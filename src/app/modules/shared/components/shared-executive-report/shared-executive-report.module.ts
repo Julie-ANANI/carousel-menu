@@ -21,6 +21,7 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ChartsModule } from 'ng2-charts';
 import { PieChartModule } from "../../../utility-components/canvas/piechart/pie-chart.module";
 import { ExecutivePitchComponent } from './executive-pitch/executive-pitch.component';
+import { ExecutiveTargetingComponent } from './executive-targeting/executive-targeting.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { ExecutivePitchComponent } from './executive-pitch/executive-pitch.compo
     PieChartComponent,
     BarChartComponent,
     ExecutiveObjectiveComponent,
-    ExecutivePitchComponent
+    ExecutivePitchComponent,
+    ExecutiveTargetingComponent
   ],
   exports: [
     SharedExecutiveReportComponent

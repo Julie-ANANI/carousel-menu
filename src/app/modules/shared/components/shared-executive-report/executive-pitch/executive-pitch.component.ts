@@ -11,13 +11,14 @@ export class ExecutivePitchComponent {
 
   @Input() set pitch(value: string) {
     this._pitch = value || '';
+    this.textColor();
   }
 
   @Output() pitchChange: EventEmitter<string> = new EventEmitter<string>();
 
   private _pitch = '';
 
-  private _pitchColor = CommonService.getLimitColor(this._pitch.length, 216);
+  private _pitchColor = '';
 
   constructor() { }
 

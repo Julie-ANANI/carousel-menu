@@ -24,7 +24,9 @@ export class SharedExecutiveReportComponent {
 
   private _objectiveConfig: ExecutiveObjective = <ExecutiveObjective>{};
 
-  private _executivePitch = '';
+  private _summary = '';
+
+  private _targetingAbstract = '';
 
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
@@ -55,7 +57,8 @@ export class SharedExecutiveReportComponent {
       objective: this._executiveReport.objective
     };
 
-    this._executivePitch = this._executiveReport.summary;
+    this._summary = this._executiveReport.summary;
+    this._targetingAbstract = this._executiveReport.targetingAbstract;
 
   }
 
@@ -133,13 +136,23 @@ export class SharedExecutiveReportComponent {
     this.emitChanges();
   }
 
-  get executivePitch(): string {
-    return this._executivePitch;
+  get summary(): string {
+    return this._summary;
   }
 
-  set executivePitch(value: string) {
-    this._executivePitch = value;
-    this._executiveReport.summary = this._executivePitch;
+  set summary(value: string) {
+    this._summary = value;
+    this._executiveReport.summary = this._summary;
+    this.emitChanges();
+  }
+
+  get targetingAbstract(): string {
+    return this._targetingAbstract;
+  }
+
+  set targetingAbstract(value: string) {
+    this._targetingAbstract = value;
+    this._executiveReport.targetingAbstract = this._targetingAbstract;
     this.emitChanges();
   }
 

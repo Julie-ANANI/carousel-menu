@@ -20,18 +20,16 @@ export class ExecutiveObjectiveComponent {
       },
       umiCommercial: value.umiCommercial || ''
     };
+
+    this.textColor('objective');
+    this.textColor('clientName');
+    this.textColor('clientEmail');
+
   }
 
   @Output() configChange: EventEmitter<ExecutiveObjective> = new EventEmitter<ExecutiveObjective>();
 
-  private _config: ExecutiveObjective = <ExecutiveObjective> {
-    objective: '',
-    owner: {
-      name: '',
-      email: '',
-    },
-    umiCommercial: ''
-  };
+  private _config: ExecutiveObjective = <ExecutiveObjective> {};
 
   // todo uncomment this
   // private readonly _allCommercials: Observable<Array<User>> = call service here;
@@ -41,11 +39,11 @@ export class ExecutiveObjectiveComponent {
 
   private _commercial: User = <User>{};
 
-  private _objectiveColor = CommonService.getLimitColor(this._config.objective.length, 120);
+  private _objectiveColor = '';
 
-  private _clientNameColor = CommonService.getLimitColor(this._config.owner.name.length, 58);
+  private _clientNameColor = '';
 
-  private _clientEmailColor = CommonService.getLimitColor(this._config.owner.email.length, 58);
+  private _clientEmailColor = '';
 
   constructor() { }
 

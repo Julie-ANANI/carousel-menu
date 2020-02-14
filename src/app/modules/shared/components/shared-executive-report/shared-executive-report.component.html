@@ -14,9 +14,21 @@
 
   <!-- pitch -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-pitch [(pitch)]="executivePitch"></executive-pitch>
+    <executive-pitch [(pitch)]="summary"></executive-pitch>
   </section>
   <!-- /pitch -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- targeting -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-targeting [(targeting)]="targetingAbstract"></executive-targeting>
+  </section>
+  <!-- /targeting -->
 
 
   <!-- divider -->

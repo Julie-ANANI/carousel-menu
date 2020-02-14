@@ -17,6 +17,7 @@ export interface ExecutiveReport {
   umiCommercial: string
   owner: ExecutiveOwner;
   objective: string;
+  targetingAbstract: string;
   created: Date;
   updated: Date;
 }

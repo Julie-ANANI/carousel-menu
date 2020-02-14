@@ -20,19 +20,13 @@
               <div *ngIf="executiveReport.lang" class="text-notify text-lg">
 
                 <div>
-                  {{ 'STORYBOARD.AUTOFILL.A' | translate }}
-                  <span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
-                    {{ 'STORYBOARD.AUTOFILL.B' | translate }}
-                  </span>
-                  {{ 'STORYBOARD.AUTOFILL.C' | translate }}
+                  {{ 'STORYBOARD.AUTOFILL.A' | translate }}<span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
+                  {{ 'STORYBOARD.AUTOFILL.B' | translate }}</span>{{ 'STORYBOARD.AUTOFILL.C' | translate }}
                 </div>
 
                 <div>
-                  {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}
-                  <span (click)="openLangModal($event)" class="text-link text-normal">
-                    {{ 'STORYBOARD.CHANGE_LANG.B' | translate }}
-                  </span>
-                  {{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
+                  {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}<span (click)="openLangModal($event)" class="text-link text-normal">
+                  {{ 'STORYBOARD.CHANGE_LANG.B' | translate }}</span>{{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
                 </div>
 
               </div>
@@ -41,11 +35,8 @@
 
               <!-- select lang -->
               <div *ngIf="!executiveReport.lang" class="text-notify text-lg">
-                {{ 'STORYBOARD.SELECT_LANG.A' | translate }}
-                <span (click)="openLangModal($event)" class="text-link text-normal">
-                    {{ 'STORYBOARD.SELECT_LANG.B' | translate }}
-                  </span>
-                {{ 'STORYBOARD.SELECT_LANG.C' | translate }}
+                {{ 'STORYBOARD.SELECT_LANG.A' | translate }}<span (click)="openLangModal($event)" class="text-link text-normal">
+                {{ 'STORYBOARD.SELECT_LANG.B' | translate }}</span>{{ 'STORYBOARD.SELECT_LANG.C' | translate }}
               </div>
               <!-- /select lang -->
 

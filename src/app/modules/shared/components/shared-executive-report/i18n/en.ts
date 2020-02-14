@@ -9,6 +9,11 @@ export const EXECUTIVE_REPORT = {
   'PITCH': {
     'PROJECT': 'Project',
     'PROJECT_PITCH': 'Project pitch'
-  }
+  },
+
+  'TARGETING': {
+    'TARGETING': 'Targeting',
+    'PROFESSIONAL': 'Panel of professionals'
+  },
 
 };
