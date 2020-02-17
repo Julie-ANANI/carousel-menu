@@ -5,13 +5,18 @@ export interface ExecutiveOwner {
 
 export interface ExecutiveProfessional {
   abstract: string;
-  list: Array<any>;
+  list: Array<string>;
 }
 
 export interface ExecutiveObjective {
   objective: string;
   owner: ExecutiveOwner;
   umiCommercial: string;
+}
+
+export interface ExecutiveTargeting {
+  abstract: string;
+  countries: Array<string>;
 }
 
 export interface ExecutiveReport {
@@ -22,7 +27,7 @@ export interface ExecutiveReport {
   umiCommercial: string
   owner: ExecutiveOwner;
   objective: string;
-  targetingAbstract: string;
+  targeting: ExecutiveTargeting;
   professionals: ExecutiveProfessional;
   //created: Date;
   //updated: Date;

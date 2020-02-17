@@ -7,7 +7,7 @@
         <textarea
           (change)="emitChanges($event)"
           (keydown)="textColor()"
-          [(ngModel)]="targeting"
+          [(ngModel)]="config.abstract"
           [attr.placeholder]="'EXECUTIVE_REPORT.TARGETING.TARGETING' | translate"
           [ngStyle]="{ 'height': '98px' }"
           maxlength="148"
@@ -16,7 +16,7 @@
         </textarea>
 
       <span [ngStyle]="{ 'color': targetingColor }" class="absolute text-limit-wrapper">
-        {{ 148 - targeting.length }}
+        {{ 148 - config.abstract.length }}
       </span>
 
     </label>
@@ -27,15 +27,15 @@
   <!-- view side -->
   <div class="content-wrapper has-border p-20">
 
-    <h4 class="m-bottom-30">{{ 'EXECUTIVE_REPORT.TARGETING.PROFESSIONAL' | translate }}</h4>
+    <h4 class="m-bottom-30 text-center">{{ 'EXECUTIVE_REPORT.TARGETING.PROFESSIONAL' | translate }}</h4>
 
     <!-- map -->
     <div [ngStyle]="{ 'height': '199px' }">
-      <app-shared-worldmap [targetingCountries]="targetCountries"></app-shared-worldmap>
+      <app-shared-worldmap [targetingCountries]="config.countries"></app-shared-worldmap>
     </div>
     <!-- /map -->
 
-    <p class="m-no-bottom text-sm">{{ targeting }}</p>
+    <p class="m-no-bottom text-sm">{{ config.abstract }}</p>
 
   </div>
   <!-- /view side -->

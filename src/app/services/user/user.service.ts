@@ -60,8 +60,8 @@ export class UserService {
     return this._http.get('/user/' + userId);
   }
 
-  public getAll(config?: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get('/user', {params: config});
+  public getAll(config?: {[header: string]: string | string[]}): Observable<Array<User>> {
+    return this._http.get<Array<User>>('/user', {params: config});
   }
 
   public delete(): Observable<any> {

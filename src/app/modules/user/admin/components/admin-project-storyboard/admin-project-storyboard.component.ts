@@ -78,7 +78,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
           name: '',
           email: ''
         },
-        targetingAbstract: '',
+        targeting: {
+          abstract: '',
+          countries: []
+        },
         professionals: {
           abstract: '',
           list: []

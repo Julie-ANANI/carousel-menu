@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonService } from '../../../../../services/common/common.service';
+import { ExecutiveTargeting } from '../../../../../models/executive-report';
 
 @Component({
   selector: 'executive-targeting',
@@ -9,41 +10,37 @@ import { CommonService } from '../../../../../services/common/common.service';
 
 export class ExecutiveTargetingComponent {
 
-  @Input() set targeting(value: string) {
-    this._targeting = value || '';
+  @Input() set config(value: ExecutiveTargeting) {
+    this._config = {
+      abstract: value.abstract,
+      countries: value.countries || []
+    };
     this.textColor();
   }
 
-  @Output() targetingChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() configChange: EventEmitter<ExecutiveTargeting> = new EventEmitter<ExecutiveTargeting>();
 
-  private _targeting = '';
+  private _config: ExecutiveTargeting = <ExecutiveTargeting>{};
 
   private _targetingColor = '';
-
-  // todo targeting countries to send the map component;
-  private _targetCountries: Array<string> = [];
 
   constructor() { }
 
   public emitChanges(event: Event) {
     event.preventDefault();
-    this.targetingChange.emit(this._targeting);
+    this.configChange.emit(this._config);
   }
 
   public textColor() {
-    this._targetingColor = CommonService.getLimitColor(this._targeting.length, 148);
+    this._targetingColor = CommonService.getLimitColor(this._config.abstract.length, 148);
   }
 
-  get targeting(): string {
-    return this._targeting;
+  get config(): ExecutiveTargeting {
+    return this._config;
   }
 
   get targetingColor(): string {
     return this._targetingColor;
-  }
-
-  get targetCountries(): Array<string> {
-    return this._targetCountries;
   }
 
 }
