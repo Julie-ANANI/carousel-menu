@@ -3,6 +3,11 @@ export interface ExecutiveOwner {
   email: string;
 }
 
+export interface ExecutiveProfessional {
+  abstract: string;
+  list: Array<any>;
+}
+
 export interface ExecutiveObjective {
   objective: string;
   owner: ExecutiveOwner;
@@ -18,6 +23,7 @@ export interface ExecutiveReport {
   owner: ExecutiveOwner;
   objective: string;
   targetingAbstract: string;
-  created: Date;
-  updated: Date;
+  professionals: ExecutiveProfessional;
+  //created: Date;
+  //updated: Date;
 }

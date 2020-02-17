@@ -8,7 +8,7 @@
       <label class="relative d-block">
 
         <textarea
-          (change)="emitChanges($event)"
+          (change)="emitChanges()"
           (keydown)="textColor('objective')"
           [(ngModel)]="config.objective"
           [attr.placeholder]="'EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
@@ -34,7 +34,7 @@
         <label class="relative d-block">
 
           <input
-            (change)="emitChanges($event)"
+            (change)="emitChanges()"
             (keydown)="textColor('clientName')"
             [(ngModel)]="config.owner.name"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_NAME' | translate"
@@ -53,7 +53,7 @@
         <label class="relative d-block">
 
           <input
-            (change)="emitChanges($event)"
+            (change)="emitChanges()"
             (keydown)="textColor('clientEmail')"
             [(ngModel)]="config.owner.email"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_EMAIL' | translate"
@@ -75,11 +75,20 @@
     <!-- commercial -->
     <div [ngStyle]="{ 'padding-top': '74px' }">
       <label>
-        <select (change)="selectCommercial($event)" class="form-select p-left-15 p-right-15">
-          <option [ngValue]="''" selected>{{ 'COMMON.PLACEHOLDER.CHOOSE_SALE' | translate }}</option>
-          <option *ngFor="let commercial of allCommercials" [ngValue]="commercial">
-            {{ commercial.name }}
+        <select
+          [ngModel]="commercial._id ? commercial._id : ''"
+          [ngModelOptions]="{ standalone: true }"
+          (change)="selectCommercial($event)"
+          class="form-select p-left-15 p-right-15">
+
+          <option [value]="''">
+            {{ 'COMMON.PLACEHOLDER.CHOOSE_SALE' | translate }}
           </option>
+
+          <option *ngFor="let com of allCommercials" [value]="com._id">
+            {{ com.firstName }} {{ com.lastName }}
+          </option>
+
         </select>
       </label>
     </div>
@@ -115,7 +124,7 @@
     <div class="p-top-40">
       <h4>{{ 'EXECUTIVE_REPORT.OBJECTIVE.CONTACT' | translate }}</h4>
       <div [ngStyle]="{ 'min-height': '57px' }">
-        <p>{{ commercial.name }}</p>
+        <p>{{ commercial.firstName }} {{ commercial.lastName }}</p>
         <p>{{ commercial.phone }}</p>
         <p>{{ commercial.email }}</p>
       </div>

@@ -1,7 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { ExecutiveObjective } from '../../../../../models/executive-report';
-import { User } from '../../../../../models/user.model';
 import { CommonService } from '../../../../../services/common/common.service';
+import { UserService } from '../../../../../services/user/user.service';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { first } from 'rxjs/operators';
+
+interface Commercial {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+}
 
 @Component({
   selector: 'executive-objective',
@@ -9,7 +20,7 @@ import { CommonService } from '../../../../../services/common/common.service';
   styleUrls: ['./executive-objective.component.scss']
 })
 
-export class ExecutiveObjectiveComponent {
+export class ExecutiveObjectiveComponent implements OnInit {
 
   @Input() set config(value: ExecutiveObjective) {
     this._config = {
@@ -29,15 +40,18 @@ export class ExecutiveObjectiveComponent {
 
   @Output() configChange: EventEmitter<ExecutiveObjective> = new EventEmitter<ExecutiveObjective>();
 
-  private _config: ExecutiveObjective = <ExecutiveObjective> {};
+  private _config: ExecutiveObjective = <ExecutiveObjective> {
+    objective: '',
+    owner: {
+      name: '',
+      email: '',
+    },
+    umiCommercial: ''
+  };
 
-  // todo uncomment this
-  // private readonly _allCommercials: Observable<Array<User>> = call service here;
+  private _allCommercials: Array<Commercial> = [];
 
-  // todo remove this
-  allCommercials: Array<User> = [];
-
-  private _commercial: User = <User>{};
+  private _commercial: Commercial = <Commercial>{};
 
   private _objectiveColor = '';
 
@@ -45,7 +59,42 @@ export class ExecutiveObjectiveComponent {
 
   private _clientEmailColor = '';
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _userService: UserService) { }
+
+  ngOnInit(): void {
+    this._getCommercials();
+  }
+
+  private _getCommercials() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._userService.getAll({ roles: 'super-admin', fields: '_id firstName lastName phone email' })
+        .pipe(first()).subscribe((response) => {
+
+          this._allCommercials = response && response['result'] ? response['result'] : [];
+
+          this._allCommercials = this._allCommercials.sort((a, b) => {
+            const nameA = (a.firstName + a.lastName).toLowerCase();
+            const nameB =  (b.firstName + b.lastName).toLowerCase();
+            return nameA.localeCompare(nameB);
+          });
+
+          this._populateCommercial();
+
+        }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
+  }
+
+  private _populateCommercial() {
+    if (this._config.umiCommercial) {
+      const index = this._allCommercials.findIndex((commercial) => commercial._id === this._config.umiCommercial);
+      if (index !== -1) {
+        this._commercial = this._allCommercials[index];
+      }
+    }
+  }
 
   public textColor(field: string) {
     switch (field) {
@@ -65,27 +114,25 @@ export class ExecutiveObjectiveComponent {
     }
   }
 
-  public emitChanges(event: Event) {
-    event.preventDefault();
+  public emitChanges() {
     this.configChange.emit(this._config);
   }
 
   public selectCommercial(event: Event) {
-    event.preventDefault();
-    // todo select commercial.
-    console.log(event);
-    this.emitChanges(event);
+    this._config.umiCommercial = event && event.target && (event.target as HTMLSelectElement).value || '';
+    this._populateCommercial();
+    this.emitChanges();
   }
 
   get config(): ExecutiveObjective {
     return this._config;
   }
 
-  /*get allCommercials(): Observable<Array<User>> {
+  get allCommercials(): Array<Commercial> {
     return this._allCommercials;
-  }*/
+  }
 
-  get commercial(): User {
+  get commercial(): Commercial {
     return this._commercial;
   }
 

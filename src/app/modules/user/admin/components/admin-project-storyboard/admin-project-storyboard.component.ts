@@ -72,7 +72,20 @@ export class AdminProjectStoryboardComponent implements OnInit {
       // temporary
       this._executiveReport = {
         lang: 'en',
-        completion: 0
+        completion: 0,
+        umiCommercial: '',
+        owner: {
+          name: '',
+          email: ''
+        },
+        targetingAbstract: '',
+        professionals: {
+          abstract: '',
+          list: []
+        },
+        objective: '',
+        summary: '',
+        _id: ''
       };
 
       this._isLoading = false;
