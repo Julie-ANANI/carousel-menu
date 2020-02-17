@@ -19,6 +19,11 @@ export interface ExecutiveTargeting {
   countries: Array<string>;
 }
 
+export interface ExecutiveConclusion {
+  umiOperator: string;
+  conclusion: string
+}
+
 export interface ExecutiveReport {
   readonly _id: string;
   readonly completion: number
@@ -29,6 +34,8 @@ export interface ExecutiveReport {
   objective: string;
   targeting: ExecutiveTargeting;
   professionals: ExecutiveProfessional;
+  conclusion: string;
+  umiOperator: string;
   //created: Date;
   //updated: Date;
 }

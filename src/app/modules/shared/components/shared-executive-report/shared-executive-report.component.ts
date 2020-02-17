@@ -1,5 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ExecutiveObjective, ExecutiveProfessional, ExecutiveReport, ExecutiveTargeting } from '../../../../models/executive-report';
+import {
+  ExecutiveConclusion,
+  ExecutiveObjective,
+  ExecutiveProfessional,
+  ExecutiveReport,
+  ExecutiveTargeting
+} from '../../../../models/executive-report';
 // import { Innovation } from '../../../../models/innovation';
 // import { Answer } from '../../../../models/answer';
 // import { AnswerService } from '../../../../services/answer/answer.service';
@@ -29,6 +35,8 @@ export class SharedExecutiveReportComponent {
   private _targetingConfig: ExecutiveTargeting = <ExecutiveTargeting>{};
 
   private _professionalConfig: ExecutiveProfessional = <ExecutiveProfessional>{};
+
+  private _conclusionConfig: ExecutiveConclusion = <ExecutiveConclusion>{};
 
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
@@ -69,6 +77,11 @@ export class SharedExecutiveReportComponent {
     this._professionalConfig = {
       abstract: this._executiveReport.professionals && this._executiveReport.professionals.abstract,
       list: this._executiveReport.professionals && this._executiveReport.professionals.list,
+    };
+
+    this._conclusionConfig = {
+      conclusion: this._executiveReport.conclusion,
+      umiOperator: this._executiveReport.umiOperator,
     };
 
   }
@@ -176,6 +189,17 @@ export class SharedExecutiveReportComponent {
     this._professionalConfig = value;
     this._executiveReport.professionals.abstract = this._professionalConfig.abstract;
     this._executiveReport.professionals.list = this._professionalConfig.list;
+    this.emitChanges();
+  }
+
+  get conclusionConfig(): ExecutiveConclusion {
+    return this._conclusionConfig;
+  }
+
+  set conclusionConfig(value: ExecutiveConclusion) {
+    this._conclusionConfig = value;
+    this._executiveReport.conclusion = this._conclusionConfig.conclusion;
+    this._executiveReport.umiOperator = this._conclusionConfig.umiOperator;
     this.emitChanges();
   }
 

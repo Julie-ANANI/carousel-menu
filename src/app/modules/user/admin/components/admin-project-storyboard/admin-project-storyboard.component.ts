@@ -88,6 +88,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
         },
         objective: '',
         summary: '',
+        conclusion: '',
+        umiOperator: '',
         _id: ''
       };
 

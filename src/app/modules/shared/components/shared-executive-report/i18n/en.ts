@@ -22,4 +22,9 @@ export const EXECUTIVE_REPORT = {
     'CHOOSE_PRO': 'Choose a pro',
   },
 
+  'CONCLUSION': {
+    'CONCLUSION': 'Conclusion',
+    'OPERATOR': 'Choose operator'
+  },
+
 };

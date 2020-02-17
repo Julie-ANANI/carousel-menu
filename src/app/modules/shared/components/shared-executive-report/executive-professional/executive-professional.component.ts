@@ -86,11 +86,15 @@ export class ExecutiveProfessionalComponent implements OnInit {
   }
 
   private static _sortPro(proList: Array<Professional>) {
-    return proList.sort((a, b) => {
-      const nameA = (a.firstName + a.lastName).toLowerCase();
-      const nameB =  (b.firstName + b.lastName).toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
+    if (proList.length > 0) {
+      return proList.sort((a, b) => {
+        const nameA = (a.firstName + a.lastName).toLowerCase();
+        const nameB =  (b.firstName + b.lastName).toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    } else {
+      return []
+    }
   }
 
   private _populateRestPro() {
