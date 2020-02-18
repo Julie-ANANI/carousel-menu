@@ -48,6 +48,23 @@
   <!-- /divider -->
 
 
+  <!-- sections -->
+  <div *ngFor="let section of executiveReport.sections; let i = index;">
+
+    <!-- section -->
+    <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+      <executive-section [section]="section" (sectionChange)="onSectionChange($event, i)"></executive-section>
+    </section>
+    <!-- /section -->
+
+    <!-- divider -->
+    <div class="divider"></div>
+    <!-- /divider -->
+
+  </div>
+  <!-- /sections -->
+
+
   <!-- conclusion -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
     <executive-conclusion [(config)]="conclusionConfig"></executive-conclusion>

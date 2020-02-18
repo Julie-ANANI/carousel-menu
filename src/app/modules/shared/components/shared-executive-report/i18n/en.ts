@@ -27,6 +27,12 @@ export const EXECUTIVE_REPORT = {
     'OPERATOR': 'Choose operator'
   },
 
-  'SAVE': 'The executive report has been saved successfully.'
+  'SAVE': 'The executive report has been saved successfully.',
+
+  'WANT_TO_DISPLAY': 'What would you want to display?',
+
+  'SYNTHESIS_SECTIONS': 'Synthesis sections',
+
+  'RAW_DATA': 'Raw data'
 
 };

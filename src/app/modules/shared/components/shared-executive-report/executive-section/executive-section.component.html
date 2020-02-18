@@ -1,16 +1,62 @@
+<div [ngClass]="{ 'inactive flex-centered': !section.questionId || !section.questionType }" id="executive-section">
+
+  <!-- no question selected -->
+  <div *ngIf="!section.questionId || !section.questionType">
+
+    <!-- title -->
+    <h4>{{ 'EXECUTIVE_REPORT.WANT_TO_DISPLAY' | translate }}</h4>
+    <!-- /title -->
+
+
+    <!-- question / type -->
+    <div class="question-selection-wrapper">
+
+      <!-- question -->
+      <div>
+        <h5 class="text-lg">{{ 'EXECUTIVE_REPORT.SYNTHESIS_SECTIONS' | translate }}</h5>
+        <ul>
+          <li>
+
+          </li>
+        </ul>
+      </div>
+      <!-- /question -->
+
+
+      <!-- type -->
+      <div>
+        <h5 class="text-lg">{{ 'EXECUTIVE_REPORT.RAW_DATA' | translate }}</h5>
+        <ul>
+          <li *ngFor="let ques of questionType" (click)="selectQuestionType(ques.label)">
+            {{ ques.alias }}
+          </li>
+        </ul>
+      </div>
+      <!-- /type -->
+
+
+    </div>
+    <!-- /question / type -->
+
+  </div>
+  <!-- /no question selected -->
+
+</div>
+
+<!--
 <section id="executive-section-wrapper">
 
 
-  <!-- title -->
+  &lt;!&ndash; title &ndash;&gt;
   <div class="title-wrapper">
 
-    <!-- heading and menu -->
+    &lt;!&ndash; heading and menu &ndash;&gt;
     <div class="heading-menu">
 
-      <!-- heading -->
+      &lt;!&ndash; heading &ndash;&gt;
       <h2 *ngIf="questionSelected?.title" class="title-primary">{{ questionSelected?.title | multiling:lang }}</h2>
 
-      <!-- menu -->
+      &lt;!&ndash; menu &ndash;&gt;
       <ng-container *ngIf="adminSide">
         <div class="dropdown absolute is-right">
 
@@ -28,9 +74,9 @@
       </ng-container>
 
     </div>
-    <!-- /heading and Menu -->
+    &lt;!&ndash; /heading and Menu &ndash;&gt;
 
-    <!-- follow -->
+    &lt;!&ndash; follow &ndash;&gt;
     <ng-container *ngIf="questionSelected && stats">
       <p class="sub-title">
 
@@ -48,35 +94,35 @@
 
       </p>
     </ng-container>
-    <!-- /follow -->
+    &lt;!&ndash; /follow &ndash;&gt;
 
   </div>
-  <!-- /title -->
+  &lt;!&ndash; /title &ndash;&gt;
 
 
-  <!-- answer display -->
+  &lt;!&ndash; answer display &ndash;&gt;
   <ng-container *ngIf="questionSelected">
     <div class="content-wrapper">
 
-      <!-- if the question type is radio -->
+      &lt;!&ndash; if the question type is radio &ndash;&gt;
       <ng-container *ngIf="questionSelected.controlType === 'radio'">
         <app-pie-chart [question]="questionSelected"></app-pie-chart>
       </ng-container>
-      <!-- /if the question type is radio -->
+      &lt;!&ndash; /if the question type is radio &ndash;&gt;
 
-      <!-- if the question type is checkbox -->
+      &lt;!&ndash; if the question type is checkbox &ndash;&gt;
       <ng-container *ngIf="questionSelected.controlType === 'checkbox'">
         <app-bar-chart [innovation]="innovation" [question]="questionSelected" class="full-space"></app-bar-chart>
       </ng-container>
-      <!-- /if the question type is checkbox -->
+      &lt;!&ndash; /if the question type is checkbox &ndash;&gt;
 
-      <!-- if the question type is star -->
+      &lt;!&ndash; if the question type is star &ndash;&gt;
       <ng-container *ngIf="questionSelected.controlType === 'stars'">
         <app-stars [question]="questionSelected" class="full-space"></app-stars>
       </ng-container>
-      <!-- /if the question type is star -->
+      &lt;!&ndash; /if the question type is star &ndash;&gt;
 
-      <!-- if the question is not checkbox, radio, stars -->
+      &lt;!&ndash; if the question is not checkbox, radio, stars &ndash;&gt;
       <ng-container *ngIf="questionSelected.controlType !== 'checkbox' && questionSelected.controlType !== 'radio' && questionSelected.controlType !== 'stars'">
         <ng-container [ngSwitch]="questionSelected.title | multiling:lang | lowercase ">
 
@@ -98,20 +144,21 @@
 
         </ng-container>
       </ng-container>
-      <!-- if the question is not checkbox, radio, stars -->
+      &lt;!&ndash; if the question is not checkbox, radio, stars &ndash;&gt;
 
     </div>
   </ng-container>
-  <!-- /answer display -->
+  &lt;!&ndash; /answer display &ndash;&gt;
 
 
-  <!-- abstract -->
+  &lt;!&ndash; abstract &ndash;&gt;
   <ng-container *ngIf="questionSelected && abstractValue">
     <div class="abstract-wrapper">
       <span>{{ abstractValue }}</span>
     </div>
   </ng-container>
-  <!-- /abstract -->
+  &lt;!&ndash; /abstract &ndash;&gt;
 
 
 </section>
+-->

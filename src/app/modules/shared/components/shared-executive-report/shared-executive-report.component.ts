@@ -3,7 +3,7 @@ import {
   ExecutiveConclusion,
   ExecutiveObjective,
   ExecutiveProfessional,
-  ExecutiveReport,
+  ExecutiveReport, ExecutiveSection,
   ExecutiveTargeting
 } from '../../../../models/executive-report';
 // import { Innovation } from '../../../../models/innovation';
@@ -84,10 +84,23 @@ export class SharedExecutiveReportComponent {
       umiOperator: this._executiveReport.umiOperator,
     };
 
+    // setting the executive report sections.
+    for (let i = 0; i <= 7; i++) {
+      if (!this._executiveReport.sections[i]) {
+        this._executiveReport.sections[i] = <ExecutiveSection>{};
+      }
+    }
+
+
   }
 
   public emitChanges() {
     this.executiveReportChange.emit(this._executiveReport);
+  }
+
+  public onSectionChange(value: ExecutiveSection, index: number) {
+    this._executiveReport.sections[index] = value;
+    this.emitChanges();
   }
 
   /*private _getAnswers() {

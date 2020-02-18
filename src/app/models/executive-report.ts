@@ -45,7 +45,7 @@ export interface ExecutiveSection {
   questionId: string;
   label: string;
   abstract: string;
-  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI';
+  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | '';
   content: SectionPie | SectionRanking | SectionBar | SectionQuote | SectionKpi;
 }
 
