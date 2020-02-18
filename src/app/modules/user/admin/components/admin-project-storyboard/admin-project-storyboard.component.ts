@@ -70,7 +70,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
       // todo assign the selected lang, nextSelected lang, executiveReport
 
       // temporary
-      this._executiveReport = {
+      /*this._executiveReport = {
         lang: 'en',
         completion: 0,
         umiCommercial: '',
@@ -86,7 +86,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
         objective: '',
         summary: '',
         _id: ''
-      };
+      };*/
 
       this._isLoading = false;
       this._setSpinner(false);
