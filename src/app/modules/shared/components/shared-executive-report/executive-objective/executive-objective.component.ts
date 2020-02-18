@@ -73,11 +73,13 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
           this._allCommercials = response && response['result'] ? response['result'] : [];
 
-          this._allCommercials = this._allCommercials.sort((a, b) => {
-            const nameA = (a.firstName + a.lastName).toLowerCase();
-            const nameB =  (b.firstName + b.lastName).toLowerCase();
-            return nameA.localeCompare(nameB);
-          });
+          if (this._allCommercials.length > 0) {
+            this._allCommercials = this._allCommercials.sort((a, b) => {
+              const nameA = (a.firstName + a.lastName).toLowerCase();
+              const nameB =  (b.firstName + b.lastName).toLowerCase();
+              return nameA.localeCompare(nameB);
+            });
+          }
 
           this._populateCommercial();
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
 
 import { AdminProjectStoryboardComponent } from './admin-project-storyboard.component';
 
@@ -12,7 +13,8 @@ import { SharedExecutiveReportModule } from '../../../../shared/components/share
     CommonModule,
     TranslateModule.forChild(),
     ModalModule,
-    SharedExecutiveReportModule
+    SharedExecutiveReportModule,
+    RouterModule
   ],
   declarations: [
     AdminProjectStoryboardComponent

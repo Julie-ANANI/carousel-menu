@@ -9,7 +9,7 @@
 
         <textarea
           (change)="emitChanges()"
-          (keydown)="textColor('objective')"
+          (keyup)="textColor('objective')"
           [(ngModel)]="config.objective"
           [attr.placeholder]="'EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
           [ngStyle]="{ 'height': '90px' }"
@@ -35,7 +35,7 @@
 
           <input
             (change)="emitChanges()"
-            (keydown)="textColor('clientName')"
+            (keyup)="textColor('clientName')"
             [(ngModel)]="config.owner.name"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_NAME' | translate"
             maxlength="58"
@@ -54,7 +54,7 @@
 
           <input
             (change)="emitChanges()"
-            (keydown)="textColor('clientEmail')"
+            (keyup)="textColor('clientEmail')"
             [(ngModel)]="config.owner.email"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_EMAIL' | translate"
             maxlength="58"

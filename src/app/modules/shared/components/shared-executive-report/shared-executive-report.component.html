@@ -26,7 +26,7 @@
 
   <!-- targeting -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-targeting [(targeting)]="targetingAbstract"></executive-targeting>
+    <executive-targeting [(config)]="targetingConfig"></executive-targeting>
   </section>
   <!-- /targeting -->
 
@@ -34,6 +34,25 @@
   <!-- divider -->
   <div class="divider"></div>
   <!-- /divider -->
+
+
+  <!-- professionals -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-professional [(config)]="professionalConfig"></executive-professional>
+  </section>
+  <!-- /professionals -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- conclusion -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-conclusion [(config)]="conclusionConfig"></executive-conclusion>
+  </section>
+  <!-- /conclusion -->
 
 </div>
 

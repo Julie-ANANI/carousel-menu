@@ -1,5 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ExecutiveObjective, ExecutiveReport} from '../../../../models/executive-report';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ExecutiveConclusion,
+  ExecutiveObjective,
+  ExecutiveProfessional,
+  ExecutiveReport,
+  ExecutiveTargeting
+} from '../../../../models/executive-report';
 // import { Innovation } from '../../../../models/innovation';
 // import { Answer } from '../../../../models/answer';
 // import { AnswerService } from '../../../../services/answer/answer.service';
@@ -26,7 +32,11 @@ export class SharedExecutiveReportComponent {
 
   private _summary = '';
 
-  private _targetingAbstract = '';
+  private _targetingConfig: ExecutiveTargeting = <ExecutiveTargeting>{};
+
+  private _professionalConfig: ExecutiveProfessional = <ExecutiveProfessional>{};
+
+  private _conclusionConfig: ExecutiveConclusion = <ExecutiveConclusion>{};
 
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
@@ -58,7 +68,21 @@ export class SharedExecutiveReportComponent {
     };
 
     this._summary = this._executiveReport.summary;
-    this._targetingAbstract = this._executiveReport.targetingAbstract;
+
+    this._targetingConfig = {
+      abstract: this._executiveReport.targeting && this._executiveReport.targeting.abstract,
+      countries: this._executiveReport.targeting && this._executiveReport.targeting.countries,
+    };
+
+    this._professionalConfig = {
+      abstract: this._executiveReport.professionals && this._executiveReport.professionals.abstract,
+      list: this._executiveReport.professionals && this._executiveReport.professionals.list,
+    };
+
+    this._conclusionConfig = {
+      conclusion: this._executiveReport.conclusion,
+      umiOperator: this._executiveReport.umiOperator,
+    };
 
   }
 
@@ -146,13 +170,36 @@ export class SharedExecutiveReportComponent {
     this.emitChanges();
   }
 
-  get targetingAbstract(): string {
-    return this._targetingAbstract;
+  get targetingConfig(): ExecutiveTargeting {
+    return this._targetingConfig;
   }
 
-  set targetingAbstract(value: string) {
-    this._targetingAbstract = value;
-    this._executiveReport.targetingAbstract = this._targetingAbstract;
+  set targetingConfig(value: ExecutiveTargeting) {
+    this._targetingConfig = value;
+    this._executiveReport.targeting.abstract = this._targetingConfig.abstract;
+    this._executiveReport.targeting.countries = this._targetingConfig.countries;
+    this.emitChanges();
+  }
+
+  get professionalConfig(): ExecutiveProfessional {
+    return this._professionalConfig;
+  }
+
+  set professionalConfig(value: ExecutiveProfessional) {
+    this._professionalConfig = value;
+    this._executiveReport.professionals.abstract = this._professionalConfig.abstract;
+    this._executiveReport.professionals.list = this._professionalConfig.list;
+    this.emitChanges();
+  }
+
+  get conclusionConfig(): ExecutiveConclusion {
+    return this._conclusionConfig;
+  }
+
+  set conclusionConfig(value: ExecutiveConclusion) {
+    this._conclusionConfig = value;
+    this._executiveReport.conclusion = this._conclusionConfig.conclusion;
+    this._executiveReport.umiOperator = this._conclusionConfig.umiOperator;
     this.emitChanges();
   }
 

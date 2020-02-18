@@ -29,6 +29,8 @@ export const STORYBOARD = {
 
   'TOAST': {
     'URL_COPIED': 'L\'URL a été copié avec succès.'
-  }
+  },
+
+  'BACK_TO': 'Retour au projet'
 
 };

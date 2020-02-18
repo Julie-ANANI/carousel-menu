@@ -12,8 +12,21 @@ export const EXECUTIVE_REPORT = {
   },
 
   'TARGETING': {
-    'TARGETING': 'Targeting',
+    'TARGETING': 'Targeting abstract',
     'PROFESSIONAL': 'Panel of professionals'
   },
+
+  'PROFESSIONAL': {
+    'PROFESSIONALS': 'Professional abstract',
+    'SOME_PROFILES': 'Some profiles',
+    'CHOOSE_PRO': 'Choose a pro',
+  },
+
+  'CONCLUSION': {
+    'CONCLUSION': 'Conclusion',
+    'OPERATOR': 'Choose operator'
+  },
+
+  'SAVE': 'The executive report has been saved successfully.'
 
 };
