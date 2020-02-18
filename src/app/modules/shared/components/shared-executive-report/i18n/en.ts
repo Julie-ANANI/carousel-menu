@@ -27,4 +27,6 @@ export const EXECUTIVE_REPORT = {
     'OPERATOR': 'Choose operator'
   },
 
+  'SAVE': 'The executive report has been saved successfully.'
+
 };

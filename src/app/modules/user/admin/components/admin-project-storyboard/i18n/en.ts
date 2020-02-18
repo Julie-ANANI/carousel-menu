@@ -29,7 +29,8 @@ export const STORYBOARD = {
 
   'TOAST': {
     'URL_COPIED': 'The URL has been copied successfully.'
-  }
+  },
 
+  'BACK_TO': 'Back to project'
 
 };

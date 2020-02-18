@@ -10,6 +10,9 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 import { ExecutiveReport } from '../../../../../models/executive-report';
 import { Innovation } from '../../../../../models/innovation';
 import { CommonService } from '../../../../../services/common/common.service';
+import { ExecutiveReportService } from '../../../../../services/executive-report/executive-report.service';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'admin-storyboard',
@@ -21,7 +24,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _executiveReport: ExecutiveReport = <ExecutiveReport>{};
 
-  private _isLoading = false;
+  private _isLoading = true;
 
   private _isModalLang = false;
 
@@ -29,72 +32,53 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _selectedLang = this.currentLang;
 
-  newSelectedLang = this.currentLang;
+  private _newSelectedLang = this.currentLang;
 
   private _toBeSaved = false;
+
+  private _innovation: Innovation = <Innovation>{};
+
+  private _reportType = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
+              private _executiveReportService: ExecutiveReportService,
               private _commonService: CommonService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
     this._setSpinner(true);
 
-    this._activatedRoute.params.subscribe((params) => {
-      this._getExecutiveReport(params['projectId']);
-    });
-
   }
 
   ngOnInit() {
 
-    const innovation: Innovation = this._activatedRoute.snapshot.data['innovation'];
-    this._setTitle(InnovationFrontService.currentLangInnovationCard(innovation, this.currentLang, 'title'));
+    this._innovation = this._activatedRoute.snapshot.data['innovation'];
+    this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'title'));
 
-    if (typeof innovation === 'undefined' || (innovation && !innovation._id)) {
-      this._isLoading = true;
+    if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
       this._setSpinner(false);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
     }
 
+    this._getExecutiveReport();
     this.setNewSelectedLang();
 
   }
 
-  private _getExecutiveReport(id: string) {
-    if (isPlatformBrowser(this._platformId)) {
-      // todo add the service to get the executive report from back using id.
-      // todo assign the selected lang, nextSelected lang, executiveReport
-
-      // temporary
-      this._executiveReport = {
-        lang: 'en',
-        completion: 0,
-        umiCommercial: '',
-        owner: {
-          name: '',
-          email: ''
-        },
-        targeting: {
-          abstract: '',
-          countries: []
-        },
-        professionals: {
-          abstract: '',
-          list: []
-        },
-        objective: '',
-        summary: '',
-        conclusion: '',
-        umiOperator: '',
-        _id: ''
-      };
-
-      this._isLoading = false;
-      this._setSpinner(false);
+  private _getExecutiveReport() {
+    if (isPlatformBrowser(this._platformId) && this._innovation && this._innovation.executiveReportId) {
+      this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((response) => {
+        this._executiveReport = response;
+        this._setSpinner(false);
+        this._isLoading = false;
+      }, (err: HttpErrorResponse) => {
+        this._setSpinner(false);
+        console.log(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+      });
     }
   }
 
@@ -107,15 +91,16 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   public setNewSelectedLang(value?: string) {
-    this.newSelectedLang = value ? value : this._selectedLang;
+    this._newSelectedLang = value ? value : this._selectedLang;
   }
 
   public autofillExecutiveReport(event: Event) {
     event.preventDefault();
   }
 
-  public openLangModal(event: Event) {
+  public openLangModal(event: Event, type: string) {
     event.preventDefault();
+    this._reportType = type;
     this._modalTitle = this._executiveReport.lang ? 'STORYBOARD.MODAL.CHANGE_TITLE' : 'STORYBOARD.MODAL.SELECT_TITLE';
     this._isModalLang = true;
   }
@@ -125,13 +110,45 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._setSpinner(true);
     this._isModalLang = false;
     this._isLoading = true;
-    this._createExecutiveReport();
+
+    switch (this._reportType) {
+
+      case 'CREATE':
+        this._createExecutiveReport();
+        break;
+
+      case 'RESET':
+        this._resetExecutiveReport();
+        break;
+
+    }
+
+    this._reportType = '';
+
   }
 
   private _createExecutiveReport() {
-    // todo add the service to create the executive report.
-    this._setSpinner(false);
-    this._isLoading = false;
+    this._executiveReportService.create(this._newSelectedLang, this._innovation._id).pipe(first()).subscribe((response) => {
+      this._executiveReport = response;
+      this._setSpinner(false);
+      this._isLoading = false;
+    }, (err: HttpErrorResponse) => {
+      this._setSpinner(false);
+      console.log(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+    });
+  }
+
+  private _resetExecutiveReport() {
+    this._executiveReportService.reset(this._executiveReport, this._newSelectedLang).pipe(first()).subscribe((response) => {
+      this._executiveReport = response;
+      this._setSpinner(false);
+      this._isLoading = false;
+    }, (err: HttpErrorResponse) => {
+      this._setSpinner(false);
+      console.log(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+    });
   }
 
   public copyLink(event: Event, linkToCopy: string) {
@@ -150,11 +167,13 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public saveExecutiveReport(event: Event) {
     event.preventDefault();
-
-    // todo save the executive report in back
-    // todo show notification success or error.
-    // todo make saveButton value false toBeSaved = false;
-
+    this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
+      this._toBeSaved = false;
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'EXECUTIVE_REPORT.SAVE');
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+    });
   }
 
   get currentLang(): string {
@@ -192,6 +211,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get toBeSaved(): boolean {
     return this._toBeSaved;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
   }
 
 }

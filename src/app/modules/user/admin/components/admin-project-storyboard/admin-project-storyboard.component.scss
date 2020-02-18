@@ -9,6 +9,11 @@
     .content-wrapper {
       flex: 1;
 
+      .back-to-wrapper:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
       .title {
         font-size: 28px;
       }

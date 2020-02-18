@@ -63,8 +63,8 @@ export interface Innovation {
     date?: any
   };
 
-  // todo remove
-  /*executiveReport?: {
+  // not use anymore
+  executiveReport?: {
     totalSections?: number,
     goal?: string,
     professionalAbstract?: string,
@@ -73,9 +73,9 @@ export interface Innovation {
       quesId: string,
       value: string
     }]
-  };*/
+  };
 
-  executiveReport?: string;
+  executiveReportId?: string;
   mission?: Mission | string;
 
   operator?: User;

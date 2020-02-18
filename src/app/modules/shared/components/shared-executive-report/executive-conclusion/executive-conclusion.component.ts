@@ -19,6 +19,7 @@ interface Operator {
 })
 
 export class ExecutiveConclusionComponent implements OnInit {
+
   @Input() set config(value: ExecutiveConclusion) {
     this._config = {
       conclusion: value.conclusion || '',

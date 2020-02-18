@@ -27,4 +27,6 @@ export const EXECUTIVE_REPORT = {
     'OPERATOR': 'Choisir un opérateur'
   },
 
+  'SAVE': 'Le rapport exécutif a été sauvegardé avec succès.'
+
 };

@@ -1,8 +1,7 @@
-<div *ngIf="!isLoading">
-  <div class="p-top-50 p-bottom-30" id="admin-project-storyboard">
+<div *ngIf="!isLoading" class="animate-fade">
+  <div class="p-top-30 p-bottom-40" id="admin-project-storyboard">
     <div class="container fluid grid-2xl">
       <div class="column col-sm-12 col-11 col-mx-auto">
-
 
         <!-- header section -->
         <section class="header-wrapper">
@@ -12,20 +11,28 @@
             <div class="content-wrapper p-right-10 p-bottom-30">
 
               <!-- heading -->
-              <h1 class="title m-no-bottom text-background">Storyboard</h1>
+              <div class="d-flex align-baseline">
+                <h1 class="title m-no-bottom m-right-15 text-background">Storyboard</h1>
+                <a
+                  *ngIf="innovation && innovation._id"
+                  [routerLink]="'/user/admin/projects/project/'+innovation._id"
+                  class="text-sm text-primary-dark back-to-wrapper">
+                  {{ 'STORYBOARD.BACK_TO' | translate }}
+                </a>
+              </div>
               <!-- /heading -->
 
 
               <!-- autofill / change lang -->
-              <div *ngIf="executiveReport.lang" class="text-notify text-lg">
+              <div *ngIf="executiveReport.lang" class="text-notify text-md">
 
                 <div>
-                  {{ 'STORYBOARD.AUTOFILL.A' | translate }}<span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
+                  {{ 'STORYBOARD.AUTOFILL.A' | translate }} <span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
                   {{ 'STORYBOARD.AUTOFILL.B' | translate }}</span> {{ 'STORYBOARD.AUTOFILL.C' | translate }}
                 </div>
 
                 <div>
-                  {{ 'STORYBOARD.CHANGE_LANG.A' | translate }}<span (click)="openLangModal($event)" class="text-link text-normal">
+                  {{ 'STORYBOARD.CHANGE_LANG.A' | translate }} <span (click)="openLangModal($event, 'RESET')" class="text-link text-normal">
                   {{ 'STORYBOARD.CHANGE_LANG.B' | translate }}</span>{{ 'STORYBOARD.CHANGE_LANG.C' | translate }}
                 </div>
 
@@ -34,8 +41,8 @@
 
 
               <!-- select lang -->
-              <div *ngIf="!executiveReport.lang" class="text-notify text-lg">
-                {{ 'STORYBOARD.SELECT_LANG.A' | translate }}<span (click)="openLangModal($event)" class="text-link text-normal">
+              <div *ngIf="!executiveReport.lang" class="text-notify text-md">
+                {{ 'STORYBOARD.SELECT_LANG.A' | translate }} <span (click)="openLangModal($event, 'CREATE')" class="text-link text-normal">
                 {{ 'STORYBOARD.SELECT_LANG.B' | translate }}</span> {{ 'STORYBOARD.SELECT_LANG.C' | translate }}
               </div>
               <!-- /select lang -->
@@ -72,7 +79,7 @@
                 <!-- /link -->
 
                 <button
-                  [disabled]="executiveReport.completion !== 100"
+                  [disabled]="true"
                   (click)="generateVideo($event)"
                   class="button is-primary m-bottom-15">
                   {{ 'COMMON.BUTTON.GENERATE_VIDEO' | translate }}

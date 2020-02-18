@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonService } from '../../../../../services/common/common.service';
+import { ScrapeHTMLTags } from '../../../../../pipe/pipes/ScrapeHTMLTags';
 
 @Component({
   selector: 'executive-pitch',
@@ -10,7 +11,7 @@ import { CommonService } from '../../../../../services/common/common.service';
 export class ExecutivePitchComponent {
 
   @Input() set pitch(value: string) {
-    this._pitch = value || '';
+    this._pitch = new ScrapeHTMLTags().transform(value) || '';
     this.textColor();
   }
 
