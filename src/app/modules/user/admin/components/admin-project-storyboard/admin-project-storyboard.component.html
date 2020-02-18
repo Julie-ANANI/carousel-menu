@@ -16,7 +16,7 @@
                 <a
                   *ngIf="innovation && innovation._id"
                   [routerLink]="'/user/admin/projects/project/'+innovation._id"
-                  class="text-sm text-primary-dark back-to-wrapper">
+                  class="text-sm text-notify back-to-wrapper">
                   {{ 'STORYBOARD.BACK_TO' | translate }}
                 </a>
               </div>
@@ -24,7 +24,7 @@
 
 
               <!-- autofill / change lang -->
-              <div *ngIf="executiveReport.lang" class="text-notify text-md">
+              <div *ngIf="executiveReport.lang" class="text-md">
 
                 <div>
                   {{ 'STORYBOARD.AUTOFILL.A' | translate }} <span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
@@ -41,7 +41,7 @@
 
 
               <!-- select lang -->
-              <div *ngIf="!executiveReport.lang" class="text-notify text-md">
+              <div *ngIf="!executiveReport.lang" class="text-md">
                 {{ 'STORYBOARD.SELECT_LANG.A' | translate }} <span (click)="openLangModal($event, 'CREATE')" class="text-link text-normal">
                 {{ 'STORYBOARD.SELECT_LANG.B' | translate }}</span> {{ 'STORYBOARD.SELECT_LANG.C' | translate }}
               </div>
@@ -100,7 +100,7 @@
                     {{ 'STORYBOARD.LAST_GENERATE' | translate }} 01/02/20 {{ 'STORYBOARD.AT' | translate }} 12:14
                   </p>
 
-                  <!-- video url -->
+                  <!-- pdf url -->
                   <p [ngStyle]="{ 'white-space': 'nowrap' }" class="text-bold">
                     https://umi.us/65118fd4df8g4dg98ddf5g4
                     <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.COPY' | translate">
@@ -162,6 +162,7 @@
 
   <section class="modal-body p-top-40">
     <div class="form-group d-flex justify-center m-no-bottom">
+
       <label class="form-radio is-inline">
         <input
           (change)="setNewSelectedLang('en')"
@@ -172,6 +173,7 @@
           value="en">
         <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
       </label>
+
       <label class="form-radio is-inline">
         <input
           (change)="setNewSelectedLang('fr')"
@@ -182,6 +184,7 @@
           value="fr">
         <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
       </label>
+
     </div>
   </section>
 

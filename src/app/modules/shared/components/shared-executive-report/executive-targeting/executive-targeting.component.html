@@ -6,7 +6,7 @@
 
         <textarea
           (change)="emitChanges($event)"
-          (keydown)="textColor()"
+          (keyup)="textColor()"
           [(ngModel)]="config.abstract"
           [attr.placeholder]="'EXECUTIVE_REPORT.TARGETING.TARGETING' | translate"
           [ngStyle]="{ 'height': '98px' }"

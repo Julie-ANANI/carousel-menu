@@ -9,7 +9,7 @@
 
         <textarea
           (change)="emitChanges()"
-          (keydown)="textColor()"
+          (keyup)="textColor()"
           [(ngModel)]="config.conclusion"
           [attr.placeholder]="'EXECUTIVE_REPORT.CONCLUSION.CONCLUSION' | translate"
           [ngStyle]="{ 'height': '140px' }"

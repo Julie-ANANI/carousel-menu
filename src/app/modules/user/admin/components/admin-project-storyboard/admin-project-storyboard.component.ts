@@ -57,14 +57,17 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
     this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'title'));
+    this.setNewSelectedLang();
 
     if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
       this._setSpinner(false);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+    } else if (this._innovation && this._innovation.executiveReportId) {
+      this._getExecutiveReport();
+    } else if (this._innovation && !this._innovation.executiveReportId) {
+      this._setSpinner(false);
+      this._isLoading = false;
     }
-
-    this._getExecutiveReport();
-    this.setNewSelectedLang();
 
   }
 
