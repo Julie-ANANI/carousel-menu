@@ -1,8 +1,8 @@
-<div class="d-flex flex-wrap justify-center" id="executive-targeting">
+<div class="executive-report-wrapper" id="executive-targeting">
 
   <!-- edit side -->
   <div class="content-wrapper">
-    <label class="relative d-block">
+    <label>
 
         <textarea
           (change)="emitChanges($event)"
@@ -15,7 +15,7 @@
           type="text">
         </textarea>
 
-      <span [ngStyle]="{ 'color': targetingColor }" class="absolute text-limit-wrapper">
+      <span [ngStyle]="{ 'color': targetingColor }" class="text-limit-wrapper">
         {{ 148 - config.abstract.length }}
       </span>
 
@@ -25,7 +25,7 @@
 
 
   <!-- view side -->
-  <div class="content-wrapper has-border p-20">
+  <div class="content-wrapper has-border">
 
     <h4 class="m-bottom-30 text-center">{{ 'EXECUTIVE_REPORT.TARGETING.PROFESSIONAL' | translate }}</h4>
 
@@ -35,7 +35,7 @@
     </div>
     <!-- /map -->
 
-    <p class="m-no-bottom text-sm">{{ config.abstract }}</p>
+    <p class="has-min-height">{{ config.abstract }}</p>
 
   </div>
   <!-- /view side -->

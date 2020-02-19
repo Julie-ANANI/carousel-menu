@@ -1,8 +1,8 @@
-<div class="d-flex flex-wrap justify-center" id="executive-pitch">
+<div class="executive-report-wrapper" id="executive-pitch">
 
   <!-- edit side -->
   <div class="content-wrapper">
-    <label class="relative d-block">
+    <label>
 
         <textarea
           (change)="emitChanges($event)"
@@ -15,7 +15,7 @@
           type="text">
         </textarea>
 
-        <span [ngStyle]="{ 'color': pitchColor }" class="absolute text-limit-wrapper">
+        <span [ngStyle]="{ 'color': pitchColor }" class="text-limit-wrapper">
           {{ 216 - pitch.length }}
         </span>
 
@@ -25,7 +25,7 @@
 
 
   <!-- view side -->
-  <div class="content-wrapper has-border p-20">
+  <div class="content-wrapper has-border text-center">
     <h4 class="m-bottom-25">{{ 'EXECUTIVE_REPORT.PITCH.PROJECT' | translate }}</h4>
     <div class="text-lg text-wrapper p-25">{{ pitch | ScrapeHTMLTags }}</div>
   </div>

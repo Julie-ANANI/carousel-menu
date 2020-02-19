@@ -37,4 +37,8 @@ export const EXECUTIVE_REPORT = {
 
   'RESET_SECTION': 'Reset section',
 
+  'KPI_SECTION': {
+    'TITLE': 'Title'
+  }
+
 };

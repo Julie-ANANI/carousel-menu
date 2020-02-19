@@ -52,7 +52,7 @@ export interface ExecutiveSection {
 export interface SectionKpi {
   kpi: string;
   legend: string;
-  examples: Array<string>;
+  examples: string;
 }
 
 export interface SectionQuote {
@@ -69,7 +69,7 @@ export interface SectionBar {
   values: Array< {
     legend: string;
     value: string;
-    example: Array<string>;
+    example: string;
   }>;
 }
 

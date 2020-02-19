@@ -45,6 +45,22 @@
   </div>
   <!-- /no question selected -->
 
+
+  <!-- question selected -->
+  <div *ngIf="section.questionId && section.questionType">
+    <div [ngSwitch]="section.questionType">
+
+      <!-- type KPI -->
+      <div *ngSwitchCase="'KPI'">
+        <type-kpi [(section)]="section"></type-kpi>
+      </div>
+      <!-- /type KPI -->
+
+
+    </div>
+  </div>
+  <!-- /question selected -->
+
 </div>
 
 <!--

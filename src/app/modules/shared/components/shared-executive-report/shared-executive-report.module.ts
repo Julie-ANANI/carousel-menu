@@ -13,6 +13,7 @@ import { StarsComponent } from './executive-section/stars/stars.component';
 import { PieChartComponent } from './executive-section/pie-chart/pie-chart.component';
 import { BarChartComponent } from './executive-section/bar-chart/bar-chart.component';
 import { ExecutiveObjectiveComponent } from './executive-objective/executive-objective.component';
+import { TypeKpiComponent } from './executive-section/type-kpi/type-kpi.component';
 
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
@@ -47,7 +48,8 @@ import { ExecutiveTargetingComponent } from './executive-targeting/executive-tar
     BarChartComponent,
     ExecutiveObjectiveComponent,
     ExecutivePitchComponent,
-    ExecutiveTargetingComponent
+    ExecutiveTargetingComponent,
+    TypeKpiComponent
   ],
   exports: [
     SharedExecutiveReportComponent

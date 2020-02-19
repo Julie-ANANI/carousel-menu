@@ -26,8 +26,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   @Input() set section(value: ExecutiveSection) {
     this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
+      questionId: value.questionId || '5c91073b6f8d680538eb1eae',
+      questionType: value.questionType || 'KPI',
       abstract: value.abstract || '',
       label: value.label || '',
       content: value.content || <any>{}

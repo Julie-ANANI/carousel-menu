@@ -1,0 +1,68 @@
+@import "framework/src/variables";
+
+.executive-report-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .content-wrapper {
+    max-width: 438px;
+    width: 100%;
+    min-height: 373px;
+    margin: 0 50px 30px 50px;
+
+    label {
+      position: relative;
+      display: block;
+    }
+
+    .form-input, .form-select {
+      border: 2px solid #000000;
+      font-size: $font-size-sm;
+    }
+
+    .form-select {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .form-input {
+      padding: 15px 20px 15px 15px;
+    }
+
+    .text-limit-wrapper {
+      top: 8px;
+      right: 10px;
+      font-size: 13px;
+      font-weight: $font-weight-medium;
+      position: absolute;
+    }
+
+    &.has-border {
+      padding: 20px;
+      border: 2px solid $border-color;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+
+      p {
+        word-break: break-all;
+        margin-bottom: 0;
+        font-size: $font-size-sm;
+
+        &.has-min-height {
+          min-height: 57px;
+        }
+
+      }
+
+      &.is-justify {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+
+    }
+
+  }
+
+}
