@@ -53,9 +53,23 @@
 
     <!-- section -->
     <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-      <executive-section [section]="section" (sectionChange)="onSectionChange($event, i)"></executive-section>
+      <executive-section
+        (sectionChange)="onSectionChange($event, i)"
+        [reportLang]="executiveReport.lang"
+        [section]="section">
+      </executive-section>
     </section>
     <!-- /section -->
+
+
+    <!-- reset button -->
+    <div class="p-top-30 text-center">
+      <button (click)="resetSection($event, i)" class="button is-outlined is-info" type="button">
+        {{ 'EXECUTIVE_REPORT.RESET_SECTION' | translate }}
+      </button>
+    </div>
+    <!-- /reset button -->
+
 
     <!-- divider -->
     <div class="divider"></div>

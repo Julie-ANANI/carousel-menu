@@ -15,8 +15,10 @@
       <div>
         <h5 class="text-lg">{{ 'EXECUTIVE_REPORT.SYNTHESIS_SECTIONS' | translate }}</h5>
         <ul>
-          <li>
-
+          <li (click)="selectQuestion(question._id)"
+              *ngFor="let question of questions"
+              [ngClass]="{ 'text-primary': question._id === section.questionId }">
+            {{ question.title | multiling:reportLang }}
           </li>
         </ul>
       </div>
@@ -27,7 +29,9 @@
       <div>
         <h5 class="text-lg">{{ 'EXECUTIVE_REPORT.RAW_DATA' | translate }}</h5>
         <ul>
-          <li *ngFor="let ques of questionType" (click)="selectQuestionType(ques.label)">
+          <li (click)="selectQuestionType(ques.label)"
+              *ngFor="let ques of questionType"
+              [ngClass]="{ 'text-primary': ques.label === section.questionType }">
             {{ ques.alias }}
           </li>
         </ul>

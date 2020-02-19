@@ -45,6 +45,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _executiveReportService: ExecutiveReportService,
+              private _innovationFrontService: InnovationFrontService,
               private _commonService: CommonService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
@@ -57,6 +58,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
     this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'title'));
+    this._innovationFrontService.setInnovation(this._innovation);
     this.setNewSelectedLang();
 
     if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {

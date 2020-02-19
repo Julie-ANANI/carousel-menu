@@ -1,11 +1,11 @@
 @import "../../../../../../style/framework/src/variables";
 
 #executive-section {
+  min-height: 438px;
 
   &.inactive {
-    min-height: 400px;
     padding-top: 20px;
-    padding-bottom: 50px;
+    padding-bottom: 70px;
     font-size: $font-size-sm;
     width: 100%;
 

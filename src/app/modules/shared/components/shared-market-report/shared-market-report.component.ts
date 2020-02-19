@@ -269,7 +269,7 @@ export class SharedMarketReportComponent implements OnInit {
    */
   private presets() {
    if (this._innovation.preset && this._innovation.preset.sections) {
-     this._questions = ResponseService.getPresets(this._innovation);
+     this._questions = ResponseService.presets(this._innovation);
    }
   }
 

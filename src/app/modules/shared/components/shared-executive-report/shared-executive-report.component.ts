@@ -103,6 +103,11 @@ export class SharedExecutiveReportComponent {
     this.emitChanges();
   }
 
+  public resetSection(event: Event, index: number) {
+    this._executiveReport.sections[index] = <ExecutiveSection>{};
+    this.emitChanges();
+  }
+
   /*private _getAnswers() {
     if (this._innovation) {
       this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {

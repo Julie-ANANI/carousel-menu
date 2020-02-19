@@ -33,6 +33,8 @@ export const EXECUTIVE_REPORT = {
 
   'SYNTHESIS_SECTIONS': 'Sections de synthèse',
 
-  'RAW_DATA': 'Raw data'
+  'RAW_DATA': 'Raw data',
+
+  'RESET_SECTION': 'Réinitialiser la section',
 
 };

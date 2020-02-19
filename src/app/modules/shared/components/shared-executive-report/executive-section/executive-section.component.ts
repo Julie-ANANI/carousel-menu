@@ -1,5 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {ExecutiveSection} from '../../../../../models/executive-report';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {Question} from '../../../../../models/question';
+import {ResponseService} from '../../shared-market-report/services/response.service';
 // import { Answer } from '../../../../../models/answer';
 // import { Question } from '../../../../../models/question';
 // import { ResponseService } from '../../shared-market-report/services/response.service';
@@ -17,7 +22,7 @@ import {ExecutiveSection} from '../../../../../models/executive-report';
   styleUrls: ['./executive-section.component.scss']
 })
 
-export class ExecutiveSectionComponent {
+export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   @Input() set section(value: ExecutiveSection) {
     this._section = {
@@ -28,6 +33,8 @@ export class ExecutiveSectionComponent {
       content: value.content || <any>{}
     };
   }
+
+  @Input() reportLang: 'en';
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
 
@@ -40,6 +47,10 @@ export class ExecutiveSectionComponent {
     { label: 'QUOTE', alias: 'Quotation' },
     { label: 'KPI', alias: 'KPI' },
   ];
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _questions: Array<Question> = [];
 
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
@@ -61,7 +72,7 @@ export class ExecutiveSectionComponent {
 
   private _sectionMenuOptions: Array<Question> = [];
 
-  private _questions: Array<Question> = [];
+
 
   private _sectionNumber: number;
 
@@ -73,7 +84,8 @@ export class ExecutiveSectionComponent {
 
   private _stats: { nbAnswers?: number, percentage?: number };*/
 
-  constructor(/*private _responseService: ResponseService,*/
+  constructor(private _innovationFronService: InnovationFrontService,
+    /*private _responseService: ResponseService,*/
               /*private _dataService: DataService,
               private _location: Location,
               private _translateService: TranslateService,*/
@@ -84,8 +96,22 @@ export class ExecutiveSectionComponent {
 
   }
 
+  ngOnInit(): void {
+
+    this._innovationFronService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._questions = ResponseService.presets(innovation);
+      console.log(this._questions);
+    });
+
+  }
+
   public emitChanges() {
     this.sectionChange.emit(this._section);
+  }
+
+  public selectQuestion(id: string) {
+    this._section.questionId = id;
+    this.emitChanges();
   }
 
   public selectQuestionType(type: any) {
@@ -188,10 +214,6 @@ export class ExecutiveSectionComponent {
     return this._sectionMenuOptions;
   }
 
-  get questions(): Array<Question> {
-    return this._questions;
-  }
-
   get questionSelected(): Question {
     return this._questionSelected;
   }
@@ -218,6 +240,15 @@ export class ExecutiveSectionComponent {
 
   get questionType(): Array<{ label: string; alias: string }> {
     return this._questionType;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }
