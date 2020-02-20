@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
 import { InnovCard } from '../../models/innov-card';
@@ -44,6 +44,8 @@ export class InnovationFrontService {
   private _saveNotifySubject: Subject<boolean> = new Subject<boolean>();
 
   private _saveCommentSubject: Subject<boolean> = new Subject<boolean>();
+
+  private _innovationObj: BehaviorSubject<Innovation> = new BehaviorSubject<Innovation>(<Innovation>{});
 
   /*
     We are calculating the percentage for the project.
@@ -306,6 +308,14 @@ export class InnovationFrontService {
 
   get calculatedPercentages(): Values {
     return this._calculatedValues;
+  }
+
+  public setInnovation(value: Innovation) {
+    this._innovationObj.next(value);
+  }
+
+  public innovation(): BehaviorSubject<Innovation> {
+    return this._innovationObj;
   }
 
 }

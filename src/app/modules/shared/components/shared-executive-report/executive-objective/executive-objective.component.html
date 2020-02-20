@@ -1,11 +1,11 @@
-<div class="d-flex flex-wrap justify-center" id="executive-objective">
+<div class="executive-report-wrapper" id="executive-objective">
 
   <!-- edit side -->
   <div class="content-wrapper">
 
     <!-- objective -->
     <div>
-      <label class="relative d-block">
+      <label>
 
         <textarea
           (change)="emitChanges()"
@@ -18,7 +18,7 @@
           type="text">
         </textarea>
 
-        <span [ngStyle]="{ 'color': objectiveColor }" class="absolute text-limit-wrapper">
+        <span [ngStyle]="{ 'color': objectiveColor }" class="text-limit-wrapper">
           {{ 120 - config.objective.length }}
         </span>
 
@@ -31,7 +31,7 @@
     <div [ngStyle]="{ 'padding-top': '74px' }">
 
       <div class="m-bottom-10">
-        <label class="relative d-block">
+        <label>
 
           <input
             (change)="emitChanges()"
@@ -42,7 +42,7 @@
             class="form-input"
             type="text">
 
-          <span [ngStyle]="{ 'color': clientNameColor }" class="absolute text-limit-wrapper">
+          <span [ngStyle]="{ 'color': clientNameColor }" class="text-limit-wrapper">
             {{ 58 - config.owner.name.length }}
           </span>
 
@@ -50,7 +50,7 @@
       </div>
 
       <div>
-        <label class="relative d-block">
+        <label>
 
           <input
             (change)="emitChanges()"
@@ -61,7 +61,7 @@
             class="form-input"
             type="text">
 
-          <span [ngStyle]="{ 'color': clientEmailColor }" class="absolute text-limit-wrapper">
+          <span [ngStyle]="{ 'color': clientEmailColor }" class="text-limit-wrapper">
             {{ 58 - config.owner.email.length }}
           </span>
 
@@ -79,7 +79,7 @@
           [ngModel]="commercial._id ? commercial._id : ''"
           [ngModelOptions]="{ standalone: true }"
           (change)="selectCommercial($event)"
-          class="form-select p-left-15 p-right-15">
+          class="form-select">
 
           <option [value]="''">
             {{ 'COMMON.PLACEHOLDER.CHOOSE_SALE' | translate }}
@@ -99,7 +99,7 @@
 
 
   <!-- view side -->
-  <div class="content-wrapper has-border p-20 d-flex justify-space flex-d-column">
+  <div class="content-wrapper has-border is-justify">
 
     <!-- objective text -->
     <div>

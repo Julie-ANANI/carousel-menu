@@ -1,0 +1,37 @@
+<div class="executive-report-wrapper" id="type-Kpi">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- title -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('title')"
+          [(ngModel)]="section.label"
+          [attr.placeholder]="'EXECUTIVE_REPORT.KPI_SECTION.TITLE' | translate"
+          maxlength="26"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
+          {{ 26 - section.label.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /title -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border is-justify">
+
+  </div>
+  <!-- /view side -->
+
+</div>

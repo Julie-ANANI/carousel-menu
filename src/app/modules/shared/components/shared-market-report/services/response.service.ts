@@ -47,15 +47,17 @@ export class ResponseService {
   }
 
   /***
-   * This function is to get and returns the questions from the innovation.
+   * This function is to returns the questions from the innovation.
    */
-  static getPresets(innovation: Innovation): Array<Question> {
+  static presets(innovation: Innovation): Array<Question> {
 
-    let questions: Array<Question>;
+    let questions: Array<Question> = [];
 
-    questions = innovation.preset.sections.reduce((questionArray: Array<Question>, section: Section) => {
-      return questionArray.concat(section.questions);
-    }, []);
+    if (innovation && innovation.preset && innovation.preset.sections && innovation.preset.sections.length > 0) {
+      questions = innovation.preset.sections.reduce((questionArray: Array<Question>, section: Section) => {
+        return questionArray.concat(section.questions);
+      }, []);
+    }
 
     return questions;
 

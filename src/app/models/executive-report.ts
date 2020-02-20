@@ -45,14 +45,14 @@ export interface ExecutiveSection {
   questionId: string;
   label: string;
   abstract: string;
-  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI';
+  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | '';
   content: SectionPie | SectionRanking | SectionBar | SectionQuote | SectionKpi;
 }
 
 export interface SectionKpi {
   kpi: string;
   legend: string;
-  examples: Array<string>;
+  examples: string;
 }
 
 export interface SectionQuote {
@@ -69,7 +69,7 @@ export interface SectionBar {
   values: Array< {
     legend: string;
     value: string;
-    example: Array<string>;
+    example: string;
   }>;
 }
 

@@ -3,25 +3,6 @@
 #executive-professional {
 
   .content-wrapper {
-    max-width: 438px;
-    width: 100%;
-    min-height: 373px;
-    margin: 0 50px 30px 50px;
-
-    .form-input {
-      padding: 15px 20px 15px 15px;
-    }
-
-    .form-input, .form-select {
-      border: 2px solid #000000;
-    }
-
-    .text-limit-wrapper {
-      top: 8px;
-      right: 10px;
-      font-size: 13px;
-      font-weight: $font-weight-medium;
-    }
 
     .select-wrapper {
       width: 175px;
@@ -43,18 +24,6 @@
 
       &:first-child, &:nth-child(3) {
         margin-right: 10px;
-      }
-
-    }
-
-    &.has-border {
-      border: 2px solid $border-color;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
-
-      p {
-        word-break: break-all;
-        min-height: 57px;
       }
 
     }
