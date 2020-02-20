@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {
   ExecutiveConclusion,
   ExecutiveObjective,
@@ -6,10 +6,16 @@ import {
   ExecutiveReport, ExecutiveSection,
   ExecutiveTargeting
 } from '../../../../models/executive-report';
-// import { Innovation } from '../../../../models/innovation';
-// import { Answer } from '../../../../models/answer';
-// import { AnswerService } from '../../../../services/answer/answer.service';
-// import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { Answer } from '../../../../models/answer';
+import { AnswerService } from '../../../../services/answer/answer.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { ResponseService } from '../shared-market-report/services/response.service';
+import { Subject } from 'rxjs';
+import { Question } from '../../../../models/question';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front';
 
 @Component({
   selector: 'app-shared-executive-report',
@@ -17,7 +23,7 @@ import {
   styleUrls: ['./shared-executive-report.component.scss']
 })
 
-export class SharedExecutiveReportComponent {
+export class SharedExecutiveReportComponent implements OnInit, OnDestroy {
 
   @Input() set executiveReport(value: ExecutiveReport) {
     this._executiveReport = value;
@@ -38,10 +44,16 @@ export class SharedExecutiveReportComponent {
 
   private _conclusionConfig: ExecutiveConclusion = <ExecutiveConclusion>{};
 
+  private _answers: Array<Answer> = [];
+
+  private _questions: Array<Question> = [];
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
     this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
-    this._getAnswers();
+
   }*/
 
   /*private _innovation: Innovation = {};
@@ -50,13 +62,36 @@ export class SharedExecutiveReportComponent {
 
   private _secondPageSections = [4, 5, 6, 7];
 
-  private _answers: Array<Answer> = [];
+
 
   private _anonymousAnswers = false;*/
 
-  constructor (/*private _answerService: AnswerService,
-               private _translateNotificationsService: TranslateNotificationsService*/) {
+  constructor (private _innovationFrontService: InnovationFrontService,
+               private _answerService: AnswerService,
+               private _translateNotificationsService: TranslateNotificationsService) { }
 
+  ngOnInit(): void {
+
+    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._getAnswers(innovation._id);
+      this._questions = ResponseService.presets(innovation);
+      console.log(this._questions);
+    });
+
+  }
+
+  private _getAnswers(id: string) {
+    if (id) {
+      this._answerService.getInnovationValidAnswers(id).pipe(first()).subscribe((response) => {
+        this._answers = response.answers.sort((a, b) => {
+          return b.profileQuality - a.profileQuality;
+        });
+        console.log(this._answers);
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      })
+    }
   }
 
   private _setData() {
@@ -158,9 +193,7 @@ export class SharedExecutiveReportComponent {
     return this._secondPageSections;
   }*/
 
-  /*get answers(): Array<Answer> {
-    return this._answers;
-  }*/
+  /**/
 
   get executiveReport(): ExecutiveReport {
     return this._executiveReport;
@@ -219,6 +252,19 @@ export class SharedExecutiveReportComponent {
     this._executiveReport.conclusion = this._conclusionConfig.conclusion;
     this._executiveReport.umiOperator = this._conclusionConfig.umiOperator;
     this.emitChanges();
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

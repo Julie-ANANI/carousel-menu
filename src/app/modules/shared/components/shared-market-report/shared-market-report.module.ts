@@ -31,8 +31,6 @@ import { SharedMarketReportPopoverComponent } from './components/shared-market-r
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 
-import { DataService } from './services/data.service';
-import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { SidebarLeftModule } from "../../../sidebars/templates/sidebar-left/sidebar-left.module";
 import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module";
@@ -61,8 +59,6 @@ import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar
     PieChartModule,
   ],
   providers: [
-    DataService,
-    ResponseService,
     TagsFiltersService
   ],
   declarations: [

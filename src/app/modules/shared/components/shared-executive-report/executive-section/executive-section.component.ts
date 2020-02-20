@@ -1,20 +1,10 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {ExecutiveSection} from '../../../../../models/executive-report';
-import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {Question} from '../../../../../models/question';
-import {ResponseService} from '../../shared-market-report/services/response.service';
-// import { Answer } from '../../../../../models/answer';
-// import { Question } from '../../../../../models/question';
-// import { ResponseService } from '../../shared-market-report/services/response.service';
-// import { Innovation } from '../../../../../models/innovation';
-// import { Location } from '@angular/common';
-// import { TranslateService } from '@ngx-translate/core';
-// import { Tag } from '../../../../../models/tag';
-// // import { InnovationService } from '../../../../../services/innovation/innovation.service';
-// // import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-// import { DataService } from '../../shared-market-report/services/data.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ExecutiveSection, SectionKpi} from '../../../../../models/executive-report';
+import { Question } from '../../../../../models/question';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { Answer } from '../../../../../models/answer';
+import { ResponseService } from '../../shared-market-report/services/response.service';
+import { Professional } from '../../../../../models/professional';
 
 @Component({
   selector: 'executive-section',
@@ -22,19 +12,23 @@ import {ResponseService} from '../../shared-market-report/services/response.serv
   styleUrls: ['./executive-section.component.scss']
 })
 
-export class ExecutiveSectionComponent implements OnInit, OnDestroy {
+export class ExecutiveSectionComponent {
+
+  @Input() questions: Array<Question> = [];
+
+  @Input() answers: Array<Answer> = [];
+
+  @Input() reportLang: 'en';
 
   @Input() set section(value: ExecutiveSection) {
     this._section = {
-      questionId: value.questionId || '5c91073b6f8d680538eb1eae',
-      questionType: value.questionType || 'KPI',
+      questionId: value.questionId || '',
+      questionType: value.questionType || '',
       abstract: value.abstract || '',
       label: value.label || '',
       content: value.content || <any>{}
     };
   }
-
-  @Input() reportLang: 'en';
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
 
@@ -47,10 +41,6 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
     { label: 'QUOTE', alias: 'Quotation' },
     { label: 'KPI', alias: 'KPI' },
   ];
-
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
-  private _questions: Array<Question> = [];
 
   /*@Input() set project(value: Innovation) {
     this._innovation = value;
@@ -84,26 +74,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   private _stats: { nbAnswers?: number, percentage?: number };*/
 
-  constructor(private _innovationFronService: InnovationFrontService,
-    /*private _responseService: ResponseService,*/
-              /*private _dataService: DataService,
-              private _location: Location,
-              private _translateService: TranslateService,*/
-              /*private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService*/) {
-
-    // this._adminSide = this._location.path().slice(5, 11) === '/admin';
-
-  }
-
-  ngOnInit(): void {
-
-    this._innovationFronService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._questions = ResponseService.presets(innovation);
-      console.log(this._questions);
-    });
-
-  }
+  constructor(private _multilingPipe: MultilingPipe,
+              private _responseService: ResponseService) { }
 
   public emitChanges() {
     this.sectionChange.emit(this._section);
@@ -115,8 +87,45 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   }
 
   public selectQuestionType(type: any) {
-    this._section.questionType = type;
-    this.emitChanges();
+    if (this._section.questionId) {
+      this._section.questionType = type;
+      this._initializeSection();
+      this.emitChanges();
+    }
+  }
+
+  private _initializeSection() {
+    switch (this._section.questionType) {
+
+      case 'KPI':
+        this._setKpiData();
+        break;
+
+      case 'QUOTE':
+
+    }
+  }
+
+  private _setKpiData() {
+    const question: Question = this._getQuestion(this._section.questionId);
+    const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
+    const professionals: Array<Professional> = ResponseService.answersProfessionals(answers);
+
+    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
+    (<SectionKpi>this._section.content).kpi = answers.length.toString(10);
+
+    (<SectionKpi>this._section.content).examples = professionals.map((professional, index) => {
+      return index === 0 ? professional.firstName + ' ' + professional.lastName
+        : ' ' + professional.firstName + ' ' + professional.lastName
+    }).toString().slice(0, 175);
+
+  }
+
+  private _getQuestion(id: string): Question {
+    const index = this.questions.findIndex((ques) => ques._id === id);
+    if (index !== -1) {
+      return this.questions[index];
+    }
   }
 
   /***
@@ -240,15 +249,6 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   get questionType(): Array<{ label: string; alias: string }> {
     return this._questionType;
-  }
-
-  get questions(): Array<Question> {
-    return this._questions;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

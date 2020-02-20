@@ -82,7 +82,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         this._setSpinner(false);
         console.log(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       });
     }
   }
@@ -140,7 +140,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     }, (err: HttpErrorResponse) => {
       this._setSpinner(false);
       console.log(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 
@@ -152,7 +152,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     }, (err: HttpErrorResponse) => {
       this._setSpinner(false);
       console.log(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 
@@ -177,7 +177,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'EXECUTIVE_REPORT.SAVE');
     }, (err: HttpErrorResponse) => {
       console.log(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 

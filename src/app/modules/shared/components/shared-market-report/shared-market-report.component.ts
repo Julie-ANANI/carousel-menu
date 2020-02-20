@@ -245,7 +245,7 @@ export class SharedMarketReportComponent implements OnInit {
        * compute tags lists for each questions of type textarea
        */
       this._questions.forEach((question) => {
-        const tags = ResponseService.getTagsList(response.answers, question);
+        const tags = ResponseService.tagsList(response.answers, question);
         const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
         this._tagFiltersService.setAnswerTags(identifier, tags);
       });

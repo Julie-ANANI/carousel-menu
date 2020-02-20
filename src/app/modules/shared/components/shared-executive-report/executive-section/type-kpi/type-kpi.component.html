@@ -24,12 +24,123 @@
     </div>
     <!-- /title -->
 
+
+    <!-- abstract -->
+    <div [ngStyle]="{ 'margin-bottom': '46px' }">
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor('abstract')"
+          [(ngModel)]="section.abstract"
+          [attr.placeholder]="'EXECUTIVE_REPORT.KPI_SECTION.ABSTRACT' | translate"
+          [ngStyle]="{ 'height': '97px' }"
+          maxlength="175"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': abstractColor }" class="text-limit-wrapper">
+          {{ 175 - section.abstract.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /abstract -->
+
+
+    <!-- kpi -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('kpi')"
+          [(ngModel)]="content.kpi"
+          [attr.placeholder]="'EXECUTIVE_REPORT.KPI_SECTION.KPI' | translate"
+          maxlength="4"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': kpiColor }" class="text-limit-wrapper">
+          {{ 4 - content.kpi.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /kpi -->
+
+
+    <!-- legend -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('legend')"
+          [(ngModel)]="content.legend"
+          [attr.placeholder]="'EXECUTIVE_REPORT.KPI_SECTION.LEGEND' | translate"
+          maxlength="82"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': legendColor }" class="text-limit-wrapper">
+          {{ 82 - content.legend.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /legend -->
+
+
+    <!-- examples -->
+    <div>
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('examples')"
+          [(ngModel)]="content.examples"
+          [attr.placeholder]="'EXECUTIVE_REPORT.KPI_SECTION.EXAMPLES' | translate"
+          maxlength="175"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': examplesColor }" class="text-limit-wrapper">
+          {{ 175 - content.examples.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /examples -->
+
   </div>
   <!-- /edit side -->
 
 
   <!-- view side -->
-  <div class="content-wrapper has-border is-justify">
+  <div class="content-wrapper has-border is-justify text-center">
+
+    <h4 [ngStyle]="{ 'margin-bottom': '48px' }">{{ section.label }}</h4>
+
+    <!-- kpi / legend -->
+    <div [ngStyle]="{ 'min-height': '116px' }" class="m-bottom-10">
+      <h5 [ngStyle]="{ 'font-size': '85px', 'line-height': '75px' }" class="text-medium m-no-bottom">
+        {{ content.kpi }}
+      </h5>
+      <p class="text-lg text-medium">{{ content.legend }}</p>
+    </div>
+    <!-- /kpi / legend -->
+
+
+    <!-- examples -->
+    <div [ngStyle]="{ 'min-height': '38px' }" class="text-sm m-bottom-15">
+      {{ content.examples }}
+    </div>
+    <!-- /examples -->
+
+
+    <p class="has-min-height text-left">{{ section.abstract }}</p>
 
   </div>
   <!-- /view side -->

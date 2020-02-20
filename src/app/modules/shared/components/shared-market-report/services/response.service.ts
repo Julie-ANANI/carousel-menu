@@ -8,9 +8,9 @@ import { Tag } from '../../../../../models/tag';
 import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
 import { PieChart } from '../../../../../models/pie-chart';
+import { Professional } from '../../../../../models/professional';
 
-// todo revisit again
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ResponseService {
 
   filteredAnswers = new Subject <Array<Answer>>();
@@ -20,7 +20,7 @@ export class ResponseService {
    * @param answers
    * @param question
    */
-  static getTagsList(answers: Array<Answer>, question: Question): Array<Tag> {
+  static tagsList(answers: Array<Answer>, question: Question): Array<Tag> {
 
     const tagId = question.identifier + (question.controlType !== 'textarea' ? 'Comment' : '');
 
@@ -48,6 +48,7 @@ export class ResponseService {
 
   /***
    * This function is to returns the questions from the innovation.
+   * @param innovation
    */
   static presets(innovation: Innovation): Array<Question> {
 
@@ -65,10 +66,33 @@ export class ResponseService {
 
 
   /***
-   *This function is the get the answers based on the question that we pass
-   * and than we pass these answers to the sub components.
+   * this will return the professionals of the provided answers.
+   * @param answers
    */
-  getAnswersToShow(answers: Array<Answer>, question: Question): Array<Answer> {
+  static answersProfessionals(answers: Array<Answer>): Array<Professional> {
+    let professionals: Array<Professional> = [];
+
+    if (answers && answers.length > 0) {
+      answers.forEach((answer) => {
+        if (answer.professional) {
+          const index = professionals.findIndex((pro) => pro._id === answer.professional._id);
+          if (index === -1 ) {
+            professionals.push(answer.professional);
+          }
+        }
+      })
+    }
+
+    return professionals;
+
+  }
+
+
+  /***
+   *This function is the get the answers based on the question that we pass.
+   * We are filtering the answers based on the question identifier.
+   */
+  public answersToShow(answers: Array<Answer>, question: Question): Array<Answer> {
 
     let answersToShow: Array<Answer>;
 
@@ -111,7 +135,8 @@ export class ResponseService {
          * here we are sorting the answer array first by quality and then length.
          * @type {Answer[]}
          */
-        answersToShow = answersToShow.filter((a) => (a.answers[questionID + 'Quality'] !== 0)).sort((a, b) => {
+        answersToShow = answersToShow.filter((a) => (a.answers[questionID + 'Quality'] !== 0))
+          .sort((a, b) => {
             if ((b.answers[questionID + 'Quality'] || 1) - (a.answers[questionID + 'Quality'] || 1) === 0) {
               return b.answers[questionID].length - a.answers[questionID].length;
             } else {
