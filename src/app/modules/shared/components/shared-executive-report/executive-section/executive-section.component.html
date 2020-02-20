@@ -31,13 +31,12 @@
         <ul>
           <li (click)="selectQuestionType(ques.label)"
               *ngFor="let ques of questionType"
-              [ngClass]="{ 'text-primary': ques.label === section.questionType }">
+              [ngClass]="{ 'text-primary': ques.label === section.questionType, 'inactive': !section.questionId }">
             {{ ques.alias }}
           </li>
         </ul>
       </div>
       <!-- /type -->
-
 
     </div>
     <!-- /question / type -->

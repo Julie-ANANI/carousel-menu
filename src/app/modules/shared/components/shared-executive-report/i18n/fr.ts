@@ -35,6 +35,14 @@ export const EXECUTIVE_REPORT = {
 
   'RAW_DATA': 'Raw data',
 
-  'RESET_SECTION': 'Réinitialiser la section',
+  'RESET_SECTION': 'Visualisation des changements',
+
+  'KPI_SECTION': {
+    'TITLE': 'Titre',
+    'ABSTRACT': 'Résumé',
+    'KPI': 'KPI',
+    'LEGEND': 'Legend',
+    'EXAMPLES': 'Exemples'
+  }
 
 };

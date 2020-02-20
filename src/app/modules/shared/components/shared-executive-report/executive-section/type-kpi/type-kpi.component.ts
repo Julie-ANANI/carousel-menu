@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ExecutiveSection, SectionKpi} from '../../../../../../models/executive-report';
-import {CommonService} from '../../../../../../services/common/common.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ExecutiveSection, SectionKpi } from '../../../../../../models/executive-report';
+import { CommonService } from '../../../../../../services/common/common.service';
 
 @Component({
   selector: 'type-kpi',
@@ -8,7 +8,7 @@ import {CommonService} from '../../../../../../services/common/common.service';
   styleUrls: ['./type-kpi.component.scss']
 })
 
-export class TypeKpiComponent implements OnInit {
+export class TypeKpiComponent {
 
   @Input() set section(value: ExecutiveSection) {
 
@@ -24,7 +24,7 @@ export class TypeKpiComponent implements OnInit {
       }
     };
 
-    this.content = <SectionKpi>this._section.content;
+    this._content = <SectionKpi>this._section.content;
 
     this.textColor('title');
     this.textColor('abstract');
@@ -38,29 +38,26 @@ export class TypeKpiComponent implements OnInit {
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
-  content: SectionKpi = {
+  private _content: SectionKpi = {
     kpi: '',
     legend: '',
     examples: ''
   };
 
-  titleColor = '';
+  private _titleColor = '';
 
-  abstractColor = '';
+  private _abstractColor = '';
 
-  kpiColor = '';
+  private _kpiColor = '';
 
-  legendColor = '';
+  private _legendColor = '';
 
-  examplesColor = '';
+  private _examplesColor = '';
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
   public emitChanges() {
-    this._section.content = this.content;
+    this._section.content = this._content;
     this.sectionChange.emit(this._section);
   }
 
@@ -68,23 +65,23 @@ export class TypeKpiComponent implements OnInit {
     switch (field) {
 
       case 'title':
-        this.titleColor = CommonService.getLimitColor(this._section.label.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.label.length, 26);
         break;
 
       case 'abstract':
-        this.abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
+        this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
         break;
 
       case 'kpi':
-        this.kpiColor = CommonService.getLimitColor(this.content.kpi.length, 4);
+        this._kpiColor = CommonService.getLimitColor(this._content.kpi.length, 4);
         break;
 
       case 'legend':
-        this.legendColor = CommonService.getLimitColor(this.content.legend.length, 82);
+        this._legendColor = CommonService.getLimitColor(this._content.legend.length, 82);
         break;
 
       case 'examples':
-        this.examplesColor = CommonService.getLimitColor(this.content.examples.length, 175);
+        this._examplesColor = CommonService.getLimitColor(this._content.examples.length, 175);
         break;
 
     }
@@ -92,6 +89,30 @@ export class TypeKpiComponent implements OnInit {
 
   get section(): ExecutiveSection {
     return this._section;
+  }
+
+  get content(): SectionKpi {
+    return this._content;
+  }
+
+  get titleColor(): string {
+    return this._titleColor;
+  }
+
+  get abstractColor(): string {
+    return this._abstractColor;
+  }
+
+  get kpiColor(): string {
+    return this._kpiColor;
+  }
+
+  get legendColor(): string {
+    return this._legendColor;
+  }
+
+  get examplesColor(): string {
+    return this._examplesColor;
   }
 
 }
