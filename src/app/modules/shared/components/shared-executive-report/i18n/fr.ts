@@ -35,14 +35,25 @@ export const EXECUTIVE_REPORT = {
 
   'RAW_DATA': 'Raw data',
 
-  'RESET_SECTION': 'Visualisation des changements',
+  'RESET_SECTION': 'Réinitialiser la section',
+
+  'TITLE': 'Titre',
+
+  'ABSTRACT': 'Résumé',
+
+  'NAME': 'Nom',
+
+  'JOB': 'Job',
 
   'KPI_SECTION': {
-    'TITLE': 'Titre',
-    'ABSTRACT': 'Résumé',
     'KPI': 'KPI',
     'LEGEND': 'Legend',
     'EXAMPLES': 'Exemples'
-  }
+  },
+
+  'QUOTE_SECTION': {
+    'QUOTATION': 'Citation',
+    'SHOW_QUOTES': 'Afficher les citations',
+  },
 
 };

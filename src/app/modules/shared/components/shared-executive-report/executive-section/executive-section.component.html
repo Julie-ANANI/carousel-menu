@@ -51,9 +51,16 @@
 
       <!-- type KPI -->
       <div *ngSwitchCase="'KPI'">
-        <type-kpi [(section)]="section"></type-kpi>
+        <type-kpi (sectionChange)="onSectionUpdate($event)" [section]="section"></type-kpi>
       </div>
       <!-- /type KPI -->
+
+
+      <!-- type QUOTE -->
+      <div *ngSwitchCase="'QUOTE'">
+        <type-quote (sectionChange)="onSectionUpdate($event)" [section]="section"></type-quote>
+      </div>
+      <!-- /type QUOTE -->
 
 
     </div>

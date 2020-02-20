@@ -11,7 +11,7 @@
           (change)="emitChanges()"
           (keyup)="textColor('title')"
           [(ngModel)]="section.label"
-          [attr.placeholder]="'EXECUTIVE_REPORT.KPI_SECTION.TITLE' | translate"
+          [attr.placeholder]="'EXECUTIVE_REPORT.TITLE' | translate"
           maxlength="26"
           class="form-input"
           type="text">
@@ -33,7 +33,7 @@
           (change)="emitChanges()"
           (keyup)="textColor('abstract')"
           [(ngModel)]="section.abstract"
-          [attr.placeholder]="'EXECUTIVE_REPORT.KPI_SECTION.ABSTRACT' | translate"
+          [attr.placeholder]="'EXECUTIVE_REPORT.ABSTRACT' | translate"
           [ngStyle]="{ 'height': '97px' }"
           maxlength="175"
           class="form-input"
@@ -140,7 +140,7 @@
     <!-- /examples -->
 
 
-    <p class="has-min-height text-left">{{ section.abstract }}</p>
+    <p class="has-min-height">{{ section.abstract }}</p>
 
   </div>
   <!-- /view side -->

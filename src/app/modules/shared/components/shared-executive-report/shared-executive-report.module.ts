@@ -14,6 +14,7 @@ import { PieChartComponent } from './executive-section/pie-chart/pie-chart.compo
 import { BarChartComponent } from './executive-section/bar-chart/bar-chart.component';
 import { ExecutiveObjectiveComponent } from './executive-objective/executive-objective.component';
 import { TypeKpiComponent } from './executive-section/type-kpi/type-kpi.component';
+import { TypeQuoteComponent } from './executive-section/type-quote/type-quote.component';
 
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
@@ -49,7 +50,8 @@ import { ExecutiveTargetingComponent } from './executive-targeting/executive-tar
     ExecutiveObjectiveComponent,
     ExecutivePitchComponent,
     ExecutiveTargetingComponent,
-    TypeKpiComponent
+    TypeKpiComponent,
+    TypeQuoteComponent
   ],
   exports: [
     SharedExecutiveReportComponent

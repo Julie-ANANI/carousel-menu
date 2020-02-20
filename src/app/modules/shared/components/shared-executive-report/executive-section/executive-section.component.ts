@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ExecutiveSection, SectionKpi} from '../../../../../models/executive-report';
+import { ExecutiveSection, SectionKpi, SectionQuote } from '../../../../../models/executive-report';
 import { Question } from '../../../../../models/question';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { Answer } from '../../../../../models/answer';
@@ -94,6 +94,11 @@ export class ExecutiveSectionComponent {
     }
   }
 
+  public onSectionUpdate(value: ExecutiveSection) {
+    this._section = value;
+    this.emitChanges();
+  }
+
   private _initializeSection() {
     switch (this._section.questionType) {
 
@@ -102,7 +107,8 @@ export class ExecutiveSectionComponent {
         break;
 
       case 'QUOTE':
-
+        this._setQuoteData();
+        break;
     }
   }
 
@@ -119,6 +125,12 @@ export class ExecutiveSectionComponent {
         : ' ' + professional.firstName + ' ' + professional.lastName
     }).toString().slice(0, 175);
 
+  }
+
+  private _setQuoteData() {
+    const question: Question = this._getQuestion(this._section.questionId);
+    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
+    (<SectionQuote>this._section.content).showQuotes = true;
   }
 
   private _getQuestion(id: string): Question {
