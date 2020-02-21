@@ -70,6 +70,13 @@
       <!-- /type BAR -->
 
 
+      <!-- type RANKING -->
+      <div *ngSwitchCase="'RANKING'">
+        <type-ranking (sectionChange)="onSectionUpdate($event)" [section]="section"></type-ranking>
+      </div>
+      <!-- /type RANKING -->
+
+
     </div>
   </div>
   <!-- /question selected -->

@@ -75,7 +75,7 @@ export interface SectionBar {
 
 export interface SectionPie {
   showPositive: boolean;
-  values: Array< {
+  values: Array<{
     p_index: string;
     value: string;
     label: string;
@@ -83,7 +83,7 @@ export interface SectionPie {
 }
 
 export interface SectionRanking {
-  values: Array< {
+  values: Array<{
     legend: string;
     value: string;
     color: string;

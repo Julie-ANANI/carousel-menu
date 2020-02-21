@@ -14,6 +14,7 @@ import { TypeQuoteComponent } from './executive-section/type-quote/type-quote.co
 import { ExecutivePitchComponent } from './executive-pitch/executive-pitch.component';
 import { ExecutiveTargetingComponent } from './executive-targeting/executive-targeting.component';
 import { TypeBarComponent } from './executive-section/type-bar/type-bar.component';
+import { TypeRankingComponent } from './executive-section/type-ranking/type-ranking.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { CountryFlagModule } from '../../../../utility-components/country-flag/country-flag.module';
@@ -41,7 +42,8 @@ import { ProgressBarModule } from '../../../../utility-components/progress-bar/p
     ExecutiveTargetingComponent,
     TypeKpiComponent,
     TypeQuoteComponent,
-    TypeBarComponent
+    TypeBarComponent,
+    TypeRankingComponent
   ],
   exports: [
     AdminExecutiveReportComponent

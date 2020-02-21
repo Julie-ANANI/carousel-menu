@@ -82,6 +82,10 @@ export class ExecutiveSectionComponent {
       case 'BAR':
         this._setBarData();
         break;
+
+      case 'RANKING':
+        this._setRankingData();
+        break;
     }
   }
 
@@ -130,6 +134,10 @@ export class ExecutiveSectionComponent {
       });
 
     }
+
+  }
+
+  private _setRankingData() {
 
   }
 
