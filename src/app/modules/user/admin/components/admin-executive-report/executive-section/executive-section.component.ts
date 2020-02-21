@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
-import { ExecutiveSection, SectionKpi, SectionQuote } from '../../../../../../models/executive-report';
+import {ExecutiveSection, SectionBar, SectionKpi, SectionQuote} from '../../../../../../models/executive-report';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
@@ -77,6 +77,10 @@ export class ExecutiveSectionComponent {
       case 'QUOTE':
         this._setQuoteData();
         break;
+
+      case 'BAR':
+        this._setBarData();
+        break;
     }
   }
 
@@ -99,6 +103,10 @@ export class ExecutiveSectionComponent {
     const question: Question = this._getQuestion(this._section.questionId);
     this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
     (<SectionQuote>this._section.content).showQuotes = true;
+  }
+
+  private _setBarData() {
+    (<SectionBar>this._section.content).showExamples = true;
   }
 
   private _getQuestion(id: string): Question {

@@ -13,6 +13,7 @@ import { TypeKpiComponent } from './executive-section/type-kpi/type-kpi.componen
 import { TypeQuoteComponent } from './executive-section/type-quote/type-quote.component';
 import { ExecutivePitchComponent } from './executive-pitch/executive-pitch.component';
 import { ExecutiveTargetingComponent } from './executive-targeting/executive-targeting.component';
+import { TypeBarComponent } from './executive-section/type-bar/type-bar.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { CountryFlagModule } from '../../../../utility-components/country-flag/country-flag.module';
@@ -37,7 +38,8 @@ import { SharedWorldmapModule } from '../../../../shared/components/shared-world
     ExecutivePitchComponent,
     ExecutiveTargetingComponent,
     TypeKpiComponent,
-    TypeQuoteComponent
+    TypeQuoteComponent,
+    TypeBarComponent
   ],
   exports: [
     AdminExecutiveReportComponent

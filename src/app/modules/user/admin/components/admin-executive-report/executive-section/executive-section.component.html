@@ -63,6 +63,13 @@
       <!-- /type QUOTE -->
 
 
+      <!-- type BAR -->
+      <div *ngSwitchCase="'BAR'">
+        <type-bar (sectionChange)="onSectionUpdate($event)" [section]="section"></type-bar>
+      </div>
+      <!-- /type BAR -->
+
+
     </div>
   </div>
   <!-- /question selected -->
