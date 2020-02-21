@@ -223,12 +223,12 @@
                   <!-- if type is progress -->
                   <ng-container *ngSwitchCase="'PROGRESS'">
                     <span>
-                      <app-progress-bar
-                        [enableTooltip]="true"
+                      <progress-bar
+                        [showTooltip]="true"
                         [height]="'8px'"
                         [backgroundColor]="getColor(getContentValue(row, getAttrs(column)[0]) || 0)"
                         [width]="(getContentValue(row, getAttrs(column)[0]) || 0) +'%'">
-                      </app-progress-bar>
+                      </progress-bar>
                     </span>
                   </ng-container>
                   <!-- /if type is progress -->

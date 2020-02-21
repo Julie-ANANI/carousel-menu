@@ -56,4 +56,14 @@ export const ADMIN_EXECUTIVE_REPORT = {
     'SHOW_QUOTES': 'Afficher les citations',
   },
 
+  'BAR_SECTION': {
+    'SHOW_EXAMPLES': 'Voir les exemples de cas ci-dessous',
+    'CASE_1': 'Cas 1',
+    'CASE_2': 'Cas 2',
+    'CASE_3': 'Cas 3',
+    'EXAMPLE_1': 'Exemple 1',
+    'EXAMPLE_2': 'Exemple 2',
+    'EXAMPLE_3': 'Exemple 3'
+  },
+
 };

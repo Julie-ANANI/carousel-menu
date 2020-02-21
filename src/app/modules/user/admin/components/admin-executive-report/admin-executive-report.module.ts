@@ -18,6 +18,7 @@ import { TypeBarComponent } from './executive-section/type-bar/type-bar.componen
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { CountryFlagModule } from '../../../../utility-components/country-flag/country-flag.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
+import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { SharedWorldmapModule } from '../../../../shared/components/shared-world
     SharedWorldmapModule,
     CountryFlagModule,
     FormsModule,
+    ProgressBarModule
   ],
   declarations: [
     ExecutiveConclusionComponent,

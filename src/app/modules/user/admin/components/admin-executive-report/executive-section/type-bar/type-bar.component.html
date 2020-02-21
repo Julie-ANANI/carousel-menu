@@ -1,0 +1,171 @@
+<div class="admin-executive-wrapper" id="type-bar">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- title -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('title')"
+          [(ngModel)]="section.label"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
+          maxlength="26"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
+          {{ 26 - section.label.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /title -->
+
+
+    <!-- abstract -->
+    <div class="m-bottom-20">
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor('abstract')"
+          [(ngModel)]="section.abstract"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
+          [ngStyle]="{ 'height': '97px' }"
+          maxlength="175"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': abstractColor }" class="text-limit-wrapper">
+          {{ 175 - section.abstract.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /abstract -->
+
+
+    <!-- show examples -->
+    <div class="m-bottom-20">
+      <label class="form-checkbox">
+        <input
+          (change)="toggleExamples()"
+          [checked]="content.showExamples"
+          [value]="content.showExamples"
+          type="checkbox">
+        <i class="form-icon"></i> {{ 'ADMIN_EXECUTIVE_REPORT.BAR_SECTION.SHOW_EXAMPLES' | translate }}
+      </label>
+    </div>
+    <!-- /show examples -->
+
+
+    <!-- case / example / value -->
+    <div *ngFor="let bar of content.values; let i = index;">
+      <div class="d-flex m-bottom-10 justify-space">
+
+        <!-- case / example -->
+        <div class="w-full m-right-20">
+
+          <!-- case -->
+          <div class="m-bottom-10">
+            <label>
+
+              <input
+                (change)="emitChanges()"
+                (keyup)="textColor('case' , (i + 1))"
+                [(ngModel)]="bar.legend"
+                [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.BAR_SECTION.CASE_' + (i + 1) | translate"
+                maxlength="32"
+                class="form-input"
+                type="text">
+
+              <span [ngStyle]="{ 'color': i === 0 ? legend1Color : i === 1 ? legend2Color : legend3Color }"
+                    class="text-limit-wrapper">
+                {{ 32 - bar.legend.length }}
+              </span>
+
+            </label>
+          </div>
+          <!-- /case -->
+
+
+          <!-- example -->
+          <div>
+            <label>
+
+              <input
+                (change)="emitChanges()"
+                (keyup)="textColor('example' , (i + 1))"
+                [(ngModel)]="bar.example"
+                [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.BAR_SECTION.EXAMPLE_' + (i + 1) | translate"
+                maxlength="40"
+                class="form-input"
+                type="text">
+
+              <span [ngStyle]="{ 'color': i === 0 ? example1Color : i === 1 ? example2Color : example3Color }"
+                    class="text-limit-wrapper">
+                {{ 40 - bar.example.length }}
+              </span>
+
+            </label>
+          </div>
+          <!-- /example -->
+
+        </div>
+        <!-- /case / example -->
+
+        <!-- value -->
+        <div>
+          <label class="value-wrapper">
+            <input
+              (change)="emitChanges()"
+              [(ngModel)]="bar.value"
+              [attr.placeholder]="'%'"
+              maxlength="4"
+              class="form-input"
+              type="text">
+          </label>
+        </div>
+        <!-- /value -->
+
+      </div>
+    </div>
+    <!-- /case / example / value -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border is-justify is-fixed">
+
+    <h4 class="m-bottom-15 text-center">{{ section.label }}</h4>
+
+    <div *ngFor="let bar of content.values; let i = index" class="m-bottom-20">
+
+      <p [ngStyle]="{ 'min-height': '27px' }" class="text-lg text-medium">
+        <ng-container *ngIf="bar.legend">{{ bar.legend }}</ng-container>
+      </p>
+
+      <div [ngStyle]="{ 'height': '8px' }">
+        <progress-bar *ngIf="bar.value" [width]="bar.value" [height]="'8px'"></progress-bar>
+      </div>
+
+      <p [ngStyle]="{ 'height': '21px' }" class="text-ellipsis">
+        <ng-container *ngIf="bar.example && content.showExamples">
+          {{ bar.example }}
+        </ng-container>
+      </p>
+
+    </div>
+
+    <p class="has-min-height">{{ section.abstract }}</p>
+
+  </div>
+  <!-- /view side -->
+
+</div>

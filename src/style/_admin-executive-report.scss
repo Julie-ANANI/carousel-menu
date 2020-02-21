@@ -104,3 +104,26 @@
   }
 
 }
+
+@media screen and (min-width: $size-xl) {
+
+  .admin-executive-wrapper {
+
+    .content-wrapper {
+
+      &.has-border {
+
+        &.is-fixed {
+          max-height: 380px;
+          overflow: hidden;
+          overflow-y: auto;
+        }
+
+      }
+
+    }
+
+  }
+
+
+}

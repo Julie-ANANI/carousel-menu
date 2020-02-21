@@ -66,7 +66,7 @@ export interface SectionQuote {
 
 export interface SectionBar {
   showExamples: boolean;
-  values: Array< {
+  values: Array<{
     legend: string;
     value: string;
     example: string;

@@ -242,7 +242,7 @@ export class ResponseService {
    * @param question
    * @param answers
    */
-  static getBarsData(question: Question, answers: Array<Answer>) {
+  static barsData(question: Question, answers: Array<Answer>) {
 
     let barsData: Array<BarData> = [];
 

@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
-import {ExecutiveSection, SectionBar, SectionKpi, SectionQuote} from '../../../../../../models/executive-report';
+import { ExecutiveSection, SectionBar, SectionKpi, SectionQuote } from '../../../../../../models/executive-report';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
+import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
 
 @Component({
   selector: 'executive-section',
@@ -106,7 +107,30 @@ export class ExecutiveSectionComponent {
   }
 
   private _setBarData() {
+    const question: Question = this._getQuestion(this._section.questionId);
+    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
     (<SectionBar>this._section.content).showExamples = true;
+
+    if (question.controlType === 'checkbox') {
+      const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
+      const barsData: Array<BarData> = ResponseService.barsData(question, answers);
+      (<SectionBar>this._section.content).values = [];
+
+      barsData.slice(0, 3).forEach((bar, index) => {
+
+        const professionals: Array<Professional> = ResponseService.answersProfessionals(bar.answers);
+
+        (<SectionBar>this._section.content).values.push({
+          legend: this._multilingPipe.transform(bar.label, this.reportLang),
+          value: bar.absolutePercentage,
+          example: professionals.map((professional, index) => {
+            return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle
+          }).toString().slice(0, 40)
+        })
+      });
+
+    }
+
   }
 
   private _getQuestion(id: string): Question {

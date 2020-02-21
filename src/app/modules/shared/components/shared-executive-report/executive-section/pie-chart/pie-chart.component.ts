@@ -26,7 +26,7 @@ export class PieChartComponent implements OnInit {
   ngOnInit() {
     /* Update data when we first get answers */
     this._dataService.getAnswers(this._question).subscribe((answers: Array<Answer>) => {
-      const barsData = ResponseService.getBarsData(this._question, answers);
+      const barsData = ResponseService.barsData(this._question, answers);
       this._pieChart = ResponseService.getPieChartData(barsData, answers);
     });
   }
