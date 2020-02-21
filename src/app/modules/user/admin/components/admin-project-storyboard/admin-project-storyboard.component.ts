@@ -106,7 +106,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   public openLangModal(event: Event, type: string) {
     event.preventDefault();
     this._reportType = type;
-    this._modalTitle = this._executiveReport.lang ? 'STORYBOARD.MODAL.CHANGE_TITLE' : 'STORYBOARD.MODAL.SELECT_TITLE';
+    this._modalTitle = this._executiveReport.lang ? 'ADMIN_STORYBOARD.MODAL.CHANGE_TITLE' : 'ADMIN_STORYBOARD.MODAL.SELECT_TITLE';
     this._isModalLang = true;
   }
 
@@ -159,7 +159,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   public copyLink(event: Event, linkToCopy: string) {
     event.preventDefault();
     this._commonService.copyToClipboard(linkToCopy);
-    this._translateNotificationsService.success('ERROR.SUCCESS', 'STORYBOARD.TOAST.URL_COPIED');
+    this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_STORYBOARD.TOAST.URL_COPIED');
   }
 
   public generateVideo(event: Event) {
@@ -174,7 +174,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     event.preventDefault();
     this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
       this._toBeSaved = false;
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'EXECUTIVE_REPORT.SAVE');
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
     }, (err: HttpErrorResponse) => {
       console.log(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));

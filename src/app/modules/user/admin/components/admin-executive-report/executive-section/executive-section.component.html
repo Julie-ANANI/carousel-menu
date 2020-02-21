@@ -1,0 +1,70 @@
+<div [ngClass]="{ 'inactive flex-centered': !section.questionId || !section.questionType }" id="executive-section">
+
+  <!-- no question selected -->
+  <div *ngIf="!section.questionId || !section.questionType">
+
+    <!-- title -->
+    <h4>{{ 'ADMIN_EXECUTIVE_REPORT.WANT_TO_DISPLAY' | translate }}</h4>
+    <!-- /title -->
+
+
+    <!-- question / type -->
+    <div class="question-selection-wrapper">
+
+      <!-- question -->
+      <div>
+        <h5 class="text-lg">{{ 'ADMIN_EXECUTIVE_REPORT.SYNTHESIS_SECTIONS' | translate }}</h5>
+        <ul>
+          <li (click)="selectQuestion(question._id)"
+              *ngFor="let question of questions"
+              [ngClass]="{ 'text-primary': question._id === section.questionId }">
+            {{ question.title | multiling:reportLang }}
+          </li>
+        </ul>
+      </div>
+      <!-- /question -->
+
+
+      <!-- type -->
+      <div>
+        <h5 class="text-lg">{{ 'ADMIN_EXECUTIVE_REPORT.RAW_DATA' | translate }}</h5>
+        <ul>
+          <li (click)="selectQuestionType(ques.label)"
+              *ngFor="let ques of questionType"
+              [ngClass]="{ 'text-primary': ques.label === section.questionType, 'inactive': !section.questionId }">
+            {{ ques.alias }}
+          </li>
+        </ul>
+      </div>
+      <!-- /type -->
+
+    </div>
+    <!-- /question / type -->
+
+  </div>
+  <!-- /no question selected -->
+
+
+  <!-- question selected -->
+  <div *ngIf="section.questionId && section.questionType">
+    <div [ngSwitch]="section.questionType">
+
+      <!-- type KPI -->
+      <div *ngSwitchCase="'KPI'">
+        <type-kpi (sectionChange)="onSectionUpdate($event)" [section]="section"></type-kpi>
+      </div>
+      <!-- /type KPI -->
+
+
+      <!-- type QUOTE -->
+      <div *ngSwitchCase="'QUOTE'">
+        <type-quote (sectionChange)="onSectionUpdate($event)" [section]="section"></type-quote>
+      </div>
+      <!-- /type QUOTE -->
+
+
+    </div>
+  </div>
+  <!-- /question selected -->
+
+</div>

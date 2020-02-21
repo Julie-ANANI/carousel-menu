@@ -1,4 +1,4 @@
-export const STORYBOARD = {
+export const ADMIN_STORYBOARD = {
 
   'CHANGE_LANG': {
     'A': 'Vous voulez',

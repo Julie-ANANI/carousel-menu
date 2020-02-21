@@ -6,15 +6,15 @@ import { RouterModule } from '@angular/router';
 import { AdminProjectStoryboardComponent } from './admin-project-storyboard.component';
 
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
-import { SharedExecutiveReportModule } from '../../../../shared/components/shared-executive-report/shared-executive-report.module';
+import { AdminExecutiveReportModule } from '../admin-executive-report/admin-executive-report.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     ModalModule,
-    SharedExecutiveReportModule,
-    RouterModule
+    RouterModule,
+    AdminExecutiveReportModule
   ],
   declarations: [
     AdminProjectStoryboardComponent

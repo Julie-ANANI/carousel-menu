@@ -1,0 +1,43 @@
+<div class="admin-executive-wrapper" id="executive-targeting">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+    <label>
+
+        <textarea
+          (change)="emitChanges($event)"
+          (keyup)="textColor()"
+          [(ngModel)]="config.abstract"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TARGETING.TARGETING' | translate"
+          [ngStyle]="{ 'height': '98px' }"
+          maxlength="148"
+          class="form-input"
+          type="text">
+        </textarea>
+
+      <span [ngStyle]="{ 'color': targetingColor }" class="text-limit-wrapper">
+        {{ 148 - config.abstract.length }}
+      </span>
+
+    </label>
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border">
+
+    <h4 class="m-bottom-30 text-center">{{ 'ADMIN_EXECUTIVE_REPORT.TARGETING.PROFESSIONAL' | translate }}</h4>
+
+    <!-- map -->
+    <div [ngStyle]="{ 'height': '199px' }">
+      <app-shared-worldmap [targetingCountries]="config.countries"></app-shared-worldmap>
+    </div>
+    <!-- /map -->
+
+    <p class="has-min-height">{{ config.abstract }}</p>
+
+  </div>
+  <!-- /view side -->
+
+</div>

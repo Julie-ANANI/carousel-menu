@@ -1,0 +1,96 @@
+<div class="admin-executive-wrapper" id="executive-professional">
+
+  <!-- edit -->
+  <div class="content-wrapper">
+
+    <!-- abstract -->
+    <div>
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor()"
+          [(ngModel)]="config.abstract"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PROFESSIONAL.PROFESSIONALS' | translate"
+          [ngStyle]="{ 'height': '140px' }"
+          maxlength="258"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': professionalAbstractColor }" class="text-limit-wrapper">
+          {{ 258 - config.abstract.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /abstract -->
+
+
+    <!-- select pro -->
+    <div class="p-top-40 d-flex justify-space flex-wrap">
+      <div *ngFor="let top of top4Pro; let i = index;" class="select-wrapper">
+        <label>
+          <select (change)="selectPro($event, i)" class="form-select">
+            <option [value]="''">{{ 'ADMIN_EXECUTIVE_REPORT.PROFESSIONAL.CHOOSE_PRO' | translate }}</option>
+            <option *ngFor="let pro of restPro" [value]="pro._id">
+              {{ pro.firstName }} {{ pro.lastName }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <!-- /select pro -->
+
+  </div>
+  <!-- /edit -->
+
+
+  <!-- view -->
+  <div class="content-wrapper has-border">
+
+    <h4 class="text-center">{{ 'ADMIN_EXECUTIVE_REPORT.PROFESSIONAL.SOME_PROFILES' | translate }}</h4>
+
+    <!-- pro display -->
+    <div class="d-flex flex-wrap justify-space">
+      <div *ngFor="let pro of top4Pro; let i = index;" class="pro-wrapper relative text-center text-sm">
+
+        <!-- flag -->
+        <div [ngStyle]="{ 'height': '26px' }" class="m-bottom-1">
+          <ng-container *ngIf="pro.country">
+            <app-country-flag [country]="pro.country" [width]="22" [height]="15"></app-country-flag>
+          </ng-container>
+        </div>
+        <!-- /flag -->
+
+
+        <!-- jobTitle -->
+        <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
+          {{ pro.jobTitle }}
+        </div>
+        <!-- /jobTitle -->
+
+
+        <!-- company -->
+        <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
+          {{ pro.company }}
+        </div>
+        <!-- /company -->
+
+
+        <!-- user icon -->
+        <div [ngStyle]="{ 'top': '7px', 'right': '15px' }" class="absolute">
+          <i class="fas fa-user text-md text-background"></i>
+        </div>
+        <!-- /user icon -->
+
+      </div>
+    </div>
+    <!-- /pro display -->
+
+    <p class="has-min-height">{{ config.abstract }}</p>
+
+  </div>
+  <!-- /view -->
+
+</div>

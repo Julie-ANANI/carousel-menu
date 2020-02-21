@@ -1,0 +1,90 @@
+<div id="shared-executive-report">
+
+  <!-- objective / owner / umi commercial -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-objective [(config)]="objectiveConfig"></executive-objective>
+  </section>
+  <!-- /objective / owner / umi commercial -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- pitch -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-pitch [(pitch)]="summary"></executive-pitch>
+  </section>
+  <!-- /pitch -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- targeting -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-targeting [(config)]="targetingConfig"></executive-targeting>
+  </section>
+  <!-- /targeting -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- professionals -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-professional [(config)]="professionalConfig"></executive-professional>
+  </section>
+  <!-- /professionals -->
+
+
+  <!-- divider -->
+  <div class="divider"></div>
+  <!-- /divider -->
+
+
+  <!-- sections -->
+  <div *ngFor="let section of executiveReport.sections; let i = index;">
+
+    <!-- section -->
+    <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+      <executive-section
+        (sectionChange)="onSectionChange($event, i)"
+        [answers]="answers"
+        [questions]="questions"
+        [reportLang]="executiveReport.lang"
+        [section]="section">
+      </executive-section>
+    </section>
+    <!-- /section -->
+
+
+    <!-- reset button -->
+    <div *ngIf="section.questionId && section.questionType" class="p-top-30 text-center">
+      <button (click)="resetSection($event, i)" class="button is-outlined is-info" type="button">
+        {{ 'ADMIN_EXECUTIVE_REPORT.RESET_SECTION' | translate }}
+      </button>
+    </div>
+    <!-- /reset button -->
+
+
+    <!-- divider -->
+    <div class="divider"></div>
+    <!-- /divider -->
+
+  </div>
+  <!-- /sections -->
+
+
+  <!-- conclusion -->
+  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
+    <executive-conclusion [(config)]="conclusionConfig"></executive-conclusion>
+  </section>
+  <!-- /conclusion -->
+
+</div>
