@@ -23,8 +23,8 @@ export class ExecutiveSectionComponent {
 
   @Input() set section(value: ExecutiveSection) {
     this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
+      questionId: value.questionId || 'dfdsf',
+      questionType: value.questionType || 'RANKING',
       abstract: value.abstract || '',
       label: value.label || '',
       content: value.content || <any>{}

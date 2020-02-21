@@ -1,3 +1,121 @@
-<p>
-  type-ranking works!
-</p>
+<div class="admin-executive-wrapper" id="type-ranking">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- title -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('title')"
+          [(ngModel)]="section.label"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
+          maxlength="26"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
+          {{ 26 - section.label.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /title -->
+
+    <!-- abstract -->
+    <div class="m-bottom-20">
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor('abstract')"
+          [(ngModel)]="section.abstract"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
+          [ngStyle]="{ 'height': '97px' }"
+          maxlength="175"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': abstractColor }" class="text-limit-wrapper">
+          {{ 175 - section.abstract.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /abstract -->
+
+
+    <!-- element / legend / color -->
+    <div *ngFor="let tag of content.values; let i = index;">
+      <div class="d-flex m-bottom-10 justify-space">
+
+        <!-- element -->
+        <div class="m-right-10">
+          <label>
+            <input
+              (change)="emitChanges()"
+              (keyup)="textColor('case' , (i + 1))"
+              [(ngModel)]="tag.legend"
+              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.ELEMENT_' + (i + 1) | translate"
+              maxlength="20"
+              class="form-input"
+              type="text">
+
+            <span [ngStyle]="{ 'color': i === 0 ? element1Color : i === 1 ? element2Color : element2Color }"
+                  class="text-limit-wrapper">
+              {{ 20 - tag.legend.length }}
+            </span>
+          </label>
+        </div>
+        <!-- /element -->
+
+
+        <!-- legend -->
+        <div class="m-right-10">
+          <label>
+            <input
+              (change)="emitChanges()"
+              (keyup)="textColor('case' , (i + 1))"
+              [(ngModel)]="tag.value"
+              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.LEGEND_' + (i + 1) | translate"
+              maxlength="13"
+              class="form-input"
+              type="text">
+
+            <span [ngStyle]="{ 'color': i === 0 ? legend1Color : i === 1 ? legend2Color : legend3Color }"
+                  class="text-limit-wrapper">
+              {{ 13 - tag.value.length }}
+            </span>
+          </label>
+        </div>
+        <!-- /legend -->
+
+
+        <!-- color -->
+        <div>
+
+        </div>
+        <!-- /color -->
+
+      </div>
+    </div>
+    <!-- /element / legend / color -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border is-justify">
+
+    <h4 class="m-bottom-15 text-center">{{ section.label }}</h4>
+
+    <p class="has-min-height">{{ section.abstract }}</p>
+
+  </div>
+  <!-- view side -->
+
+</div>

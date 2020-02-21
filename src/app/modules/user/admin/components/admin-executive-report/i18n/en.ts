@@ -66,4 +66,13 @@ export const ADMIN_EXECUTIVE_REPORT = {
     'EXAMPLE_3': 'Example 3'
   },
 
+  'RANKING_SECTION': {
+    'LEGEND_1': 'Legend 1',
+    'LEGEND_2': 'Legend 2',
+    'LEGEND_3': 'Legend 3',
+    'ELEMENT_1': 'Element 1',
+    'ELEMENT_2': 'Element 2',
+    'ELEMENT_3': 'Element 3'
+  },
+
 };
