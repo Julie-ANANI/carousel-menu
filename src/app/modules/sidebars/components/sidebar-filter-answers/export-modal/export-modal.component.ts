@@ -8,6 +8,8 @@ import { Share } from '../../../../../models/share';
 import { environment } from '../../../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { ShareService } from '../../../../../services/share/share.service';
+import * as FileSaver from 'file-saver';
+
 
 export enum ExportType { csv = 'csv', executiveReport = 'executiveReport', respReport = 'respReport', shareReport = 'shareReport' }
 
@@ -87,7 +89,14 @@ export class ExportModalComponent {
         break;
 
       case (ExportType.executiveReport):
-        window.print();
+        // window.print();
+        // window.open(`${environment.apiUrl}/innovation/${this._innovation._id}/executiveReportExport`);
+        const filename = this._innovation.name ? `UMI Executive report - ${this._innovation.name.slice(0, Math.min(13, this._innovation.name.length))}.pdf` : 'innovation_umi.pdf'
+        this._innovationService.executiveReportPDF(this._innovation._id)
+          .subscribe( data => {
+            const blob = new Blob([data], {type: 'application/pdf'});
+            FileSaver.saveAs(blob, filename);
+          });
         break;
 
       case (ExportType.respReport):

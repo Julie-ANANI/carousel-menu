@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Campaign } from '../../models/campaign';
@@ -141,7 +141,7 @@ export class InnovationService {
 
   public import(file:File): Observable<any> {
     const formData = new FormData();
-    formData.append('file', file, "import_project");
+    formData.append('file', file, 'import_project');
     return this._http.post('/innovation/import/', formData);
   }
 
@@ -160,6 +160,12 @@ export class InnovationService {
   public sendFollowUpEmails(innovationId: string, objective?: string): Observable<any> {
     const urlParams = objective ? `?objective=${objective}` : '';
     return this._http.get('/innovation/' + innovationId + '/sendFollowUpEmails' + urlParams);
+  }
+
+  public executiveReportPDF(innovationId: string): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/pdf');
+    return this._http.get(`/innovation/${innovationId}/executiveReportExport`, {headers: headers, responseType: 'blob'});
   }
 
 }
