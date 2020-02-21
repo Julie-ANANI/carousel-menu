@@ -13,11 +13,12 @@ import { environment } from '../../../../../environments/environment';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import {SharedWorldmapService} from '../shared-worldmap/services/shared-worldmap.service';
+import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -73,9 +74,9 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _toggleAnswers: boolean;
 
-  // private _numberOfSections: number; // todo remove all the details of executive report.
+  private _numberOfSections: number;
 
-  // private _executiveTemplates: Array<Executive>; // todo remove
+  private _executiveTemplates: Array<Executive>;
 
   private _modalAnswer: Answer = null;
 
@@ -134,14 +135,14 @@ export class SharedMarketReportComponent implements OnInit {
     /***
      * we are checking do we have any template.
      * @type {number | undefined}
-     */ // todo remove
-    // this._numberOfSections = this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
+     */
+    this._numberOfSections = this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
 
     /***
      * assigning the value of the executive template.
      * @type {Executive}
      */
-    // this._executiveTemplates = executiveTemplate; // todo remove
+    this._executiveTemplates = executiveTemplate;
 
     this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers && !this._adminMode;
 
@@ -278,13 +279,13 @@ export class SharedMarketReportComponent implements OnInit {
    * This function is to update the projects.
    * @param {Event} event
    */
-  /*public updateExecutiveReport(event: Event) {
+  public updateExecutiveReport(event: Event) {
     event.preventDefault();
     this._innovationService.save(this._innovation._id, {executiveReport: this._innovation.executiveReport}).subscribe(() => {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
-  }*/
+  }
 
 
   /***
@@ -303,11 +304,11 @@ export class SharedMarketReportComponent implements OnInit {
    * clicked value to the numberOfSection.
    * @param {Event} event
    * @param {number} value
-   */ // todo remove
-  /*public assignSectionValue(event: Event, value: number) {
+   */
+  public assignSectionValue(event: Event, value: number) {
     event.preventDefault();
     this._numberOfSections = value;
-  }*/
+  }
 
 
   /***
@@ -315,12 +316,12 @@ export class SharedMarketReportComponent implements OnInit {
    * We assign the number of section value to the this.project.executiveReport.totalSections
    * and call the update function to save it in database.
    * @param {Event} event
-   */ // todo remove
-  /*public generateExecutiveTemplate(event: Event) {
+   */
+  public generateExecutiveTemplate(event: Event) {
     event.preventDefault();
     this._innovation.executiveReport.totalSections = this._numberOfSections;
     this.updateExecutiveReport(event);
-  }*/
+  }
 
 
   /***
@@ -486,14 +487,13 @@ export class SharedMarketReportComponent implements OnInit {
     return this._isOwner;
   }
 
-  // todo remove
-  /*get numberOfSections(): number {
+  get numberOfSections(): number {
     return this._numberOfSections;
   }
 
   get executiveTemplates(): Array<Executive> {
     return this._executiveTemplates;
-  }*/
+  }
 
   get mapSelectedContinents(): { [p: string]: boolean } {
     return this._worldmapFiltersService.selectedContinents;

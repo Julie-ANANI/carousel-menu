@@ -1,48 +1,24 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ExecutiveSection, SectionKpi, SectionQuote } from '../../../../../models/executive-report';
-import { Question } from '../../../../../models/question';
-import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { Component, Input } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
+import { Question } from '../../../../../models/question';
 import { ResponseService } from '../../shared-market-report/services/response.service';
-import { Professional } from '../../../../../models/professional';
+import { Innovation } from '../../../../../models/innovation';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { Tag } from '../../../../../models/tag';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { DataService } from '../../shared-market-report/services/data.service';
 
 @Component({
-  selector: 'executive-section',
+  selector: 'app-executive-section',
   templateUrl: './executive-section.component.html',
   styleUrls: ['./executive-section.component.scss']
 })
 
 export class ExecutiveSectionComponent {
 
-  @Input() questions: Array<Question> = [];
-
-  @Input() answers: Array<Answer> = [];
-
-  @Input() reportLang: 'en';
-
-  @Input() set section(value: ExecutiveSection) {
-    this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
-      abstract: value.abstract || '',
-      label: value.label || '',
-      content: value.content || <any>{}
-    };
-  }
-
-  @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
-
-  private _section: ExecutiveSection = <ExecutiveSection>{};
-
-  private _questionType: Array<{ label: any; alias: string }> = [
-    { label: 'PIE', alias: 'Pie (preserved data)' },
-    { label: 'RANKING', alias: 'Ranking (preserved data)' },
-    { label: 'BAR', alias: 'Progress bars' },
-    { label: 'QUOTE', alias: 'Quotation' },
-    { label: 'KPI', alias: 'KPI' },
-  ];
-
-  /*@Input() set project(value: Innovation) {
+  @Input() set project(value: Innovation) {
     this._innovation = value;
     this._getQuestions(value);
   }
@@ -52,17 +28,17 @@ export class ExecutiveSectionComponent {
   }
 
   @Input() set answers(value: Array<Answer>) {
-    // this._answers = value;
+    this._answers = value;
     this._getSectionInformation(this._sectionNumber);
   }
 
-  // private _answers: Array<Answer> = [];
+  private _answers: Array<Answer> = [];
 
   private _innovation: Innovation;
 
   private _sectionMenuOptions: Array<Question> = [];
 
-
+  private _questions: Array<Question> = [];
 
   private _sectionNumber: number;
 
@@ -72,82 +48,28 @@ export class ExecutiveSectionComponent {
 
   private _adminSide: boolean;
 
-  private _stats: { nbAnswers?: number, percentage?: number };*/
+  private _stats: { nbAnswers?: number, percentage?: number };
 
-  constructor(private _multilingPipe: MultilingPipe,
-              private _responseService: ResponseService) { }
+  constructor(private _responseService: ResponseService,
+              private _dataService: DataService,
+              private _location: Location,
+              private _translateService: TranslateService,
+              private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService) {
 
-  public emitChanges() {
-    this.sectionChange.emit(this._section);
-  }
-
-  public selectQuestion(id: string) {
-    this._section.questionId = id;
-    this.emitChanges();
-  }
-
-  public selectQuestionType(type: any) {
-    if (this._section.questionId) {
-      this._section.questionType = type;
-      this._initializeSection();
-      this.emitChanges();
-    }
-  }
-
-  public onSectionUpdate(value: ExecutiveSection) {
-    this._section = value;
-    this.emitChanges();
-  }
-
-  private _initializeSection() {
-    switch (this._section.questionType) {
-
-      case 'KPI':
-        this._setKpiData();
-        break;
-
-      case 'QUOTE':
-        this._setQuoteData();
-        break;
-    }
-  }
-
-  private _setKpiData() {
-    const question: Question = this._getQuestion(this._section.questionId);
-    const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
-    const professionals: Array<Professional> = ResponseService.answersProfessionals(answers);
-
-    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionKpi>this._section.content).kpi = answers.length.toString(10);
-
-    (<SectionKpi>this._section.content).examples = professionals.map((professional, index) => {
-      return index === 0 ? professional.firstName + ' ' + professional.lastName
-        : ' ' + professional.firstName + ' ' + professional.lastName
-    }).toString().slice(0, 175);
+    this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
   }
 
-  private _setQuoteData() {
-    const question: Question = this._getQuestion(this._section.questionId);
-    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionQuote>this._section.content).showQuotes = true;
-  }
-
-  private _getQuestion(id: string): Question {
-    const index = this.questions.findIndex((ques) => ques._id === id);
-    if (index !== -1) {
-      return this.questions[index];
-    }
-  }
 
   /***
    * This function is to get the questions from the service, and then push it into the
    * respective arrays.
    * @param {Innovation} value
    */
-  /*private _getQuestions(value: Innovation) {
+  private _getQuestions(value: Innovation) {
     if (value.preset && value.preset.sections) {
-      ResponseService.getPresets(value).forEach((questions) => {
+      ResponseService.presets(value).forEach((questions) => {
         const index = this._questions.findIndex((question) => question._id === questions._id);
         if (index === -1) {
           this._questions.push(questions);
@@ -155,7 +77,7 @@ export class ExecutiveSectionComponent {
         }
       });
     }
-  }*/
+  }
 
 
   /***
@@ -164,7 +86,7 @@ export class ExecutiveSectionComponent {
    * @param {Event} event
    * @param {Question} option
    */
-  /*public onTitleClicked(event: Event, option: Question) {/!*
+  public onTitleClicked(event: Event, option: Question) {
     this._innovation.executiveReport.sections[this._sectionNumber] = { quesId: option._id };
 
     this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
@@ -172,8 +94,8 @@ export class ExecutiveSectionComponent {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
 
-    this._getSectionInformation(this._sectionNumber);*!/
-  }*/
+    this._getSectionInformation(this._sectionNumber);
+  }
 
 
   /***
@@ -181,15 +103,15 @@ export class ExecutiveSectionComponent {
    * with all the details.
    * @param {number} sectionNumber
    */
-  /*private _getSectionInformation(sectionNumber: number) {
+  private _getSectionInformation(sectionNumber: number) {
 
-    /!*if (this._innovation.executiveReport.sections[sectionNumber]) {
+    if (this._innovation.executiveReport.sections[sectionNumber]) {
 
       this._questionSelected = this._questions.find((ques) => ques._id === this._innovation.executiveReport.sections[sectionNumber].quesId);
 
       if (this._questionSelected) {
 
-        const answersToShow = this._responseService.getAnswersToShow(this._answers, this._questionSelected);
+        const answersToShow = this._responseService.answersToShow(this._answers, this._questionSelected);
         this._dataService.setAnswers(this._questionSelected, answersToShow);
 
         this._stats = {
@@ -201,16 +123,16 @@ export class ExecutiveSectionComponent {
 
       }
 
-    }*!/
+    }
 
-  }*/
+  }
 
 
   /***
    * this function is to get the abstract value from the abstracts array by using
    * quesId.
    */
-  /*private _getAbstractValue() {
+  private _getAbstractValue() {
 
     this._abstractValue = '';
 
@@ -221,9 +143,9 @@ export class ExecutiveSectionComponent {
       }
     }
 
-  }*/
+  }
 
-  /*get lang(): string {
+  get lang(): string {
     return this._translateService.currentLang;
   }
 
@@ -233,6 +155,10 @@ export class ExecutiveSectionComponent {
 
   get sectionMenuOptions(): Array<Question> {
     return this._sectionMenuOptions;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
   }
 
   get questionSelected(): Question {
@@ -253,14 +179,6 @@ export class ExecutiveSectionComponent {
 
   get tags(): Array<Tag> {
     return this._dataService.answersTagsLists[this._questionSelected._id];
-  }*/
-
-  get section(): ExecutiveSection {
-    return this._section;
-  }
-
-  get questionType(): Array<{ label: string; alias: string }> {
-    return this._questionType;
   }
 
 }

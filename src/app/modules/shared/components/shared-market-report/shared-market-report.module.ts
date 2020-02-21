@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
@@ -15,7 +14,9 @@ import { SidebarUserAnswerModule } from '../../../sidebars/components/user-answe
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
 import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
+import { SharedExecutiveReportModule } from '../shared-executive-report/shared-executive-report.module';
 import { PieChartModule } from '../../../utility-components/canvas/piechart/pie-chart.module';
+import { SharedMainPageModule } from '../shared-main-page/shared-main-page.module';
 
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
@@ -55,8 +56,10 @@ import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar
     CountryFlagModule,
     MessageTemplate1Module,
     ModalModule,
+    SharedExecutiveReportModule,
     SharedTagModule,
     PieChartModule,
+    SharedMainPageModule
   ],
   providers: [
     TagsFiltersService

@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
 import { InnovCard } from '../../models/innov-card';

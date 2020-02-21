@@ -1,110 +1,18 @@
-<div id="shared-executive-report">
-
-  <!-- objective / owner / umi commercial -->
-  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-objective [(config)]="objectiveConfig"></executive-objective>
-  </section>
-  <!-- /objective / owner / umi commercial -->
-
-
-  <!-- divider -->
-  <div class="divider"></div>
-  <!-- /divider -->
-
-
-  <!-- pitch -->
-  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-pitch [(pitch)]="summary"></executive-pitch>
-  </section>
-  <!-- /pitch -->
-
-
-  <!-- divider -->
-  <div class="divider"></div>
-  <!-- /divider -->
-
-
-  <!-- targeting -->
-  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-targeting [(config)]="targetingConfig"></executive-targeting>
-  </section>
-  <!-- /targeting -->
-
-
-  <!-- divider -->
-  <div class="divider"></div>
-  <!-- /divider -->
-
-
-  <!-- professionals -->
-  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-professional [(config)]="professionalConfig"></executive-professional>
-  </section>
-  <!-- /professionals -->
-
-
-  <!-- divider -->
-  <div class="divider"></div>
-  <!-- /divider -->
-
-
-  <!-- sections -->
-  <div *ngFor="let section of executiveReport.sections; let i = index;">
-
-    <!-- section -->
-    <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-      <executive-section
-        (sectionChange)="onSectionChange($event, i)"
-        [answers]="answers"
-        [questions]="questions"
-        [reportLang]="executiveReport.lang"
-        [section]="section">
-      </executive-section>
-    </section>
-    <!-- /section -->
-
-
-    <!-- reset button -->
-    <div *ngIf="section.questionId && section.questionType" class="p-top-30 text-center">
-      <button (click)="resetSection($event, i)" class="button is-outlined is-info" type="button">
-        {{ 'EXECUTIVE_REPORT.RESET_SECTION' | translate }}
-      </button>
-    </div>
-    <!-- /reset button -->
-
-
-    <!-- divider -->
-    <div class="divider"></div>
-    <!-- /divider -->
-
-  </div>
-  <!-- /sections -->
-
-
-  <!-- conclusion -->
-  <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-conclusion [(config)]="conclusionConfig"></executive-conclusion>
-  </section>
-  <!-- /conclusion -->
-
-</div>
-
-<!--
 <section class="section-light-pad" id="executive-report-wrapper">
 
 
-  &lt;!&ndash; when two sections &ndash;&gt;
+  <!-- when two sections -->
   <ng-container *ngIf="innovation.executiveReport.totalSections === 2">
     <div class="col-12">
       <div class="page-first">
 
-        &lt;!&ndash; professional column &ndash;&gt;
+        <!-- professional column -->
         <div class="section-wrapper">
           <app-executive-professional [project]="innovation" [answers]="answers"></app-executive-professional>
         </div>
-        &lt;!&ndash; /professional column &ndash;&gt;
+        <!-- /professional column -->
 
-        &lt;!&ndash; sections &ndash;&gt;
+        <!-- sections -->
         <div class="section-wrapper">
           <div *ngFor="let sectionNumber of firstPageSections | slice:0:innovation.executiveReport.totalSections"
                class="section"
@@ -119,34 +27,34 @@
 
           </div>
         </div>
-        &lt;!&ndash; /sections &ndash;&gt;
+        <!-- /sections -->
 
-        &lt;!&ndash; conclusion part &ndash;&gt;
+        <!-- conclusion part -->
         <div class="section-wrapper">
           <app-executive-conclusion [project]="innovation"></app-executive-conclusion>
         </div>
-        &lt;!&ndash; /conclusion part &ndash;&gt;
+        <!-- /conclusion part -->
 
       </div>
     </div>
   </ng-container>
-  &lt;!&ndash; /when two sections &ndash;&gt;
+  <!-- /when two sections -->
 
 
-  &lt;!&ndash; when more than two sections &ndash;&gt;
+  <!-- when more than two sections -->
   <ng-container *ngIf="innovation.executiveReport.totalSections > 2">
 
-    &lt;!&ndash; first page &ndash;&gt;
+    <!-- first page -->
     <div class="col-12">
       <div class="page-first">
 
-        &lt;!&ndash; professional column &ndash;&gt;
+        <!-- professional column -->
         <div class="section-wrapper">
           <app-executive-professional [project]="innovation" [answers]="answers"></app-executive-professional>
         </div>
-        &lt;!&ndash; /professional column &ndash;&gt;
+        <!-- /professional column -->
 
-        &lt;!&ndash; sections &ndash;&gt;
+        <!-- sections -->
         <div class="sections">
           <div *ngFor="let sectionNumber of firstPageSections" class="section" [ngClass]="{ 'section-4': innovation.executiveReport.totalSections > 2 }">
 
@@ -159,18 +67,18 @@
 
           </div>
         </div>
-        &lt;!&ndash; /sections &ndash;&gt;
+        <!-- /sections -->
 
       </div>
     </div>
-    &lt;!&ndash; /first page &ndash;&gt;
+    <!-- /first page -->
 
-    &lt;!&ndash; second page &ndash;&gt;
+    <!-- second page -->
     <div class="col-12">
       <div class="second-page section-pad rm-pad-bottom">
         <div class="second-page-wrapper">
 
-          &lt;!&ndash; sections &ndash;&gt;
+          <!-- sections -->
           <ng-container *ngIf="innovation.executiveReport.totalSections > 4">
             <div [ngClass]="{ 'section-wrapper': innovation.executiveReport.totalSections === 6, 'sections': innovation.executiveReport.totalSections > 6 }">
               <div *ngFor="let sectionNumber of secondPageSections | slice:0:(innovation.executiveReport.totalSections - 4)"
@@ -187,22 +95,21 @@
               </div>
             </div>
           </ng-container>
-          &lt;!&ndash; /sections &ndash;&gt;
+          <!-- /sections -->
 
-          &lt;!&ndash; conclusion part &ndash;&gt;
+          <!-- conclusion part -->
           <div class="section-wrapper">
             <app-executive-conclusion [project]="innovation"></app-executive-conclusion>
           </div>
-          &lt;!&ndash; /conclusion part &ndash;&gt;
+          <!-- /conclusion part -->
 
         </div>
       </div>
     </div>
-    &lt;!&ndash; /second page &ndash;&gt;
+    <!-- /second page -->
 
   </ng-container>
-  &lt;!&ndash; /when more than two sections &ndash;&gt;
+  <!-- /when more than two sections -->
 
 </section>
 
--->

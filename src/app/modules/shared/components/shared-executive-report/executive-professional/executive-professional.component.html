@@ -1,96 +1,77 @@
-<div class="executive-report-wrapper" id="executive-professional">
+<section id="executive-professional-wrapper">
 
-  <!-- edit -->
-  <div class="content-wrapper">
 
-    <!-- abstract -->
-    <div>
-      <label>
+  <!-- heading -->
+  <h2 class="title-primary" [innerText]="'MARKET_REPORT.EXECUTIVE_TEMPLATE.PROFESSIONAL_HEADING'" translate></h2>
+  <!-- /heading -->
 
-        <textarea
-          (change)="emitChanges()"
-          (keyup)="textColor()"
-          [(ngModel)]="config.abstract"
-          [attr.placeholder]="'EXECUTIVE_REPORT.PROFESSIONAL.PROFESSIONALS' | translate"
-          [ngStyle]="{ 'height': '140px' }"
-          maxlength="258"
-          class="form-input"
-          type="text">
-        </textarea>
 
-        <span [ngStyle]="{ 'color': professionalAbstractColor }" class="text-limit-wrapper">
-          {{ 258 - config.abstract.length }}
-        </span>
+  <!-- response, map and abstract -->
+  <div class="response-wrapper">
 
-      </label>
+    <!-- icon and response -->
+    <h2 class="sub-title text-center">{{ answers.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}</h2>
+
+    <!-- map -->
+    <div class="map-wrapper">
+      <app-shared-worldmap [targetingCountries]="targetCountries"></app-shared-worldmap>
     </div>
-    <!-- /abstract -->
 
-
-    <!-- select pro -->
-    <div class="p-top-40 d-flex justify-space flex-wrap">
-      <div *ngFor="let top of top4Pro; let i = index;" class="select-wrapper">
-        <label>
-          <select (change)="selectPro($event, i)" class="form-select">
-            <option [value]="''">{{ 'EXECUTIVE_REPORT.PROFESSIONAL.CHOOSE_PRO' | translate }}</option>
-            <option *ngFor="let pro of restPro" [value]="pro._id">
-              {{ pro.firstName }} {{ pro.lastName }}
-            </option>
-          </select>
-        </label>
-      </div>
+    <!-- abstract prof -->
+    <div class="abstract-wrapper text-break" id="professional-abstract">
+      <span>{{ professionalAbstract }}</span>
     </div>
-    <!-- /select pro -->
 
   </div>
-  <!-- /edit -->
+  <!-- /response, map and abstract -->
 
 
-  <!-- view -->
-  <div class="content-wrapper has-border">
+  <!-- top profile -->
+  <div class="profile-wrapper" id="professional-profiles">
+    <div *ngFor="let answer of professionalsAnswer | slice:0:4" class="profile">
 
-    <h4 class="text-center">{{ 'EXECUTIVE_REPORT.PROFESSIONAL.SOME_PROFILES' | translate }}</h4>
+      <!-- icons -->
+      <div class="icon-wrapper">
 
-    <!-- pro display -->
-    <div class="d-flex flex-wrap justify-space">
-      <div *ngFor="let pro of top4Pro; let i = index;" class="pro-wrapper relative text-center text-sm">
+        <i class="fas fa-user"></i>
 
-        <!-- flag -->
-        <div [ngStyle]="{ 'height': '26px' }" class="m-bottom-1">
-          <ng-container *ngIf="pro.country">
-            <app-country-flag [country]="pro.country" [width]="22" [height]="15"></app-country-flag>
-          </ng-container>
+        <div *ngIf="answer.country?.flag">
+          <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
         </div>
-        <!-- /flag -->
 
+      </div>
+      <!-- /icons -->
 
-        <!-- jobTitle -->
-        <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
-          {{ pro.jobTitle }}
-        </div>
-        <!-- /jobTitle -->
+      <!-- prof details -->
+      <div class="detail-wrapper">
 
+        <!-- job -->
+        <p class="job">
+          <ng-container *ngIf="answer.job">{{ answer.job }}</ng-container>
+        </p>
 
         <!-- company -->
-        <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
-          {{ pro.company }}
-        </div>
-        <!-- /company -->
-
-
-        <!-- user icon -->
-        <div [ngStyle]="{ 'top': '7px', 'right': '15px' }" class="absolute">
-          <i class="fas fa-user text-md text-background"></i>
-        </div>
-        <!-- /user icon -->
+        <p class="company">
+          <ng-container *ngIf="(answer.company && answer.company.name) || (answer.professional && answer.professional?.company)">
+            {{ answer.company?.name || answer.professional?.company }}
+          </ng-container>
+        </p>
 
       </div>
+      <!-- /prof details -->
+
     </div>
-    <!-- /pro display -->
-
-    <p class="has-min-height">{{ config.abstract }}</p>
-
   </div>
-  <!-- /view -->
+  <!-- /top profile -->
 
-</div>
+
+  <!-- remaining text -->
+  <div class="remaining-text text-center">
+    <span>{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }} </span>
+    <span pageScroll pageScrollOffset="135" href="#professionals" class="text-link" [innerText]="'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE'" translate id="professional-more"></span>
+  </div>
+  <!-- /remaining text -->
+
+
+</section>
+

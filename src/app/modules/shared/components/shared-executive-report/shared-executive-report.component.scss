@@ -1,10 +1,101 @@
 @import "../../../../../style/framework/src/variables";
 
-#shared-executive-report {
+#executive-report-wrapper {
 
-  .divider {
-    margin: 50px 0;
-    border-top-width: 2px;
+  .page-first {
+    background-color: $bg-light-color;
+    display: flex;
+    border-radius: $border-radius;
+  }
+
+  .section-wrapper {
+    width: 33.33%;
+  }
+
+  .section {
+    display: inline-flex;
+    background-color: $bg-light-color;
+    padding: 25px;
+  }
+
+  .second-page {
+
+    .second-page-wrapper {
+      display: flex;
+      border-right: $border-radius;
+      background-image: url("https://res.cloudinary.com/umi/image/upload/v1540200786/app/default-images/sections/bg-1.jpg");
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 864.67px;
+    }
+
+  }
+
+  .sections {
+    width: 66.67%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $bg-light-color;
+  }
+
+  .section-2, .section-4 {
+    height: 50%;
+    display: flex;
+    border-bottom: $border-width solid $border-color;
+  }
+
+  .section-4 {
+    width: 50%;
+    border-left: $border-width solid $border-color;
+  }
+
+  .section-2:last-child {
+    border-bottom: none;
+  }
+
+  .section-4:last-child, .section-4:nth-child(3) {
+    border-bottom: none;
+  }
+
+  .section-4:nth-child(1), .section-4:nth-child(3) {
+    border-left: none;
+  }
+
+}
+
+
+@media (max-width: $size-lg) {
+
+  #executive-report-wrapper {
+
+    .page-first, .second-page-wrapper {
+      flex-direction: column;
+    }
+
+    .sections, .section-wrapper {
+      width: 100%;
+    }
+
+    .section {
+      min-height: 446px;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-md) {
+
+  #executive-report-wrapper {
+
+    .section {
+      width: 100%;
+      border: $border-width solid $border-color !important;
+    }
+
+
   }
 
 }

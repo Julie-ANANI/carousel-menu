@@ -1,88 +1,16 @@
-<div [ngClass]="{ 'inactive flex-centered': !section.questionId || !section.questionType }" id="executive-section">
-
-  <!-- no question selected -->
-  <div *ngIf="!section.questionId || !section.questionType">
-
-    <!-- title -->
-    <h4>{{ 'EXECUTIVE_REPORT.WANT_TO_DISPLAY' | translate }}</h4>
-    <!-- /title -->
-
-
-    <!-- question / type -->
-    <div class="question-selection-wrapper">
-
-      <!-- question -->
-      <div>
-        <h5 class="text-lg">{{ 'EXECUTIVE_REPORT.SYNTHESIS_SECTIONS' | translate }}</h5>
-        <ul>
-          <li (click)="selectQuestion(question._id)"
-              *ngFor="let question of questions"
-              [ngClass]="{ 'text-primary': question._id === section.questionId }">
-            {{ question.title | multiling:reportLang }}
-          </li>
-        </ul>
-      </div>
-      <!-- /question -->
-
-
-      <!-- type -->
-      <div>
-        <h5 class="text-lg">{{ 'EXECUTIVE_REPORT.RAW_DATA' | translate }}</h5>
-        <ul>
-          <li (click)="selectQuestionType(ques.label)"
-              *ngFor="let ques of questionType"
-              [ngClass]="{ 'text-primary': ques.label === section.questionType, 'inactive': !section.questionId }">
-            {{ ques.alias }}
-          </li>
-        </ul>
-      </div>
-      <!-- /type -->
-
-    </div>
-    <!-- /question / type -->
-
-  </div>
-  <!-- /no question selected -->
-
-
-  <!-- question selected -->
-  <div *ngIf="section.questionId && section.questionType">
-    <div [ngSwitch]="section.questionType">
-
-      <!-- type KPI -->
-      <div *ngSwitchCase="'KPI'">
-        <type-kpi (sectionChange)="onSectionUpdate($event)" [section]="section"></type-kpi>
-      </div>
-      <!-- /type KPI -->
-
-
-      <!-- type QUOTE -->
-      <div *ngSwitchCase="'QUOTE'">
-        <type-quote (sectionChange)="onSectionUpdate($event)" [section]="section"></type-quote>
-      </div>
-      <!-- /type QUOTE -->
-
-
-    </div>
-  </div>
-  <!-- /question selected -->
-
-</div>
-
-<!--
 <section id="executive-section-wrapper">
 
 
-  &lt;!&ndash; title &ndash;&gt;
+  <!-- title -->
   <div class="title-wrapper">
 
-    &lt;!&ndash; heading and menu &ndash;&gt;
+    <!-- heading and menu -->
     <div class="heading-menu">
 
-      &lt;!&ndash; heading &ndash;&gt;
+      <!-- heading -->
       <h2 *ngIf="questionSelected?.title" class="title-primary">{{ questionSelected?.title | multiling:lang }}</h2>
 
-      &lt;!&ndash; menu &ndash;&gt;
+      <!-- menu -->
       <ng-container *ngIf="adminSide">
         <div class="dropdown absolute is-right">
 
@@ -100,9 +28,9 @@
       </ng-container>
 
     </div>
-    &lt;!&ndash; /heading and Menu &ndash;&gt;
+    <!-- /heading and Menu -->
 
-    &lt;!&ndash; follow &ndash;&gt;
+    <!-- follow -->
     <ng-container *ngIf="questionSelected && stats">
       <p class="sub-title">
 
@@ -120,35 +48,35 @@
 
       </p>
     </ng-container>
-    &lt;!&ndash; /follow &ndash;&gt;
+    <!-- /follow -->
 
   </div>
-  &lt;!&ndash; /title &ndash;&gt;
+  <!-- /title -->
 
 
-  &lt;!&ndash; answer display &ndash;&gt;
+  <!-- answer display -->
   <ng-container *ngIf="questionSelected">
     <div class="content-wrapper">
 
-      &lt;!&ndash; if the question type is radio &ndash;&gt;
+      <!-- if the question type is radio -->
       <ng-container *ngIf="questionSelected.controlType === 'radio'">
         <app-pie-chart [question]="questionSelected"></app-pie-chart>
       </ng-container>
-      &lt;!&ndash; /if the question type is radio &ndash;&gt;
+      <!-- /if the question type is radio -->
 
-      &lt;!&ndash; if the question type is checkbox &ndash;&gt;
+      <!-- if the question type is checkbox -->
       <ng-container *ngIf="questionSelected.controlType === 'checkbox'">
         <app-bar-chart [innovation]="innovation" [question]="questionSelected" class="full-space"></app-bar-chart>
       </ng-container>
-      &lt;!&ndash; /if the question type is checkbox &ndash;&gt;
+      <!-- /if the question type is checkbox -->
 
-      &lt;!&ndash; if the question type is star &ndash;&gt;
+      <!-- if the question type is star -->
       <ng-container *ngIf="questionSelected.controlType === 'stars'">
         <app-stars [question]="questionSelected" class="full-space"></app-stars>
       </ng-container>
-      &lt;!&ndash; /if the question type is star &ndash;&gt;
+      <!-- /if the question type is star -->
 
-      &lt;!&ndash; if the question is not checkbox, radio, stars &ndash;&gt;
+      <!-- if the question is not checkbox, radio, stars -->
       <ng-container *ngIf="questionSelected.controlType !== 'checkbox' && questionSelected.controlType !== 'radio' && questionSelected.controlType !== 'stars'">
         <ng-container [ngSwitch]="questionSelected.title | multiling:lang | lowercase ">
 
@@ -170,21 +98,20 @@
 
         </ng-container>
       </ng-container>
-      &lt;!&ndash; if the question is not checkbox, radio, stars &ndash;&gt;
+      <!-- if the question is not checkbox, radio, stars -->
 
     </div>
   </ng-container>
-  &lt;!&ndash; /answer display &ndash;&gt;
+  <!-- /answer display -->
 
 
-  &lt;!&ndash; abstract &ndash;&gt;
+  <!-- abstract -->
   <ng-container *ngIf="questionSelected && abstractValue">
     <div class="abstract-wrapper">
       <span>{{ abstractValue }}</span>
     </div>
   </ng-container>
-  &lt;!&ndash; /abstract &ndash;&gt;
+  <!-- /abstract -->
 
 
 </section>
--->

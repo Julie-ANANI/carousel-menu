@@ -1,151 +1,84 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { ExecutiveProfessional } from '../../../../../models/executive-report';
-import { CommonService } from '../../../../../services/common/common.service';
-import { isPlatformBrowser } from '@angular/common';
-import { ProfessionalsService } from '../../../../../services/professionals/professionals.service';
-import { first } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-
-interface Professional {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  company: string;
-  country: string;
-  jobTitle: string;
-}
+import { Component, Input } from '@angular/core';
+import { Answer } from '../../../../../models/answer';
+import { Innovation } from '../../../../../models/innovation';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'executive-professional',
+  selector: 'app-executive-professional',
   templateUrl: './executive-professional.component.html',
   styleUrls: ['./executive-professional.component.scss']
 })
 
-export class ExecutiveProfessionalComponent implements OnInit {
+export class ExecutiveProfessionalComponent {
 
-  @Input() set config(value: ExecutiveProfessional) {
-    this._config = {
-      abstract: value.abstract || '',
-      list: value.list || []
-    };
+  @Input() set project(value: Innovation) {
+    this._professionalAbstract = value.executiveReport.professionalAbstract;
   }
 
-  @Output() configChange: EventEmitter<ExecutiveProfessional> = new EventEmitter<ExecutiveProfessional>();
-
-  private _config: ExecutiveProfessional = <ExecutiveProfessional>{
-    abstract: '',
-    list: []
-  };
-
-  private _professionalAbstractColor = '';
-
-  private _allProfessionals: Array<Professional> = [];
-
-  private _top4Pro: Array<Professional> = [<Professional>{}, <Professional>{}, <Professional>{}, <Professional>{}];
-
-  private _restPro: Array<Professional> = [];
-
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _professionalsService: ProfessionalsService) { }
-
-  ngOnInit(): void {
-    this._populateProfessionals();
-    this.textColor();
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this.getTargetCountries();
+    this.topProfessionalsAnswer();
   }
 
-  private _populateProfessionals() {
-    if (isPlatformBrowser(this._platformId)) {
+  private _answers: Array<Answer> = [];
 
-      const config = {
-        fields: '_id firstName lastName jobTitle company country',
-        _id: JSON.stringify({ $in: this._config.list })
-      };
+  private _professionalsAnswer: Array<Answer> = [];
 
-      this._professionalsService.getAll(config).pipe(first()).subscribe((response) => {
-        this._allProfessionals = response && response.result || [];
+  private _professionalAbstract = '';
 
-        if (this._allProfessionals.length >= 4) {
-          this._top4Pro = this._allProfessionals.slice(0, 4);
-        } else {
-          for (let i = 0; i <= this._allProfessionals.length; i++) {
-            if (this._allProfessionals[i]) {
-              this._top4Pro[i] = this._allProfessionals[i];
-            } else {
-              this._top4Pro[i] = <Professional>{};
-            }
-          }
-        }
+  private _targetCountries: Array<string> = [];
 
-        this._populateRestPro();
-        this._allProfessionals = ExecutiveProfessionalComponent._sortPro(this._allProfessionals);
+  constructor(private _translateService: TranslateService) { }
 
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-    }
-  }
 
-  private static _sortPro(proList: Array<Professional>) {
-    if (proList.length > 0) {
-      return proList.sort((a, b) => {
-        const nameA = (a.firstName + a.lastName).toLowerCase();
-        const nameB =  (b.firstName + b.lastName).toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-    } else {
-      return []
-    }
-  }
-
-  private _populateRestPro() {
-    this._restPro = ExecutiveProfessionalComponent._sortPro(this._allProfessionals.filter((pro) => {
-      const index = this._top4Pro.findIndex((value) => value._id === pro._id);
-      if (index === -1) {
-        return true;
+  private getTargetCountries() {
+    this._targetCountries = this._answers.reduce((acc, answer) => {
+      if (acc.indexOf(answer.country.flag) === -1) {
+        acc.push(answer.country.flag);
       }
-    }));
+      return acc;
+    }, []);
   }
 
-  public textColor() {
-    this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract.length, 258);
-  }
 
-  public emitChanges() {
-    this.configChange.emit(this._config);
-  }
+  private topProfessionalsAnswer() {
 
-  public selectPro(event: Event, index: number) {
-    this._top4Pro[index] = this._getPro(event && event.target && (event.target as HTMLSelectElement).value);
-    this._populateRestPro();
-
-    this._config.list = this._top4Pro.concat(this._restPro).map((value) => {
-      return value._id;
+    this._answers.forEach((items) => {
+      if (items.profileQuality === 2) {
+        this._professionalsAnswer.push(items);
+      }
     });
 
-    this.emitChanges();
-  }
-
-  private _getPro(id: string): Professional {
-    const index = this._allProfessionals.findIndex((pro) => pro._id === id);
-    if (index !== -1) {
-      return this._allProfessionals[index];
+    if (this._professionalsAnswer.length < 4) {
+      this._answers.forEach((items) => {
+        const find = this._professionalsAnswer.find((professional) => professional._id === items._id);
+        if (!find) {
+          this._professionalsAnswer.push(items);
+        }
+      });
     }
+
   }
 
-  get config(): ExecutiveProfessional {
-    return this._config;
+  public get userLang(): string {
+    return this._translateService.currentLang;
   }
 
-  get professionalAbstractColor(): string {
-    return this._professionalAbstractColor;
+  get answers(): Array<Answer> {
+    return this._answers;
   }
 
-  get top4Pro(): Array<Professional> {
-    return this._top4Pro;
+  get professionalsAnswer(): Array<Answer> {
+    return this._professionalsAnswer;
   }
 
-  get restPro(): Array<Professional> {
-    return this._restPro;
+  get targetCountries(): Array<string> {
+    return this._targetCountries;
+  }
+
+  get professionalAbstract(): string {
+    return this._professionalAbstract;
   }
 
 }

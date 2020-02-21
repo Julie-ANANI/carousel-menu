@@ -240,8 +240,7 @@ export class SidebarFilterAnswersComponent implements OnInit {
 
   public onClickResetConfirm(event: Event) {
     event.preventDefault();
-    // todo check this again
-    /*const totalSections = this._innovation.executiveReport.totalSections;
+    const totalSections = this._innovation.executiveReport.totalSections;
     const sections = this._innovation.executiveReport.sections;
 
     this._innovation.executiveReport.totalSections = 0;
@@ -253,7 +252,7 @@ export class SidebarFilterAnswersComponent implements OnInit {
       this._innovation.executiveReport.totalSections = totalSections;
       this._innovation.executiveReport.sections = sections;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });*/
+    });
 
     this._modalResetReport = false;
 
