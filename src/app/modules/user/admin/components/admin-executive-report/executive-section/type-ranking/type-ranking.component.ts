@@ -125,6 +125,11 @@ export class TypeRankingComponent {
     }
   }
 
+  public setColor(value: string, index: number) {
+    this._content.values[index].color = value;
+    this.emitChanges();
+  }
+
   get section(): ExecutiveSection {
     return this._section;
   }

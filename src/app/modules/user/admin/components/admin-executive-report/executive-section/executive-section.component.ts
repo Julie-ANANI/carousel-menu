@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
-import { ExecutiveSection, SectionBar, SectionKpi, SectionQuote } from '../../../../../../models/executive-report';
+import { ExecutiveSection, SectionBar, SectionKpi, SectionQuote, SectionRanking } from '../../../../../../models/executive-report';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
+import { Tag } from '../../../../../../models/tag';
 
 @Component({
   selector: 'executive-section',
@@ -23,8 +24,8 @@ export class ExecutiveSectionComponent {
 
   @Input() set section(value: ExecutiveSection) {
     this._section = {
-      questionId: value.questionId || 'dfdsf',
-      questionType: value.questionType || 'RANKING',
+      questionId: value.questionId || '',
+      questionType: value.questionType || '',
       abstract: value.abstract || '',
       label: value.label || '',
       content: value.content || <any>{}
@@ -138,6 +139,19 @@ export class ExecutiveSectionComponent {
   }
 
   private _setRankingData() {
+    const question: Question = this._getQuestion(this._section.questionId);
+    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
+    const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
+    const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
+    (<SectionRanking>this._section.content).values = [];
+
+    tagsData.slice(0, 3).forEach((tag, index) => {
+      (<SectionRanking>this._section.content).values.push({
+        color: '#4F5D6B',
+        legend: tag.count + 'X',
+        value: this._multilingPipe.transform(tag.label, this.reportLang)
+      })
+    });
 
   }
 
