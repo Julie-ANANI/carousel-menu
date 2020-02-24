@@ -1,0 +1,122 @@
+<div class="admin-executive-wrapper" id="type-pie">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- title -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('title')"
+          [(ngModel)]="section.label"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
+          maxlength="26"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
+          {{ 26 - section.label.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /title -->
+
+
+    <!-- abstract -->
+    <div class="m-bottom-20">
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor('abstract')"
+          [(ngModel)]="section.abstract"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
+          [ngStyle]="{ 'height': '97px' }"
+          maxlength="175"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': abstractColor }" class="text-limit-wrapper">
+          {{ 175 - section.abstract.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /abstract -->
+
+
+    <!-- show response -->
+    <div class="m-bottom-20">
+      <label class="form-checkbox">
+        <input
+          (change)="toggleResponses()"
+          [checked]="content.showPositive"
+          [value]="content.showPositive"
+          type="checkbox">
+        <i class="form-icon"></i> {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.SHOW_RESPONSES' | translate }}
+      </label>
+    </div>
+    <!-- /show response -->
+
+
+    <!-- label / value -->
+    <div class="d-flex justify-space flex-wrap">
+      <div *ngFor="let pie of content.values; let i = index" class="pie-wrapper">
+
+        <!-- label -->
+        <div class="m-right-15">
+          <label>
+
+            <input
+              (change)="emitChanges()"
+              (keyup)="textColor('label' + (i + 1))"
+              [(ngModel)]="pie.label"
+              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.LABEL_' + (i + 1) | translate"
+              maxlength="13"
+              class="form-input"
+              type="text">
+
+            <span
+              [ngStyle]="{ 'color': i === 0 ? label1Color : i === 1 ? label2Color : i === 2
+              ? label3Color : label4Color  }"
+              class="text-limit-wrapper">
+              {{ 13 - pie.label.length }}
+            </span>
+
+          </label>
+        </div>
+        <!-- /label -->
+
+
+        <!-- value -->
+        <div>
+          <label class="value-wrapper">
+            <input
+              (change)="emitChanges()"
+              [(ngModel)]="pie.value"
+              maxlength="4"
+              class="form-input"
+              type="text">
+          </label>
+        </div>
+        <!-- /value -->
+
+      </div>
+    </div>
+    <!-- /legend / value -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border is-justify">
+
+  </div>
+  <!-- /view side -->
+
+</div>

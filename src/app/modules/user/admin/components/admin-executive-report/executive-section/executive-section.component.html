@@ -77,6 +77,12 @@
       <!-- /type RANKING -->
 
 
+      <!-- type PIE -->
+      <div *ngSwitchCase="'PIE'">
+        <type-pie (sectionChange)="onSectionUpdate($event)" [section]="section"></type-pie>
+      </div>
+      <!-- /type RANKING -->
+
     </div>
   </div>
   <!-- /question selected -->

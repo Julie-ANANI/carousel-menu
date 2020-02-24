@@ -87,6 +87,10 @@ export class ExecutiveSectionComponent {
       case 'RANKING':
         this._setRankingData();
         break;
+
+      case 'PIE':
+        this._setPieData();
+        break;
     }
   }
 
@@ -152,6 +156,10 @@ export class ExecutiveSectionComponent {
         value: this._multilingPipe.transform(tag.label, this.reportLang)
       })
     });
+
+  }
+
+  private _setPieData() {
 
   }
 

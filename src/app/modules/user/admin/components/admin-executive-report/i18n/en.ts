@@ -75,4 +75,12 @@ export const ADMIN_EXECUTIVE_REPORT = {
     'ELEMENT_3': 'Element 3'
   },
 
+  'PIE_SECTION': {
+    'LABEL_1': 'Label 1',
+    'LABEL_2': 'Label 2',
+    'LABEL_3': 'Label 3',
+    'LABEL_4': 'Label 4',
+    'SHOW_RESPONSES': 'Show number favorable responses'
+  },
+
 };
