@@ -30,9 +30,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _modalTitle = '';
 
-  private _selectedLang = this.currentLang;
-
-  private _newSelectedLang = this.currentLang;
+  private _selectedLang = '';
 
   private _toBeSaved = false;
 
@@ -59,7 +57,6 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
     this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'title'));
     this._innovationFrontService.setInnovation(this._innovation);
-    this.setNewSelectedLang();
 
     if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
       this._setSpinner(false);
@@ -95,8 +92,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._translateTitleService.setTitle(title ? title + ' | Storyboard | UMI' : 'Storyboard | UMI');
   }
 
-  public setNewSelectedLang(value?: string) {
-    this._newSelectedLang = value ? value : this._selectedLang;
+  public setNewSelectedLang(value: string) {
+    this._selectedLang = value;
   }
 
   public autofillExecutiveReport(event: Event) {
@@ -133,7 +130,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   private _createExecutiveReport() {
-    this._executiveReportService.create(this._newSelectedLang, this._innovation._id).pipe(first()).subscribe((response) => {
+    this._executiveReportService.create(this._selectedLang, this._innovation._id).pipe(first()).subscribe((response) => {
       this._executiveReport = response;
       this._setSpinner(false);
       this._isLoading = false;
@@ -145,10 +142,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   private _resetExecutiveReport() {
-    this._executiveReportService.reset(this._executiveReport, this._newSelectedLang).pipe(first()).subscribe((response) => {
-      this._executiveReport = response;
-      this._setSpinner(false);
-      this._isLoading = false;
+    this._executiveReportService.delete(this._executiveReport._id).pipe(first()).subscribe((response) => {
+      this._createExecutiveReport();
     }, (err: HttpErrorResponse) => {
       this._setSpinner(false);
       console.log(err);

@@ -20,8 +20,8 @@ export class ExecutiveReportService {
     return this._http.put<ExecutiveReport>(`/exereport/${executiveReportObj._id}`, executiveReportObj);
   }
 
-  public reset(executiveReportObj: ExecutiveReport, newLang: string): Observable<ExecutiveReport> {
-    return this._http.put<ExecutiveReport>(`/exereport/${executiveReportObj._id}/resetReport`, { report: executiveReportObj, newLang: newLang });
+  public delete(executiveReportId: string): Observable<ExecutiveReport> {
+    return this._http.delete<ExecutiveReport>(`/exereport/${executiveReportId}`);
   }
 
 }

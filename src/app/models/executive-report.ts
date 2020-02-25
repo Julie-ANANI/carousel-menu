@@ -3,32 +3,32 @@ export interface ExecutiveReport {
   readonly completion: number
   lang: 'en' | 'fr';
   summary: string;
-  umiCommercial: string
-  owner: ExecutiveOwner;
+  sale: string
+  client: ExecutiveClient;
   objective: string;
   targeting: ExecutiveTargeting;
   professionals: ExecutiveProfessional;
   sections: Array<ExecutiveSection>;
   conclusion: string;
-  umiOperator: string;
-  //created: Date;
-  //updated: Date;
+  operator: string;
 }
 
-export interface ExecutiveOwner {
+export interface ExecutiveClient {
   name: string;
   email: string;
 }
 
 export interface ExecutiveProfessional {
   abstract: string;
+  title: string;
+  answers: string;
   list: Array<string>;
 }
 
 export interface ExecutiveObjective {
   objective: string;
-  owner: ExecutiveOwner;
-  umiCommercial: string;
+  client: ExecutiveClient;
+  sale: string;
 }
 
 export interface ExecutiveTargeting {
@@ -37,28 +37,28 @@ export interface ExecutiveTargeting {
 }
 
 export interface ExecutiveConclusion {
-  umiOperator: string;
+  operator: string;
   conclusion: string
 }
 
 export interface ExecutiveSection {
   questionId: string;
-  label: string;
+  title: string;
   abstract: string;
   questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | '';
   content: SectionPie | SectionRanking | SectionBar | SectionQuote | SectionKpi;
 }
 
 export interface SectionKpi {
-  kpi: string;
-  legend: string;
+  value: number;
+  name: string;
   examples: string;
 }
 
 export interface SectionQuote {
   showQuotes: boolean;
   quote: string;
-  contributor: {
+  author: {
     name: string;
     jobTitle: string;
   };
@@ -67,25 +67,28 @@ export interface SectionQuote {
 export interface SectionBar {
   showExamples: boolean;
   values: Array<{
-    legend: string;
-    value: string;
+    name: string;
+    value: number;
+    visibility: boolean;
     example: string;
   }>;
 }
 
 export interface SectionPie {
   showPositive: boolean;
+  favorable: string;
   values: Array<{
-    p_index: string;
-    value: string;
-    label: string;
+    answers: number;
+    percentage: number;
+    legend: number
   }>;
 }
 
 export interface SectionRanking {
+  color: string;
   values: Array<{
-    legend: string;
-    value: string;
-    color: string;
+    name: string;
+    occurrence: string;
+    visibility: boolean;
   }>;
 }
