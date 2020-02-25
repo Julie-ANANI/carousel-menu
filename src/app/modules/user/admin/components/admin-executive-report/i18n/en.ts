@@ -17,7 +17,7 @@ export const ADMIN_EXECUTIVE_REPORT = {
   },
 
   'PROFESSIONAL': {
-    'PROFESSIONALS': 'Professional abstract',
+    'ABSTRACT': 'Professional abstract',
     'SOME_PROFILES': 'Some profiles',
     'CHOOSE_PRO': 'Choose a pro',
   },

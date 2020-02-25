@@ -23,7 +23,7 @@ export class ExecutiveConclusionComponent implements OnInit {
   @Input() set config(value: ExecutiveConclusion) {
     this._config = {
       conclusion: value.conclusion || '',
-      umiOperator: value.umiOperator || ''
+      operator: value.operator || ''
     };
   }
 
@@ -31,14 +31,14 @@ export class ExecutiveConclusionComponent implements OnInit {
 
   private _config: ExecutiveConclusion = <ExecutiveConclusion> {
     conclusion: '',
-    umiOperator: ''
+    operator: ''
   };
 
   private _conclusionColor = '';
 
   private _allOperators: Array<Operator> = [];
 
-  private _umiOperator: Operator = <Operator>{};
+  private _operator: Operator = <Operator>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _userService: UserService) { }
@@ -71,10 +71,10 @@ export class ExecutiveConclusionComponent implements OnInit {
   }
 
   private _populateOperator() {
-    if (this._config.umiOperator) {
-      const index = this._allOperators.findIndex((operator) => operator._id === this._config.umiOperator);
+    if (this._config.operator) {
+      const index = this._allOperators.findIndex((operator) => operator._id === this._config.operator);
       if (index !== -1) {
-        this._umiOperator = this._allOperators[index];
+        this._operator = this._allOperators[index];
       }
     }
   }
@@ -88,7 +88,7 @@ export class ExecutiveConclusionComponent implements OnInit {
   }
 
   public selectOperator(event: Event) {
-    this._config.umiOperator = event && event.target && (event.target as HTMLSelectElement).value || '';
+    this._config.operator = event && event.target && (event.target as HTMLSelectElement).value || '';
     this._populateOperator();
     this.emitChanges();
   }
@@ -105,8 +105,8 @@ export class ExecutiveConclusionComponent implements OnInit {
     return this._allOperators;
   }
 
-  get umiOperator(): Operator {
-    return this._umiOperator;
+  get operator(): Operator {
+    return this._operator;
   }
 
 
