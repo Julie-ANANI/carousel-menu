@@ -18,9 +18,9 @@ export class TypeKpiComponent {
       abstract: value.abstract || '',
       title: value.title || '',
       content: {
-        value: <SectionKpi>value.content && (<SectionKpi>value.content).value ? (<SectionKpi>value.content).value: '',
-        name: <SectionKpi>value.content && (<SectionKpi>value.content).name ? (<SectionKpi>value.content).name : '',
-        examples: <SectionKpi>value.content && (<SectionKpi>value.content).examples ? (<SectionKpi>value.content).examples : ''
+        value: <SectionKpi>value.content && (<SectionKpi>value.content).value || '',
+        name: <SectionKpi>value.content && (<SectionKpi>value.content).name || '',
+        examples: <SectionKpi>value.content && (<SectionKpi>value.content).examples || ''
       }
     };
 

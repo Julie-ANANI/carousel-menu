@@ -19,12 +19,12 @@ export class TypeQuoteComponent {
       title: value.title || '',
       content: {
         showQuotes: <SectionQuote>value.content && (<SectionQuote>value.content).showQuotes,
-        quote: <SectionQuote>value.content && (<SectionQuote>value.content).quote ? (<SectionQuote>value.content).quote : '',
+        quote: <SectionQuote>value.content && (<SectionQuote>value.content).quote || '',
         author: {
           name: <SectionQuote>value.content && (<SectionQuote>value.content).author
-          && (<SectionQuote>value.content).author.name ? (<SectionQuote>value.content).author.name : '',
+          && (<SectionQuote>value.content).author.name || '',
           jobTitle: <SectionQuote>value.content && (<SectionQuote>value.content).author
-          && (<SectionQuote>value.content).author.jobTitle ? (<SectionQuote>value.content).author.jobTitle : '',
+          && (<SectionQuote>value.content).author.jobTitle || '',
         }
       }
     };

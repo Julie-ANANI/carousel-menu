@@ -1,13 +1,21 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
-import { ExecutiveSection, SectionBar, SectionKpi, SectionQuote, SectionRanking } from '../../../../../../models/executive-report';
+import {
+  ExecutiveSection,
+  SectionBar,
+  SectionKpi,
+  SectionPie,
+  SectionQuote,
+  SectionRanking
+} from '../../../../../../models/executive-report';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
 import { Tag } from '../../../../../../models/tag';
 import { specialCharRegEx } from '../../../../../../utils/regex';
+import { PieChart } from '../../../../../../models/pie-chart';
 
 @Component({
   selector: 'executive-section',
@@ -146,9 +154,11 @@ export class ExecutiveSectionComponent {
   private _setRankingData() {
     const question: Question = this._getQuestion(this._section.questionId);
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionRanking>this._section.content).color = '#4F5D6B';
+
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
+
+    (<SectionRanking>this._section.content).color = '#4F5D6B';
     (<SectionRanking>this._section.content).values = [];
 
     tagsData.slice(0, 3).forEach((tag, index) => {
@@ -161,6 +171,38 @@ export class ExecutiveSectionComponent {
   }
 
   private _setPieData() {
+    const question: Question = this._getQuestion(this._section.questionId);
+    this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+
+    if (question.controlType === 'radio') {
+      const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
+      const barsData: Array<BarData> = ResponseService.barsData(question, answers);
+      const pieChartData: PieChart = ResponseService.pieChartData(barsData, answers);
+
+      (<SectionRanking>this._section.content).values = [];
+
+      if (pieChartData) {
+
+        if (pieChartData.percentage) {
+          (<SectionPie>this._section.content).favorable = pieChartData.percentage + '%';
+          (<SectionPie>this._section.content).showPositive = true;
+        }
+
+        if (pieChartData.data) {
+          pieChartData.data.forEach((data, index) => {
+            (<SectionPie>this._section.content).values.push({
+              percentage: pieChartData.labelPercentage && pieChartData.labelPercentage[index]
+                && Number(pieChartData.labelPercentage[index].replace(specialCharRegEx, '')) || 0,
+              color: pieChartData.colors && pieChartData.colors[index],
+              legend: pieChartData.labels && pieChartData.labels[this.reportLang] && pieChartData.labels[this.reportLang][index],
+              answers: data
+            });
+          });
+        }
+
+      }
+
+    }
 
   }
 

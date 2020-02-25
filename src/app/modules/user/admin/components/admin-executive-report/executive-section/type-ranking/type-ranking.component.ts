@@ -22,21 +22,21 @@ export class TypeRankingComponent {
         values: [
           {
             name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
-            && (<SectionRanking>value.content).values[0].name ? (<SectionRanking>value.content).values[0].name : '',
+            && (<SectionRanking>value.content).values[0].name || '',
             occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
-            && (<SectionRanking>value.content).values[0].occurrence ? (<SectionRanking>value.content).values[0].occurrence : '',
+            && (<SectionRanking>value.content).values[0].occurrence || '',
           },
           {
             name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
-            && (<SectionRanking>value.content).values[1].name ? (<SectionRanking>value.content).values[1].name : '',
+            && (<SectionRanking>value.content).values[1].name || '',
             occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
-            && (<SectionRanking>value.content).values[1].occurrence ? (<SectionRanking>value.content).values[1].occurrence : '',
+            && (<SectionRanking>value.content).values[1].occurrence || '',
           },
           {
             name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
-            && (<SectionRanking>value.content).values[2].name ? (<SectionRanking>value.content).values[2].name : '',
+            && (<SectionRanking>value.content).values[2].name || '',
             occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
-            && (<SectionRanking>value.content).values[2].occurrence ? (<SectionRanking>value.content).values[2].occurrence : '',
+            && (<SectionRanking>value.content).values[2].occurrence || '',
           }
         ]
       }

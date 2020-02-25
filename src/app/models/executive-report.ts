@@ -76,9 +76,10 @@ export interface SectionPie {
   showPositive: boolean;
   favorable: string;
   values: Array<{
-    answers: number;
     percentage: number;
-    legend: number
+    answers: number;
+    legend: string;
+    color: string;
   }>;
 }
 

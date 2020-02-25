@@ -22,27 +22,27 @@ export class TypeBarComponent {
         values: [
           {
             name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-            && (<SectionBar>value.content).values[0].name ? (<SectionBar>value.content).values[0].name : '',
+            && (<SectionBar>value.content).values[0].name || '',
             example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-            && (<SectionBar>value.content).values[0].example ? (<SectionBar>value.content).values[0].example : '',
+            && (<SectionBar>value.content).values[0].example || '',
             value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-            && (<SectionBar>value.content).values[0].value || null
+            && (<SectionBar>value.content).values[0].value
           },
           {
             name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].name ? (<SectionBar>value.content).values[1].name : '',
+            && (<SectionBar>value.content).values[1].name || '',
             example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].example ? (<SectionBar>value.content).values[1].example : '',
+            && (<SectionBar>value.content).values[1].example || '',
             value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].value || null
+            && (<SectionBar>value.content).values[1].value
           },
           {
             name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].name ? (<SectionBar>value.content).values[2].name : '',
+            && (<SectionBar>value.content).values[2].name || '',
             example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].example ? (<SectionBar>value.content).values[2].example : '',
+            && (<SectionBar>value.content).values[2].example || '',
             value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].value || null
+            && (<SectionBar>value.content).values[2].value
           }
         ]
       }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ExecutiveSection, SectionPie } from '../../../../../../../models/executive-report';
 import { CommonService } from '../../../../../../../services/common/common.service';
+import { ExecutivePieChart } from '../../../../../../../models/pie-chart';
 
 @Component({
   selector: 'type-pie',
@@ -16,54 +17,64 @@ export class TypePieComponent {
       questionId: value.questionId || '',
       questionType: value.questionType || '',
       abstract: value.abstract || '',
-      label: value.label || '',
+      title: value.title || '',
       content: {
         showPositive: <SectionPie>value.content && (<SectionPie>value.content).showPositive,
+        favorable: <SectionPie>value.content && (<SectionPie>value.content).favorable || '',
         values: [
           {
-            value: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
-            && (<SectionPie>value.content).values[0].value ? (<SectionPie>value.content).values[0].value : '',
-            p_index: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
-            && (<SectionPie>value.content).values[0].p_index ? (<SectionPie>value.content).values[0].p_index : '',
-            label: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
-            && (<SectionPie>value.content).values[0].label ? (<SectionPie>value.content).values[0].label : '',
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+            && (<SectionPie>value.content).values[0].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+            && (<SectionPie>value.content).values[0].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+            && (<SectionPie>value.content).values[0].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+            && (<SectionPie>value.content).values[0].color || '',
           },
           {
-            value: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
-            && (<SectionPie>value.content).values[1].value ? (<SectionPie>value.content).values[1].value : '',
-            p_index: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
-            && (<SectionPie>value.content).values[1].p_index ? (<SectionPie>value.content).values[1].p_index : '',
-            label: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
-            && (<SectionPie>value.content).values[1].label ? (<SectionPie>value.content).values[1].label : '',
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+            && (<SectionPie>value.content).values[1].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+            && (<SectionPie>value.content).values[1].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+            && (<SectionPie>value.content).values[1].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+            && (<SectionPie>value.content).values[1].color || '',
           },
           {
-            value: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
-            && (<SectionPie>value.content).values[2].value ? (<SectionPie>value.content).values[2].value : '',
-            p_index: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
-            && (<SectionPie>value.content).values[2].p_index ? (<SectionPie>value.content).values[2].p_index : '',
-            label: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
-            && (<SectionPie>value.content).values[2].label ? (<SectionPie>value.content).values[2].label : '',
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+            && (<SectionPie>value.content).values[2].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+            && (<SectionPie>value.content).values[2].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+            && (<SectionPie>value.content).values[2].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+            && (<SectionPie>value.content).values[2].color || '',
           },
           {
-            value: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
-            && (<SectionPie>value.content).values[3].value ? (<SectionPie>value.content).values[3].value : '',
-            p_index: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
-            && (<SectionPie>value.content).values[3].p_index ? (<SectionPie>value.content).values[3].p_index : '',
-            label: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
-            && (<SectionPie>value.content).values[3].label ? (<SectionPie>value.content).values[3].label : '',
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+            && (<SectionPie>value.content).values[3].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+            && (<SectionPie>value.content).values[3].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+            && (<SectionPie>value.content).values[3].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+            && (<SectionPie>value.content).values[3].color || '',
           }
         ]
       }
     };
 
     this._content = <SectionPie>this._section.content;
+    this._setPieChartData();
 
     this.textColor('title');
     this.textColor('abstract');
-    this.textColor('label1');
-    this.textColor('label2');
-    this.textColor('label3');
-    this.textColor('label4');
+    this.textColor('legend1');
+    this.textColor('legend2');
+    this.textColor('legend3');
+    this.textColor('legend4');
 
   }
 
@@ -73,6 +84,7 @@ export class TypePieComponent {
 
   private _content: SectionPie = {
     showPositive: true,
+    favorable: '',
     values: []
   };
 
@@ -80,15 +92,33 @@ export class TypePieComponent {
 
   private _abstractColor = '';
 
-  private _label1Color = '';
+  private _legend1Color = '';
 
-  private _label2Color = '';
+  private _legend2Color = '';
 
-  private _label3Color = '';
+  private _legend3Color = '';
 
-  private _label4Color = '';
+  private _legend4Color = '';
+
+  private _pieChart: ExecutivePieChart = {
+    data: [],
+    colors: [],
+    labels: [],
+    labelPercentage: []
+  };
 
   constructor() { }
+
+  private _setPieChartData() {
+    if (this._content && this._content.values) {
+      this._content.values.forEach((value, index) => {
+        this._pieChart.data[index] = value.answers;
+        this._pieChart.colors[index] = value.color;
+        this._pieChart.labels[index] = value.legend;
+        this._pieChart.labelPercentage[index] = value.percentage + '%';
+      });
+    }
+  }
 
   public emitChanges() {
     this._section.content = this._content;
@@ -104,27 +134,27 @@ export class TypePieComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.label.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
         break;
 
       case 'abstract':
         this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
         break;
 
-      case 'label1':
-        this._label1Color = CommonService.getLimitColor(this._content.values[0].label.length, 13);
+      case 'legend1':
+        this._legend1Color = CommonService.getLimitColor(this._content.values[0].legend.length, 13);
         break;
 
-      case 'label2':
-        this._label2Color = CommonService.getLimitColor(this._content.values[1].label.length, 13);
+      case 'legend2':
+        this._legend2Color = CommonService.getLimitColor(this._content.values[1].legend.length, 13);
         break;
 
-      case 'label3':
-        this._label3Color = CommonService.getLimitColor(this._content.values[2].label.length, 13);
+      case 'legend3':
+        this._legend3Color = CommonService.getLimitColor(this._content.values[2].legend.length, 13);
         break;
 
-      case 'label4':
-        this._label4Color = CommonService.getLimitColor(this._content.values[3].label.length, 13);
+      case 'legend4':
+        this._legend4Color = CommonService.getLimitColor(this._content.values[3].legend.length, 13);
         break;
 
     }
@@ -146,20 +176,24 @@ export class TypePieComponent {
     return this._content;
   }
 
-  get label1Color(): string {
-    return this._label1Color;
+  get legend1Color(): string {
+    return this._legend1Color;
   }
 
-  get label2Color(): string {
-    return this._label2Color;
+  get legend2Color(): string {
+    return this._legend2Color;
   }
 
-  get label3Color(): string {
-    return this._label3Color;
+  get legend3Color(): string {
+    return this._legend3Color;
   }
 
-  get label4Color(): string {
-    return this._label4Color;
+  get legend4Color(): string {
+    return this._legend4Color;
+  }
+
+  get pieChart(): ExecutivePieChart {
+    return this._pieChart;
   }
 
 }

@@ -10,14 +10,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('title')"
-          [(ngModel)]="section.label"
+          [(ngModel)]="section.title"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
           maxlength="26"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
-          {{ 26 - section.label.length }}
+          {{ 26 - section.title.length }}
         </span>
 
       </label>
@@ -34,9 +34,8 @@
           (keyup)="textColor('abstract')"
           [(ngModel)]="section.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
-          [ngStyle]="{ 'height': '97px' }"
           maxlength="175"
-          class="form-input"
+          class="form-input is-abstract"
           type="text">
         </textarea>
 
@@ -54,6 +53,7 @@
       <label class="form-checkbox">
         <input
           (change)="toggleResponses()"
+          [disabled]="!content.favorable"
           [checked]="content.showPositive"
           [value]="content.showPositive"
           type="checkbox">
@@ -64,7 +64,7 @@
 
 
     <!-- label / value -->
-    <div class="d-flex justify-space flex-wrap">
+    <div [ngStyle]="{ 'margin-bottom': '-15px' }" class="d-flex justify-space flex-wrap">
       <div *ngFor="let pie of content.values; let i = index" class="pie-wrapper">
 
         <!-- label -->
@@ -74,17 +74,17 @@
             <input
               (change)="emitChanges()"
               (keyup)="textColor('label' + (i + 1))"
-              [(ngModel)]="pie.label"
-              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.LABEL_' + (i + 1) | translate"
+              [(ngModel)]="pie.legend"
+              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.LEGEND_' + (i + 1) | translate"
               maxlength="13"
               class="form-input"
               type="text">
 
             <span
-              [ngStyle]="{ 'color': i === 0 ? label1Color : i === 1 ? label2Color : i === 2
-              ? label3Color : label4Color  }"
+              [ngStyle]="{ 'color': i === 0 ? legend1Color : i === 1 ? legend2Color : i === 2
+              ? legend3Color : legend4Color  }"
               class="text-limit-wrapper">
-              {{ 13 - pie.label.length }}
+              {{ 13 - pie.legend.length }}
             </span>
 
           </label>
@@ -97,7 +97,8 @@
           <label class="value-wrapper">
             <input
               (change)="emitChanges()"
-              [(ngModel)]="pie.value"
+              [(ngModel)]="pie.percentage"
+              placeholder="25"
               maxlength="4"
               class="form-input"
               type="text">
@@ -117,8 +118,10 @@
   <div class="content-wrapper has-border is-justify">
 
     <div class="text-center">
-      <h4 class="m-bottom-10 text-center">{{ section.label }}</h4>
-      <h5 *ngIf="content.showPositive" class="text-lg text-normal m-no-bottom"></h5>
+      <h4 class="m-no-bottom text-center">{{ section.title }}</h4>
+      <h5 *ngIf="content.showPositive" class="text-lg text-normal m-no-bottom">
+        {{ content.favorable }} {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.FAVOURABLE' | translate }}
+      </h5>
     </div>
 
     <p class="has-min-height">{{ section.abstract }}</p>

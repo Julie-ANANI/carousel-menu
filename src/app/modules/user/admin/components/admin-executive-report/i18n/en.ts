@@ -76,11 +76,12 @@ export const ADMIN_EXECUTIVE_REPORT = {
   },
 
   'PIE_SECTION': {
-    'LABEL_1': 'Label 1',
-    'LABEL_2': 'Label 2',
-    'LABEL_3': 'Label 3',
-    'LABEL_4': 'Label 4',
-    'SHOW_RESPONSES': 'Show number favorable responses'
+    'LEGEND_1': 'Legend 1',
+    'LEGEND_2': 'Legend 2',
+    'LEGEND_3': 'Legend 3',
+    'LEGEND_4': 'Legend 4',
+    'SHOW_RESPONSES': 'Show number favorable responses',
+    'FAVOURABLE': ' of responses are favorable'
   },
 
 };

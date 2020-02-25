@@ -5,3 +5,10 @@ export interface PieChart {
   percentage?: number;
   labelPercentage?: Array<string>;
 }
+
+export interface ExecutivePieChart {
+  data: Array<number>;
+  colors: Array<string>;
+  labels: Array<string>;
+  labelPercentage: Array<string>;
+}

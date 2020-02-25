@@ -299,7 +299,7 @@ export class ResponseService {
    * @param barsData
    * @param answers
    */
-  static getPieChartData(barsData: Array<BarData>, answers: Array<Answer>) {
+  static pieChartData(barsData: Array<BarData>, answers: Array<Answer>) {
 
     let positiveAnswersCount = 0;
 
