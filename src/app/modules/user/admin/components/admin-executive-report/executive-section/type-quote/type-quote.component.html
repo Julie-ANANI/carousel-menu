@@ -10,14 +10,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('title')"
-          [(ngModel)]="section.label"
+          [(ngModel)]="section.title"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
           maxlength="26"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
-          {{ 26 - section.label.length }}
+          {{ 26 - section.title.length }}
         </span>
 
       </label>
@@ -94,14 +94,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('name')"
-          [(ngModel)]="content.contributor.name"
+          [(ngModel)]="content.author.name"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.NAME' | translate"
           maxlength="62"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': nameColor }" class="text-limit-wrapper">
-          {{ 62 - content.contributor.name.length }}
+          {{ 62 - content.author.name.length }}
         </span>
 
       </label>
@@ -116,14 +116,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('job')"
-          [(ngModel)]="content.contributor.jobTitle"
+          [(ngModel)]="content.author.jobTitle"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.JOB' | translate"
           maxlength="62"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': jobColor }" class="text-limit-wrapper">
-          {{ 62 - content.contributor.jobTitle.length }}
+          {{ 62 - content.author.jobTitle.length }}
         </span>
 
       </label>
@@ -137,7 +137,7 @@
   <!-- view side -->
   <div class="content-wrapper has-border is-justify text-center">
 
-    <h4 class="m-bottom-25">{{ section.label }}</h4>
+    <h4 class="m-bottom-25">{{ section.title }}</h4>
 
     <!-- quotes / name / job -->
     <div class="m-bottom-20">
@@ -156,8 +156,8 @@
 
       </div>
 
-      <p class="text-lg text-medium">{{ content.contributor.name }}</p>
-      <p>{{ content.contributor.jobTitle }}</p>
+      <p class="text-lg text-medium">{{ content.author.name }}</p>
+      <p>{{ content.author.jobTitle }}</p>
 
     </div>
     <!-- /quotes / name / job -->

@@ -16,15 +16,15 @@ export class TypeQuoteComponent {
       questionId: value.questionId || '',
       questionType: value.questionType || '',
       abstract: value.abstract || '',
-      label: value.label || '',
+      title: value.title || '',
       content: {
         showQuotes: <SectionQuote>value.content && (<SectionQuote>value.content).showQuotes,
         quote: <SectionQuote>value.content && (<SectionQuote>value.content).quote ? (<SectionQuote>value.content).quote : '',
-        contributor: {
-          name: <SectionQuote>value.content && (<SectionQuote>value.content).contributor
-          && (<SectionQuote>value.content).contributor.name ? (<SectionQuote>value.content).contributor.name : '',
-          jobTitle: <SectionQuote>value.content && (<SectionQuote>value.content).contributor
-          && (<SectionQuote>value.content).contributor.jobTitle ? (<SectionQuote>value.content).contributor.jobTitle : '',
+        author: {
+          name: <SectionQuote>value.content && (<SectionQuote>value.content).author
+          && (<SectionQuote>value.content).author.name ? (<SectionQuote>value.content).author.name : '',
+          jobTitle: <SectionQuote>value.content && (<SectionQuote>value.content).author
+          && (<SectionQuote>value.content).author.jobTitle ? (<SectionQuote>value.content).author.jobTitle : '',
         }
       }
     };
@@ -46,7 +46,7 @@ export class TypeQuoteComponent {
   private _content: SectionQuote = {
     showQuotes: true,
     quote: '',
-    contributor: {
+    author: {
       name: '',
       jobTitle: ''
     }
@@ -73,7 +73,7 @@ export class TypeQuoteComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.label.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
         break;
 
       case 'abstract':
@@ -85,11 +85,11 @@ export class TypeQuoteComponent {
         break;
 
       case 'name':
-        this._nameColor = CommonService.getLimitColor(this._content.contributor.name.length, 62);
+        this._nameColor = CommonService.getLimitColor(this._content.author.name.length, 62);
         break;
 
       case 'job':
-        this._jobColor = CommonService.getLimitColor(this._content.contributor.jobTitle.length, 62);
+        this._jobColor = CommonService.getLimitColor(this._content.author.jobTitle.length, 62);
         break;
 
     }

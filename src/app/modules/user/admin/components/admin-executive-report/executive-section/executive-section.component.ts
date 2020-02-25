@@ -111,7 +111,7 @@ export class ExecutiveSectionComponent {
 
   private _setQuoteData() {
     const question: Question = this._getQuestion(this._section.questionId);
-    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
+    this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
     (<SectionQuote>this._section.content).showQuotes = true;
   }
 
