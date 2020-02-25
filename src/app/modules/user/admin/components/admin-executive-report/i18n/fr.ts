@@ -2,23 +2,23 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'OBJECTIVE': {
     'OBJECTIVE': 'Objectif',
-    'LEADER': 'Chef de projet',
+    'LEADER': 'Porteurs de projet',
     'CONTACT': 'Contact'
   },
 
   'PITCH': {
-    'PROJECT': 'Projet',
+    'TITLE': 'Project pitch',
     'PROJECT_PITCH': 'Le pitch du projet'
   },
 
   'TARGETING': {
     'TARGETING': 'Résumé du ciblage',
-    'PROFESSIONAL': 'Panel de professionnels'
+    'PROFESSIONAL': 'Professionnels ciblés'
   },
 
   'PROFESSIONAL': {
     'PROFESSIONALS': 'Résumé professionnel',
-    'SOME_PROFILES': 'Certains profils',
+    'SOME_PROFILES': 'Quelques profils"',
     'CHOOSE_PRO': 'Choisissez un pro',
   },
 

@@ -7,7 +7,7 @@ export const ADMIN_EXECUTIVE_REPORT = {
   },
 
   'PITCH': {
-    'PROJECT': 'Project',
+    'TITLE': 'Pitch du projet',
     'PROJECT_PITCH': 'Project pitch'
   },
 
