@@ -13,7 +13,7 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'TARGETING': {
     'TARGETING': 'Targeting abstract',
-    'PROFESSIONAL': 'Panel of professionals'
+    'TITLE': 'Panel of professionals'
   },
 
   'PROFESSIONAL': {

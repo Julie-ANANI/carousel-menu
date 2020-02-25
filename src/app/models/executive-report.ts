@@ -11,6 +11,7 @@ export interface ExecutiveReport {
   sections: Array<ExecutiveSection>;
   conclusion: string;
   operator: string;
+  answers: string;
 }
 
 export interface ExecutiveClient {

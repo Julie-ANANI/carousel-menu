@@ -13,7 +13,7 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'TARGETING': {
     'TARGETING': 'Résumé du ciblage',
-    'PROFESSIONAL': 'Professionnels ciblés'
+    'TITLE': 'Professionnels ciblés'
   },
 
   'PROFESSIONAL': {
