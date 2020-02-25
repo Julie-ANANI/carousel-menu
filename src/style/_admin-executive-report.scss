@@ -81,6 +81,11 @@
 
     .form-input {
       padding: 15px 30px 15px 15px;
+
+      &.is-abstract {
+        height: 118px;
+      }
+
     }
 
     .form-checkbox {
@@ -160,7 +165,7 @@
       &.has-border {
 
         &.is-fixed {
-          max-height: 380px;
+          max-height: 405px;
           overflow: hidden;
           overflow-y: auto;
         }

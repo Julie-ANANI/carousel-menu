@@ -16,33 +16,33 @@ export class TypeBarComponent {
       questionId: value.questionId || '',
       questionType: value.questionType || '',
       abstract: value.abstract || '',
-      label: value.label || '',
+      title: value.title || '',
       content: {
         showExamples: <SectionBar>value.content && (<SectionBar>value.content).showExamples,
         values: [
           {
-            legend: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-              && (<SectionBar>value.content).values[0].legend ? (<SectionBar>value.content).values[0].legend : '',
+            name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
+            && (<SectionBar>value.content).values[0].name ? (<SectionBar>value.content).values[0].name : '',
             example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
             && (<SectionBar>value.content).values[0].example ? (<SectionBar>value.content).values[0].example : '',
             value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-            && (<SectionBar>value.content).values[0].value ? (<SectionBar>value.content).values[0].value : '',
+            && (<SectionBar>value.content).values[0].value || null
           },
           {
-            legend: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].legend ? (<SectionBar>value.content).values[1].legend : '',
+            name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
+            && (<SectionBar>value.content).values[1].name ? (<SectionBar>value.content).values[1].name : '',
             example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
             && (<SectionBar>value.content).values[1].example ? (<SectionBar>value.content).values[1].example : '',
             value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].value ? (<SectionBar>value.content).values[1].value : '',
+            && (<SectionBar>value.content).values[1].value || null
           },
           {
-            legend: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].legend ? (<SectionBar>value.content).values[2].legend : '',
+            name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
+            && (<SectionBar>value.content).values[2].name ? (<SectionBar>value.content).values[2].name : '',
             example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
             && (<SectionBar>value.content).values[2].example ? (<SectionBar>value.content).values[2].example : '',
             value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].value ? (<SectionBar>value.content).values[2].value : '',
+            && (<SectionBar>value.content).values[2].value || null
           }
         ]
       }
@@ -52,9 +52,9 @@ export class TypeBarComponent {
 
     this.textColor('title');
     this.textColor('abstract');
-    this.textColor('legend', 1);
-    this.textColor('legend', 2);
-    this.textColor('legend', 3);
+    this.textColor('name', 1);
+    this.textColor('name', 2);
+    this.textColor('name', 3);
     this.textColor('example', 1);
     this.textColor('example', 2);
     this.textColor('example', 3);
@@ -74,11 +74,11 @@ export class TypeBarComponent {
 
   private _abstractColor = '';
 
-  private _legend1Color = '';
+  private _name1Color = '';
 
-  private _legend2Color = '';
+  private _name2Color = '';
 
-  private _legend3Color = '';
+  private _name3Color = '';
 
   private _example1Color = '';
 
@@ -102,20 +102,20 @@ export class TypeBarComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.label.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
         break;
 
       case 'abstract':
         this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
         break;
 
-      case 'legend':
+      case 'name':
         if (index === 1) {
-          this._legend1Color = CommonService.getLimitColor(this._content.values[0].legend.length, 32);
+          this._name1Color = CommonService.getLimitColor(this._content.values[0].name.length, 32);
         } else if (index === 2) {
-          this._legend2Color = CommonService.getLimitColor(this._content.values[1].legend.length, 32);
+          this._name2Color = CommonService.getLimitColor(this._content.values[1].name.length, 32);
         } else if (index === 3) {
-          this._legend3Color = CommonService.getLimitColor(this._content.values[2].legend.length, 32);
+          this._name3Color = CommonService.getLimitColor(this._content.values[2].name.length, 32);
         }
         break;
 
@@ -148,16 +148,16 @@ export class TypeBarComponent {
     return this._abstractColor;
   }
 
-  get legend1Color(): string {
-    return this._legend1Color;
+  get name1Color(): string {
+    return this._name1Color;
   }
 
-  get legend2Color(): string {
-    return this._legend2Color;
+  get name2Color(): string {
+    return this._name2Color;
   }
 
-  get legend3Color(): string {
-    return this._legend3Color;
+  get name3Color(): string {
+    return this._name3Color;
   }
 
   get example1Color(): string {

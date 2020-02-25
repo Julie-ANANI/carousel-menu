@@ -10,14 +10,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('title')"
-          [(ngModel)]="section.label"
+          [(ngModel)]="section.title"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
           maxlength="26"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
-          {{ 26 - section.label.length }}
+          {{ 26 - section.title.length }}
         </span>
 
       </label>
@@ -34,9 +34,8 @@
           (keyup)="textColor('abstract')"
           [(ngModel)]="section.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
-          [ngStyle]="{ 'height': '97px' }"
           maxlength="175"
-          class="form-input"
+          class="form-input is-abstract"
           type="text">
         </textarea>
 
@@ -77,15 +76,15 @@
               <input
                 (change)="emitChanges()"
                 (keyup)="textColor('case' , (i + 1))"
-                [(ngModel)]="bar.legend"
+                [(ngModel)]="bar.name"
                 [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.BAR_SECTION.CASE_' + (i + 1) | translate"
                 maxlength="32"
                 class="form-input"
                 type="text">
 
-              <span [ngStyle]="{ 'color': i === 0 ? legend1Color : i === 1 ? legend2Color : legend3Color }"
+              <span [ngStyle]="{ 'color': i === 0 ? name1Color : i === 1 ? name2Color : name3Color }"
                     class="text-limit-wrapper">
-                {{ 32 - bar.legend.length }}
+                {{ 32 - bar.name.length }}
               </span>
 
             </label>
@@ -124,7 +123,7 @@
             <input
               (change)="emitChanges()"
               [(ngModel)]="bar.value"
-              [attr.placeholder]="'%'"
+              [attr.placeholder]="'40'"
               maxlength="4"
               class="form-input"
               type="text">
@@ -143,16 +142,16 @@
   <!-- view side -->
   <div class="content-wrapper has-border is-justify is-fixed">
 
-    <h4 class="m-bottom-15 text-center">{{ section.label }}</h4>
+    <h4 class="m-bottom-15 text-center">{{ section.title }}</h4>
 
     <div *ngFor="let bar of content.values; let i = index" class="m-bottom-20">
 
       <p [ngStyle]="{ 'min-height': '27px' }" class="text-lg text-medium">
-        <ng-container *ngIf="bar.legend">{{ bar.legend }}</ng-container>
+        <ng-container *ngIf="bar.name">{{ bar.name }}</ng-container>
       </p>
 
       <div [ngStyle]="{ 'height': '8px' }">
-        <progress-bar *ngIf="bar.value" [width]="bar.value" [height]="'8px'"></progress-bar>
+        <progress-bar [width]="bar.value ? (bar.value + '%') : 0 + '%'" [height]="'8px'"></progress-bar>
       </div>
 
       <p [ngStyle]="{ 'height': '21px' }" class="text-ellipsis">

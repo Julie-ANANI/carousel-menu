@@ -116,6 +116,13 @@
   <!-- view side -->
   <div class="content-wrapper has-border is-justify">
 
+    <div class="text-center">
+      <h4 class="m-bottom-10 text-center">{{ section.label }}</h4>
+      <h5 *ngIf="content.showPositive" class="text-lg text-normal m-no-bottom"></h5>
+    </div>
+
+    <p class="has-min-height">{{ section.abstract }}</p>
+
   </div>
   <!-- /view side -->
 

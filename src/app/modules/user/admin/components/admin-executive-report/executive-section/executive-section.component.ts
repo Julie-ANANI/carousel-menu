@@ -7,6 +7,7 @@ import { ResponseService } from '../../../../../shared/components/shared-market-
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
 import { Tag } from '../../../../../../models/tag';
+import { specialCharRegEx } from '../../../../../../utils/regex';
 
 @Component({
   selector: 'executive-section',
@@ -117,10 +118,10 @@ export class ExecutiveSectionComponent {
 
   private _setBarData() {
     const question: Question = this._getQuestion(this._section.questionId);
-    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
+    this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
     (<SectionBar>this._section.content).showExamples = true;
 
-    if (question.controlType === 'checkbox') {
+    if (question.controlType === 'checkbox' || question.controlType === 'radio') {
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const barsData: Array<BarData> = ResponseService.barsData(question, answers);
       (<SectionBar>this._section.content).values = [];
@@ -130,8 +131,8 @@ export class ExecutiveSectionComponent {
         const professionals: Array<Professional> = ResponseService.answersProfessionals(bar.answers);
 
         (<SectionBar>this._section.content).values.push({
-          legend: this._multilingPipe.transform(bar.label, this.reportLang),
-          value: bar.absolutePercentage,
+          name: this._multilingPipe.transform(bar.label, this.reportLang),
+          value: Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0,
           example: professionals.map((professional, index) => {
             return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle
           }).toString().slice(0, 40)
@@ -143,8 +144,8 @@ export class ExecutiveSectionComponent {
   }
 
   private _setRankingData() {
-    const question: Question = this._getQuestion(this._section.questionId);
-    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
+    /*const question: Question = this._getQuestion(this._section.questionId);
+    this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
     (<SectionRanking>this._section.content).values = [];
@@ -155,7 +156,7 @@ export class ExecutiveSectionComponent {
         legend: tag.count + 'X',
         value: this._multilingPipe.transform(tag.label, this.reportLang)
       })
-    });
+    });*/
 
   }
 

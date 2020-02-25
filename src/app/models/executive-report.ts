@@ -68,7 +68,6 @@ export interface SectionBar {
   values: Array<{
     name: string;
     value: number;
-    visibility: boolean;
     example: string;
   }>;
 }
@@ -88,6 +87,5 @@ export interface SectionRanking {
   values: Array<{
     name: string;
     occurrence: string;
-    visibility: boolean;
   }>;
 }

@@ -34,9 +34,8 @@
           (keyup)="textColor('abstract')"
           [(ngModel)]="section.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
-          [ngStyle]="{ 'height': '97px' }"
           maxlength="175"
-          class="form-input"
+          class="form-input is-abstract"
           type="text">
         </textarea>
 
@@ -119,7 +118,7 @@
 
 
   <!-- view side -->
-  <div class="content-wrapper has-border is-justify text-center">
+  <div class="content-wrapper has-border is-justify text-center is-fixed">
 
     <h4 [ngStyle]="{ 'margin-bottom': '48px' }">{{ section.title }}</h4>
 
