@@ -16,10 +16,10 @@ export class TypeKpiComponent {
       questionId: value.questionId || '',
       questionType: value.questionType || '',
       abstract: value.abstract || '',
-      label: value.label || '',
+      title: value.title || '',
       content: {
-        kpi: <SectionKpi>value.content && (<SectionKpi>value.content).kpi ? (<SectionKpi>value.content).kpi : '',
-        legend: <SectionKpi>value.content && (<SectionKpi>value.content).legend ? (<SectionKpi>value.content).legend : '',
+        value: <SectionKpi>value.content && (<SectionKpi>value.content).value ? (<SectionKpi>value.content).value: '',
+        name: <SectionKpi>value.content && (<SectionKpi>value.content).name ? (<SectionKpi>value.content).name : '',
         examples: <SectionKpi>value.content && (<SectionKpi>value.content).examples ? (<SectionKpi>value.content).examples : ''
       }
     };
@@ -39,8 +39,8 @@ export class TypeKpiComponent {
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionKpi = {
-    kpi: '',
-    legend: '',
+    value: '',
+    name: '',
     examples: ''
   };
 
@@ -65,7 +65,7 @@ export class TypeKpiComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.label.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
         break;
 
       case 'abstract':
@@ -73,11 +73,11 @@ export class TypeKpiComponent {
         break;
 
       case 'kpi':
-        this._kpiColor = CommonService.getLimitColor(this._content.kpi.length, 4);
+        this._kpiColor = CommonService.getLimitColor(this._content.value.length, 4);
         break;
 
       case 'legend':
-        this._legendColor = CommonService.getLimitColor(this._content.legend.length, 82);
+        this._legendColor = CommonService.getLimitColor(this._content.name.length, 82);
         break;
 
       case 'examples':

@@ -10,14 +10,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('title')"
-          [(ngModel)]="section.label"
+          [(ngModel)]="section.title"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
           maxlength="26"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
-          {{ 26 - section.label.length }}
+          {{ 26 - section.title.length }}
         </span>
 
       </label>
@@ -56,14 +56,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('kpi')"
-          [(ngModel)]="content.kpi"
+          [(ngModel)]="content.value"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.KPI_SECTION.KPI' | translate"
           maxlength="4"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': kpiColor }" class="text-limit-wrapper">
-          {{ 4 - content.kpi.length }}
+          {{ 4 - content.value.length }}
         </span>
 
       </label>
@@ -78,14 +78,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('legend')"
-          [(ngModel)]="content.legend"
+          [(ngModel)]="content.name"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.KPI_SECTION.LEGEND' | translate"
           maxlength="82"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': legendColor }" class="text-limit-wrapper">
-          {{ 82 - content.legend.length }}
+          {{ 82 - content.name.length }}
         </span>
 
       </label>
@@ -121,14 +121,14 @@
   <!-- view side -->
   <div class="content-wrapper has-border is-justify text-center">
 
-    <h4 [ngStyle]="{ 'margin-bottom': '48px' }">{{ section.label }}</h4>
+    <h4 [ngStyle]="{ 'margin-bottom': '48px' }">{{ section.title }}</h4>
 
     <!-- kpi / legend -->
     <div [ngStyle]="{ 'min-height': '116px' }" class="m-bottom-10">
       <h5 [ngStyle]="{ 'font-size': '85px', 'line-height': '75px' }" class="text-medium m-no-bottom">
-        {{ content.kpi }}
+        {{ content.value }}
       </h5>
-      <p class="text-lg text-medium">{{ content.legend }}</p>
+      <p class="text-lg text-medium">{{ content.name }}</p>
     </div>
     <!-- /kpi / legend -->
 

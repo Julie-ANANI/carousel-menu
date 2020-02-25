@@ -27,7 +27,7 @@ export class ExecutiveSectionComponent {
       questionId: value.questionId || '',
       questionType: value.questionType || '',
       abstract: value.abstract || '',
-      label: value.label || '',
+      title: value.title || '',
       content: value.content || <any>{}
     };
   }
@@ -99,8 +99,8 @@ export class ExecutiveSectionComponent {
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const professionals: Array<Professional> = ResponseService.answersProfessionals(answers);
 
-    this._section.label = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionKpi>this._section.content).kpi = answers.length.toString(10);
+    this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+    (<SectionKpi>this._section.content).value = answers.length.toString(10);
 
     (<SectionKpi>this._section.content).examples = professionals.map((professional, index) => {
       return index === 0 ? professional.firstName + ' ' + professional.lastName

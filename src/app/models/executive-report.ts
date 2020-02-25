@@ -49,7 +49,7 @@ export interface ExecutiveSection {
 }
 
 export interface SectionKpi {
-  value: number;
+  value: string;
   name: string;
   examples: string;
 }
