@@ -25,11 +25,11 @@ export class ExecutiveObjectiveComponent implements OnInit {
   @Input() set config(value: ExecutiveObjective) {
     this._config = {
       objective: value.objective || '',
-      owner: {
-        name: value.owner && value.owner.name || '',
-        email: value.owner && value.owner.email || '',
+      client: {
+        name: value.client && value.client.name || '',
+        email: value.client && value.client.email || '',
       },
-      umiCommercial: value.umiCommercial || ''
+      sale: value.sale || ''
     };
 
     this.textColor('objective');
@@ -42,11 +42,11 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   private _config: ExecutiveObjective = <ExecutiveObjective> {
     objective: '',
-    owner: {
+    client: {
       name: '',
       email: '',
     },
-    umiCommercial: ''
+    sale: ''
   };
 
   private _allCommercials: Array<Commercial> = [];
@@ -90,8 +90,8 @@ export class ExecutiveObjectiveComponent implements OnInit {
   }
 
   private _populateCommercial() {
-    if (this._config.umiCommercial) {
-      const index = this._allCommercials.findIndex((commercial) => commercial._id === this._config.umiCommercial);
+    if (this._config.sale) {
+      const index = this._allCommercials.findIndex((commercial) => commercial._id === this._config.sale);
       if (index !== -1) {
         this._commercial = this._allCommercials[index];
       }
@@ -106,11 +106,11 @@ export class ExecutiveObjectiveComponent implements OnInit {
         break;
 
       case 'clientName':
-        this._clientNameColor = CommonService.getLimitColor(this._config.owner.name.length, 58);
+        this._clientNameColor = CommonService.getLimitColor(this._config.client.name.length, 58);
         break;
 
       case 'clientEmail':
-        this._clientEmailColor = CommonService.getLimitColor(this._config.owner.email.length, 58);
+        this._clientEmailColor = CommonService.getLimitColor(this._config.client.email.length, 58);
         break;
 
     }
@@ -121,7 +121,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
   }
 
   public selectCommercial(event: Event) {
-    this._config.umiCommercial = event && event.target && (event.target as HTMLSelectElement).value || '';
+    this._config.sale = event && event.target && (event.target as HTMLSelectElement).value || '';
     this._populateCommercial();
     this.emitChanges();
   }

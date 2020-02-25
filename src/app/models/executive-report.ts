@@ -20,8 +20,6 @@ export interface ExecutiveClient {
 
 export interface ExecutiveProfessional {
   abstract: string;
-  title: string;
-  answers: string;
   list: Array<string>;
 }
 

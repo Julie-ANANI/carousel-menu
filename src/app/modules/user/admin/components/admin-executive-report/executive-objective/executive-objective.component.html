@@ -36,14 +36,14 @@
           <input
             (change)="emitChanges()"
             (keyup)="textColor('clientName')"
-            [(ngModel)]="config.owner.name"
+            [(ngModel)]="config.client.name"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_NAME' | translate"
             maxlength="58"
             class="form-input"
             type="text">
 
           <span [ngStyle]="{ 'color': clientNameColor }" class="text-limit-wrapper">
-            {{ 58 - config.owner.name.length }}
+            {{ 58 - config.client.name.length }}
           </span>
 
         </label>
@@ -55,14 +55,14 @@
           <input
             (change)="emitChanges()"
             (keyup)="textColor('clientEmail')"
-            [(ngModel)]="config.owner.email"
+            [(ngModel)]="config.client.email"
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_EMAIL' | translate"
             maxlength="58"
             class="form-input"
             type="text">
 
           <span [ngStyle]="{ 'color': clientEmailColor }" class="text-limit-wrapper">
-            {{ 58 - config.owner.email.length }}
+            {{ 58 - config.client.email.length }}
           </span>
 
         </label>
@@ -113,8 +113,8 @@
     <div class="p-top-40">
       <h4>{{ 'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.LEADER' | translate }}</h4>
       <div [ngStyle]="{ 'min-height': '38px' }">
-        <p>{{ config.owner.name }}</p>
-        <p>{{ config.owner.email }}</p>
+        <p>{{ config.client.name }}</p>
+        <p>{{ config.client.email }}</p>
       </div>
     </div>
     <!-- /project leader -->

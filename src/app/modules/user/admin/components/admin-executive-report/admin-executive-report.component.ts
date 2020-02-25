@@ -59,7 +59,6 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._getAnswers(innovation._id);
       this._questions = ResponseService.presets(innovation);
-      console.log(this._questions);
     });
 
   }
@@ -70,7 +69,6 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
         this._answers = response.answers.sort((a, b) => {
           return b.profileQuality - a.profileQuality;
         });
-        console.log(this._answers);
       }, (err: HttpErrorResponse) => {
         console.log(err);
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -81,8 +79,8 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
   private _setData() {
 
     this._objectiveConfig = {
-      umiCommercial: this._executiveReport.umiCommercial,
-      owner: this._executiveReport.owner,
+      sale: this._executiveReport.sale,
+      client: this._executiveReport.client,
       objective: this._executiveReport.objective
     };
 
@@ -100,7 +98,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
     this._conclusionConfig = {
       conclusion: this._executiveReport.conclusion,
-      umiOperator: this._executiveReport.umiOperator,
+      operator: this._executiveReport.operator,
     };
 
     // setting the executive report sections.
@@ -137,8 +135,8 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   set objectiveConfig(value: ExecutiveObjective) {
     this._objectiveConfig = value;
-    this._executiveReport.umiCommercial = this._objectiveConfig.umiCommercial;
-    this._executiveReport.owner = this._objectiveConfig.owner;
+    this._executiveReport.sale = this._objectiveConfig.sale;
+    this._executiveReport.client = this._objectiveConfig.client;
     this._executiveReport.objective = this._objectiveConfig.objective;
     this.emitChanges();
   }
@@ -182,7 +180,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
   set conclusionConfig(value: ExecutiveConclusion) {
     this._conclusionConfig = value;
     this._executiveReport.conclusion = this._conclusionConfig.conclusion;
-    this._executiveReport.umiOperator = this._conclusionConfig.umiOperator;
+    this._executiveReport.operator = this._conclusionConfig.operator;
     this.emitChanges();
   }
 
