@@ -16,32 +16,27 @@ export class TypeRankingComponent {
       questionId: value.questionId || '',
       questionType: value.questionType || '',
       abstract: value.abstract || '',
-      label: value.label || '',
+      title: value.title || '',
       content: {
+        color: <SectionRanking>value.content && (<SectionRanking>value.content).color,
         values: [
           {
-            legend: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
-            && (<SectionRanking>value.content).values[0].legend ? (<SectionRanking>value.content).values[0].legend : '',
-            color: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
-            && (<SectionRanking>value.content).values[0].color ? (<SectionRanking>value.content).values[0].color : '',
-            value: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
-            && (<SectionRanking>value.content).values[0].value ? (<SectionRanking>value.content).values[0].value : '',
+            name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
+            && (<SectionRanking>value.content).values[0].name ? (<SectionRanking>value.content).values[0].name : '',
+            occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
+            && (<SectionRanking>value.content).values[0].occurrence ? (<SectionRanking>value.content).values[0].occurrence : '',
           },
           {
-            legend: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
-            && (<SectionRanking>value.content).values[1].legend ? (<SectionRanking>value.content).values[1].legend : '',
-            color: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
-            && (<SectionRanking>value.content).values[1].color ? (<SectionRanking>value.content).values[1].color : '',
-            value: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
-            && (<SectionRanking>value.content).values[1].value ? (<SectionRanking>value.content).values[1].value : '',
+            name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
+            && (<SectionRanking>value.content).values[1].name ? (<SectionRanking>value.content).values[1].name : '',
+            occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
+            && (<SectionRanking>value.content).values[1].occurrence ? (<SectionRanking>value.content).values[1].occurrence : '',
           },
           {
-            legend: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
-            && (<SectionRanking>value.content).values[2].legend ? (<SectionRanking>value.content).values[2].legend : '',
-            color: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
-            && (<SectionRanking>value.content).values[2].color ? (<SectionRanking>value.content).values[2].color : '',
-            value: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
-            && (<SectionRanking>value.content).values[2].value ? (<SectionRanking>value.content).values[2].value : '',
+            name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
+            && (<SectionRanking>value.content).values[2].name ? (<SectionRanking>value.content).values[2].name : '',
+            occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
+            && (<SectionRanking>value.content).values[2].occurrence ? (<SectionRanking>value.content).values[2].occurrence : '',
           }
         ]
       }
@@ -51,12 +46,12 @@ export class TypeRankingComponent {
 
     this.textColor('title');
     this.textColor('abstract');
-    this.textColor('legend', 1);
-    this.textColor('legend', 2);
-    this.textColor('legend', 3);
-    this.textColor('element', 1);
-    this.textColor('element', 2);
-    this.textColor('element', 3);
+    this.textColor('name', 1);
+    this.textColor('name', 2);
+    this.textColor('name', 3);
+    this.textColor('occurrence', 1);
+    this.textColor('occurrence', 2);
+    this.textColor('occurrence', 3);
 
   }
 
@@ -65,6 +60,7 @@ export class TypeRankingComponent {
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionRanking = {
+    color: '',
     values: []
   };
 
@@ -95,38 +91,38 @@ export class TypeRankingComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.label.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
         break;
 
       case 'abstract':
         this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
         break;
 
-      case 'legend':
+      case 'occurrence':
         if (index === 1) {
-          this._legend1Color = CommonService.getLimitColor(this._content.values[0].value.length, 13);
+          this._legend1Color = CommonService.getLimitColor(this._content.values[0].occurrence.length, 13);
         } else if (index === 2) {
-          this._legend2Color = CommonService.getLimitColor(this._content.values[1].value.length, 13);
+          this._legend2Color = CommonService.getLimitColor(this._content.values[1].occurrence.length, 13);
         } else if (index === 3) {
-          this._legend3Color = CommonService.getLimitColor(this._content.values[2].value.length, 13);
+          this._legend3Color = CommonService.getLimitColor(this._content.values[2].occurrence.length, 13);
         }
         break;
 
-      case 'element':
+      case 'name':
         if (index === 1) {
-          this._element1Color = CommonService.getLimitColor(this._content.values[0].legend.length, 20);
+          this._element1Color = CommonService.getLimitColor(this._content.values[0].name.length, 20);
         } else if (index === 2) {
-          this._element2Color = CommonService.getLimitColor(this._content.values[1].legend.length, 20);
+          this._element2Color = CommonService.getLimitColor(this._content.values[1].name.length, 20);
         } else if (index === 3) {
-          this._element3Color = CommonService.getLimitColor(this._content.values[2].legend.length, 20);
+          this._element3Color = CommonService.getLimitColor(this._content.values[2].name.length, 20);
         }
         break;
 
     }
   }
 
-  public setColor(value: string, index: number) {
-    this._content.values[index].color = value;
+  public setColor(value: string) {
+    this._content.color = value;
     this.emitChanges();
   }
 

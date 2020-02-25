@@ -10,14 +10,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('title')"
-          [(ngModel)]="section.label"
+          [(ngModel)]="section.title"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
           maxlength="26"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
-          {{ 26 - section.label.length }}
+          {{ 26 - section.title.length }}
         </span>
 
       </label>
@@ -25,7 +25,7 @@
     <!-- /title -->
 
     <!-- abstract -->
-    <div class="m-bottom-20">
+    <div class="m-bottom-40">
       <label>
 
         <textarea
@@ -33,9 +33,8 @@
           (keyup)="textColor('abstract')"
           [(ngModel)]="section.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
-          [ngStyle]="{ 'height': '97px' }"
           maxlength="175"
-          class="form-input"
+          class="form-input is-abstract"
           type="text">
         </textarea>
 
@@ -48,38 +47,38 @@
     <!-- /abstract -->
 
 
-    <!-- element / legend / color -->
+    <!-- name / occurrence / color -->
     <div *ngFor="let tag of content.values; let i = index;">
-      <div class="d-flex m-bottom-10 justify-space">
+      <div [ngClass]="{ 'm-bottom-15': i !== content.values.length - 1 }" class="d-flex justify-space">
 
-        <!-- element -->
+        <!-- name -->
         <div class="m-right-10">
           <label>
             <input
               (change)="emitChanges()"
-              (keyup)="textColor('case' , (i + 1))"
-              [(ngModel)]="tag.legend"
+              (keyup)="textColor('name' , (i + 1))"
+              [(ngModel)]="tag.name"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.ELEMENT_' + (i + 1) | translate"
               maxlength="20"
               class="form-input"
               type="text">
 
-            <span [ngStyle]="{ 'color': i === 0 ? element1Color : i === 1 ? element2Color : element2Color }"
+            <span [ngStyle]="{ 'color': i === 0 ? element1Color : i === 1 ? element2Color : element3Color }"
                   class="text-limit-wrapper">
-              {{ 20 - tag.legend.length }}
+              {{ 20 - tag.name.length }}
             </span>
           </label>
         </div>
         <!-- /element -->
 
 
-        <!-- legend -->
+        <!-- occurrence -->
         <div class="m-right-10">
           <label>
             <input
               (change)="emitChanges()"
-              (keyup)="textColor('case' , (i + 1))"
-              [(ngModel)]="tag.value"
+              (keyup)="textColor('occurrence' , (i + 1))"
+              [(ngModel)]="tag.occurrence"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.LEGEND_' + (i + 1) | translate"
               maxlength="13"
               class="form-input"
@@ -87,21 +86,21 @@
 
             <span [ngStyle]="{ 'color': i === 0 ? legend1Color : i === 1 ? legend2Color : legend3Color }"
                   class="text-limit-wrapper">
-              {{ 13 - tag.value.length }}
+              {{ 13 - tag.occurrence.length }}
             </span>
           </label>
         </div>
-        <!-- /legend -->
+        <!-- /occurrence -->
 
 
         <!-- color -->
         <div class="popover">
-          <div [ngStyle]="{ 'background-color': tag.color }" class="shape is-circle is-sm"></div>
+          <div [ngStyle]="{ 'background-color': content.color }" class="shape is-circle is-sm"></div>
           <div class="popover-container">
             <div class="card">
-              <div (click)="setColor('#2ECC71', i)" class="shape is-circle bg-success is-sm"></div>
-              <div (click)="setColor('#EA5858', i)" class="shape is-circle bg-alert is-sm"></div>
-              <div (click)="setColor('#4F5D6B', i)" class="shape is-circle bg-draft is-sm"></div>
+              <div (click)="setColor('#2ECC71')" class="shape is-circle bg-success is-sm"></div>
+              <div (click)="setColor('#EA5858')" class="shape is-circle bg-alert is-sm"></div>
+              <div (click)="setColor('#4F5D6B')" class="shape is-circle bg-draft is-sm"></div>
             </div>
           </div>
         </div>
@@ -118,17 +117,17 @@
   <!-- view side -->
   <div class="content-wrapper has-border is-justify">
 
-    <h4 class="m-bottom-15 text-center">{{ section.label }}</h4>
+    <h4 class="m-bottom-15 text-center">{{ section.title }}</h4>
 
     <div *ngFor="let tag of content.values; let i = index;" class="m-bottom-20 text-center">
 
       <p [ngStyle]="{ 'min-height': '24px', 'line-height': '24px' }" class="text-lg text-medium">
-        <ng-container *ngIf="tag.legend">{{ tag.legend }}</ng-container>
+        <ng-container *ngIf="tag.occurrence">{{ tag.occurrence }}</ng-container>
       </p>
 
       <div [ngStyle]="{ 'min-height': '30px' }">
-        <div *ngIf="tag.value" [ngStyle]="{ 'background-color': tag.color }" class="label is-rounded">
-          {{ tag.value }}
+        <div *ngIf="tag.name" [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
+          {{ tag. name }}
         </div>
       </div>
 

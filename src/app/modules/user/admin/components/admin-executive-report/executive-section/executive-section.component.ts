@@ -144,19 +144,19 @@ export class ExecutiveSectionComponent {
   }
 
   private _setRankingData() {
-    /*const question: Question = this._getQuestion(this._section.questionId);
+    const question: Question = this._getQuestion(this._section.questionId);
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+    (<SectionRanking>this._section.content).color = '#4F5D6B';
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
     (<SectionRanking>this._section.content).values = [];
 
     tagsData.slice(0, 3).forEach((tag, index) => {
       (<SectionRanking>this._section.content).values.push({
-        color: '#4F5D6B',
-        legend: tag.count + 'X',
-        value: this._multilingPipe.transform(tag.label, this.reportLang)
+        occurrence: tag.count + 'X',
+        name: this._multilingPipe.transform(tag.label, this.reportLang)
       })
-    });*/
+    });
 
   }
 
