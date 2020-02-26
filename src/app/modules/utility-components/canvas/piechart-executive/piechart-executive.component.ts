@@ -1,7 +1,5 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { ExecutivePieChart } from '../../../../models/pie-chart';
-import { ChartOptions, ChartType } from 'chart.js';
-import { Label } from 'ng2-charts';
 import { isPlatformBrowser } from '@angular/common';
 
 /***
@@ -29,9 +27,9 @@ export class PiechartExecutiveComponent {
     colors: []
   };
 
-  private _type: ChartType = 'pie';
+  private _type = 'pie';
 
-  private _options: ChartOptions = {
+  private _options = {
     responsive: true,
     legend: {
       position: 'right',
@@ -41,7 +39,7 @@ export class PiechartExecutiveComponent {
     },
   };
 
-  private _labels: Array<Label> = [];
+  private _labels: Array<string> = [];
 
   private _data: Array<number>  = [];
 
@@ -75,15 +73,15 @@ export class PiechartExecutiveComponent {
     return this._colors;
   }
 
-  get type(): "line" | "bar" | "horizontalBar" | "radar" | "doughnut" | "polarArea" | "bubble" | "pie" | "scatter" {
+  get type(): string {
     return this._type;
   }
 
-  get options(): ChartOptions {
+  get options() {
     return this._options;
   }
 
-  get labels(): Label[] {
+  get labels(): Array<string> {
     return this._labels;
   }
 
