@@ -45,13 +45,11 @@ export class ExecutiveSectionComponent {
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
-  private _questionType: Array<{ label: any; alias: string }> = [
-    { label: 'PIE', alias: 'Pie (preserved data)' },
-    { label: 'RANKING', alias: 'Ranking (preserved data)' },
-    { label: 'BAR', alias: 'Progress bars' },
-    { label: 'QUOTE', alias: 'Quotation' },
-    { label: 'KPI', alias: 'KPI' },
-  ];
+  private _enableVisualBar = false;
+
+  private _enableVisualRanking = false;
+
+  private _enableVisualPie = false;
 
   constructor(private _multilingPipe: MultilingPipe,
               private _responseService: ResponseService) { }
@@ -60,13 +58,45 @@ export class ExecutiveSectionComponent {
     this.sectionChange.emit(this._section);
   }
 
+  private _resetVisuals() {
+    this._enableVisualBar = false;
+    this._enableVisualRanking = false;
+    this._enableVisualPie = false;
+  }
+
+  /***
+   * assign the question id to the section and based on the question
+   * controlType active the different visualization.
+   * @param id
+   */
   public selectQuestion(id: string) {
     this._section.questionId = id;
-    this.emitChanges();
+    const question: Question = this._getQuestion(this._section.questionId);
+    this._resetVisuals();
+
+    if (question && question.controlType) {
+      switch (question.controlType) {
+
+        case 'radio':
+          this._enableVisualPie = true;
+          this._enableVisualBar = true;
+          break;
+
+        case 'checkbox':
+          this._enableVisualBar = true;
+          break;
+
+        default:
+          this._enableVisualRanking = true;
+          break;
+      }
+    }
+
   }
 
   public selectQuestionType(type: any) {
-    if (this._section.questionId) {
+    if (this._section.questionId && (type === 'QUOTE' || type === 'KPI')
+      || this._enableVisualBar || this._enableVisualRanking || this._enableVisualPie) {
       this._section.questionType = type;
       this._initializeSection();
       this.emitChanges();
@@ -103,6 +133,10 @@ export class ExecutiveSectionComponent {
     }
   }
 
+  /***
+   * available for all the question type
+   * @private
+   */
   private _setKpiData() {
     const question: Question = this._getQuestion(this._section.questionId);
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
@@ -118,46 +152,54 @@ export class ExecutiveSectionComponent {
 
   }
 
+  /***
+   * available for all the question type
+   * @private
+   */
   private _setQuoteData() {
     const question: Question = this._getQuestion(this._section.questionId);
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
     (<SectionQuote>this._section.content).showQuotes = true;
   }
 
+  /***
+   * available for the question type === 'radio' || 'checkbox'.
+   * @private
+   */
   private _setBarData() {
     const question: Question = this._getQuestion(this._section.questionId);
+    const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
+    const barsData: Array<BarData> = ResponseService.barsData(question, answers);
+
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
     (<SectionBar>this._section.content).showExamples = true;
+    (<SectionBar>this._section.content).values = [];
 
-    if (question.controlType === 'checkbox' || question.controlType === 'radio') {
-      const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
-      const barsData: Array<BarData> = ResponseService.barsData(question, answers);
-      (<SectionBar>this._section.content).values = [];
+    barsData.slice(0, 3).forEach((bar, index) => {
 
-      barsData.slice(0, 3).forEach((bar, index) => {
+      const professionals: Array<Professional> = ResponseService.answersProfessionals(bar.answers);
 
-        const professionals: Array<Professional> = ResponseService.answersProfessionals(bar.answers);
-
-        (<SectionBar>this._section.content).values.push({
-          name: this._multilingPipe.transform(bar.label, this.reportLang),
-          value: Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0,
-          example: professionals.map((professional, index) => {
-            return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle
-          }).toString().slice(0, 40)
-        })
-      });
-
-    }
+      (<SectionBar>this._section.content).values.push({
+        name: this._multilingPipe.transform(bar.label, this.reportLang),
+        value: Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0,
+        example: professionals.map((professional, index) => {
+          return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle
+        }).toString().slice(0, 40)
+      })
+    });
 
   }
 
+  /***
+   * available for all the question type expect 'radio' and 'checkbox'.
+   * @private
+   */
   private _setRankingData() {
     const question: Question = this._getQuestion(this._section.questionId);
-    this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
-
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
 
+    this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
     (<SectionRanking>this._section.content).color = '#4F5D6B';
     (<SectionRanking>this._section.content).values = [];
 
@@ -170,36 +212,36 @@ export class ExecutiveSectionComponent {
 
   }
 
+  /***
+   * available for the question type === 'radio'.
+   * @private
+   */
   private _setPieData() {
     const question: Question = this._getQuestion(this._section.questionId);
+    const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
+    const barsData: Array<BarData> = ResponseService.barsData(question, answers);
+    const pieChartData: PieChart = ResponseService.pieChartData(barsData, answers);
+
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+    (<SectionRanking>this._section.content).values = [];
 
-    if (question.controlType === 'radio') {
-      const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
-      const barsData: Array<BarData> = ResponseService.barsData(question, answers);
-      const pieChartData: PieChart = ResponseService.pieChartData(barsData, answers);
+    if (pieChartData) {
 
-      (<SectionRanking>this._section.content).values = [];
+      if (pieChartData.percentage) {
+        (<SectionPie>this._section.content).favorable = pieChartData.percentage + '%';
+        (<SectionPie>this._section.content).showPositive = true;
+      }
 
-      if (pieChartData) {
-
-        if (pieChartData.percentage) {
-          (<SectionPie>this._section.content).favorable = pieChartData.percentage + '%';
-          (<SectionPie>this._section.content).showPositive = true;
-        }
-
-        if (pieChartData.data) {
-          pieChartData.data.forEach((data, index) => {
-            (<SectionPie>this._section.content).values.push({
-              percentage: pieChartData.labelPercentage && pieChartData.labelPercentage[index]
-                && Number(pieChartData.labelPercentage[index].replace(specialCharRegEx, '')) || 0,
-              color: pieChartData.colors && pieChartData.colors[index],
-              legend: pieChartData.labels && pieChartData.labels[this.reportLang] && pieChartData.labels[this.reportLang][index],
-              answers: data
-            });
+      if (pieChartData.data) {
+        pieChartData.data.forEach((data, index) => {
+          (<SectionPie>this._section.content).values.push({
+            percentage: pieChartData.labelPercentage && pieChartData.labelPercentage[index]
+              && Number(pieChartData.labelPercentage[index].replace(specialCharRegEx, '')) || 0,
+            color: pieChartData.colors && pieChartData.colors[index],
+            legend: pieChartData.labels && pieChartData.labels[this.reportLang] && pieChartData.labels[this.reportLang][index],
+            answers: data
           });
-        }
-
+        });
       }
 
     }
@@ -217,8 +259,16 @@ export class ExecutiveSectionComponent {
     return this._section;
   }
 
-  get questionType(): Array<{ label: string; alias: string }> {
-    return this._questionType;
+  get enableVisualBar(): boolean {
+    return this._enableVisualBar;
+  }
+
+  get enableVisualRanking(): boolean {
+    return this._enableVisualRanking;
+  }
+
+  get enableVisualPie(): boolean {
+    return this._enableVisualPie;
   }
 
 }

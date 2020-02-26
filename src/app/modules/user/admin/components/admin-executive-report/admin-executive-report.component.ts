@@ -65,6 +65,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._getAnswers(innovation._id);
       this._questions = ResponseService.presets(innovation);
+      console.log(this._questions);
     });
 
   }
