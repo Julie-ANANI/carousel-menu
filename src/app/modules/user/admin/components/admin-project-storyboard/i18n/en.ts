@@ -20,7 +20,8 @@ export const ADMIN_STORYBOARD = {
 
   'MODAL':{
     'CHANGE_TITLE': 'Changing language',
-    'SELECT_TITLE': 'Selecting language'
+    'SELECT_TITLE': 'Selecting language',
+    'CURRENT_LANG': 'Current language: '
   },
 
   'LAST_GENERATE': 'Last generate',

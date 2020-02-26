@@ -91,7 +91,7 @@
 
 
 <!-- Modal to confirm action: Reset section -->
-<app-modal [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION' | translate">
+<app-modal *ngIf="showModal" [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION' | translate">
 
   <section class="modal-body p-top-30 p-bottom-30">
 
