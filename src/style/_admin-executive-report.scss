@@ -89,6 +89,14 @@
 
     }
 
+    textarea {
+
+      &.form-input {
+        resize: vertical;
+      }
+
+    }
+
     .form-checkbox {
       display: flex;
       font-size: $font-size-sm;
