@@ -27,6 +27,10 @@ export const ADMIN_EXECUTIVE_REPORT = {
     'OPERATOR': 'Choose operator'
   },
 
+  'MODAL': {
+    'RESET': 'Do you really want to reset this section?'
+  },
+
   'SAVE': 'The executive report has been saved successfully.',
 
   'WANT_TO_DISPLAY': 'What would you want to display?',

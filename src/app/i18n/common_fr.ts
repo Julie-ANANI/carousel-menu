@@ -374,6 +374,7 @@ export const COMMON = {
     'TITLE_IMPORT': 'Importation',
     'TITLE_BATCH': 'Batch',
     'TITLE_SHARE': 'Partage',
+    'TITLE_SELECT': 'Sélection',
     'TITLE_CREATE': 'Création'
   },
 

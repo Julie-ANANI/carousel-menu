@@ -66,7 +66,7 @@
 
     <!-- reset button -->
     <div *ngIf="section.questionId && section.questionType" class="p-top-40 text-center">
-      <button (click)="resetSection($event, i)" class="button is-outlined is-info" type="button">
+      <button (click)="resetModal($event, i)" class="button is-outlined is-info" type="button">
         {{ 'ADMIN_EXECUTIVE_REPORT.RESET_SECTION' | translate }}
       </button>
     </div>
@@ -88,3 +88,27 @@
   <!-- /conclusion -->
 
 </div>
+
+
+<!-- Modal to confirm action: Reset section -->
+<app-modal [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION' | translate">
+
+  <section class="modal-body p-top-30 p-bottom-30">
+
+    <!-- reset -->
+    <div *ngIf="isResetModal">
+      <p class="m-no-bottom">{{ 'ADMIN_EXECUTIVE_REPORT.MODAL.RESET' | translate }}</p>
+    </div>
+    <!-- /reset -->
+
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="onClickConfirm($event)" class="button is-primary">
+      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+    </button>
+  </footer>
+
+</app-modal>
+<!-- /Modal to confirm action: Reset section -->

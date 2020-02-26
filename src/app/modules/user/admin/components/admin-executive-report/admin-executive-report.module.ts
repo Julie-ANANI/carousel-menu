@@ -22,6 +22,7 @@ import { CountryFlagModule } from '../../../../utility-components/country-flag/c
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
 import { PiechartExecutiveModule } from '../../../../utility-components/canvas/piechart-executive/piechart-executive.module';
+import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { PiechartExecutiveModule } from '../../../../utility-components/canvas/p
     CountryFlagModule,
     FormsModule,
     ProgressBarModule,
-    PiechartExecutiveModule
+    PiechartExecutiveModule,
+    ModalModule
   ],
   declarations: [
     ExecutiveConclusionComponent,

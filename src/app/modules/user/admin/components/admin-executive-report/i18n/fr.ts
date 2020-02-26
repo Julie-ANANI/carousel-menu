@@ -27,6 +27,10 @@ export const ADMIN_EXECUTIVE_REPORT = {
     'OPERATOR': 'Choisir un opérateur'
   },
 
+  'MODAL': {
+    'RESET': 'Voulez-vous vraiment réinitialiser cette section ?'
+  },
+
   'SAVE': 'Le rapport exécutif a été sauvegardé avec succès.',
 
   'WANT_TO_DISPLAY': 'Que voudriez-vous afficher ?',

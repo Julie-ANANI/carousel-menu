@@ -378,6 +378,7 @@ export const COMMON = {
     'TITLE_IMPORT': 'Import Board',
     'TITLE_BATCH': 'Batch Board',
     'TITLE_SHARE': 'Share Board',
+    'TITLE_SELECT': 'Selection Board',
     'TITLE_CREATE': 'Creation Board'
   },
 

@@ -50,6 +50,12 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _showModal = false;
+
+  private _isResetModal = false;
+
+  private _activeIndex: number = null;
+
   constructor (private _innovationFrontService: InnovationFrontService,
                private _answerService: AnswerService,
                private _translateNotificationsService: TranslateNotificationsService) { }
@@ -59,7 +65,6 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._getAnswers(innovation._id);
       this._questions = ResponseService.presets(innovation);
-      console.log(this._questions);
     });
 
   }
@@ -121,9 +126,31 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this.emitChanges();
   }
 
-  public resetSection(event: Event, index: number) {
-    this._executiveReport.sections[index] = <ExecutiveSection>{};
+  private _resetModalVariables() {
+    this._isResetModal = false;
+  }
+
+  public resetModal(event: Event, index: number) {
+    this._resetModalVariables();
+    this._isResetModal = true;
+    this._activeIndex = index;
+    this._showModal = true;
+  }
+
+  private _resetSection() {
+    this._executiveReport.sections[this._activeIndex] = <ExecutiveSection>{};
     this.emitChanges();
+  }
+
+  public onClickConfirm(event: Event) {
+    event.preventDefault();
+
+    if (this._isResetModal) {
+      this._resetSection();
+    }
+
+    this._showModal = false;
+
   }
 
   get executiveReport(): ExecutiveReport {
@@ -191,6 +218,18 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isResetModal(): boolean {
+    return this._isResetModal;
   }
 
   ngOnDestroy(): void {
