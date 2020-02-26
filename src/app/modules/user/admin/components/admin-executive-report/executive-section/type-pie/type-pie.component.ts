@@ -13,59 +13,7 @@ export class TypePieComponent {
 
   @Input() set section(value: ExecutiveSection) {
 
-    this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
-      abstract: value.abstract || '',
-      title: value.title || '',
-      content: {
-        showPositive: <SectionPie>value.content && (<SectionPie>value.content).showPositive,
-        favorable: <SectionPie>value.content && (<SectionPie>value.content).favorable || '',
-        values: [
-          {
-            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
-            && (<SectionPie>value.content).values[0].percentage,
-            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
-            && (<SectionPie>value.content).values[0].answers,
-            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
-            && (<SectionPie>value.content).values[0].legend || '',
-            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
-            && (<SectionPie>value.content).values[0].color || '',
-          },
-          {
-            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
-            && (<SectionPie>value.content).values[1].percentage,
-            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
-            && (<SectionPie>value.content).values[1].answers,
-            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
-            && (<SectionPie>value.content).values[1].legend || '',
-            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
-            && (<SectionPie>value.content).values[1].color || '',
-          },
-          {
-            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
-            && (<SectionPie>value.content).values[2].percentage,
-            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
-            && (<SectionPie>value.content).values[2].answers,
-            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
-            && (<SectionPie>value.content).values[2].legend || '',
-            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
-            && (<SectionPie>value.content).values[2].color || '',
-          },
-          {
-            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
-            && (<SectionPie>value.content).values[3].percentage,
-            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
-            && (<SectionPie>value.content).values[3].answers,
-            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
-            && (<SectionPie>value.content).values[3].legend || '',
-            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
-            && (<SectionPie>value.content).values[3].color || '',
-          }
-        ]
-      }
-    };
-
+    this._setSectionData(value);
     this._content = <SectionPie>this._section.content;
     this._setPieChartData();
 
@@ -109,13 +57,68 @@ export class TypePieComponent {
 
   constructor() { }
 
+  private _setSectionData(value: ExecutiveSection) {
+    this._section = {
+      questionId: value.questionId || '',
+      questionType: value.questionType || '',
+      abstract: value.abstract || '',
+      title: value.title || '',
+      content: {
+        showPositive: <SectionPie>value.content && (<SectionPie>value.content).showPositive,
+        favorable: <SectionPie>value.content && (<SectionPie>value.content).favorable || '',
+        values: [
+          {
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+              && (<SectionPie>value.content).values[0].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+              && (<SectionPie>value.content).values[0].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+              && (<SectionPie>value.content).values[0].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[0]
+              && (<SectionPie>value.content).values[0].color || '',
+          },
+          {
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+              && (<SectionPie>value.content).values[1].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+              && (<SectionPie>value.content).values[1].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+              && (<SectionPie>value.content).values[1].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[1]
+              && (<SectionPie>value.content).values[1].color || '',
+          },
+          {
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+              && (<SectionPie>value.content).values[2].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+              && (<SectionPie>value.content).values[2].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+              && (<SectionPie>value.content).values[2].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[2]
+              && (<SectionPie>value.content).values[2].color || '',
+          },
+          {
+            percentage: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+              && (<SectionPie>value.content).values[3].percentage,
+            answers: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+              && (<SectionPie>value.content).values[3].answers,
+            legend: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+              && (<SectionPie>value.content).values[3].legend || '',
+            color: <SectionPie>value.content && (<SectionPie>value.content).values && (<SectionPie>value.content).values[3]
+              && (<SectionPie>value.content).values[3].color || '',
+          }
+        ]
+      }
+    };
+  }
+
   private _setPieChartData() {
     if (this._content && this._content.values) {
       this._content.values.forEach((value, index) => {
         this._pieChart.data[index] = value.answers;
         this._pieChart.colors[index] = value.color;
         this._pieChart.labels[index] = value.legend;
-        this._pieChart.labelPercentage[index] = value.percentage + '%';
+        this._pieChart.labelPercentage[index] = value.percentage;
       });
     }
   }

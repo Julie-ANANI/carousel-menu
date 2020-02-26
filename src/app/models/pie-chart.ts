@@ -10,5 +10,5 @@ export interface ExecutivePieChart {
   data: Array<number>;
   colors: Array<string>;
   labels: Array<string>;
-  labelPercentage: Array<string>;
+  labelPercentage: Array<number>;
 }
