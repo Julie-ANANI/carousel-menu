@@ -72,12 +72,12 @@
 
 
 <!-- collaborator sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-collaborator
     [sidebarState]="sidebarValue.animate_state"
     [project]="innovation"
     (collaboratorAdded)="addCollaborators($event)">
   </app-collaborator>
-</app-sidebar>
+</sidebar>
 <!-- /collaborator sidebar -->
 

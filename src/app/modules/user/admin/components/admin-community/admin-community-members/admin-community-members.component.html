@@ -27,12 +27,12 @@
 
 
 <!-- add ambassadors sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <community-form
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </community-form>
-</app-sidebar>
+</sidebar>
 <!-- /add ambassadors sidebar -->
 
 
@@ -45,10 +45,10 @@
         </button>-->
 
 <!--&lt;!&ndash; adv search sidebar &ndash;&gt;-->
-<!--<app-sidebar [(template)]="sidebarValue">-->
+<!--<sidebar [(template)]="sidebarValue">-->
     <!--<advsearch-form-->
             <!--[sidebarState]="sidebarValue.animate_state"-->
             <!--(finalOutput)="receiveResult($event)">-->
     <!--</advsearch-form>-->
-<!--</app-sidebar>-->
+<!--</sidebar>-->
 <!--&lt;!&ndash; /adv search sidebar &ndash;&gt;-->

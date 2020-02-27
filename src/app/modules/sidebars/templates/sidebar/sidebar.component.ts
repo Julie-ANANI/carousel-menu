@@ -3,7 +3,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SidebarInterface } from '../../interfaces/sidebar-interface';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   animations: [
@@ -26,7 +26,10 @@ import { SidebarInterface } from '../../interfaces/sidebar-interface';
 export class SidebarComponent {
 
   @Input() set template(value: SidebarInterface) {
-    this.setTemplate(value);
+    this._type = value.type;
+    this._state = value.animate_state === undefined ? 'inactive' : value.animate_state ;
+    this._title = value.title;
+    this._size = value.size;
   }
 
   @Output() templateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();
@@ -35,24 +38,13 @@ export class SidebarComponent {
 
   private _title: string;
 
-  private _state: string = 'inactive';
+  private _state = 'inactive';
 
-  private _size: string;
+  private _size = '452px';
 
   private _type: string;
 
   constructor() {}
-
-  /***
-   * This function is used to initialize the received value to the sidebar variables.
-   * @param {SidebarInterface} value
-   */
-  private setTemplate(value: SidebarInterface) {
-    this._type = value.type;
-    this._state = value.animate_state === undefined ? 'inactive' : value.animate_state ;
-    this._title = value.title;
-    this._size = value.size;
-  }
 
   /***
    * This function is to toggle the sidebar state and also to move up the scroll.
@@ -62,7 +54,7 @@ export class SidebarComponent {
   public toggleState(event: Event, target: any) {
     if ((event.target as HTMLElement).id === 'close') {
       this._state = 'inactive'; // todo: remove this line
-      this.templateChange.emit({animate_state: 'inactive', title: this._title, type: this._type});
+      this.templateChange.emit({ animate_state: 'inactive', title: this._title, type: this._type });
       this.closeSidebar.emit({animate_state: this._state, title: this._title, type: this._type}); // todo: remove this line
       setTimeout(() => {
         target.scrollIntoView();

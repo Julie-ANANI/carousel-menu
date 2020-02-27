@@ -41,12 +41,12 @@
 
 
 <!-- sidebar to edit workflow -->
-<app-sidebar [(template)]="more">
+<sidebar [(template)]="more">
   <app-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
   </app-workflow>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar to edit workflow -->

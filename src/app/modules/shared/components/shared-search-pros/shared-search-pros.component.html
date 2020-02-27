@@ -218,14 +218,14 @@
 
 
 <!-- sidebar to advanced search -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-sidebar-search
     [params]="params"
     (paramsChange)="updateSettings($event)"
     [geography]="geography"
     (geographyChange)="onGeographyChange($event)">
   </app-sidebar-search>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar to advanced search -->
 
 

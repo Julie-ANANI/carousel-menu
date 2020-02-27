@@ -176,7 +176,7 @@
 <!-- /modal to modify the tags -->
 
 <!-- sidebar for history -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-sidebar-showcase-history
     [selectedAnswers]="selectedAnswers"
     [selectedClients]="selectedClients"
@@ -184,5 +184,5 @@
     [tagsStats]="selectedTagsStats"
     (displayShowcase)="displayCustomShowcase($event)">
   </app-sidebar-showcase-history>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar for history -->

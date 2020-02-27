@@ -133,7 +133,7 @@
 
 
 <!-- answer sidebar -->
-<app-sidebar [(template)]="sidebarAnswer">
+<sidebar [(template)]="sidebarAnswer">
   <app-user-answer
     [sidebarState]="sidebarAnswer.animate_state"
     [adminMode]="true"
@@ -141,7 +141,7 @@
     [projectId]="project._id"
     [questions]="questions">
   </app-user-answer>
-</app-sidebar>
+</sidebar>
 <!-- /answer sidebar -->
 
 

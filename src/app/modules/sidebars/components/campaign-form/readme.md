@@ -20,10 +20,10 @@ After updating the value in this component we output the value using the event e
 
 Include this in the parent component html file, 
 
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
 <br><app-campaign-form [sidebarState]="sidebarValue.animate_state" [type]="sidebarValue.type" [campaign]="selectCampaign" (campaignOutput)="updateCampaign($event)">
 <br></app-campaign-form>
-<br></app-sidebar>
+<br></sidebar>
 
 ## Can be used for
 
