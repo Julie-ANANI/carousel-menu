@@ -95,11 +95,41 @@ export class ExecutiveSectionComponent {
   }
 
   public selectQuestionType(type: any) {
-    if (this._section.questionId && (type === 'QUOTE' || type === 'KPI')
-      || this._enableVisualBar || this._enableVisualRanking || this._enableVisualPie) {
-      this._section.questionType = type;
-      this._initializeSection();
-      this.emitChanges();
+    if (this._section.questionId) {
+      switch (type) {
+
+        case 'PIE':
+          if (this._enableVisualPie) {
+            this._section.questionType = type;
+            this._initializeSection();
+            this.emitChanges();
+          }
+          break;
+
+        case 'RANKING':
+          if (this._enableVisualRanking) {
+            this._section.questionType = type;
+            this._initializeSection();
+            this.emitChanges();
+          }
+          break;
+
+        case 'QUOTE':
+        case 'KPI':
+          this._section.questionType = type;
+          this._initializeSection();
+          this.emitChanges();
+          break;
+
+        case 'BAR':
+          if (this._enableVisualBar) {
+            this._section.questionType = type;
+            this._initializeSection();
+            this.emitChanges();
+          }
+          break;
+
+      }
     }
   }
 

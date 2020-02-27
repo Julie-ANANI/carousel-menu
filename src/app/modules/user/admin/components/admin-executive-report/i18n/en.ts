@@ -41,6 +41,8 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'RESET_SECTION': 'Reset section',
 
+  'CHANGE_VISUAL': 'Change visualisation',
+
   'TITLE': 'Title',
 
   'ABSTRACT': 'Abstract',
