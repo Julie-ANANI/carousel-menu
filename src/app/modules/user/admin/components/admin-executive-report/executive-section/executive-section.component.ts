@@ -1,21 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
-import {
-  ExecutiveSection,
-  SectionBar,
-  SectionKpi,
-  SectionPie,
-  SectionQuote,
-  SectionRanking
-} from '../../../../../../models/executive-report';
+import { ExecutiveSection, SectionQuote } from '../../../../../../models/executive-report';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
 import { Tag } from '../../../../../../models/tag';
-import { specialCharRegEx } from '../../../../../../utils/regex';
 import { PieChart } from '../../../../../../models/pie-chart';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 @Component({
   selector: 'executive-section',
@@ -52,6 +45,7 @@ export class ExecutiveSectionComponent {
   private _enableVisualPie = false;
 
   constructor(private _multilingPipe: MultilingPipe,
+              private _executiveReportFrontService: ExecutiveReportFrontService,
               private _responseService: ResponseService) { }
 
   public emitChanges() {
@@ -171,15 +165,8 @@ export class ExecutiveSectionComponent {
     const question: Question = this._getQuestion(this._section.questionId);
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const professionals: Array<Professional> = ResponseService.answersProfessionals(answers);
-
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionKpi>this._section.content).value = answers.length.toString(10);
-
-    (<SectionKpi>this._section.content).examples = professionals.map((professional, index) => {
-      return index === 0 ? professional.firstName + ' ' + professional.lastName
-        : ' ' + professional.firstName + ' ' + professional.lastName
-    }).toString().slice(0, 175);
-
+    this._section.content = ExecutiveReportFrontService.kpiSection(professionals, answers.length.toString(10));
   }
 
   /***
@@ -200,24 +187,8 @@ export class ExecutiveSectionComponent {
     const question: Question = this._getQuestion(this._section.questionId);
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const barsData: Array<BarData> = ResponseService.barsData(question, answers);
-
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionBar>this._section.content).showExamples = true;
-    (<SectionBar>this._section.content).values = [];
-
-    barsData.slice(0, 3).forEach((bar, index) => {
-
-      const professionals: Array<Professional> = ResponseService.answersProfessionals(bar.answers);
-
-      (<SectionBar>this._section.content).values.push({
-        name: this._multilingPipe.transform(bar.label, this.reportLang),
-        value: Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0,
-        example: professionals.map((professional, index) => {
-          return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle
-        }).toString().slice(0, 40)
-      })
-    });
-
+    this._section.content = this._executiveReportFrontService.barSection(barsData, this.reportLang);
   }
 
   /***
@@ -228,18 +199,8 @@ export class ExecutiveSectionComponent {
     const question: Question = this._getQuestion(this._section.questionId);
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
-
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionRanking>this._section.content).color = '#4F5D6B';
-    (<SectionRanking>this._section.content).values = [];
-
-    tagsData.slice(0, 3).forEach((tag, index) => {
-      (<SectionRanking>this._section.content).values.push({
-        occurrence: tag.count + 'X',
-        name: this._multilingPipe.transform(tag.label, this.reportLang)
-      })
-    });
-
+    this._section.content = this._executiveReportFrontService.rankingSection(tagsData, this.reportLang);
   }
 
   /***
@@ -251,31 +212,8 @@ export class ExecutiveSectionComponent {
     const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
     const barsData: Array<BarData> = ResponseService.barsData(question, answers);
     const pieChartData: PieChart = ResponseService.pieChartData(barsData, answers);
-
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionRanking>this._section.content).values = [];
-
-    if (pieChartData) {
-
-      if (pieChartData.percentage) {
-        (<SectionPie>this._section.content).favorable = pieChartData.percentage + '%';
-        (<SectionPie>this._section.content).showPositive = true;
-      }
-
-      if (pieChartData.data) {
-        pieChartData.data.forEach((data, index) => {
-          (<SectionPie>this._section.content).values.push({
-            percentage: pieChartData.labelPercentage && pieChartData.labelPercentage[index]
-              && Number(pieChartData.labelPercentage[index].replace(specialCharRegEx, '')) || 0,
-            color: pieChartData.colors && pieChartData.colors[index],
-            legend: pieChartData.labels && pieChartData.labels[this.reportLang] && pieChartData.labels[this.reportLang][index],
-            answers: data
-          });
-        });
-      }
-
-    }
-
+    this._section.content = ExecutiveReportFrontService.pieChartSection(pieChartData, this.reportLang);
   }
 
   private _getQuestion(id: string): Question {
