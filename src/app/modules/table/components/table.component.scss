@@ -148,6 +148,25 @@
               font-size: $font-size-xs;
               padding: 6px 9px;
               height: unset;
+
+              &.is-secondary, &.is-danger, &.is-draft {
+
+                i {
+                  color: $text-white-color !important;
+                  font-size: 13px;
+                }
+
+              }
+
+            }
+
+            .menu {
+              min-width: 150px;
+
+              .menu-item {
+                font-size: 13px;
+              }
+
             }
 
           }

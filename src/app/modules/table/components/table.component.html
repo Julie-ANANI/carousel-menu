@@ -419,11 +419,11 @@
 
                     <!-- not disabled -->
                     <ng-container *ngIf="!disabledRow(table._content[row]) || !getDisabledState(column)">
-                      <div class="td-dropdown dropdown">
+                      <div class="td-dropdown dropdown is-right">
 
                         <a
                           [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))
-                          ? getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0])))) : 'button is-info is-link'"
+                            ? getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0])))) : 'button is-info is-link'"
                           class="dropdown-toggle"
                           tabindex="0">
 
@@ -438,33 +438,22 @@
 
                         </a>
 
+                        <ul class="menu">
+                          <li
+                            (click)="table._isLocal ? onClickDropdownItem(filteredContent[row], item)
+                            : onClickDropdownItem(table._content[row], item)"
+                            *ngFor="let item of this.getChoices(column)"
+                            class="menu-item">
+                            {{ item._alias | translate }}
+                          </li>
+                        </ul>
+
                       </div>
                     </ng-container>
                     <!-- /not disabled -->
 
                   </ng-container>
                   <!-- type DROPDOWN -->
-
-                  <!--&lt;!&ndash; if type is a dropdown &ndash;&gt;
-                  <ng-container *ngSwitchCase="'DROPDOWN'">
-
-
-                    <span class="dropdown is-right" [ngClass]="{ 'disabled': disabledRow(table._content[row]) }"
-                          *ngIf="!disabledRow(table._content[row]) || !getDisabledState(column)">
-
-                      <ul class="menu">
-                        <li
-                          (click)="table._isLocal ? onClickDropdownItem(filteredContent[row], item)
-                          : onClickDropdownItem(table._content[row], item)"
-                          *ngFor="let item of this.getChoices(column)"
-                          class="menu-item">
-                          {{ item._alias | translate }}
-                        </li>
-                      </ul>
-
-                    </span>
-                  </ng-container>
-                  &lt;!&ndash; /if type is a dropdown &ndash;&gt;-->
 
 
                   <!-- type TEXT / DEFAULT -->

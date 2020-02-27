@@ -104,7 +104,7 @@ export class SharedProfessionalsListComponent {
           {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'icon icon-plus', _iconSize: '12px'}],
       _clickIndex: 2,
       _columns: [
-        {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
+        {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true, _width: '120px',
           _choices: [
             {_name: 'false', _alias: 'No', _url: ''},
             {_name: 'true', _alias: 'Yes', _url: 'https://res.cloudinary.com/umi/image/upload/v1552659548/app/default-images/badges/ambassador.svg'}
@@ -115,7 +115,7 @@ export class SharedProfessionalsListComponent {
         {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSortable: true, _isSearchable: true, _width: '120px'},
         {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
         {_attrs: ['company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-        {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY', _isSortable: true, _isSearchable: true, _width: '120px'},
+        {_attrs: ['campaigns'], _name: 'TABLE.HEADING.CAMPAIGNS', _type: 'ARRAY', _isSortable: true, _isSearchable: true, _width: '140px'},
         {_attrs: ['messages'], _name: 'TABLE.HEADING.CONTACT', _type: 'ARRAY', _isSortable: true, _isSearchable: true, _width: '120px'},
       ]
     };
