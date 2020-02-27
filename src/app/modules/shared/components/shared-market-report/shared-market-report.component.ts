@@ -18,7 +18,7 @@ import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import {SharedWorldmapService} from '../shared-worldmap/services/shared-worldmap.service';
+import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -246,7 +246,7 @@ export class SharedMarketReportComponent implements OnInit {
        * compute tags lists for each questions of type textarea
        */
       this._questions.forEach((question) => {
-        const tags = ResponseService.getTagsList(response.answers, question);
+        const tags = ResponseService.tagsList(response.answers, question);
         const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
         this._tagFiltersService.setAnswerTags(identifier, tags);
       });
@@ -270,7 +270,7 @@ export class SharedMarketReportComponent implements OnInit {
    */
   private presets() {
    if (this._innovation.preset && this._innovation.preset.sections) {
-     this._questions = ResponseService.getPresets(this._innovation);
+     this._questions = ResponseService.presets(this._innovation);
    }
   }
 

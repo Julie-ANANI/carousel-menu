@@ -100,7 +100,7 @@ export class QuestionSectionComponent implements OnInit {
     if (this._questionReceived && this._questionReceived.identifier) {
       const id = this._questionReceived.identifier;
 
-      const answersToShow = this._responseService.getAnswersToShow(this._answersReceived, this._questionReceived);
+      const answersToShow = this._responseService.answersToShow(this._answersReceived, this._questionReceived);
       this._dataService.setAnswers(this._questionReceived, answersToShow);
 
       // filter comments

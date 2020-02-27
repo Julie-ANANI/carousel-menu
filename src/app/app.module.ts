@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundModule } from './modules/common/not-found/not-found.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SpinnerLoaderModule } from './modules/utility-components/spinner-loader/spinner-loader.module';
 
 // Services
 import { AuthService } from './services/auth/auth.service';
@@ -43,6 +44,7 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
     CookieModule.forRoot(),
+    SpinnerLoaderModule,
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
     }),

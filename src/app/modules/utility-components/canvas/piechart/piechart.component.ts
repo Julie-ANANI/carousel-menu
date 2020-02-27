@@ -22,9 +22,9 @@ export class PiechartComponent implements OnInit {
 
   private _colors: Array<{backgroundColor: Array<string>}>;
 
-  private _lang: string;
+  private readonly _lang: string;
 
-  private _isBrowser: boolean;
+  private readonly _isBrowser: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService) {

@@ -10,11 +10,6 @@ import { AdminProjectFollowUpComponent } from "./admin-project-follow-up/admin-p
 
 export const projectRoutes: Routes = [
   {
-    path: '',
-    redirectTo: 'settings',
-    pathMatch: 'full'
-  },
-  {
     path: 'settings',
     component: AdminProjectManagementComponent,
     pathMatch: 'full'
@@ -48,5 +43,10 @@ export const projectRoutes: Routes = [
     path: 'follow-up',
     component: AdminProjectFollowUpComponent,
     pathMatch: 'full'
-  }
+  },
+  {
+    path: '',
+    redirectTo: 'settings',
+    pathMatch: 'full'
+  },
 ];

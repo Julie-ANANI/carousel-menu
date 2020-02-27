@@ -1,0 +1,60 @@
+@import "../../../../../../style/framework/src/variables";
+
+#admin-project-storyboard {
+  min-height: calc(100vh - 125px);
+  background-color: $bg-light-color;
+
+  .header-wrapper {
+
+    .content-wrapper {
+      flex: 1;
+
+      .back-to-wrapper:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .title {
+        font-size: 28px;
+      }
+
+      .video-wrapper, .pdf-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        text-align: right;
+
+        p {
+          margin-bottom: 0;
+
+          i {
+            color: $primary-color;
+            cursor: pointer;
+          }
+
+        }
+
+        .button {
+          min-width: 172px;
+        }
+
+      }
+
+    }
+
+  }
+
+  .btn-save-float-wrapper {
+    position: fixed;
+    right: 25px;
+    bottom: 30px;
+    z-index: 1;
+
+    .button {
+      min-width: 80px;
+      box-shadow: $box-shadow-button-hover;
+    }
+
+  }
+
+}

@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CommonService {
 
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
   /*
    * range function (inspired from Python)
@@ -75,6 +76,48 @@ export class CommonService {
       }
     });
     return config;
+  }
+
+  /***
+   * this function is to copy the url/link/text to the
+   * clipboard.
+   * @param url
+   */
+  public copyToClipboard(url: string) {
+    if (url) {
+      if (isPlatformBrowser(this._platformId)) {
+        let textbox = document.createElement('textarea');
+        textbox.style.position = 'fixed';
+        textbox.style.left = '0';
+        textbox.style.top = '0';
+        textbox.style.opacity = '0';
+        textbox.value = url;
+        document.body.appendChild(textbox);
+        textbox.focus();
+        textbox.select();
+        document.execCommand('copy');
+        document.body.removeChild(textbox);
+      }
+    }
+  }
+
+  /***
+   * this function is to return the color based on the length and limit.
+   * @param textLength
+   * @param limit
+   */
+  public static getLimitColor(textLength: number, limit: number): string {
+
+    const length = limit - textLength;
+
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < (limit/2)) {
+      return '#F0AD4E';
+    } else {
+      return '#2ECC71';
+    }
+
   }
 
 }

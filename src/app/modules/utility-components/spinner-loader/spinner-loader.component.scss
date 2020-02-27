@@ -1,21 +1,11 @@
 @import "../../../../style/framework/src/variables";
 
-#spinner-loader-component {
+#spinner-loader {
   height: 100vh;
-  display: flex;
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   z-index: 88881;
-  background-color: $bg-light-color;
-
-  .logo-wrapper {
-    margin-bottom: $unit-5;
-  }
-
 }

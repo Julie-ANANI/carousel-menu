@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, Routes, RouterModule } from '@angular/router';
 
 // Guards
-import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AdHocAuthGuard } from "./guards/adhoc-auth-guard.service";
@@ -94,7 +93,6 @@ const config: ExtraOptions = {
   providers: [ // /!\ Ne mettre ici que les service liés au routage (utilisés par un Guard), sinon les mettre dans app.module.ts
     AuthGuard,
     NonAuthGuard,
-    AdminAuthGuard,
     AdHocAuthGuard,
     ShareSynthesisGuard
   ]

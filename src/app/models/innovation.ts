@@ -63,6 +63,7 @@ export interface Innovation {
     date?: any
   };
 
+  // not use anymore
   executiveReport?: {
     totalSections?: number,
     goal?: string,
@@ -74,6 +75,7 @@ export interface Innovation {
     }]
   };
 
+  executiveReportId?: string;
   mission?: Mission | string;
 
   operator?: User;

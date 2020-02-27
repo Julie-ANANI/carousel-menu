@@ -37,7 +37,6 @@ import { EmailService } from '../../../services/email/email.service';
 import { TagsService } from '../../../services/tags/tags.service';
 import { CampaignService } from '../../../services/campaign/campaign.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
-import { CommonService } from '../../../services/common/common.service';
 import { AnswerService } from '../../../services/answer/answer.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { DownloadService } from '../../../services/download/download.service';
@@ -56,6 +55,7 @@ import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign
 import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
 import { ShieldService } from "../../../services/shield/shield.service";
 import { EnterpriseService } from "../../../services/enterprise/enterprise.service";
+import { AdminProjectStoryboardModule } from './components/admin-project-storyboard/admin-project-storyboard.module';
 
 @NgModule({
   imports: [
@@ -85,7 +85,8 @@ import { EnterpriseService } from "../../../services/enterprise/enterprise.servi
     AdminCommunityModule,
     AdminEnterpriseManagementModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminProjectStoryboardModule
   ],
   declarations: [
     AdminSettingsComponent
@@ -101,7 +102,6 @@ import { EnterpriseService } from "../../../services/enterprise/enterprise.servi
     TagsService,
     CampaignService,
     CampaignResolver,
-    CommonService,
     AnswerService,
     AutocompleteService,
     DownloadService,

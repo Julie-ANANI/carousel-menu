@@ -14,8 +14,6 @@ import { SpinnerLoaderComponent } from './spinner-loader.component';
   ],
   exports: [
     SpinnerLoaderComponent
-  ],
-  providers: [
   ]
 })
 

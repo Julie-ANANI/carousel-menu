@@ -1,0 +1,10 @@
+<div *ngIf="isBrowser" id="piechart-executive">
+  <canvas baseChart
+          [data]="data"
+          [labels]="labels"
+          [chartType]="type"
+          [options]="options"
+          [colors]="colors"
+          [legend]="true">
+  </canvas>
+</div>
