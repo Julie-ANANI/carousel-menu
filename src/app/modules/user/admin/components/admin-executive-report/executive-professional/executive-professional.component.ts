@@ -132,8 +132,6 @@ export class ExecutiveProfessionalComponent implements OnInit {
       return value._id;
     });
 
-    console.log(this._config);
-
     this.emitChanges();
   }
 
