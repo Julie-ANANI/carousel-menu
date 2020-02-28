@@ -1,0 +1,33 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#executive-professional {
+
+  .content-wrapper {
+
+    .select-wrapper {
+      width: 175px;
+      margin-bottom: 10px;
+
+      &:first-child, &:nth-child(3) {
+        margin-right: 10px;
+      }
+
+    }
+
+    .pro-wrapper {
+      border-radius: 4px;
+      width: 175px;
+      height: 99px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #D8D8D8;
+
+      &:first-child, &:nth-child(3) {
+        margin-right: 10px;
+      }
+
+    }
+
+  }
+
+}

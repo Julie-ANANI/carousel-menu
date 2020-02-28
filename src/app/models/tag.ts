@@ -15,5 +15,5 @@ export interface Tag {
   readonly status?: 'DRAFT' | 'VALID';
   readonly created?: Date;
   readonly updated?: Date;
-
+  count?: number;
 }

@@ -8,7 +8,7 @@
   (editRow)="editBlacklist($event)">
 </app-shared-table>
 
-<app-sidebar
+<sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-emails-form
     [sidebarState]="sidebarState"
@@ -16,4 +16,4 @@
     [editBlacklistEmail]="currentEmailToBlacklist" (editBlacklist)="blacklistEditionFinish($event)"
     (emailsToBlacklists)="addEmailsToBlacklistFinish($event)">
   </app-emails-form>
-</app-sidebar>
+</sidebar>

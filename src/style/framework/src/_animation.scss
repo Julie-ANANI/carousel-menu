@@ -181,7 +181,7 @@
 
 @keyframes slideInDown {
   from {
-    transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -20px, 0);
     opacity: 0;
   }
 
@@ -503,17 +503,68 @@
 
 /********************************** Animation class ***************************************/
 
-.animate-page {
-  animation-name: fadeIn;
-  animation-duration: 200ms;
-  animation-timing-function: ease-in-out;
+.animate-fade, .animate-zoom, .animate-bounce, .animate-slide {
+  animation-duration: 0.1s;
+  animation-timing-function: ease-in;
+
+  &.is-2 {
+    animation-duration: 0.2s !important;
+  }
+
+  &.is-3 {
+    animation-duration: 0.3s !important;
+  }
+
+  &.is-4 {
+    animation-duration: 0.4s !important;
+  }
+
+  &.is-5 {
+    animation-duration: 0.5s !important;
+  }
+
+  &.is-7 {
+    animation-duration: 0.7s !important;
+  }
+
 }
 
-.animate-content {
-  animation-name: fadeIn;
-  animation-duration: 50ms;
-  animation-timing-function: ease-in-out;
+.animate-zoom {
+  animation-name: zoomIn;
 }
+
+.animate-fade {
+  animation-name: fadeIn;
+}
+
+.animate-bounce {
+  animation-name: bounceIn;
+
+  &.bounce-inLeft {
+    animation-name: bounceInLeft;
+  }
+
+  &.bounce-inDown {
+    animation-name: bounceInDown;
+  }
+
+}
+
+.animate-slide {
+  animation-name: slideInUp;
+
+  &.slide-left {
+    animation-name: slideInLeft;
+  }
+
+  &.slide-down {
+    animation-name: slideInDown;
+  }
+
+}
+
+
+// remove these
 
 .animate-appear {
   animation-name: fadeIn;

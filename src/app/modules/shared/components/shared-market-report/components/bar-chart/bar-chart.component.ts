@@ -73,9 +73,9 @@ export class BarChartComponent implements OnInit {
 
     /* Update Answers Data */
     this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
-      this._barsData = ResponseService.getBarsData(this.question, answers);
+      this._barsData = ResponseService.barsData(this.question, answers);
       if (this.question.controlType === 'radio') {
-        this._pieChart = ResponseService.getPieChartData(this._barsData, answers);
+        this._pieChart = ResponseService.pieChartData(this._barsData, answers);
       }
     });
   }

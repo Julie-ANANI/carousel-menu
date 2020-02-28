@@ -200,7 +200,7 @@
 
 
 <!-- sidebars to perform batch operations -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-batch-form
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
@@ -210,7 +210,7 @@
     [workflow]="currentBatch?.workflow || campaign.settings.defaultWorkflow"
     [content]="content">
   </app-batch-form>
-</app-sidebar>
+</sidebar>
 <!-- /sidebars to perform batch operations  -->
 
 

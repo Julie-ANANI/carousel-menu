@@ -11,7 +11,7 @@
 
 
 <!-- section sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
 
   <ng-container *ngIf="isProfessionalForm">
     <app-user-form
@@ -31,7 +31,7 @@
     </app-tags>
   </ng-container>
 
-</app-sidebar>
+</sidebar>
 
 
 <!-- modal to ask admin to sure about deleting the professional(s) -->

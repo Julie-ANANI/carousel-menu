@@ -46,14 +46,14 @@
 
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-user-form
     (finalUserData)="updateUser($event)"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
     [user]="selectedUser">
   </app-user-form>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar -->
 
 

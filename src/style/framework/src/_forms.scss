@@ -52,6 +52,17 @@ legend {
     color: $form-placeholder-color;
   }
 
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  // Firefox
+  &[type=number] {
+    -moz-appearance:textfield;
+  }
+
   // Input types
   &[type="file"] {
     height: auto;

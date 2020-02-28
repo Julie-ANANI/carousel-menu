@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 
 import { environment } from '../../../environments/environment';
-import {Tag} from '../../models/tag';
+import { Tag } from '../../models/tag';
 
 @Injectable()
 export class UserService {
@@ -60,8 +60,8 @@ export class UserService {
     return this._http.get('/user/' + userId);
   }
 
-  public getAll(config?: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get('/user', {params: config});
+  public getAll(config?: {[header: string]: string | string[]}): Observable<Array<User>> {
+    return this._http.get<Array<User>>('/user', {params: config});
   }
 
   public delete(): Observable<any> {
@@ -79,4 +79,5 @@ export class UserService {
   public createSwellUsers(): Observable<any> {
     return this._http.post('/misc/swellrt/synchronizeUsers', {});
   }
+
 }

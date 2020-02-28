@@ -1,0 +1,189 @@
+@import "framework/src/variables";
+@import "framework/src/mixins";
+
+.admin-executive-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .content-wrapper {
+    max-width: 438px;
+    width: 100%;
+    min-height: 373px;
+    margin: 0 50px 30px 50px;
+
+    label {
+      position: relative;
+      display: block;
+
+      &.value-wrapper {
+        width: 50px;
+
+        .form-input {
+          text-align: center;
+          padding: 3px;
+        }
+
+      }
+
+    }
+
+    .popover {
+      @include flex-centered();
+      width: 50px;
+      border: 2px solid #000000;
+      border-radius: $border-radius;
+
+      .shape {
+        margin: 0;
+      }
+
+      .popover-container {
+        width: 150px;
+
+        .card {
+          flex-direction: row;
+          justify-content: center;
+
+          .shape.is-circle {
+            cursor: pointer;
+            margin: 10px;
+          }
+
+        }
+
+      }
+
+    }
+
+    .pie-wrapper {
+      display: flex;
+      margin-bottom: 15px;
+
+      .form-input {
+        width: 140px;
+      }
+
+      &:first-child, &:nth-child(3) {
+        margin-right: 10px;
+      }
+
+    }
+
+    .form-input, .form-select {
+      border: 2px solid #000000;
+      font-size: $font-size-sm;
+    }
+
+    .form-select {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .form-input {
+      padding: 15px 30px 15px 15px;
+
+      &.is-abstract {
+        height: 118px;
+      }
+
+    }
+
+    textarea {
+
+      &.form-input {
+        resize: vertical;
+      }
+
+    }
+
+    .form-checkbox {
+      display: flex;
+      font-size: $font-size-sm;
+      padding-left: 35px;
+
+      .form-icon {
+        height: 28px;
+        width: 27px;
+        border-color: $border-dark-color;
+
+        &:before {
+          margin-top: -10px;
+          height: 15px;
+        }
+
+      }
+
+    }
+
+    .text-limit-wrapper {
+      top: 2px;
+      right: 13px;
+      font-size: 13px;
+      position: absolute;
+    }
+
+    &.has-border {
+      padding: 20px;
+      border: 2px solid $border-color;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+
+      .text-wrapper {
+        border-radius: 4px;
+        background-color: #D8D8D8;
+        padding: 25px;
+        font-size: $font-size-lg;
+      }
+
+      p {
+        margin-bottom: 0;
+        font-size: $font-size-sm;
+
+        &.has-min-height {
+          min-height: 57px;
+          text-align: left;
+        }
+
+      }
+
+      .label {
+        width: 272px;
+        font-size: $font-size-sm;
+        color: $text-white-color;
+      }
+
+      &.is-justify {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+
+    }
+
+  }
+
+}
+
+@media screen and (min-width: $size-xl) {
+
+  .admin-executive-wrapper {
+
+    .content-wrapper {
+
+      &.has-border {
+
+        &.is-fixed {
+          max-height: 405px;
+          overflow: hidden;
+          overflow-y: auto;
+        }
+
+      }
+
+    }
+
+  }
+
+
+}

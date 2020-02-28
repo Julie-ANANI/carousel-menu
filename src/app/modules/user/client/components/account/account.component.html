@@ -226,9 +226,9 @@
 
 
 <!-- change password sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-user-change-password [sidebarState]="sidebarValue.animate_state" (passwordUpdate)="updatePassword($event)"></app-user-change-password>
-</app-sidebar>
+</sidebar>
 <!-- /change password sidebar -->
 
 

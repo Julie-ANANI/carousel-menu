@@ -32,6 +32,7 @@ export const PROJECT = {
   'ISSUE': 'Problématique',
   'MARKET_BENEFITS': 'Avantages marché',
   'GALLERY': 'Galerie',
+  'STORYBOARD': 'Storyboard',
   'SHARE': {
     'TITLE': 'Partager',
     'LINKEDIN': 'Partager sur LinkedIn',

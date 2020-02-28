@@ -69,7 +69,7 @@ export class ExecutiveSectionComponent {
    */
   private _getQuestions(value: Innovation) {
     if (value.preset && value.preset.sections) {
-      ResponseService.getPresets(value).forEach((questions) => {
+      ResponseService.presets(value).forEach((questions) => {
         const index = this._questions.findIndex((question) => question._id === questions._id);
         if (index === -1) {
           this._questions.push(questions);
@@ -111,7 +111,7 @@ export class ExecutiveSectionComponent {
 
       if (this._questionSelected) {
 
-        const answersToShow = this._responseService.getAnswersToShow(this._answers, this._questionSelected);
+        const answersToShow = this._responseService.answersToShow(this._answers, this._questionSelected);
         this._dataService.setAnswers(this._questionSelected, answersToShow);
 
         this._stats = {

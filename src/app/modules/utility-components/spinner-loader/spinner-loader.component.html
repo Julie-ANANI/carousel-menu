@@ -1,11 +1,13 @@
-<section id="spinner-loader-component">
+<div *ngIf="spinnerState"  class="flex-centered bg-page fixed" id="spinner-loader">
 
-  <ng-container *ngIf="getDomain() === 'umi'">
-    <div class="logo-wrapper">
-      <img src="{{ getLogo() }}" alt="UMI" height="40px">
-    </div>
-  </ng-container>
+  <div *ngIf="isUmiDomain" class="m-bottom-15">
+    <img
+      [ngStyle]="{ 'height': '33px', 'width': '110px' }"
+      [src]="logoSrc"
+      alt="UMI"
+      class="img-responsive">
+  </div>
 
   <div class="loading is-lg"></div>
 
-</section>
+</div>

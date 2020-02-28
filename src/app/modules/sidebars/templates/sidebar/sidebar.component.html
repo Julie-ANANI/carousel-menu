@@ -1,16 +1,16 @@
-<div [@animateSidebar]="state" [ngStyle]="{ 'width': size ? size : '452px'  }" class="sidebar is-right">
+<div [@animateSidebar]="state" [ngStyle]="{ 'width': size }" class="sidebar is-right">
   <div #content class="sidebar-container">
 
     <!-- header -->
     <header class="sidebar-header">
       <div class="column col-sm-12 col-11 col-mx-auto">
-        <div class="flex-between relative">
+        <div class="flex-between">
 
           <p class="sidebar-title">{{ title | translate }}</p>
 
           <button
             (click)="toggleState($event, content)"
-            class="close absolute"
+            class="close"
             id="close"
             type="button">
           </button>

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
 import { Answer } from '../../../../models/answer';
 import { AnswerService } from '../../../../services/answer/answer.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-executive-report',

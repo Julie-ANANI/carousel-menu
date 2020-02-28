@@ -1,0 +1,137 @@
+<div class="admin-executive-wrapper" id="executive-objective">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- objective -->
+    <div>
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor('objective')"
+          [(ngModel)]="config.objective"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
+          [ngStyle]="{ 'height': '90px' }"
+          maxlength="120"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': objectiveColor }" class="text-limit-wrapper">
+          {{ 120 - config.objective.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /objective -->
+
+
+    <!-- project leader -->
+    <div [ngStyle]="{ 'padding-top': '74px' }">
+
+      <div class="m-bottom-10">
+        <label>
+
+          <input
+            (change)="emitChanges()"
+            (keyup)="textColor('clientName')"
+            [(ngModel)]="config.client.name"
+            [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_NAME' | translate"
+            maxlength="58"
+            class="form-input"
+            type="text">
+
+          <span [ngStyle]="{ 'color': clientNameColor }" class="text-limit-wrapper">
+            {{ 58 - config.client.name.length }}
+          </span>
+
+        </label>
+      </div>
+
+      <div>
+        <label>
+
+          <input
+            (change)="emitChanges()"
+            (keyup)="textColor('clientEmail')"
+            [(ngModel)]="config.client.email"
+            [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_EMAIL' | translate"
+            maxlength="58"
+            class="form-input"
+            type="text">
+
+          <span [ngStyle]="{ 'color': clientEmailColor }" class="text-limit-wrapper">
+            {{ 58 - config.client.email.length }}
+          </span>
+
+        </label>
+      </div>
+
+    </div>
+    <!-- /project leader -->
+
+
+    <!-- commercial -->
+    <div [ngStyle]="{ 'padding-top': '74px' }">
+      <label>
+        <select
+          [ngModel]="commercial._id ? commercial._id : ''"
+          [ngModelOptions]="{ standalone: true }"
+          (change)="selectCommercial($event)"
+          class="form-select">
+
+          <option [value]="''">
+            {{ 'COMMON.PLACEHOLDER.CHOOSE_SALE' | translate }}
+          </option>
+
+          <option *ngFor="let com of allCommercials" [value]="com._id">
+            {{ com.firstName }} {{ com.lastName }}
+          </option>
+
+        </select>
+      </label>
+    </div>
+    <!-- /commercial -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border is-justify">
+
+    <!-- objective text -->
+    <div>
+      <h4>{{ 'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate }}</h4>
+      <p [ngStyle]="{ 'min-height': '38px' }">{{ config.objective }}</p>
+    </div>
+    <!-- /objective text -->
+
+
+    <!-- project leader -->
+    <div class="p-top-40">
+      <h4>{{ 'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.LEADER' | translate }}</h4>
+      <div [ngStyle]="{ 'min-height': '38px' }">
+        <p>{{ config.client.name }}</p>
+        <p>{{ config.client.email }}</p>
+      </div>
+    </div>
+    <!-- /project leader -->
+
+
+    <!-- contact -->
+    <div class="p-top-40">
+      <h4>{{ 'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.CONTACT' | translate }}</h4>
+      <div [ngStyle]="{ 'min-height': '57px' }">
+        <p>{{ commercial.firstName }} {{ commercial.lastName }}</p>
+        <p>{{ commercial.phone }}</p>
+        <p>{{ commercial.email }}</p>
+      </div>
+    </div>
+    <!-- /contact -->
+
+  </div>
+  <!-- /view side -->
+
+</div>
