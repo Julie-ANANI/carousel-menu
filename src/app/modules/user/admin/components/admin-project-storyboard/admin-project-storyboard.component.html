@@ -161,7 +161,7 @@
 <!-- modal to select/change language -->
 <app-modal *ngIf="!isLoading && isModalLang" [(showModal)]="isModalLang" [title]="modalTitle | translate">
 
-  <section [ngClass]="executiveReport.lang ? 'p-top-30' : 'p-top-40'" class="modal-body">
+  <section [ngClass]="executiveReport.lang ? 'p-top-30 p-bottom-10' : 'p-top-40'" class="modal-body">
 
     <div *ngIf="executiveReport.lang" class="m-bottom-15 text-background">
       {{ 'ADMIN_STORYBOARD.MODAL.CURRENT_LANG' | translate }}
@@ -197,6 +197,12 @@
         <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
       </label>
 
+    </div>
+
+
+    <div *ngIf="executiveReport.lang" class="m-top-30 text-sm">
+      <span class="text-alert text-medium">{{ 'ADMIN_STORYBOARD.MODAL.ATTENTION' | translate }}</span>
+      {{ 'ADMIN_STORYBOARD.MODAL.ATTENTION_MSG' | translate }}
     </div>
 
   </section>

@@ -65,7 +65,17 @@ export class ExecutiveProfessionalComponent implements OnInit {
         this._allProfessionals = response && response.result || [];
 
         if (this._allProfessionals.length >= 4) {
-          this._top4Pro = this._allProfessionals.slice(0, 4);
+          const pros: Array<Professional> = [];
+
+          this._config.list.forEach((id) => {
+            const index = this._allProfessionals.findIndex((pro) => pro._id === id);
+            if (index !== -1) {
+              pros.push(this._allProfessionals[index]);
+            }
+          });
+
+          this._top4Pro = pros.slice(0, 4);
+
         } else {
           for (let i = 0; i <= this._allProfessionals.length; i++) {
             if (this._allProfessionals[i]) {
@@ -121,6 +131,8 @@ export class ExecutiveProfessionalComponent implements OnInit {
     this._config.list = this._top4Pro.concat(this._restPro).map((value) => {
       return value._id;
     });
+
+    console.log(this._config);
 
     this.emitChanges();
   }
