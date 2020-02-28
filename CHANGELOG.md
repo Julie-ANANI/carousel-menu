@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 <ul>
   <li>The new interface to generate the Executive Report in the admin side.</li>
   <li>The new tab Storyboard.</li>
+  <li>Browser independent priniting for executive report.</li>
 </ul>
 
 ### Updated
