@@ -5,7 +5,6 @@ import { AuthGuard } from '../../guards/auth-guard.service';
 import { DocsGuardService } from '../../guards/docs-guard.service';
 
 import { DocumentationComponent } from './documentation.component';
-import { ChangelogComponent } from './changelog/changelog.component';
 
 const docsRoutes: Routes = [
   {
@@ -17,12 +16,6 @@ const docsRoutes: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: 'application'
-      },
-      {
-        path: 'changelog',
-        pathMatch: 'full',
-        canActivateChild: [DocsGuardService],
-        component: ChangelogComponent
       },
       {
         path: 'application',
