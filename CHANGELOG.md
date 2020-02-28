@@ -2,7 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
-### 1.30.0 Unreleased
+### 1.30.0 (Unreleased)
+<hr>
 
 #### Added
 
@@ -18,6 +19,7 @@ All notable changes to this project will be documented in this file.
 </ul>
 
 ### 1.26.0 - 10 October 2019
+<hr>
 
 #### Added
 
@@ -41,6 +43,7 @@ All notable changes to this project will be documented in this file.
 </ul>
 
 ### 1.25.0 - 23 September 2019
+<hr>
 
 #### Added
 
@@ -71,6 +74,7 @@ All notable changes to this project will be documented in this file.
 </ul>
 
 ### 1.24.0 - 11 September 2019
+<hr>
 
 #### Added
 
@@ -92,6 +96,7 @@ All notable changes to this project will be documented in this file.
 </ul>
 
 ### 1.23.0 - 26 August 2019
+<hr>
 
 #### Added
 
@@ -112,6 +117,7 @@ All notable changes to this project will be documented in this file.
 </ul>
 
 ### 1.22.0 - 05 August 2019
+<hr>
 
 #### Added
 
