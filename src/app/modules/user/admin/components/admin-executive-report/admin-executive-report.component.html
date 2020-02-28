@@ -51,6 +51,13 @@
   <!-- sections -->
   <div *ngFor="let section of executiveReport.sections; let i = index;">
 
+    <!-- section number -->
+    <h2 [ngClass]="{ 'm-bottom-40': section.questionType }" class="text-center title text-background">
+      Section {{ i + 1 }}
+    </h2>
+    <!-- /section number -->
+
+
     <!-- section -->
     <section [ngStyle]="{ 'margin-bottom': '-30px' }">
       <executive-section

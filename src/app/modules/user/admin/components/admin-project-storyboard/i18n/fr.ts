@@ -32,6 +32,8 @@ export const ADMIN_STORYBOARD = {
     'URL_COPIED': 'L\'URL a été copié avec succès.'
   },
 
-  'BACK_TO': 'Retour au projet'
+  'BACK_TO': 'Retour au projet',
+
+  'NO_QUESTIONS_MSG': 'Il n\'y a pas de questions pour remplir les sections du rapport exécutif.'
 
 };

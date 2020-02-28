@@ -57,7 +57,9 @@ export class PiechartExecutiveComponent {
     if (this._pieChart) {
       this._labels = this._pieChart.labels || [];
       this._colors = [{backgroundColor: this._pieChart.colors || []}];
-      this._data = this._pieChart.data || [];
+
+      // for the executive report we are using the percentage values not the answers values
+      this._data = this._pieChart.labelPercentage || [];
     }
   }
 

@@ -7,12 +7,21 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { ErrorFrontService} from '../../../../../services/error/error-front';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { ExecutiveReport } from '../../../../../models/executive-report';
+import { ExecutiveReport, ExecutiveSection } from '../../../../../models/executive-report';
 import { Innovation } from '../../../../../models/innovation';
 import { CommonService } from '../../../../../services/common/common.service';
 import { ExecutiveReportService } from '../../../../../services/executive-report/executive-report.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Question } from '../../../../../models/question';
+import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
+import { AnswerService } from '../../../../../services/answer/answer.service';
+import { Answer } from '../../../../../models/answer';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
+import { PieChart } from '../../../../../models/pie-chart';
+import { ExecutiveReportFrontService } from '../../../../../services/executive-report/executive-report-front.service';
+import { Tag } from '../../../../../models/tag';
 
 @Component({
   selector: 'admin-storyboard',
@@ -38,6 +47,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _reportType = '';
 
+  private _questions: Array<Question> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
@@ -45,6 +56,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _executiveReportService: ExecutiveReportService,
               private _innovationFrontService: InnovationFrontService,
               private _commonService: CommonService,
+              private _answerService: AnswerService,
+              private _executiveReportFrontService: ExecutiveReportFrontService,
+              private _multilingPipe: MultilingPipe,
+              private _responseService: ResponseService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
@@ -57,6 +72,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
     this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'title'));
     this._innovationFrontService.setInnovation(this._innovation);
+    this._questions = ResponseService.presets(this._innovation);
 
     if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
       this._setSpinner(false);
@@ -98,6 +114,82 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public autofillExecutiveReport(event: Event) {
     event.preventDefault();
+    this._setSpinner(true);
+
+    if (this._questions && this._questions.length > 0) {
+      this._getAnswers();
+    } else {
+      this._setSpinner(false);
+      this._translateNotificationsService.error('ERROR.ERROR', 'ADMIN_STORYBOARD.NO_QUESTIONS_MSG');
+    }
+
+  }
+
+  private _getAnswers() {
+    this._answerService.getInnovationValidAnswers(this._innovation._id).pipe(first()).subscribe((response) => {
+      const answers: Array<Answer> = response.answers.sort((a, b) => {
+        return b.profileQuality - a.profileQuality;
+      });
+      this._setReportSections(answers);
+    }, (err: HttpErrorResponse) => {
+      this._setSpinner(false);
+      console.log(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+    });
+  }
+
+  private _setReportSections(answers: Array<Answer>) {
+
+    const sections: Array<ExecutiveSection> = [];
+
+    this._questions.forEach((question, index) => {
+      if (this._executiveReport.sections && this._executiveReport.sections[index]) {
+
+        sections[index] = {
+          questionId: '',
+          questionType: '',
+          title: '',
+          abstract: '',
+          content: <any>{}
+        };
+
+        if (this._executiveReport.sections[index].questionId) {
+          sections[index] = this._executiveReport.sections[index];
+        } else {
+          sections[index].questionId = question._id;
+          sections[index].title = this._multilingPipe.transform(question.title, this._executiveReport.lang);
+          const answersToShow: Array<Answer> = this._responseService.answersToShow(answers, question);
+          const barsData: Array<BarData> = ResponseService.barsData(question, answersToShow);
+
+          switch (question.controlType) {
+
+            case 'radio':
+              const pieChartData: PieChart = ResponseService.pieChartData(barsData, answersToShow);
+              sections[index].questionType = 'PIE';
+              sections[index].content = ExecutiveReportFrontService.pieChartSection(pieChartData, this._executiveReport.lang);
+              break;
+
+            case 'checkbox':
+              sections[index].questionType = 'BAR';
+              sections[index].content = this._executiveReportFrontService.barSection(barsData, this._executiveReport.lang);
+              break;
+
+            default:
+              const tagsData: Array<Tag> = ResponseService.tagsList(answersToShow, question);
+              sections[index].questionType = 'RANKING';
+              sections[index].content = this._executiveReportFrontService.rankingSection(tagsData, this._executiveReport.lang);
+              break;
+
+          }
+        }
+
+      }
+    });
+
+    this._executiveReport.sections = sections;
+    this._setSpinner(false);
+    this._toBeSaved = true;
+
   }
 
   public openLangModal(event: Event, type: string) {
@@ -215,6 +307,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get innovation(): Innovation {
     return this._innovation;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
   }
 
 }
