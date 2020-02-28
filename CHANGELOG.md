@@ -2,32 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
-### 1.30.0 (Unreleased)
-<hr>
+## 1.30.0 (Unreleased)
 
-#### Added
+### Added
 
 <ul>
   <li>The new interface to generate the Executive Report in the admin side.</li>
   <li>The new tab Storyboard.</li>
 </ul>
 
-#### Updated
+### Updated
 
 <ul>
   <li>Improved the table component. Horizontal scroll only available for the devices screen less then 1440px. Header is fixed while scrolling vertically. Other little improvements.</li>
 </ul>
 
-### 1.26.0 - 10 October 2019
-<hr>
+## 1.26.0 - 10 October 2019
 
-#### Added
+### Added
 
 <ul>
   <li>Now operator can add comment and suggestion in the pitch section.</li>
 </ul>
 
-#### Bug Fixed
+### Bug Fixed
 
 <ul>
   <li>In map, now tooltip follows the mouse for the firefox browser.</li>
@@ -36,16 +34,15 @@ All notable changes to this project will be documented in this file.
   <li>Modal to make the synthesis invisible/end project/reset executive report to the client was not visible properly.</li>
 </ul>
 
-#### Updated
+### Updated
 
 <ul>
   <li>To disable icon in the css docs.</li>
 </ul>
 
-### 1.25.0 - 23 September 2019
-<hr>
+## 1.25.0 - 23 September 2019
 
-#### Added
+### Added
 
 <ul>
   <li>Put Russia in Europe</li>
@@ -57,7 +54,7 @@ All notable changes to this project will be documented in this file.
   <li>A universal targeting model.</li>
 </ul>
 
-#### Bug Fixed
+### Bug Fixed
 
 <ul>
   <li>The campaign is added to the webpage when creating a new campaign.</li>
@@ -66,17 +63,16 @@ All notable changes to this project will be documented in this file.
   <li>Shared synthesis missed a provider (now added).</li>
 </ul>
 
-#### Updated
+### Updated
 
 <ul>
   <li>The interface of the autocomplete input.</li>
   <li>The world map is now only used to paint the countries that are being selected or targeted. No click event on the map.</li>
 </ul>
 
-### 1.24.0 - 11 September 2019
-<hr>
+## 1.24.0 - 11 September 2019
 
-#### Added
+### Added
 
 <ul>
   <li>Internet Explorer 9/10/11 support</li>
@@ -87,7 +83,7 @@ All notable changes to this project will be documented in this file.
   <li>Message template 1 and 2 components in the application documentation.</li>
 </ul>
 
-#### Bug Fixed
+### Bug Fixed
 
 <ul>
   <li>The loading display in sign up form sidebar while creating account.</li>
@@ -95,10 +91,9 @@ All notable changes to this project will be documented in this file.
   <li>Css scroll problem when defining the questionnaire for the multiple choice.</li>
 </ul>
 
-### 1.23.0 - 26 August 2019
-<hr>
+## 1.23.0 - 26 August 2019
 
-#### Added
+### Added
 
 <ul>
   <li>Import / export of the questionnaires library.</li>
@@ -108,7 +103,7 @@ All notable changes to this project will be documented in this file.
   <li>Import / export of the workflow library.</li>
 </ul>
 
-#### Bug Fixed
+### Bug Fixed
 
 <ul>
   <li>Edit button in the user's sidebar response.</li>
@@ -116,10 +111,9 @@ All notable changes to this project will be documented in this file.
   <li>Display of pitch and targeting in the sidebar on the admin side.</li>
 </ul>
 
-### 1.22.0 - 05 August 2019
-<hr>
+## 1.22.0 - 05 August 2019
 
-#### Added
+### Added
 
 <ul>
   <li>Be able to edit the advantages that are already added in the pitch.</li>
@@ -127,7 +121,7 @@ All notable changes to this project will be documented in this file.
   <li>Display the tags of the respondents for the answers of the radio and checkbox in the synthesis</li>
 </ul>
 
-#### Changed
+### Changed
 
 <ul>
   <li>Change the button text of the edit collaborators to manage collaborators in the project page of client side.</li>
