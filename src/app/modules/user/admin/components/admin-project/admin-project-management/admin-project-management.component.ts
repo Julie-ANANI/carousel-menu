@@ -678,4 +678,7 @@ export class AdminProjectManagementComponent implements OnInit {
     return this._authService;
   }
 
+  get tagTypes(): string {
+    return JSON.stringify(['SECTOR', 'QUALIFICATION']);
+  }
 }
