@@ -20,11 +20,12 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   @Input() useVariables = false;
 
   @Input() set data(value: string) {
-    this._text = value;
     this._contentHash = SharedTextZoneComponent.hashString(value);
-    if (this.editor && !this.useVariables) {
-      this.editor.setContent(this._text);
+    if (this.editor && !this.useVariables && !this._isSaving) {
+      this._setContent(value);
     }
+    this._text = value;
+    this._isSaving = false;
   }
 
   @Input() set variableMapping(value: any) {
@@ -38,6 +39,8 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   private _contentHash: number;
 
   private _text: string;
+
+  private _isSaving: boolean = false;
 
   private editor: any;
 
@@ -103,6 +106,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
               const content = this._htmlToString(editor.getContent());
               this._contentHash = SharedTextZoneComponent.hashString(content);
               if (this._contentHash !== actualHash) {
+                this._isSaving = true;
                 this.onTextChange.emit({content: content});
               }
               /*if(this._sharedEditor) {
@@ -125,6 +129,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
   private _setContent(content: string) {
     this.editor.setContent(content);
+    this.editor.focus();
   }
 
   _configEditor(name: string) {
