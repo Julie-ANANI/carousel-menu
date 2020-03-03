@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SearchToolComponent } from './search-tool.component';
 import { SearchService } from '../../../../services/search/search.service';
-import { CommonService } from '../../../../services/common/common.service';
 import { DownloadService } from "../../../../services/download/download.service";
 
 import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
@@ -35,7 +34,6 @@ import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap
   ],
   providers: [
     SearchService,
-    CommonService,
     DownloadService
   ]
 })

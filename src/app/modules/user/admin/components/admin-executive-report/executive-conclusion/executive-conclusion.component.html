@@ -1,0 +1,62 @@
+<div class="admin-executive-wrapper" id="executive-conclusion">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- conclusion -->
+    <div>
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor()"
+          [(ngModel)]="config.conclusion"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.CONCLUSION.CONCLUSION' | translate"
+          [ngStyle]="{ 'height': '140px' }"
+          maxlength="270"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': conclusionColor }" class="text-limit-wrapper">
+          {{ 270 - config.conclusion.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /conclusion -->
+
+
+    <!-- operator -->
+    <div class="p-top-40">
+      <label>
+        <select
+          [ngModel]="operator._id ? operator._id : ''"
+          [ngModelOptions]="{ standalone: true }"
+          (change)="selectOperator($event)"
+          class="form-select">
+
+          <option [value]="''">{{ 'ADMIN_EXECUTIVE_REPORT.CONCLUSION.OPERATOR' | translate }}</option>
+
+          <option *ngFor="let operator of allOperators" [value]="operator._id">
+            {{ operator.firstName }} {{ operator.lastName }}
+          </option>
+
+        </select>
+      </label>
+    </div>
+    <!-- /operator -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border">
+    <h4 class="text-center m-bottom-25">{{ 'ADMIN_EXECUTIVE_REPORT.CONCLUSION.CONCLUSION' | translate }}</h4>
+    <p class="text-lg">{{ config.conclusion }}</p>
+  </div>
+  <!-- /view side -->
+
+</div>
+

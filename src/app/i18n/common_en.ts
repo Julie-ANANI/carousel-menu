@@ -160,7 +160,10 @@ export const COMMON = {
     'SIGNATURE_NAME': 'Enter the signature name',
     'PRESET_NAME': 'Enter the preset name',
     'EXISTING_TAG': 'Add an existing tag',
-    'INPUT_LIST_DEFAULT': 'Enter the input here'
+    'INPUT_LIST_DEFAULT': 'Enter the input here',
+    'CLIENT_NAME': 'Client name',
+    'CLIENT_EMAIL': 'Client email',
+    'CHOOSE_SALE': 'Choose sale',
   },
 
   'REQUIRED': {
@@ -224,6 +227,8 @@ export const COMMON = {
     'EXPORT_WORKFLOW': 'Export all the workflows',
     'IMPORT_QUESTIONNAIRE': 'Import questionnaire',
     'EXPORT_QUESTIONNAIRE': 'Export all the questionnaires',
+    'GENERATE_VIDEO': 'Generate video',
+    'GENERATE_PDF': 'Generate PDF'
   },
 
   'PROJECT': {
@@ -373,6 +378,7 @@ export const COMMON = {
     'TITLE_IMPORT': 'Import Board',
     'TITLE_BATCH': 'Batch Board',
     'TITLE_SHARE': 'Share Board',
+    'TITLE_SELECT': 'Selection Board',
     'TITLE_CREATE': 'Creation Board'
   },
 
@@ -386,7 +392,8 @@ export const COMMON = {
     'MOVE_UP': 'Move up',
     'MOVE_DOWN': 'Move down',
     'ADVANCE_SETTINGS': 'Advance settings',
-    'SAVE_CHANGES': 'Save changes'
+    'SAVE_CHANGES': 'Save changes',
+    'COPY': 'Copy'
   },
 
   'SIGNATURES': {

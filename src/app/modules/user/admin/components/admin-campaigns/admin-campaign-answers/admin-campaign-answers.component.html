@@ -136,7 +136,7 @@
 </section>
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-user-answer
     [sidebarState]="sidebarValue.animate_state"
     [adminMode]="adminMode"
@@ -145,5 +145,5 @@
     [questions]="questions"
     (answerUpdated)="updateAnswer($event)">
   </app-user-answer>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar insight preview -->

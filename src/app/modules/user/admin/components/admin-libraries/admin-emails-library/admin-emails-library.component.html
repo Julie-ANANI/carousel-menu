@@ -27,7 +27,7 @@
 
 
 <!-- sidebar to edit email -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
@@ -35,7 +35,7 @@
     [signatures]="signatures"
     [inputLanguage]="language">
   </app-workflow>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar to edit email -->
 
 <!-- modal to add the new email -->

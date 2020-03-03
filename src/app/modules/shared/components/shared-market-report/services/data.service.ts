@@ -5,7 +5,7 @@ import { Tag } from '../../../../../models/tag';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ResponseService } from './response.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DataService {
 
   private answersToShow: {[questionId: string]: BehaviorSubject<Array<Answer>>} = {};
@@ -29,7 +29,7 @@ export class DataService {
 
   public updateTagsList(question: Question) {
     const answers = this.answersToShow[question._id].getValue();
-    this.answersTagsLists[question._id] = ResponseService.getTagsList(answers, question);
+    this.answersTagsLists[question._id] = ResponseService.tagsList(answers, question);
   }
 
 }

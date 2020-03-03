@@ -1,0 +1,169 @@
+<div class="admin-executive-wrapper" id="type-quote">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+
+    <!-- title -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('title')"
+          [(ngModel)]="section.title"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
+          maxlength="26"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
+          {{ 26 - section.title.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /title -->
+
+
+    <!-- abstract -->
+    <div class="m-bottom-20">
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor('abstract')"
+          [(ngModel)]="section.abstract"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.ABSTRACT' | translate"
+          maxlength="175"
+          class="form-input is-abstract"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': abstractColor }" class="text-limit-wrapper">
+          {{ 175 - section.abstract.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /abstract -->
+
+
+    <!-- quotation -->
+    <div class="m-bottom-10">
+      <label>
+
+        <textarea
+          (change)="emitChanges()"
+          (keyup)="textColor('quote')"
+          [(ngModel)]="content.quote"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.QUOTE_SECTION.QUOTATION' | translate"
+          [ngStyle]="{ 'height': '97px' }"
+          maxlength="100"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': quoteColor }" class="text-limit-wrapper">
+          {{ 100 - content.quote.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /quotation -->
+
+
+    <!-- show quotes -->
+    <div class="m-bottom-10">
+      <label class="form-checkbox">
+        <input
+          (change)="toggleQuotes()"
+          [checked]="content.showQuotes"
+          [value]="content.showQuotes"
+          type="checkbox">
+        <i class="form-icon"></i> {{ 'ADMIN_EXECUTIVE_REPORT.QUOTE_SECTION.SHOW_QUOTES' | translate }}
+      </label>
+    </div>
+    <!-- /show quotes -->
+
+
+    <!-- name -->
+    <div class="m-bottom-10">
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('name')"
+          [(ngModel)]="content.author.name"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.NAME' | translate"
+          maxlength="62"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': nameColor }" class="text-limit-wrapper">
+          {{ 62 - content.author.name.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /name -->
+
+
+    <!-- job -->
+    <div>
+      <label>
+
+        <input
+          (change)="emitChanges()"
+          (keyup)="textColor('job')"
+          [(ngModel)]="content.author.jobTitle"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.JOB' | translate"
+          maxlength="62"
+          class="form-input"
+          type="text">
+
+        <span [ngStyle]="{ 'color': jobColor }" class="text-limit-wrapper">
+          {{ 62 - content.author.jobTitle.length }}
+        </span>
+
+      </label>
+    </div>
+    <!-- /job -->
+
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border is-justify text-center is-fixed">
+
+    <h4 class="m-bottom-25">{{ section.title }}</h4>
+
+    <!-- quotes / name / job -->
+    <div class="m-bottom-20">
+
+      <div [ngStyle]="{ 'min-height': '131px' }" class="text-wrapper relative">
+
+        <div *ngIf="content.showQuotes" [ngStyle]="{ 'top': '4px', 'left': '8px' }" class="absolute">
+          <i class="fas fa-quote-left"></i>
+        </div>
+
+        {{ content.quote }}
+
+        <div *ngIf="content.showQuotes" [ngStyle]="{ 'bottom': '4px', 'right': '8px' }" class="absolute">
+          <i class="fas fa-quote-right"></i>
+        </div>
+
+      </div>
+
+      <p class="text-lg text-medium">{{ content.author.name }}</p>
+      <p>{{ content.author.jobTitle }}</p>
+
+    </div>
+    <!-- /quotes / name / job -->
+
+    <p class="has-min-height">{{ section.abstract }}</p>
+
+  </div>
+  <!-- /view side -->
+
+</div>

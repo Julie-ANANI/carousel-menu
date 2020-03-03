@@ -1,9 +1,6 @@
-<div class="progress-bar-outer-wrapper tooltip" [attr.data-tooltip]="width" [ngStyle]="{ 'height': height ? height : '1rem' }">
-  <div
-    class="progress-bar-inner-wrapper"
-    [ngStyle]="{ 'width': width, 'background-color': backgroundColor ? backgroundColor : '#4F5D6B', 'height': height ? height : '1rem' }">
-
-    <span>{{ value }}</span>
-
+<div [attr.data-tooltip]="width" [ngClass]="{ 'tooltip': showTooltip }" [ngStyle]="{ 'height': height }"
+     id="progress-bar">
+  <div [ngStyle]="{ 'width': width, 'background-color': backgroundColor, 'height': height }" class="inner-wrapper">
+    <ng-container *ngIf="value">{{ value }}</ng-container>
   </div>
 </div>

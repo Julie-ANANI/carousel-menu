@@ -58,7 +58,7 @@ export const TABLE = {
     'NO_RESULT_SEARCHING': 'No results to show. Try adjusting your search to find what you\'re looking for.'
   },
 
-  'SELECTED_ROWS': 'selected',
+  'SELECTED_ROWS': 'selected(s)',
 
   'CHOOSE': 'Choose'
 

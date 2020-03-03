@@ -109,14 +109,6 @@ export class SharedSortComponent {
     return this._label;
   }
 
-  get currentKey(): string {
-    return this._currentKey;
-  }
-
-  get currentKeyValue(): number {
-    return this._currentKeyValue;
-  }
-
   get properties(): Array<string> {
     return this._properties;
   }

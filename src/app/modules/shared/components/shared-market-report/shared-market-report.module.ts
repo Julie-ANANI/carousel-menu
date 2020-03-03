@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
@@ -33,10 +32,6 @@ import { SharedMarketReportPopoverComponent } from './components/shared-market-r
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 
-
-import { CommonService } from '../../../../services/common/common.service';
-import { DataService } from './services/data.service';
-import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { SidebarLeftModule } from "../../../sidebars/templates/sidebar-left/sidebar-left.module";
 import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module";
@@ -67,9 +62,6 @@ import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar
     SharedMainPageModule
   ],
   providers: [
-    CommonService,
-    DataService,
-    ResponseService,
     TagsFiltersService
   ],
   declarations: [
