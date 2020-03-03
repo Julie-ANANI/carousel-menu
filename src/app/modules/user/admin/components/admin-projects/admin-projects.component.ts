@@ -75,7 +75,7 @@ export class AdminProjectsComponent implements OnInit {
       _isPaginable: true,
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true },
-        {_attrs: ['innovationCards.title'], _name: 'TABLE.HEADING.TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true },
+        // {_attrs: ['innovationCards.title'], _name: 'TABLE.HEADING.TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true },
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT' },
         {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isSearchable: true},
         {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true },

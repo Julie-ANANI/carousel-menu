@@ -1,0 +1,100 @@
+<div [ngClass]="{ 'inactive flex-centered': !section.questionId || !section.questionType }" id="executive-section">
+
+  <!-- no question selected -->
+  <div *ngIf="!section.questionId || !section.questionType">
+
+    <!-- title -->
+    <h4>{{ 'ADMIN_EXECUTIVE_REPORT.WANT_TO_DISPLAY' | translate }}</h4>
+    <!-- /title -->
+
+
+    <!-- question / type -->
+    <div class="question-selection-wrapper">
+
+      <!-- question -->
+      <div>
+        <h5 class="text-lg">{{ 'ADMIN_EXECUTIVE_REPORT.SYNTHESIS_SECTIONS' | translate }}</h5>
+        <ul>
+          <li (click)="selectQuestion(question._id)"
+              *ngFor="let question of questions"
+              [ngClass]="{ 'text-primary': question._id === section.questionId }">
+            {{ question.title | multiling:reportLang }}
+          </li>
+        </ul>
+      </div>
+      <!-- /question -->
+
+
+      <!-- type -->
+      <div>
+        <h5 class="text-lg">{{ 'ADMIN_EXECUTIVE_REPORT.RAW_DATA' | translate }}</h5>
+        <ul>
+          <li (click)="selectQuestionType('PIE')" [ngClass]="{ 'inactive': !enableVisualPie }">
+            Pie (preserved data)
+          </li>
+          <li (click)="selectQuestionType('RANKING')" [ngClass]="{ 'inactive': !enableVisualRanking }">
+            Ranking (preserved data)
+          </li>
+          <li (click)="selectQuestionType('BAR')" [ngClass]="{ 'inactive': !enableVisualBar }">
+            Progress bars
+          </li>
+          <li (click)="selectQuestionType('QUOTE')" [ngClass]="{ 'inactive': !section.questionId }">
+            Quotation
+          </li>
+          <li (click)="selectQuestionType('KPI')" [ngClass]="{ 'inactive': !section.questionId }">
+            KPI
+          </li>
+        </ul>
+      </div>
+      <!-- /type -->
+
+    </div>
+    <!-- /question / type -->
+
+  </div>
+  <!-- /no question selected -->
+
+
+  <!-- question selected -->
+  <div *ngIf="section.questionId && section.questionType">
+    <div [ngSwitch]="section.questionType">
+
+      <!-- type KPI -->
+      <div *ngSwitchCase="'KPI'">
+        <type-kpi (sectionChange)="onSectionUpdate($event)" [section]="section"></type-kpi>
+      </div>
+      <!-- /type KPI -->
+
+
+      <!-- type QUOTE -->
+      <div *ngSwitchCase="'QUOTE'">
+        <type-quote (sectionChange)="onSectionUpdate($event)" [section]="section"></type-quote>
+      </div>
+      <!-- /type QUOTE -->
+
+
+      <!-- type BAR -->
+      <div *ngSwitchCase="'BAR'">
+        <type-bar (sectionChange)="onSectionUpdate($event)" [section]="section"></type-bar>
+      </div>
+      <!-- /type BAR -->
+
+
+      <!-- type RANKING -->
+      <div *ngSwitchCase="'RANKING'">
+        <type-ranking (sectionChange)="onSectionUpdate($event)" [section]="section"></type-ranking>
+      </div>
+      <!-- /type RANKING -->
+
+
+      <!-- type PIE -->
+      <div *ngSwitchCase="'PIE'">
+        <type-pie (sectionChange)="onSectionUpdate($event)" [section]="section"></type-pie>
+      </div>
+      <!-- /type PIE -->
+
+    </div>
+  </div>
+  <!-- /question selected -->
+
+</div>

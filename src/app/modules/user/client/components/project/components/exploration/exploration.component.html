@@ -185,7 +185,7 @@
 
 
   <!-- sidebar to view user answer -->
-  <app-sidebar [(template)]="sidebarValue">
+  <sidebar [(template)]="sidebarValue">
     <app-user-answer
       [adminMode]="false"
       [sidebarState]="sidebarValue.animate_state"
@@ -193,7 +193,7 @@
       [questions]="questions"
       [projectId]="innovation._id">
     </app-user-answer>
-  </app-sidebar>
+  </sidebar>
   <!-- /sidebar to view user answer -->
 
 

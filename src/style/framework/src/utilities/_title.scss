@@ -2,64 +2,64 @@
 @import "../mixins";
 
 .title {
-  @include title-variant(1.6rem);
+  @include title-variant(32px);
 
   &.is-1 {
-    @include title-variant(2.4rem);
+    @include title-variant(48px);
   }
 
   &.is-2 {
-    @include title-variant(2rem);
+    @include title-variant(40px);
   }
 
   &.is-3 {
-    @include title-variant(1.6rem);
+    @include title-variant(32px);
   }
 
   &.is-4 {
-    @include title-variant(1.2rem);
+    @include title-variant(24px);
   }
 
   &.is-5 {
-    @include title-variant(1rem);
+    @include title-variant(20px);
   }
 
   &.is-6 {
-    @include title-variant(0.8rem);
+    @include title-variant(16px);
   }
 
 }
 
 .subtitle {
-  @include subtitle-variant(1rem);
+  @include subtitle-variant(20px);
 
   &.is-1 {
-    @include subtitle-variant(2.4rem);
+    @include subtitle-variant(48px);
   }
 
   &.is-2 {
-    @include subtitle-variant(2rem);
+    @include subtitle-variant(20px);
   }
 
   &.is-3 {
-    @include subtitle-variant(1.6rem);
+    @include subtitle-variant(32px);
   }
 
   &.is-4 {
-    @include subtitle-variant(1.2rem);
+    @include subtitle-variant(24px);
   }
 
   &.is-5 {
-    @include subtitle-variant(1rem);
+    @include subtitle-variant(20px);
   }
 
   &.is-6 {
-    @include subtitle-variant(0.8rem);
+    @include subtitle-variant(16px);
   }
 
 }
 
 .title:not(.is-spaced)+.subtitle {
-  margin-top: -1.25rem;
+  margin-top: -25px;
 }
 

@@ -76,12 +76,12 @@
 
 
 <!-- sidebar to edit campaign -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-campaign-form
     (campaignOutput)="updateCampaign($event)"
     [campaign]="selectCampaign"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-campaign-form>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar to edit campaign -->

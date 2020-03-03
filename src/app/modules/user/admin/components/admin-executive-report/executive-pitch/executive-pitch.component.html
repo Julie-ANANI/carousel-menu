@@ -1,0 +1,34 @@
+<div class="admin-executive-wrapper" id="executive-pitch">
+
+  <!-- edit side -->
+  <div class="content-wrapper">
+    <label>
+
+        <textarea
+          (change)="emitChanges($event)"
+          (keyup)="textColor()"
+          [(ngModel)]="pitch"
+          [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PITCH.PROJECT_PITCH' | translate"
+          [ngStyle]="{ 'height': '140px' }"
+          maxlength="216"
+          class="form-input"
+          type="text">
+        </textarea>
+
+        <span [ngStyle]="{ 'color': pitchColor }" class="text-limit-wrapper">
+          {{ 216 - pitch.length }}
+        </span>
+
+    </label>
+  </div>
+  <!-- /edit side -->
+
+
+  <!-- view side -->
+  <div class="content-wrapper has-border text-center">
+    <h4 class="m-bottom-25">{{ 'ADMIN_EXECUTIVE_REPORT.PITCH.TITLE' | translate }}</h4>
+    <div class="text-wrapper">{{ pitch | ScrapeHTMLTags }}</div>
+  </div>
+  <!-- /view side -->
+
+</div>

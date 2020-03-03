@@ -10,7 +10,6 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { FormatText } from './pipes/FormatText';
 import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
 
-
 @NgModule({
   imports: [
     CommonModule

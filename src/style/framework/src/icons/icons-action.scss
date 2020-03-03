@@ -94,3 +94,25 @@
   }
 
 }
+
+// Icon copy
+.icon-copy {
+  &::before {
+    border: $icon-border-width solid currentColor;
+    border-radius: 2px;
+    border-right: 0;
+    border-bottom: 0;
+    height: .8em;
+    left: 40%;
+    top: 35%;
+    width: .8em;
+  }
+  &::after {
+    border: $icon-border-width solid currentColor;
+    border-radius: 2px;
+    height: .8em;
+    left: 60%;
+    top: 60%;
+    width: .8em;
+  }
+}

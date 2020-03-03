@@ -64,13 +64,13 @@
 
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<sidebar [(template)]="sidebarValue">
   <app-sidebar-signature
     (signatureChange)="updateSignature($event)"
     [sidebarState]="sidebarValue.animate_state"
     [signature]="signatureToEdit">
   </app-sidebar-signature>
-</app-sidebar>
+</sidebar>
 <!-- /sidebar -->
 
 

@@ -20,4 +20,9 @@ export class DownloadService {
     const file = <Blob> new Blob([json]);
     return FileSaver.saveAs(file, `${fileName}.json`);
   }
+
+  static savePDF(pdf: string, fileName: string): Observable<Blob> {
+    const file = <Blob> new Blob([pdf]);
+    return FileSaver.saveAs(file, `${fileName}.pdf`);
+  }
 }

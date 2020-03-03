@@ -154,11 +154,11 @@
 
 
 <!-- innovation preview sidebar-->
-<app-sidebar [(template)]="sidebarTemplateValue">
+<sidebar [(template)]="sidebarTemplateValue">
   <app-innovation-preview
     [projectCard]="selectedInnovation"
     [batchInfo]="{ batchSelected:this.selectedBatch, date: this.dateNow }">
   </app-innovation-preview>
-</app-sidebar>
+</sidebar>
 <!-- /innovation preview sidebar-->
 

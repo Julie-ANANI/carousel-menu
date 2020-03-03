@@ -13,233 +13,158 @@
 
   .table {
 
-    tr {
-      position: relative;
+    .flex-wrapper {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: flex-start;
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
     }
 
-    th, tbody td {
-      max-width: 200px;
-      height: 44px;
-      max-height: 44px;
-      padding: $unit-h $unit-5;
-
-      &.max-width {
-        max-width: 300px;
-      }
-
+    .truncate-text {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+      height: 100%;
+      width: 100%;
     }
 
-    th {
+    .cell-text {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      flex-grow: 1;
+      padding: 2px 20px;
+    }
 
-      .th-name {
-        top: 50%;
-        margin-top: -19px;
-        height: 38px;
-        max-width: 100%;
-      }
+    .cell-action {
+      display: flex;
+      align-items: center;
+      padding: 2px 25px;
+      height: 100%;
 
-      &:hover {
-        background-color: $table-th-hover-background-color !important;
-      }
+      .button {
 
-      &.th-action {
-        text-transform: none;
-        font-weight: $font-weight-medium;
-        background-color: $table-th-background-color !important;
+        &.is-link {
+          height: unset;
+        }
 
-        .button span:hover{
-          text-decoration: underline;
+        &.is-outlined {
+          border-width: $border-width-lg !important;
+          border-style: solid !important;
+          padding: 6px 16px !important;
+          font-size: 12px !important;
+          text-decoration: none !important;
         }
 
       }
 
     }
 
-    th:first-child, tbody tr {
-      border-left-color: transparent;
-    }
+    thead {
 
-    th:last-child, tbody tr {
-      border-right-color: transparent;
+      th {
+        padding: 0;
+
+        &:hover {
+          background-color: $table-th-hover-background-color !important;
+        }
+
+        &.cell-checkbox:hover, &.is-no-hovered:hover {
+          background-color: transparent !important;
+        }
+
+      }
+
     }
 
     tbody {
 
       tr {
+        flex-grow: 1;
 
         td {
+          font-size: 13px;
+          padding: 0;
+
+          &:not(.cell-checkbox) {
+            padding: 2px 25px;
+          }
+
+          .td-tag-label {
+            display: block;
+            max-width: 100px;
+          }
+
+          .td-multi-choice-label {
+            display: block;
+            margin: 0;
+            width: 100%;
+            max-width: 100px;
+          }
+
+          .td-multi-label {
+            display: block;
+            margin: 0;
+            padding: $unit-2;
+            width: 100%;
+            max-width: 60px;
+            border-radius: 3px;
+
+            &.is-left-label {
+              border-bottom-right-radius: 0;
+              border-top-right-radius: 0;
+            }
+
+            &.is-middle-label {
+              border-radius: 0;
+            }
+
+            &.is-right-label {
+              border-bottom-left-radius: 0;
+              border-top-left-radius: 0;
+            }
+
+          }
 
           .clickable-text {
             cursor: pointer;
-          }
 
-          .clickable-text:hover {
-            color: $primary-color;
-          }
-
-          .tbody-td-data {
-            flex: 1;
-            max-width: 100%;
-            justify-content: flex-start;
-            align-items: center;
-
-            .tbody-td-action-button {
-              position: absolute;
-              right: 0;
-              padding-left: 0.75rem;
-
-              .button {
-                display: none;
-                transition: none;
-                padding: $unit-2 $unit-3;
-                border-width: $border-width-lg;
-                visibility: hidden;
-                color: $text-background-color;
-                background-color: $table-th-hover-background-color;
-                border-color: $table-tr-border-color;
-              }
-
+            &:hover {
+              color: $primary-color;
             }
 
-            &.td-type-image {
-              height: 27px;
-              width: 37px;
+            &.active {
+              color: $primary-color;
             }
 
-            .tbody-td-content {
-              flex: 1;
-              max-width: 100%;
+          }
 
-              &.td-type-image, img {
-                height: 27px;
-              }
+          .td-dropdown {
 
-              &.enable-tooltip {
-                overflow: unset;
-              }
+            .button {
+              font-size: $font-size-xs;
+              padding: 6px 9px;
+              height: unset;
 
-              &.td-type-tag {
-                max-height: 44px;
-                overflow-y: auto;
-              }
+              &.is-secondary, &.is-danger, &.is-draft {
 
-              .tbody-td-multiLabel {
-                margin: 0;
-                min-width: 45px;
-                border-radius: 3px;
-
-                &.td-type-left-label {
-                  border-bottom-right-radius: 0;
-                  border-top-right-radius: 0;
-                }
-
-                &.td-type-middle-label {
-                  border-radius: 0;
-                }
-
-                &.td-type-right-label {
-                  border-bottom-left-radius: 0;
-                  border-top-left-radius: 0;
-                }
-
-              }
-
-              .tbody-td-multi-choice-label {
-                margin: 0;
-                padding: $unit-2 $unit-4;
-                min-width: 93px;
-                max-width: 100%;
-              }
-
-              .dropdown {
-
-                &.disabled, &:disabled, &[disabled] {
-
-                  .button-dropdown {
-                    cursor: not-allowed;
-
-                    &:not(.is-link).is-info {
-                      background-color: $bg-meta-color;
-                      opacity: 0.8;
-                    }
-
-                    &.is-secondary {
-                      background-color: $bg-secondary-color;
-                      opacity: 0.8;
-                    }
-
-                    &.is-danger {
-                      background-color: $bg-alert-color;
-                      opacity: 0.8;
-                    }
-
-                  }
-
-                  .menu {
-                    display: none;
-                  }
-
-                }
-
-                .button-dropdown {
-                  padding: 6px 9px;
-                  height: unset;
-                  font-size: $font-size-xs;
-
-                  &:not(.is-link).is-info {
-
-                    &:hover {
-                      background-color: $bg-meta-color;
-                    }
-
-                  }
-
-                  &.is-secondary {
-
-                    &:hover {
-                      background-color: $bg-secondary-color;
-                    }
-
-                  }
-
-                  &.is-danger {
-
-                    &:hover {
-                      background-color: $bg-alert-color;
-                    }
-
-                  }
-
+                i {
+                  color: $text-white-color !important;
+                  font-size: 13px;
                 }
 
               }
 
             }
 
-          }
+            .menu {
+              min-width: 150px;
 
-        }
-
-        &:hover {
-
-          td {
-
-            .tbody-td-data {
-
-              .tbody-td-action-button {
-                background-color: $table-tr-hover-background-color;
-
-                .button {
-                  display: inline-flex;
-                  visibility: visible;
-
-                  &:hover {
-                    background-color: transparent !important;
-                    transition: background-color 0.2s ease !important;
-                  }
-
-                }
-
+              .menu-item {
+                font-size: 13px;
               }
 
             }
@@ -252,54 +177,9 @@
           background-color: $table-tr-hover-background-color;
         }
 
-        &.active {
-          background-color: #FFFBF1;
-        }
-
         &.disabled {
-          background-color: #F0F0F0;
-        }
-
-      }
-
-    }
-
-    .th-checkbox {
-      min-width: 45px !important;
-      max-width: 45px !important;
-      width: 45px !important;
-      padding: 0.5rem !important;
-
-      label {
-        transition: all .2s ease;
-        width: 20px;
-        height: 20px;
-        margin: auto;
-        border-radius: $border-radius;
-        border: $border-width-lg solid $border-meta-color;
-
-        input[type="checkbox"] {
-          display: none;
-        }
-
-        i {
-          font-size: $font-size-sm;
-          display: none;
-        }
-
-        &:not(.disabled):hover {
-          cursor: pointer;
-          background-color: $table-th-hover-background-color;
-        }
-
-        &.active {
-          border-color: $border-primary-color;
-
-          i {
-            display: block;
-            color: $text-warning-color;
-          }
-
+          cursor: not-allowed;
+          background-color: #F0F0F0 !important;
         }
 
       }
@@ -311,40 +191,12 @@
 
 }
 
-
-@media (max-width: $size-md) {
+@media screen and (min-width: $size-2x) {
 
   #table-wrapper {
 
-    .table {
-
-      tbody {
-
-        tr {
-
-          td {
-
-            .tbody-td-data {
-
-              .tbody-td-action-button {
-                position: relative;
-                order: 2;
-
-                .button {
-                  display: inline-flex;
-                  visibility: visible;
-                }
-
-              }
-
-            }
-
-          }
-
-        }
-
-      }
-
+    .table-responsive {
+      overflow-x: hidden;
     }
 
   }

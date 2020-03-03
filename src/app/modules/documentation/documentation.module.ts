@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { DocumentationRoutingModule } from './documentation-routing.module';
 
-import { ChangelogComponent } from './changelog/changelog.component';
 import { DocumentationComponent } from './documentation.component';
 
 import { DocsCssModule } from './docs-css/docs-css.module';
@@ -21,7 +20,6 @@ import { FooterModule } from '../common/footer/footer.module';
   ],
   declarations: [
     DocumentationComponent,
-    ChangelogComponent
   ],
 })
 

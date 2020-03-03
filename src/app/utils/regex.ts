@@ -7,3 +7,5 @@ export const videoDomainRegEx = /youtu\.?be|vimeo/;
 
 export const vimeoVideoId = /([^vimeo\.com\/]+)(\d+)(?=\/?)/; // Javascript does not support positive lookbehinds
 export const youtubeVideoId = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+
+export const specialCharRegEx = /[^a-zA-Z0-9 ]/g;
