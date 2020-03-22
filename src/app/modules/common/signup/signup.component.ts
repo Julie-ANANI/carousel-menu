@@ -60,7 +60,7 @@ export class SignupComponent implements OnInit {
       url: 'https://www.linkedin.com/oauth/v2/authorization',
       clientID: '77283cf7nmchg3',
       callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
-      scope: 'r_emailaddress r_liteprofile r_basicprofile'
+      scope: 'r_emailaddress r_liteprofile w_member_social'
     };
 
     this._linkedInState = RandomUtil.generateUUID();
