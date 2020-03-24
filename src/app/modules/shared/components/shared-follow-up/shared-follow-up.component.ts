@@ -118,6 +118,8 @@ export class SharedFollowUpComponent implements OnInit {
         { _label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
       ],
       _columns: [
+        {_attrs: ['professional.country'], _name: 'COMMON.LABEL.COUNTRY', _type: 'COUNTRY', _width: '80px'},
+        {_attrs: ['professional.language'], _name: 'COMMON.LABEL.LANGUAGE', _type: 'TEXT', _width: '80px'},
         {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
         {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
         {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
