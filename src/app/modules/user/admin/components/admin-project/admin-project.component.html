@@ -57,7 +57,6 @@
               </li>
               <li
                 (click)="onClickImportFollowUp($event)"
-                *ngIf="!project.followUpEmails || !project.followUpEmails.interview || !project.followUpEmails.opening || !project.followUpEmails.noFollow"
                 [innerText]="'Import follow up emails'"
                 class="menu-item">
               </li>
