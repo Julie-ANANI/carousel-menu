@@ -39,12 +39,10 @@ export const ERROR = {
 
   'NO_AUTHORIZED': 'You are not authorized to perform this request.',
 
-
   'FORM': {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',
     'TARGETING_FORM': 'Please answer the fields of the targeting form.'
   },
-
 
   'LOGIN': {
     'WELCOME': 'Welcome back!',

@@ -1,93 +1,105 @@
-<ng-container *ngIf="innovations">
+<div class="p-top-50 p-bottom-50" id="projects-list">
+  <div class="container grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
 
-  <section id="projects-list">
-    <div class="container grid-2xl p-top-50 p-bottom-50">
-      <div class="columns">
-        <div class="column col-md-12 col-11 col-mx-auto">
+      <!-- add project button -->
+      <section *ngIf="innovations.length > 0 && !isError" class="text-right">
+        <button routerLink="'new'" class="button is-lg is-primary">
+          {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+        </button>
+      </section>
+      <!-- /add project button -->
 
-          <!-- section add button -->
-          <div class="text-right" *ngIf="!noResult">
-            <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-lg is-rounded is-shadowed">
-              <i class="icon icon-left text-xs icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
-            </button>
-          </div>
+      <!-- no projects -->
+      <section *ngIf="innovations.length === 0 && !isError" class="text-center p-top-100">
 
-          <!-- section no project -->
-          <ng-container *ngIf="noResult">
-            <div class="no-result-wrapper flex-centered">
-              <button routerLink="new" (click)="$event.preventDefault()" class="button is-primary is-rounded is-shadowed is-xl">
-                <i class="icon icon-left text-sm icon-plus"></i> {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
-              </button>
-            </div>
-          </ng-container>
+        <h1 class="title is-4 text-bold m-bottom-10">
+          {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
+        </h1>
 
-          <!-- section projects -->
-          <ng-container *ngIf="!noResult">
-            <div class="section-pad rm-pad-bottom">
+        <p class="text-sm">{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}</p>
 
-              <!-- projects -->
-              <div class="card-wrapper" [@listAnimation]="innovations.length">
-                <div *ngFor="let innovation of innovations" class="card-project">
-                  <div class="card-content d-inline-flex">
+        <div class="p-top-30">
+          <button routerLink="'new'" class="button is-primary is-xl">
+            {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+          </button>
+        </div>
 
-                    <a [routerLink]="getRelevantLink(innovation)"><img [src]="getImage(innovation)" alt=" "></a>
+      </section>
+      <!-- /no projects -->
 
-                    <div class="project-description">
+      <!-- if projects -->
+      <section *ngIf="innovations.length > 0 && !isError" class="p-top-25">
+        <div class="card-wrapper" [@listAnimation]="innovations.length">
+          <div *ngFor="let innovation of innovations" class="card">
+            <div class="d-inline-flex w-full">
 
-                      <a [routerLink]="getRelevantLink(innovation)">
-                        <span>{{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
-                      </a>
+              <a [routerLink]="getRelevantLink(innovation)" class="card-image">
+                <img
+                  [ngStyle]="{ 'width': '120px', 'height': '100px' }"
+                  [src]="getImage(innovation)"
+                  alt=" ">
+              </a>
 
-                      <p class="text text-notify text-medium">
-                        {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
-                        •
-                        {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
-                        •
-                        {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-                        |
-                        <span class="icons is-delete tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" (click)="onClickDelete($event, innovation._id)">
+              <div class="card-body">
+
+                <a [routerLink]="getRelevantLink(innovation)">
+                  <span [ngStyle]="{ 'font-size': '22px' }">
+                    {{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}
+                  </span>
+                </a>
+
+                <p class="text-sm m-top-15 text-notify m-no-bottom text-medium">
+                  {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
+                  •
+                  {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
+                  •
+                  {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+                  |
+                  <span
+                    (click)="onClickDelete($event, innovation._id)"
+                    [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate"
+                    class="icons is-delete tooltip">
                       <i class="fas fa-trash-alt"></i>
                     </span>
-                      </p>
+                </p>
 
-                    </div>
-
-                  </div>
-                </div>
               </div>
 
-              <!-- section pagination -->
-              <ng-container *ngIf="total > 10">
-                <div class="flex-centered section-light-pad rm-pad-bottom">
-                  <app-pagination-2
-                    [(pagination)]="pagination"
-                    [ngStyle]="{ 'width': '100%' }"
-                    [totalCount]="total">
-                  </app-pagination-2>
-                </div>
-              </ng-container>
-
             </div>
-          </ng-container>
-          <!-- /section projects -->
-
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
+      <!-- /if projects -->
 
-</ng-container>
+      <!-- pagination if projects -->
+      <section *ngIf="total > 10" class="flex-centered p-top-30">
+        <app-pagination-2
+          [(pagination)]="pagination"
+          [totalCount]="total"
+          class="w-full">
+        </app-pagination-2>
+      </section>
+      <!-- /pagination if projects -->
+
+    </div>
+  </div>
+</div>
 
 <!-- delete project confirmation modal -->
 <app-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
-    <span>{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</span>
+    {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
   </section>
 
   <footer class="modal-footer">
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onClickSubmit($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button
+      (click)="onClickSubmit($event)"
+      class="button is-primary">
+      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+    </button>
   </footer>
 
 </app-modal>
