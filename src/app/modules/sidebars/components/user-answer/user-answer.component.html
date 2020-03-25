@@ -54,7 +54,6 @@
               <ng-container *ngIf="!modalAnswer.professional?.firstName && !modalAnswer.professional?.lastName">
                 {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
               </ng-container>
-
             </h4>
             <!-- /name -->
 
@@ -103,7 +102,6 @@
               <div class="country-wrapper flex-between">
 
                 <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
-
                 <div
                   (click)="onClickEdit('country')"
                   *ngIf="modeAdmin && editMode"
@@ -111,7 +109,17 @@
                   data-tooltip="Modify Country">
                   <i class="fas fa-pencil-alt"></i>
                 </div>
+              </div>
+            </ng-container>
 
+            <!-- language -->
+            <ng-container *ngIf="!assignNewPro">
+              <div class="language-active"  *ngIf="!modeAdmin || !editMode">
+                {{ modalAnswer.professional.language }}
+              </div>
+              <div *ngIf="modeAdmin && editMode">
+                <div (click)="onClickLanguage('fr')" [class]='"language" + (modalAnswer.professional.language === "fr" ? "-active": "")'>fr</div>
+                <div (click)="onClickLanguage('en')" [class]='"language" + (modalAnswer.professional.language === "en" ? "-active": "")'>en</div>
               </div>
             </ng-container>
 

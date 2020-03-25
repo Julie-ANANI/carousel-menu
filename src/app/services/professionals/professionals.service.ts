@@ -80,6 +80,10 @@ export class ProfessionalsService {
     return this._http.get(`/shield/?professional=${id}&fields=email`);
   }
 
+  public changeProLanguage(professionalId: string, language: string): Observable<any> {
+    return this._http.put(`/professional/${professionalId}`, {language: language});
+  }
+
   public addContactEmail(professionalId: string, email: string): Observable<any> {
     return this._http.get(`/professional/${professionalId}/addContactEmail?email=${email}`);
   }
