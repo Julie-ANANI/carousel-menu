@@ -149,6 +149,13 @@ export class UserAnswerComponent {
 
   }
 
+  public onClickLanguage(language: string) {
+    if (language !== this._modalAnswer.professional.language) {
+      this._professionalsService.changeProLanguage(this._modalAnswer.professional._id, language).subscribe(pro => {
+        this._modalAnswer.professional.language = pro.language;
+      });
+    }
+  }
 
   public updateProfileQuality(object: {value: number}) {
     this._modalAnswer.profileQuality = object.value;

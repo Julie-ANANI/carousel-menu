@@ -11,8 +11,8 @@ export const PROJECTS_LIST = {
   'UNTITLED': 'Untitled project',
 
   'NO_PROJECT': {
-    'TITLE': 'Don\'t have any projects? ',
-    'CONTENT': 'Create your first project by clicking on "Add Project" button.'
+    'TITLE': 'No projects right now',
+    'CONTENT': 'The projects you have added will be shown here. Try to add some.'
   },
 
   'DELETE_BUTTON': 'Delete Project'

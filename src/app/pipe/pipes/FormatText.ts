@@ -15,7 +15,7 @@ export class FormatText implements PipeTransform {
   transform (value: string, wbw: boolean = false): string {
 
     if (value) {
-      if(wbw) {
+      if (wbw) {
         let strings = value.split(/\s/);
         strings = strings.map(str => {
           return str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);

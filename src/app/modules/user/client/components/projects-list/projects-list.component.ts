@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';
@@ -9,9 +9,14 @@ import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { SpinnerService } from '../../../../../services/spinner/spinner';
+import { Config } from '../../../../../models/config';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front';
 
 @Component({
-  selector: 'app-projects-list',
+  selector: 'projects-list',
   templateUrl: 'projects-list.component.html',
   styleUrls: ['projects-list.component.scss'],
   animations: [
@@ -35,15 +40,19 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 
 export class ProjectsListComponent implements OnInit {
 
-  private _innovations: Array<Innovation>;
+  private _innovations: Array<Innovation> = [];
 
-  private _total: number;
+  private _total = 0;
 
   private _innovationId: string;
 
   private _deleteModal = false;
 
-  private _config: any = {
+  private _isError = false;
+
+  private _dateFormat = '';
+
+  private _config: Config = {
     fields: 'name created updated status collaborators principalMedia innovationCards',
     limit: '10',
     offset: '0',
@@ -56,51 +65,82 @@ export class ProjectsListComponent implements OnInit {
     offset: Number(this._config.offset)
   };
 
-  private _noResult = false;
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _spinnerService: SpinnerService,
+              private _translateService: TranslateService,
+              private _userService: UserService,
+              private _translateTitleService: TranslateTitleService,
+              private _translateNotificationService: TranslateNotificationsService,
+              private _innovationService: InnovationService) {
 
-  constructor(private translateService: TranslateService,
-              private userService: UserService,
-              private translateTitleService: TranslateTitleService,
-              private translateNotificationService: TranslateNotificationsService,
-              private innovationService: InnovationService) {
-
-    this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
+    this._setSpinner(true);
+    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.MY_PROJECTS');
 
   }
 
   ngOnInit() {
-    this.loadProjects();
+    if (isPlatformBrowser(this._platformId)) {
+      this._dateFormat = this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+      this._getProjects();
+    }
   }
 
-  private loadProjects() {
-    this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
-      this._innovations = responses.result;
-      this._total = Math.max(responses._metadata.totalCount, responses.result.length);
-      this._noResult = responses.result.length === 0;
-    }, () => {
-      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+  /***
+   * this is to start/stop the full page spinner.
+   * @param value
+   * @private
+   */
+  private _setSpinner(value: boolean) {
+    this._spinnerService.state(value);
+  }
+
+  /***
+   * this is to get the innovations from the api.
+   * @private
+   */
+  private _getProjects() {
+    this._userService.getMyInnovations(this._config).pipe(first()).subscribe((response ) => {
+      this._setSpinner(false);
+      this._innovations = response.result;
+      this._total = Math.max(response._metadata.totalCount, response.result.length);
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+      this._isError = true;
+      this._setSpinner(false);
+      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
     });
   }
 
-  getRelevantLink(innovation: Innovation): Array<string> {
+  /***
+   * get the link based on the status of the innovations.
+   * @param innovation
+   */
+  public getRelevantLink(innovation: Innovation): Array<string> {
     const link = [innovation._id];
 
     switch (innovation.status) {
+
       case 'DONE':
         link.push('synthesis');
         break;
+
       case 'EVALUATING':
         link.push('exploration');
         break;
+
       default:
         link.push('setup');
     }
+
     return link;
 
   }
 
-
-  getImage(innovation: Innovation): string {
+  /***
+   * check if the principal media return that otherwise take the media according to the current lang.
+   * @param innovation
+   */
+  public getImage(innovation: Innovation): string {
     if (innovation.principalMedia) {
 
       if (innovation.principalMedia.type === 'PHOTO') {
@@ -111,36 +151,33 @@ export class ProjectsListComponent implements OnInit {
       }
 
     } else {
-      const findIndex = innovation.innovationCards.findIndex((card) => card.lang === this.translateService.currentLang);
+      const findIndex = innovation.innovationCards.findIndex((card) => card.lang === this._translateService.currentLang);
       return InnovationFrontService.getMediaSrc(innovation.innovationCards[findIndex], 'default', '120', '100');
     }
 
   }
 
-
-  onClickDelete(event: Event, innovationId: string) {
+  public onClickDelete(event: Event, innovationId: string) {
     event.preventDefault();
     this._innovationId = innovationId;
     this._deleteModal = true;
   }
 
-
-  closeModal(event: Event) {
+  public closeModal(event: Event) {
     event.preventDefault();
     this._deleteModal = false;
     this._innovationId = '';
   }
 
-
-  onClickSubmit(event: Event) {
+  public onClickSubmit(event: Event) {
     event.preventDefault();
 
-    this.innovationService.remove(this._innovationId).pipe(first()).subscribe((response: any) => {
-      this.translateNotificationService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
-      this.loadProjects();
+    this._innovationService.remove(this._innovationId).pipe(first()).subscribe((response: any) => {
+      this._translateNotificationService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
+      this._getProjects();
       this.closeModal(event);
     }, (err: any) => {
-      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
+      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
     });
 
   }
@@ -161,7 +198,7 @@ export class ProjectsListComponent implements OnInit {
     this._pagination = value;
     this._config.limit = this._pagination.parPage ? this._pagination.parPage.toString(10) : '10';
     this._config.offset = this._pagination.offset ? this._pagination.offset.toString(10) : '0';
-    this.loadProjects();
+    this._getProjects();
   }
 
   get total () {
@@ -184,12 +221,12 @@ export class ProjectsListComponent implements OnInit {
     this._deleteModal = value;
   }
 
-  get dateFormat(): string {
-    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  get isError(): boolean {
+    return this._isError;
   }
 
-  get noResult(): boolean {
-    return this._noResult;
+  get dateFormat(): string {
+    return this._dateFormat;
   }
 
 }

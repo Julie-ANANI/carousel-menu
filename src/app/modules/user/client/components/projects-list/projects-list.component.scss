@@ -2,52 +2,39 @@
 
 #projects-list {
 
-  .no-result-wrapper {
-    min-height: 70vh;
-  }
-
   .card-wrapper {
-    margin-bottom: -1.5rem;
+    margin-bottom: -30px;
 
-    .card-project {
-      margin-bottom: 1.5rem;
+    .card {
+      min-height: 108px;
+      margin-bottom: 30px;
+      border: none;
 
-      .card-content {
-        width: 100%;
+      .card-image {
+        display: flex;
+        margin-left: unset;
+        margin-right: $unit-5;
+        padding-top: 0;
 
         img {
           border-radius: $border-radius;
-          margin-right: $unit-5;
           width: 120px;
           height: 100px;
+          max-width: unset;
+          object-fit: unset;
 
           &:hover {
-            box-shadow: $box-shadow-6;
+            box-shadow: $box-shadow-5;
             cursor: pointer;
           }
 
         }
 
-        .project-description {
-          border-bottom: $border-width solid $border-color;
-          width: 100%;
+      }
 
-          a span {
-            font-size: 1.1rem;
-          }
-
-          .text {
-            font-size: $font-size-sm;
-            margin-top: 0.75rem;
-            margin-bottom: $unit-2;
-          }
-
-          .icons {
-            margin-left: 0;
-          }
-
-        }
-
+      .card-body {
+        border-bottom: $border-width solid $border-color;
+        padding-top: 0;
       }
 
     }

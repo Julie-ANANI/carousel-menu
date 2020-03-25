@@ -11,8 +11,8 @@ export const PROJECTS_LIST = {
   'UNTITLED': 'Projet sans nom',
 
   'NO_PROJECT': {
-    'TITLE': 'Vous n\'avez pas de projet ?',
-    'CONTENT': 'Créez vos premiers projet en cliquant sur le bouton "Ajouter un projet".'
+    'TITLE': 'Aucun projet pour l\'instant',
+    'CONTENT': 'Les projets que vous avez ajoutés seront présentés ici. Essayez d\'en ajouter.'
   },
 
   'DELETE_BUTTON': 'Supprimer ce projet'

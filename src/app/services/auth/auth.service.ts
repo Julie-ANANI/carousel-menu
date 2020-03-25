@@ -31,6 +31,8 @@ export class AuthService {
 
   private _user: User;
 
+  private _errorUrl: string | null = null;
+
   private _cookieOptions: CookieOptions = {
     expires: new Date(Date.now() + environment.cookieTime ),
     secure: environment.secureCookie
@@ -280,6 +282,16 @@ export class AuthService {
       this._redirectUrl = redirectUrl;
     }
 
+  }
+
+  get errorUrl() {
+    return this._errorUrl;
+  }
+
+  set errorUrl (url) {
+    if (!!url) {
+      this._errorUrl = url;
+    }
   }
 
 }
