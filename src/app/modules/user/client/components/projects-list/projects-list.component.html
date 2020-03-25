@@ -4,7 +4,7 @@
 
       <!-- add project button -->
       <section *ngIf="innovations.length > 0 && !isError" class="text-right">
-        <button routerLink="'new'" class="button is-lg is-primary">
+        <button [id]="'btn-new'" routerLink="new" class="button is-lg is-primary">
           {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
         </button>
       </section>
@@ -20,7 +20,7 @@
         <p class="text-sm">{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}</p>
 
         <div class="p-top-30">
-          <button routerLink="'new'" class="button is-primary is-xl">
+          <button [id]="'btn-new'" routerLink="new" class="button is-primary is-xl">
             {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
           </button>
         </div>

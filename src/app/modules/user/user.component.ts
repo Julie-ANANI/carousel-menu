@@ -15,9 +15,9 @@ import { LoaderService } from '../../services/loader/loader.service';
 
 export class UserComponent implements OnInit {
 
-  private _displayLoader: boolean = true;
+  private _displayLoader = true;
 
-  private _adminSide: boolean;
+  private _adminSide = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _location: Location,
@@ -42,6 +42,7 @@ export class UserComponent implements OnInit {
           this._displayLoader = loading;
         })
       });
+
     }
 
   }

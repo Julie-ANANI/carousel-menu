@@ -105,7 +105,8 @@ export const COMMON = {
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
     'COMMUNITY_PROJECTS': 'Projets | Community | UMI',
-    'ANSWER_TAGS': 'Tags réponse | Projet'
+    'ANSWER_TAGS': 'Tags réponse | Projet',
+    'NEW_PROJECT': 'Ajouter un projet| UMI'
   },
 
   'LABEL': {
@@ -203,6 +204,8 @@ export const COMMON = {
     'SEND': 'Envoyer',
     'PRINT': 'Imprimer',
     'PREVIEW': 'Prévisualiser',
+    'PREVIOUS': 'Retour',
+    'NEXT': 'Suivant',
     'SUBMIT': 'Soumettre',
     'SIGN_IN': 'Se Connecter',
     'SIGN_UP': 'Commencer',

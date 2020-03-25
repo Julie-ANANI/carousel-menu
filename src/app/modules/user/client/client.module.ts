@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { ClientRoutingModule } from './client-routing.module';
 
@@ -21,20 +21,21 @@ import { PaginationTemplate2Module } from '../../utility-components/paginations/
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    ClientRoutingModule,
-    PaginationTemplate1Module,
-    ReactiveFormsModule,
-    ProjectModule,
-    AccountModule,
-    SynthesisListModule,
-    SynthesisCompleteModule,
-    MessageTemplate1Module,
-    ModalModule,
-    PaginationTemplate2Module
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        ClientRoutingModule,
+        PaginationTemplate1Module,
+        ReactiveFormsModule,
+        ProjectModule,
+        AccountModule,
+        SynthesisListModule,
+        SynthesisCompleteModule,
+        MessageTemplate1Module,
+        ModalModule,
+        PaginationTemplate2Module,
+        FormsModule
+    ],
   providers: [
     TagsService
   ],
