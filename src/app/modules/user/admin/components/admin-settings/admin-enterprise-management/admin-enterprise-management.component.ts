@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {EnterpriseService} from "../../../../../../services/enterprise/enterprise.service";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SidebarInterface} from "../../../../../sidebars/interfaces/sidebar-interface";
-import {Enterprise, Pattern} from "../../../../../../models/enterprise";
-import {Observable} from "rxjs";
-import {Clearbit} from "../../../../../../models/clearbit";
-import {AutocompleteService} from "../../../../../../services/autocomplete/autocomplete.service";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {Table} from "../../../../../table/models/table";
+import {EnterpriseService} from '../../../../../../services/enterprise/enterprise.service';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
+import {Enterprise, Pattern} from '../../../../../../models/enterprise';
+import {Observable} from 'rxjs';
+import {Clearbit} from '../../../../../../models/clearbit';
+import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Table} from '../../../../../table/models/table';
 
 
 @Component({
@@ -25,12 +25,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private _newEnterprise: Enterprise;
   private _parentEntreprise: Enterprise;
   private _enterpriseSidebarPatterns: Array<Pattern> = [];
-  private _displayLoading: boolean = false;
+  private _displayLoading = false;
   private _sidebarValue: SidebarInterface = {};
-  private _uploadLogoModal: boolean = false;
+  private _uploadLogoModal = false;
 
-  private _results: boolean = false;
-  private _nothingFound: boolean = false;
+  private _results = false;
+  private _nothingFound = false;
 
   private _editEnterpriseId: string = null;
 
@@ -67,7 +67,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   constructor(private _enterpriseService: EnterpriseService,
               private _formBuilder: FormBuilder,
               private _autoCompleteService: AutocompleteService,
-              private _sanitizer: DomSanitizer,) {
+              private _sanitizer: DomSanitizer, ) {
   }
 
   private _buildForm() {
@@ -103,8 +103,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
     // This is a search because the fucking indexes are not working grrrr
     this._enterpriseService.get(null, this._queryConfig)
-      .subscribe( (enterprises:any) => {
-        if(enterprises && enterprises.result && enterprises.result.length) {
+      .subscribe( (enterprises: any) => {
+        if (enterprises && enterprises.result && enterprises.result.length) {
           this._resultTableConfiguration._content = enterprises.result;
           this._resultTableConfiguration._total = enterprises._metadata.totalCount;
           this._results = true;
@@ -113,14 +113,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           this._nothingFound = true;
         }
         this._displayLoading = false;
-      }, (err: any)=> {
+      }, (err: any) => {
         console.error(err);
         this._displayLoading = false;
       });
   }
 
   public openSidebar(event: any, type: string) {
-    switch(type) {
+    switch (type) {
       case 'create':
         event.preventDefault();
         this._editEnterpriseId = null;
@@ -144,7 +144,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         };
         break;
       default:
-        //NOOP
+        // NOOP
     }
   }
 
@@ -153,16 +153,16 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       name: this._newEnterpriseForm.get('name').value,
       topLevelDomain: this._newEnterpriseForm.get('topLevelDomain').value,
       patterns: this._enterpriseSidebarPatterns,
-      parentEnterprise: this._parentEntreprise.id || null
+      parentEnterprise: this._parentEntreprise ? this._parentEntreprise.id || null : null
     };
     Object.keys(this._newEnterpriseForm.controls).forEach(key => {
-      if(this._newEnterpriseForm.get(key).value) {
-        switch(key) {
+      if (this._newEnterpriseForm.get(key).value) {
+        switch (key) {
           case 'patterns':
           case 'name':
           case 'topLevelDomain':
           case 'parentEnterprise':
-            //NOOP
+            // NOOP
             break;
           case 'logo':
             this._newEnterprise[key] = {
@@ -175,27 +175,27 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         }
       }
     });
-    let promise = !!this._editEnterpriseId ?
+    const promise = !!this._editEnterpriseId ?
       this._enterpriseService.save(this._editEnterpriseId, this._newEnterprise) :
       this._enterpriseService.create(this._newEnterprise);
 
     promise.subscribe(result => {
         console.log(result);
-      }, err=> {
+      }, err => {
         console.error(err);
       });
   }
 
   public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
     return this._autoCompleteService.get({query: searchString, type: 'company'});
-  };
+  }
 
   public enterpriseSuggestions = (searchString: string): Observable<Array<{name: string, logo: any, domain: string, _id: string}>> => {
     return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
-  };
+  }
 
   public selectCompany(c: string | Clearbit) {
-    if(typeof c === 'object') {
+    if (typeof c === 'object') {
       // Maybe there's a logo...
       this._newEnterpriseForm.get('name').reset(c.name);
       this._newEnterpriseForm.get('topLevelDomain').reset(c.domain);
@@ -204,7 +204,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   }
 
   public selectEnterprise(c: string | Enterprise) {
-    if(typeof c === 'object') {
+    if (typeof c === 'object') {
       this._parentEntreprise = c;
     }
     this._newEnterpriseForm.get('parentEnterprise').reset('');
@@ -212,16 +212,16 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
-  };
+  }
 
   public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
     return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo.uri}" height="35" alt=" "/><span>${data.name}</span>`);
-  };
+  }
 
   public newPattern(event: Event) {
     event.preventDefault();
-    if(this._newEnterpriseForm.get('patterns').value) {
-      this._enterpriseSidebarPatterns.push({pattern: {expression: this._newEnterpriseForm.get('patterns').value}, avg:0});
+    if (this._newEnterpriseForm.get('patterns').value) {
+      this._enterpriseSidebarPatterns.push({pattern: {expression: this._newEnterpriseForm.get('patterns').value}, avg: 0});
       this._newEnterpriseForm.get('patterns').reset('');
     }
   }
@@ -236,14 +236,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._enterpriseSidebarPatterns.splice(index, 1);
   }
 
-  public uploadImage(event: Event) {
-    console.log(event);
+  public uploadImage(event: any) {
+    if (event && event.url) {
+      this._newEnterpriseForm.get('logo').reset(event.url);
+    }
   }
 
   get logoUploadUri(): string {
-
-    //'/innovation/'+innovation._id+'/innovationCard/'+innovationCard._id+'/media/image'
-    return `/enterprise....`;
+    return `/media/companyLogo`;
   }
 
   get results(): boolean {
