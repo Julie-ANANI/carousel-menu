@@ -180,7 +180,13 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       this._enterpriseService.create(this._newEnterprise);
 
     promise.subscribe(result => {
-        console.log(result);
+        this._newEnterpriseForm.patchValue(result);
+        const idx = this.resultTableConfiguration._content.findIndex((value) => {
+            return value._id === result['_id'];
+        });
+        if (idx > -1) {
+          this.resultTableConfiguration._content[idx] = result;
+        }
       }, err => {
         console.error(err);
       });
@@ -240,6 +246,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     if (event && event.url) {
       this._newEnterpriseForm.get('logo').reset(event.url);
     }
+    this._uploadLogoModal = false;
   }
 
   get logoUploadUri(): string {
