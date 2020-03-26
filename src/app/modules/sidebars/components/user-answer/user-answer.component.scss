@@ -4,6 +4,14 @@
   font-size: $font-size-sm;
   padding-top: 1.5rem;
 
+  .language {
+    cursor: pointer;
+  }
+
+  .language-active {
+    color: $progress-color;
+  }
+
   .form-switch {
     color: $meta-color;
   }

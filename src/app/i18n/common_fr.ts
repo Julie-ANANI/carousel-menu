@@ -97,13 +97,14 @@ export const COMMON = {
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
     'DISCOVER': 'Showroom des innovations | UMI',
-    'PROJECTS': 'Projets',
+    'PROJECTS': 'Projets | UMI',
+    'MY_PROJECTS': 'Mes projets | UMI',
     'PROJECT': 'Projet',
     'REPORT': 'Rapport',
     'DISCOVER_DESCRIPTION': 'Innovation | UMI',
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
-    'COMMUNITY_PROJECTS': 'Projets | Community',
+    'COMMUNITY_PROJECTS': 'Projets | Community | UMI',
     'ANSWER_TAGS': 'Tags réponse | Projet'
   },
 

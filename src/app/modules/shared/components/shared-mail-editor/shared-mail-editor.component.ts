@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } 
 import { EmailSignature } from '../../../../models/email-signature';
 import { EmailTemplate } from '../../../../models/email-template';
 import { TranslateService } from '@ngx-translate/core';
-import { Professional } from "../../../../models/professional";
+import { Professional } from '../../../../models/professional';
+import { FormatText } from '../../../../pipe/pipes/FormatText';
+const capitalize = new FormatText();
 
 type editorTypes = 'FOLLOW-UP' | '';
 
@@ -153,11 +155,11 @@ export class SharedMailEditorComponent {
       const language = pro.language;
       const html = '<span class="variable">';
       this._professionalPreview = `${this._emailsObject[language].subject}<p>${this._emailsObject[language].content}</p>`
-        .replace(/\*\|FIRSTNAME\|\*/g, `${html}${pro.firstName}</span`)
-        .replace(/\*\|LASTNAME\|\*/g, `${html}${pro.lastName}</span`)
-        .replace(/\*\|TITLE\|\*/g, `${html}${this._variableMapping[language].TITLE}</span`)
-        .replace(/\*\|CLIENT_NAME\|\*/g, `${html}${this._variableMapping[language].CLIENT_NAME}</span`)
-        .replace(/\*\|COMPANY_NAME\|\*/g, `${html}${this._variableMapping[language].COMPANY_NAME}</span`);
+        .replace(/\*\|FIRSTNAME\|\*/g, `${html}${capitalize.transform(pro.firstName, true)}</span>`)
+        .replace(/\*\|LASTNAME\|\*/g,  `${html}${capitalize.transform(pro.lastName, true)}</span>`)
+        .replace(/\*\|TITLE\|\*/g, `${html}${this._variableMapping[language].TITLE}</span>`)
+        .replace(/\*\|CLIENT_NAME\|\*/g, `${html}${this._variableMapping[language].CLIENT_NAME}</span>`)
+        .replace(/\*\|COMPANY_NAME\|\*/g, `${html}${this._variableMapping[language].COMPANY_NAME}</span>`);
     } else {
       this._professionalPreview = '';
     }

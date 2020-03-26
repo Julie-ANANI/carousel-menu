@@ -243,7 +243,6 @@
 
 }
 
-
 // Cancel button class that you have to add with button class
 .btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active, .btn-cancel:not(:disabled).active {
   color: $meta-color;
@@ -256,7 +255,6 @@
   background-color: $bg-light-color;
   border: none;
 }
-
 
 // Make a button large just add this class with the btn class
 .btn-lg {
@@ -322,10 +320,11 @@
   background: transparent;
   border: $border-width solid transparent;
   font-size: $font-size-sm;
-  height: 2rem;
   color: $text-warning-color;
   border-radius: $border-radius;
-  padding: $unit-2 $unit-5;
+  padding: 15px 20px;
+  min-width: 125px;
+  box-sizing: border-box;
   font-weight: $font-weight-medium;
 
   i {
@@ -558,13 +557,14 @@
   }
 
   &.is-rounded {
-    border-radius: 1.25rem;
+    border-radius: 25px;
   }
 
   &.is-circled {
     border-radius: 50%;
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-width: unset;
   }
 
   &.is-normal {
@@ -576,8 +576,8 @@
     }
 
     &.is-circled {
-      padding-left: 0.25rem;
-      padding-right: 0.25rem;
+      padding-left: 5px;
+      padding-right: 5px;
     }
 
   }
@@ -597,59 +597,20 @@
 
   }
 
-  &.is-lg {
-    height: 2.5rem;
-    padding-left: $unit-8;
-    padding-right: $unit-8;
+  &.is-lg, &.is-xl {
+    padding-top: $unit-4;
+    padding-bottom: $unit-4;
     width: 100%;
+  }
+
+  &.is-lg {
+    font-size: $font-size-md;
     max-width: 272px;
-
-    i {
-      font-size: $font-icon-md;
-    }
-
-    &.is-circled {
-      padding-left: $unit-2;
-      padding-right: $unit-2;
-    }
-
   }
 
   &.is-xl {
-    height: 3rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    font-size: $font-size;
-    width: 100%;
-    max-width: 272px;
-
-    i {
-      font-size: $font-icon-lg;
-    }
-
-    &.is-rounded {
-      border-radius: 1.8rem;
-    }
-
-    &.is-circled {
-      padding-left: $unit-3;
-      padding-right: $unit-3;
-    }
-
-  }
-
-}
-
-
-
-@media (max-width: $size-sm) {
-
-  .btn-lg {
-    padding: $unit-2 $unit-8;
-  }
-
-  .is-xl {
-    padding: $unit-2 $unit-5;
+    font-size: $font-size-lg;
+    max-width: 370px;
   }
 
 }

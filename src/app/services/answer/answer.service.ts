@@ -54,7 +54,7 @@ export class AnswerService {
   }
 
   public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
-    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous:''}`);
+    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous : ''}`);
   }
 
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
@@ -64,14 +64,14 @@ export class AnswerService {
 
   public getExportUrl(innovationId: string, client: Boolean, anonymous?: Boolean): string {
     const query = [];
-    if(client !== undefined) {
+    if (client !== undefined) {
       query.push(`client=${!!client}`);
     }
-    if(anonymous) {
+    if (anonymous) {
       query.push(`anonymous=${!!anonymous}`);
     }
     const _query = query.join('&');
-    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (_query.length ? '?'+ _query : '');
+    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (_query.length ? '?' + _query : '');
   }
 
   public importFromGmail(file: File): Observable<any> {
