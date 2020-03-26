@@ -3,11 +3,12 @@ import {EnterpriseService} from '../../../../../../services/enterprise/enterpris
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {Enterprise, Pattern} from '../../../../../../models/enterprise';
-import {Observable} from 'rxjs';
+import {Observable, combineLatest} from 'rxjs';
 import {Clearbit} from '../../../../../../models/clearbit';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Table} from '../../../../../table/models/table';
+import {first} from 'rxjs/operators';
 
 
 @Component({
@@ -52,6 +53,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     _isSelectable: true,
     _isEditable: true,
     _isPaginable: true,
+    _isDeletable: true,
     _clickIndex: 2,
     _columns: [
       {_attrs: ['logo.uri'], _name: 'ENTERPRISE.LOGO', _type: 'PICTURE', _isSearchable: false},
@@ -230,6 +232,40 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       this._enterpriseSidebarPatterns.push({pattern: {expression: this._newEnterpriseForm.get('patterns').value}, avg: 0});
       this._newEnterpriseForm.get('patterns').reset('');
     }
+  }
+
+  public removeCompanies(event: any) {
+    const requests = event.map( (evt: any) => {
+      return this._enterpriseService.remove(evt._id).pipe(first());
+    });
+    const combined = combineLatest(requests);
+    combined.subscribe(latestValues => {
+      latestValues.forEach(result => {
+        console.log(result);
+        // TODO see how I can update the table after deletion
+        /*if (result && result['n'] > 0) {
+          const idx = this.resultTableConfiguration._content.findIndex((value) => {
+            return value._id === result['_id'];
+          });
+          if (idx > -1) {
+            this.resultTableConfiguration._content.splice(idx, 1);
+          }
+        }*/
+      });
+    });
+    /*this._enterpriseService.remove(event._id).pipe(first())
+      .subscribe(result => {
+        if (result) {
+          const idx = this.resultTableConfiguration._content.findIndex((value) => {
+            return value._id === result['_id'];
+          });
+          if (idx > -1) {
+            this.resultTableConfiguration._content.splice(idx, 1);
+          }
+        }
+      }, err => {
+        console.error(err);
+      });*/
   }
 
   public changeLogo(event: Event) {
