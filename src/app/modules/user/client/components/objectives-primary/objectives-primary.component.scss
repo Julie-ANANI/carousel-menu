@@ -1,0 +1,73 @@
+@import "../../../../../../style/framework/src/variables";
+
+#objectives-primary {
+
+  .card-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 -10px -40px -10px;
+
+    .popover {
+
+      .card {
+        min-height: 82px;
+        width: 216px;
+        border: 2px solid #E2E5E8;
+        border-radius: 4px;
+        margin: 0 10px 40px 10px;
+        padding: 0;
+        box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+
+        .card-body {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 15px 20px 20px 20px;
+          font-size: 15px;
+          font-family: $font-family-oswald;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &:not(.active):hover {
+          box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+        }
+
+        &.active {
+          border-color: $border-success-color;
+        }
+
+      }
+
+      .shape {
+        top: -15px;
+        right: -11px;
+
+        &.is-circle {
+          width: 30px;
+          height: 30px;
+          font-size: 16px;
+          background-color: $bg-success-color;
+          color: $text-white-color;
+          visibility: hidden;
+
+          &.active {
+            visibility: visible;
+          }
+
+        }
+
+      }
+
+      .popover-container {
+        width: 250px;
+      }
+
+    }
+
+  }
+
+}

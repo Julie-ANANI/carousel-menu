@@ -1,0 +1,36 @@
+<div id="objectives-primary">
+  <div class="card-wrapper">
+    <div *ngFor="let objective of objectives; let i = index;" class="popover">
+
+      <div
+        (click)="onClickObjective($event, objective)"
+        [ngClass]="{ 'active': isActive(objective) }"
+        [ngStyle]="{ 'animation-duration': (i * 110) + 'ms' }"
+        [id]="objective[currentLang]['label']"
+        class="card animate-slide slide-down">
+        <div class="card-body">
+          <img
+            [ngStyle]="{ 'width': '27px', 'height': '27px' }"
+            [src]="objective.picto"
+            alt=" "
+            class="m-right-10">
+          <div>{{ objective[currentLang]['label'] }}</div>
+        </div>
+      </div>
+
+      <div
+        [ngClass]="{ 'active': isActive(objective) }"
+        [ngStyle]="{ 'animation-duration': (i * 110) + 'ms' }"
+        class="shape is-circle absolute animate-slide slide-down">
+        <i class="icon icon-check"></i>
+      </div>
+
+      <div *ngIf="objective[currentLang]['description']" class="popover-container">
+        <div class="p-left-10 p-right-15 p-top-15 p-bottom-15 text-center">
+          {{ objective[currentLang]['description'] }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

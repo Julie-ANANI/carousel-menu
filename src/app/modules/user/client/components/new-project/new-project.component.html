@@ -1,32 +1,29 @@
 <div [hidden]="isLoading" class="p-top-40 p-bottom-40" id="new-project">
   <div class="container grid-2xl">
     <div class="column col-sm-12 col-11 col-mx-auto">
-      <div class="main-container">
+      <div class="main-container animate-fade">
 
         <!-- heading / sub-heading -->
         <section class="text-center">
           <h1 class="title is-4 text-bold">
-            {{ 'PROJECT_MODULE.NEW_PROJECT.HEADINGS.' + fields[currentStep] | translate }}
+            {{ 'NEW_PROJECT.HEADINGS.' + fields[currentStep] | translate }}
           </h1>
 
           <h2 *ngIf="fields[currentStep] === 'PRIMARY_OBJECTIVE'" class="subtitle text-lg">
-            {{ 'PROJECT_MODULE.NEW_PROJECT.SUB_HEADING.' + fields[currentStep] | translate }}
+            {{ 'NEW_PROJECT.SUB_HEADING.' + fields[currentStep] | translate }}
           </h2>
         </section>
         <!-- /heading / sub-heading  -->
 
 
         <!-- different view -->
-        <section
-          [ngSwitch]="fields[currentStep]"
-          [ngClass]="{ 'flex-centered': fields[currentStep] === 'TITLE' }"
-          class="content-wrapper">
+        <section [ngSwitch]="fields[currentStep]" class="content-wrapper col-lg-12 col-xl-10 col-8 col-mx-auto flex-centered">
 
           <!-- TITLE -->
-          <div *ngSwitchCase="'TITLE'" class="animate-fade is-3">
+          <div *ngSwitchCase="'TITLE'" class="animate-fade is-2">
             <div class="mxw-500 text-center">
 
-              <h6 class="text-normal">{{ 'PROJECT_MODULE.NEW_PROJECT.TITLE_QUESTION' | translate }}</h6>
+              <h6 class="text-normal">{{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}</h6>
 
               <div class="form-group">
                 <label>
@@ -42,8 +39,8 @@
           <!-- /TITLE -->
 
           <!-- PRIMARY_OBJECTIVE -->
-          <div *ngSwitchCase="'PRIMARY_OBJECTIVE'">
-
+          <div *ngSwitchCase="'PRIMARY_OBJECTIVE'" class="animate-fade is-2 p-bottom-40">
+            <objectives-primary [(objective)]="mission.objective.principal"></objectives-primary>
           </div>
           <!-- /PRIMARY_OBJECTIVE -->
 

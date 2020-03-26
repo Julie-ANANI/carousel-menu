@@ -9,6 +9,8 @@ import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ClientProject } from '../../../../../models/client-project';
+import { Mission } from '../../../../../models/mission';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'new-project',
@@ -34,9 +36,20 @@ export class NewProjectComponent implements OnInit {
     roadmapDates: []
   };
 
+  mission: Mission = {
+    objective: {
+      principal: { en: '', fr: '' },
+      secondary: [{ en: '', fr: '' }],
+      comment: ''
+    }
+  };
+
+  currentLang = this._translateService.currentLang;
+
   private _formData: FormGroup;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
               private router: Router,
               private formBuilder: FormBuilder,
@@ -86,7 +99,10 @@ export class NewProjectComponent implements OnInit {
         return !this.clientProject.name;
 
       case 'PRIMARY_OBJECTIVE':
-        break;
+        return !this.mission.objective.principal[this.currentLang];
+
+      case 'SECONDARY_OBJECTIVE':
+
 
     }
 

@@ -1,5 +1,6 @@
 import { Innovation } from './innovation';
 import { User } from './user.model';
+import { Multiling } from './multiling';
 
 export interface  Milestone {
  name: string;
@@ -22,4 +23,10 @@ export interface Mission {
   team?: Array<User>;
   milestoneDates?: Array<Milestone>;
   mailConf?: Array<MailConfiguration>
+
+  objective?: {
+    principal: Multiling;
+    secondary: Array<Multiling>;
+    comment: string
+  };
 }
