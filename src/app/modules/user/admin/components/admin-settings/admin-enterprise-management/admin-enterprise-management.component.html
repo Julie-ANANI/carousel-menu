@@ -129,16 +129,16 @@
               [source]="enterpriseSuggestions"
               (valueChanged)="selectEnterprise($event)">
         </div>
-        <div class="patterns-container" *ngFor="let pattern of activePatterns; index as i">
+        <!-- <div class="patterns-container" *ngFor="let pattern of activePatterns; index as i">
           <div class="patterns-form-container">
             <div class="pattern-item">
-              <p>{{pattern.pattern.expression}}</p>
+              <p>{{pattern}}</p>
             </div>
             <div class="pattern-item delete-pattern" (click)="removePattern($event, i)">
               <span><i class="fas fa-trash"></i></span>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- Patterns -->
       <label class="form-label" for="enterprise-form-patterns">Enterprise pattern</label>
@@ -156,7 +156,7 @@
         <div class="patterns-container" *ngFor="let pattern of activePatterns; index as i">
           <div class="patterns-form-container">
             <div class="pattern-item">
-              <p>{{pattern.pattern.expression}}</p>
+              <p>{{pattern['expression']}}</p>
             </div>
             <div class="pattern-item delete-pattern" (click)="removePattern($event, i)">
               <span><i class="fas fa-trash"></i></span>
