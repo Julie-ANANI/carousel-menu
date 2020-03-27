@@ -37,6 +37,14 @@ export class TableComponent {
     this._loadData(value);
   }
 
+  /**
+   * Try to stop loading :(
+   * @param value
+   */
+  @Input() set loading(value: boolean) {
+    this._isLoadingData = !!value;
+  }
+
   /***
    * Output call when the config change
    * @type {EventEmitter<Config>}
