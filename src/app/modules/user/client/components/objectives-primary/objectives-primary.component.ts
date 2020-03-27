@@ -2,6 +2,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Multiling } from '../../../../../models/multiling';
 
+/***
+ * this module is to select the primary objective for the client project.
+ * It already has all the objectives in both lang.
+ *
+ * Input:
+ * 1. Objective: pass the value in the form of { en: '', fr: '' }.
+ *
+ * Output:
+ * 1. objectiveChange: emits the value in the form of { en: '', fr: '' }.
+ *
+ * Implementation:
+ * <objectives-primary [(objective)]=objective></objectives-primary>
+ *
+ * Example: while adding the new project. module: NewProjectModule
+ */
+
 interface Objective {
   en: { label: string , description: string },
   fr: { label: string , description: string },
@@ -75,7 +91,7 @@ export class ObjectivesPrimaryComponent {
       en: { label: 'Optimizing my value proposition', description: 'I have already validated the interest of my solution ' +
           'for the market, I now wish to adjust and optimize my value proposition / offer / business model.' },
       fr: { label: 'Optimiser ma proposition de valeur', description: 'J\'ai déjà validé l\'intérêt de ma solution pour ' +
-          'le marché, je souhaite maintenant ajuster et optimiser ma proposition de valeur / offre / business model' },
+          'le marché, je souhaite maintenant ajuster et optimiser ma proposition de valeur / offre / business model.' },
       picto: 'https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-cycle.svg'
     },
     {

@@ -6,13 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { NewProjectComponent } from './new-project.component';
 
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
+import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     FormsModule,
-    ObjectivesPrimaryModule
+    ObjectivesPrimaryModule,
+    ObjectivesSecondaryModule
   ],
   declarations: [
     NewProjectComponent

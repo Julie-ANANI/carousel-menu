@@ -30,16 +30,14 @@ export class NewProjectComponent implements OnInit {
 
   clientProject: ClientProject = {
     name: '',
-    commercial: '',
-    client: '',
-    marketTests: [],
     roadmapDates: []
   };
 
   mission: Mission = {
+    name: '',
     objective: {
       principal: { en: '', fr: '' },
-      secondary: [{ en: '', fr: '' }],
+      secondary: [],
       comment: ''
     }
   };
@@ -89,6 +87,17 @@ export class NewProjectComponent implements OnInit {
   }
 
   /***
+   * if the value of the mission principal objective is 'Other' then
+   * we disabled the mission secondary objectives also assign it with [].
+   */
+  public enableSecondaryObjectives(): boolean {
+    if (this.mission.objective.principal['en'] === 'Other') {
+      this.mission.objective.secondary = [];
+    }
+    return this.mission.objective.principal['en'] !== 'Other';
+  }
+
+  /***
    * based on the conditions of the fields this make the
    * next button disabled/enabled.
    */
@@ -100,13 +109,9 @@ export class NewProjectComponent implements OnInit {
 
       case 'PRIMARY_OBJECTIVE':
         return !this.mission.objective.principal[this.currentLang];
-
-      case 'SECONDARY_OBJECTIVE':
-
-
     }
 
-    return true;
+    return false;
   }
 
 
