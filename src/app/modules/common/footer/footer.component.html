@@ -12,6 +12,14 @@
         <!-- terms and privacy -->
         <div class="privacy-wrapper text-medium">
 
+          <span [hidden]="false">
+            <a [href]="getIdeasLink()" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
+              {{ 'FOOTER.IDEAS' | translate }}
+            </a>
+          </span>
+
+          |
+
           <a [href]="getTermsLink()" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
             {{ 'FOOTER.TERMS' | translate }}
           </a>
