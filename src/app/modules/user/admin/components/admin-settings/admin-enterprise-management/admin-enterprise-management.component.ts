@@ -341,6 +341,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
+    this.doSearch();
   }
 
   get nothingFound(): boolean {
@@ -354,4 +355,5 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   get parentEnterprise(): Enterprise {
     return this._parentEntreprise;
   }
+
 }

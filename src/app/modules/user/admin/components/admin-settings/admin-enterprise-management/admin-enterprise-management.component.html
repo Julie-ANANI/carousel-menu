@@ -40,7 +40,8 @@
         [data]="resultTableConfiguration"
         [(config)]="queryConfig"
         (editRow)="openSidebar($event, 'edit')"
-        (removeRows)="removeCompanies($event)">
+        (removeRows)="removeCompanies($event)"
+        [loading]="displayLoading">
     </app-shared-table>
   </div>
   <div [hidden]="!nothingFound">
