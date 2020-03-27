@@ -6,6 +6,7 @@ export interface  Milestone {
  name: string;
  code: string;
  dueDate: string;
+ comment?: string;
 }
 
 export interface MailConfiguration {
@@ -29,4 +30,5 @@ export interface Mission {
     secondary: Array<Multiling>;
     comment: string
   };
+
 }

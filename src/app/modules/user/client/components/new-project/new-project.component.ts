@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class NewProjectComponent implements OnInit {
 
-  currentStep = 0;
+  currentStep = 3;
 
   fields: Array<string> = ['TITLE', 'PRIMARY_OBJECTIVE', 'SECONDARY_OBJECTIVE', 'RESTITUTION_DATE'];
 
@@ -39,10 +39,13 @@ export class NewProjectComponent implements OnInit {
       principal: { en: '', fr: '' },
       secondary: [],
       comment: ''
-    }
+    },
+    milestoneDates: [{ name: '', comment: '', code: '', dueDate: new Date().toDateString()}]
   };
 
   currentLang = this._translateService.currentLang;
+
+  isCreating = false;
 
   private _formData: FormGroup;
 
@@ -109,6 +112,10 @@ export class NewProjectComponent implements OnInit {
 
       case 'PRIMARY_OBJECTIVE':
         return !this.mission.objective.principal[this.currentLang];
+
+      case 'RESTITUTION_DATE':
+        return !this.mission.milestoneDates[0].name;
+
     }
 
     return false;

@@ -550,6 +550,20 @@
     @include button-default-variant($bg-community-color);
   }
 
+  &.is-loading {
+    color: transparent;
+
+    .loading {
+      animation-duration: 0.2s;
+      animation-timing-function: ease-in-out;
+      animation-name: fadeIn;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+  }
+
   .icon-left {
     margin-right: $unit-2;
     margin-left: 0;

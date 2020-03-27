@@ -11,6 +11,12 @@ export const NEW_PROJECT = {
     'PRIMARY_OBJECTIVE': 'Vous aurez la possibilité de donner des précisions à la prochaine étape'
   },
 
-  'TITLE_QUESTION': 'Donnez un nom à votre nouveau projet (titre à usage interne)'
+  'TITLE_QUESTION': 'Donnez un nom à votre nouveau projet (titre à usage interne)',
+
+  'RESTITUTION_DATE_COMMENT': 'Avez-vous des précisions à donner sur cette date ?',
+
+  'RESTITUTION_DATE_QUESTION' : 'A quelle date souhaitez-vous idéalement obtenir les résultats finaux ?',
+
+  'CHOOSE_DATE': 'Choisissez une date'
 
 };
