@@ -76,6 +76,7 @@ export interface Innovation {
   };
 
   executiveReportId?: string;
+  clientProjectId?: string;
   mission?: Mission | string;
 
   operator?: User;

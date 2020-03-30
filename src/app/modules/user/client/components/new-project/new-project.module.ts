@@ -7,6 +7,7 @@ import { NewProjectComponent } from './new-project.component';
 
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-se
     TranslateModule.forChild(),
     FormsModule,
     ObjectivesPrimaryModule,
-    ObjectivesSecondaryModule
+    ObjectivesSecondaryModule,
+    AngularMyDatePickerModule // https://github.com/kekeh/angular-mydatepicker
   ],
   declarations: [
     NewProjectComponent

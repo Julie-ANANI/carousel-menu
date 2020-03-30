@@ -62,7 +62,27 @@
             <!-- date selection -->
             <div class="p-bottom-40">
               <h6 class="text-normal m-no-bottom">{{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}</h6>
-              <p class="text-link text-normal text-md">{{ 'NEW_PROJECT.CHOOSE_DATE' | translate }}</p>
+
+              <p
+                (click)="dp.toggleCalendar()"
+                class="text-link text-normal text-md">
+                {{ 'NEW_PROJECT.CHOOSE_DATE' | translate }}
+              </p>
+
+              <div class="date-picker">
+                <label>
+                  <input
+                    (dateChanged)="onDateChanged($event)"
+                    #dp="angular-mydatepicker"
+                    [locale]="currentLang"
+                    [options]="datePickerOptions"
+                    angular-mydatepicker
+                    class="form-input"
+                    name="'date-restitution'"
+                    readonly="true">
+                </label>
+              </div>
+
             </div>
             <!-- /date selection -->
 
@@ -78,7 +98,7 @@
               <div class="form-group animate-slide slide-down is-3">
                 <label>
                   <textarea
-                    [(ngModel)]="mission.milestoneDates[0].comment"
+                    [(ngModel)]="milestoneDateComment"
                     class="form-input is-shadowed"
                     id="textarea-comment"
                     rows="3">
@@ -100,7 +120,7 @@
         <section class="text-center">
 
           <!-- previous -->
-          <ng-container *ngIf="currentStep > 0">
+          <ng-container *ngIf="currentStep > 0 && !isCreating">
             <button
               (click)="changeStep($event, currentStep - 1, 'previous')"
               class="button is-outlined m-right-20 animate-fade is-4 is-info"
@@ -111,19 +131,30 @@
           <!-- /previous -->
 
           <!-- next -->
-          <button
-            (click)="changeStep($event, currentStep + 1, 'next')"
-            [disabled]="isDisabled || isCreating"
-            [ngClass]="{ 'is-loading': isCreating }"
-            class="button is-community"
-            id="btn-next">
-            <ng-container *ngIf="currentStep === fields.length - 1 else next">
-              {{ 'COMMON.BUTTON.CREATE' | translate }}
-            </ng-container>
-            <ng-template #next>{{ 'COMMON.BUTTON.NEXT' | translate }}</ng-template>
-            <span *ngIf="isCreating" class="loading is-white"></span>
-          </button>
+          <ng-container *ngIf="currentStep < fields.length - 1">
+            <button
+              (click)="changeStep($event, currentStep + 1, 'next')"
+              [disabled]="isDisabled"
+              class="button is-community animate-fade is-4 "
+              id="btn-next">
+              {{ 'COMMON.BUTTON.NEXT' | translate }}
+            </button>
+          </ng-container>
           <!-- /next -->
+
+          <!-- create -->
+          <ng-container *ngIf="currentStep === fields.length - 1">
+            <button
+              (click)="createProject($event)"
+              [disabled]="isDisabled || isCreating"
+              [ngClass]="{ 'is-loading': isCreating }"
+              class="button is-community animate-fade is-4 "
+              id="btn-create">
+              {{ 'COMMON.BUTTON.CREATE' | translate }}
+              <span *ngIf="isCreating" class="loading is-white"></span>
+            </button>
+          </ng-container>
+          <!-- /create -->
 
         </section>
         <!-- buttons -->

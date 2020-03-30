@@ -31,4 +31,12 @@ export interface Mission {
     comment: string
   };
 
+  externalDiffusion? : {
+    umi: boolean; // website
+    community: boolean;
+    social: boolean;
+  };
+
+  type?: 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
+
 }
