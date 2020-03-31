@@ -11,7 +11,8 @@ import { ClientProjectService } from '../../../../../services/common/client-proj
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'new-project',
@@ -37,6 +38,7 @@ export class NewProjectComponent implements OnInit {
   };
 
   private _mission: Mission = {
+    name: '',
     objective: {
       principal: { en: '', fr: '' },
       secondary: [],
@@ -68,6 +70,7 @@ export class NewProjectComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _commonService: CommonService,
+              private _router: Router,
               private _clientProjectService: ClientProjectService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.NEW_PROJECT');
@@ -99,7 +102,7 @@ export class NewProjectComponent implements OnInit {
    */
   private _clientRoadmap() {
     this._clientProject.roadmapDates[this._currentStep] = {
-      name: 'STEP_' + (this._currentStep + 1),
+      name: this._currentStep === (this._fields.length - 1) ? 'CREATE' : 'STEP_' + (this._currentStep + 1),
       code: 'NEW_PROJECT',
       date: new Date()
     };
@@ -126,11 +129,13 @@ export class NewProjectComponent implements OnInit {
    */
   public createProject(event: Event) {
     event.preventDefault();
+    this._isCreating = true;
 
     // client project attribute
     this._clientRoadmap();
 
     // mission attribute
+    this._mission.name = this._clientProject.name;
     this._mission.milestoneDates[0].comment = this._milestoneDateComment;
 
     // innovation attributes
@@ -140,12 +145,8 @@ export class NewProjectComponent implements OnInit {
       domain: environment.domain
     };
 
-    console.log(this._clientProject);
-    console.log(this._mission);
-    console.log(newInnovation);
-
     this._clientProjectService.create(this._clientProject, this._mission, newInnovation).pipe(first()).subscribe((response) => {
-      console.log(response);
+      this._router.navigate([`/user/projects/${response['innovation']['_id']}/settings`]);
     }, (err: HttpErrorResponse) => {
       console.error(err);
       this._isCreating = false;
