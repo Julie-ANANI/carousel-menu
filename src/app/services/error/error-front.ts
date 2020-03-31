@@ -9,6 +9,9 @@ export class ErrorFrontService {
     if (status) {
       switch (status) {
 
+        case 400:
+          return 'ERROR.OPERATION_ERROR';
+
         case 401:
           return 'ERROR.NO_AUTHORIZED';
 
