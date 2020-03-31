@@ -7,6 +7,11 @@ import { Mission } from '../../../../../models/mission';
 import { TranslateService } from '@ngx-translate/core';
 import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { CommonService } from '../../../../../services/common/common.service';
+import { ClientProjectService } from '../../../../../services/common/client-project.service';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import {ErrorFrontService} from '../../../../../services/error/error-front';
 
 @Component({
   selector: 'new-project',
@@ -61,7 +66,9 @@ export class NewProjectComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
-              private _commonService: CommonService) {
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _commonService: CommonService,
+              private _clientProjectService: ClientProjectService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.NEW_PROJECT');
 
@@ -137,7 +144,13 @@ export class NewProjectComponent implements OnInit {
     console.log(this._mission);
     console.log(newInnovation);
 
-    // call client service here to send the data to back.
+    this._clientProjectService.create(this._clientProject, this._mission, newInnovation).pipe(first()).subscribe((response) => {
+      console.log(response);
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+      this._isCreating = false;
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+    });
 
   }
 
