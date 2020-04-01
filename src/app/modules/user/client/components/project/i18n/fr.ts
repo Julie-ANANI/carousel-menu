@@ -5,6 +5,12 @@ import { PROJECTS_LIST } from '../../projects-list/i18n/fr';
 import { SETUP } from '../components/setup/i18n/fr';
 
 export const PROJECT_MODULE = {
+
+  'SETUP_TAB': 'Description du projet',
+  'EXPLORATION_TAB': 'Exploration marché',
+  'SYNTHESIS_TAB': 'Synthèse',
+  'SETTINGS_TAB': 'Paramètres',
+
   'ADD_COLLABORATORS': 'Ajoutez l\'email d\'un collègue',
   'ADD_COLLABORATORS_PLACEHOLDER': 'Ajoutez l\'email d\'un collègue',
 
@@ -49,9 +55,7 @@ export const PROJECT_MODULE = {
     'BOT_MESSAGE': 'Partagez et éditez votre projet à plusieurs !'
   },
 
-  'SETUP_TAB': 'Description du projet',
-  'EXPLORATION_TAB': 'Exploration marché',
-  'SYNTHESIS_TAB': 'Synthèse',
+
   'HISTORY_TAB': 'Historique',
 
   'EXPLORATION': EXPLORATION,

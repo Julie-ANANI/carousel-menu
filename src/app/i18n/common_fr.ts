@@ -96,17 +96,17 @@ export const COMMON = {
     'WELCOME': 'Bienvenue',
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
-    'DISCOVER': 'Showroom des innovations | UMI',
-    'PROJECTS': 'Projets | UMI',
-    'MY_PROJECTS': 'Mes projets | UMI',
+    'DISCOVER': 'Showroom des innovations',
+    'PROJECTS': 'Projets',
+    'MY_PROJECTS': 'Mes projets',
     'PROJECT': 'Projet',
     'REPORT': 'Rapport',
-    'DISCOVER_DESCRIPTION': 'Innovation | UMI',
+    'DISCOVER_DESCRIPTION': 'Innovation',
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
-    'COMMUNITY_PROJECTS': 'Projets | Community | UMI',
+    'COMMUNITY_PROJECTS': 'Projets | Community',
     'ANSWER_TAGS': 'Tags réponse | Projet',
-    'NEW_PROJECT': 'Ajouter un projet| UMI'
+    'NEW_PROJECT': 'Ajouter un projet'
   },
 
   'LABEL': {
@@ -145,7 +145,8 @@ export const COMMON = {
     'CREATED_ON': 'Créé le',
     'COLLABORATORS': 'Collaborateurs',
     'DOMAIN_NAME': 'Nom de domaine',
-    'ANSWER': 'Réponse'
+    'ANSWER': 'Réponse',
+    'PROJECT': 'Projet',
   },
 
   'PLACEHOLDER': {

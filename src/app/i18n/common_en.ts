@@ -97,17 +97,17 @@ export const COMMON = {
     'WELCOME': 'Welcome',
     'ACCOUNT': 'Profile',
     'SHARED_REPORTS': 'Shared Reports',
-    'DISCOVER': 'Innovation Portfolio | UMI',
-    'PROJECTS': 'Projects | UMI',
-    'MY_PROJECTS': 'My projects | UMI',
+    'DISCOVER': 'Innovation Portfolio',
+    'PROJECTS': 'Projects',
+    'MY_PROJECTS': 'My projects',
     'PROJECT': 'Project',
     'REPORT': 'Report',
-    'DISCOVER_DESCRIPTION': 'Innovation | UMI',
+    'DISCOVER_DESCRIPTION': 'Innovation',
     'PROFESSIONALS': 'Professionals',
     'USERS': 'Users',
-    'COMMUNITY_PROJECTS': 'Projects | Community | UMI',
+    'COMMUNITY_PROJECTS': 'Projects | Community',
     'ANSWER_TAGS': 'Answer tags | Project',
-    'NEW_PROJECT': 'Add project | UMI'
+    'NEW_PROJECT': 'Add project'
   },
 
   'LABEL': {
@@ -146,7 +146,8 @@ export const COMMON = {
     'CREATED_ON': 'Created on',
     'COLLABORATORS': 'Collaborators',
     'DOMAIN_NAME': 'Domain Name',
-    'ANSWER': 'Answer'
+    'ANSWER': 'Answer',
+    'PROJECT': 'Project',
   },
 
   'PLACEHOLDER': {

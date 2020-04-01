@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth/auth.service';
  * Ensure User is authenticated
  */
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(private _authService: AuthService,

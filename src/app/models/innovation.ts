@@ -6,6 +6,7 @@ import { Media } from './media';
 import { Tag } from './tag';
 import { User } from './user.model';
 import { Mission } from './mission';
+import {ClientProject} from './client-project';
 
 export interface InnovationMetadataValues {
   preparation?: number;
@@ -76,7 +77,7 @@ export interface Innovation {
   };
 
   executiveReportId?: string;
-  clientProjectId?: string;
+  clientProject?: ClientProject | string;
   mission?: Mission | string;
 
   operator?: User;

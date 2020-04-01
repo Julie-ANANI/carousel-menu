@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ClientProject } from '../../models/client-project';
 import { Mission } from '../../models/mission';
 import { Innovation } from '../../models/innovation';
+import { Config } from '../../models/config';
 
 interface CreateResponse {
   clientProject: ClientProject;
@@ -25,6 +26,10 @@ export class ClientProjectService {
     };
 
     return this._http.post<CreateResponse>('/clientProject/create', data);
+  }
+
+  public get(clientProjectId: string, config?: Config): Observable<ClientProject> {
+    return this._http.get<ClientProject>(`/clientProject/${clientProjectId}`, { params: config });
   }
 
 }

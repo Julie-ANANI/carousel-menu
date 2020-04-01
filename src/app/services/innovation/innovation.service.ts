@@ -9,19 +9,19 @@ import { Professional } from '../../models/professional';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
 import { InnovCardComment } from '../../models/innov-card-comment';
+import { Config } from '../../models/config';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) { }
 
   public create(innovationObj: Innovation): Observable<any> {
     return this._http.post('/innovation', innovationObj);
   }
 
-  public get(id: string, config?: any): Observable<Innovation> {
-    return this._http.get('/innovation/' + id, {params: config});
+  public get(id: string, config?: Config): Observable<Innovation> {
+    return this._http.get<Innovation>('/innovation/' + id, {params: config});
   }
 
   public getAll(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {

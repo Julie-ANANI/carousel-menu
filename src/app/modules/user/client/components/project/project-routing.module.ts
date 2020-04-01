@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { InnovationResolver } from '../../../../../resolvers/innovation.resolver';
-
 import { ProjectComponent } from './project.component';
+
+import { AuthGuard } from '../../../../../guards/auth-guard.service';
 
 const projectRoutes: Routes = [
   {
     path: '',
     component: ProjectComponent,
-    resolve: { innovation : InnovationResolver },
-    runGuardsAndResolvers: 'always',
+    canActivateChild: [AuthGuard],
     children: [
       { path: 'exploration', pathMatch: 'full' },
       { path: 'synthesis', pathMatch: 'full' },
+      { path: 'settings', pathMatch: 'full' },
       {
         path: 'setup',
+        canActivateChild: [AuthGuard],
         children: [
           { path: 'survey', pathMatch: 'full' },
           { path: 'pitch', pathMatch: 'full' },
@@ -24,11 +25,7 @@ const projectRoutes: Routes = [
           { path: '', redirectTo: 'pitch', pathMatch: 'full' }
         ]
       },
-      {
-        path: '',
-        redirectTo: 'setup',
-        pathMatch: 'full'
-      }
+      { path: '', redirectTo: 'settings', pathMatch: 'full' }
     ]
   }
 ];
@@ -37,8 +34,6 @@ const projectRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(projectRoutes)
-  ],
-  providers: [
   ],
   exports: [
     RouterModule
