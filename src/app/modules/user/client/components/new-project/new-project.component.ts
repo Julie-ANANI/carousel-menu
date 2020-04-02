@@ -7,7 +7,7 @@ import { Mission } from '../../../../../models/mission';
 import { TranslateService } from '@ngx-translate/core';
 import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { CommonService } from '../../../../../services/common/common.service';
-import { ClientProjectService } from '../../../../../services/common/client-project.service';
+import { ClientProjectService } from '../../../../../services/client-project/client-project.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
@@ -102,7 +102,7 @@ export class NewProjectComponent implements OnInit {
    */
   private _clientRoadmap() {
     this._clientProject.roadmapDates[this._currentStep] = {
-      name: this._currentStep === (this._fields.length - 1) ? 'CREATE' : 'STEP_' + (this._currentStep + 1),
+      name: this._currentStep === (this._fields.length - 1) ? 'Create' : 'Step ' + (this._currentStep + 1),
       code: 'NEW_PROJECT',
       date: new Date()
     };
@@ -116,8 +116,8 @@ export class NewProjectComponent implements OnInit {
   public onDateChanged(event: IMyDateModel) {
     if (event && event.singleDate && event.singleDate.jsDate) {
       this._mission.milestoneDates[0] = {
-        name: 'RDO',
-        code: 'NEW_PROJECT',
+        name: this._currentLang === 'en' ? 'Restitution Date' : 'Date de restitution',
+        code: 'RDO',
         dueDate: event.singleDate.jsDate.toString()
       };
     }
