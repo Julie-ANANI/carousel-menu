@@ -310,10 +310,18 @@ export class InnovationFrontService {
     return this._calculatedValues;
   }
 
+  /***
+   * set the innovation value using this function.
+   * @param value
+   */
   public setInnovation(value: Innovation) {
     this._innovationObj.next(value);
   }
 
+  /***
+   * use this to listen the value in the components that
+   * we set.
+   */
   public innovation(): BehaviorSubject<Innovation> {
     return this._innovationObj;
   }
