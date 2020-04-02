@@ -2,7 +2,6 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { TranslateService } from '@ngx-translate/core';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
@@ -15,6 +14,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front';
 import { ClientProject } from '../../../../../models/client-project';
 import { Mission } from '../../../../../models/mission';
+import { ClientProjectFrontService } from '../../../../../services/client-project/client-project-front.service';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 
 @Component({
   selector: 'project',
@@ -43,8 +44,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _isLoading = true;
 
-  private _sidebarValue: SidebarInterface = {};
-
   private _currentPage: string;
 
   private _saveChanges = false;
@@ -57,8 +56,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _router: Router,
               private _spinnerService: SpinnerService,
+              private _clientProjectFrontService: ClientProjectFrontService,
+              private _missionFrontService: MissionFrontService,
               private _translateService: TranslateService,
-              private innovationFrontService: InnovationFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._setSpinner(true);
@@ -75,8 +76,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       this._saveChanges = !!response;
+    });
+
+    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._innovation = innovation;
+    });
+
+    this._clientProjectFrontService.clientProject().pipe(takeUntil(this._ngUnsubscribe)).subscribe((clientProject) => {
+      this._clientProject = clientProject;
+    });
+
+    this._missionFrontService.mission().pipe(takeUntil(this._ngUnsubscribe)).subscribe((mission) => {
+      this._mission = mission;
     });
 
   }
@@ -100,22 +113,23 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * we are geting the innovation from the api, and assigning the clientProject and mission
-   * attribute.
+   * we are getting the innovation from the api, and passing the clientProject and mission
+   * to the respective service.
    * @param projectId
    * @private
    */
   private _getInnovation(projectId: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
-        this._innovation = innovation;
+
+        this._innovationFrontService.setInnovation(innovation);
 
         if (this._innovation.clientProject) {
-          this._clientProject = <ClientProject>this._innovation.clientProject;
+          this._clientProjectFrontService.setClientProject(<ClientProject>this._innovation.clientProject);
         }
 
         if (this._innovation.mission) {
-          this._mission = <Mission>this._innovation.mission;
+          this._missionFrontService.setMission(<Mission>this._innovation.mission);
         }
 
         this._initPageTitle(this._clientProject.name || this._innovation.name);
@@ -161,20 +175,35 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   }
 
+  /***
+   * this will return the icon base don the primary objective.
+   * @param objective
+   */
+  public iconClass(objective: string): string {
+    switch (objective) {
 
-  editCollaborator(event: Event) {
-    event.preventDefault();
+      case 'Detecting needs / trends':
+        return 'fas fa-compass';
 
-    this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SIDEBAR.TITLE.COLLABORATOR'
-    };
+      case 'Validating market needs':
+        return 'fas fa-globe';
 
-  }
+      case 'Sourcing innovative solutions / partners':
+        return 'fas fa-book-open';
 
+      case 'Validating the interest of my solution':
+        return 'fas fa-lightbulb';
 
-  addCollaborators (event: any): void {
-    this._innovation.collaborators = event;
+      case 'Discovering new applications / markets':
+        return 'fas fa-map-signs';
+
+      case 'Targeting the most receptive application / market':
+        return 'fas fa-crosshairs';
+
+      case 'Optimizing my value proposition':
+        return 'fas fa-sync-alt';
+
+    }
   }
 
   get clientProject(): ClientProject {
@@ -203,14 +232,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get innovation(): Innovation {
     return this._innovation;
-  }
-
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
-  }
-
-  set sidebarValue(value: SidebarInterface) {
-    this._sidebarValue = value;
   }
 
   get currentPage(): string {
