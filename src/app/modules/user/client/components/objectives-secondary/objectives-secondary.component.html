@@ -44,6 +44,7 @@
           (change)="emitChanges()"
           (keypress)="emitChanges()"
           [(ngModel)]="objectiveComment"
+          [disabled]="!isEnabledComment"
           class="form-input is-shadowed"
           id="textarea-comment"
           rows="3">

@@ -80,7 +80,8 @@ const appRoutes: Routes = [
 const config: ExtraOptions = {
   initialNavigation: 'enabled',
   scrollPositionRestoration: 'top',
-  onSameUrlNavigation: 'reload'
+  onSameUrlNavigation: 'reload',
+  anchorScrolling: 'enabled'
 };
 
 @NgModule({

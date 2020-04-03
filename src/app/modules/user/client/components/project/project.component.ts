@@ -12,10 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front';
-import { ClientProject } from '../../../../../models/client-project';
 import { Mission } from '../../../../../models/mission';
-import { ClientProjectFrontService } from '../../../../../services/client-project/client-project-front.service';
-import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 
 @Component({
   selector: 'project',
@@ -26,8 +23,6 @@ import { MissionFrontService } from '../../../../../services/mission/mission-fro
 export class ProjectComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
-
-  private _clientProject: ClientProject = <ClientProject>{};
 
   private _mission: Mission = <Mission>{};
 
@@ -56,8 +51,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _router: Router,
               private _spinnerService: SpinnerService,
-              private _clientProjectFrontService: ClientProjectFrontService,
-              private _missionFrontService: MissionFrontService,
               private _translateService: TranslateService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
@@ -82,14 +75,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
-    });
-
-    this._clientProjectFrontService.clientProject().pipe(takeUntil(this._ngUnsubscribe)).subscribe((clientProject) => {
-      this._clientProject = clientProject;
-    });
-
-    this._missionFrontService.mission().pipe(takeUntil(this._ngUnsubscribe)).subscribe((mission) => {
-      this._mission = mission;
+      if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+        this._mission = <Mission>this._innovation.mission;
+      }
     });
 
   }
@@ -105,34 +93,28 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   /***
    * initialize the title of the page.
-   * @param title
    * @private
    */
-  private _initPageTitle(title = 'COMMON.PAGE_TITLE.PROJECT') {
-    this._translateTitleService.setTitle(title);
+  private _initPageTitle() {
+    if (this._innovation && this._innovation.name) {
+      this._translateTitleService.setTitle(this._innovation.name + ' | '
+        + (this._currentPage.slice(0,1).toUpperCase() + this._currentPage.slice(1)));
+    } else {
+      this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECT');
+    }
   }
 
   /***
-   * we are getting the innovation from the api, and passing the clientProject and mission
-   * to the respective service.
+   * we are getting the innovation from the api.
    * @param projectId
    * @private
    */
   private _getInnovation(projectId: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
-
         this._innovationFrontService.setInnovation(innovation);
-
-        if (this._innovation.clientProject) {
-          this._clientProjectFrontService.setClientProject(<ClientProject>this._innovation.clientProject);
-        }
-
-        if (this._innovation.mission) {
-          this._missionFrontService.setMission(<Mission>this._innovation.mission);
-        }
-
-        this._initPageTitle(this._clientProject.name || this._innovation.name);
+        this._innovation = innovation;
+        this._initPageTitle();
         this._setSpinner(false);
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
@@ -168,6 +150,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     if (!this._saveChanges) {
       this._currentPage = route;
+      this._initPageTitle();
       this._router.navigate([route], {relativeTo: this._activatedRoute});
     } else {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
@@ -204,10 +187,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
         return 'fas fa-sync-alt';
 
     }
-  }
-
-  get clientProject(): ClientProject {
-    return this._clientProject;
   }
 
   get mission(): Mission {

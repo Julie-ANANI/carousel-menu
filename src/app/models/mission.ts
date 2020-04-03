@@ -5,7 +5,7 @@ import { Multiling } from './multiling';
 export interface  Milestone {
  name: string;
  code: string;
- dueDate: string;
+ dueDate: Date;
  comment?: string;
 }
 

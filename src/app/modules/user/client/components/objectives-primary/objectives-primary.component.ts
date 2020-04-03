@@ -53,15 +53,15 @@ export class ObjectivesPrimaryComponent {
       picto: 'https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-compass.svg'
     },
     {
-      en: { label: 'Validating market needs', description: 'I have identified a/or several need(s) and I ' +
-          'wish to confirm its/their existence and criticality for the market.' },
-      fr: { label: 'Valider les besoins marché', description: 'J\'ai identifié un/des besoin(s) dont je ' +
+      en: { label: 'Validating market needs', description: 'I have identified a / or several need(s) and I ' +
+          'wish to confirm its / their existence and criticality for the market.' },
+      fr: { label: 'Valider les besoins marché', description: 'J\'ai identifié un / des besoin(s) dont je ' +
           'souhaite confirmer l\'existence et la criticité pour le marché.' },
       picto: 'https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-world.svg'
     },
     {
       en: { label: 'Sourcing innovative solutions / partners', description: 'I would like to find innovative ' +
-          'solutions and/or partners to solve a problem.' },
+          'solutions and / or partners to solve a problem.' },
       fr: { label: 'Sourcer des solutions innovantes / partenaires', description: 'Je souhaite trouver des solutions ' +
           'innovantes et/ou des partenaires pour résoudre une problématique.' },
       picto: 'https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-book.svg'

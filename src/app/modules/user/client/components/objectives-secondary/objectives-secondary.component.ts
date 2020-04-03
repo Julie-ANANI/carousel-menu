@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
  * 1. isEnabledOptions: makes disabled the selection of the different options checkbox.
  * 2. objectiveComment: the comment value you write in the provided box.
  * 3. objectives: pass the value in the form of [{ en: '', fr: '' }].
+ * 4. isEnabledComment: makes this value false to disable comment section.
  *
  * Output:
  * 1. objectivesChange: emits the value in the form of [{ en: '', fr: '' }].
@@ -19,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
  * Implementation:
  * <objectives-secondary
  *  [isEnabledOptions]=false
+ *  [isisEnabledComment]=false
  *  [(objectiveComment)]=comment
  *  [(objectives)]=objectives>
  * </objectives-secondary>
@@ -40,6 +42,8 @@ interface Objective {
 export class ObjectivesSecondaryComponent {
 
   @Input() isEnabledOptions = true;
+
+  @Input() isEnabledComment = true;
 
   @Input() set objectiveComment(value: string) {
     this._objectiveComment = value;
@@ -67,7 +71,7 @@ export class ObjectivesSecondaryComponent {
           '(techniques, d\'usages,...) que les professionnels pourront classer selon leur criticité.' }
     },
     {
-      en: { label: 'Ranking strengths / features', description: 'I list functionalities and/or strong points that ' +
+      en: { label: 'Ranking strengths / features', description: 'I list functionalities and / or strong points that ' +
           'professionals will be able to classify according to their importance.' },
       fr: { label: 'Classer des points forts / fonctionnalités', description: 'Je liste des fonctionnalités ' +
           'et/ou points forts que les professionnels pourront classer selon leur importance.' }
@@ -84,7 +88,7 @@ export class ObjectivesSecondaryComponent {
       en: { label: 'Knowing the competitive environment ', description: 'I wish to understand how professionals ' +
           'position my project in the competitive environment (actors / solutions).' },
       fr: { label: 'Connaître l\'environnement concurrentiel ', description: 'Je souhaite comprendre comment les ' +
-          'professionnels positionnent mon projet dans l\'environnement concurrentiel (acteurs/solutions).' }
+          'professionnels positionnent mon projet dans l\'environnement concurrentiel (acteurs / solutions).' }
     },
     {
       en: { label: 'Sorting the segments', description: 'I would like to analyse the results by segment ' +
@@ -106,7 +110,7 @@ export class ObjectivesSecondaryComponent {
     },
     {
       en: { label: 'Questioning my collaborators', description: 'I would also like to share my project internally ' +
-          'to get me colleagues\' opinion.' },
+          'to get me colleagues opinion.' },
       fr: { label: 'Interroger mes collaborateurs', description: 'Je souhaite aussi diffuser mon projet en interne ' +
           'pour connaître l\'avis de mes collaborateurs.' }
     }

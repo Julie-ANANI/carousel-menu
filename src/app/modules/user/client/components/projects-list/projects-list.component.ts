@@ -129,7 +129,7 @@ export class ProjectsListComponent implements OnInit {
         break;
 
       default:
-        link.push('setup');
+        link.push('settings');
     }
 
     return link;

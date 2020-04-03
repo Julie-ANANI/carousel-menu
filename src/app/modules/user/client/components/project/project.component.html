@@ -7,9 +7,8 @@
 
         <!-- heading -->
         <h1 [hidden]="isLoading" class="title text-white m-bottom-10 animate-fade">
-          <ng-container *ngIf="clientProject.name; else inno">{{ clientProject.name }}</ng-container>
-          <ng-template #inno>{{ innovation.name }}</ng-template>
-          <ng-container *ngIf="!clientProject.name && !innovation.name">{{ 'COMMON.LABEL.PROJECT' | translate }}</ng-container>
+          <ng-container *ngIf="innovation.name; else project">{{ innovation.name }}</ng-container>
+          <ng-template #project>{{ 'COMMON.LABEL.PROJECT' | translate }}</ng-template>
         </h1>
         <!-- /heading -->
 
@@ -53,7 +52,7 @@
     <!-- settings -->
     <div *ngSwitchCase="'settings'" class="container grid-2xl fluid">
       <div class="column col-sm-12 col-11 col-mx-auto">
-        <div class="p-top-25">
+        <div class="p-top-50">
           <settings></settings>
         </div>
       </div>

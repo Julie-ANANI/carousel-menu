@@ -118,7 +118,7 @@ export class NewProjectComponent implements OnInit {
       this._mission.milestoneDates[0] = {
         name: this._currentLang === 'en' ? 'Restitution Date' : 'Date de restitution',
         code: 'RDO',
-        dueDate: event.singleDate.jsDate.toString()
+        dueDate: event.singleDate.jsDate
       };
     }
   }

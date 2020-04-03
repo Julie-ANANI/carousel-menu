@@ -1,3 +1,156 @@
-<p>
-  settings works!
-</p>
+<div id="settings">
+  <section class="d-flex flex-wrap settings-wrapper">
+
+    <!-- menu wrapper -->
+    <div class="menu-wrapper">
+      <ul>
+        <ng-container *ngFor="let tab of sections">
+          <li
+            *ngIf="tab.isVisible"
+            (click)="navigateToSection(tab.name)"
+            [ngClass]="{ 'active': activeView === tab.name }">
+            {{ 'CLIENT_PROJECT_SETTINGS.' + tab.name | translate }}
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <!-- /menu wrapper -->
+
+    <!-- content wrapper -->
+    <div class="content-wrapper">
+      <div *ngFor="let section of sections; let i = index;">
+        <div *ngIf="section.isVisible" class="section-wrapper">
+          <div [ngSwitch]="section.name">
+
+            <!-- heading -->
+            <h2 class="title is-4 text-bold">{{ 'CLIENT_PROJECT_SETTINGS.HEADING.' + section.name | translate }}</h2>
+            <!-- /heading -->
+
+            <!-- TITLE -->
+            <div *ngSwitchCase="'TITLE'">
+              <div class="d-flex align-center">
+
+                <span class="text-md m-right-15">{{ innovation.name }}</span>
+
+                <span *ngIf="section.isEditable" class="text-link">
+                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
+                </span>
+
+              </div>
+            </div>
+            <!-- /TITLE -->
+
+            <!-- PRINCIPAL_OBJECTIVE -->
+            <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'">
+              <div class="d-flex align-center">
+
+                <span class="text-md m-right-15">{{ mission.objective.principal[currentLang] }}</span>
+
+                <span *ngIf="section.isEditable" class="text-link">
+                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
+                </span>
+
+              </div>
+            </div>
+            <!-- /PRINCIPAL_OBJECTIVE -->
+
+            <!-- SECONDARY_OBJECTIVE -->
+            <div *ngSwitchCase="'SECONDARY_OBJECTIVE'">
+              <div [ngStyle]="{'max-width': '755px'}">
+                <objectives-secondary
+                  [objectives]="mission.objective.secondary"
+                  [objectiveComment]="mission.objective.comment"
+                  [isEnabledOptions]="section.isEditable"
+                  [isEnabledComment]="section.isEditable">
+                </objectives-secondary>
+              </div>
+            </div>
+            <!-- /SECONDARY_OBJECTIVE -->
+
+            <!-- ROADMAP -->
+            <div *ngSwitchCase="'ROADMAP'">
+              <div class="d-flex align-center">
+
+                <ul class="roadmap-wrapper">
+                  <ng-container *ngFor="let milestone of mission.milestoneDates">
+                    <!--<li *ngIf="milestone.code !== 'RDO'"> Todo uncomment
+                      {{ milestone.name }} : {{ milestone.dueDate | date:dateFormat }}
+                    </li>-->
+                    <li>
+                      {{ milestone.name }} : {{ milestone.dueDate | date:dateFormat }}
+                    </li>
+                  </ng-container>
+                </ul>
+
+                <span *ngIf="section.isEditable" class="text-link">
+                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
+                </span>
+
+              </div>
+            </div>
+            <!-- /ROADMAP -->
+
+            <!-- RESTITUTION_DATE -->
+            <div *ngSwitchCase="'RESTITUTION_DATE'">
+              <div class="d-flex align-center">
+
+                <ng-container *ngFor="let milestone of mission.milestoneDates">
+                  <ng-container *ngIf="milestone.code === 'RDO'">
+                    <span class="text-md m-right-15">{{ milestone.dueDate | date:dateFormat }}</span>
+                  </ng-container>
+                </ng-container>
+
+                <span *ngIf="section.isEditable" class="text-link">
+                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
+                </span>
+
+              </div>
+            </div>
+            <!-- /RESTITUTION_DATE -->
+
+            <!-- OWNER -->
+            <div *ngSwitchCase="'OWNER'">
+
+              <p class="text-md text-bold">{{ innovation.owner.name }}</p>
+
+              <div class="d-flex align-center">
+
+                <span class="text-md m-right-15">
+                  <ng-container *ngIf="innovation.owner.company && innovation.owner.company.name">
+                    {{ innovation.owner.company.name }}
+                    &nbsp;•&nbsp;
+                  </ng-container>
+                  <ng-container *ngIf="innovation.owner.phone">
+                    {{ innovation.owner.phone }}
+                    &nbsp;•&nbsp;
+                  </ng-container>
+                  {{ innovation.owner.email }}
+                </span>
+
+                <span *ngIf="section.isEditable" class="text-link">
+                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
+                </span>
+
+              </div>
+
+            </div>
+            <!-- /OWNER -->
+
+            <!-- COLLABORATORS -->
+            <div *ngSwitchCase="'COLLABORATORS'">
+
+            </div>
+            <!-- /COLLABORATORS -->
+
+            <!-- divider -->
+            <div *ngIf="i !== sections.length - 1" class="divider"></div>
+            <!-- /divider -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /content wrapper -->
+
+  </section>
+</div>

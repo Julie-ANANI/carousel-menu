@@ -6,7 +6,7 @@ import { Media } from './media';
 import { Tag } from './tag';
 import { User } from './user.model';
 import { Mission } from './mission';
-import {ClientProject} from './client-project';
+import { ClientProject } from './client-project';
 
 export interface InnovationMetadataValues {
   preparation?: number;

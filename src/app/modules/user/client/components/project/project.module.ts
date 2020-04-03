@@ -25,6 +25,7 @@ import { SharedMarketReportModule } from '../../../../shared/components/shared-m
 import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 import { SharedTextZoneModule } from '../../../../shared/components/shared-text-zone/shared-text-zone.module';
+import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { SharedTextZoneModule } from '../../../../shared/components/shared-text-
     ModalModule,
     FormsModule,
     SharedTextZoneModule,
+    ObjectivesSecondaryModule
   ],
   declarations: [
     ProjectComponent,
