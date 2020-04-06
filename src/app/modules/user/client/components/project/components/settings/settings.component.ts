@@ -2,12 +2,18 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../../models/innovation';
 import { Mission } from '../../../../../../../models/mission';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../../../../../../services/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ClientProject } from '../../../../../../../models/client-project';
 import { Router } from '@angular/router';
+import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front';
+import { MissionService } from '../../../../../../../services/mission/mission.service';
+import {CalAnimation, IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
 
 interface Section {
   name: string;
@@ -36,7 +42,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   activeView = 'TITLE';
 
-  dateFormat = this._currentLang === 'en' ? 'y/MM/dd' : 'dd-MM-y';
+  private _dateFormat = this._currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
 
   private _sections: Array<Section> = [
     { name: 'TITLE', isVisible: false, isEditable: false, level: 'INNOVATION' },
@@ -52,11 +58,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
     { name: 'AUTHORISATION', isVisible: false, isEditable: false, level: 'MISSION' },
   ];
 
+  private _showModal = false;
+
+  activeModalSection: Section = <Section>{};
+
+  valueToUpdate: any = '';
+
+  datePickerOptions: IAngularMyDpOptions = <IAngularMyDpOptions>{};
+
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private _authService: AuthService,
               private _translateService: TranslateService,
               private _router: Router,
+              private _innovationService: InnovationService,
+              private _missionService: MissionService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
 
   ngOnInit() {
@@ -73,7 +90,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }
 
       this._initSections();
-      console.log(this._sections);
     });
 
   }
@@ -132,7 +148,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'LANGUAGE':
-            section.isVisible = !!(this._isAdmin) || !!(this._innovation.innovationCards && this._innovation.innovationCards.length > 0);
+            section.isVisible = !!(this._innovation.innovationCards && this._innovation.innovationCards.length > 0);
             section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED') || !!(this._isAdmin);
             break;
 
@@ -149,6 +165,211 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public navigateToSection(name: string) {
     this.activeView = name;
     this._router.navigate([`/user/projects/${this._innovation._id}/settings`], { fragment: name.toLowerCase() });
+  }
+
+  /***
+   * when the user clicks on the Edit button we open the modal and also check
+   * the isEditable property of that section.
+   * @param event
+   * @param section
+   */
+  public openModal(event: Event, section: Section) {
+    event.preventDefault();
+
+    if (section.isEditable) {
+      this.valueToUpdate = '';
+      this.activeModalSection = section;
+      this._initActiveModalValue();
+      this._showModal = true;
+    }
+
+  }
+
+  /***
+   * based on the section Edit button click we initialize
+   * the valueToUpdate with the default value.
+   * @private
+   */
+  private _initActiveModalValue() {
+    switch (this.activeModalSection.name) {
+
+      case 'TITLE':
+        this.valueToUpdate = this._innovation.name;
+        break;
+
+      case 'PRINCIPAL_OBJECTIVE':
+        this.valueToUpdate = this._mission.objective.principal;
+        break;
+
+    }
+  }
+
+  /***
+   * when the user clicks on the cancel button in the modal.
+   */
+  public closeModal() {
+    this._showModal = false;
+    this.activeModalSection = <Section>{};
+  }
+
+  public onClickSaveModal(event: Event) {
+    event.preventDefault();
+
+    switch (this.activeModalSection.level) {
+
+      case 'INNOVATION':
+        this._updateInnovation();
+        break;
+
+      case 'MISSION':
+        this._updateMission();
+        break;
+
+    }
+
+  }
+
+  /***
+   * this updates the innovation object, and based on the activeModalSection it assign the value
+   * that user wants to update and call the service.
+   * @private
+   */
+  private _updateInnovation() {
+
+    switch (this.activeModalSection.name) {
+
+      case 'TITLE':
+        this._innovation.name = this.valueToUpdate;
+        break;
+
+    }
+
+    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
+      this._innovationFrontService.setInnovation(innovation);
+      this.closeModal();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+    });
+
+  }
+
+  /***
+   * this updates the mission object, and based on the activeModalSection it assign the value
+   * that user wants to update nad call the service.
+   * @private
+   */
+  private _updateMission() {
+
+    switch (this.activeModalSection.name) {
+
+      case 'PRINCIPAL_OBJECTIVE':
+        this._mission.objective.principal = this.valueToUpdate;
+        if (this._mission.objective.principal['en'] === 'Other') {
+          this._mission.objective.secondary = [];
+        }
+        break;
+
+    }
+
+    this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
+      this._innovation.mission = mission;
+      this._innovationFrontService.setInnovation(this._innovation);
+      this.closeModal();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+    })
+
+  }
+
+  /***
+   * when the user changes the secondary objectives.
+   * @param objectives
+   * @param section
+   */
+  public onChangeSecondaryObjective(objectives: Array<any>, section: Section) {
+    if (this.enableSecondaryObjectives(section)) {
+      this._mission.objective.secondary = objectives;
+      this._updateMission();
+    }
+  }
+
+  /***
+   * when the user changes the comment of secondary objectives.
+   * @param comment
+   * @param section
+   */
+  public onChangeComment(comment: string, section: Section) {
+    if (section.isEditable) {
+      this._mission.objective.comment = comment;
+      this._updateMission();
+    }
+  }
+
+  /***
+   * when the user clicks on the Edit button to change the Restitution date.
+   */
+  public editRestitutionDate() {
+    const index = this._mission.milestoneDates.findIndex((milestone) => milestone.code === 'RDO');
+    if (index !== -1) {
+      const date = new Date(this._mission.milestoneDates[index].dueDate).toISOString();
+      this.datePickerOptions = {
+        dateRange: false,
+        dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
+        calendarAnimation: { in: CalAnimation.Fade, out: CalAnimation.Fade},
+        disableUntil: {
+          year: Number(date.slice(0, 4)),
+          month: Number(date.slice(5, 7)),
+          day: Number(date.slice(8, 10))
+        }
+      };
+    }
+  }
+
+  /***
+   * when the user selects the restitution date from the date-picker.
+   * @param event
+   */
+  public onChangeRestitutionDate(event: IMyDateModel) {
+    const index = this._mission.milestoneDates.findIndex((milestone) => milestone.code === 'RDO');
+    if (event && event.singleDate && event.singleDate.jsDate && index !== -1) {
+
+      this._mission.milestoneDates[index] = {
+        name: this._currentLang === 'en' ? 'Restitution Date' : 'Date de restitution',
+        code: 'RDO',
+        dueDate: event.singleDate.jsDate
+      };
+
+      this._updateMission();
+
+    }
+  }
+
+  /***
+   * if the value of the mission principal objective is 'Other' then
+   * we disabled the mission secondary objectives.
+   */
+  public enableSecondaryObjectives(section: Section): boolean {
+    return this._mission.objective && this._mission.objective.principal
+      && this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
+  }
+
+  /***
+   * based on the activeModalSection value, it checks for
+   * save button disable condition.
+   */
+  get isSaveDisabled(): boolean {
+    switch (this.activeModalSection.name) {
+
+      case 'TITLE':
+        return !this.valueToUpdate;
+
+    }
+
+    return false;
   }
 
   get mission(): Mission {
@@ -173,6 +394,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get currentLang(): string {
     return this._currentLang;
+  }
+
+  get dateFormat(): string {
+    return this._dateFormat;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
   }
 
   ngOnDestroy(): void {

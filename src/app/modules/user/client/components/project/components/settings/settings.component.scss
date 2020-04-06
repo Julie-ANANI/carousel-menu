@@ -50,7 +50,7 @@
           color: $text-primary-dark-color;
           font-weight: $font-weight-bold;
 
-          .fas.fa-pen {
+          .fas.fa-pen, .fas.fa-plus-circle {
             color: $text-primary-color;
             font-size: 17px;
             margin-right: 8px;
@@ -64,6 +64,44 @@
 
           li:first-child {
             margin-top: 0;
+          }
+
+        }
+
+        .collaborator-wrapper, .lang-wrapper {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          margin-bottom: 10px;
+
+          .button {
+            min-width: unset;
+            padding-left: 15px;
+            padding-right: 15px;
+            visibility: hidden;
+          }
+
+          &:hover {
+
+            .button {
+              visibility: visible;
+            }
+
+          }
+
+        }
+
+        .authorise-wrapper {
+
+          .form-checkbox {
+            padding-left: 40px;
+            padding-right: 8px;
+
+            .form-icon {
+              width: 20px;
+              height: 20px;
+            }
+
           }
 
         }

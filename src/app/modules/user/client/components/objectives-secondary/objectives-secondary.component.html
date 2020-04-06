@@ -41,8 +41,7 @@
     <div class="form-group animate-slide slide-down is-3">
       <label>
         <textarea
-          (change)="emitChanges()"
-          (keypress)="emitChanges()"
+          (change)="emitCommentChange()"
           [(ngModel)]="objectiveComment"
           [disabled]="!isEnabledComment"
           class="form-input is-shadowed"

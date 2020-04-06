@@ -127,7 +127,9 @@ export class ObjectivesSecondaryComponent {
       this._objectives = this._objectives.filter((value) => value[this._currentLang] !== objective[this._currentLang]['label']);
     }
 
-    this.emitChanges();
+    if (this.isEnabledOptions) {
+      this.objectivesChange.emit(this._objectives);
+    }
 
   }
 
@@ -135,11 +137,8 @@ export class ObjectivesSecondaryComponent {
     return this._objectives.some((value) => value[this._currentLang] === objective[this._currentLang]['label']);
   }
 
-  public emitChanges() {
+  public emitCommentChange() {
     this.objectiveCommentChange.emit(this._objectiveComment);
-    if (this.isEnabledOptions) {
-      this.objectivesChange.emit(this._objectives);
-    }
   }
 
   get objectives(): Array<Multiling> {

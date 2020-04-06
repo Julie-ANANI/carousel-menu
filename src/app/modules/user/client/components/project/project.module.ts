@@ -14,7 +14,6 @@ import { SettingsComponent } from './components/settings/settings.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
-import { SidebarCollaboratorModule } from '../../../../sidebars/components/collaborator/sidebar-collaborator.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { SidebarInnovationPreviewModule } from '../../../../sidebars/components/innovation-preview/sidebar-innovation-preview.module';
@@ -26,6 +25,9 @@ import { MessageTemplate1Module } from '../../../../utility-components/messages/
 import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
 import { SharedTextZoneModule } from '../../../../shared/components/shared-text-zone/shared-text-zone.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
+import { ModalEmptyModule } from '../../../../utility-components/modals/modal-empty/modal-empty.module';
+import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 
 @NgModule({
   imports: [
@@ -34,7 +36,6 @@ import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-se
     TranslateModule.forChild(),
     PipeModule,
     SidebarModule,
-    SidebarCollaboratorModule,
     SharedProjectSettingsModule,
     SharedProjectEditCardsModule,
     SidebarInnovationPreviewModule,
@@ -46,7 +47,10 @@ import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-se
     ModalModule,
     FormsModule,
     SharedTextZoneModule,
-    ObjectivesSecondaryModule
+    ObjectivesSecondaryModule,
+    ModalEmptyModule,
+    ObjectivesPrimaryModule,
+    AngularMyDatePickerModule
   ],
   declarations: [
     ProjectComponent,

@@ -36,6 +36,16 @@ export const CLIENT_PROJECT_SETTINGS = {
     'AUTHORISATION': 'Permission to distribute'
   },
 
-  'NOT_DEFINED': 'Not defined...'
+  'NOT_ASSIGNED': 'Not Assigned.',
+
+  'PROJECT_IN': 'Project in ',
+
+  'AUTHORISATION_TEXT': 'In order to optimize feedbacks, I authorize UMI to make my project visible anonymously on its networks:',
+
+  'SOCIAL': 'Social networks',
+
+  'UMI': 'Website',
+
+  'COMMUNITY': 'UMI Community'
 
 };

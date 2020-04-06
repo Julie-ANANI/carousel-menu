@@ -222,7 +222,7 @@ export const COMMON = {
     'CREATE': 'Créer',
     'VIEW_LIKE_CLIENT': 'Afficher comme client',
     'BACK_TO_CAMPAIGNS': 'Retour aux campagnes',
-    'COLLABORATOR': 'Gestion des collaborateurs',
+    'COLLABORATOR': 'Ajouter un collaborateur',
     'UPDATE': 'Mise à jour',
     'IMPORT_PROJECT': 'Importer un projet',
     'IMPORT_PROS': 'Importer une liste de pros',
@@ -232,7 +232,10 @@ export const COMMON = {
     'IMPORT_QUESTIONNAIRE': 'Importer un questionnaire',
     'EXPORT_QUESTIONNAIRE': 'Exporter tous les questionnaires',
     'GENERATE_VIDEO': 'Générer une vidéo',
-    'GENERATE_PDF': 'Générer PDF'
+    'GENERATE_PDF': 'Générer PDF',
+    'REINVITE': 'Renvoyer l\'invitation',
+    'ADD_LANG_ENGLISH': 'Ajouter l\'anglais',
+    'ADD_LANG_FRENCH': 'Ajouter le français',
   },
 
   'PROJECT': {

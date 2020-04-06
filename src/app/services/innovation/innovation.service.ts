@@ -63,8 +63,9 @@ export class InnovationService {
   /*public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }*/
-  public save(innovationId: string, innovationObj: Innovation): Observable<any> {
-    return this._http.put('/innovation/' + innovationId, innovationObj);
+
+  public save(innovationId: string, innovationObj: Innovation): Observable<Innovation> {
+    return this._http.put<Innovation>('/innovation/' + innovationId, innovationObj);
   }
 
   public saveInnovationCardComment(innovationId: string, innovationCardId: string, commentObj: InnovCardComment): Observable<any> {

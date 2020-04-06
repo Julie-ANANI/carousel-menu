@@ -99,7 +99,7 @@ export class ProjectsListComponent implements OnInit {
    * @private
    */
   private _getProjects() {
-    this._userService.getMyInnovations(this._config).pipe(first()).subscribe((response ) => {
+    this._userService.getMyInnovations(this._config).pipe(first()).subscribe((response) => {
       this._setSpinner(false);
       this._innovations = response.result;
       this._total = Math.max(response._metadata.totalCount, response.result.length);
@@ -174,6 +174,7 @@ export class ProjectsListComponent implements OnInit {
 
     this._innovationService.remove(this._innovationId).pipe(first()).subscribe((response: any) => {
       this._translateNotificationService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
+      this._setSpinner(true);
       this._getProjects();
       this.closeModal(event);
     }, (err: any) => {

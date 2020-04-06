@@ -32,7 +32,7 @@
 
                 <span class="text-md m-right-15">{{ innovation.name }}</span>
 
-                <span *ngIf="section.isEditable" class="text-link">
+                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
 
@@ -46,7 +46,7 @@
 
                 <span class="text-md m-right-15">{{ mission.objective.principal[currentLang] }}</span>
 
-                <span *ngIf="section.isEditable" class="text-link">
+                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
 
@@ -58,10 +58,12 @@
             <div *ngSwitchCase="'SECONDARY_OBJECTIVE'">
               <div [ngStyle]="{'max-width': '755px'}">
                 <objectives-secondary
-                  [objectives]="mission.objective.secondary"
+                  (objectiveCommentChange)="onChangeComment($event, section)"
+                  (objectivesChange)="onChangeSecondaryObjective($event, section)"
+                  [isEnabledComment]="section.isEditable"
+                  [isEnabledOptions]="enableSecondaryObjectives(section)"
                   [objectiveComment]="mission.objective.comment"
-                  [isEnabledOptions]="section.isEditable"
-                  [isEnabledComment]="section.isEditable">
+                  [objectives]="mission.objective.secondary">
                 </objectives-secondary>
               </div>
             </div>
@@ -92,6 +94,7 @@
 
             <!-- RESTITUTION_DATE -->
             <div *ngSwitchCase="'RESTITUTION_DATE'">
+
               <div class="d-flex align-center">
 
                 <ng-container *ngFor="let milestone of mission.milestoneDates">
@@ -100,11 +103,26 @@
                   </ng-container>
                 </ng-container>
 
-                <span *ngIf="section.isEditable" class="text-link">
+                <span *ngIf="section.isEditable" (click)="editRestitutionDate(); dp.toggleCalendar();" class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
 
               </div>
+
+              <div [ngStyle]="{ 'height': '0', 'margin-left': 'unset' }" class="date-picker">
+                <label>
+                  <input
+                    #dp="angular-mydatepicker"
+                    (dateChanged)="onChangeRestitutionDate($event)"
+                    [locale]="currentLang"
+                    [options]="datePickerOptions"
+                    [readOnly]="true"
+                    [hidden]="true"
+                    angular-mydatepicker
+                    name="date-restitution">
+                </label>
+              </div>
+
             </div>
             <!-- /RESTITUTION_DATE -->
 
@@ -139,8 +157,166 @@
             <!-- COLLABORATORS -->
             <div *ngSwitchCase="'COLLABORATORS'">
 
+              <div *ngFor="let collaborator of innovation.collaborators" class="collaborator-wrapper">
+
+                <span class="m-right-40">{{ collaborator.email }}</span>
+
+                <span class="button is-xs is-outlined is-info m-right-15">
+                    {{ 'COMMON.BUTTON.REINVITE' | translate }}
+                </span>
+
+                <span class="button is-xs is-outlined is-danger">
+                    {{ 'COMMON.BUTTON.DELETE' | translate }}
+                </span>
+
+              </div>
+
+              <div *ngIf="section.isEditable" class="text-link m-top-15">
+                <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.COLLABORATOR' | translate }}
+              </div>
+
             </div>
             <!-- /COLLABORATORS -->
+
+            <!-- OPERATOR -->
+            <div *ngSwitchCase="'OPERATOR'">
+
+              <p *ngIf="innovation.operator" class="text-md text-bold">
+                <ng-container *ngIf="innovation.operator.name; else flName">{{ innovation.operator.name }}</ng-container>
+                <ng-template #flName>
+                  <ng-container *ngIf="innovation.operator.firstName">{{ innovation.owner.firstName }}</ng-container>
+                  <ng-container *ngIf="innovation.operator.firstName">{{ ' ' }}</ng-container>
+                  <ng-container *ngIf="innovation.operator.lastName">{{ innovation.owner.lastName }}</ng-container>
+                </ng-template>
+              </p>
+
+              <div class="d-flex align-center">
+
+                <span *ngIf="innovation.operator; else notAssigned" class="text-md m-right-15">
+                  <ng-container *ngIf="innovation.operator.phone">
+                    {{ innovation.operator.phone }}
+                    &nbsp;•&nbsp;
+                  </ng-container>
+                  {{ innovation.operator.email }}
+                </span>
+
+                <ng-template #notAssigned>
+                  <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
+                </ng-template>
+
+                <span *ngIf="section.isEditable" class="text-link">
+                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
+                </span>
+
+              </div>
+
+            </div>
+            <!-- /OPERATOR -->
+
+            <!-- COMMERCIAL -->
+            <div *ngSwitchCase="'COMMERCIAL'">
+
+              <p *ngIf="clientProject.commercial" class="text-md text-bold">
+                <ng-container *ngIf="clientProject.commercial.name; else flName">{{ clientProject.commercial.name }}</ng-container>
+                <ng-template #flName>
+                  <ng-container *ngIf="clientProject.commercial.firstName">{{ clientProject.commercial.firstName }}</ng-container>
+                  <ng-container *ngIf="clientProject.commercial.firstName">{{ ' ' }}</ng-container>
+                  <ng-container *ngIf="clientProject.commercial.lastName">{{ clientProject.commercial.lastName }}</ng-container>
+                </ng-template>
+              </p>
+
+              <div class="d-flex align-center">
+
+                <span *ngIf="clientProject.commercial; else notAssigned" class="text-md m-right-15">
+                  <ng-container *ngIf="clientProject.commercial.phone">
+                    {{ clientProject.commercial.phone }}
+                    &nbsp;•&nbsp;
+                  </ng-container>
+                  {{ clientProject.commercial.email }}
+                </span>
+
+                <ng-template #notAssigned>
+                  <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
+                </ng-template>
+
+                <span *ngIf="section.isEditable" class="text-link">
+                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
+                </span>
+
+              </div>
+
+            </div>
+            <!-- /COMMERCIAL -->
+
+            <!-- LANGUAGE -->
+            <div *ngSwitchCase="'LANGUAGE'">
+
+              <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper">
+
+                <span class="m-right-40">
+                  {{ 'CLIENT_PROJECT_SETTINGS.PROJECT_IN' | translate }} {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
+                </span>
+
+                <span *ngIf="innovation.innovationCards.length > 1" class="button is-xs is-outlined is-danger">
+                    {{ 'COMMON.BUTTON.DELETE' | translate }}
+                </span>
+
+              </div>
+
+              <div *ngIf="section.isEditable" class="text-link m-top-15">
+                <ng-container *ngFor="let card of innovation.innovationCards">
+                  <ng-container *ngIf="card.lang ==='en'; else english">
+                    <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
+                  </ng-container>
+                  <ng-template #english>
+                    <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
+                  </ng-template>
+                </ng-container>
+              </div>
+
+            </div>
+            <!-- /LANGUAGE -->
+
+            <!-- AUTHORISATION -->
+            <div *ngSwitchCase="'AUTHORISATION'">
+
+              <p class="text-md m-bottom-25">{{ 'CLIENT_PROJECT_SETTINGS.AUTHORISATION_TEXT' | translate }}</p>
+
+              <div class="form-group authorise-wrapper">
+                <label class="form-checkbox">
+                  <input
+                    [disabled]="!section.isEditable"
+                    [checked]="mission.externalDiffusion.social"
+                    id="social"
+                    type="checkbox">
+                  <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.SOCIAL' | translate }}
+                </label>
+              </div>
+
+              <div class="form-group authorise-wrapper">
+                <label class="form-checkbox">
+                  <input
+                    [disabled]="!section.isEditable"
+                    [checked]="mission.externalDiffusion.umi"
+                    id="umi"
+                    type="checkbox">
+                  <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.UMI' | translate }}
+                </label>
+              </div>
+
+              <div class="form-group authorise-wrapper">
+                <label class="form-checkbox">
+                  <input
+                    [disabled]="!section.isEditable"
+                    [checked]="mission.externalDiffusion.community"
+                    id="community"
+                    type="checkbox">
+                  <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.COMMUNITY' | translate }}
+                </label>
+              </div>
+
+            </div>
+            <!-- /AUTHORISATION -->
 
             <!-- divider -->
             <div *ngIf="i !== sections.length - 1" class="divider"></div>
@@ -154,3 +330,67 @@
 
   </section>
 </div>
+
+
+<!-- modals -->
+<modal-empty
+  *ngIf="activeModalSection.name && showModal"
+  [(showModal)]="showModal"
+  [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? '963px' : '640px'">
+  <div [ngSwitch]="activeModalSection.name">
+
+    <!-- body -->
+    <section class="modal-body p-bottom-40">
+
+      <!-- heading -->
+      <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
+        {{ 'CLIENT_PROJECT_SETTINGS.HEADING.' + activeModalSection.name | translate }}
+      </h2>
+      <!-- /heading -->
+
+      <!-- TITLE -->
+      <div *ngSwitchCase="'TITLE'" class="mxw-400 m-left-auto m-right-auto">
+        <div class="form-group">
+          <label>
+            <input
+              [(ngModel)]="valueToUpdate"
+              class="form-input is-sm is-shadowed"
+              type="text">
+          </label>
+        </div>
+      </div>
+      <!-- /TITLE -->
+
+      <!-- PRINCIPAL_OBJECTIVE -->
+      <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'" class="p-top-10 p-bottom-10">
+        <objectives-primary [(objective)]="valueToUpdate"></objectives-primary>
+      </div>
+      <!-- /PRINCIPAL_OBJECTIVE -->
+
+    </section>
+    <!-- /body -->
+
+    <!-- footer -->
+    <footer class="modal-footer justify-center">
+
+      <button
+        (click)="closeModal()"
+        class="button modal-cancel"
+        id="btn-cancel">
+        {{ 'COMMON.BUTTON.CANCEL' | translate }}
+      </button>
+
+      <button
+        [disabled]="isSaveDisabled"
+        (click)="onClickSaveModal($event)"
+        class="button is-community"
+        id="btn-save">
+        {{ 'COMMON.BUTTON.SAVE' | translate }}
+      </button>
+
+    </footer>
+    <!-- /footer -->
+
+  </div>
+</modal-empty>
+<!-- /modals -->
