@@ -610,6 +610,11 @@
 
   }
 
+  &.is-xs {
+    padding: 5px 20px;
+    font-size: $font-size-xs;
+  }
+
   &.is-lg, &.is-xl {
     padding: $unit-4 20px;
     width: 100%;
