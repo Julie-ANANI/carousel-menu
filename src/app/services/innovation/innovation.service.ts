@@ -29,8 +29,8 @@ export class InnovationService {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
   }
 
-  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<any> {
-    return this._http.post('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
+  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {
+    return this._http.post<InnovCard>('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {

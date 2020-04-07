@@ -46,6 +46,11 @@ export const CLIENT_PROJECT_SETTINGS = {
 
   'UMI': 'Site web',
 
-  'COMMUNITY': 'Espace communauté'
+  'COMMUNITY': 'Espace communauté',
+
+  'MODAL_DELETE': {
+    'COLLABORATOR': 'Voulez-vous vraiment supprimer ce collaborateur ?',
+    'CARD': 'Voulez-vous vraiment supprimer le projet dans cette langue ?'
+  }
 
 };

@@ -46,6 +46,11 @@ export const CLIENT_PROJECT_SETTINGS = {
 
   'UMI': 'Website',
 
-  'COMMUNITY': 'UMI Community'
+  'COMMUNITY': 'UMI Community',
+
+  'MODAL_DELETE': {
+    'COLLABORATOR': 'Do you really want to delete this collaborator?',
+    'CARD': 'Do you really want to delete the project in this language?'
+  }
 
 };

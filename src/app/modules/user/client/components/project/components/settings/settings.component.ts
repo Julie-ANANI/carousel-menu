@@ -19,6 +19,7 @@ import { emailRegEx } from '../../../../../../../utils/regex';
 import { Collaborator } from '../../../../../../../models/collaborator';
 import { Invite } from '../../../../../../../services/invite/invite';
 import { User } from '../../../../../../../models/user.model';
+import { InnovCard } from '../../../../../../../models/innov-card';
 
 interface Section {
   name: string;
@@ -67,11 +68,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _activeModalSection: Section = <Section>{};
 
-  private _valueToUpdate: any = '';
+  private _selectedValue: any = '';
 
   private _datePickerOptions: IAngularMyDpOptions = <IAngularMyDpOptions>{};
 
   private _isSaving = false;
+
+  private _showDeleteModal = false;
+
+  private _isDeleting = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
@@ -176,6 +181,42 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   /***
+   * when the user clicks the delete button. It opens the delete modal.
+   * @param event
+   * @param section
+   * @param value
+   */
+  public openDeleteModal(event: Event, section: Section, value: any) {
+    event.preventDefault();
+    this._selectedValue = value;
+    this._activeModalSection = section;
+    this._showDeleteModal = true;
+  }
+
+  /***
+   * when the user clicks the confirm button in the delete modal nad based on the
+   * activeModalSection value we call the delete functionality.
+   * @param event
+   */
+  public confirmDeleteModal(event: Event) {
+    event.preventDefault();
+    this._isDeleting = true;
+
+    switch (this._activeModalSection.name) {
+
+      case 'COLLABORATORS':
+        this._deleteCollaborator(this._selectedValue);
+        break;
+
+      case 'LANGUAGE':
+        this._deleteInnovationCard(this._selectedValue);
+        break;
+
+    }
+
+  }
+
+  /***
    * when the user clicks on the Edit button we open the modal and also check
    * the isEditable property of that section.
    * @param event
@@ -185,7 +226,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (section.isEditable) {
-      this._valueToUpdate = '';
+      this._selectedValue = '';
       this._activeModalSection = section;
       this._initActiveModalValue();
       this._showModal = true;
@@ -195,32 +236,40 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   /***
    * based on the section Edit button click we initialize
-   * the valueToUpdate with the default value.
+   * the selectedValue with the default value.
    * @private
    */
   private _initActiveModalValue() {
     switch (this._activeModalSection.name) {
 
       case 'TITLE':
-        this._valueToUpdate = this._innovation.name;
+        this._selectedValue = this._innovation.name;
         break;
 
       case 'PRINCIPAL_OBJECTIVE':
-        this._valueToUpdate = this._mission.objective.principal;
+        this._selectedValue = this._mission.objective.principal;
         break;
 
     }
   }
 
   /***
-   * when the user clicks on the cancel button in the modal.
+   * when the user clicks on the cancel button in the modal in both.
    */
   public closeModal() {
     this._showModal = false;
+    this._showDeleteModal = false;
+    this._isDeleting = false;
     this._isSaving = false;
+    this._selectedValue = '';
     this._activeModalSection = <Section>{};
   }
 
+  /***
+   * when the user clicks the save button in the modal nad based on the activeModalSection level value
+   * we call the respected functionality.
+   * @param event
+   */
   public onClickSaveModal(event: Event) {
     event.preventDefault();
     this._isSaving = true;
@@ -253,11 +302,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     switch (this._activeModalSection.name) {
 
       case 'TITLE':
-        this._innovation.name = this._valueToUpdate;
+        this._innovation.name = this._selectedValue;
         break;
 
       case 'OWNER':
-        this._innovation.owner = this._valueToUpdate;
+        this._innovation.owner = this._selectedValue;
         break;
 
     }
@@ -291,7 +340,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     switch (this._activeModalSection.name) {
 
       case 'PRINCIPAL_OBJECTIVE':
-        this._mission.objective.principal = this._valueToUpdate;
+        this._mission.objective.principal = this._selectedValue;
         if (this._mission.objective.principal['en'] === 'Other') {
           this._mission.objective.secondary = [];
         }
@@ -317,8 +366,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _addCollaborator() {
-    if (this._valueToUpdate && emailRegEx.test(this._valueToUpdate)) {
-      this._innovationService.inviteCollaborators(this._innovation._id, this._valueToUpdate)
+    if (this._selectedValue && emailRegEx.test(this._selectedValue)) {
+      this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue)
         .pipe(first()).subscribe((collaborator: Collaborator) => {
 
         if (collaborator.usersAdded.length > 0) {
@@ -349,7 +398,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _getUser() {
-    this._userService.get(this._valueToUpdate._id).pipe(first()).subscribe((user) => {
+    this._userService.get(this._selectedValue._id).pipe(first()).subscribe((user) => {
       this._innovation.owner = user;
       this._innovationFrontService.setInnovation(this._innovation);
     }, (err: HttpErrorResponse) => {
@@ -426,23 +475,75 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   public changeOwner(value: any) {
     if (value._id) {
-      this._valueToUpdate = value;
+      this._selectedValue = value;
     }
   }
 
   /***
-   * when the user clicks the delete button of collaborator.
+   * this deletes the collaborator.
    * @param collaborator
+   * @private
    */
-  public deleteCollaborator(collaborator: User) {
+  private _deleteCollaborator(collaborator: User) {
     this._innovationService.removeCollaborator(this._innovation._id, collaborator).pipe(first()).subscribe((collaborators: Array<User>) => {
       this._innovation.collaborators = collaborators;
       this._innovationFrontService.setInnovation(this._innovation);
+      this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
       console.error(err);
+      this._isDeleting = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    })
+    });
+  }
+
+  /***
+   * this is to create the new innovationCard and push it to the innovation.
+   * @param section
+   * @param lang
+   */
+  public addInnovationCard(section: Section, lang: string) {
+    if (section.isEditable) {
+      this._innovationService.createInnovationCard(this._innovation._id, new InnovCard({lang: lang}))
+        .pipe(first()).subscribe((innovationCard) => {
+          this._innovation.innovationCards.push(innovationCard);
+          this._innovationFrontService.setInnovation(this._innovation);
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      })
+    }
+  }
+
+  /***
+   * this is to delete the innovationCard.
+   * @param card
+   * @private
+   */
+  private _deleteInnovationCard(card: InnovCard) {
+    if (this._innovation.innovationCards.length > 1) {
+      this._innovationService.removeInnovationCard(this._innovation._id, card._id).pipe(first()).subscribe(() => {
+        this._innovation.innovationCards = this._innovation.innovationCards.filter((value) => value._id !== card._id);
+        this._innovationFrontService.setInnovation(this._innovation);
+        this.closeModal();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._isDeleting = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    }
+  }
+
+  /***
+   * when the user toggles the authorisation value.
+   * @param event
+   * @param type
+   */
+  public onChangeAuthorisation(event: Event, type: string) {
+    this._mission.externalDiffusion[type] = ((event.target) as HTMLInputElement).checked;
+    this._updateMission();
   }
 
   /***
@@ -494,8 +595,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return this._activeModalSection;
   }
 
-  get valueToUpdate(): any {
-    return this._valueToUpdate;
+  get selectedValue(): any {
+    return this._selectedValue;
+  }
+
+  set selectedValue(value: any) {
+    this._selectedValue = value;
   }
 
   get datePickerOptions(): IAngularMyDpOptions {
@@ -504,6 +609,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get isSaving(): boolean {
     return this._isSaving;
+  }
+
+  get showDeleteModal(): boolean {
+    return this._showDeleteModal;
+  }
+
+  set showDeleteModal(value: boolean) {
+    this._showDeleteModal = value;
+  }
+
+  get isDeleting(): boolean {
+    return this._isDeleting;
   }
 
   ngOnDestroy(): void {

@@ -19,7 +19,10 @@
     <!-- content wrapper -->
     <div class="content-wrapper">
       <div *ngFor="let section of sections; let i = index;">
-        <div *ngIf="section.isVisible" class="section-wrapper">
+        <div
+          *ngIf="section.isVisible"
+          [ngStyle]="{ 'animation-duration': (i * 300) + 'ms' }"
+          class="section-wrapper animate-slide slide-down">
           <div [ngSwitch]="section.name">
 
             <!-- heading -->
@@ -161,7 +164,7 @@
 
                 <span class="m-right-40">{{ collaborator.email }}</span>
 
-                <span (click)="deleteCollaborator(collaborator)" class="button is-xs is-outlined is-danger">
+                <span (click)="openDeleteModal($event, section, collaborator)" class="button is-xs is-outlined is-danger">
                     {{ 'COMMON.BUTTON.DELETE' | translate }}
                 </span>
 
@@ -253,19 +256,26 @@
                   {{ 'CLIENT_PROJECT_SETTINGS.PROJECT_IN' | translate }} {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
                 </span>
 
-                <span *ngIf="innovation.innovationCards.length > 1" class="button is-xs is-outlined is-danger">
+                <span
+                  *ngIf="innovation.innovationCards.length > 1"
+                  (click)="openDeleteModal($event, section, card)"
+                  class="button is-xs is-outlined is-danger">
                     {{ 'COMMON.BUTTON.DELETE' | translate }}
                 </span>
 
               </div>
 
-              <div *ngIf="section.isEditable" class="text-link m-top-15">
+              <div *ngIf="section.isEditable && innovation.innovationCards.length < 2" class="text-link m-top-15">
                 <ng-container *ngFor="let card of innovation.innovationCards">
                   <ng-container *ngIf="card.lang ==='en'; else english">
-                    <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
+                    <span (click)="addInnovationCard(section, 'fr')">
+                      <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
+                    </span>
                   </ng-container>
                   <ng-template #english>
-                    <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
+                    <span (click)="addInnovationCard(section, 'en')">
+                      <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
+                    </span>
                   </ng-template>
                 </ng-container>
               </div>
@@ -281,6 +291,7 @@
               <div class="form-group authorise-wrapper">
                 <label class="form-checkbox">
                   <input
+                    (change)="onChangeAuthorisation($event, 'social')"
                     [disabled]="!section.isEditable"
                     [checked]="mission.externalDiffusion.social"
                     id="social"
@@ -292,6 +303,7 @@
               <div class="form-group authorise-wrapper">
                 <label class="form-checkbox">
                   <input
+                    (change)="onChangeAuthorisation($event, 'umi')"
                     [disabled]="!section.isEditable"
                     [checked]="mission.externalDiffusion.umi"
                     id="umi"
@@ -303,6 +315,7 @@
               <div class="form-group authorise-wrapper">
                 <label class="form-checkbox">
                   <input
+                    (change)="onChangeAuthorisation($event, 'community')"
                     [disabled]="!section.isEditable"
                     [checked]="mission.externalDiffusion.community"
                     id="community"
@@ -349,7 +362,7 @@
         <div class="form-group">
           <label>
             <input
-              [(ngModel)]="valueToUpdate"
+              [(ngModel)]="selectedValue"
               class="form-input is-sm is-shadowed"
               type="text">
           </label>
@@ -359,7 +372,7 @@
 
       <!-- PRINCIPAL_OBJECTIVE -->
       <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'" class="p-top-10 p-bottom-10">
-        <objectives-primary [(objective)]="valueToUpdate"></objectives-primary>
+        <objectives-primary [(objective)]="selectedValue"></objectives-primary>
       </div>
       <!-- /PRINCIPAL_OBJECTIVE -->
 
@@ -374,7 +387,7 @@
         <div class="form-group">
           <label>
             <input
-              [(ngModel)]="valueToUpdate"
+              [(ngModel)]="selectedValue"
               placeholder="jhon.smith@gmail.com"
               class="form-input is-sm is-shadowed"
               type="email">
@@ -391,13 +404,13 @@
 
       <button
         (click)="closeModal()"
-        class="button modal-cancel"
-        id="btn-cancel">
+        [id]="'btn-cancel'"
+        class="button modal-cancel">
         {{ 'COMMON.BUTTON.CANCEL' | translate }}
       </button>
 
       <button
-        [disabled]="!this.valueToUpdate || isSaving"
+        [disabled]="!this.selectedValue || isSaving"
         (click)="onClickSaveModal($event)"
         class="button is-community"
         id="btn-save">
@@ -410,3 +423,63 @@
   </div>
 </modal-empty>
 <!-- /modals -->
+
+
+<!-- delete modal -->
+<modal-empty *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
+
+  <!-- body -->
+  <section class="modal-body">
+
+    <!-- heading -->
+    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center m-bottom-30 text-bold">
+      {{ 'COMMON.MODAL.TITLE_DELETE' | translate }}
+    </h2>
+    <!-- /heading -->
+
+    <!-- text -->
+    <div [ngSwitch]="activeModalSection.name">
+
+      <!-- COLLABORATORS -->
+      <div *ngSwitchCase="'COLLABORATORS'">
+        <p>{{ 'CLIENT_PROJECT_SETTINGS.MODAL_DELETE.COLLABORATOR' | translate }}</p>
+        <p class="text-sm text-medium">{{ selectedValue.email }}</p>
+      </div>
+      <!-- /COLLABORATORS -->
+
+      <!-- LANGUAGE -->
+      <div *ngSwitchCase="'LANGUAGE'">
+        <p>{{ 'CLIENT_PROJECT_SETTINGS.MODAL_DELETE.CARD' | translate }}</p>
+        <p class="text-sm text-medium">{{ 'COMMON.LANG.' + selectedValue.lang.toUpperCase() | translate }}</p>
+      </div>
+      <!-- /LANGUAGE -->
+
+    </div>
+    <!-- /text -->
+
+  </section>
+  <!-- /body -->
+
+  <!-- footer -->
+  <footer class="modal-footer justify-center">
+
+    <button
+      (click)="closeModal()"
+      class="button modal-cancel"
+      [id]="'btn-cancel'">
+      {{ 'COMMON.BUTTON.CANCEL' | translate }}
+    </button>
+
+    <button
+      [disabled]="isDeleting"
+      (click)="confirmDeleteModal($event)"
+      class="button is-community"
+      id="btn-confirm">
+      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+    </button>
+
+  </footer>
+  <!-- /footer -->
+
+</modal-empty>
+<!-- /delete modal -->
