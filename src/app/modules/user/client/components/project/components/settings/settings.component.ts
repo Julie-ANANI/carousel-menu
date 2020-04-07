@@ -15,12 +15,16 @@ import { ErrorFrontService } from '../../../../../../../services/error/error-fro
 import { MissionService } from '../../../../../../../services/mission/mission.service';
 import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { UserService } from '../../../../../../../services/user/user.service';
+import { emailRegEx } from '../../../../../../../utils/regex';
+import { Collaborator } from '../../../../../../../models/collaborator';
+import { Invite } from '../../../../../../../services/invite/invite';
+import { User } from '../../../../../../../models/user.model';
 
 interface Section {
   name: string;
   isVisible: boolean;
   isEditable: boolean;
-  level: 'CLIENT_PROJECT' | 'MISSION' | 'INNOVATION'
+  level: 'CLIENT_PROJECT' | 'MISSION' | 'INNOVATION' | 'COLLABORATOR';
 }
 
 @Component({
@@ -52,7 +56,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     { name: 'ROADMAP', isVisible: false, isEditable: !!(this._isAdmin) , level: 'MISSION' },
     { name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION' },
     { name: 'OWNER', isVisible: false, isEditable: !!(this._isAdmin), level: 'INNOVATION' },
-    { name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'INNOVATION' },
+    { name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR' },
     { name: 'OPERATOR', isVisible: false, isEditable: !!(this._isAdmin), level: 'INNOVATION' },
     { name: 'COMMERCIAL', isVisible: false, isEditable: !!(this._isAdmin), level: 'CLIENT_PROJECT' },
     { name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION' },
@@ -61,11 +65,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
-  activeModalSection: Section = <Section>{};
+  private _activeModalSection: Section = <Section>{};
 
-  valueToUpdate: any = '';
+  private _valueToUpdate: any = '';
 
-  datePickerOptions: IAngularMyDpOptions = <IAngularMyDpOptions>{};
+  private _datePickerOptions: IAngularMyDpOptions = <IAngularMyDpOptions>{};
+
+  private _isSaving = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
@@ -82,7 +88,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
-      console.log(innovation);
 
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
@@ -180,8 +185,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (section.isEditable) {
-      this.valueToUpdate = '';
-      this.activeModalSection = section;
+      this._valueToUpdate = '';
+      this._activeModalSection = section;
       this._initActiveModalValue();
       this._showModal = true;
     }
@@ -194,14 +199,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _initActiveModalValue() {
-    switch (this.activeModalSection.name) {
+    switch (this._activeModalSection.name) {
 
       case 'TITLE':
-        this.valueToUpdate = this._innovation.name;
+        this._valueToUpdate = this._innovation.name;
         break;
 
       case 'PRINCIPAL_OBJECTIVE':
-        this.valueToUpdate = this._mission.objective.principal;
+        this._valueToUpdate = this._mission.objective.principal;
         break;
 
     }
@@ -212,13 +217,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   public closeModal() {
     this._showModal = false;
-    this.activeModalSection = <Section>{};
+    this._isSaving = false;
+    this._activeModalSection = <Section>{};
   }
 
   public onClickSaveModal(event: Event) {
     event.preventDefault();
+    this._isSaving = true;
 
-    switch (this.activeModalSection.level) {
+    switch (this._activeModalSection.level) {
 
       case 'INNOVATION':
         this._updateInnovation();
@@ -226,6 +233,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       case 'MISSION':
         this._updateMission();
+        break;
+
+      case 'COLLABORATOR':
+        this._addCollaborator();
         break;
 
     }
@@ -239,21 +250,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   private _updateInnovation() {
 
-    switch (this.activeModalSection.name) {
+    switch (this._activeModalSection.name) {
 
       case 'TITLE':
-        this._innovation.name = this.valueToUpdate;
+        this._innovation.name = this._valueToUpdate;
         break;
 
       case 'OWNER':
-        this._innovation.owner = this.valueToUpdate;
+        this._innovation.owner = this._valueToUpdate;
         break;
 
     }
 
     this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
 
-      if (this.activeModalSection.name === 'OWNER') {
+      if (this._activeModalSection.name === 'OWNER') {
         this._getUser()
       } else {
         this._innovationFrontService.setInnovation(innovation);
@@ -264,6 +275,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     }, (err: HttpErrorResponse) => {
       console.error(err);
+      this._isSaving = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
 
@@ -276,10 +288,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   private _updateMission() {
 
-    switch (this.activeModalSection.name) {
+    switch (this._activeModalSection.name) {
 
       case 'PRINCIPAL_OBJECTIVE':
-        this._mission.objective.principal = this.valueToUpdate;
+        this._mission.objective.principal = this._valueToUpdate;
         if (this._mission.objective.principal['en'] === 'Other') {
           this._mission.objective.secondary = [];
         }
@@ -294,9 +306,55 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
       console.error(err);
+      this._isSaving = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     })
 
+  }
+
+  /***
+   * when the users want to add the collaborator.
+   * @private
+   */
+  private _addCollaborator() {
+    if (this._valueToUpdate && emailRegEx.test(this._valueToUpdate)) {
+      this._innovationService.inviteCollaborators(this._innovation._id, this._valueToUpdate)
+        .pipe(first()).subscribe((collaborator: Collaborator) => {
+
+        if (collaborator.usersAdded.length > 0) {
+          this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
+          this._innovationFrontService.setInnovation(this._innovation);
+        } else if (collaborator.invitationsToSend.length > 0) {
+          window.open(Invite.inviteCollaborator(this._innovation.name, collaborator.invitationsToSend[0], this._currentLang), '_blank');
+        } else if (collaborator.invitationsToSendAgain.length > 0) {
+          window.open(Invite.inviteCollaborator(this._innovation.name, collaborator.invitationsToSendAgain[0], this._currentLang), '_blank');
+        }
+
+        this.closeModal();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._isSaving = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+    }
+  }
+
+  /***
+   * based on the id we get the user form the back and assign it to
+   * the innovation owner.
+   * @private
+   */
+  private _getUser() {
+    this._userService.get(this._valueToUpdate._id).pipe(first()).subscribe((user) => {
+      this._innovation.owner = user;
+      this._innovationFrontService.setInnovation(this._innovation);
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+    });
   }
 
   /***
@@ -330,7 +388,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     const index = this._mission.milestoneDates.findIndex((milestone) => milestone.code === 'RDO');
     if (index !== -1) {
       const date = new Date(this._mission.milestoneDates[index].dueDate).toISOString();
-      this.datePickerOptions = {
+      this._datePickerOptions = {
         dateRange: false,
         dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
         calendarAnimation: { in: CalAnimation.Fade, out: CalAnimation.Fade},
@@ -368,22 +426,23 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   public changeOwner(value: any) {
     if (value._id) {
-      this.valueToUpdate = value;
+      this._valueToUpdate = value;
     }
   }
 
   /***
-   * based on the id we get the user form the back and assign it to
-   * the innovation owner.
-   * @private
+   * when the user clicks the delete button of collaborator.
+   * @param collaborator
    */
-  private _getUser() {
-    this._userService.get(this.valueToUpdate._id).pipe(first()).subscribe((user) => {
-      this._innovation.owner = user;
+  public deleteCollaborator(collaborator: User) {
+    this._innovationService.removeCollaborator(this._innovation._id, collaborator).pipe(first()).subscribe((collaborators: Array<User>) => {
+      this._innovation.collaborators = collaborators;
       this._innovationFrontService.setInnovation(this._innovation);
-      }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+    })
   }
 
   /***
@@ -393,22 +452,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public enableSecondaryObjectives(section: Section): boolean {
     return this._mission.objective && this._mission.objective.principal
       && this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
-  }
-
-  /***
-   * based on the activeModalSection value, it checks for
-   * save button disable condition.
-   */
-  get isSaveDisabled(): boolean {
-    switch (this.activeModalSection.name) {
-
-      case 'TITLE':
-      case 'OWNER':
-        return !this.valueToUpdate;
-
-    }
-
-    return false;
   }
 
   get mission(): Mission {
@@ -445,6 +488,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   set showModal(value: boolean) {
     this._showModal = value;
+  }
+
+  get activeModalSection(): Section {
+    return this._activeModalSection;
+  }
+
+  get valueToUpdate(): any {
+    return this._valueToUpdate;
+  }
+
+  get datePickerOptions(): IAngularMyDpOptions {
+    return this._datePickerOptions;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
   }
 
   ngOnDestroy(): void {

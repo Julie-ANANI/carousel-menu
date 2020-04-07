@@ -161,17 +161,13 @@
 
                 <span class="m-right-40">{{ collaborator.email }}</span>
 
-                <span class="button is-xs is-outlined is-info m-right-15">
-                    {{ 'COMMON.BUTTON.REINVITE' | translate }}
-                </span>
-
-                <span class="button is-xs is-outlined is-danger">
+                <span (click)="deleteCollaborator(collaborator)" class="button is-xs is-outlined is-danger">
                     {{ 'COMMON.BUTTON.DELETE' | translate }}
                 </span>
 
               </div>
 
-              <div *ngIf="section.isEditable" class="text-link m-top-15">
+              <div *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link m-top-15">
                 <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.COLLABORATOR' | translate }}
               </div>
 
@@ -373,6 +369,20 @@
       </div>
       <!-- /OWNER -->
 
+      <!-- COLLABORATORS -->
+      <div *ngSwitchCase="'COLLABORATORS'" class="mxw-400 m-left-auto m-right-auto">
+        <div class="form-group">
+          <label>
+            <input
+              [(ngModel)]="valueToUpdate"
+              placeholder="jhon.smith@gmail.com"
+              class="form-input is-sm is-shadowed"
+              type="email">
+          </label>
+        </div>
+      </div>
+      <!-- /COLLABORATORS -->
+
     </section>
     <!-- /body -->
 
@@ -387,7 +397,7 @@
       </button>
 
       <button
-        [disabled]="isSaveDisabled"
+        [disabled]="!this.valueToUpdate || isSaving"
         (click)="onClickSaveModal($event)"
         class="button is-community"
         id="btn-save">
