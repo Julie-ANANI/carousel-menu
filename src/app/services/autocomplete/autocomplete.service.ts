@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 
 interface AutocompleteObject {_id: string; name: string; domain: string; flag: string; logo: string}
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AutocompleteService {
 
   constructor(private _http: HttpClient) { }
@@ -14,4 +14,5 @@ export class AutocompleteService {
     return this._http.get<AutocompleteObject[]>('/misc/suggestions', {params: params})
     .pipe(map((res: any) => res.result));
   }
+
 }

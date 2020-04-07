@@ -145,7 +145,7 @@
                   {{ innovation.owner.email }}
                 </span>
 
-                <span *ngIf="section.isEditable" class="text-link">
+                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
 
@@ -366,6 +366,12 @@
         <objectives-primary [(objective)]="valueToUpdate"></objectives-primary>
       </div>
       <!-- /PRINCIPAL_OBJECTIVE -->
+
+      <!-- OWNER -->
+      <div *ngSwitchCase="'OWNER'" [ngStyle]="{ 'margin-bottom': '180px' }" class="mxw-400 m-left-auto m-right-auto">
+        <auto-suggestion (valueSelected)="changeOwner($event)"></auto-suggestion>
+      </div>
+      <!-- /OWNER -->
 
     </section>
     <!-- /body -->

@@ -6,7 +6,7 @@ import { User } from '../../models/user.model';
 import { environment } from '../../../environments/environment';
 import { Tag } from '../../models/tag';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserService {
 
   constructor(private _http: HttpClient) {}
@@ -56,8 +56,8 @@ export class UserService {
     return this._http.get('/user/me');
   }
 
-  public get(userId: string): Observable<any> {
-    return this._http.get('/user/' + userId);
+  public get(userId: string): Observable<User> {
+    return this._http.get<User>('/user/' + userId);
   }
 
   public getAll(config?: {[header: string]: string | string[]}): Observable<Array<User>> {

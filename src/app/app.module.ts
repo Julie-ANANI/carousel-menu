@@ -24,7 +24,6 @@ import { TranslateNotificationsService } from './services/notifications/notifica
 import { LoaderService } from './services/loader/loader.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { ConfigService } from './services/config/config.service';
-import { UserService } from "./services/user/user.service";
 import { IndexService } from './services/index/index.service';
 
 // Interceptors
@@ -59,7 +58,6 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
   ],
   providers: [
     AuthService,
-    UserService,
     ErrorService,
     LocalStorageService,
     TranslationService,

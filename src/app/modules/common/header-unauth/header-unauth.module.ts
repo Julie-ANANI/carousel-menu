@@ -6,9 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HeaderUnauthComponent } from './header-unauth.component';
 
-import { UserService } from '../../../services/user/user.service';
-import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
-
 import { SidebarModule}  from '../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarSignupFormModule } from '../../sidebars/components/signup-form/sidebar-signup-form.module';
 import { ModalModule } from '../../utility-components/modals/modal/modal.module';
@@ -27,10 +24,6 @@ import { ModalModule } from '../../utility-components/modals/modal/modal.module'
   ],
   declarations: [
     HeaderUnauthComponent
-  ],
-  providers: [
-    UserService,
-    AutocompleteService
   ],
   exports: [
     HeaderUnauthComponent

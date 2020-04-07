@@ -28,6 +28,7 @@ import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-se
 import { ModalEmptyModule } from '../../../../utility-components/modals/modal-empty/modal-empty.module';
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
+import { AutoSuggestionModule } from '../../../../utility-components/auto-suggestion/auto-suggestion.module';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
     ObjectivesSecondaryModule,
     ModalEmptyModule,
     ObjectivesPrimaryModule,
-    AngularMyDatePickerModule
+    AngularMyDatePickerModule,
+    AutoSuggestionModule
   ],
   declarations: [
     ProjectComponent,

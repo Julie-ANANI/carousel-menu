@@ -166,6 +166,7 @@ export const COMMON = {
     'CLIENT_NAME': 'Nom du client',
     'CLIENT_EMAIL': 'Client email',
     'CHOOSE_SALE': 'Choose sale',
+    'AUTO_SUGGESTION': 'Commencez à taper pour rechercher...'
   },
 
   'REQUIRED': {

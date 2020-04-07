@@ -10,7 +10,6 @@ import { FiltersComponent } from './components/innovations/components/filters/fi
 import { CardsComponent } from './components/innovations/components/cards/cards.component';
 
 import { ShareService } from '../../../services/share/share.service';
-import { UserService } from '../../../services/user/user.service';
 import { FilterService } from '../../public/discover/components/innovations/services/filter.service';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
@@ -36,7 +35,6 @@ import { PaginationTemplate2Module } from '../../utility-components/paginations/
   providers:[
     InnovationResolver,
     ShareService,
-    UserService,
     TagsService,
     FilterService
   ],

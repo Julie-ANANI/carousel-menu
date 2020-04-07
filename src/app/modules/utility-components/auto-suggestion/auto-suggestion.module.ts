@@ -1,24 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormsModule } from '@angular/forms';
-import { WelcomeRoutingModule } from './welcome-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { WelcomeComponent } from './welcome.component';
+import { AutoSuggestionComponent } from './auto-suggestion.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    WelcomeRoutingModule,
     TranslateModule.forChild(),
+    ReactiveFormsModule,
     FormsModule
   ],
   declarations: [
-    WelcomeComponent
+    AutoSuggestionComponent
   ],
   exports: [
-    WelcomeComponent
+    AutoSuggestionComponent
   ]
 })
 
-export class WelcomeModule {}
+export class AutoSuggestionModule {}

@@ -13,7 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front';
 import { MissionService } from '../../../../../../../services/mission/mission.service';
-import {CalAnimation, IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
+import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import { UserService } from '../../../../../../../services/user/user.service';
 
 interface Section {
   name: string;
@@ -72,6 +73,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
               private _translateService: TranslateService,
               private _router: Router,
               private _innovationService: InnovationService,
+              private _userService: UserService,
               private _missionService: MissionService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -80,6 +82,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
+      console.log(innovation);
 
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
@@ -242,12 +245,23 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._innovation.name = this.valueToUpdate;
         break;
 
+      case 'OWNER':
+        this._innovation.owner = this.valueToUpdate;
+        break;
+
     }
 
     this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
-      this._innovationFrontService.setInnovation(innovation);
+
+      if (this.activeModalSection.name === 'OWNER') {
+        this._getUser()
+      } else {
+        this._innovationFrontService.setInnovation(innovation);
+      }
+
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+
     }, (err: HttpErrorResponse) => {
       console.error(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -349,6 +363,30 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   /***
+   * getting the value form autosuggestion.
+   * @param value
+   */
+  public changeOwner(value: any) {
+    if (value._id) {
+      this.valueToUpdate = value;
+    }
+  }
+
+  /***
+   * based on the id we get the user form the back and assign it to
+   * the innovation owner.
+   * @private
+   */
+  private _getUser() {
+    this._userService.get(this.valueToUpdate._id).pipe(first()).subscribe((user) => {
+      this._innovation.owner = user;
+      this._innovationFrontService.setInnovation(this._innovation);
+      }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  /***
    * if the value of the mission principal objective is 'Other' then
    * we disabled the mission secondary objectives.
    */
@@ -365,6 +403,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     switch (this.activeModalSection.name) {
 
       case 'TITLE':
+      case 'OWNER':
         return !this.valueToUpdate;
 
     }
