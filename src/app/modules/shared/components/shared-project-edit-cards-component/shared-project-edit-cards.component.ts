@@ -1,12 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
 import { TranslationService } from '../../../../services/translation/translation.service';
-import { forkJoin, Subject } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { Media, Video } from '../../../../models/media';
-import { takeUntil } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { InnovCard } from '../../../../models/innov-card';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
@@ -17,7 +15,7 @@ import { InnovationFrontService } from '../../../../services/innovation/innovati
   styleUrls: ['shared-project-edit-cards.component.scss']
 })
 
-export class SharedProjectEditCardsComponent implements OnDestroy {
+export class SharedProjectEditCardsComponent {
 
   @Input() innovation: Innovation;
 
@@ -25,25 +23,13 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
   @Input() isAdminSide: boolean = false;
 
-  private _ngUnsubscribe: Subject<boolean> = new Subject();
-
   private _selectedCardIndex: number = 0;
-
-  private _saveChanges: boolean = false;
-
-  private _showModal: boolean = false;
 
   constructor(private _translationService: TranslationService,
               private _innovationService: InnovationService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              public domSanitizer: DomSanitizer) {
-
-    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      this._saveChanges = response;
-    });
-
-  }
+              public domSanitizer: DomSanitizer) { }
 
   /***
    * this function is called when the user clicks on one of the lang,
@@ -58,46 +44,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
   }
 
   /***
-   * this function is called when the user clicks on the delete language button. It
-   * opens the modal to ask for the confirmation.
-   * @param event
-   */
-  public onClickDelete(event: Event) {
-    event.preventDefault();
-
-    if (this.isEditable && this.innovation.innovationCards.length > 1) {
-      this._showModal = true;
-    }
-
-  }
-
-  /***
-   * this function is called when the user tries to add the lang in the
-   * project.
-   * @param event
-   * @param lang
-   */
-  public onCreateInnovationCard(event: Event, lang: string) {
-    event.preventDefault();
-
-    if (this.isEditable) {
-      if (!this._saveChanges || this.isAdminSide) {
-        if (this.innovation.innovationCards.length < 2 && this.innovation.innovationCards.length !== 0) {
-          this._innovationService.createInnovationCard(this.innovation._id, new InnovCard({ lang: lang})).subscribe((data: InnovCard) => {
-            this.innovation.innovationCards.push(data);
-            this._selectedCardIndex = this.innovation.innovationCards.length - 1;
-            this.onLangChange(event, this._selectedCardIndex);
-            this.notifyChanges();
-          });
-        }
-      } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-      }
-    }
-
-  }
-
-  /***
    * this function is to notify all the changes that the user made
    * in the model.
    */
@@ -105,37 +51,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
     if (this.isEditable) {
       this._innovationFrontService.setNotifyChanges(true);
     }
-  }
-
-  public containsLanguage(lang: string): boolean {
-    return this.innovation.innovationCards.some((c) => c.lang === lang);
-  }
-
-  /***
-   * this function is called when the user clicks the submit button in the delete
-   * modal, and it deletes the selected lang card.
-   * @param event
-   */
-  public onClickConfirm(event: Event) {
-    event.preventDefault();
-
-    if (this.isEditable) {
-      if (!this._saveChanges || this.isAdminSide) {
-        this._innovationService.removeInnovationCard(this.innovation._id, this.innovation.innovationCards[this._selectedCardIndex]._id).subscribe(() => {
-          this.innovation.innovationCards = this.innovation.innovationCards.filter((card) => card._id !== this.innovation.innovationCards[this._selectedCardIndex]._id);
-          this.notifyChanges();
-          this.onLangChange(event, 0);
-          this._showModal = false;
-          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.DELETED_TEXT');
-        }, () => {
-          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
-          this._showModal = false;
-        });
-      } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-      }
-    }
-
   }
 
   /***
@@ -336,19 +251,6 @@ export class SharedProjectEditCardsComponent implements OnDestroy {
 
   get selectedCardIndex(): number {
     return this._selectedCardIndex;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

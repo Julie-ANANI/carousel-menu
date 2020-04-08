@@ -9,7 +9,7 @@
         <span>{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.LANGUAGE.HEADING' | translate }}</span>
       </div>
 
-      <!-- selection and deletion -->
+      <!-- selection  -->
       <div class="d-flex align-center">
 
         <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;"
@@ -26,28 +26,10 @@
             <i class="form-icon"></i>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}
           </label>
 
-          <div (click)="onClickDelete($event)" [ngClass]="{ 'disabled': innovation.innovationCards.length === 1 || !isEditable }"
-               class="icon-container">
-            <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate">
-              <i class="icon icon-delete text-alert"></i>
-            </span>
-          </div>
-
-        </div>
-
-        <div *ngIf="innovation.innovationCards.length < 2 && isEditable" class="text-notify p-bottom-1"
-             style="font-size: 0.75rem">
-          <span> {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.LANGUAGE.ADD_PROJECT_LANGUAGE' | translate }} </span>
-          <span *ngIf="!containsLanguage('fr')" (click)="onCreateInnovationCard($event, 'fr')" class="text-link">
-            {{ 'COMMON.LANG.FR' | translate }}
-          </span>
-          <span *ngIf="!containsLanguage('en')" (click)="onCreateInnovationCard($event, 'en')" class="text-link">
-            {{ 'COMMON.LANG.EN' | translate }}
-          </span>
         </div>
 
       </div>
-      <!-- /selection and deletion -->
+      <!-- /selection -->
 
     </div>
   </section>
@@ -799,21 +781,3 @@
   <!-- /media section -->
 
 </div>
-
-
-<!-- modal to ask user to sure about deleting the innovation card the project -->
-<app-modal [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
-
-  <section class="modal-body">
-    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
-    {{ 'COMMON.LANG.' + innovation.innovationCards[selectedCardIndex].lang | uppercase | translate }}
-    {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
-  </section>
-
-  <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="button is-primary" (click)="onClickConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </footer>
-
-</app-modal>
-<!-- /modal to ask user to sure about deleting the innovation card the project -->
