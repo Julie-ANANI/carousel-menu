@@ -44,8 +44,6 @@ export class ProjectsListComponent implements OnInit {
 
   private _total = 0;
 
-  private _innovationId: string;
-
   private _deleteModal = false;
 
   private _isError = false;
@@ -64,6 +62,8 @@ export class ProjectsListComponent implements OnInit {
     propertyName: 'client-projects',
     offset: Number(this._config.offset)
   };
+
+  private _removeInnovationId = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
@@ -159,23 +159,21 @@ export class ProjectsListComponent implements OnInit {
 
   public onClickDelete(event: Event, innovationId: string) {
     event.preventDefault();
-    this._innovationId = innovationId;
+    this._removeInnovationId = innovationId;
     this._deleteModal = true;
   }
 
   public closeModal(event: Event) {
     event.preventDefault();
     this._deleteModal = false;
-    this._innovationId = '';
   }
 
   public onClickSubmit(event: Event) {
     event.preventDefault();
 
-    this._innovationService.remove(this._innovationId).pipe(first()).subscribe((response: any) => {
+    this._innovationService.remove(this._removeInnovationId).pipe(first()).subscribe(() => {
       this._translateNotificationService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
-      this._setSpinner(true);
-      this._getProjects();
+      this._innovations = this._innovations.filter((innovation) => innovation._id !== this._removeInnovationId);
       this.closeModal(event);
     }, (err: any) => {
       this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
@@ -210,10 +208,6 @@ export class ProjectsListComponent implements OnInit {
     return this._innovations;
   }
 
-  get innovationId(): string {
-    return this._innovationId;
-  }
-
   get deleteModal(): boolean {
     return this._deleteModal;
   }
@@ -228,6 +222,10 @@ export class ProjectsListComponent implements OnInit {
 
   get dateFormat(): string {
     return this._dateFormat;
+  }
+
+  get removeInnovationId(): string {
+    return this._removeInnovationId;
   }
 
 }
