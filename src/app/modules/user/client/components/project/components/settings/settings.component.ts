@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../../models/innovation';
 import { Mission } from '../../../../../../../models/mission';
@@ -54,7 +54,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     { name: 'TITLE', isVisible: false, isEditable: false, level: 'INNOVATION' },
     { name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
     { name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
-    { name: 'ROADMAP', isVisible: false, isEditable: !!(this._isAdmin) , level: 'MISSION' },
+    { name: 'ROADMAP', isVisible: false, isEditable: false , level: 'MISSION' },
     { name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION' },
     { name: 'OWNER', isVisible: false, isEditable: !!(this._isAdmin), level: 'ALL' },
     { name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR' },
@@ -379,6 +379,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (this._mission.objective.principal['en'] === 'Other') {
           this._mission.objective.secondary = [];
         }
+        break;
+
+      case 'ROADMAP':
         break;
 
     }
