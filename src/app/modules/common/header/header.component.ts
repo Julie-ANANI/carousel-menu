@@ -64,7 +64,7 @@ export class HeaderComponent {
     { pageName: 'Users', pageLink: '/user/admin/users', adminLevel: 1 },
     { pageName: 'Community', pageLink: '/user/admin/community', adminLevel: 3 },
     { pageName: 'Professionals', pageLink: '/user/admin/professionals', adminLevel: 3 },
-    { pageName: 'Projects', pageLink: '/user/admin/projects', adminLevel: 1 },
+    { pageName: 'Market Tests', pageLink: '/user/admin/projects', adminLevel: 1 },
     { pageName: 'Libraries', pageLink: '/user/admin/libraries', adminLevel: 3 },
     { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', adminLevel: 3 },
     { pageName: 'Settings', pageLink: '/user/admin/settings', adminLevel: 3 },
