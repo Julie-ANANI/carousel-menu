@@ -34,4 +34,8 @@ export class FooterComponent {
     return this._translateService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/confidentialite/';
   }
 
+  public getIdeasLink(): string {
+    return 'https://unitedmotionideas.aha.io/settings/account/idea_portals/6777639094795433405';
+  }
+
 }
