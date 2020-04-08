@@ -7,7 +7,6 @@
         <ng-container *ngFor="let tab of sections">
           <li
             *ngIf="tab.isVisible"
-            (click)="navigateToSection(tab.name)"
             [ngClass]="{ 'active': activeView === tab.name }">
             {{ 'CLIENT_PROJECT_SETTINGS.' + tab.name | translate }}
           </li>
@@ -21,7 +20,7 @@
       <div *ngFor="let section of sections; let i = index;">
         <div
           *ngIf="section.isVisible"
-          [ngStyle]="{ 'animation-duration': (i * 300) + 'ms' }"
+          [ngStyle]="{ 'animation-duration': (i * 150) + 'ms' }"
           class="section-wrapper animate-slide slide-down">
           <div [ngSwitch]="section.name">
 
@@ -203,7 +202,7 @@
                   <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
                 </ng-template>
 
-                <span *ngIf="section.isEditable" class="text-link">
+                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
 
@@ -238,7 +237,7 @@
                   <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
                 </ng-template>
 
-                <span *ngIf="section.isEditable" class="text-link">
+                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
 
@@ -395,6 +394,44 @@
         </div>
       </div>
       <!-- /COLLABORATORS -->
+
+      <!-- OPERATOR -->
+      <div *ngSwitchCase="'OPERATOR'" class="mxw-400 m-left-auto m-right-auto">
+        <div class="form-group">
+          <label>
+            <select
+              [ngModel]="''"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="onChangeOperator($event)"
+              class="form-select">
+              <option [value]="''">{{ 'CLIENT_PROJECT_SETTINGS.SELECT_OPERATOR' | translate }}</option>
+              <option *ngFor="let operator of operators | async" [value]="operator['_id']">
+                {{ operator.firstName }} {{ operator.lastName }}
+              </option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <!-- /OPERATOR -->
+
+      <!-- COMMERCIAL -->
+      <div *ngSwitchCase="'COMMERCIAL'" class="mxw-400 m-left-auto m-right-auto">
+        <div class="form-group">
+          <label>
+            <select
+              [ngModel]="''"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="onChangeCommercial($event)"
+              class="form-select">
+              <option [value]="''">{{ 'CLIENT_PROJECT_SETTINGS.SELECT_COMMERCIAL' | translate }}</option>
+              <option *ngFor="let commercial of commercials | async" [value]="commercial['_id']">
+                {{ commercial.firstName }} {{ commercial.lastName }}
+              </option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <!-- /COMMERCIAL -->
 
     </section>
     <!-- /body -->

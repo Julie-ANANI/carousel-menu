@@ -3,11 +3,10 @@ import { InnovationFrontService } from '../../../../../../../services/innovation
 import { Innovation } from '../../../../../../../models/innovation';
 import { Mission } from '../../../../../../../models/mission';
 import { first, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../../../../../services/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ClientProject } from '../../../../../../../models/client-project';
-import { Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
@@ -20,12 +19,13 @@ import { Collaborator } from '../../../../../../../models/collaborator';
 import { Invite } from '../../../../../../../services/invite/invite';
 import { User } from '../../../../../../../models/user.model';
 import { InnovCard } from '../../../../../../../models/innov-card';
+import { ClientProjectService } from '../../../../../../../services/client-project/client-project.service';
 
 interface Section {
   name: string;
   isVisible: boolean;
   isEditable: boolean;
-  level: 'CLIENT_PROJECT' | 'MISSION' | 'INNOVATION' | 'COLLABORATOR';
+  level: 'CLIENT_PROJECT' | 'MISSION' | 'INNOVATION' | 'COLLABORATOR' | 'ALL';
 }
 
 @Component({
@@ -56,7 +56,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     { name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
     { name: 'ROADMAP', isVisible: false, isEditable: !!(this._isAdmin) , level: 'MISSION' },
     { name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION' },
-    { name: 'OWNER', isVisible: false, isEditable: !!(this._isAdmin), level: 'INNOVATION' },
+    { name: 'OWNER', isVisible: false, isEditable: !!(this._isAdmin), level: 'ALL' },
     { name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR' },
     { name: 'OPERATOR', isVisible: false, isEditable: !!(this._isAdmin), level: 'INNOVATION' },
     { name: 'COMMERCIAL', isVisible: false, isEditable: !!(this._isAdmin), level: 'CLIENT_PROJECT' },
@@ -78,14 +78,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _isDeleting = false;
 
+  private _commercials: Observable<Array<User>> = this._userService
+    .getAll({ roles: 'super-admin', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'})
+    .map((response: any) => response.result);
+
+  private _operators: Observable<Array<User>> = this._userService
+    .getAll({ search: '{"isOperator":true}', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'})
+    .map((response: any) => response.result);
+
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private _authService: AuthService,
               private _translateService: TranslateService,
-              private _router: Router,
               private _innovationService: InnovationService,
               private _userService: UserService,
               private _missionService: MissionService,
+              private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
 
@@ -173,11 +181,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
       });
     }
-  }
-
-  public navigateToSection(name: string) {
-    this.activeView = name;
-    this._router.navigate([`/user/projects/${this._innovation._id}/settings`], { fragment: name.toLowerCase() });
   }
 
   /***
@@ -276,6 +279,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     switch (this._activeModalSection.level) {
 
+      case 'ALL':
+        this._updateAll();
+        break;
+
       case 'INNOVATION':
         this._updateInnovation();
         break;
@@ -288,7 +295,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._addCollaborator();
         break;
 
+      case 'CLIENT_PROJECT':
+        this._updateClientProject();
+        break;
+
     }
+
+  }
+
+  /***
+   * this is to update the particular property in all the 3 objects.
+   * @private
+   */
+  private _updateAll() {
+
+    if (this._activeModalSection.name === 'OWNER') {
+      this._clientProject.client = this._selectedValue._id;
+      this._innovation.owner = this._selectedValue;
+      this._mission.client = this._selectedValue._id;
+    }
+
+    this._updateMission();
+    this._updateClientProject();
+    this._updateInnovation();
 
   }
 
@@ -305,8 +334,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._innovation.name = this._selectedValue;
         break;
 
-      case 'OWNER':
-        this._innovation.owner = this._selectedValue;
+      case 'OPERATOR':
+        this._innovation.operator = this._selectedValue;
         break;
 
     }
@@ -314,7 +343,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
 
       if (this._activeModalSection.name === 'OWNER') {
-        this._getUser()
+        this._getUser(this._selectedValue._id);
+      } else if (this._activeModalSection.name === 'OPERATOR') {
+        this._getUser(this._selectedValue);
       } else {
         this._innovationFrontService.setInnovation(innovation);
       }
@@ -332,7 +363,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   /***
    * this updates the mission object, and based on the activeModalSection it assign the value
-   * that user wants to update nad call the service.
+   * that user wants to update and call the service.
    * @private
    */
   private _updateMission() {
@@ -351,13 +382,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
       this._innovation.mission = mission;
       this._innovationFrontService.setInnovation(this._innovation);
-      this.closeModal();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+
+      if (this._activeModalSection.name !== 'OWNER') {
+        this.closeModal();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }
+
     }, (err: HttpErrorResponse) => {
       console.error(err);
-      this._isSaving = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    })
+
+      if (this._activeModalSection.name !== 'OWNER') {
+        this._isSaving = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      }
+
+    });
 
   }
 
@@ -393,13 +432,53 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * based on the id we get the user form the back and assign it to
-   * the innovation owner.
+   * this updates the clientProject object, and based on the activeModalSection it assign the value
+   * that user wants to update and call the service.
    * @private
    */
-  private _getUser() {
-    this._userService.get(this._selectedValue._id).pipe(first()).subscribe((user) => {
-      this._innovation.owner = user;
+  private _updateClientProject() {
+
+    if (this._activeModalSection.name === 'COMMERCIAL') {
+      this._clientProject.commercial = this._selectedValue;
+    }
+
+    this._clientProjectService.save(this._clientProject._id, this._clientProject)
+      .pipe(first()).subscribe((clientProject) => {
+
+        this._innovation.clientProject = clientProject;
+        this._innovationFrontService.setInnovation(this._innovation);
+
+        if (this._activeModalSection.name !== 'OWNER') {
+          this.closeModal();
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+        }
+
+        },(err: HttpErrorResponse) => {
+        console.error(err);
+
+        if (this._activeModalSection.name !== 'OWNER') {
+          this._isSaving = false;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        }
+
+      });
+
+  }
+
+  /***
+   * based on the id we get the user form the back and assign it to
+   * the respective objects.
+   * @private
+   */
+  private _getUser(id: string) {
+    this._userService.get(id).pipe(first()).subscribe((user) => {
+
+      if (typeof this._innovation.operator === 'string') {
+        this._innovation.operator = user;
+      } else {
+        this._innovation.owner = user;
+      }
+
       this._innovationFrontService.setInnovation(this._innovation);
     }, (err: HttpErrorResponse) => {
       console.error(err);
@@ -495,6 +574,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._isDeleting = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
+  }
+
+  /***
+   * when the user changes the operator from the select box in the modal.
+   * @param event
+   */
+  public onChangeOperator(event: Event) {
+    this._selectedValue = event && event.target && (event.target as HTMLSelectElement).value || '';
+  }
+
+  /***
+   * when the user changes the commercial from the select box in the modal.
+   * @param event
+   */
+  public onChangeCommercial(event: Event) {
+    this._selectedValue = event && event.target && (event.target as HTMLSelectElement).value || '';
   }
 
   /***
@@ -621,6 +716,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get isDeleting(): boolean {
     return this._isDeleting;
+  }
+
+  get commercials(): Observable<Array<User>> {
+    return this._commercials;
+  }
+
+  get operators(): Observable<Array<User>> {
+    return this._operators;
   }
 
   ngOnDestroy(): void {

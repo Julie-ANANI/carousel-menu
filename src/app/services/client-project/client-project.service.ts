@@ -32,4 +32,8 @@ export class ClientProjectService {
     return this._http.get<ClientProject>(`/clientProject/${clientProjectId}`, { params: config });
   }
 
+  public save(clientProjectId: string, clientObj: ClientProject): Observable<ClientProject> {
+    return this._http.put<ClientProject>(`/clientProject/${clientProjectId}`, clientObj);
+  }
+
 }

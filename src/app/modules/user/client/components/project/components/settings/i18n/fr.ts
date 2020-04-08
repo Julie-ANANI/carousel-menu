@@ -51,6 +51,10 @@ export const CLIENT_PROJECT_SETTINGS = {
   'MODAL_DELETE': {
     'COLLABORATOR': 'Voulez-vous vraiment supprimer ce collaborateur ?',
     'CARD': 'Voulez-vous vraiment supprimer le projet dans cette langue ?'
-  }
+  },
+
+  'SELECT_COMMERCIAL': 'Sélectionnez un commercial',
+
+  'SELECT_OPERATOR': 'Sélectionnez un market test manager'
 
 };
