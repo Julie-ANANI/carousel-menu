@@ -2,13 +2,21 @@
   <section class="d-flex flex-wrap settings-wrapper">
 
     <!-- menu wrapper -->
-    <div class="menu-wrapper">
+    <div *ngIf="isVisibleMenu" class="menu-wrapper">
       <ul>
         <ng-container *ngFor="let tab of sections">
           <li
             *ngIf="tab.isVisible"
             [ngClass]="{ 'active': activeView === tab.name }">
-            {{ 'CLIENT_PROJECT_SETTINGS.' + tab.name | translate }}
+            <a
+              (click)="activeView = tab.name"
+              [href]="'#'+tab.name.toLowerCase()"
+              [pageScrollOffset]="42"
+              [pageScrollSpeed]="1000"
+              class="d-block"
+              pageScroll>
+              {{ 'CLIENT_PROJECT_SETTINGS.' + tab.name | translate }}
+            </a>
           </li>
         </ng-container>
       </ul>
@@ -20,6 +28,7 @@
       <div *ngFor="let section of sections; let i = index;">
         <div
           *ngIf="section.isVisible"
+          [id]="section.name.toLowerCase()"
           [ngStyle]="{ 'animation-duration': (i * 150) + 'ms' }"
           class="section-wrapper animate-slide slide-down">
           <div [ngSwitch]="section.name">
@@ -77,10 +86,7 @@
 
                 <ul class="roadmap-wrapper">
                   <ng-container *ngFor="let milestone of mission.milestoneDates">
-                    <!--<li *ngIf="milestone.code !== 'RDO'"> Todo uncomment
-                      {{ milestone.name }} : {{ milestone.dueDate | date:dateFormat }}
-                    </li>-->
-                    <li>
+                    <li *ngIf="milestone.code !== 'RDO'">
                       {{ milestone.name }} : {{ milestone.dueDate | date:dateFormat }}
                     </li>
                   </ng-container>

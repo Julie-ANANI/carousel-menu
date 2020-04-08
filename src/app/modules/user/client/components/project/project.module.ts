@@ -29,6 +29,7 @@ import { ModalEmptyModule } from '../../../../utility-components/modals/modal-em
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { AutoSuggestionModule } from '../../../../utility-components/auto-suggestion/auto-suggestion.module';
+import { NgxPageScrollModule } from 'ngx-page-scroll';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { AutoSuggestionModule } from '../../../../utility-components/auto-sugges
     ModalEmptyModule,
     ObjectivesPrimaryModule,
     AngularMyDatePickerModule,
-    AutoSuggestionModule
+    AutoSuggestionModule,
+    NgxPageScrollModule
   ],
   declarations: [
     ProjectComponent,

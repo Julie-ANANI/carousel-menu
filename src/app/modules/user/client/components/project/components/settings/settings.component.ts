@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../../models/innovation';
 import { Mission } from '../../../../../../../models/mission';
@@ -86,6 +86,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     .getAll({ search: '{"isOperator":true}', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'})
     .map((response: any) => response.result);
 
+  private _isVisibleMenu = true;
+
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private _authService: AuthService,
@@ -113,6 +115,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._initSections();
     });
 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(_event: Event) {
+    this._isVisibleMenu = window.innerWidth >= 840;
   }
 
   /***
@@ -161,11 +168,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'ROADMAP':
-            section.isVisible = !!(this._mission.milestoneDates && this._mission.milestoneDates.length > 0);
-            /* Todo uncomment
             section.isVisible = !!(this._mission.milestoneDates && this._mission.milestoneDates.length > 0
               && this._mission.milestoneDates.some((milestone) => milestone.code !== 'RDO'));
-             */
             break;
 
           case 'LANGUAGE':
@@ -724,6 +728,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get operators(): Observable<Array<User>> {
     return this._operators;
+  }
+
+  get isVisibleMenu(): boolean {
+    return this._isVisibleMenu;
   }
 
   ngOnDestroy(): void {

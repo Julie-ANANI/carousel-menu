@@ -9,7 +9,9 @@
       margin-right: 50px;
 
       ul {
-        padding: 0 35px 25px 0;
+        position: sticky;
+        top: 0;
+        padding: 25px 35px 25px 0;
         border-right: 1px solid $border-color;
         margin: 0;
         list-style: none;
