@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
-import { ObjectivesComponent } from './components/setup/components/objectives/objectives.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -60,7 +59,6 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
-    ObjectivesComponent,
     SurveyComponent,
     HistoryProjectComponent,
     SettingsComponent
