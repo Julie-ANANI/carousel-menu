@@ -12,7 +12,7 @@ export class Invite {
    * @param email
    * @param lang
    */
-  public static inviteCollaborator(innovationTitle: string, email: string, lang = 'en'): string {
+  public static collaborator(innovationTitle: string, email: string, lang = 'en'): string {
     let subject: string;
     let message: string;
 

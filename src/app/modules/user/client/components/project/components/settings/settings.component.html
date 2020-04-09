@@ -86,7 +86,7 @@
 
                 <ul class="roadmap-wrapper">
                   <ng-container *ngFor="let milestone of mission.milestoneDates">
-                    <li *ngIf="milestone.code !== 'RDO'">
+                    <li *ngIf="milestone.code !== 'RDO' && !milestone.code.includes('RDO')">
                       {{ milestone.name }} : {{ milestone.dueDate | date:dateFormat }}
                     </li>
                   </ng-container>
@@ -131,6 +131,29 @@
                 </label>
               </div>
 
+              <ng-container *ngFor="let milestone of mission.milestoneDates; let index = index;">
+                <div *ngIf="milestone.code === 'RDO'" class="restitution-wrapper">
+
+                  <div class="divider m-left-auto m-right-auto"></div>
+
+                  <h6 class="text-normal">{{ 'CLIENT_PROJECT_SETTINGS.RESTITUTION_DATE_COMMENT' | translate }}</h6>
+
+                  <div class="form-group m-left-auto m-right-auto">
+                    <label>
+                      <textarea
+                        (change)="onChangeMilestoneComment($event, index, section)"
+                        [ngModel]="milestone.comment"
+                        [disabled]="!section.isEditable"
+                        class="form-input is-shadowed"
+                        id="textarea-comment"
+                        rows="3">
+                      </textarea>
+                    </label>
+                  </div>
+
+                </div>
+              </ng-container>
+
             </div>
             <!-- /RESTITUTION_DATE -->
 
@@ -151,10 +174,6 @@
                     &nbsp;•&nbsp;
                   </ng-container>
                   {{ innovation.owner.email }}
-                </span>
-
-                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
-                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
 
               </div>
@@ -208,10 +227,6 @@
                   <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
                 </ng-template>
 
-                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
-                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
-                </span>
-
               </div>
 
             </div>
@@ -242,10 +257,6 @@
                 <ng-template #notAssigned>
                   <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
                 </ng-template>
-
-                <span *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link">
-                  <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
-                </span>
 
               </div>
 
@@ -381,12 +392,6 @@
       </div>
       <!-- /PRINCIPAL_OBJECTIVE -->
 
-      <!-- OWNER -->
-      <div *ngSwitchCase="'OWNER'" [ngStyle]="{ 'margin-bottom': '180px' }" class="mxw-400 m-left-auto m-right-auto">
-        <auto-suggestion (valueSelected)="changeOwner($event)"></auto-suggestion>
-      </div>
-      <!-- /OWNER -->
-
       <!-- COLLABORATORS -->
       <div *ngSwitchCase="'COLLABORATORS'" class="mxw-400 m-left-auto m-right-auto">
         <div class="form-group">
@@ -400,44 +405,6 @@
         </div>
       </div>
       <!-- /COLLABORATORS -->
-
-      <!-- OPERATOR -->
-      <div *ngSwitchCase="'OPERATOR'" class="mxw-400 m-left-auto m-right-auto">
-        <div class="form-group">
-          <label>
-            <select
-              [ngModel]="''"
-              [ngModelOptions]="{ standalone: true }"
-              (change)="onChangeOperator($event)"
-              class="form-select">
-              <option [value]="''">{{ 'CLIENT_PROJECT_SETTINGS.SELECT_OPERATOR' | translate }}</option>
-              <option *ngFor="let operator of operators | async" [value]="operator['_id']">
-                {{ operator.firstName }} {{ operator.lastName }}
-              </option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <!-- /OPERATOR -->
-
-      <!-- COMMERCIAL -->
-      <div *ngSwitchCase="'COMMERCIAL'" class="mxw-400 m-left-auto m-right-auto">
-        <div class="form-group">
-          <label>
-            <select
-              [ngModel]="''"
-              [ngModelOptions]="{ standalone: true }"
-              (change)="onChangeCommercial($event)"
-              class="form-select">
-              <option [value]="''">{{ 'CLIENT_PROJECT_SETTINGS.SELECT_COMMERCIAL' | translate }}</option>
-              <option *ngFor="let commercial of commercials | async" [value]="commercial['_id']">
-                {{ commercial.firstName }} {{ commercial.lastName }}
-              </option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <!-- /COMMERCIAL -->
 
     </section>
     <!-- /body -->

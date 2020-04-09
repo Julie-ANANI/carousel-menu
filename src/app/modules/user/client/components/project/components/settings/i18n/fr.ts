@@ -55,6 +55,8 @@ export const CLIENT_PROJECT_SETTINGS = {
 
   'SELECT_COMMERCIAL': 'Sélectionnez un commercial',
 
-  'SELECT_OPERATOR': 'Sélectionnez un market test manager'
+  'SELECT_OPERATOR': 'Sélectionnez un market test manager',
+
+  'RESTITUTION_DATE_COMMENT': 'Avez-vous des précisions à donner sur cette date ?',
 
 };

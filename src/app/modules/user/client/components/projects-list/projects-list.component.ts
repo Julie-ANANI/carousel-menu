@@ -224,8 +224,4 @@ export class ProjectsListComponent implements OnInit {
     return this._dateFormat;
   }
 
-  get removeInnovationId(): string {
-    return this._removeInnovationId;
-  }
-
 }

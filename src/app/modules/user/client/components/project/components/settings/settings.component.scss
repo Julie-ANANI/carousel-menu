@@ -70,6 +70,42 @@
 
         }
 
+        .restitution-wrapper {
+          max-width: 755px;
+          text-align: center;
+
+          .divider {
+            margin-top: 40px;
+            max-width: 371px;
+            margin-bottom: 40px;
+          }
+
+          .form-group {
+            max-width: 500px;
+
+            textarea {
+              padding: 14.5px;
+              font-size: 14px;
+              line-height: 1.3;
+
+              &.form-input {
+
+                &:disabled, &.disabled {
+                  background: transparent;
+                  color: $form-input-color;
+                  border-color: $form-border-color;
+                  cursor: not-allowed;
+                  opacity: 1;
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
         .collaborator-wrapper, .lang-wrapper {
           display: flex;
           align-items: center;
