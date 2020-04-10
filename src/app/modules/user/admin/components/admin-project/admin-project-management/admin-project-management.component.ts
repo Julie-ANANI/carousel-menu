@@ -8,7 +8,7 @@ import {Innovation} from '../../../../../../models/innovation';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {Observable, Subject} from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import {distinctUntilChanged, first} from 'rxjs/operators';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 import {DashboardService} from '../../../../../../services/dashboard/dashboard.service';
 import {UserService} from '../../../../../../services/user/user.service';
@@ -23,6 +23,10 @@ import {TagsService} from '../../../../../../services/tags/tags.service';
 import {FrontendService} from '../../../../../../services/frontend/frontend.service';
 import {EmailTemplate} from '../../../../../../models/email-template';
 import {Mission} from '../../../../../../models/mission';
+import {ClientProject} from '../../../../../../models/client-project';
+import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {MissionService} from '../../../../../../services/mission/mission.service';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -83,6 +87,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   public edit: {[k: string]: boolean} = {};
 
+  private _clientProject: ClientProject = <ClientProject>{};
+
+  private _mission: Mission = <Mission>{};
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
@@ -95,6 +103,8 @@ export class AdminProjectManagementComponent implements OnInit {
               private _campaignService: CampaignService,
               private _translateService: TranslateService,
               private _formBuilder: FormBuilder,
+              private _clientProjectService: ClientProjectService,
+              private _missionService: MissionService,
               private _frontendService: FrontendService) {}
 
   /***
@@ -102,6 +112,14 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+
+    if (this._project.clientProject) {
+      this._clientProject = <ClientProject>this._project.clientProject;
+    }
+
+    if (this._project.mission) {
+      this._mission = <Mission>this._project.mission;
+    }
 
     this.projectDomains = [{name: 'umi'},
             {name: 'dynergie'},
@@ -265,6 +283,8 @@ export class AdminProjectManagementComponent implements OnInit {
   ownerEditionFinished() {
     this._project.owner = this.owner;
     this.save('Le propriétaire à été mis à jour avec succès !');
+    this._saveClientProject('OWNER');
+    this._saveMission('OWNER');
   }
 
   /***
@@ -597,6 +617,42 @@ export class AdminProjectManagementComponent implements OnInit {
       });
   }
 
+  private _saveClientProject(type?: string) {
+    if (this._clientProject._id) {
+
+      if (type === 'OWNER') {
+        this._clientProject.client = this.owner._id;
+      }
+
+      this._clientProjectService.save(this._clientProject._id, this._clientProject).pipe(first()).subscribe((clientProject) => {
+        this._clientProject = clientProject;
+        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+        this._notificationsService.error('ERROR.ERROR', err.message);
+      });
+
+    }
+  }
+
+  private _saveMission(type?: string) {
+    if (this._mission._id) {
+
+      if (type === 'OWNER') {
+        this._mission.client = this.owner._id;
+      }
+
+      this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
+        this._mission = mission;
+        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+        this._notificationsService.error('ERROR.ERROR', err.message);
+      });
+
+    }
+  }
+
   /***
    * This function is call when the user wants to save a campaign
    * @param {string} notification
@@ -681,4 +737,13 @@ export class AdminProjectManagementComponent implements OnInit {
   get tagTypes(): string {
     return JSON.stringify(['SECTOR', 'QUALIFICATION']);
   }
+
+  get clientProject(): ClientProject {
+    return this._clientProject;
+  }
+
+  get mission(): Mission {
+    return this._mission;
+  }
+
 }
