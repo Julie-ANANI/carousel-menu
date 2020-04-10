@@ -3,7 +3,7 @@
     <div class="column col-sm-12 col-11 col-mx-auto">
 
       <!-- import button -->
-      <section class="text-right p-bottom-25">
+      <section class="text-right p-bottom-30">
         <label class="button is-primary is-outlined">
           <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
           <i class="fas fa-file-import icon-left"></i> {{ 'COMMON.BUTTON.IMPORT_PROJECT' | translate }}
@@ -20,6 +20,12 @@
         </shared-table>
       </section>
       <!-- /table -->
+
+      <!-- batch -->
+      <section class="p-top-40 p-bottom-25">
+        <admin-batches-display></admin-batches-display>
+      </section>
+      <!-- /batch -->
 
     </div>
   </div>
