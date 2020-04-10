@@ -159,7 +159,7 @@
           [ngModel]="mission.type"
           (ngModelChange)="changeMissionType($event)"
           [ngModelOptions]="{standalone: true}">
-          <option [ngValue]="undefined" selected>Not assigned</option>
+          <option [ngValue]="''" selected>Not assigned</option>
           <option *ngFor="let type of missionType" [ngValue]="type">{{ type | titlecase }}</option>
         </select>
 
@@ -167,6 +167,37 @@
 
       </div>
       <!-- /mission type -->
+
+      <!-- mission objective -->
+      <div *ngIf="project.mission" class="project-line">
+
+        <label class="form-switch" for="editMissionObjective">
+          <input
+            type="checkbox"
+            name="editMissionObjective"
+            id="editMissionObjective"
+            [checked]="mission.objective && mission.objective.principal[currentLang]">
+          <i class="form-icon"></i>
+          Main objective
+        </label>
+
+        <select
+          class="form-select"
+          name="setMissionObjective"
+          id="setMissionObjective"
+          [ngModel]="mission.objective.principal[currentLang]"
+          (ngModelChange)="changeMissionObjective($event)"
+          [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="''" selected>Not assigned</option>
+          <option *ngFor="let objective of missionObjectives" [ngValue]="objective[currentLang].label">
+            {{ objective[currentLang].label }}
+          </option>
+        </select>
+
+        <div></div>
+
+      </div>
+      <!-- /mission objective -->
 
       <!-- Project description edition -->
       <div class="project-line">

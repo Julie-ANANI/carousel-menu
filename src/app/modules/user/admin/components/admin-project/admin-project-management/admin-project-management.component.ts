@@ -27,6 +27,7 @@ import {ClientProject} from '../../../../../../models/client-project';
 import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {MissionService} from '../../../../../../services/mission/mission.service';
+import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -91,7 +92,11 @@ export class AdminProjectManagementComponent implements OnInit {
 
   private _mission: Mission = <Mission>{};
 
-  missionType: Array<string> = ['USER', 'CLIENT', 'DEMO', 'TEST'];
+  private _missionType: Array<string> = ['USER', 'CLIENT', 'DEMO', 'TEST'];
+
+  private _currentLang = this._translateService.currentLang || 'en';
+
+  private _missionObjectives: Array<Objective> = ObjectivesPrincipal;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -312,6 +317,30 @@ export class AdminProjectManagementComponent implements OnInit {
   changeMissionType(type: MissionType) {
     this._mission.type = type;
     this._saveMission();
+  }
+
+  changeMissionObjective(objective: string) {
+    const index = this._missionObjectives.findIndex((value) => value[this._currentLang]['label'] === objective);
+
+    if (index !== -1) {
+
+      if (!this._mission.objective) {
+        this._mission.objective = {
+          principal: {},
+          secondary: [],
+          comment: ''
+        };
+      }
+
+      this._mission.objective.principal = {
+        en: this._missionObjectives[index].en.label,
+        fr: this._missionObjectives[index].fr.label,
+      };
+
+      this._saveMission();
+
+    }
+
   }
 
   /***
@@ -746,12 +775,20 @@ export class AdminProjectManagementComponent implements OnInit {
     return JSON.stringify(['SECTOR', 'QUALIFICATION']);
   }
 
-  get clientProject(): ClientProject {
-    return this._clientProject;
-  }
-
   get mission(): Mission {
     return this._mission;
+  }
+
+  get missionType(): Array<string> {
+    return this._missionType;
+  }
+
+  get currentLang(): string {
+    return this._currentLang;
+  }
+
+  get missionObjectives(): Array<Objective> {
+    return this._missionObjectives;
   }
 
 }
