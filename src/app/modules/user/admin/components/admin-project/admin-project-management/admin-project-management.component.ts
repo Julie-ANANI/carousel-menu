@@ -98,6 +98,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   private _missionObjectives: Array<Objective> = ObjectivesPrincipal;
 
+  private _commercials: Observable<Array<User>> = this._userService
+    .getAll({ roles: 'super-admin', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'})
+    .map((response: any) => response.result);
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
@@ -341,6 +345,11 @@ export class AdminProjectManagementComponent implements OnInit {
 
     }
 
+  }
+
+  changeCommercial(id: any) {
+    this._clientProject.commercial = id;
+    this._saveClientProject();
   }
 
   /***
@@ -789,6 +798,13 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get missionObjectives(): Array<Objective> {
     return this._missionObjectives;
+  }
+
+  get commercials(): Observable<Array<User>> {
+    return this._commercials;
+  }
+  get clientProject(): ClientProject {
+    return this._clientProject;
   }
 
 }
