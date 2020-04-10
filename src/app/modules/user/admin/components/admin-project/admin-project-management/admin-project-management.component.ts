@@ -22,7 +22,7 @@ import {EmailScenario} from '../../../../../../models/email-scenario';
 import {TagsService} from '../../../../../../services/tags/tags.service';
 import {FrontendService} from '../../../../../../services/frontend/frontend.service';
 import {EmailTemplate} from '../../../../../../models/email-template';
-import {Mission} from '../../../../../../models/mission';
+import {Mission, MissionType} from '../../../../../../models/mission';
 import {ClientProject} from '../../../../../../models/client-project';
 import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -90,6 +90,8 @@ export class AdminProjectManagementComponent implements OnInit {
   private _clientProject: ClientProject = <ClientProject>{};
 
   private _mission: Mission = <Mission>{};
+
+  missionType: Array<string> = ['USER', 'CLIENT', 'DEMO', 'TEST'];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -238,6 +240,7 @@ export class AdminProjectManagementComponent implements OnInit {
     this._innovationService.save(this._project._id, {mission: event._id}).subscribe((data: any) => {
       this._project = data;
       this._project.mission = event;
+      this._mission = event;
       this._notificationsService.success('ERROR.SUCCESS' , 'The project has been updated');
     }, (err: any) => {
       this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
@@ -304,6 +307,11 @@ export class AdminProjectManagementComponent implements OnInit {
     this._project.operator = value || null;
     this.operatorId = value || undefined;
     this.save('L\'opérateur à été mis à jour avec succès');
+  }
+
+  changeMissionType(type: MissionType) {
+    this._mission.type = type;
+    this._saveMission();
   }
 
   /***

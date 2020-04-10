@@ -2,6 +2,8 @@ import { Innovation } from './innovation';
 import { User } from './user.model';
 import { Multiling } from './multiling';
 
+export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
+
 export interface  Milestone {
  name: string;
  code: string;
@@ -37,6 +39,6 @@ export interface Mission {
     social: boolean;
   };
 
-  type?: 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
+  type?: MissionType;
 
 }

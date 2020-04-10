@@ -139,6 +139,35 @@
 
       </div>
 
+      <!-- mission type -->
+      <div *ngIf="project.mission" class="project-line">
+
+        <label class="form-switch" for="editMissionType">
+          <input
+            type="checkbox"
+            name="editMissionType"
+            id="editMissionType"
+            [checked]="mission.type">
+          <i class="form-icon"></i>
+          Market test type
+        </label>
+
+        <select
+          class="form-select"
+          name="setMissionType"
+          id="setMissionType"
+          [ngModel]="mission.type"
+          (ngModelChange)="changeMissionType($event)"
+          [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="undefined" selected>Not assigned</option>
+          <option *ngFor="let type of missionType" [ngValue]="type">{{ type | titlecase }}</option>
+        </select>
+
+        <div></div>
+
+      </div>
+      <!-- /mission type -->
+
       <!-- Project description edition -->
       <div class="project-line">
         <label class="form-switch" for="editProjectDescription">
