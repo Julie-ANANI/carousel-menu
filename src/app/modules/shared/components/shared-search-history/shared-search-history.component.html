@@ -30,12 +30,12 @@
   </ng-container>
 </div>
 
-<app-shared-table
+<shared-table
   [(config)]="config"
   [data]="tableInfos"
   (editRow)="openSidebar($event)"
   (performAction)="onClickActions($event)"
-></app-shared-table>
+></shared-table>
 
 <!-- sidebar to request details -->
 <sidebar [(template)]="sidebarValue">

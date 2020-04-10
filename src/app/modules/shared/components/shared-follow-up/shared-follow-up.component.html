@@ -103,13 +103,13 @@
 
 
       <!-- table -->
-      <app-shared-table
+      <shared-table
         [(config)]="config"
         [data]="tableInfos"
         (editRow)="seeAnswer($event)"
         (dropdownAction)="assignObjective($event)"
         (performAction)="performActions($event)">
-      </app-shared-table>
+      </shared-table>
       <!-- /table -->
 
     </div>

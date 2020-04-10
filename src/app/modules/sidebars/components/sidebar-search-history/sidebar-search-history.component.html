@@ -25,12 +25,12 @@
   </span>
 
   <div *ngIf="showChildren">
-    <app-shared-table
+    <shared-table
       [(config)]="config"
       [data]="tableInfos"
       (editRow)="goToRequest($event)"
       (performAction)="onClickActions($event)"
-    ></app-shared-table>
+    ></shared-table>
   </div>
 </div>
 

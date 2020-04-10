@@ -36,13 +36,13 @@
 
   <!-- the results go here! -->
   <div [hidden]="!results">
-    <app-shared-table
+    <shared-table
         [data]="resultTableConfiguration"
         [(config)]="queryConfig"
         (editRow)="openSidebar($event, 'edit')"
         (removeRows)="removeCompanies($event)"
         [loading]="displayLoading">
-    </app-shared-table>
+    </shared-table>
   </div>
   <div [hidden]="!nothingFound">
     <h5>I tried hard, but couldn't find anything. Try harder and refine your search (or create a new enterprise)</h5>

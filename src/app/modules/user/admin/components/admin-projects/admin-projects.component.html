@@ -1,40 +1,26 @@
-<section id="admin-projects" class="section-light-pad">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <div class="restrict-width">
+<div [hidden]="isLoading" class="p-top-25 p-bottom-25" id="admin-projects">
+  <div class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
 
-      <!-- error -->
-      <section *ngIf="fetchingError">
-        <div class="error-wrapper d-flex align-center">
-          <app-error-template-1 [errorMessage]="'ERROR.ERRORS.HEADING_1'" style="width: 100%">
-            <h5 class="subtitle text-background">
-              {{ 'ERROR.ERRORS.FETCHING_MESSAGE_1' | translate }} {{ 'ERROR.ERRORS.SERVER_CONNECTION' | translate }}
-            </h5>
-          </app-error-template-1>
-        </div>
+      <!-- import button -->
+      <section class="text-right p-bottom-25">
+        <label class="button is-primary is-outlined">
+          <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
+          <i class="fas fa-file-import icon-left"></i> {{ 'COMMON.BUTTON.IMPORT_PROJECT' | translate }}
+        </label>
       </section>
-      <!-- /error -->
+      <!-- /import button -->
 
-      <!-- no error -->
-      <section *ngIf="!fetchingError">
-
-        <!-- import button -->
-        <div class="text-right p-bottom-25">
-          <label class="button is-primary is-outlined">
-            <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
-            <i class="fas fa-file-import icon-left"></i> {{ 'COMMON.BUTTON.IMPORT_PROJECT' | translate }}
-          </label>
-        </div>
-
-        <!-- projects table -->
-        <app-shared-table
+      <!-- table -->
+      <section>
+        <shared-table
           [(config)]="config"
           [data]="table"
           (editRow)="navigate($event)">
-        </app-shared-table>
-
+        </shared-table>
       </section>
-      <!-- /no error -->
+      <!-- /table -->
 
     </div>
   </div>
-</section>
+</div>
