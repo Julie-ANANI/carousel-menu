@@ -1,0 +1,48 @@
+<div id="auto-suggestion">
+
+  <!-- input field -->
+  <form autocomplete="off" class="relative" novalidate>
+
+    <!-- input area -->
+    <div class="input-wrapper">
+      <label class="d-block">
+        <input
+          (focus)="showAutoSuggestionDropdown($event)"
+          (focusout)="hideAutoSuggestionDropdown()"
+          (keydown)="onKeyboardPress($event)"
+          [attr.placeholder]="placeholder | translate"
+          [formControl]="searchKeyword"
+          autocomplete="off"
+          class="form-input is-shadowed"
+          name="suggestion"
+          type="search">
+      </label>
+    </div>
+    <!-- /input area -->
+
+    <!-- suggestions list -->
+    <ul *ngIf="dropdownVisible && isSearching" class="menu">
+
+      <!-- when suggestions -->
+      <li
+        (mousedown)="onValueSelect(suggestion);"
+        *ngFor="let suggestion of suggestionsSource; let i = index;"
+        [ngClass]="{ 'active': i === currentFocus }"
+        class="menu-item">
+        {{ suggestion[identifier] }}
+      </li>
+      <!-- /when suggestions -->
+
+      <!-- when no suggestions but still searching -->
+      <li *ngIf="loading" class="menu-item c-default bg-white">
+        <div class="loading is-primary"></div>
+      </li>
+      <!-- /when no suggestions but still searching -->
+
+    </ul>
+    <!-- /suggestions list -->
+
+  </form>
+  <!-- /input field -->
+
+</div>

@@ -1,0 +1,51 @@
+@import "../../../../../../style/framework/src/variables";
+
+#admin-batches-display {
+
+  .batch-wrapper {
+    display: flex;
+    padding-top: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .batch {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+      p {
+        font-weight: $font-weight-medium;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .batch-body {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 4px;
+
+        .text-link {
+          text-decoration: none;
+          font-size: 16px;
+          cursor: default;
+        }
+
+      }
+
+      .popover .popover-container {
+
+        .card {
+          max-height: 500px;
+          overflow: hidden;
+          overflow-y: auto;
+        }
+
+      }
+
+    }
+
+  }
+
+}

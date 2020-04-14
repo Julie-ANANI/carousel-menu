@@ -1,0 +1,128 @@
+<div id="admin-batches-display">
+  <div *ngIf="weekBatches.length > 0">
+
+    <!-- navigate labels -->
+    <div class="flex-between">
+
+      <button
+        (click)="onClickLast()"
+        [ngStyle]="{ 'padding-top': '9px', 'padding-bottom': '9px', 'min-width': 'unset' }"
+        class="button is-outlined is-info is-sm"
+        id="btn-last"
+        type="button">
+        Last week
+      </button>
+
+      <div>
+        <div class="label is-rounded is-success">First mail</div>
+        <div class="label is-rounded is-draft">Second mail</div>
+        <div class="label is-rounded is-info">Third mail</div>
+      </div>
+
+      <button
+        (click)="onClickNext()"
+        [ngStyle]="{ 'padding-top': '9px', 'padding-bottom': '9px', 'min-width': 'unset' }"
+        class="button is-outlined is-info is-sm"
+        id="btn-next"
+        type="button">
+        Next week
+      </button>
+
+    </div>
+    <!-- /navigate labels -->
+
+    <!-- batches -->
+    <div class="batch-wrapper">
+      <div *ngFor="let days of weekBatches" class="batch">
+        <div *ngFor="let batches of days; let index2 = index">
+
+          <p *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
+
+          <!-- index2 !== 0 -->
+          <ng-container *ngIf="index2 !== 0">
+
+            <!-- index2 < 4 -->
+            <div *ngIf="index2 < 4" class="batch-body">
+
+              <ng-container *ngIf="getState(batches) === 0">
+                <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-success">
+                  <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                  {{ batches['innovation']['name']  | ellipsis:10 }}  {{ batches.size }}
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="getState(batches) === 1">
+                <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-draft">
+                  <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                  {{ batches['innovation']['name'] | ellipsis:10 }}  {{ batches.size }}
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="getState(batches) === 2">
+                <div (click)="showPreview($event, batches)" class="label is-rounded c-hand  is-info">
+                  <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                  {{ batches['innovation']['name'] | ellipsis:10 }}  {{ batches.size }}
+                </div>
+              </ng-container>
+
+            </div>
+            <!-- index2 < 4 -->
+
+            <!-- index2 === 4 -->
+            <div *ngIf="index2 === 4" class="popover justify-center">
+
+              <div class="text-link text-md">see more...</div>
+
+              <div class="popover-container is-sm">
+                <div class="card">
+                  <div class="card-body">
+                    <ng-container *ngFor="let batchesOver of days; let index3 = index">
+                      <div *ngIf="index3 > 0" class="batch-body">
+
+                        <ng-container *ngIf="getState(batchesOver) === 0">
+                          <div (click)="showPreview($event, batches)" class="label is-success is-rounded c-hand">
+                            {{ batches['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                          </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="getState(batchesOver) === 1">
+                          <div (click)="showPreview($event, batches)" class="label is-draft is-rounded c-hand">
+                            {{ batches['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                          </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="getState(batchesOver) === 2">
+                          <div (click)="showPreview($event, batches)" class="label is-info is-rounded c-hand">
+                            {{ batches['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                          </div>
+                        </ng-container>
+
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- /index2 === 4 -->
+
+          </ng-container>
+          <!-- /index2 !== 0 -->
+
+        </div>
+      </div>
+    </div>
+    <!-- /batches -->
+
+  </div>
+</div>
+
+
+<!-- innovation preview sidebar-->
+<sidebar *ngIf="weekBatches.length > 0" [(template)]="sidebarTemplate">
+  <sidebar-innovation-preview
+    [projectCard]="selectedInnovation"
+    [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }">
+  </sidebar-innovation-preview>
+</sidebar>
+<!-- /innovation preview sidebar-->

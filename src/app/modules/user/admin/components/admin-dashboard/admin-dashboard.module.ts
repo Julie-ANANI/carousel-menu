@@ -7,7 +7,7 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { AdminMissionsListModule } from '../admin-missions-list/admin-missions-list.module';
-import { SidebarInnovationPreviewModule } from '../../../../sidebars/components/innovation-preview/sidebar-innovation-preview.module';
+import { SidebarInnovationPreviewModule } from '../../../../sidebars/components/sidebar-innovation-preview/sidebar-innovation-preview.module';
 import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
 
 @NgModule({

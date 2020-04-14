@@ -45,10 +45,10 @@
 
 
       <!-- section batch -->
-      <ng-container *ngIf="weekBatches && weekBatches.length > 0">
+      <!--<ng-container *ngIf="weekBatches && weekBatches.length > 0">
         <div class="section-batch">
 
-          <!-- navigate labels -->
+          &lt;!&ndash; navigate labels &ndash;&gt;
           <div class="navigate-wrapper">
             <button type="button" class="btn ghost-edit btn-xs" (click)="onClickLast()">Last Week</button>
             <div class="label-wrapper">
@@ -141,7 +141,7 @@
           </div>
 
         </div>
-      </ng-container>
+      </ng-container>-->
       <!-- /section batch -->
 
 
@@ -154,11 +154,11 @@
 
 
 <!-- innovation preview sidebar-->
-<sidebar [(template)]="sidebarTemplateValue">
-  <app-innovation-preview
+<!--<sidebar [(template)]="sidebarTemplateValue">
+  <sidebar-innovation-preview
     [projectCard]="selectedInnovation"
     [batchInfo]="{ batchSelected:this.selectedBatch, date: this.dateNow }">
-  </app-innovation-preview>
-</sidebar>
+  </sidebar-innovation-preview>
+</sidebar>-->
 <!-- /innovation preview sidebar-->
 

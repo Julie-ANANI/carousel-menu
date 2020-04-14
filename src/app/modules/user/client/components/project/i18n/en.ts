@@ -1,10 +1,16 @@
 import { EXPLORATION  } from '../components/exploration/i18n/en';
 import { HISTORY } from '../components/history/i18n/en';
-import { NEW_PROJECT } from '../../new-project/i18n/en';
 import { PROJECTS_LIST } from '../../projects-list/i18n/en';
 import { SETUP } from '../components/setup/i18n/en';
 
 export const PROJECT_MODULE = {
+
+  'SETUP_TAB': 'Project Setup',
+  'EXPLORATION_TAB': 'Market Exploration',
+  'SYNTHESIS_TAB': 'Synthesis',
+  'SETTINGS_TAB': 'Settings',
+
+
   'ADD_COLLABORATORS': 'Add a collaborator email',
   'ADD_COLLABORATORS_PLACEHOLDER': 'Add collaborator email',
 
@@ -50,14 +56,11 @@ export const PROJECT_MODULE = {
     'BOT_MESSAGE': 'Don\'t have any collaborators? Add one by clicking on "Add" button.'
   },
 
-  'SETUP_TAB': 'Project Setup',
-  'EXPLORATION_TAB': 'Market Exploration',
-  'SYNTHESIS_TAB': 'Synthesis',
+
   'HISTORY_TAB': 'History',
 
   'EXPLORATION': EXPLORATION,
   'HISTORY': HISTORY,
-  'NEW_PROJECT': NEW_PROJECT,
   'PROJECTS_LIST': PROJECTS_LIST,
   'SETUP': SETUP
 

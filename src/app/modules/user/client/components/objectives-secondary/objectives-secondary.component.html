@@ -1,0 +1,57 @@
+<div id="objectives-secondary">
+
+  <!-- options -->
+  <div class="d-flex flex-wrap options-wrapper m-left-auto m-right-auto p-bottom-30">
+    <div *ngFor="let objective of objectiveOptions" class="popover col-sm-12 col-6">
+
+      <label class="form-checkbox">
+        <input
+          (change)="onChangeOption($event, objective)"
+          [checked]="isChecked(objective)"
+          [disabled]="!isEnabledOptions"
+          [id]="objective[currentLang]['label']"
+          type="checkbox">
+        <i class="form-icon"></i> {{ objective[currentLang]['label'] }}
+      </label>
+
+      <div *ngIf="isEnabledOptions" class="popover-container">
+        <div class="p-left-10 p-right-15 p-top-15 p-bottom-15 text-center">
+          {{ objective[currentLang]['description'] }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /options -->
+
+
+  <!-- divider -->
+  <div class="divider m-right-auto m-left-auto"></div>
+  <!-- /divider -->
+
+
+  <!-- comment -->
+  <div class="mxw-500 text-center col-mx-auto p-top-30">
+
+    <h6 class="text-normal">
+      <ng-container *ngIf="currentLang === 'en'; else french">Do you have any details about your objective?</ng-container>
+      <ng-template #french>Avez-vous des précisions à apporter sur votre objectif ?</ng-template>
+    </h6>
+
+    <div class="form-group animate-slide slide-down is-3">
+      <label>
+        <textarea
+          (change)="emitCommentChange()"
+          [(ngModel)]="objectiveComment"
+          [disabled]="!isEnabledComment"
+          class="form-input is-shadowed"
+          id="textarea-comment"
+          rows="3">
+        </textarea>
+      </label>
+    </div>
+
+  </div>
+  <!-- /comment -->
+
+</div>

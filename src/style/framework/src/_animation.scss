@@ -505,7 +505,7 @@
 
 .animate-fade, .animate-zoom, .animate-bounce, .animate-slide {
   animation-duration: 0.1s;
-  animation-timing-function: ease-in;
+  animation-timing-function: ease-in-out;
 
   &.is-2 {
     animation-duration: 0.2s !important;

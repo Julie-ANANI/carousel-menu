@@ -6,8 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ResetPasswordComponent } from './reset-password.component';
 
-import { UserService } from '../../../../../services/user/user.service';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -21,9 +19,6 @@ import { UserService } from '../../../../../services/user/user.service';
   ],
   exports: [
     ResetPasswordComponent
-  ],
-  providers: [
-    UserService
   ]
 })
 

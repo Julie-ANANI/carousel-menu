@@ -40,7 +40,8 @@ export const TABLE = {
     'PROJECTS': 'Projets',
     'AMBASSADOR': 'Ambassadeur',
     'TTR':  'Temps de sortie',
-    'OBJECTIVE': 'Objectif'
+    'OBJECTIVE': 'Objectif',
+    'TYPE': 'TYPE'
   },
 
   'TITLE': {

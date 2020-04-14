@@ -50,7 +50,7 @@
                 (ngModelChange)="changeProjectOperator($event)"
                 [ngModelOptions]="{standalone: true}">
           <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
-          <option *ngFor="let op of operators" [ngValue]="op._id">
+          <option *ngFor="let op of operators" [ngValue]="op['_id']">
             {{op.firstName + ' ' + op.lastName}}
           </option>
         </select>
@@ -138,6 +138,97 @@
         </button>
 
       </div>
+
+      <!-- mission type -->
+      <div *ngIf="project.mission" class="project-line">
+
+        <label class="form-switch" for="editMissionType">
+          <input
+            type="checkbox"
+            name="editMissionType"
+            id="editMissionType"
+            [checked]="mission.type">
+          <i class="form-icon"></i>
+          Market test type
+        </label>
+
+        <select
+          class="form-select"
+          name="setMissionType"
+          id="setMissionType"
+          [ngModel]="mission.type"
+          (ngModelChange)="changeMissionType($event)"
+          [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="''" selected>Not assigned</option>
+          <option *ngFor="let type of missionType" [ngValue]="type">{{ type | titlecase }}</option>
+        </select>
+
+        <div></div>
+
+      </div>
+      <!-- /mission type -->
+
+      <!-- mission objective -->
+      <div *ngIf="project.mission" class="project-line">
+
+        <label class="form-switch" for="editMissionObjective">
+          <input
+            type="checkbox"
+            name="editMissionObjective"
+            id="editMissionObjective"
+            [checked]="mission.objective && mission.objective.principal[currentLang]">
+          <i class="form-icon"></i>
+          Main objective
+        </label>
+
+        <select
+          class="form-select"
+          name="setMissionObjective"
+          id="setMissionObjective"
+          [ngModel]="mission.objective.principal[currentLang]"
+          (ngModelChange)="changeMissionObjective($event)"
+          [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="''" selected>Not assigned</option>
+          <option *ngFor="let objective of missionObjectives" [ngValue]="objective[currentLang].label">
+            {{ objective[currentLang].label }}
+          </option>
+        </select>
+
+        <div></div>
+
+      </div>
+      <!-- /mission objective -->
+
+      <!-- commercial -->
+      <div *ngIf="project.clientProject" class="project-line">
+
+        <label class="form-switch" for="editCommercial">
+          <input
+            type="checkbox"
+            name="editCommercial"
+            id="editCommercial"
+            [checked]="clientProject.commercial">
+          <i class="form-icon"></i>
+          Commercial
+        </label>
+
+        <select
+          class="form-select"
+          name="setCommercial"
+          id="setCommercial"
+          [ngModel]="clientProject.commercial && clientProject.commercial.id"
+          (ngModelChange)="changeCommercial($event)"
+          [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="undefined" selected>Not assigned</option>
+          <option *ngFor="let commercial of commercials | async" [ngValue]="commercial['_id']">
+            {{ commercial.firstName }} {{ commercial.lastName }}
+          </option>
+        </select>
+
+        <div></div>
+
+      </div>
+      <!-- /commercial -->
 
       <!-- Project description edition -->
       <div class="project-line">

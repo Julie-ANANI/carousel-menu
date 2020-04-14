@@ -25,11 +25,11 @@
 
       <!-- table -->
       <ng-container *ngIf="!fetchingError && total > 0">
-        <app-shared-table
+        <shared-table
           [config]="config"
           [data]="table"
           (editRow)="onClickShow($event)">
-        </app-shared-table>
+        </shared-table>
       </ng-container>
       <!-- /table -->
 

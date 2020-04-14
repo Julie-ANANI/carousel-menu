@@ -1,0 +1,158 @@
+@import "../../../../../../../../style/framework/src/variables";
+
+#settings {
+
+  .settings-wrapper {
+
+    .menu-wrapper {
+      min-width: 220px;
+      margin-right: 50px;
+
+      ul {
+        position: sticky;
+        top: 0;
+        padding: 25px 35px 25px 0;
+        border-right: 1px solid $border-color;
+        margin: 0;
+        list-style: none;
+
+        li {
+          margin: 15px 0;
+          text-align: right;
+          font-size: $font-size-lg;
+          color: #BFC6D1;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          &.active {
+            color: $text-community-color;
+          }
+
+        }
+
+      }
+
+    }
+
+    .content-wrapper {
+      flex: 1;
+
+      .section-wrapper {
+
+        .title {
+          color: #4C4C4C;
+          margin-bottom: 18px;
+        }
+
+        .text-link {
+          font-size: 14px;
+          color: $text-primary-dark-color;
+          font-weight: $font-weight-bold;
+
+          .fas.fa-pen, .fas.fa-plus-circle {
+            color: $text-primary-color;
+            font-size: 17px;
+            margin-right: 8px;
+          }
+
+        }
+
+        .roadmap-wrapper {
+          font-size: $font-size-md;
+          margin: 0 25px 0 0;
+
+          li:first-child {
+            margin-top: 0;
+          }
+
+        }
+
+        .restitution-wrapper {
+          max-width: 755px;
+          text-align: center;
+
+          .divider {
+            margin-top: 40px;
+            max-width: 371px;
+            margin-bottom: 40px;
+          }
+
+          .form-group {
+            max-width: 500px;
+
+            textarea {
+              padding: 14.5px;
+              font-size: 14px;
+              line-height: 1.3;
+
+              &.form-input {
+
+                &:disabled, &.disabled {
+                  background: transparent;
+                  color: $form-input-color;
+                  border-color: $form-border-color;
+                  cursor: not-allowed;
+                  opacity: 1;
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+        .collaborator-wrapper, .lang-wrapper {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          margin-bottom: 10px;
+
+          .button {
+            min-width: unset;
+            padding-left: 15px;
+            padding-right: 15px;
+            visibility: hidden;
+          }
+
+          &:hover {
+
+            .button {
+              visibility: visible;
+            }
+
+          }
+
+        }
+
+        .authorise-wrapper {
+
+          .form-checkbox {
+            padding-left: 40px;
+            padding-right: 8px;
+
+            .form-icon {
+              width: 20px;
+              height: 20px;
+            }
+
+          }
+
+        }
+
+        .divider {
+          margin-top: 50px;
+          margin-bottom: 40px;
+        }
+
+      }
+
+    }
+
+  }
+
+}

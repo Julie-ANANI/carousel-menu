@@ -13,7 +13,7 @@ import { ConfigService } from '../../../services/config/config.service';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-shared-table',
+  selector: 'shared-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })

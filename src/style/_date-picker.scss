@@ -1,0 +1,21 @@
+@import "framework/src/variables";
+
+.date-picker {
+  position: relative;
+  width: 150px;
+  margin-right: auto;
+  margin-left: auto;
+
+  .form-input {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+    font-size: 12px;
+    text-align: center;
+
+    &[readonly] {
+      background-color: $bg-light-color;
+    }
+
+  }
+
+}

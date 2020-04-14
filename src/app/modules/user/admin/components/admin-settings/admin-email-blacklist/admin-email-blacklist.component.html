@@ -2,11 +2,11 @@
   <button class="btn btn-primary" (click)="excludeEmails()">{{'BLACKLISTS.BLACKLIST-EMAILS-DOMAINS' | translate}}</button>
 </div>
 
-<app-shared-table
+<shared-table
   [data]="emailInfos"
   [(config)]="config"
   (editRow)="editBlacklist($event)">
-</app-shared-table>
+</shared-table>
 
 <sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">

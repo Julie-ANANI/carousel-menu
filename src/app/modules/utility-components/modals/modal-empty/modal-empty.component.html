@@ -1,0 +1,19 @@
+<div (click)="toggleState($event)" class="modal" [ngClass]="showModal ? 'active': 'inactive'">
+  <div class="modal-overlay"></div>
+  <div [ngStyle]="{ 'max-width': maxWidth }" class="modal-container relative">
+
+    <!-- content -->
+    <ng-content></ng-content>
+    <!-- /content -->
+
+    <!-- close button -->
+    <button
+        (click)="onClickCross($event)"
+        aria-label="close"
+        class="modal-close is-sm"
+        type="button">
+    </button>
+    <!-- /close button -->
+
+  </div>
+</div>

@@ -1,26 +1,22 @@
 export const NEW_PROJECT = {
-  'DESCRIPTION': {
-    'LINE1': 'Which language would you like to use to start your project?',
-    'LINE2': 'You will be able to translate it in another language later.'
+
+  'HEADINGS': {
+    'TITLE': 'To begin with...',
+    'PRIMARY_OBJECTIVE': 'What is the main objective of the UMI market test?',
+    'SECONDARY_OBJECTIVE': 'I\'d also like to...',
+    'RESTITUTION_DATE': 'And finally!'
   },
 
-  'BUTTON_TEXT': 'Create Project',
+  'SUB_HEADING': {
+    'PRIMARY_OBJECTIVE': 'You will have the opportunity to elaborate in the next step'
+  },
 
-  'COMPANY_NAME_LABEL': 'What is the name of your project?',
+  'TITLE_QUESTION': 'Give a name to your new project (title for internal use)',
 
-  'PROJECT_NAME_PLACEHOLDER': 'Enter the name of your project',
+  'RESTITUTION_DATE_COMMENT': 'Do you have any details about this date?',
 
-  'INNOVATION_TYPE_LABEL': 'Which offer best responds to your needs for this project?',
+  'RESTITUTION_DATE_QUESTION': 'When would you ideally like to obtain the final results?',
 
-  'DOWNLOAD': 'Download your project report',
-
-  'ANONYMOUS': 'Remain anonymous',
-
-  'PRIVATE': 'Nothing will be published at this stage',
-
-  'BOT_TEXT': 'Ready to begin a new project?',
-
-  'PROJECT_NAME': 'Project name is required.',
-
+  'CHOOSE_DATE': 'Choose a date'
 
 };

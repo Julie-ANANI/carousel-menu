@@ -1,26 +1,22 @@
 export const NEW_PROJECT = {
-  'DESCRIPTION': {
-    'LINE1': 'Quelle langue souhaitez-vous utiliser pour démarrer votre projet ?',
-    'LINE2': 'Vous pourrez traduire votre projet dans l\'autre langue à tout moment.'
+
+  'HEADINGS': {
+    'TITLE': 'Pour commencer…',
+    'PRIMARY_OBJECTIVE': 'Quel est l\'objectif principal du test marché UMI ?',
+    'SECONDARY_OBJECTIVE': 'J\'aimerais aussi...',
+    'RESTITUTION_DATE': 'Et pour finir !'
   },
 
-  'BUTTON_TEXT': 'Créer le projet',
+  'SUB_HEADING': {
+    'PRIMARY_OBJECTIVE': 'Vous aurez la possibilité de donner des précisions à la prochaine étape'
+  },
 
-  'COMPANY_NAME_LABEL': 'Quel est le nom de votre projet ?',
+  'TITLE_QUESTION': 'Donnez un nom à votre nouveau projet (titre à usage interne)',
 
-  'PROJECT_NAME_PLACEHOLDER': 'Entrez le nom de votre projet',
+  'RESTITUTION_DATE_COMMENT': 'Avez-vous des précisions à donner sur cette date ?',
 
-  'INNOVATION_TYPE_LABEL': 'Quelle offre répond le mieux à vos besoins pour ce projet ?',
+  'RESTITUTION_DATE_QUESTION' : 'A quelle date souhaitez-vous idéalement obtenir les résultats finaux ?',
 
-  'DOWNLOAD': 'Téléchargez votre étude complète',
-
-  'ANONYMOUS': 'Anonymat garanti',
-
-  'PRIVATE': 'Rien n\'est publié à ce stade' ,
-
-  'BOT_TEXT': 'Prêt à commencer un nouveau projet ?',
-
-  'PROJECT_NAME': 'Le nom du projet est requis.',
-
+  'CHOOSE_DATE': 'Choisissez une date'
 
 };

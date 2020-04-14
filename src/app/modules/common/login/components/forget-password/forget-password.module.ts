@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ForgetPasswordComponent } from './forget-password.component';
-import { UserService } from '../../../../../services/user/user.service';
 
 @NgModule({
   imports: [
@@ -19,9 +18,6 @@ import { UserService } from '../../../../../services/user/user.service';
   ],
   exports: [
     ForgetPasswordComponent
-  ],
-  providers: [
-    UserService
   ]
 })
 

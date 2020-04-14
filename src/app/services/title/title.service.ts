@@ -6,8 +6,9 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TranslateTitleService implements OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
@@ -17,7 +18,7 @@ export class TranslateTitleService implements OnDestroy {
 
     public setTitle(title: string) {
       this._translateService.get(title).pipe(takeUntil(this.ngUnsubscribe)).subscribe((translatedTitle: string) => {
-        return this._titleService.setTitle(translatedTitle);
+        return this._titleService.setTitle(translatedTitle + ' | ' + environment.companyShortName);
       });
     }
 

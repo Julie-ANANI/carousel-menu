@@ -7,21 +7,21 @@
   border-bottom: $border-width solid $border-color;
   flex-wrap: wrap;
   list-style: none;
-  margin: 0;
+  margin: 0 -15px;
   padding: 0;
 
   .tab-item {
     color: $text-background-color;
     margin: 0;
-    padding: 0 0.75rem;
+    padding: 0 15px;
 
     a {
       @include tab-transition();
       @include flex-centered();
-      font-size: 0.75rem;
+      font-size: 15px;
       font-weight: normal;
       margin: 0;
-      padding: 0.5rem 0.75rem;
+      padding: 10px 15px;
       text-decoration: none;
       color: inherit;
       border-bottom: $border-width-lg solid transparent;
@@ -40,7 +40,7 @@
 
     &.active a, a.active {
       border-bottom-color: $border-primary-color;
-      color: $text-warning-color;
+      color: $text-primary-color !important;
     }
 
   }

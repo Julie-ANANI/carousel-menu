@@ -1,83 +1,90 @@
- <section *ngIf="innovation" class="section-pad rm-pad-top" id="project-component">
+<div class="p-bottom-50" id="project">
 
-    <!-- header section -->
-    <div class="header bg-draft p-top-25">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+  <!-- header -->
+  <section [ngClass]="{'bg-draft': !isLoading}" class="p-top-25">
+    <div class="container grid-2xl fluid">
+      <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- heading -->
-        <h1 class="title-hero">
-          <ng-container *ngIf="innovation.name">{{ innovation.name | FormatText }}</ng-container>
-          <ng-container *ngIf="!innovation.name">Project</ng-container>
+        <h1 [hidden]="isLoading" class="title text-white m-bottom-10 animate-fade">
+          <ng-container *ngIf="innovation.name; else project">{{ innovation.name }}</ng-container>
+          <ng-template #project>{{ 'COMMON.LABEL.PROJECT' | translate }}</ng-template>
         </h1>
+        <!-- /heading -->
 
-        <!-- info -->
-        <div class="info-wrapper">
-          <span class="text text-notify">
-            {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
-            &nbsp;•&nbsp;
-            {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
-            &nbsp;•&nbsp;
-            {{ innovation.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-            <span class="text-link gtm-edit-collaborators" (click)="editCollaborator($event)">{{ 'COMMON.BUTTON.COLLABORATOR' | translate }}</span>
-          </span>
+        <!-- mission objective -->
+        <div [ngStyle]="{ 'min-height': '25px' }">
+          <div *ngIf="mission.objective && mission.objective.principal && mission.objective.principal['en']
+          && mission.objective.principal['en'] !== 'Other'">
+            <div [hidden]="isLoading" class="objective-wrapper animate-fade">
+              <i [ngClass]="iconClass(mission.objective.principal['en'])"></i>
+              {{ mission.objective.principal[currentLang] }}
+            </div>
+          </div>
         </div>
+        <!-- /mission objective -->
 
         <!-- tabs -->
-        <div class="tab-container">
-          <ul class="tab">
-            <li class="tab-item">
-              <a [routerLink]="['setup']" routerLinkActive="active" (click)="setCurrentTab($event, 'setup')" class="gtm-tabs-description">
-                <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
-              </a>
-            </li>
-            <li class="tab-item">
-              <a [routerLink]="['exploration']" routerLinkActive="active" (click)="setCurrentTab($event, 'exploration')" class="gtm-tabs-exploration">
-                <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
-              </a>
-            </li>
-            <li class="tab-item">
-              <a [routerLink]="['synthesis']" routerLinkActive="active" (click)="setCurrentTab($event, 'synthesis')" class="gtm-tabs-synthesis">
-                <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
+        <div [hidden]="isLoading" class="m-top-40 animate-fade">
+          <ul class="tab is-fullwidth">
+            <li *ngFor="let tab of tabs" class="tab-item">
+              <a
+                (click)="setCurrentTab($event, tab.route)"
+                [id]="tab.route"
+                [ngClass]="tab.tracking"
+                [routerLink]="tab.route"
+                routerLinkActive="active">
+                <i [ngClass]="tab.iconClass"></i>
+                {{ 'PROJECT_MODULE.' + tab.name | translate }}
               </a>
             </li>
           </ul>
         </div>
+        <!-- /tabs -->
 
       </div>
     </div>
-    <!-- /header section -->
-
-    <!-- setup section -->
-    <ng-container *ngIf="currentPage === 'setup'">
-      <app-setup [project]="innovation"></app-setup>
-    </ng-container>
-    <!-- /setup section -->
-
-    <!-- exploration section -->
-    <ng-container *ngIf="currentPage === 'exploration'">
-      <app-exploration [project]="innovation"></app-exploration>
-    </ng-container>
-    <!-- /exploration section -->
-
-    <!-- synthesis section -->
-    <ng-container *ngIf="currentPage === 'synthesis'">
-      <app-shared-market-report [project]="innovation" [adminSide]="false" [reportShared]="false"></app-shared-market-report>
-    </ng-container>
-  <!-- /synthesis section -->
-
-  <!-- TODO: remove currentPage parameter & use router-outlet -->
-  <!-- <router-outlet></router-outlet> -->
-
-</section>
+  </section>
+  <!-- /header -->
 
 
-<!-- collaborator sidebar -->
-<sidebar [(template)]="sidebarValue">
-  <app-collaborator
-    [sidebarState]="sidebarValue.animate_state"
-    [project]="innovation"
-    (collaboratorAdded)="addCollaborators($event)">
-  </app-collaborator>
-</sidebar>
-<!-- /collaborator sidebar -->
+  <!-- different pages -->
+  <section [ngSwitch]="currentPage">
 
+    <!-- settings -->
+    <div *ngSwitchCase="'settings'" class="container grid-2xl fluid">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+        <div class="p-top-50">
+          <settings></settings>
+        </div>
+      </div>
+    </div>
+    <!-- /settings -->
+
+    <!-- setup -->
+    <div *ngSwitchCase="'setup'">
+      <app-setup *ngIf="innovation._id" [project]="innovation"></app-setup>
+    </div>
+    <!-- /setup -->
+
+    <!-- exploration -->
+    <div *ngSwitchCase="'exploration'">
+      <app-exploration *ngIf="innovation._id" [project]="innovation"></app-exploration>
+    </div>
+    <!-- /exploration -->
+
+    <!-- synthesis -->
+    <div *ngSwitchCase="'synthesis'">
+      <app-shared-market-report
+        *ngIf="innovation._id"
+        [project]="innovation"
+        [adminSide]="false"
+        [reportShared]="false">
+      </app-shared-market-report>
+    </div>
+    <!-- /synthesis -->
+
+  </section>
+  <!-- /different pages -->
+
+</div>

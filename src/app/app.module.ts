@@ -20,12 +20,10 @@ import { AuthService } from './services/auth/auth.service';
 import { ErrorService } from './services/error/error.service';
 import { LocalStorageService } from './services/localStorage/localStorage.service';
 import { TranslationService } from "./services/translation/translation.service";
-import { TranslateTitleService } from './services/title/title.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { ConfigService } from './services/config/config.service';
-import { UserService } from "./services/user/user.service";
 import { IndexService } from './services/index/index.service';
 
 // Interceptors
@@ -60,11 +58,9 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
   ],
   providers: [
     AuthService,
-    UserService,
     ErrorService,
     LocalStorageService,
     TranslationService,
-    TranslateTitleService,
     TranslateNotificationsService,
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },

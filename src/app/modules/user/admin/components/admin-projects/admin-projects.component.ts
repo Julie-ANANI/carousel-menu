@@ -9,9 +9,12 @@ import { Response } from '../../../../../models/response';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { ConfigService } from '../../../../../services/config/config.service';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-admin-projects',
+  selector: 'admin-projects',
   templateUrl: './admin-projects.component.html',
   styleUrls: ['./admin-projects.component.scss']
 })
@@ -20,54 +23,67 @@ export class AdminProjectsComponent implements OnInit {
 
   private _projects: Array<Innovation> = [];
 
-  private _total: number = -1;
+  private _totalProjects = -1;
 
-  private _table: Table;
+  private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status',
+    fields: 'name,innovationCards,owner,domain,updated,created,status,mission',
     limit: '10',
     offset: '0',
     search: '{}',
     sort: '{"created":-1}'
   };
 
-  private _fetchingError: boolean;
+  private _isLoading = true;
+
+  private _mainObjective = this._translateService.currentLang === 'en' ? 'mission.objective.principal.en' : 'mission.objective.principal.fr';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
               private _innovationService: InnovationService,
+              private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
-    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECTS');
+    this._translateTitleService.setTitle('Market Tests');
 
   }
 
   ngOnInit(): void {
-
     if (isPlatformBrowser(this._platformId)) {
-
+      this._isLoading = false;
       this._config.limit = this._configService.configLimit('admin-projects-limit');
-
-      this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-        this._projects = response.result;
-        this._total = response._metadata.totalCount;
-        this._initializeTable();
-      }, () => {
-        this._fetchingError = true;
-      });
-
+      this._initializeTable();
+      this._getProjects();
     }
-
   }
 
+  /***
+   * this is to get the projects from the server.
+   * @private
+   */
+  private _getProjects() {
+    this._innovationService.getAll(this._config).pipe(first()).subscribe((innovations: Response) => {
+      this._projects = innovations.result;
+      this._totalProjects = innovations._metadata.totalCount;
+      this._initializeTable();
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+    });
+  }
+
+  /***
+   * initializing the table with the projects.
+   * @private
+   */
   private _initializeTable() {
     this._table = {
       _selector: 'admin-projects-limit',
       _title: 'TABLE.TITLE.PROJECTS',
       _content: this._projects,
-      _total: this._total,
+      _total: this._totalProjects,
       _isSearchable: true,
       _isEditable: false,
       _isTitle: true,
@@ -75,12 +91,11 @@ export class AdminProjectsComponent implements OnInit {
       _isPaginable: true,
       _columns: [
         {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true },
-        // {_attrs: ['innovationCards.title'], _name: 'TABLE.HEADING.TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true },
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT' },
-        {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-        {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true },
-        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true },
-        {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true,
+        {_attrs: ['mission.type'], _name: 'TABLE.HEADING.TYPE', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '150px'},
+        {_attrs: [this._mainObjective], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'TEXT'},
+        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true, _width: '150px' },
+        {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
@@ -91,26 +106,24 @@ export class AdminProjectsComponent implements OnInit {
     };
   }
 
-  private _getProjects() {
-    this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-      this._projects = response.result;
-      this._total = response._metadata.totalCount;
-      this._initializeTable();
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
+  /***
+   * when the user clicks the Name opens the project in the new tab.
+   * @param innovation
+   */
+  public navigate(innovation: Innovation) {
+    window.open(`/user/admin/projects/project/${innovation._id}`, '_blank');
   }
 
-  public navigate(value: Innovation) {
-    window.open(`/user/admin/projects/project/${value._id}`, '_blank');
-  }
-
+  /***
+   * when the user clicks the Import button to import the projects.
+   * @param file
+   */
   public onClickImport(file: File) {
     this._innovationService.import(file).pipe(first()).subscribe(() => {
-      this._getProjects();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 
@@ -123,10 +136,6 @@ export class AdminProjectsComponent implements OnInit {
     return this._config;
   }
 
-  get total(): number {
-    return this._total;
-  }
-
   get projects(): Array<Innovation> {
     return this._projects;
   }
@@ -135,8 +144,8 @@ export class AdminProjectsComponent implements OnInit {
     return this._table;
   }
 
-  get fetchingError(): boolean {
-    return this._fetchingError;
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
 }

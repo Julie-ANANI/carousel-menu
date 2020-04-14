@@ -79,14 +79,7 @@
       background-color: $bg-light-color;
 
       .modal-cancel {
-        color: $text-meta-color;
-        border: 0;
-        background: transparent;
-
-        &:hover {
-          text-decoration: underline;
-        }
-
+        @include button-outline-variant($bg-meta-color);
       }
 
       .button:not(:last-child) {

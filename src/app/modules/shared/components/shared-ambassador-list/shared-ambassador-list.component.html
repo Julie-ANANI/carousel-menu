@@ -20,14 +20,14 @@
 
 <!-- section table -->
 <ng-container *ngIf="!fetchingError && total > 0">
-  <app-shared-table
+  <shared-table
     [(config)]="config"
     [data]="tableInfos"
     (editRow)="onClickEdit($event)"
     (removeRows)="onClickRemove($event)"
     (performAction)="performActions($event)"
     (selectRows)="selectPro($event)">
-  </app-shared-table>
+  </shared-table>
 </ng-container>
 <!-- /section table -->
 

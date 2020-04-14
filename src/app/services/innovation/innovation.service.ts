@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Campaign } from '../../models/campaign';
@@ -9,27 +9,28 @@ import { Professional } from '../../models/professional';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
 import { InnovCardComment } from '../../models/innov-card-comment';
+import { Config } from '../../models/config';
+import { Collaborator } from '../../models/collaborator';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) { }
 
   public create(innovationObj: Innovation): Observable<any> {
     return this._http.post('/innovation', innovationObj);
   }
 
-  public get(id: string, config?: any): Observable<Innovation> {
-    return this._http.get('/innovation/' + id, {params: config});
+  public get(id: string, config?: Config): Observable<Innovation> {
+    return this._http.get<Innovation>('/innovation/' + id, {params: config});
   }
 
   public getAll(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
   }
 
-  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<any> {
-    return this._http.post('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
+  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {
+    return this._http.post<InnovCard>('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {
@@ -63,8 +64,9 @@ export class InnovationService {
   /*public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }*/
-  public save(innovationId: string, innovationObj: Innovation): Observable<any> {
-    return this._http.put('/innovation/' + innovationId, innovationObj);
+
+  public save(innovationId: string, innovationObj: Innovation): Observable<Innovation> {
+    return this._http.put<Innovation>('/innovation/' + innovationId, innovationObj);
   }
 
   public saveInnovationCardComment(innovationId: string, innovationCardId: string, commentObj: InnovCardComment): Observable<any> {
@@ -95,14 +97,14 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId + '/sendMailToOwner', {mail: mail});
   }
 
-  public inviteCollaborators(innovationId: string, collaboratorsEmails: string): Observable<any> {
-    return this._http.post('/innovation/' + innovationId + '/invite', {
+  public inviteCollaborators(innovationId: string, collaboratorsEmails: string): Observable<Collaborator> {
+    return this._http.post<Collaborator>('/innovation/' + innovationId + '/invite', {
       collaborators: collaboratorsEmails
     });
   }
 
-  public removeCollaborator(innovationId: string, collaborator: User): Observable<any> {
-    return this._http.delete('/innovation/' + innovationId + '/collaborator/' + collaborator.id);
+  public removeCollaborator(innovationId: string, collaborator: User): Observable<Array<User>> {
+    return this._http.delete<Array<User>>('/innovation/' + innovationId + '/collaborator/' + collaborator.id);
   }
 
   public createQuiz(innovationId: string): Observable<any> {

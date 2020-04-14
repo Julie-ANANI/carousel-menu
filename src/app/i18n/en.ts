@@ -39,6 +39,8 @@ import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-edi
 import { ENTERPRISE } from "../modules/user/admin/components/admin-settings/admin-enterprise-management/i18n/en";
 import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project-storyboard/i18n/en';
 import { ADMIN_EXECUTIVE_REPORT } from '../modules/user/admin/components/admin-executive-report/i18n/en';
+import { NEW_PROJECT } from '../modules/user/client/components/new-project/i18n/en';
+import { CLIENT_PROJECT_SETTINGS } from '../modules/user/client/components/project/components/settings/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -81,5 +83,7 @@ export const en = {
   'SHARED_MAIL_EDITOR': SHARED_MAIL_EDITOR,
   'ENTERPRISE': ENTERPRISE,
   'ADMIN_STORYBOARD': ADMIN_STORYBOARD,
-  'ADMIN_EXECUTIVE_REPORT': ADMIN_EXECUTIVE_REPORT
+  'ADMIN_EXECUTIVE_REPORT': ADMIN_EXECUTIVE_REPORT,
+  'NEW_PROJECT': NEW_PROJECT,
+  'CLIENT_PROJECT_SETTINGS': CLIENT_PROJECT_SETTINGS
 };

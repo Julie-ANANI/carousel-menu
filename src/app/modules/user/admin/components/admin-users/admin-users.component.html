@@ -30,12 +30,12 @@
 
       <!-- table users -->
       <ng-container *ngIf="!fetchingError">
-        <app-shared-table
+        <shared-table
           (editRow)="onClickEdit($event)"
           (removeRows)="onClickDelete($event)"
           [(config)]="config"
           [data]="table">
-        </app-shared-table>
+        </shared-table>
       </ng-container>
       <!-- /table users -->
 

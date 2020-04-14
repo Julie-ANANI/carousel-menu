@@ -16,18 +16,11 @@ const clientRoutes: Routes = [
     component: ClientComponent,
     canActivateChild: [AuthGuard],
     children: [
-      {
-        path: '',
-        redirectTo: 'projects',
-        pathMatch: 'full'
-      },
-      {
-        path: 'account',
-        component: AccountComponent,
-        pathMatch: 'full'
-      },
+      { path: '', redirectTo: 'projects', pathMatch: 'full' },
+      { path: 'account', component: AccountComponent, pathMatch: 'full' },
       {
         path: 'synthesis',
+        canActivateChild: [AuthGuard],
         children: [
           { path: '', component: SynthesisListComponent, pathMatch: 'full' },
           { path: ':projectId/:shareKey', component: SynthesisCompleteComponent, pathMatch: 'full' }
@@ -35,6 +28,7 @@ const clientRoutes: Routes = [
       },
       {
         path: 'projects',
+        canActivateChild: [AuthGuard],
         children: [
           { path: '', component: ProjectsListComponent, pathMatch: 'full' },
           { path: 'new', component: NewProjectComponent, pathMatch: 'full' },
@@ -52,9 +46,6 @@ const clientRoutes: Routes = [
   ],
   exports: [
     RouterModule
-  ],
-  providers: [
-    AuthGuard
   ]
 })
 

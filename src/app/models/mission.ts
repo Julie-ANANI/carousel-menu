@@ -1,10 +1,14 @@
 import { Innovation } from './innovation';
 import { User } from './user.model';
+import { Multiling } from './multiling';
+
+export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 
 export interface  Milestone {
  name: string;
  code: string;
- dueDate: string;
+ dueDate: Date;
+ comment?: string;
 }
 
 export interface MailConfiguration {
@@ -22,4 +26,19 @@ export interface Mission {
   team?: Array<User>;
   milestoneDates?: Array<Milestone>;
   mailConf?: Array<MailConfiguration>
+
+  objective?: {
+    principal: Multiling;
+    secondary: Array<Multiling>;
+    comment: string
+  };
+
+  externalDiffusion? : {
+    umi: boolean; // website
+    community: boolean;
+    social: boolean;
+  };
+
+  type?: MissionType;
+
 }

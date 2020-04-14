@@ -96,16 +96,17 @@ export const COMMON = {
     'WELCOME': 'Bienvenue',
     'ACCOUNT': 'Profil',
     'SHARED_REPORTS': 'Rapports partagés',
-    'DISCOVER': 'Showroom des innovations | UMI',
-    'PROJECTS': 'Projets | UMI',
-    'MY_PROJECTS': 'Mes projets | UMI',
+    'DISCOVER': 'Showroom des innovations',
+    'PROJECTS': 'Projets',
+    'MY_PROJECTS': 'Mes projets',
     'PROJECT': 'Projet',
     'REPORT': 'Rapport',
-    'DISCOVER_DESCRIPTION': 'Innovation | UMI',
+    'DISCOVER_DESCRIPTION': 'Innovation',
     'PROFESSIONALS': 'Professionnels',
     'USERS': 'Utilisateurs',
-    'COMMUNITY_PROJECTS': 'Projets | Community | UMI',
-    'ANSWER_TAGS': 'Tags réponse | Projet'
+    'COMMUNITY_PROJECTS': 'Projets | Community',
+    'ANSWER_TAGS': 'Tags réponse | Projet',
+    'NEW_PROJECT': 'Ajouter un projet'
   },
 
   'LABEL': {
@@ -144,7 +145,8 @@ export const COMMON = {
     'CREATED_ON': 'Créé le',
     'COLLABORATORS': 'Collaborateurs',
     'DOMAIN_NAME': 'Nom de domaine',
-    'ANSWER': 'Réponse'
+    'ANSWER': 'Réponse',
+    'PROJECT': 'Projet',
   },
 
   'PLACEHOLDER': {
@@ -164,6 +166,7 @@ export const COMMON = {
     'CLIENT_NAME': 'Nom du client',
     'CLIENT_EMAIL': 'Client email',
     'CHOOSE_SALE': 'Choose sale',
+    'AUTO_SUGGESTION': 'Commencez à taper pour rechercher...'
   },
 
   'REQUIRED': {
@@ -203,6 +206,8 @@ export const COMMON = {
     'SEND': 'Envoyer',
     'PRINT': 'Imprimer',
     'PREVIEW': 'Prévisualiser',
+    'PREVIOUS': 'Retour',
+    'NEXT': 'Suivant',
     'SUBMIT': 'Soumettre',
     'SIGN_IN': 'Se Connecter',
     'SIGN_UP': 'Commencer',
@@ -218,7 +223,7 @@ export const COMMON = {
     'CREATE': 'Créer',
     'VIEW_LIKE_CLIENT': 'Afficher comme client',
     'BACK_TO_CAMPAIGNS': 'Retour aux campagnes',
-    'COLLABORATOR': 'Gestion des collaborateurs',
+    'COLLABORATOR': 'Ajouter un collaborateur',
     'UPDATE': 'Mise à jour',
     'IMPORT_PROJECT': 'Importer un projet',
     'IMPORT_PROS': 'Importer une liste de pros',
@@ -228,7 +233,10 @@ export const COMMON = {
     'IMPORT_QUESTIONNAIRE': 'Importer un questionnaire',
     'EXPORT_QUESTIONNAIRE': 'Exporter tous les questionnaires',
     'GENERATE_VIDEO': 'Générer une vidéo',
-    'GENERATE_PDF': 'Générer PDF'
+    'GENERATE_PDF': 'Générer PDF',
+    'REINVITE': 'Renvoyer l\'invitation',
+    'ADD_LANG_ENGLISH': 'Ajouter l\'anglais',
+    'ADD_LANG_FRENCH': 'Ajouter le français',
   },
 
   'PROJECT': {

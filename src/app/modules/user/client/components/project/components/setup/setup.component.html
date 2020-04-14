@@ -77,12 +77,6 @@
     <div class="section-tabs">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <ul class="tab">
-          <li class="tab-item" *ngIf="innovation.mission">
-            <a [ngClass]="{ 'active': currentPage === 'objectives' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'objectives')">
-              <div class="shape is-circle is-md objectives-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
-              {{ 'PROJECT_MODULE.SETUP.OBJECTIVES_TAB' | translate }}
-            </a>
-          </li>
           <li class="tab-item">
             <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
               <div class="shape is-circle is-md pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
@@ -109,12 +103,6 @@
     <!-- different section -->
     <div class="p-top-25">
       <div class="column col-xs-12 col-11 col-mx-auto">
-
-        <!-- objectives -->
-        <div *ngIf="currentPage === 'objectives'" class="p-top-25">
-          <app-objectives [project]="innovation" [editable]="canEdit"></app-objectives>
-        </div>
-
 
         <!-- pitch -->
         <div *ngIf="currentPage === 'pitch'">
@@ -163,7 +151,7 @@
 
   <!-- innovation view sidebar -->
   <sidebar [(template)]="sidebarValue">
-    <app-innovation-preview [projectCard]="innovationToView"></app-innovation-preview>
+    <sidebar-innovation-preview [projectCard]="innovationToView"></sidebar-innovation-preview>
   </sidebar>
   <!-- /innovation view sidebar -->
 

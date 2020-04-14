@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UserComponent } from './user.component';
 
-import { UserService } from '../../services/user/user.service';
 import { AuthGuard } from '../../guards/auth-guard.service';
 
 const userRoutes: Routes = [
@@ -30,7 +29,6 @@ const userRoutes: Routes = [
     RouterModule.forChild(userRoutes)
   ],
   providers: [
-    UserService,
     AuthGuard
   ],
   exports: [

@@ -22,7 +22,6 @@ import { PipeModule } from '../../../pipe/pipe.module';
 import { SidebarModule } from '../../sidebars/templates/sidebar/sidebar.module';
 import { LogoutModule } from '../../common/logout/logout.module';
 import { InputListModule } from '../../utility-components/input-list/input-list.module';
-import { SidebarInnovationPreviewModule } from '../../sidebars/components/innovation-preview/sidebar-innovation-preview.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
@@ -38,7 +37,6 @@ import { TagsService } from '../../../services/tags/tags.service';
 import { CampaignService } from '../../../services/campaign/campaign.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { AnswerService } from '../../../services/answer/answer.service';
-import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
@@ -81,7 +79,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     HeaderModule,
     LogoutModule,
     InputListModule,
-    SidebarInnovationPreviewModule,
     AdminCommunityModule,
     AdminEnterpriseManagementModule,
     FormsModule,
@@ -103,7 +100,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     CampaignService,
     CampaignResolver,
     AnswerService,
-    AutocompleteService,
     DownloadService,
     RequestResolver,
     ScenarioResolver,

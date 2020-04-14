@@ -546,6 +546,24 @@
 
   }
 
+  &.is-community {
+    @include button-default-variant($bg-community-color);
+  }
+
+  &.is-loading {
+    color: transparent;
+
+    .loading {
+      animation-duration: 0.2s;
+      animation-timing-function: ease-in-out;
+      animation-name: fadeIn;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+  }
+
   .icon-left {
     margin-right: $unit-2;
     margin-left: 0;
@@ -568,7 +586,7 @@
   }
 
   &.is-normal {
-    height: 2rem;
+    padding: 15px 20px;
     font-size: $font-size-sm;
 
     i {
@@ -583,12 +601,7 @@
   }
 
   &.is-sm {
-    font-size: $font-size-xs;
-    height: 1.5rem;
-
-    i {
-      font-size: $font-icon-sm;
-    }
+    padding: 11px 20px;
 
     &.is-circled {
       padding-left: 1px;
@@ -597,9 +610,13 @@
 
   }
 
+  &.is-xs {
+    padding: 5px 20px;
+    font-size: $font-size-xs;
+  }
+
   &.is-lg, &.is-xl {
-    padding-top: $unit-4;
-    padding-bottom: $unit-4;
+    padding: $unit-4 20px;
     width: 100%;
   }
 

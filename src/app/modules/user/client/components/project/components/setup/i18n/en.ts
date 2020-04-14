@@ -1,5 +1,4 @@
 import { SURVEY } from '../components/survey/i18n/en';
-import { OBJECTIVES } from '../components/objectives/i18n/en';
 
 export const SETUP = {
   'TITLE': 'Project details',
@@ -34,8 +33,6 @@ export const SETUP = {
   'SURVEY_TAB': 'Survey',
 
   'SURVEY': SURVEY,
-
-  'OBJECTIVES': OBJECTIVES,
 
   'PREVIEW': 'Preview',
 

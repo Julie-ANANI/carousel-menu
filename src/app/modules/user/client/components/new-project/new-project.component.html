@@ -1,95 +1,178 @@
-<section class="section-pad restrict-width" id="new-project-component">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <form novalidate [formGroup]="formData" (ngSubmit)="onCreateProject()">
+<div [hidden]="isLoading" class="p-top-40 p-bottom-40" id="new-project">
+  <div class="container grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <div class="main-container animate-fade">
 
-      <!-- section 1 -->
-      <div class="columns col-gapless">
+        <!-- heading / sub-heading -->
+        <section class="text-center">
+          <h1 class="title is-4 text-bold">
+            {{ 'NEW_PROJECT.HEADINGS.' + fields[currentStep] | translate }}
+          </h1>
 
-        <!-- questions -->
-        <div class="column col-xl-12 col-6 col-mx-auto">
+          <h2 *ngIf="fields[currentStep] === 'PRIMARY_OBJECTIVE'" class="subtitle text-lg">
+            {{ 'NEW_PROJECT.SUB_HEADING.' + fields[currentStep] | translate }}
+          </h2>
+        </section>
+        <!-- /heading / sub-heading  -->
 
-          <div class="ques-1">
-            <span class="shape is-rounded bg-draft">1</span>
-            <span class="text text-question">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
-            <div class="form-group" [ngStyle]="{ 'padding-top': '1rem' }">
-              <label class="form-radio is-inline" for="new-project-frLang">
-                <input
-                  type="radio"
-                  name="choosenLang"
-                  value="fr"
-                  formControlName="choosenLang"
-                  id="new-project-frLang">
-                <i class="form-icon"></i>{{ 'COMMON.LANG.FR' | translate }}
-              </label>
-              <label class="form-radio is-inline" for="new-project-enLang">
-                <input
-                  type="radio"
-                  name="choosenLang"
-                  value="en"
-                  formControlName="choosenLang"
-                  id="new-project-enLang">
-                <i class="form-icon"></i>{{ 'COMMON.LANG.EN' | translate }}
-              </label>
+
+        <!-- different view -->
+        <section
+          [ngSwitch]="fields[currentStep]"
+          class="content-wrapper col-lg-12 col-xl-10 col-8 col-mx-auto flex-centered p-bottom-40">
+
+          <!-- TITLE -->
+          <div *ngSwitchCase="'TITLE'" class="w-full">
+            <div class="mxw-500 text-center col-mx-auto">
+
+              <h6 class="text-normal">{{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}</h6>
+
+              <div class="form-group animate-slide slide-down is-3">
+                <label>
+                  <input
+                    [(ngModel)]="clientProject.name"
+                    class="form-input is-shadowed"
+                    type="text">
+                </label>
+              </div>
+
             </div>
           </div>
+          <!-- /TITLE -->
 
-          <div class="ques-2">
-            <span class="shape is-rounded bg-draft">2</span>
-            <span class="text text-question">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
-            <div class="form-group has-error" [ngStyle]="{ 'padding-top': '1rem' }">
-              <label for="new-project-companyName"></label>
-                <input
-                  type="text"
-                  class="form-input"
-                  name="name"
-                  formControlName="name"
-                  id="new-project-companyName"
-                  [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
-                <span class="form-input-hint" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
-                  {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
-                </span>
+          <!-- PRIMARY_OBJECTIVE -->
+          <div *ngSwitchCase="'PRIMARY_OBJECTIVE'" class="animate-fade w-full is-2">
+            <objectives-primary [(objective)]="mission.objective.principal"></objectives-primary>
+          </div>
+          <!-- /PRIMARY_OBJECTIVE -->
+
+          <!-- SECONDARY_OBJECTIVE -->
+          <div *ngSwitchCase="'SECONDARY_OBJECTIVE'" class="animate-fade w-full is-2">
+            <objectives-secondary
+              [(objectiveComment)]="mission.objective.comment"
+              [(objectives)]="mission.objective.secondary"
+              [isEnabledOptions]="enableSecondaryObjectives()">
+            </objectives-secondary>
+          </div>
+          <!-- /SECONDARY_OBJECTIVE -->
+
+          <!-- RESTITUTION_DATE -->
+          <div *ngSwitchCase="'RESTITUTION_DATE'" class="w-full animate-fade is-2 text-center">
+
+            <!-- date selection -->
+            <div class="p-bottom-40">
+              <h6 class="text-normal m-no-bottom">{{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}</h6>
+
+              <p
+                (click)="dp.toggleCalendar()"
+                class="text-link text-normal text-md">
+                {{ 'NEW_PROJECT.CHOOSE_DATE' | translate }}
+              </p>
+
+              <div class="date-picker">
+                <label>
+                  <input
+                    #dp="angular-mydatepicker"
+                    (dateChanged)="onDateChanged($event)"
+                    [locale]="currentLang"
+                    [options]="datePickerOptions"
+                    [readOnly]="true"
+                    angular-mydatepicker
+                    class="form-input"
+                    name="date-restitution">
+                </label>
+              </div>
+
             </div>
+            <!-- /date selection -->
+
+            <!-- divider -->
+            <div class="divider"></div>
+            <!-- /divider -->
+
+            <!-- comment -->
+            <div class="mxw-500 col-mx-auto p-top-30">
+
+              <h6 class="text-normal">{{ 'NEW_PROJECT.RESTITUTION_DATE_COMMENT' | translate }}</h6>
+
+              <div class="form-group animate-slide slide-down is-3">
+                <label>
+                  <textarea
+                    [(ngModel)]="milestoneDateComment"
+                    class="form-input is-shadowed"
+                    id="textarea-comment"
+                    rows="3">
+                  </textarea>
+                </label>
+              </div>
+
+            </div>
+            <!-- /comment -->
+
           </div>
+          <!-- /RESTITUTION_DATE -->
 
-        </div>
+        </section>
+        <!-- /different view -->
 
-        <!-- bot -->
-        <div class="column col-6 hide-xl col-mx-auto text-center">
-          <app-message-template-1 [widthMax]="'250px'">
-            {{ 'PROJECT_MODULE.NEW_PROJECT.BOT_TEXT' | translate }}
-          </app-message-template-1>
-        </div>
+
+        <!-- buttons -->
+        <section class="text-center">
+
+          <!-- previous -->
+          <ng-container *ngIf="currentStep > 0">
+            <button
+              (click)="changeStep($event, currentStep - 1, 'previous')"
+              [disabled]="isCreating"
+              class="button is-outlined m-right-20 animate-fade is-4 is-info"
+              id="btn-previous">
+              {{ 'COMMON.BUTTON.PREVIOUS' | translate }}
+            </button>
+          </ng-container>
+          <!-- /previous -->
+
+          <!-- next -->
+          <ng-container *ngIf="currentStep < fields.length - 1">
+            <button
+              (click)="changeStep($event, currentStep + 1, 'next')"
+              [disabled]="isDisabled"
+              class="button is-community animate-fade is-4 "
+              id="btn-next">
+              {{ 'COMMON.BUTTON.NEXT' | translate }}
+            </button>
+          </ng-container>
+          <!-- /next -->
+
+          <!-- create -->
+          <ng-container *ngIf="currentStep === fields.length - 1">
+            <button
+              (click)="createProject($event)"
+              [disabled]="isDisabled || isCreating"
+              [ngClass]="{ 'is-loading': isCreating }"
+              class="button is-community animate-fade is-4 "
+              id="btn-create">
+              {{ 'COMMON.BUTTON.CREATE' | translate }}
+              <span *ngIf="isCreating" class="loading is-white"></span>
+            </button>
+          </ng-container>
+          <!-- /create -->
+
+        </section>
+        <!-- buttons -->
+
+
+        <!-- circles -->
+        <section class="flex-centered flex-wrap p-top-15 circle-wrapper">
+          <div
+            *ngFor="let field of fields; let i = index"
+            [ngClass]="{ 'active': i === currentStep }"
+            class="shape is-circle">
+          </div>
+        </section>
+        <!-- /circles -->
 
       </div>
-      <!-- /section 1 -->
-
-      <!-- section 3 -->
-      <div class="create-button text-center">
-        <button class="btn btn-lg btn-primary gtm-create-project-validated" type="submit" [disabled]="formData.invalid">
-          {{ 'PROJECT_MODULE.NEW_PROJECT.BUTTON_TEXT' | translate }}
-        </button>
-      </div>
-      <!-- /section 3 -->
-
-      <!-- section 4
-      <div class="section-info">
-        <div class="columns col-gapless text-center">
-          <div class="column col-sm-12 col-4 col-mx-auto">
-            <div><i class="fas fa-3x fa-cloud-download-alt"></i></div>
-            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.DOWNLOAD' | translate }}</p>
-          </div>
-          <div class="column col-sm-12 col-4 col-mx-auto">
-            <div><i class="fas fa-3x fa-lock"></i></div>
-            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.ANONYMOUS' | translate }}</p>
-          </div>
-          <div class="column col-sm-12 col-4 col-mx-auto">
-            <div><i class="fas fa-3x fa-eye-slash"></i></div>
-            <p class="text">{{ 'PROJECT_MODULE.NEW_PROJECT.PRIVATE' | translate }}</p>
-          </div>
-        </div>
-      </div>
-      /section 4 -->
-
-    </form>
+    </div>
   </div>
-</section>
+</div>
+

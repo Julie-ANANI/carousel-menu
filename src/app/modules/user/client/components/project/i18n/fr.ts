@@ -1,10 +1,15 @@
 import { EXPLORATION } from '../components/exploration/i18n/fr';
 import { HISTORY } from '../components/history/i18n/fr';
-import { NEW_PROJECT } from '../../new-project/i18n/fr';
 import { PROJECTS_LIST } from '../../projects-list/i18n/fr';
 import { SETUP } from '../components/setup/i18n/fr';
 
 export const PROJECT_MODULE = {
+
+  'SETUP_TAB': 'Description du projet',
+  'EXPLORATION_TAB': 'Exploration marché',
+  'SYNTHESIS_TAB': 'Synthèse',
+  'SETTINGS_TAB': 'Paramètres',
+
   'ADD_COLLABORATORS': 'Ajoutez l\'email d\'un collègue',
   'ADD_COLLABORATORS_PLACEHOLDER': 'Ajoutez l\'email d\'un collègue',
 
@@ -49,14 +54,11 @@ export const PROJECT_MODULE = {
     'BOT_MESSAGE': 'Partagez et éditez votre projet à plusieurs !'
   },
 
-  'SETUP_TAB': 'Description du projet',
-  'EXPLORATION_TAB': 'Exploration marché',
-  'SYNTHESIS_TAB': 'Synthèse',
+
   'HISTORY_TAB': 'Historique',
 
   'EXPLORATION': EXPLORATION,
   'HISTORY': HISTORY,
-  'NEW_PROJECT': NEW_PROJECT,
   'PROJECTS_LIST': PROJECTS_LIST,
   'SETUP': SETUP
 

@@ -1,5 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import * as moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
@@ -117,6 +118,22 @@ export class CommonService {
     } else {
       return '#2ECC71';
     }
+
+  }
+
+  /***
+   * this return the date of the future month in the format 'YYYY-MM-DD'.
+   */
+  public getFutureMonth() {
+    const currentDate = moment();
+    let futureMonth = moment(currentDate).add(1, 'M');
+    const futureMonthEnd = moment(futureMonth).endOf('month');
+
+    if (currentDate.date() !== futureMonth.date() && futureMonth.isSame(futureMonthEnd.format('YYYY-MM-DD'))) {
+      futureMonth = futureMonth.add(1, 'd');
+    }
+
+    return futureMonth.format('YYYY-MM-DD');
 
   }
 

@@ -47,12 +47,12 @@
       <!-- /add button -->
 
       <!-- table -->
-      <app-shared-table
+      <shared-table
         (editRow)="editSignature($event)"
         (removeRows)="OnClickDelete($event)"
         [(config)]="config"
         [data]="table">
-      </app-shared-table>
+      </shared-table>
       <!-- /table -->
 
     </ng-container>

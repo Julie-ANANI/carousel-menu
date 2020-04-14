@@ -1,5 +1,5 @@
 <section id="shared-professionals-list">
-  <app-shared-table
+  <shared-table
     (configChange)="onConfigChange($event)"
     (editRow)="onClickEdit($event)"
     (removeRows)="onClickDelete($event)"
@@ -7,7 +7,7 @@
     (selectRows)="onSelectRows($event)"
     [config]="config"
     [data]="table">
-  </app-shared-table>
+  </shared-table>
 </section>
 
 

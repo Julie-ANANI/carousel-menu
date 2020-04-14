@@ -6,9 +6,6 @@ import { WelcomeRoutingModule } from './welcome-routing.module';
 
 import { WelcomeComponent } from './welcome.component';
 
-import { UserService } from '../../../services/user/user.service';
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -18,9 +15,6 @@ import { UserService } from '../../../services/user/user.service';
   ],
   declarations: [
     WelcomeComponent
-  ],
-  providers: [
-    UserService
   ],
   exports: [
     WelcomeComponent

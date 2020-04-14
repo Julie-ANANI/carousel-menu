@@ -97,16 +97,17 @@ export const COMMON = {
     'WELCOME': 'Welcome',
     'ACCOUNT': 'Profile',
     'SHARED_REPORTS': 'Shared Reports',
-    'DISCOVER': 'Innovation Portfolio | UMI',
-    'PROJECTS': 'Projects | UMI',
-    'MY_PROJECTS': 'My projects | UMI',
+    'DISCOVER': 'Innovation Portfolio',
+    'PROJECTS': 'Projects',
+    'MY_PROJECTS': 'My projects',
     'PROJECT': 'Project',
     'REPORT': 'Report',
-    'DISCOVER_DESCRIPTION': 'Innovation | UMI',
+    'DISCOVER_DESCRIPTION': 'Innovation',
     'PROFESSIONALS': 'Professionals',
     'USERS': 'Users',
-    'COMMUNITY_PROJECTS': 'Projects | Community | UMI',
-    'ANSWER_TAGS': 'Answer tags | Project'
+    'COMMUNITY_PROJECTS': 'Projects | Community',
+    'ANSWER_TAGS': 'Answer tags | Project',
+    'NEW_PROJECT': 'Add project'
   },
 
   'LABEL': {
@@ -145,7 +146,8 @@ export const COMMON = {
     'CREATED_ON': 'Created on',
     'COLLABORATORS': 'Collaborators',
     'DOMAIN_NAME': 'Domain Name',
-    'ANSWER': 'Answer'
+    'ANSWER': 'Answer',
+    'PROJECT': 'Project',
   },
 
   'PLACEHOLDER': {
@@ -165,6 +167,7 @@ export const COMMON = {
     'CLIENT_NAME': 'Client name',
     'CLIENT_EMAIL': 'Client email',
     'CHOOSE_SALE': 'Choose sale',
+    'AUTO_SUGGESTION': 'Start typing to search...'
   },
 
   'REQUIRED': {
@@ -205,6 +208,8 @@ export const COMMON = {
     'SEND': 'Send',
     'PRINT': 'Print',
     'PREVIEW': 'Preview',
+    'PREVIOUS': 'Previous',
+    'NEXT': 'Next',
     'SUBMIT': 'Submit',
     'SIGN_IN': 'Sign In',
     'SIGN_UP': 'Sign Up',
@@ -219,7 +224,7 @@ export const COMMON = {
     'CREATE': 'Create',
     'VIEW_LIKE_CLIENT': 'View like client',
     'BACK_TO_CAMPAIGNS': 'Back to campaigns',
-    'COLLABORATOR': 'manage collaborators',
+    'COLLABORATOR': 'Add collaborator',
     'UPDATE': 'Update',
     'IMPORT_PROJECT': 'Import project',
     'EXPORT_PROJECT': 'Export project',
@@ -229,7 +234,10 @@ export const COMMON = {
     'IMPORT_QUESTIONNAIRE': 'Import questionnaire',
     'EXPORT_QUESTIONNAIRE': 'Export all the questionnaires',
     'GENERATE_VIDEO': 'Generate video',
-    'GENERATE_PDF': 'Generate PDF'
+    'GENERATE_PDF': 'Generate PDF',
+    'REINVITE': 'Reinvite',
+    'ADD_LANG_ENGLISH': 'Add English',
+    'ADD_LANG_FRENCH': 'Add French',
   },
 
   'PROJECT': {

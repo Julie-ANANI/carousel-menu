@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Mission } from '../../models/mission';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MissionService {
 
   constructor(private _http: HttpClient) {

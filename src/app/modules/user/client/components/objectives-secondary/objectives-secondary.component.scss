@@ -1,0 +1,44 @@
+@import "../../../../../../style/framework/src/variables";
+
+#objectives-secondary {
+
+  .options-wrapper {
+    max-width: 750px;
+
+    .form-checkbox {
+      padding-left: 40px;
+      padding-right: 8px;
+
+      .form-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+    }
+
+  }
+
+  .divider {
+    max-width: 371px;
+  }
+
+  textarea {
+    padding: 14.5px;
+    font-size: 14px;
+    line-height: 1.3;
+
+    &.form-input {
+
+      &:disabled, &.disabled {
+        background: transparent;
+        color: $form-input-color;
+        border-color: $form-border-color;
+        cursor: not-allowed;
+        opacity: 1;
+      }
+
+    }
+
+  }
+
+}
