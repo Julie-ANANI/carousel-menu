@@ -22,7 +22,6 @@ import { PipeModule } from '../../../pipe/pipe.module';
 import { SidebarModule } from '../../sidebars/templates/sidebar/sidebar.module';
 import { LogoutModule } from '../../common/logout/logout.module';
 import { InputListModule } from '../../utility-components/input-list/input-list.module';
-import { SidebarInnovationPreviewModule } from '../../sidebars/components/innovation-preview/sidebar-innovation-preview.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
@@ -80,7 +79,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     HeaderModule,
     LogoutModule,
     InputListModule,
-    SidebarInnovationPreviewModule,
     AdminCommunityModule,
     AdminEnterpriseManagementModule,
     FormsModule,

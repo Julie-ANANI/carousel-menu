@@ -15,7 +15,7 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
-import { SidebarInnovationPreviewModule } from '../../../../sidebars/components/innovation-preview/sidebar-innovation-preview.module';
+import { SidebarInnovationPreviewModule } from '../../../../sidebars/components/sidebar-innovation-preview/sidebar-innovation-preview.module';
 import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';

@@ -6,12 +6,12 @@ import { Media } from '../../../../models/media';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 
 @Component({
-  selector: 'app-innovation-preview',
-  templateUrl: './innovation-preview.component.html',
-  styleUrls: ['./innovation-preview.component.scss']
+  selector: 'sidebar-innovation-preview',
+  templateUrl: './sidebar-innovation-preview.component.html',
+  styleUrls: ['./sidebar-innovation-preview.component.scss']
 })
 
-export class InnovationPreviewComponent {
+export class SidebarInnovationPreviewComponent {
 
   @Input() set projectCard(value: InnovCard) {
     if (value) {

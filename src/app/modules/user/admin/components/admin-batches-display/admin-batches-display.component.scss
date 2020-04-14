@@ -2,32 +2,44 @@
 
 #admin-batches-display {
 
-  .batches-wrapper {
+  .batch-wrapper {
+    display: flex;
+    padding-top: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-    .batch-wrapper {
+    .batch {
       display: flex;
+      flex-direction: column;
+      text-align: center;
       padding-top: 10px;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      padding-bottom: 10px;
 
-      .batch {
+      p {
+        font-weight: $font-weight-medium;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .batch-body {
         display: flex;
         flex-direction: column;
-        text-align: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        margin-bottom: 4px;
 
-        p {
-          font-weight: $font-weight-medium;
-          color: $text-background-color;
+        .text-link {
+          text-decoration: none;
           font-size: 16px;
-          margin-bottom: 10px;
+          cursor: default;
         }
 
-        .batch-body {
-          display: flex;
-          flex-direction: column;
-          margin-bottom: 10px;
+      }
+
+      .popover .popover-container {
+
+        .card {
+          max-height: 500px;
+          overflow: hidden;
+          overflow-y: auto;
         }
 
       }
