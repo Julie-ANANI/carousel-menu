@@ -2,14 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.30.0 (Unreleased)
+## 1.31.0 (Unreleased)
+
+### Added
+<ul>
+  <li>The new interface to generate Project at the client side.</li>
+  <li>The new tab Settings in the project page at the client side.</li>
+  <li>Functionality to edit the Commercial, Type, Objective under the Settings tab of the project at the admin side.</li>
+</ul>
+
+### Updated
+<ul>
+  <li>Updating the owner of the project updates the Client in ClientProject and Mission also.</li>
+</ul>
+
+### Changed
+
+<ul>
+  <li>Projects tab to Market Tests tab at the admin side.</li>
+  <li>Batch display under the Dashboard tab now under the Market Test tab.</li>
+</ul>
+
+## 1.30.0 - 28 February 2020 
 
 ### Added
 
 <ul>
   <li>The new interface to generate the Executive Report in the admin side.</li>
   <li>The new tab Storyboard.</li>
-  <li>Browser independent priniting for executive report.</li>
+  <li>Browser independent printing for executive report.</li>
 </ul>
 
 ### Updated
