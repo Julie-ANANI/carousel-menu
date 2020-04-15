@@ -36,7 +36,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
-  private _mission: Mission = <Mission>{};
+  private _mission: Mission = <Mission>{
+    objective: {
+      principal: { en: '', fr: '' },
+      secondary: [],
+      comment: ''
+    },
+    milestoneDates: []
+  };
 
   private _clientProject: ClientProject = <ClientProject>{};
 
@@ -126,14 +133,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'PRINCIPAL_OBJECTIVE':
-            section.isVisible = !!(this._mission.objective && this._mission.objective.principal
-              && this._mission.objective.principal[this._currentLang]);
+            section.isVisible = !!(this._mission.objective.principal[this._currentLang]);
             section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 
           case 'SECONDARY_OBJECTIVE':
-            section.isVisible = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED')
-              || !!(this._mission.objective && this._mission.objective.principal && this._mission.objective.secondary[this._currentLang]);
+            section.isVisible = !!(this._mission.objective.principal[this._currentLang] && (this._innovation.status === 'EDITING'
+              || this._innovation.status === 'SUBMITTED'));
             section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 
@@ -150,13 +156,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'RESTITUTION_DATE':
-            section.isVisible = !!(this._mission.milestoneDates && this._mission.milestoneDates.length > 0
+            section.isVisible = !!(this._mission.milestoneDates.length > 0
               && this._mission.milestoneDates.some((milestone) => milestone.code === 'RDO'));
             section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 
           case 'ROADMAP':
-            section.isVisible = !!(this._mission.milestoneDates && this._mission.milestoneDates.length > 0
+            section.isVisible = !!(this._mission.milestoneDates.length > 0
               && this._mission.milestoneDates.some((milestone) => milestone.code !== 'RDO'));
             break;
 
@@ -518,8 +524,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * we disabled the mission secondary objectives.
    */
   public enableSecondaryObjectives(section: Section): boolean {
-    return this._mission.objective && this._mission.objective.principal
-      && this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
+    return this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
   }
 
   get mission(): Mission {
