@@ -24,14 +24,12 @@
       .batch-body {
         display: flex;
         flex-direction: column;
-        margin-bottom: 4px;
+      }
 
-        .text-link {
-          text-decoration: none;
-          font-size: 16px;
-          cursor: default;
-        }
-
+      .text-link {
+        text-decoration: none;
+        font-size: 15px;
+        cursor: default;
       }
 
       .popover .popover-container {
