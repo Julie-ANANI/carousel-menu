@@ -51,7 +51,9 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   private _selectedInnovation: InnovCard = <InnovCard>{};
 
-  private _sidebarTemplate: SidebarInterface = <SidebarInterface>{};
+  private _sidebarTemplate: SidebarInterface = <SidebarInterface>{
+    animate_state: 'inactive'
+  };
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _dashboardService: DashboardService,

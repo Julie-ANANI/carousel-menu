@@ -71,29 +71,29 @@
             <!-- index2 === 4 -->
             <div *ngIf="index2 === 4" class="popover justify-center">
 
-              <div class="text-link text-md">see more...</div>
+              <div class="text-link">see more...</div>
 
-              <div class="popover-container is-sm">
+              <div class="popover-container w-200">
                 <div class="card">
-                  <div class="card-body">
+                  <div class="card-body p-no">
                     <ng-container *ngFor="let batchesOver of days; let index3 = index">
                       <div *ngIf="index3 > 0" class="batch-body">
 
                         <ng-container *ngIf="getState(batchesOver) === 0">
                           <div (click)="showPreview($event, batches)" class="label is-success is-rounded c-hand">
-                            {{ batches['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                            {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="getState(batchesOver) === 1">
                           <div (click)="showPreview($event, batches)" class="label is-draft is-rounded c-hand">
-                            {{ batches['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                            {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="getState(batchesOver) === 2">
                           <div (click)="showPreview($event, batches)" class="label is-info is-rounded c-hand">
-                            {{ batches['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                            {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                           </div>
                         </ng-container>
 
@@ -119,8 +119,9 @@
 
 
 <!-- innovation preview sidebar-->
-<sidebar *ngIf="weekBatches.length > 0" [(template)]="sidebarTemplate">
+<sidebar [(template)]="sidebarTemplate">
   <sidebar-innovation-preview
+    *ngIf="weekBatches.length > 0"
     [projectCard]="selectedInnovation"
     [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }">
   </sidebar-innovation-preview>
