@@ -29,7 +29,7 @@
   .sidebar-container {
     width: 100%;
     min-height: 100vh;
-    background: $bg-light-color;
+    background: $bg-white-color;
   }
 
   .sidebar-header {
@@ -41,7 +41,7 @@
     background: $primary-gradient-color;
 
     .sidebar-title {
-      color: $light-color;
+      color: $white-color;
       line-height: $line-height-sm;
       font-weight: $font-weight-medium;
       margin: 0;
@@ -62,7 +62,7 @@
   position: fixed;
   width: $control-width-sm;
   bottom: 0;
-  background: $bg-light-color;
+  background: $bg-white-color;
   box-shadow: -3px 0 8px 0 rgba(66,91,118,.21);
 
   &.inactive, &.active {

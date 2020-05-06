@@ -2,13 +2,13 @@
 @import '../../../../../style/framework/src/mixins';
 
 #sidebar-market-report {
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
   margin-left: auto;
   margin-right: auto;
   padding: 1.25rem $unit-4;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
-  color: $text-background-color;
+  color: $text-draft-color;
 
   i {
     font-size: 18px;
@@ -161,7 +161,7 @@
       .form-checkbox {
         display: block;
         font-size: $font-size-xs;
-        color: $text-background-color;
+        color: $text-draft-color;
         font-weight: $font-weight-medium;
         padding-right: 0;
         white-space: nowrap;

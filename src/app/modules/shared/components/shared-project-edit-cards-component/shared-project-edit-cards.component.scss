@@ -8,7 +8,7 @@
 
   .spec-text-question {
     font-size: 0.85rem;
-    color: $text-primary-dark-color;
+    color: $text-dark-color;
     margin-right: $unit-1;
   }
 
@@ -61,7 +61,7 @@
   iframe {
     width: 240px;
     height: 159px;
-    border: $border-width solid $border-color;
+    border: $border-width solid $border-default-color;
   }
 
   .spec-secondary-media-wrapper {

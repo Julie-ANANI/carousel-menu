@@ -48,7 +48,7 @@
       flex-shrink: 0;
 
       .modal-title {
-        color: $light-color;
+        color: $white-color;
         flex-grow: 1;
         flex-shrink: 0;
         line-height: $line-height-sm;
@@ -60,7 +60,7 @@
 
     .modal-body {
       display: block;
-      background-color: $bg-light-color;
+      background-color: $bg-white-color;
       flex-grow: 1;
       flex-shrink: 1;
       padding: $unit-5;
@@ -76,7 +76,7 @@
       flex-shrink: 0;
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
-      background-color: $bg-light-color;
+      background-color: $bg-white-color;
 
       .modal-cancel {
         @include button-outline-variant($bg-meta-color);

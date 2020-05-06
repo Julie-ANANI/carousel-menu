@@ -110,14 +110,14 @@
       margin: 0;
       font-size: $font-icon-sm;
       background: $bg-border-color;
-      color: $light-color;
+      color: $white-color;
       transform: translate(50%, -50%);
     }
 
     &.is-active {
       border-color: $border-success-color;
-      background-color: $bg-light-color;
-      color: $text-primary-dark-color;
+      background-color: $bg-white-color;
+      color: $text-dark-color;
 
       i {
         display: inline-flex;
@@ -167,9 +167,9 @@
     }
 
     &.active {
-      background-color: $bg-light-color;
+      background-color: $bg-white-color;
       border-color: $border-success-color;
-      color: $text-primary-dark-color;
+      color: $text-dark-color;
       border-width: $border-width-lg;
 
       i {

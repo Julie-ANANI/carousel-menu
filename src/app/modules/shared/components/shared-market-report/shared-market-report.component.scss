@@ -8,7 +8,7 @@
   }
 
   .bg-white {
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
     border-radius: $border-radius;
   }
 
@@ -43,7 +43,7 @@
             border-color: $primary-color;
 
             span {
-              color: $light-color;
+              color: $white-color;
             }
 
           }
@@ -53,7 +53,7 @@
             border-color: $success-color;
 
             span {
-              color: $light-color;
+              color: $white-color;
             }
 
           }
@@ -143,7 +143,7 @@
     border-radius: $border-radius;
 
     .op-text {
-      color: $text-background-color;
+      color: $text-draft-color;
       font-size: 0.75rem;
       margin-bottom: 0.75rem;
     }
@@ -158,10 +158,10 @@
     top: 0;
     position: sticky;
     height: 100vh;
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
     overflow-y: auto;
     overflow-x: hidden;
-    border-right: $border-width solid $border-color;
+    border-right: $border-width solid $border-default-color;
   }
 
 }

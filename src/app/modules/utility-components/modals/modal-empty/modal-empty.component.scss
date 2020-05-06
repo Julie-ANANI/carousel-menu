@@ -3,10 +3,10 @@
 .modal {
 
   .modal-close {
-    color: $text-primary-dark-color;
+    color: $text-dark-color;
 
     &:hover {
-      color: $text-primary-dark-color;
+      color: $text-dark-color;
 
       &::before {
         background-color: rgba(58, 66, 77, 0.10);

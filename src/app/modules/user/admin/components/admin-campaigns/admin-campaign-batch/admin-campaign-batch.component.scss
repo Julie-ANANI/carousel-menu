@@ -21,12 +21,12 @@
     }
 
     .stat-heading, .stat-value {
-      color: $light-color;
+      color: $white-color;
     }
 
     .stat-sub-heading {
       opacity: 0.7;
-      color: $light-color;
+      color: $white-color;
     }
 
   }
@@ -73,7 +73,7 @@
 
       .fa-check {
         visibility: visible;
-        color: $light-color;
+        color: $white-color;
       }
 
     }

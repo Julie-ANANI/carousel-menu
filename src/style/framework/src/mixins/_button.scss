@@ -58,7 +58,7 @@
       background-color: lighten($color, 30%);
     }
 
-    @if $color == $bg-background-color {
+    @if $color == $bg-draft-color {
       background-color: lighten($color, 57%);
     }
 
@@ -130,7 +130,7 @@
 
 }
 
-@mixin button-loading-variant($color: $bg-light-color) {
+@mixin button-loading-variant($color: $bg-white-color) {
   min-width: 4.25rem;
 
   &:after {

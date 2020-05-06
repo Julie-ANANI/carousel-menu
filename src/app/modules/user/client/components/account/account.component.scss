@@ -37,7 +37,7 @@
           font-size: 63px;
           margin-bottom: 0;
           font-family: Oswald, sans-serif;
-          color: $text-background-color;
+          color: $text-draft-color;
         }
 
       }
@@ -57,7 +57,7 @@
 
       .hero-hr {
         width: 100%;
-        border: $border-width solid $border-color;
+        border: $border-width solid $border-default-color;
         margin-bottom: $unit-5;
       }
 
@@ -76,7 +76,7 @@
 
         li:hover, a:hover {
           background-color: $primary-color;
-          color: $light-color;
+          color: $white-color;
           cursor: pointer;
         }
 
@@ -85,7 +85,7 @@
     }
 
     .right-content-wrapper {
-      border-left: $border-width solid $border-color;
+      border-left: $border-width solid $border-default-color;
       padding-left: 2.5rem;
       flex: 0 1 75% !important;
 
@@ -93,7 +93,7 @@
         text-align: center;
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
-        border-bottom: $border-width solid $border-color;
+        border-bottom: $border-width solid $border-default-color;
 
         h3 {
           font-size: 1.3rem;

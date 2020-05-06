@@ -21,7 +21,7 @@
   }
 
   .avatar-icon, .avatar-presence {
-    background: $bg-light-color;
+    background: $bg-white-color;
     bottom: 14.64%;
     height: 50%;
     padding: $border-width-lg;
@@ -54,7 +54,7 @@
   }
 
   &[data-initial]::before {
-    color: $text-background-color;
+    color: $text-draft-color;
     content: attr(data-initial);
     left: 50%;
     position: absolute;

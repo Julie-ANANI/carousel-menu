@@ -5,9 +5,9 @@
   @include control-transition();
   display: flex;
   flex-direction: column;
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
   border-radius: $border-radius;
-  border: $border-width solid $border-color;
+  border: $border-width solid $border-default-color;
   word-break: break-word;
 
   &.is-shadow {

@@ -4,7 +4,7 @@
 // This stylesheet contains the styles that are related to the upload zone photo.
 
 file-drop.drop-container {
-  border: $border-width-lg dashed $border-color;
+  border: $border-width-lg dashed $border-default-color;
   position: relative;
   border-radius: $border-radius;
   min-height: 12.5rem;

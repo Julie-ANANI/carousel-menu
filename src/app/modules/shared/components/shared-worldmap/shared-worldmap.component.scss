@@ -4,7 +4,7 @@
 #shared-worldmap {
 
   .country-tooltip {
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
     box-shadow: $box-shadow-menu;
     padding: 0.75rem 1rem;
     width: fit-content;
@@ -38,7 +38,7 @@
 
     .country {
       fill: #E2E2E2;
-      stroke: $light-color;
+      stroke: $white-color;
     }
 
   }

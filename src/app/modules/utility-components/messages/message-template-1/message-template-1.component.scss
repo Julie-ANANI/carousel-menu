@@ -5,8 +5,8 @@
   .message-content-wrapper {
     padding: 1rem 0.75rem;
     border-radius: 6px;
-    color: $light-color;
-    background: $bg-background-color;
+    color: $white-color;
+    background: $bg-draft-color;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
     position: relative;
@@ -14,7 +14,7 @@
   }
 
   .triangle {
-    border-top: 12px solid $background-color;
+    border-top: 12px solid $draft-color;
     border-right: 25px solid transparent;
     transform: skewX(75deg);
     margin-left: 3.75rem;

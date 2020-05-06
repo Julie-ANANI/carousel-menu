@@ -117,7 +117,7 @@
   text-decoration: none;
   text-align: center;
   margin: 0;
-  color: $border-color;
+  color: $border-default-color;
 
   &:hover {
     cursor: pointer;
@@ -136,7 +136,7 @@
   }
 
   &.is-draft {
-    color: $background-color;
+    color: $draft-color;
   }
 
   &.is-success {
@@ -144,7 +144,7 @@
   }
 
   &.is-white {
-    color: $light-color;
+    color: $white-color;
   }
 
   &.is-delete {

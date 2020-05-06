@@ -49,7 +49,7 @@
           }
 
           .fas {
-            color: $light-color;
+            color: $white-color;
           }
 
         }
@@ -102,8 +102,8 @@
       }
 
       .pitch-check, .targeting-check, .objectives-check, .survey-check {
-        background: $border-color;
-        color: $text-primary-dark-color;
+        background: $border-default-color;
+        color: $text-dark-color;
         font-weight: $font-weight-medium;
         font-size: 10px;
       }
@@ -116,7 +116,7 @@
       .complete {
         @include control-transition();
         background-color: $success-color;
-        color: $light-color;
+        color: $white-color;
         border-color: $success-color;
       }
 

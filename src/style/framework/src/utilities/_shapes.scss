@@ -4,7 +4,7 @@
 .shape {
   @include inline-flex-centered();
   @include control-transition();
-  color: $text-primary-dark-color;
+  color: $text-dark-color;
   font-weight: $font-weight-medium;
   background-color: $bg-border-color;
   line-height: $line-height-sm;

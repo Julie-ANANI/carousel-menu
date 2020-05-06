@@ -14,7 +14,7 @@
 
   .summary-wrapper, .issue-wrapper, .solution-wrapper {
     padding-top: $unit-5;
-    color: $background-color;
+    color: $draft-color;
     font-size: $font-size-md;
     font-weight: $font-weight-normal;
     margin-bottom: 0;
@@ -63,7 +63,7 @@
       margin-bottom: 0;
 
       li {
-        color: $background-color;
+        color: $draft-color;
       }
 
     }
