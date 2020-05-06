@@ -5,6 +5,7 @@
 
     <!-- objective -->
     <div>
+
       <label>
 
         <textarea
@@ -12,7 +13,7 @@
           (keyup)="textColor('objective')"
           [(ngModel)]="config.objective"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
-          [ngStyle]="{ 'height': '90px' }"
+          [ngStyle]="{ 'height': '100px' }"
           maxlength="120"
           class="form-input"
           type="text">
@@ -23,6 +24,15 @@
         </span>
 
       </label>
+
+      <!-- insert snippet button -->
+      <div class="insert-snippet">
+        <span (click)="onClickSnippet($event)">
+          {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
+        </span>
+      </div>
+      <!-- /insert snippet button -->
+
     </div>
     <!-- /objective -->
 

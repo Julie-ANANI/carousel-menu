@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ScrapeHTMLTags } from '../../../../../../pipe/pipes/ScrapeHTMLTags';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'executive-pitch',
@@ -21,15 +22,23 @@ export class ExecutivePitchComponent {
 
   private _pitchColor = '';
 
-  constructor() { }
+  constructor(private _translateService: TranslateService) { }
 
-  public emitChanges(event: Event) {
-    event.preventDefault();
+  public emitChanges() {
     this.pitchChange.emit(this._pitch);
   }
 
   public textColor() {
     this._pitchColor = CommonService.getLimitColor(this._pitch.length, 216);
+  }
+
+  public onClickSnippet(event: Event) {
+    event.preventDefault();
+    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.PITCH').subscribe((text) => {
+      this._pitch = text;
+      this.textColor();
+      this.emitChanges();
+    });
   }
 
   get pitch(): string {

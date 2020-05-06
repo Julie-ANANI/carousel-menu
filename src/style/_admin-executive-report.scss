@@ -28,6 +28,22 @@
 
     }
 
+    .insert-snippet {
+      text-align: right;
+      color: $text-dark-color;
+      font-size: 13px;
+
+      span {
+        cursor: pointer;
+
+        &:hover{
+          text-decoration: underline;
+        }
+
+      }
+
+    }
+
     .popover {
       @include flex-centered();
       width: 50px;

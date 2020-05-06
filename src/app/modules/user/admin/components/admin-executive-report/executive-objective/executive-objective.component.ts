@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { ExecutiveObjective } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Commercial {
   _id: string;
@@ -60,7 +61,8 @@ export class ExecutiveObjectiveComponent implements OnInit {
   private _clientEmailColor = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _userService: UserService) { }
+              private _userService: UserService,
+              private _translateService: TranslateService) { }
 
   ngOnInit(): void {
     this._getCommercials();
@@ -118,6 +120,15 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   public emitChanges() {
     this.configChange.emit(this._config);
+  }
+
+  public onClickSnippet(event: Event) {
+    event.preventDefault();
+    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.OBJECTIVE').subscribe((text) => {
+      this._config.objective = text;
+      this.textColor('objective');
+      this.emitChanges();
+    });
   }
 
   public selectCommercial(event: Event) {

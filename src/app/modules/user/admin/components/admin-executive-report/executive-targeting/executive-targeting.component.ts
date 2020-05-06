@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ExecutiveTargeting } from '../../../../../../models/executive-report';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'executive-targeting',
@@ -24,15 +25,23 @@ export class ExecutiveTargetingComponent {
 
   private _targetingColor = '';
 
-  constructor() { }
+  constructor(private _translateService: TranslateService) { }
 
-  public emitChanges(event: Event) {
-    event.preventDefault();
+  public emitChanges() {
     this.configChange.emit(this._config);
   }
 
   public textColor() {
     this._targetingColor = CommonService.getLimitColor(this._config.abstract.length, 148);
+  }
+
+  public onClickSnippet(event: Event) {
+    event.preventDefault();
+    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.TARGETING').subscribe((text) => {
+      this._config.abstract = text;
+      this.textColor();
+      this.emitChanges();
+    });
   }
 
   get config(): ExecutiveTargeting {

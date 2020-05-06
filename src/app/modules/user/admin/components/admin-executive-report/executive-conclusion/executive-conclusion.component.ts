@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ExecutiveConclusion } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Operator {
   _id: string;
@@ -41,7 +42,8 @@ export class ExecutiveConclusionComponent implements OnInit {
   private _operator: Operator = <Operator>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _userService: UserService) { }
+              private _userService: UserService,
+              private _translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.textColor();
@@ -85,6 +87,15 @@ export class ExecutiveConclusionComponent implements OnInit {
 
   public textColor() {
     this._conclusionColor = CommonService.getLimitColor(this._config.conclusion.length, 270);
+  }
+
+  public onClickSnippet(event: Event) {
+    event.preventDefault();
+    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.CONCLUSION').subscribe((text) => {
+      this._config.conclusion = text;
+      this.textColor();
+      this.emitChanges();
+    });
   }
 
   public selectOperator(event: Event) {

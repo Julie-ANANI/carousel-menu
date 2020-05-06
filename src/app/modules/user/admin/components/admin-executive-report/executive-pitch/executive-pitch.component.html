@@ -2,10 +2,11 @@
 
   <!-- edit side -->
   <div class="content-wrapper">
+
     <label>
 
         <textarea
-          (change)="emitChanges($event)"
+          (change)="emitChanges()"
           (keyup)="textColor()"
           [(ngModel)]="pitch"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PITCH.PROJECT_PITCH' | translate"
@@ -20,6 +21,15 @@
         </span>
 
     </label>
+
+    <!-- insert snippet button -->
+    <div class="insert-snippet">
+      <span (click)="onClickSnippet($event)">
+        {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
+      </span>
+    </div>
+    <!-- /insert snippet button -->
+
   </div>
   <!-- /edit side -->
 

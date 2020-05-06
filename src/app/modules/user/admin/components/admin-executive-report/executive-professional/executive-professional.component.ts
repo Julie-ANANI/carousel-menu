@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ExecutiveProfessional } from '../../../../../../models/executive-report';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Professional {
   _id: string;
@@ -46,7 +47,8 @@ export class ExecutiveProfessionalComponent implements OnInit {
   private _restPro: Array<Professional> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _professionalsService: ProfessionalsService) { }
+              private _professionalsService: ProfessionalsService,
+              private _translateService: TranslateService) { }
 
   ngOnInit(): void {
     this._populateProfessionals();
@@ -118,6 +120,15 @@ export class ExecutiveProfessionalComponent implements OnInit {
 
   public textColor() {
     this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract.length, 258);
+  }
+
+  public onClickSnippet(event: Event) {
+    event.preventDefault();
+    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.PROFESSIONAL').subscribe((text) => {
+      this._config.abstract = text;
+      this.textColor();
+      this.emitChanges();
+    });
   }
 
   public emitChanges() {
