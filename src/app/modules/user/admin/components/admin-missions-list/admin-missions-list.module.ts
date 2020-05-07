@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {TableModule} from '../../../../table/table.module';
 import { AdminMissionsListComponent } from './admin-missions-list.component';
 import { MissionService } from '../../../../../services/mission/mission.service';
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { MissionFormModule } from '../../../../sidebars/components/mission-form/mission-form.module';
 

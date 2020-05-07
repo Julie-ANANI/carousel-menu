@@ -14,10 +14,10 @@ import { BarChartComponent } from './executive-section/bar-chart/bar-chart.compo
 
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
-import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
+import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ChartsModule } from 'ng2-charts';
-import { PieChartModule } from "../../../utility-components/canvas/piechart/pie-chart.module";
+import { PieChartModule } from "../../../utility/canvas/piechart/pie-chart.module";
 
 @NgModule({
   imports: [

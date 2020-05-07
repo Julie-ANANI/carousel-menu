@@ -7,9 +7,9 @@ import { SharedSearchResultsComponent } from './shared-search-results.component'
 
 import { SharedProsListModule } from '../shared-pros-list/shared-pros-list.module';
 import { SharedProsListOldModule } from '../shared-pros-list-old/shared-pros-list-old.module';
-import { AutoCompleteInputModule } from '../../../utility-components/auto-complete-input/auto-complete-input.module';
-import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
+import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
+import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
+import { ModalModule } from "../../../utility/modals/modal/modal.module";
 
 @NgModule({
   imports: [

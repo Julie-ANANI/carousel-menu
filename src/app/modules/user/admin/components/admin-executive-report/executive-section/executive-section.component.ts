@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
-import { ExecutiveSection, SectionQuote } from '../../../../../../models/executive-report';
+import { ExecutiveSection } from '../../../../../../models/executive-report';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
@@ -176,7 +176,7 @@ export class ExecutiveSectionComponent {
   private _setQuoteData() {
     const question: Question = this._getQuestion(this._section.questionId);
     this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
-    (<SectionQuote>this._section.content).showQuotes = true;
+    this._section.content = ExecutiveReportFrontService.quoteSection();
   }
 
   /***

@@ -7,10 +7,10 @@ import { RouterModule } from '@angular/router';
 import { AccountComponent } from './account.component';
 
 import { SidebarUserChangePasswordModule } from '../../../../sidebars/components/user-change-password/sidebar-user-change-password.module';
-import { InputListModule } from '../../../../utility-components/input-list/input-list.module';
+import { InputListModule } from '../../../../utility/input-list/input-list.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
-import { NguiAutoCompleteModule } from '../../../../utility-components/auto-complete/auto-complete.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
+import { NguiAutoCompleteModule } from '../../../../utility/auto-complete/auto-complete.module';
 
 @NgModule({
   imports: [

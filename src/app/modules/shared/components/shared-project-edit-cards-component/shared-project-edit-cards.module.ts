@@ -7,11 +7,11 @@ import { SharedProjectEditCardsComponent } from './shared-project-edit-cards.com
 
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
-import { InputListModule } from '../../../utility-components/input-list/input-list.module';
+import { InputListModule } from '../../../utility/input-list/input-list.module';
 import { SharedUploadZonePhotoModule } from '../shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { SharedUploadZoneVideoModule } from '../shared-upload-zone-video/shared-upload-zone-video.module';
-import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
-import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
+import { MessageTemplate1Module } from '../../../utility/messages/message-template-1/message-template-1.module';
+import { ModalModule } from '../../../utility/modals/modal/modal.module';
 
 
 @NgModule({

@@ -7,10 +7,10 @@ import { AdminEnterpriseManagementComponent } from './admin-enterprise-managemen
 import { SidebarModule } from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import { TableModule} from '../../../../../table/table.module';
 import { SidebarEmailFormModule } from '../../../../../sidebars/components/emails-form/sidebar-email-form.module';
-import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
+import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 import {ReactiveFormsModule} from "@angular/forms";
-import {NguiAutoCompleteModule} from "../../../../../utility-components/auto-complete/auto-complete.module";
-import {AutoCompleteInputModule} from "../../../../../utility-components/auto-complete-input/auto-complete-input.module";
+import {NguiAutoCompleteModule} from "../../../../../utility/auto-complete/auto-complete.module";
+import {AutoCompleteInputModule} from "../../../../../utility/auto-complete-input/auto-complete-input.module";
 import {FileDropModule} from "ngx-file-drop";
 import {SharedUploadZonePhotoModule} from "../../../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module";
 

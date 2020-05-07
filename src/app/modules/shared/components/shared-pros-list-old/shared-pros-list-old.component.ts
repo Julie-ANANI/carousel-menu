@@ -3,7 +3,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { first } from 'rxjs/operators';
-import {Pagination} from '../../../utility-components/paginations/interfaces/pagination';
+import {Pagination} from '../../../utility/paginations/interfaces/pagination';
 import {Config} from '../../../../models/config';
 
 export interface SelectedProfessional extends Professional {

@@ -7,7 +7,7 @@ import { CommunityFormComponent } from './community-form.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SharedAmbassadorListModule } from "../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
-import { SearchInput3Module } from '../../../utility-components/search-inputs/search-template-3/search-input-3.module';
+import { SearchInput3Module } from '../../../utility/search-inputs/search-template-3/search-input-3.module';
 
 @NgModule({
   imports: [

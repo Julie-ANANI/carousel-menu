@@ -6,8 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedTagComponent } from './shared-tag.component';
 
-import { NguiAutoCompleteModule } from '../../../utility-components/auto-complete/auto-complete.module';
-import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
+import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
+import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
 @NgModule({

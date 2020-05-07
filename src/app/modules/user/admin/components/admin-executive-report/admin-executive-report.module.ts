@@ -18,11 +18,11 @@ import { TypeRankingComponent } from './executive-section/type-ranking/type-rank
 import { TypePieComponent } from './executive-section/type-pie/type-pie.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { CountryFlagModule } from '../../../../utility-components/country-flag/country-flag.module';
+import { CountryFlagModule } from '../../../../utility/country-flag/country-flag.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
-import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
-import { PiechartExecutiveModule } from '../../../../utility-components/canvas/piechart-executive/piechart-executive.module';
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
+import { PiechartExecutiveModule } from '../../../../utility/canvas/piechart-executive/piechart-executive.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 
 @NgModule({
   imports: [

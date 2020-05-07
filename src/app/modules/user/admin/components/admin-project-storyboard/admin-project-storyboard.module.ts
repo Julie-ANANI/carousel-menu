@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { AdminProjectStoryboardComponent } from './admin-project-storyboard.component';
 
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { AdminExecutiveReportModule } from '../admin-executive-report/admin-executive-report.module';
 
 @NgModule({

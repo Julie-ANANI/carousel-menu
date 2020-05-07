@@ -11,48 +11,16 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 export class TypeRankingComponent {
 
   @Input() set section(value: ExecutiveSection) {
-
-    this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
-      abstract: value.abstract || '',
-      title: value.title || '',
-      content: {
-        color: <SectionRanking>value.content && (<SectionRanking>value.content).color,
-        values: [
-          {
-            name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
-            && (<SectionRanking>value.content).values[0].name || '',
-            occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[0]
-            && (<SectionRanking>value.content).values[0].occurrence || '',
-          },
-          {
-            name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
-            && (<SectionRanking>value.content).values[1].name || '',
-            occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[1]
-            && (<SectionRanking>value.content).values[1].occurrence || '',
-          },
-          {
-            name: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
-            && (<SectionRanking>value.content).values[2].name || '',
-            occurrence: <SectionRanking>value.content && (<SectionRanking>value.content).values && (<SectionRanking>value.content).values[2]
-            && (<SectionRanking>value.content).values[2].occurrence || '',
-          }
-        ]
-      }
-    };
-
+    this._section = value;
     this._content = <SectionRanking>this._section.content;
-
     this.textColor('title');
     this.textColor('abstract');
     this.textColor('name', 1);
     this.textColor('name', 2);
     this.textColor('name', 3);
-    this.textColor('occurrence', 1);
-    this.textColor('occurrence', 2);
-    this.textColor('occurrence', 3);
-
+    this.textColor('legend', 1);
+    this.textColor('legend', 2);
+    this.textColor('legend', 3);
   }
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
@@ -60,7 +28,6 @@ export class TypeRankingComponent {
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionRanking = {
-    color: '',
     values: []
   };
 
@@ -98,13 +65,13 @@ export class TypeRankingComponent {
         this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
         break;
 
-      case 'occurrence':
+      case 'legend':
         if (index === 1) {
-          this._legend1Color = CommonService.getLimitColor(this._content.values[0].occurrence.length, 13);
+          this._legend1Color = CommonService.getLimitColor(this._content.values[0].legend.length, 13);
         } else if (index === 2) {
-          this._legend2Color = CommonService.getLimitColor(this._content.values[1].occurrence.length, 13);
+          this._legend2Color = CommonService.getLimitColor(this._content.values[1].legend.length, 13);
         } else if (index === 3) {
-          this._legend3Color = CommonService.getLimitColor(this._content.values[2].occurrence.length, 13);
+          this._legend3Color = CommonService.getLimitColor(this._content.values[2].legend.length, 13);
         }
         break;
 
@@ -121,8 +88,12 @@ export class TypeRankingComponent {
     }
   }
 
-  public setColor(value: string) {
-    this._content.color = value;
+  public checkVisibility(index: number) {
+    this._content.values[index].visibility = this._content.values[index].name !== '';
+  }
+
+  public setColor(value: string, index: number) {
+    this._content.values[index].color = value;
     this.emitChanges();
   }
 

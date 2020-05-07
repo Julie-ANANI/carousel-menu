@@ -12,7 +12,7 @@ import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-p
 import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
 import { AdminProjectFollowUpComponent } from "./admin-project-follow-up/admin-project-follow-up.component";
 
-import { NguiAutoCompleteModule } from '../../../../utility-components/auto-complete/auto-complete.module';
+import { NguiAutoCompleteModule } from '../../../../utility/auto-complete/auto-complete.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedSortModule } from '../../../../shared/components/shared-sort/shared-sort.module';
 import { SharedTextZoneModule } from '../../../../shared/components/shared-text-zone/shared-text-zone.module';
@@ -22,17 +22,17 @@ import { SharedProjectSettingsModule } from '../../../../shared/components/share
 import { SharedTagModule } from '../../../../shared/components/shared-tag/shared-tag.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/admin-project-questionnaire.module';
-import { AutoCompleteInputModule } from '../../../../utility-components/auto-complete-input/auto-complete-input.module';
+import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
-import { ProgressBarModule } from '../../../../utility-components/progress-bar/progress-bar.module';
+import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
 import { SidebarTagsModule } from '../../../../sidebars/components/tags/sidebar-tags.module';
 import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebars/components/innovation-form/sidebar-innovation-form.module';
 import { SidebarCampaignFormModule } from '../../../../sidebars/components/campaign-form/sidebar-campaign-form.module';
-import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
-import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
-import { MessageTemplate2Module } from '../../../../utility-components/messages/message-template-2/message-template-2.module';
+import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
+import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
+import { MessageTemplate2Module } from '../../../../utility/messages/message-template-2/message-template-2.module';
 import { SharedFollowUpModule } from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 
 @NgModule({

@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ExecutivePitchComponent {
 
   @Input() set pitch(value: string) {
-    this._pitch = new ScrapeHTMLTags().transform(value) || '';
+    this._pitch = new ScrapeHTMLTags().transform(value);
     this.textColor();
   }
 

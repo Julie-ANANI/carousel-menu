@@ -8,7 +8,7 @@ import { AdminEditWorkflowComponent } from './admin-edit-workflow.component';
 import { TableModule } from '../../../../table/table.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarWorkflowFormModule } from '../../../../sidebars/components/workflow-form/sidebar-workflow-form.module';
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 
 
 @NgModule({

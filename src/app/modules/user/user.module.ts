@@ -11,7 +11,7 @@ import { UserComponent } from './user.component';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { ShareService } from '../../services/share/share.service';
 import { AnswerService } from '../../services/answer/answer.service';
-import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinner-loader.module';
+import { SpinnerLoaderModule } from '../utility/spinner-loader/spinner-loader.module';
 
 @NgModule({
   imports: [

@@ -6,7 +6,7 @@ import { AdminProfessionalsComponent } from './admin-professionals.component';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { SharedProfessionalsListModule } from '../../../../shared/components/shared-professionals-list/shared-professionals-list.module';
 
 @NgModule({

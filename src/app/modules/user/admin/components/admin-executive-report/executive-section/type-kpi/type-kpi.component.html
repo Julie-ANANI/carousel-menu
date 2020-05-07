@@ -55,14 +55,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('kpi')"
-          [(ngModel)]="content.value"
+          [(ngModel)]="content.kpi"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.KPI_SECTION.KPI' | translate"
           maxlength="4"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': kpiColor }" class="text-limit-wrapper">
-          {{ 4 - content.value.length }}
+          {{ 4 - content.kpi.length }}
         </span>
 
       </label>
@@ -77,14 +77,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('legend')"
-          [(ngModel)]="content.name"
+          [(ngModel)]="content.legend"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.KPI_SECTION.LEGEND' | translate"
           maxlength="82"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': legendColor }" class="text-limit-wrapper">
-          {{ 82 - content.name.length }}
+          {{ 82 - content.legend.length }}
         </span>
 
       </label>
@@ -125,9 +125,9 @@
     <!-- kpi / legend -->
     <div [ngStyle]="{ 'min-height': '116px' }" class="m-bottom-10">
       <h5 [ngStyle]="{ 'font-size': '85px', 'line-height': '75px' }" class="text-medium m-no-bottom">
-        {{ content.value }}
+        {{ content.kpi }}
       </h5>
-      <p class="text-lg text-medium">{{ content.name }}</p>
+      <p class="text-lg text-medium">{{ content.legend }}</p>
     </div>
     <!-- /kpi / legend -->
 

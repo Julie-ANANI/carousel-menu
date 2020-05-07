@@ -53,9 +53,9 @@
       <label class="form-checkbox">
         <input
           (change)="toggleResponses()"
-          [disabled]="!content.favorable"
-          [checked]="content.showPositive"
-          [value]="content.showPositive"
+          [disabled]="!content.favorable_answers.percentage"
+          [checked]="content.favorable_answers.visibility"
+          [value]="content.favorable_answers.visibility"
           type="checkbox">
         <i class="form-icon"></i> {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.SHOW_RESPONSES' | translate }}
       </label>
@@ -122,8 +122,8 @@
       <h4 class="m-no-bottom text-center">{{ section.title }}</h4>
 
       <h5 [ngStyle]="{ 'min-height': '27px' }" class="text-lg text-normal m-no-bottom">
-        <ng-container *ngIf="content.showPositive">
-          {{ content.favorable }} {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.FAVOURABLE' | translate }}
+        <ng-container *ngIf="content.favorable_answers.visibility">
+          {{ content.favorable_answers.percentage }}% {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.FAVOURABLE' | translate }}
         </ng-container>
       </h5>
 

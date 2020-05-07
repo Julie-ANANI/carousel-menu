@@ -7,8 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { AdminProjectQuestionnaireComponent } from './admin-project-questionnaire.component';
 
 import { SharedPresetModule } from '../../../../../shared/components/shared-preset/shared-preset.module';
-import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
-import { NguiAutoCompleteModule } from '../../../../../utility-components/auto-complete/auto-complete.module';
+import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
+import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
 
 @NgModule({
   imports: [

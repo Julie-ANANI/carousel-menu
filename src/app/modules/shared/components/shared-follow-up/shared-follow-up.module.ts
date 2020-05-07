@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedFollowUpComponent } from './shared-follow-up.component';
 
 import { SidebarLeftModule } from '../../../sidebars/templates/sidebar-left/sidebar-left.module';
-import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
+import { ModalModule } from "../../../utility/modals/modal/modal.module";
 import { SharedMailEditorModule } from "../shared-mail-editor/shared-mail-editor.module";
 import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module';
 import { TableModule } from '../../../table/table.module';

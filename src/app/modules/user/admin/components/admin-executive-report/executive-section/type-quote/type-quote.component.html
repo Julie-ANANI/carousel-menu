@@ -54,8 +54,8 @@
 
         <textarea
           (change)="emitChanges()"
-          (keyup)="textColor('quote')"
-          [(ngModel)]="content.quote"
+          (keyup)="textColor('quotation')"
+          [(ngModel)]="content.quotation"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.QUOTE_SECTION.QUOTATION' | translate"
           [ngStyle]="{ 'height': '97px' }"
           maxlength="100"
@@ -64,7 +64,7 @@
         </textarea>
 
         <span [ngStyle]="{ 'color': quoteColor }" class="text-limit-wrapper">
-          {{ 100 - content.quote.length }}
+          {{ 100 - content.quotation.length }}
         </span>
 
       </label>
@@ -93,14 +93,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('name')"
-          [(ngModel)]="content.author.name"
+          [(ngModel)]="content.name"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.NAME' | translate"
           maxlength="62"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': nameColor }" class="text-limit-wrapper">
-          {{ 62 - content.author.name.length }}
+          {{ 62 - content.name.length }}
         </span>
 
       </label>
@@ -115,14 +115,14 @@
         <input
           (change)="emitChanges()"
           (keyup)="textColor('job')"
-          [(ngModel)]="content.author.jobTitle"
+          [(ngModel)]="content.job"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.JOB' | translate"
           maxlength="62"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': jobColor }" class="text-limit-wrapper">
-          {{ 62 - content.author.jobTitle.length }}
+          {{ 62 - content.job.length }}
         </span>
 
       </label>
@@ -147,7 +147,7 @@
           <i class="fas fa-quote-left"></i>
         </div>
 
-        {{ content.quote }}
+        {{ content.quotation }}
 
         <div *ngIf="content.showQuotes" [ngStyle]="{ 'bottom': '4px', 'right': '8px' }" class="absolute">
           <i class="fas fa-quote-right"></i>
@@ -155,8 +155,8 @@
 
       </div>
 
-      <p class="text-lg text-medium">{{ content.author.name }}</p>
-      <p>{{ content.author.jobTitle }}</p>
+      <p class="text-lg text-medium">{{ content.name }}</p>
+      <p>{{ content.job }}</p>
 
     </div>
     <!-- /quotes / name / job -->

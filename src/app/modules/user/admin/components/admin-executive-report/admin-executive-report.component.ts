@@ -90,11 +90,13 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
       objective: this._executiveReport.objective
     };
 
+    // pitch
     this._summary = this._executiveReport.summary;
 
     this._targetingConfig = {
       abstract: this._executiveReport.targeting && this._executiveReport.targeting.abstract,
       countries: this._executiveReport.targeting && this._executiveReport.targeting.countries,
+      countriesall: this._executiveReport.targeting && this._executiveReport.targeting.countriesall,
     };
 
     this._professionalConfig = {

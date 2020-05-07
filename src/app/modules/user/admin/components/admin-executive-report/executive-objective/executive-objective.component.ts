@@ -24,19 +24,10 @@ interface Commercial {
 export class ExecutiveObjectiveComponent implements OnInit {
 
   @Input() set config(value: ExecutiveObjective) {
-    this._config = {
-      objective: value.objective || '',
-      client: {
-        name: value.client && value.client.name || '',
-        email: value.client && value.client.email || '',
-      },
-      sale: value.sale || ''
-    };
-
+    this._config = value;
     this.textColor('objective');
     this.textColor('clientName');
     this.textColor('clientEmail');
-
   }
 
   @Output() configChange: EventEmitter<ExecutiveObjective> = new EventEmitter<ExecutiveObjective>();
@@ -68,6 +59,11 @@ export class ExecutiveObjectiveComponent implements OnInit {
     this._getCommercials();
   }
 
+  /***
+   * this is to get the commercial list from the back. From the moment we are getting the
+   * super-admin.
+   * @private
+   */
   private _getCommercials() {
     if (isPlatformBrowser(this._platformId)) {
       this._userService.getAll({ roles: 'super-admin', fields: '_id firstName lastName phone email' })
@@ -86,11 +82,15 @@ export class ExecutiveObjectiveComponent implements OnInit {
           this._populateCommercial();
 
         }, (err: HttpErrorResponse) => {
-        console.log(err);
+        console.error(err);
       });
     }
   }
 
+  /***
+   * populating the sale field.
+   * @private
+   */
   private _populateCommercial() {
     if (this._config.sale) {
       const index = this._allCommercials.findIndex((commercial) => commercial._id === this._config.sale);
@@ -131,6 +131,10 @@ export class ExecutiveObjectiveComponent implements OnInit {
     });
   }
 
+  /***
+   * when the user selects the commercial from the Select box.
+   * @param event
+   */
   public selectCommercial(event: Event) {
     this._config.sale = event && event.target && (event.target as HTMLSelectElement).value || '';
     this._populateCommercial();

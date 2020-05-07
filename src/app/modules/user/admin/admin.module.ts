@@ -21,7 +21,7 @@ import { AdminCountryManagementModule } from './components/admin-settings/admin-
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SidebarModule } from '../../sidebars/templates/sidebar/sidebar.module';
 import { LogoutModule } from '../../common/logout/logout.module';
-import { InputListModule } from '../../utility-components/input-list/input-list.module';
+import { InputListModule } from '../../utility/input-list/input-list.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { AdminCommunityModule } from "./components/admin-community/admin-community.module";

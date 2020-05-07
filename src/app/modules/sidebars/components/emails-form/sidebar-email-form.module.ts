@@ -7,8 +7,8 @@ import { EmailsFormComponent } from './emails-form.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { TableModule } from '../../../table/table.module';
-import { AutoCompleteInputModule } from '../../../utility-components/auto-complete-input/auto-complete-input.module';
-import { InputListModule } from '../../../utility-components/input-list/input-list.module';
+import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
+import { InputListModule } from '../../../utility/input-list/input-list.module';
 
 @NgModule({
   imports: [

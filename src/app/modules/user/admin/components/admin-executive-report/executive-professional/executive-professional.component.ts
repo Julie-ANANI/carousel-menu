@@ -25,10 +25,7 @@ interface Professional {
 export class ExecutiveProfessionalComponent implements OnInit {
 
   @Input() set config(value: ExecutiveProfessional) {
-    this._config = {
-      abstract: value.abstract || '',
-      list: value.list || []
-    };
+    this._config = value;
   }
 
   @Output() configChange: EventEmitter<ExecutiveProfessional> = new EventEmitter<ExecutiveProfessional>();
@@ -92,7 +89,7 @@ export class ExecutiveProfessionalComponent implements OnInit {
         this._allProfessionals = ExecutiveProfessionalComponent._sortPro(this._allProfessionals);
 
       }, (err: HttpErrorResponse) => {
-        console.log(err);
+        console.error(err);
       });
     }
   }

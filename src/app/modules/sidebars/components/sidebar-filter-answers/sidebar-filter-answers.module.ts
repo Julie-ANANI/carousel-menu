@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SidebarFilterAnswersComponent } from './sidebar-filter-answers.component';
 import {PipeModule} from "../../../../pipe/pipe.module";
 import {NgxPageScrollModule} from "ngx-page-scroll";
-import {ModalModule} from "../../../utility-components/modals/modal/modal.module";
+import {ModalModule} from "../../../utility/modals/modal/modal.module";
 import {ExportModalComponent} from "./export-modal/export-modal.component";
 
 

@@ -4,7 +4,7 @@ import { LocalStorageService } from '../../../../../../../services/localStorage/
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
-import { Pagination } from '../../../../../../utility-components/paginations/interfaces/pagination';
+import { Pagination } from '../../../../../../utility/paginations/interfaces/pagination';
 
 @Component({
   selector: 'app-cards',

@@ -12,10 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ExecutiveTargetingComponent {
 
   @Input() set config(value: ExecutiveTargeting) {
-    this._config = {
-      abstract: value.abstract,
-      countries: value.countries || []
-    };
+    this._config = value;
     this.textColor();
   }
 

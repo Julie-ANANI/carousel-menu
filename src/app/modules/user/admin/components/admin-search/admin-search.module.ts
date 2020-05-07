@@ -13,8 +13,8 @@ import { AdminSearchResultsComponent } from './admin-search-results/admin-search
 import { SharedSearchMailModule } from '../../../../shared/components/shared-search-mail/shared-search-mail.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
-import { CountryFlagModule } from "../../../../utility-components/country-flag/country-flag.module";
-import { ModalModule } from "../../../../utility-components/modals/modal/modal.module";
+import { CountryFlagModule } from "../../../../utility/country-flag/country-flag.module";
+import { ModalModule } from "../../../../utility/modals/modal/modal.module";
 
 
 @NgModule({

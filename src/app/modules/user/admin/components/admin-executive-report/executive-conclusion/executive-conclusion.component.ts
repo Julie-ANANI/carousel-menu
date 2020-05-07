@@ -22,10 +22,7 @@ interface Operator {
 export class ExecutiveConclusionComponent implements OnInit {
 
   @Input() set config(value: ExecutiveConclusion) {
-    this._config = {
-      conclusion: value.conclusion || '',
-      operator: value.operator || ''
-    };
+    this._config = value;
   }
 
   @Output() configChange: EventEmitter<ExecutiveConclusion> = new EventEmitter<ExecutiveConclusion>();
@@ -67,7 +64,7 @@ export class ExecutiveConclusionComponent implements OnInit {
         this._populateOperator();
 
       }, (err: HttpErrorResponse) => {
-        console.log(err);
+        console.error(err);
       })
     }
   }
@@ -119,6 +116,5 @@ export class ExecutiveConclusionComponent implements OnInit {
   get operator(): Operator {
     return this._operator;
   }
-
 
 }
