@@ -13,7 +13,6 @@ import { environment } from '../../../../../environments/environment';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
@@ -74,10 +73,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _toggleAnswers: boolean;
 
-  private _numberOfSections: number;
-
-  private _executiveTemplates: Array<Executive>;
-
   private _modalAnswer: Answer = null;
 
   private _leftSidebarTemplateValue: SidebarInterface = {
@@ -130,19 +125,6 @@ export class SharedMarketReportComponent implements OnInit {
      * @user
      */
     this._previewMode = this._innovation.previewMode ? this._innovation.previewMode : false;
-
-
-    /***
-     * we are checking do we have any template.
-     * @type {number | undefined}
-     */
-    this._numberOfSections = this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
-
-    /***
-     * assigning the value of the executive template.
-     * @type {Executive}
-     */
-    this._executiveTemplates = executiveTemplate;
 
     this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers && !this._adminMode;
 
@@ -298,49 +280,6 @@ export class SharedMarketReportComponent implements OnInit {
     return InnovationFrontService.getColor(length, limit);
   }
 
-
-  /***
-   * This function is called when we click on the radio button, and assign the
-   * clicked value to the numberOfSection.
-   * @param {Event} event
-   * @param {number} value
-   */
-  public assignSectionValue(event: Event, value: number) {
-    event.preventDefault();
-    this._numberOfSections = value;
-  }
-
-
-  /***
-   * This function is called when you click on the valid template button.
-   * We assign the number of section value to the this.project.executiveReport.totalSections
-   * and call the update function to save it in database.
-   * @param {Event} event
-   */
-  public generateExecutiveTemplate(event: Event) {
-    event.preventDefault();
-    this._innovation.executiveReport.totalSections = this._numberOfSections;
-    this.updateExecutiveReport(event);
-  }
-
-
-  /***
-   * This function is to return the src of the UMI intro image.
-   * @returns {string}
-   */
-  public get introSrc(): string {
-
-    if (this.userLang === 'en') {
-      return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-en.png';
-    }
-
-    if (this.userLang === 'fr') {
-      return 'https://res.cloudinary.com/umi/image/upload/v1550482760/app/default-images/intro/UMI-fr.png';
-    }
-
-  }
-
-
   /***
    * This function saves the comment of the operator.
    * @param event
@@ -358,7 +297,7 @@ export class SharedMarketReportComponent implements OnInit {
 
   /***
    * This function is to filter by the countries.
-   * @param {{continents: {[continent: string]: boolean}, allChecked: boolean}} event
+   * @param event
    */
   filterByContinents(event: {continents: {[continent: string]: boolean}, allChecked: boolean}): void {
     this._worldmapFiltersService.selectContinents(event);
@@ -405,10 +344,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   public get userLang(): string {
     return this._translateService.currentLang;
-  }
-
-  public get domainName(): string {
-    return environment.domain;
   }
 
   get previewMode(): boolean {
@@ -485,14 +420,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   get isOwner(): boolean {
     return this._isOwner;
-  }
-
-  get numberOfSections(): number {
-    return this._numberOfSections;
-  }
-
-  get executiveTemplates(): Array<Executive> {
-    return this._executiveTemplates;
   }
 
   get mapSelectedContinents(): { [p: string]: boolean } {

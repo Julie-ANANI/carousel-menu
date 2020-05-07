@@ -20,52 +20,6 @@
     width: 100%;
   }
 
-  .executive-generate-wrapper {
-    flex-direction: column;
-
-    .template-outer-wrapper {
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
-      margin-right: -$unit-5;
-
-      .card {
-        border: none;
-        overflow: hidden;
-
-        &.is-responsive {
-          margin-bottom: 0.75rem;
-        }
-
-        .btn.btn-radio {
-
-          &:hover {
-            background-color: $primary-color;
-            border-color: $primary-color;
-
-            span {
-              color: $white-color;
-            }
-
-          }
-
-          &.active {
-            background-color: $success-color;
-            border-color: $success-color;
-
-            span {
-              color: $white-color;
-            }
-
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
   .origin-wrapper {
     border-radius: $border-radius;
   }

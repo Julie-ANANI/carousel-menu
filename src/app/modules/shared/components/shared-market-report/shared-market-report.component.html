@@ -78,66 +78,6 @@
           </ng-container>
           <!-- /main page goal -->
 
-
-          <!-- executive report generation -->
-          <ng-container *ngIf="adminSide">
-            <section class="section-pad" id="executive-generate">
-              <div class="section-pad full d-flex executive-generate-wrapper bg-white">
-
-                <h2 class="title-primary">Executive Report</h2>
-
-                <div class="template-outer-wrapper d-flex">
-                  <div *ngFor="let template of executiveTemplates" class="card is-responsive">
-
-                    <img [src]="template.imageSrc" alt=" ">
-
-                    <div class="card-header text-center">
-                      <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }"
-                           (click)="assignSectionValue($event, template.value)">
-                        <span>•</span>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div class="text-center" [ngStyle]="{ 'margin-top': '0.5rem' }">
-                  <button class="btn ghost-primary btn-sm"
-                          [disabled]="numberOfSections === 0 || innovation.executiveReport.totalSections > 0"
-                          (click)="generateExecutiveTemplate($event)">
-                    Valid template
-                  </button>
-                </div>
-
-              </div>
-            </section>
-          </ng-container>
-          <!-- /executive report generation -->
-
-
-          <!-- main page -->
-          <div id="main-page" class="d-none">
-            <app-shared-main-page [project]="innovation"></app-shared-main-page>
-          </div>
-          <!-- /main page -->
-
-
-          <!-- umi intro -->
-          <div *ngIf="domainName === 'umi'" class="d-none" id="umi-intro">
-            <img [src]="introSrc" alt="UMI">
-          </div>
-          <!-- /umi intro -->
-
-
-          <!-- executive report -->
-          <ng-container *ngIf="innovation.executiveReport && innovation.executiveReport.totalSections">
-            <section *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" id="executive-report" class="section-light-pad">
-              <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
-            </section>
-          </ng-container>
-          <!-- /executive report -->
-
-
           <!-- key learning section -->
           <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">
             <section class="section-pad" id="key-learnings" [ngClass]="{ 'rm-pad-top': reportShared }">
