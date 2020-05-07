@@ -93,8 +93,6 @@ export class SidebarFilterAnswersComponent implements OnInit {
 
   private _modalPreviewInnovation: boolean;
 
-  private _modalExport: boolean;
-
   private _filterNumber = 0;
 
   private _innovation: Innovation = <Innovation> {};
@@ -452,14 +450,6 @@ export class SidebarFilterAnswersComponent implements OnInit {
 
   set modalPreviewInnovation(value: boolean) {
     this._modalPreviewInnovation = value;
-  }
-
-  get modalExport(): boolean {
-    return this._modalExport;
-  }
-
-  set modalExport(value: boolean) {
-    this._modalExport = value;
   }
 
   get selectedAnswersTags(): {[questionId: string]: {[t: string]: boolean}} {

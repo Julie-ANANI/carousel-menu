@@ -61,16 +61,6 @@
   </ng-container>
   <!-- /different actions for admin -->
 
-
-  <!-- export option -->
-  <div *ngIf="isOwner && !isAdminSide && !reportShared" class="text-center">
-    <button class="btn btn-primary gtm-export-synthesis" (click)="modalExport = true"
-            [textContent]="'MARKET_REPORT.BUTTON_EXPORT'" translate></button>
-    <div class="divider"></div>
-  </div>
-  <!-- /export option -->
-
-
   <!-- views wrapper -->
   <div class="view-wrapper">
 
@@ -470,11 +460,3 @@
 
 </app-modal>
 <!-- /Modal to ask operator to sure about ending the project -->
-
-
-<!-- Modal to ask operator and client to export different reports -->
-<ng-container *ngIf="isOwner">
-  <app-market-report-export-modal [innovation]="innovation"
-                                  [(showModal)]="modalExport"></app-market-report-export-modal>
-</ng-container>
-<!-- /Modal to ask operator and client to export different reports -->
