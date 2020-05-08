@@ -28,6 +28,11 @@
             &:hover {
               color: $text-dark-color;
               cursor: pointer;
+
+              &:not(.inactive) {
+                text-decoration: underline;
+              }
+
             }
 
             &.inactive {

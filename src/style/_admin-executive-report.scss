@@ -21,7 +21,7 @@
 
         .form-input {
           text-align: center;
-          padding: 3px;
+          padding: 14px 3px;
         }
 
       }
@@ -46,7 +46,7 @@
 
     .popover {
       @include flex-centered();
-      width: 50px;
+      width: 54.45px;
       border: 2px solid #000000;
       border-radius: $border-radius;
 
@@ -97,7 +97,7 @@
     }
 
     .form-input {
-      padding: 15px 30px 15px 15px;
+      padding: 14px 30px 14px 15px;
 
       &.is-abstract {
         height: 118px;

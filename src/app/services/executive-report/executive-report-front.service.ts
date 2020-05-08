@@ -64,7 +64,7 @@ export class ExecutiveReportFrontService {
       values: []
     };
 
-    if (pieChartData) {
+    if (pieChartData && (pieChartData.percentage || pieChartData.data)) {
 
       if (pieChartData.percentage) {
         section.favorable_answers = {

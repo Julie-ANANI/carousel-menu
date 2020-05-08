@@ -64,6 +64,8 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'JOB': 'Job',
 
+  'CUSTOM_SECTION': 'Section personnalisée',
+
   'KPI_SECTION': {
     'KPI': 'KPI',
     'LEGEND': 'Legend',
