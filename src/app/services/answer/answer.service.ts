@@ -102,4 +102,9 @@ export class AnswerService {
   public updateLinkingStatus(arrayAnswers: Array<string>, newStatus: string): Observable<any> {
     return this._http.post('/answer/update/followUp', {status: newStatus, answers: arrayAnswers});
   }
+
+  public exportAsPDF(innovationId: string, lang: string) {
+    return `${environment.apiUrl}/reporting/job/answers/${innovationId}?lang=${lang}&print=1`;
+  }
+
 }

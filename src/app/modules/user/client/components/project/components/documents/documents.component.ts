@@ -12,6 +12,7 @@ import {ErrorFrontService} from '../../../../../../../services/error/error-front
 import {CommonService} from '../../../../../../../services/common/common.service';
 import {environment} from '../../../../../../../../environments/environment';
 import {AnswerService} from '../../../../../../../services/answer/answer.service';
+import {TranslateService} from '@ngx-translate/core';
 
 interface Document {
   name: string;
@@ -58,16 +59,21 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     }
   ];
 
+  userLang = this._translateService.currentLang || 'en';
+
   isLinkCopied = false;
 
   isGeneratingLink = false;
 
   isGeneratingCSV = false;
 
+  isGeneratingPDF = false;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _authService: AuthService,
               private _commonService: CommonService,
               private _answerService: AnswerService,
+              private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) { }
 
@@ -156,6 +162,21 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         window.open(url);
         this.isGeneratingCSV = false;
+      }, 1000);
+    }
+  }
+
+  /***
+   * when the user clicks on the Download PDF button.
+   */
+  public onClickPDF(event: Event) {
+    event.preventDefault();
+    if (!this.isGeneratingPDF && this.isOwner && this.ownerConsent) {
+      this.isGeneratingPDF = true;
+      const url = this._answerService.exportAsPDF(this._innovation._id, this.userLang);
+      setTimeout(() => {
+        window.open(url);
+        this.isGeneratingPDF = false;
       }, 1000);
     }
   }

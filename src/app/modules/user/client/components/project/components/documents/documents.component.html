@@ -127,7 +127,18 @@
 
             <!-- case === 'PDF' -->
             <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.PDF' | translate">
-              PDF
+              <button
+                (click)="onClickPDF($event)"
+                [disabled]="isGeneratingPDF || !isOwner || !ownerConsent"
+                class="button is-primary"
+                id="btn-document-pdf">
+                <ng-container *ngIf="!isGeneratingPDF; else genPDF">
+                  {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
+                </ng-container>
+                <ng-template #genPDF>
+                  {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                </ng-template>
+              </button>
             </div>
             <!-- /case === 'PDF' -->
 
