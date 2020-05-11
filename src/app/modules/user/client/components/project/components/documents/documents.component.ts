@@ -11,6 +11,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front';
 import {CommonService} from '../../../../../../../services/common/common.service';
 import {environment} from '../../../../../../../../environments/environment';
+import {AnswerService} from '../../../../../../../services/answer/answer.service';
 
 interface Document {
   name: string;
@@ -31,20 +32,42 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   documents: Array<Document> = [
-    { name: 'REPORT', isExportable: false, img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/executive-report.png' },
-    { name: 'SHARE', isExportable: false, img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/share-link.png' },
-    { name: 'CSV', isExportable: false, img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/csv-answers.png' },
-    { name: 'PDF', isExportable: false, img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/pdf-answers.png' },
-    { name: 'VIDEO', isExportable: false, img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/video-synthesis.png' }
+    {
+      name: 'REPORT',
+      isExportable: false,
+      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/executive-report.png' },
+    {
+      name: 'SHARE',
+      isExportable: false,
+      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/share-link.png'
+    },
+    {
+      name: 'CSV',
+      isExportable: false,
+      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/csv-answers.png'
+    },
+    {
+      name: 'PDF',
+      isExportable: false,
+      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/pdf-answers.png'
+    },
+    {
+      name: 'VIDEO',
+      isExportable: false,
+      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/video-synthesis.png'
+    }
   ];
 
   isLinkCopied = false;
 
   isGeneratingLink = false;
 
+  isGeneratingCSV = false;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _authService: AuthService,
               private _commonService: CommonService,
+              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) { }
 
@@ -74,8 +97,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         case 'SHARE':
         case 'CSV':
         case 'PDF':
-          document.isExportable = this.isOwner && this.ownerConsent && this._innovation.previewMode
-            || (this._innovation.status && this._innovation.status === 'DONE');
+          document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'DONE');
           break;
 
       }
@@ -91,6 +113,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this._innovation.ownerConsent.value = !!(event.target as HTMLInputElement).checked;
     this._innovationService.saveConsent(this._innovation._id, Date.now()).pipe(first()).subscribe(() => {
     }, (err: HttpErrorResponse) => {
+      this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.log(err);
     });
@@ -102,7 +125,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickShare(event: Event) {
     event.preventDefault();
-    if (!this.isLinkCopied) {
+    if (!this.isLinkCopied && this.isOwner && this.ownerConsent) {
       this.isGeneratingLink = true;
       this._innovationService.shareSynthesis(this._innovation._id).pipe(first()).subscribe((share) => {
         const url = `${environment.clientUrl}/share/synthesis/${share.objectId}/${share.shareKey}`;
@@ -120,6 +143,25 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         console.log(err);
       });
     }
+  }
+
+  /***
+   * when the user clicks on the Download CSV button.
+   */
+  public onClickCSV(event: Event) {
+    event.preventDefault();
+    if (!this.isGeneratingCSV && this.isOwner && this.ownerConsent) {
+      this.isGeneratingCSV = true;
+      const url = this._answerService.getExportUrl(this._innovation._id, true, this.anonymousCSV);
+      setTimeout(() => {
+        window.open(url);
+        this.isGeneratingCSV = false;
+      }, 1000);
+    }
+  }
+
+  get anonymousCSV(): boolean {
+    return !!(this._innovation._metadata && this._innovation._metadata.campaign && this._innovation._metadata.campaign.anonymous_answers);
   }
 
   get ownerConsent(): boolean {

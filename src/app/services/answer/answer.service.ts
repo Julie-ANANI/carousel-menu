@@ -5,7 +5,7 @@ import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AnswerService {
 
   constructor(private _http: HttpClient) {
@@ -62,7 +62,7 @@ export class AnswerService {
     window.open(url);
   }
 
-  public getExportUrl(innovationId: string, client: Boolean, anonymous?: Boolean): string {
+  public getExportUrl(innovationId: string, client: boolean, anonymous?: boolean): string {
     const query = [];
     if (client !== undefined) {
       query.push(`client=${!!client}`);

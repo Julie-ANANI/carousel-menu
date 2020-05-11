@@ -36,7 +36,6 @@ import { EmailService } from '../../../services/email/email.service';
 import { TagsService } from '../../../services/tags/tags.service';
 import { CampaignService } from '../../../services/campaign/campaign.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
-import { AnswerService } from '../../../services/answer/answer.service';
 import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
@@ -99,7 +98,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     TagsService,
     CampaignService,
     CampaignResolver,
-    AnswerService,
     DownloadService,
     RequestResolver,
     ScenarioResolver,

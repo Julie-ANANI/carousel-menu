@@ -240,7 +240,8 @@ export const COMMON = {
     'SHARE_LINK': 'Cliquez pour copier le lien',
     'COPY_LINK': 'Copier le lien',
     'COPIED': 'Copié',
-    'GENERATING_LINK': 'la création du lien...'
+    'GENERATING_LINK': 'la création du lien...',
+    'GENERATING_FILE': 'la création du fichier...'
   },
 
   'PROJECT': {

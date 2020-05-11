@@ -46,7 +46,9 @@
 
           <!-- heading -->
           <div class="card-header">
-            <div class="card-title text-md text-bold">{{ 'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate }}</div>
+            <div class="card-title text-md text-bold">
+              {{ 'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate }}
+            </div>
           </div>
           <!-- /heading -->
 
@@ -68,8 +70,13 @@
         </div>
 
         <!-- buttons -->
-        <div *ngIf="document.isExportable" class="document-buttons">
-          <div [ngSwitch]="'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate">
+        <div
+          *ngIf="document.isExportable"
+          [ngStyle]="{ 'animation-duration': ((i+1) * 300) + 'ms' }"
+          class="document-buttons animate-slide slide-down">
+          <div
+            [ngSwitch]="'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate"
+            [ngClass]="{'popover': !isOwner || !ownerConsent}">
 
             <!-- case === 'REPORT' -->
             <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.REPORT' | translate">
@@ -81,23 +88,40 @@
             <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.SHARE' | translate">
               <button
                 (click)="onClickShare($event)"
-                [disabled]="isGeneratingLink"
+                [disabled]="isGeneratingLink || !isOwner || !ownerConsent"
                 [ngClass]="{ 'is-primary': isGeneratingLink || !isLinkCopied,
-                'is-success': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
-                class="button is-outlined"
+                'is-success is-outlined': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
+                class="button"
                 id="btn-document-share">
                 <ng-container *ngIf="!isLinkCopied; else copied">
-                  <ng-container *ngIf="!isGeneratingLink; else gen">{{ 'COMMON.BUTTON.COPY_LINK' | translate }}</ng-container>
-                  <ng-template #gen>{{ 'COMMON.BUTTON.GENERATING_LINK' | translate }}</ng-template>
+                  <ng-container *ngIf="!isGeneratingLink; else gen">
+                    {{ 'COMMON.BUTTON.COPY_LINK' | translate }}
+                  </ng-container>
+                  <ng-template #gen>
+                    {{ 'COMMON.BUTTON.GENERATING_LINK' | translate }}
+                  </ng-template>
                 </ng-container>
-                <ng-template #copied>{{ 'COMMON.BUTTON.COPIED' | translate }}</ng-template>
+                <ng-template #copied>
+                  {{ 'COMMON.BUTTON.COPIED' | translate }}
+                </ng-template>
               </button>
             </div>
             <!-- /case === 'SHARE' -->
 
             <!-- case === 'CSV' -->
             <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.CSV' | translate">
-              CSV
+              <button
+                (click)="onClickCSV($event)"
+                [disabled]="isGeneratingCSV || !isOwner || !ownerConsent"
+                class="button is-primary"
+                id="btn-document-csv">
+                <ng-container *ngIf="!isGeneratingCSV; else genCSV">
+                  {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
+                </ng-container>
+                <ng-template #genCSV>
+                  {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                </ng-template>
+              </button>
             </div>
             <!-- /case === 'CSV' -->
 
@@ -112,6 +136,24 @@
               VIDEO
             </div>
             <!-- /case === 'SHARE' -->
+
+            <!-- popover container -->
+            <div *ngIf="!isOwner || !ownerConsent" class="popover-container is-sm">
+              <div class="p-15">
+                <ng-container *ngIf="!ownerConsent && !isOwner; else specific">
+                  {{ 'CLIENT_PROJECT_DOCUMENTS.POPOVER.NOT_BOTH' | translate }}
+                </ng-container>
+                <ng-template #specific>
+                  <ng-container *ngIf="!isOwner; else consent">
+                    {{ 'CLIENT_PROJECT_DOCUMENTS.POPOVER.NOT_OWNER' | translate }}
+                  </ng-container>
+                  <ng-template #consent>
+                    {{ 'CLIENT_PROJECT_DOCUMENTS.POPOVER.NOT_CONSENT' | translate }}
+                  </ng-template>
+                </ng-template>
+              </div>
+            </div>
+            <!-- /popover container -->
 
           </div>
         </div>

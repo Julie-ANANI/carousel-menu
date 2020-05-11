@@ -22,4 +22,10 @@ export const CLIENT_PROJECT_DOCUMENTS = {
 
   'CONSENT': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, the personal data contained in the complete summary must not be used outside of your company.',
 
+  'POPOVER': {
+    'NOT_OWNER': 'To download/share link, you have to be the owner of the project.',
+    'NOT_CONSENT': 'To download/share link, please accept the above consent.',
+    'NOT_BOTH': 'To download/share link, you have to be the owner of the project and please accept the above consent.'
+  }
+
 };

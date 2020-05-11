@@ -10,7 +10,6 @@ import { UserComponent } from './user.component';
 
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { ShareService } from '../../services/share/share.service';
-import { AnswerService } from '../../services/answer/answer.service';
 import { SpinnerLoaderModule } from '../utility/spinner-loader/spinner-loader.module';
 
 @NgModule({
@@ -28,7 +27,6 @@ import { SpinnerLoaderModule } from '../utility/spinner-loader/spinner-loader.mo
   providers: [
     InnovationResolver,
     ShareService,
-    AnswerService
   ]
 })
 
