@@ -1,0 +1,127 @@
+<div id="documents">
+
+  <!-- status EDITING || SUBMITTED -->
+  <section *ngIf="innovation.status && (innovation.status === 'EDITING' || innovation.status === 'SUBMITTED')">
+    <message-template-1 [widthMax]="'292px'">
+      {{ 'CLIENT_PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}
+    </message-template-1>
+  </section>
+  <!-- /status EDITING || SUBMITTED -->
+
+  <!-- status EVALUATING || DONE -->
+  <section *ngIf="innovation.status && (innovation.status === 'EVALUATING' || innovation.status === 'DONE')">
+
+    <!-- consent -->
+    <div class="form-group p-bottom-40 m-left-auto m-right-auto">
+      <label class="form-checkbox p-left-30" for="document-consent">
+        <input
+          (change)="toggleConsent($event)"
+          [checked]="innovation.ownerConsent && innovation.ownerConsent.value"
+          id="document-consent"
+          name="document-consent"
+          type="checkbox"
+          value="true">
+        <i class="form-icon"></i>{{ 'CLIENT_PROJECT_DOCUMENTS.CONSENT' | translate }}
+      </label>
+    </div>
+    <!-- /consent -->
+
+    <!-- documents -->
+    <div class="documents-wrapper">
+      <div *ngFor="let document of documents; let i = index;" class="document">
+
+        <div
+          [ngClass]="{'inactive': !document.isExportable}"
+          [ngStyle]="{ 'animation-duration': ((i+1) * 300) + 'ms' }"
+          class="card relative animate-fade">
+
+          <!-- image -->
+          <div class="card-image">
+            <img
+              [ngStyle]="{ 'width': '135px', 'height': '76px' }"
+              [src]="document.img"
+              alt=" ">
+          </div>
+          <!-- /image -->
+
+          <!-- heading -->
+          <div class="card-header">
+            <div class="card-title text-md text-bold">{{ 'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate }}</div>
+          </div>
+          <!-- /heading -->
+
+          <!-- body -->
+          <div class="card-body text-sm p-no">
+            {{ 'CLIENT_PROJECT_DOCUMENTS.DESCRIPTION.' + document.name | translate }}
+          </div>
+          <!-- /body -->
+
+          <!-- on hover when not ready -->
+          <div *ngIf="!document.isExportable" class="document-cover flex-centered">
+            <img
+              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-lock-red.svg"
+              alt=" ">
+            {{ 'CLIENT_PROJECT_DOCUMENTS.IN_PROGRESS' | translate }}
+          </div>
+          <!-- /on hover when not ready -->
+
+        </div>
+
+        <!-- buttons -->
+        <div *ngIf="document.isExportable" class="document-buttons">
+          <div [ngSwitch]="'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate">
+
+            <!-- case === 'REPORT' -->
+            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.REPORT' | translate">
+              REPORT
+            </div>
+            <!-- /case === 'REPORT' -->
+
+            <!-- case === 'SHARE' -->
+            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.SHARE' | translate">
+              <button
+                (click)="onClickShare($event)"
+                [disabled]="isGeneratingLink"
+                [ngClass]="{ 'is-primary': isGeneratingLink || !isLinkCopied,
+                'is-success': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
+                class="button is-outlined"
+                id="btn-document-share">
+                <ng-container *ngIf="!isLinkCopied; else copied">
+                  <ng-container *ngIf="!isGeneratingLink; else gen">{{ 'COMMON.BUTTON.COPY_LINK' | translate }}</ng-container>
+                  <ng-template #gen>{{ 'COMMON.BUTTON.GENERATING_LINK' | translate }}</ng-template>
+                </ng-container>
+                <ng-template #copied>{{ 'COMMON.BUTTON.COPIED' | translate }}</ng-template>
+              </button>
+            </div>
+            <!-- /case === 'SHARE' -->
+
+            <!-- case === 'CSV' -->
+            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.CSV' | translate">
+              CSV
+            </div>
+            <!-- /case === 'CSV' -->
+
+            <!-- case === 'PDF' -->
+            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.PDF' | translate">
+              PDF
+            </div>
+            <!-- /case === 'PDF' -->
+
+            <!-- case === 'VIDEO' -->
+            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.VIDEO' | translate">
+              VIDEO
+            </div>
+            <!-- /case === 'SHARE' -->
+
+          </div>
+        </div>
+        <!-- /buttons -->
+
+      </div>
+    </div>
+    <!-- /documents -->
+
+  </section>
+  <!-- /status EVALUATING || DONE -->
+
+</div>

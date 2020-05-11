@@ -2,7 +2,7 @@
 
 #message-template-1 {
 
-  .message-content-wrapper {
+  .message-content {
     padding: 1rem 0.75rem;
     border-radius: 6px;
     color: $white-color;
@@ -13,7 +13,7 @@
     text-align: center;
   }
 
-  .triangle {
+  .message-triangle {
     border-top: 12px solid $draft-color;
     border-right: 25px solid transparent;
     transform: skewX(75deg);
@@ -23,7 +23,7 @@
     position: relative;
   }
 
-  .bot-wrapper {
+  .message-bot {
 
     img {
       margin-left: auto;

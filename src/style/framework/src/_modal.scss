@@ -21,7 +21,7 @@
   }
 
   .modal-overlay {
-    @include absolute-full-page();
+    @include absolute-full();
     background: $bg-overlay-dark-color;
   }
 

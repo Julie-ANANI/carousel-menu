@@ -237,6 +237,10 @@ export const COMMON = {
     'REINVITE': 'Renvoyer l\'invitation',
     'ADD_LANG_ENGLISH': 'Ajouter l\'anglais',
     'ADD_LANG_FRENCH': 'Ajouter le français',
+    'SHARE_LINK': 'Cliquez pour copier le lien',
+    'COPY_LINK': 'Copier le lien',
+    'COPIED': 'Copié',
+    'GENERATING_LINK': 'la création du lien...'
   },
 
   'PROJECT': {

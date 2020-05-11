@@ -10,6 +10,7 @@ import { ExplorationComponent } from './components/exploration/exploration.compo
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { DocumentsComponent } from './components/documents/documents.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
@@ -61,7 +62,8 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
     ExplorationComponent,
     SurveyComponent,
     HistoryProjectComponent,
-    SettingsComponent
+    SettingsComponent,
+    DocumentsComponent
   ],
   exports: [
     ProjectComponent

@@ -11,11 +11,11 @@
     <!-- section no campaign -->
     <ng-container *ngIf="campaigns.length === 0">
       <div class="section-pad rm-pad-bottom">
-        <app-message-template-1 [widthMax]="'354px'">
+        <message-template-1 [widthMax]="'354px'">
           {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
           <br>
           {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
-        </app-message-template-1>
+        </message-template-1>
       </div>
     </ng-container>
 

@@ -31,12 +31,12 @@
   <!-- when fetching or initializing -->
   <ng-container *ngIf="table._total === -1">
     <div class="section-light-pad">
-      <app-message-template-1 [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
+      <message-template-1 [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
         <div class="flex-centered">
           <div class="loading is-white" style="margin-right: 0.8rem"></div>
           <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
         </div>
-      </app-message-template-1>
+      </message-template-1>
     </div>
   </ng-container>
   <!-- /when fetching or initializing -->
@@ -45,11 +45,11 @@
   <!-- when no result -->
   <ng-container *ngIf="table._total === 0 || isSearching">
     <div class="section-light-pad">
-      <app-message-template-1
+      <message-template-1
         [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
         [widthMax]="isSearching ? '362px' : '273px'">
         <span [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'" translate></span>
-      </app-message-template-1>
+      </message-template-1>
     </div>
   </ng-container>
   <!-- /when no result -->

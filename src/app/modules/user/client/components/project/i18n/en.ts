@@ -8,6 +8,7 @@ export const PROJECT_MODULE = {
   'SETUP_TAB': 'Project Setup',
   'EXPLORATION_TAB': 'Market Exploration',
   'SYNTHESIS_TAB': 'Synthesis',
+  'DOCUMENTS_TAB': 'Documents',
   'SETTINGS_TAB': 'Settings',
 
 

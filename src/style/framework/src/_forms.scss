@@ -152,11 +152,11 @@ textarea {
 // Form element: Checkbox and Radio
 .form-checkbox, .form-radio, .form-switch {
   display: flex;
-  line-height: $line-height-sm;
+  line-height: 1.2;
   font-weight: $font-weight-normal;
-  font-size: 0.75rem;
+  font-size: 15px;
   align-items: center;
-  padding:  $layout-spacing 1.25rem;
+  padding:  $layout-spacing 25px;
   position: relative;
 
   input {

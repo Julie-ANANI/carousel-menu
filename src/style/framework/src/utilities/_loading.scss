@@ -65,6 +65,15 @@
 
   }
 
+  &.is-primary {
+
+    &::after {
+      border-bottom-color: $border-primary-color;
+      border-left-color: $border-primary-color;
+    }
+
+  }
+
   &.is-white {
 
     &::after {
