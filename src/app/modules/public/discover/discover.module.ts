@@ -13,8 +13,6 @@ import { ShareService } from '../../../services/share/share.service';
 import { TagsService } from '../../../services/tags/tags.service';
 import { FilterService } from './components/innovations/services/filter.service';
 
-import { InnovationResolver } from '../../../resolvers/innovation.resolver';
-
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { FooterModule } from '../../common/footer/footer.module';
@@ -44,7 +42,6 @@ import { PaginationTemplate2Module } from '../../utility/paginations/pagination-
     PaginationTemplate2Module
   ],
   providers:[
-    InnovationResolver,
     ShareService,
     TagsService,
     FilterService

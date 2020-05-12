@@ -40,6 +40,25 @@
 
   }
 
+  /********************************** Executive Report ***************************************/
+
+  // first page
+  #project-front-page {
+    padding: 25px 25px 0 !important;
+
+    .front-body {
+      min-height: unset !important;
+      height: 625px;
+
+      &.no-header {
+        height: 685px;
+      }
+
+    }
+
+  }
+
+
 
   /********************************** Innovation Card ***************************************/
 

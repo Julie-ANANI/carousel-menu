@@ -147,6 +147,8 @@ export const COMMON = {
     'DOMAIN_NAME': 'Nom de domaine',
     'ANSWER': 'Réponse',
     'PROJECT': 'Projet',
+    'MARKET_TEST_BY': 'Test Marché par',
+    'PROJECT_LEADER': 'Chef de projet'
   },
 
   'PLACEHOLDER': {

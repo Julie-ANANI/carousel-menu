@@ -7,7 +7,6 @@ import { ClientRoutingModule } from './client-routing.module';
 
 import { ClientComponent } from './client.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
-import { ExecutiveReportComponent } from './components/print/executive-report/executive-report.component';
 
 import { PaginationTemplate1Module } from '../../utility/paginations/pagination-template-1/pagination-template-1.module';
 import { ProjectModule } from './components/project/project.module';
@@ -19,7 +18,6 @@ import { TagsService } from "../../../services/tags/tags.service";
 import { ModalModule } from '../../utility/modals/modal/modal.module';
 import { PaginationTemplate2Module } from '../../utility/paginations/pagination-template-2/pagination-template-2.module';
 import { NewProjectModule } from './components/new-project/new-project.module';
-import {SharedExecutiveReportModule} from '../../shared/components/shared-executive-report/shared-executive-report.module';
 
 @NgModule({
   imports: [
@@ -35,8 +33,7 @@ import {SharedExecutiveReportModule} from '../../shared/components/shared-execut
     MessageTemplate1Module,
     ModalModule,
     PaginationTemplate2Module,
-    NewProjectModule,
-    SharedExecutiveReportModule
+    NewProjectModule
   ],
   providers: [
     TagsService
@@ -44,7 +41,6 @@ import {SharedExecutiveReportModule} from '../../shared/components/shared-execut
   declarations: [
     ClientComponent,
     ProjectsListComponent,
-    ExecutiveReportComponent
   ],
   exports: [
     ClientComponent

@@ -8,22 +8,24 @@ import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Innovation } from '../models/innovation';
 import { InnovationService } from '../services/innovation/innovation.service';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, first, tap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const INNOVATION_KEY = makeStateKey('innovation');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class InnovationResolver implements Resolve<Innovation> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
               private _innovationService: InnovationService,
-              private _transferState: TransferState) {}
+              private _transferState: TransferState) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Innovation> {
 
     if (this._transferState.hasKey(INNOVATION_KEY)) {
-      const innovation = this._transferState.get<Innovation>(INNOVATION_KEY, null);
+      const innovation = this._transferState.get<Innovation>(INNOVATION_KEY, <Innovation>{});
       this._transferState.remove(INNOVATION_KEY);
+
       return new Observable((observer) => {
         observer.next(innovation);
         observer.complete();
@@ -33,13 +35,14 @@ export class InnovationResolver implements Resolve<Innovation> {
       const innovationId = activatedRouteSnapshot.paramMap.get('projectId') || '';
 
       return this._innovationService.get(innovationId)
-        .pipe(
+        .pipe(first(),
           tap((innovation) => {
             if (isPlatformServer(this.platformId)) {
               this._transferState.set(INNOVATION_KEY, innovation as Innovation);
             }
           }),
-          catchError(() => {
+          catchError((err: HttpErrorResponse) => {
+            console.log(err);
             return EMPTY;
           })
         );

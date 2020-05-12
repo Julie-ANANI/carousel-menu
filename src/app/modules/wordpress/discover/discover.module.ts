@@ -12,8 +12,6 @@ import { CardsComponent } from './components/innovations/components/cards/cards.
 import { ShareService } from '../../../services/share/share.service';
 import { FilterService } from '../../public/discover/components/innovations/services/filter.service';
 
-import { InnovationResolver } from '../../../resolvers/innovation.resolver';
-
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { TagsService } from '../../../services/tags/tags.service';
@@ -33,7 +31,6 @@ import { PaginationTemplate2Module } from '../../utility/paginations/pagination-
     PaginationTemplate2Module
   ],
   providers:[
-    InnovationResolver,
     ShareService,
     TagsService,
     FilterService

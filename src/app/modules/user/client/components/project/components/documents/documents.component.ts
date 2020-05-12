@@ -120,13 +120,15 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public toggleConsent(event: Event) {
     event.preventDefault();
-    this._innovation.ownerConsent.value = !!(event.target as HTMLInputElement).checked;
-    this._innovationService.saveConsent(this._innovation._id, Date.now()).pipe(first()).subscribe(() => {
-    }, (err: HttpErrorResponse) => {
-      this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.log(err);
-    });
+    if (this.isOwner) {
+      this._innovation.ownerConsent.value = !!(event.target as HTMLInputElement).checked;
+      this._innovationService.saveConsent(this._innovation._id, Date.now()).pipe(first()).subscribe(() => {
+      }, (err: HttpErrorResponse) => {
+        this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.log(err);
+      });
+    }
   }
 
   /***
@@ -215,7 +217,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   }
 
   get isOwner(): boolean {
-    return this.user.id !== (this._innovation.owner && this._innovation.owner.id);
+    return this.user.id === (this._innovation.owner && this._innovation.owner.id);
   }
 
   get user(): User {

@@ -1,0 +1,31 @@
+<div id="project-front-page">
+
+  <!-- company logo -->
+  <div *ngIf="project.companyLogo" class="front-header">
+    <img [src]="project.companyLogo" alt=" ">
+  </div>
+  <!-- /company logo -->
+
+  <!-- body -->
+  <div [ngClass]="{ 'no-header': !project.companyLogo }" class="front-body">
+    <h1 class="title is-4">{{ project.title }}</h1>
+    <h2 [innerHTML]="project.summary"></h2>
+    <div *ngIf="project.objective" class="body-objective">{{ project.objective }}</div>
+    <img [src]="project.media" alt=" " class="body-media img-responsive">
+    <div class="body-leader">{{ 'COMMON.LABEL.PROJECT_LEADER' | translate }}</div>
+    <div class="body-owner">{{ project.ownerName }} / {{ project.ownerEmail }}</div>
+  </div>
+  <!-- body -->
+
+  <!-- footer -->
+  <div class="front-footer">
+    <div *ngIf="isUmi" class="logo-test">
+      <div>{{ 'COMMON.LABEL.MARKET_TEST_BY' | translate }}</div>
+      <div class="umi-image">
+        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-white.svg" alt="UMI">
+      </div>
+    </div>
+  </div>
+  <!-- /footer -->
+
+</div>

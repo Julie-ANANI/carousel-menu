@@ -7,7 +7,6 @@ import { NewProjectComponent } from './components/new-project/new-project.compon
 import { AccountComponent } from './components/account/account.component';
 import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../../public/share/component/synthesis-complete/synthesis-complete.component';
-import { ExecutiveReportComponent } from './components/print/executive-report/executive-report.component';
 
 import { AuthGuard } from '../../../guards/auth-guard.service';
 
@@ -26,12 +25,6 @@ const clientRoutes: Routes = [
           { path: '', component: SynthesisListComponent, pathMatch: 'full' },
           { path: ':projectId/:shareKey', component: SynthesisCompleteComponent, pathMatch: 'full' }
         ]
-      },
-      {
-        path: 'projects/:projectId/print/executive-report',
-        canActivate: [AuthGuard],
-        component: ExecutiveReportComponent,
-        pathMatch: 'full'
       },
       {
         path: 'projects',

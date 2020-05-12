@@ -84,6 +84,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _setData() {
 
+    // objective
     this._objectiveConfig = {
       sale: this._executiveReport.sale,
       client: this._executiveReport.client,
@@ -93,17 +94,20 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     // pitch
     this._summary = this._executiveReport.summary;
 
+    // targeting
     this._targetingConfig = {
       abstract: this._executiveReport.targeting && this._executiveReport.targeting.abstract,
       countries: this._executiveReport.targeting && this._executiveReport.targeting.countries,
       countriesall: this._executiveReport.targeting && this._executiveReport.targeting.countriesall,
     };
 
+    // professionals
     this._professionalConfig = {
       abstract: this._executiveReport.professionals && this._executiveReport.professionals.abstract,
       list: this._executiveReport.professionals && this._executiveReport.professionals.list,
     };
 
+    // conclusion
     this._conclusionConfig = {
       conclusion: this._executiveReport.conclusion,
       operator: this._executiveReport.operator,

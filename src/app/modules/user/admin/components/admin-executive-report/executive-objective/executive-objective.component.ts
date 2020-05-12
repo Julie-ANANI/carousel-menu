@@ -37,6 +37,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
     client: {
       name: '',
       email: '',
+      logo: ''
     },
     sale: ''
   };

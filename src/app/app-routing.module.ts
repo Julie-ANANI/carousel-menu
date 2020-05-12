@@ -92,7 +92,6 @@ const config: ExtraOptions = {
     RouterModule
   ],
   providers: [ // /!\ Ne mettre ici que les service liés au routage (utilisés par un Guard), sinon les mettre dans app.module.ts
-    AuthGuard,
     NonAuthGuard,
     AdHocAuthGuard,
     ShareSynthesisGuard

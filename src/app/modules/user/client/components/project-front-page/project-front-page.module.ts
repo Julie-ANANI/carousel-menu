@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { SharedMainPageComponent } from './shared-main-page.component';
+import { ProjectFrontPageComponent } from './project-front-page.component';
 
 @NgModule({
   imports: [
@@ -10,11 +10,11 @@ import { SharedMainPageComponent } from './shared-main-page.component';
     TranslateModule.forChild(),
   ],
   declarations: [
-    SharedMainPageComponent
+    ProjectFrontPageComponent
   ],
   exports: [
-    SharedMainPageComponent
+    ProjectFrontPageComponent
   ]
 })
 
-export class SharedMainPageModule {}
+export class ProjectFrontPageModule {}

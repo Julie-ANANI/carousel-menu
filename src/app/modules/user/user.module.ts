@@ -8,7 +8,6 @@ import { HeaderModule } from '../common/header/header.module';
 
 import { UserComponent } from './user.component';
 
-import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { ShareService } from '../../services/share/share.service';
 import { SpinnerLoaderModule } from '../utility/spinner-loader/spinner-loader.module';
 
@@ -19,13 +18,12 @@ import { SpinnerLoaderModule } from '../utility/spinner-loader/spinner-loader.mo
     UserRoutingModule,
     FooterModule,
     HeaderModule,
-    SpinnerLoaderModule
+    SpinnerLoaderModule,
   ],
   declarations: [
     UserComponent,
   ],
   providers: [
-    InnovationResolver,
     ShareService,
   ]
 })

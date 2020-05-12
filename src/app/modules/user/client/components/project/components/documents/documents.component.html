@@ -16,6 +16,7 @@
       <label class="form-checkbox p-left-30" for="document-consent">
         <input
           (change)="toggleConsent($event)"
+          [disabled]="!isOwner"
           [checked]="innovation.ownerConsent && innovation.ownerConsent.value"
           id="document-consent"
           name="document-consent"
@@ -189,8 +190,4 @@
   <!-- /status EVALUATING || DONE -->
 
 </div>
-
-<section id="executive-report" class="section-light-pad">
-  <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
-</section>
 

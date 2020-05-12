@@ -17,6 +17,7 @@ export interface ExecutiveReport {
 export interface ExecutiveClient {
   name: string;
   email: string;
+  logo: string;
 }
 
 export interface ExecutiveProfessional {

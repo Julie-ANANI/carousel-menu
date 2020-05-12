@@ -35,9 +35,6 @@ const discoverRoutes: Routes = [
   imports: [
     RouterModule.forChild(discoverRoutes)
   ],
-  providers: [
-    InnovationResolver
-  ],
   exports: [
     RouterModule
   ]
