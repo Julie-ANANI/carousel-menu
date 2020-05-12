@@ -30,32 +30,34 @@ import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primar
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
+import {SharedExecutiveReportModule} from '../../../../shared/components/shared-executive-report/shared-executive-report.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ProjectRoutingModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    SidebarModule,
-    SharedProjectSettingsModule,
-    SharedProjectEditCardsModule,
-    SidebarInnovationPreviewModule,
-    TableModule,
-    SharedWorldmapModule,
-    SidebarUserAnswerModule,
-    SharedMarketReportModule,
-    MessageTemplate1Module,
-    ModalModule,
-    FormsModule,
-    SharedTextZoneModule,
-    ObjectivesSecondaryModule,
-    ModalEmptyModule,
-    ObjectivesPrimaryModule,
-    AngularMyDatePickerModule,
-    AutoSuggestionModule,
-    NgxPageScrollModule
-  ],
+    imports: [
+        CommonModule,
+        ProjectRoutingModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        SidebarModule,
+        SharedProjectSettingsModule,
+        SharedProjectEditCardsModule,
+        SidebarInnovationPreviewModule,
+        TableModule,
+        SharedWorldmapModule,
+        SidebarUserAnswerModule,
+        SharedMarketReportModule,
+        MessageTemplate1Module,
+        ModalModule,
+        FormsModule,
+        SharedTextZoneModule,
+        ObjectivesSecondaryModule,
+        ModalEmptyModule,
+        ObjectivesPrimaryModule,
+        AngularMyDatePickerModule,
+        AutoSuggestionModule,
+        NgxPageScrollModule,
+        SharedExecutiveReportModule
+    ],
   declarations: [
     ProjectComponent,
     SetupComponent,

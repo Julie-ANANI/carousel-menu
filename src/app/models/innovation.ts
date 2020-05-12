@@ -64,7 +64,7 @@ export interface Innovation {
     date?: any
   };
 
-  // not use anymore
+  // not use anymore. It's for the old innovations.
   executiveReport?: {
     totalSections?: number,
     goal?: string,

@@ -80,7 +80,18 @@
 
             <!-- case === 'REPORT' -->
             <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.REPORT' | translate">
-              REPORT
+              <button
+                (click)="onClickReport($event)"
+                [disabled]="isGeneratingReport || !isOwner || !ownerConsent"
+                class="button is-primary"
+                id="btn-document-report">
+                <ng-container *ngIf="!isGeneratingReport; else genCSV">
+                  {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
+                </ng-container>
+                <ng-template #genCSV>
+                  {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                </ng-template>
+              </button>
             </div>
             <!-- /case === 'REPORT' -->
 
@@ -178,3 +189,8 @@
   <!-- /status EVALUATING || DONE -->
 
 </div>
+
+<section id="executive-report" class="section-light-pad">
+  <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
+</section>
+

@@ -13,6 +13,7 @@ import {CommonService} from '../../../../../../../services/common/common.service
 import {environment} from '../../../../../../../../environments/environment';
 import {AnswerService} from '../../../../../../../services/answer/answer.service';
 import {TranslateService} from '@ngx-translate/core';
+import FileSaver from "file-saver";
 
 interface Document {
   name: string;
@@ -69,6 +70,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   isGeneratingPDF = false;
 
+  isGeneratingReport = false;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _authService: AuthService,
               private _commonService: CommonService,
@@ -95,6 +98,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       switch (document.name) {
 
         case 'REPORT':
+          document.isExportable = !!this._innovation.executiveReport || !!this._innovation.executiveReportId;
           break;
 
         case 'VIDEO':
@@ -178,6 +182,27 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         window.open(url);
         this.isGeneratingPDF = false;
       }, 1000);
+    }
+  }
+
+  /***
+   * when the user clicks on the Download Report button.
+   */
+  public onClickReport(event: Event) {
+    event.preventDefault();
+    if (!this.isGeneratingReport && this.isOwner && this.ownerConsent) {
+      this.isGeneratingReport = true;
+      const filename = this._innovation.name ? `UMI Executive report -
+      ${this._innovation.name.slice(0, Math.min(13, this._innovation.name.length))}.pdf` : 'innovation_umi.pdf';
+      this._innovationService.executiveReportPDF(this._innovation._id).pipe(first()).subscribe( data => {
+        const blob = new Blob([data], {type: 'application/pdf'});
+        FileSaver.saveAs(blob, filename);
+        this.isGeneratingReport = false;
+      }, (err: HttpErrorResponse) => {
+        this.isGeneratingReport = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.log(err);
+      });
     }
   }
 
