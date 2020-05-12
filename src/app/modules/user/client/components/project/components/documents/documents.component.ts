@@ -215,7 +215,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   }
 
   get isOwner(): boolean {
-    return this.user.id === (this._innovation.owner && this._innovation.owner.id);
+    return this.user.id !== (this._innovation.owner && this._innovation.owner.id);
   }
 
   get user(): User {
