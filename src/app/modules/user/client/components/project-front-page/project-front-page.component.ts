@@ -61,6 +61,7 @@ export class ProjectFrontPageComponent implements OnChanges {
   private _typeInnovation() {
     const innovation: Innovation = <Innovation>this.data;
     const card: InnovCard = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'card');
+    this._userLang = card.lang;
     this._project = {
       title: card.title,
       summary: card.summary,
@@ -78,6 +79,7 @@ export class ProjectFrontPageComponent implements OnChanges {
    */
   private _typeExecutive() {
     const report: ExecutiveReport = <ExecutiveReport>this.data;
+    this._userLang = report.lang;
     this._project = {
       title: this.title,
       summary: report.summary,
@@ -95,6 +97,10 @@ export class ProjectFrontPageComponent implements OnChanges {
 
   get project(): ProjectFront {
     return this._project;
+  }
+
+  get userLang(): string {
+    return this._userLang;
   }
 
 }

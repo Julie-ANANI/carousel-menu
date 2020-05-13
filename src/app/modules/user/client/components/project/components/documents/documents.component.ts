@@ -126,7 +126,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.log(err);
+        console.error(err);
       });
     }
   }
@@ -152,7 +152,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         this.isGeneratingLink = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.log(err);
+        console.error(err);
       });
     }
   }
@@ -203,7 +203,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         this.isGeneratingReport = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.log(err);
+        console.error(err);
       });
     }
   }
@@ -217,7 +217,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   }
 
   get isOwner(): boolean {
-    return this.user.id === (this._innovation.owner && this._innovation.owner.id);
+    return (this.user.id === (this._innovation.owner && this._innovation.owner.id)) || this._authService.isAdmin;
   }
 
   get user(): User {

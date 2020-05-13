@@ -1,5 +1,28 @@
 @import "../../../../../style/framework/src/variables";
 
+#report {
+
+  .first-page {
+    background-color: $bg-white-color;
+    display: flex;
+    min-height: 934.5px;
+  }
+
+  .page-section {
+    width: 33.33%;
+  }
+
+  .second-page {
+    display: flex;
+    background-image: url("https://res.cloudinary.com/umi/image/upload/app/default-images/sections/bg-1.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 931.5px;
+  }
+
+}
+
 #executive-report-wrapper {
 
   .page-first {

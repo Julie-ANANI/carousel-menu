@@ -59,6 +59,21 @@
 
   }
 
+  // 3rd and 4th page
+  #report {
+
+    .first-page {
+      min-height: unset;
+      height: 934.5px;
+    }
+
+    .second-page {
+      min-height: unset;
+      height: 931.5px;
+    }
+
+  }
+
 
 
   /********************************** Innovation Card ***************************************/
@@ -258,19 +273,19 @@
         }
 
         #executive-professional-wrapper {
-          padding: 20px !important;
-          border-right: $border-width solid $border-default-color;
+          // padding: 20px !important;
+          // border-right: $border-width solid $border-default-color;
 
           .response-wrapper, .profile {
-            margin-bottom: 10px !important;
+            // margin-bottom: 10px !important;
           }
 
           .sub-title, #professional-abstract {
-            font-size: 12px !important;
+            // font-size: 12px !important;
           }
 
           .detail-wrapper, .remaining-text {
-            font-size: 11px !important;
+            // font-size: 11px !important;
           }
 
         }

@@ -27,7 +27,8 @@ export class PrintExecutiveReportComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this._activatedRoute.snapshot.data.report && typeof this._activatedRoute.snapshot.data.report !== undefined) {
+    if (this._activatedRoute.snapshot.data.report && typeof this._activatedRoute.snapshot.data.report !== undefined
+      && this._activatedRoute.snapshot.data.report._id) {
       this._data = <ExecutiveReport>this._activatedRoute.snapshot.data.report;
       this._userLang = this.data['lang'];
       this._initData();

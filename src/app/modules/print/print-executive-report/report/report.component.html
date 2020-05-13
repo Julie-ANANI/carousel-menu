@@ -1,0 +1,187 @@
+<div id="report">
+
+  <!-- when two sections -->
+  <div *ngIf="totalSection === 2" class="col-12">
+    <div class="first-page">
+
+      <!-- professional -->
+      <div class="page-section">
+        <report-professional
+          [answers]="answers"
+          [report]="report"
+          [userLang]="userLang">
+        </report-professional>
+      </div>
+      <!-- /professional -->
+
+      <!-- sections -->
+      <div class="page-section">
+        <!--<div *ngFor="let sectionNumber of firstPageSections | slice:0:innovation.executiveReport.totalSections"
+             class="section"
+             [ngClass]="{ 'section-2': innovation.executiveReport.totalSections === 2 }">
+
+          <report-section
+            [answers]="answers"
+            [project]="innovation"
+            [ngStyle]="{ 'width': '100%' }"
+            [section]="sectionNumber">
+          </report-section>
+
+        </div>-->
+      </div>
+      <!-- /sections -->
+
+      <!-- conclusion part -->
+      <div class="page-section">
+        <!--<report-conclusion [project]="innovation"></report-conclusion>-->
+      </div>
+      <!-- /conclusion part -->
+
+    </div>
+  </div>
+  <!-- /when two sections -->
+
+  <!-- when more than two sections -->
+  <ng-container *ngIf="totalSection > 2">
+
+    <!-- first page -->
+    <div class="col-12">
+      <div class="first-page">
+
+        <!-- professional column -->
+        <div class="page-section">
+          <report-professional
+            [answers]="answers"
+            [report]="report"
+            [userLang]="userLang">
+          </report-professional>
+        </div>
+        <!-- /professional column -->
+
+        <!-- sections -->
+        <div class="sections">
+          <!--<div *ngFor="let sectionNumber of firstPageSections" class="section" [ngClass]="{ 'section-4': innovation.executiveReport.totalSections > 2 }">
+
+            <report-section
+              [project]="innovation"
+              [answers]="answers"
+              [ngStyle]="{ 'width': '100%' }"
+              [section]="sectionNumber">
+            </report-section>
+
+          </div>-->
+        </div>
+        <!-- /sections -->
+
+      </div>
+    </div>
+    <!-- /first page -->
+
+    <!-- second page -->
+    <div class="col-12">
+      <div class="second-page">
+
+        <!-- sections -->
+        <ng-container *ngIf="totalSection > 4">
+          <!--<div [ngClass]="{ 'section-wrapper': innovation.executiveReport.totalSections === 6, 'sections': innovation.executiveReport.totalSections > 6 }">
+            <div *ngFor="let sectionNumber of secondPageSections | slice:0:(innovation.executiveReport.totalSections - 4)"
+                 class="section"
+                 [ngClass]="{ 'section-2': innovation.executiveReport.totalSections === 6, 'section-4': innovation.executiveReport.totalSections > 6 }">
+
+              <report-section
+                [project]="innovation"
+                [answers]="answers"
+                [ngStyle]="{ 'width': '100%' }"
+                [section]="sectionNumber">
+              </report-section>
+
+            </div>
+          </div>-->
+        </ng-container>
+        <!-- /sections -->
+
+        <!-- conclusion part -->
+        <div class="page-section">
+          <!--<report-conclusion [project]="innovation"></report-conclusion>-->
+        </div>
+        <!-- /conclusion part -->
+
+      </div>
+    </div>
+    <!-- /second page -->
+
+  </ng-container>
+  <!-- /when more than two sections -->
+
+  <!-- when more than two sections -->
+<!--  <ng-container *ngIf="innovation.executiveReport.totalSections > 2">
+
+    &lt;!&ndash; first page &ndash;&gt;
+    <div class="col-12">
+      <div class="page-first">
+
+        &lt;!&ndash; professional column &ndash;&gt;
+        <div class="section-wrapper">
+          <report-professional [project]="innovation" [answers]="answers"></report-professional>
+        </div>
+        &lt;!&ndash; /professional column &ndash;&gt;
+
+        &lt;!&ndash; sections &ndash;&gt;
+        <div class="sections">
+          <div *ngFor="let sectionNumber of firstPageSections" class="section" [ngClass]="{ 'section-4': innovation.executiveReport.totalSections > 2 }">
+
+            <report-section
+              [project]="innovation"
+              [answers]="answers"
+              [ngStyle]="{ 'width': '100%' }"
+              [section]="sectionNumber">
+            </report-section>
+
+          </div>
+        </div>
+        &lt;!&ndash; /sections &ndash;&gt;
+
+      </div>
+    </div>
+    &lt;!&ndash; /first page &ndash;&gt;
+
+    &lt;!&ndash; second page &ndash;&gt;
+    <div class="col-12">
+      <div class="second-page section-pad rm-pad-bottom">
+        <div class="second-page-wrapper">
+
+          &lt;!&ndash; sections &ndash;&gt;
+          <ng-container *ngIf="innovation.executiveReport.totalSections > 4">
+            <div [ngClass]="{ 'section-wrapper': innovation.executiveReport.totalSections === 6, 'sections': innovation.executiveReport.totalSections > 6 }">
+              <div *ngFor="let sectionNumber of secondPageSections | slice:0:(innovation.executiveReport.totalSections - 4)"
+                   class="section"
+                   [ngClass]="{ 'section-2': innovation.executiveReport.totalSections === 6, 'section-4': innovation.executiveReport.totalSections > 6 }">
+
+                <report-section
+                  [project]="innovation"
+                  [answers]="answers"
+                  [ngStyle]="{ 'width': '100%' }"
+                  [section]="sectionNumber">
+                </report-section>
+
+              </div>
+            </div>
+          </ng-container>
+          &lt;!&ndash; /sections &ndash;&gt;
+
+          &lt;!&ndash; conclusion part &ndash;&gt;
+          <div class="section-wrapper">
+            <report-conclusion [project]="innovation"></report-conclusion>
+          </div>
+          &lt;!&ndash; /conclusion part &ndash;&gt;
+
+        </div>
+      </div>
+    </div>
+    &lt;!&ndash; /second page &ndash;&gt;
+
+  </ng-container>-->
+  <!-- /when more than two sections -->
+
+</div>
+

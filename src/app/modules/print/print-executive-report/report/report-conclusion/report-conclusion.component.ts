@@ -3,12 +3,12 @@ import { environment } from '../../../../../../environments/environment';
 import { Innovation } from '../../../../../models/innovation';
 
 @Component({
-  selector: 'app-executive-conclusion',
-  templateUrl: './executive-conclusion.component.html',
-  styleUrls: ['./executive-conclusion.component.scss']
+  selector: 'report-conclusion',
+  templateUrl: './report-conclusion.component.html',
+  styleUrls: ['./report-conclusion.component.scss']
 })
 
-export class ExecutiveConclusionComponent {
+export class ReportConclusionComponent {
 
   @Input() project: Innovation;
 

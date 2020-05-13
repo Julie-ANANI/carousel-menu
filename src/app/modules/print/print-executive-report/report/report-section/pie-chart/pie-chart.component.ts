@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
-import { ResponseService } from '../../../shared-market-report/services/response.service';
+import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { PieChart } from '../../../../../../models/pie-chart';
-import { DataService } from '../../../shared-market-report/services/data.service';
+import { DataService } from '../../../../../shared/components/shared-market-report/services/data.service';
 
 @Component({
   selector: 'app-pie-chart',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BarChartComponent as BaseComponent } from '../../../shared-market-report/components/bar-chart/bar-chart.component';
+import { BarChartComponent as BaseComponent } from '../../../../../shared/components/shared-market-report/components/bar-chart/bar-chart.component';
 
 @Component({
   selector: 'app-bar-chart',

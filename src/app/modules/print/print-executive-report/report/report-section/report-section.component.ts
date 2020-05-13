@@ -1,22 +1,22 @@
 import { Component, Input } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
-import { ResponseService } from '../../shared-market-report/services/response.service';
+import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
 import { Innovation } from '../../../../../models/innovation';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Tag } from '../../../../../models/tag';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { DataService } from '../../shared-market-report/services/data.service';
+import { DataService } from '../../../../shared/components/shared-market-report/services/data.service';
 
 @Component({
-  selector: 'app-executive-section',
-  templateUrl: './executive-section.component.html',
-  styleUrls: ['./executive-section.component.scss']
+  selector: 'report-section',
+  templateUrl: './report-section.component.html',
+  styleUrls: ['./report-section.component.scss']
 })
 
-export class ExecutiveSectionComponent {
+export class ReportSectionComponent {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;

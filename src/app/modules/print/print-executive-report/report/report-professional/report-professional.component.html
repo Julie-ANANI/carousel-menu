@@ -1,0 +1,48 @@
+<div id="report-professional">
+
+  <!-- title / answers / map / target abstract -->
+  <div class="target-wrapper">
+    <h1 class="title is-4">{{ professional.title }}</h1>
+    <h2>{{ professional.answers }}</h2>
+    <div class="target-map">
+      <app-shared-worldmap [targetingCountries]="professional.countries"></app-shared-worldmap>
+    </div>
+    <h3>{{ professional.targetAbstract }}</h3>
+  </div>
+  <!-- /title / answers / map / target abstract -->
+
+  <!-- pros / abstract -->
+  <div class="profiles-wrapper">
+    <h3>{{ professional.profileAbstract }}</h3>
+    <div class="profiles">
+      <div *ngFor="let pro of pros" class="profile">
+
+        <!-- picto / jobTitle / company -->
+        <div class="d-flex p-right-1">
+          <img
+            [ngStyle]="{ 'height': '18px', 'width': '15px', 'margin-right': '8px' }"
+            src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-user-draft.svg"
+            alt=" ">
+          <div>
+            <h4 *ngIf="pro.jobTitle">{{ pro.jobTitle }}</h4>
+            <h5 *ngIf="pro.company">{{ pro.company }}</h5>
+          </div>
+        </div>
+        <!-- /picto / jobTitle / company -->
+
+        <!-- flag -->
+        <div *ngIf="pro.country">
+          <app-country-flag
+            [country]="pro.country"
+            [width]="23"
+            [height]="16">
+          </app-country-flag>
+        </div>
+        <!-- /flag -->
+
+      </div>
+    </div>
+  </div>
+  <!-- /pros / abstract -->
+
+</div>

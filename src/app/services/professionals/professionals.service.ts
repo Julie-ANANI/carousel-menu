@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Professional } from '../../models/professional';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfessionalsService {
 
   constructor(private _http: HttpClient) {

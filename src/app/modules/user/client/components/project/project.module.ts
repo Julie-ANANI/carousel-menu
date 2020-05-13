@@ -30,7 +30,6 @@ import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primar
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
-import {SharedExecutiveReportModule} from '../../../../shared/components/shared-executive-report/shared-executive-report.module';
 
 @NgModule({
     imports: [
@@ -55,8 +54,7 @@ import {SharedExecutiveReportModule} from '../../../../shared/components/shared-
         ObjectivesPrimaryModule,
         AngularMyDatePickerModule,
         AutoSuggestionModule,
-        NgxPageScrollModule,
-        SharedExecutiveReportModule
+        NgxPageScrollModule
     ],
   declarations: [
     ProjectComponent,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StarsComponent as BaseComponent } from '../../../shared-market-report/components/stars/stars.component';
+import { StarsComponent as BaseComponent } from '../../../../../shared/components/shared-market-report/components/stars/stars.component';
 
 @Component({
   selector: 'app-stars',

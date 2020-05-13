@@ -29,7 +29,6 @@ import { AdminEnterpriseManagementModule } from "./components/admin-settings/adm
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
-import { ProfessionalsService } from '../../../services/professionals/professionals.service';
 import { TemplatesService } from '../../../services/templates/templates.service';
 import { PresetService } from '../../../services/preset/preset.service';
 import { EmailService } from '../../../services/email/email.service';
@@ -91,7 +90,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     DashboardService,
     SearchService,
     FrontendService,
-    ProfessionalsService,
     TemplatesService,
     PresetService,
     EmailService,

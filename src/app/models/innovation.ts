@@ -14,6 +14,18 @@ export interface InnovationMetadataValues {
   delivery?: number;
 }
 
+// not use anymore. It's for the old innovations report.
+export interface OldExecutiveReport {
+  totalSections: number;
+  goal?: string;
+  professionalAbstract: string;
+  sections: Array<{quesId: string}>;
+  abstracts: [{
+    quesId: string,
+    value: string
+  }];
+}
+
 export interface Innovation {
 
   readonly _id?: string;
@@ -65,16 +77,7 @@ export interface Innovation {
   };
 
   // not use anymore. It's for the old innovations.
-  executiveReport?: {
-    totalSections?: number,
-    goal?: string,
-    professionalAbstract?: string,
-    sections?: Array<{quesId: string}>,
-    abstracts?: [{
-      quesId: string,
-      value: string
-    }]
-  };
+  executiveReport?: OldExecutiveReport;
 
   executiveReportId?: string;
   clientProject?: ClientProject | string;
