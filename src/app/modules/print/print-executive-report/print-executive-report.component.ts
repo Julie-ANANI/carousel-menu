@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../models/innovation';
 import { ExecutiveReport } from '../../../models/executive-report';
 import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
+import { environment } from '../../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'executive-report',
@@ -18,15 +20,20 @@ export class PrintExecutiveReportComponent implements OnInit {
 
   private _media = '';
 
-  constructor(private _activatedRoute: ActivatedRoute) { }
+  private _userLang = this._translateService.currentLang;
+
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _translateService: TranslateService) { }
 
   ngOnInit() {
 
     if (this._activatedRoute.snapshot.data.report && typeof this._activatedRoute.snapshot.data.report !== undefined) {
       this._data = <ExecutiveReport>this._activatedRoute.snapshot.data.report;
+      this._userLang = this.data['lang'];
       this._initData();
     } else if (this._activatedRoute.snapshot.parent.data.innovation && typeof this._activatedRoute.snapshot.parent.data.innovation !== undefined) {
       this._data = <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
+      this._userLang = InnovationFrontService.currentLangInnovationCard(<Innovation>this.data, this._userLang, 'lang');
     }
 
   }
@@ -40,8 +47,21 @@ export class PrintExecutiveReportComponent implements OnInit {
   private _initData() {
     const innovation: Innovation = this._activatedRoute.snapshot.parent.data && this._activatedRoute.snapshot.parent.data.innovation
       && <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
-    this._title = InnovationFrontService.currentLangInnovationCard(innovation, this.data['lang'], 'title');
-    this._media = InnovationFrontService.principalMedia(innovation, this.data['lang'], '173', '110');
+    this._title = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'title');
+    this._media = InnovationFrontService.principalMedia(innovation, this._userLang, '173', '110');
+  }
+
+  /***
+   * This function is to return the src of the UMI intro image.
+   * @returns {string}
+   */
+  public get introSrc(): string {
+    return this._userLang === 'fr' ? 'https://res.cloudinary.com/umi/image/upload/app/default-images/intro/UMI-fr.png'
+      : 'https://res.cloudinary.com/umi/image/upload/app/default-images/intro/UMI-en.png'
+  }
+
+  get isUMI(): boolean {
+    return environment.domain === 'umi';
   }
 
   get data(): Innovation | ExecutiveReport {
@@ -54,6 +74,10 @@ export class PrintExecutiveReportComponent implements OnInit {
 
   get media(): string {
     return this._media;
+  }
+
+  get userLang(): string {
+    return this._userLang;
   }
 
 }

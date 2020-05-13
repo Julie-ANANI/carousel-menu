@@ -246,6 +246,9 @@ export class InnovationFrontService {
 
         case 'solution':
           return new ScrapeHTMLTags().transform(innovation.innovationCards[index].solution) || '';
+
+        case 'lang':
+          return innovation.innovationCards[index].lang;
       }
 
     }

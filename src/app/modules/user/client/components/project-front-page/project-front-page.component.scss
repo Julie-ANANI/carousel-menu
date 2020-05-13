@@ -26,7 +26,11 @@
 
   .front-body {
     flex-direction: column;
-    min-height: 625px;
+    min-height: 775px;
+
+    &.no-header {
+      min-height: 835px;
+    }
 
     h1 {
       font-weight: bold;
@@ -35,8 +39,8 @@
 
     h2 {
       width: 90%;
-      font-size: 16px;
-      color: $text-meta-color;
+      font-size: 18px;
+      color: #9E9E9E;
       font-weight: normal;
       margin-bottom: 25px;
     }
@@ -48,13 +52,14 @@
     }
 
     .body-objective {
-      max-width: 60%;
+      max-width: 46%;
       background-color: $bg-draft-color;
       color: $text-white-color;
       font-size: 14px;
       border-radius: 30px;
       padding: 10px 20px;
       margin-bottom: 40px;
+      font-weight: $font-weight-medium;
     }
 
     .body-leader {
