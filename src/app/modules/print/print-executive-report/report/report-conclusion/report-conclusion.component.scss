@@ -1,82 +1,84 @@
 @import "../../../../../../style/framework/src/variables";
 
-#executive-conclusion-wrapper {
+#report-conclusion {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
-  background-color: $draft-color;
-  color: white;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
+  color: white;
+  background-color: $bg-draft-color;
 
-  .section-first {
-    padding: 25px;
+  .result-wrapper {
+    padding: 20px;
 
-    .title-primary {
-      color: $white-color;
-      font-size: 24px;
-      margin-bottom: 15px;
+    .title {
+      color: $text-white-color;
     }
 
-    .conclusion-text {
-      font-weight: 600;
-      font-size: 13px;
+    h2 {
+      font-size: 15px;
       margin-bottom: 15px;
+      max-height: 473px;
+      overflow: hidden;
     }
 
-    .operator-contact {
+    h3 {
+      font-size: 18px;
+      font-weight: bold;
+    }
 
-      .name, .job, .phone {
-        font-size: 16px;
-        color: $white-color;
-        margin-bottom: 2px;
-      }
+    h4, h5, h6 {
+      margin-bottom: 2px;
+      line-height: 1.3;
+      font-size: 14px;
+    }
 
-      .job, .phone, .text-link {
-        font-size: 13px;
-      }
-
-      .text-link {
-        margin-bottom: 0;
-      }
-
+    h6 {
+      color: $text-primary-color;
     }
 
   }
 
-  .section-second {
+  .sale-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 245px;
     background-color: #313C48;
-    min-height: 146.71px;
-    padding: 25px;
+    text-align: center;
+    padding: 25px 20px;
 
-    h6 {
-      color: $white-color;
-      margin-bottom: 2px;
+    h2, h3, h4, h5 {
       font-size: 16px;
+      color: $text-white-color;
+      margin-bottom: 2px;
     }
 
-    .logo-address {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
+    h2 {
+      margin-bottom: 6px;
+    }
 
-      .logo img {
-        width: 100px;
-        height: auto;
-      }
+    h4{
+      color: $text-primary-color;
+    }
 
-      .address {
-        font-size: 12px;
-        margin-left: 10px;
-        font-weight: 600;
-        margin-top: -5px;
+    h5 {
+      margin-bottom: 0;
+    }
 
-        p {
-          margin-bottom: 0;
-        }
+    img {
+      margin-top: 25px;
+      margin-bottom: 10px;
+      width: 125px;
+      height: 38px;
+    }
 
-      }
-
+    p {
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: $font-weight-medium;
     }
 
   }

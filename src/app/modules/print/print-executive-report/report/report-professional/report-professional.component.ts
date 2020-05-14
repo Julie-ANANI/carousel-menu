@@ -9,7 +9,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 
 interface ProfessionalColumn {
-  title: string;
   countries: Array<string>;
   targetAbstract: string;
   profileAbstract: string;
@@ -24,8 +23,6 @@ interface ProfessionalColumn {
 
 export class ReportProfessionalComponent implements OnChanges {
 
-  @Input() userLang = 'en';
-
   @Input() report: OldExecutiveReport | ExecutiveReport = <OldExecutiveReport | ExecutiveReport>{};
 
   @Input() answers: Array<Answer> = [];
@@ -38,9 +35,9 @@ export class ReportProfessionalComponent implements OnChanges {
               private _professionalsService: ProfessionalsService) { }
 
   ngOnChanges(): void {
-    if (this.report['totalSections'] && this.answers.length > 0) {
+    if (this.report['totalSections'] && this.answers.length > 0 && !this.report['_id']) {
       this._typeInnovation();
-    } else if (this.answers.length === 0 && this.report['professionals'] && this.report['targeting']) {
+    } else if (this.answers.length === 0 && this.report['professionals'] && this.report['targeting'] && this.report['_id']) {
       this._typeExecutive();
     }
   }
@@ -53,11 +50,10 @@ export class ReportProfessionalComponent implements OnChanges {
     const data: OldExecutiveReport = <OldExecutiveReport>this.report;
     this._pros = this._topProfessionals();
     this._professional = {
-      title: this.userLang === 'fr' ? 'Professionnels qualifiés' : 'Qualified professionals',
       targetAbstract: data.professionalAbstract,
       profileAbstract: '',
       countries: this._targetCountries(),
-      answers: this.userLang === 'fr' ? `${this.answers.length.toString(10)} réponses` : `${this.answers.length.toString(10)} answers`
+      answers: data.lang === 'fr' ? `${this.answers.length.toString(10)} réponses` : `${this.answers.length.toString(10)} answers`
     };
   }
 
@@ -73,7 +69,6 @@ export class ReportProfessionalComponent implements OnChanges {
     }
 
     this._professional = {
-      title: data.lang === 'fr' ? 'Professionnels qualifiés' : 'Qualified professionals',
       targetAbstract: data.targeting.abstract,
       profileAbstract: data.professionals.abstract,
       countries: data.targeting.countries,

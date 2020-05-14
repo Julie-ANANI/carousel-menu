@@ -2,7 +2,7 @@
 
   <!-- title / answers / map / target abstract -->
   <div class="target-wrapper">
-    <h1 class="title is-4">{{ professional.title }}</h1>
+    <h1 class="title is-4">{{ report.lang === 'fr' ? 'Professionnels qualifiés' : 'Qualified professionals' }}</h1>
     <h2>{{ professional.answers }}</h2>
     <div class="target-map">
       <app-shared-worldmap [targetingCountries]="professional.countries"></app-shared-worldmap>

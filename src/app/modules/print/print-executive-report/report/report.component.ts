@@ -14,8 +14,6 @@ import { first } from 'rxjs/operators';
 
 export class ReportComponent implements OnChanges {
 
-  @Input() userLang = 'en';
-
   @Input() data: Innovation | ExecutiveReport = <Innovation | ExecutiveReport>{}
 
   private _firstPageSections = [0, 1, 2, 3];

@@ -20,6 +20,9 @@ export interface OldExecutiveReport {
   goal?: string;
   professionalAbstract: string;
   sections: Array<{quesId: string}>;
+  conclusion: string;
+  lang: 'en' | 'fr';
+  operator: User;
   abstracts: [{
     quesId: string,
     value: string

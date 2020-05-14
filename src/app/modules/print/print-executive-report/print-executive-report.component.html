@@ -13,5 +13,5 @@
 <!-- /second page - umi intro -->
 
 <!-- third / forth page -->
-<client-report [userLang]="userLang" [data]="data"></client-report>
+<client-report *ngIf="data._id" [data]="data"></client-report>
 <!-- /third / forth page -->

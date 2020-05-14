@@ -8,8 +8,7 @@
       <div class="page-section">
         <report-professional
           [answers]="answers"
-          [report]="report"
-          [userLang]="userLang">
+          [report]="report">
         </report-professional>
       </div>
       <!-- /professional -->
@@ -33,7 +32,7 @@
 
       <!-- conclusion part -->
       <div class="page-section">
-        <!--<report-conclusion [project]="innovation"></report-conclusion>-->
+        <report-conclusion [report]="report"></report-conclusion>
       </div>
       <!-- /conclusion part -->
 
@@ -52,8 +51,7 @@
         <div class="page-section">
           <report-professional
             [answers]="answers"
-            [report]="report"
-            [userLang]="userLang">
+            [report]="report">
           </report-professional>
         </div>
         <!-- /professional column -->
@@ -102,7 +100,7 @@
 
         <!-- conclusion part -->
         <div class="page-section">
-          <!--<report-conclusion [project]="innovation"></report-conclusion>-->
+          <report-conclusion [report]="report"></report-conclusion>
         </div>
         <!-- /conclusion part -->
 
