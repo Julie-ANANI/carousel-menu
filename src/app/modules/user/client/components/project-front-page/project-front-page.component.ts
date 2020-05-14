@@ -87,7 +87,7 @@ export class ProjectFrontPageComponent implements OnChanges {
       media: this.media,
       ownerName: report.client.name,
       ownerEmail: report.client.email,
-      companyLogo: report.client.logo
+      companyLogo: report.client.company.logo
     };
   }
 

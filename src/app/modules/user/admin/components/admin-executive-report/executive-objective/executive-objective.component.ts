@@ -6,6 +6,10 @@ import { ExecutiveObjective } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { TranslateService } from '@ngx-translate/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Observable} from 'rxjs';
+import {Clearbit} from '../../../../../../models/clearbit';
+import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 
 interface Commercial {
   _id: string;
@@ -37,10 +41,19 @@ export class ExecutiveObjectiveComponent implements OnInit {
     client: {
       name: '',
       email: '',
-      logo: ''
+      company: {
+        name: '',
+        logo: '',
+        domain: '',
+        id: ''
+      }
     },
     sale: ''
   };
+
+  private _company = '';
+
+  private _logo = '';
 
   private _allCommercials: Array<Commercial> = [];
 
@@ -54,7 +67,9 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _userService: UserService,
-              private _translateService: TranslateService) { }
+              private _translateService: TranslateService,
+              private _sanitizer: DomSanitizer,
+              private _autoCompleteService: AutocompleteService) { }
 
   ngOnInit(): void {
     this._getCommercials();
@@ -140,6 +155,39 @@ export class ExecutiveObjectiveComponent implements OnInit {
     this._config.sale = event && event.target && (event.target as HTMLSelectElement).value || '';
     this._populateCommercial();
     this.emitChanges();
+  }
+
+  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+    return this._autoCompleteService.get({query: searchString, type: 'company'});
+  }
+
+  public selectCompany(c: string | any) {
+    if (typeof c === 'object') {
+      // Maybe there's a logo...
+      this._config.client.company = c;
+      this._company = c.name;
+      this._logo = c.logo;
+    } // If typeof c === string, leave the thing alone.
+  }
+
+  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
+    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
+  }
+
+  public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
+    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo.uri}" height="35" alt=" "/><span>${data.name}</span>`);
+  }
+
+  get logo(): string {
+    return this._logo;
+  }
+
+  get company(): string {
+    return this._company;
+  }
+
+  set company(value: string) {
+    this._company = value;
   }
 
   get config(): ExecutiveObjective {

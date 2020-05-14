@@ -78,6 +78,24 @@
         </label>
       </div>
 
+      <div>
+        <label>
+
+          <input
+            auto-complete
+            class="form-input"
+            formControlName="name"
+            id="enterprise-form-name"
+            type="text"
+            placeholder="New enterprise name"
+            [min-chars]="2"
+            [list-formatter]="autocompleteCompanyListFormatter"
+            [source]="companiesSuggestions"
+            (valueChanged)="selectCompany($event)"
+            [(ngModel)]="company">
+        </label>
+      </div>
+
     </div>
     <!-- /project leader -->
 
@@ -125,6 +143,9 @@
       <div [ngStyle]="{ 'min-height': '38px' }">
         <p>{{ config.client.name }}</p>
         <p>{{ config.client.email }}</p>
+      </div>
+      <div *ngIf="!!logo">
+        <img [src]="logo">
       </div>
     </div>
     <!-- /project leader -->
