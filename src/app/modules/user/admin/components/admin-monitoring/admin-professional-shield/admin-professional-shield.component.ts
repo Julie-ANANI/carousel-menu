@@ -3,8 +3,8 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Table } from '../../../../../table/models/table';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ShieldService } from "../../../../../../services/shield/shield.service";
-import {Config} from "../../../../../../models/config";
+import { ShieldService } from '../../../../../../services/shield/shield.service';
+import { Config } from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-professional-shield',
@@ -39,7 +39,7 @@ export class AdminProfessionalShieldComponent implements OnInit {
       _selector: 'admin-user-limit',
       _title: 'TABLE.TITLE.PROFESSIONALS',
       _content: this._shieldPros || [],
-      _total: this._total|| 0,
+      _total: this._total || 0,
       _isSearchable: false,
       _isDeletable: false,
       _isSelectable: true,
