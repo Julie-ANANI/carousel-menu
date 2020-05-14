@@ -12,6 +12,11 @@
     width: 33.33%;
   }
 
+  .section-6 {
+    width: 33.33%;
+    height: 100%;
+  }
+
   .second-page {
     display: flex;
     background-image: url("https://res.cloudinary.com/umi/image/upload/app/default-images/sections/bg-1.jpg");
@@ -21,56 +26,28 @@
     min-height: 931.5px;
   }
 
-}
-
-#executive-report-wrapper {
-
-  .page-first {
-    background-color: $bg-white-color;
-    display: flex;
-    border-radius: $border-radius;
-  }
-
   .section-wrapper {
-    width: 33.33%;
-  }
-
-  .section {
-    display: inline-flex;
-    background-color: $bg-white-color;
-    padding: 25px;
-  }
-
-  .second-page {
-
-    .second-page-wrapper {
-      display: flex;
-      border-right: $border-radius;
-      background-image: url("https://res.cloudinary.com/umi/image/upload/v1540200786/app/default-images/sections/bg-1.jpg");
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      min-height: 864.67px;
-    }
-
-  }
-
-  .sections {
     width: 66.67%;
     display: flex;
     flex-wrap: wrap;
     background-color: $bg-white-color;
   }
 
+  .section {
+    display: inline-flex;
+    background-color: $bg-white-color;
+    padding: 20px;
+  }
+
   .section-2, .section-4 {
     height: 50%;
     display: flex;
-    border-bottom: $border-width solid $border-default-color;
+    border-bottom: 1px solid $border-default-color;
   }
 
   .section-4 {
     width: 50%;
-    border-left: $border-width solid $border-default-color;
+    border-left: 1px solid $border-default-color;
   }
 
   .section-2:last-child {
@@ -87,38 +64,40 @@
 
 }
 
+#executive-report-wrapper {
 
-@media (max-width: $size-lg) {
+  /*.page-first {
+    background-color: $bg-white-color;
+    display: flex;
+    border-radius: $border-radius;
+  }*/
 
-  #executive-report-wrapper {
+ /* .section {
+    display: inline-flex;
+    background-color: $bg-white-color;
+    padding: 25px;
+  }*/
 
-    .page-first, .second-page-wrapper {
-      flex-direction: column;
+  /*.second-page {
+
+    .second-page-wrapper {
+      display: flex;
+      border-right: $border-radius;
+      background-image: url("https://res.cloudinary.com/umi/image/upload/v1540200786/app/default-images/sections/bg-1.jpg");
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 864.67px;
     }
 
-    .sections, .section-wrapper {
-      width: 100%;
-    }
+  }*/
 
-    .section {
-      min-height: 446px;
-    }
-
-  }
+  /*.sections {
+    width: 66.67%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $bg-white-color;
+  }*/
 
 }
 
-
-@media (max-width: $size-md) {
-
-  #executive-report-wrapper {
-
-    .section {
-      width: 100%;
-      border: $border-width solid $border-default-color !important;
-    }
-
-
-  }
-
-}

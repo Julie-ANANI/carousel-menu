@@ -15,18 +15,15 @@
 
       <!-- sections -->
       <div class="page-section">
-        <!--<div *ngFor="let sectionNumber of firstPageSections | slice:0:innovation.executiveReport.totalSections"
-             class="section"
-             [ngClass]="{ 'section-2': innovation.executiveReport.totalSections === 2 }">
-
-          <report-section
+        <div *ngFor="let sectionNumber of firstPageSections | slice:0:totalSection"
+             [ngClass]="{ 'section-2': totalSection === 2 }"
+             class="section">
+          <!--<report-section
             [answers]="answers"
-            [project]="innovation"
             [ngStyle]="{ 'width': '100%' }"
             [section]="sectionNumber">
-          </report-section>
-
-        </div>-->
+          </report-section>-->
+        </div>
       </div>
       <!-- /sections -->
 
@@ -57,17 +54,17 @@
         <!-- /professional column -->
 
         <!-- sections -->
-        <div class="sections">
-          <!--<div *ngFor="let sectionNumber of firstPageSections" class="section" [ngClass]="{ 'section-4': innovation.executiveReport.totalSections > 2 }">
-
-            <report-section
-              [project]="innovation"
+        <div class="section-wrapper">
+          <div
+            *ngFor="let sectionNumber of firstPageSections"
+            [ngClass]="{ 'section-4': totalSection > 2 }"
+            class="section">
+            <!--<report-section
               [answers]="answers"
               [ngStyle]="{ 'width': '100%' }"
               [section]="sectionNumber">
-            </report-section>
-
-          </div>-->
+            </report-section>-->
+          </div>
         </div>
         <!-- /sections -->
 
@@ -81,20 +78,18 @@
 
         <!-- sections -->
         <ng-container *ngIf="totalSection > 4">
-          <!--<div [ngClass]="{ 'section-wrapper': innovation.executiveReport.totalSections === 6, 'sections': innovation.executiveReport.totalSections > 6 }">
-            <div *ngFor="let sectionNumber of secondPageSections | slice:0:(innovation.executiveReport.totalSections - 4)"
-                 class="section"
-                 [ngClass]="{ 'section-2': innovation.executiveReport.totalSections === 6, 'section-4': innovation.executiveReport.totalSections > 6 }">
-
-              <report-section
-                [project]="innovation"
+          <div [ngClass]="{ 'section-6': totalSection === 6, 'section-wrapper': totalSection > 6 }">
+            <div
+              *ngFor="let sectionNumber of secondPageSections | slice:0:(totalSection - 4)"
+              [ngClass]="{ 'section-2': totalSection === 6, 'section-4': totalSection > 6 }"
+              class="section">
+              <!--<report-section
                 [answers]="answers"
                 [ngStyle]="{ 'width': '100%' }"
                 [section]="sectionNumber">
-              </report-section>
-
+              </report-section>-->
             </div>
-          </div>-->
+          </div>
         </ng-container>
         <!-- /sections -->
 

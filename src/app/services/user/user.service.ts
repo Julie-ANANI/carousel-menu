@@ -5,7 +5,6 @@ import { User } from '../../models/user.model';
 
 import { environment } from '../../../environments/environment';
 import { Tag } from '../../models/tag';
-import { Config } from '../../models/config';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -58,7 +57,7 @@ export class UserService {
   }
 
   // todo check for the config in the back
-  public get(userId: string, config?: Config): Observable<User> {
+  public get(userId: string, config?: any): Observable<User> {
     return this._http.get<User>('/user/' + userId, {params: config});
   }
 
