@@ -5,6 +5,7 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { ExecutiveReport} from '../../../../models/executive-report';
 import { HttpErrorResponse } from '@angular/common/http';
 import { first } from 'rxjs/operators';
+import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
 
 @Component({
   selector: 'client-report',
@@ -66,34 +67,10 @@ export class ReportComponent implements OnChanges {
   private _getAnswers(innovation: Innovation, anonymous = false) {
     if (innovation && innovation._id) {
       this._answerService.getInnovationValidAnswers(innovation._id).pipe(first()).subscribe((response) => {
-
-        this._answers = response.answers.sort((a, b) => {
-          return b.profileQuality - a.profileQuality;
-        });
+        this._answers = AnswerFrontService.qualitySort(response.answers);
 
         if(anonymous) {
-          this._answers = <Array<Answer>>this._answers.map( answer => {
-            const _answer = {};
-            Object.keys(answer).forEach(key => {
-              switch(key) {
-                case('company'):
-                  _answer[key] = {
-                    'name': ''
-                  };
-                  break;
-                case('professional'):
-                    if (answer[key]['company']) {
-                      _answer[key] = {
-                        'company': ''
-                      };
-                    }
-                  break;
-                default:
-                  _answer[key] = answer[key];
-              }
-            });
-            return _answer;
-          });
+          this._answers = AnswerFrontService.anonymous(this._answers);
         }
 
       }, (err: HttpErrorResponse) => {

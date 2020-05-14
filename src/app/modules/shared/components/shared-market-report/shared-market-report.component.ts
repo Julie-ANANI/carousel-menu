@@ -18,6 +18,7 @@ import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
+import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -163,42 +164,14 @@ export class SharedMarketReportComponent implements OnInit {
    */
   private _getAnswers() {
     this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).subscribe((response) => {
-      this._answers = response.answers.sort((a, b) => {
-        return b.profileQuality - a.profileQuality;
-      });
+      this._answers = AnswerFrontService.qualitySort(response.answers);
 
       if( this._anonymousAnswers ) {
-        this._answers = <Array<Answer>>this._answers.map( answer => {
-          const _answer = {};
-          Object.keys(answer).forEach(key => {
-            switch(key) {
-              case('company'):
-                _answer[key] = {
-                  'name': ''
-                };
-                break;
-              case('professional'):
-                _answer[key] = {
-                  language: answer[key].language || 'en'
-                };
-                if (answer[key]['company']) {
-                  _answer[key]['company'] = {
-                    name: ''
-                  };
-                }
-                break;
-              default:
-                _answer[key] = answer[key];
-            }
-          });
-          return _answer;
-        });
+        this._answers = AnswerFrontService.anonymous(this._answers);
       }
 
       this._filteredAnswers = this._answers;
-
       this._updateAnswersToShow();
-
       this._filterService.filtersUpdate.subscribe(() => this._updateAnswersToShow());
 
       this._companies = response.answers.map((answer: any) => answer.company || {
