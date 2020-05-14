@@ -196,9 +196,12 @@ export class SharedMarketReportComponent implements OnInit {
                 };
                 break;
               case('professional'):
+                _answer[key] = {
+                  language: answer[key].language || 'en'
+                };
                 if (answer[key]['company']) {
                   _answer[key]['company'] = {
-                    'name': ''
+                    name: ''
                   };
                 }
                 break;
