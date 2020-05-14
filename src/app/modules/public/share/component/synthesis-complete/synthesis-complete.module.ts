@@ -10,7 +10,6 @@ import { MessageTemplate1Module } from '../../../../utility/messages/message-tem
 import { ProjectFrontPageModule } from '../../../../user/client/components/project-front-page/project-front-page.module';
 import { SharedInnovationDetailModule } from '../../../../shared/components/shared-innovation-detail/shared-innovation-detail.module';
 import { SharedTargetingDetailModule } from '../../../../shared/components/shared-targeting-detail/shared-targeting-detail.module';
-import { SharedExecutiveReportModule } from '../../../../shared/components/shared-executive-report/shared-executive-report.module';
 
 import { TagsService } from '../../../../../services/tags/tags.service';
 
@@ -24,7 +23,6 @@ import { TagsService } from '../../../../../services/tags/tags.service';
     ProjectFrontPageModule,
     SharedInnovationDetailModule,
     SharedTargetingDetailModule,
-    SharedExecutiveReportModule
   ],
   declarations: [
     SynthesisCompleteComponent

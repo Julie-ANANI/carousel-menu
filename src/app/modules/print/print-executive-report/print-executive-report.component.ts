@@ -5,6 +5,7 @@ import { ExecutiveReport } from '../../../models/executive-report';
 import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
 import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'executive-report',
@@ -27,13 +28,16 @@ export class PrintExecutiveReportComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this._activatedRoute.snapshot.data.report && typeof this._activatedRoute.snapshot.data.report !== undefined) {
+    if (this._activatedRoute.snapshot.data.report && this._activatedRoute.snapshot.data.report._id) {
       this._data = <ExecutiveReport>this._activatedRoute.snapshot.data.report;
       this._userLang = this.data['lang'];
       this._initData();
-    } else if (this._activatedRoute.snapshot.parent.data.innovation && typeof this._activatedRoute.snapshot.parent.data.innovation !== undefined) {
+    } else if (this._activatedRoute.snapshot.parent.data.innovation && this._activatedRoute.snapshot.parent.data.innovation.executiveReport) {
       this._data = <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
-      this._userLang = InnovationFrontService.currentLangInnovationCard(<Innovation>this.data, this._userLang, 'lang');
+      this._data.executiveReport.lang = InnovationFrontService.currentLangInnovationCard(<Innovation>this.data, this._userLang, 'lang');
+      this._data.executiveReport.operator = this._data.operator || <User>{};
+      this._data.executiveReport.conclusion = this._data.marketReport && this._data.marketReport.finalConclusion
+        && this._data.marketReport.finalConclusion.conclusion || '';
     }
 
   }

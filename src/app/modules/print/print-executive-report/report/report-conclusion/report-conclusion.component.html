@@ -1,0 +1,27 @@
+<div id="report-conclusion">
+
+  <!-- title / result / operator -->
+  <div class="result-wrapper">
+    <h1 class="title is-4">Conclusion</h1>
+    <h2 [innerHtml]="report.conclusion"></h2>
+    <div *ngIf="operator.name && operator.email" class="operator">
+      <h3>{{ operator.name }}</h3>
+      <h4>{{ report.lang === 'fr' ? 'Responsable du test de marché' : 'Market Test Manager'}}</h4>
+      <h5 *ngIf="operator.phone">{{ operator.phone }}</h5>
+      <h6>{{ operator.email }}</h6>
+    </div>
+  </div>
+  <!-- /title / result / operator -->
+
+  <!-- sale -->
+  <div class="sale-wrapper">
+    <h2>{{ report.lang === 'fr' ? 'Vous voulez lancer un test de marché ?' : 'Do you want to launch a market test?' }}</h2>
+    <h3>Contact <ng-container *ngIf="sale.name">{{ sale.name }}</ng-container></h3>
+    <h4 *ngIf="sale.phone">{{ sale.phone }}</h4>
+    <h5 *ngIf="sale.email">{{ sale.email }}</h5>
+    <img [src]="logo" alt=" ">
+    <p>{{ companyUrl }}</p>
+  </div>
+  <!-- /sale -->
+
+</div>
