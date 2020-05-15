@@ -13,7 +13,7 @@ import { Config } from '../../../../../../models/config';
 })
 export class AdminProfessionalShieldComponent implements OnInit {
 
-  private _config = {
+  private _config = <Config>{
     fields: '',
     limit: '10',
     offset: '0',
@@ -48,7 +48,8 @@ export class AdminProfessionalShieldComponent implements OnInit {
       _isPaginable: true,
       _clickIndex: 1,
       _columns: [
-        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: false, _isSortable: true},
+        {_attrs: ['professional.firstName', 'professional.lastName'],
+          _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: false, _isSortable: true},
         {_attrs: ['email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT', _isSearchable: true, _isSortable: true},
         {_attrs: ['professional.company'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSearchable: false, _isSortable: true},
         {_attrs: ['createdAt-90'], _name: 'TABLE.HEADING.TTR', _type: 'DAYS-TO', _isSearchable: false, _isSortable: false},

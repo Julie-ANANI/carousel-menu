@@ -27,7 +27,7 @@ interface ProjectFront {
 }
 
 @Component({
-  selector: 'project-front-page',
+  selector: 'app-project-front-page',
   templateUrl: './project-front-page.component.html',
   styleUrls: ['./project-front-page.component.scss']
 })
@@ -87,7 +87,7 @@ export class ProjectFrontPageComponent implements OnChanges {
       media: this.media,
       ownerName: report.client.name,
       ownerEmail: report.client.email,
-      companyLogo: report.client.company.logo
+      companyLogo: report.client.company.logo.uri
     };
   }
 
