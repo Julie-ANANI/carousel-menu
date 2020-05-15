@@ -1,5 +1,5 @@
 export interface Config {
-  fields?: string;
+  fields: string;
   limit: string;
   offset: string;
   search: string;

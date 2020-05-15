@@ -21,7 +21,8 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ChartsModule } from 'ng2-charts';
 import { PieChartModule } from '../../utility/canvas/piechart/pie-chart.module';
 import { PipeModule } from '../../../pipe/pipe.module';
-
+import { PiechartExecutiveModule } from '../../utility/canvas/piechart-executive/piechart-executive.module';
+import { ProgressBarModule } from '../../utility/progress-bar/progress-bar.module';
 
 @NgModule({
   imports: [
@@ -35,7 +36,9 @@ import { PipeModule } from '../../../pipe/pipe.module';
     NgxPageScrollModule,
     ChartsModule,
     PieChartModule,
-    PipeModule
+    PipeModule,
+    PiechartExecutiveModule,
+    ProgressBarModule
   ],
   declarations: [
     PrintExecutiveReportComponent,
@@ -46,7 +49,7 @@ import { PipeModule } from '../../../pipe/pipe.module';
     TagComponent,
     StarsComponent,
     PieChartComponent,
-    BarChartComponent
+    BarChartComponent,
   ],
   exports: [
     PrintExecutiveReportComponent

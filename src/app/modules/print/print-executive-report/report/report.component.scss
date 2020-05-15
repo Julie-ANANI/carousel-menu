@@ -8,13 +8,8 @@
     min-height: 934.5px;
   }
 
-  .page-section {
+  .page-section, .section-6 {
     width: 33.33%;
-  }
-
-  .section-6 {
-    width: 33.33%;
-    height: 100%;
   }
 
   .second-page {
@@ -63,41 +58,3 @@
   }
 
 }
-
-#executive-report-wrapper {
-
-  /*.page-first {
-    background-color: $bg-white-color;
-    display: flex;
-    border-radius: $border-radius;
-  }*/
-
- /* .section {
-    display: inline-flex;
-    background-color: $bg-white-color;
-    padding: 25px;
-  }*/
-
-  /*.second-page {
-
-    .second-page-wrapper {
-      display: flex;
-      border-right: $border-radius;
-      background-image: url("https://res.cloudinary.com/umi/image/upload/v1540200786/app/default-images/sections/bg-1.jpg");
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      min-height: 864.67px;
-    }
-
-  }*/
-
-  /*.sections {
-    width: 66.67%;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: $bg-white-color;
-  }*/
-
-}
-

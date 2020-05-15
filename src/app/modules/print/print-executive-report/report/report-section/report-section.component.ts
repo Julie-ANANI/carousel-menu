@@ -1,14 +1,22 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
 import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
-import { Innovation } from '../../../../../models/innovation';
-import { Location } from '@angular/common';
+import { Innovation, OldExecutiveReport } from '../../../../../models/innovation';
 import { TranslateService } from '@ngx-translate/core';
 import { Tag } from '../../../../../models/tag';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { DataService } from '../../../../shared/components/shared-market-report/services/data.service';
+import {
+  ExecutiveReport,
+  ExecutiveSection, SectionBar,
+  SectionKpi,
+  SectionPie,
+  SectionQuote,
+  SectionRanking
+} from '../../../../../models/executive-report';
+import { ExecutivePieChart } from '../../../../../models/pie-chart';
 
 @Component({
   selector: 'report-section',
@@ -16,21 +24,27 @@ import { DataService } from '../../../../shared/components/shared-market-report/
   styleUrls: ['./report-section.component.scss']
 })
 
-export class ReportSectionComponent {
+export class ReportSectionComponent implements OnChanges {
+
+  @Input() currentSection = 0;
+
+  @Input() answers: Array<Answer> = [];
+
+  @Input() report: OldExecutiveReport | ExecutiveReport = <OldExecutiveReport | ExecutiveReport>{};
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
     this._getQuestions(value);
   }
 
-  @Input() set section(value: number) {
+  /*@Input() set section(value: number) {
     this._sectionNumber = value;
-  }
+  }*/
 
-  @Input() set answers(value: Array<Answer>) {
+  /*@Input() set answers(value: Array<Answer>) {
     this._answers = value;
     this._getSectionInformation(this._sectionNumber);
-  }
+  }*/
 
   private _answers: Array<Answer> = [];
 
@@ -46,19 +60,68 @@ export class ReportSectionComponent {
 
   private _abstractValue = '';
 
-  private _adminSide: boolean;
-
   private _stats: { nbAnswers?: number, percentage?: number };
+
+  private _section: ExecutiveSection = <ExecutiveSection>{};
+
+  private _content: SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar
+    = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>{}
+
+  private _pieChart: ExecutivePieChart = {
+    data: [],
+    colors: [],
+    labels: [],
+    labelPercentage: []
+  };
 
   constructor(private _responseService: ResponseService,
               private _dataService: DataService,
-              private _location: Location,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
-    this._adminSide = this._location.path().slice(5, 11) === '/admin';
+  ngOnChanges(): void {
+    if (this.report['totalSections'] && this.answers.length > 0 && !this.report['_id']) {
+      this._typeInnovation();
+    } else if (this.answers.length === 0 && this.report['_id'] && !this.report['totalSections']) {
+      this._typeExecutive();
+    }
+  }
 
+  /***
+   * it the object type is Innovation.
+   * @private
+   */
+  private _typeInnovation() {
+    console.log(this.report);
+  }
+
+  /***
+   * if the object type is Executive report
+   * @private
+   */
+  private _typeExecutive() {
+    console.log(this.report);
+    const data: ExecutiveReport = <ExecutiveReport>this.report;
+    this._section = data.sections[this.currentSection];
+    this._content = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>this._section.content;
+    this._initPieChartData();
+  }
+
+  /***
+   * initializing the values for the pie chart.
+   * @private
+   */
+  private _initPieChartData() {
+    const _content = <SectionPie>this._content;
+    if (this._section.questionType === 'PIE' && _content.values.length > 0) {
+      _content.values.forEach((value, index) => {
+        this._pieChart.data[index] = value.percentage;
+        this._pieChart.colors[index] = value.color;
+        this._pieChart.labels[index] = value.legend;
+        this._pieChart.labelPercentage[index] = value.percentage;
+      });
+    }
   }
 
 
@@ -169,16 +232,24 @@ export class ReportSectionComponent {
     return this._abstractValue;
   }
 
-  get adminSide(): boolean {
-    return this._adminSide;
-  }
-
   get stats(): { nbAnswers?: number; percentage?: number } {
     return this._stats;
   }
 
   get tags(): Array<Tag> {
     return this._dataService.answersTagsLists[this._questionSelected._id];
+  }
+
+  get section(): ExecutiveSection {
+    return this._section;
+  }
+
+  get content(): SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar {
+    return this._content;
+  }
+
+  get pieChart(): ExecutivePieChart {
+    return this._pieChart;
   }
 
 }
