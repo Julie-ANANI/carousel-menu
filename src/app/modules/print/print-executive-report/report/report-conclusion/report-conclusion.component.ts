@@ -7,7 +7,6 @@ import { UserService } from '../../../../../services/user/user.service';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Config } from '../../../../../models/config';
 
 @Component({
   selector: 'report-conclusion',
@@ -100,7 +99,7 @@ export class ReportConclusionComponent implements OnChanges {
    */
   private _getUser(id: string, type: string) {
     if (isPlatformBrowser(this._platformId)) {
-      const config: Config = {
+      const config: any = {
         fields: 'firstName lastName email phone name',
       };
 

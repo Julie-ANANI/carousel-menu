@@ -12,7 +12,7 @@ export const CLIENT_PROJECT_DOCUMENTS = {
 
   'DESCRIPTION': {
     'REPORT': 'Partagez les résultats synthétiques de votre Test Marché',
-    'SHAE': 'Partagez les résultats complets anonymisés',
+    'SHARE': 'Partagez les résultats complets anonymisés',
     'CSV': 'Toutes les réponses de votre test marché au format CSV',
     'PDF': 'Toutes les réponses de votre test marché au format PDF',
     'VIDEO': 'Partagez les résultats de votre Test Marché, au format vidéo',

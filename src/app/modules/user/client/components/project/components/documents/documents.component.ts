@@ -105,9 +105,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           break;
 
         case 'SHARE':
+          document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'DONE');
+          break;
+
         case 'CSV':
         case 'PDF':
-          document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'DONE');
+          document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'EVALUATING');
           break;
 
       }
