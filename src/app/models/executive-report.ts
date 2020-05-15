@@ -19,8 +19,12 @@ export interface ExecutiveClient {
   email: string;
   company: {
     name: string;
-    logo: string;
-    domain: string;
+    logo: {
+      uri: string;
+      id: string;
+      alt: string;
+    };
+    topLevelDomain: string;
     id: string;
   };
 }

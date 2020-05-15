@@ -8,7 +8,6 @@ import { CommonService } from '../../../../../../services/common/common.service'
 import { TranslateService } from '@ngx-translate/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
-import {Clearbit} from '../../../../../../models/clearbit';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 
 interface Commercial {
@@ -20,7 +19,7 @@ interface Commercial {
 }
 
 @Component({
-  selector: 'executive-objective',
+  selector: 'app-executive-objective',
   templateUrl: './executive-objective.component.html',
   styleUrls: ['./executive-objective.component.scss']
 })
@@ -29,6 +28,9 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   @Input() set config(value: ExecutiveObjective) {
     this._config = value;
+    // Set the logo here
+    this._logo = this._config.client.company.logo.uri;
+    this._company = this._config.client.company.name;
     this.textColor('objective');
     this.textColor('clientName');
     this.textColor('clientEmail');
@@ -43,8 +45,12 @@ export class ExecutiveObjectiveComponent implements OnInit {
       email: '',
       company: {
         name: '',
-        logo: '',
-        domain: '',
+        logo: {
+          uri: '',
+          alt: '',
+          id: ''
+        },
+        topLevelDomain: '',
         id: ''
       }
     },
@@ -158,15 +164,24 @@ export class ExecutiveObjectiveComponent implements OnInit {
   }
 
   public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'company'});
+    return this._autoCompleteService.get({query: searchString, type: 'company', internalOnly: 'true'});
   }
 
   public selectCompany(c: string | any) {
     if (typeof c === 'object') {
       // Maybe there's a logo...
-      this._config.client.company = c;
+      // Convert here to the good format
+      this._config.client.company.name = c.name;
+      this._config.client.company.topLevelDomain = c.domain;
+      this._config.client.company.id = c.id;
+      this._config.client.company.logo = {
+        uri: c.logo,
+        alt: c.name,
+        id: ''
+      };
       this._company = c.name;
       this._logo = c.logo;
+      this.emitChanges();
     } // If typeof c === string, leave the thing alone.
   }
 

@@ -259,6 +259,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public saveExecutiveReport(event: Event) {
     event.preventDefault();
+    // Clean the client company to leave only the id
+    const ex_report = <any>this._executiveReport;
+    ex_report.client.company = this._executiveReport.client.company.id;
+    // TODO is this a good solution?
     this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
       this._toBeSaved = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
