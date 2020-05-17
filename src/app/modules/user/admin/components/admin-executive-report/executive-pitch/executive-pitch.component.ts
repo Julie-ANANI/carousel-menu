@@ -28,6 +28,10 @@ export class ExecutivePitchComponent {
     this.pitchChange.emit(this._pitch);
   }
 
+  public update(value: string) {
+    this._pitch = value;
+  }
+
   public textColor() {
     this._pitchColor = CommonService.getLimitColor(this._pitch.length, 216);
   }

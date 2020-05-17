@@ -6,14 +6,14 @@
     <label>
 
         <textarea
-          (change)="emitChanges()"
+          #pitchText
+          (change)="update(pitchText.value); emitChanges()"
           (keyup)="textColor()"
-          [(ngModel)]="pitch"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PITCH.PROJECT_PITCH' | translate"
+          [innerHTML]="pitch"
           [ngStyle]="{ 'height': '140px' }"
-          maxlength="216"
           class="form-input"
-          type="text">
+          maxlength="216">
         </textarea>
 
         <span [ngStyle]="{ 'color': pitchColor }" class="text-limit-wrapper">
@@ -37,7 +37,7 @@
   <!-- view side -->
   <div class="content-wrapper has-border text-center">
     <h4 class="m-bottom-25">{{ 'ADMIN_EXECUTIVE_REPORT.PITCH.TITLE' | translate }}</h4>
-    <div class="text-wrapper">{{ pitch | ScrapeHTMLTags }}</div>
+    <div [innerHTML]="pitch" class="text-wrapper"></div>
   </div>
   <!-- /view side -->
 
