@@ -116,12 +116,17 @@
                 </div>-->
                 <!-- /link -->
 
-                <!--<button
-                  [disabled]="executiveReport.completion !== 100"
+                <button
+                  [disabled]="isGeneratingReport"
                   (click)="generatePdf($event)"
                   class="button is-primary is-outlined m-bottom-15">
-                  {{ 'COMMON.BUTTON.GENERATE_PDF' | translate }}
-                </button>-->
+                  <ng-container *ngIf="!isGeneratingReport; else genCSV">
+                    {{ 'COMMON.BUTTON.GENERATE_PDF' | translate }}
+                  </ng-container>
+                  <ng-template #genCSV>
+                    {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                  </ng-template>
+                </button>
 
               </div>
               <!-- /pdf -->
@@ -145,7 +150,7 @@
         <div *ngIf="toBeSaved && executiveReport.lang" class="btn-save-float-wrapper">
           <button
             (click)="saveExecutiveReport($event)"
-            class="button is-primary animate-slide slide-down is-3 is-rounded">
+            class="button is-primary animate-zoom is-3 is-rounded">
             {{ 'COMMON.BUTTON.SAVE' | translate }}
           </button>
         </div>
