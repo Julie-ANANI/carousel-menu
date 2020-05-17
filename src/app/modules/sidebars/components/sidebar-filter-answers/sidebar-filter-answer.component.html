@@ -162,16 +162,6 @@
   <!-- /select/unselect all -->
 
 
-
-  <!-- executive report -->
-  <div *ngIf="templateType === 'market-report' && innovation.executiveReport.totalSections > 0 && !reportShared"
-       class="filter-rest-wrapper"
-       [ngStyle]="{ 'padding-bottom': '1rem' }">
-    <a href="#executive-report" pageScroll class="text-primary-dark">Executive report</a>
-  </div>
-  <!-- /executive report -->
-
-
   <!-- key-learning -->
   <div *ngIf="templateType === 'market-report' && innovation.marketReport?.keyLearning?.conclusion || isAdminSide"
        class="filter-rest-wrapper"
