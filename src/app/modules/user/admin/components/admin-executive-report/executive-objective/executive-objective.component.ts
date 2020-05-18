@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 import { ExecutiveObjective } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
-import { TranslateService } from '@ngx-translate/core';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
 
 interface Commercial {
   _id: string;
@@ -22,6 +22,8 @@ interface Commercial {
 })
 
 export class ExecutiveObjectiveComponent implements OnInit {
+
+  @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveObjective) {
     this._config = value;
@@ -53,8 +55,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
   private _clientEmailColor = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _userService: UserService,
-              private _translateService: TranslateService) { }
+              private _userService: UserService) { }
 
   ngOnInit(): void {
     this._getCommercials();
@@ -125,11 +126,9 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   public onClickSnippet(event: Event) {
     event.preventDefault();
-    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.OBJECTIVE').subscribe((text) => {
-      this._config.objective = text;
-      this.textColor('objective');
-      this.emitChanges();
-    });
+    this._config.objective = SnippetService.storyboard('OBJECTIVE', this.lang);
+    this.textColor('objective');
+    this.emitChanges();
   }
 
   /***
