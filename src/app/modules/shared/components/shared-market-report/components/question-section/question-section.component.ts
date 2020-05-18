@@ -5,10 +5,7 @@ import { Question } from '../../../../../../models/question';
 import { Innovation } from '../../../../../../models/innovation';
 import { Tag } from '../../../../../../models/tag';
 import { ResponseService } from '../../services/response.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
-import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { DataService } from '../../services/data.service';
 import { Observable } from 'rxjs';
@@ -57,8 +54,6 @@ export class QuestionSectionComponent implements OnInit {
 
   private _adminSide: boolean;
 
-  private _formQuestionSection: FormGroup;
-
   private _toggleAnswers: boolean = false;
 
   private _answersWithComment: Array<Answer> = [];
@@ -72,9 +67,6 @@ export class QuestionSectionComponent implements OnInit {
   constructor(private _translateService: TranslateService,
               private _responseService: ResponseService,
               private _location: Location,
-              private _formBuilder: FormBuilder,
-              private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService,
               private _dataService: DataService) {
 
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
@@ -82,15 +74,6 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    /* Build Form */
-    this._formQuestionSection = this._formBuilder.group({
-      [this._questionReceived._id]: ['']
-    });
-
-    /* Patch Form */
-    const value = this._responseService.getInnovationAbstract(this._innovation, this._questionReceived._id);
-    this._formQuestionSection.get(this._questionReceived._id).setValue(value);
-
     /* Update Answers Data */
     this._updateAnswersData();
   }
@@ -161,28 +144,9 @@ export class QuestionSectionComponent implements OnInit {
   }
 
 
-  /***
-   * This function is to save the abstract in the innovation object.
-   * @param {Event} event
-   * @param {string} formControlName
-   */
-  public saveAbstract(event: Event, formControlName: string) {
-    const abstract = this._formQuestionSection.get(formControlName).value;
-
-    this._innovation = this._responseService.saveInnovationAbstract(this._innovation, abstract, formControlName);
-
-    this._innovationService.save(this._innovation._id, {executiveReport: this._innovation.executiveReport}).subscribe(() => {
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-
-  }
-
-
   public color(length: number, limit: number) {
     return InnovationFrontService.getColor(length, limit);
   }
-
 
   get showComment(): boolean {
     return this._showComment;
@@ -222,10 +186,6 @@ export class QuestionSectionComponent implements OnInit {
 
   get adminSide(): boolean {
     return this._adminSide;
-  }
-
-  get formQuestionSection(): FormGroup {
-    return this._formQuestionSection;
   }
 
 }

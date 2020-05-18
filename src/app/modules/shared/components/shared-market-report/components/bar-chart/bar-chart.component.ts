@@ -5,14 +5,11 @@ import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Location } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ResponseService } from '../../services/response.service';
 import { BarData } from '../../models/bar-data';
-import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { PieChart } from '../../../../../../models/pie-chart';
-import {DataService} from "../../services/data.service";
+import { DataService } from "../../services/data.service";
 
 @Component({
   selector: 'app-bar-chart',
@@ -38,8 +35,6 @@ export class BarChartComponent implements OnInit {
 
   private _adminSide: boolean = false;
 
-  private _formBarChart: FormGroup;
-
   private _barsData: Array<BarData> = [];
 
   private _pieChart: PieChart;
@@ -51,26 +46,13 @@ export class BarChartComponent implements OnInit {
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
               private _filterService: FilterService,
-              private _location: Location,
-              private _formBuilder: FormBuilder,
-              private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _responseService: ResponseService) {
+              private _location: Location) {
 
     this._adminSide = this._location.path().slice(5, 11) === '/admin';
 
   }
 
   ngOnInit() {
-    /* Build Form */
-    this._formBarChart = this._formBuilder.group({
-      [this.question._id]: ['']
-    });
-
-    /* Patch form */
-    const value = this._responseService.getInnovationAbstract(this.innovation, this.question._id);
-    this._formBarChart.get(this.question._id).setValue(value);
-
     /* Update Answers Data */
     this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
       this._barsData = ResponseService.barsData(this.question, answers);
@@ -113,24 +95,6 @@ export class BarChartComponent implements OnInit {
     this.answerButtonClicked.emit(this.toggleAnswers);
   }
 
-  /***
-   * This function is to save the abstract in the innovation object.
-   * @param {Event} event
-   * @param {string} formControlName
-   */
-  public saveAbstract(event: Event, formControlName: string) {
-    const abstract = this._formBarChart.get(formControlName).value;
-
-    this.innovation = this._responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
-
-    this._innovationService.save(this.innovation._id, this.innovation).subscribe(() => {
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-
-  }
-
-
   public color(length: number, limit: number) {
     return InnovationFrontService.getColor(length, limit);
   }
@@ -153,10 +117,6 @@ export class BarChartComponent implements OnInit {
 
   get adminSide(): boolean {
     return this._adminSide;
-  }
-
-  get formBarChart(): FormGroup {
-    return this._formBarChart;
   }
 
   get showAnswers(): { [p: string]: boolean } {
