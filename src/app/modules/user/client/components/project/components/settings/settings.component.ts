@@ -139,7 +139,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           case 'SECONDARY_OBJECTIVE':
             section.isVisible = !!(this._mission.objective.principal[this._currentLang] && (this._innovation.status === 'EDITING'
-              || this._innovation.status === 'SUBMITTED'));
+              || this._innovation.status === 'SUBMITTED')) || !!(this._mission.objective.secondary.length
+              || this._mission.objective.comment);
             section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 
