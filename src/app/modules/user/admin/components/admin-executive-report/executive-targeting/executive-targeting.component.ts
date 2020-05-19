@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ExecutiveTargeting } from '../../../../../../models/executive-report';
 import { CommonService } from '../../../../../../services/common/common.service';
-import { TranslateService } from '@ngx-translate/core';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
 
 @Component({
   selector: 'executive-targeting',
@@ -10,6 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 
 export class ExecutiveTargetingComponent {
+
+  @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveTargeting) {
     this._config = value;
@@ -22,7 +24,7 @@ export class ExecutiveTargetingComponent {
 
   private _targetingColor = '';
 
-  constructor(private _translateService: TranslateService) { }
+  constructor() { }
 
   public emitChanges() {
     this.configChange.emit(this._config);
@@ -34,11 +36,9 @@ export class ExecutiveTargetingComponent {
 
   public onClickSnippet(event: Event) {
     event.preventDefault();
-    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.TARGETING').subscribe((text) => {
-      this._config.abstract = text;
-      this.textColor();
-      this.emitChanges();
-    });
+    this._config.abstract = SnippetService.storyboard('TARGETING', this.lang);
+    this.textColor();
+    this.emitChanges();
   }
 
   get config(): ExecutiveTargeting {

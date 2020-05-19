@@ -18,7 +18,6 @@
 
     <!-- if the question type is not checkbox and radio -->
     <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'">
-
       <div class="bg-white">
         <app-question-conclusion
           [innovation]="innovation"
@@ -27,37 +26,6 @@
           [stats]="stats">
         </app-question-conclusion>
       </div>
-
-      <!-- abstract -->
-      <ng-container *ngIf="adminSide">
-        <div class="section-pad rm-pad-bottom">
-          <form novalidate [formGroup]="formQuestionSection">
-            <div class="section-light-pad full-light bg-white full">
-
-              <h2 class="title-primary">{{ questionReceived?.title | multiling:lang | FormatText }} Abstract</h2>
-
-              <div class="form-group relative">
-                <label [for]="'market-report-' + questionReceived._id"></label>
-                <textarea
-                  (blur)="saveAbstract($event, questionReceived._id)"
-                  [formControlName]="questionReceived._id"
-                  [id]="'market-report-' + questionReceived._id"
-                  class="form-input"
-                  maxlength="160"
-                  placeholder="Describe the abstract of this question within 160 words."
-                  rows="5">
-                </textarea>
-                <div class="char-remaining" [ngStyle]="{ 'color': color((formQuestionSection.get(questionReceived._id).value.length | characterCountdown:160), 160) }">
-                  <span>{{ formQuestionSection.get(questionReceived._id).value.length | characterCountdown:160 }}</span>
-                </div>
-              </div>
-
-            </div>
-          </form>
-        </div>
-      </ng-container>
-      <!-- /abstract -->
-
     </ng-container>
     <!-- /if the question type is not checkbox and radio -->
 

@@ -6,6 +6,8 @@ import { InnovationFrontService } from '../../../services/innovation/innovation-
 import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../../models/user.model';
+import { ResponseService } from '../../shared/components/shared-market-report/services/response.service';
+import { Question } from '../../../models/question';
 
 @Component({
   selector: 'executive-report',
@@ -38,6 +40,7 @@ export class PrintExecutiveReportComponent implements OnInit {
       this._data.executiveReport.operator = this._data.operator || <User>{};
       this._data.executiveReport.conclusion = this._data.marketReport && this._data.marketReport.finalConclusion
         && this._data.marketReport.finalConclusion.conclusion || '';
+      this._data.executiveReport.questions = this._initInnoQuestions(this._data);
     }
 
   }
@@ -53,6 +56,26 @@ export class PrintExecutiveReportComponent implements OnInit {
       && <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
     this._title = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'title');
     this._media = InnovationFrontService.principalMedia(innovation, this._userLang, '173', '110');
+  }
+
+  /***
+   * getting the questions for the old ER from the innovation object.
+   * @param innovation
+   * @private
+   */
+  private _initInnoQuestions(innovation: Innovation): Array<Question> {
+    const _questions: Array<Question> = [];
+
+    if (innovation.preset && innovation.preset.sections) {
+      ResponseService.presets(innovation).forEach((questions) => {
+        const index = _questions.findIndex((question) => question._id === questions._id);
+        if (index === -1) {
+          _questions.push(questions);
+        }
+      });
+    }
+
+    return _questions;
   }
 
   /***

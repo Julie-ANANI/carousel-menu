@@ -51,7 +51,6 @@ export class ResponseService {
    * @param innovation
    */
   static presets(innovation: Innovation): Array<Question> {
-
     let questions: Array<Question> = [];
 
     if (innovation && innovation.preset && innovation.preset.sections && innovation.preset.sections.length > 0) {
@@ -61,7 +60,6 @@ export class ResponseService {
     }
 
     return questions;
-
   }
 
 

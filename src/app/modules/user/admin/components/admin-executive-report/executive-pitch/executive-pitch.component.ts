@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ScrapeHTMLTags } from '../../../../../../pipe/pipes/ScrapeHTMLTags';
 import { CommonService } from '../../../../../../services/common/common.service';
-import { TranslateService } from '@ngx-translate/core';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
 
 @Component({
   selector: 'executive-pitch',
@@ -11,6 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class ExecutivePitchComponent {
 
+  @Input() lang = 'en';
+
   @Input() set pitch(value: string) {
     this._pitch = new ScrapeHTMLTags().transform(value);
     this.textColor();
@@ -18,14 +20,20 @@ export class ExecutivePitchComponent {
 
   @Output() pitchChange: EventEmitter<string> = new EventEmitter<string>();
 
+  @ViewChild('pitchText') pitchText: ElementRef;
+
   private _pitch = '';
 
   private _pitchColor = '';
 
-  constructor(private _translateService: TranslateService) { }
+  constructor() { }
 
   public emitChanges() {
     this.pitchChange.emit(this._pitch);
+  }
+
+  public update(value: string) {
+    this._pitch = value;
   }
 
   public textColor() {
@@ -34,11 +42,10 @@ export class ExecutivePitchComponent {
 
   public onClickSnippet(event: Event) {
     event.preventDefault();
-    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.PITCH').subscribe((text) => {
-      this._pitch = text;
-      this.textColor();
-      this.emitChanges();
-    });
+    this._pitch = SnippetService.storyboard('PITCH', this.lang);
+    this.pitchText.nativeElement.value = this._pitch;
+    this.textColor();
+    this.emitChanges();
   }
 
   get pitch(): string {

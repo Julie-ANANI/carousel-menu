@@ -2,17 +2,6 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'INSERT_SNIPPET': 'Insert snippet',
 
-  'SNIPPET': {
-    'OBJECTIVE': 'The objective of the market test was to',
-    'PITCH': 'Here is your project:',
-    'TARGETING': 'We contacted professionals concerned with ### in specific countries including  ###, ###, ###, ###. and ' +
-      'collected XX responses.',
-    'PROFESSIONAL': 'We based our analysis on this panel of XX professionals, from sectors such as XX, XX, XX, XX,... Here are 4 profiles of ' +
-      'professionals of particular interest.',
-    'CONCLUSION': 'Your XX solution answers an important issue validated by the market. If more XX solutions are expected, ' +
-      'yours can be used as a XX solution if the XX is XX. XX would be the best area to start accessing the market.'
-  },
-
   'OBJECTIVE': {
     'OBJECTIVE': 'Objective',
     'LEADER': 'Project leader',

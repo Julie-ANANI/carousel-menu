@@ -7,7 +7,7 @@ export const CLIENT_PROJECT_DOCUMENTS = {
     'SHARE': 'Share link',
     'CSV': 'All answers in CSV',
     'PDF': 'All answers in PDF',
-    'VIDEO': 'Vidéo Synthèse',
+    'VIDEO': 'Synthesis Video',
   },
 
   'DESCRIPTION': {

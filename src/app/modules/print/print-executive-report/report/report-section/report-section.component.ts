@@ -1,14 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
-import { Question } from '../../../../../models/question';
 import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
-import { Innovation } from '../../../../../models/innovation';
-import { Location } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
+import { OldExecutiveReport } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { DataService } from '../../../../shared/components/shared-market-report/services/data.service';
+import {
+  ExecutiveReport,
+  ExecutiveSection, SectionBar,
+  SectionKpi,
+  SectionPie,
+  SectionQuote,
+  SectionRanking
+} from '../../../../../models/executive-report';
+import { ExecutivePieChart, PieChart } from '../../../../../models/pie-chart';
+import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
+import { Multiling } from '../../../../../models/multiling';
 
 @Component({
   selector: 'report-section',
@@ -16,169 +21,299 @@ import { DataService } from '../../../../shared/components/shared-market-report/
   styleUrls: ['./report-section.component.scss']
 })
 
-export class ReportSectionComponent {
+export class ReportSectionComponent implements OnChanges {
 
-  @Input() set project(value: Innovation) {
-    this._innovation = value;
-    this._getQuestions(value);
+  @Input() currentSection = 0;
+
+  @Input() answers: Array<Answer> = [];
+
+  @Input() report: OldExecutiveReport | ExecutiveReport = <OldExecutiveReport | ExecutiveReport>{};
+
+  private _section: ExecutiveSection = <ExecutiveSection>{};
+
+  private _content: SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar
+    = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>{}
+
+  private _pieChart: ExecutivePieChart = {
+    data: [],
+    colors: [],
+    labels: [],
+    labelPercentage: []
+  };
+
+  constructor(private _responseService: ResponseService) { }
+
+  ngOnChanges(): void {
+    if (this.report['totalSections'] && this.answers.length > 0 && !this.report['_id']) {
+      this._typeInnovation();
+    } else if (this.answers.length === 0 && this.report['_id'] && !this.report['totalSections']) {
+      this._typeExecutive();
+    }
   }
-
-  @Input() set section(value: number) {
-    this._sectionNumber = value;
-  }
-
-  @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
-    this._getSectionInformation(this._sectionNumber);
-  }
-
-  private _answers: Array<Answer> = [];
-
-  private _innovation: Innovation;
-
-  private _sectionMenuOptions: Array<Question> = [];
-
-  private _questions: Array<Question> = [];
-
-  private _sectionNumber: number;
-
-  private _questionSelected: Question;
-
-  private _abstractValue = '';
-
-  private _adminSide: boolean;
-
-  private _stats: { nbAnswers?: number, percentage?: number };
-
-  constructor(private _responseService: ResponseService,
-              private _dataService: DataService,
-              private _location: Location,
-              private _translateService: TranslateService,
-              private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService) {
-
-    this._adminSide = this._location.path().slice(5, 11) === '/admin';
-
-  }
-
 
   /***
-   * This function is to get the questions from the service, and then push it into the
-   * respective arrays.
-   * @param {Innovation} value
+   * it the object type is Innovation.
+   * @private
    */
-  private _getQuestions(value: Innovation) {
-    if (value.preset && value.preset.sections) {
-      ResponseService.presets(value).forEach((questions) => {
-        const index = this._questions.findIndex((question) => question._id === questions._id);
-        if (index === -1) {
-          this._questions.push(questions);
-          this._sectionMenuOptions.push(questions);
+  private _typeInnovation() {
+    const _report: OldExecutiveReport = <OldExecutiveReport>this.report;
+    this._initSection(_report);
+  }
+
+  /***
+   * this functions is to initialize the section value for the old ER.
+   * @param report
+   * @private
+   */
+  private _initSection(report: OldExecutiveReport) {
+    if (report.sections[this.currentSection] && report.questions.length > 0 && this.answers.length > 0) {
+      const _quesId = report.sections[this.currentSection].quesId || '';
+      const _question = report.questions.find((ques) => ques._id === _quesId);
+      const _titleFrench = _question.title && _question.title['fr'];
+      const _titleEnglish = _question.title && _question.title['en'];
+      const _abstract = this._getAbstract(_question._id);
+      const _answers = this._responseService.answersToShow(this.answers, _question);
+
+      if (_question && _question.controlType) {
+
+        switch (_question.controlType) {
+
+          case 'checkbox':
+            this._section = {
+              questionId: _quesId,
+              title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
+              abstract: _abstract,
+              questionType: 'BAR',
+              content: <SectionBar>{}
+            };
+            this._content = this._initBarContent(ResponseService.barsData(_question, _answers));
+            break;
+
+          case 'radio':
+            this._section = {
+              questionId: _quesId,
+              title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
+              abstract: _abstract,
+              questionType: 'PIE',
+              content: <SectionPie>{}
+            };
+            const _barsData = ResponseService.barsData(_question, _answers);
+            this._content = this._initPieContent(ResponseService.pieChartData(_barsData, _answers));
+            this._initPieChartData();
+            break;
+
+          case 'stars':
+            this._section = {
+              questionId: _quesId,
+              title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
+              abstract: _abstract,
+              questionType: 'BAR',
+              content: <SectionBar>{}
+            };
+            this._content = this._initStarContent(ResponseService.getStarsAnswers(_question, _answers));
+            break;
+
+          default:
+            this._section = {
+              questionId: _quesId,
+              title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
+              abstract: _abstract,
+              questionType: 'RANKING',
+              content: <SectionRanking>{}
+            };
+            this._content = this._initRankingContent(ResponseService.tagsList(_answers, _question), _question.title);
+
         }
+      }
+
+    }
+  }
+
+  /***
+   * returns the content of the Section Bar of type Checkbox
+   * @param barData
+   * @private
+   */
+  private _initBarContent(barData: Array<BarData>): SectionBar {
+    const _content = <SectionBar>{};
+    _content.showExamples = false;
+    _content.values = [];
+    if (barData.length > 0) {
+      _content.showExamples = true;
+      for (let i=0; i<3; i++) {
+        const _percentage = (Number)(barData[i] && barData[i].absolutePercentage.substring(0, barData[i].absolutePercentage.length - 1))
+          || 0;
+        _content.values.push({
+          name: barData[i] && barData[i].label && barData[i].label[this.report.lang] || '',
+          percentage: _percentage,
+          legend: this._barLegend(barData[i] && barData[i].answers),
+          visibility: _percentage !== 0
+        });
+      }
+    }
+    return _content;
+  }
+
+  /***
+   * returns the professional company.
+   * @param answers
+   * @private
+   */
+  private _barLegend(answers: Array<Answer>): string {
+    let _string = '';
+    if (answers.length > 0) {
+      for (let i=0; i<2; i++) {
+        if (answers[i].professional && answers[i].professional.company) {
+          _string += answers[i].professional.company;
+          if (i === 0 && _string) {
+            _string += ', ';
+          }
+        }
+      }
+    }
+    return _string;
+  }
+
+  /***
+   * returns the content of the Section Bar of type Stars
+   * @param notesData
+   * @private
+   */
+  private _initStarContent(notesData: Array<{label: Multiling, sum: number, percentage: string}>): SectionBar {
+    const _content = <SectionBar>{};
+    _content.showExamples = false;
+    _content.values = [];
+    if (notesData.length > 0) {
+      for (let i=0; i<3; i++) {
+        const _percentage = (Number)(notesData[i] && notesData[i].percentage.substring(0, notesData[i].percentage.length - 1))
+          || 0;
+        _content.values.push({
+          name: notesData[i] && notesData[i].label && notesData[i].label[this.report.lang] || '',
+          percentage: _percentage,
+          legend: '',
+          visibility: _percentage !== 0
+        });
+      }
+    }
+    return _content;
+  }
+
+  /***
+   * returns the content of the Section Pie
+   * @param pieData
+   * @private
+   */
+  private _initPieContent(pieData: PieChart): SectionPie {
+    const _content = <SectionPie>{};
+    _content.values = [];
+    _content.favorable_answers = {
+      percentage: pieData.percentage,
+      visibility: pieData.percentage !== 0
+    };
+    if (pieData.data) {
+      for (let i=0; i<pieData.data.length; i++) {
+        _content.values[i] = {
+          percentage: (Number)(pieData.labelPercentage[i].substring(0, pieData.labelPercentage[i].length - 1))
+            || 0,
+          answers: pieData.data[i],
+          legend: pieData.labels[this.report.lang][i],
+          color: pieData.colors[i],
+        };
+      }
+    }
+    return _content;
+  }
+
+  /***
+   * returns the content of the Section Ranking
+   * @param tagsData
+   * @param title
+   * @private
+   */
+  private _initRankingContent(tagsData: Array<Tag>, title: Multiling): SectionRanking {
+    const _content = <SectionRanking>{};
+    _content.values = [];
+    if (tagsData.length > 0) {
+      for (let i=0; i<3; i++) {
+        _content.values[i] = {
+          name: tagsData[i].label[this.report.lang] || '',
+          visibility: true,
+          legend: tagsData[i].count > 1 ? tagsData[i].count + 'X' : '',
+          color: this._getRankingColor(title)
+        }
+      }
+    }
+    return _content;
+  }
+
+  /***
+   * returns the label color for Ranking content
+   * @param title
+   * @private
+   */
+  private _getRankingColor(title: Multiling): string {
+    if (title) {
+      if (title['en'].toLowerCase().includes('objections')) {
+        return '#EA5858';
+      } else if (title['en'].toLowerCase().includes('strengths') || title['fr'].toLowerCase().includes('points forts')) {
+        return '#2ECC71';
+      }
+    }
+    return '#4F5D6B';
+  }
+
+  /***
+   * return the abstract for the Old ER.
+   * @param id
+   * @private
+   */
+  private _getAbstract(id: string): string {
+    if (id && this.report['abstracts'] && this.report['abstracts'].length > 0) {
+      const index = this.report['abstracts'].findIndex((abstract: { quesId: string, value: string }) => abstract.quesId === id);
+      if (index !== -1) {
+        return this.report['abstracts'][index].value;
+      }
+    }
+    return '';
+  }
+
+  /***
+   * if the object type is Executive report
+   * @private
+   */
+  private _typeExecutive() {
+    const data: ExecutiveReport = <ExecutiveReport>this.report;
+    this._section = data.sections[this.currentSection];
+    this._content = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>this._section.content;
+    this._initPieChartData();
+  }
+
+  /***
+   * initializing the values for the pie chart.
+   * @private
+   */
+  private _initPieChartData() {
+    const _content = <SectionPie>this._content;
+    if (this._section.questionType === 'PIE' && _content.values.length > 0) {
+      _content.values.forEach((value, index) => {
+        this._pieChart.data[index] = value.percentage;
+        this._pieChart.colors[index] = value.color;
+        this._pieChart.labels[index] = value.legend;
+        this._pieChart.labelPercentage[index] = value.percentage;
       });
     }
   }
 
-
-  /***
-   * This function is called when the operator clicked on anyone title
-   * then we select that question and save that question id.
-   * @param {Event} event
-   * @param {Question} option
-   */
-  public onTitleClicked(event: Event, option: Question) {
-    this._innovation.executiveReport.sections[this._sectionNumber] = { quesId: option._id };
-
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-
-    this._getSectionInformation(this._sectionNumber);
+  get section(): ExecutiveSection {
+    return this._section;
   }
 
-
-  /***
-   * Based on the sectionNumber we get the question id from the executiveReport.sections array and fill that section
-   * with all the details.
-   * @param {number} sectionNumber
-   */
-  private _getSectionInformation(sectionNumber: number) {
-
-    if (this._innovation.executiveReport.sections[sectionNumber]) {
-
-      this._questionSelected = this._questions.find((ques) => ques._id === this._innovation.executiveReport.sections[sectionNumber].quesId);
-
-      if (this._questionSelected) {
-
-        const answersToShow = this._responseService.answersToShow(this._answers, this._questionSelected);
-        this._dataService.setAnswers(this._questionSelected, answersToShow);
-
-        this._stats = {
-          nbAnswers: answersToShow.length,
-          percentage: Math.round((answersToShow.length * 100) / this._answers.length)
-        };
-
-        this._getAbstractValue();
-
-      }
-
-    }
-
+  get content(): SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar {
+    return this._content;
   }
 
-
-  /***
-   * this function is to get the abstract value from the abstracts array by using
-   * quesId.
-   */
-  private _getAbstractValue() {
-
-    this._abstractValue = '';
-
-    if (this._innovation.executiveReport.abstracts) {
-      const findAbstract = this._innovation.executiveReport.abstracts.find((ques) => ques.quesId === this._questionSelected._id);
-      if (findAbstract) {
-        this._abstractValue = findAbstract.value;
-      }
-    }
-
-  }
-
-  get lang(): string {
-    return this._translateService.currentLang;
-  }
-
-  get innovation(): Innovation {
-    return this._innovation;
-  }
-
-  get sectionMenuOptions(): Array<Question> {
-    return this._sectionMenuOptions;
-  }
-
-  get questions(): Array<Question> {
-    return this._questions;
-  }
-
-  get questionSelected(): Question {
-    return this._questionSelected;
-  }
-
-  get abstractValue(): string {
-    return this._abstractValue;
-  }
-
-  get adminSide(): boolean {
-    return this._adminSide;
-  }
-
-  get stats(): { nbAnswers?: number; percentage?: number } {
-    return this._stats;
-  }
-
-  get tags(): Array<Tag> {
-    return this._dataService.answersTagsLists[this._questionSelected._id];
+  get pieChart(): ExecutivePieChart {
+    return this._pieChart;
   }
 
 }

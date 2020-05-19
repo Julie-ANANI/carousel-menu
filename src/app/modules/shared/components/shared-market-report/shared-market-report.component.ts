@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -18,6 +18,9 @@ import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
+import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -25,7 +28,7 @@ import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldm
   styleUrls: ['./shared-market-report.component.scss']
 })
 
-export class SharedMarketReportComponent implements OnInit {
+export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   @Input() set adminMode(value: boolean) {
     this._adminMode = value;
@@ -88,11 +91,16 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _anonymousAnswers: boolean = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _toBeSaved = false;
+
   constructor(private _translateService: TranslateService,
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService,
               private _authService: AuthService,
+              private _innovationFrontService: InnovationFrontService,
               private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
               private _sharedWorldMapService: SharedWorldmapService,
@@ -100,6 +108,11 @@ export class SharedMarketReportComponent implements OnInit {
 
   ngOnInit() {
     this._filterService.reset();
+
+    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
+      this._toBeSaved = value;
+    });
+
   }
 
 
@@ -163,42 +176,14 @@ export class SharedMarketReportComponent implements OnInit {
    */
   private _getAnswers() {
     this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).subscribe((response) => {
-      this._answers = response.answers.sort((a, b) => {
-        return b.profileQuality - a.profileQuality;
-      });
+      this._answers = AnswerFrontService.qualitySort(response.answers);
 
       if( this._anonymousAnswers ) {
-        this._answers = <Array<Answer>>this._answers.map( answer => {
-          const _answer = {};
-          Object.keys(answer).forEach(key => {
-            switch(key) {
-              case('company'):
-                _answer[key] = {
-                  'name': ''
-                };
-                break;
-              case('professional'):
-                _answer[key] = {
-                  language: answer[key].language || 'en'
-                };
-                if (answer[key]['company']) {
-                  _answer[key]['company'] = {
-                    name: ''
-                  };
-                }
-                break;
-              default:
-                _answer[key] = answer[key];
-            }
-          });
-          return _answer;
-        });
+        this._answers = AnswerFrontService.anonymous(this._answers);
       }
 
       this._filteredAnswers = this._answers;
-
       this._updateAnswersToShow();
-
       this._filterService.filtersUpdate.subscribe(() => this._updateAnswersToShow());
 
       this._companies = response.answers.map((answer: any) => answer.company || {
@@ -259,20 +244,6 @@ export class SharedMarketReportComponent implements OnInit {
    }
   }
 
-
-  /***
-   * This function is to update the projects.
-   * @param {Event} event
-   */
-  public updateExecutiveReport(event: Event) {
-    event.preventDefault();
-    this._innovationService.save(this._innovation._id, {executiveReport: this._innovation.executiveReport}).subscribe(() => {
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-  }
-
-
   /***
    * This function returns the color according to the length of the input data.
    * @param {number} length
@@ -289,9 +260,15 @@ export class SharedMarketReportComponent implements OnInit {
    * @param {string} ob
    */
   public saveOperatorComment(event: {content: string}, ob: string) {
-    const innoChanges = { marketReport: { [ob]: { conclusion: event.content } } };
-    this._innovationService.save(this._innovation._id, innoChanges).subscribe(() => {
-      // do nothing
+    this._innovation.marketReport[ob] = { conclusion: event.content };
+    this._innovationFrontService.setNotifyChanges(true);
+  }
+
+  public saveInnovation(event: Event) {
+    event.preventDefault();
+    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+      this._toBeSaved = false;
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
@@ -447,6 +424,15 @@ export class SharedMarketReportComponent implements OnInit {
 
   set toggleProfessional(value: boolean) {
     this._toggleProfessional = value;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

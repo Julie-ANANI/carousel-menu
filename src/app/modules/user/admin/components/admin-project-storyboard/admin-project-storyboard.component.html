@@ -4,132 +4,127 @@
       <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- header section -->
-        <section class="header-wrapper">
-          <div class="d-flex flex-wrap">
+        <section class="header-wrapper d-flex flex-wrap">
 
-            <!-- heading / lang -->
-            <div class="content-wrapper p-right-10 p-bottom-30">
+          <!-- heading / lang -->
+          <div class="content-wrapper p-right-10 p-bottom-30">
 
-              <!-- heading -->
-              <div class="d-flex align-baseline">
-                <h1 class="title m-no-bottom m-right-15 text-background">Storyboard</h1>
-                <a
-                  *ngIf="innovation && innovation._id"
-                  [routerLink]="'/user/admin/projects/project/'+innovation._id"
-                  class="text-sm text-notify back-to-wrapper">
-                  {{ 'ADMIN_STORYBOARD.BACK_TO' | translate }}
-                </a>
-              </div>
-              <!-- /heading -->
+            <!-- heading -->
+            <div class="d-flex align-baseline">
+              <h1 class="title m-no-bottom m-right-15 text-background">Storyboard</h1>
+              <a
+                *ngIf="innovation && innovation._id"
+                [routerLink]="'/user/admin/projects/project/'+innovation._id"
+                class="text-sm text-notify back-to-wrapper">
+                {{ 'ADMIN_STORYBOARD.BACK_TO' | translate }}
+              </a>
+            </div>
+            <!-- /heading -->
 
 
-              <!-- autofill / change lang -->
-              <div *ngIf="executiveReport.lang" class="text-md">
+            <!-- autofill / change lang -->
+            <div *ngIf="executiveReport.lang" class="text-md">
 
-                <div>
-                  {{ 'ADMIN_STORYBOARD.AUTOFILL.A' | translate }}
-                  <span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
+              <div>
+                {{ 'ADMIN_STORYBOARD.AUTOFILL.A' | translate }}
+                <span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
                   {{ 'ADMIN_STORYBOARD.AUTOFILL.B' | translate }}</span> {{ 'ADMIN_STORYBOARD.AUTOFILL.C' | translate }}
-                </div>
+              </div>
 
-                <div>
-                  {{ 'ADMIN_STORYBOARD.CHANGE_LANG.A' | translate }}
-                  <span (click)="openLangModal($event, 'RESET')" class="text-link text-normal">
+              <div>
+                {{ 'ADMIN_STORYBOARD.CHANGE_LANG.A' | translate }}
+                <span (click)="openLangModal($event, 'RESET')" class="text-link text-normal">
                   {{ 'ADMIN_STORYBOARD.CHANGE_LANG.B' | translate }}</span>{{ 'ADMIN_STORYBOARD.CHANGE_LANG.C' | translate }}
-                </div>
-
               </div>
-              <!-- /autofill / change lang -->
+
+            </div>
+            <!-- /autofill / change lang -->
 
 
-              <!-- select lang -->
-              <div *ngIf="!executiveReport.lang" class="text-md">
-                {{ 'ADMIN_STORYBOARD.SELECT_LANG.A' | translate }}
-                <span (click)="openLangModal($event, 'CREATE')" class="text-link text-normal">
+            <!-- select lang -->
+            <div *ngIf="!executiveReport.lang" class="text-md">
+              {{ 'ADMIN_STORYBOARD.SELECT_LANG.A' | translate }}
+              <span (click)="openLangModal($event, 'CREATE')" class="text-link text-normal">
                 {{ 'ADMIN_STORYBOARD.SELECT_LANG.B' | translate }}</span> {{ 'ADMIN_STORYBOARD.SELECT_LANG.C' | translate }}
-              </div>
-              <!-- /select lang -->
-
             </div>
-            <!-- /heading / lang -->
-
-
-            <!-- buttons / links -->
-            <div *ngIf="executiveReport.lang" class="content-wrapper p-bottom-15">
-
-              <!-- video -->
-              <div class="video-wrapper">
-
-                <!-- link -->
-                <!--<div class="text-sm m-right-15 m-bottom-15">
-
-                  &lt;!&ndash; last generated date and time &ndash;&gt;
-                  <p>
-                    {{ 'ADMIN_STORYBOARD.LAST_GENERATE' | translate }} 01/02/20 {{ 'ADMIN_STORYBOARD.AT' | translate }} 12:14
-                  </p>
-
-                  &lt;!&ndash; video url &ndash;&gt;
-                  <p [ngStyle]="{ 'white-space': 'nowrap' }" class="text-bold">
-                    https://vimeo.com/387669379/02494b7130
-                    <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.COPY' | translate">
-                      <i (click)="copyLink($event, 'https://vimeo.com/387669379/02494b7130')"
-                         class="icon icon-copy">
-                      </i>
-                    </span>
-                  </p>
-
-                </div>-->
-                <!-- /link -->
-
-                <!--<button
-                  [disabled]="true"
-                  (click)="generateVideo($event)"
-                  class="button is-primary m-bottom-15">
-                  {{ 'COMMON.BUTTON.GENERATE_VIDEO' | translate }}
-                </button>-->
-
-              </div>
-              <!-- /video -->
-
-
-              <!-- pdf -->
-              <div class="pdf-wrapper">
-
-                <!-- link -->
-                <!--<div class="text-sm m-bottom-15 m-right-15">
-
-                  &lt;!&ndash; last generated date and time &ndash;&gt;
-                  <p>
-                    {{ 'ADMIN_STORYBOARD.LAST_GENERATE' | translate }} 01/02/20 {{ 'ADMIN_STORYBOARD.AT' | translate }} 12:14
-                  </p>
-
-                  &lt;!&ndash; pdf url &ndash;&gt;
-                  <p [ngStyle]="{ 'white-space': 'nowrap' }" class="text-bold">
-                    https://umi.us/65118fd4df8g4dg98ddf5g4
-                    <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.COPY' | translate">
-                      <i (click)="copyLink($event, 'https://umi.us/65118fd4df8g4dg98ddf5g4')"
-                         class="icon icon-copy">
-                      </i>
-                    </span>
-                  </p>
-
-                </div>-->
-                <!-- /link -->
-
-                <!--<button
-                  [disabled]="executiveReport.completion !== 100"
-                  (click)="generatePdf($event)"
-                  class="button is-primary is-outlined m-bottom-15">
-                  {{ 'COMMON.BUTTON.GENERATE_PDF' | translate }}
-                </button>-->
-
-              </div>
-              <!-- /pdf -->
-
-            </div>
-            <!-- /buttons / links -->
+            <!-- /select lang -->
 
           </div>
+          <!-- /heading / lang -->
+
+
+          <!-- buttons / links -->
+          <div *ngIf="executiveReport.lang" class="content-wrapper p-bottom-15">
+
+            <!-- video -->
+            <div class="video-wrapper">
+
+              <!-- link -->
+              <!--<div class="text-sm m-right-15 m-bottom-15">
+
+                &lt;!&ndash; last generated date and time &ndash;&gt;
+                <p>
+                  {{ 'ADMIN_STORYBOARD.LAST_GENERATE' | translate }} 01/02/20 {{ 'ADMIN_STORYBOARD.AT' | translate }} 12:14
+                </p>
+
+                &lt;!&ndash; video url &ndash;&gt;
+                <p [ngStyle]="{ 'white-space': 'nowrap' }" class="text-bold">
+                  https://vimeo.com/387669379/02494b7130
+                  <span class="tooltip" [attr.data-tooltip]="'COMMON.TOOLTIP.COPY' | translate">
+                    <i (click)="copyLink($event, 'https://vimeo.com/387669379/02494b7130')"
+                       class="icon icon-copy">
+                    </i>
+                  </span>
+                </p>
+
+              </div>-->
+              <!-- /link -->
+
+              <!--<button
+                [disabled]="true"
+                (click)="generateVideo($event)"
+                class="button is-primary m-bottom-15">
+                {{ 'COMMON.BUTTON.GENERATE_VIDEO' | translate }}
+              </button>-->
+
+            </div>
+            <!-- /video -->
+
+
+            <!-- pdf -->
+            <div class="pdf-wrapper">
+
+              <!-- link -->
+              <div class="text-sm form-group m-bottom-15 m-right-15">
+                <label class="form-switch">
+                  <input
+                    (change)="onChangeDiffusion($event)"
+                    [checked]="executiveReport.externalDiffusion"
+                    id="externalDiffusion"
+                    type="checkbox">
+                  <i class="form-icon"></i> Available at Client side to download
+                </label>
+              </div>
+              <!-- /link -->
+
+              <button
+                [disabled]="isGeneratingReport || executiveReport.completion !== 100"
+                (click)="generatePdf($event)"
+                class="button is-primary is-outlined m-bottom-15">
+                <ng-container *ngIf="!isGeneratingReport; else genCSV">
+                  {{ 'COMMON.BUTTON.GENERATE_PDF' | translate }}
+                </ng-container>
+                <ng-template #genCSV>
+                  {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                </ng-template>
+              </button>
+
+            </div>
+            <!-- /pdf -->
+
+          </div>
+          <!-- /buttons / links -->
+
         </section>
         <!-- /header section -->
 
@@ -145,7 +140,7 @@
         <div *ngIf="toBeSaved && executiveReport.lang" class="btn-save-float-wrapper">
           <button
             (click)="saveExecutiveReport($event)"
-            class="button is-primary animate-slide slide-down is-3 is-rounded">
+            class="button is-primary animate-zoom is-3 is-rounded">
             {{ 'COMMON.BUTTON.SAVE' | translate }}
           </button>
         </div>
