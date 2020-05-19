@@ -197,6 +197,12 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   }
 
+  public onChangeDiffusion(event: Event) {
+    event.preventDefault();
+    this._executiveReport.externalDiffusion = (event.target as HTMLInputElement).checked;
+    this._toBeSaved = true;
+  }
+
   public openLangModal(event: Event, type: string) {
     event.preventDefault();
     this._reportType = type;
