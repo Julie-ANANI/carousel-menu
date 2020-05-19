@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { ScrapeHTMLTags } from '../../../../../../pipe/pipes/ScrapeHTMLTags';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 @Component({
   selector: 'executive-pitch',
@@ -26,7 +27,7 @@ export class ExecutivePitchComponent {
 
   private _pitchColor = '';
 
-  constructor() { }
+  constructor(private _executiveReportFrontService: ExecutiveReportFrontService) { }
 
   public emitChanges() {
     this.pitchChange.emit(this._pitch);
@@ -38,6 +39,11 @@ export class ExecutivePitchComponent {
 
   public textColor() {
     this._pitchColor = CommonService.getLimitColor(this._pitch.length, 216);
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._pitch, this.lang);
   }
 
   public onClickSnippet(event: Event) {

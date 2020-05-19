@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ExecutiveTargeting } from '../../../../../../models/executive-report';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 @Component({
   selector: 'executive-targeting',
@@ -24,7 +25,7 @@ export class ExecutiveTargetingComponent {
 
   private _targetingColor = '';
 
-  constructor() { }
+  constructor(private _executiveReportFrontService: ExecutiveReportFrontService) { }
 
   public emitChanges() {
     this.configChange.emit(this._config);
@@ -32,6 +33,11 @@ export class ExecutiveTargetingComponent {
 
   public textColor() {
     this._targetingColor = CommonService.getLimitColor(this._config.abstract.length, 148);
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.abstract, this.lang);
   }
 
   public onClickSnippet(event: Event) {

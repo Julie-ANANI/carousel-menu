@@ -6,6 +6,7 @@ import { ExecutiveProfessional } from '../../../../../../models/executive-report
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 interface Professional {
   _id: string;
@@ -46,6 +47,7 @@ export class ExecutiveProfessionalComponent implements OnInit {
   private _restPro: Array<Professional> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _executiveReportFrontService: ExecutiveReportFrontService,
               private _professionalsService: ProfessionalsService) { }
 
   ngOnInit(): void {
@@ -118,6 +120,11 @@ export class ExecutiveProfessionalComponent implements OnInit {
 
   public textColor() {
     this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract.length, 258);
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.abstract, this.lang);
   }
 
   public onClickSnippet(event: Event) {

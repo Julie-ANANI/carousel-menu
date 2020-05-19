@@ -6,6 +6,7 @@ import { ExecutiveConclusion } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 interface Operator {
   _id: string;
@@ -41,6 +42,7 @@ export class ExecutiveConclusionComponent implements OnInit {
   private _operator: Operator = <Operator>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _executiveReportFrontService: ExecutiveReportFrontService,
               private _userService: UserService) { }
 
   ngOnInit(): void {
@@ -85,6 +87,11 @@ export class ExecutiveConclusionComponent implements OnInit {
 
   public textColor() {
     this._conclusionColor = CommonService.getLimitColor(this._config.conclusion.length, 270);
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.conclusion, this.lang);
   }
 
   public onClickSnippet(event: Event) {

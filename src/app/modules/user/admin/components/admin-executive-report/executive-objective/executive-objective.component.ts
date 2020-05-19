@@ -6,6 +6,7 @@ import { ExecutiveObjective } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 interface Commercial {
   _id: string;
@@ -55,6 +56,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
   private _clientEmailColor = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _executiveReportFrontService: ExecutiveReportFrontService,
               private _userService: UserService) { }
 
   ngOnInit(): void {
@@ -122,6 +124,11 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   public emitChanges() {
     this.configChange.emit(this._config);
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.objective, this.lang);
   }
 
   public onClickSnippet(event: Event) {

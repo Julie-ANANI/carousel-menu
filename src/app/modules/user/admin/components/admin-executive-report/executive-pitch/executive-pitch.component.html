@@ -11,7 +11,7 @@
           (keyup)="textColor()"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PITCH.PROJECT_PITCH' | translate"
           [innerHTML]="pitch"
-          [ngStyle]="{ 'height': '140px' }"
+          [ngStyle]="{ 'height': '150px' }"
           class="form-input"
           maxlength="216">
         </textarea>
@@ -19,6 +19,12 @@
         <span [ngStyle]="{ 'color': pitchColor }" class="text-limit-wrapper">
           {{ 216 - pitch.length }}
         </span>
+
+        <div (click)="onClickPlay($event)" class="btn-play">
+          <img
+            src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+            alt=" ">
+        </div>
 
     </label>
 

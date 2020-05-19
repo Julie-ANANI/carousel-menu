@@ -1,11 +1,13 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as moment from 'moment';
+import { TranslateNotificationsService } from '../notifications/notifications.service';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateNotificationsService: TranslateNotificationsService) {}
 
   /*
    * range function (inspired from Python)
@@ -135,6 +137,20 @@ export class CommonService {
 
     return futureMonth.format('YYYY-MM-DD');
 
+  }
+
+  /***
+   * play the audio sound.
+   * @param file
+   */
+  public playAudio(file: any) {
+    let sound = new Audio("data:audio/wav;base64," + file);
+    sound.play().then( () => {
+      console.log('Played successfully!');
+    }).catch((err) => {
+      console.error(err);
+      this._translateNotificationsService.error('Error', 'The audio could not be played at the moment.');
+    });
   }
 
 }
