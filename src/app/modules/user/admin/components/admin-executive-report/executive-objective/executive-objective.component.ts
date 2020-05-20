@@ -9,6 +9,8 @@ import { TranslateService } from '@ngx-translate/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 interface Commercial {
   _id: string;
@@ -25,6 +27,8 @@ interface Commercial {
 })
 
 export class ExecutiveObjectiveComponent implements OnInit {
+
+  @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveObjective) {
     this._config = value;
@@ -76,6 +80,8 @@ export class ExecutiveObjectiveComponent implements OnInit {
               private _translateService: TranslateService,
               private _sanitizer: DomSanitizer,
               private _autoCompleteService: AutocompleteService) { }
+              private _executiveReportFrontService: ExecutiveReportFrontService,
+              private _userService: UserService) { }
 
   ngOnInit(): void {
     this._getCommercials();
@@ -144,13 +150,16 @@ export class ExecutiveObjectiveComponent implements OnInit {
     this.configChange.emit(this._config);
   }
 
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.objective, this.lang);
+  }
+
   public onClickSnippet(event: Event) {
     event.preventDefault();
-    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.OBJECTIVE').subscribe((text) => {
-      this._config.objective = text;
-      this.textColor('objective');
-      this.emitChanges();
-    });
+    this._config.objective = SnippetService.storyboard('OBJECTIVE', this.lang);
+    this.textColor('objective');
+    this.emitChanges();
   }
 
   /***

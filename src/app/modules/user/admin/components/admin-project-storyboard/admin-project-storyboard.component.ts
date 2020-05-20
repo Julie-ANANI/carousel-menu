@@ -22,6 +22,8 @@ import { BarData } from '../../../../shared/components/shared-market-report/mode
 import { PieChart } from '../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../services/executive-report/executive-report-front.service';
 import { Tag } from '../../../../../models/tag';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import FileSaver from "file-saver";
 
 @Component({
   selector: 'admin-storyboard',
@@ -49,6 +51,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _questions: Array<Question> = [];
 
+  private _isGeneratingReport = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
@@ -59,6 +63,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _answerService: AnswerService,
               private _executiveReportFrontService: ExecutiveReportFrontService,
               private _multilingPipe: MultilingPipe,
+              private _innovationService: InnovationService,
               private _responseService: ResponseService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
@@ -192,6 +197,12 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   }
 
+  public onChangeDiffusion(event: Event) {
+    event.preventDefault();
+    this._executiveReport.externalDiffusion = (event.target as HTMLInputElement).checked;
+    this._toBeSaved = true;
+  }
+
   public openLangModal(event: Event, type: string) {
     event.preventDefault();
     this._reportType = type;
@@ -255,6 +266,20 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public generatePdf(event: Event) {
     event.preventDefault();
+    if (!this._isGeneratingReport) {
+      this._isGeneratingReport = true;
+      const filename = this._innovation.name ? `UMI Executive report -
+      ${this._innovation.name.slice(0, Math.min(13, this._innovation.name.length))}.pdf` : 'innovation_umi.pdf';
+      this._innovationService.executiveReportPDF(this._innovation._id).pipe(first()).subscribe( data => {
+        const blob = new Blob([data], {type: 'application/pdf'});
+        FileSaver.saveAs(blob, filename);
+        this._isGeneratingReport = false;
+      }, (err: HttpErrorResponse) => {
+        this._isGeneratingReport = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   public saveExecutiveReport(event: Event) {
@@ -315,6 +340,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  get isGeneratingReport(): boolean {
+    return this._isGeneratingReport;
   }
 
 }

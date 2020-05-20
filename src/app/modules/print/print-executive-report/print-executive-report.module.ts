@@ -9,10 +9,6 @@ import { ReportConclusionComponent } from './report/report-conclusion/report-con
 import { ReportProfessionalComponent } from './report/report-professional/report-professional.component';
 import { ReportSectionComponent } from './report/report-section/report-section.component';
 import { ReportComponent } from './report/report.component';
-import { TagComponent } from './report/report-section/tag/tag.component';
-import { StarsComponent } from './report/report-section/stars/stars.component';
-import { PieChartComponent } from './report/report-section/pie-chart/pie-chart.component';
-import { BarChartComponent } from './report/report-section/bar-chart/bar-chart.component';
 
 import { ProjectFrontPageModule } from '../../user/client/components/project-front-page/project-front-page.module';
 import { SharedWorldmapModule } from '../../shared/components/shared-worldmap/shared-worldmap.module';
@@ -45,11 +41,7 @@ import { ProgressBarModule } from '../../utility/progress-bar/progress-bar.modul
     ReportConclusionComponent,
     ReportProfessionalComponent,
     ReportSectionComponent,
-    ReportComponent,
-    TagComponent,
-    StarsComponent,
-    PieChartComponent,
-    BarChartComponent,
+    ReportComponent
   ],
   exports: [
     PrintExecutiveReportComponent

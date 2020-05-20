@@ -1,6 +1,5 @@
 <section id="bar-chart-component">
 
-
   <!-- header section -->
   <div class="bg-white">
     <app-question-conclusion
@@ -12,36 +11,6 @@
     </app-question-conclusion>
   </div>
   <!-- /header section -->
-
-
-  <!-- abstract -->
-  <div *ngIf="adminSide" class="section-pad rm-pad-bottom">
-    <form novalidate [formGroup]="formBarChart">
-      <div class="section-light-pad full-light bg-white full">
-
-        <h2 class="title-primary">{{ question.title | multiling:lang | FormatText }} Abstract</h2>
-
-        <div class="form-group relative">
-          <label [for]="'market-report-' + question._id"></label>
-          <textarea
-            (blur)="saveAbstract($event, question._id)"
-            [formControlName]="question._id"
-            [id]="'market-report-' + question._id"
-            class="form-input"
-            maxlength="160"
-            placeholder="Describe the abstract of this question within 160 words."
-            rows="5">
-          </textarea>
-          <div class="char-remaining" [ngStyle]="{ 'color': color((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
-            <span>{{ formBarChart.get(question._id).value.length | characterCountdown:160 }}</span>
-          </div>
-        </div>
-
-      </div>
-    </form>
-  </div>
-  <!-- /abstract -->
-
 
   <!-- content section -->
   <div>

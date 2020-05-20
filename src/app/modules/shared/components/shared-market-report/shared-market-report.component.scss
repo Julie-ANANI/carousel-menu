@@ -104,6 +104,19 @@
 
   }
 
+  .btn-save-float-wrapper {
+    position: fixed;
+    right: 25px;
+    bottom: 30px;
+    z-index: 1;
+
+    .button {
+      min-width: 80px;
+      box-shadow: $box-shadow-button-hover;
+    }
+
+  }
+
 }
 
 @media (min-width: $size-sm) {

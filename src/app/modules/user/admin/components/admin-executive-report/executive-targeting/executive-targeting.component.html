@@ -10,7 +10,7 @@
           (keyup)="textColor()"
           [(ngModel)]="config.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TARGETING.TARGETING' | translate"
-          [ngStyle]="{ 'height': '98px' }"
+          [ngStyle]="{ 'height': '110px' }"
           maxlength="148"
           class="form-input"
           type="text">
@@ -19,6 +19,12 @@
       <span [ngStyle]="{ 'color': targetingColor }" class="text-limit-wrapper">
         {{ 148 - config.abstract.length }}
       </span>
+
+      <div (click)="onClickPlay($event)" class="btn-play">
+        <img
+          src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+          alt=" ">
+      </div>
 
     </label>
 

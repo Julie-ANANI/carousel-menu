@@ -28,6 +28,16 @@
 
     }
 
+    .btn-play {
+      display: flex;
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      height: 27px;
+      width: 27px;
+      cursor: pointer;
+    }
+
     .insert-snippet {
       text-align: right;
       color: $text-dark-color;
@@ -109,6 +119,7 @@
 
       &.form-input {
         resize: vertical;
+        padding-right: 40px;
       }
 
     }

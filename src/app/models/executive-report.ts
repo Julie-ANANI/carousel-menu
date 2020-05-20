@@ -12,6 +12,7 @@ export interface ExecutiveReport {
   conclusion: string;
   operator: string;
   answers: string;
+  externalDiffusion: boolean;
 }
 
 export interface ExecutiveClient {
