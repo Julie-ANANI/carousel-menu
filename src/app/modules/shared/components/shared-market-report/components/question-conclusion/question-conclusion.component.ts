@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { DataService } from '../../services/data.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
 import { environment } from '../../../../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { PieChart } from '../../../../../../models/pie-chart';
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -33,10 +32,9 @@ export class QuestionConclusionComponent implements OnInit {
 
   private _answersOrigin: {[c: string]: number} = null;
 
-  constructor(private _innovationService: InnovationService,
-              private _translateService: TranslateService,
+  constructor(private _translateService: TranslateService,
               private _dataService: DataService,
-              private _translateNotificationsService: TranslateNotificationsService) {}
+              private _innovationFrontService: InnovationFrontService) {}
 
   ngOnInit() {
     if (!!this.innovation && !this.innovation.marketReport) {
@@ -44,13 +42,9 @@ export class QuestionConclusionComponent implements OnInit {
     }
   }
 
-
   public keyupHandlerFunction(event: {content: string}) {
-    const innoChanges: Innovation = {marketReport: {[this.question.identifier]: { conclusion: event['content'] }}};
-    this._innovationService.save(this.innovation._id, innoChanges).subscribe(() => {
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
+    this.innovation.marketReport[this.question.identifier] = { conclusion: event['content'] };
+    this._innovationFrontService.setNotifyChanges(true);
   }
 
   public isMainDomain(): boolean {
