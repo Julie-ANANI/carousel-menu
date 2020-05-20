@@ -25,6 +25,8 @@ export class TypeRankingComponent {
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
 
+  @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
+
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionRanking = {
@@ -90,6 +92,11 @@ export class TypeRankingComponent {
 
   public checkVisibility(index: number) {
     this._content.values[index].visibility = this._content.values[index].name !== '';
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this.playSection.emit();
   }
 
   public setColor(value: string, index: number) {

@@ -22,6 +22,8 @@ export class TypeQuoteComponent {
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
 
+  @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
+
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionQuote = {
@@ -72,6 +74,11 @@ export class TypeQuoteComponent {
         break;
 
     }
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this.playSection.emit();
   }
 
   public toggleQuotes() {
