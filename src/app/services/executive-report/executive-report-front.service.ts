@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {SectionBar, SectionKpi, SectionPie, SectionQuote, SectionRanking} from '../../models/executive-report';
+import { SectionBar, SectionKpi, SectionPie, SectionQuote, SectionRanking } from '../../models/executive-report';
 import { Professional } from '../../models/professional';
 import { BarData } from '../../modules/shared/components/shared-market-report/models/bar-data';
 import { ResponseService } from '../../modules/shared/components/shared-market-report/services/response.service';
@@ -7,11 +7,20 @@ import { specialCharRegEx } from '../../utils/regex';
 import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../models/tag';
 import { PieChart } from '../../models/pie-chart';
+import { ExecutiveReportService } from './executive-report.service';
+import { TranslateNotificationsService } from '../notifications/notifications.service';
+import { first} from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../error/error-front';
+import { CommonService } from '../common/common.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExecutiveReportFrontService {
 
-  constructor(private _multilingPipe: MultilingPipe) { }
+  constructor(private _multilingPipe: MultilingPipe,
+              private _commonService: CommonService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _executiveReportService: ExecutiveReportService) { }
 
   /***
    * this returns the content of the KPI section.
@@ -182,6 +191,24 @@ export class ExecutiveReportFrontService {
 
     return section;
 
+  }
+
+  /***
+   * play the text.
+   * @param text
+   * @param lang
+   */
+  public audio(text: string, lang: string = 'en') {
+    if (text) {
+      this._executiveReportService.audio(text, lang).pipe(first()).subscribe((file) => {
+        this._commonService.playAudio(file.audioContent);
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    } else {
+      this._translateNotificationsService.error('Error', 'The text could not be empty.');
+    }
   }
 
 }

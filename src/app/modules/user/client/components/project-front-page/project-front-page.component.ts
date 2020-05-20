@@ -27,7 +27,7 @@ interface ProjectFront {
 }
 
 @Component({
-  selector: 'app-project-front-page',
+  selector: 'project-front-page',
   templateUrl: './project-front-page.component.html',
   styleUrls: ['./project-front-page.component.scss']
 })

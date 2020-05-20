@@ -5,10 +5,11 @@ import { first } from 'rxjs/operators';
 import { ExecutiveObjective } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
-import { TranslateService } from '@ngx-translate/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Observable} from 'rxjs';
-import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 
 interface Commercial {
   _id: string;
@@ -19,18 +20,20 @@ interface Commercial {
 }
 
 @Component({
-  selector: 'app-executive-objective',
+  selector: 'executive-objective',
   templateUrl: './executive-objective.component.html',
   styleUrls: ['./executive-objective.component.scss']
 })
 
 export class ExecutiveObjectiveComponent implements OnInit {
 
+  @Input() lang = 'en';
+
   @Input() set config(value: ExecutiveObjective) {
     this._config = value;
     // Set the logo here
-    this._logo = this._config.client.company.logo.uri;
-    this._company = this._config.client.company.name;
+    this._logo = this._config.client.company && this._config.client.company.logo && this._config.client.company.logo.uri;
+    this._company = this._config.client.company && this._config.client.company.name;
     this.textColor('objective');
     this.textColor('clientName');
     this.textColor('clientEmail');
@@ -72,8 +75,8 @@ export class ExecutiveObjectiveComponent implements OnInit {
   private _clientEmailColor = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _executiveReportFrontService: ExecutiveReportFrontService,
               private _userService: UserService,
-              private _translateService: TranslateService,
               private _sanitizer: DomSanitizer,
               private _autoCompleteService: AutocompleteService) { }
 
@@ -144,13 +147,16 @@ export class ExecutiveObjectiveComponent implements OnInit {
     this.configChange.emit(this._config);
   }
 
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.objective, this.lang);
+  }
+
   public onClickSnippet(event: Event) {
     event.preventDefault();
-    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.OBJECTIVE').subscribe((text) => {
-      this._config.objective = text;
-      this.textColor('objective');
-      this.emitChanges();
-    });
+    this._config.objective = SnippetService.storyboard('OBJECTIVE', this.lang);
+    this.textColor('objective');
+    this.emitChanges();
   }
 
   /***

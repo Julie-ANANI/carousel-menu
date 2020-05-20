@@ -255,6 +255,10 @@ export class ExecutiveSectionComponent {
     }
   }
 
+  public onClickPlay(section: ExecutiveSection) {
+    this._executiveReportFrontService.audio(section.abstract, this.reportLang);
+  }
+
   get section(): ExecutiveSection {
     return this._section;
   }

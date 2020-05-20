@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Innovation} from '../../../../../../../models/innovation';
 import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
 import {first, takeUntil} from 'rxjs/operators';
@@ -14,6 +14,8 @@ import {environment} from '../../../../../../../../environments/environment';
 import {AnswerService} from '../../../../../../../services/answer/answer.service';
 import {TranslateService} from '@ngx-translate/core';
 import FileSaver from "file-saver";
+import {isPlatformBrowser} from '@angular/common';
+import {ExecutiveReportService} from '../../../../../../../services/executive-report/executive-report.service';
 
 interface Document {
   name: string;
@@ -33,7 +35,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
-  documents: Array<Document> = [
+  private _documents: Array<Document> = [
     {
       name: 'REPORT',
       isExportable: false,
@@ -60,22 +62,24 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     }
   ];
 
-  userLang = this._translateService.currentLang || 'en';
+  private _userLang = this._translateService.currentLang || 'en';
 
-  isLinkCopied = false;
+  private _isLinkCopied = false;
 
-  isGeneratingLink = false;
+  private _isGeneratingLink = false;
 
-  isGeneratingCSV = false;
+  private _isGeneratingCSV = false;
 
-  isGeneratingPDF = false;
+  private _isGeneratingPDF = false;
 
-  isGeneratingReport = false;
+  private _isGeneratingReport = false;
 
-  constructor(private _innovationFrontService: InnovationFrontService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _innovationFrontService: InnovationFrontService,
               private _authService: AuthService,
               private _commonService: CommonService,
               private _answerService: AnswerService,
+              private _executiveReportService: ExecutiveReportService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) { }
@@ -94,11 +98,16 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _initDocuments() {
-    this.documents.forEach((document) => {
+    this._documents.forEach((document) => {
       switch (document.name) {
 
         case 'REPORT':
-          document.isExportable = !!this._innovation.executiveReport || !!this._innovation.executiveReportId;
+          if (this._innovation.executiveReportId) {
+            this._getExecutiveReport();
+          } else if (this._innovation.executiveReport && this._innovation.executiveReport.sections
+            && this._innovation.executiveReport.sections.length) {
+            document.isExportable = true;
+          }
           break;
 
         case 'VIDEO':
@@ -115,6 +124,24 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
       }
     });
+  }
+
+  /***
+   * getting the ER from the back and checking the externalDiffusion value if true then downloadable
+   * else not.
+   * @private
+   */
+  private _getExecutiveReport() {
+    if (isPlatformBrowser(this._platformId) && this._innovation.executiveReportId) {
+      this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((response) => {
+        const index = this._documents.findIndex((document) => document.name === 'REPORT');
+        if (index !== -1) {
+          this._documents[index].isExportable = response.externalDiffusion;
+        }
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+      });
+    }
   }
 
   /***
@@ -140,20 +167,20 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickShare(event: Event) {
     event.preventDefault();
-    if (!this.isLinkCopied && this.isOwner && this.ownerConsent) {
-      this.isGeneratingLink = true;
+    if (!this._isLinkCopied && this.isOwner && this.ownerConsent) {
+      this._isGeneratingLink = true;
       this._innovationService.shareSynthesis(this._innovation._id).pipe(first()).subscribe((share) => {
         const url = `${environment.clientUrl}/share/synthesis/${share.objectId}/${share.shareKey}`;
         this._commonService.copyToClipboard(url);
-        this.isGeneratingLink = false;
-        this.isLinkCopied = true;
+        this._isGeneratingLink = false;
+        this._isLinkCopied = true;
 
         setTimeout(() => {
-          this.isLinkCopied = false;
+          this._isLinkCopied = false;
         }, 8000);
 
       }, (err: HttpErrorResponse) => {
-        this.isGeneratingLink = false;
+        this._isGeneratingLink = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
@@ -165,12 +192,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickCSV(event: Event) {
     event.preventDefault();
-    if (!this.isGeneratingCSV && this.isOwner && this.ownerConsent) {
-      this.isGeneratingCSV = true;
+    if (!this._isGeneratingCSV && this.isOwner && this.ownerConsent) {
+      this._isGeneratingCSV = true;
       const url = this._answerService.getExportUrl(this._innovation._id, true, this.anonymousCSV);
       setTimeout(() => {
         window.open(url);
-        this.isGeneratingCSV = false;
+        this._isGeneratingCSV = false;
       }, 1000);
     }
   }
@@ -180,12 +207,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickPDF(event: Event) {
     event.preventDefault();
-    if (!this.isGeneratingPDF && this.isOwner && this.ownerConsent) {
-      this.isGeneratingPDF = true;
-      const url = this._answerService.exportAsPDF(this._innovation._id, this.userLang);
+    if (!this._isGeneratingPDF && this.isOwner && this.ownerConsent) {
+      this._isGeneratingPDF = true;
+      const url = this._answerService.exportAsPDF(this._innovation._id, this._userLang);
       setTimeout(() => {
         window.open(url);
-        this.isGeneratingPDF = false;
+        this._isGeneratingPDF = false;
       }, 1000);
     }
   }
@@ -195,16 +222,16 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickReport(event: Event) {
     event.preventDefault();
-    if (!this.isGeneratingReport && this.isOwner && this.ownerConsent) {
-      this.isGeneratingReport = true;
+    if (!this._isGeneratingReport && this.isOwner && this.ownerConsent) {
+      this._isGeneratingReport = true;
       const filename = this._innovation.name ? `UMI Executive report -
       ${this._innovation.name.slice(0, Math.min(13, this._innovation.name.length))}.pdf` : 'innovation_umi.pdf';
       this._innovationService.executiveReportPDF(this._innovation._id).pipe(first()).subscribe( data => {
         const blob = new Blob([data], {type: 'application/pdf'});
         FileSaver.saveAs(blob, filename);
-        this.isGeneratingReport = false;
+        this._isGeneratingReport = false;
       }, (err: HttpErrorResponse) => {
-        this.isGeneratingReport = false;
+        this._isGeneratingReport = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
@@ -229,6 +256,34 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   get innovation(): Innovation {
     return this._innovation;
+  }
+
+  get documents(): Array<Document> {
+    return this._documents;
+  }
+
+  get userLang(): string {
+    return this._userLang;
+  }
+
+  get isLinkCopied(): boolean {
+    return this._isLinkCopied;
+  }
+
+  get isGeneratingLink(): boolean {
+    return this._isGeneratingLink;
+  }
+
+  get isGeneratingCSV(): boolean {
+    return this._isGeneratingCSV;
+  }
+
+  get isGeneratingPDF(): boolean {
+    return this._isGeneratingPDF;
+  }
+
+  get isGeneratingReport(): boolean {
+    return this._isGeneratingReport;
   }
 
   ngOnDestroy(): void {

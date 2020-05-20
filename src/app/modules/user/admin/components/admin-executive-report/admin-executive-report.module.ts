@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ExecutiveConclusionComponent } from './executive-conclusion/executive-conclusion.component';
 import { ExecutiveProfessionalComponent } from './executive-professional/executive-professional.component';
@@ -23,8 +23,8 @@ import { SharedWorldmapModule } from '../../../../shared/components/shared-world
 import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
 import { PiechartExecutiveModule } from '../../../../utility/canvas/piechart-executive/piechart-executive.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
-import {NguiAutoCompleteModule} from '../../../../utility/auto-complete/auto-complete.module';
-import {AutoCompleteInputModule} from '../../../../utility/auto-complete-input/auto-complete-input.module';
+import { NguiAutoCompleteModule } from '../../../../utility/auto-complete/auto-complete.module';
+import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 
 @NgModule({
   imports: [

@@ -5,7 +5,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ExecutiveProfessional } from '../../../../../../models/executive-report';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { CommonService } from '../../../../../../services/common/common.service';
-import { TranslateService } from '@ngx-translate/core';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 interface Professional {
   _id: string;
@@ -23,6 +24,8 @@ interface Professional {
 })
 
 export class ExecutiveProfessionalComponent implements OnInit {
+
+  @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveProfessional) {
     this._config = value;
@@ -44,8 +47,8 @@ export class ExecutiveProfessionalComponent implements OnInit {
   private _restPro: Array<Professional> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _professionalsService: ProfessionalsService,
-              private _translateService: TranslateService) { }
+              private _executiveReportFrontService: ExecutiveReportFrontService,
+              private _professionalsService: ProfessionalsService) { }
 
   ngOnInit(): void {
     this._populateProfessionals();
@@ -119,13 +122,16 @@ export class ExecutiveProfessionalComponent implements OnInit {
     this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract.length, 258);
   }
 
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.abstract, this.lang);
+  }
+
   public onClickSnippet(event: Event) {
     event.preventDefault();
-    this._translateService.get('ADMIN_EXECUTIVE_REPORT.SNIPPET.PROFESSIONAL').subscribe((text) => {
-      this._config.abstract = text;
-      this.textColor();
-      this.emitChanges();
-    });
+    this._config.abstract = SnippetService.storyboard('PROFESSIONAL', this.lang);
+    this.textColor();
+    this.emitChanges();
   }
 
   public emitChanges() {

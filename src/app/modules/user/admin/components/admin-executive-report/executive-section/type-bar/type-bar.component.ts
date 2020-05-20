@@ -10,6 +10,8 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 
 export class TypeBarComponent {
 
+  @Input() lang = 'en';
+
   @Input() set section(value: ExecutiveSection) {
     this._section = value;
     this._content = <SectionBar>this._section.content;
@@ -24,6 +26,8 @@ export class TypeBarComponent {
   }
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
+
+  @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
@@ -97,6 +101,11 @@ export class TypeBarComponent {
   public checkVisibility(index: number) {
     this._content.values[index].visibility = this._content.values[index].percentage !== 0;
     this.emitChanges();
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this.playSection.emit();
   }
 
   get section(): ExecutiveSection {

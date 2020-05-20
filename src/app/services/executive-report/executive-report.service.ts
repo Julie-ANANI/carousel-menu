@@ -24,4 +24,8 @@ export class ExecutiveReportService {
     return this._http.delete<ExecutiveReport>(`/exereport/${executiveReportId}`);
   }
 
+  public audio(text: string, lang: string): Observable<any> {
+    return this._http.post<any>(`/exereport/audio/${lang}`, {text: text});
+  }
+
 }

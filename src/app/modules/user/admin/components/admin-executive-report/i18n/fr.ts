@@ -2,17 +2,6 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'INSERT_SNIPPET': 'Insérer un extrait',
 
-  'SNIPPET': {
-    'OBJECTIVE': 'L’objectif du test marché était de',
-    'PITCH': 'Voici le projet :',
-    'TARGETING': 'Nous avons contacté des professionnels qualifiés dans le secteur de ### en  France, ##, ##,##, et collecté XX réponses.',
-    'PROFESSIONAL': 'Notre analyse est basée sur un, panel de XX répondants issus de secteurs comme ##,##,##,... Parmi eux, ' +
-      'voici quatre professionnels particulièrement interessants',
-    'CONCLUSION': 'Votre solution de XX répond bien à une problématique validée par le marché. Si plus de solutions XX sont attendues, ' +
-      'la vôtre peut être vue comme une solution XX si le XX est XX. XX serait la première zone géographique pour ' +
-      'commencer l\'évaluation marché.'
-  },
-
   'OBJECTIVE': {
     'OBJECTIVE': 'Objectif',
     'LEADER': 'Porteurs de projet',

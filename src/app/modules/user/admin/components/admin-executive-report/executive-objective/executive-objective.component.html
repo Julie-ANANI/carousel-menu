@@ -23,6 +23,12 @@
           {{ 120 - config.objective.length }}
         </span>
 
+        <div (click)="onClickPlay($event)" class="btn-play">
+          <img
+            src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+            alt=" ">
+        </div>
+
       </label>
 
       <!-- insert snippet button -->
@@ -38,7 +44,7 @@
 
 
     <!-- project leader -->
-    <div [ngStyle]="{ 'padding-top': '74px' }">
+    <div class="p-top-25">
 
       <div class="m-bottom-10">
         <label>
@@ -59,7 +65,7 @@
         </label>
       </div>
 
-      <div>
+      <div class="m-bottom-10">
         <label>
 
           <input
@@ -84,7 +90,6 @@
           <input
             auto-complete
             class="form-input"
-            formControlName="name"
             id="enterprise-form-name"
             type="text"
             placeholder="Client enterprise name"
@@ -101,7 +106,7 @@
 
 
     <!-- commercial -->
-    <div [ngStyle]="{ 'padding-top': '74px' }">
+    <div class="p-top-25">
       <label>
         <select
           [ngModel]="commercial._id ? commercial._id : ''"

@@ -25,6 +25,8 @@ export class TypePieComponent {
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
 
+  @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
+
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionPie = {
@@ -105,6 +107,11 @@ export class TypePieComponent {
         break;
 
     }
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this.playSection.emit();
   }
 
   get section(): ExecutiveSection {
