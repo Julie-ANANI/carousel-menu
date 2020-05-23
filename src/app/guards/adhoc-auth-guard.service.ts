@@ -6,7 +6,7 @@ const ACL = ["juandavidcruz@gmail.com", "ecdk@icv-finance.com"];
 
 import {Md5} from 'ts-md5/dist/md5';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AdHocAuthGuard implements CanActivate {
   constructor(private _authService: AuthService,
               private _router: Router) {

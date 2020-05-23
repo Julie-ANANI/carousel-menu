@@ -10,32 +10,40 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class FooterComponent {
 
-  private _companyName: string = environment.companyName;
+  private _companyName = environment.companyName;
+
+  private _termsLink = this._translateService.currentLang === 'fr'
+    ? 'https://www.umi.us/fr/mentions-legales/' : 'https://www.umi.us/terms/';
+
+  private _privacyLink = this._translateService.currentLang === 'fr'
+    ? 'https://www.umi.us/fr/confidentialite/' : 'https://www.umi.us/privacy/';
+
+  private _ideasLink = 'https://unitedmotionideas.aha.io/settings/account/idea_portals/6777639094795433405';
 
   constructor (private _translateService: TranslateService) { }
-
-  public get copyrightDate(): string {
-    return (new Date()).getFullYear().toString();
-  }
 
   private static _checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
-  public get companyName(): string {
+  get copyrightDate(): string {
+    return (new Date()).getFullYear().toString();
+  }
+
+  get companyName(): string {
     return `${ this._companyName } ${ FooterComponent._checkIsMainDomain() ? '' : ' by United Motion Ideas' }`;
   }
 
-  public getTermsLink(): string {
-    return this._translateService.currentLang === 'en' ? 'https://www.umi.us/terms/' : 'https://www.umi.us/fr/mentions-legales/';
+  get termsLink(): string {
+    return this._termsLink;
   }
 
-  public getPrivacyLink(): string {
-    return this._translateService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/confidentialite/';
+  get privacyLink(): string {
+    return this._privacyLink;
   }
 
-  public getIdeasLink(): string {
-    return 'https://unitedmotionideas.aha.io/settings/account/idea_portals/6777639094795433405';
+  get ideasLink(): string {
+    return this._ideasLink;
   }
 
 }

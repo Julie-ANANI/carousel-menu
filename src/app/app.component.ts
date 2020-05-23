@@ -125,14 +125,13 @@ export class AppComponent implements OnInit, OnDestroy {
     document.head.appendChild( linkElement );
   }*/
 
+  get notificationsOptions(): Options {
+    return this._notificationsOptions;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
-  }
-
-  get notificationsOptions(): Options {
-    return this._notificationsOptions;
   }
 
 }

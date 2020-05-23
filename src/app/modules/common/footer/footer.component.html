@@ -12,21 +12,19 @@
         <!-- terms and privacy -->
         <div class="privacy-wrapper text-medium">
 
-          <span [hidden]="false">
-            <a [href]="getIdeasLink()" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
-              {{ 'FOOTER.IDEAS' | translate }}
-            </a>
-          </span>
+          <a [href]="ideasLink" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
+            {{ 'FOOTER.IDEAS' | translate }}
+          </a>
 
           |
 
-          <a [href]="getTermsLink()" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
+          <a [href]="termsLink" class="gtm-legal-notice c-hand" rel="noopener" target="_blank">
             {{ 'FOOTER.TERMS' | translate }}
           </a>
 
           |
 
-          <a [href]="getPrivacyLink()" class="gtm-end-user-licence-agreement c-hand" rel="noopener" target="_blank">
+          <a [href]="privacyLink" class="gtm-end-user-licence-agreement c-hand" rel="noopener" target="_blank">
             {{ 'FOOTER.PRIVACY' | translate }}
           </a>
 

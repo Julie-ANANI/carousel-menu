@@ -1,9 +1,16 @@
 #user {
+  display: flex;
   min-height: 100vh;
   flex-direction: column;
 
   #main-wrapper {
     flex: 1 0 auto;
+    background-color: #FFFFFF;
+
+    &.admin-side {
+      background-color: #F5F7FA;
+    }
+
   }
 
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../../../../services/auth/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 
 /**
  * if the user is authenticated we redirect the user to the /user/synthesis.
  */
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ShareSynthesisGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}

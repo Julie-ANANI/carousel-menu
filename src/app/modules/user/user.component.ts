@@ -1,7 +1,9 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, Location } from '@angular/common';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
-import { LoaderService } from '../../services/loader/loader.service';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser, Location} from '@angular/common';
+import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
+import {LoaderService} from '../../services/loader/loader.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 //import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 //import {UserService} from "../../services/user/user.service";
 
@@ -13,11 +15,13 @@ import { LoaderService } from '../../services/loader/loader.service';
   styleUrls: ['./user.component.scss']
 })
 
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
 
   private _displayLoader = true;
 
   private _adminSide = false;
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _location: Location,
@@ -26,31 +30,31 @@ export class UserComponent implements OnInit {
               private _loaderService: LoaderService,
               private _router: Router) {
 
-    if (isPlatformBrowser(this._platformId)) {
-
-      this._router.events.subscribe((event) => {
-        if (event instanceof NavigationStart) {
-          this._displayLoader = true;
-        } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-          this._displayLoader = false;
-          this._adminSide = this._location.path().slice(5, 11) === '/admin';
-        }
-      });
-
-      this._loaderService.isLoading$.subscribe((loading: boolean) => {
-        setTimeout(() => {
-          this._displayLoader = loading;
-        })
-      });
-
-    }
+    this._initRoutes();
 
   }
 
   ngOnInit() {
-    this._adminSide = this._location.path().slice(5, 11) === '/admin';
+    if (isPlatformBrowser(this._platformId)) {
+      this._loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading: boolean) => {
+        setTimeout(() => {
+          this._displayLoader = loading;
+        })
+      });
+    }
     /*this.startSwellRTClient();
     this.startSwellRTSession();*/
+  }
+
+  private _initRoutes() {
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this._displayLoader = true;
+      } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this._displayLoader = false;
+        this._adminSide = this._location.path().slice(5, 11) === '/admin';
+      }
+    });
   }
 
   /*private startSwellRTSession() {
@@ -96,6 +100,11 @@ export class UserComponent implements OnInit {
 
   get adminSide(): boolean {
     return this._adminSide;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }
