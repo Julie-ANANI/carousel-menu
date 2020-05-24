@@ -243,7 +243,8 @@ export const COMMON = {
     'COPY_LINK': 'Copier le lien',
     'COPIED': 'Copié',
     'GENERATING_LINK': 'la création du lien...',
-    'GENERATING_FILE': 'la création du fichier...'
+    'GENERATING_FILE': 'la création du fichier...',
+    'CONTACT_COMMERCIAL': 'Contacter mon commercial'
   },
 
   'PROJECT': {

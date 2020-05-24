@@ -14,6 +14,7 @@ import { isPlatformBrowser, Location } from '@angular/common';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { Config } from '../../../../../models/config';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
 
 @Component({
   selector: 'app-discover-description',
@@ -142,7 +143,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     this._linkedInUrl = ShareService.linkedinProjectShareLink(this._innovationCard);
     this._twitterUrl = ShareService.twitterProjectShareLink(this._innovationCard);
     this._mailUrl = ShareService.mailProjectShareLink(this._innovationCard, this._lang);
-    this._contactUsUrl = ShareService.contactOperator(this._innovationCard, this._operatorEmail, this._lang);
+    this._contactUsUrl = ContactFrontService.operator(this._innovationCard, this._operatorEmail, this._lang);
 
   }
 
