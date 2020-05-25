@@ -15,7 +15,7 @@ interface Operator {
 }
 
 @Component({
-  selector: 'executive-conclusion',
+  selector: 'app-admin-executive-conclusion',
   templateUrl: './executive-conclusion.component.html',
   styleUrls: ['./executive-conclusion.component.scss']
 })

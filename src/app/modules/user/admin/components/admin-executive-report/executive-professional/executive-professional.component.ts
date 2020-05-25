@@ -18,7 +18,7 @@ interface Professional {
 }
 
 @Component({
-  selector: 'executive-professional',
+  selector: 'app-admin-executive-professional',
   templateUrl: './executive-professional.component.html',
   styleUrls: ['./executive-professional.component.scss']
 })

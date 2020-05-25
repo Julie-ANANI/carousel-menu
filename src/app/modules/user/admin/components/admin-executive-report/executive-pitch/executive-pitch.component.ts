@@ -5,7 +5,7 @@ import { SnippetService } from '../../../../../../services/snippet/snippet.servi
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 @Component({
-  selector: 'executive-pitch',
+  selector: 'app-admin-executive-pitch',
   templateUrl: './executive-pitch.component.html',
   styleUrls: ['./executive-pitch.component.scss']
 })

@@ -17,7 +17,7 @@
 
   <!-- pitch -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-pitch [(pitch)]="summary" [lang]="executiveReport.lang"></executive-pitch>
+    <app-admin-executive-pitch [(pitch)]="summary" [lang]="executiveReport.lang"></app-admin-executive-pitch>
   </section>
   <!-- /pitch -->
 
@@ -29,7 +29,7 @@
 
   <!-- targeting -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-targeting [(config)]="targetingConfig" [lang]="executiveReport.lang"></executive-targeting>
+    <app-admin-executive-targeting [(config)]="targetingConfig" [lang]="executiveReport.lang"></app-admin-executive-targeting>
   </section>
   <!-- /targeting -->
 
@@ -41,7 +41,7 @@
 
   <!-- professionals -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-professional [(config)]="professionalConfig" [lang]="executiveReport.lang"></executive-professional>
+    <app-admin-executive-professional [(config)]="professionalConfig" [lang]="executiveReport.lang"></app-admin-executive-professional>
   </section>
   <!-- /professionals -->
 
@@ -63,14 +63,14 @@
 
     <!-- section -->
     <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-      <executive-section
+      <app-admin-executive-section
         (sectionChange)="onSectionChange($event, i)"
         [answers]="answers"
         [questions]="questions"
         [reportLang]="executiveReport.lang"
         [sectionIndex]="i"
         [section]="section">
-      </executive-section>
+      </app-admin-executive-section>
     </section>
     <!-- /section -->
 
@@ -94,7 +94,7 @@
 
   <!-- conclusion -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <executive-conclusion [(config)]="conclusionConfig" [lang]="executiveReport.lang"></executive-conclusion>
+    <app-admin-executive-conclusion [(config)]="conclusionConfig" [lang]="executiveReport.lang"></app-admin-executive-conclusion>
   </section>
   <!-- /conclusion -->
 

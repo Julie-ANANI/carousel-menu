@@ -3,7 +3,7 @@ import { ExecutiveSection, SectionBar } from '../../../../../../../models/execut
 import { CommonService } from '../../../../../../../services/common/common.service';
 
 @Component({
-  selector: 'type-bar',
+  selector: 'app-admin-section-type-bar',
   templateUrl: './type-bar.component.html',
   styleUrls: ['./type-bar.component.scss']
 })

@@ -71,55 +71,55 @@
 
       <!-- type KPI -->
       <div *ngSwitchCase="'KPI'">
-        <type-kpi
+        <app-admin-section-type-kpi
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
           [section]="section">
-        </type-kpi>
+        </app-admin-section-type-kpi>
       </div>
       <!-- /type KPI -->
 
 
       <!-- type QUOTE -->
       <div *ngSwitchCase="'QUOTE'">
-        <type-quote
+        <app-admin-section-type-quote
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
           [section]="section">
-        </type-quote>
+        </app-admin-section-type-quote>
       </div>
       <!-- /type QUOTE -->
 
 
       <!-- type BAR -->
       <div *ngSwitchCase="'BAR'">
-        <type-bar
+        <app-admin-section-type-bar
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
           [section]="section">
-        </type-bar>
+        </app-admin-section-type-bar>
       </div>
       <!-- /type BAR -->
 
 
       <!-- type RANKING -->
       <div *ngSwitchCase="'RANKING'">
-        <type-ranking
+        <app-admin-section-type-ranking
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
           [section]="section">
-        </type-ranking>
+        </app-admin-section-type-ranking>
       </div>
       <!-- /type RANKING -->
 
 
       <!-- type PIE -->
       <div *ngSwitchCase="'PIE'">
-        <type-pie
+        <app-admin-section-type-pie
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
           [section]="section">
-        </type-pie>
+        </app-admin-section-type-pie>
       </div>
       <!-- /type PIE -->
 

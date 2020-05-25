@@ -11,7 +11,7 @@ import { PieChart } from '../../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 @Component({
-  selector: 'executive-section',
+  selector: 'app-admin-executive-section',
   templateUrl: './executive-section.component.html',
   styleUrls: ['./executive-section.component.scss']
 })

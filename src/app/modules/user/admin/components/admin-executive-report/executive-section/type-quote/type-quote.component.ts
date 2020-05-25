@@ -3,7 +3,7 @@ import { ExecutiveSection, SectionQuote } from '../../../../../../../models/exec
 import { CommonService } from '../../../../../../../services/common/common.service';
 
 @Component({
-  selector: 'type-quote',
+  selector: 'app-admin-section-type-quote',
   templateUrl: './type-quote.component.html',
   styleUrls: ['./type-quote.component.scss']
 })

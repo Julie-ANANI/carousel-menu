@@ -5,7 +5,7 @@ import { SnippetService } from '../../../../../../services/snippet/snippet.servi
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 @Component({
-  selector: 'executive-targeting',
+  selector: 'app-admin-executive-targeting',
   templateUrl: './executive-targeting.component.html',
   styleUrls: ['./executive-targeting.component.scss']
 })
