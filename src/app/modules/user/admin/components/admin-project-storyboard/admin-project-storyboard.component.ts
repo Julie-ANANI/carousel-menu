@@ -23,7 +23,8 @@ import { PieChart } from '../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../services/executive-report/executive-report-front.service';
 import { Tag } from '../../../../../models/tag';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import FileSaver from "file-saver";
+import FileSaver from 'file-saver';
+import {DeliverableService} from '../../../../../services/deliverable/deliverable.service';
 
 @Component({
   selector: 'admin-storyboard',
@@ -66,7 +67,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _innovationService: InnovationService,
               private _responseService: ResponseService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService) {
+              private _translateTitleService: TranslateTitleService,
+              private _deliverableService: DeliverableService) {
 
     this._setSpinner(true);
 
@@ -97,6 +99,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
         this._executiveReport = response;
         this._setSpinner(false);
         this._isLoading = false;
+        // Get here some deliverables
       }, (err: HttpErrorResponse) => {
         this._setSpinner(false);
         console.log(err);
@@ -262,6 +265,16 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public generateVideo(event: Event) {
     event.preventDefault();
+    console.log('generating video');
+    // ownerId: string, innovationId: string, jobType: string
+    this._deliverableService.registerJob(this._innovation.owner.id, this._innovation._id, 'VIDEO_TEST')
+      .subscribe((result: any) => {
+        console.log(result);
+      }, (err: HttpErrorResponse) => {
+        this._isGeneratingReport = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
   }
 
   public generatePdf(event: Event) {

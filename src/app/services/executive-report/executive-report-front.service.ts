@@ -65,7 +65,7 @@ export class ExecutiveReportFrontService {
    */
   public static pieChartSection(pieChartData: PieChart, lang: string): SectionPie {
 
-    let section: SectionPie = {
+    const section: SectionPie = {
       favorable_answers: {
         percentage: 0,
         visibility: false

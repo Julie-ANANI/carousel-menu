@@ -24,8 +24,8 @@ import { LogoutModule } from '../../common/logout/logout.module';
 import { InputListModule } from '../../utility/input-list/input-list.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
-import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
-import { AdminEnterpriseManagementModule } from "./components/admin-settings/admin-enterprise-management/admin-enterprise-management.module";
+import { AdminCommunityModule } from './components/admin-community/admin-community.module';
+import { AdminEnterpriseManagementModule } from './components/admin-settings/admin-enterprise-management/admin-enterprise-management.module';
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
@@ -42,16 +42,17 @@ import { SignatureResolver } from '../../../resolvers/signature.resolver';
 import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
-import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
+import { AdvSearchService } from '../../../services/advsearch/advsearch.service';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver';
 import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
 import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
 import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
-import { ShieldService } from "../../../services/shield/shield.service";
-import { EnterpriseService } from "../../../services/enterprise/enterprise.service";
+import { ShieldService } from '../../../services/shield/shield.service';
+import { EnterpriseService } from '../../../services/enterprise/enterprise.service';
 import { AdminProjectStoryboardModule } from './components/admin-project-storyboard/admin-project-storyboard.module';
+import {DeliverableService} from '../../../services/deliverable/deliverable.service';
 
 @NgModule({
   imports: [
@@ -112,7 +113,8 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     CampaignProfessionalsResolver,
     ProjectTagsPoolResolver,
     ShieldService,
-    EnterpriseService
+    EnterpriseService,
+    DeliverableService
   ]
 })
 
