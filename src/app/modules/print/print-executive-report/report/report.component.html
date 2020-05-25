@@ -6,10 +6,10 @@
 
       <!-- professional -->
       <div class="page-section">
-        <report-professional
+        <app-print-report-professional
           [answers]="answers"
           [report]="report">
-        </report-professional>
+        </app-print-report-professional>
       </div>
       <!-- /professional -->
 
@@ -18,19 +18,19 @@
         <div *ngFor="let index of firstPageSections | slice:0:totalSection"
              [ngClass]="{ 'section-2': totalSection === 2 }"
              class="section">
-          <report-section
+          <app-print-report-section
             [answers]="answers"
             [ngStyle]="{ 'width': '100%' }"
             [report]="report"
             [currentSection]="index">
-          </report-section>
+          </app-print-report-section>
         </div>
       </div>
       <!-- /sections -->
 
       <!-- conclusion part -->
       <div class="page-section">
-        <report-conclusion [report]="report"></report-conclusion>
+        <app-print-report-conclusion [report]="report"></app-print-report-conclusion>
       </div>
       <!-- /conclusion part -->
 
@@ -47,10 +47,10 @@
 
         <!-- professional column -->
         <div class="page-section">
-          <report-professional
+          <app-print-report-professional
             [answers]="answers"
             [report]="report">
-          </report-professional>
+          </app-print-report-professional>
         </div>
         <!-- /professional column -->
 
@@ -60,12 +60,12 @@
             *ngFor="let index of firstPageSections"
             [ngClass]="{ 'section-4': totalSection > 2 }"
             class="section">
-            <report-section
+            <app-print-report-section
               [answers]="answers"
               [ngStyle]="{ 'width': '100%' }"
               [report]="report"
               [currentSection]="index">
-            </report-section>
+            </app-print-report-section>
           </div>
         </div>
         <!-- /sections -->
@@ -85,12 +85,12 @@
               *ngFor="let index of secondPageSections | slice:0:(totalSection - 4)"
               [ngClass]="{ 'section-2': totalSection === 6, 'section-4': totalSection > 6 }"
               class="section">
-              <report-section
+              <app-print-report-section
                 [answers]="answers"
                 [ngStyle]="{ 'width': '100%' }"
                 [report]="report"
                 [currentSection]="index">
-              </report-section>
+              </app-print-report-section>
             </div>
           </div>
         </ng-container>
@@ -98,7 +98,7 @@
 
         <!-- conclusion part -->
         <div class="page-section">
-          <report-conclusion [report]="report"></report-conclusion>
+          <app-print-report-conclusion [report]="report"></app-print-report-conclusion>
         </div>
         <!-- /conclusion part -->
 

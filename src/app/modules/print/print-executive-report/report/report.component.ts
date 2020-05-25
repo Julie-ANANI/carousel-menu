@@ -8,7 +8,7 @@ import { first } from 'rxjs/operators';
 import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
 
 @Component({
-  selector: 'client-report',
+  selector: 'app-print-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })

@@ -17,7 +17,6 @@ const reportRoutes: Routes = [
   }
 ];
 
-
 @NgModule({
   imports: [
     RouterModule.forChild(reportRoutes)

@@ -16,7 +16,7 @@ interface ProfessionalColumn {
 }
 
 @Component({
-  selector: 'report-professional',
+  selector: 'app-print-report-professional',
   templateUrl: './report-professional.component.html',
   styleUrls: ['./report-professional.component.scss']
 })
