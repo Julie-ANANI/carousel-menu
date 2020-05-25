@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-search-input-3',
+  selector: 'app-utility-search-input-3',
   templateUrl: './search-input-3.component.html',
   styleUrls: ['./search-input-3.component.scss']
 })

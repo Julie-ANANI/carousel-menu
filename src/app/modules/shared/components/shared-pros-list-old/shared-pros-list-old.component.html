@@ -28,7 +28,7 @@
 
   <tr *ngFor="let pro of pros" [ngClass]="{'active': pro.isSelected}" (click)="selectPro(pro)">
     <td><input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
-    <td><app-country-flag [country]="pro.country"></app-country-flag></td>
+    <td><app-utility-country-flag [country]="pro.country"></app-utility-country-flag></td>
     <td>
       <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-link"></i></a>
       <i class="fa fa-list" (click)="showKeywords(pro._id)"></i>
@@ -54,7 +54,7 @@
   </tfoot>
 </table>
 
-<app-modal [(showModal)]="keywordsModal" [title]="'Keywords'">
+<app-utility-modal [(showModal)]="keywordsModal" [title]="'Keywords'">
 
   <section class="modal-body">
     <small><strong>{{nbSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
@@ -68,5 +68,5 @@
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 

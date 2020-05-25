@@ -60,7 +60,7 @@
 
 
 <!-- modal to ask the admin to delete the campaign -->
-<app-modal [(showModal)]="activateModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="activateModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'COMMON.CAMPAIGN.DELETE_BOARD.CONTENT' | translate }}
@@ -71,7 +71,7 @@
     <button (click)="onClickSubmit()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to ask the admin to delete the campaign -->
 
 

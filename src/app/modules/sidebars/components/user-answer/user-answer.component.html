@@ -101,7 +101,7 @@
             <ng-container *ngIf="!editCountry && !assignNewPro">
               <div class="country-wrapper flex-between">
 
-                <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
+                <app-utility-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-utility-country-flag>
                 <div
                   (click)="onClickEdit('country')"
                   *ngIf="modeAdmin && editMode"

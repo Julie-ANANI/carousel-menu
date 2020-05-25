@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, OnDestroy, 
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  selector: 'app-modal-media',
+  selector: 'app-utility-modal-media',
   templateUrl: './modal-media.component.html',
   styleUrls: ['./modal-media.component.scss']
 })

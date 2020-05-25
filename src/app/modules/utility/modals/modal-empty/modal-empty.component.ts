@@ -12,7 +12,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  selector: 'modal-empty',
+  selector: 'app-utility-modal-empty',
   templateUrl: './modal-empty.component.html',
   styleUrls: ['./modal-empty.component.scss'],
   encapsulation: ViewEncapsulation.None

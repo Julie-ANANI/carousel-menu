@@ -12,7 +12,7 @@ import { SpinnerService } from '../../../services/spinner/spinner';
  */
 
 @Component({
-  selector: 'spinner-loader',
+  selector: 'app-utility-spinner-loader',
   templateUrl: './spinner-loader.component.html',
   styleUrls: ['./spinner-loader.component.scss']
 })

@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { PieChart } from '../../../../models/pie-chart';
 
 @Component({
-  selector: 'app-piechart',
+  selector: 'app-utility-piechart',
   templateUrl: 'piechart.component.html',
   styleUrls: ['piechart.component.scss']
 })

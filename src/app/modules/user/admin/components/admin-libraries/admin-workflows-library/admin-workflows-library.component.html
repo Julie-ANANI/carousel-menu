@@ -27,7 +27,7 @@
 
 
 <!-- modal to add the new workflow -->
-<app-modal [(showModal)]="modalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
+<app-utility-modal [(showModal)]="modalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
   <section class="modal-body">
     <div class="form-group">
@@ -52,5 +52,5 @@
     <button (click)="onClickConfirm()" [disabled]="!newScenarioName" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to add the new workflow -->

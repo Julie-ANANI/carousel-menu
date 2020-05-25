@@ -25,7 +25,7 @@
 
 
 <!-- modal to delete the scenario -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'EDIT_WORKFLOW.MODAL.CONTENT' | translate }}
@@ -36,7 +36,7 @@
     <button class="button is-primary" (click)="deleteScenario()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to delete the scenario -->
 
 

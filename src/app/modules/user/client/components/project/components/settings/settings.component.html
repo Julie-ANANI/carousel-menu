@@ -358,7 +358,7 @@
 
 
 <!-- modals -->
-<modal-empty
+<app-utility-modal-empty
   *ngIf="activeModalSection.name && showModal"
   [(showModal)]="showModal"
   [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? '963px' : '640px'">
@@ -431,12 +431,12 @@
     <!-- /footer -->
 
   </div>
-</modal-empty>
+</app-utility-modal-empty>
 <!-- /modals -->
 
 
 <!-- delete modal -->
-<modal-empty *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
+<app-utility-modal-empty *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
 
   <!-- body -->
   <section class="modal-body">
@@ -491,5 +491,5 @@
   </footer>
   <!-- /footer -->
 
-</modal-empty>
+</app-utility-modal-empty>
 <!-- /delete modal -->

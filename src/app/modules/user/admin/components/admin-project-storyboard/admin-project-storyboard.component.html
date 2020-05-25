@@ -169,7 +169,7 @@
 
 
 <!-- modal to select/change language -->
-<app-modal [(showModal)]="isModalLang" [title]="modalTitle | translate">
+<app-utility-modal [(showModal)]="isModalLang" [title]="modalTitle | translate">
   <ng-container *ngIf="!isLoading && isModalLang">
 
     <section [ngClass]="executiveReport.lang ? 'p-top-30 p-bottom-10' : 'p-top-40'" class="modal-body">
@@ -226,12 +226,12 @@
     </footer>
 
   </ng-container>
-</app-modal>
+</app-utility-modal>
 <!-- /modal to select/change language -->
 
 
 <!-- modal to select type of video -->
-<modal-empty [(showModal)]="isModalVideo">
+<app-utility-modal-empty [(showModal)]="isModalVideo">
   <ng-container *ngIf="isModalVideo && !isLoading">
 
     <!-- body -->
@@ -287,5 +287,5 @@
     <!-- /footer -->
 
   </ng-container>
-</modal-empty>
+</app-utility-modal-empty>
 <!-- /modal to select type of video -->

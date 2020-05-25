@@ -20,7 +20,7 @@
 
 
 <!-- modal to delete -->
-<app-modal [(showModal)]="showDeleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="showDeleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
 
@@ -37,5 +37,5 @@
     <button (click)="removeCountries()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to delete -->

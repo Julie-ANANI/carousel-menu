@@ -33,7 +33,7 @@ import { HttpErrorResponse } from '@angular/common/http';
  */
 
 @Component({
-  selector: 'auto-suggestion',
+  selector: 'app-utility-auto-suggestion',
   templateUrl: './auto-suggestion.component.html',
   styleUrls: ['./auto-suggestion.component.scss']
 })

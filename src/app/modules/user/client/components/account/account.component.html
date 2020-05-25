@@ -233,7 +233,7 @@
 
 
 <!-- modal to delete account -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}
   <br><br>
   {{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}
@@ -241,7 +241,7 @@
     <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-</app-modal>
+</app-utility-modal>
 <!-- /modal to delete account -->
 
 

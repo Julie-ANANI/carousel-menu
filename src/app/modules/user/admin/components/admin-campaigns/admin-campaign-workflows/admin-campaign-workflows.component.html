@@ -75,7 +75,7 @@
 
 
 <!-- modal to ask for the confirmation if importing the same template -->
-<app-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+<app-utility-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
 
   <section class="modal-body">
     {{ modalContent | translate }}
@@ -86,5 +86,5 @@
     <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to ask for the confirmation if importing the same template -->

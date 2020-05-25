@@ -41,7 +41,7 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
 
@@ -60,5 +60,5 @@
     <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal -->

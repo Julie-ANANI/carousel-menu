@@ -184,7 +184,7 @@
 
 
 <!-- modal to delete batch -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'CAMPAIGNS.BATCH_PAGE.MODAL_DELETE_CONTENT' | translate }}
@@ -195,7 +195,7 @@
     <button (click)="onConfirmDelete()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to delete batch -->
 
 

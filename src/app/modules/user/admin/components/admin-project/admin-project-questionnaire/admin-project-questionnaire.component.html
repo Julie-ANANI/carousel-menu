@@ -81,7 +81,7 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="showPresetModal" [title]="'COMMON.MODAL.TITLE_IMPORT'">
+<app-utility-modal [(showModal)]="showPresetModal" [title]="'COMMON.MODAL.TITLE_IMPORT'">
 
   <section class="modal-body" [ngStyle]="{ 'height': '250px' }">
 
@@ -106,5 +106,5 @@
     <button [disabled]="!chosenPreset" (click)="importPreset($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal -->

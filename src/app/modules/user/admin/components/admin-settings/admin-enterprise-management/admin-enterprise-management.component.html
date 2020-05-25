@@ -245,11 +245,11 @@
 </sidebar>
 <!-- /new/edit enterprise sidebar -->
 
-<app-modal [(showModal)]="uploadLogoModal" [title]="'Upload a file for the new logo'">
+<app-utility-modal [(showModal)]="uploadLogoModal" [title]="'Upload a file for the new logo'">
   <section class="modal-body">
   <div>
     <app-shared-upload-zone-photo [uri]="logoUploadUri" (cbFn)="uploadImage($event)"></app-shared-upload-zone-photo>
   </div>
   </section>
-</app-modal>
+</app-utility-modal>
 
