@@ -244,7 +244,8 @@ export const COMMON = {
     'COPY_LINK': 'Copy share link',
     'COPIED': 'Copied to clipboard',
     'GENERATING_LINK': 'generating the link...',
-    'GENERATING_FILE': 'generating the file...'
+    'GENERATING_FILE': 'generating the file...',
+    'CONTACT_COMMERCIAL': 'Contact commercial'
   },
 
   'PROJECT': {

@@ -69,21 +69,27 @@ export class TypeRankingComponent {
 
       case 'legend':
         if (index === 1) {
-          this._legend1Color = CommonService.getLimitColor(this._content.values[0].legend.length, 13);
+          this._legend1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].legend
+            && this._content.values[0].legend.length, 13);
         } else if (index === 2) {
-          this._legend2Color = CommonService.getLimitColor(this._content.values[1].legend.length, 13);
+          this._legend2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].legend
+            && this._content.values[1].legend.length, 13);
         } else if (index === 3) {
-          this._legend3Color = CommonService.getLimitColor(this._content.values[2].legend.length, 13);
+          this._legend3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].legend
+            && this._content.values[2].legend.length, 13);
         }
         break;
 
       case 'name':
         if (index === 1) {
-          this._element1Color = CommonService.getLimitColor(this._content.values[0].name.length, 20);
+          this._element1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].name
+            && this._content.values[0].name.length, 20);
         } else if (index === 2) {
-          this._element2Color = CommonService.getLimitColor(this._content.values[1].name.length, 20);
+          this._element2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].name
+            && this._content.values[1].name.length, 20);
         } else if (index === 3) {
-          this._element3Color = CommonService.getLimitColor(this._content.values[2].name.length, 20);
+          this._element3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].name
+            && this._content.values[2].name.length, 20);
         }
         break;
 

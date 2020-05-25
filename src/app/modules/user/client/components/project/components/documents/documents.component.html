@@ -60,11 +60,13 @@
           <!-- /body -->
 
           <!-- on hover when not ready -->
-          <div *ngIf="!document.isExportable" class="document-cover flex-centered">
+          <div *ngIf="!document.isExportable || document.name === 'VIDEO'" class="document-cover flex-centered">
             <img
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-lock-red.svg"
               alt=" ">
-            {{ 'CLIENT_PROJECT_DOCUMENTS.IN_PROGRESS' | translate }}
+            <ng-container *ngIf="document.name !== 'VIDEO'">
+              {{ 'CLIENT_PROJECT_DOCUMENTS.IN_PROGRESS' | translate }}
+            </ng-container>
           </div>
           <!-- /on hover when not ready -->
 
@@ -156,7 +158,20 @@
 
             <!-- case === 'VIDEO' -->
             <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.VIDEO' | translate">
-              VIDEO
+              <div class="d-flex justify-center flex-wrap">
+
+                <!-- contact commercial -->
+                <button
+                  (click)="onClickContact($event)"
+                  [disabled]="!isOwner || !ownerConsent"
+                  class="button is-primary"
+                  id="btn-document-contact-commercial">
+                  {{ 'COMMON.BUTTON.CONTACT_COMMERCIAL' | translate }}
+                </button>
+                <!-- /contact commercial -->
+
+
+              </div>
             </div>
             <!-- /case === 'SHARE' -->
 

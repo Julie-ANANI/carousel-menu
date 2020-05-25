@@ -20,7 +20,7 @@ interface Commercial {
 }
 
 @Component({
-  selector: 'app-executive-objective',
+  selector: 'executive-objective',
   templateUrl: './executive-objective.component.html',
   styleUrls: ['./executive-objective.component.scss']
 })
@@ -32,8 +32,8 @@ export class ExecutiveObjectiveComponent implements OnInit {
   @Input() set config(value: ExecutiveObjective) {
     this._config = value;
     // Set the logo here
-    this._logo = this._config.client.company.logo.uri;
-    this._company = this._config.client.company.name;
+    this._logo = this._config.client.company && this._config.client.company.logo && this._config.client.company.logo.uri;
+    this._company = this._config.client.company && this._config.client.company.name;
     this.textColor('objective');
     this.textColor('clientName');
     this.textColor('clientEmail');
@@ -75,10 +75,10 @@ export class ExecutiveObjectiveComponent implements OnInit {
   private _clientEmailColor = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _executiveReportFrontService: ExecutiveReportFrontService,
               private _userService: UserService,
               private _sanitizer: DomSanitizer,
-              private _autoCompleteService: AutocompleteService,
-              private _executiveReportFrontService: ExecutiveReportFrontService) { }
+              private _autoCompleteService: AutocompleteService) { }
 
   ngOnInit(): void {
     this._getCommercials();

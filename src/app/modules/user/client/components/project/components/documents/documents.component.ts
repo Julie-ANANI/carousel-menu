@@ -16,6 +16,8 @@ import {TranslateService} from '@ngx-translate/core';
 import FileSaver from "file-saver";
 import {isPlatformBrowser} from '@angular/common';
 import {ExecutiveReportService} from '../../../../../../../services/executive-report/executive-report.service';
+import {ContactFrontService} from '../../../../../../../services/contact/contact-front.service';
+import {ClientProject} from '../../../../../../../models/client-project';
 
 interface Document {
   name: string;
@@ -93,10 +95,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   }
 
-  /***
-   *
-   * @private
-   */
   private _initDocuments() {
     this._documents.forEach((document) => {
       switch (document.name) {
@@ -111,6 +109,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           break;
 
         case 'VIDEO':
+          document.isExportable = true;
           break;
 
         case 'SHARE':
@@ -235,6 +234,19 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
+    }
+  }
+
+  /***
+   * when the user clicks on the Contact Commercial button
+   * @param event
+   */
+  public onClickContact(event: Event) {
+    event.preventDefault();
+    if (this.isOwner && this.ownerConsent) {
+      const clientProject = <ClientProject>this._innovation.clientProject;
+      const email = clientProject && clientProject.commercial && clientProject.commercial.email || 'achampagne@umi.us';
+      window.open(ContactFrontService.commercialVideo(this._innovation, email, this._userLang), '_blank');
     }
   }
 

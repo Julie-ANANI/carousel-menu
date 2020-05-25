@@ -20,7 +20,8 @@ export const CLIENT_PROJECT_DOCUMENTS = {
 
   'IN_PROGRESS': 'en cours de création...',
 
-  'CONSENT': 'Nous vous rappelons que selon le règlement nᵒ 2016/679, dit règlement général sur la protection des données, les données à caractère personnel contenues dans la synthèse complète ne doivent pas être utilisées en dehors de votre entreprise.',
+  'CONSENT': 'Nous vous rappelons que selon le règlement nᵒ 2016/679, dit règlement général sur la protection des données, ' +
+    'les données à caractère personnel contenues dans la synthèse complète ne doivent pas être utilisées en dehors de votre entreprise.',
 
   'POPOVER': {
     'NOT_OWNER': 'Pour télécharger/partager le lien, vous devez être le propriétaire du projet.',

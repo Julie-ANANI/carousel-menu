@@ -39,7 +39,6 @@ const clientRoutes: Routes = [
   }
 ];
 
-
 @NgModule({
   imports: [
     RouterModule.forChild(clientRoutes)

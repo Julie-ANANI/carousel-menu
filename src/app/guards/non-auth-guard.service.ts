@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth/auth.service';
  * Ensure User is NOT authenticated
  */
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class NonAuthGuard implements CanActivate {
 
   constructor(private authService: AuthService,
@@ -30,4 +30,5 @@ export class NonAuthGuard implements CanActivate {
     this.router.navigate(['/']);
     return false;
   }
+
 }

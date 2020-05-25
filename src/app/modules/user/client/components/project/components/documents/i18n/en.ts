@@ -20,7 +20,8 @@ export const CLIENT_PROJECT_DOCUMENTS = {
 
   'IN_PROGRESS': 'under development...',
 
-  'CONSENT': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, the personal data contained in the complete summary must not be used outside of your company.',
+  'CONSENT': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, ' +
+    'the personal data contained in the complete summary must not be used outside of your company.',
 
   'POPOVER': {
     'NOT_OWNER': 'To download/share link, you have to be the owner of the project.',

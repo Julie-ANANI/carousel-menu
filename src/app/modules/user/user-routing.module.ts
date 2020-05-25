@@ -9,12 +9,11 @@ import { InnovationResolver } from '../../resolvers/innovation.resolver';
 const userRoutes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     component: UserComponent,
     children: [
       {
         path: 'admin',
-        canActivateChild: [AuthGuard],
         loadChildren: './admin/admin.module#AdminModule'
       },
       {

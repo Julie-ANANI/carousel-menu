@@ -91,19 +91,23 @@ export class TypePieComponent {
         break;
 
       case 'legend1':
-        this._legend1Color = CommonService.getLimitColor(this._content.values[0].legend.length, 13);
+        this._legend1Color = CommonService.getLimitColor(this._content.values[0]
+          && this._content.values[0].legend && this._content.values[0].legend.length, 13);
         break;
 
       case 'legend2':
-        this._legend2Color = CommonService.getLimitColor(this._content.values[1].legend.length, 13);
+        this._legend2Color = CommonService.getLimitColor(this._content.values[1]
+          && this._content.values[1].legend && this._content.values[1].legend.length, 13);
         break;
 
       case 'legend3':
-        this._legend3Color = CommonService.getLimitColor(this._content.values[2].legend.length, 13);
+        this._legend3Color = CommonService.getLimitColor(this._content.values[2]
+          && this._content.values[2].legend && this._content.values[2].legend.length, 13);
         break;
 
       case 'legend4':
-        this._legend4Color = CommonService.getLimitColor(this._content.values[3].legend.length, 13);
+        this._legend4Color = CommonService.getLimitColor(this._content.values[3]
+          && this._content.values[3].legend && this._content.values[3].legend.length, 13);
         break;
 
     }
