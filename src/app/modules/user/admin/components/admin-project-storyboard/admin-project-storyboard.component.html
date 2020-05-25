@@ -80,12 +80,27 @@
               </div>-->
               <!-- /link -->
 
-              <button
-                [disabled]="executiveReport.completion !== 100"
-                (click)="openVideoModal($event)"
-                class="button is-primary m-bottom-15">
-                {{ 'COMMON.BUTTON.GENERATE_VIDEO' | translate }}
-              </button>
+              <div class="popover m-bottom-15">
+
+                <button
+                  [disabled]="isVideoDisabled"
+                  (click)="openVideoModal($event)"
+                  class="button is-primary">
+                  {{ 'COMMON.BUTTON.GENERATE_VIDEO' | translate }}
+                </button>
+
+                <div *ngIf="isVideoDisabled" class="popover-container is-sm">
+                  <div class="p-top-20 text-center p-bottom-20 p-left-25 p-right-25">
+                    <ng-container *ngIf="videoJob.status; else textDef">
+                      Video is in {{ videoJob.status | titlecase }} status.
+                    </ng-container>
+                    <ng-container #textDef>
+                      Either report is incomplete or it is not able to download at the client side.
+                    </ng-container>
+                  </div>
+                </div>
+
+              </div>
 
             </div>
             <!-- /video -->
@@ -231,7 +246,7 @@
       <div class="flex-centered form-group p-top-20">
         <label class="form-radio is-inline">
           <input
-            (change)="setVideo($event, 'test')"
+            (change)="setVideo($event, 'VIDEO_TEST')"
             checked
             type="radio"
             name="video"
@@ -240,7 +255,7 @@
         </label>
         <label class="form-radio is-inline">
           <input
-            (change)="setVideo($event, 'final')"
+            (change)="setVideo($event, 'VIDEO_FINAL')"
             type="radio"
             name="video"
             id="video-final">

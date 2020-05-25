@@ -52,7 +52,6 @@ import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-p
 import { ShieldService } from '../../../services/shield/shield.service';
 import { EnterpriseService } from '../../../services/enterprise/enterprise.service';
 import { AdminProjectStoryboardModule } from './components/admin-project-storyboard/admin-project-storyboard.module';
-import {DeliverableService} from '../../../services/deliverable/deliverable.service';
 
 @NgModule({
   imports: [
@@ -113,8 +112,7 @@ import {DeliverableService} from '../../../services/deliverable/deliverable.serv
     CampaignProfessionalsResolver,
     ProjectTagsPoolResolver,
     ShieldService,
-    EnterpriseService,
-    DeliverableService
+    EnterpriseService
   ]
 })
 
