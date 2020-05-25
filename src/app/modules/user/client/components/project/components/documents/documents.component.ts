@@ -26,7 +26,7 @@ interface Document {
 }
 
 @Component({
-  selector: 'documents',
+  selector: 'app-project-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss']
 })

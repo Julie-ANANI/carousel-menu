@@ -34,7 +34,7 @@ interface Objective {
 }
 
 @Component({
-  selector: 'objectives-secondary',
+  selector: 'app-objectives-secondary',
   templateUrl: './objectives-secondary.component.html',
   styleUrls: ['./objectives-secondary.component.scss']
 })

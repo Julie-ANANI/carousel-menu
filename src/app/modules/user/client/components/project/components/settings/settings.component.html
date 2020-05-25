@@ -68,14 +68,14 @@
             <!-- SECONDARY_OBJECTIVE -->
             <div *ngSwitchCase="'SECONDARY_OBJECTIVE'">
               <div [ngStyle]="{'max-width': '755px'}">
-                <objectives-secondary
+                <app-objectives-secondary
                   (objectiveCommentChange)="onChangeComment($event, section)"
                   (objectivesChange)="onChangeSecondaryObjective($event, section)"
                   [isEnabledComment]="section.isEditable"
                   [isEnabledOptions]="enableSecondaryObjectives(section)"
                   [objectiveComment]="mission.objective.comment"
                   [objectives]="mission.objective.secondary">
-                </objectives-secondary>
+                </app-objectives-secondary>
               </div>
             </div>
             <!-- /SECONDARY_OBJECTIVE -->
@@ -388,7 +388,7 @@
 
       <!-- PRINCIPAL_OBJECTIVE -->
       <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'" class="p-top-10 p-bottom-10">
-        <objectives-primary [(objective)]="selectedValue"></objectives-primary>
+        <app-objectives-primary [(objective)]="selectedValue"></app-objectives-primary>
       </div>
       <!-- /PRINCIPAL_OBJECTIVE -->
 

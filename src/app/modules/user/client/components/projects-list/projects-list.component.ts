@@ -16,7 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front';
 
 @Component({
-  selector: 'projects-list',
+  selector: 'app-projects-list',
   templateUrl: 'projects-list.component.html',
   styleUrls: ['projects-list.component.scss'],
   animations: [
