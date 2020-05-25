@@ -8,15 +8,17 @@ import { AdminProjectStoryboardComponent } from './admin-project-storyboard.comp
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { AdminExecutiveReportModule } from '../admin-executive-report/admin-executive-report.module';
 import { FormsModule } from '@angular/forms';
+import { ModalEmptyModule } from '../../../../utility/modals/modal-empty/modal-empty.module';
 
 @NgModule({
   imports: [
-      CommonModule,
-      TranslateModule.forChild(),
-      ModalModule,
-      RouterModule,
-      AdminExecutiveReportModule,
-      FormsModule
+    CommonModule,
+    TranslateModule.forChild(),
+    ModalModule,
+    RouterModule,
+    AdminExecutiveReportModule,
+    FormsModule,
+    ModalEmptyModule
   ],
   declarations: [
     AdminProjectStoryboardComponent

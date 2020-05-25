@@ -207,6 +207,7 @@ export const COMMON = {
     'IMPORT': 'Import',
     'EXPORT': 'Export',
     'SELECT': 'Select',
+    'GENERATE': 'Generate',
     'SEND': 'Send',
     'PRINT': 'Print',
     'PREVIEW': 'Preview',
@@ -245,7 +246,7 @@ export const COMMON = {
     'COPIED': 'Copied to clipboard',
     'GENERATING_LINK': 'generating the link...',
     'GENERATING_FILE': 'generating the file...',
-    'CONTACT_COMMERCIAL': 'Contact commercial'
+    'CONTACT_COMMERCIAL': 'Contact commercial',
   },
 
   'PROJECT': {
@@ -396,7 +397,8 @@ export const COMMON = {
     'TITLE_BATCH': 'Batch Board',
     'TITLE_SHARE': 'Share Board',
     'TITLE_SELECT': 'Selection Board',
-    'TITLE_CREATE': 'Creation Board'
+    'TITLE_CREATE': 'Creation Board',
+    'TITLE_VIDEO_STORYBOARD': 'Select the video type to generate'
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search...',

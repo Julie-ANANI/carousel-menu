@@ -38,4 +38,9 @@ export const ADMIN_STORYBOARD = {
 
   'NO_QUESTIONS_MSG': 'There are no questions to fill the executive report sections.',
 
+  'VIDEO_TYPE': {
+    'TEST': 'Test',
+    'FINAL': 'Final'
+  }
+
 };

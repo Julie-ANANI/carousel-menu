@@ -53,6 +53,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _isGeneratingReport = false;
 
+  private _isModalVideo = false;
+
+  selectedVideo = 'test';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
@@ -260,6 +264,34 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_STORYBOARD.TOAST.URL_COPIED');
   }
 
+  /***
+   * when the user clicks on the Generate Video button
+   * @param event
+   */
+  public openVideoModal(event: Event) {
+    event.preventDefault();
+    this.selectedVideo = 'test';
+    this._isModalVideo = true;
+  }
+
+  /***
+   * when the user clicks on the cancel button in the Video modal.
+   */
+  public closeModal() {
+   this._isModalVideo = false;
+   this.selectedVideo = 'test';
+  }
+
+  /***
+   * when the user selects the video type from the modal.
+   * @param event
+   * @param type
+   */
+  public setVideo(event: Event, type: string) {
+    event.preventDefault();
+    this.selectedVideo = type;
+  }
+
   public generateVideo(event: Event) {
     event.preventDefault();
   }
@@ -344,6 +376,14 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get isGeneratingReport(): boolean {
     return this._isGeneratingReport;
+  }
+
+  get isModalVideo(): boolean {
+    return this._isModalVideo;
+  }
+
+  set isModalVideo(value: boolean) {
+    this._isModalVideo = value;
   }
 
 }

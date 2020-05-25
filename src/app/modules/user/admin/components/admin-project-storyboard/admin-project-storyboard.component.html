@@ -80,12 +80,12 @@
               </div>-->
               <!-- /link -->
 
-              <!--<button
-                [disabled]="true"
-                (click)="generateVideo($event)"
+              <button
+                [disabled]="executiveReport.completion !== 100"
+                (click)="openVideoModal($event)"
                 class="button is-primary m-bottom-15">
                 {{ 'COMMON.BUTTON.GENERATE_VIDEO' | translate }}
-              </button>-->
+              </button>
 
             </div>
             <!-- /video -->
@@ -154,60 +154,123 @@
 
 
 <!-- modal to select/change language -->
-<app-modal *ngIf="!isLoading && isModalLang" [(showModal)]="isModalLang" [title]="modalTitle | translate">
+<app-modal [(showModal)]="isModalLang" [title]="modalTitle | translate">
+  <ng-container *ngIf="!isLoading && isModalLang">
 
-  <section [ngClass]="executiveReport.lang ? 'p-top-30 p-bottom-10' : 'p-top-40'" class="modal-body">
+    <section [ngClass]="executiveReport.lang ? 'p-top-30 p-bottom-10' : 'p-top-40'" class="modal-body">
 
-    <div *ngIf="executiveReport.lang" class="m-bottom-15 text-background">
-      {{ 'ADMIN_STORYBOARD.MODAL.CURRENT_LANG' | translate }}
-      <span *ngIf="executiveReport.lang === 'en'" class="text-medium text-primary-dark">
+      <div *ngIf="executiveReport.lang" class="m-bottom-15 text-background">
+        {{ 'ADMIN_STORYBOARD.MODAL.CURRENT_LANG' | translate }}
+        <span *ngIf="executiveReport.lang === 'en'" class="text-medium text-primary-dark">
         {{ 'COMMON.LANG.EN' | translate }}
       </span>
-      <span *ngIf="executiveReport.lang === 'fr'" class="text-medium text-primary-dark">
+        <span *ngIf="executiveReport.lang === 'fr'" class="text-medium text-primary-dark">
         {{ 'COMMON.LANG.FR' | translate }}
       </span>
-    </div>
+      </div>
 
-    <div class="form-group d-flex justify-center m-no-bottom">
+      <div class="form-group d-flex justify-center m-no-bottom">
 
-      <label class="form-radio is-inline">
-        <input
-          (change)="setNewSelectedLang('en')"
-          [checked]="selectedLang === 'en'"
-          id="lang-en"
-          name="lang"
-          type="radio"
-          value="en">
-        <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
-      </label>
+        <label class="form-radio is-inline">
+          <input
+            (change)="setNewSelectedLang('en')"
+            [checked]="selectedLang === 'en'"
+            id="lang-en"
+            name="lang"
+            type="radio"
+            value="en">
+          <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
+        </label>
 
-      <label class="form-radio is-inline">
-        <input
-          (change)="setNewSelectedLang('fr')"
-          [checked]="selectedLang === 'fr'"
-          id="lang-fr"
-          name="lang"
-          type="radio"
-          value="fr">
-        <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
-      </label>
+        <label class="form-radio is-inline">
+          <input
+            (change)="setNewSelectedLang('fr')"
+            [checked]="selectedLang === 'fr'"
+            id="lang-fr"
+            name="lang"
+            type="radio"
+            value="fr">
+          <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
+        </label>
 
-    </div>
+      </div>
 
 
-    <div *ngIf="executiveReport.lang" class="m-top-30 text-sm">
-      <span class="text-alert text-medium">{{ 'ADMIN_STORYBOARD.MODAL.ATTENTION' | translate }}</span>
-      {{ 'ADMIN_STORYBOARD.MODAL.ATTENTION_MSG' | translate }}
-    </div>
+      <div *ngIf="executiveReport.lang" class="m-top-30 text-sm">
+        <span class="text-alert text-medium">{{ 'ADMIN_STORYBOARD.MODAL.ATTENTION' | translate }}</span>
+        {{ 'ADMIN_STORYBOARD.MODAL.ATTENTION_MSG' | translate }}
+      </div>
 
-  </section>
+    </section>
 
-  <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onClickConfirm($event)" class="button is-primary">
-      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
-    </button>
-  </footer>
+    <footer class="modal-footer">
+      <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+      <button (click)="onClickConfirm($event)" class="button is-primary">
+        {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+      </button>
+    </footer>
 
+  </ng-container>
 </app-modal>
 <!-- /modal to select/change language -->
+
+
+<!-- modal to select type of video -->
+<modal-empty [(showModal)]="isModalVideo">
+  <ng-container *ngIf="isModalVideo && !isLoading">
+
+    <!-- body -->
+    <section class="modal-body p-bottom-40">
+
+      <!-- heading -->
+      <h2 class="title is-4 text-center m-bottom-30 text-bold">
+        {{ 'COMMON.MODAL.TITLE_VIDEO_STORYBOARD' | translate }}
+      </h2>
+      <!-- /heading -->
+
+      <div class="flex-centered form-group p-top-20">
+        <label class="form-radio is-inline">
+          <input
+            (change)="setVideo($event, 'test')"
+            checked
+            type="radio"
+            name="video"
+            id="video-test">
+          <i class="form-icon"></i> {{ 'ADMIN_STORYBOARD.VIDEO_TYPE.TEST' | translate }}
+        </label>
+        <label class="form-radio is-inline">
+          <input
+            (change)="setVideo($event, 'final')"
+            type="radio"
+            name="video"
+            id="video-final">
+          <i class="form-icon"></i> {{ 'ADMIN_STORYBOARD.VIDEO_TYPE.FINAL' | translate }}
+        </label>
+      </div>
+
+    </section>
+    <!-- /body -->
+
+    <!-- footer -->
+    <footer class="modal-footer justify-center">
+
+      <button
+        (click)="closeModal()"
+        [id]="'btn-cancel'"
+        class="button modal-cancel">
+        {{ 'COMMON.BUTTON.CANCEL' | translate }}
+      </button>
+
+      <button
+        (click)="generateVideo($event)"
+        class="button is-community"
+        id="btn-continue">
+        {{ 'COMMON.BUTTON.GENERATE' | translate }}
+      </button>
+
+    </footer>
+    <!-- /footer -->
+
+  </ng-container>
+</modal-empty>
+<!-- /modal to select type of video -->
