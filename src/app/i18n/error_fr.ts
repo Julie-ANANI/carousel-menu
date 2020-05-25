@@ -220,6 +220,10 @@ export const ERROR = {
 
   'PROFESSIONAL': {
     'MERGE_ERROR': 'Un profesionnel avec cette adresse e-mail existe déjà. Essayez de merger à la main les deux profesionnels.<br>Demandez l\'équipe tech pour plus d\'info',
+  },
+
+  'JOB': {
+    'VIDEO': 'La demande de vidéo est enregistrée. Nous vous enverrons un courriel une fois qu\'elle aura été complétée.'
   }
 
 };

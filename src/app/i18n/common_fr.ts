@@ -216,6 +216,7 @@ export const COMMON = {
     'DELETE': 'Supprimer',
     'SELECT': 'Sélectionner',
     'CLOSE': 'Fermer',
+    'GENERATE': 'Générer',
     'DOWNLOAD': 'Télécharger',
     'SHARE': 'Partager',
     'SEE_MORE': 'En voir plus',
@@ -392,7 +393,8 @@ export const COMMON = {
     'TITLE_BATCH': 'Batch',
     'TITLE_SHARE': 'Partage',
     'TITLE_SELECT': 'Sélection',
-    'TITLE_CREATE': 'Création'
+    'TITLE_CREATE': 'Création',
+    'TITLE_VIDEO_STORYBOARD': 'Sélectionnez le type de vidéo à générer'
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',

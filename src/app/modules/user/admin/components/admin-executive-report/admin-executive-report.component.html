@@ -2,7 +2,10 @@
 
   <!-- objective / owner / umi commercial -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <app-executive-objective [(config)]="objectiveConfig" [lang]="executiveReport.lang"></app-executive-objective>
+    <app-admin-executive-objective
+      [(config)]="objectiveConfig"
+      [lang]="executiveReport.lang">
+    </app-admin-executive-objective>
   </section>
   <!-- /objective / owner / umi commercial -->
 

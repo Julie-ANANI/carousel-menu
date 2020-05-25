@@ -6,6 +6,7 @@
     "umi": {
       "root": "",
       "projectType": "application",
+      "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
           "styleext": "scss",
