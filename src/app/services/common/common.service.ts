@@ -6,6 +6,25 @@ import { TranslateNotificationsService } from '../notifications/notifications.se
 @Injectable({ providedIn: 'root' })
 export class CommonService {
 
+  /***
+   * this function is to return the color based on the length and limit.
+   * @param textLength
+   * @param limit
+   */
+  static getLimitColor(textLength: number, limit: number): string {
+
+    const length = limit - textLength;
+
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < (limit / 2)) {
+      return '#F0AD4E';
+    } else {
+      return '#2ECC71';
+    }
+
+  }
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateNotificationsService: TranslateNotificationsService) {}
 
@@ -54,11 +73,9 @@ export class CommonService {
               });
               break;
           }
-        }
-        else if (isObject(accVal) && isObject(objVal)) {
+        } else if (isObject(accVal) && isObject(objVal)) {
           acc[key] = this.deepMerge(accVal, objVal);
-        }
-        else {
+        } else {
           acc[key] = objVal;
         }
       });
@@ -89,7 +106,7 @@ export class CommonService {
   public copyToClipboard(url: string) {
     if (url) {
       if (isPlatformBrowser(this._platformId)) {
-        let textbox = document.createElement('textarea');
+        const textbox = document.createElement('textarea');
         textbox.style.position = 'fixed';
         textbox.style.left = '0';
         textbox.style.top = '0';
@@ -102,25 +119,6 @@ export class CommonService {
         document.body.removeChild(textbox);
       }
     }
-  }
-
-  /***
-   * this function is to return the color based on the length and limit.
-   * @param textLength
-   * @param limit
-   */
-  public static getLimitColor(textLength: number, limit: number): string {
-
-    const length = limit - textLength;
-
-    if (length <= 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < (limit/2)) {
-      return '#F0AD4E';
-    } else {
-      return '#2ECC71';
-    }
-
   }
 
   /***
@@ -144,7 +142,7 @@ export class CommonService {
    * @param file
    */
   public playAudio(file: any) {
-    let sound = new Audio("data:audio/wav;base64," + file);
+    const sound = new Audio('data:audio/wav;base64,' + file);
     sound.play().then( () => {
       console.log('Played successfully!');
     }).catch((err) => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Enterprise } from "../../models/enterprise";
+import { Enterprise } from '../../models/enterprise';
 
 @Injectable()
 export class EnterpriseService {
@@ -14,7 +14,7 @@ export class EnterpriseService {
   }
 
   public get(id?: string, config?: {[header: string]: string | string[] }): Observable<any> {
-    return this._http.get( `/enterprise/${id?id:''}`, {params: config} );
+    return this._http.get( `/enterprise/${id ? id : ''}`, {params: config} );
   }
 
   public save(enterpriseId: string, enterprise: Enterprise): Observable<Enterprise> {
