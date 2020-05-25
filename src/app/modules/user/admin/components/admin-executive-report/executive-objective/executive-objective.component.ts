@@ -20,7 +20,7 @@ interface Commercial {
 }
 
 @Component({
-  selector: 'executive-objective',
+  selector: 'app-executive-objective',
   templateUrl: './executive-objective.component.html',
   styleUrls: ['./executive-objective.component.scss']
 })
