@@ -100,6 +100,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._isLoading = false;
     }
 
+    this._getVideoJob();
+
   }
 
   private _getExecutiveReport() {
@@ -108,11 +110,25 @@ export class AdminProjectStoryboardComponent implements OnInit {
         this._executiveReport = response;
         this._setSpinner(false);
         this._isLoading = false;
-        // Get here some deliverables
       }, (err: HttpErrorResponse) => {
         this._setSpinner(false);
         console.log(err);
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    }
+  }
+
+  private _getVideoJob() {
+    if (isPlatformBrowser(this._platformId) && this._innovation._id) {
+      this._innovationService.getDeliverableJob(this._innovation._id).pipe(first()).subscribe((jobs) => {
+        if (jobs && jobs.length) {
+          const index = jobs.findIndex((job) => job.status === 'RECEIVED' || job.status === 'PROCESSING' || job.status === 'QUEUED');
+          if (index !== -1) {
+            this._videoJob = jobs[index];
+          }
+        }
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
       });
     }
   }
