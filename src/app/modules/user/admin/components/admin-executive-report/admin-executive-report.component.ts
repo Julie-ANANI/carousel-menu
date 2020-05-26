@@ -18,7 +18,7 @@ import { ResponseService } from '../../../../shared/components/shared-market-rep
 import { ErrorFrontService } from '../../../../../services/error/error-front';
 
 @Component({
-  selector: 'admin-executive-report',
+  selector: 'app-admin-executive-report',
   templateUrl: './admin-executive-report.component.html',
   styleUrls: ['./admin-executive-report.component.scss']
 })

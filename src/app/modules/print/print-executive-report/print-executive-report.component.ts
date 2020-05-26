@@ -10,7 +10,7 @@ import { ResponseService } from '../../shared/components/shared-market-report/se
 import { Question } from '../../../models/question';
 
 @Component({
-  selector: 'executive-report',
+  selector: 'app-print-executive-report',
   templateUrl: './print-executive-report.component.html',
   styleUrls: ['./print-executive-report.component.scss']
 })

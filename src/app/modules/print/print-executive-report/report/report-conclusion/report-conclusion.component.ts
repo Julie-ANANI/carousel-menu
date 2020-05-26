@@ -9,7 +9,7 @@ import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'report-conclusion',
+  selector: 'app-print-report-conclusion',
   templateUrl: './report-conclusion.component.html',
   styleUrls: ['./report-conclusion.component.scss']
 })

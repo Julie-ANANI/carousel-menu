@@ -11,7 +11,7 @@ import { InnovationFrontService } from '../../../../../../../services/innovation
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  selector: 'app-setup',
+  selector: 'app-project-setup',
   templateUrl: 'setup.component.html',
   styleUrls: ['setup.component.scss']
 })

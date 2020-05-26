@@ -52,7 +52,7 @@
             {{ content.favorable_answers.percentage }}%
             {{ report.lang === 'fr' ? 'des réponses sont favorables' : ' of responses are favorable' }}
           </h2>
-          <piechart-executive [pieChart]="pieChart"></piechart-executive>
+          <app-utility-piechart-executive [pieChart]="pieChart"></app-utility-piechart-executive>
         </div>
         <!-- /type PIE -->
 
@@ -61,7 +61,7 @@
           <ng-container *ngFor="let value of content.values">
             <ng-container *ngIf="value.visibility">
               <h2>{{ value.name }}</h2>
-              <progress-bar [width]="value.percentage + '%'" [height]="'8px'" [backgroundColor]="'#FFB300'"></progress-bar>
+              <app-utility-progress-bar [width]="value.percentage + '%'" [height]="'8px'" [backgroundColor]="'#FFB300'"></app-utility-progress-bar>
               <div *ngIf="content.showExamples && value.legend" class="text-ellipsis bar-example">{{ value.legend }}</div>
             </ng-container>
           </ng-container>

@@ -8,7 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
  */
 
 @Component({
-  selector: 'piechart-executive',
+  selector: 'app-utility-piechart-executive',
   templateUrl: 'piechart-executive.component.html',
   styleUrls: ['piechart-executive.component.scss']
 })

@@ -46,7 +46,7 @@
 
 
 <!-- modal to create new tag -->
-<app-modal [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_CREATE'">
+<app-utility-modal [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
   <section class="modal-body">
 
@@ -64,5 +64,5 @@
     <button (click)="createNewTag()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to create new tag -->

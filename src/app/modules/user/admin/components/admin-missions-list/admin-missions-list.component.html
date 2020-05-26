@@ -5,7 +5,7 @@
   <shared-table [(config)]="config" [data]="tableInfos" (editRow)="editMission($event)" (removeRows)="removeMissions($event)"></shared-table>
 </div>
 
-<app-modal [(showModal)]="showModalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
+<app-utility-modal [(showModal)]="showModalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
   <section class="modal-body">
     <div class="form-group">
@@ -25,7 +25,7 @@
     <button (click)="onClickCreate($event)" [disabled]="!newMissionName" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 
 <sidebar [(template)]="sidebarValue">
   <app-mission-form [(mission)]="selectedMission"></app-mission-form>

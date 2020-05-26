@@ -3,7 +3,7 @@ import { ExecutiveSection, SectionRanking } from '../../../../../../../models/ex
 import { CommonService } from '../../../../../../../services/common/common.service';
 
 @Component({
-  selector: 'type-ranking',
+  selector: 'app-admin-section-type-ranking',
   templateUrl: './type-ranking.component.html',
   styleUrls: ['./type-ranking.component.scss']
 })

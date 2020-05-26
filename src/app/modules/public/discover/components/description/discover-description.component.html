@@ -7,9 +7,9 @@
         <!-- fetching error -->
         <section *ngIf="fetchingError">
           <div class="d-d-error-wrapper d-flex align-center">
-            <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+            <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
               <p [innerText]="'ERROR.ERRORS.PROJECT_FETCHING_ERROR'" translate></p>
-            </app-error-template-1>
+            </app-utility-error-template-1>
           </div>
         </section>
         <!-- /fetching error -->
@@ -233,5 +233,5 @@
 
 
 <!-- modal to view image -->
-<app-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-modal-media>
+<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
 <!-- /modal to view image-->

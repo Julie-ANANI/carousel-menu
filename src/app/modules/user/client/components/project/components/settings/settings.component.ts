@@ -27,7 +27,7 @@ interface Section {
 }
 
 @Component({
-  selector: 'settings',
+  selector: 'app-project-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })

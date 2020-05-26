@@ -16,7 +16,7 @@ import { BarData } from '../../../../shared/components/shared-market-report/mode
 import { Multiling } from '../../../../../models/multiling';
 
 @Component({
-  selector: 'report-section',
+  selector: 'app-print-report-section',
   templateUrl: './report-section.component.html',
   styleUrls: ['./report-section.component.scss']
 })

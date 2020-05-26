@@ -3,7 +3,7 @@ import { ExecutiveSection, SectionKpi } from '../../../../../../../models/execut
 import { CommonService } from '../../../../../../../services/common/common.service';
 
 @Component({
-  selector: 'type-kpi',
+  selector: 'app-admin-section-type-kpi',
   templateUrl: './type-kpi.component.html',
   styleUrls: ['./type-kpi.component.scss']
 })

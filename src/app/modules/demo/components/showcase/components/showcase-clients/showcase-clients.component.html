@@ -40,7 +40,7 @@
 </section>
 
 <!-- modal to select clients -->
-<app-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
+<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
 
   <section class="modal-body">
     <div class="section-card columns text-center">
@@ -66,5 +66,5 @@
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to select innovations -->

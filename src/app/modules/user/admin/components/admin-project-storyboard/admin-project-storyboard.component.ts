@@ -28,7 +28,7 @@ import { DeliverableService } from '../../../../../services/deliverable/delivera
 import { Job, JobType } from '../../../../../models/job';
 
 @Component({
-  selector: 'admin-storyboard',
+  selector: 'app-admin-storyboard',
   templateUrl: './admin-project-storyboard.component.html',
   styleUrls: ['./admin-project-storyboard.component.scss']
 })

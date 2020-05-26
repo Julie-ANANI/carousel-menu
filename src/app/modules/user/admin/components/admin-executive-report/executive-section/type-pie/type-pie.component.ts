@@ -4,7 +4,7 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 import { ExecutivePieChart } from '../../../../../../../models/pie-chart';
 
 @Component({
-  selector: 'type-pie',
+  selector: 'app-admin-section-type-pie',
   templateUrl: './type-pie.component.html',
   styleUrls: ['./type-pie.component.scss']
 })

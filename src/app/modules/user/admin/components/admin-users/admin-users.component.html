@@ -6,7 +6,7 @@
       <!-- fetching error -->
       <ng-container *ngIf="fetchingError">
         <div class="a-u-error-wrapper d-flex align-center">
-          <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+          <app-utility-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
         </div>
       </ng-container>
       <!-- /fetching error -->
@@ -58,7 +58,7 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     <div class="text-background text-medium">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>
@@ -75,5 +75,5 @@
     <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal -->

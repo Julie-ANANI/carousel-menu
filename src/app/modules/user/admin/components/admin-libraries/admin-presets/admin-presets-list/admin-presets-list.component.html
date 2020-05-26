@@ -5,7 +5,7 @@
     <!-- fetching error -->
     <ng-container *ngIf="fetchingError">
       <div class="a-p-l-error-wrapper d-flex align-center">
-        <app-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+        <app-utility-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
       </div>
     </ng-container>
     <!-- /fetching error -->
@@ -66,7 +66,7 @@
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalOpen" [title]="modalTitle">
+<app-utility-modal [(showModal)]="modalOpen" [title]="modalTitle">
 
   <section class="modal-body">
 
@@ -140,5 +140,5 @@
 
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal -->

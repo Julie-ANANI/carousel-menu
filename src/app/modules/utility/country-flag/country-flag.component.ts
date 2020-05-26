@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { countries } from '../../../models/static-data/country';
 
 @Component({
-  selector: 'app-country-flag',
+  selector: 'app-utility-country-flag',
   templateUrl: './country-flag.component.html',
   styleUrls: ['./country-flag.component.scss']
 })

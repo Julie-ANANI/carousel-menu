@@ -42,17 +42,17 @@
 
           <!-- PRIMARY_OBJECTIVE -->
           <div *ngSwitchCase="'PRIMARY_OBJECTIVE'" class="animate-fade w-full is-2">
-            <objectives-primary [(objective)]="mission.objective.principal"></objectives-primary>
+            <app-objectives-primary [(objective)]="mission.objective.principal"></app-objectives-primary>
           </div>
           <!-- /PRIMARY_OBJECTIVE -->
 
           <!-- SECONDARY_OBJECTIVE -->
           <div *ngSwitchCase="'SECONDARY_OBJECTIVE'" class="animate-fade w-full is-2">
-            <objectives-secondary
+            <app-objectives-secondary
               [(objectiveComment)]="mission.objective.comment"
               [(objectives)]="mission.objective.secondary"
               [isEnabledOptions]="enableSecondaryObjectives()">
-            </objectives-secondary>
+            </app-objectives-secondary>
           </div>
           <!-- /SECONDARY_OBJECTIVE -->
 

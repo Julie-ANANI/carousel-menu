@@ -238,11 +238,11 @@
 
                   <!-- type COUNTRY -->
                   <ng-container *ngSwitchCase="'COUNTRY'">
-                    <app-country-flag
+                    <app-utility-country-flag
                       [country]="(getContentValue(row, getAttrs(column)[0]) || '')"
                       [width]="35"
                       [height]="25">
-                    </app-country-flag>
+                    </app-utility-country-flag>
                   </ng-container>
                   <!-- /type COUNTRY -->
 
@@ -278,12 +278,12 @@
 
                   <!-- type PROGRESS -->
                   <ng-container *ngSwitchCase="'PROGRESS'">
-                    <progress-bar
+                    <app-utility-progress-bar
                       [showTooltip]="true"
                       [height]="'12px'"
                       [backgroundColor]="getColor(getContentValue(row, getAttrs(column)[0]) || 0)"
                       [width]="(getContentValue(row, getAttrs(column)[0]) || 0) +'%'">
-                    </progress-bar>
+                    </app-utility-progress-bar>
                   </ng-container>
                   <!-- /type PROGRESS -->
 

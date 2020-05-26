@@ -208,16 +208,16 @@
 
 
 <!-- modal to preview the template -->
-<app-modal [(showModal)]="showModel" [enableCloseButton]="true" [maxWidth]="'960px'">
+<app-utility-modal [(showModal)]="showModel" [enableCloseButton]="true" [maxWidth]="'960px'">
   <section class="modal-body">
 
   </section>
-</app-modal>
+</app-utility-modal>
 <!-- /modal to preview the template -->
 
 
 <!-- modal to confirm load of template when their is already template exist -->
-<app-modal [(showModal)]="showModelTemplate" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+<app-utility-modal [(showModal)]="showModelTemplate" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
 
   <section class="modal-body">
     <div>
@@ -230,5 +230,5 @@
     <button (click)="onClickConfirm($event)" [innerText]="'COMMON.BUTTON.CONFIRM'" class="button is-primary" translate></button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to confirm load of template when their is already template exist -->

@@ -1,7 +1,7 @@
 <!-- section fetching error -->
 <ng-container *ngIf="fetchingError">
   <div class="section-pad">
-    <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
+    <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-utility-error-template-1>
   </div>
 </ng-container>
 <!-- /section fetching error -->
@@ -33,7 +33,7 @@
 
 
 <!-- modal to ask the operator to confirm to delete the ambassador -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     <ng-container *ngIf="context && context.deleteType === 'Campaign'">
@@ -67,4 +67,4 @@
     <button (click)="deleteAmbassador($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
