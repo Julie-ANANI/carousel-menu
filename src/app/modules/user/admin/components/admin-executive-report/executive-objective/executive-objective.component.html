@@ -143,21 +143,25 @@
 
 
     <!-- project leader -->
-    <div class="p-top-40">
+    <div class="p-top-25">
       <h4>{{ 'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.LEADER' | translate }}</h4>
       <div [ngStyle]="{ 'min-height': '38px' }">
         <p>{{ config.client.name }}</p>
         <p>{{ config.client.email }}</p>
       </div>
-      <div *ngIf="!!logo">
-        <img [src]="logo">
+      <div *ngIf="!!logo" class="m-top-20">
+        <img
+          [ngStyle]="{'width': '80px'}"
+          [src]="logo"
+          alt=""
+          class="img-responsive m-left-auto m-right-auto">
       </div>
     </div>
     <!-- /project leader -->
 
 
     <!-- contact -->
-    <div class="p-top-40">
+    <div class="p-top-20">
       <h4>{{ 'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.CONTACT' | translate }}</h4>
       <div [ngStyle]="{ 'min-height': '57px' }">
         <p>{{ commercial.firstName }} {{ commercial.lastName }}</p>

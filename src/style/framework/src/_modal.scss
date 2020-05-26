@@ -35,7 +35,7 @@
     width: 100%;
     margin: 0 auto;
     z-index: 1;
-    animation: .2s slideInDown;
+    animation: .2s modal-slide-down;
     max-height: calc(100vh - 50px);
 
     .modal-header {

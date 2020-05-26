@@ -57,9 +57,11 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _isModalVideo = false;
 
-  videoJob: Job = <Job>{};
+  private _videoJob: Job = <Job>{};
 
-  selectedVideoType = 'VIDEO_TEST';
+  private _selectedVideoType = 'VIDEO_TEST';
+
+  private _isGeneratingVideo = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
@@ -120,7 +122,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   private _setTitle(title?: string) {
-    this._translateTitleService.setTitle(title ? title + ' | Storyboard | UMI' : 'Storyboard | UMI');
+    this._translateTitleService.setTitle(title ? title + ' | Storyboard' : 'Storyboard');
   }
 
   public setNewSelectedLang(value: string) {
@@ -276,7 +278,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
    */
   public openVideoModal(event: Event) {
     event.preventDefault();
-    this.selectedVideoType = 'VIDEO_TEST';
+    this._selectedVideoType = 'VIDEO_TEST';
     this._isModalVideo = true;
   }
 
@@ -285,7 +287,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
    */
   public closeModal() {
    this._isModalVideo = false;
-    this.selectedVideoType = 'VIDEO_TEST';
+    this._selectedVideoType = 'VIDEO_TEST';
   }
 
   /***
@@ -295,7 +297,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
    */
   public setVideo(event: Event, type: JobType) {
     event.preventDefault();
-    this.selectedVideoType = type;
+    this._selectedVideoType = type;
   }
 
   /***
@@ -304,15 +306,18 @@ export class AdminProjectStoryboardComponent implements OnInit {
    */
   public generateVideo(event: Event) {
     event.preventDefault();
-    this._deliverableService.registerJob(this._innovation.owner.id, this._innovation._id, this.selectedVideoType)
-      .subscribe((job) => {
-        this.videoJob = job;
-        this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
+    if (!this._isGeneratingVideo) {
+      this._isGeneratingVideo = true;
+      this._deliverableService.registerJob(this._innovation.owner.id, this._innovation._id, this._selectedVideoType)
+        .subscribe((job) => {
+          this._videoJob = job;
+          this.closeModal();
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
         }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
+          console.error(err);
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        });
+    }
   }
 
   public generatePdf(event: Event) {
@@ -349,8 +354,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   get isVideoDisabled(): boolean {
-    return this._executiveReport.completion !== 100 || this.videoJob.status && (this.videoJob.status === 'RECEIVED'
-      || this.videoJob.status === 'QUEUED' || this.videoJob.status === 'PROCESSING')
+    return this._executiveReport.completion !== 100 || this._videoJob.status && (this._videoJob.status === 'RECEIVED'
+      || this._videoJob.status === 'QUEUED' || this._videoJob.status === 'PROCESSING')
       || !this._executiveReport.externalDiffusion;
   }
 
@@ -409,6 +414,14 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   set isModalVideo(value: boolean) {
     this._isModalVideo = value;
+  }
+
+  get videoJob(): Job {
+    return this._videoJob;
+  }
+
+  get isGeneratingVideo(): boolean {
+    return this._isGeneratingVideo;
   }
 
 }
