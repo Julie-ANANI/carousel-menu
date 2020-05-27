@@ -57,7 +57,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _isModalVideo = false;
 
-  videoJob: Job = null; // <Job>{};
+  _videoJob: Job = null; // <Job>{};
 
   private _selectedVideoType = 'VIDEO_TEST';
 
