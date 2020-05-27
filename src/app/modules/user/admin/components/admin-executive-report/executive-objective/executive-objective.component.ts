@@ -177,6 +177,18 @@ export class ExecutiveObjectiveComponent implements OnInit {
     if (typeof c === 'object') {
       // Maybe there's a logo...
       // Convert here to the good format
+      if (!this._config.client.company) {
+        this._config.client.company = {
+          name: '',
+          topLevelDomain: '',
+          id: '',
+          logo: {
+            uri: '',
+            alt: '',
+            id: ''
+          }
+        };
+      }
       this._config.client.company.name = c.name;
       this._config.client.company.topLevelDomain = c.domain;
       this._config.client.company.id = c.id;

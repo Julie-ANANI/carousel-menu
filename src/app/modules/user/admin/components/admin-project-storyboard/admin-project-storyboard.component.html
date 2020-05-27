@@ -91,12 +91,12 @@
 
                 <div *ngIf="isVideoDisabled" class="popover-container is-sm">
                   <div class="p-top-20 text-center p-bottom-20 p-left-25 p-right-25">
-                    <ng-container *ngIf="videoJob.status; else textDef">
+                    <ng-container *ngIf="videoJob && videoJob.status; else textDef">
                       Video is in {{ videoJob.status | titlecase }} status.
                     </ng-container>
-                    <ng-container #textDef>
+                    <ng-template #textDef>
                       Either report is incomplete or it is not able to download at the client side.
-                    </ng-container>
+                    </ng-template>
                   </div>
                 </div>
 

@@ -57,7 +57,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _isModalVideo = false;
 
-  videoJob: Job = <Job>{};
+  videoJob: Job = null; // <Job>{};
 
   selectedVideoType = 'VIDEO_TEST';
 
@@ -340,6 +340,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     ex_report.client.company = this._executiveReport.client.company.id;
     // TODO is this a good solution?
     this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
+      this._executiveReport = response;
       this._toBeSaved = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
     }, (err: HttpErrorResponse) => {
