@@ -7,7 +7,7 @@ import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { SpinnerService } from '../../../../../services/spinner/spinner';
+import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';

@@ -9,7 +9,7 @@ import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { SpinnerService } from '../../../../../services/spinner/spinner';
+import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';

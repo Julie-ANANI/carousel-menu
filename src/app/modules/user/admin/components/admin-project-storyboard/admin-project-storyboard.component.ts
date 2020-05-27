@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { SpinnerService } from '../../../../../services/spinner/spinner';
+import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -57,11 +57,13 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _isModalVideo = false;
 
-  _videoJob: Job = null; // <Job>{};
-
   private _selectedVideoType = 'VIDEO_TEST';
 
   private _isGeneratingVideo = false;
+
+  private _showBanner = false;
+
+  bannerVideos: Array<Job> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
@@ -121,12 +123,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
   private _getVideoJob() {
     if (isPlatformBrowser(this._platformId) && this._innovation._id) {
       this._innovationService.getDeliverableJob(this._innovation._id).pipe(first()).subscribe((jobs) => {
-        if (jobs && jobs.length) {
-          const index = jobs.findIndex((job) => job.status === 'RECEIVED' || job.status === 'PROCESSING' || job.status === 'QUEUED');
-          if (index !== -1) {
-            this._videoJob = jobs[index];
-          }
-        }
+        this.bannerVideos = jobs;
+        this._showBanner = this.bannerVideos.length > 0;
       }, (err: HttpErrorResponse) => {
         console.error(err);
       });
@@ -326,11 +324,13 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._isGeneratingVideo = true;
       this._deliverableService.registerJob(this._innovation.owner.id, this._innovation._id, this._selectedVideoType)
         .subscribe((job) => {
-          this._videoJob = job;
+          this._isGeneratingVideo = false;
+          this._getVideoJob();
           this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
         }, (err: HttpErrorResponse) => {
           console.error(err);
+          this._isGeneratingVideo = false;
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         });
     }
@@ -371,9 +371,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   get isVideoDisabled(): boolean {
-    return this._executiveReport.completion !== 100 || this._videoJob && this._videoJob.status && (this._videoJob.status === 'RECEIVED'
-      || this._videoJob.status === 'QUEUED' || this._videoJob.status === 'PROCESSING')
-      || !this._executiveReport.externalDiffusion;
+    return this._executiveReport.completion !== 100 || !this._executiveReport.externalDiffusion;
   }
 
   get currentLang(): string {
@@ -433,12 +431,16 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._isModalVideo = value;
   }
 
-  get videoJob(): Job {
-    return this._videoJob;
-  }
-
   get isGeneratingVideo(): boolean {
     return this._isGeneratingVideo;
+  }
+
+  get showBanner(): boolean {
+    return this._showBanner;
+  }
+
+  set showBanner(value: boolean) {
+    this._showBanner = value;
   }
 
 }
