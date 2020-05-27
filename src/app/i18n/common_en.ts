@@ -246,6 +246,7 @@ export const COMMON = {
     'COPIED': 'Copied to clipboard',
     'GENERATING_LINK': 'generating the link...',
     'GENERATING_FILE': 'generating the file...',
+    'GENERATING_VIDEO': 'generating the video...',
     'CONTACT_COMMERCIAL': 'Contact commercial',
   },
 

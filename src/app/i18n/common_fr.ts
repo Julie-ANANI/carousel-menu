@@ -245,6 +245,7 @@ export const COMMON = {
     'COPIED': 'Copié',
     'GENERATING_LINK': 'la création du lien...',
     'GENERATING_FILE': 'la création du fichier...',
+    'GENERATING_VIDEO': 'la création de la vidéo...',
     'CONTACT_COMMERCIAL': 'Contacter mon commercial'
   },
 

@@ -246,6 +246,7 @@
       <div class="flex-centered form-group p-top-20">
         <label class="form-radio is-inline">
           <input
+            [disabled]="isGeneratingVideo"
             (change)="setVideo($event, 'VIDEO_TEST')"
             checked
             type="radio"
@@ -255,6 +256,7 @@
         </label>
         <label class="form-radio is-inline">
           <input
+            [disabled]="isGeneratingVideo"
             (change)="setVideo($event, 'VIDEO_FINAL')"
             type="radio"
             name="video"
@@ -277,10 +279,16 @@
       </button>
 
       <button
+        [disabled]="isGeneratingVideo"
         (click)="generateVideo($event)"
         class="button is-community"
         id="btn-continue">
-        {{ 'COMMON.BUTTON.GENERATE' | translate }}
+        <ng-container *ngIf="!isGeneratingVideo; else genVideo">
+          {{ 'COMMON.BUTTON.GENERATE' | translate }}
+        </ng-container>
+        <ng-template #genVideo>
+          {{ 'COMMON.BUTTON.GENERATING_VIDEO' | translate }}
+        </ng-template>
       </button>
 
     </footer>

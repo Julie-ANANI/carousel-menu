@@ -11,6 +11,7 @@ import { Video } from '../../models/media';
 import { InnovCardComment } from '../../models/innov-card-comment';
 import { Config } from '../../models/config';
 import { Collaborator } from '../../models/collaborator';
+import { Job, JobType } from '../../models/job';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -168,6 +169,11 @@ export class InnovationService {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/pdf');
     return this._http.get(`/innovation/${innovationId}/executiveReportExport`, {headers: headers, responseType: 'blob'});
+  }
+
+  public getDeliverableJob(innovationId: string, type?: JobType): Observable<Array<Job>> {
+    const config = { jobType: type };
+    return this._http.get<Array<Job>>(`/innovation/${innovationId}/deliverables`, {params: config});
   }
 
 }
