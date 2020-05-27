@@ -371,7 +371,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   get isVideoDisabled(): boolean {
-    return this._executiveReport.completion !== 100 || this._videoJob.status && (this._videoJob.status === 'RECEIVED'
+    return this._executiveReport.completion !== 100 || this._videoJob && this._videoJob.status && (this._videoJob.status === 'RECEIVED'
       || this._videoJob.status === 'QUEUED' || this._videoJob.status === 'PROCESSING')
       || !this._executiveReport.externalDiffusion;
   }
