@@ -1,4 +1,16 @@
-<div *ngIf="!isLoading" class="animate-fade">
+<div *ngIf="!isLoading" class="animate-fade relative">
+
+  <!-- banner to show last requested video status -->
+  <app-utility-banner [(showBanner)]="showBanner">
+    <ng-container *ngIf="bannerVideos[0]">
+      {{ bannerVideos[0].jobType }} is in status {{ bannerVideos[0].status }}.
+    </ng-container>
+    <ng-container *ngIf="bannerVideos[1]">
+      {{ bannerVideos[1].jobType }} is in status {{ bannerVideos[1].status }}.
+    </ng-container>
+  </app-utility-banner>
+  <!-- /banner to show last requested video status -->
+
   <div class="p-top-30 p-bottom-40" id="admin-project-storyboard">
     <div class="container fluid grid-2xl">
       <div class="column col-sm-12 col-11 col-mx-auto">
@@ -91,12 +103,7 @@
 
                 <div *ngIf="isVideoDisabled" class="popover-container is-sm">
                   <div class="p-top-20 text-center p-bottom-20 p-left-25 p-right-25">
-                    <ng-container *ngIf="videoJob && videoJob.status; else textDef">
-                      Video is in {{ videoJob.status | titlecase }} status.
-                    </ng-container>
-                    <ng-template #textDef>
-                      Either report is incomplete or it is not able to download at the client side.
-                    </ng-template>
+                    Either report is incomplete or it is not able to download at the client side.
                   </div>
                 </div>
 

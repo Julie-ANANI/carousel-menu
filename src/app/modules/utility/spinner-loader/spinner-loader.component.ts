@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { SpinnerService } from '../../../services/spinner/spinner';
+import { SpinnerService } from '../../../services/spinner/spinner.service';
 
 /***
  * use this component when you want to show the full page spinner
