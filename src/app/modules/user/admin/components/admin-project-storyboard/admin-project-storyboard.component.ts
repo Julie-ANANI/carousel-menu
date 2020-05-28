@@ -358,7 +358,9 @@ export class AdminProjectStoryboardComponent implements OnInit {
     event.preventDefault();
     // Clean the client company to leave only the id
     const ex_report = <any>this._executiveReport;
-    ex_report.client.company = this._executiveReport.client.company.id;
+    if (this._executiveReport.client && this._executiveReport.client.company) {
+      ex_report.client.company = this._executiveReport.client.company.id;
+    }
     // TODO is this a good solution?
     this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
       this._executiveReport = response;
@@ -371,7 +373,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   get isVideoDisabled(): boolean {
-    return this._executiveReport.completion !== 100 || this._videoJob.status && (this._videoJob.status === 'RECEIVED'
+    return this._executiveReport.completion !== 100 || (this._videoJob && this._videoJob.status) && (this._videoJob.status === 'RECEIVED'
       || this._videoJob.status === 'QUEUED' || this._videoJob.status === 'PROCESSING')
       || !this._executiveReport.externalDiffusion;
   }
