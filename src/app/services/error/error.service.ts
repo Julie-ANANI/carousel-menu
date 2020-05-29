@@ -35,11 +35,11 @@ export class ErrorService {
         });
         scope.setTag('route', environment.clientUrl + this.router.url);
 
-        const eventId = Sentry.captureException(error);
+        // const eventId = Sentry.captureException(error);
 
-        if (this.auth.adminLevel > 0) {
+        /*if (this.auth.adminLevel > 0) {
           Sentry.showReportDialog({ eventId });
-        }
+        }*/
 
       });
 
