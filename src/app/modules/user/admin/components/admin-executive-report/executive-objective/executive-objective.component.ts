@@ -5,6 +5,11 @@ import { first } from 'rxjs/operators';
 import { ExecutiveObjective } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 interface Commercial {
   _id: string;
@@ -15,27 +20,23 @@ interface Commercial {
 }
 
 @Component({
-  selector: 'executive-objective',
+  selector: 'app-admin-executive-objective',
   templateUrl: './executive-objective.component.html',
   styleUrls: ['./executive-objective.component.scss']
 })
 
 export class ExecutiveObjectiveComponent implements OnInit {
 
-  @Input() set config(value: ExecutiveObjective) {
-    this._config = {
-      objective: value.objective || '',
-      client: {
-        name: value.client && value.client.name || '',
-        email: value.client && value.client.email || '',
-      },
-      sale: value.sale || ''
-    };
+  @Input() lang = 'en';
 
+  @Input() set config(value: ExecutiveObjective) {
+    this._config = value;
+    // Set the logo here
+    this._logo = this._config.client.company && this._config.client.company.logo && this._config.client.company.logo.uri;
+    this._company = this._config.client.company && this._config.client.company.name;
     this.textColor('objective');
     this.textColor('clientName');
     this.textColor('clientEmail');
-
   }
 
   @Output() configChange: EventEmitter<ExecutiveObjective> = new EventEmitter<ExecutiveObjective>();
@@ -45,9 +46,23 @@ export class ExecutiveObjectiveComponent implements OnInit {
     client: {
       name: '',
       email: '',
+      company: {
+        name: '',
+        logo: {
+          uri: '',
+          alt: '',
+          id: ''
+        },
+        topLevelDomain: '',
+        id: ''
+      }
     },
     sale: ''
   };
+
+  private _company = '';
+
+  private _logo = '';
 
   private _allCommercials: Array<Commercial> = [];
 
@@ -60,12 +75,20 @@ export class ExecutiveObjectiveComponent implements OnInit {
   private _clientEmailColor = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _userService: UserService) { }
+              private _executiveReportFrontService: ExecutiveReportFrontService,
+              private _userService: UserService,
+              private _sanitizer: DomSanitizer,
+              private _autoCompleteService: AutocompleteService) { }
 
   ngOnInit(): void {
     this._getCommercials();
   }
 
+  /***
+   * this is to get the commercial list from the back. From the moment we are getting the
+   * super-admin.
+   * @private
+   */
   private _getCommercials() {
     if (isPlatformBrowser(this._platformId)) {
       this._userService.getAll({ roles: 'super-admin', fields: '_id firstName lastName phone email' })
@@ -84,11 +107,15 @@ export class ExecutiveObjectiveComponent implements OnInit {
           this._populateCommercial();
 
         }, (err: HttpErrorResponse) => {
-        console.log(err);
+        console.error(err);
       });
     }
   }
 
+  /***
+   * populating the sale field.
+   * @private
+   */
   private _populateCommercial() {
     if (this._config.sale) {
       const index = this._allCommercials.findIndex((commercial) => commercial._id === this._config.sale);
@@ -120,10 +147,80 @@ export class ExecutiveObjectiveComponent implements OnInit {
     this.configChange.emit(this._config);
   }
 
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.objective, this.lang);
+  }
+
+  public onClickSnippet(event: Event) {
+    event.preventDefault();
+    this._config.objective = SnippetService.storyboard('OBJECTIVE', this.lang);
+    this.textColor('objective');
+    this.emitChanges();
+  }
+
+  /***
+   * when the user selects the commercial from the Select box.
+   * @param event
+   */
   public selectCommercial(event: Event) {
     this._config.sale = event && event.target && (event.target as HTMLSelectElement).value || '';
     this._populateCommercial();
     this.emitChanges();
+  }
+
+  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+    return this._autoCompleteService.get({query: searchString, type: 'company', internalOnly: 'true'});
+  }
+
+  public selectCompany(c: string | any) {
+    if (typeof c === 'object') {
+      // Maybe there's a logo...
+      // Convert here to the good format
+      if (!this._config.client.company) {
+        this._config.client.company = {
+          name: '',
+          topLevelDomain: '',
+          id: '',
+          logo: {
+            uri: '',
+            alt: '',
+            id: ''
+          }
+        };
+      }
+      this._config.client.company.name = c.name;
+      this._config.client.company.topLevelDomain = c.domain;
+      this._config.client.company.id = c.id;
+      this._config.client.company.logo = {
+        uri: c.logo,
+        alt: c.name,
+        id: ''
+      };
+      this._company = c.name;
+      this._logo = c.logo;
+      this.emitChanges();
+    } // If typeof c === string, leave the thing alone.
+  }
+
+  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
+    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
+  }
+
+  public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
+    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo.uri}" height="35" alt=" "/><span>${data.name}</span>`);
+  }
+
+  get logo(): string {
+    return this._logo;
+  }
+
+  get company(): string {
+    return this._company;
+  }
+
+  set company(value: string) {
+    this._company = value;
   }
 
   get config(): ExecutiveObjective {

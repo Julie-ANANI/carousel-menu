@@ -36,6 +36,11 @@ export const ADMIN_STORYBOARD = {
 
   'BACK_TO': 'Retour au projet',
 
-  'NO_QUESTIONS_MSG': 'Il n\'y a pas de questions pour remplir les sections du rapport exécutif.'
+  'NO_QUESTIONS_MSG': 'Il n\'y a pas de questions pour remplir les sections du rapport exécutif.',
+
+  'VIDEO_TYPE': {
+    'TEST': 'Test',
+    'FINAL': 'Définitive'
+  }
 
 };

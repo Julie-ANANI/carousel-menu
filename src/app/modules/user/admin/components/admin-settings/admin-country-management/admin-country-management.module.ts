@@ -7,7 +7,7 @@ import { AdminCountryManagementComponent } from './admin-country-management.comp
 import { SidebarModule } from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import { TableModule} from '../../../../../table/table.module';
 import { SidebarEmailFormModule } from '../../../../../sidebars/components/emails-form/sidebar-email-form.module';
-import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
+import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 
 @NgModule({
   imports: [

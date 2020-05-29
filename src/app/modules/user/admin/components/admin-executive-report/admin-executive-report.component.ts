@@ -15,10 +15,10 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 
 @Component({
-  selector: 'admin-executive-report',
+  selector: 'app-admin-executive-report',
   templateUrl: './admin-executive-report.component.html',
   styleUrls: ['./admin-executive-report.component.scss']
 })
@@ -84,24 +84,30 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _setData() {
 
+    // objective
     this._objectiveConfig = {
       sale: this._executiveReport.sale,
       client: this._executiveReport.client,
       objective: this._executiveReport.objective
     };
 
+    // pitch
     this._summary = this._executiveReport.summary;
 
+    // targeting
     this._targetingConfig = {
       abstract: this._executiveReport.targeting && this._executiveReport.targeting.abstract,
       countries: this._executiveReport.targeting && this._executiveReport.targeting.countries,
+      countriesall: this._executiveReport.targeting && this._executiveReport.targeting.countriesall,
     };
 
+    // professionals
     this._professionalConfig = {
       abstract: this._executiveReport.professionals && this._executiveReport.professionals.abstract,
       list: this._executiveReport.professionals && this._executiveReport.professionals.list,
     };
 
+    // conclusion
     this._conclusionConfig = {
       conclusion: this._executiveReport.conclusion,
       operator: this._executiveReport.operator,

@@ -9,7 +9,7 @@
 
   &::after {
     animation: loading 500ms infinite linear;
-    border: $border-width-lg solid $border-primary-color;
+    border: 2px solid $border-primary-color;
     border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
@@ -25,14 +25,51 @@
     z-index: 0;
   }
 
+  &.is-md, &.is-lg, &.is-xl {
+
+    &::after {
+      margin-left: -$unit-4;
+      margin-top: -$unit-4;
+    }
+
+  }
+
+  &.is-md {
+    min-height: 32px;
+
+    &::after {
+      height: 30px;
+      width: 30px;
+    }
+
+  }
+
   &.is-lg {
     min-height: $unit-10;
 
     &::after {
       height: $unit-8;
-      margin-left: -$unit-4;
-      margin-top: -$unit-4;
       width: $unit-8;
+    }
+
+  }
+
+  &.is-xl {
+    min-height: 60px;
+
+    &::after {
+      height: 60px;
+      width: 60px;
+      border-width: 3px;
+    }
+
+  }
+
+  &.is-primary {
+
+    &::after {
+      border-bottom-color: $border-primary-color;
+      border-left-color: $border-primary-color;
     }
 
   }
@@ -71,7 +108,8 @@
 .loading-content {
   position: relative;
   background-color: #DBDBDB;
-  min-height: 20px;
+  min-height: 10px;
+  border-radius: 2px;
 
   &.card-image {
     border-radius: 0;

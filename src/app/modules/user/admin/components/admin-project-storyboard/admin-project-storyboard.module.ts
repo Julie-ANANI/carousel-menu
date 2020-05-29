@@ -5,8 +5,11 @@ import { RouterModule } from '@angular/router';
 
 import { AdminProjectStoryboardComponent } from './admin-project-storyboard.component';
 
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { AdminExecutiveReportModule } from '../admin-executive-report/admin-executive-report.module';
+import { FormsModule } from '@angular/forms';
+import { ModalEmptyModule } from '../../../../utility/modals/modal-empty/modal-empty.module';
+import { BannerModule } from '../../../../utility/banner/banner.module';
 
 @NgModule({
   imports: [
@@ -14,7 +17,10 @@ import { AdminExecutiveReportModule } from '../admin-executive-report/admin-exec
     TranslateModule.forChild(),
     ModalModule,
     RouterModule,
-    AdminExecutiveReportModule
+    AdminExecutiveReportModule,
+    FormsModule,
+    ModalEmptyModule,
+    BannerModule
   ],
   declarations: [
     AdminProjectStoryboardComponent

@@ -3,7 +3,7 @@ import { ExecutiveSection, SectionQuote } from '../../../../../../../models/exec
 import { CommonService } from '../../../../../../../services/common/common.service';
 
 @Component({
-  selector: 'type-quote',
+  selector: 'app-admin-section-type-quote',
   templateUrl: './type-quote.component.html',
   styleUrls: ['./type-quote.component.scss']
 })
@@ -11,45 +11,26 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 export class TypeQuoteComponent {
 
   @Input() set section(value: ExecutiveSection) {
-
-    this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
-      abstract: value.abstract || '',
-      title: value.title || '',
-      content: {
-        showQuotes: <SectionQuote>value.content && (<SectionQuote>value.content).showQuotes,
-        quote: <SectionQuote>value.content && (<SectionQuote>value.content).quote || '',
-        author: {
-          name: <SectionQuote>value.content && (<SectionQuote>value.content).author
-          && (<SectionQuote>value.content).author.name || '',
-          jobTitle: <SectionQuote>value.content && (<SectionQuote>value.content).author
-          && (<SectionQuote>value.content).author.jobTitle || '',
-        }
-      }
-    };
-
+    this._section = value;
     this._content = <SectionQuote>this._section.content;
-
     this.textColor('title');
     this.textColor('abstract');
-    this.textColor('quote');
+    this.textColor('quotation');
     this.textColor('name');
     this.textColor('job');
-
   }
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
+
+  @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionQuote = {
     showQuotes: true,
-    quote: '',
-    author: {
-      name: '',
-      jobTitle: ''
-    }
+    quotation: '',
+    name: '',
+    job: ''
   };
 
   private _titleColor = '';
@@ -80,19 +61,24 @@ export class TypeQuoteComponent {
         this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
         break;
 
-      case 'quote':
-        this._quoteColor = CommonService.getLimitColor(this._content.quote.length, 100);
+      case 'quotation':
+        this._quoteColor = CommonService.getLimitColor(this._content.quotation.length, 100);
         break;
 
       case 'name':
-        this._nameColor = CommonService.getLimitColor(this._content.author.name.length, 62);
+        this._nameColor = CommonService.getLimitColor(this._content.name.length, 62);
         break;
 
       case 'job':
-        this._jobColor = CommonService.getLimitColor(this._content.author.jobTitle.length, 62);
+        this._jobColor = CommonService.getLimitColor(this._content.job.length, 62);
         break;
 
     }
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this.playSection.emit();
   }
 
   public toggleQuotes() {

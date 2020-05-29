@@ -147,6 +147,8 @@ export const COMMON = {
     'DOMAIN_NAME': 'Nom de domaine',
     'ANSWER': 'Réponse',
     'PROJECT': 'Projet',
+    'MARKET_TEST_BY': 'Test Marché par',
+    'PROJECT_LEADER': 'Chef de projet'
   },
 
   'PLACEHOLDER': {
@@ -214,6 +216,7 @@ export const COMMON = {
     'DELETE': 'Supprimer',
     'SELECT': 'Sélectionner',
     'CLOSE': 'Fermer',
+    'GENERATE': 'Générer',
     'DOWNLOAD': 'Télécharger',
     'SHARE': 'Partager',
     'SEE_MORE': 'En voir plus',
@@ -237,6 +240,13 @@ export const COMMON = {
     'REINVITE': 'Renvoyer l\'invitation',
     'ADD_LANG_ENGLISH': 'Ajouter l\'anglais',
     'ADD_LANG_FRENCH': 'Ajouter le français',
+    'SHARE_LINK': 'Cliquez pour copier le lien',
+    'COPY_LINK': 'Copier le lien',
+    'COPIED': 'Copié',
+    'GENERATING_LINK': 'la création du lien...',
+    'GENERATING_FILE': 'la création du fichier...',
+    'GENERATING_VIDEO': 'la création de la vidéo...',
+    'CONTACT_COMMERCIAL': 'Contacter mon commercial'
   },
 
   'PROJECT': {
@@ -384,7 +394,8 @@ export const COMMON = {
     'TITLE_BATCH': 'Batch',
     'TITLE_SHARE': 'Partage',
     'TITLE_SELECT': 'Sélection',
-    'TITLE_CREATE': 'Création'
+    'TITLE_CREATE': 'Création',
+    'TITLE_VIDEO_STORYBOARD': 'Sélectionnez le type de vidéo à générer'
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',

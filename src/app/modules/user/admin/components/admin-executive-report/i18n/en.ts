@@ -1,5 +1,7 @@
 export const ADMIN_EXECUTIVE_REPORT = {
 
+  'INSERT_SNIPPET': 'Insert snippet',
+
   'OBJECTIVE': {
     'OBJECTIVE': 'Objective',
     'LEADER': 'Project leader',
@@ -50,6 +52,8 @@ export const ADMIN_EXECUTIVE_REPORT = {
   'NAME': 'Name',
 
   'JOB': 'Job',
+
+  'CUSTOM_SECTION': 'Add custom section',
 
   'KPI_SECTION': {
     'KPI': 'KPI',

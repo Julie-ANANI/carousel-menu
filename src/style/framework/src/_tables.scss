@@ -32,7 +32,7 @@
   thead {
 
     th {
-      color: $text-background-color;
+      color: $text-draft-color;
       font-size: 12px;
       font-weight: $font-weight-medium;
       background-color: $table-th-background-color;
@@ -139,7 +139,7 @@
   }
 
   tbody tr {
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
     border-top: $border-width solid $table-tr-border-color;
 
     &:first-child {

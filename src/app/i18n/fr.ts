@@ -18,7 +18,7 @@ import { LOG_IN } from '../modules/common/login/i18n/fr';
 import { SIGN_UP } from '../modules/common/signup/i18n/fr';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/fr';
 import { WELCOME } from '../modules/common/welcome/i18n/fr';
-import { PAGINATION } from '../modules/utility-components/paginations/i18n/fr';
+import { PAGINATION } from '../modules/utility/paginations/i18n/fr';
 import { SHARE } from '../modules/public/share/i18n/fr';
 import { FOOTER } from "../modules/common/footer/i18n/fr";
 import { HEADER } from '../modules/common/header/i18n/fr';
@@ -41,6 +41,7 @@ import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project
 import { ADMIN_EXECUTIVE_REPORT } from '../modules/user/admin/components/admin-executive-report/i18n/fr';
 import { NEW_PROJECT } from '../modules/user/client/components/new-project/i18n/fr';
 import { CLIENT_PROJECT_SETTINGS } from '../modules/user/client/components/project/components/settings/i18n/fr';
+import { CLIENT_PROJECT_DOCUMENTS } from '../modules/user/client/components/project/components/documents/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -85,5 +86,6 @@ export const fr = {
   'ADMIN_STORYBOARD': ADMIN_STORYBOARD,
   'ADMIN_EXECUTIVE_REPORT': ADMIN_EXECUTIVE_REPORT,
   'NEW_PROJECT': NEW_PROJECT,
-  'CLIENT_PROJECT_SETTINGS': CLIENT_PROJECT_SETTINGS
+  'CLIENT_PROJECT_SETTINGS': CLIENT_PROJECT_SETTINGS,
+  'CLIENT_PROJECT_DOCUMENTS': CLIENT_PROJECT_DOCUMENTS
 };

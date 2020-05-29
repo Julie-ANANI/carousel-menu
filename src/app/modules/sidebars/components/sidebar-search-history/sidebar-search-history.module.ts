@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarSearchHistoryComponent } from './sidebar-search-history.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
+import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
 import { TableModule } from "../../../table/table.module";
 
 @NgModule({

@@ -148,6 +148,8 @@ export const COMMON = {
     'DOMAIN_NAME': 'Domain Name',
     'ANSWER': 'Answer',
     'PROJECT': 'Project',
+    'MARKET_TEST_BY': 'Market test by',
+    'PROJECT_LEADER': 'Project leader'
   },
 
   'PLACEHOLDER': {
@@ -205,6 +207,7 @@ export const COMMON = {
     'IMPORT': 'Import',
     'EXPORT': 'Export',
     'SELECT': 'Select',
+    'GENERATE': 'Generate',
     'SEND': 'Send',
     'PRINT': 'Print',
     'PREVIEW': 'Preview',
@@ -238,6 +241,13 @@ export const COMMON = {
     'REINVITE': 'Reinvite',
     'ADD_LANG_ENGLISH': 'Add English',
     'ADD_LANG_FRENCH': 'Add French',
+    'SHARE_LINK': 'Click to copy share link to clipboard',
+    'COPY_LINK': 'Copy share link',
+    'COPIED': 'Copied to clipboard',
+    'GENERATING_LINK': 'generating the link...',
+    'GENERATING_FILE': 'generating the file...',
+    'GENERATING_VIDEO': 'generating the video...',
+    'CONTACT_COMMERCIAL': 'Contact commercial',
   },
 
   'PROJECT': {
@@ -388,7 +398,8 @@ export const COMMON = {
     'TITLE_BATCH': 'Batch Board',
     'TITLE_SHARE': 'Share Board',
     'TITLE_SELECT': 'Selection Board',
-    'TITLE_CREATE': 'Creation Board'
+    'TITLE_CREATE': 'Creation Board',
+    'TITLE_VIDEO_STORYBOARD': 'Select the video type to generate'
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search...',

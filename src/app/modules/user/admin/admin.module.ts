@@ -21,22 +21,19 @@ import { AdminCountryManagementModule } from './components/admin-settings/admin-
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SidebarModule } from '../../sidebars/templates/sidebar/sidebar.module';
 import { LogoutModule } from '../../common/logout/logout.module';
-import { InputListModule } from '../../utility-components/input-list/input-list.module';
+import { InputListModule } from '../../utility/input-list/input-list.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
-import { AdminCommunityModule } from "./components/admin-community/admin-community.module";
-import { AdminEnterpriseManagementModule } from "./components/admin-settings/admin-enterprise-management/admin-enterprise-management.module";
+import { AdminCommunityModule } from './components/admin-community/admin-community.module';
+import { AdminEnterpriseManagementModule } from './components/admin-settings/admin-enterprise-management/admin-enterprise-management.module';
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
-import { ProfessionalsService } from '../../../services/professionals/professionals.service';
 import { TemplatesService } from '../../../services/templates/templates.service';
 import { PresetService } from '../../../services/preset/preset.service';
 import { EmailService } from '../../../services/email/email.service';
 import { TagsService } from '../../../services/tags/tags.service';
-import { CampaignService } from '../../../services/campaign/campaign.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
-import { AnswerService } from '../../../services/answer/answer.service';
 import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
@@ -44,15 +41,15 @@ import { SignatureResolver } from '../../../resolvers/signature.resolver';
 import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
-import { AdvSearchService } from "../../../services/advsearch/advsearch.service";
+import { AdvSearchService } from '../../../services/advsearch/advsearch.service';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver';
 import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
 import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
 import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
 import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
-import { ShieldService } from "../../../services/shield/shield.service";
-import { EnterpriseService } from "../../../services/enterprise/enterprise.service";
+import { ShieldService } from '../../../services/shield/shield.service';
+import { EnterpriseService } from '../../../services/enterprise/enterprise.service';
 import { AdminProjectStoryboardModule } from './components/admin-project-storyboard/admin-project-storyboard.module';
 
 @NgModule({
@@ -92,14 +89,11 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     DashboardService,
     SearchService,
     FrontendService,
-    ProfessionalsService,
     TemplatesService,
     PresetService,
     EmailService,
     TagsService,
-    CampaignService,
     CampaignResolver,
-    AnswerService,
     DownloadService,
     RequestResolver,
     ScenarioResolver,

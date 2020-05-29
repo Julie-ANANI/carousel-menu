@@ -47,6 +47,14 @@
 
   }
 
+  &.has-hover-white:hover {
+
+    &::before {
+      background-color: rgba(255, 255, 255, 0.10);
+    }
+
+  }
+
   &.is-background {
 
     &::before {

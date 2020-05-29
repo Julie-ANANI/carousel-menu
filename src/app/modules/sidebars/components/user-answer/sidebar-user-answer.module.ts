@@ -8,12 +8,11 @@ import { UserAnswerComponent } from './user-answer.component';
 import { AnswerQuestionComponent } from './answer-question/answer-question.component';
 import { RatingItemComponent } from './rating-item/rating-item.component';
 
-import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { AutoCompleteInputModule } from '../../../utility-components/auto-complete-input/auto-complete-input.module';
+import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
+import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
-import { InputListModule } from '../../../utility-components/input-list/input-list.module';
-import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
+import { InputListModule } from '../../../utility/input-list/input-list.module';
 
 @NgModule({
   imports: [
@@ -32,9 +31,6 @@ import { ProfessionalsService } from "../../../../services/professionals/profess
     UserAnswerComponent,
     AnswerQuestionComponent,
     RatingItemComponent
-  ],
-  providers: [
-    ProfessionalsService
   ],
   exports: [
     UserAnswerComponent

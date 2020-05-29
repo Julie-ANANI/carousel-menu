@@ -2,7 +2,7 @@
 
 #admin-project-storyboard {
   min-height: calc(100vh - 125px);
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
 
   .header-wrapper {
 
@@ -23,6 +23,7 @@
         justify-content: flex-end;
         align-items: center;
         text-align: right;
+        flex-wrap: wrap;
 
         p {
           margin-bottom: 0;
@@ -53,6 +54,32 @@
     .button {
       min-width: 80px;
       box-shadow: $box-shadow-button-hover;
+    }
+
+  }
+
+}
+
+
+@media screen {
+
+  @media (max-width: $size-md) {
+
+    #admin-project-storyboard {
+
+      .header-wrapper {
+        flex-direction: column;
+
+        .content-wrapper {
+
+          .pdf-wrapper {
+            justify-content: flex-start;
+          }
+
+        }
+
+      }
+
     }
 
   }

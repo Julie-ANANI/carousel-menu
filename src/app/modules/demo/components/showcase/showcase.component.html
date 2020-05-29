@@ -13,7 +13,7 @@
     <!-- when fetching error -->
     <ng-container *ngIf="fetchingError">
       <div class="d-flex s-error-wrapper align-center">
-        <app-error-template-1 [ngStyle]="{ 'width': '100%' }" [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-error-template-1>
+        <app-utility-error-template-1 [ngStyle]="{ 'width': '100%' }" [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
       </div>
     </ng-container>
     <!-- /when fetching error -->
@@ -136,7 +136,7 @@
 
 
 <!-- modal to modify the tags -->
-<app-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
+<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
 
   <section class="modal-body">
 
@@ -172,11 +172,11 @@
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to modify the tags -->
 
 <!-- sidebar for history -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-sidebar-showcase-history
     [selectedAnswers]="selectedAnswers"
     [selectedClients]="selectedClients"
@@ -184,5 +184,5 @@
     [tagsStats]="selectedTagsStats"
     (displayShowcase)="displayCustomShowcase($event)">
   </app-sidebar-showcase-history>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar for history -->

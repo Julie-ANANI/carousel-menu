@@ -4,7 +4,7 @@
 .navbar {
   min-height: 3.75rem;
   position: relative;
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
   border-bottom: $border-width solid $border-light-color;
 
   .navbar-brand {
@@ -14,7 +14,7 @@
   }
 
   .navbar-burger, .navbar-item, .dropdown-toggle {
-    color: $text-background-color;
+    color: $text-draft-color;
   }
 
   .navbar-burger {
@@ -53,11 +53,11 @@
         margin: 0;
         padding: 0.5rem 0;
         list-style: none;
-        background: $bg-light-color;
+        background: $bg-white-color;
 
         .navbar-divider {
           display: none;
-          border-top: $border-width solid $border-color;
+          border-top: $border-width solid $border-default-color;
           height: $border-width;
           margin: $unit-2 1.1rem;
         }
@@ -87,7 +87,7 @@
 .navbar-sidebar {
   min-height: 100vh;
   position: relative;
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
 
   .navbar-menu {
     display: flex;
@@ -100,14 +100,14 @@
       display: flex;
       background-color: transparent;
       font-size: $font-size-sm;
-      color: $text-background-color;
+      color: $text-draft-color;
       font-weight: $font-weight-medium;
       line-height: $line-height;
       position: relative;
       margin: 0;
       list-style: none;
       padding: $unit-3 1.1rem;
-      border-bottom: $border-width solid $border-color;
+      border-bottom: $border-width solid $border-default-color;
 
       &.active, &:active, &:hover {
         color: $text-warning-color;
@@ -202,7 +202,7 @@
 
             &:hover, &.active, &:active {
               background-color: $bg-menu-item-color;
-              color: $text-background-color;
+              color: $text-draft-color;
             }
 
           }
@@ -253,7 +253,7 @@
       &:active, &.active {
         display: flex;
         flex-direction: column;
-        background-color: $bg-light-color;
+        background-color: $bg-white-color;
         box-shadow: 0 8px 16px rgba(10,10,10,.1);
         padding: 0.5rem 0;
         position: absolute;

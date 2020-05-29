@@ -55,7 +55,7 @@
     <div *ngSwitchCase="'settings'" class="container grid-2xl fluid">
       <div class="column col-sm-12 col-11 col-mx-auto">
         <div class="p-top-50">
-          <settings></settings>
+          <app-project-settings></app-project-settings>
         </div>
       </div>
     </div>
@@ -63,13 +63,13 @@
 
     <!-- setup -->
     <div *ngSwitchCase="'setup'">
-      <app-setup *ngIf="innovation._id" [project]="innovation"></app-setup>
+      <app-project-setup *ngIf="innovation._id" [project]="innovation"></app-project-setup>
     </div>
     <!-- /setup -->
 
     <!-- exploration -->
     <div *ngSwitchCase="'exploration'">
-      <app-exploration *ngIf="innovation._id" [project]="innovation"></app-exploration>
+      <app-project-exploration *ngIf="innovation._id" [project]="innovation"></app-project-exploration>
     </div>
     <!-- /exploration -->
 
@@ -83,6 +83,16 @@
       </app-shared-market-report>
     </div>
     <!-- /synthesis -->
+
+    <!-- documents -->
+    <div *ngSwitchCase="'documents'" class="container grid-2xl fluid">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+        <div class="p-top-50">
+          <app-project-documents></app-project-documents>
+        </div>
+      </div>
+    </div>
+    <!-- /documents -->
 
   </section>
   <!-- /different pages -->

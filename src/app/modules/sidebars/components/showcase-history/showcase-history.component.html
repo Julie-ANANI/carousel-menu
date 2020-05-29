@@ -25,12 +25,12 @@
 
 
     <!-- section table -->
-    <shared-table
+    <app-shared-table
       [(config)]="config"
       [data]="tableInfos"
       (editRow)="loadShowcase($event)"
       (removeRows)="deleteShowcase($event)">
-    </shared-table>
+    </app-shared-table>
     <!-- /section table -->
 
 

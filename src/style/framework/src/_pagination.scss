@@ -19,7 +19,7 @@
   }
 
   .pagination-previous-control, .pagination-next-control, .pagination-link {
-    color: $text-background-color;
+    color: $text-draft-color;
     font-size: $font-size-sm;
     margin: 0.25rem;
     text-align: center;
@@ -37,7 +37,7 @@
       min-width: 1.9rem;
 
       &.active, &:active {
-        background-color: lighten($background-color, 50%);
+        background-color: lighten($draft-color, 50%);
       }
 
     }
@@ -54,7 +54,7 @@
     .pagination-next-control, .pagination-previous-control {
 
       &:hover:not(.disabled) {
-        background-color: lighten($background-color, 55%);
+        background-color: lighten($draft-color, 55%);
       }
 
     }
@@ -64,7 +64,7 @@
       .pagination-link {
 
         &:hover:not(.active), &.disabled {
-          background-color: lighten($background-color, 55%);
+          background-color: lighten($draft-color, 55%);
         }
 
       }
@@ -82,7 +82,7 @@
     flex-direction: column;
 
     .pagination-next-control, .pagination-previous-control {
-      background-color: lighten($background-color, 55%);
+      background-color: lighten($draft-color, 55%);
     }
 
     .pagination-previous-control {

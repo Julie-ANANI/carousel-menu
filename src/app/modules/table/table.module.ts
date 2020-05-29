@@ -8,12 +8,12 @@ import { TableComponent } from './components/table.component';
 
 import { SharedSearchMultiModule } from '../shared/components/shared-search-multi/shared-search-multi.module';
 import { SharedSortModule } from '../shared/components/shared-sort/shared-sort.module';
-import { ProgressBarModule } from '../utility-components/progress-bar/progress-bar.module';
+import { ProgressBarModule } from '../utility/progress-bar/progress-bar.module';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
-import { CountryFlagModule } from '../utility-components/country-flag/country-flag.module';
+import { CountryFlagModule } from '../utility/country-flag/country-flag.module';
 import { PipeModule } from '../../pipe/pipe.module';
-import { MessageTemplate1Module } from '../utility-components/messages/message-template-1/message-template-1.module';
-import { PaginationTemplate2Module } from '../utility-components/paginations/pagination-template-2/pagination-template-2.module';
+import { MessageTemplate1Module } from '../utility/messages/message-template-1/message-template-1.module';
+import { PaginationTemplate2Module } from '../utility/paginations/pagination-template-2/pagination-template-2.module';
 
 @NgModule({
   imports: [

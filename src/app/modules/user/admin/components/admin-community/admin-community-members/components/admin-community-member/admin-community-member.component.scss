@@ -3,10 +3,10 @@
 #admin-community-member-component {
 
   .section-header {
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
 
     .name-wrapper {
-      border-bottom: $border-width solid $border-color;
+      border-bottom: $border-width solid $border-default-color;
       padding-bottom: $unit-5;
 
       .title-primary {

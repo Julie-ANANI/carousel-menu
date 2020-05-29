@@ -1,0 +1,113 @@
+<div id="report">
+
+  <!-- when two sections -->
+  <div *ngIf="totalSection === 2" class="col-12">
+    <div class="first-page">
+
+      <!-- professional -->
+      <div class="page-section">
+        <app-print-report-professional
+          [answers]="answers"
+          [report]="report">
+        </app-print-report-professional>
+      </div>
+      <!-- /professional -->
+
+      <!-- sections -->
+      <div class="page-section">
+        <div *ngFor="let index of firstPageSections | slice:0:totalSection"
+             [ngClass]="{ 'section-2': totalSection === 2 }"
+             class="section">
+          <app-print-report-section
+            [answers]="answers"
+            [ngStyle]="{ 'width': '100%' }"
+            [report]="report"
+            [currentSection]="index">
+          </app-print-report-section>
+        </div>
+      </div>
+      <!-- /sections -->
+
+      <!-- conclusion part -->
+      <div class="page-section">
+        <app-print-report-conclusion [report]="report"></app-print-report-conclusion>
+      </div>
+      <!-- /conclusion part -->
+
+    </div>
+  </div>
+  <!-- /when two sections -->
+
+  <!-- when more than two sections -->
+  <ng-container *ngIf="totalSection > 2">
+
+    <!-- first page -->
+    <div class="col-12">
+      <div class="first-page">
+
+        <!-- professional column -->
+        <div class="page-section">
+          <app-print-report-professional
+            [answers]="answers"
+            [report]="report">
+          </app-print-report-professional>
+        </div>
+        <!-- /professional column -->
+
+        <!-- sections -->
+        <div class="section-wrapper">
+          <div
+            *ngFor="let index of firstPageSections"
+            [ngClass]="{ 'section-4': totalSection > 2 }"
+            class="section">
+            <app-print-report-section
+              [answers]="answers"
+              [ngStyle]="{ 'width': '100%' }"
+              [report]="report"
+              [currentSection]="index">
+            </app-print-report-section>
+          </div>
+        </div>
+        <!-- /sections -->
+
+      </div>
+    </div>
+    <!-- /first page -->
+
+    <!-- second page -->
+    <div class="col-12">
+      <div class="second-page">
+
+        <!-- sections -->
+        <ng-container *ngIf="totalSection > 4">
+          <div [ngClass]="{ 'section-6': totalSection === 6, 'section-wrapper': totalSection > 6 }">
+            <div
+              *ngFor="let index of secondPageSections | slice:0:(totalSection - 4)"
+              [ngClass]="{ 'section-2': totalSection === 6, 'section-4': totalSection > 6 }"
+              class="section">
+              <app-print-report-section
+                [answers]="answers"
+                [ngStyle]="{ 'width': '100%' }"
+                [report]="report"
+                [currentSection]="index">
+              </app-print-report-section>
+            </div>
+          </div>
+        </ng-container>
+        <!-- /sections -->
+
+        <!-- conclusion part -->
+        <div class="page-section">
+          <app-print-report-conclusion [report]="report"></app-print-report-conclusion>
+        </div>
+        <!-- /conclusion part -->
+
+      </div>
+    </div>
+    <!-- /second page -->
+
+  </ng-container>
+  <!-- /when more than two sections -->
+
+</div>
+

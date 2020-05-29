@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SectionBar, SectionKpi, SectionPie, SectionRanking } from '../../models/executive-report';
+import { SectionBar, SectionKpi, SectionPie, SectionQuote, SectionRanking } from '../../models/executive-report';
 import { Professional } from '../../models/professional';
 import { BarData } from '../../modules/shared/components/shared-market-report/models/bar-data';
 import { ResponseService } from '../../modules/shared/components/shared-market-report/services/response.service';
@@ -7,11 +7,20 @@ import { specialCharRegEx } from '../../utils/regex';
 import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../models/tag';
 import { PieChart } from '../../models/pie-chart';
+import { ExecutiveReportService } from './executive-report.service';
+import { TranslateNotificationsService } from '../notifications/notifications.service';
+import { first} from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../error/error-front.service';
+import { CommonService } from '../common/common.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExecutiveReportFrontService {
 
-  constructor(private _multilingPipe: MultilingPipe) { }
+  constructor(private _multilingPipe: MultilingPipe,
+              private _commonService: CommonService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _executiveReportService: ExecutiveReportService) { }
 
   /***
    * this returns the content of the KPI section.
@@ -21,9 +30,9 @@ export class ExecutiveReportFrontService {
   public static kpiSection(professionals: Array<Professional>, totalAnswers: string): SectionKpi {
 
     const section: SectionKpi = {
-      value: totalAnswers,
+      kpi: totalAnswers,
       examples: '',
-      name: ''
+      legend: ''
     };
 
     if (professionals && professionals.length > 0) {
@@ -38,6 +47,18 @@ export class ExecutiveReportFrontService {
   }
 
   /***
+   * this returns the content of the Quote section.
+   */
+  public static quoteSection(): SectionQuote {
+    return {
+      showQuotes: true,
+      quotation: '',
+      name: '',
+      job: '',
+    }
+  }
+
+  /***
    * this returns the content of the PIE section.
    * @param pieChartData
    * @param lang
@@ -45,16 +66,20 @@ export class ExecutiveReportFrontService {
   public static pieChartSection(pieChartData: PieChart, lang: string): SectionPie {
 
     const section: SectionPie = {
-      showPositive: false,
-      favorable: '',
+      favorable_answers: {
+        percentage: 0,
+        visibility: false
+      },
       values: []
     };
 
-    if (pieChartData) {
+    if (pieChartData && (pieChartData.percentage || pieChartData.data)) {
 
       if (pieChartData.percentage) {
-        section.favorable = pieChartData.percentage + '%';
-        section.showPositive = true;
+        section.favorable_answers = {
+          percentage: pieChartData.percentage,
+          visibility: pieChartData.percentage > 0
+        }
       }
 
       if (pieChartData.data) {
@@ -67,6 +92,22 @@ export class ExecutiveReportFrontService {
             answers: data
           });
         });
+      }
+
+    } else {
+
+      section.favorable_answers = {
+        percentage: 0,
+        visibility: false
+      };
+
+      for (let i = 0; i < 4; i++) {
+        section.values.push({
+          percentage: 0,
+          color: i === 0 ? '#C0210F' : i === 1 ? '#82CD30' : i === 2 ? '#34AC01' : '#F2C500',
+          legend: '',
+          answers: 0
+        })
       }
 
     }
@@ -82,7 +123,7 @@ export class ExecutiveReportFrontService {
    */
   public barSection(barsData: Array<BarData>, lang: string): SectionBar {
 
-    const section: SectionBar = {
+    let section: SectionBar = {
       showExamples: true,
       values: []
     };
@@ -95,12 +136,22 @@ export class ExecutiveReportFrontService {
 
         section.values.push({
           name: this._multilingPipe.transform(bar.label, lang),
-          value: Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0,
-          example: professionals.map((professional, index) => {
+          visibility: (Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0) > 0,
+          percentage: Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0,
+          legend: professionals.map((professional, index) => {
             return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle
           }).toString().slice(0, 40)
         })
       });
+    } else {
+      for (let i = 0; i < 3; i++) {
+        section.values.push({
+          percentage: 0,
+          legend: '',
+          name: '',
+          visibility: false
+        })
+      }
     }
 
     return section;
@@ -115,22 +166,49 @@ export class ExecutiveReportFrontService {
   public rankingSection(tagsData: Array<Tag>, lang: string): SectionRanking {
 
     const section: SectionRanking = {
-      color: '#4F5D6B',
       values: []
     };
 
     if (tagsData && tagsData.length > 0) {
       tagsData.slice(0, 3).forEach((tag) => {
         section.values.push({
-          occurrence: tag.count + 'X',
-          name: this._multilingPipe.transform(tag.label, lang)
+          legend: tag.count + 'X',
+          color: '#4F5D6B',
+          name: this._multilingPipe.transform(tag.label, lang),
+          visibility: tag.count > 0
         })
       });
+    } else {
+      for (let i = 0; i < 3; i++) {
+        section.values.push({
+          color: '#4F5D6B',
+          legend: '',
+          name: '',
+          visibility: false
+        })
+      }
     }
 
     return section;
 
   }
 
+  /***
+   * play the text.
+   * @param text
+   * @param lang
+   */
+  public audio(text: string, lang: string = 'en') {
+    if (text) {
+      this._executiveReportService.audio(text, lang).pipe(first()).subscribe((file) => {
+        this._commonService.playAudio(file.audioContent);
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    } else {
+      this._translateNotificationsService.error('Error', 'The text could not be empty.');
+    }
+  }
 
 }

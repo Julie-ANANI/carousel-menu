@@ -77,17 +77,17 @@
 
 
 <!-- sign up sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-signup-form
     (finalOutput)="createUser($event)"
     [sidebarState]="sidebarValue.animate_state">
   </app-signup-form>
-</sidebar>
+</app-sidebar>
 <!-- /sign up sidebar -->
 
 
 <!-- sign in modal -->
-<app-modal [(showModal)]="modalSignIn" [maxWidth]="'400px'" [enableCloseButton]="true">
+<app-utility-modal [(showModal)]="modalSignIn" [maxWidth]="'400px'" [enableCloseButton]="true">
   <section class="modal-body">
 
     <!-- heading -->
@@ -153,5 +153,5 @@
     <!-- /form -->
 
   </section>
-</app-modal>
+</app-utility-modal>
 <!-- /sign in modal -->

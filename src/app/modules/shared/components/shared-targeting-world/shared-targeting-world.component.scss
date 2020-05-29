@@ -32,7 +32,7 @@
   .form-group {
 
     &.is-continent {
-      border-bottom: $border-width solid $border-color;
+      border-bottom: $border-width solid $border-default-color;
       padding-bottom: $unit-o;
       margin-bottom: 0.75rem;
 
@@ -61,7 +61,7 @@
 
         img {
           width: 1.75rem;
-          border: 1px solid $border-color;
+          border: 1px solid $border-default-color;
         }
 
       }

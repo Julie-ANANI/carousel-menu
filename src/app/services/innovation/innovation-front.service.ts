@@ -246,9 +246,54 @@ export class InnovationFrontService {
 
         case 'solution':
           return new ScrapeHTMLTags().transform(innovation.innovationCards[index].solution) || '';
+
+        case 'lang':
+          return innovation.innovationCards[index].lang;
       }
 
     }
+  }
+
+  /***
+   * returns the principal media of the innovation.
+   * @param innovation
+   * @param lang
+   * @param width
+   * @param height
+   */
+  public static principalMedia(innovation: Innovation, lang: string, width = '240', height = '159'): string {
+    const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
+    const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
+    const suffix = '.jpg';
+    let src = '';
+
+    if (innovation) {
+
+      if (innovation.principalMedia && innovation.principalMedia.type === 'PHOTO' && innovation.principalMedia.cloudinary
+        && innovation.principalMedia.cloudinary.public_id) {
+        src = prefix + innovation.principalMedia.cloudinary.public_id + suffix;
+      } else if (innovation.innovationCards && innovation.innovationCards.length) {
+
+        let index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === lang);
+        if (index === -1) {
+          index = 0;
+        }
+
+        const card = innovation.innovationCards[index];
+
+        if (card && card.media && card.media.length) {
+          const index = card.media.findIndex((media: Media) => media.type === 'PHOTO');
+          if (index !== -1 && card.media[index].cloudinary && card.media[index].cloudinary.public_id) {
+            src = prefix + card.media[index].cloudinary.public_id + suffix;
+          }
+        }
+
+      }
+
+    }
+
+    return src === '' ? defaultSrc : src;
+
   }
 
   /***

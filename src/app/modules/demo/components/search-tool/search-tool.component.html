@@ -4,7 +4,7 @@
 
     <!-- section search bar -->
     <section class="section-search section-pad rm-pad-bottom">
-      <app-search-input-3 [searchFieldValue]="searchFieldValue" (searchFieldOutput)="onClickSearch($event)"></app-search-input-3>
+      <app-utility-search-input-3 [searchFieldValue]="searchFieldValue" (searchFieldOutput)="onClickSearch($event)"></app-utility-search-input-3>
     </section>
     <!-- /section search bar -->
 
@@ -170,7 +170,7 @@
 
                 <ng-container *ngIf="professional && professional.country">
                   <div class="card-header animate-card-appear">
-                    <app-country-flag [country]="professional.country" [width]="23" [height]="16"></app-country-flag>
+                    <app-utility-country-flag [country]="professional.country" [width]="23" [height]="16"></app-utility-country-flag>
                   </div>
                 </ng-container>
 
@@ -275,7 +275,7 @@
 
 
 <!-- sidebar for history -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-sidebar-search-tool
     [sidebarState]="sidebarValue.animate_state"
     [searchFieldValue]="searchFieldOutput"
@@ -284,5 +284,5 @@
     (onUpload)="uploadRequest($event)"
     (onLoadRequest)="loadRequest($event)">
   </app-sidebar-search-tool>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar for history -->

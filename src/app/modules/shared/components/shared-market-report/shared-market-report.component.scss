@@ -8,7 +8,7 @@
   }
 
   .bg-white {
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
     border-radius: $border-radius;
   }
 
@@ -18,52 +18,6 @@
 
   .full-width {
     width: 100%;
-  }
-
-  .executive-generate-wrapper {
-    flex-direction: column;
-
-    .template-outer-wrapper {
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
-      margin-right: -$unit-5;
-
-      .card {
-        border: none;
-        overflow: hidden;
-
-        &.is-responsive {
-          margin-bottom: 0.75rem;
-        }
-
-        .btn.btn-radio {
-
-          &:hover {
-            background-color: $primary-color;
-            border-color: $primary-color;
-
-            span {
-              color: $light-color;
-            }
-
-          }
-
-          &.active {
-            background-color: $success-color;
-            border-color: $success-color;
-
-            span {
-              color: $light-color;
-            }
-
-          }
-
-        }
-
-      }
-
-    }
-
   }
 
   .origin-wrapper {
@@ -143,9 +97,22 @@
     border-radius: $border-radius;
 
     .op-text {
-      color: $text-background-color;
+      color: $text-draft-color;
       font-size: 0.75rem;
       margin-bottom: 0.75rem;
+    }
+
+  }
+
+  .btn-save-float-wrapper {
+    position: fixed;
+    right: 25px;
+    bottom: 30px;
+    z-index: 1;
+
+    .button {
+      min-width: 80px;
+      box-shadow: $box-shadow-button-hover;
     }
 
   }
@@ -158,10 +125,10 @@
     top: 0;
     position: sticky;
     height: 100vh;
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
     overflow-y: auto;
     overflow-x: hidden;
-    border-right: $border-width solid $border-color;
+    border-right: $border-width solid $border-default-color;
   }
 
 }

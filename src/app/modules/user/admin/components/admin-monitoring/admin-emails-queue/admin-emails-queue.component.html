@@ -1,11 +1,11 @@
 <div class="p-bottom-25">
-  <shared-table [data]="tableInfos" [(config)]="config" (editRow)="showCampaignInfos($event)"></shared-table>
+  <app-shared-table [data]="tableInfos" [(config)]="config" (editRow)="showCampaignInfos($event)"></app-shared-table>
 </div>
 
-<sidebar
+<app-sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-emails-form
     [sidebarState]="sidebarState"
     [type]="more.type" [campaignInfos]="currentQueue">
   </app-emails-form>
-</sidebar>
+</app-sidebar>

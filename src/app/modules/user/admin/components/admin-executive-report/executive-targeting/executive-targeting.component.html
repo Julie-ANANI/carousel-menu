@@ -2,14 +2,15 @@
 
   <!-- edit side -->
   <div class="content-wrapper">
+
     <label>
 
         <textarea
-          (change)="emitChanges($event)"
+          (change)="emitChanges()"
           (keyup)="textColor()"
           [(ngModel)]="config.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TARGETING.TARGETING' | translate"
-          [ngStyle]="{ 'height': '98px' }"
+          [ngStyle]="{ 'height': '110px' }"
           maxlength="148"
           class="form-input"
           type="text">
@@ -19,7 +20,22 @@
         {{ 148 - config.abstract.length }}
       </span>
 
+      <div (click)="onClickPlay($event)" class="btn-play">
+        <img
+          src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+          alt=" ">
+      </div>
+
     </label>
+
+    <!-- insert snippet button -->
+    <div class="insert-snippet">
+      <span (click)="onClickSnippet($event)">
+        {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
+      </span>
+    </div>
+    <!-- /insert snippet button -->
+
   </div>
   <!-- /edit side -->
 

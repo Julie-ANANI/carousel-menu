@@ -7,7 +7,7 @@ import { SharedSearchProsComponent } from './shared-search-pros.component';
 
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarSearchModule } from '../../../sidebars/components/sidebar-search/sidebar-search.module';
-import { ModalModule } from "../../../utility-components/modals/modal/modal.module";
+import { ModalModule } from "../../../utility/modals/modal/modal.module";
 
 @NgModule({
   imports: [

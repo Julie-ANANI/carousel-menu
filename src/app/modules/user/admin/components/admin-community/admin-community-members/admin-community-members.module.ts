@@ -13,8 +13,8 @@ import { SharedAmbassadorListModule } from "../../../../../shared/components/sha
 import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { TableModule } from '../../../../../table/table.module';
 import { SidebarCommunityFormModule } from '../../../../../sidebars/components/community-form/sidebar-community-form.module';
-import { ErrorTemplate1Module } from '../../../../../utility-components/errors/error-template-1/error-template-1.module';
-import { NguiAutoCompleteModule } from '../../../../../utility-components/auto-complete/auto-complete.module';
+import { ErrorTemplate1Module } from '../../../../../utility/errors/error-template-1/error-template-1.module';
+import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
 
 
 @NgModule({

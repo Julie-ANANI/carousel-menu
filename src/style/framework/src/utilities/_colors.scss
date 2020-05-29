@@ -5,7 +5,7 @@
 }
 
 .text-primary-dark {
-  color: $text-primary-dark-color !important;
+  color: $text-dark-color !important;
 }
 
 .text-success {
@@ -25,7 +25,7 @@
 }
 
 .text-background {
-  color: $text-background-color !important;
+  color: $text-draft-color !important;
 }
 
 .text-white {
@@ -73,17 +73,17 @@
 
 .bg-draft {
   color: $text-white-color !important;
-  background: $bg-background-color !important;
+  background: $bg-draft-color !important;
 }
 
 .bg-light {
-  color: $text-primary-dark-color !important;
+  color: $text-dark-color !important;
   background: $bg-page-color !important;
 }
 
 .bg-white {
-  color: $text-primary-dark-color !important;
-  background: $bg-light-color !important;
+  color: $text-dark-color !important;
+  background: $bg-white-color !important;
 }
 
 .bg-page {

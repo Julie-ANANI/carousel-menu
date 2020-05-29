@@ -1,0 +1,82 @@
+<div id="report-section">
+
+  <!-- title -->
+  <h1 class="title is-4">{{ section.title }}</h1>
+  <!-- /title -->
+
+  <!-- body -->
+  <div class="section-body">
+    <ng-container *ngIf="section.questionId && section.questionType && section.content">
+      <ng-container [ngSwitch]="section.questionType">
+
+        <!-- type KPI -->
+        <div *ngSwitchCase="'KPI'" id="kpi-content">
+          <h4>{{ content.kpi }}</h4>
+          <h5>{{ content.legend }}</h5>
+          <p>{{ content.examples }}</p>
+        </div>
+        <!-- /type KPI -->
+
+        <!-- type QUOTE -->
+        <div *ngSwitchCase="'QUOTE'" id="quote-content">
+          <div class="quote">
+            <div *ngIf="content.showQuotes" [ngStyle]="{ 'top': '12px', 'left': '12px' }" class="absolute">
+              <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-quote-down-primary.svg" alt=" ">
+            </div>
+            {{ content.quotation }}
+            <div *ngIf="content.showQuotes" [ngStyle]="{ 'bottom': '12px', 'right': '12px' }" class="absolute">
+              <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-quote-up-primary.svg" alt=" ">
+            </div>
+          </div>
+          <h4>{{ content.name }}</h4>
+          <p>{{ content.job }}</p>
+        </div>
+        <!-- /type QUOTE -->
+
+        <!-- type RANKING -->
+        <div *ngSwitchCase="'RANKING'" id="ranking-content">
+          <ng-container *ngFor="let value of content.values">
+            <ng-container *ngIf="value.visibility">
+              <p>{{ value.legend }}</p>
+              <div [ngStyle]="{ 'background-color': value.color }" class="label is-rounded">
+                {{ value.name }}
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+        <!-- /type RANKING -->
+
+        <!-- type PIE -->
+        <div *ngSwitchCase="'PIE'" id="pie-content">
+          <h2 *ngIf="content.favorable_answers && content.favorable_answers.visibility">
+            {{ content.favorable_answers.percentage }}%
+            {{ report.lang === 'fr' ? 'des réponses sont favorables' : ' of responses are favorable' }}
+          </h2>
+          <app-utility-piechart-executive [pieChart]="pieChart"></app-utility-piechart-executive>
+        </div>
+        <!-- /type PIE -->
+
+        <!-- type BAR -->
+        <div *ngSwitchCase="'BAR'" id="bar-content">
+          <ng-container *ngFor="let value of content.values">
+            <ng-container *ngIf="value.visibility">
+              <h2>{{ value.name }}</h2>
+              <app-utility-progress-bar [width]="value.percentage + '%'" [height]="'8px'" [backgroundColor]="'#FFB300'"></app-utility-progress-bar>
+              <div *ngIf="content.showExamples && value.legend" class="text-ellipsis bar-example">{{ value.legend }}</div>
+            </ng-container>
+          </ng-container>
+        </div>
+        <!-- /type BAR -->
+
+      </ng-container>
+    </ng-container>
+  </div>
+  <!-- /body -->
+
+  <!-- abstract -->
+  <div class="section-abstract">
+    {{ section.abstract }}
+  </div>
+  <!-- /abstract -->
+
+</div>

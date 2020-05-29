@@ -37,7 +37,7 @@
           <h4 class="text-background text-medium text-sm">{{ answer.job }}</h4>
 
           <div class="flex-start">
-            <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
+            <app-utility-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-utility-country-flag>
             <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
           </div>
 
@@ -62,7 +62,7 @@
 
 
 <!-- modal to select the answers -->
-<app-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
+<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
 
  <section class="modal-body">
    <div class="card-wrapper d-flex">
@@ -80,7 +80,7 @@
          <h4 class="text-background text-medium text-xs">{{ answer.job }}</h4>
 
          <div class="flex-start">
-           <app-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-country-flag>
+           <app-utility-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></app-utility-country-flag>
            <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
          </div>
 
@@ -96,5 +96,5 @@
     </footer>
   </ng-container>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to select the answers -->

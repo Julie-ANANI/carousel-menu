@@ -15,7 +15,7 @@
   white-space: nowrap;
   text-decoration: none;
   line-height: $line-height-sm;
-  background: $bg-light-color;
+  background: $bg-white-color;
   border: $border-width solid $primary-color;
   font-size: $font-size-sm;
   height: 2.5rem;
@@ -34,7 +34,7 @@
     transition: all 0.4s ease;
     background: transparent;
     border: 0;
-    color: $light-color;
+    color: $white-color;
     height: 30px;
     padding: 0;
     text-decoration: none;
@@ -84,7 +84,7 @@
     background: transparent none;
     border-color: $primary-color;
     font-size: $font-size-xs;
-    color: $light-color;
+    color: $white-color;
 
     i {
       margin-left: 0;
@@ -112,11 +112,11 @@
     min-width: 0;
     padding: 0;
     border: $border-width-lg solid $button-border-color;
-    color: $light-color;
+    color: $white-color;
     font-size: $font-size-xs;
 
     span {
-      color: $light-color;
+      color: $white-color;
       font-size: $font-icon-lg;
     }
 
@@ -174,7 +174,7 @@
   }
 
   &.ghost-draft {
-    @include button-ghost-variant($background-color);
+    @include button-ghost-variant($draft-color);
   }
 
   &.rounded {
@@ -220,7 +220,7 @@
     }
 
     &.ghost-draft {
-      @include ghost-button-no-hover-variant($background-color);
+      @include ghost-button-no-hover-variant($draft-color);
     }
 
   }
@@ -236,7 +236,7 @@
     }
 
     &.ghost-draft {
-      @include button-ghost-background-variant($background-color);
+      @include button-ghost-background-variant($draft-color);
     }
 
   }
@@ -246,13 +246,13 @@
 // Cancel button class that you have to add with button class
 .btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active, .btn-cancel:not(:disabled).active {
   color: $meta-color;
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
   border: none;
 }
 
 .btn-cancel:not(:disabled):hover {
   color: lighten($meta-color, 15%);
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
   border: none;
 }
 
@@ -367,7 +367,7 @@
     @include button-default-variant($bg-primary-color);
 
     &.loading {
-      @include button-loading-variant($bg-light-color);
+      @include button-loading-variant($bg-white-color);
     }
 
     &.is-shadowed {
@@ -400,7 +400,7 @@
     }
 
     &.loading {
-      @include button-loading-variant($bg-light-color);
+      @include button-loading-variant($bg-white-color);
     }
 
     &.is-outlined {
@@ -434,7 +434,7 @@
     }
 
     &.loading {
-      @include button-loading-variant($bg-light-color);
+      @include button-loading-variant($bg-white-color);
     }
 
     &.is-outlined {
@@ -467,7 +467,7 @@
     }
 
     &.loading {
-      @include button-loading-variant($bg-light-color);
+      @include button-loading-variant($bg-white-color);
     }
 
     &.is-outlined {
@@ -481,34 +481,34 @@
   }
 
   &.is-draft {
-    @include button-default-variant($bg-background-color);
+    @include button-default-variant($bg-draft-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($bg-background-color);
+        @include button-loading-variant($bg-draft-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($bg-background-color);
+      @include button-link-variant($bg-draft-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($bg-background-color)
+      @include button-default-action-variant($bg-draft-color)
     }
 
     &.loading {
-      @include button-loading-variant($bg-light-color);
+      @include button-loading-variant($bg-white-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($bg-background-color);
+      @include button-outline-variant($bg-draft-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($bg-background-color);
+      @include button-shadow-variant($bg-draft-color);
     }
 
   }
@@ -533,7 +533,7 @@
     }
 
     &.loading {
-      @include button-loading-variant($bg-light-color);
+      @include button-loading-variant($bg-white-color);
     }
 
     &.is-outlined {

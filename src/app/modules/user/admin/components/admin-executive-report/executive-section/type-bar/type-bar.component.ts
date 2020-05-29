@@ -3,65 +3,31 @@ import { ExecutiveSection, SectionBar } from '../../../../../../../models/execut
 import { CommonService } from '../../../../../../../services/common/common.service';
 
 @Component({
-  selector: 'type-bar',
+  selector: 'app-admin-section-type-bar',
   templateUrl: './type-bar.component.html',
   styleUrls: ['./type-bar.component.scss']
 })
 
 export class TypeBarComponent {
 
+  @Input() lang = 'en';
+
   @Input() set section(value: ExecutiveSection) {
-
-    this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
-      abstract: value.abstract || '',
-      title: value.title || '',
-      content: {
-        showExamples: <SectionBar>value.content && (<SectionBar>value.content).showExamples,
-        values: [
-          {
-            name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-            && (<SectionBar>value.content).values[0].name || '',
-            example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-            && (<SectionBar>value.content).values[0].example || '',
-            value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[0]
-            && (<SectionBar>value.content).values[0].value
-          },
-          {
-            name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].name || '',
-            example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].example || '',
-            value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[1]
-            && (<SectionBar>value.content).values[1].value
-          },
-          {
-            name: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].name || '',
-            example: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].example || '',
-            value: <SectionBar>value.content && (<SectionBar>value.content).values && (<SectionBar>value.content).values[2]
-            && (<SectionBar>value.content).values[2].value
-          }
-        ]
-      }
-    };
-
+    this._section = value;
     this._content = <SectionBar>this._section.content;
-
     this.textColor('title');
     this.textColor('abstract');
     this.textColor('name', 1);
     this.textColor('name', 2);
     this.textColor('name', 3);
-    this.textColor('example', 1);
-    this.textColor('example', 2);
-    this.textColor('example', 3);
-
+    this.textColor('legend', 1);
+    this.textColor('legend', 2);
+    this.textColor('legend', 3);
   }
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
+
+  @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
@@ -111,25 +77,41 @@ export class TypeBarComponent {
 
       case 'name':
         if (index === 1) {
-          this._name1Color = CommonService.getLimitColor(this._content.values[0].name.length, 32);
+          this._name1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].name
+            && this._content.values[0].name.length, 32);
         } else if (index === 2) {
-          this._name2Color = CommonService.getLimitColor(this._content.values[1].name.length, 32);
+          this._name2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].name
+            && this._content.values[1].name.length, 32);
         } else if (index === 3) {
-          this._name3Color = CommonService.getLimitColor(this._content.values[2].name.length, 32);
+          this._name3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].name
+            && this._content.values[2].name.length, 32);
         }
         break;
 
-      case 'example':
+      case 'legend':
         if (index === 1) {
-          this._example1Color = CommonService.getLimitColor(this._content.values[0].example.length, 40);
+          this._example1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].legend
+            && this._content.values[0].legend.length, 40);
         } else if (index === 2) {
-          this._example2Color = CommonService.getLimitColor(this._content.values[1].example.length, 40);
+          this._example2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].legend
+            && this._content.values[1].legend.length, 40);
         } else if (index === 3) {
-          this._example3Color = CommonService.getLimitColor(this._content.values[2].example.length, 40);
+          this._example3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].legend
+            && this._content.values[2].legend.length, 40);
         }
         break;
 
     }
+  }
+
+  public checkVisibility(index: number) {
+    this._content.values[index].visibility = this._content.values[index].percentage !== 0;
+    this.emitChanges();
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this.playSection.emit();
   }
 
   get section(): ExecutiveSection {

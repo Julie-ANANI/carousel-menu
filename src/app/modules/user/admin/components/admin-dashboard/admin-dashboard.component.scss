@@ -15,7 +15,7 @@
     }
 
     .text {
-      color: $background-color;
+      color: $draft-color;
       font-weight: $font-weight-medium;
 
       span {
@@ -25,7 +25,7 @@
     }
 
     .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
-      border-color: $border-color;
+      border-color: $border-default-color;
     }
 
   }
@@ -62,7 +62,7 @@
 
         p {
           margin-top: 0.8755rem;
-          color: $background-color;
+          color: $draft-color;
           font-weight: 600;
         }
 
@@ -135,5 +135,5 @@
     }
 
   }
-  
+
 }

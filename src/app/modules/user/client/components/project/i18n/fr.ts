@@ -8,6 +8,7 @@ export const PROJECT_MODULE = {
   'SETUP_TAB': 'Description du projet',
   'EXPLORATION_TAB': 'Exploration marché',
   'SYNTHESIS_TAB': 'Synthèse',
+  'DOCUMENTS_TAB': 'Documents',
   'SETTINGS_TAB': 'Paramètres',
 
   'ADD_COLLABORATORS': 'Ajoutez l\'email d\'un collègue',

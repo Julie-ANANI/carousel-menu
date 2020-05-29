@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { SpinnerService } from '../../../../../services/spinner/spinner';
+import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ErrorFrontService} from '../../../../../services/error/error-front';
+import { ErrorFrontService} from '../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { ExecutiveReport, ExecutiveSection } from '../../../../../models/executive-report';
@@ -22,9 +22,13 @@ import { BarData } from '../../../../shared/components/shared-market-report/mode
 import { PieChart } from '../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../services/executive-report/executive-report-front.service';
 import { Tag } from '../../../../../models/tag';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import FileSaver from 'file-saver';
+import { DeliverableService } from '../../../../../services/deliverable/deliverable.service';
+import { Job, JobType } from '../../../../../models/job';
 
 @Component({
-  selector: 'admin-storyboard',
+  selector: 'app-admin-storyboard',
   templateUrl: './admin-project-storyboard.component.html',
   styleUrls: ['./admin-project-storyboard.component.scss']
 })
@@ -49,6 +53,18 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _questions: Array<Question> = [];
 
+  private _isGeneratingReport = false;
+
+  private _isModalVideo = false;
+
+  private _selectedVideoType = 'VIDEO_TEST';
+
+  private _isGeneratingVideo = false;
+
+  private _showBanner = false;
+
+  private _bannerVideos: Array<Job> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
@@ -59,9 +75,11 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _answerService: AnswerService,
               private _executiveReportFrontService: ExecutiveReportFrontService,
               private _multilingPipe: MultilingPipe,
+              private _innovationService: InnovationService,
               private _responseService: ResponseService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService) {
+              private _translateTitleService: TranslateTitleService,
+              private _deliverableService: DeliverableService) {
 
     this._setSpinner(true);
 
@@ -84,6 +102,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._isLoading = false;
     }
 
+    this._getVideoJob();
+
   }
 
   private _getExecutiveReport() {
@@ -100,12 +120,23 @@ export class AdminProjectStoryboardComponent implements OnInit {
     }
   }
 
+  private _getVideoJob() {
+    if (isPlatformBrowser(this._platformId) && this._innovation._id) {
+      this._innovationService.getDeliverableJob(this._innovation._id).pipe(first()).subscribe((jobs) => {
+        this._bannerVideos = jobs;
+        this._showBanner = this._bannerVideos.length > 0;
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+      });
+    }
+  }
+
   private _setSpinner(value: boolean) {
     this._spinnerService.state(value);
   }
 
   private _setTitle(title?: string) {
-    this._translateTitleService.setTitle(title ? title + ' | Storyboard | UMI' : 'Storyboard | UMI');
+    this._translateTitleService.setTitle(title ? title + ' | Storyboard' : 'Storyboard');
   }
 
   public setNewSelectedLang(value: string) {
@@ -192,6 +223,12 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   }
 
+  public onChangeDiffusion(event: Event) {
+    event.preventDefault();
+    this._executiveReport.externalDiffusion = (event.target as HTMLInputElement).checked;
+    this._toBeSaved = true;
+  }
+
   public openLangModal(event: Event, type: string) {
     event.preventDefault();
     this._reportType = type;
@@ -249,23 +286,94 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_STORYBOARD.TOAST.URL_COPIED');
   }
 
+  /***
+   * when the user clicks on the Generate Video button
+   * @param event
+   */
+  public openVideoModal(event: Event) {
+    event.preventDefault();
+    this._selectedVideoType = 'VIDEO_TEST';
+    this._isModalVideo = true;
+  }
+
+  /***
+   * when the user clicks on the Cancel button in the Video modal.
+   */
+  public closeModal() {
+   this._isModalVideo = false;
+    this._selectedVideoType = 'VIDEO_TEST';
+  }
+
+  /***
+   * when the user selects the Video type from the Video modal.
+   * @param event
+   * @param type
+   */
+  public setVideo(event: Event, type: JobType) {
+    event.preventDefault();
+    this._selectedVideoType = type;
+  }
+
+  /***
+   * when the user clicks the Generate button of the Video modal.
+   * @param event
+   */
   public generateVideo(event: Event) {
     event.preventDefault();
+    if (!this._isGeneratingVideo) {
+      this._isGeneratingVideo = true;
+      this._deliverableService.registerJob(this._innovation.owner.id, this._innovation._id, this._selectedVideoType)
+        .subscribe((job) => {
+          this._isGeneratingVideo = false;
+          this._getVideoJob();
+          this.closeModal();
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
+        }, (err: HttpErrorResponse) => {
+          console.error(err);
+          this._isGeneratingVideo = false;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        });
+    }
   }
 
   public generatePdf(event: Event) {
     event.preventDefault();
+    if (!this._isGeneratingReport) {
+      this._isGeneratingReport = true;
+      const filename = this._innovation.name ? `UMI Executive report -
+      ${this._innovation.name.slice(0, Math.min(13, this._innovation.name.length))}.pdf` : 'innovation_umi.pdf';
+      this._innovationService.executiveReportPDF(this._innovation._id).pipe(first()).subscribe( data => {
+        const blob = new Blob([data], {type: 'application/pdf'});
+        FileSaver.saveAs(blob, filename);
+        this._isGeneratingReport = false;
+      }, (err: HttpErrorResponse) => {
+        this._isGeneratingReport = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   public saveExecutiveReport(event: Event) {
     event.preventDefault();
+    // Clean the client company to leave only the id
+    const ex_report = <any>this._executiveReport;
+    if (this._executiveReport.client && this._executiveReport.client.company) {
+      ex_report.client.company = this._executiveReport.client.company.id;
+    }
+    // TODO is this a good solution?
     this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
+      this._executiveReport = response;
       this._toBeSaved = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
     }, (err: HttpErrorResponse) => {
       console.log(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
+  }
+
+  get isVideoDisabled(): boolean {
+    return this._executiveReport.completion !== 100 || !this._executiveReport.externalDiffusion;
   }
 
   get currentLang(): string {
@@ -311,6 +419,34 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  get isGeneratingReport(): boolean {
+    return this._isGeneratingReport;
+  }
+
+  get isModalVideo(): boolean {
+    return this._isModalVideo;
+  }
+
+  set isModalVideo(value: boolean) {
+    this._isModalVideo = value;
+  }
+
+  get isGeneratingVideo(): boolean {
+    return this._isGeneratingVideo;
+  }
+
+  get showBanner(): boolean {
+    return this._showBanner;
+  }
+
+  set showBanner(value: boolean) {
+    this._showBanner = value;
+  }
+
+  get bannerVideos(): Array<Job> {
+    return this._bannerVideos;
   }
 
 }

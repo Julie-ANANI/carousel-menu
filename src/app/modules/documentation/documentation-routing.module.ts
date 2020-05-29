@@ -31,7 +31,6 @@ const docsRoutes: Routes = [
     RouterModule.forChild(docsRoutes)
   ],
   providers: [
-    AuthGuard,
     DocsGuardService
   ],
   exports: [

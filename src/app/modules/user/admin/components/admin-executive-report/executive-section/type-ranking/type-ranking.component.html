@@ -42,6 +42,12 @@
           {{ 175 - section.abstract.length }}
         </span>
 
+        <div (click)="onClickPlay($event)" class="btn-play">
+          <img
+            src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+            alt=" ">
+        </div>
+
       </label>
     </div>
     <!-- /abstract -->
@@ -56,7 +62,7 @@
           <label>
             <input
               (change)="emitChanges()"
-              (keyup)="textColor('name' , (i + 1))"
+              (keyup)="textColor('name' , (i + 1)); checkVisibility(i)"
               [(ngModel)]="tag.name"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.ELEMENT_' + (i + 1) | translate"
               maxlength="20"
@@ -72,13 +78,13 @@
         <!-- /element -->
 
 
-        <!-- occurrence -->
+        <!-- legend -->
         <div class="m-right-10">
           <label>
             <input
               (change)="emitChanges()"
-              (keyup)="textColor('occurrence' , (i + 1))"
-              [(ngModel)]="tag.occurrence"
+              (keyup)="textColor('legend' , (i + 1))"
+              [(ngModel)]="tag.legend"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.LEGEND_' + (i + 1) | translate"
               maxlength="13"
               class="form-input"
@@ -86,21 +92,21 @@
 
             <span [ngStyle]="{ 'color': i === 0 ? legend1Color : i === 1 ? legend2Color : legend3Color }"
                   class="text-limit-wrapper">
-              {{ 13 - tag.occurrence.length }}
+              {{ 13 - tag.legend.length }}
             </span>
           </label>
         </div>
-        <!-- /occurrence -->
+        <!-- /legend -->
 
 
         <!-- color -->
         <div class="popover">
-          <div [ngStyle]="{ 'background-color': content.color }" class="shape is-circle is-sm"></div>
+          <div [ngStyle]="{ 'background-color': tag.color }" class="shape is-circle is-sm"></div>
           <div class="popover-container">
             <div class="card">
-              <div (click)="setColor('#2ECC71')" class="shape is-circle bg-success is-sm"></div>
-              <div (click)="setColor('#EA5858')" class="shape is-circle bg-alert is-sm"></div>
-              <div (click)="setColor('#4F5D6B')" class="shape is-circle bg-draft is-sm"></div>
+              <div (click)="setColor('#2ECC71', i)" class="shape is-circle bg-success is-sm"></div>
+              <div (click)="setColor('#EA5858', i)" class="shape is-circle bg-alert is-sm"></div>
+              <div (click)="setColor('#4F5D6B', i)" class="shape is-circle bg-draft is-sm"></div>
             </div>
           </div>
         </div>
@@ -122,12 +128,12 @@
     <div *ngFor="let tag of content.values; let i = index;" class="m-bottom-20 text-center">
 
       <p [ngStyle]="{ 'min-height': '24px', 'line-height': '24px' }" class="text-lg text-medium">
-        <ng-container *ngIf="tag.occurrence">{{ tag.occurrence }}</ng-container>
+        <ng-container *ngIf="tag.legend && tag.visibility">{{ tag.legend }}</ng-container>
       </p>
 
       <div [ngStyle]="{ 'min-height': '30px' }">
-        <div *ngIf="tag.name" [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
-          {{ tag. name }}
+        <div *ngIf="tag.visibility && tag.name" [ngStyle]="{ 'background-color': tag.color }" class="label is-rounded">
+          {{ tag.name }}
         </div>
       </div>
 

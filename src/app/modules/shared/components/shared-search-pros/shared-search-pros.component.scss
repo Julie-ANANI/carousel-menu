@@ -27,7 +27,7 @@
             .card-body {
               padding: 10px 5px;
               font-size: 12px;
-              color: $background-color;
+              color: $draft-color;
               font-weight: 600;
             }
 
@@ -154,10 +154,10 @@
     .analysis-content, .suggested-content, .profile-content {
       font-size: 14px;
       font-weight: 600;
-      color: $background-color;
+      color: $draft-color;
       padding-top: 2px;
       padding-bottom: 25px;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $border-default-color;
 
       ul {
         list-style: none;
@@ -224,7 +224,7 @@
           li {
             padding-right: 8px;
             margin-right: 8px;
-            border-right: 2px solid $border-color;
+            border-right: 2px solid $border-default-color;
           }
 
         }

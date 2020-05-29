@@ -13,13 +13,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundModule } from './modules/common/not-found/not-found.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SpinnerLoaderModule } from './modules/utility-components/spinner-loader/spinner-loader.module';
+import { SpinnerLoaderModule } from './modules/utility/spinner-loader/spinner-loader.module';
 
 // Services
 import { AuthService } from './services/auth/auth.service';
 import { ErrorService } from './services/error/error.service';
 import { LocalStorageService } from './services/localStorage/localStorage.service';
-import { TranslationService } from "./services/translation/translation.service";
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
 import { MouseService } from './services/mouse/mouse.service';
@@ -60,7 +59,6 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     AuthService,
     ErrorService,
     LocalStorageService,
-    TranslationService,
     TranslateNotificationsService,
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },

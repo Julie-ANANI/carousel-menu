@@ -1,7 +1,6 @@
 import {Innovation} from './innovation';
 import {Campaign} from './campaign';
 
-
 export interface Batch {
   _id?: string,
   innovation?: Innovation,

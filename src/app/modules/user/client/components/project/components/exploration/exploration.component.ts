@@ -15,7 +15,7 @@ import { first } from 'rxjs/operators';
 import { Config } from '../../../../../../../models/config';
 
 @Component({
-  selector: 'app-exploration',
+  selector: 'app-project-exploration',
   templateUrl: 'exploration.component.html',
   styleUrls: ['exploration.component.scss']
 })

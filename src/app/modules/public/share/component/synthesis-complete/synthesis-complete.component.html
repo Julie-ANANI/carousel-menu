@@ -5,9 +5,9 @@
   <ng-container *ngIf="notFound">
     <div class="no-found-wrapper">
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <app-message-template-1 [widthMax]="'360px'">
+        <message-template-1 [widthMax]="'360px'">
           <span [innerText]="'SHARE.NOT_FOUND'" translate></span>
-        </app-message-template-1>
+        </message-template-1>
       </div>
     </div>
   </ng-container>
@@ -32,7 +32,7 @@
 
           <!-- main page -->
           <div class="section-pad">
-            <app-shared-main-page [project]="innovation"></app-shared-main-page>
+            <app-project-front-page [data]="innovation"></app-project-front-page>
           </div>
 
           <!-- description -->
@@ -43,11 +43,6 @@
           <!-- targeting -->
           <div class="section-pad">
             <app-shared-targeting-detail [project]="innovation"></app-shared-targeting-detail>
-          </div>
-
-          <!-- executive report -->
-          <div class="section-pad">
-            <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
           </div>
 
         </div>

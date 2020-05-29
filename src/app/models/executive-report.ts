@@ -12,11 +12,22 @@ export interface ExecutiveReport {
   conclusion: string;
   operator: string;
   answers: string;
+  externalDiffusion: boolean;
 }
 
 export interface ExecutiveClient {
   name: string;
   email: string;
+  company: {
+    name: string;
+    logo: {
+      uri: string;
+      id: string;
+      alt: string;
+    };
+    topLevelDomain: string;
+    id: string;
+  };
 }
 
 export interface ExecutiveProfessional {
@@ -33,6 +44,7 @@ export interface ExecutiveObjective {
 export interface ExecutiveTargeting {
   abstract: string;
   countries: Array<string>;
+  countriesall: boolean;
 }
 
 export interface ExecutiveConclusion {
@@ -49,32 +61,33 @@ export interface ExecutiveSection {
 }
 
 export interface SectionKpi {
-  value: string;
-  name: string;
+  kpi: string;
+  legend: string;
   examples: string;
 }
 
 export interface SectionQuote {
   showQuotes: boolean;
-  quote: string;
-  author: {
-    name: string;
-    jobTitle: string;
-  };
+  quotation: string;
+  name: string;
+  job: string;
 }
 
 export interface SectionBar {
   showExamples: boolean;
   values: Array<{
     name: string;
-    value: number;
-    example: string;
+    percentage: number;
+    legend: string;
+    visibility: boolean;
   }>;
 }
 
 export interface SectionPie {
-  showPositive: boolean;
-  favorable: string;
+  favorable_answers: {
+    percentage: number;
+    visibility: boolean
+  };
   values: Array<{
     percentage: number;
     answers: number;
@@ -84,9 +97,10 @@ export interface SectionPie {
 }
 
 export interface SectionRanking {
-  color: string;
   values: Array<{
     name: string;
-    occurrence: string;
+    legend: string;
+    visibility: boolean;
+    color: string
   }>;
 }

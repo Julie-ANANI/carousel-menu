@@ -12,9 +12,9 @@
 
             <div class="section-light-pad rm-pad-bottom">
 
-              <app-message-template-1 [widthMax]="'337px'">
+              <message-template-1 [widthMax]="'337px'">
                 <span>{{ 'MARKET_REPORT.MESSAGE.EDITING' | translate }}</span>
-              </app-message-template-1>
+              </message-template-1>
 
             </div>
 
@@ -29,9 +29,9 @@
     <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
       <section class="section-pad rm-pad-bottom">
         <div class="column col-xs-12 col-11 col-mx-auto">
-          <app-message-template-1 [widthMax]="'337px'">
+          <message-template-1 [widthMax]="'337px'">
             <span>{{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}</span>
-          </app-message-template-1>
+          </message-template-1>
         </div>
       </section>
     </ng-container>
@@ -44,99 +44,6 @@
 
         <!-- answers section -->
         <section id="answer-wrapper" class="column col-xs-12 col-11 col-mx-auto">
-
-
-          <!-- main page goal -->
-          <ng-container *ngIf="adminSide">
-            <section class="section-pad" id="innovation-goal">
-              <div class="section-light-pad bg-white full-light">
-
-                <h2 class="title-primary">Objective</h2>
-
-                <div class="form-group relative">
-
-                  <label for="market-report-objective"></label>
-
-                  <textarea
-                    (blur)="updateExecutiveReport($event)"
-                    [(ngModel)]="innovation.executiveReport.objective"
-                    placeholder="Describe the objective of this innovation within 120 words."
-                    class="form-input"
-                    id="market-report-objective"
-                    maxlength="120"
-                    rows="5">
-                      </textarea>
-
-                  <div class="char-remaining" [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
-                    <span>{{ innovation.executiveReport?.objective.length | characterCountdown:120 }}</span>
-                  </div>
-
-                </div>
-
-              </div>
-            </section>
-          </ng-container>
-          <!-- /main page goal -->
-
-
-          <!-- executive report generation -->
-          <ng-container *ngIf="adminSide">
-            <section class="section-pad" id="executive-generate">
-              <div class="section-pad full d-flex executive-generate-wrapper bg-white">
-
-                <h2 class="title-primary">Executive Report</h2>
-
-                <div class="template-outer-wrapper d-flex">
-                  <div *ngFor="let template of executiveTemplates" class="card is-responsive">
-
-                    <img [src]="template.imageSrc" alt=" ">
-
-                    <div class="card-header text-center">
-                      <div class="btn btn-radio" [ngClass]="{ 'active': numberOfSections === template.value }"
-                           (click)="assignSectionValue($event, template.value)">
-                        <span>•</span>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div class="text-center" [ngStyle]="{ 'margin-top': '0.5rem' }">
-                  <button class="btn ghost-primary btn-sm"
-                          [disabled]="numberOfSections === 0 || innovation.executiveReport.totalSections > 0"
-                          (click)="generateExecutiveTemplate($event)">
-                    Valid template
-                  </button>
-                </div>
-
-              </div>
-            </section>
-          </ng-container>
-          <!-- /executive report generation -->
-
-
-          <!-- main page -->
-          <div id="main-page" class="d-none">
-            <app-shared-main-page [project]="innovation"></app-shared-main-page>
-          </div>
-          <!-- /main page -->
-
-
-          <!-- umi intro -->
-          <div *ngIf="domainName === 'umi'" class="d-none" id="umi-intro">
-            <img [src]="introSrc" alt="UMI">
-          </div>
-          <!-- /umi intro -->
-
-
-          <!-- executive report -->
-          <ng-container *ngIf="innovation.executiveReport && innovation.executiveReport.totalSections">
-            <section *ngIf="innovation.executiveReport.totalSections > 0 && !reportShared" id="executive-report" class="section-light-pad">
-              <app-shared-executive-report [project]="innovation"></app-shared-executive-report>
-            </section>
-          </ng-container>
-          <!-- /executive report -->
-
 
           <!-- key learning section -->
           <ng-container *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide">
@@ -158,7 +65,6 @@
           </ng-container>
           <!-- /key learning section -->
 
-
           <!-- origin comment and professional responses -->
           <section class="section-pad" id="origin-responses" [ngClass]="{ 'rm-pad-top': reportShared && innovation.marketReport?.keyLearning?.conclusion.length === 0 }">
             <div class="origin-wrapper bg-white text">
@@ -175,41 +81,6 @@
           </section>
           <!-- /origin comment and professional responses -->
 
-
-          <!-- professional abstract -->
-          <ng-container *ngIf="adminSide">
-            <section class="abstract-wrapper">
-              <div class="section-light-pad full-light bg-white text">
-
-                <h2 class="title-primary">Professional Abstract</h2>
-
-                <div class="form-group relative">
-
-                  <label for="market-report-professionals"></label>
-
-                  <textarea
-                    (blur)="updateExecutiveReport($event)"
-                    [(ngModel)]="innovation.executiveReport.professionalAbstract"
-                    placeholder="Describe the professional abstract of this innovation within 160 words."
-                    class="form-input"
-                    id="market-report-professionals"
-                    maxlength="160"
-                    rows="5">
-                      </textarea>
-
-                  <div class="char-remaining"
-                       [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
-                    <span>{{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}</span>
-                  </div>
-
-                </div>
-
-              </div>
-            </section>
-          </ng-container>
-          <!-- /professional abstract -->
-
-
           <!-- map -->
           <section class="section-light-pad" id="map">
             <div class="map-wrapper">
@@ -217,7 +88,6 @@
             </div>
           </section>
           <!-- /map -->
-
 
           <!-- professionals -->
           <section class="section-pad" id="professionals">
@@ -249,7 +119,6 @@
 
           </section>
           <!-- /professionals -->
-
 
           <!-- other question sections -->
           <section id="questions">
@@ -312,16 +181,26 @@
 
 
     <!-- insight preview -->
-    <sidebar [(template)]="sidebarTemplateValue">
+    <app-sidebar [(template)]="sidebarTemplateValue">
       <app-user-answer
         [(userAnswer)]="modalAnswer"
         [adminMode]="adminMode"
         [projectId]="innovation._id"
         [questions]="questions">
       </app-user-answer>
-    </sidebar>
+    </app-sidebar>
     <!-- /insight preview -->
 
+
+    <!-- save button -->
+    <div *ngIf="toBeSaved" class="btn-save-float-wrapper">
+      <button
+        (click)="saveInnovation($event)"
+        class="button is-primary animate-zoom is-3 is-rounded">
+        {{ 'COMMON.BUTTON.SAVE' | translate }}
+      </button>
+    </div>
+    <!-- /save button -->
 
   </div>
 </ng-container>

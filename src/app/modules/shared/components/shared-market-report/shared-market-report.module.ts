@@ -11,12 +11,10 @@ import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { SidebarUserAnswerModule } from '../../../sidebars/components/user-answer/sidebar-user-answer.module';
-import { CountryFlagModule } from '../../../utility-components/country-flag/country-flag.module';
-import { MessageTemplate1Module } from '../../../utility-components/messages/message-template-1/message-template-1.module';
-import { ModalModule } from '../../../utility-components/modals/modal/modal.module';
-import { SharedExecutiveReportModule } from '../shared-executive-report/shared-executive-report.module';
-import { PieChartModule } from '../../../utility-components/canvas/piechart/pie-chart.module';
-import { SharedMainPageModule } from '../shared-main-page/shared-main-page.module';
+import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
+import { MessageTemplate1Module } from '../../../utility/messages/message-template-1/message-template-1.module';
+import { ModalModule } from '../../../utility/modals/modal/modal.module';
+import { PieChartModule } from '../../../utility/canvas/piechart/pie-chart.module';
 
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
@@ -56,10 +54,8 @@ import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar
     CountryFlagModule,
     MessageTemplate1Module,
     ModalModule,
-    SharedExecutiveReportModule,
     SharedTagModule,
     PieChartModule,
-    SharedMainPageModule
   ],
   providers: [
     TagsFiltersService

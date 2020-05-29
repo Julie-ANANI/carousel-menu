@@ -217,6 +217,10 @@ export const ERROR = {
 
   'PROFESSIONAL': {
     'MERGE_ERROR': 'A professional with that e-mail already exists. Try to manually merge both professionals.<br>For more info, ask the tech team',
+  },
+
+  'JOB': {
+    'VIDEO': 'The request for the video is registered. We will email you once it has been completed.'
   }
 
 };

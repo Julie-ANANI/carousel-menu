@@ -10,6 +10,7 @@ import { ExplorationComponent } from './components/exploration/exploration.compo
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { DocumentsComponent } from './components/documents/documents.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
@@ -20,48 +21,49 @@ import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
-import { MessageTemplate1Module } from '../../../../utility-components/messages/message-template-1/message-template-1.module';
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
+import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SharedTextZoneModule } from '../../../../shared/components/shared-text-zone/shared-text-zone.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
-import { ModalEmptyModule } from '../../../../utility-components/modals/modal-empty/modal-empty.module';
+import { ModalEmptyModule } from '../../../../utility/modals/modal-empty/modal-empty.module';
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { AutoSuggestionModule } from '../../../../utility-components/auto-suggestion/auto-suggestion.module';
+import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ProjectRoutingModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    SidebarModule,
-    SharedProjectSettingsModule,
-    SharedProjectEditCardsModule,
-    SidebarInnovationPreviewModule,
-    TableModule,
-    SharedWorldmapModule,
-    SidebarUserAnswerModule,
-    SharedMarketReportModule,
-    MessageTemplate1Module,
-    ModalModule,
-    FormsModule,
-    SharedTextZoneModule,
-    ObjectivesSecondaryModule,
-    ModalEmptyModule,
-    ObjectivesPrimaryModule,
-    AngularMyDatePickerModule,
-    AutoSuggestionModule,
-    NgxPageScrollModule
-  ],
+    imports: [
+        CommonModule,
+        ProjectRoutingModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        SidebarModule,
+        SharedProjectSettingsModule,
+        SharedProjectEditCardsModule,
+        SidebarInnovationPreviewModule,
+        TableModule,
+        SharedWorldmapModule,
+        SidebarUserAnswerModule,
+        SharedMarketReportModule,
+        MessageTemplate1Module,
+        ModalModule,
+        FormsModule,
+        SharedTextZoneModule,
+        ObjectivesSecondaryModule,
+        ModalEmptyModule,
+        ObjectivesPrimaryModule,
+        AngularMyDatePickerModule,
+        AutoSuggestionModule,
+        NgxPageScrollModule
+    ],
   declarations: [
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
     SurveyComponent,
     HistoryProjectComponent,
-    SettingsComponent
+    SettingsComponent,
+    DocumentsComponent
   ],
   exports: [
     ProjectComponent

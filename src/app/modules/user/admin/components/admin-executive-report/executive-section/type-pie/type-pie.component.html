@@ -43,6 +43,12 @@
           {{ 175 - section.abstract.length }}
         </span>
 
+        <div (click)="onClickPlay($event)" class="btn-play">
+          <img
+            src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+            alt=" ">
+        </div>
+
       </label>
     </div>
     <!-- /abstract -->
@@ -53,9 +59,9 @@
       <label class="form-checkbox">
         <input
           (change)="toggleResponses()"
-          [disabled]="!content.favorable"
-          [checked]="content.showPositive"
-          [value]="content.showPositive"
+          [disabled]="!content.favorable_answers.percentage"
+          [checked]="content.favorable_answers.visibility"
+          [value]="content.favorable_answers.visibility"
           type="checkbox">
         <i class="form-icon"></i> {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.SHOW_RESPONSES' | translate }}
       </label>
@@ -122,8 +128,8 @@
       <h4 class="m-no-bottom text-center">{{ section.title }}</h4>
 
       <h5 [ngStyle]="{ 'min-height': '27px' }" class="text-lg text-normal m-no-bottom">
-        <ng-container *ngIf="content.showPositive">
-          {{ content.favorable }} {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.FAVOURABLE' | translate }}
+        <ng-container *ngIf="content.favorable_answers.visibility">
+          {{ content.favorable_answers.percentage }}% {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.FAVOURABLE' | translate }}
         </ng-container>
       </h5>
 
@@ -131,7 +137,7 @@
 
     <div class="d-flex justify-center m-bottom-20">
       <div class="w-300">
-        <piechart-executive [pieChart]="pieChart"></piechart-executive>
+        <app-utility-piechart-executive [pieChart]="pieChart"></app-utility-piechart-executive>
       </div>
     </div>
 

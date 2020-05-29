@@ -3,7 +3,7 @@ import { ExecutiveSection, SectionKpi } from '../../../../../../../models/execut
 import { CommonService } from '../../../../../../../services/common/common.service';
 
 @Component({
-  selector: 'type-kpi',
+  selector: 'app-admin-section-type-kpi',
   templateUrl: './type-kpi.component.html',
   styleUrls: ['./type-kpi.component.scss']
 })
@@ -11,36 +11,24 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 export class TypeKpiComponent {
 
   @Input() set section(value: ExecutiveSection) {
-
-    this._section = {
-      questionId: value.questionId || '',
-      questionType: value.questionType || '',
-      abstract: value.abstract || '',
-      title: value.title || '',
-      content: {
-        value: <SectionKpi>value.content && (<SectionKpi>value.content).value || '',
-        name: <SectionKpi>value.content && (<SectionKpi>value.content).name || '',
-        examples: <SectionKpi>value.content && (<SectionKpi>value.content).examples || ''
-      }
-    };
-
+    this._section = value;
     this._content = <SectionKpi>this._section.content;
-
     this.textColor('title');
     this.textColor('abstract');
     this.textColor('kpi');
     this.textColor('legend');
     this.textColor('examples');
-
   }
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
 
+  @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
+
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionKpi = {
-    value: '',
-    name: '',
+    kpi: '',
+    legend: '',
     examples: ''
   };
 
@@ -73,11 +61,11 @@ export class TypeKpiComponent {
         break;
 
       case 'kpi':
-        this._kpiColor = CommonService.getLimitColor(this._content.value.length, 4);
+        this._kpiColor = CommonService.getLimitColor(this._content.kpi.length, 4);
         break;
 
       case 'legend':
-        this._legendColor = CommonService.getLimitColor(this._content.name.length, 82);
+        this._legendColor = CommonService.getLimitColor(this._content.legend.length, 82);
         break;
 
       case 'examples':
@@ -85,6 +73,11 @@ export class TypeKpiComponent {
         break;
 
     }
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this.playSection.emit();
   }
 
   get section(): ExecutiveSection {

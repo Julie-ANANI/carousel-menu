@@ -5,8 +5,8 @@ import { FormsModule } from "@angular/forms";
 
 import { AdminWorkflowsLibraryComponent } from "./admin-workflows-library.component";
 import { AdminEditWorkflowModule } from "../../admin-edit-workflow/admin-edit-workflow.module";
-import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
-import { MessageTemplate1Module } from '../../../../../utility-components/messages/message-template-1/message-template-1.module';
+import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
+import { MessageTemplate1Module } from '../../../../../utility/messages/message-template-1/message-template-1.module';
 
 
 @NgModule({

@@ -1,0 +1,48 @@
+@import "../../../../style/framework/src/variables";
+
+#spinner-loader {
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: column;
+  z-index: 88881;
+
+  .loader-wrapper {
+    animation: rotate 3s linear infinite;
+    height: 50px;
+    transform-origin: bottom center;
+
+    .circle {
+      animation: grow 1.5s linear infinite;
+      background-color: $bg-community-color;
+      border-radius: 50%;
+      display: inline-block;
+      margin: -8px;
+      height: 40px;
+      width: 40px;
+      transform: scale(0);
+
+      &:nth-of-type(2) {
+        animation-delay: .75s;
+        background-color: $bg-primary-color;
+      }
+
+    }
+
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes grow {
+    50% {
+      transform: scale(1);
+    }
+  }
+
+}

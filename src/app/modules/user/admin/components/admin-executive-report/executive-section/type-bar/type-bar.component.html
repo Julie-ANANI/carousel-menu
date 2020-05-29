@@ -43,6 +43,12 @@
           {{ 175 - section.abstract.length }}
         </span>
 
+        <div (click)="onClickPlay($event)" class="btn-play">
+          <img
+            src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+            alt=" ">
+        </div>
+
       </label>
     </div>
     <!-- /abstract -->
@@ -99,7 +105,7 @@
               <input
                 (change)="emitChanges()"
                 (keyup)="textColor('example' , (i + 1))"
-                [(ngModel)]="bar.example"
+                [(ngModel)]="bar.legend"
                 [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.BAR_SECTION.EXAMPLE_' + (i + 1) | translate"
                 maxlength="40"
                 class="form-input"
@@ -107,7 +113,7 @@
 
               <span [ngStyle]="{ 'color': i === 0 ? example1Color : i === 1 ? example2Color : example3Color }"
                     class="text-limit-wrapper">
-                {{ 40 - bar.example.length }}
+                {{ 40 - bar.legend.length }}
               </span>
 
             </label>
@@ -121,8 +127,8 @@
         <div>
           <label class="value-wrapper">
             <input
-              (change)="emitChanges()"
-              [(ngModel)]="bar.value"
+              (change)="checkVisibility(i)"
+              [(ngModel)]="bar.percentage"
               [attr.placeholder]="'40'"
               maxlength="4"
               class="form-input"
@@ -151,12 +157,15 @@
       </p>
 
       <div [ngStyle]="{ 'height': '8px' }">
-        <progress-bar [width]="bar.value ? (bar.value + '%') : 0 + '%'" [height]="'8px'"></progress-bar>
+        <app-utility-progress-bar
+          [width]="bar.percentage ? (bar.percentage + '%') : 0 + '%'"
+          [height]="'8px'">
+        </app-utility-progress-bar>
       </div>
 
       <p [ngStyle]="{ 'height': '21px' }" class="text-ellipsis">
-        <ng-container *ngIf="bar.example && content.showExamples">
-          {{ bar.example }}
+        <ng-container *ngIf="bar.legend && content.showExamples">
+          {{ bar.legend }}
         </ng-container>
       </p>
 

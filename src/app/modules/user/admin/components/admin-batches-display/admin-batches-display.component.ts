@@ -3,7 +3,7 @@ import { DashboardService } from '../../../../../services/dashboard/dashboard.se
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovCard } from '../../../../../models/innov-card';

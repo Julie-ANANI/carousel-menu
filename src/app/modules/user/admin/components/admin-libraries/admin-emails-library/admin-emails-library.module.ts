@@ -8,8 +8,8 @@ import { AdminEmailsLibraryComponent } from "./admin-emails-library.component";
 import { SidebarModule } from "../../../../../sidebars/templates/sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
 import { SidebarWorkflowFormModule } from '../../../../../sidebars/components/workflow-form/sidebar-workflow-form.module';
-import { ModalModule } from '../../../../../utility-components/modals/modal/modal.module';
-import { MessageTemplate1Module } from '../../../../../utility-components/messages/message-template-1/message-template-1.module';
+import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
+import { MessageTemplate1Module } from '../../../../../utility/messages/message-template-1/message-template-1.module';
 
 @NgModule({
   imports: [

@@ -14,6 +14,7 @@ const projectRoutes: Routes = [
       { path: 'exploration', pathMatch: 'full' },
       { path: 'synthesis', pathMatch: 'full' },
       { path: 'settings', pathMatch: 'full' },
+      { path: 'documents', pathMatch: 'full' },
       {
         path: 'setup',
         canActivateChild: [AuthGuard],

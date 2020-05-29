@@ -1,7 +1,7 @@
 @import "../../../../../style/framework/src/variables";
 
 .videos-upload {
-  border: $border-width-lg dashed $border-color;
+  border: $border-width-lg dashed $border-default-color;
   position: relative;
   border-radius: $border-radius;
   min-height: 12.5rem;

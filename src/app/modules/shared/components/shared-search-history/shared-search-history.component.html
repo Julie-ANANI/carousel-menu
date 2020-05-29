@@ -30,24 +30,24 @@
   </ng-container>
 </div>
 
-<shared-table
+<app-shared-table
   [(config)]="config"
   [data]="tableInfos"
   (editRow)="openSidebar($event)"
   (performAction)="onClickActions($event)"
-></shared-table>
+></app-shared-table>
 
 <!-- sidebar to request details -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-sidebar-search-history
     [request]="selectedRequest">
   </app-sidebar-search-history>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar to advanced search -->
 
 
 <!-- MODAL : Ajout de pros à une campagne -->
-<app-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
+<app-utility-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
 
   <section class="modal-body">
 
@@ -83,4 +83,4 @@
     </button>
   </footer>
 
-</app-modal>
+</app-utility-modal>

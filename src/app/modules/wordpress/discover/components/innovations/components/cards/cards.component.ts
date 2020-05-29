@@ -3,7 +3,7 @@ import { Innovation } from '../../../../../../../models/innovation';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { ActivatedRoute } from '@angular/router';
-import { Pagination } from '../../../../../../utility-components/paginations/interfaces/pagination';
+import { Pagination } from '../../../../../../utility/paginations/interfaces/pagination';
 
 @Component({
   selector: 'app-cards',

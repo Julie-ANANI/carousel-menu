@@ -20,7 +20,7 @@
       .card-body {
         margin-top: 0;
         padding: 0.75rem;
-        border-bottom: $border-width solid $border-color;
+        border-bottom: $border-width solid $border-default-color;
 
         &:first-child {
           padding-top: 0;

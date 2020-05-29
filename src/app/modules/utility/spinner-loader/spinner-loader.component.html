@@ -1,0 +1,16 @@
+<div *ngIf="spinnerState" class="flex-centered bg-page fixed" id="spinner-loader">
+
+  <div *ngIf="isUmiDomain" class="m-bottom-20">
+    <img
+      [ngStyle]="{ 'height': '41px', 'width': '139px' }"
+      [src]="logoSrc"
+      alt="UMI"
+      class="img-responsive">
+  </div>
+
+  <div class="loader-wrapper">
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+</div>

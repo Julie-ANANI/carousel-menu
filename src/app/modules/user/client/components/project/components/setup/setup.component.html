@@ -150,16 +150,16 @@
 
 
   <!-- innovation view sidebar -->
-  <sidebar [(template)]="sidebarValue">
+  <app-sidebar [(template)]="sidebarValue">
     <sidebar-innovation-preview [projectCard]="innovationToView"></sidebar-innovation-preview>
-  </sidebar>
+  </app-sidebar>
   <!-- /innovation view sidebar -->
 
 </ng-container>
 
 
 <!-- modal to ask user to sure about submitting the project -->
-<app-modal [(showModal)]="submitModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+<app-utility-modal [(showModal)]="submitModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
 
   <section class="modal-body">
     <span>{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL.CONTENT' | translate }}</span>
@@ -170,7 +170,7 @@
     <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to ask user to sure about submitting the project -->
 
 

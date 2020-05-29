@@ -7,7 +7,7 @@
   font-weight: $font-weight-medium;
   font-size: $font-size-xs;
   padding: $unit-2 $unit-4;
-  color: $text-primary-dark-color;
+  color: $text-dark-color;
   background-color: #F5F5F5;
   margin: $unit-1;
   border-radius: $border-width-lg;
@@ -38,7 +38,7 @@
   }
 
   &.is-answer {
-    @include label-variant($text-primary-dark-color, #F8F4F4);
+    @include label-variant($text-dark-color, #F8F4F4);
   }
 
   &.is-info {
@@ -46,7 +46,7 @@
   }
 
   &.is-draft {
-    @include label-color-variant($bg-background-color);
+    @include label-color-variant($bg-draft-color);
   }
 
   &.is-success {
@@ -107,7 +107,7 @@
 
   // Todo remove this below.
   &.label-tag {
-    @include label-variant($light-color, $background-color);
+    @include label-variant($white-color, $draft-color);
 
     .fas {
       font-size: $font-icon-xs;
@@ -134,7 +134,7 @@
   }
 
   &.label-answer {
-    @include label-variant($text-primary-dark-color, #F8F4F4);
+    @include label-variant($text-dark-color, #F8F4F4);
     font-size: $font-size-sm;
   }
 

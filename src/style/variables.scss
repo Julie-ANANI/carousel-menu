@@ -6,10 +6,11 @@ $disabled-color: #DBDBDB !default;
 $meta-color: #97A4B1 !default;
 $dark-color: #333333 !default;
 $background-color: #4F5D6B !default;
-$border-color: #E0E0E0 !default;
+$border-default-color: #E0E0E0 !default;
 $hover-background-color: #FFF9EB !default;
-$light-color: #FFFFFF !default;
+$white-color: #FFFFFF !default;
 $disabled-text-color: #A9A9A9 !default
+$draft-color: #4F5D6B !default;
 
 
 // control variables
@@ -19,10 +20,10 @@ $warning-color: #FFB300 !default;
 
 
 // Other colors
-$body-bg-color: $light-color;
+$body-bg-color: $white-color;
 $body-font-color: $dark-color;
 $link-color: $primary-color;
-$bg-light-color: $light-color !default;
+$bg-white-color: $white-color !default;
 $bg-overlay: rgba(0,0,0,0.75) !default;
 $bg-dropdown-color: #F2F2F2 !default;
 $border-meta-color: $meta-color !default;
@@ -40,7 +41,7 @@ $text-disabled-color: $disabled-text-color !default;
 $form-placeholder-color: #AAB2BD !default;
 $form-input-color: #262831 !default;
 $form-label-color: $dark-color !default;
-$form-border-color: $border-color !default;
+$form-border-color: $border-default-color !default;
 $form-primary-color: $primary-color !default;
 $form-alert-color: $alert-color !default;
 $form-success-color: $success-color !default;
@@ -58,7 +59,7 @@ $label-answer-color: #F8F4F4 !default;
 // button variables
 $button-disabled-text-color: $disabled-text-color !default;
 $button-disabled-bg-color: $disabled-color !default;
-$button-border-color: $border-color !default;
+$button-border-color: $border-default-color !default;
 
 
 // box shadow variables

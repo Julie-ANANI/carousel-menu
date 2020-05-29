@@ -1,7 +1,7 @@
 <!-- section fetching error -->
 <ng-container *ngIf="fetchingError">
   <div class="section-pad">
-    <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
+    <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-utility-error-template-1>
   </div>
 </ng-container>
 <!-- /section fetching error -->
@@ -10,9 +10,9 @@
 <!-- section no result -->
 <ng-container *ngIf="!fetchingError && total === 0">
   <div class="section-pad">
-    <app-message-template-1 [widthMax]="'342px'">
+    <message-template-1 [widthMax]="'342px'">
       <span>Do not have any ambassadors to show.</span>
-    </app-message-template-1>
+    </message-template-1>
   </div>
 </ng-container>
 <!-- /section no result -->
@@ -20,20 +20,20 @@
 
 <!-- section table -->
 <ng-container *ngIf="!fetchingError && total > 0">
-  <shared-table
+  <app-shared-table
     [(config)]="config"
     [data]="tableInfos"
     (editRow)="onClickEdit($event)"
     (removeRows)="onClickRemove($event)"
     (performAction)="performActions($event)"
     (selectRows)="selectPro($event)">
-  </shared-table>
+  </app-shared-table>
 </ng-container>
 <!-- /section table -->
 
 
 <!-- modal to ask the operator to confirm to delete the ambassador -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     <ng-container *ngIf="context && context.deleteType === 'Campaign'">
@@ -67,4 +67,4 @@
     <button (click)="deleteAmbassador($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>

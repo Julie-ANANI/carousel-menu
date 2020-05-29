@@ -7,15 +7,15 @@ import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { SpinnerService } from '../../../../../services/spinner/spinner';
+import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Mission } from '../../../../../models/mission';
 
 @Component({
-  selector: 'project',
+  selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
@@ -34,12 +34,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
     { route: 'settings', iconClass: 'fas fa-cog', name: 'SETTINGS_TAB', tracking: 'gtm-tabs-settings' },
     { route: 'setup', iconClass: 'fas fa-pencil-alt', name: 'SETUP_TAB', tracking: 'gtm-tabs-description' },
     { route: 'exploration', iconClass: 'fas fa-globe', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration' },
-    { route: 'synthesis', iconClass: 'fas fa-signal', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis' }
+    { route: 'synthesis', iconClass: 'fas fa-signal', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis' },
+    { route: 'documents', iconClass: 'fas fa-file-download', name: 'DOCUMENTS_TAB', tracking: 'gtm-tabs-documents' }
   ];
 
   private _isLoading = true;
 
-  private _currentPage: string;
+  private _currentPage = '';
 
   private _saveChanges = false;
 

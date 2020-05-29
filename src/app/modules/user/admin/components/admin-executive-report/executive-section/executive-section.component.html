@@ -15,10 +15,20 @@
       <div>
         <h5 class="text-lg">{{ 'ADMIN_EXECUTIVE_REPORT.SYNTHESIS_SECTIONS' | translate }}</h5>
         <ul>
-          <li (click)="selectQuestion(question._id)"
-              *ngFor="let question of questions"
-              [ngClass]="{ 'text-primary': question._id === section.questionId }">
+          <li
+            (click)="selectQuestion(question._id)"
+            *ngFor="let question of questions"
+            [id]="question._id"
+            [ngClass]="{ 'text-primary': question._id === section.questionId }">
             {{ question.title | multiling:reportLang }}
+          </li>
+          <li
+            (click)="selectQuestion('quesCustom_'+sectionIndex)"
+            [id]="'quesCustom_'+sectionIndex"
+            [ngClass]="('quesCustom_'+sectionIndex) === section.questionId ? 'text-primary' : 'text-notify'"
+            class="text-medium m-top-10">
+            <i class="fas fa-plus-circle m-right-1"></i>
+            {{ 'ADMIN_EXECUTIVE_REPORT.CUSTOM_SECTION' | translate }}
           </li>
         </ul>
       </div>
@@ -61,35 +71,55 @@
 
       <!-- type KPI -->
       <div *ngSwitchCase="'KPI'">
-        <type-kpi (sectionChange)="onSectionUpdate($event)" [section]="section"></type-kpi>
+        <app-admin-section-type-kpi
+          (playSection)="onClickPlay(section)"
+          (sectionChange)="onSectionUpdate($event)"
+          [section]="section">
+        </app-admin-section-type-kpi>
       </div>
       <!-- /type KPI -->
 
 
       <!-- type QUOTE -->
       <div *ngSwitchCase="'QUOTE'">
-        <type-quote (sectionChange)="onSectionUpdate($event)" [section]="section"></type-quote>
+        <app-admin-section-type-quote
+          (playSection)="onClickPlay(section)"
+          (sectionChange)="onSectionUpdate($event)"
+          [section]="section">
+        </app-admin-section-type-quote>
       </div>
       <!-- /type QUOTE -->
 
 
       <!-- type BAR -->
       <div *ngSwitchCase="'BAR'">
-        <type-bar (sectionChange)="onSectionUpdate($event)" [section]="section"></type-bar>
+        <app-admin-section-type-bar
+          (playSection)="onClickPlay(section)"
+          (sectionChange)="onSectionUpdate($event)"
+          [section]="section">
+        </app-admin-section-type-bar>
       </div>
       <!-- /type BAR -->
 
 
       <!-- type RANKING -->
       <div *ngSwitchCase="'RANKING'">
-        <type-ranking (sectionChange)="onSectionUpdate($event)" [section]="section"></type-ranking>
+        <app-admin-section-type-ranking
+          (playSection)="onClickPlay(section)"
+          (sectionChange)="onSectionUpdate($event)"
+          [section]="section">
+        </app-admin-section-type-ranking>
       </div>
       <!-- /type RANKING -->
 
 
       <!-- type PIE -->
       <div *ngSwitchCase="'PIE'">
-        <type-pie (sectionChange)="onSectionUpdate($event)" [section]="section"></type-pie>
+        <app-admin-section-type-pie
+          (playSection)="onClickPlay(section)"
+          (sectionChange)="onSectionUpdate($event)"
+          [section]="section">
+        </app-admin-section-type-pie>
       </div>
       <!-- /type PIE -->
 

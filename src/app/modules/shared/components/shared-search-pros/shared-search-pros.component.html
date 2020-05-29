@@ -218,20 +218,20 @@
 
 
 <!-- sidebar to advanced search -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-sidebar-search
     [params]="params"
     (paramsChange)="updateSettings($event)"
     [geography]="geography"
     (geographyChange)="onGeographyChange($event)">
   </app-sidebar-search>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar to advanced search -->
 
 
 
 <!-- MODAL : import a professionals list -->
-<app-modal [(showModal)]="showModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
+<app-utility-modal [(showModal)]="showModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
 
   <section class="modal-body"> <!-- import button -->
     <div class="form-group">
@@ -261,7 +261,7 @@
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 
 <!--<div class="columns">
   <div class="column col-5 col-ml-auto">

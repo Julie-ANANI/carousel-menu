@@ -20,7 +20,7 @@ import { Objective, ObjectivesPrincipal } from '../../../../../models/static-dat
  */
 
 @Component({
-  selector: 'objectives-primary',
+  selector: 'app-objectives-primary',
   templateUrl: './objectives-primary.component.html',
   styleUrls: ['./objectives-primary.component.scss']
 })

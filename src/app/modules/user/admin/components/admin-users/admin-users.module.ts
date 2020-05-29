@@ -9,8 +9,8 @@ import { TableModule } from '../../../../table/table.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../../sidebars/components/user-form/sidebar-user-form.module';
-import { ModalModule } from '../../../../utility-components/modals/modal/modal.module';
-import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { ModalModule } from '../../../../utility/modals/modal/modal.module';
+import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 
 @NgModule({
   imports: [

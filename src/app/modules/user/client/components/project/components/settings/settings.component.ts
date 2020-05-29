@@ -10,7 +10,7 @@ import { ClientProject } from '../../../../../../../models/client-project';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 import { MissionService } from '../../../../../../../services/mission/mission.service';
 import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { emailRegEx } from '../../../../../../../utils/regex';
@@ -27,7 +27,7 @@ interface Section {
 }
 
 @Component({
-  selector: 'settings',
+  selector: 'app-project-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
@@ -139,7 +139,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           case 'SECONDARY_OBJECTIVE':
             section.isVisible = !!(this._mission.objective.principal[this._currentLang] && (this._innovation.status === 'EDITING'
-              || this._innovation.status === 'SUBMITTED'));
+              || this._innovation.status === 'SUBMITTED')) || !!(this._mission.objective.secondary.length
+              || this._mission.objective.comment);
             section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 

@@ -1,17 +1,17 @@
 <section id="pros-list-component">
-  <shared-table
+  <app-shared-table
     [(config)]="config"
     [data]="tableInfos"
     (editRow)="onClickEdit($event)"
     (removeRows)="deleteProsModal($event)"
     (performAction)="performActions($event)"
     (selectRowAction)="selectPro($event)">
-  </shared-table>
+  </app-shared-table>
 </section>
 
 
 <!-- section sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
 
   <ng-container *ngIf="isProfessionalForm">
     <app-user-form
@@ -31,11 +31,11 @@
     </app-tags>
   </ng-container>
 
-</sidebar>
+</app-sidebar>
 
 
 <!-- modal to ask admin to sure about deleting the professional(s) -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}
@@ -46,5 +46,5 @@
     <button class="button is-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to ask admin to sure about deleting the professional(s) -->

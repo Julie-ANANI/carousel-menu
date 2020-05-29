@@ -5,6 +5,7 @@
 
     <!-- abstract -->
     <div>
+
       <label>
 
         <textarea
@@ -12,7 +13,7 @@
           (keyup)="textColor()"
           [(ngModel)]="config.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PROFESSIONAL.ABSTRACT' | translate"
-          [ngStyle]="{ 'height': '140px' }"
+          [ngStyle]="{ 'height': '150px' }"
           maxlength="258"
           class="form-input"
           type="text">
@@ -22,7 +23,22 @@
           {{ 258 - config.abstract.length }}
         </span>
 
+        <div (click)="onClickPlay($event)" class="btn-play">
+          <img
+            src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+            alt=" ">
+        </div>
+
       </label>
+
+      <!-- insert snippet button -->
+      <div class="insert-snippet">
+        <span (click)="onClickSnippet($event)">
+          {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
+        </span>
+      </div>
+      <!-- /insert snippet button -->
+
     </div>
     <!-- /abstract -->
 
@@ -58,7 +74,7 @@
         <!-- flag -->
         <div [ngStyle]="{ 'height': '26px' }" class="m-bottom-1">
           <ng-container *ngIf="pro.country">
-            <app-country-flag [country]="pro.country" [width]="22" [height]="15"></app-country-flag>
+            <app-utility-country-flag [country]="pro.country" [width]="22" [height]="15"></app-utility-country-flag>
           </ng-container>
         </div>
         <!-- /flag -->

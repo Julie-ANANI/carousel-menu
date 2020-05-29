@@ -39,7 +39,7 @@ legend {
   outline: none;
   padding: 14.5px;
   position: relative;
-  background: $bg-light-color none;
+  background: $bg-white-color none;
   max-width: 100%;
   line-height: $line-height-sm;
 
@@ -98,7 +98,7 @@ textarea {
   width: 100%;
   outline: none;
   position: relative;
-  background: $bg-light-color none;
+  background: $bg-white-color none;
   max-width: 100%;
   align-items: center;
   line-height: $line-height;
@@ -152,11 +152,11 @@ textarea {
 // Form element: Checkbox and Radio
 .form-checkbox, .form-radio, .form-switch {
   display: flex;
-  line-height: $line-height-sm;
+  line-height: 1.2;
   font-weight: $font-weight-normal;
-  font-size: 0.75rem;
+  font-size: 15px;
   align-items: center;
-  padding:  $layout-spacing 1.25rem;
+  padding:  $layout-spacing 25px;
   position: relative;
 
   input {
@@ -170,7 +170,7 @@ textarea {
 
   .form-icon {
     @include control-transition();
-    border: $border-width-lg solid $border-color;
+    border: $border-width-lg solid $border-default-color;
     cursor: pointer;
     display: inline-block;
     position: absolute;
@@ -184,8 +184,8 @@ textarea {
   padding-right: 0;
 
   .form-icon {
-    background: $bg-light-color none;
-    border-color: $border-color;
+    background: $bg-white-color none;
+    border-color: $border-default-color;
     background-clip: padding-box;
     border-radius: 16px;
     height: 15px;
@@ -234,7 +234,7 @@ textarea {
   }
 
   .form-icon {
-    background: $bg-light-color none;
+    background: $bg-white-color none;
     height: $unit-4;
     left: 0;
     width: $unit-4;
@@ -262,7 +262,7 @@ textarea {
     &:checked + .form-icon, &.active + .form-icon {
 
       &::before {
-        background: $bg-light-color none;
+        background: $bg-white-color none;
         border-radius: 50%;
         content: "";
         height: 4px;
@@ -310,7 +310,7 @@ textarea {
       border-color: $border-primary-color;
 
       &::before {
-        background: $bg-light-color;
+        background: $bg-white-color;
         content: "";
         height: 2px;
         left: 50%;
@@ -339,7 +339,7 @@ textarea {
      border-color: $border-primary-color;
 
      ~.icon {
-       color: $text-background-color;
+       color: $text-draft-color;
      }
 
    }
@@ -492,7 +492,7 @@ textarea {
   .has-error &, &.is-error {
 
     .form-icon {
-      background: $bg-light-color none;
+      background: $bg-white-color none;
       border-color: $border-alert-color;
 
       &::before {
@@ -545,7 +545,7 @@ textarea {
   &:disabled, &.disabled {
     background: $form-disabled-color none;
     color: $form-disabled-text-color;
-    border-color: $border-color;
+    border-color: $border-default-color;
     cursor: not-allowed;
     opacity: .5;
   }
@@ -598,7 +598,7 @@ input {
 
   &[readonly] {
     background: $form-disabled-color none;
-    border-color: $border-color;
+    border-color: $border-default-color;
   }
 
 }
@@ -617,7 +617,7 @@ input {
   margin-bottom: 0;
   list-style: none;
   z-index: 2;
-  background-color: $bg-light-color;
+  background-color: $bg-white-color;
   border-radius: $border-radius;
   overflow: auto;
   max-height: 350px;
@@ -631,7 +631,7 @@ input {
     padding: $layout-spacing;
     font-size: $font-size-sm;
     margin-top: $unit-1;
-    color: $text-primary-dark-color;
+    color: $text-dark-color;
 
     &:hover, &.is-focused {
       background:  $bg-menu-item-color;

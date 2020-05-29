@@ -5,6 +5,7 @@
 
     <!-- conclusion -->
     <div>
+
       <label>
 
         <textarea
@@ -12,7 +13,7 @@
           (keyup)="textColor()"
           [(ngModel)]="config.conclusion"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.CONCLUSION.CONCLUSION' | translate"
-          [ngStyle]="{ 'height': '140px' }"
+          [ngStyle]="{ 'height': '160px' }"
           maxlength="270"
           class="form-input"
           type="text">
@@ -22,7 +23,22 @@
           {{ 270 - config.conclusion.length }}
         </span>
 
+        <div (click)="onClickPlay($event)" class="btn-play">
+          <img
+            src="https://res.cloudinary.com/umi/image/upload/v1589878292/app/default-images/pictos/picto-play-blue.svg"
+            alt=" ">
+        </div>
+
       </label>
+
+      <!-- insert snippet button -->
+      <div class="insert-snippet">
+        <span (click)="onClickSnippet($event)">
+          {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
+        </span>
+      </div>
+      <!-- /insert snippet button -->
+
     </div>
     <!-- /conclusion -->
 

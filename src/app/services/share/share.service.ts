@@ -72,42 +72,12 @@ export class ShareService {
     if (userLang === 'en') {
       subject = `Interesting Innovation - ${ShareService._getTitle(innovationCard)}`;
 
-      message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\nURL - 
+      message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\nURL -
       ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle
       (innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
     }
 
     return `mailto:?subject=${subject}&body=${message}`;
-
-  }
-
-  /***
-   * this is to get the url to contact us.
-   * @param innovationCard
-   * @param operatorEmail
-   * @param userLang
-   */
-  public static contactOperator(innovationCard: InnovCard, operatorEmail: string = 'contact@umi.us', userLang: string = 'en'): string {
-    let subject: string;
-    let message: string;
-
-    if (userLang === 'fr' ) {
-      subject = `Contactez-nous - ${ShareService._getTitle(innovationCard)}`;
-
-      message = encodeURI(`Veuillez ajouter votre message ici.\r\n\r\n-------------------------------------\r\nDétails de l'innovation :
-      \r\nURL - ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitre - ${ShareService
-        ._getTitle(innovationCard)}\r\n\r\nSommaire - ${ShareService._getSummary(innovationCard)}`);
-    }
-
-    if (userLang === 'en') {
-      subject = `Contacting us - ${ShareService._getTitle(innovationCard)}`;
-
-      message = encodeURI(`Please add your message here.\r\n\r\n-------------------------------------\r\nInnovation Details: \r\nURL - 
-      ${environment.clientUrl}/discover/${innovationCard.innovation_reference}/${innovationCard.lang}\r\n\r\nTitle - ${ShareService._getTitle
-      (innovationCard)}\r\n\r\nSummary - ${ShareService._getSummary(innovationCard)}`);
-    }
-
-    return `mailto:${operatorEmail}?subject=${subject}&body=${message}`;
 
   }
 

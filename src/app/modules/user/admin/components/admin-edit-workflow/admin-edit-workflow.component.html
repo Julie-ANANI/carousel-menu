@@ -19,13 +19,13 @@
   </div>
 
   <!-- section table -->
-  <shared-table [data]="tableInfos" (editRow)="editEmail($event)" [(config)]="config"></shared-table>
+  <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [(config)]="config"></app-shared-table>
 
 </section>
 
 
 <!-- modal to delete the scenario -->
-<app-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'EDIT_WORKFLOW.MODAL.CONTENT' | translate }}
@@ -36,17 +36,17 @@
     <button class="button is-primary" (click)="deleteScenario()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to delete the scenario -->
 
 
 <!-- sidebar to edit workflow -->
-<sidebar [(template)]="more">
+<app-sidebar [(template)]="more">
   <app-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
   </app-workflow>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar to edit workflow -->

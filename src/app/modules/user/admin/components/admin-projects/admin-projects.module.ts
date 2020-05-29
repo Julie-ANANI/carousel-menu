@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminProjectsComponent } from './admin-projects.component';
 
-import { ErrorTemplate1Module } from '../../../../utility-components/errors/error-template-1/error-template-1.module';
+import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminBatchesDisplayModule } from '../admin-batches-display/admin-batches-display.module';

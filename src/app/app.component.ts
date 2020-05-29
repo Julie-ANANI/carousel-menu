@@ -1,4 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject, HostListener, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
@@ -6,6 +6,8 @@ import { environment } from '../environments/environment';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,7 @@ import { MouseService } from './services/mouse/mouse.service';
   templateUrl: './app.component.html'
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   private _notificationsOptions: Options = {
     position: ['bottom', 'right'],
@@ -26,7 +28,9 @@ export class AppComponent implements OnInit {
     clickToClose: true
   };
 
-  private _startMouseEvent: boolean;
+  private _startMouseEvent = false;
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService,
@@ -44,15 +48,18 @@ export class AppComponent implements OnInit {
       });
     }
 
-    this._mouseService.getStartEvent().subscribe((value: boolean) => {
-      this._startMouseEvent = value;
-    });
-
   }
 
 
   ngOnInit(): void {
+    this._mouseEvent();
     //this._setSwellRTScript();
+  }
+
+  private _mouseEvent() {
+    this._mouseService.getStartEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value: boolean) => {
+      this._startMouseEvent = value;
+    });
   }
 
   @HostListener('mouseup', ['$event'])
@@ -118,13 +125,13 @@ export class AppComponent implements OnInit {
     document.head.appendChild( linkElement );
   }*/
 
-
   get notificationsOptions(): Options {
     return this._notificationsOptions;
   }
 
-  get startMouseEvent(): boolean {
-    return this._startMouseEvent;
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

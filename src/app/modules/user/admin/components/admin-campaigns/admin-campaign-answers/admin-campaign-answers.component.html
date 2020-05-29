@@ -59,7 +59,7 @@
         <!-- fetching error campaign answers -->
         <ng-container *ngIf="fetchingError">
           <div class="a-c-a-error-wrapper d-flex align-center">
-            <app-error-template-1 [errorMessage]="'CAMPAIGNS.ERROR_MESSAGE.FETCHING'" [ngStyle]="{ 'width': '100%' }"></app-error-template-1>
+            <app-utility-error-template-1 [errorMessage]="'CAMPAIGNS.ERROR_MESSAGE.FETCHING'" [ngStyle]="{ 'width': '100%' }"></app-utility-error-template-1>
           </div>
         </ng-container>
         <!-- /fetching error campaign answers -->
@@ -114,12 +114,12 @@
 
           <!-- table -->
           <div class="p-top-25">
-            <shared-table
+            <app-shared-table
               (editRow)="onClickEdit($event)"
               (performAction)="onClickActions($event)"
               [(config)]="config"
               [data]="table">
-            </shared-table>
+            </app-shared-table>
           </div>
           <!-- /table -->
 
@@ -136,7 +136,7 @@
 </section>
 
 <!-- sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-user-answer
     [sidebarState]="sidebarValue.animate_state"
     [adminMode]="adminMode"
@@ -145,5 +145,5 @@
     [questions]="questions"
     (answerUpdated)="updateAnswer($event)">
   </app-user-answer>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar insight preview -->

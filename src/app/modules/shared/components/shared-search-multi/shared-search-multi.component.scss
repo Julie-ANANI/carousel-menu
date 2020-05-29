@@ -60,7 +60,7 @@
   }
 
   .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {
-    border-color: $border-color;
+    border-color: $border-default-color;
   }
 
   &.table-view {

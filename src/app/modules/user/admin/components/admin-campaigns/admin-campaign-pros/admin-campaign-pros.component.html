@@ -14,7 +14,7 @@
         <!-- fetching error -->
         <ng-container *ngIf="fetchingError">
           <div class="a-c-p-error-wrapper d-flex align-center">
-            <app-error-template-1 [errorMessage]="'CAMPAIGNS.ERROR_MESSAGE.FETCHING_PROFESSIONALS'"></app-error-template-1>
+            <app-utility-error-template-1 [errorMessage]="'CAMPAIGNS.ERROR_MESSAGE.FETCHING_PROFESSIONALS'"></app-utility-error-template-1>
           </div>
         </ng-container>
         <!-- /fetching error -->
@@ -102,18 +102,18 @@
 
 
 <!-- sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-user-form
     (finalProfessionalData)="onClickSave($event)"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-user-form>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar -->
 
 
 <!-- modal -->
-<app-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_IMPORT'">
+<app-utility-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_IMPORT'">
 
   <section class="modal-body">
 
@@ -138,7 +138,7 @@
     <button (click)="onClickConfirm()" [disabled]="!originCampaign.length" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal -->
 
 

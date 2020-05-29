@@ -5,7 +5,7 @@
   position: relative;
 
   &[data-content]::after {
-    background: $bg-light-color;
+    background: $bg-white-color;
     color: $text-meta-color;
     content: attr(data-content);
     display: inline-block;
@@ -18,7 +18,7 @@
 }
 
 .divider {
-  border-top: $border-width solid $border-color;
+  border-top: $border-width solid $border-default-color;
   height: $border-width;
   margin: $unit-2 0;
   text-align: center;
@@ -38,7 +38,7 @@
   padding: $unit-4;
 
   &::before {
-    border-left: $border-width solid $border-color;
+    border-left: $border-width solid $border-default-color;
     bottom: $unit-2;
     content: "";
     display: block;
@@ -90,7 +90,7 @@
 
 // Todo this remove
 .hr {
-  border: $border-width solid $border-color;
+  border: $border-width solid $border-default-color;
   border-radius: $border-radius;
 }
 

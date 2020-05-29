@@ -6,14 +6,14 @@ import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
 import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
-import { Pagination } from '../../utility-components/paginations/interfaces/pagination';
+import { Pagination } from '../../utility/paginations/interfaces/pagination';
 import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
 import { ConfigService } from '../../../services/config/config.service';
 
 import * as moment from 'moment';
 
 @Component({
-  selector: 'shared-table',
+  selector: 'app-shared-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })

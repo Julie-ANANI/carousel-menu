@@ -5,7 +5,7 @@ import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AnswerService {
 
   constructor(private _http: HttpClient) {
@@ -62,7 +62,7 @@ export class AnswerService {
     window.open(url);
   }
 
-  public getExportUrl(innovationId: string, client: Boolean, anonymous?: Boolean): string {
+  public getExportUrl(innovationId: string, client: boolean, anonymous?: boolean): string {
     const query = [];
     if (client !== undefined) {
       query.push(`client=${!!client}`);
@@ -102,4 +102,9 @@ export class AnswerService {
   public updateLinkingStatus(arrayAnswers: Array<string>, newStatus: string): Observable<any> {
     return this._http.post('/answer/update/followUp', {status: newStatus, answers: arrayAnswers});
   }
+
+  public exportAsPDF(innovationId: string, lang: string) {
+    return `${environment.apiUrl}/reporting/job/answers/${innovationId}?lang=${lang}&print=1`;
+  }
+
 }

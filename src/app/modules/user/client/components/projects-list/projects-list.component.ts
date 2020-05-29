@@ -3,20 +3,20 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { Innovation } from '../../../../../models/innovation';
-import { Pagination } from '../../../../utility-components/paginations/interfaces/pagination';
+import { Pagination } from '../../../../utility/paginations/interfaces/pagination';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { SpinnerService } from '../../../../../services/spinner/spinner';
+import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 
 @Component({
-  selector: 'projects-list',
+  selector: 'app-projects-list',
   templateUrl: 'projects-list.component.html',
   styleUrls: ['projects-list.component.scss'],
   animations: [

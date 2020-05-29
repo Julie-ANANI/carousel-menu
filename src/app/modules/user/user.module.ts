@@ -8,27 +8,25 @@ import { HeaderModule } from '../common/header/header.module';
 
 import { UserComponent } from './user.component';
 
-import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { ShareService } from '../../services/share/share.service';
-import { AnswerService } from '../../services/answer/answer.service';
-import { SpinnerLoaderModule } from '../utility-components/spinner-loader/spinner-loader.module';
+import { SpinnerLoaderModule } from '../utility/spinner-loader/spinner-loader.module';
+import { BannerModule } from '../utility/banner/banner.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    UserRoutingModule,
-    FooterModule,
-    HeaderModule,
-    SpinnerLoaderModule
+      CommonModule,
+      TranslateModule.forChild(),
+      UserRoutingModule,
+      FooterModule,
+      HeaderModule,
+      SpinnerLoaderModule,
+      BannerModule,
   ],
   declarations: [
     UserComponent,
   ],
   providers: [
-    InnovationResolver,
     ShareService,
-    AnswerService
   ]
 })
 

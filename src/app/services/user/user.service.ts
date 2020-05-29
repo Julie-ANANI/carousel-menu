@@ -56,8 +56,9 @@ export class UserService {
     return this._http.get('/user/me');
   }
 
-  public get(userId: string): Observable<User> {
-    return this._http.get<User>('/user/' + userId);
+  // todo check for the config in the back
+  public get(userId: string, config?: any): Observable<User> {
+    return this._http.get<User>('/user/' + userId, {params: config});
   }
 
   public getAll(config?: {[header: string]: string | string[]}): Observable<Array<User>> {

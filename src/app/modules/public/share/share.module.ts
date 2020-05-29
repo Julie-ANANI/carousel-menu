@@ -11,7 +11,6 @@ import { SynthesisCompleteModule } from './component/synthesis-complete/synthesi
 import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderModule } from '../../common/header/header.module';
 
-import { AnswerService } from '../../../services/answer/answer.service';
 import { ShareService } from '../../../services/share/share.service';
 
 
@@ -30,7 +29,6 @@ import { ShareService } from '../../../services/share/share.service';
     ShareComponent,
   ],
   providers: [
-    AnswerService,
     ShareService
   ]
 })

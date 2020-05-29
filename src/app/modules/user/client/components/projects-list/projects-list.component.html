@@ -87,7 +87,7 @@
 </div>
 
 <!-- delete project confirmation modal -->
-<app-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
@@ -102,5 +102,5 @@
     </button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /delete project confirmation modal -->

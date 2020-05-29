@@ -21,7 +21,7 @@
   }
 
   .modal-overlay {
-    @include absolute-full-page();
+    @include absolute-full();
     background: $bg-overlay-dark-color;
   }
 
@@ -35,7 +35,7 @@
     width: 100%;
     margin: 0 auto;
     z-index: 1;
-    animation: .2s slideInDown;
+    animation: .2s modal-slide-down;
     max-height: calc(100vh - 50px);
 
     .modal-header {
@@ -48,7 +48,7 @@
       flex-shrink: 0;
 
       .modal-title {
-        color: $light-color;
+        color: $white-color;
         flex-grow: 1;
         flex-shrink: 0;
         line-height: $line-height-sm;
@@ -60,7 +60,7 @@
 
     .modal-body {
       display: block;
-      background-color: $bg-light-color;
+      background-color: $bg-white-color;
       flex-grow: 1;
       flex-shrink: 1;
       padding: $unit-5;
@@ -76,7 +76,7 @@
       flex-shrink: 0;
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
-      background-color: $bg-light-color;
+      background-color: $bg-white-color;
 
       .modal-cancel {
         @include button-outline-variant($bg-meta-color);

@@ -68,14 +68,14 @@
             <!-- SECONDARY_OBJECTIVE -->
             <div *ngSwitchCase="'SECONDARY_OBJECTIVE'">
               <div [ngStyle]="{'max-width': '755px'}">
-                <objectives-secondary
+                <app-objectives-secondary
                   (objectiveCommentChange)="onChangeComment($event, section)"
                   (objectivesChange)="onChangeSecondaryObjective($event, section)"
                   [isEnabledComment]="section.isEditable"
                   [isEnabledOptions]="enableSecondaryObjectives(section)"
                   [objectiveComment]="mission.objective.comment"
                   [objectives]="mission.objective.secondary">
-                </objectives-secondary>
+                </app-objectives-secondary>
               </div>
             </div>
             <!-- /SECONDARY_OBJECTIVE -->
@@ -358,7 +358,7 @@
 
 
 <!-- modals -->
-<modal-empty
+<app-utility-modal-empty
   *ngIf="activeModalSection.name && showModal"
   [(showModal)]="showModal"
   [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? '963px' : '640px'">
@@ -388,7 +388,7 @@
 
       <!-- PRINCIPAL_OBJECTIVE -->
       <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'" class="p-top-10 p-bottom-10">
-        <objectives-primary [(objective)]="selectedValue"></objectives-primary>
+        <app-objectives-primary [(objective)]="selectedValue"></app-objectives-primary>
       </div>
       <!-- /PRINCIPAL_OBJECTIVE -->
 
@@ -431,12 +431,12 @@
     <!-- /footer -->
 
   </div>
-</modal-empty>
+</app-utility-modal-empty>
 <!-- /modals -->
 
 
 <!-- delete modal -->
-<modal-empty *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
+<app-utility-modal-empty *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
 
   <!-- body -->
   <section class="modal-body">
@@ -491,5 +491,5 @@
   </footer>
   <!-- /footer -->
 
-</modal-empty>
+</app-utility-modal-empty>
 <!-- /delete modal -->

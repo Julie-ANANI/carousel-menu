@@ -1,11 +1,32 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as moment from 'moment';
+import { TranslateNotificationsService } from '../notifications/notifications.service';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
+  /***
+   * this function is to return the color based on the length and limit.
+   * @param textLength
+   * @param limit
+   */
+  static getLimitColor(textLength: number, limit: number): string {
+
+    const length = limit - textLength;
+
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < (limit / 2)) {
+      return '#F0AD4E';
+    } else {
+      return '#2ECC71';
+    }
+
+  }
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateNotificationsService: TranslateNotificationsService) {}
 
   /*
    * range function (inspired from Python)
@@ -52,11 +73,9 @@ export class CommonService {
               });
               break;
           }
-        }
-        else if (isObject(accVal) && isObject(objVal)) {
+        } else if (isObject(accVal) && isObject(objVal)) {
           acc[key] = this.deepMerge(accVal, objVal);
-        }
-        else {
+        } else {
           acc[key] = objVal;
         }
       });
@@ -87,7 +106,7 @@ export class CommonService {
   public copyToClipboard(url: string) {
     if (url) {
       if (isPlatformBrowser(this._platformId)) {
-        let textbox = document.createElement('textarea');
+        const textbox = document.createElement('textarea');
         textbox.style.position = 'fixed';
         textbox.style.left = '0';
         textbox.style.top = '0';
@@ -100,25 +119,6 @@ export class CommonService {
         document.body.removeChild(textbox);
       }
     }
-  }
-
-  /***
-   * this function is to return the color based on the length and limit.
-   * @param textLength
-   * @param limit
-   */
-  public static getLimitColor(textLength: number, limit: number): string {
-
-    const length = limit - textLength;
-
-    if (length <= 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < (limit/2)) {
-      return '#F0AD4E';
-    } else {
-      return '#2ECC71';
-    }
-
   }
 
   /***
@@ -135,6 +135,20 @@ export class CommonService {
 
     return futureMonth.format('YYYY-MM-DD');
 
+  }
+
+  /***
+   * play the audio sound.
+   * @param file
+   */
+  public playAudio(file: any) {
+    const sound = new Audio('data:audio/wav;base64,' + file);
+    sound.play().then( () => {
+      console.log('Played successfully!');
+    }).catch((err) => {
+      console.error(err);
+      this._translateNotificationsService.error('Error', 'The audio could not be played at the moment.');
+    });
   }
 
 }

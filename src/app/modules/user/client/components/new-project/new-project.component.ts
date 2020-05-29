@@ -11,11 +11,11 @@ import { ClientProjectService } from '../../../../../services/client-project/cli
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'new-project',
+  selector: 'app-new-project',
   templateUrl: 'new-project.component.html',
   styleUrls: ['new-project.component.scss']
 })

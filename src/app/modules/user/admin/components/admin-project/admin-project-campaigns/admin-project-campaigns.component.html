@@ -11,11 +11,11 @@
     <!-- section no campaign -->
     <ng-container *ngIf="campaigns.length === 0">
       <div class="section-pad rm-pad-bottom">
-        <app-message-template-1 [widthMax]="'354px'">
+        <message-template-1 [widthMax]="'354px'">
           {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
           <br>
           {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
-        </app-message-template-1>
+        </message-template-1>
       </div>
     </ng-container>
 
@@ -60,7 +60,7 @@
 
 
 <!-- modal to ask the admin to delete the campaign -->
-<app-modal [(showModal)]="activateModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="activateModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'COMMON.CAMPAIGN.DELETE_BOARD.CONTENT' | translate }}
@@ -71,17 +71,17 @@
     <button (click)="onClickSubmit()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to ask the admin to delete the campaign -->
 
 
 <!-- sidebar to edit campaign -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-campaign-form
     (campaignOutput)="updateCampaign($event)"
     [campaign]="selectCampaign"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-campaign-form>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar to edit campaign -->

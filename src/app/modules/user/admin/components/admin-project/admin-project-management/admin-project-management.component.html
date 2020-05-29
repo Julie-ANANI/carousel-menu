@@ -768,7 +768,7 @@
 </div>
 
 <!-- Sidebars -->
-<sidebar
+<app-sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-innovation-form
     *ngIf="isInnovationSidebar"
@@ -794,7 +794,7 @@
                  [tagType]="tagTypes"
                  (newTags)="addTags($event)">
   </app-tags>
-</sidebar>
+</app-sidebar>
 
 
 <!-- Modal to ask admin to sure about deleting the project

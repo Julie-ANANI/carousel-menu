@@ -3,10 +3,10 @@
 #admin-community-project-component {
 
   .section-header {
-    background-color: $bg-light-color;
+    background-color: $bg-white-color;
 
     .name-wrapper {
-      border-bottom: $border-width solid $border-color;
+      border-bottom: $border-width solid $border-default-color;
       flex-wrap: wrap;
 
       h1 {

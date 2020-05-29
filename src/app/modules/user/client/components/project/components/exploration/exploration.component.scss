@@ -25,14 +25,14 @@
     .status-wrapper {
       min-height: 11rem;
       width: 330px;
-      background-color: $background-color;
+      background-color: $draft-color;
       border-radius: $border-width-xl;
       padding: 1.25rem;
       margin-right: 1.25rem;
       margin-bottom: 1.25rem;
 
       h4 {
-        color: $light-color;
+        color: $white-color;
         font-size: 1.1rem;
         margin-bottom: $unit-5;
         font-weight: $font-weight-normal;
@@ -43,7 +43,7 @@
         justify-content: space-between;
         align-items: center;
         font-size: $font-size-sm;
-        color: $light-color;
+        color: $white-color;
       }
 
       .fa-check, .fa-times {
@@ -113,7 +113,7 @@
         .svg-text {
           font-size: $font-size-xs;
           font-weight: 600;
-          fill: $light-color;
+          fill: $white-color;
         }
 
       }

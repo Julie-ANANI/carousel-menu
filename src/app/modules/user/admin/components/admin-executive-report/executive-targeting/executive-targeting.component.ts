@@ -1,20 +1,21 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ExecutiveTargeting } from '../../../../../../models/executive-report';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { SnippetService } from '../../../../../../services/snippet/snippet.service';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 
 @Component({
-  selector: 'executive-targeting',
+  selector: 'app-admin-executive-targeting',
   templateUrl: './executive-targeting.component.html',
   styleUrls: ['./executive-targeting.component.scss']
 })
 
 export class ExecutiveTargetingComponent {
 
+  @Input() lang = 'en';
+
   @Input() set config(value: ExecutiveTargeting) {
-    this._config = {
-      abstract: value.abstract,
-      countries: value.countries || []
-    };
+    this._config = value;
     this.textColor();
   }
 
@@ -24,15 +25,26 @@ export class ExecutiveTargetingComponent {
 
   private _targetingColor = '';
 
-  constructor() { }
+  constructor(private _executiveReportFrontService: ExecutiveReportFrontService) { }
 
-  public emitChanges(event: Event) {
-    event.preventDefault();
+  public emitChanges() {
     this.configChange.emit(this._config);
   }
 
   public textColor() {
     this._targetingColor = CommonService.getLimitColor(this._config.abstract.length, 148);
+  }
+
+  public onClickPlay(event: Event) {
+    event.preventDefault();
+    this._executiveReportFrontService.audio(this._config.abstract, this.lang);
+  }
+
+  public onClickSnippet(event: Event) {
+    event.preventDefault();
+    this._config.abstract = SnippetService.storyboard('TARGETING', this.lang);
+    this.textColor();
+    this.emitChanges();
   }
 
   get config(): ExecutiveTargeting {

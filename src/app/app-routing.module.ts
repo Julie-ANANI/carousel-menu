@@ -5,7 +5,7 @@ import { ExtraOptions, Routes, RouterModule } from '@angular/router';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AdHocAuthGuard } from "./guards/adhoc-auth-guard.service";
-import { ShareSynthesisGuard } from './modules/public/share/guards/share-synthesis-guard.service';
+import { ShareSynthesisGuard } from './guards/share-synthesis-guard.service';
 
 // Components
 import { NotFoundComponent } from "./modules/common/not-found/not-found.component";
@@ -90,12 +90,6 @@ const config: ExtraOptions = {
   ],
   exports: [
     RouterModule
-  ],
-  providers: [ // /!\ Ne mettre ici que les service liés au routage (utilisés par un Guard), sinon les mettre dans app.module.ts
-    AuthGuard,
-    NonAuthGuard,
-    AdHocAuthGuard,
-    ShareSynthesisGuard
   ]
 })
 

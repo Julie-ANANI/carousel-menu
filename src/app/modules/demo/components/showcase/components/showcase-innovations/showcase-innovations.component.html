@@ -57,7 +57,7 @@
 
 
 <!-- modal to select innovations -->
-<app-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
+<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
 
   <section class="modal-body">
     <div class="modal-card-wrapper d-flex text-center">
@@ -89,5 +89,5 @@
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-modal>
+</app-utility-modal>
 <!-- /modal to select innovations -->

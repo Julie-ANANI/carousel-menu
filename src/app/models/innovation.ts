@@ -2,16 +2,32 @@ import { InnovationSettings } from './innov-settings';
 import { InnovCard } from './innov-card';
 import { QuestionReport } from './market-report';
 import { Media } from './media';
-// import { Preset } from './preset';
 import { Tag } from './tag';
 import { User } from './user.model';
 import { Mission } from './mission';
 import { ClientProject } from './client-project';
+import { Question } from './question';
 
 export interface InnovationMetadataValues {
   preparation?: number;
   campaign?: number;
   delivery?: number;
+}
+
+// not use anymore. It's for the innovations old executive report.
+export interface OldExecutiveReport {
+  totalSections: number;
+  goal?: string;
+  professionalAbstract: string;
+  sections: Array<{quesId: string}>;
+  conclusion: string;
+  questions: Array<Question>;
+  lang: 'en' | 'fr';
+  operator: User;
+  abstracts: [{
+    quesId: string,
+    value: string
+  }];
 }
 
 export interface Innovation {
@@ -64,17 +80,8 @@ export interface Innovation {
     date?: any
   };
 
-  // not use anymore
-  executiveReport?: {
-    totalSections?: number,
-    goal?: string,
-    professionalAbstract?: string,
-    sections?: Array<{quesId: string}>,
-    abstracts?: [{
-      quesId: string,
-      value: string
-    }]
-  };
+  // not use anymore. It's for the innovations old executive report.
+  executiveReport?: OldExecutiveReport;
 
   executiveReportId?: string;
   clientProject?: ClientProject | string;

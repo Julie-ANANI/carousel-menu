@@ -26,12 +26,17 @@
             margin-top: 2px;
 
             &:hover {
-              color: $text-primary-color;
+              color: $text-dark-color;
               cursor: pointer;
+
+              &:not(.inactive) {
+                text-decoration: underline;
+              }
+
             }
 
             &.inactive {
-              color: $text-primary-dark-color;
+              color: $text-dark-color;
               cursor: not-allowed;
               opacity: 0.7;
             }

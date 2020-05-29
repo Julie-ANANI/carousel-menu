@@ -4,7 +4,7 @@
   <ng-container *ngIf="fetchingError">
     <div class="section-pad">
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <app-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-error-template-1>
+        <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-utility-error-template-1>
       </div>
     </div>
   </ng-container>
@@ -484,14 +484,14 @@
 
           <!-- emails -->
           <div *ngIf="emailTableInfo._total !== 0" class="section-pad rm-pad-bottom">
-            <shared-table [config]="configEmail" [data]="emailTableInfo" (editRow)="onClickEmailShow($event)"></shared-table>
+            <app-shared-table [config]="configEmail" [data]="emailTableInfo" (editRow)="onClickEmailShow($event)"></app-shared-table>
           </div>
           <!-- emails -->
 
 
           <!-- participated in projects -->
           <div *ngIf="projectTableInfo._total !== 0" class="section-pad rm-pad-bottom">
-            <shared-table [config]="configProject" [data]="projectTableInfo" (editRow)="onClickProjectShow($event)"></shared-table>
+            <app-shared-table [config]="configProject" [data]="projectTableInfo" (editRow)="onClickProjectShow($event)"></app-shared-table>
           </div>
           <!-- participated in projects -->
 

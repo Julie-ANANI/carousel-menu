@@ -12,14 +12,12 @@ import { CardsComponent } from './components/innovations/components/cards/cards.
 import { ShareService } from '../../../services/share/share.service';
 import { FilterService } from '../../public/discover/components/innovations/services/filter.service';
 
-import { InnovationResolver } from '../../../resolvers/innovation.resolver';
-
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
 import { TagsService } from '../../../services/tags/tags.service';
-import { ModalModule } from '../../utility-components/modals/modal/modal.module';
-import { ErrorTemplate1Module } from '../../utility-components/errors/error-template-1/error-template-1.module';
-import { PaginationTemplate2Module } from '../../utility-components/paginations/pagination-template-2/pagination-template-2.module';
+import { ModalModule } from '../../utility/modals/modal/modal.module';
+import { ErrorTemplate1Module } from '../../utility/errors/error-template-1/error-template-1.module';
+import { PaginationTemplate2Module } from '../../utility/paginations/pagination-template-2/pagination-template-2.module';
 
 @NgModule({
   imports: [
@@ -33,7 +31,6 @@ import { PaginationTemplate2Module } from '../../utility-components/paginations/
     PaginationTemplate2Module
   ],
   providers:[
-    InnovationResolver,
     ShareService,
     TagsService,
     FilterService

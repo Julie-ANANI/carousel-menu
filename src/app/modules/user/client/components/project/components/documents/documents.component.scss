@@ -1,0 +1,99 @@
+@import "../../../../../../../../style/framework/src/variables";
+@import "../../../../../../../../style/framework/src/mixins";
+
+#documents {
+
+  .form-group {
+    max-width: 990px;
+
+    .form-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+  }
+
+  .documents-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: -45px;
+
+    .document {
+      width: 282px;
+      text-align: center;
+      margin: 0 35px 30px 35px;
+
+      .card {
+        min-height: 257px;
+        border-width: 3px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+        margin: 0 0 20px 0;
+        padding: 30px;
+
+        &:hover {
+
+          .document-cover {
+            display: flex;
+          }
+
+          &.inactive {
+            border-color: rgba(58, 66, 77, 0.8);
+            cursor: not-allowed;
+          }
+
+        }
+
+        .card-image {
+          width: 135px;
+          height: 76px;
+          box-shadow: -2px 2px 7px 0 rgba(0,0,0,0.28);
+
+          img {
+            border-radius: 1px;
+          }
+
+        }
+
+        .card-header {
+          padding: 17px 0 12px 0;
+        }
+
+        .document-cover {
+          @include absolute-full();
+          transition: background 0.3s ease-in-out;
+          font-size: 16px;
+          color: $text-white-color;
+          font-weight: $font-weight-bold;
+          display: none;
+          flex-direction: column;
+
+          img {
+            width: 30px;
+            height: 39px;
+            margin-bottom: 10px;
+          }
+
+          &:hover {
+            background: rgba(58, 66, 77, 0.8);
+          }
+
+        }
+
+      }
+
+      .document-buttons {
+
+        .button {
+          margin-bottom: 10px;
+          padding: 10px 20px;
+        }
+
+      }
+
+    }
+
+  }
+
+}

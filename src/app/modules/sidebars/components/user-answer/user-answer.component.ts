@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
-import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 
 @Component({
   selector: 'app-user-answer',
