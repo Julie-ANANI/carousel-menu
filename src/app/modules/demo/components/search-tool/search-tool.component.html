@@ -275,7 +275,7 @@
 
 
 <!-- sidebar for history -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-sidebar-search-tool
     [sidebarState]="sidebarValue.animate_state"
     [searchFieldValue]="searchFieldOutput"
@@ -284,5 +284,5 @@
     (onUpload)="uploadRequest($event)"
     (onLoadRequest)="loadRequest($event)">
   </app-sidebar-search-tool>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar for history -->

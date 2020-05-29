@@ -23,8 +23,6 @@ import { SpinnerLoaderModule } from '../../utility/spinner-loader/spinner-loader
   ],
   declarations: [
     LoginComponent,
-  ],
-  providers: [
   ]
 })
 
