@@ -102,13 +102,13 @@
 
 
 <!-- sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-user-form
     (finalProfessionalData)="onClickSave($event)"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-user-form>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar -->
 
 

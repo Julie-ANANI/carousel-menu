@@ -5,7 +5,7 @@
   .stat {
 
     .stat-container:first-child {
-      background-color: $secondary-color;
+      background-color: $bg-secondary-color;
     }
 
     .stat-container:nth-child(2) {
@@ -21,18 +21,18 @@
     }
 
     .stat-heading, .stat-value {
-      color: $white-color;
+      color: $text-white-color;
     }
 
     .stat-sub-heading {
       opacity: 0.7;
-      color: $white-color;
+      color: $text-white-color;
     }
 
   }
 
   .toggle {
-    padding: 0.75rem 0;
+    padding: 15px 0;
 
     .form-group {
       margin-bottom: 0;
@@ -58,8 +58,8 @@
     }
 
     .incomplete {
-      background-color: $alert-color;
-      border-color: $alert-color;
+      background-color: $bg-alert-color;
+      border-color: $border-alert-color;
 
       .fa-check {
         visibility: hidden;
@@ -68,32 +68,26 @@
     }
 
     .complete {
-      background-color: $success-color;
-      border-color: $success-color;
+      background-color: $bg-success-color;
+      border-color: $border-success-color;
 
       .fa-check {
         visibility: visible;
-        color: $white-color;
+        color: $text-white-color;
       }
 
     }
 
   }
 
-
-  .notify-wrapper{
-    margin-top: 0.5rem;
-  }
-
   .section-status {
 
     .form-group {
-      margin-bottom: 1.25rem;
       display: inline-flex;
-      margin-right: 1.25rem;
+      margin-right: 25px;
 
       .form-switch {
-        color: $meta-color;
+        color: $text-meta-color;
       }
 
     }
@@ -101,7 +95,7 @@
   }
 
   .card {
-    margin-bottom: 1.5rem;
+    margin-bottom: 30px;
     background: transparent;
     border: none;
 
@@ -110,12 +104,13 @@
       .card-title {
         display: inline-flex;
         text-align: center;
+        align-items: center;
         font-size: $font-size-md;
-        color: $meta-color;
+        color: $text-meta-color;
       }
 
       .form-switch {
-        color: $meta-color;
+        color: $text-meta-color;
       }
 
     }

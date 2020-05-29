@@ -2,13 +2,13 @@
   <button class="btn btn-primary" (click)="excludeEmails()">{{'BLACKLISTS.BLACKLIST-EMAILS-DOMAINS' | translate}}</button>
 </div>
 
-<shared-table
+<app-shared-table
   [data]="emailInfos"
   [(config)]="config"
   (editRow)="editBlacklist($event)">
-</shared-table>
+</app-shared-table>
 
-<sidebar
+<app-sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-emails-form
     [sidebarState]="sidebarState"
@@ -16,4 +16,4 @@
     [editBlacklistEmail]="currentEmailToBlacklist" (editBlacklist)="blacklistEditionFinish($event)"
     (emailsToBlacklists)="addEmailsToBlacklistFinish($event)">
   </app-emails-form>
-</sidebar>
+</app-sidebar>

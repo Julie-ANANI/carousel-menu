@@ -8,7 +8,7 @@ import {User} from '../../../../../../../models/user.model';
 import {InnovationService} from '../../../../../../../services/innovation/innovation.service';
 import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../../../../services/error/error-front';
+import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {CommonService} from '../../../../../../../services/common/common.service';
 import {environment} from '../../../../../../../../environments/environment';
 import {AnswerService} from '../../../../../../../services/answer/answer.service';

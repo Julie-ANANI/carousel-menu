@@ -11,7 +11,7 @@ import { ExecutiveReportService } from './executive-report.service';
 import { TranslateNotificationsService } from '../notifications/notifications.service';
 import { first} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../error/error-front';
+import { ErrorFrontService } from '../error/error-front.service';
 import { CommonService } from '../common/common.service';
 
 @Injectable({ providedIn: 'root' })

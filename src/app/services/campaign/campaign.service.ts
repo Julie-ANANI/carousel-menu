@@ -6,7 +6,7 @@ import { Batch } from '../../models/batch';
 import { Campaign } from '../../models/campaign';
 import { Professional } from '../../models/professional';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CampaignService {
 
   constructor(private _http: HttpClient) {}
@@ -23,8 +23,8 @@ export class CampaignService {
     return this._http.put('/campaign/' + campaignObj._id, campaignObj);
   }
 
-  public getAll(config: {[header: string]: string | string[]}): Observable<Array<Campaign>> {
-    return this._http.get<Array<Campaign>>('/campaign/', {params: config});
+  public getAll(config: {[header: string]: string | string[]}): Observable<any> {
+    return this._http.get<any>('/campaign/', {params: config});
   }
 
   public getPros(campaignId: string, config: {[header: string]: string | string[]}): Observable<{result: Array<Professional>, _metadata: any}> {
@@ -47,8 +47,8 @@ export class CampaignService {
     return this._http.put(`/campaign/${campaignId}/stats`, {});
   }
 
-  public messagesStats(campaignId: string): Observable<any> {
-    return this._http.get(`/campaign/${campaignId}/messagesStats`);
+  public messagesStats(campaignId: string): Observable<Array<Batch>> {
+    return this._http.get<Array<Batch>>(`/campaign/${campaignId}/messagesStats`);
   }
 
   public createNewBatch(campaignId: string, batch: Batch): Observable<any> {
@@ -81,8 +81,8 @@ export class CampaignService {
     return this._http.post(`/campaign/${campaign}/updateBatchesStats`, {});
   }
 
-  public updateBatch(batch: Batch): Observable<any> {
-    return this._http.put(`/batch/${batch._id}`, batch);
+  public updateBatch(batch: Batch): Observable<Batch> {
+    return this._http.put<Batch>(`/batch/${batch._id}`, batch);
   }
 
   public updateBatchStatus(batchId: string, status: number): Observable<any> {

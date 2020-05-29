@@ -1,0 +1,134 @@
+<div class="p-top-25" id="sidebar-batch-form">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+    <form [formGroup]="formData" autocomplete="off" (ngSubmit)="onSubmit()">
+
+      <!-- save / send -->
+      <div class="p-bottom-25 text-right">
+
+        <!-- templateType !== 'NEW_BATCH' -->
+        <button
+          *ngIf="templateType === 'EDIT_BATCH'"
+          type="submit"
+          class="button is-community is-sm"
+          id="btn-save-batch">
+          Save
+        </button>
+        <!-- templateType !== 'NEW_BATCH' -->
+
+        <!-- templateType === 'NEW_BATCH' -->
+        <button
+          *ngIf="templateType === 'NEW_BATCH'"
+          type="submit"
+          class="button is-community is-sm"
+          id="btn-send-batch">
+          Send
+        </button>
+        <!-- templateType === 'NEW_BATCH' -->
+
+      </div>
+      <!-- /save / send -->
+
+      <!-- batch id -->
+      <div *ngIf="templateType === 'EDIT_BATCH' && content['_id']" class="form-group">
+        <label class="form-label">Batch Id</label>
+        <div [ngStyle]="{'font-size': '15px'}">{{ content['_id'] }}</div>
+      </div>
+      <!-- /batch id -->
+
+      <!-- templateType === 'NEW_BATCH' no of pros -->
+      <div *ngIf="templateType === 'NEW_BATCH'" class="form-group">
+        <label class="form-label" for="batch-form-pros">Pros Number</label>
+        <input
+          (change)="onKeyboardPress($event)"
+          class="form-input"
+          formControlName="pros"
+          id="batch-form-pros"
+          placeholder="ex: 1000"
+          type="number">
+        <div *ngIf="errorPros" class="text-error">The value should be greater than 0.</div>
+      </div>
+      <!-- templateType === 'NEW_BATCH' no of pros -->
+
+      <!-- date -->
+      <div *ngIf="!hideInput" class="form-group">
+        <label class="form-label" for="batch-form-date">Date</label>
+        <input
+          (change)="onKeyboardPress($event)"
+          [value]="mailDate | date:'yyyy-MM-dd'"
+          class="form-input"
+          formControlName="date"
+          id="batch-form-date"
+          type="date">
+        <div *ngIf="templateType === 'NEW_BATCH'" class="text-error">
+          Leave this blank to send the batch immediately.
+        </div>
+      </div>
+      <!-- /date -->
+
+      <!-- time -->
+      <div *ngIf="!hideInput" class="form-group">
+        <label class="form-label" for="batch-form-time">Time</label>
+        <input
+          (change)="onKeyboardPress($event)"
+          [value]="mailTime"
+          class="form-input"
+          formControlName="time"
+          id="batch-form-time"
+          type="time">
+        <div *ngIf="templateType === 'NEW_BATCH'" class="text-error">
+          Leave this blank to send the batch immediately.
+        </div>
+        <div *ngIf="templateType === 'NEW_BATCH'" class="text-error">
+          The chosen hour must in at least 7 minutes, otherwise the batch may not be sent.
+        </div>
+      </div>
+      <!-- /time -->
+
+      <!-- content en -->
+      <div *ngIf="templateType === 'EDIT_BATCH'" class="form-group">
+        <label class="form-label">English Content</label>
+        <app-text-zone
+          [readonly]="true"
+          [data]="content['en']">
+        </app-text-zone>
+      </div>
+      <!-- /content en -->
+
+      <!-- content fr -->
+      <div *ngIf="templateType === 'EDIT_BATCH'" class="form-group">
+        <label class="form-label">French Content</label>
+        <app-text-zone
+          [readonly]="true"
+          [data]="content['fr']">
+        </app-text-zone>
+      </div>
+      <!-- content fr -->
+
+      <!-- workflows -->
+      <div *ngIf="templateType === 'EDIT_BATCH' && campaignWorkflows && campaignWorkflows.length > 1" class="form-group">
+        <label class="form-label" for="batch-email-template">Modify Email Template</label>
+        <select
+          class="form-select"
+          id="batch-email-template"
+          formControlName="workflow">
+          <option *ngFor="let workflow of campaignWorkflows" [value]="workflow">
+            {{ workflow }}
+          </option>
+        </select>
+      </div>
+      <!-- /workflows -->
+
+      <!-- update status -->
+      <div *ngIf="templateType === 'EDIT_BATCH' && content" class="form-group">
+        <label class="form-label" for="batch-update-status">Modify Status</label>
+        <input
+          (change)="updateBatchStatus($event)"
+          class="form-input"
+          id="batch-update-status"
+          type="number">
+      </div>
+      <!-- /update status -->
+
+    </form>
+  </div>
+</div>

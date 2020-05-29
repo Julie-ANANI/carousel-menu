@@ -114,12 +114,12 @@
 
           <!-- table -->
           <div class="p-top-25">
-            <shared-table
+            <app-shared-table
               (editRow)="onClickEdit($event)"
               (performAction)="onClickActions($event)"
               [(config)]="config"
               [data]="table">
-            </shared-table>
+            </app-shared-table>
           </div>
           <!-- /table -->
 
@@ -136,7 +136,7 @@
 </section>
 
 <!-- sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-user-answer
     [sidebarState]="sidebarValue.animate_state"
     [adminMode]="adminMode"
@@ -145,5 +145,5 @@
     [questions]="questions"
     (answerUpdated)="updateAnswer($event)">
   </app-user-answer>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar insight preview -->

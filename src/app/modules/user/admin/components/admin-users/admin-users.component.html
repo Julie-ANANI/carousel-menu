@@ -30,12 +30,12 @@
 
       <!-- table users -->
       <ng-container *ngIf="!fetchingError">
-        <shared-table
+        <app-shared-table
           (editRow)="onClickEdit($event)"
           (removeRows)="onClickDelete($event)"
           [(config)]="config"
           [data]="table">
-        </shared-table>
+        </app-shared-table>
       </ng-container>
       <!-- /table users -->
 
@@ -46,14 +46,14 @@
 
 
 <!-- sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-user-form
     (finalUserData)="updateUser($event)"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
     [user]="selectedUser">
   </app-user-form>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar -->
 
 

@@ -1,216 +1,254 @@
-<ng-container *ngIf="campaign">
-  <section id="admin-campaign-batch-component">
+<div *ngIf="!fetchingError" id="admin-campaign-batch-component">
 
-    <!-- section stats -->
-    <ul class="stat">
+  <!-- section stats -->
+  <ul class="stat animate-fade is-4">
 
-      <!-- stat col 1 -->
-      <li class="stat-container fluid">
-        <a (click)="updateStats()"><i class="fa fa-sync"></i></a>
-        <h5 class="stat-heading">Emails</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">To send</h5>
-          <span class="stat-value">{{ getCampaignStat('good_emails') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Received</h5>
-          <span class="stat-value">{{ getCampaignStat('received') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Bounces</h5>
-          <span class="stat-value">{{ getCampaignStat('bounces') }}</span>
-        </div>
-      </li>
+    <!-- stat col 1 -->
+    <li class="stat-container fluid">
+      <a (click)="updateStats()" class="c-hand"><i class="fa fa-sync"></i></a>
+      <h5 class="stat-heading">Emails</h5>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">To send</h5>
+        <span class="stat-value">{{ campaignStat('good_emails') }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Received</h5>
+        <span class="stat-value">{{ campaignStat('received') }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Bounces</h5>
+        <span class="stat-value">{{ campaignStat('bounces') }}</span>
+      </div>
+    </li>
+    <!-- /stat col 1 -->
 
-      <!-- stat col 2 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Interaction</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Opened</h5>
-          <span class="stat-value">{{ getCampaignStat('opened') }}%</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Clicked</h5>
-          <span class="stat-value">{{ getCampaignStat('clicked') }}%</span>
-        </div>
-      </li>
+    <!-- stat col 2 -->
+    <li class="stat-container fluid">
+      <h5 class="stat-heading">Interaction</h5>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Opened</h5>
+        <span class="stat-value">{{ campaignStat('opened') }}%</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Clicked</h5>
+        <span class="stat-value">{{ campaignStat('clicked') }}%</span>
+      </div>
+    </li>
 
-      <!-- stat col 3 -->
-      <li class="stat-container fluid">
-        <h5 class="stat-heading">Display</h5>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Email</h5>
-          <span class="stat-value">{{ getCampaignStat('email') }}</span>
-        </div>
-        <div class="stat-body">
-          <h5 class="stat-sub-heading">Questionnaire</h5>
-          <span class="stat-value">{{ getCampaignStat('questionnaire') }}</span>
-        </div>
-      </li>
+    <!-- stat col 3 -->
+    <li class="stat-container fluid">
+      <h5 class="stat-heading">Display</h5>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Email</h5>
+        <span class="stat-value">{{ campaignStat('email') }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Questionnaire</h5>
+        <span class="stat-value">{{ campaignStat('questionnaire') }}</span>
+      </div>
+    </li>
 
-    </ul>
-    <!-- /section stats -->
+  </ul>
+  <!-- /section stats -->
 
-    <div class="column col-xs-12 col-11 col-mx-auto">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
-      <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
+    <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
 
-      <!-- section no batches -->
-      <ng-container *ngIf="!tableBatch.length">
-        <div class="section-light-pad">
+    <!-- section no batches -->
+    <div *ngIf="!batchesTable.length" class="p-top-25 p-bottom-25">
 
-          <!-- note -->
-          <ng-container *ngIf="!autoBatchStatus">
-            <div class="section-error section-pad rm-pad-top">
+      <!-- note -->
+      <ng-container *ngIf="!autoBatchStatus">
+        <div class="section-error section-pad rm-pad-top">
 
-              <div class="shape is-circle is-sm" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' ">
-                <i class="fas fa-check"></i>
-              </div>
-              <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}</span>
+          <div class="shape is-circle is-sm" [ngClass]=" innovationStatus ? 'complete' : 'incomplete' ">
+            <i class="fas fa-check"></i>
+          </div>
+          <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.INNOVATION' | translate }}</span>
 
-              <div class="shape is-circle is-sm left" [ngClass]=" quiz ? 'complete' : 'incomplete' ">
-                <i class="fas fa-check"></i>
-              </div>
-              <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}</span>
+          <div class="shape is-circle is-sm left" [ngClass]=" quiz ? 'complete' : 'incomplete' ">
+            <i class="fas fa-check"></i>
+          </div>
+          <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.QUIZ' | translate }}</span>
 
-              <div class="shape is-circle is-sm left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' ">
-                <i class="fas fa-check"></i>
-              </div>
-              <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}</span>
-
-            </div>
-          </ng-container>
-
-          <!-- bot -->
-          <message-template-1 [widthMax]="'473px'">
-
-            <div class="toggle nuggets">
-              {{ 'CAMPAIGNS.BATCH_PAGE.NUGGETS' | translate }}
-              <div class="form-group">
-                <label class="form-switch" for="result-nuggets">
-                  <input type="checkbox" id="result-nuggets" (change)="setNuggets()"  [ngModel]="campaign.nuggets">
-                  <i class="form-icon"></i>
-                </label>
-              </div>
-            </div>
-
-            <div class="toggle">
-              {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
-              <div class="form-group">
-                <label class="form-switch" for="auto-batch">
-                  <input
-                    type="checkbox"
-                    id="auto-batch"
-                    [disabled]="!autoBatchStatus"
-                    [value]="campaign.autoBatch"
-                    (change)="onSwitchAutoBatch($event)"
-                    [ngModel]="campaign.autoBatch">
-                  <i class="form-icon"></i>
-                </label>
-              </div>
-            </div>
-
-            <ng-container>
-              <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
-                   class="icons is-white absolute tooltip"
-                   data-tooltip="Batch Manually"
-                   (click)="activateSidebar('newBatch')">
-                <i class="fas fa-cog"></i>
-              </div>
-            </ng-container>
-
-          </message-template-1>
+          <div class="shape is-circle is-sm left" [ngClass]=" templatesStatus ? 'complete' : 'incomplete' ">
+            <i class="fas fa-check"></i>
+          </div>
+          <span class="text text-notify text-medium">{{ 'CAMPAIGNS.BATCH_PAGE.WORKFLOW' | translate }}</span>
 
         </div>
       </ng-container>
-      <!-- /section no batches -->
 
-      <!-- section batches -->
-      <ng-container *ngIf="tableBatch.length">
-        <div class="section-light-pad rm-pad-bottom">
+      <!-- bot -->
+      <message-template-1 [widthMax]="'473px'">
 
-          <!-- section status -->
-          <div class="section-status">
-
-            <div class="form-group">
-              <label class="form-switch text-medium" for="result-auto-batch">
-                <input type="checkbox" id="result-auto-batch" (change)="onSwitchAutoBatch($event)" [ngModel]="campaign.autoBatch">
-                <i class="form-icon"></i>{{ 'CAMPAIGNS.BATCH_PAGE.AUTO_BATCH_LABEL' | translate }}
-              </label>
-            </div>
-            <a (click)="activateSidebar('newBatch')">
-              <i class="fas fa-plus"></i>New Batch
-            </a>
-
+        <div class="toggle nuggets">
+          {{ 'CAMPAIGNS.BATCH_PAGE.NUGGETS' | translate }}
+          <div class="form-group">
+            <label class="form-switch" for="result-nuggets">
+              <input type="checkbox" id="result-nuggets" (change)="setNuggets()"  [ngModel]="campaign.nuggets">
+              <i class="form-icon"></i>
+            </label>
           </div>
-
-          <!-- batches -->
-          <div *ngFor="let batch of stats.batches; let batchIndex = index" class="card">
-
-            <div class="card-header">
-
-              <div class="card-title">
-                <span>{{ 'CAMPAIGNS.BATCH_PAGE.TITLE' | translate }} {{ batch.size }} pros</span>
-                <span *ngIf="batch.error" class="text-error">{{ 'CAMPAIGNS.BATCH_PAGE.ERROR' | translate }}</span>
-                <div *ngIf="getDeleteStatus(batch)" class="icons is-delete tooltip" data-tooltip="Delete Batch" (click)="onClickDelete(batch)"><i class="fas fa-trash-alt"></i></div>
-              </div>
-
-              <label class="form-switch float-right text-medium" [for]="batch._id">
-                <input type="checkbox" [id]="batch._id" (change)="OnSwitchFreeze(batch , $event)" [ngModel]="batch.active">
-                <i class="form-icon"></i>{{ 'COMMON.LABEL.STARTED' | translate }}
-              </label>
-
-            </div>
-
-            <div class="card-body">
-              <shared-table
-                [data]="getBatch(batchIndex)"
-                [config]="config"
-                (editRow)="OnClickEdit($event, batch)">
-              </shared-table>
-            </div>
-
-          </div>
-
         </div>
-      </ng-container>
-      <!-- /section batches -->
+
+        <div class="toggle">
+          {{ 'CAMPAIGNS.BATCH_PAGE.BOT' | translate  }}
+          <div class="form-group">
+            <label class="form-switch" for="auto-batch">
+              <input
+                type="checkbox"
+                id="auto-batch"
+                [disabled]="!autoBatchStatus"
+                [value]="campaign.autoBatch"
+                (change)="onSwitchAutoBatch($event)"
+                [ngModel]="campaign.autoBatch">
+              <i class="form-icon"></i>
+            </label>
+          </div>
+        </div>
+
+        <ng-container>
+          <div [ngStyle]="{ 'visibility': autoBatchStatus ? 'visible' : 'hidden' }"
+               class="icons is-white absolute tooltip"
+               data-tooltip="Batch Manually"
+               (click)="activateSidebar('NEW_BATCH')">
+            <i class="fas fa-cog"></i>
+          </div>
+        </ng-container>
+
+      </message-template-1>
 
     </div>
+    <!-- /section no batches -->
 
-  </section>
-</ng-container>
+    <!-- section batches -->
+    <div *ngIf="batchesTable.length" class="p-top-25">
 
+      <!-- section status -->
+      <div class="section-status flex-between m-bottom-15">
+
+        <div class="form-group m-bottom-15">
+          <label class="form-switch text-medium" for="result-auto-batch">
+            <input
+              (change)="onSwitchAutoBatch($event)"
+              [ngModel]="campaign.autoBatch"
+              id="result-auto-batch"
+              type="checkbox">
+            <i class="form-icon"></i>Auto-batch started
+          </label>
+        </div>
+
+        <button
+          (click)="activateSidebar('NEW_BATCH')"
+          class="button is-primary is-sm m-bottom-15"
+          id="btn-new-batch">
+          New batch
+        </button>
+
+      </div>
+
+      <!-- batches -->
+      <div
+        *ngFor="let batch of stats['batches'];
+        let batchIndex = index;"
+        [ngStyle]="{ 'animation-duration': ((batchIndex+1) * 200) + 'ms' }"
+        class="card animate-slide slide-down">
+
+        <div class="card-header">
+
+          <div class="card-title">
+            <span class="m-right-1">Batch for {{ batch.size }} pros</span>
+            <span *ngIf="batch.error" class="text-error m-right-1 text-sm text-normal">
+              There has been an error when sending this batch!
+            </span>
+            <div
+              (click)="onDeleteBatch($event, batch)"
+              *ngIf="getDeleteStatus(batch)"
+              [ngStyle]="{'height': '23px'}"
+              class="icons is-delete tooltip"
+              data-tooltip="Delete Batch">
+              <i class="fas fa-trash-alt"></i>
+            </div>
+          </div>
+
+          <label class="form-switch float-right text-medium" [for]="batch['_id']">
+            <input
+              (change)="OnSwitchFreeze($event, batch)"
+              [id]="batch['_id']"
+              [ngModel]="batch.active"
+              type="checkbox">
+            <i class="form-icon"></i>Started
+          </label>
+
+        </div>
+
+        <div class="card-body">
+          <app-shared-table
+            (editRow)="onClickEdit($event, batch)"
+            [config]="config"
+            [data]="getBatch(batchIndex)">
+          </app-shared-table>
+        </div>
+
+      </div>
+      <!-- /batches -->
+
+    </div>
+    <!-- /section batches -->
+
+  </div>
+
+</div>
 
 
 <!-- modal to delete batch -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal [(showModal)]="modalDelete" [title]="'Delete Board'">
+  <ng-container *ngIf="selectedBatchToBeDeleted._id">
 
-  <section class="modal-body">
-    {{ 'CAMPAIGNS.BATCH_PAGE.MODAL_DELETE_CONTENT' | translate }}
-  </section>
+    <section class="modal-body">
+      Do you really want to delete this batch?
+    </section>
 
-  <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onConfirmDelete()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </footer>
+    <footer class="modal-footer">
 
+      <button class="button modal-cancel" id="btn-cancel">
+        Cancel
+      </button>
+
+      <button
+        [disabled]="!selectedBatchToBeDeleted._id || isDeletingBatch"
+        (click)="onConfirmDelete($event)"
+        class="button is-primary"
+        id="btn-confirm">
+        <ng-container *ngIf="isDeletingBatch; else textDef">
+          deleting the batch...
+        </ng-container>
+        <ng-template #textDef>
+          Confirm
+        </ng-template>
+      </button>
+
+    </footer>
+
+  </ng-container>
 </app-utility-modal>
 <!-- /modal to delete batch -->
 
 
 <!-- sidebars to perform batch operations -->
-<sidebar [(template)]="sidebarValue">
-  <app-batch-form
-    [sidebarState]="sidebarValue.animate_state"
-    [type]="sidebarValue.type"
-    (batchOutput)="onOutput($event)"
-    [currentRow]="currentRow"
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-batch-form
+    (batchOutput)="onSidebarOutput($event)"
     [campaignWorkflows]="campaignWorkflows"
-    [workflow]="currentBatch?.workflow || campaign.settings.defaultWorkflow"
-    [content]="content">
-  </app-batch-form>
-</sidebar>
+    [content]="content"
+    [currentRow]="currentRow"
+    [sidebarState]="sidebarValue.animate_state"
+    [templateType]="sidebarValue.type"
+    [workflow]="currentBatch?.workflow || (campaign.settings && campaign.settings.defaultWorkflow)">
+  </app-sidebar-batch-form>
+</app-sidebar>
 <!-- /sidebars to perform batch operations  -->
 
 

@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ErrorFrontService} from '../../../../../services/error/error-front';
+import { ErrorFrontService} from '../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { ExecutiveReport, ExecutiveSection } from '../../../../../models/executive-report';
@@ -63,7 +63,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _showBanner = false;
 
-  bannerVideos: Array<Job> = [];
+  private _bannerVideos: Array<Job> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
@@ -123,8 +123,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
   private _getVideoJob() {
     if (isPlatformBrowser(this._platformId) && this._innovation._id) {
       this._innovationService.getDeliverableJob(this._innovation._id).pipe(first()).subscribe((jobs) => {
-        this.bannerVideos = jobs;
-        this._showBanner = this.bannerVideos.length > 0;
+        this._bannerVideos = jobs;
+        this._showBanner = this._bannerVideos.length > 0;
       }, (err: HttpErrorResponse) => {
         console.error(err);
       });
@@ -443,6 +443,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   set showBanner(value: boolean) {
     this._showBanner = value;
+  }
+
+  get bannerVideos(): Array<Job> {
+    return this._bannerVideos;
   }
 
 }

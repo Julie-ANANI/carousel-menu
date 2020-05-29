@@ -1,5 +1,5 @@
 <section id="shared-professionals-list">
-  <shared-table
+  <app-shared-table
     (configChange)="onConfigChange($event)"
     (editRow)="onClickEdit($event)"
     (removeRows)="onClickDelete($event)"
@@ -7,12 +7,12 @@
     (selectRows)="onSelectRows($event)"
     [config]="config"
     [data]="table">
-  </shared-table>
+  </app-shared-table>
 </section>
 
 
 <!-- sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
 
   <!-- professional -->
   <ng-container *ngIf="isProfessionalSidebar">
@@ -36,7 +36,7 @@
   </ng-container>
   <!-- /tags -->
 
-</sidebar>
+</app-sidebar>
 <!-- /sidebar -->
 
 

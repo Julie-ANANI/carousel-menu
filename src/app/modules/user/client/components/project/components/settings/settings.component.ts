@@ -10,7 +10,7 @@ import { ClientProject } from '../../../../../../../models/client-project';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 import { MissionService } from '../../../../../../../services/mission/mission.service';
 import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { emailRegEx } from '../../../../../../../utils/regex';

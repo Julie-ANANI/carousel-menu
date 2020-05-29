@@ -181,14 +181,14 @@
 
 
     <!-- insight preview -->
-    <sidebar [(template)]="sidebarTemplateValue">
+    <app-sidebar [(template)]="sidebarTemplateValue">
       <app-user-answer
         [(userAnswer)]="modalAnswer"
         [adminMode]="adminMode"
         [projectId]="innovation._id"
         [questions]="questions">
       </app-user-answer>
-    </sidebar>
+    </app-sidebar>
     <!-- /insight preview -->
 
 

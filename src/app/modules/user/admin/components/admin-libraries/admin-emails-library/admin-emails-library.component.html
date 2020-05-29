@@ -6,12 +6,12 @@
 
   <ng-container *ngIf="emails.length > 0">
     <div class="section-light-pad rm-pad-bottom">
-      <shared-table
+      <app-shared-table
         [(config)]="config"
         [data]="tableInfos"
         (editRow)="editEmail($event)"
         (removeRows)="removeEmails($event)">
-      </shared-table>
+      </app-shared-table>
     </div>
   </ng-container>
 
@@ -27,7 +27,7 @@
 
 
 <!-- sidebar to edit email -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <app-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
@@ -35,7 +35,7 @@
     [signatures]="signatures"
     [inputLanguage]="language">
   </app-workflow>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar to edit email -->
 
 <!-- modal to add the new email -->

@@ -103,13 +103,13 @@
 
 
       <!-- table -->
-      <shared-table
+      <app-shared-table
         [(config)]="config"
         [data]="tableInfos"
         (editRow)="seeAnswer($event)"
         (dropdownAction)="assignObjective($event)"
         (performAction)="performActions($event)">
-      </shared-table>
+      </app-shared-table>
       <!-- /table -->
 
     </div>
@@ -120,7 +120,7 @@
 
 
 <!-- answer sidebar -->
-<sidebar [(template)]="sidebarAnswer">
+<app-sidebar [(template)]="sidebarAnswer">
   <app-user-answer
     [sidebarState]="sidebarAnswer.animate_state"
     [adminMode]="true"
@@ -128,7 +128,7 @@
     [projectId]="project._id"
     [questions]="questions">
   </app-user-answer>
-</sidebar>
+</app-sidebar>
 <!-- /answer sidebar -->
 
 

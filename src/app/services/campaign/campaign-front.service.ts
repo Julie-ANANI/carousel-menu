@@ -106,7 +106,7 @@ export class CampaignFrontService {
    * @param campaign
    * @param searchKey
    */
-  static getBatchCampaignStat(campaign: Campaign, searchKey: any): number {
+  static getBatchCampaignStat(campaign: Campaign, searchKey: string): number {
     let value = 0;
 
     if (campaign && campaign.stats) {
@@ -121,15 +121,17 @@ export class CampaignFrontService {
           break;
 
         case 'bounces':
-          value = campaign.stats.nbTotalMails && campaign.stats.nbProsSent? campaign.stats.nbTotalMails - campaign.stats.nbProsSent : 0;
+          value = campaign.stats.nbTotalMails && campaign.stats.nbProsSent ? campaign.stats.nbTotalMails - campaign.stats.nbProsSent : 0;
           break;
 
         case 'opened':
-          value = campaign.stats.nbProsOpened  && campaign.stats.nbProsSent ? Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsSent) * 100) : 0;
+          value = campaign.stats.nbProsOpened  && campaign.stats.nbProsSent
+            ? Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsSent) * 100) : 0;
           break;
 
         case 'clicked':
-          value = campaign.stats.nbProsClicked  && campaign.stats.nbProsSent ? Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsSent) * 100) : 0;
+          value = campaign.stats.nbProsClicked  && campaign.stats.nbProsSent
+            ? Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsSent) * 100) : 0;
           break;
 
         case 'email':

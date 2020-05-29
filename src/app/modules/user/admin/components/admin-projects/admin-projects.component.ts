@@ -10,7 +10,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { ConfigService } from '../../../../../services/config/config.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

@@ -26,7 +26,7 @@ import { TableModule } from '../../../../table/table.module';
 import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
 import { AutoCompleteInputModule } from "../../../../utility/auto-complete-input/auto-complete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';
-import { SidebarBatchFormModule } from '../../../../sidebars/components/batch-form/sidebar-batch-form.module';
+import { SidebarBatchFormModule } from '../../../../sidebars/components/sidebar-batch-form/sidebar-batch-form.module';
 import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebars/components/user-form/sidebar-user-form.module';

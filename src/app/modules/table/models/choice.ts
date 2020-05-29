@@ -8,4 +8,4 @@ export interface Choice {
 
 export type labelClass = 'label is-progress' | 'label is-success' | 'label is-danger' | 'label is-secondary'
   | 'label is-draft' | 'button is-danger' | 'button is-secondary' | 'button is-draft' | 'text-secondary'
-  | 'text-draft' | 'text-alert' | '';
+  | 'text-draft' | 'text-alert' | 'label is-info' | '';

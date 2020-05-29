@@ -17,7 +17,7 @@ import { Tag } from "../../../../models/tag";
 import { TagsFiltersService }  from "../shared-market-report/services/tags-filter.service";
 import { FilterService } from "../shared-market-report/services/filters.service";
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
 
 @Component({
   selector: 'shared-follow-up',

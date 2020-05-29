@@ -19,7 +19,7 @@
   </div>
 
   <!-- section table -->
-  <shared-table [data]="tableInfos" (editRow)="editEmail($event)" [(config)]="config"></shared-table>
+  <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [(config)]="config"></app-shared-table>
 
 </section>
 
@@ -41,12 +41,12 @@
 
 
 <!-- sidebar to edit workflow -->
-<sidebar [(template)]="more">
+<app-sidebar [(template)]="more">
   <app-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
     [inputLanguage]="language"
     (emailChange)="updateEmail($event)">
   </app-workflow>
-</sidebar>
+</app-sidebar>
 <!-- /sidebar to edit workflow -->

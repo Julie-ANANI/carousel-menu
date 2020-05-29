@@ -15,7 +15,7 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-admin-executive-report',

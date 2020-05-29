@@ -48,13 +48,13 @@
       <!-- /add button -->
 
       <!-- table -->
-      <shared-table
+      <app-shared-table
         (editRow)="showPreset($event)"
         (removeRows)="OnClickDelete($event)"
         (performAction)="onClickActions($event)"
         [(config)]="config"
         [data]="table">
-      </shared-table>
+      </app-shared-table>
       <!-- /table -->
 
     </ng-container>

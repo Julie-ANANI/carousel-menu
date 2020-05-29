@@ -36,13 +36,13 @@
 
   <!-- the results go here! -->
   <div [hidden]="!results">
-    <shared-table
+    <app-shared-table
         [data]="resultTableConfiguration"
         [(config)]="queryConfig"
         (editRow)="openSidebar($event, 'edit')"
         (removeRows)="removeCompanies($event)"
         [loading]="displayLoading">
-    </shared-table>
+    </app-shared-table>
   </div>
   <div [hidden]="!nothingFound">
     <h5>I tried hard, but couldn't find anything. Try harder and refine your search (or create a new enterprise)</h5>
@@ -51,7 +51,7 @@
 
 
 <!-- new/edit enterprise sidebar -->
-<sidebar [(template)]="sidebarValue">
+<app-sidebar [(template)]="sidebarValue">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <form novalidate [formGroup]="newEnterpriseForm" (ngSubmit)="saveEnterprise()" autocomplete="off">
       <!-- Company name -->
@@ -242,7 +242,7 @@
 
     </form>
   </div>
-</sidebar>
+</app-sidebar>
 <!-- /new/edit enterprise sidebar -->
 
 <app-utility-modal [(showModal)]="uploadLogoModal" [title]="'Upload a file for the new logo'">

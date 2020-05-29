@@ -172,7 +172,7 @@
         <ng-container *ngIf="tableInfos?._total > 0">
           <div class="section-light-pad rm-pad-bottom">
             <h3 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
-            <shared-table [data]="tableInfos" [(config)]="config" (editRow)="onClickShow($event)"></shared-table>
+            <app-shared-table [data]="tableInfos" [(config)]="config" (editRow)="onClickShow($event)"></app-shared-table>
           </div>
         </ng-container>
         <!-- section table -->
@@ -185,7 +185,7 @@
 
 
   <!-- sidebar to view user answer -->
-  <sidebar [(template)]="sidebarValue">
+  <app-sidebar [(template)]="sidebarValue">
     <app-user-answer
       [adminMode]="false"
       [sidebarState]="sidebarValue.animate_state"
@@ -193,7 +193,7 @@
       [questions]="questions"
       [projectId]="innovation._id">
     </app-user-answer>
-  </sidebar>
+  </app-sidebar>
   <!-- /sidebar to view user answer -->
 
 

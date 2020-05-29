@@ -13,7 +13,7 @@ import { SpinnerService } from '../../../../../services/spinner/spinner.service'
 import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../services/error/error-front';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-projects-list',

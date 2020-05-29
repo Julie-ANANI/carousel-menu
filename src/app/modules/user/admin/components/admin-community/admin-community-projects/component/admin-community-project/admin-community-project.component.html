@@ -105,7 +105,7 @@
 
 <!-- sidebar community -->
 <ng-container *ngIf="!fetchingError && innovation">
-  <sidebar [(template)]="sidebarValue">
+  <app-sidebar [(template)]="sidebarValue">
     <community-form
       [sidebarState]="sidebarValue.animate_state"
       [innovationId]="innovation._id"
@@ -114,6 +114,6 @@
       [context]="context"
       (callbackNotification)="actionsResultCallback($event)">
     </community-form>
-  </sidebar>
+  </app-sidebar>
 </ng-container>
 <!-- /sidebar community -->
