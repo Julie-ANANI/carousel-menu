@@ -17,6 +17,7 @@ import { Response } from '../../../../../../models/response';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { ConfigService } from '../../../../../../services/config/config.service';
+import {Company} from '../../../../../../models/company';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -54,6 +55,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _questions: Array<Question> = [];
 
+  private _excludedCompanies: Array<Company> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -69,6 +72,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
     if (this._activatedRoute.snapshot.parent.data['campaign']) {
       this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+      this._excludedCompanies = this._campaign && this._campaign.innovation && this._campaign.innovation.settings
+        && this._campaign.innovation.settings.companies && this._campaign.innovation.settings.companies.exclude;
       this._getQuestions();
     }
 
@@ -261,6 +266,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  get excludedCompanies(): Array<Company> {
+    return this._excludedCompanies;
   }
 
 }
