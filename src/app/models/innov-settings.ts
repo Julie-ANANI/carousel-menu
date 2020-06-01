@@ -23,6 +23,10 @@ export interface InnovationSettings {
     comments: string;
   };
 
+  contact?: {
+    internal: boolean;
+  }
+
   readonly companies: {
     include: Array<any>;
     exclude: Array<any>;
