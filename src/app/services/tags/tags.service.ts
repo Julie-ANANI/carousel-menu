@@ -5,7 +5,7 @@ import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
 import {environment} from '../../../environments/environment';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TagsService {
 
   constructor(private _http: HttpClient) {

@@ -1,0 +1,21 @@
+<div id="public-discover">
+
+  <!-- unauthenticated header -->
+  <app-header-unauth *ngIf="!authService.isAuthenticated"></app-header-unauth>
+  <!-- /unauthenticated header -->
+
+  <!-- authenticated header -->
+  <app-header *ngIf="authService.isAuthenticated"></app-header>
+  <!-- /authenticated header -->
+
+  <!-- body -->
+  <main class="main-wrapper">
+    <router-outlet></router-outlet>
+  </main>
+  <!-- /body -->
+
+  <!-- footer -->
+  <app-footer></app-footer>
+  <!-- /footer -->
+
+</div>

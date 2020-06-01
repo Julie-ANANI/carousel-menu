@@ -32,7 +32,6 @@ import { FrontendService } from '../../../services/frontend/frontend.service';
 import { TemplatesService } from '../../../services/templates/templates.service';
 import { PresetService } from '../../../services/preset/preset.service';
 import { EmailService } from '../../../services/email/email.service';
-import { TagsService } from '../../../services/tags/tags.service';
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
@@ -92,7 +91,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     TemplatesService,
     PresetService,
     EmailService,
-    TagsService,
     CampaignResolver,
     DownloadService,
     RequestResolver,

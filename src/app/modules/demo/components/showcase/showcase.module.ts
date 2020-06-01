@@ -13,7 +13,6 @@ import { ShowcaseComponent } from './showcase.component';
 import { ShowcaseService } from './services/showcase.service';
 import { ShowcaseRoutingModule } from './showcase-routing.module';
 
-import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
@@ -47,8 +46,7 @@ import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap
   ],
   providers: [
     MultilingPipe,
-    ShowcaseService,
-    TagsService,
+    ShowcaseService
   ],
   exports: [
     ShowcaseComponent

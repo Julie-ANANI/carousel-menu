@@ -47,6 +47,8 @@ export class CardsComponent {
 
   private _stopLoading: boolean;
 
+  private _userLang = this._translateService.currentLang || 'en';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _localStorage: LocalStorageService,
               private _translateService: TranslateService) { }
@@ -75,46 +77,19 @@ export class CardsComponent {
    * @param toReturn
    * @param innovation
    */
-  public getInnovationDetail(toReturn: string, innovation: Innovation):string {
-    let index = 0;
+  public getInnovationDetail(toReturn: string, innovation: Innovation): string {
+    const _card: InnovCard = <InnovCard>InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'card');
 
-    if (innovation && innovation.innovationCards) {
+    switch (toReturn) {
+      case 'url':
+        return innovation._id && _card && _card.lang ? `discover/${innovation._id}/${_card.lang}` : '';
 
-      if (innovation.innovationCards.length > 1) {
-        const userLangIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.userLang);
-        if (userLangIndex !== -1) {
-          index = userLangIndex;
-        }
-      } else {
-        const indexEn = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === 'en');
-        if (indexEn !== -1) {
-          index = indexEn;
-        } else {
-          index = 0;
-        }
-      }
+      case 'title':
+        return _card && _card.title ? _card.title : '';
 
-      switch (toReturn) {
-
-        case 'url':
-          return `discover/${innovation.innovationCards[index].innovation_reference}/${innovation.innovationCards[index].lang}`;
-
-        case 'title':
-          return innovation.innovationCards[index].title;
-
-        case 'imageUrl':
-          return InnovationFrontService.getMediaSrc(innovation.innovationCards[index], 'default', 'auto', '174');
-
-      }
-
+      case 'imageUrl':
+        return innovation._id ? InnovationFrontService.principalMedia(innovation, this._userLang, 'auto', '174') : '';
     }
-
-    if (toReturn === 'url') {
-      return '/discover#';
-    }
-
-    return '';
-
   }
 
   get pagination(): Pagination {
@@ -131,10 +106,6 @@ export class CardsComponent {
     return this._innovations;
   }
 
-  get totalInnovations(): Array<Innovation> {
-    return this._totalInnovations;
-  }
-
   get total(): number {
     return this._total;
   }
@@ -149,10 +120,6 @@ export class CardsComponent {
 
   get isPagination(): boolean {
     return this._isPagination;
-  }
-
-  get userLang(): string {
-    return this._translateService.currentLang ;
   }
 
   get stopLoading(): boolean {

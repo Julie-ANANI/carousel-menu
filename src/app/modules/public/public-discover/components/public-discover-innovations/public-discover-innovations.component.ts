@@ -5,7 +5,7 @@ import { Tag } from '../../../../../models/tag';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { FilterService } from './services/filter.service';
+import { DiscoverService } from '../../../../../services/discover/discover.service';
 import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
@@ -13,12 +13,11 @@ import { Response } from '../../../../../models/response';
 import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-innovations',
-  templateUrl: './innovations.component.html',
-  styleUrls: ['./innovations.component.scss']
+  templateUrl: './public-discover-innovations.component.html',
+  styleUrls: ['./public-discover-innovations.component.scss']
 })
 
-export class InnovationsComponent implements OnInit {
+export class PublicDiscoverInnovationsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'created principalMedia innovationCards tags status projectStatus',
@@ -62,7 +61,7 @@ export class InnovationsComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _authService: AuthService,
-              private _filterService: FilterService) {
+              private _filterService: DiscoverService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
     this._userAuthenticated = this._authService.isAuthenticated;
@@ -131,7 +130,7 @@ export class InnovationsComponent implements OnInit {
    * sectorTags.
    */
   private _getAllSectorTags() {
-    this._sectorTags = FilterService.getAllSectorTags(this._totalInnovations);
+    this._sectorTags = DiscoverService.getAllSectorTags(this._totalInnovations);
   }
 
   public onSelectFilters(filters: Array<Tag>) {
@@ -151,7 +150,7 @@ export class InnovationsComponent implements OnInit {
   }
 
   private _getFilteredInnovations() {
-    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this._searchKey);
+    this._filteredInnovations = DiscoverService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this._searchKey);
   }
 
   public onClickRemove(tagId: string) {

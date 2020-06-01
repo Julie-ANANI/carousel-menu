@@ -11,9 +11,6 @@ import { SynthesisCompleteModule } from './component/synthesis-complete/synthesi
 import { FooterModule } from '../../common/footer/footer.module';
 import { HeaderModule } from '../../common/header/header.module';
 
-import { ShareService } from '../../../services/share/share.service';
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -28,9 +25,6 @@ import { ShareService } from '../../../services/share/share.service';
   declarations: [
     ShareComponent,
   ],
-  providers: [
-    ShareService
-  ]
 })
 
 export class ShareModule {}

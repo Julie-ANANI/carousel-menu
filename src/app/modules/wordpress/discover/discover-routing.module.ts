@@ -12,11 +12,7 @@ const discoverRoutes: Routes = [
     path: '',
     component: DiscoverComponent,
     children: [
-      {
-        path: ':lang',
-        component: InnovationsComponent,
-        pathMatch: 'full',
-      },
+      { path: ':lang', component: InnovationsComponent, pathMatch: 'full' },
       {
         path: ':projectId/:lang',
         component: DiscoverDescriptionComponent,

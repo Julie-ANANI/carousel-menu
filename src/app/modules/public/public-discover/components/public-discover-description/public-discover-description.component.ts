@@ -16,12 +16,11 @@ import { Config } from '../../../../../models/config';
 import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
 
 @Component({
-  selector: 'app-discover-description',
-  templateUrl: './discover-description.component.html',
-  styleUrls: ['./discover-description.component.scss']
+  templateUrl: './public-discover-description.component.html',
+  styleUrls: ['./public-discover-description.component.scss']
 })
 
-export class DiscoverDescriptionComponent implements OnInit {
+export class PublicDiscoverDescriptionComponent implements OnInit {
 
   private _relatedInnovationConfig = {
     fields: 'innovationCards tags principalMedia',
