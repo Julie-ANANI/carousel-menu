@@ -4,7 +4,7 @@ import { InnovCard } from '../../models/innov-card';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 import { Innovation } from '../../models/innovation';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ShareService {
 
   constructor() {}

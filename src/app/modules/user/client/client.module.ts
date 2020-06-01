@@ -14,7 +14,6 @@ import { AccountModule } from './components/account/account.module';
 import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';
 import { SynthesisCompleteModule } from '../../public/share/component/synthesis-complete/synthesis-complete.module';
 import { MessageTemplate1Module } from '../../utility/messages/message-template-1/message-template-1.module';
-import { TagsService } from "../../../services/tags/tags.service";
 import { ModalModule } from '../../utility/modals/modal/modal.module';
 import { PaginationTemplate2Module } from '../../utility/paginations/pagination-template-2/pagination-template-2.module';
 import { NewProjectModule } from './components/new-project/new-project.module';
@@ -34,9 +33,6 @@ import { NewProjectModule } from './components/new-project/new-project.module';
     ModalModule,
     PaginationTemplate2Module,
     NewProjectModule
-  ],
-  providers: [
-    TagsService
   ],
   declarations: [
     ClientComponent,

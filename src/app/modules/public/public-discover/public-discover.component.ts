@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
-  templateUrl: './discover.component.html',
-  styleUrls: ['./discover.component.scss'],
+  templateUrl: './public-discover.component.html',
+  styleUrls: ['./public-discover.component.scss'],
 })
 
-export class DiscoverComponent {
+export class PublicDiscoverComponent {
 
   constructor(public authService: AuthService) { }
 

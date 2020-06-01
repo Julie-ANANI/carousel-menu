@@ -65,4 +65,12 @@ export const SHARED_PROJECT_SETTINGS = {
     'HELP': 'Vous avez de la difficulté à décrire votre projet ? Notre équipe est toujours là pour vous aider !'
   },
 
+  'CONTACT_INTERNAL': {
+    'LABEL': 'Je souhaite collecter l\'avis de mes collaborateurs',
+    'NO': 'Non, je ne veux pas collecter l\'avis de mes collaborateurs ',
+    'YES': 'Oui, je voudrais collecter l\'avis de mes collaborateurs.',
+    'VALUE_FALSE': 'Non',
+    'VALUE_TRUE': 'Oui',
+  },
+
 };

@@ -6,7 +6,7 @@
     font-size: 1.35rem;
   }
 
-  .section-title, .section-comment, .section-analytics {
+  .section-title, .section-analytics {
     padding-bottom: 1.25rem;
   }
 
@@ -14,66 +14,6 @@
 
     .title-primary, .btn {
       margin-bottom: 1.25rem;
-    }
-
-  }
-
-  .section-comment {
-    display: flex;
-    flex-wrap: wrap;
-
-    .status-wrapper {
-      min-height: 11rem;
-      width: 330px;
-      background-color: $draft-color;
-      border-radius: $border-width-xl;
-      padding: 1.25rem;
-      margin-right: 1.25rem;
-      margin-bottom: 1.25rem;
-
-      h4 {
-        color: $white-color;
-        font-size: 1.1rem;
-        margin-bottom: $unit-5;
-        font-weight: $font-weight-normal;
-      }
-
-      .status-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: $font-size-sm;
-        color: $white-color;
-      }
-
-      .fa-check, .fa-times {
-        margin-right: 0.25rem;
-        font-size: $font-icon-md;
-      }
-
-      .fa-check {
-        color: $success-color;
-      }
-
-      .fa-times {
-        color: $alert-color;
-      }
-
-    }
-
-    .comment-wrapper {
-      flex: 1;
-      padding-bottom: 1.25rem;
-
-      .operator-wrapper {
-        padding-top: 1.25rem;
-
-        span {
-          margin-right: $unit-2;
-        }
-
-      }
-
     }
 
   }
@@ -118,64 +58,6 @@
 
       }
 
-    }
-
-  }
-
-  .section-company {
-
-    .company-content {
-      list-style: none;
-      margin: 0;
-
-      li {
-        margin-top: 0;
-        margin-bottom: 0.4rem;
-        display: inline-flex;
-        width: 33.33%;
-      }
-
-    }
-
-  }
-
-
-}
-
-@media (max-width: $size-md) {
-
-  #exploration-component {
-
-    .company-content {
-
-      li {
-        width: 50% !important;
-      }
-
-    }
-
-  }
-
-}
-
-@media (max-width: $size-sm) {
-
-  #exploration-component {
-
-   .section-comment {
-     flex-direction: column;
-   }
-
-  }
-
-}
-
-@media (max-width: 320px) {
-
-  #exploration-component {
-
-    .status-wrapper {
-      width: 300px !important;
     }
 
   }

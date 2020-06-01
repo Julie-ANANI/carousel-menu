@@ -15,7 +15,6 @@ import { Observable } from 'rxjs';
 import {Clearbit} from "../../../../../models/clearbit";
 
 @Component({
-  selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })

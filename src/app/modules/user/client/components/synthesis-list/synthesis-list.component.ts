@@ -9,7 +9,6 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
-  selector: 'app-synthesis-list',
   templateUrl: './synthesis-list.component.html',
   styleUrls: ['./synthesis-list.component.scss']
 })

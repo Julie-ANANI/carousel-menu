@@ -10,7 +10,6 @@ import {takeUntil} from 'rxjs/operators';
 //declare let swellrt;
 
 @Component({
-  selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })

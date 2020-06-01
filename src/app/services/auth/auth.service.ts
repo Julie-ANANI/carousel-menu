@@ -16,7 +16,7 @@ import {Md5} from 'ts-md5/dist/md5';
 
 const AUTH_SESSION_KEY = makeStateKey('authSession');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
 
   private _authenticated = false;

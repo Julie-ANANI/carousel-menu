@@ -14,7 +14,7 @@ Sentry.init({
   defaultIntegrations: false // we don't want the sentry integrations, they provide more shadows than real data
 });
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ErrorService {
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
@@ -35,11 +35,11 @@ export class ErrorService {
         });
         scope.setTag('route', environment.clientUrl + this.router.url);
 
-        const eventId = Sentry.captureException(error);
+        // const eventId = Sentry.captureException(error);
 
-        if (this.auth.adminLevel > 0) {
+        /*if (this.auth.adminLevel > 0) {
           Sentry.showReportDialog({ eventId });
-        }
+        }*/
 
       });
 

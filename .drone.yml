@@ -314,25 +314,25 @@ steps:
 
 ## Group 3
   ## Schneider production steps
-- name: dockerProdSchneider
-  depends_on: [baseimageProd, rancherProdInomer, rancherProdNovanexia, rancherProdSalveo]
-  image: plugins/docker
-  settings:
-    target: buildinstance
-    auto_tag: true
-    auto_tag_suffix: schneider
-    build_args:
-      - APP_NAME=schneider
-      - ENV_NAME=production
-      - VERSION=${DRONE_TAG}
-    repo: unitedmotionideas/umi-application-front
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-  when:
-    event:
-      - tag
+#- name: dockerProdSchneider
+#  depends_on: [baseimageProd, rancherProdInomer, rancherProdNovanexia, rancherProdSalveo]
+#  image: plugins/docker
+#  settings:
+#    target: buildinstance
+#    auto_tag: true
+#    auto_tag_suffix: schneider
+#    build_args:
+#      - APP_NAME=schneider
+#      - ENV_NAME=production
+#      - VERSION=${DRONE_TAG}
+#    repo: unitedmotionideas/umi-application-front
+#    username:
+#      from_secret: docker_username
+#    password:
+#      from_secret: docker_password
+#  when:
+#    event:
+#      - tag
 
 #- name: rancherProdSchneider
 #  depends_on: [dockerProdSchneider]
@@ -351,25 +351,25 @@ steps:
 #      - tag
 
   ## BNP Paribas production steps
-- name: dockerProdBNP
-  depends_on: [baseimageProd, rancherProdInomer, rancherProdNovanexia, rancherProdSalveo]
-  image: plugins/docker
-  settings:
-    target: buildinstance
-    auto_tag: true
-    auto_tag_suffix: bnpparibas
-    build_args:
-      - APP_NAME=bnpparibas
-      - ENV_NAME=production
-      - VERSION=${DRONE_TAG}
-    repo: unitedmotionideas/umi-application-front
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-  when:
-    event:
-      - tag
+#- name: dockerProdBNP
+#  depends_on: [baseimageProd, rancherProdInomer, rancherProdNovanexia, rancherProdSalveo]
+#  image: plugins/docker
+#  settings:
+#    target: buildinstance
+#    auto_tag: true
+#    auto_tag_suffix: bnpparibas
+#    build_args:
+#      - APP_NAME=bnpparibas
+#      - ENV_NAME=production
+#      - VERSION=${DRONE_TAG}
+#    repo: unitedmotionideas/umi-application-front
+#    username:
+#      from_secret: docker_username
+#    password:
+#      from_secret: docker_password
+#  when:
+#    event:
+#      - tag
 
 #- name: rancherProdBNP
 #  depends_on: [dockerProdBNP]

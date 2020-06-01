@@ -35,7 +35,7 @@ export const EXPLORATION = {
 
   'COMPANIES_LIST_TITLE': 'Companies you asked to contact',
 
-  'INSIGHTS_TITLE': 'Insights of your study',
+  'INSIGHTS_TITLE': 'insights of your study',
 
   'STATUS': {
     'STARTED': 'Started',

@@ -27,7 +27,7 @@ export const EXPLORATION = {
 
   'COMPANIES_LIST_TITLE': 'Les entreprises à contacter',
 
-  'INSIGHTS_TITLE': 'Réponses',
+  'INSIGHTS_TITLE': 'réponses',
 
   'ANALYTICS': {
     'TITLE': 'Statistiques',

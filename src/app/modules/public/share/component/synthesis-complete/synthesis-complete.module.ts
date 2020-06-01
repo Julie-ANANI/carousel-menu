@@ -11,8 +11,6 @@ import { ProjectFrontPageModule } from '../../../../user/client/components/proje
 import { SharedInnovationDetailModule } from '../../../../shared/components/shared-innovation-detail/shared-innovation-detail.module';
 import { SharedTargetingDetailModule } from '../../../../shared/components/shared-targeting-detail/shared-targeting-detail.module';
 
-import { TagsService } from '../../../../../services/tags/tags.service';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -26,9 +24,6 @@ import { TagsService } from '../../../../../services/tags/tags.service';
   ],
   declarations: [
     SynthesisCompleteComponent
-  ],
-  providers: [
-    TagsService
   ],
   exports: [
     SynthesisCompleteComponent

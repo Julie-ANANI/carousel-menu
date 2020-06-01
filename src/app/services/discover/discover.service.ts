@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Innovation } from '../../../../../../models/innovation';
-import { Tag } from '../../../../../../models/tag';
-import { InnovCard } from '../../../../../../models/innov-card';
-import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
+import { Innovation } from '../../models/innovation';
+import { Tag } from '../../models/tag';
+import { InnovCard } from '../../models/innov-card';
+import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Subject } from 'rxjs';
 
-@Injectable()
-export class FilterService {
+@Injectable({providedIn: 'root'})
+export class DiscoverService {
 
   filterRemove: Subject<string> = new Subject<string>();
 
@@ -34,7 +34,7 @@ export class FilterService {
     const highlightTags: Array<Tag> = [];
     if (tags.length > 0) {
       tags.forEach((tag: Tag) => {
-        const index = FilterService.highlight.indexOf(tag.label.en.toLowerCase());
+        const index = DiscoverService.highlight.indexOf(tag.label.en.toLowerCase());
         if (index !== -1) {
           highlightTags.push(tag);
         }
