@@ -15,7 +15,6 @@ import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
-  selector: 'app-admin-campaign-batch',
   templateUrl: './admin-campaign-batch.component.html',
   styleUrls: ['./admin-campaign-batch.component.scss']
 })

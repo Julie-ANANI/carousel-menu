@@ -37,35 +37,35 @@ const adminRoutes: Routes = [
     path: '',
     canActivateChild: [AdminAuthGuard],
     children: [
+      { path: '', component: AdminDashboardComponent, pathMatch: 'full' },
+      { path: 'users', component: AdminUsersComponent, pathMatch: 'full' },
+      { path: 'professionals', component: AdminProfessionalsComponent, pathMatch: 'full' },
       {
-        path: '',
-        component: AdminDashboardComponent,
-        pathMatch: 'full'
+        path: 'projects/project/:projectId/storyboard',
+        component: AdminProjectStoryboardComponent,
+        pathMatch: 'full',
+        resolve: { innovation : InnovationResolver },
+        runGuardsAndResolvers: 'always',
       },
       {
-        path: 'users',
+        path: 'projects',
         canActivateChild: [AdminAuthGuard],
         children: [
+          { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
           {
-            path: '',
-            component: AdminUsersComponent,
-            pathMatch: 'full',
-          },
-        ]
-      },
-      {
-        path: 'professionals',
-        canActivateChild: [AdminAuthGuard],
-        children: [
-          {
-            path: '',
-            component: AdminProfessionalsComponent,
-            pathMatch: 'full',
-          }
+            path: 'project/:projectId',
+            resolve: { innovation : InnovationResolver },
+            runGuardsAndResolvers: 'always',
+            component: AdminProjectComponent,
+            canActivateChild: [AdminAuthGuard],
+            children: [
+              ...projectRoutes
+            ]}
         ]
       },
       {
         path: 'community',
+        canActivateChild: [AdminAuthGuard],
         children: [
           {
             path: '',
@@ -77,58 +77,32 @@ const adminRoutes: Routes = [
           },
           {
             path: 'members/:memberId',
-            canActivateChild: [AdminAuthGuard],
-            children: [
-              {
-                path: '',
-                component: AdminCommunityMemberComponent,
-                pathMatch: 'full',
-                resolve: { professional: ProfessionalResolver, tagsSector: TagsSectorResolver },
-                runGuardsAndResolvers: 'always'
-              }
-            ],
+            component: AdminCommunityMemberComponent,
+            resolve: { professional: ProfessionalResolver, tagsSector: TagsSectorResolver },
+            runGuardsAndResolvers: 'always'
           },
           {
             path: 'projects/:projectId',
-            canActivateChild: [AdminAuthGuard],
-            children: [
-              {
-                path: '',
-                component: AdminCommunityProjectComponent,
-                pathMatch: 'full',
-                resolve: { innovation : InnovationResolver },
-                runGuardsAndResolvers: 'always',
-              }
-            ],
+            component: AdminCommunityProjectComponent,
+            resolve: { innovation: InnovationResolver },
+            runGuardsAndResolvers: 'always',
           }
         ]
       },
       {
-        path: 'projects/project/:projectId/storyboard',
-        canActivate: [AdminAuthGuard],
-        component: AdminProjectStoryboardComponent,
-        pathMatch: 'full',
-        resolve: { innovation : InnovationResolver },
-        runGuardsAndResolvers: 'always',
-      },
-      {
-        path: 'projects',
+        path: 'monitoring',
+        component: AdminMonitoringComponent,
         canActivateChild: [AdminAuthGuard],
         children: [
-          {
-            path: '',
-            component: AdminProjectsComponent,
-            pathMatch: 'full',
-          },
-          {
-            path: 'project/:projectId',
-            resolve: { innovation : InnovationResolver },
-            runGuardsAndResolvers: 'always',
-            component: AdminProjectComponent,
-            canActivateChild: [AdminAuthGuard],
-            children: [
-              ...projectRoutes
-            ]}
+          ...monitoringRoutes
+        ]
+      },
+      {
+        path: 'search',
+        component: AdminSearchComponent,
+        canActivateChild: [AdminAuthGuard],
+        children: [
+          ...searchRoutes
         ]
       },
       {
@@ -142,19 +116,11 @@ const adminRoutes: Routes = [
         ]
       },
       {
-        path: 'search',
-        component: AdminSearchComponent,
+        path: 'settings',
+        component: AdminSettingsComponent,
         canActivateChild: [AdminAuthGuard],
         children: [
-          ...searchRoutes
-        ]
-      },
-      {
-        path: 'monitoring',
-        component: AdminMonitoringComponent,
-        canActivateChild: [AdminAuthGuard],
-        children: [
-          ...monitoringRoutes
+          ...settingsRoutes,
         ]
       },
       {
@@ -163,15 +129,6 @@ const adminRoutes: Routes = [
         canActivateChild: [AdminAuthGuard],
         children: [
           ...librariesRoutes
-        ]
-      },
-      {
-        path: 'settings',
-        component: AdminSettingsComponent,
-        canActivateChild: [AdminAuthGuard],
-        children: [
-          { path: '', redirectTo: 'blacklist', pathMatch: 'full' },
-          ...settingsRoutes,
         ]
       },
       {
