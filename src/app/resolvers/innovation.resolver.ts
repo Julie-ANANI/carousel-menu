@@ -42,7 +42,7 @@ export class InnovationResolver implements Resolve<Innovation> {
             }
           }),
           catchError((err: HttpErrorResponse) => {
-            console.log(err);
+            console.error(err);
             return EMPTY;
           })
         );

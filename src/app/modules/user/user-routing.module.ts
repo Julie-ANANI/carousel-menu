@@ -12,11 +12,8 @@ const userRoutes: Routes = [
     path: '',
     component: UserComponent,
     children: [
-      {
-        path: 'admin',
-        canActivate: [AdminAuthGuard],
-        loadChildren: './admin/admin.module#AdminModule'
-      },
+      { path: '', canActivate: [AuthGuard], loadChildren: './client/client.module#ClientModule' },
+      { path: 'admin', canActivate: [AdminAuthGuard], loadChildren: './admin/admin.module#AdminModule' },
       {
         path: 'projects/:projectId/print/executive-report',
         canActivate: [AuthGuard],
@@ -24,10 +21,6 @@ const userRoutes: Routes = [
         resolve: { innovation : InnovationResolver },
         runGuardsAndResolvers: 'always',
       },
-      {
-        path: '',
-        loadChildren: './client/client.module#ClientModule'
-      }
     ]
   }
 ];

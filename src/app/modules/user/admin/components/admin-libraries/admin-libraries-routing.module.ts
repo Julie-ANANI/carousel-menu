@@ -11,25 +11,12 @@ import { SignaturesResolver } from '../../../../../resolvers/admin/signatures-re
 import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver';
 
 export const librariesRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: 'workflows',
-    pathMatch: 'full'
-  },
-  {
-    path: 'workflows',
-    component: AdminWorkflowsLibraryComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'emails',
-    component: AdminEmailsLibraryComponent,
-    pathMatch: 'full'
-  },
+  { path: '', redirectTo: 'workflows', pathMatch: 'full' },
+  { path: 'workflows', component: AdminWorkflowsLibraryComponent, pathMatch: 'full' },
+  { path: 'emails', component: AdminEmailsLibraryComponent, pathMatch: 'full' },
   {
     path: 'signatures',
     component: AdminSignaturesLibraryComponent,
-    pathMatch: 'full',
     resolve: { signatures: SignaturesResolver },
     runGuardsAndResolvers: 'always'
   },
@@ -42,7 +29,6 @@ export const librariesRoutes: Routes = [
   {
     path: 'questionnaire',
     component: AdminPresetsListComponent,
-    pathMatch: 'full',
     resolve: { presets: PresetsResolver },
     runGuardsAndResolvers: 'always'
   },
@@ -50,7 +36,7 @@ export const librariesRoutes: Routes = [
     path: 'questionnaire/:presetId',
     component: AdminPresetsEditComponent,
     resolve: { preset: PresetResolver },
-    pathMatch: 'full'
+    runGuardsAndResolvers: 'always'
   }
 
 ];

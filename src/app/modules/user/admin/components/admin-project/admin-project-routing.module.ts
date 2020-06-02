@@ -9,44 +9,12 @@ import { AdminProjectManagementComponent } from './admin-project-management/admi
 import { AdminProjectFollowUpComponent } from './admin-project-follow-up/admin-project-follow-up.component';
 
 export const projectRoutes: Routes = [
-  {
-    path: 'settings',
-    component: AdminProjectManagementComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'cards',
-    component: AdminProjectCardsComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'synthesis',
-    component: AdminProjectSynthesisComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'campaigns',
-    component: AdminProjectCampaignsComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'answer_tags',
-    component: AdminProjectTagsPoolComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'questionnaire',
-    component: AdminProjectQuestionnaireComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'follow-up',
-    component: AdminProjectFollowUpComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: '',
-    redirectTo: 'settings',
-    pathMatch: 'full'
-  },
+  { path: '', redirectTo: 'settings', pathMatch: 'full'},
+  { path: 'settings', component: AdminProjectManagementComponent, pathMatch: 'full' },
+  { path: 'cards', component: AdminProjectCardsComponent, pathMatch: 'full' },
+  { path: 'synthesis', component: AdminProjectSynthesisComponent, pathMatch: 'full' },
+  { path: 'campaigns', component: AdminProjectCampaignsComponent, pathMatch: 'full' },
+  { path: 'answer_tags', component: AdminProjectTagsPoolComponent, pathMatch: 'full' },
+  { path: 'questionnaire', component: AdminProjectQuestionnaireComponent, pathMatch: 'full' },
+  { path: 'follow-up', component: AdminProjectFollowUpComponent, pathMatch: 'full' }
 ];

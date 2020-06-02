@@ -14,7 +14,7 @@ Sentry.init({
   defaultIntegrations: false // we don't want the sentry integrations, they provide more shadows than real data
 });
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ErrorService {
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,

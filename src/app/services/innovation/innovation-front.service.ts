@@ -215,85 +215,101 @@ export class InnovationFrontService {
   }
 
   /***
-   * this function returns the fields for the
-   * current lang innovation card or innovation card from the innovation.
+   * this function returns the demanded field from the innovation
+   * based on the current lang provided.
    * @param innovation
    * @param currentLang
    * @param required
    */
-  public static currentLangInnovationCard(innovation: Innovation, currentLang: string, required: string) {
+  public static currentLangInnovationCard(innovation: Innovation, currentLang = 'en', required: string): any {
     if (innovation && innovation.innovationCards && currentLang && required) {
-
-      let index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
-
-      if (index === -1) {
-        index = 0;
-      }
+      let _cardIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
+      const _card: InnovCard = _cardIndex !== -1 ? innovation.innovationCards[_cardIndex] : innovation.innovationCards[0];
 
       switch (required) {
 
         case 'card':
-          return innovation.innovationCards[index];
+          return <InnovCard>_card;
 
         case 'title':
-          return innovation.innovationCards[index].title;
+          return _card.title;
 
         case 'summary':
-          return new ScrapeHTMLTags().transform(innovation.innovationCards[index].summary) || '';
+          return InnovationFrontService.scrapeHtmlTags(_card.summary) || '';
 
         case 'problem':
-          return new ScrapeHTMLTags().transform(innovation.innovationCards[index].problem) || '';
+          return InnovationFrontService.scrapeHtmlTags(_card.problem) || '';
 
         case 'solution':
-          return new ScrapeHTMLTags().transform(innovation.innovationCards[index].solution) || '';
+          return InnovationFrontService.scrapeHtmlTags(_card.solution) || '';
 
         case 'lang':
-          return innovation.innovationCards[index].lang;
+          return _card.lang;
+
       }
 
     }
   }
 
+  public static scrapeHtmlTags(text: string): string {
+    return new ScrapeHTMLTags().transform(text);
+  }
+
   /***
-   * returns the principal media of the innovation.
+   * first it checks the principal media at the innovation level, if not found then check at the
+   * card level based on the lang and return the url..
    * @param innovation
    * @param lang
    * @param width
    * @param height
    */
-  public static principalMedia(innovation: Innovation, lang: string, width = '240', height = '159'): string {
-    const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
-    const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
-    const suffix = '.jpg';
-    let src = '';
+  public static principalMedia(innovation: Innovation, lang = 'en', width = '240', height = '159'): string {
+    if (innovation.principalMedia) {
+      return InnovationFrontService._getMedia(innovation.principalMedia, width, height);
+    } else if (innovation.innovationCards && innovation.innovationCards.length > 0) {
+      let _cardIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === lang);
+      const _card: InnovCard = _cardIndex !== -1 ? innovation.innovationCards[_cardIndex] : innovation.innovationCards[0];
+      return InnovationFrontService.innovCardPrincipalMedia(_card, width, height);
+    }
+  }
 
-    if (innovation) {
+  /***
+   * this function return the principal media url at the level of the innovation card.
+   * @param innovCard
+   * @param width
+   * @param height
+   */
+  public static innovCardPrincipalMedia(innovCard: InnovCard, width = '240', height = '159'): string {
+    if (innovCard.principalMedia) {
+      return InnovationFrontService._getMedia(innovCard.principalMedia, width, height);
+    } else if (innovCard.media && innovCard.media.length > 0) {
+      const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
+      const _media: Media = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
+      return InnovationFrontService._getMedia(_media, width, height);
+    }
+  }
 
-      if (innovation.principalMedia && innovation.principalMedia.type === 'PHOTO' && innovation.principalMedia.cloudinary
-        && innovation.principalMedia.cloudinary.public_id) {
-        src = prefix + innovation.principalMedia.cloudinary.public_id + suffix;
-      } else if (innovation.innovationCards && innovation.innovationCards.length) {
+  private static _getMedia(media: Media, width = '240', height = '159'): string {
+    const _defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
+    let _src = '';
 
-        let index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === lang);
-        if (index === -1) {
-          index = 0;
-        }
-
-        const card = innovation.innovationCards[index];
-
-        if (card && card.media && card.media.length) {
-          const index = card.media.findIndex((media: Media) => media.type === 'PHOTO');
-          if (index !== -1 && card.media[index].cloudinary && card.media[index].cloudinary.public_id) {
-            src = prefix + card.media[index].cloudinary.public_id + suffix;
-          }
-        }
-
-      }
-
+    if (media.type && media.type === 'PHOTO') {
+      _src = InnovationFrontService._imageSrc(media, width, height);
+    } else if (media.type && media.type === 'VIDEO') {
+      _src = this._videoThumbnail(media);
     }
 
-    return src === '' ? defaultSrc : src;
+    return _src === '' ? _defaultSrc : _src;
+  }
 
+  private static _videoThumbnail(media: Media): string {
+    return media.video && media.video.thumbnail || '';
+  }
+
+  private static _imageSrc(media: Media, width = '240', height = '159'): string {
+    const _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
+    const _suffix = '.jpg';
+    return _prefix + (media.cloudinary && media.cloudinary.public_id) + _suffix || '';
   }
 
   /***

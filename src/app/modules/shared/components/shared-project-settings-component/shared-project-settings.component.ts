@@ -16,6 +16,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
+    console.log(value.settings)
     this._setTargetCountries();
   }
 
@@ -48,6 +49,8 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _targetingCountries: Array<string> = [];
+
+  contactInternal: Array<string> = ['false', 'true'];
 
   constructor(private translateService: TranslateService,
               private innovationFrontService: InnovationFrontService) { }
@@ -114,6 +117,11 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
           initialData: ''
         };
     }
+  }
+
+  public onChangeContact() {
+    this._innovation.settings.contact.internal = !this._innovation.settings.contact.internal;
+    this.updateSettings();
   }
 
   private _setTargetCountries() {

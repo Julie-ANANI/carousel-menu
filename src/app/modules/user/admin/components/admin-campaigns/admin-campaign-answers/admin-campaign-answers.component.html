@@ -1,8 +1,7 @@
-<section id="admin-campaign-answers">
-
+<div *ngIf="!fetchingError" id="admin-campaign-answers">
 
   <!-- stats -->
-  <ul class="stat">
+  <ul class="stat is-admin-campaign animate-fade is-4">
 
     <!-- stat col 1 -->
     <li class="stat-container fluid">
@@ -13,13 +12,16 @@
       </div>
       <div class="stat-body">
         <h5 class="stat-sub-heading">To look at</h5>
-        <span class="stat-value">{{ campaignStat('status', ['SUBMITTED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']) }}</span>
+        <span class="stat-value">
+          {{ campaignStat('status', ['SUBMITTED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']) }}
+        </span>
       </div>
       <div class="stat-body">
         <h5 class="stat-sub-heading">Validated</h5>
         <span class="stat-value">{{ campaignStat('status', 'VALIDATED') }}</span>
       </div>
     </li>
+    <!-- /stat col 1 -->
 
     <!-- stat col 2 -->
     <li class="stat-container fluid">
@@ -33,6 +35,7 @@
         <span class="stat-value">{{ campaignStat('profile', 2) }}</span>
       </div>
     </li>
+    <!-- /stat col 2 -->
 
     <!-- stat col 3 -->
     <li class="stat-container fluid">
@@ -46,100 +49,100 @@
         <span class="stat-value">{{ campaignStat('quality', 'time_elapsed') }}" min.</span>
       </div>
     </li>
+    <!-- /stat col 3 -->
 
   </ul>
   <!-- /stats -->
 
+  <!-- content -->
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
-  <div class="section-light-pad">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <div class="restrict-width">
-
-
-        <!-- fetching error campaign answers -->
-        <ng-container *ngIf="fetchingError">
-          <div class="a-c-a-error-wrapper d-flex align-center">
-            <app-utility-error-template-1 [errorMessage]="'CAMPAIGNS.ERROR_MESSAGE.FETCHING'" [ngStyle]="{ 'width': '100%' }"></app-utility-error-template-1>
-          </div>
-        </ng-container>
-        <!-- /fetching error campaign answers -->
-
-
-        <!-- no answers -->
-        <ng-container *ngIf="!fetchingError && total === 0 && noResult">
-          <div class="a-c-a-no-result-wrapper d-flex align-center">
-            <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
-              <div class="text-center">
-
-                <h4 [innerText]="'CAMPAIGNS.NO_ANSWER'" class="text-background" translate></h4>
-
-                <div *ngIf="authorizedActions(2)" class="m-top-25">
-
-                  <label class="btn btn-primary rounded shadow">
-                    <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file"/>
-                    <i class="fas fa-file-import m-no-left"></i>
-                    {{ 'CAMPAIGNS.IMPORT_ANSWERS' | translate }}
-                  </label>
-
-                </div>
-
-              </div>
-            </app-message-template-2>
-          </div>
-        </ng-container>
-        <!-- /no answers -->
-
-
-        <!-- answers -->
-        <ng-container *ngIf="!fetchingError && !noResult">
-
-
-          <!-- buttons -->
-          <div *ngIf="authorizedActions(2)" class="text-right">
-
-            <!-- import -->
-            <label class="btn ghost-primary btn-sm m-right-20 m-bottom-10">
-              <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file"/>
-              {{ 'COMMON.BUTTON.IMPORT' | translate }}
+    <!-- no answers -->
+    <section *ngIf="totalAnswers === 0" class="p-top-50 p-bottom-50 animate-fade is-4">
+      <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+        <div class="text-center">
+          <h4 class="text-background">Could not found any answers for this campaign. Try to import some!</h4>
+          <div *ngIf="authorizedActions(2)" class="m-top-25">
+            <label class="button is-primary is-rounded is-shadowed">
+              <input
+                #fileupload
+                (change)="onImport(fileupload.files[0])"
+                [hidden]="true"
+                type="file"/>
+              <ng-container *ngIf="!isImportingAnswers; else importFile">
+                <i class="fas fa-file-import m-no-left"></i>
+                Import answers
+              </ng-container>
+              <ng-template #importFile>
+                importing answers...
+              </ng-template>
             </label>
-
-            <!-- export -->
-            <button (click)="onClickExport()" class="btn btn-primary m-bottom-10 btn-sm">
-              {{ 'COMMON.BUTTON.EXPORT' | translate }}
-            </button>
-
           </div>
-          <!-- /buttons -->
+        </div>
+      </app-message-template-2>
+    </section>
+    <!-- /no answers -->
 
+    <!-- answers -->
+    <div *ngIf="totalAnswers > 0" class="p-top-25 p-bottom-30 animate-fade is-4">
 
-          <!-- table -->
-          <div class="p-top-25">
-            <app-shared-table
-              (editRow)="onClickEdit($event)"
-              (performAction)="onClickActions($event)"
-              [(config)]="config"
-              [data]="table">
-            </app-shared-table>
-          </div>
-          <!-- /table -->
+      <!-- buttons -->
+      <section *ngIf="authorizedActions(2)" class="text-right">
 
+        <!-- import -->
+        <label class="button is-primary is-sm is-outlined m-right-25 m-bottom-15">
+          <input
+            #fileupload
+            (change)="onImport(fileupload.files[0])"
+            [hidden]="true"
+            type="file"/>
+          <ng-container *ngIf="!isImportingAnswers; else importFile">
+            Import
+          </ng-container>
+          <ng-template #importFile>
+            importing...
+          </ng-template>
+        </label>
+        <!-- /import -->
 
-        </ng-container>
-        <!-- /answers -->
+        <!-- export -->
+        <button
+          (click)="onExport()"
+          class="button is-primary is-sm m-bottom-15"
+          id="btn-export-answers">
+          Export
+        </button>
+        <!-- /export -->
 
+      </section>
+      <!-- /buttons -->
 
-      </div>
+      <!-- table -->
+      <section class="p-top-25">
+        <app-shared-table
+          (editRow)="onEdit($event)"
+          (performAction)="onActions($event)"
+          [(config)]="config"
+          [data]="table">
+        </app-shared-table>
+      </section>
+      <!-- /table -->
+
     </div>
+    <!-- /answers -->
+
   </div>
+  <!-- /content -->
 
+</div>
 
-</section>
-
-<!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<!-- sidebar insight preview -->
+<app-sidebar *ngIf="!fetchingError && answers.length > 0" [(template)]="sidebarValue">
   <app-user-answer
+    *ngIf="modalAnswer._id"
     [sidebarState]="sidebarValue.animate_state"
     [adminMode]="adminMode"
+    [excludedCompanies]="excludedCompanies"
     [(userAnswer)]="modalAnswer"
     [projectId]="campaign.innovation._id"
     [questions]="questions"

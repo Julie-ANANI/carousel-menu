@@ -2,11 +2,14 @@ import { Clearbit } from './clearbit';
 import { Professional } from './professional';
 import { Tag } from './tag';
 
+export type AnswerStatus = 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED' | 'VALIDATED_UMIBOT'
+  | 'REJECTED_UMIBOT' | 'REJECTED_GMAIL';
+
 export interface Answer {
   readonly _id?: string;
   readonly campaign: string;
   readonly innovation: string;
-  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT' | 'REJECTED_GMAIL';
+  status: AnswerStatus;
   quizReference?: string;
   originalAnswerReference?: string;
   tags: Array<Tag>;

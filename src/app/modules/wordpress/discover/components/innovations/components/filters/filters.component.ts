@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Tag } from '../../../../../../../models/tag';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
-import { FilterService } from '../../../../../../public/discover/components/innovations/services/filter.service';
+import { DiscoverService } from '../../../../../../../services/discover/discover.service';
 import { ActivatedRoute } from '@angular/router';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
@@ -57,7 +57,7 @@ export class FiltersComponent {
   private _stopLoading: boolean;
 
   constructor(private _tagsService: TagsService,
-              private _filterService: FilterService,
+              private _filterService: DiscoverService,
               private _activatedRoute: ActivatedRoute) {
 
     this._activatedRoute.params.subscribe(params => {
@@ -109,7 +109,7 @@ export class FiltersComponent {
    * @private
    */
   private _getHighlightedTags() {
-    this._highLightTags = FilterService.getHighlightedTags(this._allTags);
+    this._highLightTags = DiscoverService.getHighlightedTags(this._allTags);
     this._sortTags('highlight');
   }
 

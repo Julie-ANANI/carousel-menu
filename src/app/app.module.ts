@@ -15,22 +15,11 @@ import { NotFoundModule } from './modules/common/not-found/not-found.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SpinnerLoaderModule } from './modules/utility/spinner-loader/spinner-loader.module';
 
-// Services
-import { AuthService } from './services/auth/auth.service';
-import { ErrorService } from './services/error/error.service';
-import { LocalStorageService } from './services/localStorage/localStorage.service';
-import { TranslateNotificationsService } from './services/notifications/notifications.service';
-import { LoaderService } from './services/loader/loader.service';
-import { MouseService } from './services/mouse/mouse.service';
-import { ConfigService } from './services/config/config.service';
-import { IndexService } from './services/index/index.service';
-
 // Interceptors
 import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { GlobalErrorHandler } from './handlers/error-handler';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
-import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backend";
 
 @NgModule({
   imports: [
@@ -56,20 +45,11 @@ import { SwellrtBackend } from "./modules/swellrt-client/services/swellrt-backen
     AppComponent
   ],
   providers: [
-    AuthService,
-    ErrorService,
-    LocalStorageService,
-    TranslateNotificationsService,
-    LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     // { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
-    SwellrtBackend,
-    MouseService,
-    ConfigService,
-    IndexService
   ],
   bootstrap: [
     AppComponent

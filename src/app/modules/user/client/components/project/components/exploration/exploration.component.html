@@ -18,55 +18,8 @@
         <!-- section title -->
         <div class="section-title flex-between">
           <h2 class="title-primary">{{ 'PROJECT_MODULE.EXPLORATION.TITLE'  | translate }}</h2>
-          <a
-            *ngIf="contactUrl"
-            class="btn btn-primary gtm-exploration-contact-operator"
-            href="{{ contactUrl }}">
-            <span>{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</span>
-          </a>
         </div>
         <!-- /section title -->
-
-        <!-- section comment -->
-        <div class="section-comment">
-
-          <!-- status wrapper -->
-          <div class="status-wrapper">
-
-            <h4>{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.TITLE' | translate }}</h4>
-
-            <div class="status-content">
-              <p><i class="fas fa-check"></i>{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.CREATED' | translate }}</p>
-              <p>{{ innovation.created | date:dateFormat }}</p>
-            </div>
-
-            <ng-container *ngFor="let action of innovation.statusLogs">
-              <div class="status-content">
-                <p>
-                  <i class="fas" [ngClass]="(action.action === 'REJECT') ? 'fa-times' : 'fa-check'"></i>{{ ('PROJECT_MODULE.EXPLORATION.STATUS_TEXT.' + action.action) | translate }}
-                </p>
-                <p>{{ action.date | date:dateFormat }}</p>
-              </div>
-            </ng-container>
-
-          </div>
-
-          <!-- Operator -->
-          <ng-container *ngIf="innovation.operator?.name">
-            <div class="comment-wrapper">
-
-              <ng-container *ngIf="innovation.operator?.name">
-                <div class="operator-wrapper text">
-                  <span class="text-medium">{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span>
-                  <span>{{ innovation.operator?.name }}</span>
-                </div>
-              </ng-container>
-
-            </div>
-          </ng-container>
-
-        </div>
-        <!-- /section comment -->
 
         <!-- section analytics -->
         <ng-container *ngIf="false">
@@ -155,23 +108,12 @@
         </div>
         <!-- /section click rate -->
 
-        <!-- section company -->
-        <ng-container *ngIf="companies.length > 0">
-          <div class="section-company section-light-pad rm-pad-bottom">
-            <h3 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h3>
-            <ul class="company-content text">
-              <li *ngFor="let company of companies; let i = index">
-                {{ i + 1 + '.'}} {{ company.name | FormatText }}
-              </li>
-            </ul>
-          </div>
-        </ng-container>
-        <!-- /section company -->
-
         <!-- section table -->
         <ng-container *ngIf="tableInfos?._total > 0">
           <div class="section-light-pad rm-pad-bottom">
-            <h3 class="title-secondary">{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
+            <h3 class="title-secondary">
+              {{ tableInfos._total }} {{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}
+            </h3>
             <app-shared-table [data]="tableInfos" [(config)]="config" (editRow)="onClickShow($event)"></app-shared-table>
           </div>
         </ng-container>

@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { DiscoverRoutingModule } from './discover-routing.module';
+import { PublicDiscoverRoutingModule } from './public-discover-routing.module';
 
-import { DiscoverComponent } from './discover.component';
-import { DiscoverDescriptionComponent } from './components/description/discover-description.component';
-import { InnovationsComponent } from './components/innovations/innovations.component';
-import { FiltersComponent } from './components/innovations/components/filters/filters.component';
-import { CardsComponent } from './components/innovations/components/cards/cards.component';
-
-import { ShareService } from '../../../services/share/share.service';
-import { TagsService } from '../../../services/tags/tags.service';
-import { FilterService } from './components/innovations/services/filter.service';
+import { PublicDiscoverComponent } from './public-discover.component';
+import { PublicDiscoverDescriptionComponent } from './components/public-discover-description/public-discover-description.component';
+import { PublicDiscoverInnovationsComponent } from './components/public-discover-innovations/public-discover-innovations.component';
+import { FiltersComponent } from './components/public-discover-innovations/components/filters/filters.component';
+import { CardsComponent } from './components/public-discover-innovations/components/cards/cards.component';
 
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
@@ -24,11 +20,10 @@ import { SearchInput2Module } from '../../utility/search-inputs/search-template-
 import { ErrorTemplate1Module } from '../../utility/errors/error-template-1/error-template-1.module';
 import { PaginationTemplate2Module } from '../../utility/paginations/pagination-template-2/pagination-template-2.module';
 
-
 @NgModule({
   imports: [
     CommonModule,
-    DiscoverRoutingModule,
+    PublicDiscoverRoutingModule,
     TranslateModule.forChild(),
     PipeModule,
     SharedLoaderModule,
@@ -41,18 +36,13 @@ import { PaginationTemplate2Module } from '../../utility/paginations/pagination-
     ErrorTemplate1Module,
     PaginationTemplate2Module
   ],
-  providers:[
-    ShareService,
-    TagsService,
-    FilterService
-  ],
   declarations: [
-    DiscoverComponent,
-    DiscoverDescriptionComponent,
-    InnovationsComponent,
+    PublicDiscoverComponent,
+    PublicDiscoverDescriptionComponent,
+    PublicDiscoverInnovationsComponent,
     FiltersComponent,
     CardsComponent
   ]
 })
 
-export class DiscoverModule {}
+export class PublicDiscoverModule {}

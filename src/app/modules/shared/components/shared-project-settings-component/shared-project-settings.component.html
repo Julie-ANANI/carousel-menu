@@ -262,10 +262,41 @@
         </div>
         <!-- /Professional profiles -->
 
+        <!-- contact internal -->
+        <div [ngStyle]="{ 'padding-top': innovation.settings.contact && canEdit ? '40px' : '25px' }">
+
+          <span class="shape is-rounded bg-draft">5</span>
+          <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.CONTACT_INTERNAL.LABEL' | translate }}</span>
+
+          <div *ngIf="!canEdit" class="pd-input">
+            <p class="text">
+              <ng-container *ngIf="innovation.settings.contact.internal; else no">
+                {{ 'SHARED_PROJECT_SETTINGS.CONTACT_INTERNAL.YES' | translate }}
+              </ng-container>
+              <ng-template #no>{{ 'SHARED_PROJECT_SETTINGS.CONTACT_INTERNAL.NO' | translate }}</ng-template>
+            </p>
+          </div>
+
+          <div *ngIf="canEdit" class="pd-input">
+            <label *ngFor="let contact of contactInternal" class="form-radio is-inline">
+              <input
+                (change)="onChangeContact()"
+                [checked]="innovation.settings.contact.internal.toString() === contact"
+                [value]="contact"
+                name="contact-internal"
+                type="radio">
+              <i class="form-icon"></i>
+              {{ 'SHARED_PROJECT_SETTINGS.CONTACT_INTERNAL.VALUE_' + contact.toUpperCase() | translate }}
+            </label>
+          </div>
+
+        </div>
+        <!-- /contact internal -->
+
         <!-- Keyword and other stuffs -->
         <div [ngStyle]="{ 'padding-top': innovation.settings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
 
-          <span class="shape is-rounded bg-draft">5</span>
+          <span class="shape is-rounded bg-draft">6</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</span>
 
           <ng-container *ngIf="!canEdit">

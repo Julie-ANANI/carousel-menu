@@ -3,7 +3,7 @@ import { Tag } from '../../../../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../../../../../../environments/environment';
-import { FilterService } from '../../services/filter.service';
+import { DiscoverService } from '../../../../../../../services/discover/discover.service';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from "../../../../../../../services/auth/auth.service";
@@ -75,7 +75,7 @@ export class FiltersComponent {
               private _translateService: TranslateService,
               private _tagsService: TagsService,
               private _activatedRoute: ActivatedRoute,
-              private _filterService: FilterService) {
+              private _filterService: DiscoverService) {
 
     this._filterService.getFilterToRemove().subscribe((tagId: string) => {
       if (this._selectedSimilarTags.length === 0) {
@@ -122,7 +122,7 @@ export class FiltersComponent {
    * @private
    */
   private _getHighlightedTags() {
-    this._highLightTags = FilterService.getHighlightedTags(this._allTags);
+    this._highLightTags = DiscoverService.getHighlightedTags(this._allTags);
     this._sortTags('highlight');
   }
 
