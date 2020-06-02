@@ -48,6 +48,7 @@ export const SETUP = {
   },
 
   'EMAIL_DOMAINS': 'Domains to be used',
+  'ROADMAP': 'Roadmap',
 
   'EXAMPLE_TEXT': 'This section allows you to build the landing page that will be sent to professionals. You will describe ' +
     'your solution according to the UMI methodology. To help you in the writing, you can rely on the advice associated ' +

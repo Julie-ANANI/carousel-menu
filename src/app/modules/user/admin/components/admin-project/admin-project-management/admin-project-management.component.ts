@@ -90,7 +90,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   private _clientProject: ClientProject = <ClientProject>{};
 
-  private _mission: Mission = <Mission>{};
+  private _mission: Mission = null;
 
   private _missionType: Array<string> = ['USER', 'CLIENT', 'DEMO', 'TEST'];
 
@@ -221,18 +221,20 @@ export class AdminProjectManagementComponent implements OnInit {
   changeSidebar(name: string) {
     this.resetAllSidebar();
     switch (name) {
-      case('innovation-form') : {
+      case('innovation-form'):
         this.isInnovationSidebar = true;
         break;
-      } case('blacklist-emails-domains'): {
+      case('blacklist-emails-domains'):
         this.isEmailsDomainsSidebar = true;
         break;
-      } case('tags-form') : {
+      case('tags-form') :
         this.isTagsSidebar = true;
         break;
-      } default : {
+      case('mission-form'):
+        this.isTagsSidebar = true;
         break;
-      }
+      default:
+        // NOOP
     }
   }
 
@@ -364,6 +366,17 @@ export class AdminProjectManagementComponent implements OnInit {
       type: 'pitch',
       size: '726px'
     };
+  }
+
+  editRoadmap() {
+    this.changeSidebar('mission-form');
+    if (this._project.mission) {
+      this._more = {
+        animate_state: 'active',
+        title: 'SIDEBAR.TITLE.EDIT_MISSION',
+        size: '726px'
+      };
+    }
   }
 
   /***
@@ -786,6 +799,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get mission(): Mission {
     return this._mission;
+  }
+
+  set mission(value: Mission) {
+    this._mission = value;
   }
 
   get missionType(): Array<string> {

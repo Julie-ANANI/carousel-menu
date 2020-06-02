@@ -93,5 +93,6 @@ export const PROJECT = {
   'PROJECT_TAGS': 'Tags projet',
   'ANSWER_TAGS': 'Tags réponses',
   'FOLLOW-UP': 'Follow up',
-  'MAIL_CONFIG': 'Réglages Emails'
+  'MAIL_CONFIG': 'Réglages Emails',
+  'ROADMAP': 'Roadmap'
 };

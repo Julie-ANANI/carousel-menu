@@ -23,9 +23,9 @@ export class AdminProjectComponent implements OnInit {
 
   private _innovationTitle: string;
 
-  private _showModal: boolean = false;
+  private _showModal = false;
 
-  private _isProjectModal: boolean = false;
+  private _isProjectModal = false;
 
   private _projectExportConfig: any = {
     answers: {
@@ -74,7 +74,7 @@ export class AdminProjectComponent implements OnInit {
     const adminLevel = this._authService.adminLevel;
 
     if (adminLevel > 1) {
-      return ['settings', 'cards', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis', 'storyboard', 'follow-up' ];
+      return ['settings', 'roadmap', 'cards', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis', 'storyboard', 'follow-up' ];
     } else {
       return ['cards', 'campaigns', 'synthesis'];
     }
@@ -114,23 +114,23 @@ export class AdminProjectComponent implements OnInit {
   private _exportProject() {
     const params: Array<string> = [];
 
-    for (let key of Object.keys(this._projectExportConfig)) {
-      if (key === "answers") {
+    for (const key of Object.keys(this._projectExportConfig)) {
+      if (key === 'answers') {
         const statusesToExport: Array<string> = [];
 
-        for (let key of Object.keys(this._projectExportConfig.answers)) {
-          if (this._projectExportConfig.answers[key]) {
-            statusesToExport.push(key);
+        for (const _key of Object.keys(this._projectExportConfig.answers)) {
+          if (this._projectExportConfig.answers[_key]) {
+            statusesToExport.push(_key);
           }
         }
 
         if (statusesToExport.length) {
-          params.push("answers=" + statusesToExport.join(','));
+          params.push('answers=' + statusesToExport.join(','));
         }
 
       } else {
         if (this._projectExportConfig[key]) {
-          params.push(key + "=true");
+          params.push(key + '=true');
         }
       }
     }

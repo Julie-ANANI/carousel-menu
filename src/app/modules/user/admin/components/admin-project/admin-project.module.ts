@@ -34,6 +34,7 @@ import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../utility/messages/message-template-2/message-template-2.module';
 import { SharedFollowUpModule } from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
+import { MissionFormModule } from '../../../../sidebars/components/mission-form/mission-form.module';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { SharedFollowUpModule } from '../../../../shared/components/shared-follo
     ModalModule,
     ErrorTemplate1Module,
     MessageTemplate2Module,
-    SharedFollowUpModule
+    SharedFollowUpModule,
+    MissionFormModule
   ],
   declarations: [
     AdminProjectComponent,

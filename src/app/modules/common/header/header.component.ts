@@ -57,7 +57,7 @@ export class HeaderComponent {
 
   private _sidebarValues: SidebarInterface = {};
 
-  private _showLangs: boolean = false;
+  private _showLangs = false;
 
   private _adminRoutes: Array<Header> = [
     // { pageName: 'Dashboard', pageLink: '/user/admin', adminLevel: 1 },
