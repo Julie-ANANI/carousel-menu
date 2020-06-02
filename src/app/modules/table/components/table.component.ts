@@ -785,7 +785,8 @@ export class TableComponent {
 
           }
 
-        } else if (contentKey === searchKey && content[searchKey] && content[searchKey].toString().toLowerCase().indexOf(searchValue) !== -1) {
+        } else if (contentKey === searchKey && searchValue && content[searchKey]
+          && content[searchKey].toString().toLowerCase() === searchValue.toLowerCase()) {
           return true;
         }
 

@@ -37,7 +37,6 @@ import { DownloadService } from '../../../services/download/download.service';
 import { RequestResolver } from '../../../resolvers/request.resolver';
 import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
 import { SignatureResolver } from '../../../resolvers/signature.resolver';
-import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { PresetResolver } from '../../../resolvers/preset.resolver';
 import { AdvSearchService } from '../../../services/advsearch/advsearch.service';
@@ -97,7 +96,6 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
-    CampaignFrontService,
     QuizService,
     PresetResolver,
     AdvSearchService,

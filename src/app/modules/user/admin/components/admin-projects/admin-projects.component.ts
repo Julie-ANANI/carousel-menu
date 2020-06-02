@@ -90,12 +90,12 @@ export class AdminProjectsComponent implements OnInit {
       _clickIndex: 1,
       _isPaginable: true,
       _columns: [
-        {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true },
-        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT' },
-        {_attrs: ['mission.type'], _name: 'TABLE.HEADING.TYPE', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '150px'},
-        {_attrs: [this._mainObjective], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'TEXT'},
-        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true, _width: '150px' },
-        {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
+        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true },
+        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT' },
+        {_attrs: ['mission.type'], _name: 'Type', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '150px'},
+        {_attrs: [this._mainObjective], _name: 'Objective', _type: 'TEXT'},
+        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '150px' },
+        {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},

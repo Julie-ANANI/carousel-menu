@@ -1,7 +1,7 @@
 <div *ngIf="!fetchingError" id="admin-campaign-batch-component">
 
   <!-- section stats -->
-  <ul class="stat animate-fade is-4">
+  <ul class="stat is-admin-campaign animate-fade is-4">
 
     <!-- stat col 1 -->
     <li class="stat-container fluid">
@@ -56,7 +56,7 @@
     <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
 
     <!-- section no batches -->
-    <div *ngIf="!batchesTable.length" class="p-top-25 p-bottom-25">
+    <section *ngIf="!batchesTable.length" class="p-top-25 p-bottom-25">
 
       <!-- note -->
       <ng-container *ngIf="!autoBatchStatus">
@@ -120,14 +120,14 @@
 
       </message-template-1>
 
-    </div>
+    </section>
     <!-- /section no batches -->
 
     <!-- section batches -->
     <div *ngIf="batchesTable.length" class="p-top-25">
 
       <!-- section status -->
-      <div class="section-status flex-between m-bottom-15">
+      <section class="section-status flex-between m-bottom-15">
 
         <div class="form-group m-bottom-15">
           <label class="form-switch text-medium" for="result-auto-batch">
@@ -147,10 +147,10 @@
           New batch
         </button>
 
-      </div>
+      </section>
 
       <!-- batches -->
-      <div
+      <section
         *ngFor="let batch of stats['batches'];
         let batchIndex = index;"
         [ngStyle]="{ 'animation-duration': ((batchIndex+1) * 200) + 'ms' }"
@@ -192,7 +192,7 @@
           </app-shared-table>
         </div>
 
-      </div>
+      </section>
       <!-- /batches -->
 
     </div>
@@ -238,8 +238,9 @@
 
 
 <!-- sidebars to perform batch operations -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="!fetchingError" [(template)]="sidebarValue">
   <app-sidebar-batch-form
+    *ngIf="sidebarValue.type"
     (batchOutput)="onSidebarOutput($event)"
     [campaignWorkflows]="campaignWorkflows"
     [content]="content"

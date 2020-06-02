@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { SidebarInterface } from '../../interfaces/sidebar-interface';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, PLATFORM_ID} from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {SidebarInterface} from '../../interfaces/sidebar-interface';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,7 +24,7 @@ import { SidebarInterface } from '../../interfaces/sidebar-interface';
   ]
 })
 
-export class SidebarComponent {
+export class SidebarComponent implements OnInit, OnDestroy {
 
   @Input() set template(value: SidebarInterface) {
     this._type = value.type;
@@ -44,7 +45,18 @@ export class SidebarComponent {
 
   private _type: string;
 
-  constructor() {}
+  private readonly _element: any;
+
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _elementRef: ElementRef) {
+    this._element = this._elementRef.nativeElement;
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.appendChild(this._element);
+    }
+  }
 
   /***
    * This function is to toggle the sidebar state and also to move up the scroll.
@@ -80,6 +92,12 @@ export class SidebarComponent {
 
   get type(): string {
     return this._type;
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.removeChild(this._element);
+    }
   }
 
 }

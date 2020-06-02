@@ -119,9 +119,8 @@
 
 
 <!-- innovation preview sidebar-->
-<app-sidebar [(template)]="sidebarTemplate">
+<app-sidebar *ngIf="weekBatches.length > 0" [(template)]="sidebarTemplate">
   <sidebar-innovation-preview
-    *ngIf="weekBatches.length > 0"
     [projectCard]="selectedInnovation"
     [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }">
   </sidebar-innovation-preview>

@@ -144,13 +144,7 @@
   color: $text-white-color;
   background-color: $color;
   border-color: $color;
-
-  &:hover {
-    color: $text-white-color;
-    background-color: $color;
-    border-color: $color;
-    box-shadow: $box-shadow-button-hover;
-  }
+  box-shadow: $box-shadow-button-hover;
 
   &[disabled], &:disabled, &.disabled {
     box-shadow: none;
