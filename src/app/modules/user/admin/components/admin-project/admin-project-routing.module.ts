@@ -6,7 +6,7 @@ import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-
 import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-project-tags-pool.component';
 import { AdminProjectQuestionnaireComponent } from './admin-project-questionnaire/admin-project-questionnaire.component';
 import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
-import { AdminProjectFollowUpComponent } from "./admin-project-follow-up/admin-project-follow-up.component";
+import { AdminProjectFollowUpComponent } from './admin-project-follow-up/admin-project-follow-up.component';
 
 export const projectRoutes: Routes = [
   { path: '', redirectTo: 'settings', pathMatch: 'full'},

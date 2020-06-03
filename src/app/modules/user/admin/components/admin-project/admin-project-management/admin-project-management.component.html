@@ -139,6 +139,25 @@
 
       </div>
 
+      <!-- Roadmap -->
+      <div class="project-line">
+        <label class="form-switch" for="editRoadmap">
+          <input
+            type="checkbox"
+            name="editRoadmap"
+            id="editRoadmap"
+            [checked]="mission && mission.type">
+          <i class="form-icon"></i>
+          Roadmap
+        </label>
+
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="editRoadmap()" [disabled]="!mission">
+          {{'COMMON.EDIT' | translate}}
+        </button>
+      </div>
+
+      <!--/ Roadmap -->
+
       <!-- mission type -->
       <div *ngIf="project.mission" class="project-line">
 
@@ -794,6 +813,7 @@
                  [tagType]="tagTypes"
                  (newTags)="addTags($event)">
   </app-tags>
+  <app-mission-form [(mission)]="mission"></app-mission-form>
 </app-sidebar>
 
 
