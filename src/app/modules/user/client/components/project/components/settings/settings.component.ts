@@ -112,6 +112,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    const _pageOffset = window.pageYOffset;
+    this._sections.forEach((section) => {
+      const _element = document.getElementById(section.name.toLowerCase());
+      if (_element) {
+        const _elementOffset = _element.offsetTop;
+        if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
+          this.activeView = section.name;
+        }
+      }
+    });
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(_event: Event) {
     this._isVisibleMenu = window.innerWidth >= 840;
