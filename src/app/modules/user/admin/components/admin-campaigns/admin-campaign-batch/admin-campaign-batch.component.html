@@ -1,4 +1,4 @@
-<div *ngIf="!fetchingError" id="admin-campaign-batch-component">
+<div [hidden]="fetchingError" id="admin-campaign-batch-component">
 
   <!-- section stats -->
   <ul class="stat is-admin-campaign animate-fade is-4">
@@ -238,9 +238,8 @@
 
 
 <!-- sidebars to perform batch operations -->
-<app-sidebar *ngIf="!fetchingError" [(template)]="sidebarValue">
+<app-sidebar [hidden]="fetchingError" [(template)]="sidebarValue">
   <app-sidebar-batch-form
-    *ngIf="sidebarValue.type"
     (batchOutput)="onSidebarOutput($event)"
     [campaignWorkflows]="campaignWorkflows"
     [content]="content"

@@ -1,4 +1,4 @@
-<div *ngIf="!fetchingError" id="admin-campaign-answers">
+<div [hidden]="fetchingError" id="admin-campaign-answers">
 
   <!-- stats -->
   <ul class="stat is-admin-campaign animate-fade is-4">
@@ -137,7 +137,7 @@
 </div>
 
 <!-- sidebar insight preview -->
-<app-sidebar *ngIf="!fetchingError && answers.length > 0" [(template)]="sidebarValue">
+<app-sidebar [hidden]="fetchingError && answers.length === 0" [(template)]="sidebarValue">
   <app-user-answer
     *ngIf="modalAnswer._id"
     [sidebarState]="sidebarValue.animate_state"

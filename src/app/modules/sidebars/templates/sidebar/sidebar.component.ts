@@ -8,7 +8,6 @@ import {isPlatformBrowser} from '@angular/common';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   animations: [
-
     trigger(('animateSidebar'), [
       state('inactive', style({
         opacity: 0,
@@ -20,30 +19,25 @@ import {isPlatformBrowser} from '@angular/common';
       })),
       transition('inactive <=> active', animate('250ms ease-in-out')),
     ]),
-
   ]
 })
 
 export class SidebarComponent implements OnInit, OnDestroy {
 
   @Input() set template(value: SidebarInterface) {
-    this._type = value.type;
-    this._state = value.animate_state === undefined ? 'inactive' : value.animate_state ;
-    this._title = value.title;
-    this._size = value.size;
+    this._template = {
+      type: value.type || '',
+      animate_state: value.animate_state === undefined ? 'inactive' : value.animate_state || 'inactive',
+      title: value.title || '',
+      size: value.size || '452px'
+    };
   }
 
   @Output() templateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();
 
   @Output() closeSidebar = new EventEmitter<SidebarInterface>(); // todo: remove this line
 
-  private _title: string;
-
-  private _state = 'inactive';
-
-  private _size = '452px';
-
-  private _type: string;
+  private _template: SidebarInterface = <SidebarInterface>{};
 
   private readonly _element: any;
 
@@ -65,33 +59,25 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   public toggleState(event: Event, target: any) {
     if ((event.target as HTMLElement).id === 'close') {
-      this._state = 'inactive'; // todo: remove this line
-      this.templateChange.emit({ animate_state: 'inactive', title: this._title, type: this._type });
-      this.closeSidebar.emit({animate_state: this._state, title: this._title, type: this._type}); // todo: remove this line
+      this._template.animate_state = 'inactive';
+      this._emitChanges();
       setTimeout(() => {
         target.scrollIntoView();
       }, 300);
     }
   }
 
-  get title(): string {
-    return this._title;
+  private _emitChanges() {
+    this.templateChange.emit(this._template);
+    this.closeSidebar.emit({
+      animate_state: this._template.animate_state,
+      title: this._template.title,
+      type: this._template.type
+    }); // todo: remove this line
   }
 
-  get state(): string {
-    return this._state;
-  }
-
-  get size(): string {
-    return this._size;
-  }
-
-  set size(value: string) {
-    this._size = value;
-  }
-
-  get type(): string {
-    return this._type;
+  get template(): SidebarInterface {
+    return this._template;
   }
 
   ngOnDestroy(): void {

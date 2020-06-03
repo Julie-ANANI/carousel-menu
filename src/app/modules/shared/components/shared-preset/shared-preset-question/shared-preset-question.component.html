@@ -71,6 +71,10 @@
         <input type="checkbox" [(ngModel)]="question.canComment">
         <i class="form-icon"></i> Add comment
       </label>
+      <label *ngIf="question.controlType === 'radio'" class="form-switch m-left-20">
+        <input type="checkbox" [(ngModel)]="question.visibility">
+        <i class="form-icon"></i> Show favorable answers
+      </label>
       <button *ngIf="question.controlType === 'stars' && innovation" (click)="fillWithBenefits($event)" class="btn btn-primary ghost-primary">
         Import Benefits
       </button>

@@ -145,12 +145,12 @@ export class AdminCampaignAnswersComponent implements OnInit {
       _buttons: [{_label: 'Validate', _icon: 'fas fa-check'}, {_label: 'Reject', _icon: 'fas fa-times'}],
       _columns: [
         {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'Name', _type: 'TEXT', _isSearchable: true},
-        {_attrs: ['country'], _name: 'Country', _type: 'COUNTRY', _isSearchable: true },
+        {_attrs: ['country'], _name: 'Country', _type: 'COUNTRY', _isSearchable: true, _width: '120px' },
         {_attrs: ['professional.jobTitle'], _name: 'Job', _type: 'TEXT', _isSearchable: true},
-        {_attrs: ['scoreStatus'], _name: 'Validation Score', _type: 'TEXT', _isSearchable: true},
-        {_attrs: ['updated'], _name: 'Updated', _type: 'DATE'},
-        {_attrs: ['created'], _name: 'Created', _type: 'DATE'},
-        {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSearchable: true,
+        {_attrs: ['scoreStatus'], _name: 'Validation Score', _type: 'TEXT', _isSearchable: true, _width: '180px'},
+        {_attrs: ['updated'], _name: 'Updated', _type: 'DATE', _width: '150px'},
+        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _width: '150px'},
+        {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSearchable: true, _width: '180px',
           _choices: [
             {_name: 'VALIDATED', _alias: 'Validated', _class: 'label is-success'},
             {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-progress'},
