@@ -202,7 +202,8 @@ export class TableComponent {
    */
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
-      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ? this._table._columns[index]._isSearchable : false;
+      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ?
+        this._table._columns[index]._isSearchable : false;
       this._table._columns[index]._isSelected = this._columnActive(value);
     });
   }

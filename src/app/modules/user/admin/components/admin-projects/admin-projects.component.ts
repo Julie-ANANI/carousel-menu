@@ -12,6 +12,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import {UserService} from '../../../../../services/user/user.service';
+import {environment} from '../../../../../../environments/environment';
+import {User} from '../../../../../models/user.model';
 
 @Component({
   selector: 'admin-projects',
@@ -28,12 +31,14 @@ export class AdminProjectsComponent implements OnInit {
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status,mission',
+    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator',
     limit: '10',
     offset: '0',
     search: '{}',
     sort: '{"created":-1}'
   };
+
+  private _operators: Array<User>;
 
   private _isLoading = true;
 
@@ -44,7 +49,8 @@ export class AdminProjectsComponent implements OnInit {
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService) {
+              private _translateTitleService: TranslateTitleService,
+              private _userService: UserService) {
 
     this._translateTitleService.setTitle('Market Tests');
 
@@ -55,7 +61,11 @@ export class AdminProjectsComponent implements OnInit {
       this._isLoading = false;
       this._config.limit = this._configService.configLimit('admin-projects-limit');
       this._initializeTable();
-      this._getProjects();
+      this._getOperators().then( _ => {
+        this._getProjects();
+      }, err => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+      });
     }
   }
 
@@ -71,6 +81,31 @@ export class AdminProjectsComponent implements OnInit {
     }, (err: HttpErrorResponse) => {
       console.error(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+    });
+  }
+
+  /**
+   * Get the list of all operators in the domain
+   * @private
+   */
+  private _getOperators() {
+    return new Promise( (resolve, reject) => {
+      const operatorConfig = <Config>{
+        fields: '',
+        limit: '10',
+        offset: '0',
+        search: '{}',
+        sort: '{"created":-1}',
+        domain: environment.domain,
+        isOperator: 'true'
+      };
+      this._userService.getAll(operatorConfig).pipe(first())
+        .subscribe(operators => {
+          this._operators = operators && operators['result'] ? operators['result'] : [];
+          resolve(true);
+        }, err => {
+          reject(err);
+        });
     });
   }
 
@@ -101,7 +136,12 @@ export class AdminProjectsComponent implements OnInit {
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
             {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label is-progress'},
             {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-          ]}
+          ]},
+        {_attrs: ['operator'], _name: 'Operator', _type: 'MULTI-CHOICES', _isSearchable: true, _isHidden: true,
+          _choices: this._operators && this._operators.length ? this._operators.map(oper => {
+            return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+          }) : []
+        },
       ]
     };
   }
@@ -128,7 +168,8 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   set config(value: Config) {
-    this._config = value;
+    this._config = value; // TODO how to change the config when searching things like the operator?
+    // const specialQueryFields = {};
     this._getProjects();
   }
 
