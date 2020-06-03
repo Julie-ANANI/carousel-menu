@@ -5,14 +5,14 @@
     <div *ngIf="isVisibleMenu" class="menu-wrapper">
       <ul>
         <ng-container *ngFor="let tab of sections">
-          <li
-            *ngIf="tab.isVisible"
-            [ngClass]="{ 'active': activeView === tab.name }">
+          <li *ngIf="tab.isVisible">
             <a
-              (click)="activeView = tab.name"
+              (click)="onClickTab(tab.name)"
               [href]="'#'+tab.name.toLowerCase()"
+              [ngClass]="{ 'active': activeView === tab.name }"
               [pageScrollOffset]="42"
               [pageScrollSpeed]="1000"
+              (pageScrollFinish)="scrollEnd()"
               class="d-block"
               pageScroll>
               {{ 'CLIENT_PROJECT_SETTINGS.' + tab.name | translate }}
