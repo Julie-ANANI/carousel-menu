@@ -54,7 +54,6 @@ export class AdminProjectsComponent implements OnInit {
       }
     } catch (ex) {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.message));
-    } finally {
       this._getProjects();
     }
   }
