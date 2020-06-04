@@ -87,6 +87,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
+  tabClicked = false;
+
   constructor(private _authService: AuthService,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
@@ -114,16 +116,25 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    const _pageOffset = window.pageYOffset;
-    this._sections.forEach((section) => {
-      const _element = document.getElementById(section.name.toLowerCase());
-      if (_element) {
-        const _elementOffset = _element.offsetTop;
-        if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
-          this.activeView = section.name;
+    if (!this.tabClicked) {
+      const _pageOffset = window.pageYOffset;
+      this._sections.forEach((section, index) => {
+        const _element = document.getElementById(section.name.toLowerCase());
+        if (_element) {
+          const _elementOffset = _element.offsetTop;
+          if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
+            this.activeView = section.name;
+          }
         }
-      }
-    });
+      });
+    }
+  }
+
+  /***
+   * fired when the scroll end.
+   */
+  public scrollEnd() {
+    this.tabClicked = false;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -194,6 +205,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  public onClickTab(name: string) {
+    this.tabClicked = true;
+    this.activeView = name;
   }
 
   /***
