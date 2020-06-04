@@ -202,7 +202,8 @@ export class TableComponent {
    */
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
-      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ? this._table._columns[index]._isSearchable : false;
+      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ?
+        this._table._columns[index]._isSearchable : false;
       this._table._columns[index]._isSelected = this._columnActive(value);
     });
   }
@@ -394,6 +395,22 @@ export class TableComponent {
 
     }
 
+  }
+
+  /**
+   * Gte the title of a cell
+   * @param row
+   * @param column
+   */
+  public getTitle(row: string, column: Column) {
+    const title = this.getAttrs(column).map(attr => {
+      return (this.getContentValue(row, attr) || ' - ').toString();
+    }).join(' ');
+    if (title.length > 23) {
+      return title;
+    } else {
+      return '';
+    }
   }
 
   /***

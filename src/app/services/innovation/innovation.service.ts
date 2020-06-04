@@ -176,4 +176,8 @@ export class InnovationService {
     return this._http.get<Array<Job>>(`/innovation/${innovationId}/deliverables`, {params: config});
   }
 
+  public advancedSearch(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
+    return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/advancedSearch', {params: params});
+  }
+
 }

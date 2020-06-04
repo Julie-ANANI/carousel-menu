@@ -461,7 +461,7 @@
 
                     <!-- not clickable -->
                     <ng-container *ngIf="i !== table._clickIndex - 1">
-                      <div class="text-ellipsis">
+                      <div class="text-ellipsis" [title]="getTitle(row, column)">
                         <ng-container *ngFor="let attr of getAttrs(column)">
                           {{ (getContentValue(row, attr)|| " - ").toString() | titlecase }}
                         </ng-container>
@@ -475,7 +475,8 @@
                       <div
                         (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
                         [ngClass]="{ 'active': rowIndex === selectedIndex }"
-                        class="clickable-text text-ellipsis">
+                        class="clickable-text text-ellipsis"
+                        [title]="getTitle(row, column)">
                         <ng-container *ngFor="let attr of getAttrs(column)">
                           {{ (getContentValue(row, attr)|| " - ").toString() | titlecase }}
                         </ng-container>

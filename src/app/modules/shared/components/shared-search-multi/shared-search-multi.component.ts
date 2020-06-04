@@ -71,22 +71,37 @@ export class SharedSearchMultiComponent {
 
   }
 
+  /**
+   * This function sets the search configuration up. The idea here is to put the right values
+   * regarding the search string and the fields.
+   * New: if in the configuration of the column the property _searchConfig exists, the configuration
+   * object changes to perform an advanced search in the back.
+   */
   public onSearch() {
 
     this._searchConfig.offset = '0';
 
     if (this._searchString === '') {
       this._searchConfig.search = '{}';
+      if (this._currentTextProp._searchConfig) {
+        delete this._searchConfig['fromCollection'];
+        delete this._searchConfig[this._currentTextProp._searchConfig._searchKey];
+      }
     } else {
-      let _search: any = {};
+      const _search: any = {};
 
       const input = this._searchString.split(',');
 
-      input.forEach((queryStr: string, index: number) => {
-        _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
-      });
-
-      this._searchConfig.search = JSON.stringify(_search);
+      // See if we have some information for a complicated search
+      if (this._currentTextProp._searchConfig) {
+        this._searchConfig['fromCollection'] = this._currentTextProp._searchConfig._collection;
+        this._searchConfig[this._currentTextProp._searchConfig._searchKey] = encodeURIComponent(input.join(' '));
+      } else {
+        input.forEach((queryStr: string, index: number) => {
+          _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
+        });
+        this._searchConfig.search = JSON.stringify(_search);
+      }
     }
 
     this.searchConfigChange.emit(this._searchConfig);
