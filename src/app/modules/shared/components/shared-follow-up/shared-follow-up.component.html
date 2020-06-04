@@ -134,13 +134,13 @@
 
 <!-- filter sidebar -->
 <sidebar-left [(sidebarTemplate)]="sidebarTemplate">
-  <sidebar-filter-answers
+  <app-sidebar-filter-answers
     [innovation]="project"
     [templateType]="sidebarTemplate.type"
     [questions]="questions"
     [answers]="answers"
     (closeSidebar)="closeSidebar()">
-  </sidebar-filter-answers>
+  </app-sidebar-filter-answers>
 </sidebar-left>
 <!-- /filter sidebar -->
 

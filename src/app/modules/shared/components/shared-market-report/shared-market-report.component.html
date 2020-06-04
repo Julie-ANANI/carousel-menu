@@ -37,9 +37,18 @@
       <div class="pws-wrapper">
 
         <!-- sidebar -->
-        <aside class="sidebar-wrapper">
+        <aside [ngStyle]="{'max-width': '297px'}" class="sidebar-wrapper">
           <app-sidebar-in-page [(sidebarTemplate)]="leftSidebarTemplateValue">
-
+            <app-sidebar-filter-answers
+              [innovation]="innovation"
+              [templateType]="leftSidebarTemplateValue.type"
+              [questions]="questions"
+              [answers]="answers"
+              [isAdmin]="adminMode"
+              [isAdminSide]="adminSide"
+              [isOwner]="isOwner"
+              (closeSidebar)="closeSidebar()">
+            </app-sidebar-filter-answers>
           </app-sidebar-in-page>
         </aside>
         <!-- /sidebar -->
@@ -166,21 +175,6 @@
     </div>
   </div>
   <!-- /project status done or preview mode or not editing -->
-
-  <!-- filter sidebar -->
-  <!--<sidebar-left [(sidebarTemplate)]="leftSidebarTemplateValue">
-    <sidebar-filter-answers
-      [innovation]="innovation"
-      [templateType]="leftSidebarTemplateValue.type"
-      [questions]="questions"
-      [answers]="answers"
-      [isAdmin]="adminMode"
-      [isAdminSide]="adminSide"
-      [isOwner]="isOwner"
-      (closeSidebar)="closeSidebar()">
-    </sidebar-filter-answers>
-  </sidebar-left>-->
-  <!-- /filter sidebar -->
 
 </div>
 
