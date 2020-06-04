@@ -59,6 +59,7 @@ export interface Innovation {
   collaborators?: Array<User>;
   settings?: InnovationSettings;
   stats?: any;
+  updatedStats?: Date;
   restitution?: boolean;
 
   clientSatisfaction?: {

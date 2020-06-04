@@ -29,6 +29,7 @@ export interface Campaign {
   readonly owner: string;
   title: string;
   stats?: CampaignStats;
+  updatedStats?: Date;
   settings?: CampaignSettings;
   autoBatch: Boolean;
   nuggets?: Boolean;
