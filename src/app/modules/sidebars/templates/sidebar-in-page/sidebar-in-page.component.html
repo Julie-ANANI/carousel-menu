@@ -1,0 +1,32 @@
+<div [ngClass]="{ 'is-sticky': position === 'sticky' }" id="sidebar-in-page">
+
+  <!-- border -->
+  <div class="sidebar-border"></div>
+  <!-- /border -->
+
+  <!-- toggle button -->
+  <div class="absolute sidebar-toggle">
+    <button
+      (click)="toggleState($event)"
+      aria-label="close"
+      class="button is-primary is-action is-circled"
+      type="button">
+      <i class="icon icon-menu text-xs"></i>
+    </button>
+  </div>
+  <!-- /toggle button -->
+
+  <!-- sidebar -->
+  <div
+    [ngClass]="sidebarTemplate.animate_state"
+    [ngStyle]="{ 'width': sidebarTemplate.animate_state === 'active' ? sidebarTemplate.size + 'px' : '0' }"
+    class="sidebar is-not-responsive">
+    <div class="sidebar-container">
+      <div [ngClass]="sidebarTemplate.animate_state" class="sidebar-body">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+  <!-- /sidebar -->
+
+</div>

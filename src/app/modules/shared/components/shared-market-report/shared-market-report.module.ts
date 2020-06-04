@@ -33,7 +33,7 @@ import { SharedMarketComment2Component } from './components/professional-comment
 import { TagsFiltersService } from './services/tags-filter.service';
 import { SidebarLeftModule } from "../../../sidebars/templates/sidebar-left/sidebar-left.module";
 import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module";
-
+import { SidebarInPageModule } from '../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
 
 @NgModule({
   imports: [
@@ -56,6 +56,7 @@ import { SidebarFilterAnswersModule } from "../../../sidebars/components/sidebar
     ModalModule,
     SharedTagModule,
     PieChartModule,
+    SidebarInPageModule
   ],
   providers: [
     TagsFiltersService

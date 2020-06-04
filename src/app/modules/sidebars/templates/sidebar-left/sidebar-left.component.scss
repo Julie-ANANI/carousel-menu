@@ -35,10 +35,7 @@
     position: unset;
     z-index: unset;
     transform-origin: left;
-
-    &.inactive, &.active {
-      transition-duration: 100ms;
-    }
+    transition: width 300ms cubic-bezier(0.2, 0, 0, 1) 0s;
 
     .sidebar-body {
       padding: 50px 25px;
@@ -48,7 +45,7 @@
 
       &.active {
         opacity: 1;
-        transition: opacity 200ms ease-in-out;
+        transition: opacity 300ms ease-in-out;
       }
 
     }
