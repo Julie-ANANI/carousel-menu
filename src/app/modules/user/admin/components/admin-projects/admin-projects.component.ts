@@ -186,10 +186,10 @@ export class AdminProjectsComponent implements OnInit {
       _clickIndex: 1,
       _isPaginable: true,
       _columns: [
-        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true },
-        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT' },
+        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '270px' },
+        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '210px' },
         {_attrs: ['mission.type'], _name: 'Type', _type: 'TEXT', _isSortable: true, _isSearchable: true,
-          _width: '150px', _searchConfig: { _collection: 'mission', _searchKey: 'type' }}, // Using _searchConfig for advanced search
+          _width: '100px', _searchConfig: { _collection: 'mission', _searchKey: 'type' }}, // Using _searchConfig for advanced search
         {_attrs: [this._mainObjective], _name: 'Objective', _type: 'TEXT', _isSearchable: true,
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey } }, // Using _searchConfig for advanced search
         {_attrs: ['innovationCard.title'], _name: 'Innovation card title', _type: 'TEXT', _isSearchable: true, _isHidden: true,

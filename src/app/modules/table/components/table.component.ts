@@ -397,6 +397,22 @@ export class TableComponent {
 
   }
 
+  /**
+   * Gte the title of a cell
+   * @param row
+   * @param column
+   */
+  public getTitle(row: string, column: Column) {
+    const title = this.getAttrs(column).map(attr => {
+      return (this.getContentValue(row, attr) || ' - ').toString();
+    }).join(' ');
+    if (title.length > 23) {
+      return title;
+    } else {
+      return '';
+    }
+  }
+
   /***
    * This function returns the type of the column in argument
    * @param {Column} column
