@@ -33,7 +33,11 @@
               <p class="d-flex text text-notify align-center">
                 {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
                 •
-                {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.ANSWERS' | translate }}
+                {{ campaign.stats ? campaign.stats['campaign']['nbFirstTierMails'] || 0 : 0 }} {{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate  }}
+                •
+                {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.VALIDATED' | translate }}
+                •
+                {{ campaign.stats ? ((campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.STATS.TITLE.LOOK' | translate }}
                 •
                 {{ campaign.status | FormatText }} {{ 'CAMPAIGNS.STATUS' | translate }}
                 <ng-container *ngIf="getAuthorizationLevel(2)">
