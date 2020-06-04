@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SidebarInterface } from '../../interfaces/sidebar-interface';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, PLATFORM_ID} from '@angular/core';
+import {SidebarInterface} from '../../interfaces/sidebar-interface';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'sidebar-left',
@@ -7,7 +8,7 @@ import { SidebarInterface } from '../../interfaces/sidebar-interface';
   styleUrls: ['./sidebar-left.component.scss']
 })
 
-export class SidebarLeftComponent {
+export class SidebarLeftComponent implements OnInit, OnDestroy {
 
   @Input() set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = {
@@ -19,32 +20,38 @@ export class SidebarLeftComponent {
 
   @Output() sidebarTemplateChange: EventEmitter<SidebarInterface> = new EventEmitter<SidebarInterface>();
 
-  private _sidebarTemplate: SidebarInterface = {
-    animate_state: 'inactive',
-    size: '263px',
-  };
+  private _sidebarTemplate: SidebarInterface = <SidebarInterface>{};
 
-  constructor() { }
+  private readonly _element: any;
+
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _elementRef: ElementRef) {
+    this._element = this._elementRef.nativeElement;
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.appendChild(this._element);
+    }
+  }
 
   public toggleState(event: Event, target: any) {
     event.preventDefault();
-
+    this._sidebarTemplate.animate_state = this._sidebarTemplate.animate_state === 'inactive' ? 'active' : 'inactive';
+    this.sidebarTemplateChange.emit(this._sidebarTemplate);
     setTimeout(() => {
       target.scrollIntoView();
     }, 300);
-
-    this._sidebarTemplate.animate_state = this._sidebarTemplate.animate_state === 'inactive' ? 'active' : 'inactive';
-
-    this.sidebarTemplateChange.emit({
-      animate_state: this._sidebarTemplate.animate_state,
-      size: this._sidebarTemplate.size,
-      type: this._sidebarTemplate.type
-    });
-
   }
 
   get sidebarTemplate(): SidebarInterface {
     return this._sidebarTemplate;
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.removeChild(this._element);
+    }
   }
 
 }

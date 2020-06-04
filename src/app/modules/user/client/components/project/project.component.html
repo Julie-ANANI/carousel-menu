@@ -1,4 +1,4 @@
-<div class="p-bottom-50" id="project">
+<div id="project">
 
   <!-- header -->
   <section [ngClass]="{'bg-draft': !isLoading}" class="p-top-25 print-hide">
@@ -54,7 +54,7 @@
     <!-- settings -->
     <div *ngSwitchCase="'settings'" class="container grid-2xl fluid">
       <div class="column col-sm-12 col-11 col-mx-auto">
-        <div class="p-top-50">
+        <div class="p-top-50 p-bottom-50">
           <app-project-settings></app-project-settings>
         </div>
       </div>
@@ -62,13 +62,13 @@
     <!-- /settings -->
 
     <!-- setup -->
-    <div *ngSwitchCase="'setup'">
+    <div *ngSwitchCase="'setup'" class="p-bottom-50">
       <app-project-setup *ngIf="innovation._id" [project]="innovation"></app-project-setup>
     </div>
     <!-- /setup -->
 
     <!-- exploration -->
-    <div *ngSwitchCase="'exploration'">
+    <div *ngSwitchCase="'exploration'" class="p-bottom-50">
       <app-project-exploration *ngIf="innovation._id" [project]="innovation"></app-project-exploration>
     </div>
     <!-- /exploration -->
@@ -87,7 +87,7 @@
     <!-- documents -->
     <div *ngSwitchCase="'documents'" class="container grid-2xl fluid">
       <div class="column col-sm-12 col-11 col-mx-auto">
-        <div class="p-top-50">
+        <div class="p-top-50 p-bottom-50">
           <app-project-documents></app-project-documents>
         </div>
       </div>

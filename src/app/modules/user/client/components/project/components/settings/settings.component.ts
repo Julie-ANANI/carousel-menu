@@ -51,7 +51,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _currentLang = this._translateService.currentLang;
 
-  activeView = 'TITLE';
+  private _activeView = 'TITLE';
 
   private _dateFormat = this._currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
 
@@ -87,7 +87,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
-  tabClicked = false;
+  private _tabClicked = false;
 
   constructor(private _authService: AuthService,
               private _translateService: TranslateService,
@@ -116,14 +116,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    if (!this.tabClicked) {
+    if (!this._tabClicked) {
       const _pageOffset = window.pageYOffset;
       this._sections.forEach((section, index) => {
         const _element = document.getElementById(section.name.toLowerCase());
         if (_element) {
           const _elementOffset = _element.offsetTop;
           if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
-            this.activeView = section.name;
+            this._activeView = section.name;
           }
         }
       });
@@ -134,7 +134,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * fired when the scroll end.
    */
   public scrollEnd() {
-    this.tabClicked = false;
+    this._tabClicked = false;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -208,8 +208,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   public onClickTab(name: string) {
-    this.tabClicked = true;
-    this.activeView = name;
+    this._tabClicked = true;
+    this._activeView = name;
   }
 
   /***
@@ -628,6 +628,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get isVisibleMenu(): boolean {
     return this._isVisibleMenu;
+  }
+
+  get activeView(): string {
+    return this._activeView;
   }
 
   ngOnDestroy(): void {

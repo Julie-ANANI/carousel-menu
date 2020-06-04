@@ -76,7 +76,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _toggleAnswers: boolean;
 
-  private _modalAnswer: Answer = null;
+  private _modalAnswer: Answer = <Answer>{};
 
   private _leftSidebarTemplateValue: SidebarInterface = {
     animate_state: 'active',

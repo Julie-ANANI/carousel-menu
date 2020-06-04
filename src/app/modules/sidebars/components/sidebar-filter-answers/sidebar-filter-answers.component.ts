@@ -8,17 +8,21 @@ import { Answer } from '../../../../models/answer';
 import { first } from 'rxjs/operators';
 import { Question } from '../../../../models/question';
 import { SharedWorldmapService } from "../../../shared/components/shared-worldmap/services/shared-worldmap.service";
-import {Tag} from "../../../../models/tag";
-import {TagsFiltersService} from "../../../shared/components/shared-market-report/services/tags-filter.service";
-import {WorldmapFiltersService} from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
+import { Tag } from "../../../../models/tag";
+import { TagsFiltersService } from "../../../shared/components/shared-market-report/services/tags-filter.service";
+import { WorldmapFiltersService } from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
+
+type templateType = 'MARKET_TYPE' | 'FOLLOW_UP';
 
 @Component({
-  selector: 'sidebar-filter-answers',
+  selector: 'app-sidebar-filter-answers',
   templateUrl: './sidebar-filter-answer.component.html',
   styleUrls: ['./sidebar-filter-answers.component.scss']
 })
 
 export class SidebarFilterAnswersComponent implements OnInit {
+
+  @Input() template: templateType = 'MARKET_TYPE';
 
   @Input() set innovation(value: Innovation) {
     if (value) {
