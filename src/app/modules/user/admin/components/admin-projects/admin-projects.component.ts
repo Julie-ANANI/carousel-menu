@@ -24,6 +24,57 @@ import {User} from '../../../../../models/user.model';
 
 export class AdminProjectsComponent implements OnInit {
 
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: ConfigService,
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateTitleService: TranslateTitleService,
+              private _userService: UserService) {
+
+    this._translateTitleService.setTitle('Market Tests');
+
+  }
+
+  set config(value: Config) {
+    this._config = value; // TODO how to change the config when searching things like the operator?
+    try {
+      // Parse the config.search field to see if there's something
+      if (this._config['fromCollection']) {
+        switch (this._config['fromCollection']) {
+          case('mission'):
+          case('innovationcard'):
+            this._searchMissionsByOther(this._config);
+            break;
+          default:
+            this._getProjects();
+        }
+      } else {
+        this._getProjects();
+      }
+    } catch (ex) {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.message));
+    } finally {
+      this._getProjects();
+    }
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get projects(): Array<Innovation> {
+    return this._projects;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
   private _projects: Array<Innovation> = [];
 
   private _totalProjects = -1;
@@ -42,19 +93,11 @@ export class AdminProjectsComponent implements OnInit {
 
   private _isLoading = true;
 
-  private _mainObjective = this._translateService.currentLang === 'en' ? 'mission.objective.principal.en' : 'mission.objective.principal.fr';
+  private _mainObjective = this._translateService.currentLang === 'en' ?
+    'mission.objective.principal.en' : 'mission.objective.principal.fr';
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
-              private _innovationService: InnovationService,
-              private _translateService: TranslateService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService,
-              private _userService: UserService) {
-
-    this._translateTitleService.setTitle('Market Tests');
-
-  }
+  private _objectiveSearchKey = this._translateService.currentLang === 'en' ?
+    'objective.principal.en' : 'objective.principal.fr';
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -109,6 +152,24 @@ export class AdminProjectsComponent implements OnInit {
     });
   }
 
+  /**
+   * Sends a request to cross search innovations using external collections, e.g., innovations x missions or
+   * innovations x innovation card title
+   * @param config
+   * @private
+   */
+  private _searchMissionsByOther(config: Config) {
+    // Change here the fields. This will hit an aggregate on the back
+    this._innovationService.advancedSearch(config)
+      .subscribe(innovations => {
+        this._projects = innovations.result;
+        this._totalProjects = innovations._metadata.totalCount;
+        this._initializeTable();
+      }, err => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+      });
+  }
+
   /***
    * initializing the table with the projects.
    * @private
@@ -127,8 +188,12 @@ export class AdminProjectsComponent implements OnInit {
       _columns: [
         {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true },
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT' },
-        {_attrs: ['mission.type'], _name: 'Type', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '150px'},
-        {_attrs: [this._mainObjective], _name: 'Objective', _type: 'TEXT'},
+        {_attrs: ['mission.type'], _name: 'Type', _type: 'TEXT', _isSortable: true, _isSearchable: true,
+          _width: '150px', _searchConfig: { _collection: 'mission', _searchKey: 'type' }}, // Using _searchConfig for advanced search
+        {_attrs: [this._mainObjective], _name: 'Objective', _type: 'TEXT', _isSearchable: true,
+          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey } }, // Using _searchConfig for advanced search
+        {_attrs: ['innovationCard.title'], _name: 'Innovation card title', _type: 'TEXT', _isSearchable: true, _isHidden: true,
+          _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' } }, // Using _searchConfig for advanced search
         {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '150px' },
         {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [
@@ -165,28 +230,6 @@ export class AdminProjectsComponent implements OnInit {
       console.error(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
-  }
-
-  set config(value: Config) {
-    this._config = value; // TODO how to change the config when searching things like the operator?
-    // const specialQueryFields = {};
-    this._getProjects();
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get projects(): Array<Innovation> {
-    return this._projects;
-  }
-
-  get table(): Table {
-    return this._table;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
   }
 
 }
