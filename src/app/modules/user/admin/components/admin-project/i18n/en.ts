@@ -93,5 +93,17 @@ export const PROJECT = {
   'PROJECT_TAGS': 'Project tags',
   'ANSWER_TAGS': 'Answer tags',
   'FOLLOW-UP': 'Follow up',
-  'MAIL_CONFIG': 'Email Configuration'
+  'MAIL_CONFIG': 'Email Configuration',
+  'STATS': {
+    'COMPLETION': 'Completion',
+    'ANSWERS': 'Answers',
+    'TO_SEND': 'To send',
+    'DELIVERED': 'Delivered',
+    'OPEN_RATE': 'Open rate',
+    'CLICK_RATE': 'Click rate',
+    'QUESTIONNAIRE_QUALITY': 'Questionnaire quality',
+    'ANSWER_RATE': 'Answer rate',
+    'UPDATE': 'Update the stats',
+    'UPDATED': 'Stats were updated on',
+  }
 };

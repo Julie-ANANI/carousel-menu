@@ -163,13 +163,25 @@ export class AdminProjectManagementComponent implements OnInit {
       .subscribe((campaigns: any) => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
           if (this.currentCampaign !== null) {
-            this.updateStats(this.currentCampaign);
             this.generateAvailableScenario();
             this.generateModifiedScenarios();
           }
         },
         (error: any) => this._notificationsService.error('ERROR', error.message)
       );
+  }
+
+  /***
+   * This function is call to update the stats of the innovation
+   * @param {Innovation} innovation
+   */
+  public updateStats() {
+    this._innovationService.updateStats(this._project._id)
+      .subscribe((project: any) => {
+        this._project = project;
+      }, (error: any) => {
+        this._notificationsService.error('ERROR', error.message);
+      });
   }
 
   /***
@@ -238,11 +250,11 @@ export class AdminProjectManagementComponent implements OnInit {
 
   public missionsSuggestions = (searchString: string): Observable<Array<{name: string}>> => {
     return this._autoCompleteService.get({query: searchString, type: 'mission'});
-  };
+  }
 
   public autocompleteMissionListFormatter = (data: Mission): string => {
     return data.name;
-  };
+  }
 
   public selectMission(event: Mission) {
     this.edit.mission = false;
@@ -449,18 +461,6 @@ export class AdminProjectManagementComponent implements OnInit {
 
   // Campaign section
 
-  /***
-   * This function is call to update the stats of a campaign
-   * @param {Campaign} campaign
-   */
-  public updateStats(campaign: Campaign) {
-    this._campaignService.updateStats(campaign._id)
-      .subscribe((stats: any) => {
-        campaign.stats = stats;
-      }, (error: any) => {
-        this._notificationsService.error('ERROR', error.message);
-      });
-  }
 
   /***
    * This function returns the best campaign related to a project
@@ -713,7 +713,7 @@ export class AdminProjectManagementComponent implements OnInit {
     });
   }
 
-  public hasBeenPublished(): boolean{
+  public hasBeenPublished(): boolean {
     return !!this._project['published'];
   }
 
@@ -722,16 +722,24 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   public publish() {
-    this._innovationService.publishToCommunity(this._project._id).subscribe(published=>{
-      if(published) {
+    this._innovationService.publishToCommunity(this._project._id).subscribe(published => {
+      if (published) {
         this._project['published'] = published;
       } else {
         this._project['published'] = null;
       }
-    }, err=>{
+    }, err => {
       this._project['published'] = null;
       this._notificationsService.error('Error', 'Cannot publish the innovation at this time!');
     });
+  }
+
+  public getRate(value1: number, value2: number, decimals?: number): string {
+    const power = decimals ? Math.pow(10, decimals) : 100;
+    if (value2 && (value1 || value1 === 0)) {
+      return (Math.round(100 * power * value1 / value2) / power).toString() + '%';
+    }
+    return '?';
   }
 
   /***

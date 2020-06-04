@@ -93,5 +93,17 @@ export const PROJECT = {
   'PROJECT_TAGS': 'Tags projet',
   'ANSWER_TAGS': 'Tags réponses',
   'FOLLOW-UP': 'Follow up',
-  'MAIL_CONFIG': 'Réglages Emails'
+  'MAIL_CONFIG': 'Réglages Emails',
+  'STATS': {
+    'COMPLETION': 'Complétion',
+    'ANSWERS': 'Réponses',
+    'TO_SEND': 'Envoyables',
+    'DELIVERED': 'Délivrés',
+    'OPEN_RATE': 'Taux d\'ouverture',
+    'CLICK_RATE': 'Taux de clic',
+    'QUESTIONNAIRE_QUALITY': 'Qualité du questionnaire',
+    'ANSWER_RATE': 'Taux de réponse',
+    'UPDATE': 'Mettre à jour les stats',
+    'UPDATED': 'Stats mises à jour le',
+  }
 };

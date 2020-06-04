@@ -343,22 +343,53 @@
 
     <div class="project-summary">
       <div class="completion">
-        <h6>Completion</h6>
+        <h6>{{'PROJECT.STATS.COMPLETION' | translate}}</h6>
         <span *ngFor="let innov of project.innovationCards" class="text-center">
           <label class="form-label">{{innov?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}</label>
           <label>{{innov?.completion?.toFixed(0) || 0}} %</label>
         </span>
       </div>
-      <div class="campaign">
-        <h6>Campaign</h6>
+      <div class="emails">
+        <h6>Emails</h6>
         <span class="text-center">
-          <label class="form-label">{{'COMMON.PROFESSIONALS' | translate}}</label>
-          <label>{{currentCampaign?.stats?.campaign?.nbProfessionals || '?'}}</label>
+          <label class="form-label">{{'PROJECT.STATS.TO_SEND' | translate}}</label>
+          <label>{{project?.stats?.emailsOK || '?'}}</label>
         </span>
         <span class="text-center">
-          <label class="form-label">{{'PROJECT.CAMPAIGN.INSIGHTS' | translate}}</label>
-          <label>{{currentCampaign?.stats?.campaign?.nbResp || '?'}}</label>
+          <label class="form-label">{{'PROJECT.STATS.DELIVERED' | translate}}</label>
+          <label>{{project?.stats?.received || '?'}}</label>
         </span>
+        <span class="text-center">
+          <label class="form-label">{{'PROJECT.STATS.OPEN_RATE' | translate}}</label>
+          <label>{{getRate(project?.stats?.opened, project?.stats?.received)}}</label>
+        </span>
+        <span class="text-center">
+          <label class="form-label">{{'PROJECT.STATS.CLICK_RATE' | translate}}</label>
+          <label>{{getRate(project?.stats?.clicked, project?.stats?.opened)}}</label>
+        </span>
+      </div>
+      <div class="answers">
+        <h6>{{'PROJECT.STATS.ANSWERS' | translate}}</h6>
+        <span class="text-center">
+          <label class="form-label">{{'PROJECT.STATS.QUESTIONNAIRE_QUALITY' | translate}}</label>
+          <label>{{getRate(project?.stats?.answers, project?.stats?.clicked)}}</label>
+        </span>
+        <span class="text-center">
+          <label class="form-label">{{'CAMPAIGNS.VALIDATED' | translate}}</label>
+          <label>{{project?.stats?.validatedAnswers || '?'}}</label>
+        </span>
+        <span class="text-center">
+          <label class="form-label">{{'PROJECT.STATS.ANSWER_RATE' | translate}}</label>
+          <label>{{getRate(project?.stats?.validatedAnswers, project?.stats?.received)}}</label>
+        </span>
+      </div>
+      <div class="update">
+        <span *ngIf="project.updatedStats">
+          {{'PROJECT.STATS.UPDATED' | translate}} : {{ project.updatedStats | date }}
+        </span>
+        <a (click)="updateStats()">
+          {{'PROJECT.STATS.UPDATE' | translate}}
+        </a>
       </div>
 
     </div>

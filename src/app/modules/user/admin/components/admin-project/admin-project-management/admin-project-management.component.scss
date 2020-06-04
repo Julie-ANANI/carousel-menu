@@ -32,7 +32,7 @@
       padding-right: 20px;
     }
 
-    .completion, .campaign {
+    .completion, .emails, .answers, .update {
       height: 73px;
       display: flex;
       flex-direction: row;
@@ -49,10 +49,10 @@
       width: 100px;
       color: white;
     }
-    .timing, .completion {
+    .timing, .completion, .answers {
       background-color: #0B90C6;
     }
-    .campaign {
+    .emails, .update {
       background-color: #2FA4D4;
     }
     .cost {
