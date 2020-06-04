@@ -132,8 +132,8 @@ export class AdminProjectCampaignsComponent implements OnInit {
   onClickUpdateStatus(event: Event, campaign: Campaign) {
     event.preventDefault();
 
-    this.campaignService.updateStats(campaign._id).subscribe((stats: any) => {
-      campaign.stats = stats;
+    this.campaignService.updateStats(campaign._id).subscribe((updatedCampaign: any) => {
+      campaign = updatedCampaign;
       this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.CAMPAIGN.UPDATED');
       }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
