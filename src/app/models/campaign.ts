@@ -15,6 +15,7 @@ export interface CampaignStats {
   nbProsSent: number,
   nbStartedAnswer: number,
   nbValidatedAnswers: number,
+  nbProsReceived: number,
   nbProsOpened: number,
   nbProsClicked: number,
   nbAnswers: number,

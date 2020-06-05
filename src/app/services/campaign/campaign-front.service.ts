@@ -113,33 +113,38 @@ export class CampaignFrontService {
       switch (searchKey) {
 
         case 'good_emails':
-          value = campaign.stats.campaign.nbFirstTierMails ? campaign.stats.campaign.nbFirstTierMails : 0;
+          value = campaign.stats.campaign.nbFirstTierMails || 0;
           break;
 
         case 'received':
-          value = campaign.stats.nbProsSent ? campaign.stats.nbProsSent : 0;
+          value = campaign.stats.nbProsReceived || 0;
           break;
 
         case 'bounces':
-          value = campaign.stats.nbTotalMails && campaign.stats.nbProsSent ? campaign.stats.nbTotalMails - campaign.stats.nbProsSent : 0;
+          value = campaign.stats.nbProsReceived && campaign.stats.nbProsSent ? campaign.stats.nbProsSent - campaign.stats.nbProsReceived : 0;
           break;
 
         case 'opened':
-          value = campaign.stats.nbProsOpened  && campaign.stats.nbProsSent
-            ? Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsSent) * 100) : 0;
+          value = campaign.stats.nbProsReceived  && campaign.stats.nbProsOpened
+            ? Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsReceived) * 10000) / 100 : 0;
           break;
 
         case 'clicked':
-          value = campaign.stats.nbProsClicked  && campaign.stats.nbProsSent
-            ? Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsSent) * 100) : 0;
+          value = campaign.stats.nbProsClicked  && campaign.stats.nbProsOpened
+            ? Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsOpened) * 10000) / 100 : 0;
+          break;
+
+        case 'answer_rate':
+          value = campaign.stats.campaign.nbValidatedResp  && campaign.stats.nbProsReceived
+            ? Math.round((campaign.stats.campaign.nbValidatedResp / campaign.stats.nbProsReceived) * 10000) / 100 : 0;
           break;
 
         case 'email':
-          value = campaign.stats.nbProsOpened ? campaign.stats.nbProsOpened : 0;
+          value = campaign.stats.nbProsOpened || 0;
           break;
 
         case 'questionnaire':
-          value = campaign.stats.nbProsClicked ?  campaign.stats.nbProsClicked : 0;
+          value = campaign.stats.nbProsClicked || 0;
           break;
 
       }

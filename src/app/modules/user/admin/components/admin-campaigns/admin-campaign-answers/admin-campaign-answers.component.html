@@ -8,20 +8,28 @@
     <li class="stat-container fluid">
       <h5 class="stat-heading">Insight</h5>
       <div class="stat-body">
-        <h5 class="stat-sub-heading">Rejected</h5>
-        <span class="stat-value">{{ campaignStat('status', 'REJECTED') }}</span>
-      </div>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">To look at</h5>
-        <span class="stat-value">{{ campaignStat('status', ['SUBMITTED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']) }}</span>
+        <h5 class="stat-sub-heading">Answer rate</h5>
+        <span class="stat-value">{{ campaignStat('answer_rate') }}</span>
       </div>
       <div class="stat-body">
         <h5 class="stat-sub-heading">Validated</h5>
         <span class="stat-value">{{ campaignStat('status', 'VALIDATED') }}</span>
       </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Rejected by mail</h5>
+        <span class="stat-value">{{ campaignStat('status', 'REJECTED_GMAIL') }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Auto-validated</h5>
+        <span class="stat-value">{{ campaignStat('status', 'REJECTED_UMIBOT') }}</span>
+      </div>
+      <div class="stat-body">
+        <h5 class="stat-sub-heading">Auto-rejected</h5>
+        <span class="stat-value">{{ campaignStat('status', 'VALIDATED_UMIBOT') }}</span>
+      </div>
     </li>
 
-    <!-- stat col 2 -->
+    <!-- stat col 2
     <li class="stat-container fluid">
       <h5 class="stat-heading">Profile</h5>
       <div class="stat-body">
@@ -33,7 +41,7 @@
         <span class="stat-value">{{ campaignStat('profile', 2) }}</span>
       </div>
     </li>
-
+    -->
     <!-- stat col 3 -->
     <li class="stat-container fluid">
       <h5 class="stat-heading">Quality</h5>
