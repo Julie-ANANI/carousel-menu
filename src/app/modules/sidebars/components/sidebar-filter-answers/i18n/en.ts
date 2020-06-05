@@ -2,12 +2,6 @@ export const SIDEBAR_MARKET_REPORT = {
 
   'MY_VIEWS': 'My views',
 
-  'SELECT_CONTACTS_CRITERIA': 'Select contacts according to your criteria',
-
-  'SELECT': 'Select',
-
-  'CONTACTS': 'contacts',
-
   'FORM_VIEW_PLACEHOLDER': 'Name of your view',
 
   'TOOLTIP_LOAD_VIEW': 'Load view',

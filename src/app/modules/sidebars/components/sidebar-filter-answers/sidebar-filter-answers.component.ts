@@ -1,18 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
 import { SharedFilter } from '../../../shared/components/shared-market-report/models/shared-filter';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { FilterService } from '../../../shared/components/shared-market-report/services/filters.service';
 import { Answer } from '../../../../models/answer';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Question } from '../../../../models/question';
 import { SharedWorldmapService } from "../../../shared/components/shared-worldmap/services/shared-worldmap.service";
 import { Tag } from "../../../../models/tag";
 import { TagsFiltersService } from "../../../shared/components/shared-market-report/services/tags-filter.service";
 import { WorldmapFiltersService } from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
-
-type templateType = 'MARKET_TYPE' | 'FOLLOW_UP';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar-filter-answers',
@@ -20,92 +22,59 @@ type templateType = 'MARKET_TYPE' | 'FOLLOW_UP';
   styleUrls: ['./sidebar-filter-answers.component.scss']
 })
 
-export class SidebarFilterAnswersComponent implements OnInit {
-
-  @Input() template: templateType = 'MARKET_TYPE';
+export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   @Input() set innovation(value: Innovation) {
-    if (value) {
+    if (value._id) {
       this._innovation = value;
+      if (this._innovation.marketReport) {
+        this._isKeyLearning = this._innovation.marketReport.keyLearning
+          && this._innovation.marketReport.keyLearning.conclusion !== '';
+        this._isFinalConclusion = this._innovation.marketReport.finalConclusion
+          && this._innovation.marketReport.finalConclusion.conclusion
+          && this._innovation.marketReport.finalConclusion.conclusion !== '';
+      }
       this._loadSharedFiltersList();
     }
   }
 
-  @Input() set answers(value: Array<Answer>) {
-    this._answers = value;
-    this._filterNumber = value.length;
-    this._filterService.filtersUpdate.subscribe(() => {
-      this._filterNumber = this._filterService.filter(this._answers).length;
-    });
-  }
+  @Input() answers: Array<Answer> = [];
+
+  @Input() isAdmin = false;
+
+  @Input() isOwner = false;
+
+  @Input() isAdminSide = false;
 
   @Input() set templateType(value: string) {
     this._templateType = value;
-    if (value === 'market-report') {
-      this.showSection.map = true;
-      this.showSection.professionals = true;
-    }
   }
 
   @Input() set questions(value: Array<Question>) {
     this._questions = value;
-    this._displayedQuestions = [];
-    this._questions.forEach((question: Question) => {
-      this.showSection[question.identifier] = this._templateType === 'market-report';
-      if (this.templateType === 'market-report' || question.controlType === 'checkbox' ||
-        question.controlType === 'radio' || this.answersTagsLists[question.identifier] &&
-        this.answersTagsLists[question.identifier].length) {
-        this._displayedQuestions.push(question);
-      }
-    });
+    this._initQuestions();
   }
-
-  @Input() set reportShared(value: boolean) {
-    this._reportShared = value;
-  }
-
-  @Input() set isAdmin(value: boolean) {
-    this._isAdmin = value;
-  }
-
-  @Input() set isAdminSide(value: boolean) {
-    this._isAdminSide = value;
-  }
-
-  @Input() set isOwner(value: boolean) {
-    this._isOwner = value;
-  }
-
 
   /***
    * this is to emit the event that will close the
    * sidebar.
    */
-  @Output() closeSidebar: EventEmitter<null> = new EventEmitter<null>();
+  @Output() closeSidebar: EventEmitter<void> = new EventEmitter<void>();
 
-  private _templateType: string;
+  // 'MARKET_TYPE' | 'FOLLOW_UP'
+  private _templateType = 'MARKET_TYPE';
 
-  private _reportShared: boolean;
+  private _isModalEnd: boolean;
 
-  private _isAdmin: boolean;
-
-  private _isAdminSide: boolean;
-
-  private _isOwner: boolean;
-
-  private _modalEndInnovation: boolean;
-
-  private _modalPreviewInnovation: boolean;
+  private _isModalPreview: boolean;
 
   private _filterNumber = 0;
 
-  private _innovation: Innovation = <Innovation> {};
+  private _innovation: Innovation = <Innovation>{};
 
   private _sharedFiltersList: Array<SharedFilter> = [];
 
   private _filterName = '';
-
-  private _answers: Array<Answer> = [];
 
   private _activatedCustomFilters: Array<string> = [];
 
@@ -113,17 +82,37 @@ export class SidebarFilterAnswersComponent implements OnInit {
 
   private _displayedQuestions: Array<Question> = [];
 
-  public showSection: {[questionId: string]: boolean} = {};
+  private _showSection: {[questionId: string]: boolean} = {
+    map: true,
+    professionals: true
+  };
 
-  public seeMore: {[questionId: string]: boolean} = {};
+  private _seeMore: {[questionId: string]: boolean} = {
+    professionals: false
+  };
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _isKeyLearning = false;
+
+  private _userLang = this._translateService.currentLang || 'en';
+
+  private _isFinalConclusion = true;
 
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _worldmapFilterService: WorldmapFiltersService,
               private _tagService: TagsFiltersService,
-              private _filterService: FilterService,) { }
+              private _translateService: TranslateService,
+              private _filterService: FilterService) { }
 
-  ngOnInit() {
+  ngOnChanges(): void {
+    if (this.answers.length) {
+      this._filterNumber = this.answers.length;
+      this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+        this._filterNumber = this._filterService.filter(this.answers).length;
+      });
+    }
   }
 
   private _loadSharedFiltersList() {
@@ -131,8 +120,26 @@ export class SidebarFilterAnswersComponent implements OnInit {
       if (Array.isArray(results)) {
         this._sharedFiltersList = results;
       }
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'SIDEBAR_MARKET_REPORT.ERRORS.VIEWS');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+  }
+
+  private _initQuestions() {
+    this._displayedQuestions = [];
+    this._questions.forEach((question: Question) => {
+      if (!this._showSection[question.identifier]) {
+        this._showSection[question.identifier] = true;
+      }
+      if (!this._seeMore[question.identifier]) {
+        this._seeMore[question.identifier] = false;
+      }
+      if (this._templateType === 'MARKET_TYPE' || question.controlType === 'checkbox' ||
+        question.controlType === 'radio' || this.answersTagsLists[question.identifier] &&
+        this.answersTagsLists[question.identifier].length) {
+        this._displayedQuestions.push(question);
+      }
     });
   }
 
@@ -145,14 +152,25 @@ export class SidebarFilterAnswersComponent implements OnInit {
     } else {
       this.filterEverything(false, this.continentsList, 'CONTINENT');
       this.filterEverything(false, this.tagsList, 'TAG');
-      this._questions.forEach(question => {
+      this.questions.forEach(question => {
         this.filterEverything(false, [question], question.controlType);
       });
     }
   }
 
-  public onClickSelect() {
+  public onSelectedContacts(event: Event) {
+    event.preventDefault();
     this.closeSidebar.emit();
+  }
+
+  public openModalPreview(event: Event) {
+    event.preventDefault();
+    this._isModalPreview = true;
+  }
+
+  public openModalEnd(event: Event) {
+    event.preventDefault();
+    this._isModalEnd = true;
   }
 
   public deleteProfessionalFilter(event: Event, id: string) {
@@ -172,27 +190,24 @@ export class SidebarFilterAnswersComponent implements OnInit {
   }
 
   public registerNewFilter() {
-
-    const find = this._sharedFiltersList.find((filter) => filter.name.toLowerCase() === this._filterName.toLowerCase());
-
-    if (!find) {
-
-      const data = {
+    const _find = this._sharedFiltersList.find((filter) =>
+      filter.name.toLowerCase() === this._filterName.toLowerCase()
+    );
+    if (!_find) {
+      const _data = {
         name: this._filterName,
-        answers: this._filterService.filter(this._answers).map((answer) => answer._id)
+        answers: this._filterService.filter(this.answers).map((answer) => answer._id)
       };
-
-      this._innovationService.saveFilter(this._innovation._id, data).pipe(first()).subscribe((res) => {
+      this._innovationService.saveFilter(this._innovation._id, _data).pipe(first()).subscribe((res) => {
         this._sharedFiltersList.push(res);
         this._filterName = '';
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
-
     } else {
       this._translateNotificationsService.error('ERROR.ERROR', 'SIDEBAR_MARKET_REPORT.ERRORS.VIEW_ALREADY_EXIST');
     }
-
   }
 
   public checkOption(event: Event, question: Question) {
@@ -217,26 +232,27 @@ export class SidebarFilterAnswersComponent implements OnInit {
     }
   }
 
-
-  public onClickPreviewConfirm(event: Event) {
+  public onConfirmVisibility(event: Event) {
     event.preventDefault();
-    this._innovation.previewMode = !this._innovation.previewMode;
-
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
-      if (response.previewMode) {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
-      } else {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
-      }
-    }, () => {
+    if (this.isAdminSide) {
       this._innovation.previewMode = !this._innovation.previewMode;
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-
-    this._modalPreviewInnovation = false;
-
+      this._innovationService.save(this._innovation._id, this._innovation).pipe(first())
+        .subscribe((response: Innovation) => {
+          this._isModalPreview = false;
+          if (response.previewMode) {
+            this._translateNotificationsService.success('Success',
+              'The partial synthesis is now visible to the client.');
+          } else {
+            this._translateNotificationsService.success('Success',
+              'The partial synthesis is not visible to the client.');
+          }
+        }, (err: HttpErrorResponse) => {
+          this._innovation.previewMode = !this._innovation.previewMode;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+        });
+    }
   }
-
 
   /***
    * This function will make the project end and synthesis will be available to the client.
@@ -244,54 +260,53 @@ export class SidebarFilterAnswersComponent implements OnInit {
    */
   public onClickEndInnovationConfirm(event: Event) {
     event.preventDefault();
-
-    this._innovationService.save(this._innovation._id, {status: 'DONE'}).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-    });
-
-    this._modalEndInnovation = false;
-
+    if (this.isAdmin && this.isAdminSide) {
+      this._innovationService.save(this._innovation._id, {status: 'DONE'}).pipe(first())
+        .subscribe(() => {
+          this._isModalEnd = false;
+          this._translateNotificationsService.success('Success',
+          'The project has been successfully ended, and the complete synthesis is available at the client side.');
+      }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+      });
+    }
   }
 
   public deleteCustomFilter(event: Event, name: string) {
     event.preventDefault();
-
-    this._innovationService.deleteFilter(this._innovation._id, encodeURIComponent(name)).pipe(first()).subscribe((result) => {
-      if (result['ok'] === 1) {
-        this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
-      }
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
-    });
-
+    this._innovationService.deleteFilter(this._innovation._id, encodeURIComponent(name))
+      .pipe(first()).subscribe((result) => {
+        if (result['ok'] === 1) {
+          this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
+        }
+        }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
   }
 
   public loadFilter(name: string) {
-
-    const find = this._activatedCustomFilters.find((filter) => filter.toLowerCase() === name.toLowerCase());
-
-    if (!find) {
-      this._innovationService.getFilter(this._innovation._id, encodeURIComponent(name)).pipe(first()).subscribe((result) => {
-        if (result) {
-
-          this._filterService.addFilter({
-            status: 'CUSTOM',
-            questionId: name,
-            value: result.answers
-          });
-
+    const _find = this._activatedCustomFilters.find((filter) => filter.toLowerCase() === name.toLowerCase());
+    if (!_find) {
+      this._innovationService.getFilter(this._innovation._id, encodeURIComponent(name))
+        .pipe(first()).subscribe((result) => {
+          if (result) {
+            this._filterService.addFilter({
+              status: 'CUSTOM',
+              questionId: name,
+              value: result.answers
+            });
           this._activatedCustomFilters.push(name);
-
         }
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
     } else {
-      this._translateNotificationsService.error('ERROR.ERROR', 'SIDEBAR_MARKET_REPORT.ERRORS.VIEW_ALREADY_ACTIVATED');
+      this._translateNotificationsService.error('ERROR.ERROR',
+        'SIDEBAR_MARKET_REPORT.ERRORS.VIEW_ALREADY_ACTIVATED');
     }
-
   }
 
   public unloadFilter(event: Event, name: string) {
@@ -300,24 +315,20 @@ export class SidebarFilterAnswersComponent implements OnInit {
     this._filterService.deleteFilter(name);
   }
 
-
   public checkCountry(event: Event) {
     event.preventDefault();
     this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
   }
-
 
   public checkTag(event: Event, tagId: string) {
     event.preventDefault();
     this._tagService.checkTag(tagId, (event.target as HTMLInputElement).checked);
   }
 
-
   public checkAnswerTag(event: Event, questionIdentifier: string) {
     event.preventDefault();
     this._tagService.checkAnswerTag(questionIdentifier, (event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
   }
-
 
   public filterEverything(isChecked: boolean, filterArray: Array<any>, typeFilter: string) {
     let question: Question;
@@ -380,10 +391,6 @@ export class SidebarFilterAnswersComponent implements OnInit {
     this._filterName = value;
   }
 
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
   get activatedCustomFilters() {
     return this._activatedCustomFilters;
   }
@@ -424,40 +431,49 @@ export class SidebarFilterAnswersComponent implements OnInit {
     return Object.keys(this._filterService.filters).length;
   }
 
-  get isAdmin(): boolean {
-    return this._isAdmin;
+  get isModalEnd(): boolean {
+    return this._isModalEnd;
   }
 
-  get isAdminSide(): boolean {
-    return this._isAdminSide;
+  set isModalEnd(value: boolean) {
+    this._isModalEnd = value;
   }
 
-  get isOwner(): boolean {
-    return this._isOwner;
+  get isModalPreview(): boolean {
+    return this._isModalPreview;
   }
 
-  get reportShared(): boolean {
-    return this._reportShared;
-  }
-
-  get modalEndInnovation(): boolean {
-    return this._modalEndInnovation;
-  }
-
-  set modalEndInnovation(value: boolean) {
-    this._modalEndInnovation = value;
-  }
-
-  get modalPreviewInnovation(): boolean {
-    return this._modalPreviewInnovation;
-  }
-
-  set modalPreviewInnovation(value: boolean) {
-    this._modalPreviewInnovation = value;
+  set isModalPreview(value: boolean) {
+    this._isModalPreview = value;
   }
 
   get selectedAnswersTags(): {[questionId: string]: {[t: string]: boolean}} {
     return this._tagService.selectedAnswersTags;
+  }
+
+  get showSection(): { [p: string]: boolean } {
+    return this._showSection;
+  }
+
+  get seeMore(): { [p: string]: boolean } {
+    return this._seeMore;
+  }
+
+  get isKeyLearning(): boolean {
+    return this._isKeyLearning;
+  }
+
+  get userLang(): string {
+    return this._userLang;
+  }
+
+  get isFinalConclusion(): boolean {
+    return this._isFinalConclusion;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

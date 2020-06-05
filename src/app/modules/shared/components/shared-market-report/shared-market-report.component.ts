@@ -80,7 +80,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _leftSidebarTemplateValue: SidebarInterface = {
     animate_state: 'active',
-    type: 'market-report'
+    type: 'MARKET_REPORT'
   };
 
   private _sidebarTemplateValue: SidebarInterface = {};
@@ -313,7 +313,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   public closeSidebar() {
     this._leftSidebarTemplateValue = {
       animate_state: 'inactive',
-      type: 'market-report'
+      type: 'MARKET_REPORT'
     };
   }
 
