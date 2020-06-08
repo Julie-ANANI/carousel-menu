@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Answer } from '../../models/answer';
+import {Injectable} from '@angular/core';
+import {Answer} from '../../models/answer';
+import {Tag} from '../../models/tag';
 
 @Injectable({ providedIn: 'root' })
 export class AnswerFrontService {
@@ -63,6 +64,29 @@ export class AnswerFrontService {
     }
 
     return _answers;
+  }
+
+  /***
+   * this returns the tags occurrence for the answers and also sort them by the
+   * occurrence.
+   * @param answers
+   */
+  public static tagsOccurrence(answers: Array<Answer>): Array<Tag> {
+    return answers.reduce((_tags, _answer) => {
+      const _answerTags = _answer.tags;
+      if (Array.isArray(_answerTags) && _answerTags.length) {
+        _answerTags.forEach((tag) => {
+          const _previousTag = _tags.findIndex((t) => t._id === tag._id);
+          if (_previousTag !== -1) {
+            _tags[_previousTag].count += 1;
+          } else {
+            tag.count = 1;
+            _tags.push(tag);
+          }
+        });
+      }
+      return _tags;
+    }, []).sort((a, b) => b.count - a.count);
   }
 
 }

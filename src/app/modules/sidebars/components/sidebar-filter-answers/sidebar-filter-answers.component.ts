@@ -15,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
 
 @Component({
   selector: 'app-sidebar-filter-answers',
@@ -99,6 +100,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _isFinalConclusion = true;
 
+  private _professionalsTags: Array<Tag> = [];
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _worldmapFilterService: WorldmapFiltersService,
@@ -109,6 +112,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   ngOnChanges(): void {
     if (this.answers.length) {
       this._filterNumber = this.answers.length;
+      this._professionalsTags = AnswerFrontService.tagsOccurrence(this.answers);
       this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
         this._filterNumber = this._filterService.filter(this.answers).length;
       });
@@ -151,7 +155,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
       this._filterService.reset();
     } else {
       this.filterEverything(false, this.continentsList, 'CONTINENT');
-      this.filterEverything(false, this.tagsList, 'TAG');
+      this.filterEverything(false, this._professionalsTags, 'TAG');
       this.questions.forEach(question => {
         this.filterEverything(false, [question], question.controlType);
       });
@@ -407,10 +411,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     return SharedWorldmapService.continentsList;
   }
 
-  get tagsList(): Array<Tag> {
-    return this._tagService.tagsList;
-  }
-
   get answersTagsLists(): {[questionId: string]: Array<Tag>} {
     return this._tagService.answersTagsLists;
   }
@@ -469,6 +469,10 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   get isFinalConclusion(): boolean {
     return this._isFinalConclusion;
+  }
+
+  get professionalsTags(): Array<Tag> {
+    return this._professionalsTags;
   }
 
   ngOnDestroy(): void {

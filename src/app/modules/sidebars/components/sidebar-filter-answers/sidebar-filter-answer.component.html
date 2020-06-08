@@ -227,7 +227,7 @@
   <!-- /map filters type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
 
   <!-- professional filters type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
-  <div *ngIf="tagsList.length" class="scroll-wrapper animate-fade is-3">
+  <div *ngIf="professionalsTags.length" class="scroll-wrapper animate-fade is-3">
 
     <!-- type 'MARKET_REPORT' -->
     <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#professionals'" pageScroll>
@@ -255,13 +255,13 @@
         <input
           type="checkbox"
           id="select-all-professionals"
-          (change)="filterEverything($event.target['checked'], tagsList, 'TAG')"
+          (change)="filterEverything($event.target['checked'], professionalsTags, 'TAG')"
           [checked]="!filters['tags']">
         <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
       </label>
 
       <div
-        *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))"
+        *ngFor="let tag of (seeMore.professionals ? professionalsTags : (professionalsTags | slice:0:6))"
         class="form-group">
         <label class="form-checkbox">
           <input
@@ -275,7 +275,7 @@
       </div>
 
       <!-- see more -->
-      <div *ngIf="tagsList.length > 6 && !seeMore.professionals">
+      <div *ngIf="professionalsTags.length > 6 && !seeMore.professionals">
         <span (click)="seeMore.professionals = true" class="text-link">
           {{ 'MARKET_REPORT.SEE_MORE' | translate }}
         </span>
@@ -283,7 +283,7 @@
       <!-- /see more -->
 
       <!-- see less -->
-      <div *ngIf="tagsList.length > 6 && seeMore.professionals">
+      <div *ngIf="professionalsTags.length > 6 && seeMore.professionals">
         <span class="text-link" (click)="seeMore.professionals = false">
           {{ 'MARKET_REPORT.SEE_LESS' | translate }}
         </span>
