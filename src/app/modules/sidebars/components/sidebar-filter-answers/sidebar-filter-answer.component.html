@@ -184,8 +184,8 @@
       <span (click)="showSection.map = !showSection.map">
         <i *ngIf="showSection.map" class="icon icon-arrow-down"></i>
         <i *ngIf="!showSection.map" class="icon icon-arrow-up"></i>
-        {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
       </span>
+      {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
     </a>
     <!-- /type 'MARKET_REPORT' -->
 
@@ -194,8 +194,8 @@
       <span (click)="showSection.map = !showSection.map">
         <i *ngIf="showSection.map" class="icon icon-arrow-down"></i>
         <i *ngIf="!showSection.map" class="icon icon-arrow-up"></i>
-        Map
       </span>
+      Map
     </a>
     <!-- /type 'FOLLOW_UP' -->
 
@@ -234,8 +234,8 @@
       <span (click)="showSection.professionals = !showSection.professionals">
         <i *ngIf="showSection.professionals" class="icon icon-arrow-down"></i>
         <i *ngIf="!showSection.professionals" class="icon icon-arrow-up"></i>
-        {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
       </span>
+      {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
     </a>
     <!-- /type 'MARKET_REPORT' -->
 
@@ -244,8 +244,8 @@
       <span (click)="showSection.professionals = !showSection.professionals">
         <i *ngIf="showSection.professionals" class="icon icon-arrow-down"></i>
         <i *ngIf="!showSection.professionals" class="icon icon-arrow-up"></i>
-        Professionals
       </span>
+      Professionals
     </a>
     <!-- /type 'FOLLOW_UP' -->
 
@@ -321,25 +321,25 @@
 
       <!-- type 'MARKET_REPORT' -->
       <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#'+question.identifier" pageScroll>
-      <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
-        <ng-container *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)">
-          <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
-          <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
-        </ng-container>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <ng-container *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)">
+            <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+            <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+          </ng-container>
+        </span>
         {{ question.title | multiling:userLang | FormatText }}
-      </span>
       </a>
       <!-- /type 'MARKET_REPORT' -->
 
       <!-- type 'FOLLOW_UP' -->
       <a *ngIf="templateType === 'FOLLOW_UP'" pageScroll>
-      <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
-        <ng-container *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)">
-          <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
-          <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
-        </ng-container>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <ng-container *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)">
+            <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+            <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+          </ng-container>
+        </span>
         {{ question.title | multiling:userLang | FormatText }}
-      </span>
       </a>
       <!-- /type 'FOLLOW_UP' -->
 
@@ -399,21 +399,21 @@
 
       <!-- type 'MARKET_REPORT' -->
       <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#'+question.identifier" pageScroll>
-      <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
-        <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
-        <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+          <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+        </span>
         {{ question.title | multiling:userLang | FormatText }}
-      </span>
       </a>
       <!-- /type 'MARKET_REPORT' -->
 
       <!-- type 'FOLLOW_UP' -->
       <a *ngIf="templateType === 'FOLLOW_UP'" pageScroll>
-      <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
-        <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
-        <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+          <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+        </span>
         {{ question.title | multiling:userLang | FormatText }}
-      </span>
       </a>
       <!-- /type 'FOLLOW_UP' -->
 

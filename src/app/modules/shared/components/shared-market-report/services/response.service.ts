@@ -288,7 +288,9 @@ export class ResponseService {
 
     }
 
-    return barsData;
+    return barsData.sort((a, b) => {
+      return b.count - a.count;
+    });
 
   }
 

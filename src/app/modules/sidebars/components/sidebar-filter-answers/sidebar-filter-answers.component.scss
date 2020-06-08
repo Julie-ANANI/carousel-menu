@@ -72,6 +72,12 @@
         margin-right: 4px;
       }
 
+      .icon-arrow-down, .icon-arrow-up {
+        &:hover {
+          color: $text-primary-color;
+        }
+      }
+
     }
 
   }
