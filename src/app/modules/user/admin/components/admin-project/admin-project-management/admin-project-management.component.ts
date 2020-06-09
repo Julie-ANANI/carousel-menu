@@ -762,6 +762,22 @@ export class AdminProjectManagementComponent implements OnInit {
     this._userService.updateOther(this._project.owner).subscribe();
   }
 
+  public onValidateProject(event: Event) {
+    event.preventDefault();
+    if (this._project.status === 'SUBMITTED') {
+      this._project.status = 'EVALUATING';
+      this.save('The project has been validated successfully');
+    }
+  }
+
+  public onRevisionProject(event: Event) {
+    event.preventDefault();
+    if (this._project.status === 'SUBMITTED') {
+      this._project.status = 'EDITING';
+      this.save('The project has been placed in revision status, please notify the owner of the changes to be made.');
+    }
+  }
+
   formatText(text: string) {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
   }

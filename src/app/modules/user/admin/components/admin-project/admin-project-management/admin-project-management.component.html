@@ -361,6 +361,7 @@
 
 
     <div class="project-summary">
+
       <div class="completion">
         <h6>Completion</h6>
         <span *ngFor="let innov of project.innovationCards" class="text-center">
@@ -380,7 +381,28 @@
         </span>
       </div>
 
+      <div class="p-top-25 p-no-left">
+
+        <button
+          *ngIf="project && project.status === 'SUBMITTED'"
+          (click)="onValidateProject($event)"
+          class="button is-primary is-sm m-right-20 m-bottom-15"
+          id="btn-validate-project">
+          Validate project
+        </button>
+
+        <button
+          *ngIf="project && project.status === 'SUBMITTED'"
+          (click)="onRevisionProject($event)"
+          class="button is-danger is-sm m-bottom-15"
+          id="btn-revision-project">
+          Ask for project revision
+        </button>
+
+      </div>
+
     </div>
+
   </div>
 
   <h6>Campaigns</h6>
