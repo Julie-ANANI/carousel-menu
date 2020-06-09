@@ -80,7 +80,6 @@ export class AdminProjectsComponent implements OnInit {
   private _getProjects() {
     this._innovationService.getAll(this._config).pipe(first()).subscribe((innovations: Response) => {
       this._projects = innovations.result;
-      console.log(innovations.result)
       this._totalProjects = innovations._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
@@ -148,8 +147,8 @@ export class AdminProjectsComponent implements OnInit {
       _clickIndex: 1,
       _isPaginable: true,
       _columns: [
-        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '270px' },
-        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '210px' },
+        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true },
+        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '180px' },
         {
           _attrs: ['mission.type'],
           _name: 'Type',
@@ -164,6 +163,7 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Objective',
           _type: 'TEXT',
           _isSearchable: true,
+          _width: '200px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
         {
@@ -174,9 +174,8 @@ export class AdminProjectsComponent implements OnInit {
           _isHidden: true,
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
           }, // Using _searchConfig for advanced search
-        {_attrs: ['preset.name'], _name: 'Questionnaire', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+        {_attrs: ['preset.name'], _name: 'Questionnaire Title', _type: 'TEXT', _isSearchable: true},
         {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '150px' },
-        {_attrs: ['updated'], _name: 'Last update', _type: 'DATE', _isSortable: true, _width: '150px' },
         {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
