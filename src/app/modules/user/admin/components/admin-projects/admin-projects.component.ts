@@ -15,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../../../../services/user/user.service';
 import { environment } from '../../../../../../environments/environment';
 import { User } from '../../../../../models/user.model';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'admin-projects',
@@ -24,14 +25,14 @@ import { User } from '../../../../../models/user.model';
 
 export class AdminProjectsComponent implements OnInit {
 
-  private _projects: Array<Innovation> = [];
+  private _projects: Array<any> = [];
 
   private _totalProjects = -1;
 
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,preset',
+    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator',
     limit: '10',
     offset: '0',
     search: '{}',
@@ -80,6 +81,7 @@ export class AdminProjectsComponent implements OnInit {
   private _getProjects() {
     this._innovationService.getAll(this._config).pipe(first()).subscribe((innovations: Response) => {
       this._projects = innovations.result;
+      this._initProjects();
       this._totalProjects = innovations._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
@@ -124,11 +126,21 @@ export class AdminProjectsComponent implements OnInit {
     this._innovationService.advancedSearch(config)
       .subscribe(innovations => {
         this._projects = innovations.result;
+        this._initProjects();
         this._totalProjects = innovations._metadata.totalCount;
         this._initializeTable();
       }, err => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
       });
+  }
+
+  private _initProjects() {
+    this._projects = this._projects.map((project) => {
+      if (project.innovationCards && project.innovationCards.length) {
+        project.innovationCards = InnovationFrontService.currentLangInnovationCard(project, this._translateService.currentLang, 'card');
+      }
+      return project;
+    });
   }
 
   /***
@@ -148,6 +160,13 @@ export class AdminProjectsComponent implements OnInit {
       _isPaginable: true,
       _columns: [
         {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true },
+        {
+          _attrs: ['innovationCards.title'],
+          _name: 'Innovation card title',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
+        }, // Using _searchConfig for advanced search
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '180px' },
         {
           _attrs: ['mission.type'],
@@ -166,15 +185,6 @@ export class AdminProjectsComponent implements OnInit {
           _width: '200px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
-        {
-          _attrs: ['innovationCard.title'],
-          _name: 'Innovation card title',
-          _type: 'TEXT',
-          _isSearchable: true,
-          _isHidden: true,
-          _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
-          }, // Using _searchConfig for advanced search
-        {_attrs: ['preset.name'], _name: 'Questionnaire Title', _type: 'TEXT', _isSearchable: true},
         {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '150px' },
         {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [
