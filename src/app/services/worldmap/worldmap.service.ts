@@ -1,7 +1,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 
 @Injectable({providedIn: 'root'})
-export class SharedWorldmapService {
+export class WorldmapService {
 
   constructor() {}
 
@@ -10,11 +10,11 @@ export class SharedWorldmapService {
   private _countries: {[country: string]: string} = {}; // a mapping of countries -> continent
 
   public static areAllContinentChecked(selectedContinents: {[c: string]: boolean}): boolean {
-    return SharedWorldmapService._continentsList.every((c) => selectedContinents[c] === true);
+    return WorldmapService._continentsList.every((c) => selectedContinents[c] === true);
   }
 
   public static setContinents(value: boolean): any {
-    return SharedWorldmapService._continentsList.reduce((acc, cont) => {
+    return WorldmapService._continentsList.reduce((acc, cont) => {
       acc[cont] = value;
       return acc;
     }, {} as any);
@@ -22,7 +22,7 @@ export class SharedWorldmapService {
 
   public loadCountriesFromViewContainerRef (viewContainerRef: ViewContainerRef) {
     if (Object.keys(this._countries).length === 0) {
-      SharedWorldmapService._continentsList.forEach((continent) => {
+      WorldmapService._continentsList.forEach((continent) => {
         const continent_elem = viewContainerRef.element.nativeElement.getElementsByClassName(continent);
         Array.prototype.forEach.call(continent_elem, (continent_el: HTMLElement) => {
           const countries_elems = continent_el.getElementsByTagName('path');
@@ -55,7 +55,7 @@ export class SharedWorldmapService {
   }
 
   static get continentsList(): Array<string> {
-    return SharedWorldmapService._continentsList;
+    return WorldmapService._continentsList;
   }
 
 }

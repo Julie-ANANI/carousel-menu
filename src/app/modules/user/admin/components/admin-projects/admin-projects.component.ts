@@ -12,9 +12,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import {UserService} from '../../../../../services/user/user.service';
-import {environment} from '../../../../../../environments/environment';
-import {User} from '../../../../../models/user.model';
+import { UserService } from '../../../../../services/user/user.service';
+import { environment } from '../../../../../../environments/environment';
+import { User } from '../../../../../models/user.model';
 
 @Component({
   selector: 'admin-projects',
@@ -24,56 +24,6 @@ import {User} from '../../../../../models/user.model';
 
 export class AdminProjectsComponent implements OnInit {
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
-              private _innovationService: InnovationService,
-              private _translateService: TranslateService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService,
-              private _userService: UserService) {
-
-    this._translateTitleService.setTitle('Market Tests');
-
-  }
-
-  set config(value: Config) {
-    this._config = value; // TODO how to change the config when searching things like the operator?
-    try {
-      // Parse the config.search field to see if there's something
-      if (this._config['fromCollection']) {
-        switch (this._config['fromCollection']) {
-          case('mission'):
-          case('innovationcard'):
-            this._searchMissionsByOther(this._config);
-            break;
-          default:
-            this._getProjects();
-        }
-      } else {
-        this._getProjects();
-      }
-    } catch (ex) {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.message));
-      this._getProjects();
-    }
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get projects(): Array<Innovation> {
-    return this._projects;
-  }
-
-  get table(): Table {
-    return this._table;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
   private _projects: Array<Innovation> = [];
 
   private _totalProjects = -1;
@@ -81,7 +31,7 @@ export class AdminProjectsComponent implements OnInit {
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator',
+    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,preset',
     limit: '10',
     offset: '0',
     search: '{}',
@@ -97,6 +47,18 @@ export class AdminProjectsComponent implements OnInit {
 
   private _objectiveSearchKey = this._translateService.currentLang === 'en' ?
     'objective.principal.en' : 'objective.principal.fr';
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: ConfigService,
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateTitleService: TranslateTitleService,
+              private _userService: UserService) {
+
+    this._translateTitleService.setTitle('Market Tests');
+
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -118,6 +80,7 @@ export class AdminProjectsComponent implements OnInit {
   private _getProjects() {
     this._innovationService.getAll(this._config).pipe(first()).subscribe((innovations: Response) => {
       this._projects = innovations.result;
+      console.log(innovations.result)
       this._totalProjects = innovations._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
@@ -187,12 +150,31 @@ export class AdminProjectsComponent implements OnInit {
       _columns: [
         {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '270px' },
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '210px' },
-        {_attrs: ['mission.type'], _name: 'Type', _type: 'TEXT', _isSortable: true, _isSearchable: true,
-          _width: '100px', _searchConfig: { _collection: 'mission', _searchKey: 'type' }}, // Using _searchConfig for advanced search
-        {_attrs: [this._mainObjective], _name: 'Objective', _type: 'TEXT', _isSearchable: true,
-          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey } }, // Using _searchConfig for advanced search
-        {_attrs: ['innovationCard.title'], _name: 'Innovation card title', _type: 'TEXT', _isSearchable: true, _isHidden: true,
-          _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' } }, // Using _searchConfig for advanced search
+        {
+          _attrs: ['mission.type'],
+          _name: 'Type',
+          _type: 'TEXT',
+          _isSortable: true,
+          _isSearchable: true,
+          _width: '100px',
+          _searchConfig: {_collection: 'mission', _searchKey: 'type' }
+          }, // Using _searchConfig for advanced search
+        {
+          _attrs: [this._mainObjective],
+          _name: 'Objective',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
+          }, // Using _searchConfig for advanced search
+        {
+          _attrs: ['innovationCard.title'],
+          _name: 'Innovation card title',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isHidden: true,
+          _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
+          }, // Using _searchConfig for advanced search
+        {_attrs: ['preset.name'], _name: 'Questionnaire', _type: 'TEXT', _isSortable: true, _isSearchable: true},
         {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '150px' },
         {_attrs: ['updated'], _name: 'Last update', _type: 'DATE', _isSortable: true, _width: '150px' },
         {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
@@ -230,6 +212,44 @@ export class AdminProjectsComponent implements OnInit {
       console.error(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
+  }
+
+  set config(value: Config) {
+    this._config = value; // TODO how to change the config when searching things like the operator?
+    try {
+      // Parse the config.search field to see if there's something
+      if (this._config['fromCollection']) {
+        switch (this._config['fromCollection']) {
+          case('mission'):
+          case('innovationcard'):
+            this._searchMissionsByOther(this._config);
+            break;
+          default:
+            this._getProjects();
+        }
+      } else {
+        this._getProjects();
+      }
+    } catch (ex) {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.message));
+      this._getProjects();
+    }
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get projects(): Array<Innovation> {
+    return this._projects;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
 }

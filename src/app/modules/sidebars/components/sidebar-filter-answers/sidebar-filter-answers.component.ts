@@ -7,7 +7,7 @@ import { FilterService } from '../../../shared/components/shared-market-report/s
 import { Answer } from '../../../../models/answer';
 import { first, takeUntil } from 'rxjs/operators';
 import { Question } from '../../../../models/question';
-import { SharedWorldmapService } from "../../../shared/components/shared-worldmap/services/shared-worldmap.service";
+import { WorldmapService } from "../../../../services/worldmap/worldmap.service";
 import { Tag } from "../../../../models/tag";
 import { TagsFiltersService } from "../../../shared/components/shared-market-report/services/tags-filter.service";
 import { WorldmapFiltersService } from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
@@ -408,7 +408,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   }
 
   get continentsList(): Array<string> {
-    return SharedWorldmapService.continentsList;
+    return WorldmapService.continentsList;
   }
 
   get answersTagsLists(): {[questionId: string]: Array<Tag>} {

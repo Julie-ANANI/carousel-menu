@@ -4,7 +4,7 @@ import { Country } from '../../../../models/country';
 import { Response } from '../../../../models/response';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
+import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { GeographySettings } from '../../../../models/innov-settings';
 
 @Component({
@@ -139,7 +139,7 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   public checkSelectAll(): boolean {
     const selectedContinents = this.getIncludedContinents();
-    return selectedContinents.length === 7 || selectedContinents.length === SharedWorldmapService.continentsList.length;
+    return selectedContinents.length === 7 || selectedContinents.length === WorldmapService.continentsList.length;
   }
 
   public onChangeSelectAll(event: Event) {
@@ -149,10 +149,10 @@ export class SharedTargetingWorldComponent implements OnInit {
       this._geography.exclude = [];
 
       if ((event.target as HTMLInputElement).checked) {
-        this._geography.continentTarget = SharedWorldmapService.setContinents(true);
+        this._geography.continentTarget = WorldmapService.setContinents(true);
         this._includeCountries();
       } else {
-        this._geography.continentTarget = SharedWorldmapService.setContinents(false);
+        this._geography.continentTarget = WorldmapService.setContinents(false);
       }
 
       this._emitChanges();
@@ -279,7 +279,7 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   get continents(): Array<string> {
-    return SharedWorldmapService.continentsList;
+    return WorldmapService.continentsList;
   }
 
   get geography(): GeographySettings {

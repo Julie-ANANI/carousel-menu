@@ -17,7 +17,7 @@ import { ResponseService } from './services/response.service';
 import { TagsFiltersService } from './services/tags-filter.service';
 import { WorldmapFiltersService } from './services/worldmap-filter.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
+import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -103,7 +103,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
-              private _sharedWorldMapService: SharedWorldmapService,
+              private _sharedWorldMapService: WorldmapService,
               private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {

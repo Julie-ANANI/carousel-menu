@@ -3,7 +3,7 @@ import { Answer } from '../../../../../models/answer';
 import { Filter } from '../models/filter';
 import { Tag } from '../../../../../models/tag';
 import { Subject } from 'rxjs';
-import { SharedWorldmapService } from '../../shared-worldmap/services/shared-worldmap.service';
+import { WorldmapService } from '../../../../../services/worldmap/worldmap.service';
 
 @Injectable({providedIn: 'root'})
 export class FilterService {
@@ -11,7 +11,7 @@ export class FilterService {
   private _filters: {[questionId: string]: Filter} = {};
   private _filtersUpdate = new Subject<null>();
 
-  constructor(private _sharedWorld: SharedWorldmapService) {
+  constructor(private _sharedWorld: WorldmapService) {
     this.reset();
   }
 

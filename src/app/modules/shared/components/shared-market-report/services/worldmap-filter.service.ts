@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FilterService } from './filters.service';
-import {SharedWorldmapService} from '../../shared-worldmap/services/shared-worldmap.service';
+import {WorldmapService} from '../../../../../services/worldmap/worldmap.service';
 
 @Injectable({providedIn: 'root'})
 export class WorldmapFiltersService {
@@ -12,7 +12,7 @@ export class WorldmapFiltersService {
   }
 
   public reset() {
-    this._selectedContinents = SharedWorldmapService.continentsList.reduce((acc, cont) => {
+    this._selectedContinents = WorldmapService.continentsList.reduce((acc, cont) => {
       acc[cont] = true;
       return acc;
     }, {} as {[c: string]: boolean});
@@ -20,7 +20,7 @@ export class WorldmapFiltersService {
 
   public selectContinent(continent: string, value: boolean) {
     this._selectedContinents[continent] = value;
-    const remove = SharedWorldmapService.areAllContinentChecked(this._selectedContinents);
+    const remove = WorldmapService.areAllContinentChecked(this._selectedContinents);
     if (!remove) {
       this.filterService.addFilter(
         {

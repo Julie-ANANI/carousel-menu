@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewContainerRef, Output, EventEmitter } from '@angular/core';
-import { SharedWorldmapService } from './services/shared-worldmap.service';
+import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { Response } from '../../../../models/response';
 import { IndexService } from '../../../../services/index/index.service';
 import { Country } from '../../../../models/country';
@@ -81,6 +81,7 @@ export class SharedWorldmapComponent implements OnInit {
    */
   @Input() set countriesData (value: any) {
     this._countriesData = value;
+    console.log(this._countriesData);
     this._initializeTemplate();
   }
 
@@ -106,11 +107,11 @@ export class SharedWorldmapComponent implements OnInit {
 
   constructor(private _elementRef: ElementRef,
               private _indexService: IndexService,
-              private _sharedWorldmapService: SharedWorldmapService,
+              private _worldmapService: WorldmapService,
               private _viewContainerRef: ViewContainerRef) {}
 
   ngOnInit() {
-    this._sharedWorldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
+    this._worldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
   @HostListener('click', ['$event'])
