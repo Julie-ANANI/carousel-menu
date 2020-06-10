@@ -17,9 +17,9 @@ import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
-import { SearchService } from "../../../../services/search/search.service";
+import { SearchService } from '../../../../services/search/search.service';
 import { Observable} from 'rxjs';
-import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 
 @Component({
   selector: 'app-user-form',
@@ -49,7 +49,7 @@ export class UserFormComponent implements OnInit {
       this._pro = value;
       this.loadProfessional();
     }
-  };
+  }
 
   @Input() set campaign(value: Campaign) {
     this._campaign = value;
@@ -65,7 +65,7 @@ export class UserFormComponent implements OnInit {
       this._user = value;
       this.loadEditUser();
     }
-  };
+  }
 
   @Input() set type(type: 'editUser' | 'professional' | 'addPro') {
     this._type = type;
@@ -155,6 +155,7 @@ export class UserFormComponent implements OnInit {
       isOperator: [false],
       profileUrl: [null],
       domain: [''],
+      phone: ['']
     });
   }
 
@@ -189,9 +190,9 @@ export class UserFormComponent implements OnInit {
       this._company = { name: this._pro.company };
       this._proKeywords = null;
       this._professionalService.isShielded(this._pro._id)
-        .subscribe(response=>{
+        .subscribe(response => {
           this._isProShielded = response && response.result.length;
-        }, err=>{
+        }, err => {
           console.error(err);
         });
     }
@@ -222,11 +223,11 @@ export class UserFormComponent implements OnInit {
 
   public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
     return this.autoCompleteService.get({query: searchString, type: 'company'});
-  };
+  }
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
-  };
+  }
 
   public selectCompany(c: string | Clearbit) {
     this._userForm.get('company').reset((typeof c === 'string') ? {name: c} : c);
@@ -234,7 +235,7 @@ export class UserFormComponent implements OnInit {
 
   onClickSave() {
 
-    for (let code in this._countries) {
+    for (const code in this._countries) {
       if (this._countries[code] === this._userForm.get('country').value) {
         this._userForm.value['country'] = code;
       }
@@ -271,7 +272,7 @@ export class UserFormComponent implements OnInit {
             if (valueIndex === -1) { // if not exist then push into the array.
               this._countriesSuggestion.push(items.name);
             }
-          })
+          });
         }
       });
     });
@@ -345,7 +346,7 @@ export class UserFormComponent implements OnInit {
 
 
   getCountryName(value: string) {
-    for (let code in this._countries) {
+    for (const code in this._countries) {
       if (code === value) {
         return this._countries[code];
       }
@@ -356,18 +357,18 @@ export class UserFormComponent implements OnInit {
   }
 
   public onEmailChange() {
-    if(this._type === 'addPro' && this._userForm.get("email").valid) {
+    if (this._type === 'addPro' && this._userForm.get('email').valid) {
       const config = {
         fields: 'firstName lastName company email country jobTitle campaigns innovations',
         limit: '1',
         offset: '0',
         search: '{}',
-        email: this._userForm.get("email").value,
+        email: this._userForm.get('email').value,
         sort: '{ "created": -1 }'
       };
       this._professionalService.getAll(config)
         .subscribe( response => {
-          if(response && response.result && response.result.length) {
+          if (response && response.result && response.result.length) {
             this._userForm.patchValue(response.result[0]);
           }
         }, err => {
@@ -387,11 +388,11 @@ export class UserFormComponent implements OnInit {
   }
 
   get isSuperAdmin(): boolean {
-    return this._user.roles === "super-admin";
+    return this._user.roles === 'super-admin';
   }
 
   get isDomainAdmin(): boolean {
-    return this._user.roles === "admin" || this._user.roles === "super-admin";
+    return this._user.roles === 'admin' || this._user.roles === 'super-admin';
   }
 
 
