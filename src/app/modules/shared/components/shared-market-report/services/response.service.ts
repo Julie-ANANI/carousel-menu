@@ -285,12 +285,15 @@ export class ResponseService {
         bd.relativePercentage = `${((bd.count * 100) / maxAnswersCount) >> 0}%`;
       });
 
+      if (question.controlType === 'checkbox') {
+        barsData.sort((a, b) => {
+          return b.count - a.count;
+        });
+      }
 
     }
 
-    return barsData.sort((a, b) => {
-      return b.count - a.count;
-    });
+    return barsData;
 
   }
 
