@@ -224,6 +224,18 @@
                   </ng-container>
                   <!-- /type DATE -->
 
+                  <!-- type DATE_TIME -->
+                  <ng-container *ngSwitchCase="'DATE_TIME'">
+                    <div class="text-ellipsis">
+                      <span>
+                        {{ (getContentValue(row, getAttrs(column)[0])?.toString() | date:dateFormat) }}
+                        {{ 'TABLE.AT' | translate }}
+                        {{ getTime((getContentValue(row, getAttrs(column)[0])?.toString())) }}
+                      </span>
+                    </div>
+                  </ng-container>
+                  <!-- /type DATE_TIME -->
+
 
                   <!-- type MULTI-CHOICES -->
                   <ng-container *ngSwitchCase="'MULTI-CHOICES'">

@@ -66,7 +66,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     { name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION' },
     { name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT' },
     { name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION' },
-    { name: 'AUTHORISATION', isVisible: false, isEditable: false, level: 'MISSION' },
+    { name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION' },
   ];
 
   private _showModal = false;
@@ -199,7 +199,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           case 'AUTHORISATION':
             section.isVisible = !!(this._mission.externalDiffusion);
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 
         }

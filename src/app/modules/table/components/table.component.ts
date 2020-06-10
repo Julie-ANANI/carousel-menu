@@ -11,6 +11,7 @@ import { LocalStorageService } from '../../../services/localStorage/localStorage
 import { ConfigService } from '../../../services/config/config.service';
 
 import * as moment from 'moment';
+import * as momentTimeZone from 'moment-timezone';
 
 @Component({
   selector: 'app-shared-table',
@@ -706,6 +707,10 @@ export class TableComponent {
 
   public onClickDropdownItem(content: any, item: Choice) {
     this.dropdownAction.emit({content: content, item: item});
+  }
+
+  public getTime(content: string): string {
+    return momentTimeZone(content).tz('Europe/Paris').format('h:mm a');
   }
 
   get table(): Table {
