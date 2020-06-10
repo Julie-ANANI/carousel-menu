@@ -159,12 +159,13 @@ export class AdminProjectsComponent implements OnInit {
       _clickIndex: 1,
       _isPaginable: true,
       _columns: [
-        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true },
+        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '200px' },
         {
           _attrs: ['innovationCards.title'],
           _name: 'Innovation card title',
           _type: 'TEXT',
           _isSearchable: true,
+          _width: '200px',
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '180px' },
@@ -182,10 +183,11 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Objective',
           _type: 'TEXT',
           _isSearchable: true,
-          _width: '200px',
+          _width: '120px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
-        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '150px' },
+        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '130px' },
+        {_attrs: ['updated'], _name: 'Last Updated', _type: 'DATE_TIME', _isSortable: true, _width: '200px' },
         {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
