@@ -74,7 +74,7 @@ export class AdminProjectComponent implements OnInit {
     const adminLevel = this._authService.adminLevel;
 
     if (adminLevel > 1) {
-      return ['settings', 'roadmap', 'cards', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis', 'storyboard', 'follow-up' ];
+      return ['settings', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis', 'storyboard', 'follow-up' ];
     } else {
       return ['cards', 'campaigns', 'synthesis'];
     }
