@@ -48,7 +48,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/share-link.png'
     },
     {
-      name: 'CSV',
+      name: 'XLSX',
       isExportable: false,
       img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/csv-answers.png'
     },
@@ -70,7 +70,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   private _isGeneratingLink = false;
 
-  private _isGeneratingCSV = false;
+  private _isGeneratingXLSX = false;
 
   private _isGeneratingPDF = false;
 
@@ -116,7 +116,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'DONE');
           break;
 
-        case 'CSV':
+        case 'XLSX':
         case 'PDF':
           document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'EVALUATING');
           break;
@@ -189,14 +189,14 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   /***
    * when the user clicks on the Download CSV button.
    */
-  public onClickCSV(event: Event) {
+  public onClickXLSX(event: Event) {
     event.preventDefault();
-    if (!this._isGeneratingCSV && this.isOwner && this.ownerConsent) {
-      this._isGeneratingCSV = true;
-      const url = this._answerService.getExportUrl(this._innovation._id, true, this.anonymousCSV);
+    if (!this._isGeneratingXLSX && this.isOwner && this.ownerConsent) {
+      this._isGeneratingXLSX = true;
+      const url = this._answerService.getExportUrl(this._innovation._id, true, this.anonymousXLSX);
       setTimeout(() => {
         window.open(url);
-        this._isGeneratingCSV = false;
+        this._isGeneratingXLSX = false;
       }, 1000);
     }
   }
@@ -250,7 +250,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     }
   }
 
-  get anonymousCSV(): boolean {
+  get anonymousXLSX(): boolean {
     return !!(this._innovation._metadata && this._innovation._metadata.campaign && this._innovation._metadata.campaign.anonymous_answers);
   }
 
@@ -286,8 +286,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     return this._isGeneratingLink;
   }
 
-  get isGeneratingCSV(): boolean {
-    return this._isGeneratingCSV;
+  get isGeneratingXLSX(): boolean {
+    return this._isGeneratingXLSX;
   }
 
   get isGeneratingPDF(): boolean {

@@ -5,7 +5,7 @@ export const CLIENT_PROJECT_DOCUMENTS = {
   'NAME': {
     'REPORT': 'Executive Report',
     'SHARE': 'Lien partageable',
-    'CSV': 'Réponses au format CSV',
+    'XLSX': 'Réponses au format Excel',
     'PDF': 'Réponses au format PDF',
     'VIDEO': 'Vidéo Synthèse',
   },
@@ -13,7 +13,7 @@ export const CLIENT_PROJECT_DOCUMENTS = {
   'DESCRIPTION': {
     'REPORT': 'Partagez les résultats synthétiques de votre Test Marché',
     'SHARE': 'Partagez les résultats complets anonymisés',
-    'CSV': 'Toutes les réponses de votre test marché au format CSV',
+    'XLSX': 'Toutes les réponses de votre test marché au format Excel',
     'PDF': 'Toutes les réponses de votre test marché au format PDF',
     'VIDEO': 'Partagez les résultats de votre Test Marché, au format vidéo',
   },
