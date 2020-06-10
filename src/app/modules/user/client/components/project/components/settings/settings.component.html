@@ -402,6 +402,12 @@
               class="form-input is-sm is-shadowed"
               type="email">
           </label>
+          <!-- Warning text -->
+          <label class="form-checkbox">
+            <input [(ngModel)]="consent" type="checkbox">
+            <i class="form-icon"></i> Please note that collaborators have access to your project, including the results and other
+            sensitive data. Do you want to continue?
+          </label>
         </div>
       </div>
       <!-- /COLLABORATORS -->
@@ -420,7 +426,7 @@
       </button>
 
       <button
-        [disabled]="!this.selectedValue || isSaving"
+        [disabled]="!canPerformAction()"
         (click)="onClickSaveModal($event)"
         class="button is-community"
         id="btn-save">

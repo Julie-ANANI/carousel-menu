@@ -69,7 +69,7 @@ export class AdminProjectsComponent implements OnInit {
       this._getOperators().then( _ => {
         this._getProjects();
       }, err => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       });
     }
   }
@@ -86,7 +86,7 @@ export class AdminProjectsComponent implements OnInit {
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
       console.error(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 
@@ -130,7 +130,7 @@ export class AdminProjectsComponent implements OnInit {
         this._totalProjects = innovations._metadata.totalCount;
         this._initializeTable();
       }, err => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       });
   }
 
