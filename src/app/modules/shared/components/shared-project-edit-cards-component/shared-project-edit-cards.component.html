@@ -234,16 +234,11 @@
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
-                <label>
-                <textarea
-                  (change)="onChangeComment($event)"
-                  [(ngModel)]="innovationCard.operatorComment.summary.comment"
-                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
-                  class="form-input"
-                  id="summary-comment"
-                  rows="5">
-                </textarea>
-                </label>
+                <app-text-zone
+                  (onTextChange)="updateUMIComment($event, 'summary', 'comment')"
+                  [data]="innovationCard.operatorComment.summary.comment"
+                  id="summary-comment">
+                </app-text-zone>
               </div>
 
             </div>
@@ -262,16 +257,11 @@
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
-                <label>
-                <textarea
-                  (change)="onChangeComment($event)"
-                  [(ngModel)]="innovationCard.operatorComment.summary.suggestion"
-                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
-                  class="form-input"
-                  id="summary-suggestion"
-                  rows="5">
-                </textarea>
-                </label>
+                <app-text-zone
+                  (onTextChange)="updateUMIComment($event, 'summary', 'suggestion')"
+                  [data]="innovationCard.operatorComment.summary.suggestion"
+                  id="summary-suggestion">
+                </app-text-zone>
               </div>
 
             </div>
@@ -359,16 +349,11 @@
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
-                <label>
-                <textarea
-                  (change)="onChangeComment($event)"
-                  [(ngModel)]="innovationCard.operatorComment.problem.comment"
-                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
-                  class="form-input"
-                  id="problem-comment"
-                  rows="5">
-                </textarea>
-                </label>
+                <app-text-zone
+                  (onTextChange)="updateUMIComment($event, 'problem', 'comment')"
+                  [data]="innovationCard.operatorComment.problem.comment"
+                  id="problem-comment">
+                </app-text-zone>
               </div>
 
             </div>
@@ -387,16 +372,11 @@
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
-                <label>
-                <textarea
-                  (change)="onChangeComment($event)"
-                  [(ngModel)]="innovationCard.operatorComment.problem.suggestion"
-                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
-                  class="form-input"
-                  id="problem-suggestion"
-                  rows="5">
-                </textarea>
-                </label>
+                <app-text-zone
+                  (onTextChange)="updateUMIComment($event, 'problem', 'suggestion')"
+                  [data]="innovationCard.operatorComment.problem.suggestion"
+                  id="problem-suggestion">
+                </app-text-zone>
               </div>
 
             </div>
@@ -481,16 +461,11 @@
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
-                <label>
-                <textarea
-                  (change)="onChangeComment($event)"
-                  [(ngModel)]="innovationCard.operatorComment.solution.comment"
-                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.COMMENT' | translate"
-                  class="form-input"
-                  id="solution-comment"
-                  rows="5">
-                </textarea>
-                </label>
+                <app-text-zone
+                  (onTextChange)="updateUMIComment($event, 'solution', 'comment')"
+                  [data]="innovationCard.operatorComment.solution.comment"
+                  id="solution-comment">
+                </app-text-zone>
               </div>
 
             </div>
@@ -509,16 +484,11 @@
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
-                <label>
-                <textarea
-                  (change)="onChangeComment($event)"
-                  [(ngModel)]="innovationCard.operatorComment.solution.suggestion"
-                  [attr.placeholder]="'SHARED_PROJECT_EDIT.PLACEHOLDERS.SUGGESTION' | translate"
-                  class="form-input"
-                  id="solution-suggestion"
-                  rows="5">
-                </textarea>
-                </label>
+                <app-text-zone
+                  (onTextChange)="updateUMIComment($event, 'solution', 'suggestion')"
+                  [data]="innovationCard.operatorComment.solution.suggestion"
+                  id="solution-suggestion">
+                </app-text-zone>
               </div>
 
             </div>

@@ -72,21 +72,24 @@ export class AnswerFrontService {
    * @param answers
    */
   public static tagsOccurrence(answers: Array<Answer>): Array<Tag> {
-    return answers.reduce((_tags, _answer) => {
-      const _answerTags = _answer.tags;
-      if (Array.isArray(_answerTags) && _answerTags.length) {
-        _answerTags.forEach((tag) => {
-          const _previousTag = _tags.findIndex((t) => t._id === tag._id);
-          if (_previousTag !== -1) {
-            _tags[_previousTag].count += 1;
-          } else {
-            tag.count = 1;
-            _tags.push(tag);
-          }
-        });
-      }
-      return _tags;
-    }, []).sort((a, b) => b.count - a.count);
+    const _tags: Array<Tag> = [];
+    if (answers.length > 0) {
+      answers.forEach((answer) => {
+        const _answerTags = answer.tags;
+        if (Array.isArray(_answerTags) && _answerTags.length) {
+          _answerTags.forEach((tag) => {
+            const _previousTag = _tags.findIndex((t) => t._id === tag._id);
+            if (_previousTag !== -1) {
+              _tags[_previousTag].count += 1;
+            } else {
+              tag.count = 1;
+              _tags.push(tag);
+            }
+          });
+        }
+      })
+    }
+    return _tags;
   }
 
 }

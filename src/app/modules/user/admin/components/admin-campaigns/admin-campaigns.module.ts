@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminCampaignComponent } from './admin-campaign/admin-campaign.component';
 import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
-import { AdminCampaignQuizComponent } from './admin-campaign-quiz/admin-campaign-quiz.component';
 import { AdminCampaignHistoryComponent } from './admin-campaign-history/admin-campaign-history.component';
 import { AdminCampaignBatchComponent } from './admin-campaign-batch/admin-campaign-batch.component';
 import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign-pros.component';
@@ -62,7 +61,6 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
   declarations: [
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
-    AdminCampaignQuizComponent,
     AdminCampaignHistoryComponent,
     AdminCampaignBatchComponent,
     AdminCampaignProsComponent,
@@ -75,7 +73,6 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
   exports: [
     AdminCampaignComponent,
     AdminCampaignAnswersComponent,
-    AdminCampaignQuizComponent,
     AdminCampaignHistoryComponent,
     AdminCampaignBatchComponent,
     AdminCampaignProsComponent,

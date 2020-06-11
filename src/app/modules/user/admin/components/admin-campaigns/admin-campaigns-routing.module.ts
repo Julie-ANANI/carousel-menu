@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import { RequestResolver } from '../../../../../resolvers/request.resolver';
 
-import { AdminCampaignQuizComponent } from './admin-campaign-quiz/admin-campaign-quiz.component';
 import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
@@ -14,7 +13,6 @@ import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-ca
 export const campaignRoutes: Routes = [
   { path: '', redirectTo: 'answers', pathMatch: 'full' },
   { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full' },
-  { path: 'quiz', component: AdminCampaignQuizComponent, pathMatch: 'full' },
   { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full' },
   { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full' },
   { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full' },

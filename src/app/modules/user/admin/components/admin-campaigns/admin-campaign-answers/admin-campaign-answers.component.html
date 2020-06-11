@@ -92,36 +92,53 @@
     <!-- answers -->
     <div *ngIf="totalAnswers > 0" class="p-top-25 p-bottom-30 animate-fade is-4">
 
-      <!-- buttons -->
-      <section *ngIf="authorizedActions(2)" class="text-right">
+      <!-- quiz links / buttons -->
+      <section *ngIf="authorizedActions(2) || quizLinks.length" class="flex-between">
 
-        <!-- import -->
-        <label class="button is-primary is-sm is-outlined m-right-25 m-bottom-15">
-          <input
-            #fileupload
-            (change)="onImport(fileupload.files[0])"
-            [hidden]="true"
-            type="file"/>
-          <ng-container *ngIf="!isImportingAnswers; else importFile">
-            Import
-          </ng-container>
-          <ng-template #importFile>
-            importing...
-          </ng-template>
-        </label>
-        <!-- /import -->
+        <!-- quiz links -->
+        <div *ngIf="quizLinks.length" class="m-bottom-15 m-right-15">
+          <p class="text-md">Visit these below links to see the questionnaire:</p>
+          <ul class="m-no-bottom">
+            <li *ngFor="let url of quizLinks" class="text-sm m-top-1 text-hover-underline">
+              <a [href]="url" target="_blank" class="text-primary-dark">{{ url }}</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /quiz links -->
 
-        <!-- export -->
-        <button
-          (click)="onExport()"
-          class="button is-primary is-sm m-bottom-15"
-          id="btn-export-answers">
-          Export
-        </button>
-        <!-- /export -->
+        <!-- buttons -->
+        <div *ngIf="authorizedActions(2)">
+
+          <!-- import -->
+          <label class="button is-primary is-sm is-outlined m-right-25 m-bottom-15">
+            <input
+              #fileupload
+              (change)="onImport(fileupload.files[0])"
+              [hidden]="true"
+              type="file"/>
+            <ng-container *ngIf="!isImportingAnswers; else importFile">
+              Import
+            </ng-container>
+            <ng-template #importFile>
+              importing...
+            </ng-template>
+          </label>
+          <!-- /import -->
+
+          <!-- export -->
+          <button
+            (click)="onExport()"
+            class="button is-primary is-sm m-bottom-15"
+            id="btn-export-answers">
+            Export
+          </button>
+          <!-- /export -->
+
+        </div>
+        <!-- /buttons -->
 
       </section>
-      <!-- /buttons -->
+      <!-- /quiz links / buttons -->
 
       <!-- table -->
       <section class="p-top-25">
