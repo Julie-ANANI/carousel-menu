@@ -1,84 +1,88 @@
-<div id="sidebar-market-report">
+<div id="sidebar-filter-answers">
 
-  <!-- selected contacts -->
-  <div *ngIf="templateType === 'follow-up'">
+  <!-- selected contacts type === 'FOLLOW_UP' -->
+  <div *ngIf="templateType === 'FOLLOW_UP'">
 
-    <!-- no contact selected -->
-    <h6 *ngIf="!filterNumber" [innerText]="'SIDEBAR_MARKET_REPORT.SELECT_CONTACTS_CRITERIA'" class="m-no-bottom text-bold" translate></h6>
-    <!-- /no contact selected -->
+    <!-- contacts -->
+    <div [ngClass]="{'text-center': filterNumber}">
 
-    <!-- button select contacts -->
-    <a *ngIf="filterNumber" (click)="onClickSelect()" class="button is-primary" style="white-space: normal; height: unset">
-      <i class="fas fa-share"></i>
-      {{ 'SIDEBAR_MARKET_REPORT.SELECT' | translate }} {{ filterNumber }} {{ 'SIDEBAR_MARKET_REPORT.CONTACTS' | translate }}
-    </a>
+      <!-- no contact selected -->
+      <h6 *ngIf="!filterNumber" class="m-bottom-30 text-bold">
+        Select contacts according to your criteria
+      </h6>
+      <!-- /no contact selected -->
 
-    <!-- button select contacts -->
-
-  </div>
-  <!-- /selected contacts -->
-
-
-  <!-- divider -->
-  <div class="divider"></div>
-  <!-- /divider -->
-
-
-  <!-- different actions for admin -->
-  <ng-container *ngIf="templateType === 'market-report' && isAdmin && isAdminSide">
-    <div class="dropdown">
-
-      <a class="button dropdown-toggle is-outlined is-primary" tabindex="0">
-        Actions <i class="fas fa-caret-down"> </i>
-      </a>
-
-      <div class="menu">
-
-        <div
-          (click)="modalPreviewInnovation = true"
-          *ngIf="!innovation.previewMode && innovation.status !== 'DONE'"
-          class="menu-item">
-          <span>{{ 'MARKET_REPORT.SIDEBAR.MAKE_VISIBLE' | translate }}</span>
-        </div>
-
-        <div
-          (click)="modalPreviewInnovation = true"
-          *ngIf="innovation.previewMode && innovation.status !== 'DONE'"
-          class="menu-item">
-          <span>{{ 'MARKET_REPORT.SIDEBAR.MAKE_INVISIBLE' | translate }}</span>
-        </div>
-
-        <div class="menu-item" (click)="modalEndInnovation = true">
-          <span>{{ 'MARKET_REPORT.SIDEBAR.END_PROJECT' | translate }}</span>
-        </div>
-
-      </div>
+      <!-- button selected contacts -->
+      <button
+        (click)="onSelectedContacts($event)"
+        *ngIf="filterNumber"
+        class="button is-primary"
+        id="btn-selected-contacts"
+        type="button">
+        <i class="fas fa-share icon-left"></i> Selected {{ filterNumber }} contacts
+      </button>
+      <!-- button selected contacts -->
 
     </div>
+    <!-- /contacts -->
 
     <div class="divider"></div>
 
-  </ng-container>
-  <!-- /different actions for admin -->
+  </div>
+  <!-- /selected contacts type === 'FOLLOW_UP -->
 
-  <!-- views wrapper -->
-  <div class="view-wrapper">
+  <!-- actions button for admin type === 'MARKET_REPORT' -->
+  <div *ngIf="templateType === 'MARKET_REPORT' && isAdmin && isAdminSide">
 
-    <!-- title -->
-    <h6 [innerText]="'SIDEBAR_MARKET_REPORT.MY_VIEWS'" translate></h6>
-    <!-- /title -->
+    <!-- button -->
+    <div class="dropdown m-right-auto">
 
+      <a class="button dropdown-toggle is-outlined is-sm is-secondary" tabindex="0">
+        Actions <i class="fas fa-caret-down"></i>
+      </a>
+
+      <div class="menu">
+        <div
+          (click)="openModalPreview($event)"
+          *ngIf="!innovation.previewMode && innovation.status !== 'DONE'"
+          class="menu-item">
+          Make project visible to client
+        </div>
+        <div
+          (click)="openModalPreview($event)"
+          *ngIf="innovation.previewMode && innovation.status !== 'DONE'"
+          class="menu-item">
+          Make project invisible to client
+        </div>
+        <div (click)="openModalEnd($event)" class="menu-item">
+          End project
+        </div>
+      </div>
+
+    </div>
+    <!-- button -->
+
+    <div class="divider"></div>
+
+  </div>
+  <!-- /actions button for admin type === 'MARKET_REPORT' -->
+
+  <!-- views type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
+  <div>
+
+    <h6>My views</h6>
 
     <!-- show views -->
     <div *ngFor="let filter of sharedFiltersList" class="d-flex align-center m-top-1 m-bottom-1">
 
-      <div (click)="deleteCustomFilter($event, filter.name)"
-           [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
-           class="c-hand m-right-1 tooltip is-right">
+      <div
+        (click)="deleteCustomFilter($event, filter.name)"
+        [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
+        class="c-hand m-right-1 tooltip is-right">
         <img
           [ngStyle]="{ 'height': '13px', 'width': '12px'}"
           alt=" "
-          src="https://res.cloudinary.com/umi/image/upload/v1573650537/pictos/delete/picto-delete-danger.svg">
+          src="https://res.cloudinary.com/umi/image/upload/pictos/delete/picto-delete-danger.svg">
       </div>
 
       <a
@@ -91,7 +95,6 @@
 
     </div>
     <!-- /show views -->
-
 
     <!-- form to register view -->
     <form (ngSubmit)="registerNewFilter()">
@@ -107,14 +110,13 @@
         </label>
       </div>
 
-      <div class="text-center p-top-1">
+      <div class="text-center p-top-10">
         <button
           [disabled]="!filterName"
-          [ngStyle]="{ 'border-width': '2px', 'opacity': '1' }"
-          [textContent]="'COMMON.BUTTON.SAVE'"
           class="button is-draft is-outlined is-sm"
-          translate
+          id="btn-create-view"
           type="submit">
+          {{ 'COMMON.BUTTON.SAVE' | translate }}
         </button>
       </div>
 
@@ -122,329 +124,404 @@
     <!-- /form to register view -->
 
   </div>
-  <!-- /views wrapper -->
+  <!-- /views type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
 
-
-  <!-- divider -->
   <div class="divider"></div>
-  <!-- /divider -->
 
-
-  <!-- view activated -->
+  <!-- view activated type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
   <div *ngIf="activatedCustomFilters.length > 0">
 
-    <h6 [innerText]="'SIDEBAR_MARKET_REPORT.ACTIVATED_VIEW'" class="m-bottom-2" translate></h6>
+    <h6 class="m-bottom-2">{{ 'SIDEBAR_MARKET_REPORT.ACTIVATED_VIEW' | translate }}</h6>
 
     <div *ngFor="let filter of activatedCustomFilters" class="m-top-1">
-      <span (click)="unloadFilter($event, filter)"
-            class="d-flex align-center text-background text-medium m-bottom-1 text-xs c-hand">
+      <div
+        (click)="unloadFilter($event, filter)"
+        class="d-flex align-center text-background text-medium m-bottom-1 text-xs c-hand">
         <i class="icon text-primary m-right-2 icon-cross"></i>
         {{ filter }}
-      </span>
+      </div>
     </div>
 
     <div class="divider"></div>
 
   </div>
-  <!-- /view activated -->
+  <!-- /view activated type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
 
-  <!-- select/unselect all -->
-  <div *ngIf="templateType === 'follow-up'">
-    <label class="form-checkbox p-no-right">
-      {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+  <!-- select/unselect all type === 'FOLLOW_UP' -->
+  <div *ngIf="templateType === 'FOLLOW_UP'" class="m-bottom-20">
+    <label class="form-checkbox">
       <input
         type="checkbox"
+        id="select-all"
         (change)="resetFilters(!!filtersCount)"
         [checked]="!filtersCount">
-      <i class="form-icon"></i>
+      <i class="form-icon"></i> Select all
     </label>
   </div>
-  <!-- /select/unselect all -->
+  <!-- /select/unselect all type === 'FOLLOW_UP' -->
 
-
-  <!-- key-learning -->
-  <div *ngIf="templateType === 'market-report' && innovation.marketReport?.keyLearning?.conclusion || isAdminSide"
-       class="filter-rest-wrapper"
-       [ngStyle]="{ 'padding-bottom': '1rem' }">
-    <a href="#key-learnings" pageScroll class="text-primary-dark" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate>
+  <!-- key-learning type === 'MARKET_REPORT' -->
+  <div *ngIf="templateType === 'MARKET_REPORT' && (isKeyLearning || isAdminSide)" class="scroll-wrapper">
+    <a [href]="'#key-learnings'" pageScroll>
+      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.KEY_LEARNING' | translate }}
     </a>
   </div>
-  <!-- /key-learning -->
+  <!-- /key-learning type === 'MARKET_REPORT'  -->
 
-
-  <!-- origin -->
-  <div *ngIf="templateType === 'market-report'" class="filter-rest-wrapper" [ngStyle]="{ 'padding-bottom': '1rem' }">
-    <a href="#origin-responses" pageScroll class="text-primary-dark" [innerText]="'MARKET_REPORT.ORIGIN'" translate>
+  <!-- origin type === 'MARKET_REPORT'  -->
+  <div *ngIf="templateType === 'MARKET_REPORT'" class="scroll-wrapper">
+    <a [href]="'#origin-responses'" pageScroll>
+      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.ORIGIN' | translate }}
     </a>
   </div>
-  <!-- /origin -->
+  <!-- /origin type === 'MARKET_REPORT'  -->
 
+  <!-- map filters type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
+  <div *ngIf="continentsList.length" class="scroll-wrapper">
 
-  <!-- map filters -->
-  <div class="filter-rest-wrapper">
-
-    <div *ngIf="continentsList.length > 0" class="m-bottom-15">
-      <span class="d-flex align-center" (click)="showSection.map = !showSection.map">
-        <a *ngIf="templateType === 'market-report'" href="#map" pageScroll
-           class="flex-between m-no-bottom">
-          <i *ngIf="showSection.map" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-          <i *ngIf="!showSection.map" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-          <span class="text-primary-dark">{{ 'MARKET_REPORT.MAP.TITLE' | translate }}</span>
-        </a>
-        <span *ngIf="templateType === 'follow-up'">
-          <i *ngIf="showSection.map" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-          <i *ngIf="!showSection.map" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-          <span class="text-primary-dark">{{ 'MARKET_REPORT.MAP.TITLE' | translate }}</span>
-        </span>
+    <!-- type 'MARKET_REPORT' -->
+    <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#map'" pageScroll>
+      <span (click)="showSection.map = !showSection.map">
+        <i *ngIf="showSection.map" class="icon icon-arrow-down"></i>
+        <i *ngIf="!showSection.map" class="icon icon-arrow-up"></i>
       </span>
-    </div>
+      {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
+    </a>
+    <!-- /type 'MARKET_REPORT' -->
 
-    <div [hidden]="!showSection.map">
-      <label class="form-checkbox p-no-right">
-        {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+    <!-- type 'FOLLOW_UP' -->
+    <a *ngIf="templateType === 'FOLLOW_UP'" pageScroll>
+      <span (click)="showSection.map = !showSection.map">
+        <i *ngIf="showSection.map" class="icon icon-arrow-down"></i>
+        <i *ngIf="!showSection.map" class="icon icon-arrow-up"></i>
+      </span>
+      Map
+    </a>
+    <!-- /type 'FOLLOW_UP' -->
+
+    <div [hidden]="!showSection.map" class="filter-wrapper animate-fade is-3">
+
+      <label class="form-checkbox">
         <input
           type="checkbox"
-          (change)="filterEverything($event.target.checked, continentsList, 'CONTINENT')"
+          id="select-all-continent"
+          (change)="filterEverything($event.target['checked'], continentsList, 'CONTINENT')"
           [checked]="!(filters['worldmap'])">
-        <i class="form-icon"></i>
+        <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
       </label>
+
       <div *ngFor="let continent of continentsList" class="form-group">
         <label class="form-checkbox">
           <input
             type="checkbox"
             [name]="continent"
             (change)="checkCountry($event)"
+            [id]="'continent-'+continent"
             [checked]="filteredContinents ? filteredContinents[continent] : true">
-          <i class="form-icon"></i><span>{{ ('CONTINENTS.' + continent) | translate }}</span>
+          <i class="form-icon"></i> {{ ('CONTINENTS.' + continent) | translate }}
         </label>
       </div>
     </div>
+
   </div>
-  <!-- /map filters -->
+  <!-- /map filters type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
 
+  <!-- professional filters type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
+  <div *ngIf="professionalsTags.length" class="scroll-wrapper animate-fade is-3">
 
-  <!-- professional filters -->
-  <div class="filter-rest-wrapper filter-professional">
-    <div *ngIf="tagsList.length > 0" class="m-bottom-15" (click)="showSection.professionals = !showSection.professionals">
-      <a *ngIf="templateType === 'market-report'" href="#professionals" pageScroll
-         class="flex-between m-no-bottom">
-        <i *ngIf="showSection.professionals" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-        <i *ngIf="!showSection.professionals" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-        <span class="text-primary-dark">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</span>
-      </a>
-      <span *ngIf="templateType === 'follow-up'">
-        <i *ngIf="showSection.professionals" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-        <i *ngIf="!showSection.professionals" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-        <span class="text-primary-dark">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</span>
+    <!-- type 'MARKET_REPORT' -->
+    <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#professionals'" pageScroll>
+      <span (click)="showSection.professionals = !showSection.professionals">
+        <i *ngIf="showSection.professionals" class="icon icon-arrow-down"></i>
+        <i *ngIf="!showSection.professionals" class="icon icon-arrow-up"></i>
       </span>
-    </div>
+      {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+    </a>
+    <!-- /type 'MARKET_REPORT' -->
 
+    <!-- type 'FOLLOW_UP' -->
+    <a *ngIf="templateType === 'FOLLOW_UP'" pageScroll>
+      <span (click)="showSection.professionals = !showSection.professionals">
+        <i *ngIf="showSection.professionals" class="icon icon-arrow-down"></i>
+        <i *ngIf="!showSection.professionals" class="icon icon-arrow-up"></i>
+      </span>
+      Professionals
+    </a>
+    <!-- /type 'FOLLOW_UP' -->
 
-    <div  [hidden]="!showSection.professionals">
-      <label class="form-checkbox p-no-right">
-        {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+    <div [hidden]="!showSection.professionals" class="filter-wrapper animate-fade is-3">
+
+      <label class="form-checkbox">
         <input
           type="checkbox"
-          (change)="filterEverything($event.target.checked, tagsList, 'TAG')"
+          id="select-all-professionals"
+          (change)="filterEverything($event.target['checked'], professionalsTags, 'TAG')"
           [checked]="!filters['tags']">
-        <i class="form-icon"></i>
+        <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
       </label>
-      <div *ngFor="let tag of (seeMore.professionals ? tagsList : (tagsList | slice:0:6))" class="form-group">
+
+      <div
+        *ngFor="let tag of (seeMore.professionals ? professionalsTags : (professionalsTags | slice:0:6))"
+        class="form-group">
         <label class="form-checkbox">
           <input
-            type="checkbox"
-            [name]="tag.label | multiling:userLang"
             (change)="checkTag($event, tag._id)"
-            [checked]="selectedTags[tag._id]">
-          <i class="form-icon"></i><span>{{ tag.label | multiling:userLang | FormatText }}</span>
+            [checked]="selectedTags[tag._id]"
+            [id]="tag.label | multiling:userLang"
+            [name]="tag.label | multiling:userLang"
+            type="checkbox">
+          <i class="form-icon"></i> {{ tag.label | multiling:userLang | FormatText }}
         </label>
       </div>
 
       <!-- see more -->
-      <div *ngIf="tagsList && tagsList.length > 6 && !seeMore.professionals">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
-              (click)="seeMore.professionals = true"></span>
+      <div *ngIf="professionalsTags.length > 6 && !seeMore.professionals">
+        <span (click)="seeMore.professionals = true" class="text-link">
+          {{ 'MARKET_REPORT.SEE_MORE' | translate }}
+        </span>
       </div>
+      <!-- /see more -->
 
       <!-- see less -->
-      <div *ngIf="tagsList && tagsList.length > 6 && seeMore.professionals">
-        <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
-              (click)="seeMore.professionals = false"></span>
+      <div *ngIf="professionalsTags.length > 6 && seeMore.professionals">
+        <span class="text-link" (click)="seeMore.professionals = false">
+          {{ 'MARKET_REPORT.SEE_LESS' | translate }}
+        </span>
       </div>
+      <!-- /see less -->
+
     </div>
 
-    <div *ngIf="filters['professionals']" class="professional-hide-wrapper">
-      <div *ngFor="let professional of filters['professionals'].value | keyvalue"
-           (click)="deleteProfessionalFilter($event, professional.key)"
-           class="tooltip c-hand" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_UNHIDE_PROFESSIONAL' | translate">
-        <i class="fas fa-eye-slash text-alert" aria-hidden="true"></i>
-        <span>{{ professional.value.professional?.firstName }} {{ professional.value.professional?.lastName }}</span>
-      </div>
+    <div *ngIf="filters['professionals']" class="m-top-10">
+      <ng-container *ngFor="let professional of filters['professionals'].value | keyvalue">
+        <div
+          *ngIf="professional.value['professional']"
+          (click)="deleteProfessionalFilter($event, professional.key)"
+          class="tooltip prof-hidden-wrapper"
+          [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_UNHIDE_PROFESSIONAL' | translate">
+          <i class="fas fa-eye-slash text-alert"></i>
+          <ng-container *ngIf="professional.value['professional']['firstName']">
+            {{ professional.value['professional']['firstName'] }}
+          </ng-container>
+          <ng-container *ngIf="professional.value['professional']['lastName']">
+            {{ professional.value['professional']['lastName'] }}
+          </ng-container>
+        </div>
+      </ng-container>
     </div>
 
   </div>
-  <!-- /professional filters -->
+  <!-- /professional filters type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
 
+  <!-- questions filters type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
+  <div *ngFor="let question of displayedQuestions" class="scroll-wrapper animate-fade is-3">
 
-  <!-- questions filters -->
-  <div *ngFor="let question of displayedQuestions" class="filter-rest-wrapper filter-question">
     <!-- textarea -->
     <ng-container *ngIf="question.controlType === 'textarea'">
-      <div class="m-bottom-15">
-          <span class="d-flex align-center" (click)="showSection[question.identifier] = !showSection[question.identifier]">
-            <a *ngIf="templateType === 'market-report'" [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
-              <i *ngIf="showSection[question.identifier] && answersTagsLists[question.identifier]?.length > 0" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-              <i *ngIf="!showSection[question.identifier] && answersTagsLists[question.identifier]?.length > 0" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-              <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
-            </a>
-            <span *ngIf="templateType === 'follow-up'">
-              <i *ngIf="showSection[question.identifier]" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-              <i *ngIf="!showSection[question.identifier]" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-              <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
-            </span>
-          </span>
-      </div>
-      <div *ngIf="answersTagsLists[question.identifier]?.length > 0" [hidden]="!showSection[question.identifier]">
-        <label *ngIf="answersTagsLists[question.identifier]?.length > 0" class="form-checkbox p-no-right">
-          {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+
+      <!-- type 'MARKET_REPORT' -->
+      <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#'+question.identifier" pageScroll>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <ng-container *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)">
+            <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+            <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+          </ng-container>
+        </span>
+        {{ question.title | multiling:userLang | FormatText }}
+      </a>
+      <!-- /type 'MARKET_REPORT' -->
+
+      <!-- type 'FOLLOW_UP' -->
+      <a *ngIf="templateType === 'FOLLOW_UP'" pageScroll>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <ng-container *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)">
+            <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+            <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+          </ng-container>
+        </span>
+        {{ question.title | multiling:userLang | FormatText }}
+      </a>
+      <!-- /type 'FOLLOW_UP' -->
+
+      <div
+        *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)"
+        [hidden]="!showSection[question.identifier]" class="filter-wrapper animate-fade is-3">
+
+        <label class="form-checkbox">
           <input
             type="checkbox"
-            (change)="filterEverything($event.target.checked, [question], question.controlType)"
+            [id]="'select-all'+(question.title | multiling:userLang)"
+            (change)="filterEverything($event.target['checked'], [question], question.controlType)"
             [checked]="!filters[question.identifier]">
-          <i class="form-icon"></i>
+          <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
         </label>
+
         <div
-          *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier] : (answersTagsLists[question.identifier] | slice:0:4))"
+          *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier]
+          : (answersTagsLists[question.identifier] | slice:0:4))"
           class="form-group">
           <label class="form-checkbox">
             <input
-              type="checkbox"
-              [name]="answerTag._id"
               (change)="checkAnswerTag($event, question.identifier)"
-              [checked]="selectedAnswersTags[question.identifier][answerTag._id]">
-            <i class="form-icon"></i><span>{{ answerTag.label | multiling:userLang | FormatText }}</span>
+              [checked]="selectedAnswersTags[question.identifier][answerTag._id]"
+              [id]="answerTag._id"
+              [name]="answerTag._id"
+              type="checkbox">
+            <i class="form-icon"></i> {{ answerTag.label | multiling:userLang | FormatText }}
           </label>
         </div>
-        <!-- see more -->
-        <div
-          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && !seeMore[question.identifier]">
-            <span class="text-link" [innerText]="'MARKET_REPORT.SEE_MORE'" translate
-                  (click)="seeMore[question.identifier] = true"></span>
-        </div>
-        <!-- see less -->
-        <div
-          *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 6 && seeMore[question.identifier]">
-            <span class="text-link" [innerText]="'MARKET_REPORT.SEE_LESS'" translate
-                  (click)="seeMore[question.identifier] = false"></span>
-        </div>
-      </div>
-    </ng-container>
 
-    <!-- checkbox/radio -->
+        <!-- see more -->
+        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 4
+        && !seeMore[question.identifier]">
+          <span (click)="seeMore[question.identifier] = true" class="text-link">
+            {{ 'MARKET_REPORT.SEE_MORE' | translate }}
+          </span>
+        </div>
+        <!-- /see more -->
+
+        <!-- see less -->
+        <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 4
+        && seeMore[question.identifier]">
+          <span class="text-link" (click)="seeMore[question.identifier] = false">
+            {{ 'MARKET_REPORT.SEE_LESS' | translate }}
+          </span>
+        </div>
+        <!-- /see less -->
+
+      </div>
+
+    </ng-container>
+    <!-- /textarea -->
+
+    <!-- checkbox || radio -->
     <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
 
-      <div *ngIf="question.options.length > 0" class="m-bottom-15">
-          <span class="d-flex align-center" (click)="showSection[question.identifier] = !showSection[question.identifier]">
-            <a *ngIf="templateType === 'market-report'" [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
-              <i *ngIf="showSection[question.identifier]" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-              <i *ngIf="!showSection[question.identifier]" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-              <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
-            </a>
-            <span *ngIf="templateType === 'follow-up'">
-              <i *ngIf="showSection[question.identifier]" class="fas fa-angle-up text-notify" aria-hidden="true"></i>
-              <i *ngIf="!showSection[question.identifier]" class="fas fa-angle-down text-notify" aria-hidden="true"></i>
-              <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
-            </span>
-          </span>
-      </div>
+      <!-- type 'MARKET_REPORT' -->
+      <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#'+question.identifier" pageScroll>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+          <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+        </span>
+        {{ question.title | multiling:userLang | FormatText }}
+      </a>
+      <!-- /type 'MARKET_REPORT' -->
 
-      <div [hidden]="!showSection[question.identifier]">
-        <label class="form-checkbox p-no-right">
-          {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+      <!-- type 'FOLLOW_UP' -->
+      <a *ngIf="templateType === 'FOLLOW_UP'" pageScroll>
+        <span (click)="showSection[question.identifier] = !showSection[question.identifier]">
+          <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
+          <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
+        </span>
+        {{ question.title | multiling:userLang | FormatText }}
+      </a>
+      <!-- /type 'FOLLOW_UP' -->
+
+      <div [hidden]="!showSection[question.identifier]" class="filter-wrapper animate-fade is-3">
+
+        <label class="form-checkbox">
           <input
             type="checkbox"
-            (change)="filterEverything($event.target.checked, [question], question.controlType)"
+            [id]="'select-all'+(question.title | multiling:userLang)"
+            (change)="filterEverything($event.target['checked'], [question], question.controlType)"
             [checked]="!filters[question.identifier]">
-          <i class="form-icon"></i>
+          <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
         </label>
-        <div *ngFor="let option of question.options" class="form-group">
+
+        <div *ngFor="let option of (seeMore[question.identifier] ? question.options
+        : (question.options | slice:0:4))" class="form-group">
           <label class="form-checkbox">
             <input
-              type="checkbox"
-              [name]="option.identifier"
               (change)="checkOption($event, question)"
-              [checked]="filters[question.identifier] ? filters[question.identifier].value[option.identifier] : true">
-            <i class="form-icon"></i><span>{{ option.label | multiling:userLang | FormatText }}</span>
+              [checked]="filters[question.identifier] ? filters[question.identifier].value[option.identifier] : true"
+              [id]="option.identifier"
+              [name]="option.identifier"
+              type="checkbox">
+            <i class="form-icon"></i> {{ option.label | multiling:userLang | FormatText }}
           </label>
         </div>
-      </div>
-    </ng-container>
 
-    <!-- other types -->
-    <ng-container *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox' && question.controlType !== 'radio'">
-      <div class="m-bottom-15">
-          <span class="d-flex align-center">
-            <a [href]="'#' + question.identifier" pageScroll class="flex-between m-no-bottom c-hand">
-              <span class="text-primary-dark" [innerText]= "question.title | multiling:userLang | FormatText "></span>
-            </a>
+        <!-- see more -->
+        <div *ngIf="question.options && question.options.length > 4 && !seeMore[question.identifier]">
+          <span (click)="seeMore[question.identifier] = true" class="text-link">
+            {{ 'MARKET_REPORT.SEE_MORE' | translate }}
           </span>
+        </div>
+        <!-- /see more -->
+
+        <!-- see less -->
+        <div *ngIf="question.options && question.options.length > 4 && seeMore[question.identifier]">
+          <span class="text-link" (click)="seeMore[question.identifier] = false">
+            {{ 'MARKET_REPORT.SEE_LESS' | translate }}
+          </span>
+        </div>
+        <!-- /see less -->
+
       </div>
+
     </ng-container>
+    <!-- /checkbox || radio -->
+
+    <!-- rest types -->
+    <div *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox'
+    && question.controlType !== 'radio'" class="scroll-wrapper">
+      <a [href]="'#' + question.identifier" pageScroll>
+        <i class="icon icon-arrow-right"></i> {{ question.title | multiling:userLang | FormatText }}
+      </a>
+    </div>
+    <!-- /rest types -->
 
   </div>
   <!-- /questions filters -->
 
-
   <!-- conclusion filters -->
-  <div *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || isAdminSide"
-       class="filter-rest-wrapper">
-    <a href="#conclusion" pageScroll class="text-primary-dark">
-      <div class="flex-between">
-        <span [innerText]="'MARKET_REPORT.CONCLUSION'" translate></span>
-      </div>
+  <div *ngIf="isFinalConclusion || isAdminSide" class="scroll-wrapper">
+    <a [href]="'#conclusion'" pageScroll>
+      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.CONCLUSION' | translate }}
     </a>
   </div>
   <!-- /conclusion filters -->
 
-
 </div>
 
-
-<!-- Modal to ask the operator to confirm for the preview of the innovation at the side of the client -->
-<app-utility-modal [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'" [(showModal)]="modalPreviewInnovation">
+<!-- Modal to ask the operator to confirm for the preview of the synthesis at the side of the client -->
+<app-utility-modal *ngIf="isAdminSide" [title]="'Confirmation'" [(showModal)]="isModalPreview">
 
   <section class="modal-body">
-    <ng-container *ngIf="!innovation.previewMode">
-      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_VISIBLE' | translate }}</span>
-    </ng-container>
-
-    <ng-container *ngIf="innovation.previewMode">
-      <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_MAKE_INVISIBLE' | translate }}</span>
-    </ng-container>
+    <div>
+      <ng-container *ngIf="!innovation.previewMode; else invisible">
+        Do you really want to make this partial synthesis visible to the client?
+      </ng-container>
+      <ng-template #invisible>
+        Do you really want to make this partial synthesis invisible to the client?
+      </ng-template>
+    </div>
   </section>
 
   <!-- footer -->
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="button is-primary" (click)="onClickPreviewConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
+    <button class="button is-primary" (click)="onConfirmVisibility($event)">Confirm</button>
   </footer>
   <!-- /footer -->
 
 </app-utility-modal>
-<!-- /Modal to ask the admin to confirm for the preview of the innovation at the side of the client -->
-
+<!-- /Modal to ask the admin to confirm for the preview of the synthesis at the side of the client -->
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-utility-modal [(showModal)]="modalEndInnovation" [title]="'MARKET_REPORT.SIDEBAR.CONFIRMATION'">
+<app-utility-modal *ngIf="isAdminSide && isAdmin" [(showModal)]="isModalEnd" [title]="'Confirmation'">
 
   <section class="modal-body">
-    <span>{{ 'MARKET_REPORT.SIDEBAR.REALLY_END_PROJECT' | translate }}</span>
+    <div>
+      Do you really want to end this project? Please keep in mind that after this you won't be able to make
+      any further changes.
+    </div>
   </section>
 
   <!-- footer -->
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="button is-primary" (click)="onClickEndInnovationConfirm($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
+    <button class="button is-primary" (click)="onClickEndInnovationConfirm($event)">Confirm</button>
   </footer>
   <!-- /footer -->
 

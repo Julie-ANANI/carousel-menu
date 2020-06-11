@@ -19,43 +19,45 @@
       </div>
 
       <!-- Objectifs -->
-      <div>
+      <!--<div>
         <h5 class="title is-5" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.OBJECTIVES'"></h5>
         <blockquote>
           <p [innerText]="missionForm.get('goal').value"></p>
         </blockquote>
-      </div>
+      </div>-->
 
       <!-- milestones -->
       <div formArrayName="milestoneDates">
-        <h5 class="title is-5" translate [innerText]="'PROJECT_MODULE.SETUP.OBJECTIVES.ROADMAP'"></h5>
+        <h5 class="title is-5" translate [innerText]="'PROJECT_MODULE.SETUP.ROADMAP'"></h5>
         <ng-container *ngFor="let milestone of milestoneDates.controls; index as i">
-          <div [formGroupName]="i" class="columns">
-            <div class="column col-5">
-              <div class="form-group">
-                <label class="form-label" for="mission-milestone-{{i}}-name">{{ 'COMMON.LABEL.NAME' | translate }}</label>
-                <input
-                  class="form-input"
-                  formControlName="name"
-                  id="mission-milestone-{{i}}-name"
-                  type="text"
-                  placeholder="Enter milestone name">
+          <div>
+            <div [formGroupName]="i" class="columns">
+              <div class="column col-5">
+                <div class="form-group">
+                  <label class="form-label" for="mission-milestone-{{i}}-name">{{ 'COMMON.LABEL.NAME' | translate }}</label>
+                  <input
+                    class="form-input"
+                    formControlName="name"
+                    id="mission-milestone-{{i}}-name"
+                    type="text"
+                    placeholder="Enter milestone name">
+                </div>
               </div>
-            </div>
-            <div class="column col-5">
-              <div class="form-group">
-                <label class="form-label" for="mission-milestone-{{i}}-date">{{ 'COMMON.LABEL.DATE' | translate }}</label>
-                <input
-                  class="form-input"
-                  formControlName="dueDate"
-                  id="mission-milestone-{{i}}-date"
-                  type="date">
+              <div class="column col-5">
+                <div class="form-group">
+                  <label class="form-label" for="mission-milestone-{{i}}-date">{{ 'COMMON.LABEL.DATE' | translate }}</label>
+                  <input
+                    class="form-input"
+                    formControlName="dueDate"
+                    id="mission-milestone-{{i}}-date"
+                    type="date">
+                </div>
               </div>
-            </div>
-            <div class="column col-2">
-              <button (click)="removeMilestone($event, i)" class="button is-action is-danger is-circled is-sm">
-                <i class="fas fa-trash-alt"></i>
-              </button>
+              <div class="column col-2">
+                <button (click)="removeMilestone($event, i)" class="button is-action is-danger is-circled is-sm">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
             </div>
           </div>
         </ng-container>

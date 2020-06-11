@@ -5,7 +5,7 @@ import { SETUP } from '../components/setup/i18n/fr';
 
 export const PROJECT_MODULE = {
 
-  'SETUP_TAB': 'Description du projet',
+  'SETUP_TAB': 'Préparation du Test Marché',
   'EXPLORATION_TAB': 'Exploration marché',
   'SYNTHESIS_TAB': 'Synthèse',
   'DOCUMENTS_TAB': 'Documents',

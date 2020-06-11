@@ -2,35 +2,6 @@
 
 #admin-campaign-batch-component {
 
-  .stat {
-
-    .stat-container:first-child {
-      background-color: $bg-secondary-color;
-    }
-
-    .stat-container:nth-child(2) {
-      background-color: #2fa4d4;
-    }
-
-    .stat-container:last-child {
-      background-color: #5faece;
-    }
-
-    .stat-container {
-      border-right: none;
-    }
-
-    .stat-heading, .stat-value {
-      color: $text-white-color;
-    }
-
-    .stat-sub-heading {
-      opacity: 0.7;
-      color: $text-white-color;
-    }
-
-  }
-
   .toggle {
     padding: 15px 0;
 

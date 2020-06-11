@@ -1,0 +1,44 @@
+<div id="cards">
+
+  <!-- cards -->
+  <section class="c-cards-wrapper d-flex text-center flex-wrap">
+    <div
+      *ngFor="let innovation of innovations | slice:startIndex:endIndex"
+      [ngClass]="{ 'c-effect': stopLoading }"
+      class="card is-responsive m-bottom-30">
+      <a
+        [href]="[getInnovationDetail('url', innovation)]"
+        [ngClass]="{ 'c-default': !stopLoading }"
+        class="text-primary-dark text-sm p-4"
+        style="height: 100%">
+
+        <div class="card-image" [ngClass]="stopLoading ? 'relative' : 'loading-content'">
+          <figure [ngClass]="{ 'img-hover-button': stopLoading }">
+            <img
+              [alt]="getInnovationDetail('title', innovation)"
+              [src]="getInnovationDetail('imageUrl', innovation)"
+              height="174"
+              style="height: 174px"
+              width="100%">
+            <span [ngClass]="{ 'd-hide': !stopLoading }" class="img-button">{{ 'DISCOVER.LEARN_MORE' | translate }}</span>
+          </figure>
+        </div>
+
+        <div [ngClass]="{ 'p-no-left p-no-right': !stopLoading }" class="card-header">
+          <h6 [ngClass]="{ 'loading-content': !stopLoading }" class="card-title m-no-bottom">
+            {{ getInnovationDetail('title', innovation) }}
+          </h6>
+        </div>
+
+      </a>
+    </div>
+  </section>
+  <!-- /cards -->
+
+  <!-- pagination -->
+  <section *ngIf="isPagination && total > 10 && stopLoading" class="p-top-25 p-bottom-25">
+    <app-pagination-2 [(pagination)]="pagination" [totalCount]="total"></app-pagination-2>
+  </section>
+  <!-- /pagination -->
+
+</div>

@@ -147,6 +147,19 @@
         </span>
       </div>
 
+      <!-- Phone number -->
+      <ng-container *ngIf="isEditUser">
+        <div class="form-group has-error">
+          <label class="form-label" for="user-form-phone">{{ 'COMMON.LABEL.PHONE' | translate }}</label>
+          <input
+            class="form-input"
+            formControlName="phone"
+            id="user-form-phone"
+            type="text"
+            placeholder="+33 4 12 34 56 78">
+        </div>
+      </ng-container>
+
       <!-- job -->
       <div class="form-group">
         <label class="form-label" for="user-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>

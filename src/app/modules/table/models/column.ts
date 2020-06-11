@@ -14,6 +14,14 @@ export interface Column {
   readonly _multiLabels?: MultiLabel[];
   readonly _width?: string;
   readonly _enableTooltip?: boolean;
+  /**
+   * This is the expected configuration when we want to search using a collection other than the one which is active
+   */
+  readonly _searchConfig?: {
+    _collection: string,
+    _searchKey: string
+  };
 }
 
-export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'MULTI-IMAGE-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL' | 'MULTILING' | 'TAG-LIST' | 'COUNTRY-NAME' | 'LENGTH' | 'DAYS-TO' | 'DROPDOWN';
+export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'MULTI-IMAGE-CHOICES' | 'DATE' | 'ARRAY'
+  | 'MULTI-LABEL' | 'MULTILING' | 'TAG-LIST' | 'COUNTRY-NAME' | 'LENGTH' | 'DAYS-TO' | 'DROPDOWN' | 'DATE_TIME';

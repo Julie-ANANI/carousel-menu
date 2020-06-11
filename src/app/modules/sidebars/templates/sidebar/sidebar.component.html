@@ -1,25 +1,24 @@
-<div [@animateSidebar]="state" [ngStyle]="{ 'width': size }" class="sidebar is-right">
-  <div #content class="sidebar-container">
+<div
+  [@animateSidebar]="template.animate_state"
+  [ngStyle]="{ 'width': template.size }"
+  class="sidebar is-right">
+  <div #content *ngIf="template.animate_state === 'active'" class="sidebar-container">
 
     <!-- header -->
     <header class="sidebar-header">
       <div class="column col-sm-12 col-11 col-mx-auto">
         <div class="flex-between">
-
-          <p class="sidebar-title">{{ title | translate }}</p>
-
+          <p class="sidebar-title">{{ template.title | translate }}</p>
           <button
             (click)="toggleState($event, content)"
             class="close has-hover-white"
             id="close"
             type="button">
           </button>
-
         </div>
       </div>
     </header>
     <!-- /header -->
-
 
     <!-- content -->
     <section class="sidebar-body p-bottom-30">

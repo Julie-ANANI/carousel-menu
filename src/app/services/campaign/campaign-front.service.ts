@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CampaignFrontService {
 
   /***
@@ -10,9 +10,9 @@ export class CampaignFrontService {
    * campaign component.
    * @param answers
    * @param requestFor
-   * @param searchKey
+   * @param searchKey string | number
    */
-  getAnswerCampaignStat(answers: Array<Answer>, requestFor: string, searchKey: any): number  {
+  public static answerStat(answers: Array<Answer>, requestFor: string, searchKey: any): number {
     let value = 0;
 
     if (answers.length > 0) {
@@ -42,11 +42,7 @@ export class CampaignFrontService {
             }
             break;
 
-          default:
-          // do nothing...
-
         }
-
       });
 
       if (searchKey === 'time_elapsed' ) {

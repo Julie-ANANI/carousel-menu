@@ -5,24 +5,8 @@ import { AdminCommunityResponsesComponent } from "./admin-community-answers/admi
 import { AdminCommunityProjectsComponent } from "./admin-community-projects/admin-community-projects.component";
 
 export const communityRoutes: Routes = [
-  {
-    path: 'projects',
-    component: AdminCommunityProjectsComponent,
-    pathMatch: 'full' ,
-  },
-  {
-    path: 'members',
-    component: AdminCommunityMembersComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'emailanswers',
-    component: AdminCommunityResponsesComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: '',
-    redirectTo: 'projects',
-    pathMatch: 'full'
-  },
+  { path: '', redirectTo: 'projects', pathMatch: 'full' },
+  { path: 'projects', component: AdminCommunityProjectsComponent, pathMatch: 'full' },
+  { path: 'members', component: AdminCommunityMembersComponent, pathMatch: 'full' },
+  { path: 'emailanswers', component: AdminCommunityResponsesComponent, pathMatch: 'full' },
 ];

@@ -105,5 +105,6 @@ export const PROJECT = {
     'ANSWER_RATE': 'Answer rate',
     'UPDATE': 'Update the stats',
     'UPDATED': 'Stats were updated on',
-  }
+  },
+  'ROADMAP': 'Roadmap'
 };

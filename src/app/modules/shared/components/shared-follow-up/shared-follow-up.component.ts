@@ -68,7 +68,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _sidebarTemplate: SidebarInterface = {
     animate_state: 'inactive',
-    type: 'follow-up'
+    type: 'FOLLOW_UP'
   };
 
   private _modalTemplateType: string = '';
@@ -328,7 +328,7 @@ export class SharedFollowUpComponent implements OnInit {
   public closeSidebar() {
     this._sidebarTemplate = {
       animate_state: 'inactive',
-      type: 'follow-up'
+      type: 'FOLLOW_UP'
     };
   }
 

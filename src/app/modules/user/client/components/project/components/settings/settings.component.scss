@@ -23,12 +23,17 @@
           color: #BFC6D1;
           cursor: pointer;
 
-          &:hover {
-            text-decoration: underline;
+          a {
+            color: #BFC6D1;
+
+            &.active {
+              color: $text-community-color;
+            }
+
           }
 
-          &.active {
-            color: $text-community-color;
+          &:hover {
+            text-decoration: underline;
           }
 
         }

@@ -5,7 +5,7 @@ import { Tag } from '../../../../../models/tag';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../../services/auth/auth.service';
-import { FilterService } from '../../../../public/discover/components/innovations/services/filter.service';
+import { DiscoverService } from '../../../../../services/discover/discover.service';
 import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
@@ -58,7 +58,7 @@ export class InnovationsComponent implements OnInit {
               private _innovationService: InnovationService,
               private _activatedRoute: ActivatedRoute,
               private _authService: AuthService,
-              private _filterService: FilterService) {
+              private _filterService: DiscoverService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
 
@@ -112,7 +112,7 @@ export class InnovationsComponent implements OnInit {
    * sectorTags.
    */
   private _getAllSectorTags() {
-    this._sectorTags = FilterService.getAllSectorTags(this._totalInnovations);
+    this._sectorTags = DiscoverService.getAllSectorTags(this._totalInnovations);
   }
 
   public onSelectFilters(filters: Array<Tag>) {
@@ -122,7 +122,7 @@ export class InnovationsComponent implements OnInit {
   }
 
   private _getFilteredInnovations() {
-    this._filteredInnovations = FilterService.getFilteredInnovations(this._totalInnovations, this._selectedFilters);
+    this._filteredInnovations = DiscoverService.getFilteredInnovations(this._totalInnovations, this._selectedFilters);
   }
 
   public onClickRemove(tagId: string) {

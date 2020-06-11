@@ -1,6 +1,8 @@
 <section class="pie-chart">
 
-  <p class="percentage">{{ pieChart?.percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}</p>
+  <p *ngIf="showFavorable" class="percentage">
+    {{ pieChart?.percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}
+  </p>
 
   <ng-container *ngIf="isBrowser && pieChart">
     <canvas

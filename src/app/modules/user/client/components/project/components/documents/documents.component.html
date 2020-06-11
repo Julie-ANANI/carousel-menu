@@ -122,22 +122,22 @@
             </div>
             <!-- /case === 'SHARE' -->
 
-            <!-- case === 'CSV' -->
-            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.CSV' | translate">
+            <!-- case === 'XLSX' -->
+            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.XLSX' | translate">
               <button
-                (click)="onClickCSV($event)"
-                [disabled]="isGeneratingCSV || !isOwner || !ownerConsent"
+                (click)="onClickXLSX($event)"
+                [disabled]="isGeneratingXLSX || !isOwner || !ownerConsent"
                 class="button is-primary"
-                id="btn-document-csv">
-                <ng-container *ngIf="!isGeneratingCSV; else genCSV">
+                id="btn-document-xlsx">
+                <ng-container *ngIf="!isGeneratingXLSX; else genXLSX">
                   {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
                 </ng-container>
-                <ng-template #genCSV>
+                <ng-template #genXLSX>
                   {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
                 </ng-template>
               </button>
             </div>
-            <!-- /case === 'CSV' -->
+            <!-- /case === 'XLSX' -->
 
             <!-- case === 'PDF' -->
             <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.PDF' | translate">
@@ -169,7 +169,6 @@
                   {{ 'COMMON.BUTTON.CONTACT_COMMERCIAL' | translate }}
                 </button>
                 <!-- /contact commercial -->
-
 
               </div>
             </div>

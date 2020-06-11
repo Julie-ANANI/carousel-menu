@@ -51,9 +51,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _currentLang = this._translateService.currentLang;
 
-  activeView = 'TITLE';
+  private _activeView = 'TITLE';
 
   private _dateFormat = this._currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
+
+  private _collaboratorConsent = false;
 
   private _sections: Array<Section> = [
     { name: 'TITLE', isVisible: false, isEditable: false, level: 'INNOVATION' },
@@ -66,7 +68,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     { name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION' },
     { name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT' },
     { name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION' },
-    { name: 'AUTHORISATION', isVisible: false, isEditable: false, level: 'MISSION' },
+    { name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION' },
   ];
 
   private _showModal = false;
@@ -86,6 +88,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _isVisibleMenu = true;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
+
+  private _tabClicked = false;
 
   constructor(private _authService: AuthService,
               private _translateService: TranslateService,
@@ -110,6 +114,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._initSections();
     });
 
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    if (!this._tabClicked) {
+      const _pageOffset = window.pageYOffset;
+      this._sections.forEach((section, index) => {
+        const _element = document.getElementById(section.name.toLowerCase());
+        if (_element) {
+          const _elementOffset = _element.offsetTop;
+          if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
+            this._activeView = section.name;
+          }
+        }
+      });
+    }
+  }
+
+  /***
+   * fired when the scroll end.
+   */
+  public scrollEnd() {
+    this._tabClicked = false;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -174,12 +201,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           case 'AUTHORISATION':
             section.isVisible = !!(this._mission.externalDiffusion);
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 
         }
       });
     }
+  }
+
+  public onClickTab(name: string) {
+    this._tabClicked = true;
+    this._activeView = name;
   }
 
   /***
@@ -265,6 +296,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._isSaving = false;
     this._selectedValue = '';
     this._activeModalSection = <Section>{};
+    this._collaboratorConsent = false;
   }
 
   /***
@@ -349,6 +381,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _addCollaborator() {
+    // Un check the consent... We don't want prechecked things
+    this._collaboratorConsent = false;
     if (this._selectedValue && emailRegEx.test(this._selectedValue)) {
       this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue)
         .pipe(first()).subscribe((collaborator: Collaborator) => {
@@ -528,6 +562,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
   }
 
+  public canPerformAction(): boolean {
+    switch (this._activeModalSection.level) {
+
+      case 'COLLABORATOR':
+        return this._collaboratorConsent && (!!this.selectedValue || !this.isSaving);
+      case 'INNOVATION':
+      case 'MISSION':
+      default:
+        return !this.selectedValue || this.isSaving;
+    }
+  }
+
   get mission(): Mission {
     return this._mission;
   }
@@ -598,6 +644,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get isVisibleMenu(): boolean {
     return this._isVisibleMenu;
+  }
+
+  get activeView(): string {
+    return this._activeView;
+  }
+
+  get consent(): boolean {
+    return this._collaboratorConsent;
+  }
+
+  set consent(value: boolean) {
+    this._collaboratorConsent = value;
   }
 
   ngOnDestroy(): void {

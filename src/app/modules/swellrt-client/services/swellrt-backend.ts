@@ -5,7 +5,7 @@ import * as sha1 from 'js-sha1';
 
 //declare let swellrt;
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SwellrtBackend {
 
   // swellrt's service interface

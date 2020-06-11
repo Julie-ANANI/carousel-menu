@@ -180,4 +180,8 @@ export class InnovationService {
     return this._http.put(`/innovation/${innovationId}/stats`, {});
   }
 
+  public advancedSearch(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
+    return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/advancedSearch', {params: params});
+  }
+
 }

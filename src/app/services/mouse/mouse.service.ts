@@ -7,7 +7,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MouseService {
 
   start: Subject<boolean> = new Subject<boolean>();

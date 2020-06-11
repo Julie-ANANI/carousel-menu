@@ -51,9 +51,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   private _selectedInnovation: InnovCard = <InnovCard>{};
 
-  private _sidebarTemplate: SidebarInterface = <SidebarInterface>{
-    animate_state: 'inactive'
-  };
+  private _sidebarTemplate: SidebarInterface = <SidebarInterface>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _dashboardService: DashboardService,
@@ -94,7 +92,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
     const now = Date.now();
     this._dateNow = new Date(now);
 
-    this._dashboardService.getNextDateSend(this._dateNow.toString()).subscribe( (batches: Array<any>) => {
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe( (batches: Array<any>) => {
       this._weekBatches = batches;
     }, (err: HttpErrorResponse) => {
       console.error(err);
@@ -115,7 +113,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   public onClickNext() {
     this._dateNow.setDate(this._dateNow.getDate() + 7);
-    this._dashboardService.getNextDateSend(this._dateNow.toString()).subscribe((batches: Array<any>) => {
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     }, (err: HttpErrorResponse) => {
       console.error(err);

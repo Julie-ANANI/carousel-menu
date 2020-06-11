@@ -25,9 +25,7 @@ export class CardsComponent {
     this._initializePagination();
   }
 
-  @Input() set search(value: boolean) {
-    this._isSearching = value;
-  }
+  @Input() search = false;
 
   @Input() set stopLoading(value: boolean) {
     this._stopLoading = value;
@@ -49,8 +47,6 @@ export class CardsComponent {
   private _isPagination: boolean = false;
 
   private _userLang = 'en';
-
-  private _isSearching: boolean = false;
 
   private _stopLoading: boolean;
 
@@ -86,46 +82,19 @@ export class CardsComponent {
    * @param toReturn
    * @param innovation
    */
-  public getInnovationDetail(toReturn: string, innovation: Innovation):string {
-    let index = 0;
+  public getInnovationDetail(toReturn: string, innovation: Innovation): string {
+    const _card: InnovCard = <InnovCard>InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'card');
 
-    if (innovation && innovation.innovationCards) {
+    switch (toReturn) {
+      case 'url':
+        return innovation._id && _card && _card.lang ? `wordpress/discover/${innovation._id}/${_card.lang}` : '';
 
-      if (innovation.innovationCards.length > 1) {
-        const userLangIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.userLang);
-        if (userLangIndex !== -1) {
-          index = userLangIndex;
-        }
-      } else {
-        const indexEn = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === 'en');
-        if (indexEn !== -1) {
-          index = indexEn;
-        } else {
-          index = 0;
-        }
-      }
+      case 'title':
+        return _card && _card.title ? _card.title : '';
 
-      switch (toReturn) {
-
-        case 'url':
-          return `wordpress/discover/${innovation.innovationCards[index].innovation_reference}/${innovation.innovationCards[index].lang}`;
-
-        case 'title':
-          return innovation.innovationCards[index].title;
-
-        case 'imageUrl':
-          return InnovationFrontService.getMediaSrc(innovation.innovationCards[index], 'default', 'auto', '174');
-
-      }
-
+      case 'imageUrl':
+        return innovation._id ? InnovationFrontService.principalMedia(innovation, this._userLang, 'auto', '174') : '';
     }
-
-    if (toReturn === 'url') {
-      return '/discover#';
-    }
-
-    return '';
-
   }
 
   get pagination(): Pagination {
@@ -146,10 +115,6 @@ export class CardsComponent {
     return this._total;
   }
 
-  get totalInnovations(): Array<Innovation> {
-    return this._totalInnovations;
-  }
-
   get startIndex(): number {
     return this._startIndex;
   }
@@ -164,10 +129,6 @@ export class CardsComponent {
 
   get userLang(): string {
     return this._userLang;
-  }
-
-  get isSearching(): boolean {
-    return this._isSearching;
   }
 
   get stopLoading(): boolean {

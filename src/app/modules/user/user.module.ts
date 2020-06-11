@@ -8,7 +8,6 @@ import { HeaderModule } from '../common/header/header.module';
 
 import { UserComponent } from './user.component';
 
-import { ShareService } from '../../services/share/share.service';
 import { SpinnerLoaderModule } from '../utility/spinner-loader/spinner-loader.module';
 import { BannerModule } from '../utility/banner/banner.module';
 
@@ -24,9 +23,6 @@ import { BannerModule } from '../utility/banner/banner.module';
   ],
   declarations: [
     UserComponent,
-  ],
-  providers: [
-    ShareService,
   ]
 })
 

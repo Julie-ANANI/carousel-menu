@@ -2,9 +2,9 @@ import { Multiling } from './multiling';
 
 export interface Option {
   identifier: string;
-  readonly label: Multiling;
-  readonly color?: string;
-  readonly positive?: boolean;
+  label: Multiling;
+  color?: string;
+  positive?: boolean;
 }
 
 export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
@@ -13,11 +13,11 @@ export interface Question {
   _id?: string;
   identifier: string;
   controlType: QuestionType;
-  readonly label: Multiling;
-  readonly title: Multiling;
-  readonly subtitle: Multiling;
-  readonly canComment: boolean;
-  readonly parameters?: {
+  label: Multiling;
+  title: Multiling;
+  subtitle: Multiling;
+  canComment: boolean;
+  parameters?: {
     type: 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
     addon: string;
     min: number;
@@ -25,4 +25,5 @@ export interface Question {
     step: number;
   };
   options?: Array<Option>;
+  visibility?: boolean;
 }

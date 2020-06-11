@@ -5,7 +5,7 @@ export const CLIENT_PROJECT_DOCUMENTS = {
   'NAME': {
     'REPORT': 'Executive Report',
     'SHARE': 'Share link',
-    'CSV': 'All answers in CSV',
+    'XLSX': 'All answers in Excel',
     'PDF': 'All answers in PDF',
     'VIDEO': 'Synthesis Video',
   },
@@ -13,7 +13,7 @@ export const CLIENT_PROJECT_DOCUMENTS = {
   'DESCRIPTION': {
     'REPORT': 'Share your summary Market Test results',
     'SHARE': 'Share your Market Test results anonymised',
-    'CSV': 'All answers from your Market Test in CSV',
+    'XLSX': 'All answers from your Market Test in Excel',
     'PDF': 'All answers from your Market Test in PDF',
     'VIDEO': 'Share your Market Test result thanks to a video ',
   },

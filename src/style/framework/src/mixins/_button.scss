@@ -29,6 +29,7 @@
 @mixin button-outline-variant($color: $bg-primary-color) {
   color: $color;
   border-color: $color;
+  border-width: 2px;
   background-color: transparent;
 
   &:focus, &.active, &:active  {
@@ -144,13 +145,7 @@
   color: $text-white-color;
   background-color: $color;
   border-color: $color;
-
-  &:hover {
-    color: $text-white-color;
-    background-color: $color;
-    border-color: $color;
-    box-shadow: $box-shadow-button-hover;
-  }
+  box-shadow: $box-shadow-button-hover;
 
   &[disabled], &:disabled, &.disabled {
     box-shadow: none;

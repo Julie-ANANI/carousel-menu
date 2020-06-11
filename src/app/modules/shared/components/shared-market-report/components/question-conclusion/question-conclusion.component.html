@@ -50,7 +50,7 @@
 
         <!-- pie chart -->
         <ng-container *ngSwitchCase="'radio'">
-          <app-utility-piechart [pieChart]="pieChart"></app-utility-piechart>
+          <app-utility-piechart [showFavorable]="question.visibility" [pieChart]="pieChart"></app-utility-piechart>
         </ng-container>
 
         <!-- ou encadré bleu -->

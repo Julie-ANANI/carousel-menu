@@ -62,6 +62,8 @@ export const TABLE = {
 
   'SELECTED_ROWS': 'sélectionné(s)',
 
-  'CHOOSE': 'Choisir'
+  'CHOOSE': 'Choisir',
+
+  'AT': 'à'
 
 };

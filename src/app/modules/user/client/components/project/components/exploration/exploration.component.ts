@@ -5,7 +5,6 @@ import { InnovationService } from '../../../../../../../services/innovation/inno
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../../models/answer';
 import { Campaign } from '../../../../../../../models/campaign';
-import { Clearbit } from '../../../../../../../models/clearbit';
 import { Innovation } from '../../../../../../../models/innovation';
 import { Question } from '../../../../../../../models/question';
 import { Section } from '../../../../../../../models/section';
@@ -28,8 +27,6 @@ export class ExplorationComponent implements OnInit {
 
   private _innovation: Innovation = {};
 
-  private _contactUrl: string;
-
   private _campaignsStats: {
     nbPros: number,
     nbProsSent: number,
@@ -37,8 +34,6 @@ export class ExplorationComponent implements OnInit {
     nbProsClicked: number,
     nbValidatedResp: number
   };
-
-  private _companies: Array<Clearbit>;
 
   private _countries: Array<string>;
 
@@ -69,13 +64,6 @@ export class ExplorationComponent implements OnInit {
 
     if (this._innovation) {
       this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
-
-      if (this._innovation.operator && this._innovation.operator.email) {
-        this._contactUrl = encodeURI(`mailto:${this._innovation.operator.email}?subject=` + this._innovation.name);
-      } else {
-        this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this._innovation.name);
-      }
-
     }
 
     this.loadAnswers();
@@ -93,9 +81,7 @@ export class ExplorationComponent implements OnInit {
           _isLocal: true,
           _isPaginable: true,
           _columns: [
-            //{_attrs: [], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-            //{_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
           ]
         };
@@ -150,12 +136,6 @@ export class ExplorationComponent implements OnInit {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
 
-
-    if (this._innovation.settings && this._innovation.settings.companies
-        && Array.isArray(this._innovation.settings.companies.include)) {
-      this._companies = this._innovation.settings.companies.include;
-    }
-
     this._questions = [];
 
     if (this._innovation.preset && Array.isArray(this._innovation.preset.sections)) {
@@ -192,16 +172,8 @@ export class ExplorationComponent implements OnInit {
     return this._campaignsStats;
   }
 
-  get companies() {
-    return this._companies;
-  }
-
   get countries() {
     return this._countries;
-  }
-
-  get contactUrl() {
-    return this._contactUrl;
   }
 
   get dateFormat(): string {

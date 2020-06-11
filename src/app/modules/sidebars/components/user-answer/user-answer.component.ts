@@ -6,6 +6,7 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { Company } from '../../../../models/company';
 
 @Component({
   selector: 'app-user-answer',
@@ -26,6 +27,8 @@ export class UserAnswerComponent {
   }
 
   @Input() questions: Array<Question>;
+
+  @Input() excludedCompanies: Array<Company> = [];
 
   @Input() set userAnswer(value: Answer) {
     this._modalAnswer = value;

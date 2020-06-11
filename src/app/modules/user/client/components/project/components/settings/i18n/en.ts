@@ -14,6 +14,8 @@ export const CLIENT_PROJECT_SETTINGS = {
 
   'COLLABORATORS': 'Collaborators',
 
+  'COLLABORATORS_CONSENT': 'Please note that collaborators have access to your project, including the results and other sensitive data. Do you want to continue?',
+
   'OPERATOR': 'Market test manager',
 
   'COMMERCIAL': 'Commercial',

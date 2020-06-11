@@ -13,7 +13,7 @@ import { Router } from "@angular/router";
 import { ConfigService } from "../../../../services/config/config.service";
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { GeographySettings } from '../../../../models/innov-settings';
-import { SharedWorldmapService } from '../shared-worldmap/services/shared-worldmap.service';
+import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { IndexService } from '../../../../services/index/index.service';
 
 @Component({
@@ -230,7 +230,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           this._geography = {
             include: campaign.targetCountries.map((country) => { return {code: country}; }),
             exclude: [],
-            continentTarget: SharedWorldmapService.setContinents(false)
+            continentTarget: WorldmapService.setContinents(false)
           };
           this._chosenCampaign = campaign;
         });

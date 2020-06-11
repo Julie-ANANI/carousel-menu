@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { Answer } from '../../../../../../models/answer';
+import { Answer, AnswerStatus } from '../../../../../../models/answer';
 import { Campaign } from '../../../../../../models/campaign';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
@@ -12,14 +12,15 @@ import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-int
 import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Config } from '../../../../../../models/config';
-import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { Response } from '../../../../../../models/response';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { ConfigService } from '../../../../../../services/config/config.service';
+import { Company } from '../../../../../../models/company';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-admin-campaign-answers',
   templateUrl: './admin-campaign-answers.component.html',
   styleUrls: ['./admin-campaign-answers.component.scss']
 })
@@ -34,99 +35,106 @@ export class AdminCampaignAnswersComponent implements OnInit {
     sort: '{ "created": -1 }'
   };
 
-  private _campaign: Campaign;
+  private _campaign: Campaign = <Campaign>{};
 
   private _answers: Array<Answer> = [];
 
-  private _total: number;
+  private _totalAnswers = -1;
 
-  private _fetchingError: boolean;
+  private _fetchingError = true;
 
-  private _table: Table;
+  private _table: Table = <Table>{};
 
-  private _adminMode: boolean;
+  private _adminMode = false;
 
-  private _noResult: boolean;
+  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  private _sidebarValue: SidebarInterface = {};
-
-  private _modalAnswer: Answer = null;
+  private _modalAnswer: Answer = <Answer>{};
 
   private _questions: Array<Question> = [];
+
+  private _excludedCompanies: Array<Company> = [];
+
+  private _isImportingAnswers = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
-              private _translateTitleService: TranslateTitleService,
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _authService: AuthService,
-              private _configService: ConfigService,
-              private _campaignFrontService: CampaignFrontService) {
-
-    this._translateTitleService.setTitle('Answers | Campaign');
-    this._adminMode = this._authService.adminLevel > 2 || (this._authService.adminLevel > 0 && this._authService.isOperator);
-
-    if (this._activatedRoute.snapshot.parent.data['campaign']) {
-      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-      this._getQuestions();
-    }
-
-  }
+              private _configService: ConfigService) { }
 
   ngOnInit() {
+    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+    this._adminMode = this._authService.adminLevel > 2 || (this._authService.adminLevel > 0 && this._authService.isOperator);
 
-    if (isPlatformBrowser(this._platformId)) {
-      this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((response: Response) => {
-        this._answers = response.answers.localAnswers;
-        this._total = this._answers.length;
-        this._noResult = this._total === 0;
-        this._initializeTable();
-      }, () => {
-        this._fetchingError = true;
-      });
+    if (this._campaign._id) {
+      this._getAnswers();
+      this._initQuestions();
+      this._excludedCompanies = this._campaign.innovation && this._campaign.innovation.settings
+        && this._campaign.innovation.settings.companies && this._campaign.innovation.settings.companies.exclude;
+    } else {
+      this._fetchingError = true;
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
     }
 
   }
 
-  private _getQuestions() {
-    if (this._campaign && this._campaign.innovation.preset && this._campaign.innovation.preset.sections && Array.isArray(this._campaign.innovation.preset.sections)) {
+  private _reinitializeVariables() {
+    this._totalAnswers = -1;
+    this._answers = [];
+  }
+
+  private _getAnswers() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._reinitializeVariables();
+      this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((response: Response) => {
+        this._answers = response.answers && response.answers.localAnswers;
+        this._totalAnswers = this._answers.length;
+        this._fetchingError = false;
+        this._initTable();
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    }
+  }
+
+  private _initQuestions() {
+    if (this._campaign.innovation && this._campaign.innovation.preset && this._campaign.innovation.preset.sections
+      && Array.isArray(this._campaign.innovation.preset.sections)) {
       this._campaign.innovation.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
       });
     }
   }
 
-  public onClickImport(file: File) {
-    this._answerService.importAsCsv(this._campaign._id, file).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.IMPORTED');
-      this._getAnswers();
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
-    });
+  public onImport(file: File) {
+    if (!this._isImportingAnswers) {
+      this._isImportingAnswers = true;
+      this._answerService.importAsCsv(this._campaign._id, file).pipe(first()).subscribe(() => {
+        this._getAnswers();
+        this._translateNotificationsService.success('Success', 'The answers has been imported successfully.');
+        this._isImportingAnswers = false;
+      }, (err: HttpErrorResponse) => {
+        this._isImportingAnswers = false
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    }
   }
 
-  public onClickExport() {
+  public onExport() {
     this._answerService.exportAsCsvByCampaign(this._campaign._id, false);
   }
 
-  private _getAnswers() {
-    this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((response: Response) => {
-      this._answers = response.answers.localAnswers;
-      this._total = this._answers.length;
-      this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
-      this._initializeTable();
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
-  }
-
-  private _initializeTable() {
+  private _initTable() {
     this._table = {
       _selector: 'admin-campaign-answers',
-      _title: 'TABLE.TITLE.ANSWERS',
+      _title: 'answers',
       _content: this._answers,
-      _total: this._total,
+      _total: this._totalAnswers,
       _isSearchable: true,
       _isSelectable: true,
       _isPaginable: true,
@@ -134,22 +142,22 @@ export class AdminCampaignAnswersComponent implements OnInit {
       _clickIndex: 1,
       _isTitle: true,
       _isLocal: true,
-      _buttons: [{_label: 'ANSWER.VALID_ANSWER', _icon: 'fas fa-check'}, {_label: 'ANSWER.REJECT_ANSWER', _icon: 'fas fa-times'}],
+      _buttons: [{_label: 'Validate', _icon: 'fas fa-check'}, {_label: 'Reject', _icon: 'fas fa-times'}],
       _columns: [
-        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true},
-        {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _isSearchable: true },
-        {_attrs: ['professional.jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSearchable: true},
-        {_attrs: ['scoreStatus'], _name: 'TABLE.HEADING.SCORE', _type: 'TEXT', _isSearchable: true},
-        {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE'},
-        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
-        {_attrs: ['status'], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
+        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'Name', _type: 'TEXT', _isSearchable: true},
+        {_attrs: ['country'], _name: 'Country', _type: 'COUNTRY', _isSearchable: true, _width: '120px' },
+        {_attrs: ['professional.jobTitle'], _name: 'Job', _type: 'TEXT', _isSearchable: true},
+        {_attrs: ['scoreStatus'], _name: 'Validation Score', _type: 'TEXT', _isSearchable: true, _width: '180px'},
+        {_attrs: ['updated'], _name: 'Updated', _type: 'DATE', _width: '150px'},
+        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _width: '150px'},
+        {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSearchable: true, _width: '180px',
           _choices: [
-            {_name: 'VALIDATED', _alias: 'TABLE.STATUS.VALIDATED', _class: 'label is-success'},
-            {_name: 'SUBMITTED', _alias: 'TABLE.STATUS.SUBMITTED', _class: 'label is-progress'},
-            {_name: 'REJECTED', _alias: 'TABLE.STATUS.REJECTED', _class: 'label is-danger'},
-            {_name: 'REJECTED_GMAIL', _alias: 'TABLE.STATUS.REJECTED_GMAIL', _class: 'label is-danger'},
-            {_name: 'VALIDATED_UMIBOT', _alias: 'TABLE.STATUS.VALIDATED_UMIBOT', _class: 'label is-progress'},
-            {_name: 'REJECTED_UMIBOT', _alias: 'TABLE.STATUS.REJECTED_UMIBOT', _class: 'label is-progress'}
+            {_name: 'VALIDATED', _alias: 'Validated', _class: 'label is-success'},
+            {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-progress'},
+            {_name: 'REJECTED', _alias: 'Rejected', _class: 'label is-danger'},
+            {_name: 'REJECTED_GMAIL', _alias: 'Rejected by mail', _class: 'label is-danger'},
+            {_name: 'VALIDATED_UMIBOT', _alias: 'Auto validated', _class: 'label is-progress'},
+            {_name: 'REJECTED_UMIBOT', _alias: 'Auto rejected', _class: 'label is-progress'}
           ]
         },
       ]
@@ -157,27 +165,24 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
   public campaignStat(type: string, searchKey: any): number {
-    return this._campaignFrontService.getAnswerCampaignStat(this._answers, type, searchKey);
+    return CampaignFrontService.answerStat(this._answers, type, searchKey);
   }
 
   public authorizedActions(level: number): boolean {
     return this._authService.adminLevel > level;
   }
 
-  public onClickEdit(value: Answer) {
-    this._modalAnswer = value;
-
+  public onEdit(answer: Answer) {
+    this._modalAnswer = answer;
     this._sidebarValue = {
       animate_state: 'active',
-      title: 'SIDEBAR.TITLE.EDIT_INSIGHT',
+      title: 'Edit Insight',
       size: '726px'
     };
-
   }
 
-  public onClickActions(action: any) {
+  public onActions(action: any) {
     switch (action._label) {
-
       case 'ANSWER.VALID_ANSWER':
         this._updateStatus(action._rows, 'VALIDATED');
         break;
@@ -188,19 +193,18 @@ export class AdminCampaignAnswersComponent implements OnInit {
     }
   }
 
-  private _updateStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED'
-    | 'VALIDATED' | 'VALIDATED_UMIBOT' | 'REJECTED_UMIBOT') {
-    rows.forEach((row: Answer) => {
-      row.status = status;
-      this._answerService.save(row._id, row).subscribe(() => {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ANSWER.STATUS_UPDATE');
+  private _updateStatus(answers: Answer[], status: AnswerStatus) {
+    answers.forEach((answer: Answer) => {
+      answer.status = status;
+      this._answerService.save(answer._id, answer).pipe(first()).subscribe(() => {
         this._getAnswers();
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+        this._translateNotificationsService.success('Success', 'The answer has been updated successfully.');
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       });
     });
   }
-
 
   public updateAnswer(value: boolean) {
     this._getAnswers();
@@ -235,12 +239,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
     return this._table;
   }
 
-  get total(): number {
-    return this._total;
-  }
-
-  get noResult(): boolean {
-    return this._noResult;
+  get totalAnswers(): number {
+    return this._totalAnswers;
   }
 
   get sidebarValue(): SidebarInterface {
@@ -261,6 +261,14 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  get excludedCompanies(): Array<Company> {
+    return this._excludedCompanies;
+  }
+
+  get isImportingAnswers(): boolean {
+    return this._isImportingAnswers;
   }
 
 }

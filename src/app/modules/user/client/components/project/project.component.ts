@@ -15,7 +15,6 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 import { Mission } from '../../../../../models/mission';
 
 @Component({
-  selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })

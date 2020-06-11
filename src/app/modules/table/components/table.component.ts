@@ -11,6 +11,7 @@ import { LocalStorageService } from '../../../services/localStorage/localStorage
 import { ConfigService } from '../../../services/config/config.service';
 
 import * as moment from 'moment';
+import * as momentTimeZone from 'moment-timezone';
 
 @Component({
   selector: 'app-shared-table',
@@ -202,7 +203,8 @@ export class TableComponent {
    */
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
-      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ? this._table._columns[index]._isSearchable : false;
+      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ?
+        this._table._columns[index]._isSearchable : false;
       this._table._columns[index]._isSelected = this._columnActive(value);
     });
   }
@@ -394,6 +396,22 @@ export class TableComponent {
 
     }
 
+  }
+
+  /**
+   * Gte the title of a cell
+   * @param row
+   * @param column
+   */
+  public getTitle(row: string, column: Column) {
+    const title = this.getAttrs(column).map(attr => {
+      return (this.getContentValue(row, attr) || ' - ').toString();
+    }).join(' ');
+    if (title.length > 23) {
+      return title;
+    } else {
+      return '';
+    }
   }
 
   /***
@@ -691,6 +709,10 @@ export class TableComponent {
     this.dropdownAction.emit({content: content, item: item});
   }
 
+  public getTime(content: string): string {
+    return momentTimeZone(content).tz('Europe/Paris').format('h:mm a');
+  }
+
   get table(): Table {
     return this._table;
   }
@@ -785,7 +807,8 @@ export class TableComponent {
 
           }
 
-        } else if (contentKey === searchKey && content[searchKey] && content[searchKey].toString().toLowerCase().indexOf(searchValue) !== -1) {
+        } else if (contentKey === searchKey && searchValue && content[searchKey]
+          && content[searchKey].toString().toLowerCase() === searchValue.toLowerCase()) {
           return true;
         }
 

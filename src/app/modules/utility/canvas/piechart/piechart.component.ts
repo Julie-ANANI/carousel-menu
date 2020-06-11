@@ -11,6 +11,8 @@ import { PieChart } from '../../../../models/pie-chart';
 
 export class PiechartComponent implements OnInit {
 
+  @Input() showFavorable = true;
+
   @Input() set pieChart(value: PieChart) {
     this._pieChart = value;
     this._loadData();
