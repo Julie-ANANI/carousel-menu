@@ -95,6 +95,13 @@ export class SharedProjectEditCardsComponent {
     this.notifyChanges();
   }
 
+  public updateUMIComment(event: { content: string }, cardProperty:  'summary' | 'problem' | 'solution', type: 'comment' | 'suggestion') {
+    if (this.allowAdminToComment) {
+      this.innovation.innovationCards[this._selectedCardIndex]['operatorComment'][cardProperty][type] = event.content;
+      this.notifyChanges();
+    }
+  }
+
   public getColor(length: number, limit: number) {
     return InnovationFrontService.getColor(length, limit);
   }
@@ -104,7 +111,7 @@ export class SharedProjectEditCardsComponent {
    * @param event the resulting value sent from the components directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  public updateAdvantage (event: { value: Array<{text: string }>}, cardIdx: number): void {
+  public updateAdvantage(event: { value: Array<{text: string }>}, cardIdx: number): void {
     this.innovation.innovationCards[cardIdx].advantages = event.value;
     this.notifyChanges();
   }
