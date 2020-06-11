@@ -178,7 +178,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).subscribe((response) => {
       this._answers = AnswerFrontService.qualitySort(response.answers);
 
-      if( this._anonymousAnswers ) {
+      if ( this._anonymousAnswers ) {
         this._answers = AnswerFrontService.anonymous(this._answers);
       }
 
