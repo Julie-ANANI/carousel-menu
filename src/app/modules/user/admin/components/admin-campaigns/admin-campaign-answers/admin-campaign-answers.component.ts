@@ -164,7 +164,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     };
   }
 
-  public campaignStat(type: string, searchKey: any): number {
+  public campaignStat(type: string, searchKey?: any): number {
     return CampaignFrontService.answerStat(this._answers, type, searchKey);
   }
 
