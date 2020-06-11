@@ -81,7 +81,6 @@ export class SharedWorldmapComponent implements OnInit {
    */
   @Input() set countriesData (value: any) {
     this._countriesData = value;
-    console.log(this._countriesData);
     this._initializeTemplate();
   }
 
