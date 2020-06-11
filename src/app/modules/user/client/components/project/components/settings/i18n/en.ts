@@ -12,10 +12,9 @@ export const CLIENT_PROJECT_SETTINGS = {
 
   'OWNER': 'Owner',
 
-  'COLLABORATORS': {
-    'LABEL': 'Collaborators',
-    'CONSENT': 'Please note that collaborators have access to your project, including the results and other sensitive data. Do you want to continue?'
-  },
+  'COLLABORATORS': 'Collaborators',
+
+  'COLLABORATORS_CONSENT': 'Please note that collaborators have access to your project, including the results and other sensitive data. Do you want to continue?',
 
   'OPERATOR': 'Market test manager',
 
