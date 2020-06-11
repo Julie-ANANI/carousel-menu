@@ -50,12 +50,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     {
       name: 'XLSX',
       isExportable: false,
-      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/csv-answer.png'
+      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/csv-answers.png'
     },
     {
       name: 'PDF',
       isExportable: false,
-      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/pdf-answers.png'
+      img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/pdf-answer.png'
     },
     {
       name: 'VIDEO',
