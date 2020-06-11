@@ -775,6 +775,10 @@ export class AdminProjectManagementComponent implements OnInit {
     if (this._project.status === 'SUBMITTED') {
       this._project.status = 'EVALUATING';
       this.save('The project has been validated successfully');
+      if (this._mission && this._mission._id && this._mission.type === 'USER') {
+        this._mission.type = 'CLIENT';
+        this._saveMission();
+      }
     }
   }
 
