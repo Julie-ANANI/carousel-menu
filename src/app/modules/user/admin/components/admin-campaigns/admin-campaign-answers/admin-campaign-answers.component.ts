@@ -19,6 +19,7 @@ import { ConfigService } from '../../../../../../services/config/config.service'
 import { Company } from '../../../../../../models/company';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { QuizService } from '../../../../../../services/quiz/quiz.service';
 
 @Component({
   templateUrl: './admin-campaign-answers.component.html',
@@ -57,6 +58,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _isImportingAnswers = false;
 
+  private _quizLinks: Array<string> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -72,6 +75,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
     if (this._campaign._id) {
       this._getAnswers();
       this._initQuestions();
+      if (this._campaign.innovation && this._campaign.innovation.quizId) {
+        this._quizLinks = ['fr', 'en'].map((lang) => {
+          return QuizService.getQuizUrl(this._campaign, lang);
+        });
+      }
       this._excludedCompanies = this._campaign.innovation && this._campaign.innovation.settings
         && this._campaign.innovation.settings.companies && this._campaign.innovation.settings.companies.exclude;
     } else {
@@ -269,6 +277,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   get isImportingAnswers(): boolean {
     return this._isImportingAnswers;
+  }
+
+  get quizLinks() {
+    return this._quizLinks
   }
 
 }

@@ -13,7 +13,7 @@ export class AdminCampaignComponent implements OnInit {
 
   private _campaign: Campaign;
 
-  private _tabs = ['search', 'history', 'pros', 'quiz', 'workflows', 'batch', 'answers'];
+  private _tabs = ['search', 'history', 'pros', 'workflows', 'batch', 'answers'];
 
   private _selectedTab = 'answers';
 
@@ -46,10 +46,6 @@ export class AdminCampaignComponent implements OnInit {
 
       case 'batch':
         value = 'Batch';
-        break;
-
-      case 'quiz':
-        value = 'Quiz';
         break;
 
       case 'history':
@@ -101,10 +97,6 @@ export class AdminCampaignComponent implements OnInit {
 
   get tabs(): any {
     return this._tabs;
-  }
-
-  get selectedTab(): string {
-    return this._selectedTab;
   }
 
 }
