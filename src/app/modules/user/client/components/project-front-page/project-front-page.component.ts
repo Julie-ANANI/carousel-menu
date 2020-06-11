@@ -80,6 +80,8 @@ export class ProjectFrontPageComponent implements OnChanges {
   private _typeExecutive() {
     const report: ExecutiveReport = <ExecutiveReport>this.data;
     this._userLang = report.lang;
+    const logo = report.client && report.client.company && report.client.company.logo && report.client.company.logo.uri ?
+      report.client.company.logo.uri : 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
     this._project = {
       title: this.title,
       summary: report.summary,
@@ -87,7 +89,7 @@ export class ProjectFrontPageComponent implements OnChanges {
       media: this.media,
       ownerName: report.client.name,
       ownerEmail: report.client.email,
-      companyLogo: report.client.company && report.client.company.logo && report.client.company.logo.uri
+      companyLogo: logo
     };
   }
 
