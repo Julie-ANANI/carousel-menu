@@ -55,6 +55,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _dateFormat = this._currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
 
+  private _collaboratorConsent = false;
+
   private _sections: Array<Section> = [
     { name: 'TITLE', isVisible: false, isEditable: false, level: 'INNOVATION' },
     { name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
@@ -294,6 +296,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._isSaving = false;
     this._selectedValue = '';
     this._activeModalSection = <Section>{};
+    this._collaboratorConsent = false;
   }
 
   /***
@@ -378,6 +381,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _addCollaborator() {
+    // Un check the consent... We don't want prechecked things
+    this._collaboratorConsent = false;
     if (this._selectedValue && emailRegEx.test(this._selectedValue)) {
       this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue)
         .pipe(first()).subscribe((collaborator: Collaborator) => {
@@ -557,6 +562,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
   }
 
+  public canPerformAction(): boolean {
+    switch (this._activeModalSection.level) {
+
+      case 'COLLABORATOR':
+        return this._collaboratorConsent && (!!this.selectedValue || !this.isSaving);
+      case 'INNOVATION':
+      case 'MISSION':
+      default:
+        return !this.selectedValue || this.isSaving;
+    }
+  }
+
   get mission(): Mission {
     return this._mission;
   }
@@ -631,6 +648,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get activeView(): string {
     return this._activeView;
+  }
+
+  get consent(): boolean {
+    return this._collaboratorConsent;
+  }
+
+  set consent(value: boolean) {
+    this._collaboratorConsent = value;
   }
 
   ngOnDestroy(): void {

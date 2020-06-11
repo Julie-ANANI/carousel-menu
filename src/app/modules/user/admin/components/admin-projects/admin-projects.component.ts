@@ -69,7 +69,7 @@ export class AdminProjectsComponent implements OnInit {
       this._getOperators().then( _ => {
         this._getProjects();
       }, err => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       });
     }
   }
@@ -86,7 +86,7 @@ export class AdminProjectsComponent implements OnInit {
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
       console.error(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 
@@ -130,7 +130,7 @@ export class AdminProjectsComponent implements OnInit {
         this._totalProjects = innovations._metadata.totalCount;
         this._initializeTable();
       }, err => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       });
   }
 
@@ -169,6 +169,13 @@ export class AdminProjectsComponent implements OnInit {
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
         {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '180px' },
+        { _attrs: ['owner.company.name'],
+          _name: 'Company',
+          _type: 'TEXT',
+          _width: '180px',
+          _isSearchable: true,
+          _searchConfig: {_collection: 'user', _searchKey: 'company.name' }
+        },
         {
           _attrs: ['mission.type'],
           _name: 'Type',
@@ -230,14 +237,7 @@ export class AdminProjectsComponent implements OnInit {
     try {
       // Parse the config.search field to see if there's something
       if (this._config['fromCollection']) {
-        switch (this._config['fromCollection']) {
-          case('mission'):
-          case('innovationcard'):
-            this._searchMissionsByOther(this._config);
-            break;
-          default:
-            this._getProjects();
-        }
+        this._searchMissionsByOther(this._config);
       } else {
         this._getProjects();
       }

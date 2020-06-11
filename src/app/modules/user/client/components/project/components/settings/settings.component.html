@@ -402,6 +402,11 @@
               class="form-input is-sm is-shadowed"
               type="email">
           </label>
+          <!-- Warning text -->
+          <label class="form-checkbox">
+            <input [(ngModel)]="consent" type="checkbox">
+            <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
+          </label>
         </div>
       </div>
       <!-- /COLLABORATORS -->
@@ -420,7 +425,7 @@
       </button>
 
       <button
-        [disabled]="!this.selectedValue || isSaving"
+        [disabled]="!canPerformAction()"
         (click)="onClickSaveModal($event)"
         class="button is-community"
         id="btn-save">
