@@ -103,7 +103,8 @@ export class LoginComponent implements OnInit {
         if (this._authService.isAuthenticated) {
 
           // Get the redirect URL from our auth service. If no redirect has been set, use the default.
-          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
+          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : this._authService.isSuperAdmin
+            ? '/user/admin/projects' : '/';
           this._authService.redirectUrl = '';
 
           // Set our navigation extras object that passes on our global query params and fragment
