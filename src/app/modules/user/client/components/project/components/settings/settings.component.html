@@ -405,8 +405,7 @@
           <!-- Warning text -->
           <label class="form-checkbox">
             <input [(ngModel)]="consent" type="checkbox">
-            <i class="form-icon"></i> Please note that collaborators have access to your project, including the results and other
-            sensitive data. Do you want to continue?
+            <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.COLLABORATORS.CONSENT' | translate }}
           </label>
         </div>
       </div>
