@@ -85,12 +85,31 @@
               <div class="d-flex align-center">
 
                 <ul class="roadmap-wrapper">
+                  <li>
+                    {{ 'COMMON.LABEL.CREATED' | translate }}
+                    <span class="d-flex align-center">
+                      <span class="shape is-circle is-sm"></span><span class="divider"></span>
+                    </span>
+                    {{ innovation.created | date:dateFormat }}
+                  </li>
+                  <ng-container *ngFor="let milestone of mission.milestoneDates">
+                    <li *ngIf="milestone.code !== 'RDO' && !milestone.code.includes('RDO')">
+                      {{ milestone.name }}
+                      <span class="d-flex align-center">
+                        <span class="shape is-circle is-sm"></span><span class="divider"></span>
+                      </span>
+                      {{ milestone.dueDate | date:dateFormat }}
+                    </li>
+                  </ng-container>
+                </ul>
+
+                <!--<ul class="roadmap-wrapper">
                   <ng-container *ngFor="let milestone of mission.milestoneDates">
                     <li *ngIf="milestone.code !== 'RDO' && !milestone.code.includes('RDO')">
                       {{ milestone.name }} : {{ milestone.dueDate | date:dateFormat }}
                     </li>
                   </ng-container>
-                </ul>
+                </ul>-->
 
                 <span *ngIf="section.isEditable" class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}

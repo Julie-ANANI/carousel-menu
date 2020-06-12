@@ -66,8 +66,30 @@
         }
 
         .roadmap-wrapper {
-          font-size: $font-size-md;
+          display: flex;
+          align-items: center;
           margin: 0 25px 0 0;
+          list-style: none;
+
+          li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+
+            .shape.is-circle {
+              margin: 10px 0;
+              border: 2px solid $border-default-color;
+              background-color: $bg-white-color;
+            }
+
+            .divider {
+              margin: 0;
+              width: 100px;
+              border-width: 2px;
+            }
+
+          }
 
           li:first-child {
             margin-top: 0;
