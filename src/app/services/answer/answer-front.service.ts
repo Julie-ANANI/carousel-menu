@@ -72,7 +72,7 @@ export class AnswerFrontService {
    * @param answers
    */
   public static tagsOccurrence(answers: Array<Answer>): Array<Tag> {
-    let _tags: Array<Tag> = [];
+    const _tags: Array<Tag> = [];
     if (answers.length > 0) {
       answers.forEach((answer) => {
         const _answerTags = answer.tags;
@@ -87,8 +87,7 @@ export class AnswerFrontService {
             }
           });
         }
-      });
-      _tags = _tags.sort((a, b) => b.count - a.count);
+      })
     }
     return _tags;
   }
