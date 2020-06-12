@@ -106,7 +106,7 @@ export class ProjectsListComponent implements OnInit {
       console.log(err);
       this._isError = true;
       this._setSpinner(false);
-      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status))
+      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }
 
@@ -144,9 +144,8 @@ export class ProjectsListComponent implements OnInit {
 
       if (innovation.principalMedia.type === 'PHOTO') {
         return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_100,w_120/' + innovation.principalMedia.cloudinary.public_id;
-      }
-      else {
-        return innovation.principalMedia.video.thumbnail;
+      } else {
+        return innovation.principalMedia.video ? innovation.principalMedia.video.thumbnail : 'https://res.cloudinary.com/umi/image/upload/v1506677711/app/no-image.png';
       }
 
     } else {
