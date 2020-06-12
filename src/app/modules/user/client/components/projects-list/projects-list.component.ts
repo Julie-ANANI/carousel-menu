@@ -140,19 +140,7 @@ export class ProjectsListComponent implements OnInit {
    * @param innovation
    */
   public getImage(innovation: Innovation): string {
-    if (innovation.principalMedia) {
-
-      if (innovation.principalMedia.type === 'PHOTO') {
-        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_100,w_120/' + innovation.principalMedia.cloudinary.public_id;
-      } else {
-        return innovation.principalMedia.video ? innovation.principalMedia.video.thumbnail : 'https://res.cloudinary.com/umi/image/upload/v1506677711/app/no-image.png';
-      }
-
-    } else {
-      const findIndex = innovation.innovationCards.findIndex((card) => card.lang === this._translateService.currentLang);
-      return InnovationFrontService.getMediaSrc(innovation.innovationCards[findIndex], 'default', '120', '100');
-    }
-
+    return InnovationFrontService.principalMedia(innovation, this._translateService.currentLang, '120', '100');
   }
 
   public onClickDelete(event: Event, innovationId: string) {
