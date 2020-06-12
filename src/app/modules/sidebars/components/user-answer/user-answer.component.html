@@ -325,7 +325,10 @@
         <ng-container *ngIf="modalAnswer.created || modalAnswer.time_elapsed">
           <div class="text text-notify text-bold receive-wrapper">
             <span *ngIf="modalAnswer.created">
-              {{ 'ANSWER.RECEIVED.A' | translate }} {{ modalAnswer.created | date }} {{ 'ANSWER.RECEIVED.B' | translate }} {{ modalAnswer.created | slice: 11 : 16  }}
+              {{ 'ANSWER.RECEIVED.A' | translate }}
+              {{ createdDate(modalAnswer.created) }}
+              {{ 'ANSWER.RECEIVED.B' | translate }}
+              {{ createdTime(modalAnswer.created)  }}
             </span>
             <span *ngIf="modeAdmin && modalAnswer.created && modalAnswer.time_elapsed">&nbsp; • &nbsp;</span>
             <span *ngIf="modeAdmin && modalAnswer.time_elapsed">

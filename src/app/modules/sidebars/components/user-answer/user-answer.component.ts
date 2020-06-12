@@ -8,6 +8,8 @@ import { Tag } from '../../../../models/tag';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { Company } from '../../../../models/company';
 
+import * as momentTimeZone from 'moment-timezone';
+
 @Component({
   selector: 'app-user-answer',
   templateUrl: './user-answer.component.html',
@@ -258,6 +260,14 @@ export class UserAnswerComponent {
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ERROR');
     });
+  }
+
+  public createdDate(date: Date) {
+    return momentTimeZone(date).tz('Europe/Paris').format('MMM Do YYYY');
+  }
+
+  public createdTime(date: Date) {
+    return momentTimeZone(date).tz('Europe/Paris').format('h:mm a');
   }
 
   get meta(): any {

@@ -62,7 +62,6 @@ export class ExecutiveProfessionalComponent implements OnInit {
       this._allProfessionals = <Array<Professional>><unknown>this._config.list;
       this._top4Pro = this._allProfessionals.slice(0, 4);
       this._populateRestPro();
-      console.log(this._allProfessionals);
       /*const config = {
         fields: '_id firstName lastName jobTitle company country',
         _id: JSON.stringify({ $in: this._config.list })
