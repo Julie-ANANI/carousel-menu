@@ -214,20 +214,19 @@ export class ResponseService {
           const vote = parseInt(answer.answers[question.identifier][k], 10);
           if (Number.isInteger(idx) && Number.isInteger(vote) && idx < notesData.length) {
             // If user didn't vote this characteristic, default value will be 0.
-            notesData[idx].sum += vote / 5;
+            notesData[idx].sum += vote;
           }
         });
       });
-      const max = Math.max.apply(Math, notesData.map(function(o) { return o.sum; }));
-      // const min = Math.min.apply(Math, notesData.map(function(o) { return o.sum; }));
+
       notesData = notesData.map((noteData) => {
-          if (answers.length > 0) {
-            noteData.percentage = `${Math.round((((noteData.sum / answers.length) || 0) / max) * 100)}%`;
-          }
-          return noteData;
-        }).sort((noteA, noteB) => {
-          return noteB.sum - noteA.sum;
-        });
+        if (answers.length > 0) {
+          noteData.percentage = `${Math.round(((noteData.sum / answers.length) || 0) * 20)}%`;
+        }
+        return noteData;
+      }).sort((noteA, noteB) => {
+        return noteB.sum - noteA.sum;
+      });
 
     }
 
