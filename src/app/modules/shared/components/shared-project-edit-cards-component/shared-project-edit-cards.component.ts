@@ -98,7 +98,7 @@ export class SharedProjectEditCardsComponent {
   public updateUMIComment(event: { content: string }, cardProperty:  'summary' | 'problem' | 'solution', type: 'comment' | 'suggestion') {
     if (this.allowAdminToComment) {
       this.innovation.innovationCards[this._selectedCardIndex]['operatorComment'][cardProperty][type] = event.content;
-      this.notifyChanges();
+      this._innovationFrontService.setCardCommentNotifyChanges(true);
     }
   }
 
