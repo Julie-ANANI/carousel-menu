@@ -63,7 +63,9 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _showBanner = false;
 
-  private _bannerVideos: Array<Job> = [];
+  private _bannerVideo: Job = <Job>{};
+
+  private _videoJobs: Array<Job> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
@@ -123,12 +125,26 @@ export class AdminProjectStoryboardComponent implements OnInit {
   private _getVideoJob() {
     if (isPlatformBrowser(this._platformId) && this._innovation._id) {
       this._innovationService.getDeliverableJob(this._innovation._id).pipe(first()).subscribe((jobs) => {
-        this._bannerVideos = jobs;
-        this._showBanner = this._bannerVideos.length > 0;
+        this._videoJobs = jobs;
+        const _jobs: Array<Job> = this._jobs();
+        if (_jobs.length === 1) {
+          this._bannerVideo = _jobs[0];
+          this._showBanner = true;
+        } else if (_jobs.length > 1) {
+          const _index = _jobs.findIndex((video) => video.jobType ===  'VIDEO_FINAL');
+          if (_index !== -1) {
+            this._bannerVideo = _jobs[_index];
+            this._showBanner = true;
+          }
+        }
       }, (err: HttpErrorResponse) => {
         console.error(err);
       });
     }
+  }
+
+  private _jobs(): Array<Job> {
+    return this._videoJobs.filter((video) => video.jobType === 'VIDEO_TEST' || video.jobType === 'VIDEO_FINAL');
   }
 
   private _setSpinner(value: boolean) {
@@ -325,7 +341,6 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._deliverableService.registerJob(this._innovation.owner.id, this._innovation._id, this._selectedVideoType)
         .subscribe((job) => {
           this._isGeneratingVideo = false;
-          this._getVideoJob();
           this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
         }, (err: HttpErrorResponse) => {
@@ -370,6 +385,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
       console.log(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
+  }
+
+  get bannerBackground(): string {
+    return this._bannerVideo.status === 'ERROR' ? '#EA5858' : this._bannerVideo.status === 'DONE' ? '#2ECC71' : '#FFB300';
   }
 
   get isVideoDisabled(): boolean {
@@ -445,8 +464,12 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._showBanner = value;
   }
 
-  get bannerVideos(): Array<Job> {
-    return this._bannerVideos;
+  get bannerVideo(): Job {
+    return this._bannerVideo;
+  }
+
+  get videoJobs(): Array<Job> {
+    return this._videoJobs;
   }
 
 }
