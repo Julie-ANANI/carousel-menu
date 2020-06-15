@@ -85,9 +85,26 @@
               <div class="d-flex align-center">
 
                 <ul class="roadmap-wrapper">
-                  <ng-container *ngFor="let milestone of mission.milestoneDates">
-                    <li *ngIf="milestone.code !== 'RDO' && !milestone.code.includes('RDO')">
-                      {{ milestone.name }} : {{ milestone.dueDate | date:dateFormat }}
+                  <li *ngIf="mission.milestoneDates.length > 1" class="active">
+                    <span class="d-flex flex-d-column align-center">
+                      <span class="shape is-circle is-sm"></span>
+                      <span class="divider-vert active"></span>
+                    </span>
+                    {{ innovation.created | date:dateFormat }} - {{ 'COMMON.LABEL.CREATED' | translate }}
+                  </li>
+                  <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
+                    <li
+                      *ngIf="milestone.code !== 'RDO' && !milestone.code.includes('RDO')"
+                      [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
+                      <span class="d-flex flex-d-column align-center">
+                        <span class="shape is-circle is-sm"></span>
+                        <span
+                          *ngIf="i < mission.milestoneDates.length - 1"
+                          [ngClass]="{ 'active': isNextMilestoneReached(i+1) }"
+                          class="divider-vert">
+                        </span>
+                      </span>
+                      {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
                     </li>
                   </ng-container>
                 </ul>

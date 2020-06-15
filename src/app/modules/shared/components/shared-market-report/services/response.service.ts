@@ -268,8 +268,15 @@ export class ResponseService {
           }
         });
 
-        return { label: q.label, answers: filteredAnswers, absolutePercentage: '0%', relativePercentage: '0%', color: q.color, count: filteredAnswers.length,
-          positive: q.positive, identifier: q.identifier
+        return {
+          label: q.label,
+          answers: filteredAnswers,
+          absolutePercentage: '0%',
+          relativePercentage: '0%',
+          color: question.controlType === 'checkbox' ? '#FFB300' : q.color,
+          count: filteredAnswers.length,
+          positive: q.positive,
+          identifier: q.identifier
         }
 
       });

@@ -168,7 +168,7 @@ export class InnovationFrontService {
   }
 
 
-  /***
+  /*** Todo to remove this function
    * this function is to get the src with defined height and width to restrict the size of image.
    * @param width
    * @param height
@@ -193,7 +193,8 @@ export class InnovationFrontService {
 
         // it can be used to get the related src for an innovation.
         case 'default':
-          if (source.principalMedia && source.principalMedia.type === 'PHOTO' && source.principalMedia.cloudinary && source.principalMedia.cloudinary.public_id) {
+          if (source.principalMedia && source.principalMedia.type === 'PHOTO' && source.principalMedia.cloudinary
+            && source.principalMedia.cloudinary.public_id) {
             src = prefix + source.principalMedia.cloudinary.public_id + suffix;
           } else if (source.media.length > 0) {
             const index = source.media.findIndex((media: Media) => media.type === 'PHOTO');
@@ -255,6 +256,10 @@ export class InnovationFrontService {
     return new ScrapeHTMLTags().transform(text);
   }
 
+  public static defaultMedia(width = '240', height = '159'): string {
+    return `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
+  }
+
   /***
    * first it checks the principal media at the innovation level, if not found then check at the
    * card level based on the lang and return the url..
@@ -267,8 +272,7 @@ export class InnovationFrontService {
     if (innovation.principalMedia) {
       return InnovationFrontService._getMedia(innovation.principalMedia, width, height);
     } else if (innovation.innovationCards && innovation.innovationCards.length > 0) {
-      let _cardIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === lang);
-      const _card: InnovCard = _cardIndex !== -1 ? innovation.innovationCards[_cardIndex] : innovation.innovationCards[0];
+      const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'card');
       return InnovationFrontService.innovCardPrincipalMedia(_card, width, height);
     }
   }
@@ -286,20 +290,21 @@ export class InnovationFrontService {
       const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
       const _media: Media = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
       return InnovationFrontService._getMedia(_media, width, height);
+    } else {
+      return InnovationFrontService.defaultMedia(width, height);
     }
   }
 
   private static _getMedia(media: Media, width = '240', height = '159'): string {
-    const _defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
     let _src = '';
 
-    if (media.type && media.type === 'PHOTO') {
+    if (media && media.type && media.type === 'PHOTO') {
       _src = InnovationFrontService._imageSrc(media, width, height);
-    } else if (media.type && media.type === 'VIDEO') {
+    } else if (media && media.type && media.type === 'VIDEO') {
       _src = this._videoThumbnail(media);
     }
 
-    return _src === '' ? _defaultSrc : _src;
+    return _src === '' ? InnovationFrontService.defaultMedia(width, height) : _src;
   }
 
   private static _videoThumbnail(media: Media): string {
@@ -309,7 +314,7 @@ export class InnovationFrontService {
   private static _imageSrc(media: Media, width = '240', height = '159'): string {
     const _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
     const _suffix = '.jpg';
-    return _prefix + (media.cloudinary && media.cloudinary.public_id) + _suffix || '';
+    return media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
   }
 
   /***

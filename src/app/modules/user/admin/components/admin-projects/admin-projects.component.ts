@@ -193,8 +193,8 @@ export class AdminProjectsComponent implements OnInit {
           _width: '120px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
-        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '130px' },
         {_attrs: ['updated'], _name: 'Last Updated', _type: 'DATE_TIME', _isSortable: true, _width: '200px' },
+        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '130px' },
         {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},

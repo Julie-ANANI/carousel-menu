@@ -1,13 +1,8 @@
 <div *ngIf="!isLoading" class="animate-fade relative">
 
   <!-- banner to show last requested video status -->
-  <app-utility-banner [(showBanner)]="showBanner">
-    <ng-container *ngIf="bannerVideos[0]">
-      {{ bannerVideos[0].jobType }} is in status {{ bannerVideos[0].status }}.
-    </ng-container>
-    <ng-container *ngIf="bannerVideos[1]">
-      {{ bannerVideos[1].jobType }} is in status {{ bannerVideos[1].status }}.
-    </ng-container>
+  <app-utility-banner [(showBanner)]="showBanner" [background]="bannerBackground">
+    {{ bannerVideo.lastMessage && bannerVideo.lastMessage.message }}
   </app-utility-banner>
   <!-- /banner to show last requested video status -->
 
@@ -253,7 +248,7 @@
       <div class="flex-centered form-group p-top-20">
         <label class="form-radio is-inline">
           <input
-            [disabled]="isGeneratingVideo"
+            [disabled]="isGeneratingVideo || videoJobs.length >= 1"
             (change)="setVideo($event, 'VIDEO_TEST')"
             checked
             type="radio"
@@ -263,7 +258,7 @@
         </label>
         <label class="form-radio is-inline">
           <input
-            [disabled]="isGeneratingVideo"
+            [disabled]="isGeneratingVideo || videoJobs.length <= 1"
             (change)="setVideo($event, 'VIDEO_FINAL')"
             type="radio"
             name="video"

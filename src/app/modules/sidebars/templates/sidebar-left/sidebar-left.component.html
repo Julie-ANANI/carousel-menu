@@ -1,9 +1,8 @@
-<div id="sidebar-left" class="d-flex">
+<div id="sidebar-left">
 
   <!-- border -->
   <div class="sidebar-border"></div>
   <!-- /border -->
-
 
   <!-- toggle button -->
   <div class="absolute sidebar-toggle">
@@ -17,11 +16,11 @@
   </div>
   <!-- /toggle button -->
 
-
   <!-- sidebar -->
-  <div [ngClass]="sidebarTemplate.animate_state"
-       [ngStyle]="{ 'width': sidebarTemplate.animate_state === 'active' ? sidebarTemplate.size : '0' }"
-       class="sidebar is-not-responsive">
+  <div
+    [ngClass]="sidebarTemplate.animate_state"
+    [ngStyle]="{ 'width': sidebarTemplate.animate_state === 'active' ? sidebarTemplate.size : '0' }"
+    class="sidebar is-not-responsive">
     <div #content class="sidebar-container">
       <div [ngClass]="sidebarTemplate.animate_state" class="sidebar-body">
         <ng-content></ng-content>

@@ -66,11 +66,51 @@
         }
 
         .roadmap-wrapper {
-          font-size: $font-size-md;
+          display: flex;
+          flex-direction: column;
           margin: 0 25px 0 0;
+          list-style: none;
 
-          li:first-child {
-            margin-top: 0;
+          li {
+            display: flex;
+            font-size: 16px;
+            margin-top: -8px;
+            margin-left: -10px;
+
+            .shape.is-circle {
+              margin: 0 10px;
+              border: 2px solid $border-default-color;
+              background-color: $bg-white-color;
+            }
+
+            .divider-vert {
+              padding-top: 20px;
+              margin: -7px 0 0;
+              padding-bottom: 20px;
+
+              &::before {
+                border-left-width: 2px;
+              }
+
+              &.active::before {
+                border-color: $border-success-color;
+              }
+
+            }
+
+            &:first-child {
+              margin-top: 0;
+            }
+
+            &.active {
+
+              .shape.is-circle {
+                border-color: $bg-success-color;
+                background-color: lighten($bg-success-color, 42%);
+              }
+
+            }
+
           }
 
         }
