@@ -1,6 +1,7 @@
 @import "../../../../../style/framework/src/variables";
 
 #sidebar-left {
+  display: flex;
   top: 0;
   bottom: 0;
   left: 0;
@@ -9,6 +10,7 @@
   z-index: $zindexSidebar-0;
   background: $bg-white-color;
   box-shadow: 0 0 24px 0 rgba(0,0,0,0.32);
+  border-right: 2px solid $border-primary-color;
 
   .sidebar-border {
     min-height: 100vh;
@@ -19,13 +21,31 @@
 
   .sidebar-toggle {
     top: 35px;
-    right: -17px;
+    right: -16px;
     z-index: 1;
 
-    .button.is-action.is-circled {
-      width: 34px;
-      height: 34px;
-      padding: 0;
+    .button {
+
+      &.is-primary {
+        background-color: $bg-white-color;
+        color: $text-primary-color;
+        border-width: 2px;
+        transition: all 0.3s ease;
+        border-color: $border-primary-color;
+
+        &:hover {
+          background-color: $bg-primary-color;
+          color: $text-white-color;
+        }
+
+      }
+
+      &.is-action {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+      }
+
     }
 
   }
@@ -38,7 +58,7 @@
     transition: width 300ms cubic-bezier(0.2, 0, 0, 1) 0s;
 
     .sidebar-body {
-      padding: 50px 25px;
+      padding: 35px 25px;
       overflow-x: hidden;
       overflow-y: auto;
       opacity: 0;

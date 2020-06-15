@@ -1,6 +1,16 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SidebarInterface} from '../../interfaces/sidebar-interface';
 
+/***
+ * used this when you want to show the sidebar in the page itself.
+ * Provide the size in the number like '265' not '265px or 50%'.
+ * You also have to specify the size of the wrapper container.
+ * By default the sidebar size is 265 so the outside container
+ * size is 297. To calc just add the 32 to size the of the sidebar.
+ *
+ * Example: shared market report component.
+ */
+
 @Component({
   selector: 'app-sidebar-in-page',
   templateUrl: './sidebar-in-page.component.html',
@@ -11,7 +21,7 @@ export class SidebarInPageComponent {
 
   @Input() set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = {
-      size: value.size || '265',
+      size: value.size ? (Number(value.size) - 32).toString(10) : '265',
       animate_state: value.animate_state || 'inactive',
       type: value.type || ''
     };

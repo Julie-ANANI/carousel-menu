@@ -120,15 +120,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
   onScroll() {
     if (!this._tabClicked) {
       const _pageOffset = window.pageYOffset;
-      this._sections.forEach((section, index) => {
-        const _element = document.getElementById(section.name.toLowerCase());
-        if (_element) {
-          const _elementOffset = _element.offsetTop;
-          if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
-            this._activeView = section.name;
+      if (_pageOffset > 0) {
+        this._sections.forEach((section, index) => {
+          const _element = document.getElementById(section.name.toLowerCase());
+          if (_element) {
+            const _elementOffset = _element.offsetTop;
+            if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
+              this._activeView = section.name;
+            }
           }
-        }
-      });
+        });
+      } else {
+        this._activeView = this._sections[0].name;
+      }
     }
   }
 
@@ -564,7 +568,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   public canPerformAction(): boolean {
     switch (this._activeModalSection.level) {
-
       case 'COLLABORATOR':
         return this._collaboratorConsent && (!!this.selectedValue || !this.isSaving);
       case 'INNOVATION':
@@ -572,6 +575,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
       default:
         return !this.selectedValue || this.isSaving;
     }
+  }
+
+  public isMilestoneReached(date: Date): boolean {
+    return date ? new Date(date) <= new Date() : false;
+  }
+
+  public isNextMilestoneReached(index: number): boolean {
+    if (this._mission.milestoneDates[index] && this._mission.milestoneDates[index].dueDate) {
+      return new Date(this._mission.milestoneDates[index].dueDate) <= new Date();
+    }
+    return false;
   }
 
   get mission(): Mission {
