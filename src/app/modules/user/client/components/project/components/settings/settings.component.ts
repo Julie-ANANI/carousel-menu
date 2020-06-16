@@ -105,6 +105,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
+        if (this._mission.milestoneDates.length > 1) {
+          this._mission.milestoneDates = this._mission.milestoneDates.sort((a, b) => {
+            const _dateA: any = new Date(a.dueDate);
+            const _dateB: any = new Date(b.dueDate);
+            return _dateA - _dateB;
+          });
+        }
       }
 
       if (<ClientProject>this._innovation.clientProject && (<Mission>this._innovation.clientProject)._id) {

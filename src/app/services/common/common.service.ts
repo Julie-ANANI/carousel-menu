@@ -6,12 +6,15 @@ import { TranslateNotificationsService } from '../notifications/notifications.se
 @Injectable({ providedIn: 'root' })
 export class CommonService {
 
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateNotificationsService: TranslateNotificationsService) { }
+
   /***
    * this function is to return the color based on the length and limit.
    * @param textLength
    * @param limit
    */
-  static getLimitColor(textLength: number, limit: number): string {
+  public static getLimitColor(textLength: number, limit: number): string {
 
     const length = limit - textLength;
 
@@ -24,9 +27,6 @@ export class CommonService {
     }
 
   }
-
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateNotificationsService: TranslateNotificationsService) {}
 
   /*
    * range function (inspired from Python)
@@ -83,8 +83,6 @@ export class CommonService {
       return acc;
     }, {});
   }
-
-
 
   configToString(configObj: {[k: string]: any}): {[k: string]: string} {
     const config: {[k: string]: string} = {};
