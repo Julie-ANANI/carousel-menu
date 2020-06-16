@@ -270,6 +270,11 @@ export class UserAnswerComponent {
     return momentTimeZone(date).tz('Europe/Paris').format('h:mm a');
   }
 
+  get companyLength(): number {
+    return this._modalAnswer && (this._modalAnswer.company && this._modalAnswer.company.name && this._modalAnswer.company.name.length ||
+    this._modalAnswer.professional && this._modalAnswer.professional.company && this._modalAnswer.professional.company.length) || 30;
+  }
+
   get meta(): any {
     return this._modalAnswer.meta || {};
   }

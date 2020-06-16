@@ -410,8 +410,22 @@
       <!-- /PRINCIPAL_OBJECTIVE -->
 
       <!-- COLLABORATORS -->
-      <div *ngSwitchCase="'COLLABORATORS'" class="mxw-400 m-left-auto m-right-auto">
-        <div class="form-group">
+      <div *ngSwitchCase="'COLLABORATORS'">
+
+        <!-- Warning text -->
+        <div [ngStyle]="{'max-width': '530px'}" class="m-left-auto m-right-auto m-bottom-30">
+          <label class="form-checkbox p-left-30">
+            <input
+              [(ngModel)]="consent"
+              id="collaborator-consent"
+              type="checkbox">
+            <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
+            {{ 'CLIENT_PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
+          </label>
+        </div>
+        <!-- /Warning text -->
+
+        <div class="form-group mxw-400 m-left-auto m-right-auto">
           <label>
             <input
               [(ngModel)]="selectedValue"
@@ -419,12 +433,8 @@
               class="form-input is-sm is-shadowed"
               type="email">
           </label>
-          <!-- Warning text -->
-          <label class="form-checkbox">
-            <input [(ngModel)]="consent" type="checkbox">
-            <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
-          </label>
         </div>
+
       </div>
       <!-- /COLLABORATORS -->
 
