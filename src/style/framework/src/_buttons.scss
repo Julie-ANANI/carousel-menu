@@ -416,7 +416,6 @@
   &.is-info {
     @include button-default-variant($bg-meta-color);
 
-
     &.is-link, &.is-outlined {
 
       &.loading {

@@ -14,7 +14,9 @@
       <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
 
         <!-- title -->
-        <h2 class="title is-4 m-bottom-15">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
+        <h2 class="title is-4 m-bottom-15">
+          {{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}
+        </h2>
         <!-- /title -->
 
         <!-- buttons currentPage === 'PITCH' -->
@@ -24,7 +26,7 @@
           <button
             (click)="onViewExample($event)"
             *ngIf="isExampleAvailable"
-            class="button is-link is-sm m-bottom-15 p-no m-right-15"
+            class="button is-link is-sm m-bottom-15 p-no"
             id="btn-innovCard-example">
             <img
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg"
@@ -37,7 +39,8 @@
           <!-- card preview -->
           <button
             (click)="onViewInnovCard($event)"
-            class="button is-link is-sm m-bottom-15 p-no m-right-15"
+            [ngClass]="{'m-right-15': isDropdownLang}"
+            class="button is-link is-sm m-bottom-15 p-no"
             id="btn-innovCard-preview">
             <img
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
@@ -54,7 +57,7 @@
             <button
               (click)="onAddCard($event)"
               [disabled]="isAddingCard"
-              class="button p-no-left is-link is-sm"
+              class="button is-link is-sm p-no"
               id="btn-add-card">
               <i class="fas fa-plus-circle"></i>
               <ng-container *ngIf="activeInnovCard.lang === 'en'">
