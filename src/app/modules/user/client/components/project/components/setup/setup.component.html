@@ -22,8 +22,8 @@
 
           <!-- card example -->
           <button
-            *ngIf="isExampleAvailable"
             (click)="onViewExample($event)"
+            *ngIf="isExampleAvailable"
             class="button is-link is-sm m-bottom-15 p-no m-right-15"
             id="btn-innovCard-example">
             <img
@@ -52,10 +52,10 @@
           <!-- if only one lang then Add card lang -->
           <div *ngIf="canAddCard" class="m-bottom-15">
             <button
-              [disabled]="isAddingCard"
               (click)="onAddCard($event)"
+              [disabled]="isAddingCard"
               class="button p-no-left is-link is-sm"
-              id="btn-add-lang">
+              id="btn-add-card">
               <i class="fas fa-plus-circle"></i>
               <ng-container *ngIf="activeInnovCard.lang === 'en'">
                 {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
@@ -70,13 +70,13 @@
           <!-- has more than 2 lang -->
           <div *ngIf="isDropdownLang" class="dropdown m-bottom-15 is-right">
             <a class="button dropdown-toggle is-info" tabindex="0">
-              {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }}<i class="icon icon-caret"></i>
+              {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }} <i class="icon icon-caret"></i>
             </a>
             <ul class="menu">
-              <li *ngIf="activeInnovCard.lang === 'en'" (click)="onChangeLang($event)" class="menu-item">
+              <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'en'" class="menu-item">
                 {{ 'COMMON.LANG.FR' | translate }}
               </li>
-              <li *ngIf="activeInnovCard.lang === 'fr'" (click)="onChangeLang($event)" class="menu-item">
+              <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'fr'" class="menu-item">
                 {{ 'COMMON.LANG.EN' | translate }}
               </li>
             </ul>
@@ -89,12 +89,19 @@
         <!-- /buttons currentPage === 'PITCH' -->
 
         <!-- button currentPage === 'TARGETING' -->
-        <div *ngIf="currentPage === 'TARGETING'" class="animate-fade is-4 m-bottom-15">
+        <div *ngIf="currentPage === 'TARGETING' && saveChanges" class="animate-fade is-4 m-bottom-15">
           <button
+            (click)="onSaveProject($event)"
+            [disabled]="isSavingProject"
             [ngStyle]="{'min-width': '100px'}"
             class="button is-primary is-sm"
             id="btn-project-save">
-            {{ 'COMMON.BUTTON.SAVE' | translate }}
+            <ng-container *ngIf="isSavingProject; else defSaveText">
+              {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
+            </ng-container>
+            <ng-template #defSaveText>
+              {{ 'COMMON.BUTTON.SAVE' | translate }}
+            </ng-template>
           </button>
         </div>
         <!-- /button currentPage === 'TARGETING' -->
@@ -157,17 +164,22 @@
 
     <button
       (click)="closeModal()"
-      id="btn-cancel"
-      class="button modal-cancel">
+      class="button modal-cancel"
+      id="btn-cancel">
       {{ 'COMMON.BUTTON.CANCEL' | translate }}
     </button>
 
     <button
-      [disabled]="isAddingCard"
       (click)="addInnovationCard($event)"
+      [disabled]="isAddingCard"
       class="button is-community"
       id="btn-confirm-card">
-      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+      <ng-container *ngIf="isAddingCard; else defConfirmText">
+        {{ 'COMMON.BUTTON.ADDING_LANG' | translate }}
+      </ng-container>
+      <ng-template #defConfirmText>
+        {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+      </ng-template>
     </button>
 
   </footer>

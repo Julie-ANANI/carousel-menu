@@ -14,6 +14,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Mission } from '../../../../../models/mission';
 
+interface Tab {
+  route: string;
+  iconClass: string;
+  name: string;
+  tracking: string;
+}
+
 @Component({
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
@@ -29,7 +36,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _dateFormat = this._currentLang === 'fr' ? 'dd-MM-y' : 'y-MM-dd';
 
-  private _tabs: Array<{route: string, iconClass: string, name: string, tracking: string}> = [
+  private _tabs: Array<Tab> = [
     { route: 'settings', iconClass: 'fas fa-cog', name: 'SETTINGS_TAB', tracking: 'gtm-tabs-settings' },
     { route: 'setup', iconClass: 'fas fa-pencil-alt', name: 'SETUP_TAB', tracking: 'gtm-tabs-description' },
     { route: 'exploration', iconClass: 'fas fa-globe', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration' },
@@ -40,8 +47,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
   private _isLoading = true;
 
   private _currentPage = '';
-
-  private _saveChanges = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
@@ -68,10 +73,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._initCurrentTab();
-
-    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      this._saveChanges = !!response;
-    });
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
@@ -139,23 +140,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  /***
-   * this function will activate the tab and user has to save all the changes
-   * before going to another page.
-   * @param event
-   * @param route
-   */
   public navigateTo(event: Event, route: string) {
     event.preventDefault();
-
-    if (!this._saveChanges) {
-      this._currentPage = route;
-      this._initPageTitle();
-      this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-    }
-
+    this._currentPage = route;
+    this._initPageTitle();
+    this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
   }
 
   /***
@@ -201,7 +190,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     return this._dateFormat;
   }
 
-  get tabs(): Array<{ route: string; iconClass: string; name: string; tracking: string }> {
+  get tabs(): Array<Tab> {
     return this._tabs;
   }
 
