@@ -17,6 +17,13 @@ interface Banner {
   background: string;
 }
 
+interface Tab {
+  route: string;
+  iconClass: string;
+  name: string;
+  tracking: string;
+}
+
 @Component({
   selector: 'app-project-setup',
   templateUrl: 'setup.component.html',
@@ -25,14 +32,7 @@ interface Banner {
 
 export class SetupComponent implements OnInit, OnDestroy {
 
-  /*@Input() set project(value: Innovation) {
-    this._innovation = value;
-    this._canEdit = value.status === 'EDITING';
-  }*/
-
   private _innovation: Innovation = <Innovation>{};
-
-  // private _selectedInnovationIndex = 0;
 
   private _scrollOn = false;
 
@@ -42,17 +42,11 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _saveChanges = false;
 
-  // private _buttonSaveClass = 'save-disabled';
-
   private _sidebarTemplate: SidebarInterface = <SidebarInterface>{
     animate_state: 'inactive',
     title: 'SIDEBAR.TITLE.PREVIEW',
     size: '726px'
   };
-
-  // private _submitModal = false;
-
-  // private _canEdit = false;
 
   private _innovCardToPreview: InnovCard = <InnovCard>{};
 
@@ -64,21 +58,23 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _isBannerViewed = false;
 
-  activeCardIndex = 0;
+  private _activeCardIndex = 0;
 
-  activeInnovCard: InnovCard = <InnovCard>{};
+  private _activeInnovCard: InnovCard = <InnovCard>{};
 
-  tabs: Array<{route: string, iconClass: string, name: string, tracking: string}> = [
+  private _tabs: Array<Tab> = [
     { route: 'setup/pitch', iconClass: 'icon icon-check', name: 'PITCH_TAB', tracking: 'gtm-edit-market-targeting' },
     { route: 'setup/targeting', iconClass: 'icon icon-check', name: 'TARGETING_TAB', tracking: 'gtm-edit-market-targeting' },
     { route: 'setup/survey', iconClass: 'icon icon-check', name: 'SURVEY_TAB', tracking: 'gtm-edit-market-targeting' },
   ];
 
-  isExampleAvailable = false;
+  private _isExampleAvailable = false;
 
-  showCardModal = false;
+  private _showCardModal = false;
 
-  isAddingCard = false;
+  private _isAddingCard = false;
+
+  private _isSavingProject = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
@@ -92,17 +88,6 @@ export class SetupComponent implements OnInit, OnDestroy {
       }
     });
 
-    /*this._innovationFrontService.getSelectedInnovationIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: number) => {
-      this._selectedInnovationIndex = response;
-    });*/
-
-    /*this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      this._saveChanges = response;
-      if (this._saveChanges) {
-        this._buttonSaveClass = 'save-active';
-      }
-    });*/
-
   }
 
   ngOnInit() {
@@ -113,6 +98,10 @@ export class SetupComponent implements OnInit, OnDestroy {
       this._innovation = innovation;
       this._initBanner();
       this._initInnovCard();
+    });
+
+    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
     });
 
   }
@@ -132,7 +121,7 @@ export class SetupComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.get('5dbb0b0f07eacfdfae0e2aa1').pipe(first()).subscribe((response) => {
         this._innovationExample = response;
-        this.isExampleAvailable =  this._innovationExample.innovationCards && this._innovationExample.innovationCards.length !== 0;
+        this._isExampleAvailable =  this._innovationExample.innovationCards && this._innovationExample.innovationCards.length !== 0;
       }, (err: HttpErrorResponse) => {
         console.error(err);
       });
@@ -174,39 +163,27 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _initInnovCard() {
     if (this._innovation.innovationCards && this._innovation.innovationCards.length) {
-      this.activeInnovCard = this._innovation.innovationCards[this.activeCardIndex];
+      this._activeInnovCard = this._innovation.innovationCards[this._activeCardIndex];
     }
   }
 
   public onChangeLang(event: Event) {
     event.preventDefault();
     if (this._innovation.innovationCards && this._innovation.innovationCards.length > 1) {
-      this.activeCardIndex = this.activeCardIndex === 0 ? 1 : 0;
+      this._activeCardIndex = this._activeCardIndex === 0 ? 1 : 0;
       this._initInnovCard();
     }
   }
 
-  /***
-   * this function will activate the tab and user has to save all the changes
-   * before going to another page.
-   * @param event
-   * @param route
-   */
   public navigateTo(event: Event, route: string) {
     event.preventDefault();
-
-    if (!this._saveChanges) {
-      this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-    }
-
+    this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
   }
 
   public onViewExample(event: Event) {
     event.preventDefault();
 
-    const _lang = this._innovation.innovationCards[this.activeCardIndex].lang;
+    const _lang = this._innovation.innovationCards[this._activeCardIndex].lang;
     const _index = this._innovationExample.innovationCards.findIndex((card) => card.lang === _lang);
 
     this._innovCardToPreview = _index !== -1 ? this._innovationExample.innovationCards[_index]
@@ -226,7 +203,7 @@ export class SetupComponent implements OnInit, OnDestroy {
    */
   public onViewInnovCard(event: Event) {
     event.preventDefault();
-    this._innovCardToPreview = this._innovation.innovationCards[this.activeCardIndex];
+    this._innovCardToPreview = this._innovation.innovationCards[this._activeCardIndex];
     this._sidebarTemplate = {
       animate_state: 'active',
       title: 'SIDEBAR.TITLE.PREVIEW',
@@ -251,8 +228,8 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   public onAddCard(event: Event) {
     event.preventDefault();
-    if (this.canAddCard && !this.isAddingCard) {
-      this.showCardModal = true;
+    if (this.canAddCard && !this._isAddingCard) {
+      this._showCardModal = true;
     }
   }
 
@@ -263,109 +240,65 @@ export class SetupComponent implements OnInit, OnDestroy {
   public addInnovationCard(event: Event) {
     event.preventDefault();
 
-    if (this.canAddCard && !this.isAddingCard) {
-      this.isAddingCard = true;
-      const _lang = this.activeInnovCard.lang === 'en' ? 'fr' : 'en';
+    if (this.canAddCard && !this._isAddingCard) {
+      this._isAddingCard = true;
+      const _lang = this._activeInnovCard.lang === 'en' ? 'fr' : 'en';
       const _card = new InnovCard({lang: _lang});
-      this._innovationService.createInnovationCard(this._innovation._id, _card).pipe(first()).subscribe((innovationCard) => {
+      this._innovationService.createInnovationCard(this._innovation._id, _card).pipe(first()).subscribe((card) => {
         this._isBannerViewed = true;
-        this._innovation.innovationCards.push(innovationCard);
+        this._innovation.innovationCards.push(card);
         this._innovationFrontService.setInnovation(this._innovation);
-        this.isAddingCard = false;
+        this._isAddingCard = false;
+        this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
         }, (err: HttpErrorResponse) => {
-        this.isAddingCard = false;
-        console.error(err);
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isAddingCard = false;
+        console.error(err);
       });
     }
 
   }
 
   public closeModal() {
-    this.showCardModal = false;
+    this._showCardModal = false;
   }
 
   /***
-   * this function is called when the user wants to save the innovation changes.
+   * this function is called when the user click on the Save button.
+   * this is only for the Targeting page.
    * @param event
    */
-  /*onClickSave(event: Event) {
+  public onSaveProject(event: Event) {
     event.preventDefault();
 
-    if (this._saveChanges) {
-
-      this._innovationFrontService.completionCalculation(this._innovation);
-      const percentages = this._innovationFrontService.calculatedPercentages;
-
-      if (percentages) {
-        this._innovation.settings.completion = percentages.settingPercentage;
-        this._innovation.completion = percentages.totalPercentage;
-        percentages.innovationCardsPercentage.forEach((item: any) => {
-          const index = this._innovation.innovationCards.findIndex(card => card.lang === item.lang);
-          this._innovation.innovationCards[index].completion = item.percentage;
-        });
-      }
-
-      this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
-        this._buttonSaveClass = 'save-disabled';
+    if (this._saveChanges && !this._isSavingProject) {
+      this._isSavingProject = true;
+      this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe(() => {
         this._innovationFrontService.setNotifyChanges(false);
-        this._translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
-        }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+        this._isSavingProject = false;
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+        }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isSavingProject = false;
+        console.error(err);
       });
-
     }
 
-  }*/
-
-
-  /***
-   * this function is called when the user wants to submit his project,
-   * we also checked he saved the project or not then open the confirmation modal.
-   */
-  /*onClickSubmit() {
-    if (!this._saveChanges) {
-      this._submitModal = true;
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-    }
-  }*/
-
-
-  /***
-   * this function is called when the user clicks on the confirm button of the submit
-   * modal.
-   */
-  /*onClickConfirm() {
-    this._innovationService.save(this._innovation._id, {status: 'SUBMITTED'}).subscribe((response: Innovation) => {
-      this._router.navigate(['user/projects']);
-      this._translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
-      }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
-  }*/
-
-  /*getImageSrc(innovCard: InnovCard): string {
-    return InnovationFrontService.getMediaSrc(innovCard, 'default', '180', '119');
-  }*/
+  }
 
   get canAddCard(): boolean {
-    return this.activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length === 1
+    return this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length === 1
       && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
   }
 
   get isDropdownLang(): boolean {
-    return this.activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length > 1;
+    return this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length > 1;
   }
 
   get innovation(): Innovation {
     return this._innovation;
   }
-
-  /*get selectedInnovationIndex(): number {
-    return this._selectedInnovationIndex;
-  }*/
 
   get scrollOn(): boolean {
     return this._scrollOn;
@@ -375,10 +308,6 @@ export class SetupComponent implements OnInit, OnDestroy {
     return this._currentPage;
   }
 
-  /*get buttonSaveClass(): string {
-    return this._buttonSaveClass;
-  }*/
-
   set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = value;
   }
@@ -387,24 +316,8 @@ export class SetupComponent implements OnInit, OnDestroy {
     return this._sidebarTemplate;
   }
 
-  /*set submitModal(value: boolean) {
-    this._submitModal = value;
-  }*/
-
-  /*get submitModal(): boolean {
-    return this._submitModal;
-  }*/
-
-  /*get canEdit(): boolean {
-    return this._canEdit;
-  }*/
-
   get innovCardToPreview(): InnovCard {
     return this._innovCardToPreview;
-  }
-
-  get innovationExample(): Innovation {
-    return this._innovationExample;
   }
 
   get showBanner(): boolean {
@@ -417,6 +330,36 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get banner(): Banner {
     return this._banner;
+  }
+
+  get showCardModal(): boolean {
+    return this._showCardModal;
+  }
+
+  set showCardModal(value: boolean) {
+    this._showCardModal = value;
+  }
+  get isExampleAvailable(): boolean {
+    return this._isExampleAvailable;
+  }
+
+  get isSavingProject(): boolean {
+    return this._isSavingProject;
+  }
+  get saveChanges(): boolean {
+    return this._saveChanges;
+  }
+
+  get activeInnovCard(): InnovCard {
+    return this._activeInnovCard;
+  }
+
+  get tabs(): Array<Tab> {
+    return this._tabs;
+  }
+
+  get isAddingCard(): boolean {
+    return this._isAddingCard;
   }
 
   ngOnDestroy(): void {

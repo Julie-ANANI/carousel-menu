@@ -438,13 +438,13 @@
   <section class="modal-body">
 
     <!-- heading -->
-    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center m-bottom-30 text-bold">
+    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center m-bottom-50 text-bold">
       {{ 'COMMON.MODAL.TITLE_DELETE' | translate }}
     </h2>
     <!-- /heading -->
 
     <!-- text -->
-    <div [ngSwitch]="activeModalSection.name">
+    <div [ngSwitch]="activeModalSection.name" class="mxw-550 m-left-auto m-right-auto">
 
       <!-- COLLABORATORS -->
       <div *ngSwitchCase="'COLLABORATORS'">

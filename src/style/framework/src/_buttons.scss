@@ -318,7 +318,7 @@
   text-decoration: none;
   line-height: $line-height-sm;
   background: transparent;
-  border: $border-width solid transparent;
+  border: 2px solid transparent;
   font-size: $font-size-sm;
   color: $text-warning-color;
   border-radius: $border-radius;
@@ -415,7 +415,6 @@
 
   &.is-info {
     @include button-default-variant($bg-meta-color);
-
 
     &.is-link, &.is-outlined {
 
