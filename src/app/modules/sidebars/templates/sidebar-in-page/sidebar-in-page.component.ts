@@ -6,7 +6,8 @@ import {SidebarInterface} from '../../interfaces/sidebar-interface';
  * Provide the size in the number like '265' not '265px or 50%'.
  * You also have to specify the size of the wrapper container.
  * By default the sidebar size is 265 so the outside container
- * size is 297. To calc just add the 32 to size the of the sidebar.
+ * size is 297. To calc just add the 32 to size the of the sidebar you want
+ * to give.
  *
  * Example: shared market report component.
  */
@@ -21,7 +22,7 @@ export class SidebarInPageComponent {
 
   @Input() set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = {
-      size: value.size ? (Number(value.size) - 32).toString(10) : '265',
+      size: value.size || '265',
       animate_state: value.animate_state || 'inactive',
       type: value.type || ''
     };

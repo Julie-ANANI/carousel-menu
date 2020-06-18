@@ -221,15 +221,16 @@
 
             <ng-container *ngIf="!editCompany && !assignNewPro">
 
-              <span [ngClass]="{'popover': excludedCompanies.length > 0}">
+              <span [ngClass]="{'popover': excludedCompanies.length > 0,
+              'is-right': excludedCompanies.length > 0 && companyLength <= 30}">
                 {{ (modalAnswer.company.name || modalAnswer.professional?.company) | FormatText:true }}
-                <div *ngIf="excludedCompanies.length > 0" class="popover-container">
+                <div *ngIf="excludedCompanies.length > 0" class="popover-container is-sm">
                   <div
                     [ngStyle]="{ 'max-height': '300px', 'overflow-y': 'auto' }"
                     class="p-top-20 p-left-25 p-bottom-20 p-right-25">
                     <h3 class="text-center text-sm">Companies blacklisted by the client</h3>
                     <ul class="m-no">
-                      <li *ngFor="let company of excludedCompanies" class="m-top-1 text-xs">
+                      <li *ngFor="let company of excludedCompanies" class="m-top-h text-xs">
                         {{ company.name }}
                       </li>
                     </ul>
