@@ -272,6 +272,7 @@ export class SetupComponent implements OnInit, OnDestroy {
         this._innovation.innovationCards.push(innovationCard);
         this._innovationFrontService.setInnovation(this._innovation);
         this.isAddingCard = false;
+        this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
         }, (err: HttpErrorResponse) => {
         this.isAddingCard = false;
