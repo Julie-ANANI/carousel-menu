@@ -1,220 +1,177 @@
-<ng-container *ngIf="innovation">
+<div id="setup" class="relative p-bottom-50">
 
-  <section id="setup-component">
-
-    <!-- project under submitted status -->
-    <ng-container *ngIf="innovation.status === 'SUBMITTED'">
-      <div class="banner bg-success">
-        {{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}
-      </div>
-    </ng-container>
-
-    <!-- project under evaluating and reviewing status -->
-    <ng-container *ngIf="innovation.reviewing && innovation.status === 'EDITING'">
-      <div class="banner bg-success">
-        {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
-        {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}
-        {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
-      </div>
-    </ng-container>
-
-    <!-- project under evaluating status -->
-    <ng-container *ngIf="innovation.status === 'EVALUATING'">
-      <div class="banner bg-success">
-        {{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}
-      </div>
-    </ng-container>
-
-    <!-- project under done status message -->
-    <ng-container *ngIf="innovation.status === 'DONE'">
-      <div class="banner bg-success">
-        {{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}
-      </div>
-    </ng-container>
-
-    <!-- header section -->
-    <div class="section-header section-light-pad rm-pad-bottom" [ngClass]="{ 'sticky': scrollOn }">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="flex-between content-wrapper">
-
-          <!-- title -->
-          <h2 class="title-primary">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
-
-          <!-- buttons -->
-          <ul class="flex-start button-wrapper">
-            <li>
-              <button class="btn ghost-primary gtm-print-card" (click)="onClickPrint($event)">
-                {{ 'COMMON.BUTTON.PRINT' | translate }}
-              </button>
-            </li>
-            <li>
-              <button class="btn ghost-primary gtm-preview-card" (click)="onClickPreview($event)">
-                {{ 'COMMON.BUTTON.PREVIEW' | translate }}
-              </button>
-            </li>
-            <li [ngClass]="buttonSaveClass">
-              <div class="shape is-circle"><i class="fas fa-save"></i></div>
-              <button class="btn btn-primary ghost-primary" (click)="onClickSave($event)">
-                {{ 'COMMON.BUTTON.SAVE' | translate }}
-              </button>
-            </li>
-            <li>
-              <button
-                [disabled]="innovation.status !== 'EDITING'"
-                (click)="onClickSubmit()"
-                class="btn btn-primary gtm-submit-project">
-                {{ 'COMMON.BUTTON.SUBMIT' | translate }}
-              </button>
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    </div>
-    <!-- /header section -->
-
-    <!-- tab section -->
-    <div class="section-tabs">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <ul class="tab">
-          <li class="tab-item">
-            <a [ngClass]="{ 'active': currentPage === 'pitch' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'pitch')">
-              <div class="shape is-circle is-md pitch-check" [ngClass]=" { 'complete': getPitchCompletion(innovation) === 100 } ">{{ getPitchCompletion(innovation) }}%</div>
-              {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
-            </a>
-          </li>
-          <li class="tab-item">
-            <a [ngClass]="{ 'active': currentPage === 'targeting' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'targeting')">
-              <div class="shape is-circle is-md targeting-check" [ngClass]=" { 'complete': innovation?.settings.completion === 100 } ">{{ innovation?.settings.completion }}%</div>
-              {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
-            </a>
-          </li>
-          <li class="tab-item">
-            <a [ngClass]="{ 'active': currentPage === 'survey' }" class="gtm-edit-market-targeting" (click)="setCurrentTab($event, 'survey')">
-              <div class="shape is-circle is-md survey-check" [ngClass]=" { 'complete': innovation?.quizId } "><i class="fas fa-check"></i></div>
-              {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- /tab section -->
-
-    <!-- different section -->
-    <div class="p-top-25">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-
-        <!-- pitch -->
-        <div *ngIf="currentPage === 'pitch'">
-
-          <!-- example -->
-          <ng-container *ngIf="innovationExample && innovationExample.innovationCards && innovation.status === 'EDITING'">
-            <div class="text-center text-md" [ngStyle]="{ 'line-height': '1' }">
-              {{ 'PROJECT_MODULE.SETUP.EXAMPLE_TEXT' | translate }}
-              <button
-                (click)="onClickExample($event)"
-                class="button p-left-1 text-md is-link">
-                {{ 'PROJECT_MODULE.SETUP.INNOVATION_EXAMPLE' | translate }}.
-              </button>
-            </div>
-          </ng-container>
-          <!-- /example -->
-
-
-          <div class="p-top-25">
-            <app-shared-project-edit-cards
-              [innovation]="innovation"
-              [isEditable]="canEdit">
-            </app-shared-project-edit-cards>
-          </div>
-
-        </div>
-
-
-        <!-- targeting -->
-        <div *ngIf="currentPage === 'targeting'" class="p-top-25">
-          <app-shared-project-settings [project]="innovation" [editable]="canEdit"></app-shared-project-settings>
-        </div>
-
-
-        <!-- survey -->
-        <div *ngIf="currentPage === 'survey'" class="p-top-25">
-          <app-survey [innovation]="innovation"></app-survey>
-        </div>
-
-      </div>
-    </div>
-    <!-- /different section -->
-
-  </section>
-
-
-  <!-- innovation view sidebar -->
-  <app-sidebar [(template)]="sidebarValue">
-    <sidebar-innovation-preview [projectCard]="innovationToView"></sidebar-innovation-preview>
-  </app-sidebar>
-  <!-- /innovation view sidebar -->
-
-</ng-container>
-
-
-<!-- modal to ask user to sure about submitting the project -->
-<app-utility-modal [(showModal)]="submitModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
-
-  <section class="modal-body">
-    <span>{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.MODAL.CONTENT' | translate }}</span>
-  </section>
-
-  <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-  </footer>
-
-</app-utility-modal>
-<!-- /modal to ask user to sure about submitting the project -->
-
-
-<!-- print innovation -->
-<ng-container *ngIf="innovation">
-  <div id="innovation-card-print">
-
-    <!-- column 1 -->
-    <div class="column-1">
-
-      <h3 class="title">{{ innovation.innovationCards[selectedInnovationIndex].title }}</h3>
-
-      <div class="summary-text" [innerHTML]="innovation.innovationCards[selectedInnovationIndex].summary"></div>
-
-      <div class="image-wrapper">
-        <img [src]="getImageSrc(innovation.innovationCards[selectedInnovationIndex])" alt=" ">
-      </div>
-
-      <div class="advantage-wrapper">
-        <h3 class="title">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h3>
-        <ul class="advantages">
-          <li *ngFor="let advantage of innovation.innovationCards[selectedInnovationIndex].advantages">
-            {{ advantage.text | FormatText }}
-          </li>
-        </ul>
-      </div>
-
-    </div>
-    <!-- /column 1 -->
-
-    <!-- column 2 -->
-    <div class="column-2">
-      <h3 class="title">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
-      <div class="issue-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].problem"></div>
-    </div>
-    <!-- /column 2 -->
-
-    <!-- column 3 -->
-    <div class="column-3">
-      <h3 class="title">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
-      <div class="solution-text" [innerHtml]="innovation.innovationCards[selectedInnovationIndex].solution"></div>
-    </div>
-    <!-- /column 3 -->
-
+  <!-- banner project message  -->
+  <div *ngIf="showBanner">
+    <app-utility-banner [(showBanner)]="showBanner" [background]="banner.background" [position]="'relative'">
+      {{ banner.message | translate }}
+    </app-utility-banner>
   </div>
-</ng-container>
-<!-- /print innovation -->
+  <!-- banner project message  -->
+
+  <!-- header -->
+  <section [ngClass]="{ 'sticky': scrollOn }" class="p-top-25">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
+
+        <!-- title -->
+        <h2 class="title is-4 m-bottom-15">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
+        <!-- /title -->
+
+        <!-- buttons currentPage === 'PITCH' -->
+        <div *ngIf="currentPage === 'PITCH'" class="d-flex align-center animate-fade is-4">
+
+          <!-- card example -->
+          <button
+            *ngIf="isExampleAvailable"
+            (click)="onViewExample($event)"
+            class="button is-link is-sm m-bottom-15 p-no m-right-15"
+            id="btn-innovCard-example">
+            <img
+              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg"
+              alt=""
+              class="icon-left">
+            {{ 'COMMON.BUTTON.EXAMPLE' | translate }}
+          </button>
+          <!-- card example -->
+
+          <!-- card preview -->
+          <button
+            (click)="onViewInnovCard($event)"
+            class="button is-link is-sm m-bottom-15 p-no m-right-15"
+            id="btn-innovCard-preview">
+            <img
+              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
+              alt=""
+              class="icon-left">
+            {{ 'COMMON.BUTTON.PREVIEW' | translate }}
+          </button>
+          <!-- card preview -->
+
+          <!-- card lang -->
+
+          <!-- if only one lang then Add card lang -->
+          <div *ngIf="canAddCard" class="m-bottom-15">
+            <button
+              [disabled]="isAddingCard"
+              (click)="onAddCard($event)"
+              class="button p-no-left is-link is-sm"
+              id="btn-add-lang">
+              <i class="fas fa-plus-circle"></i>
+              <ng-container *ngIf="activeInnovCard.lang === 'en'">
+                {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
+              </ng-container>
+              <ng-container *ngIf="activeInnovCard.lang === 'fr'">
+                {{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
+              </ng-container>
+            </button>
+          </div>
+          <!-- /if only one lang then Add card lang -->
+
+          <!-- has more than 2 lang -->
+          <div *ngIf="isDropdownLang" class="dropdown m-bottom-15 is-right">
+            <a class="button dropdown-toggle is-info" tabindex="0">
+              {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }}<i class="icon icon-caret"></i>
+            </a>
+            <ul class="menu">
+              <li *ngIf="activeInnovCard.lang === 'en'" (click)="onChangeLang($event)" class="menu-item">
+                {{ 'COMMON.LANG.FR' | translate }}
+              </li>
+              <li *ngIf="activeInnovCard.lang === 'fr'" (click)="onChangeLang($event)" class="menu-item">
+                {{ 'COMMON.LANG.EN' | translate }}
+              </li>
+            </ul>
+          </div>
+          <!-- /has more than 2 lang -->
+
+          <!-- /card lang -->
+
+        </div>
+        <!-- /buttons currentPage === 'PITCH' -->
+
+        <!-- button currentPage === 'TARGETING' -->
+        <div *ngIf="currentPage === 'TARGETING'" class="animate-fade is-4 m-bottom-15">
+          <button
+            [ngStyle]="{'min-width': '100px'}"
+            class="button is-primary is-sm"
+            id="btn-project-save">
+            {{ 'COMMON.BUTTON.SAVE' | translate }}
+          </button>
+        </div>
+        <!-- /button currentPage === 'TARGETING' -->
+
+      </div>
+    </div>
+  </section>
+  <!-- /header -->
+
+  <!-- tabs -->
+  <section>
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <ul class="tab">
+        <li *ngFor="let tab of tabs" class="tab-item">
+          <a
+            (click)="navigateTo($event, tab.route)"
+            [id]="tab.route"
+            [ngClass]="tab.tracking"
+            [routerLink]="tab.route"
+            routerLinkActive="active">
+            <i *ngIf="isComplete(tab.name)" [ngClass]="tab.iconClass"></i>
+            {{ 'PROJECT_MODULE.SETUP.' + tab.name | translate }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <!-- /tabs -->
+
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+
+<!-- sidebar to preview innovation card -->
+<app-sidebar [(template)]="sidebarTemplate">
+  <app-sidebar-innovCard-preview [innovCard]="innovCardToPreview"></app-sidebar-innovCard-preview>
+</app-sidebar>
+<!-- /sidebar to preview innovation card -->
+
+
+<!-- modal to innovation card add lang -->
+<app-utility-modal-empty *ngIf="showCardModal" [(showModal)]="showCardModal">
+
+  <!-- body -->
+  <section class="modal-body p-bottom-40">
+    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
+      {{ 'PROJECT_MODULE.SETUP.ADD_PROJECT_MODAL.HEADING' | translate }}
+    </h2>
+    <div class="mxw-550 m-right-auto m-left-auto">
+      {{ 'PROJECT_MODULE.SETUP.ADD_PROJECT_MODAL.INFO' | translate }}
+    </div>
+  </section>
+  <!-- body -->
+
+  <!-- footer -->
+  <footer class="modal-footer justify-center">
+
+    <button
+      (click)="closeModal()"
+      id="btn-cancel"
+      class="button modal-cancel">
+      {{ 'COMMON.BUTTON.CANCEL' | translate }}
+    </button>
+
+    <button
+      [disabled]="isAddingCard"
+      (click)="addInnovationCard($event)"
+      class="button is-community"
+      id="btn-confirm-card">
+      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+    </button>
+
+  </footer>
+  <!-- /footer -->
+
+</app-utility-modal-empty>
+<!-- modal to innovation card add lang -->

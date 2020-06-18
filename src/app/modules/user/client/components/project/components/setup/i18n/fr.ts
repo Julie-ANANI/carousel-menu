@@ -3,24 +3,31 @@ import { SURVEY } from '../components/survey/i18n/fr';
 export const SETUP = {
   'TITLE': 'Détails du projet',
 
+  'ADD_PROJECT_MODAL': {
+    'HEADING': 'Ajouter la langue du projet',
+    'INFO': 'Nous vous conseillons de rédiger votre projet dans votre langue maternelle, notre équipe se chargera ' +
+      'de traduire en français ou en anglais.'
+  },
+
   'SAVE_PROJECT': 'Sauvegarder',
+
   'SUBMIT_PROJECT': 'Soumettre',
 
+  'BANNER_MESSAGES': {
+    'SUBMITTED': 'Le projet est en cours d\'examen par notre équipe. Nous reviendrons bientôt !',
+    'REVIEWING': 'Le projet doit être modifié. Veuillez lire nos commentaires/suggestions pour chaque section de ' +
+      'présentation respectivement.',
+    'EVALUATING': 'Il n\'est plus possible de modifier du projet car l\'exploration marché est en cours.',
+    'DONE': 'Le test de marché complet du projet est disponible.'
+  },
+
   'MESSAGE': {
-    'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': {
       'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },
-    'EVALUATING': 'Il n\'est plus possible de modifier votre projet car l\'exploration marché est en cours.',
-    'REVIEWING': {
-      'A': 'Votre projet doit être modifié. Veuillez',
-      'B': ' lire ',
-      'C': 'nos commentaires pour améliorer votre fiche.'
-    },
     'PREVIEW_MODE': 'La synthèse partielle de votre innovation est disponible.',
-    'DONE': 'La synthèse complète de votre projet est disponible.',
   },
 
   'PITCH_TAB': 'Description',

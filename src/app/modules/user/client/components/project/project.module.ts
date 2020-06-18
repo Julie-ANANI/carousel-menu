@@ -11,12 +11,13 @@ import { SurveyComponent } from './components/setup/components/survey/survey.com
 import { HistoryProjectComponent } from './components/history/history.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DocumentsComponent } from './components/documents/documents.component';
+import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
-import { SidebarInnovationPreviewModule } from '../../../../sidebars/components/sidebar-innovation-preview/sidebar-innovation-preview.module';
+import { SidebarInnovCardPreviewModule } from '../../../../sidebars/components/sidebar-innovCard-preview/sidebar-innovCard-preview.module';
 import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';
@@ -30,32 +31,36 @@ import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primar
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
+import { BannerModule } from '../../../../utility/banner/banner.module';
+import { SidebarProjectPitchModule } from '../../../../sidebars/components/sidebar-project-pitch/sidebar-project-pitch.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ProjectRoutingModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        SidebarModule,
-        SharedProjectSettingsModule,
-        SharedProjectEditCardsModule,
-        SidebarInnovationPreviewModule,
-        TableModule,
-        SharedWorldmapModule,
-        SidebarUserAnswerModule,
-        SharedMarketReportModule,
-        MessageTemplate1Module,
-        ModalModule,
-        FormsModule,
-        SharedTextZoneModule,
-        ObjectivesSecondaryModule,
-        ModalEmptyModule,
-        ObjectivesPrimaryModule,
-        AngularMyDatePickerModule,
-        AutoSuggestionModule,
-        NgxPageScrollModule
-    ],
+  imports: [
+    CommonModule,
+    ProjectRoutingModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    SidebarModule,
+    SharedProjectSettingsModule,
+    SharedProjectEditCardsModule,
+    SidebarInnovCardPreviewModule,
+    TableModule,
+    SharedWorldmapModule,
+    SidebarUserAnswerModule,
+    SharedMarketReportModule,
+    MessageTemplate1Module,
+    ModalModule,
+    FormsModule,
+    SharedTextZoneModule,
+    ObjectivesSecondaryModule,
+    ModalEmptyModule,
+    ObjectivesPrimaryModule,
+    AngularMyDatePickerModule,
+    AutoSuggestionModule,
+    NgxPageScrollModule,
+    BannerModule,
+    SidebarProjectPitchModule
+  ],
   declarations: [
     ProjectComponent,
     SetupComponent,
@@ -63,7 +68,8 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
     SurveyComponent,
     HistoryProjectComponent,
     SettingsComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    PitchComponent
   ],
   exports: [
     ProjectComponent

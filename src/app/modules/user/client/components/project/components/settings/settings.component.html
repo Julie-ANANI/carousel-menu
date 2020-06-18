@@ -265,10 +265,10 @@
 
             <!-- LANGUAGE -->
             <div *ngSwitchCase="'LANGUAGE'">
-
               <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper">
                 <span class="m-right-40">
-                  {{ 'CLIENT_PROJECT_SETTINGS.PROJECT_IN' | translate }} {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
+                  {{ 'CLIENT_PROJECT_SETTINGS.PROJECT_IN' | translate }}
+                  {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
                 </span>
                 <span
                   *ngIf="innovation.innovationCards.length > 1"
@@ -277,22 +277,6 @@
                     {{ 'COMMON.BUTTON.DELETE' | translate }}
                 </span>
               </div>
-
-              <div *ngIf="section.isEditable && innovation.innovationCards.length < 2" class="text-link m-top-15">
-                <ng-container *ngFor="let card of innovation.innovationCards">
-                  <ng-container *ngIf="card.lang ==='en'; else english">
-                    <span (click)="addInnovationCard(section, 'fr')">
-                      <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
-                    </span>
-                  </ng-container>
-                  <ng-template #english>
-                    <span (click)="addInnovationCard(section, 'en')">
-                      <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
-                    </span>
-                  </ng-template>
-                </ng-container>
-              </div>
-
             </div>
             <!-- /LANGUAGE -->
 

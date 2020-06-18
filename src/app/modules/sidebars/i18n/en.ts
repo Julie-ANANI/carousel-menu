@@ -25,6 +25,13 @@ export const SIDEBAR = {
 
   'LABELS': {
     'CSV-IMPORT': 'Import csv file'
+  },
+
+  'INNOV_CARD_PREVIEW': {
+    'BOT_MESSAGE': 'To preview the innovation you must have to describe it first.',
+    'BENEFITS': 'Benefits',
+    'ISSUE': 'Issue',
+    'SOLUTION': 'Solution',
   }
 
 };

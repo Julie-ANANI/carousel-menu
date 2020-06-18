@@ -7,6 +7,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
  * Input:
  * 1. background: pass the value to change the background of the banner.
  * 2. showBanner: true to show banner
+ * 3. position: default is absolute means it does not affect the space of the
+ * parent container. You can also use other position css value.
  *
  * Implementation:
  * <app-utility-banner [(showBanner)]="value" [background]="'#EA5858'">
@@ -26,6 +28,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class BannerComponent {
 
   @Input() background = '#FFB300';
+
+  @Input() position = 'absolute';
 
   @Input() set showBanner(value: boolean) {
     this._showBanner = value;

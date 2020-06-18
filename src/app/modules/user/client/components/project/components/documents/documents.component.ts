@@ -87,12 +87,10 @@ export class DocumentsComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService) { }
 
   ngOnInit() {
-
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
       this._initDocuments();
     });
-
   }
 
   private _initDocuments() {
@@ -118,7 +116,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
         case 'XLSX':
         case 'PDF':
-          document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'EVALUATING');
+          document.isExportable = this._innovation.previewMode || (this._innovation.status
+            && this._innovation.status === 'EVALUATING');
           break;
 
       }

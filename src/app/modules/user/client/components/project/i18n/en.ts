@@ -11,7 +11,6 @@ export const PROJECT_MODULE = {
   'DOCUMENTS_TAB': 'Documents',
   'SETTINGS_TAB': 'Settings',
 
-
   'ADD_COLLABORATORS': 'Add a collaborator email',
   'ADD_COLLABORATORS_PLACEHOLDER': 'Add collaborator email',
 

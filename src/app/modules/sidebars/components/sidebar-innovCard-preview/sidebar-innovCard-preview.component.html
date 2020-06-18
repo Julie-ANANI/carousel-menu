@@ -1,0 +1,92 @@
+<div class="p-top-25" id="innovCard-preview">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- nothing to show -->
+    <div *ngIf="innovCard.problem === '' && innovCard.summary === ''&& innovCard.title === ''
+    && innovCard.advantages.length === 0" class="p-top-50">
+      <message-template-1 [widthMax]="'321px'">
+        {{ 'SIDEBAR.INNOV_CARD_PREVIEW.BOT_MESSAGE' | translate }}
+      </message-template-1>
+    </div>
+    <!-- /nothing to show -->
+
+    <!-- innovation card -->
+    <div *ngIf="innovCard.problem !== '' || innovCard.summary !== '' || innovCard.title !== ''
+    || innovCard.advantages.length !== 0">
+
+      <!-- title -->
+      <h1 class="title m-no-top m-bottom-10">{{ innovCard.title }}</h1>
+      <!-- /title -->
+
+      <!-- batch date -->
+      <h6 *ngIf="getDate" class="text-notify m-bottom-10 text-sm">
+        Planned: {{ getDate | date: dateFormat }}
+      </h6>
+      <!-- /batch date -->
+
+      <!-- summary -->
+      <section
+        *ngIf="innovCard.summary"
+        class="text-wrapper p-top-10"
+        [innerHTML]="innovCard.summary">
+      </section>
+      <!-- /summary -->
+
+      <!-- medias -->
+      <section
+        *ngIf="innovCard.media && innovCard.media.length > 0"
+        [ngStyle]="{'margin-bottom': '-20px'}"
+        class="d-flex justify-center flex-wrap p-top-25">
+        <div *ngFor="let media of innovCard.media" class="media-wrapper">
+
+          <!-- image -->
+          <img
+            *ngIf="media.type && media.type === 'PHOTO' && imageSrc(media)"
+            [ngStyle]="{ 'width': '180px', 'height': '119px' }"
+            [src]="imageSrc(media)"
+            alt="">
+          <!-- /image -->
+
+          <!-- video -->
+          <iframe
+            *ngIf="media.type && media.type === 'VIDEO'"
+            [ngStyle]="{ 'left': 'O', 'width': '180px', 'border-width': '0' }"
+            [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+            height="119px">
+          </iframe>
+          <!-- /video -->
+
+        </div>
+      </section>
+      <!-- /medias -->
+
+      <!-- benefits -->
+      <section *ngIf="innovCard.advantages && innovCard.advantages.length > 0" class="p-top-20">
+        <h2 class="title">{{ 'SIDEBAR.INNOV_CARD_PREVIEW.BENEFITS' | translate }}</h2>
+        <ul class="m-no-bottom m-top-3">
+          <li *ngFor="let advantage of innovCard.advantages" [ngStyle]="{'font-size': '15px'}" class="m-top-1">
+            {{ advantage.text | FormatText }}
+          </li>
+        </ul>
+      </section>
+      <!-- /benefits -->
+
+      <!-- issue -->
+      <section *ngIf="innovCard.problem" class="p-top-20">
+        <h2 class="title">{{ 'SIDEBAR.INNOV_CARD_PREVIEW.ISSUE' | translate }}</h2>
+        <div class="text-wrapper" [innerHTML]="innovCard.problem"></div>
+      </section>
+      <!-- /issue -->
+
+      <!-- solution -->
+      <section *ngIf="innovCard.solution" class="p-top-20">
+        <h2 class="title">{{ 'SIDEBAR.INNOV_CARD_PREVIEW.SOLUTION' | translate }}</h2>
+        <div class="text-wrapper" [innerHTML]="innovCard.solution"></div>
+      </section>
+      <!-- /solution -->
+
+    </div>
+    <!-- /innovation card -->
+
+  </div>
+</div>

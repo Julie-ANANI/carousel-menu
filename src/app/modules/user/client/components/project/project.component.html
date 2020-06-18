@@ -29,7 +29,7 @@
           <ul class="tab is-fullwidth">
             <li *ngFor="let tab of tabs" class="tab-item">
               <a
-                (click)="setCurrentTab($event, tab.route)"
+                (click)="navigateTo($event, tab.route)"
                 [id]="tab.route"
                 [ngClass]="tab.tracking"
                 [routerLink]="tab.route"
@@ -47,7 +47,6 @@
   </section>
   <!-- /header -->
 
-
   <!-- different pages -->
   <section [ngSwitch]="currentPage">
 
@@ -62,8 +61,8 @@
     <!-- /settings -->
 
     <!-- setup -->
-    <div *ngSwitchCase="'setup'" class="p-bottom-50">
-      <app-project-setup *ngIf="innovation._id" [project]="innovation"></app-project-setup>
+    <div *ngSwitchCase="'setup'">
+      <app-project-setup></app-project-setup>
     </div>
     <!-- /setup -->
 

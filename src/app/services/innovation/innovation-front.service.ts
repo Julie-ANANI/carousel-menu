@@ -47,6 +47,8 @@ export class InnovationFrontService {
 
   private _innovationObj: BehaviorSubject<Innovation> = new BehaviorSubject<Innovation>(<Innovation>{});
 
+  private _activeCardIndex: Subject<number> = new Subject<number>();
+
   /*
     We are calculating the percentage for the project.
    */
@@ -299,7 +301,7 @@ export class InnovationFrontService {
     let _src = '';
 
     if (media && media.type && media.type === 'PHOTO') {
-      _src = InnovationFrontService._imageSrc(media, width, height);
+      _src = InnovationFrontService.imageSrc(media, width, height);
     } else if (media && media.type && media.type === 'VIDEO') {
       _src = this._videoThumbnail(media);
     }
@@ -311,7 +313,7 @@ export class InnovationFrontService {
     return media.video && media.video.thumbnail || '';
   }
 
-  private static _imageSrc(media: Media, width = '240', height = '159'): string {
+  public static imageSrc(media: Media, width = '240', height = '159'): string {
     const _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
     const _suffix = '.jpg';
     return media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
@@ -320,7 +322,7 @@ export class InnovationFrontService {
   /***
    * This function is to get and returns the questions from the innovation.
    */
-  static presets(innovation: Innovation): Array<Question> {
+  public static presets(innovation: Innovation): Array<Question> {
 
     let questions: Array<Question> = [];
 
@@ -334,7 +336,7 @@ export class InnovationFrontService {
 
   }
 
-  /***
+  /*** Todo remove this
    * these function is to set and get selected innovation index.
    * @param value
    */
@@ -347,8 +349,20 @@ export class InnovationFrontService {
   }
 
   /***
+   * these function is to set and get active innovation card index.
+   * @param value
+   */
+  setActiveCardIndex(value: number) {
+    this._activeCardIndex.next(value);
+  }
+
+  activeCardIndex(): Subject<number> {
+    return this._selectedInnovationIndex;
+  }
+
+  /***
    * this function is called when there are some changes and we want to notify
-   * in the component that changes are to be saved or not.
+   * in the component that changes are to be saved or not for the innovation.
    * @param value
    */
   setNotifyChanges(value: boolean) {

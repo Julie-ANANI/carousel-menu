@@ -25,7 +25,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _mission: Mission = <Mission>{};
 
-  private _currentLang = this._translateService.currentLang;
+  private _currentLang = this._translateService.currentLang || 'en';
 
   private _dateFormat = this._currentLang === 'fr' ? 'dd-MM-y' : 'y-MM-dd';
 
@@ -55,19 +55,19 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
-    this._setSpinner(true);
     this._initPageTitle();
-  }
-
-  ngOnInit() {
-
-    this._initCurrentTab();
 
     this._activatedRoute.params.subscribe((params) => {
       if (params['projectId']) {
+        this._setSpinner(true);
         this._getInnovation(params['projectId']);
       }
     });
+
+  }
+
+  ngOnInit() {
+    this._initCurrentTab();
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       this._saveChanges = !!response;
@@ -145,13 +145,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
    * @param event
    * @param route
    */
-  public setCurrentTab(event: Event, route: string) {
+  public navigateTo(event: Event, route: string) {
     event.preventDefault();
 
     if (!this._saveChanges) {
       this._currentPage = route;
       this._initPageTitle();
-      this._router.navigate([route], {relativeTo: this._activatedRoute});
+      this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
     } else {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     }

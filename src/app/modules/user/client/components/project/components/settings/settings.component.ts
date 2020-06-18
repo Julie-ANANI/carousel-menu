@@ -99,7 +99,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService) { }
 
   ngOnInit() {
-
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
 
@@ -120,7 +119,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       this._initSections();
     });
-
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -207,7 +205,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           case 'LANGUAGE':
             section.isVisible = !!(this._innovation.innovationCards && this._innovation.innovationCards.length > 0);
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED') || !!(this._isAdmin);
             break;
 
           case 'AUTHORISATION':
@@ -514,25 +511,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._isDeleting = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
-  }
-
-  /***
-   * this is to create the new innovationCard and push it to the innovation.
-   * @param section
-   * @param lang
-   */
-  public addInnovationCard(section: Section, lang: string) {
-    if (section.isEditable) {
-      this._innovationService.createInnovationCard(this._innovation._id, new InnovCard({lang: lang}))
-        .pipe(first()).subscribe((innovationCard) => {
-          this._innovation.innovationCards.push(innovationCard);
-          this._innovationFrontService.setInnovation(this._innovation);
-          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      })
-    }
   }
 
   /***

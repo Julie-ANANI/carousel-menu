@@ -248,6 +248,7 @@ export const COMMON = {
     'GENERATING_FILE': 'generating the file...',
     'GENERATING_VIDEO': 'generating the video...',
     'CONTACT_COMMERCIAL': 'Contact commercial',
+    'EXAMPLE': 'Example'
   },
 
   'PROJECT': {

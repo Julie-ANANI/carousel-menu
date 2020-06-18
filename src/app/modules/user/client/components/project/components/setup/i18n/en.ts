@@ -3,25 +3,29 @@ import { SURVEY } from '../components/survey/i18n/en';
 export const SETUP = {
   'TITLE': 'Project details',
 
+  'ADD_PROJECT_MODAL': {
+    'HEADING': 'Add project language',
+    'INFO': 'We advise you to write your project in your mother tongue, our team will translate into French or English.'
+  },
+
   'SAVE_PROJECT': 'Save',
 
   'SUBMIT_PROJECT': 'Submit',
 
+  'BANNER_MESSAGES': {
+    'SUBMITTED': 'The project is under review by our team. We\'ll come back soon!',
+    'REVIEWING': 'The project needs to be modified. Please read our comments/suggestions for each pitch section respectively.',
+    'EVALUATING': 'The market exploration is under progress. You can\'t make changes in the project anymore.',
+    'DONE': 'The complete market test of the project is available.'
+  },
+
   'MESSAGE': {
-    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
     'EDITING': {
       'A': 'Please finish',
       'B': 'setup of your project',
       'C': 'and submit it.'
     },
-    'EVALUATING': 'Market exploration is under progress. You can\'t make changes in your project anymore.',
-    'REVIEWING': {
-      'A': 'Your project needs to be modified. Please ',
-      'B': 'read',
-      'C': 'our comments to improve the description.'
-    },
     'PREVIEW_MODE': 'The partial synthesis of your project is available.',
-    'DONE': 'The complete synthesis of your project is available.',
   },
 
   'PITCH_TAB': 'Pitch',
@@ -54,6 +58,6 @@ export const SETUP = {
     'your solution according to the UMI methodology. To help you in the writing, you can rely on the advice associated ' +
     'with each section and this',
 
-  'INNOVATION_EXAMPLE': 'innovation example'
+  'INNOVATION_EXAMPLE': 'innovation example',
 
 };

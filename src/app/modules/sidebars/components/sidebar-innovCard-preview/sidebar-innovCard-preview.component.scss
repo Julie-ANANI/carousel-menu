@@ -1,0 +1,26 @@
+@import "../../../../../style/framework/src/variables";
+
+#innovCard-preview {
+
+  .title {
+    color: #3E5164;
+    font-weight: $font-weight-normal;
+    font-family: Oswald, sans-serif;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 26px;
+  }
+
+  .text-wrapper {
+    padding-top: 5px;
+    font-size: 15px;
+    color: $text-dark-color;
+    margin-bottom: -4px;
+  }
+
+  .media-wrapper {
+    display: inline-flex;
+    margin: 10px 10px 20px 10px;
+  }
+
+}

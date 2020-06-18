@@ -6,18 +6,14 @@ import { Media } from '../../../../models/media';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 
 @Component({
-  selector: 'sidebar-innovation-preview',
-  templateUrl: './sidebar-innovation-preview.component.html',
-  styleUrls: ['./sidebar-innovation-preview.component.scss']
+  selector: 'app-sidebar-innovCard-preview',
+  templateUrl: './sidebar-innovCard-preview.component.html',
+  styleUrls: ['./sidebar-innovCard-preview.component.scss']
 })
 
-export class SidebarInnovationPreviewComponent {
+export class SidebarInnovCardPreviewComponent {
 
-  @Input() set projectCard(value: InnovCard) {
-    if (value) {
-      this._innovationCard = value;
-    }
-  }
+  @Input() innovCard: InnovCard = <InnovCard>{};
 
   @Input() set batchInfo(data: any) {
     if (data) {
@@ -45,17 +41,15 @@ export class SidebarInnovationPreviewComponent {
 
   private _date: Date;
 
-  private _innovationCard: InnovCard;
+  constructor(private _domSanitizer1: DomSanitizer,
+              private _translateService: TranslateService) { }
 
-  constructor(private domSanitizer1: DomSanitizer,
-              private translateService: TranslateService) {}
-
-  getSrc(media: Media): string {
-    return InnovationFrontService.getMediaSrc(media, 'mediaSrc', '180', '119');
+  public imageSrc(media: Media): string {
+    return InnovationFrontService.imageSrc(media, '180', '119');
   }
 
   get domSanitizer() {
-    return this.domSanitizer1;
+    return this._domSanitizer1;
   }
 
   get getDate() {
@@ -63,11 +57,7 @@ export class SidebarInnovationPreviewComponent {
   }
 
   get dateFormat(): string {
-    return this.translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
-  }
-
-  get innovationCard(): InnovCard {
-    return this._innovationCard;
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
   }
 
 }

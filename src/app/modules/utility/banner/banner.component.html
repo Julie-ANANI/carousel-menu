@@ -1,4 +1,8 @@
-<div *ngIf="showBanner" [ngStyle]="{'background-color': background}" class="banner animate-fade is-7" id="banner">
+<div
+  *ngIf="showBanner"
+  [ngStyle]="{'background-color': background, 'position': position}"
+  class="banner animate-fade is-7"
+  id="banner">
 
   <div class="m-right-15">
     <ng-content></ng-content>

@@ -1,136 +1,46 @@
 @import "../../../../../../../../style/framework/src/variables";
-@import "../../../../../../../../style/framework/src/mixins";
 
-#innovation-card-print {
-  display: none;
-}
+#setup {
 
-#setup-component {
+  .dropdown {
 
-  .section-header {
+    .button {
+      padding-top: 13px;
+      padding-bottom: 13px;
+      font-size: 16px;
+      border-radius: 2px;
 
-    .content-wrapper {
-      flex-wrap: wrap;
-
-      .title-primary {
-        font-size: 1.35rem;
-      }
-
-      .button-wrapper {
-        list-style: none;
-        flex-wrap: wrap;
-        margin-top: 0;
-        margin-left: 0;
-        margin-bottom: 0.75rem;
-
-        li {
-          margin-top: 0;
-          margin-right: $unit-5;
-          margin-bottom: $unit-2;
-          position: relative;
-
-          &:last-child {
-            margin-right: 0;
-          }
-
-        }
-
-        .shape {
-          position: absolute;
-          right: 0;
-          margin-top: -12px;
-          margin-right: -11px;
-          visibility: hidden;
-          z-index: $zindex-0;
-
-          &.is-circle {
-            width: 25px;
-            height: 25px;
-          }
-
-          .fas {
-            color: $white-color;
-          }
-
-        }
-
-        .save-disabled {
-
-          .ghost-primary {
-            border-color: $button-border-color !important;
-            color: $button-disabled-text-color !important;
-            background-color: $button-disabled-bg-color !important;
-            cursor: not-allowed;
-          }
-
-        }
-
-        .save-active {
-
-          .ghost-primary {
-            border-color: $success-color !important;
-            color: #262831 !important;
-
-            &:hover {
-              background-color: $hover-background-color !important;
-              box-shadow: none;
-            }
-
-          }
-
-          .shape {
-            background-color: $success-color !important;
-            border-color: $success-color;
-            visibility: visible;
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
-  .section-tabs {
-
-    .tab {
-
-      .tab-item {
-        min-width: 150px;
-        margin-right: $unit-5;
-      }
-
-      .pitch-check, .targeting-check, .objectives-check, .survey-check {
-        background: $border-default-color;
-        color: $text-dark-color;
-        font-weight: $font-weight-medium;
-        font-size: 10px;
-      }
-
-      .fa-check {
+      i {
+        margin-left: 10px;
         margin-right: 0;
-        font-size: $font-size-sm;
-      }
-
-      .complete {
-        @include control-transition();
-        background-color: $success-color;
-        color: $white-color;
-        border-color: $success-color;
+        font-size: 28px;
+        height: auto;
+        margin-top: -4px;
       }
 
     }
 
   }
 
+  .tab {
+
+    .tab-item {
+      min-width: 150px;
+      margin-right: 20px;
+
+      i {
+        color: $text-success-color;
+      }
+
+    }
+
+  }
 
 }
-
 
 @media (min-width: $size-md) {
 
-  #setup-component {
+  #setup {
 
     .sticky {
       position: sticky;

@@ -1,11 +1,10 @@
 @import "../../../../style/framework/src/variables";
 
 #banner {
-  position: absolute;
   top: 0;
   width: 100%;
   padding: 8px 12px;
   z-index: 1;
   flex-wrap: wrap;
-  font-weight: normal;
+  font-weight: $font-weight-medium;
 }

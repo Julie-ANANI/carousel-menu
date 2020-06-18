@@ -5,6 +5,7 @@ import { InnovationFrontService } from '../../../../services/innovation/innovati
 import { Innovation } from '../../../../models/innovation';
 import { Subject } from 'rxjs';
 import {GeographySettings} from "../../../../models/innov-settings";
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -16,7 +17,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
     this._innovation = value;
-    console.log(value.settings)
+    this.getCommentSections();
     this._setTargetCountries();
   }
 
@@ -32,7 +33,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this._adminSide = value;
   }
 
-  private _innovation: Innovation = {};
+  private _innovation: Innovation = <Innovation>{};
 
   private _canEdit = false;
 
@@ -56,7 +57,13 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
               private innovationFrontService: InnovationFrontService) { }
 
   ngOnInit(): void {
-    this.getCommentSections();
+    this.innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._innovation = innovation;
+      if (this._innovation._id) {
+        this.getCommentSections();
+        this._canEdit = this._innovation.status === 'EDITING';
+      }
+    });
   }
 
   private getCommentSections() {
