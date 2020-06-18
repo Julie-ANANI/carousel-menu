@@ -11,7 +11,7 @@ export class DashboardService {
   public getOperators(): Observable<{result: Array<User>}> {
     return this._http.get<{result: Array<User>}>('/user', {
       params: {
-        search: '{"isOperator":true}',
+        'isOperator': 'true',
         fields: 'firstName,lastName,email,domain'
       }
     });

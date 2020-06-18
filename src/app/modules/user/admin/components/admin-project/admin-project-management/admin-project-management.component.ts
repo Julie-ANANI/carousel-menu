@@ -102,6 +102,8 @@ export class AdminProjectManagementComponent implements OnInit {
     .getAll({ roles: 'super-admin', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'})
     .map((response: any) => response.result);
 
+  public missionTeam: string[];
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
@@ -130,6 +132,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
     if (this._project.mission) {
       this._mission = <Mission>this._project.mission;
+      this.missionTeam = this._mission.team.map((user: User) => user.id);
     }
 
     this.projectDomains = [{name: 'umi'},
@@ -250,24 +253,16 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  public missionsSuggestions = (searchString: string): Observable<Array<{name: string}>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'mission'});
-  }
-
-  public autocompleteMissionListFormatter = (data: Mission): string => {
-    return data.name;
-  }
-
-  public selectMission(event: Mission) {
-    this.edit.mission = false;
-    this._innovationService.save(this._project._id, {mission: event._id}).subscribe((data: any) => {
-      this._project = data;
-      this._project.mission = event;
-      this._mission = event;
-      this._notificationsService.success('ERROR.SUCCESS' , 'The project has been updated');
-    }, (err: any) => {
-      this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
-    });
+  public updateMissionTeam(selectedOperator: User) {
+    const operatorIndex = this._mission.team.findIndex((operator: User) => operator.id === selectedOperator['_id']);
+    if (operatorIndex > -1) {
+      this._mission.team.splice(operatorIndex, 1);
+      this.missionTeam.splice(operatorIndex, 1);
+    } else {
+      selectedOperator.id = selectedOperator['_id'];
+      this._mission.team.push(selectedOperator);
+      this.missionTeam.push(selectedOperator['_id']);
+    }
   }
 
   /***
@@ -310,7 +305,7 @@ export class AdminProjectManagementComponent implements OnInit {
     this._project.owner = this.owner;
     this.save('Le propriétaire à été mis à jour avec succès !');
     this._saveClientProject('OWNER');
-    this._saveMission('OWNER');
+    this.saveMission('OWNER');
   }
 
   /***
@@ -334,7 +329,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   changeMissionType(type: MissionType) {
     this._mission.type = type;
-    this._saveMission();
+    this.saveMission();
   }
 
   changeMissionObjective(objective: string) {
@@ -355,7 +350,7 @@ export class AdminProjectManagementComponent implements OnInit {
         fr: this._missionObjectives[index].fr.label,
       };
 
-      this._saveMission();
+      this.saveMission();
 
     }
 
@@ -694,7 +689,8 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  private _saveMission(type?: string) {
+  private saveMission(type?: string) {
+    this.edit.missionTeam = false;
     if (this._mission._id) {
 
       if (type === 'OWNER') {
@@ -702,7 +698,6 @@ export class AdminProjectManagementComponent implements OnInit {
       }
 
       this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
-        this._mission = mission;
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       }, (err: HttpErrorResponse) => {
         console.log(err);
@@ -777,7 +772,7 @@ export class AdminProjectManagementComponent implements OnInit {
       this.save('The project has been validated successfully');
       if (this._mission && this._mission._id && this._mission.type === 'USER') {
         this._mission.type = 'CLIENT';
-        this._saveMission();
+        this.saveMission();
       }
     }
   }

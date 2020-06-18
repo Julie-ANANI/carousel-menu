@@ -26,6 +26,7 @@ export const PROJECT = {
   },
 
   'CAMPAIGNS': 'Campaigns',
+  'MISSION_TEAM': 'Mission team',
 
   'CAMPAIGN': {
     'CAMPAIGN': 'Campaign',
