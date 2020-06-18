@@ -100,41 +100,43 @@
 
       </div>
 
-      <!-- Mission -->
+      <!-- Mission Team -->
       <div class="project-line">
         <label class="form-switch" for="editMission">
           <input
             type="checkbox"
             name="editMission"
             id="editMission"
-            [checked]="!!project.mission"
+            [checked]="mission.team.length"
             disabled>
           <i class="form-icon"></i>
-          {{ 'COMMON.PROJECT.MISSION' | translate }}
+          {{ 'PROJECT.MISSION_TEAM' | translate }}
         </label>
-        <label *ngIf="!edit.mission" class="form-label">{{project.mission?.name}}</label>
-
-        <!-- if we click on update we show an autoComplete of all users -->
-        <div class="form-group" [formGroup]="formData" *ngIf="edit.mission">
-          <label class="form-label" for="project-mission"></label>
-          <input
-            auto-complete
-            class="form-input"
-            formControlName="mission"
-            id="project-mission"
-            type="text"
-            [min-chars]="2"
-            [list-formatter]="autocompleteMissionListFormatter"
-            [source]="missionsSuggestions"
-            [accept-user-input]="false"
-            (valueChanged)="selectMission($event)"
-            [attr.placeholder]="'COMMON.PROJECT.MISSION' | translate">
+        <ul *ngIf="!edit.missionTeam" class="form-label">
+          <li *ngFor="let operator of mission.team">
+            {{ operator.firstName }} {{ operator.lastName }}
+          </li>
+        </ul>
+        <div *ngIf="edit.missionTeam">
+          <label class="form-checkbox" *ngFor="let operator of operators">
+            <input
+              type="checkbox"
+              [name]="operator.id"
+              (change)="updateMissionTeam(operator)"
+              [id]="operator.id"
+              [checked]="missionTeam.indexOf(operator['_id']) > -1">
+            <i class="form-icon"></i> {{ operator.firstName }} {{ operator.lastName }}
+          </label>
         </div>
 
-        <button class="btn btn-xs ghost-edit"
-                [ngClass]="{'showOnHover': !edit.mission}"
-                (click)="edit.mission = !edit.mission">
-          {{(edit.mission ? 'COMMON.BUTTON.CANCEL' : 'COMMON.CHANGE') | translate}}
+
+        <button class="btn btn-xs ghost-edit showOnHover" *ngIf="!edit.missionTeam"
+                (click)="edit.missionTeam = true">
+          {{ 'COMMON.CHANGE' | translate}}
+        </button>
+        <button class="btn btn-xs ghost-edit" *ngIf="edit.missionTeam"
+                (click)="saveMission()">
+          {{ 'COMMON.SAVE' | translate}}
         </button>
 
       </div>
