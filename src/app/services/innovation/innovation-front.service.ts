@@ -225,7 +225,7 @@ export class InnovationFrontService {
    * @param required
    */
   public static currentLangInnovationCard(innovation: Innovation, currentLang = 'en', required: string): any {
-    if (innovation && innovation.innovationCards && currentLang && required) {
+    if (innovation && innovation.innovationCards && required) {
       let _cardIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
       const _card: InnovCard = _cardIndex !== -1 ? innovation.innovationCards[_cardIndex] : innovation.innovationCards[0];
 

@@ -5,12 +5,12 @@ import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
-import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
+import { Mission } from '../../../../../../../models/mission';
+import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
 
 interface Banner {
   message: string;
@@ -42,15 +42,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _saveChanges = false;
 
-  private _sidebarTemplate: SidebarInterface = <SidebarInterface>{
-    animate_state: 'inactive',
-    title: 'SIDEBAR.TITLE.PREVIEW',
-    size: '726px'
-  };
-
   private _innovCardToPreview: InnovCard = <InnovCard>{};
-
-  private _innovationExample: Innovation = <Innovation>{};
 
   private _banner: Banner = <Banner>{};
 
@@ -76,6 +68,8 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _isSavingProject = false;
 
+  private _quizExample = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
               private _innovationService: InnovationService,
@@ -92,10 +86,11 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._getCurrentPage();
-    this._getExampleInnovation();
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
+      this._quizExample = MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
+        'HELP_QUIZ', this._activeInnovCard.lang);
       this._initBanner();
       this._initInnovCard();
     });
@@ -114,17 +109,6 @@ export class SetupComponent implements OnInit, OnDestroy {
       this._currentPage = (_params > 0 ? _value.substring(0, _params) : _value).toUpperCase();
     } else {
       this._currentPage = 'PITCH';
-    }
-  }
-
-  private _getExampleInnovation() {
-    if (isPlatformBrowser(this._platformId)) {
-      this._innovationService.get('5dbb0b0f07eacfdfae0e2aa1').pipe(first()).subscribe((response) => {
-        this._innovationExample = response;
-        this._isExampleAvailable =  this._innovationExample.innovationCards && this._innovationExample.innovationCards.length !== 0;
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-      });
     }
   }
 
@@ -163,6 +147,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _initInnovCard() {
     if (this._innovation.innovationCards && this._innovation.innovationCards.length) {
+      this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
       this._activeInnovCard = this._innovation.innovationCards[this._activeCardIndex];
     }
   }
@@ -180,35 +165,22 @@ export class SetupComponent implements OnInit, OnDestroy {
     this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
   }
 
+  /***
+   * when the user clicks on the Example button to view the example of the quiz of the
+   * selected objective
+   * @param event
+   */
   public onViewExample(event: Event) {
     event.preventDefault();
-
-    const _lang = this._innovation.innovationCards[this._activeCardIndex].lang;
-    const _index = this._innovationExample.innovationCards.findIndex((card) => card.lang === _lang);
-
-    this._innovCardToPreview = _index !== -1 ? this._innovationExample.innovationCards[_index]
-      : this._innovationExample.innovationCards[0];
-
-    this._sidebarTemplate = {
-      animate_state: 'active',
-      title: 'SIDEBAR.TITLE.EXAMPLE',
-      size: '726px'
-    };
-
+    window.open(this._quizExample, '_blank');
   }
 
   /***
-   * this function is called when the user wants to preview the innovation card.
+   * this function is called when the user clicks on the Preview button.
    * @param event
    */
-  public onViewInnovCard(event: Event) {
+  public onViewPreview(event: Event) {
     event.preventDefault();
-    this._innovCardToPreview = this._innovation.innovationCards[this._activeCardIndex];
-    this._sidebarTemplate = {
-      animate_state: 'active',
-      title: 'SIDEBAR.TITLE.PREVIEW',
-      size: '726px'
-    };
   }
 
   public isComplete(tabName: string) {
@@ -308,14 +280,6 @@ export class SetupComponent implements OnInit, OnDestroy {
     return this._currentPage;
   }
 
-  set sidebarTemplate(value: SidebarInterface) {
-    this._sidebarTemplate = value;
-  }
-
-  get sidebarTemplate(): SidebarInterface {
-    return this._sidebarTemplate;
-  }
-
   get innovCardToPreview(): InnovCard {
     return this._innovCardToPreview;
   }
@@ -360,6 +324,10 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get isAddingCard(): boolean {
     return this._isAddingCard;
+  }
+
+  get quizExample(): string {
+    return this._quizExample;
   }
 
   ngOnDestroy(): void {

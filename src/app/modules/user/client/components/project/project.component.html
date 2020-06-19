@@ -17,7 +17,7 @@
           <div *ngIf="mission.objective && mission.objective.principal && mission.objective.principal['en']
           && mission.objective.principal['en'] !== 'Other'">
             <div [hidden]="isLoading" class="objective-wrapper animate-fade">
-              <i [ngClass]="iconClass(mission.objective.principal['en'])"></i>
+              <i [ngClass]="iconClass"></i>
               {{ mission.objective.principal[currentLang] }}
             </div>
           </div>

@@ -13,6 +13,7 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Mission } from '../../../../../models/mission';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 
 interface Tab {
   route: string;
@@ -78,6 +79,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
       this._innovation = innovation;
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
+      } else {
+        this._mission = <Mission>{};
       }
     });
 
@@ -147,35 +150,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
   }
 
-  /***
-   * this will return the icon base don the primary objective.
-   * @param objective
-   */
-  public iconClass(objective: string): string {
-    switch (objective) {
-
-      case 'Detecting needs / trends':
-        return 'fas fa-compass';
-
-      case 'Validating market needs':
-        return 'fas fa-globe';
-
-      case 'Sourcing innovative solutions / partners':
-        return 'fas fa-book-open';
-
-      case 'Validating the interest of my solution':
-        return 'fas fa-lightbulb';
-
-      case 'Discovering new applications / markets':
-        return 'fas fa-map-signs';
-
-      case 'Targeting the most receptive application / market':
-        return 'fas fa-crosshairs';
-
-      case 'Optimizing my value proposition':
-        return 'fas fa-sync-alt';
-
-    }
+  get iconClass(): string {
+    return MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
   }
 
   get mission(): Mission {

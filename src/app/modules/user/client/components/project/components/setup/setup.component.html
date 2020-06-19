@@ -25,9 +25,9 @@
           <!-- card example -->
           <button
             (click)="onViewExample($event)"
-            *ngIf="isExampleAvailable"
+            *ngIf="quizExample"
             class="button is-link is-sm m-bottom-15 p-no"
-            id="btn-innovCard-example">
+            id="btn-quiz-example">
             <img
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg"
               alt=""
@@ -36,19 +36,19 @@
           </button>
           <!-- card example -->
 
-          <!-- card preview -->
+          <!-- preview -->
           <button
-            (click)="onViewInnovCard($event)"
+            (click)="onViewPreview($event)"
             [ngClass]="{'m-right-15': isDropdownLang}"
             class="button is-link is-sm m-bottom-15 p-no"
-            id="btn-innovCard-preview">
+            id="btn-preview">
             <img
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
               alt=""
               class="icon-left">
             {{ 'COMMON.BUTTON.PREVIEW' | translate }}
           </button>
-          <!-- card preview -->
+          <!-- preview -->
 
           <!-- card lang -->
 
@@ -139,13 +139,6 @@
   </div>
 
 </div>
-
-
-<!-- sidebar to preview innovation card -->
-<app-sidebar [(template)]="sidebarTemplate">
-  <app-sidebar-innovCard-preview [innovCard]="innovCardToPreview"></app-sidebar-innovCard-preview>
-</app-sidebar>
-<!-- /sidebar to preview innovation card -->
 
 
 <!-- modal to innovation card add lang -->
