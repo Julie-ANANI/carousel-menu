@@ -57,7 +57,6 @@ export class SetupComponent implements OnInit, OnDestroy {
   private _tabs: Array<Tab> = [
     { route: 'setup/pitch', iconClass: 'icon icon-check', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
     { route: 'setup/targeting', iconClass: 'icon icon-check', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
-    { route: 'setup/survey', iconClass: 'icon icon-check', name: 'QUESTIONNAIRE', tracking: 'gtm-edit-market-targeting' },
   ];
 
   private _isExampleAvailable = false;

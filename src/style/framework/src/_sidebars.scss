@@ -38,7 +38,7 @@
     z-index: 2;
     top: 0;
     min-height: 74px;
-    background: $bg-draft-color;
+    background: linear-gradient(90deg, #23303C 0%, #4F5D6B 100%);
 
     .sidebar-title {
       color: $white-color;

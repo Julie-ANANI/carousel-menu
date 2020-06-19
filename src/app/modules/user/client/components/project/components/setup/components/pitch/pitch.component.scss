@@ -1,0 +1,67 @@
+@import "../../../../../../../../../../style/framework/src/variables";
+
+#pitch {
+  display: flex;
+  min-height: calc(100vh - 446px);
+
+  .main-wrapper {
+    flex: 1;
+
+    .content-wrapper {
+      max-width: 666px;
+      padding: 35px 80px 50px 80px;
+
+      .subtitle {
+        font-size: 18px;
+        color: #9E9E9E;
+        font-weight: normal;
+        margin-bottom: 35px;
+      }
+
+    }
+
+    &.is-description {
+      background-color: #F5F5F5;
+
+      .content-wrapper {
+        margin-left: auto;
+
+        .field-wrapper {
+          min-height: 65px;
+          max-width: 471px;
+          border: 2px solid #C3CBD3;
+          margin-bottom: 25px;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 3px;
+          padding: 25px;
+
+          &.is-not-filled {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: #000000;
+            background-color: transparent;
+            border-style: dashed;
+          }
+
+        }
+
+      }
+
+    }
+
+    &.is-questionnaire {
+      background-color: $bg-white-color;
+
+      .content-wrapper {
+        margin-right: auto;
+      }
+
+    }
+
+  }
+
+}

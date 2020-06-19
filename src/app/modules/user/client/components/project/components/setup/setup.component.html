@@ -1,4 +1,4 @@
-<div id="setup" class="relative p-bottom-50">
+<div id="setup" class="relative">
 
   <!-- banner project message  -->
   <div *ngIf="showBanner">
@@ -10,112 +10,114 @@
 
   <!-- header -->
   <section [ngClass]="{ 'sticky': scrollOn }" class="p-top-25">
-    <div class="column col-sm-12 col-11 col-mx-auto">
-      <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
+    <div class="container grid-2xl fluid">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+        <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
 
-        <!-- title -->
-        <h2 class="title is-4 m-bottom-15">
-          {{ 'PROJECT_SETUP.TITLE' | translate }}
-        </h2>
-        <!-- /title -->
+          <!-- title -->
+          <h2 class="title is-4 m-bottom-15">
+            {{ 'PROJECT_SETUP.TITLE' | translate }}
+          </h2>
+          <!-- /title -->
 
-        <!-- buttons currentPage === 'PITCH' -->
-        <div *ngIf="currentPage === 'PITCH'" class="d-flex align-center animate-fade is-4">
+          <!-- buttons currentPage === 'PITCH' -->
+          <div *ngIf="currentPage === 'PITCH'" class="d-flex align-center animate-fade is-4">
 
-          <!-- card example -->
-          <button
-            (click)="onViewExample($event)"
-            *ngIf="quizExample"
-            class="button is-link is-sm m-bottom-15 p-no"
-            id="btn-quiz-example">
-            <img
-              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg"
-              alt=""
-              class="icon-left">
-            {{ 'COMMON.BUTTON.EXAMPLE' | translate }}
-          </button>
-          <!-- card example -->
-
-          <!-- preview -->
-          <button
-            (click)="onViewPreview($event)"
-            [ngClass]="{'m-right-15': isDropdownLang}"
-            class="button is-link is-sm m-bottom-15 p-no"
-            id="btn-preview">
-            <img
-              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
-              alt=""
-              class="icon-left">
-            {{ 'COMMON.BUTTON.PREVIEW' | translate }}
-          </button>
-          <!-- preview -->
-
-          <!-- card lang -->
-
-          <!-- if only one lang then Add card lang -->
-          <div *ngIf="canAddCard" class="m-bottom-15">
+            <!-- card example -->
             <button
-              (click)="onAddCard($event)"
-              [disabled]="isAddingCard"
-              class="button is-link is-sm p-no"
-              id="btn-add-card">
-              <i class="fas fa-plus-circle"></i>
-              <ng-container *ngIf="activeInnovCard.lang === 'en'">
-                {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
+              (click)="onViewExample($event)"
+              *ngIf="quizExample"
+              class="button is-link is-sm m-bottom-15 p-no"
+              id="btn-quiz-example">
+              <img
+                src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg"
+                alt=""
+                class="icon-left">
+              {{ 'COMMON.BUTTON.EXAMPLE' | translate }}
+            </button>
+            <!-- card example -->
+
+            <!-- preview -->
+            <button
+              (click)="onViewPreview($event)"
+              [ngClass]="{'m-right-15': isDropdownLang}"
+              class="button is-link is-sm m-bottom-15 p-no"
+              id="btn-preview">
+              <img
+                src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
+                alt=""
+                class="icon-left">
+              {{ 'COMMON.BUTTON.PREVIEW' | translate }}
+            </button>
+            <!-- preview -->
+
+            <!-- card lang -->
+
+            <!-- if only one lang then Add card lang -->
+            <div *ngIf="canAddCard" class="m-bottom-15">
+              <button
+                (click)="onAddCard($event)"
+                [disabled]="isAddingCard"
+                class="button is-link is-sm p-no"
+                id="btn-add-card">
+                <i class="fas fa-plus-circle"></i>
+                <ng-container *ngIf="activeInnovCard.lang === 'en'">
+                  {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
+                </ng-container>
+                <ng-container *ngIf="activeInnovCard.lang === 'fr'">
+                  {{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
+                </ng-container>
+              </button>
+            </div>
+            <!-- /if only one lang then Add card lang -->
+
+            <!-- has more than 2 lang -->
+            <div *ngIf="isDropdownLang" class="dropdown m-bottom-15 is-right">
+              <a class="button dropdown-toggle is-info" tabindex="0">
+                {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }} <i class="icon icon-caret"></i>
+              </a>
+              <ul class="menu">
+                <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'en'" class="menu-item">
+                  {{ 'COMMON.LANG.FR' | translate }}
+                </li>
+                <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'fr'" class="menu-item">
+                  {{ 'COMMON.LANG.EN' | translate }}
+                </li>
+              </ul>
+            </div>
+            <!-- /has more than 2 lang -->
+
+            <!-- /card lang -->
+
+          </div>
+          <!-- /buttons currentPage === 'PITCH' -->
+
+          <!-- button currentPage === 'TARGETING' -->
+          <div *ngIf="currentPage === 'TARGETING' && saveChanges" class="animate-fade is-4 m-bottom-15">
+            <button
+              (click)="onSaveProject($event)"
+              [disabled]="isSavingProject"
+              [ngStyle]="{'min-width': '100px'}"
+              class="button is-primary is-sm"
+              id="btn-project-save">
+              <ng-container *ngIf="isSavingProject; else defSaveText">
+                {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
               </ng-container>
-              <ng-container *ngIf="activeInnovCard.lang === 'fr'">
-                {{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
-              </ng-container>
+              <ng-template #defSaveText>
+                {{ 'COMMON.BUTTON.SAVE' | translate }}
+              </ng-template>
             </button>
           </div>
-          <!-- /if only one lang then Add card lang -->
-
-          <!-- has more than 2 lang -->
-          <div *ngIf="isDropdownLang" class="dropdown m-bottom-15 is-right">
-            <a class="button dropdown-toggle is-info" tabindex="0">
-              {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }} <i class="icon icon-caret"></i>
-            </a>
-            <ul class="menu">
-              <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'en'" class="menu-item">
-                {{ 'COMMON.LANG.FR' | translate }}
-              </li>
-              <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'fr'" class="menu-item">
-                {{ 'COMMON.LANG.EN' | translate }}
-              </li>
-            </ul>
-          </div>
-          <!-- /has more than 2 lang -->
-
-          <!-- /card lang -->
+          <!-- /button currentPage === 'TARGETING' -->
 
         </div>
-        <!-- /buttons currentPage === 'PITCH' -->
-
-        <!-- button currentPage === 'TARGETING' -->
-        <div *ngIf="currentPage === 'TARGETING' && saveChanges" class="animate-fade is-4 m-bottom-15">
-          <button
-            (click)="onSaveProject($event)"
-            [disabled]="isSavingProject"
-            [ngStyle]="{'min-width': '100px'}"
-            class="button is-primary is-sm"
-            id="btn-project-save">
-            <ng-container *ngIf="isSavingProject; else defSaveText">
-              {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
-            </ng-container>
-            <ng-template #defSaveText>
-              {{ 'COMMON.BUTTON.SAVE' | translate }}
-            </ng-template>
-          </button>
-        </div>
-        <!-- /button currentPage === 'TARGETING' -->
-
       </div>
     </div>
   </section>
   <!-- /header -->
 
   <!-- tabs -->
-  <section>
+  <section class="container grid-2xl fluid">
     <div class="column col-sm-12 col-11 col-mx-auto">
       <ul class="tab">
         <li *ngFor="let tab of tabs" class="tab-item">

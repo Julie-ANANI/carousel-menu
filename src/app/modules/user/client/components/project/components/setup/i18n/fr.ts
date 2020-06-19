@@ -6,8 +6,7 @@ export const PROJECT_SETUP = {
 
   'TAB': {
     'PITCH': 'Description',
-    'TARGETING': 'Ciblage',
-    'QUESTIONNAIRE': 'Questionnaire'
+    'TARGETING': 'Ciblage'
   },
 
   'ADD_PROJECT_MODAL': {

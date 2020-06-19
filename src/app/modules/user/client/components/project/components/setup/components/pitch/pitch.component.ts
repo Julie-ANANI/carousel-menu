@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './pitch.component.html',
   styleUrls: ['./pitch.component.scss']
 })
+
 export class PitchComponent implements OnInit {
 
   constructor() { }
