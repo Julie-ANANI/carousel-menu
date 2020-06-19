@@ -15,7 +15,7 @@
 
         <!-- title -->
         <h2 class="title is-4 m-bottom-15">
-          {{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}
+          {{ 'PROJECT_SETUP.TITLE' | translate }}
         </h2>
         <!-- /title -->
 
@@ -126,7 +126,7 @@
             [routerLink]="tab.route"
             routerLinkActive="active">
             <i *ngIf="isComplete(tab.name)" [ngClass]="tab.iconClass"></i>
-            {{ 'PROJECT_MODULE.SETUP.' + tab.name | translate }}
+            {{ 'PROJECT_SETUP.TAB.' + tab.name | translate }}
           </a>
         </li>
       </ul>
@@ -154,10 +154,10 @@
   <!-- body -->
   <section class="modal-body p-bottom-40">
     <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
-      {{ 'PROJECT_MODULE.SETUP.ADD_PROJECT_MODAL.HEADING' | translate }}
+      {{ 'PROJECT_SETUP.ADD_PROJECT_MODAL.HEADING' | translate }}
     </h2>
     <div class="mxw-550 m-right-auto m-left-auto">
-      {{ 'PROJECT_MODULE.SETUP.ADD_PROJECT_MODAL.INFO' | translate }}
+      {{ 'PROJECT_SETUP.ADD_PROJECT_MODAL.INFO' | translate }}
     </div>
   </section>
   <!-- body -->

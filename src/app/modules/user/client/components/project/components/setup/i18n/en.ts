@@ -1,16 +1,19 @@
 import { SURVEY } from '../components/survey/i18n/en';
 
-export const SETUP = {
+export const PROJECT_SETUP = {
+
   'TITLE': 'Project details',
+
+  'TAB': {
+    'PITCH': 'Pitch',
+    'TARGETING': 'Targeting',
+    'QUESTIONNAIRE': 'Questionnaire'
+  },
 
   'ADD_PROJECT_MODAL': {
     'HEADING': 'Add project language',
     'INFO': 'We advise you to write your project in your mother tongue, our team will translate into French or English.'
   },
-
-  'SAVE_PROJECT': 'Save',
-
-  'SUBMIT_PROJECT': 'Submit',
 
   'BANNER_MESSAGES': {
     'SUBMITTED': 'The project is under review by our team. We\'ll come back soon!',
@@ -18,6 +21,15 @@ export const SETUP = {
     'EVALUATING': 'The market exploration is under progress. You can\'t make changes in the project anymore.',
     'DONE': 'The complete market test of the project is available.'
   },
+
+}
+
+// Todo remove this after admin interface
+export const SETUP = {
+
+
+
+
 
   'MESSAGE': {
     'EDITING': {
@@ -42,8 +54,6 @@ export const SETUP = {
 
   'PREVIEW_BUTTON': 'Preview',
 
-  'PRINT_BUTTON': 'Print',
-
   'DELETE_BUTTON': 'Delete Project',
 
   'DELETE_PROJECT_MODAL': {
@@ -52,6 +62,7 @@ export const SETUP = {
   },
 
   'EMAIL_DOMAINS': 'Domains to be used',
+
   'ROADMAP': 'Roadmap',
 
   'EXAMPLE_TEXT': 'This section allows you to build the landing page that will be sent to professionals. You will describe ' +

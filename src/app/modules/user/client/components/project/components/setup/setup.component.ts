@@ -63,9 +63,9 @@ export class SetupComponent implements OnInit, OnDestroy {
   private _activeInnovCard: InnovCard = <InnovCard>{};
 
   private _tabs: Array<Tab> = [
-    { route: 'setup/pitch', iconClass: 'icon icon-check', name: 'PITCH_TAB', tracking: 'gtm-edit-market-targeting' },
-    { route: 'setup/targeting', iconClass: 'icon icon-check', name: 'TARGETING_TAB', tracking: 'gtm-edit-market-targeting' },
-    { route: 'setup/survey', iconClass: 'icon icon-check', name: 'SURVEY_TAB', tracking: 'gtm-edit-market-targeting' },
+    { route: 'setup/pitch', iconClass: 'icon icon-check', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
+    { route: 'setup/targeting', iconClass: 'icon icon-check', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
+    { route: 'setup/survey', iconClass: 'icon icon-check', name: 'QUESTIONNAIRE', tracking: 'gtm-edit-market-targeting' },
   ];
 
   private _isExampleAvailable = false;
@@ -149,13 +149,13 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _bannerMessage(): string {
     if (this._innovation.reviewing && this._innovation.status === 'EDITING') {
-      return 'PROJECT_MODULE.SETUP.BANNER_MESSAGES.REVIEWING';
+      return 'PROJECT_SETUP.BANNER_MESSAGES.REVIEWING';
     } else if (this._innovation.status === 'SUBMITTED') {
-      return 'PROJECT_MODULE.SETUP.BANNER_MESSAGES.SUBMITTED';
+      return 'PROJECT_SETUP.BANNER_MESSAGES.SUBMITTED';
     } else if (this._innovation.status === 'EVALUATING') {
-      return 'PROJECT_MODULE.SETUP.BANNER_MESSAGES.EVALUATING';
+      return 'PROJECT_SETUP.BANNER_MESSAGES.EVALUATING';
     } else if (this._innovation.status === 'DONE') {
-      return 'PROJECT_MODULE.SETUP.BANNER_MESSAGES.DONE';
+      return 'PROJECT_SETUP.BANNER_MESSAGES.DONE';
     } else {
       return '';
     }
@@ -212,15 +212,15 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
   public isComplete(tabName: string) {
-    if (tabName === 'PITCH_TAB' && this._innovation.innovationCards && this._innovation.innovationCards.length) {
+    if (tabName === 'PITCH' && this._innovation.innovationCards && this._innovation.innovationCards.length) {
       let total = 0;
       this._innovation.innovationCards.forEach((innovationCard: InnovCard) => {
         total += innovationCard.completion;
       });
       return (total / this._innovation.innovationCards.length) === 100;
-    } else if (tabName === 'TARGETING_TAB' && this._innovation.settings && this._innovation.settings.completion) {
+    } else if (tabName === 'TARGETING' && this._innovation.settings && this._innovation.settings.completion) {
       return this._innovation.settings.completion === 100;
-    } else if (tabName === 'SURVEY_TAB' && this._innovation.quizId) {
+    } else if (tabName === 'QUESTIONNAIRE' && this._innovation.quizId) {
       return this._innovation.quizId !== '';
     }
     return false;

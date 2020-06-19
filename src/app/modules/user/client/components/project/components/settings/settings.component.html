@@ -15,7 +15,7 @@
               (pageScrollFinish)="scrollEnd()"
               class="d-block"
               pageScroll>
-              {{ 'CLIENT_PROJECT_SETTINGS.' + tab.name | translate }}
+              {{ 'PROJECT_SETTINGS.' + tab.name | translate }}
             </a>
           </li>
         </ng-container>
@@ -35,7 +35,7 @@
 
             <!-- heading -->
             <h2 class="title is-4 text-bold">
-              {{ 'CLIENT_PROJECT_SETTINGS.HEADING.' + section.name | translate }}
+              {{ 'PROJECT_SETTINGS.HEADING.' + section.name | translate }}
             </h2>
             <!-- /heading -->
 
@@ -151,7 +151,7 @@
               <ng-container *ngFor="let milestone of mission.milestoneDates; let index = index;">
                 <div *ngIf="milestone.code === 'RDO'" class="restitution-wrapper">
                   <div class="divider m-left-auto m-right-auto"></div>
-                  <h6 class="text-normal">{{ 'CLIENT_PROJECT_SETTINGS.RESTITUTION_DATE_COMMENT' | translate }}</h6>
+                  <h6 class="text-normal">{{ 'PROJECT_SETTINGS.RESTITUTION_DATE_COMMENT' | translate }}</h6>
                   <div class="form-group m-left-auto m-right-auto">
                     <label>
                       <textarea
@@ -228,7 +228,7 @@
                   {{ innovation.operator.email }}
                 </span>
                 <ng-template #notAssigned>
-                  <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
+                  <span class="text-md m-right-15">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
                 </ng-template>
               </div>
 
@@ -256,7 +256,7 @@
                   {{ clientProject.commercial.email }}
                 </span>
                 <ng-template #notAssigned>
-                  <span class="text-md m-right-15">{{ 'CLIENT_PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
+                  <span class="text-md m-right-15">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</span>
                 </ng-template>
               </div>
 
@@ -267,7 +267,7 @@
             <div *ngSwitchCase="'LANGUAGE'">
               <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper">
                 <span class="m-right-40">
-                  {{ 'CLIENT_PROJECT_SETTINGS.PROJECT_IN' | translate }}
+                  {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
                   {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
                 </span>
                 <span
@@ -283,7 +283,7 @@
             <!-- AUTHORISATION -->
             <div *ngSwitchCase="'AUTHORISATION'">
 
-              <p class="text-md m-bottom-25">{{ 'CLIENT_PROJECT_SETTINGS.AUTHORISATION_TEXT' | translate }}</p>
+              <p class="text-md m-bottom-25">{{ 'PROJECT_SETTINGS.AUTHORISATION_TEXT' | translate }}</p>
 
               <div class="form-group authorise-wrapper">
                 <label class="form-checkbox">
@@ -293,7 +293,7 @@
                     [checked]="mission.externalDiffusion.social"
                     id="social"
                     type="checkbox">
-                  <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.SOCIAL' | translate }}
+                  <i class="form-icon"></i> {{ 'PROJECT_SETTINGS.SOCIAL' | translate }}
                 </label>
               </div>
 
@@ -305,7 +305,7 @@
                     [checked]="mission.externalDiffusion.umi"
                     id="umi"
                     type="checkbox">
-                  <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.UMI' | translate }}
+                  <i class="form-icon"></i> {{ 'PROJECT_SETTINGS.UMI' | translate }}
                 </label>
               </div>
 
@@ -317,7 +317,7 @@
                     [checked]="mission.externalDiffusion.community"
                     id="community"
                     type="checkbox">
-                  <i class="form-icon"></i> {{ 'CLIENT_PROJECT_SETTINGS.COMMUNITY' | translate }}
+                  <i class="form-icon"></i> {{ 'PROJECT_SETTINGS.COMMUNITY' | translate }}
                 </label>
               </div>
 
@@ -350,7 +350,7 @@
 
       <!-- heading -->
       <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
-        {{ 'CLIENT_PROJECT_SETTINGS.HEADING.' + activeModalSection.name | translate }}
+        {{ 'PROJECT_SETTINGS.HEADING.' + activeModalSection.name | translate }}
       </h2>
       <!-- /heading -->
 
@@ -384,7 +384,7 @@
               id="collaborator-consent"
               type="checkbox">
             <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
-            {{ 'CLIENT_PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
+            {{ 'PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
           </label>
         </div>
         <!-- /Warning text -->
@@ -448,14 +448,14 @@
 
       <!-- COLLABORATORS -->
       <div *ngSwitchCase="'COLLABORATORS'">
-        <p>{{ 'CLIENT_PROJECT_SETTINGS.MODAL_DELETE.COLLABORATOR' | translate }}</p>
+        <p>{{ 'PROJECT_SETTINGS.MODAL_DELETE.COLLABORATOR' | translate }}</p>
         <p class="text-sm text-medium">{{ selectedValue.email }}</p>
       </div>
       <!-- /COLLABORATORS -->
 
       <!-- LANGUAGE -->
       <div *ngSwitchCase="'LANGUAGE'">
-        <p>{{ 'CLIENT_PROJECT_SETTINGS.MODAL_DELETE.CARD' | translate }}</p>
+        <p>{{ 'PROJECT_SETTINGS.MODAL_DELETE.CARD' | translate }}</p>
         <p class="text-sm text-medium">{{ 'COMMON.LANG.' + selectedValue.lang.toUpperCase() | translate }}</p>
       </div>
       <!-- /LANGUAGE -->

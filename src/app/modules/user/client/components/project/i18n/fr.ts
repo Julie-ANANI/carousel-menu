@@ -6,12 +6,17 @@ import { SETUP } from '../components/setup/i18n/fr';
 export const PROJECT_MODULE = {
 
   'SETUP_TAB': 'Préparation du Test Marché',
+
   'EXPLORATION_TAB': 'Exploration marché',
+
   'SYNTHESIS_TAB': 'Synthèse',
+
   'DOCUMENTS_TAB': 'Documents',
+
   'SETTINGS_TAB': 'Paramètres',
 
   'ADD_COLLABORATORS': 'Ajoutez l\'email d\'un collègue',
+
   'ADD_COLLABORATORS_PLACEHOLDER': 'Ajoutez l\'email d\'un collègue',
 
   'COLLABORATORS': 'collaborateur(s)',
@@ -44,23 +49,27 @@ export const PROJECT_MODULE = {
   'ADD_COLLABORATORS_MODAL': {
     'TITLE': 'Mes collaborateurs',
     'CONTENT': 'Vous pouvez ajouter ici les adresses e-mail des personnes que vous souhaitez ajouter en tant que collaborateurs pour votre projet.',
-    'NOTE': 'Info: les personnes déjà utilisateurs de la plateforme seront ajoutées immédiatement, sinon elles recevront un e-mail avec une invitation à s\'inscrire. ' +
-    'N\'oubliez pas: pour accepter l\'invitation, les nouveaux utilisateurs doivent s\'inscrire en utilisant la même adresse d\'inscription.',
+    'NOTE': 'Info: les personnes déjà utilisateurs de la plateforme seront ajoutées immédiatement, sinon elles recevront ' +
+      'un e-mail avec une invitation à s\'inscrire. N\'oubliez pas: pour accepter l\'invitation, les nouveaux utilisateurs ' +
+      'doivent s\'inscrire en utilisant la même adresse d\'inscription.',
     'USERS_ADDED': 'collaborateur(s) a/ont été ajouté(s)',
-    'TO_SEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application. Pour les/l\'ajouter comme collabora-teur-trice-s à ce projet, ' +
-    'vous devez leur/lui envoyer une invitation en cliquant sur le bouton ci-dessous :',
-    'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application et ont peut-être déjà reçu une invitation de vôtre part. Pour ' +
-    'les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton',
+    'TO_SEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application. Pour les/l\'ajouter ' +
+      'comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton ci-dessous :',
+    'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application et ont peut-être déjà ' +
+      'reçu une invitation de vôtre part. Pour les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui ' +
+      'envoyer une invitation en cliquant sur le bouton',
     'LABEL': 'Email d\'un(e) collègue',
     'BOT_MESSAGE': 'Partagez et éditez votre projet à plusieurs !'
   },
 
-
   'HISTORY_TAB': 'Historique',
 
   'EXPLORATION': EXPLORATION,
+
   'HISTORY': HISTORY,
+
   'PROJECTS_LIST': PROJECTS_LIST,
+
   'SETUP': SETUP
 
 };

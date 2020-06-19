@@ -3,7 +3,7 @@
   <!-- status EDITING || SUBMITTED -->
   <section *ngIf="innovation.status && (innovation.status === 'EDITING' || innovation.status === 'SUBMITTED')">
     <message-template-1 [widthMax]="'292px'">
-      {{ 'CLIENT_PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}
+      {{ 'PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}
     </message-template-1>
   </section>
   <!-- /status EDITING || SUBMITTED -->
@@ -22,7 +22,7 @@
           name="document-consent"
           type="checkbox"
           value="true">
-        <i class="form-icon"></i>{{ 'CLIENT_PROJECT_DOCUMENTS.CONSENT' | translate }}
+        <i class="form-icon"></i>{{ 'PROJECT_DOCUMENTS.CONSENT' | translate }}
       </label>
     </div>
     <!-- /consent -->
@@ -48,14 +48,14 @@
           <!-- heading -->
           <div class="card-header">
             <div class="card-title text-md text-bold">
-              {{ 'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate }}
+              {{ 'PROJECT_DOCUMENTS.NAME.' + document.name | translate }}
             </div>
           </div>
           <!-- /heading -->
 
           <!-- body -->
           <div class="card-body text-sm p-no">
-            {{ 'CLIENT_PROJECT_DOCUMENTS.DESCRIPTION.' + document.name | translate }}
+            {{ 'PROJECT_DOCUMENTS.DESCRIPTION.' + document.name | translate }}
           </div>
           <!-- /body -->
 
@@ -65,7 +65,7 @@
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-lock-red.svg"
               alt=" ">
             <ng-container *ngIf="document.name !== 'VIDEO'">
-              {{ 'CLIENT_PROJECT_DOCUMENTS.IN_PROGRESS' | translate }}
+              {{ 'PROJECT_DOCUMENTS.IN_PROGRESS' | translate }}
             </ng-container>
           </div>
           <!-- /on hover when not ready -->
@@ -78,11 +78,11 @@
           [ngStyle]="{ 'animation-duration': ((i+1) * 300) + 'ms' }"
           class="document-buttons animate-slide slide-down">
           <div
-            [ngSwitch]="'CLIENT_PROJECT_DOCUMENTS.NAME.' + document.name | translate"
+            [ngSwitch]="'PROJECT_DOCUMENTS.NAME.' + document.name | translate"
             [ngClass]="{'popover': !isOwner || !ownerConsent}">
 
             <!-- case === 'REPORT' -->
-            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.REPORT' | translate">
+            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.REPORT' | translate">
               <button
                 (click)="onClickReport($event)"
                 [disabled]="isGeneratingReport || !isOwner || !ownerConsent"
@@ -99,7 +99,7 @@
             <!-- /case === 'REPORT' -->
 
             <!-- case === 'SHARE' -->
-            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.SHARE' | translate">
+            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.SHARE' | translate">
               <button
                 (click)="onClickShare($event)"
                 [disabled]="isGeneratingLink || !isOwner || !ownerConsent"
@@ -123,7 +123,7 @@
             <!-- /case === 'SHARE' -->
 
             <!-- case === 'XLSX' -->
-            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.XLSX' | translate">
+            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.XLSX' | translate">
               <button
                 (click)="onClickXLSX($event)"
                 [disabled]="isGeneratingXLSX || !isOwner || !ownerConsent"
@@ -140,7 +140,7 @@
             <!-- /case === 'XLSX' -->
 
             <!-- case === 'PDF' -->
-            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.PDF' | translate">
+            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.PDF' | translate">
               <button
                 (click)="onClickPDF($event)"
                 [disabled]="isGeneratingPDF || !isOwner || !ownerConsent"
@@ -157,7 +157,7 @@
             <!-- /case === 'PDF' -->
 
             <!-- case === 'VIDEO' -->
-            <div *ngSwitchCase="'CLIENT_PROJECT_DOCUMENTS.NAME.VIDEO' | translate">
+            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.VIDEO' | translate">
               <div class="d-flex justify-center flex-wrap">
 
                 <!-- contact commercial -->
@@ -178,14 +178,14 @@
             <div *ngIf="!isOwner || !ownerConsent" class="popover-container is-sm">
               <div class="p-15">
                 <ng-container *ngIf="!ownerConsent && !isOwner; else specific">
-                  {{ 'CLIENT_PROJECT_DOCUMENTS.POPOVER.NOT_BOTH' | translate }}
+                  {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_BOTH' | translate }}
                 </ng-container>
                 <ng-template #specific>
                   <ng-container *ngIf="!isOwner; else consent">
-                    {{ 'CLIENT_PROJECT_DOCUMENTS.POPOVER.NOT_OWNER' | translate }}
+                    {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_OWNER' | translate }}
                   </ng-container>
                   <ng-template #consent>
-                    {{ 'CLIENT_PROJECT_DOCUMENTS.POPOVER.NOT_CONSENT' | translate }}
+                    {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_CONSENT' | translate }}
                   </ng-template>
                 </ng-template>
               </div>

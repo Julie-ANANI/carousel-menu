@@ -1,17 +1,20 @@
 import { SURVEY } from '../components/survey/i18n/fr';
 
-export const SETUP = {
+export const PROJECT_SETUP = {
+
   'TITLE': 'Détails du projet',
+
+  'TAB': {
+    'PITCH': 'Description',
+    'TARGETING': 'Ciblage',
+    'QUESTIONNAIRE': 'Questionnaire'
+  },
 
   'ADD_PROJECT_MODAL': {
     'HEADING': 'Ajouter la langue du projet',
     'INFO': 'Nous vous conseillons de rédiger votre projet dans votre langue maternelle, notre équipe se chargera ' +
       'de traduire en français ou en anglais.'
   },
-
-  'SAVE_PROJECT': 'Sauvegarder',
-
-  'SUBMIT_PROJECT': 'Soumettre',
 
   'BANNER_MESSAGES': {
     'SUBMITTED': 'Le projet est en cours d\'examen par notre équipe. Nous reviendrons bientôt !',
@@ -20,6 +23,15 @@ export const SETUP = {
     'EVALUATING': 'Il n\'est plus possible de modifier du projet car l\'exploration marché est en cours.',
     'DONE': 'Le test de marché complet du projet est disponible.'
   },
+
+}
+
+// Todo remove this after admin interface
+export const SETUP = {
+
+
+
+
 
   'MESSAGE': {
     'EDITING': {
@@ -40,12 +52,6 @@ export const SETUP = {
 
   'SURVEY': SURVEY,
 
-  'PREVIEW': 'Aperçu',
-
-  'PREVIEW_BUTTON': 'Prévisualiser',
-
-  'PRINT_BUTTON': 'Imprimer',
-
   'DELETE_BUTTON': 'Supprimer le projet',
 
   'DELETE_PROJECT_MODAL': {
@@ -54,6 +60,7 @@ export const SETUP = {
   },
 
   'EMAIL_DOMAINS': 'Domaines à utiliser',
+
   'ROADMAP': 'Roadmap',
 
   'EXAMPLE_TEXT': 'Cette section permet de construire la landing page qui sera envoyée aux professionnels. Vous ' +

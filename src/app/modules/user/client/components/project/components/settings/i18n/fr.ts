@@ -1,4 +1,4 @@
-export const CLIENT_PROJECT_SETTINGS = {
+export const PROJECT_SETTINGS = {
 
   'TITLE': 'Titre',
 
@@ -14,7 +14,8 @@ export const CLIENT_PROJECT_SETTINGS = {
 
   'COLLABORATORS': 'Collaborateurs',
 
-  'COLLABORATORS_CONSENT': 'Veuillez noter que les collaborateurs ont accès au projet ainsi que aux résultats et aux autres données sensibles. Voulez vous continuer ?',
+  'COLLABORATORS_CONSENT': 'Veuillez noter que les collaborateurs ont accès au projet ainsi que aux résultats et aux autres ' +
+    'données sensibles. Voulez vous continuer ?',
 
   'OPERATOR': 'Market test manager',
 

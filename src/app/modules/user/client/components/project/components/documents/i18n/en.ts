@@ -1,4 +1,4 @@
-export const CLIENT_PROJECT_DOCUMENTS = {
+export const PROJECT_DOCUMENTS = {
 
   'MESSAGE_BOT': 'On this page, you will find your Market Test documents, once launched.',
 
