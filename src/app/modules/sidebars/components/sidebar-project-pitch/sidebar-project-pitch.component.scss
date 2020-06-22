@@ -1,0 +1,19 @@
+@import "../../../../../style/framework/src/variables";
+
+#sidebar-project-pitch {
+
+  .icon {
+
+    &.icon-arrow-down, &.icon-arrow-up {
+      color: $text-community-color;
+
+      &:before {
+        width: 11px;
+        height: 11px;
+      }
+
+    }
+
+  }
+
+}

@@ -1,3 +1,100 @@
-<p>
-  sidebar-project-pitch works!
-</p>
+<div class="column col-sm-12 col-11 col-mx-auto" id="sidebar-project-pitch">
+  <div class="p-top-30">
+
+    <!-- save button -->
+    <section class="text-right">
+      <button
+        (click)="onSave($event)"
+        [disabled]="isSaving || !toBeSaved"
+        [ngStyle]="{'min-width': '100px'}"
+        class="button is-sm is-community"
+        id="btn-save">
+        <ng-container *ngIf="isSaving; else defText">
+          {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
+        </ng-container>
+        <ng-template #defText>
+          {{ 'COMMON.BUTTON.SAVE' | translate }}
+        </ng-template>
+      </button>
+    </section>
+    <!-- /save button -->
+
+    <!-- fields -->
+    <section [ngSwitch]="type" class="p-top-30">
+
+      <!-- title -->
+      <div *ngSwitchCase="'TITLE'">
+        <div class="form-group">
+          <label>
+            <input
+              (ngModelChange)="onChangeValue()"
+              [(ngModel)]="cardContent"
+              [placeholder]="'COMMON.PLACEHOLDER.PROJECT_TITLE' | translate"
+              class="form-input is-shadowed"
+              type="text">
+          </label>
+        </div>
+      </div>
+      <!-- /title -->
+
+      <!-- summary | issue | solution -->
+      <div *ngSwitchDefault>
+        <app-text-zone
+          (onTextChange)="onTextChange($event)"
+          [data]="cardContent"
+          [id]="type ? type.toLowerCase() : 'text-zone'">
+        </app-text-zone>
+      </div>
+      <!-- /summary | issue | solution -->
+
+    </section>
+    <!-- /fields -->
+
+    <!-- umi comment -->
+    <section *ngIf="comment && comment.comment" class="p-top-30">
+      <div class="d-flex align-center m-bottom-10">
+        <div class="d-flex align-center m-right-10">
+          <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.COMMENT' | translate }}</span>
+          <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
+        </div>
+        <div (click)="toggle($event, 'COMMENT')" class="icon-container is-sm is-overlay">
+          <i [ngClass]="showComment ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+        </div>
+      </div>
+      <div *ngIf="showComment" class="message animate-fade is-2">
+        <p class="message-body" [innerHTML]="comment.comment"></p>
+      </div>
+    </section>
+    <!-- /umi comment -->
+
+    <!-- umi suggestion -->
+    <section *ngIf="comment && comment.comment" class="p-top-30">
+      <div class="d-flex align-center m-bottom-10">
+        <div class="d-flex align-center m-right-10">
+          <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.SUGGESTION' | translate }}</span>
+          <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
+        </div>
+        <div (click)="toggle($event, 'SUGGESTION')" class="icon-container is-sm is-overlay">
+          <i [ngClass]="showSuggestion ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+        </div>
+      </div>
+      <div *ngIf="showSuggestion" class="message animate-fade is-2">
+        <p class="message-body" [innerHTML]="comment.suggestion"></p>
+      </div>
+    </section>
+    <!-- /umi suggestion -->
+
+    <!-- help text -->
+    <section class="p-top-30">
+      <div class="d-flex align-center m-bottom-10">
+        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.HELP' | translate }}</span>
+        <span (click)="toggle($event, 'HELP')" class="icon-container is-sm is-overlay">
+          <i [ngClass]="showHelp ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+        </span>
+      </div>
+      <p *ngIf="showHelp" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="helpText"></p>
+    </section>
+    <!-- /help text -->
+
+  </div>
+</div>

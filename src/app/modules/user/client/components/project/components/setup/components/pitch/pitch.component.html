@@ -18,7 +18,10 @@
       <!-- /action buttons -->
 
       <!-- title field -->
-      <div class="field-wrapper is-not-filled">
+      <div
+        (click)="openSidebar('TITLE')"
+        [ngClass]="{ 'is-not-filled': !isFilled('TITLE'), 'is-filled': isFilled('TITLE')  }"
+        class="field-wrapper">
 
         <!-- if empty -->
         <div>{{ 'PROJECT_PITCH.DESCRIPTION.TITLE_NOT_FILLED' | translate }}</div>
@@ -29,7 +32,10 @@
       <!-- /title field -->
 
       <!-- summary field -->
-      <div class="field-wrapper is-not-filled">
+      <div
+        (click)="openSidebar('SUMMARY')"
+        [ngClass]="{ 'is-not-filled': !isFilled('SUMMARY'), 'is-filled': isFilled('SUMMARY')  }"
+        class="field-wrapper">
 
         <!-- if empty -->
         <div>{{ 'PROJECT_PITCH.DESCRIPTION.SUMMARY_NOT_FILLED' | translate }}</div>
@@ -59,3 +65,17 @@
   <!-- /questionnaire -->
 
 </div>
+
+
+<!-- sidebar to edit innovation card field -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-project-pitch
+    (saveProject)="onSaveProject($event)"
+    [(isSaving)]="isSaving"
+    [cardContent]="cardContent"
+    [pitchHelp]="pitchHelp"
+    [sidebarValue]="sidebarValue"
+    [type]="sidebarValue.type">
+  </app-sidebar-project-pitch>
+</app-sidebar>
+<!-- /sidebar to edit innovation card field -->

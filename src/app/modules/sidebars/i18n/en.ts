@@ -32,6 +32,15 @@ export const SIDEBAR = {
     'BENEFITS': 'Benefits',
     'ISSUE': 'Issue',
     'SOLUTION': 'Solution',
+  },
+
+  'PROJECT_PITCH': {
+    'TITLE': 'Edit Title',
+    'SUMMARY': 'Edit Summary',
+    'ISSUE': 'Edit Issue',
+    'SOLUTION': 'Edit Solution',
+    'MEDIAS': 'Add Medias',
+    'REMAINING_TEXT': 'characters remaining'
   }
 
 };

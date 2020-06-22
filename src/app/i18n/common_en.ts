@@ -149,7 +149,11 @@ export const COMMON = {
     'ANSWER': 'Answer',
     'PROJECT': 'Project',
     'MARKET_TEST_BY': 'Market test by',
-    'PROJECT_LEADER': 'Project leader'
+    'PROJECT_LEADER': 'Project leader',
+    'HELP': 'Help',
+    'EXAMPLE': 'Examples',
+    'COMMENT': 'Comment',
+    'SUGGESTION': 'Suggestion',
   },
 
   'PLACEHOLDER': {
@@ -169,7 +173,8 @@ export const COMMON = {
     'CLIENT_NAME': 'Client name',
     'CLIENT_EMAIL': 'Client email',
     'CHOOSE_SALE': 'Choose sale',
-    'AUTO_SUGGESTION': 'Start typing to search...'
+    'AUTO_SUGGESTION': 'Start typing to search...',
+    'PROJECT_TITLE': 'Add the project title here...'
   },
 
   'REQUIRED': {

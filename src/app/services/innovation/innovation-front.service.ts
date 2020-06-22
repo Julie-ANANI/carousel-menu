@@ -336,6 +336,11 @@ export class InnovationFrontService {
 
   }
 
+  public static activeCard(innovation: Innovation, index = 0): InnovCard {
+    return innovation && innovation.innovationCards && innovation.innovationCards.length
+      ? innovation.innovationCards[index] : <InnovCard>{};
+  }
+
   /*** Todo remove this
    * these function is to set and get selected innovation index.
    * @param value
@@ -357,7 +362,7 @@ export class InnovationFrontService {
   }
 
   activeCardIndex(): Subject<number> {
-    return this._selectedInnovationIndex;
+    return this._activeCardIndex;
   }
 
   /***

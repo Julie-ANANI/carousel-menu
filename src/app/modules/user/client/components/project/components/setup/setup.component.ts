@@ -42,8 +42,6 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _saveChanges = false;
 
-  private _innovCardToPreview: InnovCard = <InnovCard>{};
-
   private _banner: Banner = <Banner>{};
 
   private _showBanner = false;
@@ -88,10 +86,10 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
-      this._quizExample = MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
-        'HELP_QUIZ', this._activeInnovCard.lang);
       this._initBanner();
       this._initInnovCard();
+      this._quizExample = MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
+        'HELP_QUIZ', this._activeInnovCard.lang);
     });
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
@@ -145,10 +143,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   }
 
   private _initInnovCard() {
-    if (this._innovation.innovationCards && this._innovation.innovationCards.length) {
-      this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
-      this._activeInnovCard = this._innovation.innovationCards[this._activeCardIndex];
-    }
+    this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
+    this._activeInnovCard = InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
   }
 
   public onChangeLang(event: Event) {
@@ -277,10 +273,6 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get currentPage(): string {
     return this._currentPage;
-  }
-
-  get innovCardToPreview(): InnovCard {
-    return this._innovCardToPreview;
   }
 
   get showBanner(): boolean {

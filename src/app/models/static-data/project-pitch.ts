@@ -1,4 +1,4 @@
-interface HELP {
+export interface PitchHelpFields {
   title: string;
   summary: string;
   issue: string;
@@ -6,12 +6,12 @@ interface HELP {
   quiz: string;
 }
 
-export interface DESCRIPTION_HELP {
-  en: HELP;
-  fr: HELP
+export interface PitchDescriptionHelp {
+  en: PitchHelpFields;
+  fr: PitchHelpFields
 }
 
-export const DetectingNeedsHelp: DESCRIPTION_HELP = {
+export const DetectingNeedsHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -43,7 +43,7 @@ export const DetectingNeedsHelp: DESCRIPTION_HELP = {
   }
 }
 
-export const ValidatingMarketHelp: DESCRIPTION_HELP = {
+export const ValidatingMarketHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails we send to the thousands of professionals we reach out to. ' +
       'It condenses the the subject-matter of the questionnaire in a few words.',
@@ -80,7 +80,7 @@ export const ValidatingMarketHelp: DESCRIPTION_HELP = {
   }
 }
 
-export const SourcingInnovativeHelp: DESCRIPTION_HELP = {
+export const SourcingInnovativeHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t only be the name of the solution, but also condense in a few words what your solution brings.',
@@ -119,7 +119,7 @@ export const SourcingInnovativeHelp: DESCRIPTION_HELP = {
   }
 }
 
-export const ValidatingInterestHelp: DESCRIPTION_HELP = {
+export const ValidatingInterestHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -170,7 +170,7 @@ export const ValidatingInterestHelp: DESCRIPTION_HELP = {
   }
 }
 
-export const DiscoveringApplicationsHelp: DESCRIPTION_HELP = {
+export const DiscoveringApplicationsHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -221,7 +221,7 @@ export const DiscoveringApplicationsHelp: DESCRIPTION_HELP = {
   }
 }
 
-export const TargetingApplicationHelp: DESCRIPTION_HELP = {
+export const TargetingApplicationHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -272,7 +272,7 @@ export const TargetingApplicationHelp: DESCRIPTION_HELP = {
   }
 }
 
-export const OptimizingValueHelp: DESCRIPTION_HELP = {
+export const OptimizingValueHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -323,7 +323,7 @@ export const OptimizingValueHelp: DESCRIPTION_HELP = {
   }
 }
 
-export const OtherHelp: DESCRIPTION_HELP = {
+export const OtherHelp: PitchDescriptionHelp = {
   en: {
     title: '',
     summary: '',
