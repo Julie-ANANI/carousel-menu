@@ -6,7 +6,7 @@ export interface InnovCardSection {
   type: 'ISSUE' | 'SOLUTION';
   title: string;
   content: string;
-  visibility: boolean
+  visibility: boolean;
 }
 
 export class InnovCard extends Model {
@@ -21,6 +21,6 @@ export class InnovCard extends Model {
   solution?: string; // todo remove
   completion?: number;
   advantages?: Array<{ text: string }>;
-  operatorComment?: InnovCardComment
+  operatorComment?: InnovCardComment;
   sections?: Array<InnovCardSection>;
 }

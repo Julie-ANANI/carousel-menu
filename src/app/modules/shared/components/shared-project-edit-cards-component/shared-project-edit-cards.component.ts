@@ -104,7 +104,7 @@ export class SharedProjectEditCardsComponent {
       if (cardProperty === 'summary') {
         this.innovation.innovationCards[this._selectedCardIndex]['operatorComment'][cardProperty][type] = event.content;
       } else {
-        this.innovation.innovationCards[this._selectedCardIndex].operatorComment.sections[index].content = event.content;
+        this.innovation.innovationCards[this._selectedCardIndex].operatorComment.sections[index][type] = event.content;
       }
       this._innovationFrontService.setCardCommentNotifyChanges(true);
     }
