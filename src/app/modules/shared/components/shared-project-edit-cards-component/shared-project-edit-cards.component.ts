@@ -90,8 +90,12 @@ export class SharedProjectEditCardsComponent {
    * @param event
    * @param cardProperty
    */
-  public updateData(event: { content: string }, cardProperty:  'summary' | 'problem' | 'solution') {
-    this.innovation.innovationCards[this._selectedCardIndex][cardProperty] = event.content;
+  public updateData(event: { content: string }, cardProperty:  'summary' | 'sections', index?: number) {
+    if (cardProperty === 'summary') {
+      this.innovation.innovationCards[this._selectedCardIndex][cardProperty] = event.content;
+    } else {
+      this.innovation.innovationCards[this._selectedCardIndex].sections[index].content = event.content;
+    }
     this.notifyChanges();
   }
 
