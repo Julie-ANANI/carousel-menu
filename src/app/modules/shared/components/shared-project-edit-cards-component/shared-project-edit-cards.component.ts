@@ -99,9 +99,13 @@ export class SharedProjectEditCardsComponent {
     this.notifyChanges();
   }
 
-  public updateUMIComment(event: { content: string }, cardProperty:  'summary' | 'problem' | 'solution', type: 'comment' | 'suggestion') {
+  public updateUMIComment(event: { content: string }, cardProperty:  'summary' | 'sections', type: 'comment' | 'suggestion', index?: number) {
     if (this.allowAdminToComment) {
-      this.innovation.innovationCards[this._selectedCardIndex]['operatorComment'][cardProperty][type] = event.content;
+      if (cardProperty === 'summary') {
+        this.innovation.innovationCards[this._selectedCardIndex]['operatorComment'][cardProperty][type] = event.content;
+      } else {
+        this.innovation.innovationCards[this._selectedCardIndex].operatorComment.sections[index].content = event.content;
+      }
       this._innovationFrontService.setCardCommentNotifyChanges(true);
     }
   }
