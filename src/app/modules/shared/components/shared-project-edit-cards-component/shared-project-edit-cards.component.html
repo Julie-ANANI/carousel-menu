@@ -281,10 +281,13 @@
 
             <span class="shape is-rounded is-md bg-draft">3</span>
 
-            <span *ngIf="!isEditable" class="spec-text-question">{{ section.title }}</span>
+            <span *ngIf="!isEditable" class="spec-text-question">
+              {{ section.title }}</span>
 
             <!-- input field -->
             <div *ngIf="isEditable" class="form-group m-top-25">
+              <i *ngIf="section.visibility" class="fas fa-eye" (click)="section.visibility = false"></i>
+              <i *ngIf="!section.visibility" class="fas fa-eye-slash" (click)="section.visibility = true"></i>
               <label>
                 <input
                   (change)="notifyChanges()"
