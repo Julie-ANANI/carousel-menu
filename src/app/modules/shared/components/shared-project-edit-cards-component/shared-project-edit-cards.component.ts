@@ -90,14 +90,22 @@ export class SharedProjectEditCardsComponent {
    * @param event
    * @param cardProperty
    */
-  public updateData(event: { content: string }, cardProperty:  'summary' | 'problem' | 'solution') {
-    this.innovation.innovationCards[this._selectedCardIndex][cardProperty] = event.content;
+  public updateData(event: { content: string }, cardProperty:  'summary' | 'sections', index?: number) {
+    if (cardProperty === 'summary') {
+      this.innovation.innovationCards[this._selectedCardIndex][cardProperty] = event.content;
+    } else {
+      this.innovation.innovationCards[this._selectedCardIndex].sections[index].content = event.content;
+    }
     this.notifyChanges();
   }
 
-  public updateUMIComment(event: { content: string }, cardProperty:  'summary' | 'problem' | 'solution', type: 'comment' | 'suggestion') {
+  public updateUMIComment(event: { content: string }, cardProperty:  'summary' | 'sections', type: 'comment' | 'suggestion', index?: number) {
     if (this.allowAdminToComment) {
-      this.innovation.innovationCards[this._selectedCardIndex]['operatorComment'][cardProperty][type] = event.content;
+      if (cardProperty === 'summary') {
+        this.innovation.innovationCards[this._selectedCardIndex]['operatorComment'][cardProperty][type] = event.content;
+      } else {
+        this.innovation.innovationCards[this._selectedCardIndex].operatorComment.sections[index].content = event.content;
+      }
       this._innovationFrontService.setCardCommentNotifyChanges(true);
     }
   }
