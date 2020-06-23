@@ -83,6 +83,7 @@ export const ERROR = {
     'DELETED_PROJECT_TEXT': 'Your project has been deleted successfully.',
     'NOT_DELETED_TEXT': 'Your project can not be deleted at the moment because of some technical reasons. Please try again later!',
     'SAVED_TEXT': 'The project has been saved successfully.',
+    'UPDATED_TEXT': 'The project has been updated successfully.',
     'SAVE_ERROR': 'There are changes to be saved before proceeding.',
     'SUBMITTED': 'Submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validate.',

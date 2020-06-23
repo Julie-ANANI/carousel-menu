@@ -40,7 +40,8 @@ export const SIDEBAR = {
     'ISSUE': 'Editer la problématique',
     'SOLUTION': 'Editer la solution',
     'MEDIA': 'Ajouter des médias',
-    'REMAINING_TEXT': 'caractères restants'
+    'REMAINING_TEXT': 'caractères restants',
+    'SET_PRINCIPAL': 'En faire le média principal'
   }
 
 };

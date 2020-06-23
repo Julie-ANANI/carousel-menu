@@ -2,7 +2,7 @@
 
   <!-- description edition -->
   <div class="main-wrapper is-description">
-    <div class="content-wrapper">
+    <div class="content-wrapper animate-fade is-5">
 
       <!-- heading / sub heading -->
       <section class="text-center">
@@ -17,47 +17,81 @@
       </section>
       <!-- /action buttons -->
 
-      <!-- title field -->
-      <div
-        (click)="openSidebar('TITLE')"
-        [ngClass]="{ 'is-not-filled': !isFilled('TITLE'), 'is-filled': isFilled('TITLE')  }"
+      <!-- default sections -->
+      <section
+        *ngFor="let section of defaultSections"
+        [ngClass]="{ 'is-filled': sectionInfo(section, 'CLASS'),
+        'is-not-filled': !sectionInfo(section, 'CLASS'),
+        'is-active': activeSection === section }"
         class="field-wrapper">
 
-        <!-- if empty -->
-        <div>{{ 'PROJECT_PITCH.DESCRIPTION.TITLE_NOT_FILLED' | translate }}</div>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
-        <!-- /if empty -->
+        <!-- header -->
+        <div class="flex-between w-full">
+          <div class="d-flex align-center m-right-1">
+            <span class="m-right-1 field-heading">{{ sectionInfo(section, 'HEADING') | translate }}</span>
+          </div>
+          <span *ngIf="isEditable" (click)="openSidebar(section)" class="icon-container is-overlay">
+            <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
+          </span>
+        </div>
+        <!-- /header -->
 
-      </div>
-      <!-- /title field -->
+        <!-- content -->
+        <div
+          *ngIf="section !== 'MEDIA'"
+          [ngStyle]="{'margin-bottom': section === 'SUMMARY' ? '-8px' : '0'}"
+          [innerHTML]="sectionInfo(section, 'CONTENT')"
+          class="text-sm p-top-h">
+        </div>
+        <!-- /content -->
 
-      <!-- summary field -->
-      <div
-        (click)="openSidebar('SUMMARY')"
-        [ngClass]="{ 'is-not-filled': !isFilled('SUMMARY'), 'is-filled': isFilled('SUMMARY')  }"
-        class="field-wrapper">
+        <!-- content for section === 'MEDIA' -->
+        <div
+          *ngIf="section === 'MEDIA'"
+          [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-10px' }"
+          class="m-top-10 d-flex flex-wrap">
 
-        <!-- if empty -->
-        <div>{{ 'PROJECT_PITCH.DESCRIPTION.SUMMARY_NOT_FILLED' | translate }}</div>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
-        <!-- /if empty -->
+          <!-- principal media -->
+          <div
+            *ngIf="activeInnovCard.principalMedia && mediaSrc(activeInnovCard.principalMedia)"
+            class="text-center media-wrapper">
+            <figure>
+              <img
+                [src]="mediaSrc(activeInnovCard.principalMedia)"
+                alt=" "
+                class="img-responsive"
+                height="100"
+                width="120">
+            </figure>
+            <span class="text-xs p-top-1">{{ 'PROJECT_PITCH.DESCRIPTION.MAIN_MEDIA' | translate }}</span>
+          </div>
+          <!-- /principal media -->
 
-      </div>
-      <!-- /summary field -->
+          <!-- secondary medias -->
+          <ng-container *ngIf="activeInnovCard.media && activeInnovCard.media.length > 0">
+            <ng-container *ngFor="let media of activeInnovCard.media">
+              <div
+                *ngIf="mediaSrc(media) &&
+                media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
+                class="media-wrapper">
+                <figure>
+                  <img
+                    [src]="mediaSrc(media)"
+                    alt=" "
+                    class="img-responsive"
+                    height="100"
+                    width="120">
+                </figure>
+              </div>
+            </ng-container>
+          </ng-container>
+          <!-- /secondary medias -->
 
-      <!-- media field -->
-      <div
-        (click)="openSidebar('MEDIA')"
-        [ngClass]="{ 'is-not-filled': !isFilled('MEDIA'), 'is-filled': isFilled('MEDIA')  }"
-        class="field-wrapper">
+        </div>
+        <!-- /content for section === 'MEDIA' -->
 
-        <!-- if empty -->
-        <div>{{ 'PROJECT_PITCH.DESCRIPTION.MEDIA_NOT_FILLED' | translate }}</div>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
-        <!-- /if empty -->
-
-      </div>
-      <!-- /media field -->
+      </section>
+      <!-- /default sections -->
 
     </div>
   </div>
@@ -65,7 +99,7 @@
 
   <!-- questionnaire -->
   <div class="main-wrapper is-questionnaire">
-    <div class="content-wrapper">
+    <div class="content-wrapper animate-fade is-5">
 
       <!-- heading / sub heading -->
       <section class="text-center">
@@ -88,6 +122,7 @@
     [(isSaving)]="isSaving"
     [cardContent]="cardContent"
     [imagePostUri]="imagePostUri"
+    [mainMedia]="activeInnovCard && activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
     [sidebarValue]="sidebarValue"
     [type]="sidebarValue.type">

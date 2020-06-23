@@ -16,4 +16,19 @@
 
   }
 
+  .media-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0 15px 30px 15px;
+
+    iframe {
+      border: none;
+    }
+
+  }
+
+  .box-shadow {
+    box-shadow: $box-shadow-form;
+  }
+
 }

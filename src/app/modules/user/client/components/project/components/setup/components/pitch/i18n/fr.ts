@@ -7,7 +7,10 @@ export const PROJECT_PITCH = {
     'SUMMARY_NOT_FILLED': 'Remplir le résumé',
     'SOLUTION_NOT_FILLED': 'Remplir la solution',
     'PROBLEM_NOT_FILLED': 'Remplir la problématique',
-    'MEDIA_NOT_FILLED': 'Ajouter des médias'
+    'MEDIA': 'Ajouter des médias',
+    'TITLE_FILLED': 'Titre',
+    'SUMMARY_FILLED': 'Résumé',
+    'MAIN_MEDIA': 'Média principal'
   },
 
   'QUESTIONNAIRE': {

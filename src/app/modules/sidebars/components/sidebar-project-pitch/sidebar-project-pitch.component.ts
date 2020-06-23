@@ -4,6 +4,7 @@ import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {SidebarInterface} from '../../interfaces/sidebar-interface';
 import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
+import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-sidebar-project-pitch',
@@ -27,6 +28,8 @@ export class SidebarProjectPitchComponent {
   }
 
   @Input() imagePostUri = '';
+
+  @Input() mainMedia: Media = <Media>{};
 
   @Input() pitchHelp: PitchHelpFields = <PitchHelpFields>{};
 
@@ -63,6 +66,8 @@ export class SidebarProjectPitchComponent {
 
   private _toBeSaved = false;
 
+  constructor(private _innovationFrontService: InnovationFrontService) { }
+
   public onSave(event: Event) {
     event.preventDefault();
     this.isSavingChange.emit(true);
@@ -78,7 +83,7 @@ export class SidebarProjectPitchComponent {
     this.onChangeValue();
   }
 
-  public uploadMedia(media: Media | Video, type: string) {
+  public onUploadMedia(media: Media | Video, type: string) {
     if (media) {
       this.isSavingChange.emit(true);
       if (type === 'IMAGE') {
@@ -86,6 +91,35 @@ export class SidebarProjectPitchComponent {
       } else if (type === 'VIDEO') {
         this.saveProject.emit({type: 'VIDEO', content: <Video>media});
       }
+    }
+  }
+
+  public mediaSrc(media: any, type: 'IMAGE' | 'VIDEO') {
+    if (media && type === 'IMAGE') {
+      return InnovationFrontService.imageSrc(media);
+    } else if (media && type === 'VIDEO') {
+      return this._innovationFrontService.videoSrc(media);
+    }
+  }
+
+  public isNotMainMedia(media: any): boolean {
+    if (this.mainMedia && this.mainMedia._id && media && media['_id']) {
+      return this.mainMedia._id !== media['_id'];
+    }
+    return true;
+  }
+
+  public onSetPrincipal(media: any) {
+    if (media && this.isNotMainMedia(media) && !this._isSaving) {
+      this.isSavingChange.emit(true);
+      this.saveProject.emit({type: 'MAIN_MEDIA', content: <Media>media});
+    }
+  }
+
+  public onDeleteMedia(media: any) {
+    if (media && this.cardContent.length > 1 && !this._isSaving) {
+      this.isSavingChange.emit(true);
+      this.saveProject.emit({type: 'DELETE_MEDIA', content: <Media>media});
     }
   }
 
