@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CardComment} from '../../../../models/innov-card-comment';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {SidebarInterface} from '../../interfaces/sidebar-interface';
+import {CommonService} from '../../../../services/common/common.service';
+import {Media, Video} from '../../../../models/media';
 
 @Component({
   selector: 'app-sidebar-project-pitch',
@@ -24,6 +26,8 @@ export class SidebarProjectPitchComponent {
     }
   }
 
+  @Input() imagePostUri = '';
+
   @Input() pitchHelp: PitchHelpFields = <PitchHelpFields>{};
 
   @Input() set comment(value: CardComment) {
@@ -38,7 +42,7 @@ export class SidebarProjectPitchComponent {
 
   @Input() cardContent = '';
 
-  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION'
+  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'
   @Input() type = '';
 
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
@@ -74,6 +78,17 @@ export class SidebarProjectPitchComponent {
     this.onChangeValue();
   }
 
+  public uploadMedia(media: Media | Video, type: string) {
+    if (media) {
+      this.isSavingChange.emit(true);
+      if (type === 'IMAGE') {
+        this.saveProject.emit({type: 'MEDIA', content: <Media>media});
+      } else if (type === 'VIDEO') {
+        this.saveProject.emit({type: 'VIDEO', content: <Video>media});
+      }
+    }
+  }
+
   public toggle(event: Event, type: string) {
     event.preventDefault();
     switch (type) {
@@ -97,21 +112,68 @@ export class SidebarProjectPitchComponent {
     }
   }
 
-  get helpText(): string {
+  public remaining(type: string): string {
+    if (this.type && type) {
+      switch (this.type) {
+
+        case 'TITLE':
+          if (type === 'COLOR') {
+            return CommonService.getLimitColor(this.cardContent.length, 150);
+          } else if (type === 'CHAR') {
+            return (150 - this.cardContent.length).toString(10);
+          }
+          break;
+
+        case 'SUMMARY':
+        case 'ISSUE':
+        case 'SOLUTION':
+          if (type === 'COLOR') {
+            return CommonService.getLimitColor(this.cardContent.length, 500);
+          } else if (type === 'CHAR') {
+            return (500 - this.cardContent.length).toString(10);
+          }
+          break;
+
+      }
+    }
+    return '';
+  }
+
+  public help(type: string): string {
     if (this.pitchHelp && this.type) {
       switch (this.type) {
 
         case 'TITLE':
-          return this.pitchHelp.title;
+          if (type === 'TEXT') {
+            return this.pitchHelp.title;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.title;
+          }
+          break;
 
         case 'SUMMARY':
-          return this.pitchHelp.summary;
+          if (type === 'TEXT') {
+            return this.pitchHelp.summary;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.summary;
+          }
+          break;
 
         case 'ISSUE':
-          return this.pitchHelp.issue;
+          if (type === 'TEXT') {
+            return this.pitchHelp.issue;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.issue;
+          }
+          break;
 
         case 'SOLUTION':
-          return this.pitchHelp.solution;
+          if (type === 'TEXT') {
+            return this.pitchHelp.solution;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.solution;
+          }
+          break;
 
       }
     }

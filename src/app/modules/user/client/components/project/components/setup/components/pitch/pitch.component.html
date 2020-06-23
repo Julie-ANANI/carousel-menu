@@ -45,6 +45,20 @@
       </div>
       <!-- /summary field -->
 
+      <!-- media field -->
+      <div
+        (click)="openSidebar('MEDIA')"
+        [ngClass]="{ 'is-not-filled': !isFilled('MEDIA'), 'is-filled': isFilled('MEDIA')  }"
+        class="field-wrapper">
+
+        <!-- if empty -->
+        <div>{{ 'PROJECT_PITCH.DESCRIPTION.MEDIA_NOT_FILLED' | translate }}</div>
+        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
+        <!-- /if empty -->
+
+      </div>
+      <!-- /media field -->
+
     </div>
   </div>
   <!-- /description edition -->
@@ -73,6 +87,7 @@
     (saveProject)="onSaveProject($event)"
     [(isSaving)]="isSaving"
     [cardContent]="cardContent"
+    [imagePostUri]="imagePostUri"
     [pitchHelp]="pitchHelp"
     [sidebarValue]="sidebarValue"
     [type]="sidebarValue.type">

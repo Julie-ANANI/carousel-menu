@@ -2,7 +2,7 @@
   <div class="p-top-30">
 
     <!-- save button -->
-    <section class="text-right">
+    <section *ngIf="type && type !== 'MEDIA'" class="text-right">
       <button
         (click)="onSave($event)"
         [disabled]="isSaving || !toBeSaved"
@@ -37,8 +37,31 @@
       </div>
       <!-- /title -->
 
+      <!-- media -->
+      <div *ngSwitchCase="'MEDIA'">
+
+        <!-- image -->
+        <div class="form-group">
+          <app-shared-upload-zone-photo
+            [uri]="imagePostUri"
+            (cbFn)="uploadMedia($event, 'IMAGE')">
+          </app-shared-upload-zone-photo>
+        </div>
+        <!-- /image -->
+
+        <div [attr.data-content]="'COMMON.LABEL.OR' | translate | uppercase" class="divider m-top-40 m-bottom-40"></div>
+
+        <!-- video -->
+        <div class="form-group">
+          <app-shared-upload-zone-video (cbFn)="uploadMedia($event, 'VIDEO')"></app-shared-upload-zone-video>
+        </div>
+        <!-- /video -->
+
+      </div>
+      <!-- /media -->
+
       <!-- summary | issue | solution -->
-      <div *ngSwitchDefault>
+      <div *ngSwitchDefault class="form-group">
         <app-text-zone
           (onTextChange)="onTextChange($event)"
           [data]="cardContent"
@@ -46,6 +69,15 @@
         </app-text-zone>
       </div>
       <!-- /summary | issue | solution -->
+
+      <!-- remaining text -->
+      <div
+        *ngIf="type && type !== 'MEDIA'"
+        [ngStyle]="{'color': remaining('COLOR')}"
+        class="text-right text-medium text-xs">
+        {{ remaining('CHAR') }} {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
+      </div>
+      <!-- /remaining text -->
 
     </section>
     <!-- /fields -->
@@ -85,16 +117,28 @@
     <!-- /umi suggestion -->
 
     <!-- help text -->
-    <section class="p-top-30">
+    <section *ngIf="type && type !== 'MEDIA'" class="p-top-30">
       <div class="d-flex align-center m-bottom-10">
         <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.HELP' | translate }}</span>
         <span (click)="toggle($event, 'HELP')" class="icon-container is-sm is-overlay">
           <i [ngClass]="showHelp ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
         </span>
       </div>
-      <p *ngIf="showHelp" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="helpText"></p>
+      <p *ngIf="showHelp" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('TEXT')"></p>
     </section>
     <!-- /help text -->
+
+    <!-- example -->
+    <section *ngIf="type && type !== 'MEDIA'" class="p-top-30">
+      <div class="d-flex align-center m-bottom-10">
+        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.EXAMPLE' | translate }}</span>
+        <span (click)="toggle($event, 'EXAMPLE')" class="icon-container is-sm is-overlay">
+          <i [ngClass]="showExample ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+        </span>
+      </div>
+      <p *ngIf="showExample" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('EXAMPLE')"></p>
+    </section>
+    <!-- /example -->
 
   </div>
 </div>

@@ -12,6 +12,7 @@ import {InnovationService} from '../../../../../../../../../services/innovation/
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
+import {Video} from '../../../../../../../../../models/media';
 
 @Component({
   selector: 'app-project-pitch',
@@ -58,8 +59,10 @@ export class PitchComponent implements OnInit, OnDestroy {
       case 'SUMMARY':
         return !!this.activeInnovCard.summary;
 
-    }
+      case 'MEDIA':
+        return !!(this.activeInnovCard.media && this.activeInnovCard.media.length);
 
+    }
     return false;
   }
 
@@ -73,6 +76,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
       case 'SUMMARY':
         this._cardContent = this.activeInnovCard.summary;
+        break;
+
+      case 'MEDIA':
+        this._cardContent = '';
         break;
 
     }
@@ -92,28 +99,62 @@ export class PitchComponent implements OnInit, OnDestroy {
 
         case 'TITLE':
           this._innovation.innovationCards[this._activeCardIndex].title = event.content;
+          this._updateProject();
           break;
 
         case 'SUMMARY':
           this._innovation.innovationCards[this._activeCardIndex].summary = event.content;
+          this._updateProject();
           break;
 
+        case 'IMAGE':
+          this._innovation.innovationCards[this._activeCardIndex].media.push(event.content);
+          if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
+            this._innovation.innovationCards[this._activeCardIndex].principalMedia = event.content;
+          }
+          this._updateProject();
+          break;
+
+        case 'VIDEO':
+          this._uploadVideo(event.content);
+          break;
       }
-
-      this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
-        this._innovationFrontService.setInnovation(innovation);
-        this._isSaving = false;
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isSaving = false;
-        console.error(err);
-      });
-
     }
+  }
+
+  private _updateProject() {
+    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
+      this._innovationFrontService.setInnovation(innovation);
+      this._isSaving = false;
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isSaving = false;
+      console.error(err);
+    });
+  }
+
+  private _uploadVideo(video: Video) {
+    this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
+      .pipe(first()).subscribe((video) => {
+        this._innovation.innovationCards[this._activeCardIndex].media.push(video);
+        this._innovationFrontService.setInnovation(this._innovation);
+        this._isSaving = false;
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isSaving = false;
+      console.error(err);
+    });
   }
 
   get activeInnovCard(): InnovCard {
     return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
+  }
+
+  get imagePostUri(): string {
+    return this._innovation._id && this.activeInnovCard._id
+      ? `/innovation/${this._innovation._id}/innovationCard/${this.activeInnovCard._id}/media/image` : '';
   }
 
   get pitchHelp(): PitchHelpFields {

@@ -15,12 +15,11 @@ export class CommonService {
    * @param limit
    */
   public static getLimitColor(textLength: number, limit: number): string {
+    const _length = limit - textLength;
 
-    const length = limit - textLength;
-
-    if (length <= 0) {
+    if (_length <= 0) {
       return '#EA5858';
-    } else if (length > 0 && length < (limit / 2)) {
+    } else if (_length > 0 && _length < (limit / 2)) {
       return '#F0AD4E';
     } else {
       return '#2ECC71';
