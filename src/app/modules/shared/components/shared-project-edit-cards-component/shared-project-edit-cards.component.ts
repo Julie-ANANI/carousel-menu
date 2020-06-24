@@ -21,8 +21,6 @@ export class SharedProjectEditCardsComponent {
 
   @Input() isEditable: boolean = false;
 
-  @Input() isAdminSide: boolean = false;
-
   private _selectedCardIndex: number = 0;
 
   constructor(private _translationService: TranslationService,
@@ -257,7 +255,7 @@ export class SharedProjectEditCardsComponent {
   }
 
   get allowAdminToComment(): boolean {
-    return this.isAdminSide && this.innovation && (this.innovation.status === 'SUBMITTED' || this.innovation.status === 'EDITING');
+    return this.innovation && (this.innovation.status === 'SUBMITTED' || this.innovation.status === 'EDITING');
   }
 
   get companyDomain(): string {

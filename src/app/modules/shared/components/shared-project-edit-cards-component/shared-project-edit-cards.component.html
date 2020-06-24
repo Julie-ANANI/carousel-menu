@@ -36,8 +36,7 @@
   <!-- /language section -->
 
   <!-- questions section -->
-  <section *ngIf="innovation.innovationCards"
-           [ngClass]="isAdminSide ? 'col-11 col-xs-12' : 'col-md-12 col-lg-10 col-xl-8 col-8'">
+  <section *ngIf="innovation.innovationCards" class="col-11 col-xs-12">
     <div *ngFor="let innovationCard of innovation.innovationCards; let i = index;">
       <div *ngIf="selectedCardIndex === i">
 
@@ -51,20 +50,11 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
-              <span class="text-sm text-medium text-primary c-default">{{ 'SHARED_PROJECT_EDIT.ADVISE_BUTTON' | translate }}</span>
-              <div class="popover-container">
-                <div class="card">
-                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.TITLE.HELP'" translate></span>
-                </div>
-              </div>
-            </span>
-
           </div>
           <!-- /ques -->
 
           <!-- translation button -->
-          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+          <div *ngIf="innovation.innovationCards.length > 1" class="m-top-25">
             <button
               (click)="importTranslation($event, 'title')"
               [disabled]="innovationCard.title"
@@ -100,15 +90,11 @@
           <div *ngIf="isVisible('title') || allowAdminToComment">
 
             <!-- comment umi -->
-            <div *ngIf="innovationCard.operatorComment.title.comment || isAdminSide" class="m-top-25">
+            <div class="m-top-25">
 
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
                 <div class="label is-primary text-md">UMI</div>
-              </div>
-
-              <div *ngIf="innovationCard.operatorComment.title.comment && !isAdminSide" class="m-top-20">
-                <p [innerHTML]="innovationCard.operatorComment.title.comment"></p>
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
@@ -128,15 +114,11 @@
             <!-- /comment umi -->
 
             <!-- suggestion umi -->
-            <div *ngIf="innovationCard.operatorComment.title.suggestion || isAdminSide" class="m-top-25">
+            <div class="m-top-25">
 
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
                 <div class="label is-primary text-md">UMI</div>
-              </div>
-
-              <div *ngIf="innovationCard.operatorComment.title.suggestion && !isAdminSide" class="m-top-20">
-                <p [innerHTML]="innovationCard.operatorComment.title.suggestion"></p>
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
@@ -171,20 +153,11 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
-              <span class="text-sm text-medium text-primary c-default">{{ 'SHARED_PROJECT_EDIT.ADVISE_BUTTON' | translate }}</span>
-              <div class="popover-container">
-                <div class="card">
-                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.SUMMARY.HELP'" translate></span>
-                </div>
-              </div>
-            </span>
-
           </div>
           <!-- /ques -->
 
           <!-- translation button -->
-          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+          <div *ngIf="innovation.innovationCards.length > 1" class="m-top-25">
             <button
               (click)="importTranslation($event, 'summary')"
               [disabled]="innovationCard.summary"
@@ -222,15 +195,11 @@
           <div *ngIf="isVisible('summary') || allowAdminToComment">
 
             <!-- comment umi -->
-            <div *ngIf="innovationCard.operatorComment.summary.comment || isAdminSide" class="m-top-25">
+            <div class="m-top-25">
 
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
                 <div class="label is-primary text-md">UMI</div>
-              </div>
-
-              <div *ngIf="innovationCard.operatorComment.summary.comment && !isAdminSide" class="m-top-20">
-                <p [innerHTML]="innovationCard.operatorComment.summary.comment"></p>
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
@@ -245,14 +214,14 @@
             <!-- /comment umi -->
 
             <!-- suggestion umi -->
-            <div *ngIf="innovationCard.operatorComment.summary.suggestion || isAdminSide" class="m-top-25">
+            <div class="m-top-25">
 
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
                 <div class="label is-primary text-md">UMI</div>
               </div>
 
-              <div *ngIf="innovationCard.operatorComment.summary.suggestion && !isAdminSide" class="m-top-20">
+              <div class="m-top-20">
                 <p [innerHTML]="innovationCard.operatorComment.summary.suggestion"></p>
               </div>
 
@@ -304,7 +273,7 @@
           <!-- /ques -->
 
           <!-- translation button -->
-          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+          <div *ngIf="innovation.innovationCards.length > 1" class="m-top-25">
             <button
               (click)="importTranslation($event, section.content)"
               [disabled]="section.content"
@@ -342,14 +311,14 @@
           <div *ngIf="isVisible('problem')|| allowAdminToComment">
 
             <!-- comment umi -->
-            <div *ngIf="innovationCard.operatorComment.sections[index].comment || isAdminSide" class="m-top-25">
+            <div class="m-top-25">
 
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
                 <div class="label is-primary text-md">UMI</div>
               </div>
 
-              <div *ngIf="innovationCard.operatorComment.sections[index].comment && !isAdminSide" class="m-top-20">
+              <div *ngIf="innovationCard.operatorComment.sections[index].comment" class="m-top-20">
                 <p [innerHTML]="innovationCard.operatorComment.sections[index].comment"></p>
               </div>
 
@@ -365,14 +334,14 @@
             <!-- /comment umi -->
 
             <!-- suggestion umi -->
-            <div *ngIf="innovationCard.operatorComment.problem.suggestion || isAdminSide" class="m-top-25">
+            <div class="m-top-25">
 
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
                 <div class="label is-primary text-md">UMI</div>
               </div>
 
-              <div *ngIf="innovationCard.operatorComment.problem.suggestion && !isAdminSide" class="m-top-20">
+              <div class="m-top-20">
                 <p [innerHTML]="innovationCard.operatorComment.problem.suggestion"></p>
               </div>
 
@@ -403,21 +372,11 @@
 
             <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
 
-            <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
-              <span class="text-sm text-medium text-primary c-default">{{ 'SHARED_PROJECT_EDIT.ADVISE_BUTTON' | translate }}</span>
-              <div class="popover-container">
-                <div class="card">
-                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.1'" class="m-bottom-1" translate></span>
-                  <span [innerText]="'SHARED_PROJECT_EDIT.DESCRIPTION.ADVANTAGES.HELP.2'" class="m-bottom-1" translate></span>
-                </div>
-              </div>
-            </span>
-
           </div>
           <!-- /ques -->
 
           <!-- translation button -->
-          <div *ngIf="isAdminSide && innovation.innovationCards.length > 1" class="m-top-25">
+          <div *ngIf="innovation.innovationCards.length > 1" class="m-top-25">
             <button
               (click)="importTranslation($event, 'advantages')"
               [disabled]="innovationCard.advantages"
@@ -447,10 +406,6 @@
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.COMMENT' | translate }}</span>
                 <div class="label is-primary text-md">UMI</div>
-              </div>
-
-              <div *ngIf="innovationCard.operatorComment.advantages.comment && !isAdminSide" class="m-top-20">
-                <p [innerHTML]="innovationCard.operatorComment.advantages.comment"></p>
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
@@ -492,15 +447,6 @@
 
           <span class="spec-text-question">{{ 'SHARED_PROJECT_EDIT.MEDIA.LABEL' | translate }} </span>
 
-          <span *ngIf="innovation.status === 'EDITING' && !isAdminSide" class="popover">
-            <span class="text-sm text-medium text-primary c-default">{{ 'SHARED_PROJECT_EDIT.ADVISE_BUTTON' | translate }}</span>
-            <div class="popover-container">
-              <div class="card">
-                <span [innerText]="'SHARED_PROJECT_EDIT.MEDIA.HELP'"  translate></span>
-              </div>
-            </div>
-          </span>
-
         </div>
         <!-- /ques -->
 
@@ -530,14 +476,6 @@
           </div>
         </div>
         <!-- /media upload -->
-
-        <!-- media display -->
-
-        <!-- no media uploaded -->
-        <div *ngIf="innovation.status !== 'EDITING' && innovationCard.media?.length === 0 && !isAdminSide" class="m-top-25">
-          <span class="spec-text-answer">{{ 'SHARED_PROJECT_EDIT.MEDIA.NO_MEDIA' | translate }}</span>
-        </div>
-        <!-- /no media uploaded -->
 
         <!-- main media -->
         <div *ngIf="innovationCard.principalMedia" class="text-center m-top-40">
