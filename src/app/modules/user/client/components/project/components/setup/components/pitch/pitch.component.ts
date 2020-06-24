@@ -257,7 +257,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
-    if (value.animate_state === 'inactive') {
+    if (this._sidebarValue.animate_state === 'inactive') {
       this._activeSection = '';
     }
   }
@@ -272,10 +272,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get cardContent(): any {
     return this._cardContent;
-  }
-
-  set cardContent(value: any) {
-    this._cardContent = value;
   }
 
   get isEditable(): boolean {

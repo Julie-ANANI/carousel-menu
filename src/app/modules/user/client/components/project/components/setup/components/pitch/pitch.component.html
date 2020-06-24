@@ -20,8 +20,8 @@
       <!-- sections -->
       <section
         *ngFor="let section of sections"
-        [ngClass]="{ 'is-filled': section.content,
-        'is-not-filled': !(section.content && section.content.length),
+        [ngClass]="{ 'is-filled': (section.content && section.content.length),
+        'is-not-filled': !(section.content && section.content.length > 0),
         'is-active': activeSection === section.type }"
         class="field-wrapper">
 
@@ -129,14 +129,13 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
-    [(cardContent)]="cardContent"
+    [cardContent]="cardContent"
     [(isSaving)]="isSaving"
     [comment]="operatorComment"
     [imagePostUri]="imagePostUri"
     [isEditable]="isEditable"
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
-    [sidebarValue]="sidebarValue"
     [type]="sidebarValue.type">
   </app-sidebar-project-pitch>
 </app-sidebar>

@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {CardComment} from '../../../../models/innov-card-comment';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
-import {SidebarInterface} from '../../interfaces/sidebar-interface';
 import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
@@ -36,17 +35,7 @@ import {InnovationFrontService} from '../../../../services/innovation/innovation
   styleUrls: ['./sidebar-project-pitch.component.scss']
 })
 
-export class SidebarProjectPitchComponent {
-
-  @Input() set sidebarValue(value: SidebarInterface) {
-    this._isSaving = false;
-    this._toBeSaved = false;
-    if (value.animate_state === 'inactive') {
-      setTimeout(() => {
-        this.cardContentChange.emit('');
-      }, 1);
-    }
-  }
+export class SidebarProjectPitchComponent implements OnChanges {
 
   @Input() set isSaving(value: boolean) {
     this._isSaving = value;
@@ -82,8 +71,6 @@ export class SidebarProjectPitchComponent {
 
   @Output() isSavingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @Output() cardContentChange: EventEmitter<any> = new EventEmitter<any>();
-
   private _comment: CardComment = <CardComment>{};
 
   private _isSaving = false;
@@ -99,6 +86,14 @@ export class SidebarProjectPitchComponent {
   private _toBeSaved = false;
 
   constructor(private _innovationFrontService: InnovationFrontService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes.type && changes.type.currentValue !== changes.type.previousValue) {
+      this.cardContent = changes.cardContent && changes.cardContent.currentValue || '';
+      this._isSaving = false;
+      this._toBeSaved = false;
+    }
+  }
 
   /***
    * when the user clicks on the Save button
