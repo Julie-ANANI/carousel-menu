@@ -39,8 +39,9 @@ export const SIDEBAR = {
     'SUMMARY': 'Edit Summary',
     'ISSUE': 'Edit Issue',
     'SOLUTION': 'Edit Solution',
-    'MEDIAS': 'Add Medias',
-    'REMAINING_TEXT': 'characters remaining'
+    'MEDIA': 'Add Medias',
+    'REMAINING_TEXT': 'characters remaining',
+    'SET_PRINCIPAL': 'Set as main media'
   }
 
 };

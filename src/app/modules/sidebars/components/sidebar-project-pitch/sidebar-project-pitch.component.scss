@@ -16,4 +16,24 @@
 
   }
 
+  .media-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0 15px 30px 15px;
+
+    iframe {
+      border: none;
+    }
+
+    .text-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+  }
+
+  .box-shadow {
+    box-shadow: $box-shadow-form;
+  }
+
 }

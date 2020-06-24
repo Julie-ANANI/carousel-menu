@@ -7,6 +7,8 @@ import { SidebarProjectPitchComponent } from './sidebar-project-pitch.component'
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
+import { SharedUploadZonePhotoModule } from '../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
+import { SharedUploadZoneVideoModule } from '../../../shared/components/shared-upload-zone-video/shared-upload-zone-video.module';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { SharedTextZoneModule } from '../../../shared/components/shared-text-zon
     TranslateModule.forChild(),
     SidebarModule,
     FormsModule,
-    SharedTextZoneModule
+    SharedTextZoneModule,
+    SharedUploadZonePhotoModule,
+    SharedUploadZoneVideoModule,
   ],
   declarations: [
     SidebarProjectPitchComponent

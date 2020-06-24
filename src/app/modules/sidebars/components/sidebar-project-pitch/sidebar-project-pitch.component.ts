@@ -2,6 +2,32 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CardComment} from '../../../../models/innov-card-comment';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {SidebarInterface} from '../../interfaces/sidebar-interface';
+import {CommonService} from '../../../../services/common/common.service';
+import {Media, Video} from '../../../../models/media';
+import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
+
+/***
+ * It involves the edition of the Innovation Card fields.
+ *
+ * Inputs:
+ * 1. isSaving: to disabled/enabled the save button when the parent component
+ * is saving the project in the back.
+ * 2. imagePostUri: url to save the image media.
+ * 3. mainMedia: principal media of the card.
+ * 4. pitchHelp: based on the mission objective pass the help/example for the different
+ * Type.
+ * 5. comment: pass the UMI team comment and suggestion to show.
+ * 6. cardContent: can be of any type like 'string' | 'Array<Media>'.
+ * 7. type: based on it we show the template and the functionality. They are
+ * 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'.
+ *
+ * Outputs:
+ * 1. saveProject: format: {type: string, content: any}. You receive the object in the parent component
+ * and based on the type ('TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'IMAGE' | 'VIDEO' | 'MAIN_MEDIA' | 'DELETE_MEDIA')
+ * you can perform the logic. The type are passed based on the functionality used in the sidebar.
+ * 2. isSavingChange: to listen in the parent component to execute the functionality and disabled the Save button in
+ * the sidebar.
+ */
 
 @Component({
   selector: 'app-sidebar-project-pitch',
@@ -24,6 +50,10 @@ export class SidebarProjectPitchComponent {
     }
   }
 
+  @Input() imagePostUri = '';
+
+  @Input() mainMedia: Media = <Media>{};
+
   @Input() pitchHelp: PitchHelpFields = <PitchHelpFields>{};
 
   @Input() set comment(value: CardComment) {
@@ -36,9 +66,9 @@ export class SidebarProjectPitchComponent {
     }
   }
 
-  @Input() cardContent = '';
+  @Input() cardContent: any = '';
 
-  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION'
+  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'
   @Input() type = '';
 
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
@@ -59,21 +89,97 @@ export class SidebarProjectPitchComponent {
 
   private _toBeSaved = false;
 
+  constructor(private _innovationFrontService: InnovationFrontService) { }
+
+  /***
+   * when the user clicks on the Save button
+   * @param event
+   */
   public onSave(event: Event) {
     event.preventDefault();
     this.isSavingChange.emit(true);
     this.saveProject.emit({type: this.type, content: this.cardContent});
   }
 
+  /***
+   * when we change the value of the form-input or text-zone.
+   */
   public onChangeValue() {
     this._toBeSaved = true;
   }
 
+  /***
+   * when the user writes in the text-zone to edit the text.
+   * @param event
+   */
   public onTextChange(event: { content: string }) {
     this.cardContent = event.content;
     this.onChangeValue();
   }
 
+  /***
+   * when the user upload Image or Video.
+   * @param media
+   * @param type
+   */
+  public onUploadMedia(media: Media | Video, type: 'IMAGE' | 'VIDEO') {
+    if (media && type) {
+      this.isSavingChange.emit(true);
+      this.saveProject.emit({type: type, content: <Video>media});
+    }
+  }
+
+  /***
+   * to get the Image or Video source for the respective media.
+   * @param media
+   * @param type
+   */
+  public mediaSrc(media: any, type: 'IMAGE' | 'VIDEO') {
+    if (media && type === 'IMAGE') {
+      return InnovationFrontService.imageSrc(media);
+    } else if (media && type === 'VIDEO') {
+      return this._innovationFrontService.videoSrc(media);
+    }
+  }
+
+  /***
+   * checking the media shown is not the main media.
+   * @param media
+   */
+  public isNotMainMedia(media: any): boolean {
+    if (this.mainMedia && this.mainMedia._id && media && media['_id']) {
+      return this.mainMedia._id !== media['_id'];
+    }
+    return true;
+  }
+
+  /***
+   * when the user clicks on the Set as main media button to set the media as a main media
+   * @param media
+   */
+  public onSetPrincipal(media: any) {
+    if (media && this.isNotMainMedia(media) && !this._isSaving) {
+      this.isSavingChange.emit(true);
+      this.saveProject.emit({type: 'MAIN_MEDIA', content: <Media>media});
+    }
+  }
+
+  /***
+   * when the user clicks on the Delete media button
+   * @param media
+   */
+  public onDeleteMedia(media: any) {
+    if (media && this.cardContent.length > 1 && !this._isSaving) {
+      this.isSavingChange.emit(true);
+      this.saveProject.emit({type: 'DELETE_MEDIA', content: <Media>media});
+    }
+  }
+
+  /***
+   * to toggle the different sections
+   * @param event
+   * @param type
+   */
   public toggle(event: Event, type: string) {
     event.preventDefault();
     switch (type) {
@@ -97,21 +203,72 @@ export class SidebarProjectPitchComponent {
     }
   }
 
-  get helpText(): string {
+  /***
+   * returns the remaining Char and Color of the field
+   * @param type
+   */
+  public remaining(type: string): string {
+    if (this.type && type) {
+      switch (this.type) {
+
+        case 'TITLE':
+          if (type === 'COLOR') {
+            return CommonService.getLimitColor(this.cardContent.length, 150);
+          } else if (type === 'CHAR') {
+            return (150 - this.cardContent.length).toString(10);
+          }
+          break;
+
+        case 'SUMMARY':
+        case 'ISSUE':
+        case 'SOLUTION':
+          if (type === 'COLOR') {
+            return CommonService.getLimitColor(this.cardContent.length, 500);
+          } else if (type === 'CHAR') {
+            return (500 - this.cardContent.length).toString(10);
+          }
+          break;
+
+      }
+    }
+    return '';
+  }
+
+  public help(type: string): string {
     if (this.pitchHelp && this.type) {
       switch (this.type) {
 
         case 'TITLE':
-          return this.pitchHelp.title;
+          if (type === 'TEXT') {
+            return this.pitchHelp.title;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.title;
+          }
+          break;
 
         case 'SUMMARY':
-          return this.pitchHelp.summary;
+          if (type === 'TEXT') {
+            return this.pitchHelp.summary;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.summary;
+          }
+          break;
 
         case 'ISSUE':
-          return this.pitchHelp.issue;
+          if (type === 'TEXT') {
+            return this.pitchHelp.issue;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.issue;
+          }
+          break;
 
         case 'SOLUTION':
-          return this.pitchHelp.solution;
+          if (type === 'TEXT') {
+            return this.pitchHelp.solution;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.solution;
+          }
+          break;
 
       }
     }

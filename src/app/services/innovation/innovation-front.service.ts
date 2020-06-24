@@ -12,6 +12,7 @@ import { InnovCard } from '../../models/innov-card';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 import { Question } from '../../models/question';
 import { Section } from '../../models/section';
+import {DomSanitizer} from '@angular/platform-browser';
 
 export interface Values {
   settingPercentage?: number;
@@ -48,6 +49,8 @@ export class InnovationFrontService {
   private _innovationObj: BehaviorSubject<Innovation> = new BehaviorSubject<Innovation>(<Innovation>{});
 
   private _activeCardIndex: Subject<number> = new Subject<number>();
+
+  constructor(private _domSanitizer: DomSanitizer) { }
 
   /*
     We are calculating the percentage for the project.
@@ -151,7 +154,6 @@ export class InnovationFrontService {
     }
 
   }
-
 
   /***
    * this function is to return the color based on the length and limit.
@@ -271,9 +273,9 @@ export class InnovationFrontService {
    * @param height
    */
   public static principalMedia(innovation: Innovation, lang = 'en', width = '240', height = '159'): string {
-    if (innovation.principalMedia) {
-      return InnovationFrontService._getMedia(innovation.principalMedia, width, height);
-    } else if (innovation.innovationCards && innovation.innovationCards.length > 0) {
+    if (innovation && innovation.principalMedia) {
+      return InnovationFrontService.getMedia(innovation.principalMedia, width, height);
+    } else if (innovation && innovation.innovationCards && innovation.innovationCards.length > 0) {
       const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'card');
       return InnovationFrontService.innovCardPrincipalMedia(_card, width, height);
     }
@@ -286,18 +288,18 @@ export class InnovationFrontService {
    * @param height
    */
   public static innovCardPrincipalMedia(innovCard: InnovCard, width = '240', height = '159'): string {
-    if (innovCard.principalMedia) {
-      return InnovationFrontService._getMedia(innovCard.principalMedia, width, height);
-    } else if (innovCard.media && innovCard.media.length > 0) {
+    if (innovCard && innovCard.principalMedia) {
+      return InnovationFrontService.getMedia(innovCard.principalMedia, width, height);
+    } else if (innovCard && innovCard.media && innovCard.media.length > 0) {
       const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
       const _media: Media = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
-      return InnovationFrontService._getMedia(_media, width, height);
+      return InnovationFrontService.getMedia(_media, width, height);
     } else {
       return InnovationFrontService.defaultMedia(width, height);
     }
   }
 
-  private static _getMedia(media: Media, width = '240', height = '159'): string {
+  public static getMedia(media: Media, width = '240', height = '159'): string {
     let _src = '';
 
     if (media && media.type && media.type === 'PHOTO') {
@@ -310,13 +312,13 @@ export class InnovationFrontService {
   }
 
   private static _videoThumbnail(media: Media): string {
-    return media.video && media.video.thumbnail || '';
+    return media && media.video && media.video.thumbnail || '';
   }
 
   public static imageSrc(media: Media, width = '240', height = '159'): string {
     const _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
     const _suffix = '.jpg';
-    return media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
+    return media && media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
   }
 
   /***
@@ -339,6 +341,11 @@ export class InnovationFrontService {
   public static activeCard(innovation: Innovation, index = 0): InnovCard {
     return innovation && innovation.innovationCards && innovation.innovationCards.length
       ? innovation.innovationCards[index] : <InnovCard>{};
+  }
+
+  public videoSrc(media: Media): any {
+    return media && media.video && media.video.embeddableUrl
+      ? this._domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl) : '';
   }
 
   /*** Todo remove this
