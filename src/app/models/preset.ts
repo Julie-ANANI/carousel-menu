@@ -19,8 +19,6 @@ export interface Preset {
     hidden: boolean
   },
 
-  template?: 'marketResearch' | 'potentialValidation' | 'leadGeneration';
-
   requirements?: Array<PresetRequirement>;
 
 }
