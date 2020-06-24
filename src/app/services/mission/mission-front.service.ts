@@ -2,11 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Mission} from '../../models/mission';
 import {ObjectivesPrincipal} from '../../models/static-data/missionObjectives';
-import {
-  DetectingNeedsHelp, DiscoveringApplicationsHelp, OptimizingValueHelp, OtherHelp,
-  SourcingInnovativeHelp, TargetingApplicationHelp, ValidatingInterestHelp,
-  ValidatingMarketHelp
-} from '../../models/static-data/project-pitch';
+import {Pitches} from '../../models/static-data/project-pitch';
 
 @Injectable({providedIn: 'root'})
 export class MissionFrontService {
@@ -27,59 +23,21 @@ export class MissionFrontService {
    */
   public static objectiveInfo(mission: Mission, required: string, lang = 'en'): any {
     if (mission && mission.objective && mission.objective.principal && mission.objective.principal['en'] && required) {
-      const _matching = {
-        'Detecting needs / trends': {
-          index: 0,
-          file: DetectingNeedsHelp,
-          icon: 'fas fa-compass'
-        },
-        'Validating market needs': {
-          index: 1,
-          file: ValidatingMarketHelp,
-          icon: 'fas fa-compass'
-        },
-        'Sourcing innovative solutions / partners': {
-          index: 2,
-          file: SourcingInnovativeHelp,
-          icon: 'fas fa-book-open'
-        },
-        'Validating the interest of my solution': {
-          index: 3,
-          file: ValidatingInterestHelp,
-          icon: 'fas fa-lightbulb'
-        },
-        'Discovering new applications / markets': {
-          index: 4,
-          file: DiscoveringApplicationsHelp,
-          icon: 'fas fa-map-signs'
-        },
-        'Targeting the most receptive application / market': {
-          index: 5,
-          file: TargetingApplicationHelp,
-          icon: 'fas fa-crosshairs'
-        },
-        'Optimizing my value proposition': {
-          index: 6,
-          file: OptimizingValueHelp,
-          icon: 'fas fa-sync-alt'
-        },
-        'Other': {
-          index: 7,
-          file: OtherHelp,
-          icon: 'fas fa-pencil-alt'
-        },
-      }
+      const _objective = mission.objective.principal['en'];
+      const _matching = ['Detecting needs / trends', 'Validating market needs', 'Sourcing innovative solutions / partners',
+        'Validating the interest of my solution', 'Discovering new applications / markets',
+        'Targeting the most receptive application / market', 'Optimizing my value proposition', 'Other'];
 
       if (required === 'OBJECTIVE') {
-        return ObjectivesPrincipal[_matching[mission.objective.principal['en']].index][lang];
+        return ObjectivesPrincipal[_matching.indexOf(_objective)][lang];
       } else if (required === 'PICTO') {
-        return ObjectivesPrincipal[_matching[mission.objective.principal['en']].index]['picto'];
+        return ObjectivesPrincipal[_matching.indexOf(_objective)]['picto'];
       } else if (required === 'FONT_AWESOME_ICON') {
-        return _matching[mission.objective.principal['en']].icon;
+        return ObjectivesPrincipal[_matching.indexOf(_objective)].icon;
       } else if (required === 'HELP_QUIZ') {
-        return _matching[mission.objective.principal['en']].file[lang].quiz;
+        return Pitches[_objective][lang].quiz;
       } else if (required === 'PITCH_HELP') {
-        return _matching[mission.objective.principal['en']].file[lang];
+        return Pitches[_objective][lang];
       }
 
     }
