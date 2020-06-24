@@ -67,6 +67,9 @@ export class PitchComponent implements OnInit, OnDestroy {
           return !!this.activeInnovCard.title;
         } else if (type === 'CONTENT') {
           return this.activeInnovCard.title;
+        } else if (type === 'LABEL') {
+          return !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title
+            && (this.activeInnovCard.operatorComment.title.comment || this.activeInnovCard.operatorComment.title.suggestion));
         }
         break;
 
@@ -77,6 +80,9 @@ export class PitchComponent implements OnInit, OnDestroy {
           return !!this.activeInnovCard.summary;
         } else if (type === 'CONTENT') {
           return this.activeInnovCard.summary;
+        } else if (type === 'LABEL') {
+          return !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.summary
+            && (this.activeInnovCard.operatorComment.summary.comment || this.activeInnovCard.operatorComment.summary.suggestion));
         }
         break;
 
@@ -87,6 +93,8 @@ export class PitchComponent implements OnInit, OnDestroy {
           return !!(this.activeInnovCard.media && this.activeInnovCard.media.length);
         } else if (type === 'CONTENT') {
           return this.activeInnovCard.media;
+        } else if (type === 'LABEL') {
+          return false;
         }
         break;
 

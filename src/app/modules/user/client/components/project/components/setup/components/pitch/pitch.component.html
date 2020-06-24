@@ -28,7 +28,10 @@
         <!-- header -->
         <div class="flex-between w-full">
           <div class="d-flex align-center m-right-1">
-            <span class="m-right-1 field-heading">{{ sectionInfo(section, 'HEADING') | translate }}</span>
+            <span class="m-right-2 field-heading">{{ sectionInfo(section, 'HEADING') | translate }}</span>
+            <span *ngIf="sectionInfo(section, 'LABEL')" class="label is-primary is-sm text-xs p-left-3 p-right-3">
+              {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
+            </span>
           </div>
           <span *ngIf="isEditable" (click)="openSidebar(section)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
