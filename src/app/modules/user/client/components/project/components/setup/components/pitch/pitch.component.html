@@ -36,11 +36,11 @@
                 {{ section.title | translate }}
               </ng-template>
             </span>
-            <span *ngIf="sectionInfo(section.type, 'LABEL')" class="label is-primary is-sm text-xs p-left-3 p-right-3">
+            <span *ngIf="sectionCommentLabel(section.type)" class="label is-primary is-sm text-xs p-left-3 p-right-3">
               {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
             </span>
           </div>
-          <span (click)="openSidebar(section.type)" class="icon-container is-overlay">
+          <span (click)="openSidebar(section.type, section.content)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
         </div>
@@ -58,7 +58,7 @@
         <!-- content for section === 'MEDIA' -->
         <div
           *ngIf="section.type === 'MEDIA'"
-          [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-10px' }"
+          [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-15px' }"
           class="m-top-10 d-flex flex-wrap">
 
           <!-- principal media -->
