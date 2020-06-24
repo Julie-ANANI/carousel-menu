@@ -6,6 +6,29 @@ import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 
+/***
+ * It involves the edition of the Innovation Card fields.
+ *
+ * Inputs:
+ * 1. isSaving: to disabled/enabled the save button when the parent component
+ * is saving the project in the back.
+ * 2. imagePostUri: url to save the image media.
+ * 3. mainMedia: principal media of the card.
+ * 4. pitchHelp: based on the mission objective pass the help/example for the different
+ * Type.
+ * 5. comment: pass the UMI team comment and suggestion to show.
+ * 6. cardContent: can be of any type like 'string' | 'Array<Media>'.
+ * 7. type: based on it we show the template and the functionality. They are
+ * 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'.
+ *
+ * Outputs:
+ * 1. saveProject: format: {type: string, content: any}. You receive the object in the parent component
+ * and based on the type ('TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'IMAGE' | 'VIDEO' | 'MAIN_MEDIA' | 'DELETE_MEDIA')
+ * you can perform the logic. The type are passed based on the functionality used in the sidebar.
+ * 2. isSavingChange: to listen in the parent component to execute the functionality and disabled the Save button in
+ * the sidebar.
+ */
+
 @Component({
   selector: 'app-sidebar-project-pitch',
   templateUrl: './sidebar-project-pitch.component.html',
@@ -43,7 +66,7 @@ export class SidebarProjectPitchComponent {
     }
   }
 
-  @Input() cardContent = '';
+  @Input() cardContent: any = '';
 
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'
   @Input() type = '';
@@ -68,32 +91,49 @@ export class SidebarProjectPitchComponent {
 
   constructor(private _innovationFrontService: InnovationFrontService) { }
 
+  /***
+   * when the user clicks on the Save button
+   * @param event
+   */
   public onSave(event: Event) {
     event.preventDefault();
     this.isSavingChange.emit(true);
     this.saveProject.emit({type: this.type, content: this.cardContent});
   }
 
+  /***
+   * when we change the value of the form-input or text-zone.
+   */
   public onChangeValue() {
     this._toBeSaved = true;
   }
 
+  /***
+   * when the user writes in the text-zone to edit the text.
+   * @param event
+   */
   public onTextChange(event: { content: string }) {
     this.cardContent = event.content;
     this.onChangeValue();
   }
 
-  public onUploadMedia(media: Media | Video, type: string) {
-    if (media) {
+  /***
+   * when the user upload Image or Video.
+   * @param media
+   * @param type
+   */
+  public onUploadMedia(media: Media | Video, type: 'IMAGE' | 'VIDEO') {
+    if (media && type) {
       this.isSavingChange.emit(true);
-      if (type === 'IMAGE') {
-        this.saveProject.emit({type: 'MEDIA', content: <Media>media});
-      } else if (type === 'VIDEO') {
-        this.saveProject.emit({type: 'VIDEO', content: <Video>media});
-      }
+      this.saveProject.emit({type: type, content: <Video>media});
     }
   }
 
+  /***
+   * to get the Image or Video source for the respective media.
+   * @param media
+   * @param type
+   */
   public mediaSrc(media: any, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
       return InnovationFrontService.imageSrc(media);
@@ -102,6 +142,10 @@ export class SidebarProjectPitchComponent {
     }
   }
 
+  /***
+   * checking the media shown is not the main media.
+   * @param media
+   */
   public isNotMainMedia(media: any): boolean {
     if (this.mainMedia && this.mainMedia._id && media && media['_id']) {
       return this.mainMedia._id !== media['_id'];
@@ -109,6 +153,10 @@ export class SidebarProjectPitchComponent {
     return true;
   }
 
+  /***
+   * when the user clicks on the Set as main media button to set the media as a main media
+   * @param media
+   */
   public onSetPrincipal(media: any) {
     if (media && this.isNotMainMedia(media) && !this._isSaving) {
       this.isSavingChange.emit(true);
@@ -116,6 +164,10 @@ export class SidebarProjectPitchComponent {
     }
   }
 
+  /***
+   * when the user clicks on the Delete media button
+   * @param media
+   */
   public onDeleteMedia(media: any) {
     if (media && this.cardContent.length > 1 && !this._isSaving) {
       this.isSavingChange.emit(true);
@@ -123,6 +175,11 @@ export class SidebarProjectPitchComponent {
     }
   }
 
+  /***
+   * to toggle the different sections
+   * @param event
+   * @param type
+   */
   public toggle(event: Event, type: string) {
     event.preventDefault();
     switch (type) {
@@ -146,6 +203,10 @@ export class SidebarProjectPitchComponent {
     }
   }
 
+  /***
+   * returns the remaining Char and Color of the field
+   * @param type
+   */
   public remaining(type: string): string {
     if (this.type && type) {
       switch (this.type) {

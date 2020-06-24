@@ -127,7 +127,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public onSaveProject(event: {type: string, content: any}) {
-    if (event.type && this._isEditable) {
+    if (event.type && this._isEditable && this._isSaving) {
       switch (event.type) {
 
         case 'TITLE':
@@ -145,7 +145,7 @@ export class PitchComponent implements OnInit, OnDestroy {
           if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
             this._innovation.innovationCards[this._activeCardIndex].principalMedia = event.content;
           }
-          this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media;
+          this._cardContent = this.activeInnovCard.media;
           this._updateProject('ERROR.PROJECT.UPDATED_TEXT');
           break;
 
@@ -181,7 +181,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       .pipe(first()).subscribe((video) => {
         this._innovation.innovationCards[this._activeCardIndex].media.push(video);
         this._innovationFrontService.setInnovation(this._innovation);
-        this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media;
+        this._cardContent = this.activeInnovCard.media;
         this._isSaving = false;
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
     }, (err: HttpErrorResponse) => {
@@ -205,7 +205,17 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   private _deleteMedia(media: Media) {
-
+    this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
+      .pipe(first()).subscribe(() => {
+        this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
+        this._cardContent = this.activeInnovCard.media;
+        this._isSaving = false;
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
+    }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isSaving = false;
+        console.error(err);
+    });
   }
 
   get activeInnovCard(): InnovCard {
