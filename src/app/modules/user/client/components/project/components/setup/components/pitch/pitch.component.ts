@@ -13,6 +13,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
 import {Media, Video} from '../../../../../../../../../models/media';
+import {CardComment, CardSections} from '../../../../../../../../../models/innov-card-comment';
 
 @Component({
   selector: 'app-project-pitch',
@@ -40,7 +41,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _defaultSections: Array<string> = ['TITLE', 'SUMMARY', 'MEDIA'];
 
-  private _activeSection = '';
+  private _activeSection: CardSections = '';
 
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -68,8 +69,8 @@ export class PitchComponent implements OnInit, OnDestroy {
         } else if (type === 'CONTENT') {
           return this.activeInnovCard.title;
         } else if (type === 'LABEL') {
-          return !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title
-            && (this.activeInnovCard.operatorComment.title.comment || this.activeInnovCard.operatorComment.title.suggestion));
+          return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').comment
+            || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').suggestion);
         }
         break;
 
@@ -81,8 +82,8 @@ export class PitchComponent implements OnInit, OnDestroy {
         } else if (type === 'CONTENT') {
           return this.activeInnovCard.summary;
         } else if (type === 'LABEL') {
-          return !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.summary
-            && (this.activeInnovCard.operatorComment.summary.comment || this.activeInnovCard.operatorComment.summary.suggestion));
+          return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').comment
+            || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').suggestion);
         }
         break;
 
@@ -93,8 +94,6 @@ export class PitchComponent implements OnInit, OnDestroy {
           return !!(this.activeInnovCard.media && this.activeInnovCard.media.length);
         } else if (type === 'CONTENT') {
           return this.activeInnovCard.media;
-        } else if (type === 'LABEL') {
-          return false;
         }
         break;
 
@@ -103,7 +102,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public openSidebar(section: string) {
     if (this._isEditable) {
-      this._activeSection = section;
+      this._activeSection = <CardSections>section;
 
       switch (section) {
 
@@ -230,6 +229,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
   }
 
+  get operatorComment(): CardComment {
+    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection);
+  }
+
   get imagePostUri(): string {
     return this._innovation._id && this.activeInnovCard._id
       ? `/innovation/${this._innovation._id}/innovationCard/${this.activeInnovCard._id}/media/image` : '';
@@ -279,7 +282,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._defaultSections;
   }
 
-  get activeSection(): string {
+  get activeSection(): CardSections {
     return this._activeSection;
   }
 

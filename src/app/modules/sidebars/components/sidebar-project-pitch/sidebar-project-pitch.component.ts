@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CardComment} from '../../../../models/innov-card-comment';
+import {CardComment, CardSections} from '../../../../models/innov-card-comment';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {SidebarInterface} from '../../interfaces/sidebar-interface';
 import {CommonService} from '../../../../services/common/common.service';
@@ -73,7 +73,7 @@ export class SidebarProjectPitchComponent {
   @Input() cardContent: any = '';
 
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'
-  @Input() type = '';
+  @Input() type: CardSections = '';
 
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
 

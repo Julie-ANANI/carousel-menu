@@ -122,8 +122,9 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
-    [(isSaving)]="isSaving"
     [(cardContent)]="cardContent"
+    [(isSaving)]="isSaving"
+    [comment]="operatorComment"
     [imagePostUri]="imagePostUri"
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"

@@ -16,3 +16,5 @@ export interface InnovCardComment {
   solution?: CardComment;
   advantages?: CardComment;
 }
+
+export type CardSections = 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | '';

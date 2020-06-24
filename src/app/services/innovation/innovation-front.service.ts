@@ -12,7 +12,8 @@ import { InnovCard } from '../../models/innov-card';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 import { Question } from '../../models/question';
 import { Section } from '../../models/section';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CardComment, CardSections } from '../../models/innov-card-comment';
 
 export interface Values {
   settingPercentage?: number;
@@ -254,6 +255,26 @@ export class InnovationFrontService {
       }
 
     }
+  }
+
+  /***
+   * returns the operator comment of the card based on the required
+   * @param innovCard
+   * @param required
+   */
+  public static cardOperatorComment(innovCard: InnovCard, required: CardSections): CardComment {
+    if (innovCard && innovCard.operatorComment && required) {
+      switch (required) {
+
+        case 'TITLE':
+          return innovCard.operatorComment.title;
+
+        case 'SUMMARY':
+          return innovCard.operatorComment.summary;
+
+      }
+    }
+    return <CardComment>{};
   }
 
   public static scrapeHtmlTags(text: string): string {
