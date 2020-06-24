@@ -83,47 +83,34 @@ export class PitchComponent implements OnInit, OnDestroy {
     ];
 
     this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
-      ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections
+      ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
   }
 
-  public sectionInfo(section: string, type: string): boolean {
+  public sectionCommentLabel(section: string): boolean {
     switch (section) {
 
       case 'TITLE':
-        if (type === 'LABEL') {
-          return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').comment
-            || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').suggestion);
-        }
-        break;
+        return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').comment
+          || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').suggestion);
 
       case 'SUMMARY':
-        if (type === 'LABEL') {
-          return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').comment
-            || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').suggestion);
-        }
-        break;
+        return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').comment
+          || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').suggestion);
+
+      case 'ISSUE':
+        return !!(InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'ISSUE').comment
+          || InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'ISSUE').suggestion);
+
+      case 'SOLUTION':
+        return !!(InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'SOLUTION').comment
+          || InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion);
 
     }
   }
 
-  public openSidebar(section: string) {
+  public openSidebar(section: string, content: string | Array<Media>) {
     this._activeSection = <CardSectionTypes>section;
-
-    switch (section) {
-
-      case 'TITLE':
-        this._cardContent = this.activeInnovCard.title;
-        break;
-
-      case 'SUMMARY':
-        this._cardContent = this.activeInnovCard.summary;
-        break;
-
-      case 'MEDIA':
-        this._cardContent = this.activeInnovCard.media;
-        break;
-
-    }
+    this._cardContent = content;
 
     this._sidebarValue = {
       animate_state: 'active',
@@ -152,6 +139,18 @@ export class PitchComponent implements OnInit, OnDestroy {
           this._updateProject();
           break;
 
+        case 'ISSUE':
+          const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE')
+          this._innovation.innovationCards[this._activeCardIndex].sections[_indexIssue].content = event.content;
+          this._updateProject();
+          break;
+
+        case 'SOLUTION':
+          const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION')
+          this._innovation.innovationCards[this._activeCardIndex].sections[_indexSolution].content = event.content;
+          this._updateProject();
+          break;
+
         case 'IMAGE':
           this._innovation.innovationCards[this._activeCardIndex].media.push(event.content);
           if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
@@ -166,11 +165,11 @@ export class PitchComponent implements OnInit, OnDestroy {
           break;
 
         case 'MAIN_MEDIA':
-          this._setMainMedia(event.content)
+          this._setMainMedia(event.content);
           break;
 
         case 'DELETE_MEDIA':
-          this._deleteMedia(event.content)
+          this._deleteMedia(event.content);
           break;
       }
     }

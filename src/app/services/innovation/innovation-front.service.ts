@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
-import { CardSectionTypes, InnovCard } from '../../models/innov-card';
+import { CardSectionTypes, InnovCard, InnovCardSection } from '../../models/innov-card';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 import { Question } from '../../models/question';
 import { Section } from '../../models/section';
@@ -244,10 +244,10 @@ export class InnovationFrontService {
           return InnovationFrontService.scrapeHtmlTags(_card.summary) || '';
 
         case 'ISSUE':
-          return InnovationFrontService.scrapeHtmlTags(_card.problem) || '';
+          return InnovationFrontService.cardDynamicSection(_card, 'ISSUE').content || '';
 
         case 'SOLUTION':
-          return InnovationFrontService.scrapeHtmlTags(_card.solution) || '';
+          return InnovationFrontService.cardDynamicSection(_card, 'SOLUTION').content || '';
 
         case 'LANG':
           return _card.lang;
@@ -258,13 +258,37 @@ export class InnovationFrontService {
   }
 
   /***
+   * returns the section info of the 'ISSUE' | 'SOLUTION'.
+   * @param innovCard
+   * @param field
+   */
+  public static cardDynamicSection(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): InnovCardSection {
+    if (innovCard && innovCard.sections && innovCard.sections.length) {
+      const _index = InnovationFrontService.cardDynamicSectionIndex(innovCard, field);
+      if (_index !== -1) {
+        return innovCard.sections[_index]
+      }
+    }
+    return <InnovCardSection>{};
+  }
+
+  /***
+   * return the index of the section 'ISSUE' | 'SOLUTION'
+   * @param innovCard
+   * @param field
+   */
+  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): number {
+    return innovCard.sections.findIndex((section) => section.type === field);
+  }
+
+  /***
    * returns the operator comment of the card based on the required
    * @param innovCard
-   * @param required
+   * @param field
    */
-  public static cardOperatorComment(innovCard: InnovCard, required: CardSectionTypes): CardComment {
-    if (innovCard && innovCard.operatorComment && required) {
-      switch (required) {
+  public static cardOperatorComment(innovCard: InnovCard, field: CardSectionTypes): CardComment {
+    if (innovCard && innovCard.operatorComment && field) {
+      switch (field) {
 
         case 'TITLE':
           return innovCard.operatorComment.title;
@@ -272,6 +296,27 @@ export class InnovationFrontService {
         case 'SUMMARY':
           return innovCard.operatorComment.summary;
 
+        case 'ISSUE':
+          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'ISSUE');
+
+        case 'SOLUTION':
+          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'SOLUTION');
+
+      }
+    }
+    return <CardComment>{};
+  }
+
+  /***
+   * returns the dynamic comment section info of the 'ISSUE' | 'SOLUTION'
+   * @param innovCard
+   * @param field
+   */
+  public static cardDynamicOperatorComment(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): CardComment {
+    if (innovCard && innovCard.operatorComment && innovCard.operatorComment.sections && innovCard.operatorComment.sections.length) {
+      const _index = innovCard.operatorComment.sections.findIndex((section) => section.type === field);
+      if (_index !== -1) {
+        return innovCard.operatorComment.sections[_index]
       }
     }
     return <CardComment>{};
