@@ -84,7 +84,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
     if (this._activatedRoute.snapshot.data.innovation && typeof this._activatedRoute.snapshot.data.innovation !== undefined) {
       this._innovation = this._activatedRoute.snapshot.data.innovation;
-      this._innovationCard = InnovationFrontService.currentLangInnovationCard(this._innovation, this._lang, 'card');
+      this._innovationCard = InnovationFrontService.currentLangInnovationCard(this._innovation, this._lang, 'CARD');
       this._pageTitle = this._innovationCard.title;
       this._setPageTitle();
       this._getAllTags();

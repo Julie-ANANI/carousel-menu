@@ -8,12 +8,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
-import { InnovCard } from '../../models/innov-card';
+import { CardSectionTypes, InnovCard } from '../../models/innov-card';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 import { Question } from '../../models/question';
 import { Section } from '../../models/section';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CardComment, CardSections } from '../../models/innov-card-comment';
+import { CardComment } from '../../models/innov-card-comment';
 
 export interface Values {
   settingPercentage?: number;
@@ -234,22 +234,22 @@ export class InnovationFrontService {
 
       switch (required) {
 
-        case 'card':
+        case 'CARD':
           return <InnovCard>_card;
 
-        case 'title':
+        case 'TITLE':
           return _card.title;
 
-        case 'summary':
+        case 'SUMMARY':
           return InnovationFrontService.scrapeHtmlTags(_card.summary) || '';
 
-        case 'problem':
+        case 'ISSUE':
           return InnovationFrontService.scrapeHtmlTags(_card.problem) || '';
 
-        case 'solution':
+        case 'SOLUTION':
           return InnovationFrontService.scrapeHtmlTags(_card.solution) || '';
 
-        case 'lang':
+        case 'LANG':
           return _card.lang;
 
       }
@@ -262,7 +262,7 @@ export class InnovationFrontService {
    * @param innovCard
    * @param required
    */
-  public static cardOperatorComment(innovCard: InnovCard, required: CardSections): CardComment {
+  public static cardOperatorComment(innovCard: InnovCard, required: CardSectionTypes): CardComment {
     if (innovCard && innovCard.operatorComment && required) {
       switch (required) {
 
@@ -297,7 +297,7 @@ export class InnovationFrontService {
     if (innovation && innovation.principalMedia) {
       return InnovationFrontService.getMedia(innovation.principalMedia, width, height);
     } else if (innovation && innovation.innovationCards && innovation.innovationCards.length > 0) {
-      const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'card');
+      const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'CARD');
       return InnovationFrontService.innovCardPrincipalMedia(_card, width, height);
     }
   }

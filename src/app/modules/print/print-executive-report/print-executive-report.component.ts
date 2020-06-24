@@ -36,7 +36,7 @@ export class PrintExecutiveReportComponent implements OnInit {
       this._initData();
     } else if (this._activatedRoute.snapshot.parent.data.innovation && this._activatedRoute.snapshot.parent.data.innovation.executiveReport) {
       this._data = <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
-      this._data.executiveReport.lang = InnovationFrontService.currentLangInnovationCard(<Innovation>this.data, this._userLang, 'lang');
+      this._data.executiveReport.lang = InnovationFrontService.currentLangInnovationCard(<Innovation>this.data, this._userLang, 'LANG');
       this._data.executiveReport.operator = this._data.operator || <User>{};
       this._data.executiveReport.conclusion = this._data.marketReport && this._data.marketReport.finalConclusion
         && this._data.marketReport.finalConclusion.conclusion || '';
@@ -54,7 +54,7 @@ export class PrintExecutiveReportComponent implements OnInit {
   private _initData() {
     const innovation: Innovation = this._activatedRoute.snapshot.parent.data && this._activatedRoute.snapshot.parent.data.innovation
       && <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
-    this._title = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'title');
+    this._title = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'TITLE');
     this._media = InnovationFrontService.principalMedia(innovation, this._userLang, '173', '110');
   }
 

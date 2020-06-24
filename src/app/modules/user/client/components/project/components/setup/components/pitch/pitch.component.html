@@ -17,23 +17,30 @@
       </section>
       <!-- /action buttons -->
 
-      <!-- default sections -->
+      <!-- sections -->
       <section
-        *ngFor="let section of defaultSections"
-        [ngClass]="{ 'is-filled': sectionInfo(section, 'CLASS'),
-        'is-not-filled': !sectionInfo(section, 'CLASS'),
-        'is-active': activeSection === section }"
+        *ngFor="let section of sections"
+        [ngClass]="{ 'is-filled': section.content,
+        'is-not-filled': !(section.content && section.content.length),
+        'is-active': activeSection === section.type }"
         class="field-wrapper">
 
         <!-- header -->
         <div class="flex-between w-full">
           <div class="d-flex align-center m-right-1">
-            <span class="m-right-2 field-heading">{{ sectionInfo(section, 'HEADING') | translate }}</span>
-            <span *ngIf="sectionInfo(section, 'LABEL')" class="label is-primary is-sm text-xs p-left-3 p-right-3">
+            <span class="m-right-2 field-heading">
+              <ng-container *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'; else translateTitle">
+                {{ section.title }}
+              </ng-container>
+              <ng-template #translateTitle>
+                {{ section.title | translate }}
+              </ng-template>
+            </span>
+            <span *ngIf="sectionInfo(section.type, 'LABEL')" class="label is-primary is-sm text-xs p-left-3 p-right-3">
               {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
             </span>
           </div>
-          <span (click)="openSidebar(section)" class="icon-container is-overlay">
+          <span (click)="openSidebar(section.type)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
         </div>
@@ -41,16 +48,16 @@
 
         <!-- content -->
         <div
-          *ngIf="section !== 'MEDIA'"
-          [ngStyle]="{'margin-bottom': section === 'SUMMARY' ? '-8px' : '0'}"
-          [innerHTML]="sectionInfo(section, 'CONTENT')"
+          *ngIf="section.type !== 'MEDIA'"
+          [ngStyle]="{'margin-bottom': section.type === 'SUMMARY' ? '-8px' : '0'}"
+          [innerHTML]="section.content"
           class="text-sm p-top-h">
         </div>
         <!-- /content -->
 
         <!-- content for section === 'MEDIA' -->
         <div
-          *ngIf="section === 'MEDIA'"
+          *ngIf="section.type === 'MEDIA'"
           [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-10px' }"
           class="m-top-10 d-flex flex-wrap">
 
@@ -71,8 +78,8 @@
           <!-- /principal media -->
 
           <!-- secondary medias -->
-          <ng-container *ngIf="activeInnovCard.media && activeInnovCard.media.length > 0">
-            <ng-container *ngFor="let media of activeInnovCard.media">
+          <ng-container *ngIf="section.content && section.content.length > 0">
+            <ng-container *ngFor="let media of section.content">
               <div
                 *ngIf="mediaSrc(media) &&
                 media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
@@ -94,7 +101,7 @@
         <!-- /content for section === 'MEDIA' -->
 
       </section>
-      <!-- /default sections -->
+      <!-- /sections -->
 
     </div>
   </div>

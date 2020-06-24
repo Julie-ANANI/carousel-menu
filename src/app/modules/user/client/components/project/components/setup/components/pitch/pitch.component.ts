@@ -6,14 +6,14 @@ import {first, takeUntil} from 'rxjs/operators';
 import {MissionFrontService} from '../../../../../../../../../services/mission/mission-front.service';
 import {Mission} from '../../../../../../../../../models/mission';
 import {Subject} from 'rxjs';
-import {InnovCard} from '../../../../../../../../../models/innov-card';
+import {CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
 import {SidebarInterface} from '../../../../../../../../sidebars/interfaces/sidebar-interface';
 import {InnovationService} from '../../../../../../../../../services/innovation/innovation.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
 import {Media, Video} from '../../../../../../../../../models/media';
-import {CardComment, CardSections} from '../../../../../../../../../models/innov-card-comment';
+import {CardComment} from '../../../../../../../../../models/innov-card-comment';
 
 @Component({
   selector: 'app-project-pitch',
@@ -39,9 +39,9 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _isEditable = false;
 
-  private _defaultSections: Array<string> = ['TITLE', 'SUMMARY', 'MEDIA'];
+  private _activeSection: CardSectionTypes = '';
 
-  private _activeSection: CardSections = '';
+  private _sections: Array<InnovCardSection> = []
 
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -51,49 +51,55 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+      this._initDefaultSections();
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((cardIndex) => {
       this._activeCardIndex = cardIndex;
+      this._initDefaultSections();
     });
   }
 
-  public sectionInfo(section: string, type: string): string | boolean | Array<Media> {
+  private _initDefaultSections() {
+    const _defaultSections: Array<InnovCardSection> = [
+      {
+        title: this.activeInnovCard.title ? 'PROJECT_PITCH.DESCRIPTION.TITLE_FILLED' : 'PROJECT_PITCH.DESCRIPTION.TITLE_NOT_FILLED',
+        content: this.activeInnovCard.title,
+        visibility: true,
+        type: 'TITLE'
+      },
+      {
+        title: this.activeInnovCard.summary ? 'PROJECT_PITCH.DESCRIPTION.SUMMARY_FILLED' : 'PROJECT_PITCH.DESCRIPTION.SUMMARY_NOT_FILLED',
+        content: this.activeInnovCard.summary,
+        visibility: true,
+        type: 'SUMMARY'
+      },
+      {
+        title: 'PROJECT_PITCH.DESCRIPTION.MEDIA',
+        content: this.activeInnovCard.media,
+        visibility: true,
+        type: 'MEDIA'
+      }
+    ];
+
+    this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
+      ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections
+  }
+
+  public sectionInfo(section: string, type: string): boolean {
     switch (section) {
 
       case 'TITLE':
-        if (type === 'HEADING') {
-          return this.activeInnovCard.title ? 'PROJECT_PITCH.DESCRIPTION.TITLE_FILLED' : 'PROJECT_PITCH.DESCRIPTION.TITLE_NOT_FILLED';
-        } else if (type === 'CLASS') {
-          return !!this.activeInnovCard.title;
-        } else if (type === 'CONTENT') {
-          return this.activeInnovCard.title;
-        } else if (type === 'LABEL') {
+        if (type === 'LABEL') {
           return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').comment
             || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').suggestion);
         }
         break;
 
       case 'SUMMARY':
-        if (type === 'HEADING') {
-          return this.activeInnovCard.summary ? 'PROJECT_PITCH.DESCRIPTION.SUMMARY_FILLED' : 'PROJECT_PITCH.DESCRIPTION.SUMMARY_NOT_FILLED';
-        } else if (type === 'CLASS') {
-          return !!this.activeInnovCard.summary;
-        } else if (type === 'CONTENT') {
-          return this.activeInnovCard.summary;
-        } else if (type === 'LABEL') {
+        if (type === 'LABEL') {
           return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').comment
             || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').suggestion);
-        }
-        break;
-
-      case 'MEDIA':
-        if (type === 'HEADING') {
-          return 'PROJECT_PITCH.DESCRIPTION.MEDIA';
-        } else if (type === 'CLASS') {
-          return !!(this.activeInnovCard.media && this.activeInnovCard.media.length);
-        } else if (type === 'CONTENT') {
-          return this.activeInnovCard.media;
         }
         break;
 
@@ -101,7 +107,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public openSidebar(section: string) {
-    this._activeSection = <CardSections>section;
+    this._activeSection = <CardSectionTypes>section;
 
     switch (section) {
 
@@ -277,12 +283,12 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._isEditable;
   }
 
-  get defaultSections(): Array<string> {
-    return this._defaultSections;
+  get activeSection(): CardSectionTypes {
+    return this._activeSection;
   }
 
-  get activeSection(): CardSections {
-    return this._activeSection;
+  get sections(): Array<InnovCardSection> {
+    return this._sections;
   }
 
   ngOnDestroy(): void {

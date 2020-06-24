@@ -137,7 +137,7 @@ export class AdminProjectsComponent implements OnInit {
   private _initProjects() {
     this._projects = this._projects.map((project) => {
       if (project.innovationCards && project.innovationCards.length) {
-        project.innovationCards = InnovationFrontService.currentLangInnovationCard(project, this._translateService.currentLang, 'card');
+        project.innovationCards = InnovationFrontService.currentLangInnovationCard(project, this._translateService.currentLang, 'CARD');
       }
       return project;
     });
