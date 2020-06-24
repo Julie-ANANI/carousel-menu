@@ -244,12 +244,13 @@ export class SharedProjectEditCardsComponent {
     return [];
   }
 
-  public isVisible(field: string): boolean {
+  public isVisible(field: string, index?: number): boolean {
     if (this.innovation && this.innovation.innovationCards[this._selectedCardIndex]
-      && this.innovation.innovationCards[this._selectedCardIndex].operatorComment && this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field]) {
-      return this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field]
-        && (this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field].comment
-          || this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field].suggestion);
+      && this.innovation.innovationCards[this._selectedCardIndex].operatorComment) {
+      const comment = field === 'section' ?
+        this.innovation.innovationCards[this._selectedCardIndex].operatorComment.sections[index] :
+        this.innovation.innovationCards[this._selectedCardIndex].operatorComment[field];
+      return comment && (comment.comment || comment.suggestion);
     }
     return false;
   }

@@ -290,7 +290,7 @@
             <app-text-zone
               (onTextChange)="updateData($event, 'sections', idx)"
               [data]="section.content"
-              id="problem">
+              [id]="'sections-' + idx">
             </app-text-zone>
 
             <div [ngStyle]="{ 'color': getColor(section.content.length | characterCountdown:1000, 1000) }"
@@ -308,7 +308,7 @@
           <!-- /not editable -->
 
           <!-- operator comment -->
-          <div *ngIf="isVisible('problem')|| allowAdminToComment">
+          <div *ngIf="isVisible('section', idx)|| allowAdminToComment">
 
             <!-- comment umi -->
             <div class="m-top-25">
@@ -318,15 +318,15 @@
                 <div class="label is-primary text-md">UMI</div>
               </div>
 
-              <div *ngIf="innovationCard.operatorComment.sections[index].comment" class="m-top-20">
-                <p [innerHTML]="innovationCard.operatorComment.sections[index].comment"></p>
+              <div *ngIf="innovationCard.operatorComment.sections[idx].comment" class="m-top-20">
+                <p [innerHTML]="innovationCard.operatorComment.sections[idx].comment"></p>
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
                 <app-text-zone
-                  (onTextChange)="updateUMIComment($event, 'sections.' + index, 'comment')"
-                  [data]="innovationCard.operatorComment.sections[index].comment"
-                  id="problem-comment">
+                  (onTextChange)="updateUMIComment($event, 'sections.' + idx, 'comment')"
+                  [data]="innovationCard.operatorComment.sections[idx].comment"
+                  [id]="'sections-' + idx + '-comment'">
                 </app-text-zone>
               </div>
 
@@ -334,7 +334,7 @@
             <!-- /comment umi -->
 
             <!-- suggestion umi -->
-            <div class="m-top-25">
+            <div class="m-top-25" *ngIf="innovationCard.operatorComment">
 
               <div class="d-flex align-center">
                 <span class="spec-text-op">{{ 'SHARED_PROJECT_EDIT.SUGGESTION' | translate }}</span>
@@ -342,14 +342,14 @@
               </div>
 
               <div class="m-top-20">
-                <p [innerHTML]="innovationCard.operatorComment.problem.suggestion"></p>
+                <p [innerHTML]="innovationCard.operatorComment.sections[idx].suggestion"></p>
               </div>
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
                 <app-text-zone
-                  (onTextChange)="updateUMIComment($event, 'problem', 'suggestion')"
-                  [data]="innovationCard.operatorComment.problem.suggestion"
-                  id="problem-suggestion">
+                  (onTextChange)="updateUMIComment($event, 'sections', 'suggestion', idx)"
+                  [data]="innovationCard.operatorComment.sections[idx].suggestion"
+                  [id]="'sections-' + idx + '-suggestion'">
                 </app-text-zone>
               </div>
 
