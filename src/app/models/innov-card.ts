@@ -3,9 +3,9 @@ import { Model } from './model';
 import { InnovCardComment } from './innov-card-comment';
 
 export interface InnovCardSection {
-  type: 'ISSUE' | 'SOLUTION';
+  type: CardSectionTypes;
   title: string;
-  content: string;
+  content: string | Array<Media>;
   visibility: boolean;
 }
 
@@ -24,3 +24,5 @@ export class InnovCard extends Model {
   operatorComment?: InnovCardComment;
   sections?: Array<InnovCardSection>;
 }
+
+export type CardSectionTypes = 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | '';

@@ -55,7 +55,7 @@ export class AdminProjectComponent implements OnInit {
 
     if (this._activatedRoute.snapshot.data['innovation'] && typeof this._activatedRoute.snapshot.data['innovation'] !== undefined) {
       this._project = this._activatedRoute.snapshot.data['innovation'];
-      this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._translateService.currentLang, 'title');
+      this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._translateService.currentLang, 'TITLE');
       this._setPageTitle(this.title );
       this._metadata();
     } else {

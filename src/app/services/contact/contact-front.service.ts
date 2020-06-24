@@ -17,9 +17,9 @@ export class ContactFrontService {
   public static commercialVideo(innovation: Innovation, commercialEmail: string = 'achampagne@umi.us', userLang: string = 'en'): string {
     let subject = '';
     let message = '';
-    const title = InnovationFrontService.currentLangInnovationCard(innovation, userLang, 'title');
-    const summary = InnovationFrontService.currentLangInnovationCard(innovation, userLang, 'summary');
-    const lang = InnovationFrontService.currentLangInnovationCard(innovation, userLang, 'lang');
+    const title = InnovationFrontService.currentLangInnovationCard(innovation, userLang, 'TITLE');
+    const summary = InnovationFrontService.currentLangInnovationCard(innovation, userLang, 'SUMMARY');
+    const lang = InnovationFrontService.currentLangInnovationCard(innovation, userLang, 'LANG');
     const url = `${environment.clientUrl}/discover/${innovation._id}/${lang}`;
 
     if (userLang === 'fr') {

@@ -90,7 +90,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
   ngOnInit() {
 
     this._innovation = this._activatedRoute.snapshot.data['innovation'];
-    this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'title'));
+    this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'TITLE'));
     this._innovationFrontService.setInnovation(this._innovation);
     this._questions = ResponseService.presets(this._innovation);
 

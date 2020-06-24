@@ -60,7 +60,7 @@ export class ProjectFrontPageComponent implements OnChanges {
    */
   private _typeInnovation() {
     const innovation: Innovation = <Innovation>this.data;
-    const card: InnovCard = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'card');
+    const card: InnovCard = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'CARD');
     this._userLang = card.lang;
     this._project = {
       title: card.title,

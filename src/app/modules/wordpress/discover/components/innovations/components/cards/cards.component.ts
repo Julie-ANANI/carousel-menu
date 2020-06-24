@@ -83,7 +83,7 @@ export class CardsComponent {
    * @param innovation
    */
   public getInnovationDetail(toReturn: string, innovation: Innovation): string {
-    const _card: InnovCard = <InnovCard>InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'card');
+    const _card: InnovCard = <InnovCard>InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'CARD');
 
     switch (toReturn) {
       case 'url':
