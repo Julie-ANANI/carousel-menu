@@ -259,6 +259,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._cardContent;
   }
 
+  set cardContent(value: any) {
+    this._cardContent = value;
+  }
+
   get isEditable(): boolean {
     return this._isEditable;
   }

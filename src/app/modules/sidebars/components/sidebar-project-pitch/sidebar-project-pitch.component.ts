@@ -38,9 +38,13 @@ import {InnovationFrontService} from '../../../../services/innovation/innovation
 export class SidebarProjectPitchComponent {
 
   @Input() set sidebarValue(value: SidebarInterface) {
-    this.cardContent = '';
     this._isSaving = false;
     this._toBeSaved = false;
+    if (value.animate_state === 'inactive') {
+      setTimeout(() => {
+        this.cardContentChange.emit('');
+      }, 1);
+    }
   }
 
   @Input() set isSaving(value: boolean) {
@@ -74,6 +78,8 @@ export class SidebarProjectPitchComponent {
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
 
   @Output() isSavingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output() cardContentChange: EventEmitter<any> = new EventEmitter<any>();
 
   private _comment: CardComment = <CardComment>{};
 
@@ -213,9 +219,9 @@ export class SidebarProjectPitchComponent {
 
         case 'TITLE':
           if (type === 'COLOR') {
-            return CommonService.getLimitColor(this.cardContent.length, 150);
+            return CommonService.getLimitColor(this.cardContent.length, 100);
           } else if (type === 'CHAR') {
-            return (150 - this.cardContent.length).toString(10);
+            return (100 - this.cardContent.length).toString(10);
           }
           break;
 
