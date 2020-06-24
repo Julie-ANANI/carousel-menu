@@ -101,32 +101,31 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public openSidebar(section: string) {
-    if (this._isEditable) {
-      this._activeSection = <CardSections>section;
+    this._activeSection = <CardSections>section;
 
-      switch (section) {
+    switch (section) {
 
-        case 'TITLE':
-          this._cardContent = this.activeInnovCard.title;
-          break;
+      case 'TITLE':
+        this._cardContent = this.activeInnovCard.title;
+        break;
 
-        case 'SUMMARY':
-          this._cardContent = this.activeInnovCard.summary;
-          break;
+      case 'SUMMARY':
+        this._cardContent = this.activeInnovCard.summary;
+        break;
 
-        case 'MEDIA':
-          this._cardContent = this.activeInnovCard.media;
-          break;
+      case 'MEDIA':
+        this._cardContent = this.activeInnovCard.media;
+        break;
 
-      }
-
-      this._sidebarValue = {
-        animate_state: 'active',
-        type: section,
-        size: '726px',
-        title: 'SIDEBAR.PROJECT_PITCH.' + section
-      };
     }
+
+    this._sidebarValue = {
+      animate_state: 'active',
+      type: section,
+      size: '726px',
+      title: 'SIDEBAR.PROJECT_PITCH.' + section
+    };
+
   };
 
   public mediaSrc(media: Media) {

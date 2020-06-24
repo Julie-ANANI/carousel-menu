@@ -2,7 +2,7 @@
   <div class="p-top-30">
 
     <!-- save button -->
-    <section *ngIf="type && type !== 'MEDIA'" class="text-right">
+    <section *ngIf="type && type !== 'MEDIA' && isEditable" class="text-right">
       <button
         (click)="onSave($event)"
         [disabled]="isSaving || !toBeSaved"
@@ -20,10 +20,10 @@
     <!-- /save button -->
 
     <!-- fields -->
-    <section [ngSwitch]="type" class="p-top-30">
+    <section [ngSwitch]="type" [ngClass]="{'p-top-30': isEditable}">
 
       <!-- title -->
-      <div *ngSwitchCase="'TITLE'">
+      <div *ngSwitchCase="'TITLE'" [ngClass]="{'p-top-40': !isEditable}">
         <div class="form-group">
           <label>
             <input
@@ -39,29 +39,34 @@
 
       <!-- media -->
       <div *ngSwitchCase="'MEDIA'">
+        <ng-container *ngIf="isEditable">
 
-        <!-- image -->
-        <div class="form-group">
-          <app-shared-upload-zone-photo
-            [uri]="imagePostUri"
-            (cbFn)="onUploadMedia($event, 'IMAGE')">
-          </app-shared-upload-zone-photo>
-        </div>
-        <!-- /image -->
+          <!-- image -->
+          <div class="form-group">
+            <app-shared-upload-zone-photo
+              [uri]="imagePostUri"
+              (cbFn)="onUploadMedia($event, 'IMAGE')">
+            </app-shared-upload-zone-photo>
+          </div>
+          <!-- /image -->
 
-        <div [attr.data-content]="'COMMON.LABEL.OR' | translate | uppercase" class="divider m-top-40 m-bottom-40"></div>
+          <div
+            [attr.data-content]="'COMMON.LABEL.OR' | translate | uppercase"
+            class="divider m-top-40 m-bottom-40">
+          </div>
 
-        <!-- video -->
-        <div class="form-group">
-          <app-shared-upload-zone-video (cbFn)="onUploadMedia($event, 'VIDEO')"></app-shared-upload-zone-video>
-        </div>
-        <!-- /video -->
+          <!-- video -->
+          <div class="form-group">
+            <app-shared-upload-zone-video (cbFn)="onUploadMedia($event, 'VIDEO')"></app-shared-upload-zone-video>
+          </div>
+          <!-- /video -->
 
+        </ng-container>
       </div>
       <!-- /media -->
 
       <!-- summary | issue | solution -->
-      <div *ngSwitchDefault>
+      <div *ngSwitchDefault [ngClass]="{'p-top-40': !isEditable}">
         <div class="form-group">
           <div class="box-shadow">
             <app-text-zone
@@ -113,7 +118,7 @@
         <!-- /if type === 'VIDEO' -->
 
         <!-- set principal -->
-        <div *ngIf="isNotMainMedia(media)" class="text-sm p-top-2">
+        <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
           <span
             (click)="onSetPrincipal(media)"
             [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
@@ -126,7 +131,8 @@
 
         <!-- delete button -->
         <div
-          *ngIf="cardContent.length > 1 && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))"
+          *ngIf="cardContent.length > 1 && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))
+          && isEditable"
           [ngClass]="{'p-top-2': !isNotMainMedia(media)}"
           class="text-sm">
           <span
@@ -178,7 +184,7 @@
     <!-- /umi suggestion -->
 
     <!-- help text -->
-    <section *ngIf="type && type !== 'MEDIA'" class="p-top-30">
+    <section *ngIf="type && type !== 'MEDIA' && help('TEXT')" class="p-top-30">
       <div class="d-flex align-center m-bottom-10">
         <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.HELP' | translate }}</span>
         <span (click)="toggle($event, 'HELP')" class="icon-container is-sm is-overlay">
@@ -190,7 +196,7 @@
     <!-- /help text -->
 
     <!-- example -->
-    <section *ngIf="type && type !== 'MEDIA'" class="p-top-30">
+    <section *ngIf="type && type !== 'MEDIA' && help('EXAMPLE')" class="p-top-30">
       <div class="d-flex align-center m-bottom-10">
         <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.EXAMPLE' | translate }}</span>
         <span (click)="toggle($event, 'EXAMPLE')" class="icon-container is-sm is-overlay">

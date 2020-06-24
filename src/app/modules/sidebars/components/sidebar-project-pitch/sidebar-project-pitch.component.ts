@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CardComment, CardSections} from '../../../../models/innov-card-comment';
+import {CardComment} from '../../../../models/innov-card-comment';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {SidebarInterface} from '../../interfaces/sidebar-interface';
 import {CommonService} from '../../../../services/common/common.service';
@@ -20,6 +20,7 @@ import {InnovationFrontService} from '../../../../services/innovation/innovation
  * 6. cardContent: can be of any type like 'string' | 'Array<Media>'.
  * 7. type: based on it we show the template and the functionality. They are
  * 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'.
+ * 8. isEditable: possibility to edit the card field.
  *
  * Outputs:
  * 1. saveProject: format: {type: string, content: any}. You receive the object in the parent component
@@ -54,6 +55,8 @@ export class SidebarProjectPitchComponent {
     }
   }
 
+  @Input() isEditable = false;
+
   @Input() imagePostUri = '';
 
   @Input() mainMedia: Media = <Media>{};
@@ -73,7 +76,7 @@ export class SidebarProjectPitchComponent {
   @Input() cardContent: any = '';
 
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'
-  @Input() type: CardSections = '';
+  @Input() type = '';
 
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
 
@@ -103,15 +106,19 @@ export class SidebarProjectPitchComponent {
    */
   public onSave(event: Event) {
     event.preventDefault();
-    this.isSavingChange.emit(true);
-    this.saveProject.emit({type: this.type, content: this.cardContent});
+    if (this.isEditable) {
+      this.isSavingChange.emit(true);
+      this.saveProject.emit({type: this.type, content: this.cardContent});
+    }
   }
 
   /***
    * when we change the value of the form-input or text-zone.
    */
   public onChangeValue() {
-    this._toBeSaved = true;
+    if (this.isEditable) {
+      this._toBeSaved = true;
+    }
   }
 
   /***
@@ -119,8 +126,10 @@ export class SidebarProjectPitchComponent {
    * @param event
    */
   public onTextChange(event: { content: string }) {
-    this.cardContent = event.content;
-    this.onChangeValue();
+    if (this.isEditable) {
+      this.cardContent = event.content;
+      this.onChangeValue();
+    }
   }
 
   /***
@@ -129,7 +138,7 @@ export class SidebarProjectPitchComponent {
    * @param type
    */
   public onUploadMedia(media: Media | Video, type: 'IMAGE' | 'VIDEO') {
-    if (media && type) {
+    if (media && type && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: type, content: <Video>media});
     }
@@ -164,7 +173,7 @@ export class SidebarProjectPitchComponent {
    * @param media
    */
   public onSetPrincipal(media: any) {
-    if (media && this.isNotMainMedia(media) && !this._isSaving) {
+    if (media && this.isNotMainMedia(media) && !this._isSaving && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'MAIN_MEDIA', content: <Media>media});
     }
@@ -175,7 +184,7 @@ export class SidebarProjectPitchComponent {
    * @param media
    */
   public onDeleteMedia(media: any) {
-    if (media && this.cardContent.length > 1 && !this._isSaving) {
+    if (media && this.cardContent.length > 1 && !this._isSaving && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'DELETE_MEDIA', content: <Media>media});
     }

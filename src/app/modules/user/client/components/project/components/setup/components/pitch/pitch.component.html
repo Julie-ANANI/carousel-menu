@@ -33,7 +33,7 @@
               {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
             </span>
           </div>
-          <span *ngIf="isEditable" (click)="openSidebar(section)" class="icon-container is-overlay">
+          <span (click)="openSidebar(section)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
         </div>
@@ -126,6 +126,7 @@
     [(isSaving)]="isSaving"
     [comment]="operatorComment"
     [imagePostUri]="imagePostUri"
+    [isEditable]="isEditable"
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
     [sidebarValue]="sidebarValue"
