@@ -27,121 +27,61 @@ export class MissionFrontService {
    */
   public static objectiveInfo(mission: Mission, required: string, lang = 'en'): any {
     if (mission && mission.objective && mission.objective.principal && mission.objective.principal['en'] && required) {
-      switch (mission.objective.principal['en']) {
-
-        case 'Detecting needs / trends':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[0][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[0].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-compass';
-          } else if (required === 'HELP_QUIZ') {
-            return DetectingNeedsHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return DetectingNeedsHelp[lang];
-          }
-          break;
-
-        case 'Validating market needs':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[1][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[1].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-globe';
-          } else if (required === 'HELP_QUIZ') {
-            return ValidatingMarketHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return ValidatingMarketHelp[lang];
-          }
-          break;
-
-        case 'Sourcing innovative solutions / partners':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[2][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[2].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-book-open';
-          } else if (required === 'HELP_QUIZ') {
-            return SourcingInnovativeHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return SourcingInnovativeHelp[lang];
-          }
-          break;
-
-        case 'Validating the interest of my solution':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[3][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[3].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-lightbulb';
-          } else if (required === 'HELP_QUIZ') {
-            return ValidatingInterestHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return ValidatingInterestHelp[lang];
-          }
-          break;
-
-        case 'Discovering new applications / markets':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[4][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[4].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-map-signs';
-          } else if (required === 'HELP_QUIZ') {
-            return DiscoveringApplicationsHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return DiscoveringApplicationsHelp[lang];
-          }
-          break;
-
-        case 'Targeting the most receptive application / market':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[5][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[5].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-crosshairs';
-          } else if (required === 'HELP_QUIZ') {
-            return TargetingApplicationHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return TargetingApplicationHelp[lang];
-          }
-          break;
-
-        case 'Optimizing my value proposition':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[6][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[6].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-sync-alt';
-          } else if (required === 'HELP_QUIZ') {
-            return OptimizingValueHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return OptimizingValueHelp[lang];
-          }
-          break;
-
-        case 'Other':
-          if (required === 'OBJECTIVE') {
-            return ObjectivesPrincipal[7][lang];
-          } else if (required === 'PICTO') {
-            return ObjectivesPrincipal[7].picto;
-          } else if (required === 'FONT_AWESOME_ICON') {
-            return 'fas fa-pencil-alt';
-          } else if (required === 'HELP_QUIZ') {
-            return OtherHelp[lang]['quiz'];
-          } else if (required === 'PITCH_HELP') {
-            return OtherHelp[lang];
-          }
-          break;
-
+      const _matching = {
+        'Detecting needs / trends': {
+          index: 0,
+          file: DetectingNeedsHelp,
+          icon: 'fas fa-compass'
+        },
+        'Validating market needs': {
+          index: 1,
+          file: ValidatingMarketHelp,
+          icon: 'fas fa-compass'
+        },
+        'Sourcing innovative solutions / partners': {
+          index: 2,
+          file: SourcingInnovativeHelp,
+          icon: 'fas fa-book-open'
+        },
+        'Validating the interest of my solution': {
+          index: 3,
+          file: ValidatingInterestHelp,
+          icon: 'fas fa-lightbulb'
+        },
+        'Discovering new applications / markets': {
+          index: 4,
+          file: DiscoveringApplicationsHelp,
+          icon: 'fas fa-map-signs'
+        },
+        'Targeting the most receptive application / market': {
+          index: 5,
+          file: TargetingApplicationHelp,
+          icon: 'fas fa-crosshairs'
+        },
+        'Optimizing my value proposition': {
+          index: 6,
+          file: OptimizingValueHelp,
+          icon: 'fas fa-sync-alt'
+        },
+        'Other': {
+          index: 7,
+          file: OtherHelp,
+          icon: 'fas fa-pencil-alt'
+        },
       }
+
+      if (required === 'OBJECTIVE') {
+        return ObjectivesPrincipal[_matching[mission.objective.principal['en']].index][lang];
+      } else if (required === 'PICTO') {
+        return ObjectivesPrincipal[_matching[mission.objective.principal['en']].index]['picto'];
+      } else if (required === 'FONT_AWESOME_ICON') {
+        return _matching[mission.objective.principal['en']].icon;
+      } else if (required === 'HELP_QUIZ') {
+        return _matching[mission.objective.principal['en']].file[lang].quiz;
+      } else if (required === 'PITCH_HELP') {
+        return _matching[mission.objective.principal['en']].file[lang];
+      }
+
     }
 
     return '';
