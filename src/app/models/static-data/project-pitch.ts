@@ -17,7 +17,7 @@ export interface PitchDescriptionHelp {
   fr: PitchHelpFields;
 }
 
-export const DetectingNeedsHelp: PitchDescriptionHelp = {
+const DetectingNeedsHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -75,9 +75,9 @@ export const DetectingNeedsHelp: PitchDescriptionHelp = {
         'those of our customers, our own, those of our partners, but also those of other business sectors.'
     }
   }
-}
+};
 
-export const ValidatingMarketHelp: PitchDescriptionHelp = {
+const ValidatingMarketHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails we send to the thousands of professionals we reach out to. ' +
       'It condenses the the subject-matter of the questionnaire in a few words.',
@@ -167,9 +167,9 @@ export const ValidatingMarketHelp: PitchDescriptionHelp = {
         'gamme des températures rencontrées durant le soudage par fusion de polymères thermoplastiques.'
     }
   }
-}
+};
 
-export const SourcingInnovativeHelp: PitchDescriptionHelp = {
+const SourcingInnovativeHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t only be the name of the solution, but also condense in a few words what your solution brings.',
@@ -248,9 +248,9 @@ export const SourcingInnovativeHelp: PitchDescriptionHelp = {
         'these issues. It would be kind to have your help.'
     }
   }
-}
+};
 
-export const ValidatingInterestHelp: PitchDescriptionHelp = {
+const ValidatingInterestHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -390,9 +390,9 @@ export const ValidatingInterestHelp: PitchDescriptionHelp = {
         'L’encombrement est limité dans des modules conteneurs de 20 ft pour le modèle 50m3h et 40 ft pour les modèles 100 m3h et 150 m3h.'
     }
   }
-}
+};
 
-export const DiscoveringApplicationsHelp: PitchDescriptionHelp = {
+const DiscoveringApplicationsHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -498,9 +498,9 @@ export const DiscoveringApplicationsHelp: PitchDescriptionHelp = {
         'électrogènes, objets connectés, ...) et pour toutes les technologies de batterie (lithium, plomb, ...)'
     }
   }
-}
+};
 
-export const TargetingApplicationHelp: PitchDescriptionHelp = {
+const TargetingApplicationHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -606,9 +606,9 @@ export const TargetingApplicationHelp: PitchDescriptionHelp = {
         'électrogènes, objets connectés, ...) et pour toutes les technologies de batterie (lithium, plomb, ...)'
     }
   }
-}
+};
 
-export const OptimizingValueHelp: PitchDescriptionHelp = {
+const OptimizingValueHelp: PitchDescriptionHelp = {
   en: {
     title: 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals we reach out. ' +
       'It shouldn\'t be the name of the solution only, but also condense in a few words what your solution brings.',
@@ -733,9 +733,9 @@ export const OptimizingValueHelp: PitchDescriptionHelp = {
         'sauvegarder simultanément les formats RTC, µC et DRAM / SRAM, ainsi que les disques SSD d\'entreprise / client.'
     }
   }
-}
+};
 
-export const OtherHelp: PitchDescriptionHelp = {
+const OtherHelp: PitchDescriptionHelp = {
   en: {
     title: '',
     summary: '',
@@ -872,4 +872,15 @@ export const OtherHelp: PitchDescriptionHelp = {
         'L’encombrement est limité dans des modules conteneurs de 20 ft pour le modèle 50m3h et 40 ft pour les modèles 100 m3h et 150 m3h.'
     }
   }
-}
+};
+
+export const Pitches = {
+  'Detecting needs / trends': DetectingNeedsHelp,
+  'Validating market needs': ValidatingMarketHelp,
+  'Sourcing innovative solutions / partners': SourcingInnovativeHelp,
+  'Validating the interest of my solution': ValidatingInterestHelp,
+  'Discovering new applications / markets': DiscoveringApplicationsHelp,
+  'Targeting the most receptive application / market': TargetingApplicationHelp,
+  'Optimizing my value proposition': OptimizingValueHelp,
+  'Other': OtherHelp
+};
