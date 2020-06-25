@@ -255,7 +255,11 @@ export const COMMON = {
     'GENERATING_FILE': 'en cours de création...',
     'GENERATING_VIDEO': 'en cours de création...',
     'CONTACT_COMMERCIAL': 'Contacter mon commercial',
-    'EXAMPLE': 'Exemple'
+    'EXAMPLE': 'Exemple',
+    'REQUEST_PROOFREADING': 'Demander une relecture',
+    'REQUESTING_PROOFREADING': 'en cours de demander...',
+    'VALIDATE_DEFINITIVELY': 'Valider définitivement',
+    'VALIDATING_DEFINITIVELY': 'en cours de soumission...',
   },
 
   'PROJECT': {

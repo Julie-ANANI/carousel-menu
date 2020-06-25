@@ -547,6 +547,11 @@
 
   &.is-community {
     @include button-default-variant($bg-community-color);
+
+    &.is-outlined {
+      @include button-outline-variant($bg-community-color);
+    }
+
   }
 
   &.is-loading {

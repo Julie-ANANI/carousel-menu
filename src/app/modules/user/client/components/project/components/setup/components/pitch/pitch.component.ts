@@ -43,6 +43,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _sections: Array<InnovCardSection> = []
 
+  private _isRequesting = false;
+
+  private _isSubmitting = false;
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -63,19 +67,21 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _initDefaultSections() {
     const _defaultSections: Array<InnovCardSection> = [
       {
-        title: this.activeInnovCard.title ? 'PROJECT_PITCH.DESCRIPTION.TITLE_FILLED' : 'PROJECT_PITCH.DESCRIPTION.TITLE_NOT_FILLED',
+        title: this.activeInnovCard.title ? this.activeInnovCard.lang === 'fr' ? 'Titre' : 'Title' : this.activeInnovCard.lang === 'fr'
+          ? 'Remplir le titre' : 'Fill in the title',
         content: this.activeInnovCard.title,
         visibility: true,
         type: 'TITLE'
       },
       {
-        title: this.activeInnovCard.summary ? 'PROJECT_PITCH.DESCRIPTION.SUMMARY_FILLED' : 'PROJECT_PITCH.DESCRIPTION.SUMMARY_NOT_FILLED',
+        title: this.activeInnovCard.summary ? this.activeInnovCard.lang === 'fr' ? 'Résumé' : 'Summary' : this.activeInnovCard.lang === 'fr'
+          ? 'Remplir le résumé' : 'Fill in the summary',
         content: this.activeInnovCard.summary,
         visibility: true,
         type: 'SUMMARY'
       },
       {
-        title: 'PROJECT_PITCH.DESCRIPTION.MEDIA',
+        title: this.activeInnovCard.lang === 'fr' ? 'Ajouter des médias' : 'Add medias',
         content: this.activeInnovCard.media,
         visibility: true,
         type: 'MEDIA'
@@ -123,6 +129,15 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: Media) {
     return InnovationFrontService.getMedia(media);
+  }
+
+  public onRequestProofreading(event: Event) {
+    event.preventDefault();
+    if (this._innovation.status === 'EDITING' && !this._isRequesting && !this._isSaving) {
+      this._isRequesting = true;
+      this._innovation['proofreading'] = true;
+      this._updateProject('ERROR.PROJECT.REQUEST_PROOFREADING');
+    }
   }
 
   public onSaveProject(event: {type: string, content: any}) {
@@ -177,11 +192,17 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _updateProject(message = 'ERROR.PROJECT.SAVED_TEXT') {
     this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
+      if (this._innovation['proofreading']) {
+        this._isRequesting = false;
+      }
       this._innovationFrontService.setInnovation(innovation);
       this._isSaving = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      if (this._innovation['proofreading']) {
+        this._isRequesting = false;
+      }
       this._isSaving = false;
       console.error(err);
     });
@@ -257,7 +278,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
-    if (value.animate_state === 'inactive') {
+    if (this._sidebarValue.animate_state === 'inactive') {
       this._activeSection = '';
     }
   }
@@ -274,10 +295,6 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._cardContent;
   }
 
-  set cardContent(value: any) {
-    this._cardContent = value;
-  }
-
   get isEditable(): boolean {
     return this._isEditable;
   }
@@ -288,6 +305,14 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get sections(): Array<InnovCardSection> {
     return this._sections;
+  }
+
+  get isRequesting(): boolean {
+    return this._isRequesting;
+  }
+
+  get isSubmitting(): boolean {
+    return this._isSubmitting;
   }
 
   ngOnDestroy(): void {
