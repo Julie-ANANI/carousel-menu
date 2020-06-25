@@ -324,7 +324,7 @@
 
               <div *ngIf="allowAdminToComment" class="form-group m-top-20">
                 <app-text-zone
-                  (onTextChange)="updateUMIComment($event, 'sections.' + idx, 'comment')"
+                  (onTextChange)="updateUMIComment($event, 'sections', 'comment', idx)"
                   [data]="innovationCard.operatorComment.sections[idx].comment"
                   [id]="'sections-' + idx + '-comment'">
                 </app-text-zone>
