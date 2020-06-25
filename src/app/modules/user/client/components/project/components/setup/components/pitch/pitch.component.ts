@@ -47,6 +47,8 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _isSubmitting = false;
 
+  private _showModal = false;
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -140,8 +142,28 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
+  public onOpenModal(event: Event) {
+    event.preventDefault();
+    if (this._innovation.status === 'EDITING' && !this._isSubmitting && !this._isSaving && !this._isRequesting) {
+      this._showModal = true;
+    }
+  }
+
+  public onCloseModal() {
+    this._showModal = false;
+  }
+
+  public onSubmitProject(event: Event) {
+    event.preventDefault();
+    if (this._innovation.status === 'EDITING' && !this._isSubmitting && !this._isSaving && !this._isRequesting && this._showModal) {
+      this._isSubmitting = true;
+      this._innovation.status = 'SUBMITTED';
+      this._updateProject('ERROR.PROJECT.SUBMITTED_TEXT');
+    }
+  }
+
   public onSaveProject(event: {type: string, content: any}) {
-    if (event.type && this._isEditable && this._isSaving) {
+    if (event.type && this._isEditable && this._isSaving && !this._isSubmitting) {
       switch (event.type) {
 
         case 'TITLE':
@@ -192,20 +214,30 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _updateProject(message = 'ERROR.PROJECT.SAVED_TEXT') {
     this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
-      if (this._innovation['proofreading']) {
-        this._isRequesting = false;
-      }
+      this._resetVariables();
       this._innovationFrontService.setInnovation(innovation);
-      this._isSaving = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      if (this._innovation['proofreading']) {
-        this._isRequesting = false;
-      }
-      this._isSaving = false;
+      this._resetVariables();
       console.error(err);
     });
+  }
+
+  private _resetVariables() {
+
+    if (this._isRequesting) {
+      this._isRequesting = false;
+    }
+
+    if (this._isSubmitting) {
+      if (this._innovation.status === 'SUBMITTED') {
+        this.onCloseModal();
+      }
+      this._isSubmitting = false;
+    }
+
+    this._isSaving = false;
   }
 
   private _uploadVideo(video: Video) {
@@ -214,11 +246,11 @@ export class PitchComponent implements OnInit, OnDestroy {
         this._innovation.innovationCards[this._activeCardIndex].media.push(video);
         this._innovationFrontService.setInnovation(this._innovation);
         this._cardContent = this.activeInnovCard.media;
-        this._isSaving = false;
+        this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
     }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isSaving = false;
+        this._resetVariables();
         console.error(err);
     });
   }
@@ -227,11 +259,11 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
       .pipe(first()).subscribe(() => {
         this.activeInnovCard.principalMedia = media;
-        this._isSaving = false;
+        this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
     }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isSaving = false;
+        this._resetVariables();
         console.error(err);
     });
   }
@@ -241,11 +273,11 @@ export class PitchComponent implements OnInit, OnDestroy {
       .pipe(first()).subscribe(() => {
         this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
         this._cardContent = this.activeInnovCard.media;
-        this._isSaving = false;
+        this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
     }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isSaving = false;
+        this._resetVariables();
         console.error(err);
     });
   }
@@ -313,6 +345,14 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get isSubmitting(): boolean {
     return this._isSubmitting;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
   }
 
   ngOnDestroy(): void {

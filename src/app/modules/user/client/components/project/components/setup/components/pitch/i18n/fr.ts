@@ -10,13 +10,25 @@ export const PROJECT_PITCH = {
     'MEDIA': 'Ajouter des médias',
     'TITLE_FILLED': 'Titre',
     'SUMMARY_FILLED': 'Résumé',
-    'MAIN_MEDIA': 'Média principal',
-    'POPOVER_REQUEST_PROOFREADING': 'The project'
+    'MAIN_MEDIA': 'Média principal'
   },
 
   'QUESTIONNAIRE': {
     'HEADING': 'Mes questions',
     'SUB_HEADING': 'Elles seront posées aux professionnels du marché'
   },
+
+  'MODAL': {
+    'HEADING_SUBMIT': 'Soumission du projet',
+    'SUBMIT_TEXT': 'En cliquant sur “Confirmer”, vous donnez votre accord pour communiquer votre questionnaire aux professionnels ' +
+      'ciblés et autorisez UMI à diffuser, anonymement, sur ces réseaux : <br> ' +
+      '<i class="fas fa-check-circle text-success m-top-10"></i> Réseaux sociaux<br>' +
+      '<i class="fas fa-check-circle text-success"></i> Site web<br>' +
+      '<i class="fas fa-check-circle text-success"></i> Espace communauté'
+  },
+
+  'POPOVER': {
+    'REQUEST_PROOFREADING': 'Il enverra la demande de relecture à votre responsable des tests de marché.',
+  }
 
 };

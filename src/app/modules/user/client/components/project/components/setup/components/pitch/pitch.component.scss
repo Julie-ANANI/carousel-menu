@@ -15,7 +15,7 @@
         font-size: 18px;
         color: #9E9E9E;
         font-weight: normal;
-        margin-bottom: 30px;
+        margin-bottom: 35px;
       }
 
     }
@@ -62,7 +62,7 @@
             background-color: $bg-draft-color;
             color: $text-white-color;
             border-color: $border-draft-color;
-            transition: background-color, border 0.2s ease;
+            transition: background-color, border 0.5s ease;
           }
 
           .media-wrapper {
