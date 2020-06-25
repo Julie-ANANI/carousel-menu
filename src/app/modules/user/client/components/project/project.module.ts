@@ -32,6 +32,7 @@ import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-s
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { BannerModule } from '../../../../utility/banner/banner.module';
 import { SidebarProjectPitchModule } from '../../../../sidebars/components/sidebar-project-pitch/sidebar-project-pitch.module';
+import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/innovCardTitlePipe.module';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { SidebarProjectPitchModule } from '../../../../sidebars/components/sideb
     AutoSuggestionModule,
     NgxPageScrollModule,
     BannerModule,
-    SidebarProjectPitchModule
+    SidebarProjectPitchModule,
+    InnovCardTitlePipeModule
   ],
   declarations: [
     ProjectComponent,

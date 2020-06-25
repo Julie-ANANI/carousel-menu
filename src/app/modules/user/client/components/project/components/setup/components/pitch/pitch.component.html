@@ -29,11 +29,11 @@
         <div class="flex-between w-full">
           <div class="d-flex align-center m-right-1">
             <span class="m-right-2 field-heading">
-              <ng-container *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'; else translateTitle">
-                {{ section.title }}
+              <ng-container *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'; else defTitle">
+                {{ section.title | InnovCardTitle:section.content:activeInnovCard.lang }}
               </ng-container>
-              <ng-template #translateTitle>
-                {{ section.title | translate }}
+              <ng-template #defTitle>
+                {{ section.title }}
               </ng-template>
             </span>
             <span *ngIf="sectionCommentLabel(section.type)" class="label is-primary is-sm text-xs p-left-3 p-right-3">

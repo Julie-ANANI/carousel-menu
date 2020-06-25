@@ -13,13 +13,13 @@ import { BannerModule } from '../utility/banner/banner.module';
 
 @NgModule({
   imports: [
-      CommonModule,
-      TranslateModule.forChild(),
-      UserRoutingModule,
-      FooterModule,
-      HeaderModule,
-      SpinnerLoaderModule,
-      BannerModule,
+    CommonModule,
+    TranslateModule.forChild(),
+    UserRoutingModule,
+    FooterModule,
+    HeaderModule,
+    SpinnerLoaderModule,
+    BannerModule,
   ],
   declarations: [
     UserComponent,

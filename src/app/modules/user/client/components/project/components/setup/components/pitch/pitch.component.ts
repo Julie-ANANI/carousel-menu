@@ -63,19 +63,21 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _initDefaultSections() {
     const _defaultSections: Array<InnovCardSection> = [
       {
-        title: this.activeInnovCard.title ? 'PROJECT_PITCH.DESCRIPTION.TITLE_FILLED' : 'PROJECT_PITCH.DESCRIPTION.TITLE_NOT_FILLED',
+        title: this.activeInnovCard.title ? this.activeInnovCard.lang === 'fr' ? 'Titre' : 'Title' : this.activeInnovCard.lang === 'fr'
+          ? 'Remplir le titre' : 'Fill in the title',
         content: this.activeInnovCard.title,
         visibility: true,
         type: 'TITLE'
       },
       {
-        title: this.activeInnovCard.summary ? 'PROJECT_PITCH.DESCRIPTION.SUMMARY_FILLED' : 'PROJECT_PITCH.DESCRIPTION.SUMMARY_NOT_FILLED',
+        title: this.activeInnovCard.summary ? this.activeInnovCard.lang === 'fr' ? 'Résumé' : 'Summary' : this.activeInnovCard.lang === 'fr'
+          ? 'Remplir le résumé' : 'Fill in the summary',
         content: this.activeInnovCard.summary,
         visibility: true,
         type: 'SUMMARY'
       },
       {
-        title: 'PROJECT_PITCH.DESCRIPTION.MEDIA',
+        title: this.activeInnovCard.lang === 'fr' ? 'Ajouter des médias' : 'Add medias',
         content: this.activeInnovCard.media,
         visibility: true,
         type: 'MEDIA'
