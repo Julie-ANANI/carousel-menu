@@ -12,7 +12,7 @@
       <!-- /heading / sub heading -->
 
       <!-- action buttons -->
-      <section *ngIf="innovation.status === 'EDITING'" class="flex-between m-bottom-15">
+      <section *ngIf="innovation.status === 'EDITING'" class="flex-between m-bottom-20">
 
         <!-- proofreading -->
         <div [ngClass]="{'popover': !isRequesting && !isSaving && !isSubmitting}" class="m-right-15 m-bottom-15">
@@ -20,7 +20,7 @@
           <button
             (click)="onRequestProofreading($event)"
             [disabled]="isRequesting || isSaving || isSubmitting"
-            [ngStyle]="{'min-height': '46px'}"
+            [ngStyle]="{ 'min-height': '46px', 'min-width': '226px' }"
             class="button is-community is-sm is-outlined"
             id="btn-request">
             <ng-container *ngIf="!isRequesting; else defReqText">
@@ -36,8 +36,8 @@
           </button>
 
           <div *ngIf="!isRequesting && !isSaving && !isSubmitting" class="popover-container is-sm">
-            <div class="p-top-20 p-right-25 p-bottom-20 p-left-25">
-              {{ 'PROJECT_PITCH.DESCRIPTION.POPOVER_REQUEST_PROOFREADING' | translate }}
+            <div class="p-15 text-center">
+              {{ 'PROJECT_PITCH.POPOVER.REQUEST_PROOFREADING' | translate }}
             </div>
           </div>
 
@@ -45,6 +45,18 @@
         <!-- /proofreading -->
 
         <!-- validate -->
+        <button
+          (click)="onOpenModal($event)"
+          [disabled]="isRequesting || isSaving || isSubmitting"
+          [ngStyle]="{ 'min-height': '46px', 'min-width': '226px' }"
+          class="button is-community is-sm m-bottom-15"
+          id="btn-submit">
+          {{ 'COMMON.BUTTON.VALIDATE_DEFINITIVELY' | translate }}
+          <img
+            alt=" "
+            src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-validate-white.svg"
+            class="icon-right">
+        </button>
         <!-- /validate -->
 
       </section>
@@ -156,6 +168,49 @@
   <!-- /questionnaire -->
 
 </div>
+
+
+<!-- modal to confirm the submission -->
+<app-utility-modal-empty [(showModal)]="showModal">
+
+  <!-- body -->
+  <section class="modal-body p-bottom-30">
+    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold">
+      {{ 'PROJECT_PITCH.MODAL.HEADING_SUBMIT' | translate }}
+    </h2>
+    <div [innerHTML]="'PROJECT_PITCH.MODAL.SUBMIT_TEXT' | translate" class="mxw-550 m-right-auto m-left-auto"></div>
+  </section>
+  <!-- /body -->
+
+  <!-- footer -->
+  <footer class="modal-footer justify-center">
+
+    <button
+      (click)="onCloseModal()"
+      [disabled]="isSubmitting"
+      id="btn-cancel"
+      class="button modal-cancel">
+      {{ 'COMMON.BUTTON.CANCEL' | translate }}
+    </button>
+
+    <button
+      [disabled]="isSubmitting"
+      (click)="onSubmitProject($event)"
+      class="button is-community"
+      id="btn-confirm">
+      <ng-container *ngIf="isSubmitting; else defText">
+        {{ 'COMMON.BUTTON.VALIDATING_DEFINITIVELY' | translate }}
+      </ng-container>
+      <ng-template #defText>
+        {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+      </ng-template>
+    </button>
+
+  </footer>
+  <!-- /footer -->
+
+</app-utility-modal-empty>
+<!-- /modal to confirm the submission -->
 
 
 <!-- sidebar to edit innovation card field -->

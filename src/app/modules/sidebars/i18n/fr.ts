@@ -39,7 +39,7 @@ export const SIDEBAR = {
     'SUMMARY': 'Editer le résumé',
     'ISSUE': 'Editer la problématique',
     'SOLUTION': 'Editer la solution',
-    'MEDIA': 'Ajouter des médias',
+    'MEDIA': 'Editer les médias',
     'REMAINING_TEXT': 'caractères restants',
     'SET_PRINCIPAL': 'En faire le média principal'
   }
