@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class InnovCardTitlePipe implements PipeTransform {
 
-  private _toMatch = ['la', 'le'];
+  private _toMatch = ['la', 'le', 'La', 'Le'];
 
   transform (actualTitle: string, content: string, lang = 'en'): string {
     if (actualTitle) {

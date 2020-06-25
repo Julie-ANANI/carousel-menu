@@ -12,7 +12,40 @@
       <!-- /heading / sub heading -->
 
       <!-- action buttons -->
-      <section>
+      <section *ngIf="innovation.status === 'EDITING'" class="flex-between m-bottom-15">
+
+        <!-- proofreading -->
+        <div [ngClass]="{'popover': !isRequesting && !isSaving && !isSubmitting}" class="m-right-15 m-bottom-15">
+
+          <button
+            (click)="onRequestProofreading($event)"
+            [disabled]="isRequesting || isSaving || isSubmitting"
+            [ngStyle]="{'min-height': '46px'}"
+            class="button is-community is-sm is-outlined"
+            id="btn-request">
+            <ng-container *ngIf="!isRequesting; else defReqText">
+              {{ 'COMMON.BUTTON.REQUEST_PROOFREADING' | translate }}
+              <img
+                alt=" "
+                src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-bell-blue.svg"
+                class="icon-right">
+            </ng-container>
+            <ng-template #defReqText>
+              {{ 'COMMON.BUTTON.REQUESTING_PROOFREADING' | translate }}
+            </ng-template>
+          </button>
+
+          <div *ngIf="!isRequesting && !isSaving && !isSubmitting" class="popover-container is-sm">
+            <div class="p-top-20 p-right-25 p-bottom-20 p-left-25">
+              {{ 'PROJECT_PITCH.DESCRIPTION.POPOVER_REQUEST_PROOFREADING' | translate }}
+            </div>
+          </div>
+
+        </div>
+        <!-- /proofreading -->
+
+        <!-- validate -->
+        <!-- /validate -->
 
       </section>
       <!-- /action buttons -->

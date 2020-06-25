@@ -43,6 +43,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _sections: Array<InnovCardSection> = []
 
+  private _isRequesting = false;
+
+  private _isSubmitting = false;
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -127,6 +131,15 @@ export class PitchComponent implements OnInit, OnDestroy {
     return InnovationFrontService.getMedia(media);
   }
 
+  public onRequestProofreading(event: Event) {
+    event.preventDefault();
+    if (this._innovation.status === 'EDITING' && !this._isRequesting && !this._isSaving) {
+      this._isRequesting = true;
+      this._innovation['proofreading'] = true;
+      this._updateProject('ERROR.PROJECT.REQUEST_PROOFREADING');
+    }
+  }
+
   public onSaveProject(event: {type: string, content: any}) {
     if (event.type && this._isEditable && this._isSaving) {
       switch (event.type) {
@@ -179,11 +192,17 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _updateProject(message = 'ERROR.PROJECT.SAVED_TEXT') {
     this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
+      if (this._innovation['proofreading']) {
+        this._isRequesting = false;
+      }
       this._innovationFrontService.setInnovation(innovation);
       this._isSaving = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      if (this._innovation['proofreading']) {
+        this._isRequesting = false;
+      }
       this._isSaving = false;
       console.error(err);
     });
@@ -286,6 +305,14 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get sections(): Array<InnovCardSection> {
     return this._sections;
+  }
+
+  get isRequesting(): boolean {
+    return this._isRequesting;
+  }
+
+  get isSubmitting(): boolean {
+    return this._isSubmitting;
   }
 
   ngOnDestroy(): void {

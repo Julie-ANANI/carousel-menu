@@ -10,7 +10,8 @@ export const PROJECT_PITCH = {
     'MEDIA': 'Add medias',
     'TITLE_FILLED': 'Title',
     'SUMMARY_FILLED': 'Summary',
-    'MAIN_MEDIA': 'Main media'
+    'MAIN_MEDIA': 'Main media',
+    'POPOVER_REQUEST_PROOFREADING': 'The project'
   },
 
   'QUESTIONNAIRE': {

@@ -153,7 +153,7 @@ export const COMMON = {
     'HELP': 'Help',
     'EXAMPLE': 'Examples',
     'COMMENT': 'Comment',
-    'SUGGESTION': 'Suggestion',
+    'SUGGESTION': 'Proposition',
     'OR': 'Or',
   },
 
@@ -256,7 +256,11 @@ export const COMMON = {
     'GENERATING_FILE': 'generating the file...',
     'GENERATING_VIDEO': 'generating the video...',
     'CONTACT_COMMERCIAL': 'Contact commercial',
-    'EXAMPLE': 'Example'
+    'EXAMPLE': 'Example',
+    'REQUEST_PROOFREADING': 'Request a proofreading',
+    'REQUESTING_PROOFREADING': 'requesting a proofreading...',
+    'VALIDATE_DEFINITIVELY': 'Validate definitively',
+    'VALIDATING_DEFINITIVELY': 'submitting the project...',
   },
 
   'PROJECT': {
