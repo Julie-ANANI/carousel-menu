@@ -51,10 +51,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._templateType = value;
   }
 
-  @Input() set questions(value: Array<Question>) {
-    this._questions = value;
-    this._initQuestions();
-  }
+  @Input() questions: Array<Question> = [];
 
   /***
    * this is to emit the event that will close the
@@ -78,8 +75,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   private _filterName = '';
 
   private _activatedCustomFilters: Array<string> = [];
-
-  private _questions: Array<Question> = [];
 
   private _displayedQuestions: Array<Question> = [];
 
@@ -117,6 +112,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         this._filterNumber = this._filterService.filter(this.answers).length;
       });
     }
+    this._initQuestions();
   }
 
   private _loadSharedFiltersList() {
@@ -132,7 +128,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _initQuestions() {
     this._displayedQuestions = [];
-    this._questions.forEach((question: Question) => {
+    this.questions.forEach((question: Question) => {
       if (!this._showSection[question.identifier]) {
         this._showSection[question.identifier] = true;
       }
@@ -397,10 +393,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   get activatedCustomFilters() {
     return this._activatedCustomFilters;
-  }
-
-  get questions(): Array<Question> {
-    return this._questions;
   }
 
   get displayedQuestions(): Array<Question> {
