@@ -1,207 +1,209 @@
-<div id="documents">
+<div class="container fluid grid-2xl p-top-50 p-bottom-50" id="documents">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
-  <!-- status EDITING || SUBMITTED -->
-  <section *ngIf="innovation.status && (innovation.status === 'EDITING' || innovation.status === 'SUBMITTED')">
-    <message-template-1 [widthMax]="'292px'">
-      {{ 'PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}
-    </message-template-1>
-  </section>
-  <!-- /status EDITING || SUBMITTED -->
+    <!-- status EDITING || SUBMITTED -->
+    <section *ngIf="innovation.status && (innovation.status === 'EDITING' || innovation.status === 'SUBMITTED')">
+      <message-template-1 [widthMax]="'292px'">
+        {{ 'PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}
+      </message-template-1>
+    </section>
+    <!-- /status EDITING || SUBMITTED -->
 
-  <!-- status EVALUATING || DONE -->
-  <section *ngIf="innovation.status && (innovation.status === 'EVALUATING' || innovation.status === 'DONE')">
+    <!-- status EVALUATING || DONE -->
+    <section *ngIf="innovation.status && (innovation.status === 'EVALUATING' || innovation.status === 'DONE')">
 
-    <!-- consent -->
-    <div class="form-group p-bottom-40 m-left-auto m-right-auto">
-      <label class="form-checkbox p-left-30" for="document-consent">
-        <input
-          (change)="toggleConsent($event)"
-          [disabled]="!isOwner"
-          [checked]="innovation.ownerConsent && innovation.ownerConsent.value"
-          id="document-consent"
-          name="document-consent"
-          type="checkbox"
-          value="true">
-        <i class="form-icon"></i>{{ 'PROJECT_DOCUMENTS.CONSENT' | translate }}
-      </label>
-    </div>
-    <!-- /consent -->
-
-    <!-- documents -->
-    <div class="documents-wrapper">
-      <div *ngFor="let document of documents; let i = index;" class="document">
-
-        <div
-          [ngClass]="{'inactive': !document.isExportable}"
-          [ngStyle]="{ 'animation-duration': ((i+1) * 300) + 'ms' }"
-          class="card relative animate-fade">
-
-          <!-- image -->
-          <div class="card-image">
-            <img
-              [ngStyle]="{ 'width': '135px', 'height': '76px' }"
-              [src]="document.img"
-              alt=" ">
-          </div>
-          <!-- /image -->
-
-          <!-- heading -->
-          <div class="card-header">
-            <div class="card-title text-md text-bold">
-              {{ 'PROJECT_DOCUMENTS.NAME.' + document.name | translate }}
-            </div>
-          </div>
-          <!-- /heading -->
-
-          <!-- body -->
-          <div class="card-body text-sm p-no">
-            {{ 'PROJECT_DOCUMENTS.DESCRIPTION.' + document.name | translate }}
-          </div>
-          <!-- /body -->
-
-          <!-- on hover when not ready -->
-          <div *ngIf="!document.isExportable || document.name === 'VIDEO'" class="document-cover flex-centered">
-            <img
-              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-lock-red.svg"
-              alt=" ">
-            <ng-container *ngIf="document.name !== 'VIDEO'">
-              {{ 'PROJECT_DOCUMENTS.IN_PROGRESS' | translate }}
-            </ng-container>
-          </div>
-          <!-- /on hover when not ready -->
-
-        </div>
-
-        <!-- buttons -->
-        <div
-          *ngIf="document.isExportable"
-          [ngStyle]="{ 'animation-duration': ((i+1) * 300) + 'ms' }"
-          class="document-buttons animate-slide slide-down">
-          <div
-            [ngSwitch]="'PROJECT_DOCUMENTS.NAME.' + document.name | translate"
-            [ngClass]="{'popover': !isOwner || !ownerConsent}">
-
-            <!-- case === 'REPORT' -->
-            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.REPORT' | translate">
-              <button
-                (click)="onClickReport($event)"
-                [disabled]="isGeneratingReport || !isOwner || !ownerConsent"
-                class="button is-primary"
-                id="btn-document-report">
-                <ng-container *ngIf="!isGeneratingReport; else genCSV">
-                  {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
-                </ng-container>
-                <ng-template #genCSV>
-                  {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
-                </ng-template>
-              </button>
-            </div>
-            <!-- /case === 'REPORT' -->
-
-            <!-- case === 'SHARE' -->
-            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.SHARE' | translate">
-              <button
-                (click)="onClickShare($event)"
-                [disabled]="isGeneratingLink || !isOwner || !ownerConsent"
-                [ngClass]="{ 'is-primary': isGeneratingLink || !isLinkCopied,
-                'is-success is-outlined': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
-                class="button"
-                id="btn-document-share">
-                <ng-container *ngIf="!isLinkCopied; else copied">
-                  <ng-container *ngIf="!isGeneratingLink; else gen">
-                    {{ 'COMMON.BUTTON.COPY_LINK' | translate }}
-                  </ng-container>
-                  <ng-template #gen>
-                    {{ 'COMMON.BUTTON.GENERATING_LINK' | translate }}
-                  </ng-template>
-                </ng-container>
-                <ng-template #copied>
-                  {{ 'COMMON.BUTTON.COPIED' | translate }}
-                </ng-template>
-              </button>
-            </div>
-            <!-- /case === 'SHARE' -->
-
-            <!-- case === 'XLSX' -->
-            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.XLSX' | translate">
-              <button
-                (click)="onClickXLSX($event)"
-                [disabled]="isGeneratingXLSX || !isOwner || !ownerConsent"
-                class="button is-primary"
-                id="btn-document-xlsx">
-                <ng-container *ngIf="!isGeneratingXLSX; else genXLSX">
-                  {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
-                </ng-container>
-                <ng-template #genXLSX>
-                  {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
-                </ng-template>
-              </button>
-            </div>
-            <!-- /case === 'XLSX' -->
-
-            <!-- case === 'PDF' -->
-            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.PDF' | translate">
-              <button
-                (click)="onClickPDF($event)"
-                [disabled]="isGeneratingPDF || !isOwner || !ownerConsent"
-                class="button is-primary"
-                id="btn-document-pdf">
-                <ng-container *ngIf="!isGeneratingPDF; else genPDF">
-                  {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
-                </ng-container>
-                <ng-template #genPDF>
-                  {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
-                </ng-template>
-              </button>
-            </div>
-            <!-- /case === 'PDF' -->
-
-            <!-- case === 'VIDEO' -->
-            <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.VIDEO' | translate">
-              <div class="d-flex justify-center flex-wrap">
-
-                <!-- contact commercial -->
-                <button
-                  (click)="onClickContact($event)"
-                  [disabled]="!isOwner || !ownerConsent"
-                  class="button is-primary"
-                  id="btn-document-contact-commercial">
-                  {{ 'COMMON.BUTTON.CONTACT_COMMERCIAL' | translate }}
-                </button>
-                <!-- /contact commercial -->
-
-              </div>
-            </div>
-            <!-- /case === 'SHARE' -->
-
-            <!-- popover container -->
-            <div *ngIf="!isOwner || !ownerConsent" class="popover-container is-sm">
-              <div class="p-15">
-                <ng-container *ngIf="!ownerConsent && !isOwner; else specific">
-                  {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_BOTH' | translate }}
-                </ng-container>
-                <ng-template #specific>
-                  <ng-container *ngIf="!isOwner; else consent">
-                    {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_OWNER' | translate }}
-                  </ng-container>
-                  <ng-template #consent>
-                    {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_CONSENT' | translate }}
-                  </ng-template>
-                </ng-template>
-              </div>
-            </div>
-            <!-- /popover container -->
-
-          </div>
-        </div>
-        <!-- /buttons -->
-
+      <!-- consent -->
+      <div class="form-group p-bottom-40 m-left-auto m-right-auto">
+        <label class="form-checkbox p-left-30" for="document-consent">
+          <input
+            (change)="toggleConsent($event)"
+            [disabled]="!isOwner"
+            [checked]="innovation.ownerConsent && innovation.ownerConsent.value"
+            id="document-consent"
+            name="document-consent"
+            type="checkbox"
+            value="true">
+          <i class="form-icon"></i>{{ 'PROJECT_DOCUMENTS.CONSENT' | translate }}
+        </label>
       </div>
-    </div>
-    <!-- /documents -->
+      <!-- /consent -->
 
-  </section>
-  <!-- /status EVALUATING || DONE -->
+      <!-- documents -->
+      <div class="documents-wrapper">
+        <div *ngFor="let document of documents; let i = index;" class="document">
 
+          <div
+            [ngClass]="{'inactive': !document.isExportable}"
+            [ngStyle]="{ 'animation-duration': ((i+1) * 300) + 'ms' }"
+            class="card relative animate-fade">
+
+            <!-- image -->
+            <div class="card-image">
+              <img
+                [ngStyle]="{ 'width': '135px', 'height': '76px' }"
+                [src]="document.img"
+                alt=" ">
+            </div>
+            <!-- /image -->
+
+            <!-- heading -->
+            <div class="card-header">
+              <div class="card-title text-md text-bold">
+                {{ 'PROJECT_DOCUMENTS.NAME.' + document.name | translate }}
+              </div>
+            </div>
+            <!-- /heading -->
+
+            <!-- body -->
+            <div class="card-body text-sm p-no">
+              {{ 'PROJECT_DOCUMENTS.DESCRIPTION.' + document.name | translate }}
+            </div>
+            <!-- /body -->
+
+            <!-- on hover when not ready -->
+            <div *ngIf="!document.isExportable || document.name === 'VIDEO'" class="document-cover flex-centered">
+              <img
+                src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-lock-red.svg"
+                alt=" ">
+              <ng-container *ngIf="document.name !== 'VIDEO'">
+                {{ 'PROJECT_DOCUMENTS.IN_PROGRESS' | translate }}
+              </ng-container>
+            </div>
+            <!-- /on hover when not ready -->
+
+          </div>
+
+          <!-- buttons -->
+          <div
+            *ngIf="document.isExportable"
+            [ngStyle]="{ 'animation-duration': ((i+1) * 300) + 'ms' }"
+            class="document-buttons animate-slide slide-down">
+            <div
+              [ngSwitch]="'PROJECT_DOCUMENTS.NAME.' + document.name | translate"
+              [ngClass]="{'popover': !isOwner || !ownerConsent}">
+
+              <!-- case === 'REPORT' -->
+              <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.REPORT' | translate">
+                <button
+                  (click)="onClickReport($event)"
+                  [disabled]="isGeneratingReport || !isOwner || !ownerConsent"
+                  class="button is-primary"
+                  id="btn-document-report">
+                  <ng-container *ngIf="!isGeneratingReport; else genCSV">
+                    {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
+                  </ng-container>
+                  <ng-template #genCSV>
+                    {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                  </ng-template>
+                </button>
+              </div>
+              <!-- /case === 'REPORT' -->
+
+              <!-- case === 'SHARE' -->
+              <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.SHARE' | translate">
+                <button
+                  (click)="onClickShare($event)"
+                  [disabled]="isGeneratingLink || !isOwner || !ownerConsent"
+                  [ngClass]="{ 'is-primary': isGeneratingLink || !isLinkCopied,
+                'is-success is-outlined': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
+                  class="button"
+                  id="btn-document-share">
+                  <ng-container *ngIf="!isLinkCopied; else copied">
+                    <ng-container *ngIf="!isGeneratingLink; else gen">
+                      {{ 'COMMON.BUTTON.COPY_LINK' | translate }}
+                    </ng-container>
+                    <ng-template #gen>
+                      {{ 'COMMON.BUTTON.GENERATING_LINK' | translate }}
+                    </ng-template>
+                  </ng-container>
+                  <ng-template #copied>
+                    {{ 'COMMON.BUTTON.COPIED' | translate }}
+                  </ng-template>
+                </button>
+              </div>
+              <!-- /case === 'SHARE' -->
+
+              <!-- case === 'XLSX' -->
+              <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.XLSX' | translate">
+                <button
+                  (click)="onClickXLSX($event)"
+                  [disabled]="isGeneratingXLSX || !isOwner || !ownerConsent"
+                  class="button is-primary"
+                  id="btn-document-xlsx">
+                  <ng-container *ngIf="!isGeneratingXLSX; else genXLSX">
+                    {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
+                  </ng-container>
+                  <ng-template #genXLSX>
+                    {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                  </ng-template>
+                </button>
+              </div>
+              <!-- /case === 'XLSX' -->
+
+              <!-- case === 'PDF' -->
+              <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.PDF' | translate">
+                <button
+                  (click)="onClickPDF($event)"
+                  [disabled]="isGeneratingPDF || !isOwner || !ownerConsent"
+                  class="button is-primary"
+                  id="btn-document-pdf">
+                  <ng-container *ngIf="!isGeneratingPDF; else genPDF">
+                    {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
+                  </ng-container>
+                  <ng-template #genPDF>
+                    {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
+                  </ng-template>
+                </button>
+              </div>
+              <!-- /case === 'PDF' -->
+
+              <!-- case === 'VIDEO' -->
+              <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.VIDEO' | translate">
+                <div class="d-flex justify-center flex-wrap">
+
+                  <!-- contact commercial -->
+                  <button
+                    (click)="onClickContact($event)"
+                    [disabled]="!isOwner || !ownerConsent"
+                    class="button is-primary"
+                    id="btn-document-contact-commercial">
+                    {{ 'COMMON.BUTTON.CONTACT_COMMERCIAL' | translate }}
+                  </button>
+                  <!-- /contact commercial -->
+
+                </div>
+              </div>
+              <!-- /case === 'SHARE' -->
+
+              <!-- popover container -->
+              <div *ngIf="!isOwner || !ownerConsent" class="popover-container is-sm">
+                <div class="p-15">
+                  <ng-container *ngIf="!ownerConsent && !isOwner; else specific">
+                    {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_BOTH' | translate }}
+                  </ng-container>
+                  <ng-template #specific>
+                    <ng-container *ngIf="!isOwner; else consent">
+                      {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_OWNER' | translate }}
+                    </ng-container>
+                    <ng-template #consent>
+                      {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_CONSENT' | translate }}
+                    </ng-template>
+                  </ng-template>
+                </div>
+              </div>
+              <!-- /popover container -->
+
+            </div>
+          </div>
+          <!-- /buttons -->
+
+        </div>
+      </div>
+      <!-- /documents -->
+
+    </section>
+    <!-- /status EVALUATING || DONE -->
+
+  </div>
 </div>
 

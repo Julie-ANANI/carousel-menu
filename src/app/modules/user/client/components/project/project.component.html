@@ -1,7 +1,7 @@
 <div id="project">
 
   <!-- header -->
-  <section [ngClass]="{'bg-draft': !isLoading}" class="p-top-25 print-hide">
+  <section [ngClass]="{'bg-draft': !isLoading}" class="p-top-25">
     <div class="container grid-2xl fluid">
       <div class="column col-sm-12 col-11 col-mx-auto">
 
@@ -48,15 +48,11 @@
   <!-- /header -->
 
   <!-- different pages -->
-  <section [ngSwitch]="currentPage">
+  <div [ngSwitch]="currentPage">
 
     <!-- settings -->
-    <div *ngSwitchCase="'settings'" class="container grid-2xl fluid">
-      <div class="column col-sm-12 col-11 col-mx-auto">
-        <div class="p-top-50 p-bottom-50">
-          <app-project-settings></app-project-settings>
-        </div>
-      </div>
+    <div *ngSwitchCase="'settings'">
+      <app-project-settings></app-project-settings>
     </div>
     <!-- /settings -->
 
@@ -84,16 +80,12 @@
     <!-- /synthesis -->
 
     <!-- documents -->
-    <div *ngSwitchCase="'documents'" class="container grid-2xl fluid">
-      <div class="column col-sm-12 col-11 col-mx-auto">
-        <div class="p-top-50 p-bottom-50">
-          <app-project-documents></app-project-documents>
-        </div>
-      </div>
+    <div *ngSwitchCase="'documents'">
+      <app-project-documents></app-project-documents>
     </div>
     <!-- /documents -->
 
-  </section>
+  </div>
   <!-- /different pages -->
 
 </div>

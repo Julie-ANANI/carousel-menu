@@ -2,7 +2,7 @@
   <div class="p-top-30">
 
     <!-- save button -->
-    <section *ngIf="type && type !== 'MEDIA' && isEditable" class="text-right">
+    <section *ngIf="type && type !== 'MEDIA' && isEditable" class="text-right m-bottom-20">
       <button
         (click)="onSave($event)"
         [disabled]="isSaving || !toBeSaved"
@@ -20,13 +20,14 @@
     <!-- /save button -->
 
     <!-- fields -->
-    <section [ngSwitch]="type" [ngClass]="{'p-top-30': isEditable}">
+    <section [ngSwitch]="type">
 
       <!-- title -->
-      <div *ngSwitchCase="'TITLE'" [ngClass]="{'p-top-40': !isEditable}">
-        <div class="form-group">
+      <div *ngSwitchCase="'TITLE'">
+        <div class="form-group p-top-10">
           <label>
             <input
+              [disabled]="!isEditable"
               (ngModelChange)="onChangeValue()"
               [(ngModel)]="cardContent"
               [placeholder]="'COMMON.PLACEHOLDER.PROJECT_TITLE' | translate"
@@ -66,22 +67,23 @@
       <!-- /media -->
 
       <!-- summary | issue | solution -->
-      <div *ngSwitchDefault [ngClass]="{'p-top-40': !isEditable}">
-        <div class="form-group">
-          <div class="box-shadow">
+      <div *ngSwitchDefault>
+        <div class="form-group p-top-10">
+          <div *ngIf="isEditable" class="box-shadow">
             <app-text-zone
               (onTextChange)="onTextChange($event)"
               [data]="cardContent"
               [id]="type ? type.toLowerCase() : 'text-zone'">
             </app-text-zone>
           </div>
+          <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>
         </div>
       </div>
       <!-- /summary | issue | solution -->
 
       <!-- remaining text -->
       <div
-        *ngIf="type && type !== 'MEDIA'"
+        *ngIf="type && type !== 'MEDIA' && isEditable"
         [ngStyle]="{'color': remaining('COLOR')}"
         class="text-right text-medium text-xs">
         {{ remaining('CHAR') }} {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
@@ -94,7 +96,8 @@
     <!-- show media -->
     <section
       *ngIf="type && type === 'MEDIA' && cardContent.length > 0"
-      class="d-flex flex-wrap justify-center p-top-50 p-bottom-50">
+      [ngClass]="{ 'p-top-50': isEditable, 'p-top-10': !isEditable }"
+      class="d-flex flex-wrap justify-center p-bottom-50">
       <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">
 
         <!-- if type === 'PHOTO' -->

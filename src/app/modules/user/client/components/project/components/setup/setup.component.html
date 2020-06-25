@@ -161,6 +161,7 @@
   <footer class="modal-footer justify-center">
 
     <button
+      [disabled]="isAddingCard"
       (click)="closeModal()"
       class="button modal-cancel"
       id="btn-cancel">

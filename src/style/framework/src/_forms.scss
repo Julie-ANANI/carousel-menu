@@ -441,7 +441,8 @@ textarea {
 
   .has-error &, &.is-error  {
 
-    &.form-input.ng-dirty.ng-touched.ng-invalid, &.form-input.ng-pristine.ng-touched.ng-invalid, &.form-input.ng-dirty.ng-touched.ng-invalid:focus, &.form-select {
+    &.form-input.ng-dirty.ng-touched.ng-invalid, &.form-input.ng-pristine.ng-touched.ng-invalid,
+    &.form-input.ng-dirty.ng-touched.ng-invalid:focus, &.form-select {
       border-color: $border-alert-color;
     }
 
@@ -544,7 +545,7 @@ textarea {
 
   &:disabled, &.disabled {
     background: $form-disabled-color none;
-    color: $form-disabled-text-color;
+    color: $form-label-color;
     border-color: $border-default-color;
     cursor: not-allowed;
     opacity: .5;
