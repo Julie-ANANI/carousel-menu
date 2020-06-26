@@ -6,14 +6,14 @@ import {first, takeUntil} from 'rxjs/operators';
 import {MissionFrontService} from '../../../../../../../../../services/mission/mission-front.service';
 import {Mission} from '../../../../../../../../../models/mission';
 import {Subject} from 'rxjs';
-import {CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
+import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
 import {SidebarInterface} from '../../../../../../../../sidebars/interfaces/sidebar-interface';
 import {InnovationService} from '../../../../../../../../../services/innovation/innovation.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
 import {Media, Video} from '../../../../../../../../../models/media';
-import {CardComment} from '../../../../../../../../../models/innov-card-comment';
+import {Preset} from '../../../../../../../../../models/preset';
 
 @Component({
   selector: 'app-project-pitch',
@@ -55,6 +55,8 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _message = '';
 
+  private _preset: Preset = <Preset>{};
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -62,7 +64,9 @@ export class PitchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
-      console.log(innovation.preset);
+      if (this._innovation.preset && !this._preset.sections) {
+        this._preset = this._innovation.preset;
+      }
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
     });
@@ -390,6 +394,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   set message(value: string) {
     this._message = value;
+  }
+
+  get preset(): Preset {
+    return this._preset;
   }
 
   ngOnDestroy(): void {

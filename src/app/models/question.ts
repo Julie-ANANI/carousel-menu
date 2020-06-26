@@ -26,4 +26,5 @@ export interface Question {
   };
   options?: Array<Option>;
   visibility?: boolean;
+  toggle?: boolean; // using this in only front-side, to toggle the question.
 }

@@ -1,12 +1,29 @@
-import { Media } from './media';
-import { Model } from './model';
-import { InnovCardComment } from './innov-card-comment';
+import {Media} from './media';
+import {Model} from './model';
+import {User} from './user.model';
+
+export interface CardComment {
+  type?: string;
+  comment?: string;
+  suggestion?: string;
+}
 
 export interface InnovCardSection {
   type: CardSectionTypes;
   title: string;
   content: string | Array<Media>;
   visibility: boolean;
+}
+
+export interface InnovCardComment {
+  innovationCardId?: string;
+  owner?: User;
+  title?: CardComment;
+  problem?: CardComment; //TODO remove
+  summary?: CardComment; //TODO remove
+  sections?: Array<CardComment>;
+  solution?: CardComment;
+  advantages?: CardComment;
 }
 
 export class InnovCard extends Model {

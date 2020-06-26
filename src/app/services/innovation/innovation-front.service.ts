@@ -8,12 +8,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Media } from '../../models/media';
-import { CardSectionTypes, InnovCard, InnovCardSection } from '../../models/innov-card';
+import { CardComment, CardSectionTypes, InnovCard, InnovCardSection } from '../../models/innov-card';
 import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
 import { Question } from '../../models/question';
 import { Section } from '../../models/section';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CardComment } from '../../models/innov-card-comment';
 
 export interface Values {
   settingPercentage?: number;

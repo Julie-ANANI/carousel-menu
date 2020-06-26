@@ -9,7 +9,7 @@
 
     .content-wrapper {
       max-width: 666px;
-      padding: 35px 80px 50px 80px;
+      padding: 35px 70px 50px 70px;
 
       .subtitle {
         font-size: 18px;
@@ -28,7 +28,7 @@
 
         .field-wrapper {
           min-height: 65px;
-          max-width: 506px;
+          max-width: 526px;
           border: 2px solid transparent;
           margin-bottom: 25px;
           margin-left: auto;
@@ -88,18 +88,58 @@
 
       .content-wrapper {
         margin-right: auto;
-      }
 
-      .divider {
-        max-width: 350px;
-        margin: 30px auto;
-      }
-
-      .form-group {
-
-        textarea {
+        .preset-wrapper {
           font-size: 14px;
-          padding: 10px 15px;
+
+          p {
+            font-size: 12px;
+            opacity: 0.5;
+            font-weight: 600;
+            margin: 0;
+          }
+
+          .icon {
+
+            &.icon-arrow-down, &.icon-arrow-up {
+              color: $text-community-color;
+
+              &:before {
+                width: 10px;
+                height: 10px;
+              }
+
+            }
+
+          }
+
+          .label {
+            background-color: #B2B2B2;
+            font-size: 14px;
+            color: $text-white-color;
+          }
+
+        }
+
+        .comment-wrapper {
+          max-width: 526px;
+          margin-left: auto;
+          margin-right: auto;
+
+          .divider {
+            max-width: 350px;
+            margin: 30px auto;
+          }
+
+          .form-group {
+
+            textarea {
+              font-size: 14px;
+              padding: 10px 15px;
+            }
+
+          }
+
         }
 
       }
@@ -107,5 +147,79 @@
     }
 
   }
+
+}
+
+@media screen {
+
+  @media (max-width: $size-xl) {
+
+    #pitch {
+      flex-direction: column;
+
+      .main-wrapper {
+        max-width: $size-xl;
+
+        &.is-description, &.is-questionnaire {
+
+          .content-wrapper {
+            padding-left: 35px;
+            padding-right: 35px;
+            margin-left: auto;
+            margin-right: auto;
+
+            .field-wrapper {
+              max-width: 596px;
+            }
+
+          }
+
+        }
+
+
+      }
+
+    }
+
+  }
+
+  @media (max-width: $size-sm) {
+
+    #pitch {
+
+      .main-wrapper {
+
+        &.is-description, &.is-questionnaire {
+
+          .content-wrapper {
+            padding-left: 15px;
+            padding-right: 15px;
+
+            .action-btn-wrapper {
+              flex-wrap: wrap;
+              justify-content: center;
+
+              > div {
+                margin-right: 0 !important;
+                width: 100%;
+              }
+
+              .button {
+                width: 100%;
+              }
+
+            }
+
+          }
+
+        }
+
+
+      }
+
+    }
+
+  }
+
 
 }

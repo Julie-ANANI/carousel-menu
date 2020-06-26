@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {CardComment} from '../../../../models/innov-card-comment';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
+import {CardComment} from '../../../../models/innov-card';
 
 /***
  * It involves the edition of the Innovation Card fields.

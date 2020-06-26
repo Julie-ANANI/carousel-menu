@@ -12,7 +12,7 @@
       <!-- /heading / sub heading -->
 
       <!-- action buttons -->
-      <section *ngIf="innovation.status === 'EDITING'" class="flex-between m-bottom-20">
+      <section *ngIf="innovation.status === 'EDITING'" class="flex-between m-bottom-20 action-btn-wrapper">
 
         <!-- proofreading -->
         <div [ngClass]="{'popover': !isRequesting && !isSaving && !isSubmitting}" class="m-right-15 m-bottom-15">
@@ -161,8 +161,35 @@
       </section>
       <!-- /heading / sub heading -->
 
+      <!-- preset -->
+      <section
+        *ngFor="let section of preset.sections; let i = index;"
+        [ngClass]="{'p-top-20': i !== 0 }"
+        class="preset-wrapper">
+
+        <p *ngIf="section.label[activeInnovCard.lang]">
+          SECTION {{ section.label[activeInnovCard.lang] | uppercase }}
+        </p>
+
+        <div *ngFor="let question of section.questions" class="m-top-10">
+          <div (click)="question.toggle = !question.toggle" class="d-flex align-center c-hand">
+            <div class="icon-container is-overlay m-right-1 is-sm">
+              <i [ngClass]="question.toggle ? 'icon-arrow-down' : 'icon-arrow-up'" class="icon"></i>
+            </div>
+            <span *ngIf="question.label[activeInnovCard.lang]">{{ question.label[activeInnovCard.lang] }}</span>
+          </div>
+          <div *ngIf="!question.toggle" class="m-left-30 d-flex flex-wrap">
+            <div *ngFor="let option of question.options" class="label">
+              {{ option.label[activeInnovCard.lang] }}
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <!-- /preset -->
+
       <!-- comment box -->
-      <section *ngIf="innovation.status !== 'DONE'" class="text-center">
+      <section *ngIf="innovation.status !== 'DONE'" class="comment-wrapper text-center">
 
         <div class="divider"></div>
 
@@ -185,10 +212,10 @@
             [disabled]="isSendingMessage"
             class="button is-sm is-community"
             id="btn-send">
-            <ng-container *ngIf="isSendingMessage; else defText">
+            <ng-container *ngIf="isSendingMessage; else defMsgText">
               {{ 'COMMON.BUTTON.SENDING_MESSAGE' | translate }}
             </ng-container>
-            <ng-template #defText>{{ 'COMMON.BUTTON.COMMENT' | translate }}</ng-template>
+            <ng-template #defMsgText>{{ 'COMMON.BUTTON.COMMENT' | translate }}</ng-template>
           </button>
         </div>
 
@@ -230,10 +257,10 @@
       (click)="onSubmitProject($event)"
       class="button is-community"
       id="btn-confirm">
-      <ng-container *ngIf="isSubmitting; else defText">
+      <ng-container *ngIf="isSubmitting; else defSubText">
         {{ 'COMMON.BUTTON.VALIDATING_DEFINITIVELY' | translate }}
       </ng-container>
-      <ng-template #defText>{{ 'COMMON.BUTTON.CONFIRM' | translate }}</ng-template>
+      <ng-template #defSubText>{{ 'COMMON.BUTTON.CONFIRM' | translate }}</ng-template>
     </button>
 
   </footer>

@@ -10,8 +10,8 @@
   margin: 0;
   font-size: $font-icon;
   color: $text-meta-color;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 35px;
+  height: 35px;
 
   &.is-overlay {
 
@@ -44,38 +44,38 @@
 
   &.is-xs {
     font-size: $font-icon-xs;
-    width: 1rem;
-    height: 1rem;
+    width: 20px;
+    height: 20px;
   }
 
   &.is-sm {
     font-size: $font-icon-sm;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 30px;
+    height: 30px;
   }
 
   &.is-normal {
     font-size: $font-icon;
-    width: 1.55rem;
-    height: 1.55rem;
+    width: 35px;
+    height: 35px;
   }
 
   &.is-md {
     font-size: $font-icon-md;
-    width: 2rem;
-    height: 2rem;
+    width: 40px;
+    height: 40px;
   }
 
   &.is-lg {
     font-size: $font-icon-lg;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 45px;
+    height: 45px;
   }
 
   &.is-xl {
     font-size: $font-icon-xl;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 50px;
+    height: 50px;
   }
 
   &:hover {

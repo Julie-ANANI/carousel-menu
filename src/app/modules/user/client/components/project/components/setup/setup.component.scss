@@ -38,16 +38,20 @@
 
 }
 
-@media (min-width: $size-md) {
+@media screen {
 
-  #setup {
+  @media (min-width: $size-md) {
 
-    .sticky {
-      position: sticky;
-      background-color: white;
-      top: 0;
-      box-shadow: $box-shadow-7;
-      z-index: 11;
+    #setup {
+
+      .sticky {
+        position: sticky;
+        background-color: white;
+        top: 0;
+        box-shadow: $box-shadow-7;
+        z-index: 11;
+      }
+
     }
 
   }
