@@ -53,8 +53,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _isSendingMessage = false;
 
-  private _message = '';
-
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -255,6 +253,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
     this._isSaving = false;
     this.unsavedChanges = false;
+    this._isSendingMessage = false;
   }
 
   private _uploadVideo(video: Video) {
@@ -303,7 +302,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
       this._isSendingMessage = true;
-      //Todo add service call.
+      this._updateProject();
     }
   }
 
@@ -382,14 +381,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get isSendingMessage(): boolean {
     return this._isSendingMessage;
-  }
-
-  get message(): string {
-    return this._message;
-  }
-
-  set message(value: string) {
-    this._message = value;
   }
 
   ngOnDestroy(): void {
