@@ -257,11 +257,11 @@ export const COMMON = {
     'CONTACT_COMMERCIAL': 'Contacter mon commercial',
     'EXAMPLE': 'Exemple',
     'REQUEST_PROOFREADING': 'Demander une relecture',
-    'REQUESTING_PROOFREADING': 'en cours de demander...',
+    'REQUESTING_PROOFREADING': 'demande en cours...',
     'VALIDATE_DEFINITIVELY': 'Valider définitivement',
     'VALIDATING_DEFINITIVELY': 'en cours de soumission...',
     'COMMENT': 'Commentaire',
-    'SENDING_MESSAGE': 'en cours de l\'envoie...',
+    'SENDING_MESSAGE': 'en cours d\'envoi...',
   },
 
   'PROJECT': {

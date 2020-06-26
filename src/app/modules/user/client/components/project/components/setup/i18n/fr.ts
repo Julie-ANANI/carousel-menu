@@ -16,10 +16,9 @@ export const PROJECT_SETUP = {
   },
 
   'BANNER_MESSAGES': {
-    'SUBMITTED': 'Le projet est en cours d\'examen par notre équipe. Nous reviendrons bientôt !',
-    'REVIEWING': 'Le projet doit être modifié. Veuillez lire nos commentaires/suggestions pour chaque section de ' +
-      'présentation respectivement.',
-    'EVALUATING': 'Il n\'est plus possible de modifier du projet car l\'exploration marché est en cours.',
+    'SUBMITTED': 'Le projet est en cours d\'examen par notre équipe. Nous reviendrons bientôt vers vous !',
+    'REVIEWING': 'Le projet a besoin de modifications. Veuillez lire nos commentaires/suggestions pour chaque section.',
+    'EVALUATING': 'Il n\'est plus possible de modifier le projet car l\'exploration marché est en cours.',
     'DONE': 'Le test de marché complet du projet est disponible.'
   },
 
@@ -34,7 +33,7 @@ export const SETUP = {
 
   'MESSAGE': {
     'EDITING': {
-      'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
+      'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée ensuite.',
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },

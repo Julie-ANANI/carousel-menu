@@ -259,6 +259,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
     this._isSaving = false;
     this.unsavedChanges = false;
+    this._isSendingMessage = false;
   }
 
   private _uploadVideo(video: Video) {
@@ -307,7 +308,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
       this._isSendingMessage = true;
-      //Todo add service call.
+      this._updateProject();
     }
   }
 

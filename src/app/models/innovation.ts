@@ -46,6 +46,7 @@ export interface Innovation {
 
   name?: string;
   domain?: string;
+  questionnaireComment?: string;
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
   tags?: Array<Tag>;

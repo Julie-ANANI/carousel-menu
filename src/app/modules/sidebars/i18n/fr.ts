@@ -28,7 +28,7 @@ export const SIDEBAR = {
   },
 
   'INNOV_CARD_PREVIEW': {
-    'BOT_MESSAGE': 'Pour avoir un aperçu de l\'innovation, vous devez d\'abord la décrire.',
+    'BOT_MESSAGE': 'Pour avoir un aperçu de l\'innovation, vous devez d\'abord compléter la description.',
     'BENEFITS': 'Avantages marché',
     'ISSUE': 'Problématique',
     'SOLUTION': 'Solution',
