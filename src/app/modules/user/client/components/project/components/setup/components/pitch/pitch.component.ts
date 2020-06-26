@@ -49,6 +49,8 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
+  public unsavedChanges = false;
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -65,6 +67,15 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._initDefaultSections();
     });
   }
+
+  canDeactivate(): boolean {
+    if (this.unsavedChanges && this._sidebarValue.animate_state === 'active') {
+      const message = 'Are you sure? Unsaved changes will be lost.';
+      return confirm(message);
+    }
+    return true;
+  }
+
 
   private _initDefaultSections() {
     const _defaultSections: Array<InnovCardSection> = [
@@ -238,6 +249,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
 
     this._isSaving = false;
+    this.unsavedChanges = false;
   }
 
   private _uploadVideo(video: Video) {

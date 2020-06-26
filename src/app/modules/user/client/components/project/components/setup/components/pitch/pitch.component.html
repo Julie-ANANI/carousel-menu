@@ -220,6 +220,7 @@
     [cardContent]="cardContent"
     [(isSaving)]="isSaving"
     [comment]="operatorComment"
+    (unsavedChanges)="unsavedChanges = true"
     [imagePostUri]="imagePostUri"
     [isEditable]="isEditable"
     [mainMedia]="activeInnovCard.principalMedia"

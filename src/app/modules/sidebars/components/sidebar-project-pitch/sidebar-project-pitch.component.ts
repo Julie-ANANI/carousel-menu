@@ -52,6 +52,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   @Input() pitchHelp: PitchHelpFields = <PitchHelpFields>{};
 
+  @Output() unsavedChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   @Input() set comment(value: CardComment) {
     this._comment = value;
     if (this._comment && (this._comment.comment || this._comment.suggestion)) {
@@ -113,6 +115,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
   public onChangeValue() {
     if (this.isEditable) {
       this._toBeSaved = true;
+      this.unsavedChanges.emit(true);
     }
   }
 
