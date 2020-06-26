@@ -29,7 +29,7 @@ export const PROJECT_PITCH = {
   },
 
   'POPOVER': {
-    'REQUEST_PROOFREADING': 'Il enverra la demande de relecture à votre responsable des tests de marché.',
+    'REQUEST_PROOFREADING': 'Une demande de relecture sera envoyée à votre Market Test Manager.',
   }
 
 };
