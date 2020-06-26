@@ -49,11 +49,9 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
-  public unsavedChanges = false;
+  // public unsavedChanges = false;
 
   private _isSendingMessage = false;
-
-  private _message = '';
 
   private _preset: Preset = <Preset>{};
 
@@ -77,13 +75,13 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
-  canDeactivate(): boolean {
+  /*canDeactivate(): boolean {
     if (this.unsavedChanges && this._sidebarValue.animate_state === 'active') {
       const message = 'Are you sure? Unsaved changes will be lost.';
       return confirm(message);
     }
     return true;
-  }
+  }*/
 
 
   private _initDefaultSections() {
@@ -245,21 +243,14 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   private _resetVariables() {
-
-    if (this._isRequesting) {
-      this._isRequesting = false;
+    if (this._isSubmitting && this._innovation.status === 'SUBMITTED') {
+      this.onCloseModal();
     }
-
-    if (this._isSubmitting) {
-      if (this._innovation.status === 'SUBMITTED') {
-        this.onCloseModal();
-      }
-      this._isSubmitting = false;
-    }
-
     this._isSaving = false;
-    this.unsavedChanges = false;
+    this._isRequesting = false;
+    this._isSubmitting = false;
     this._isSendingMessage = false;
+    // this.unsavedChanges = false;
   }
 
   private _uploadVideo(video: Video) {
@@ -308,7 +299,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
       this._isSendingMessage = true;
-      this._updateProject();
+      this._updateProject('ERROR.PROJECT.SEND_MESSAGE');
     }
   }
 
@@ -387,14 +378,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get isSendingMessage(): boolean {
     return this._isSendingMessage;
-  }
-
-  get message(): string {
-    return this._message;
-  }
-
-  set message(value: string) {
-    this._message = value;
   }
 
   get preset(): Preset {

@@ -6,7 +6,6 @@ import { PitchComponent } from './components/setup/components/pitch/pitch.compon
 import { SharedProjectSettingsComponent } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.component';
 
 import { AuthGuard } from '../../../../../guards/auth-guard.service';
-import {CanDeactivateGuard} from '../../../../../guards/can-deactivate-guard.service';
 
 const projectRoutes: Routes = [
   {
@@ -23,7 +22,7 @@ const projectRoutes: Routes = [
         canActivateChild: [AuthGuard],
         children: [
           { path: '', redirectTo: 'pitch', pathMatch: 'full' },
-          { path: 'pitch', component: PitchComponent, pathMatch: 'full', canDeactivate: [CanDeactivateGuard] },
+          { path: 'pitch', component: PitchComponent, pathMatch: 'full' },
           { path: 'targeting', component: SharedProjectSettingsComponent, pathMatch: 'full' },
         ]
       },

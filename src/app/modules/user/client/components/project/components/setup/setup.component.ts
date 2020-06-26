@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -34,8 +34,6 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
-  private _scrollOn = false;
-
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   private _currentPage = '';
@@ -56,8 +54,6 @@ export class SetupComponent implements OnInit, OnDestroy {
     { route: 'setup/pitch', iconClass: 'icon icon-check', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
     { route: 'setup/targeting', iconClass: 'icon icon-check', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
   ];
-
-  private _isExampleAvailable = false;
 
   private _showCardModal = false;
 
@@ -107,14 +103,6 @@ export class SetupComponent implements OnInit, OnDestroy {
     } else {
       this._currentPage = 'PITCH';
     }
-  }
-
-  /***
-   * we are getting the scroll value for the sticky bar.
-   */
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this._scrollOn = window.pageYOffset > 50 || window.scrollY > 50;
   }
 
   private _initBanner() {
@@ -267,10 +255,6 @@ export class SetupComponent implements OnInit, OnDestroy {
     return this._innovation;
   }
 
-  get scrollOn(): boolean {
-    return this._scrollOn;
-  }
-
   get currentPage(): string {
     return this._currentPage;
   }
@@ -293,9 +277,6 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   set showCardModal(value: boolean) {
     this._showCardModal = value;
-  }
-  get isExampleAvailable(): boolean {
-    return this._isExampleAvailable;
   }
 
   get isSavingProject(): boolean {

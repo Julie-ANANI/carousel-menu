@@ -97,6 +97,7 @@ export const ERROR = {
     'LINKING_DONE': 'Votre demande de mise en relation a été prise en compte',
     'SEND_EMAILS': 'Envoi des emails',
     'SEND_EMAILS_OK': 'Les emails ont bien été envoyés',
+    'SEND_MESSAGE': 'Le message a été envoyé avec succès.'
   },
 
 

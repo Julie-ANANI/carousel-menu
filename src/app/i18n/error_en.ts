@@ -95,6 +95,7 @@ export const ERROR = {
     'LINKING_DONE': 'Your request for contact has been taken into account',
     'SEND_EMAILS': 'Sending the emails',
     'SEND_EMAILS_OK': 'The emails have been sent successfully',
+    'SEND_MESSAGE': 'The message has been sent successfully.'
   },
 
 

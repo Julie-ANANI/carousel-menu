@@ -1,127 +1,126 @@
-<div class="column col-sm-12 col-11 col-mx-auto" id="sidebar-project-pitch">
-  <div class="p-top-30">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="sidebar-project-pitch">
 
-    <!-- save button -->
-    <section *ngIf="type && type !== 'MEDIA' && isEditable" class="text-right m-bottom-20">
-      <button
-        (click)="onSave($event)"
-        [disabled]="isSaving || !toBeSaved"
-        [ngStyle]="{'min-width': '100px'}"
-        class="button is-sm is-community"
-        id="btn-save">
-        <ng-container *ngIf="isSaving; else defText">
-          {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
-        </ng-container>
-        <ng-template #defText>
-          {{ 'COMMON.BUTTON.SAVE' | translate }}
-        </ng-template>
-      </button>
-    </section>
-    <!-- /save button -->
+  <!-- save button -->
+  <section *ngIf="type && type !== 'MEDIA' && isEditable" class="text-right m-bottom-20">
+    <button
+      (click)="onSave($event)"
+      [disabled]="isSaving || !toBeSaved"
+      [ngStyle]="{'min-width': '100px'}"
+      class="button is-sm is-community"
+      id="btn-save">
+      <ng-container *ngIf="isSaving; else defText">
+        {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
+      </ng-container>
+      <ng-template #defText>
+        {{ 'COMMON.BUTTON.SAVE' | translate }}
+      </ng-template>
+    </button>
+  </section>
+  <!-- /save button -->
 
-    <!-- fields -->
-    <section [ngSwitch]="type">
+  <!-- fields -->
+  <section [ngSwitch]="type">
 
-      <!-- title -->
-      <div *ngSwitchCase="'TITLE'">
-        <div class="form-group p-top-10">
-          <label>
-            <input
-              [disabled]="!isEditable"
-              (ngModelChange)="onChangeValue()"
-              [(ngModel)]="cardContent"
-              [placeholder]="'COMMON.PLACEHOLDER.PROJECT_TITLE' | translate"
-              class="form-input is-shadowed"
-              type="text">
-          </label>
+    <!-- title -->
+    <div *ngSwitchCase="'TITLE'">
+      <div class="form-group p-top-10">
+        <label>
+          <input
+            [disabled]="!isEditable"
+            (ngModelChange)="onChangeValue()"
+            [(ngModel)]="cardContent"
+            [placeholder]="'COMMON.PLACEHOLDER.PROJECT_TITLE' | translate"
+            class="form-input is-shadowed"
+            type="text">
+        </label>
+      </div>
+    </div>
+    <!-- /title -->
+
+    <!-- media -->
+    <div *ngSwitchCase="'MEDIA'">
+      <ng-container *ngIf="isEditable">
+
+        <!-- image -->
+        <div class="form-group p-top-30">
+          <app-shared-upload-zone-photo
+            [uri]="imagePostUri"
+            (cbFn)="onUploadMedia($event, 'IMAGE')">
+          </app-shared-upload-zone-photo>
         </div>
-      </div>
-      <!-- /title -->
+        <!-- /image -->
 
-      <!-- media -->
-      <div *ngSwitchCase="'MEDIA'">
-        <ng-container *ngIf="isEditable">
-
-          <!-- image -->
-          <div class="form-group">
-            <app-shared-upload-zone-photo
-              [uri]="imagePostUri"
-              (cbFn)="onUploadMedia($event, 'IMAGE')">
-            </app-shared-upload-zone-photo>
-          </div>
-          <!-- /image -->
-
-          <div
-            [attr.data-content]="'COMMON.LABEL.OR' | translate | uppercase"
-            class="divider m-top-40 m-bottom-40">
-          </div>
-
-          <!-- video -->
-          <div class="form-group">
-            <app-shared-upload-zone-video (cbFn)="onUploadMedia($event, 'VIDEO')"></app-shared-upload-zone-video>
-          </div>
-          <!-- /video -->
-
-        </ng-container>
-      </div>
-      <!-- /media -->
-
-      <!-- summary | issue | solution -->
-      <div *ngSwitchDefault>
-        <div class="form-group p-top-10">
-          <div *ngIf="isEditable" class="box-shadow">
-            <app-text-zone
-              (onTextChange)="onTextChange($event)"
-              [data]="cardContent"
-              [id]="type ? type.toLowerCase() : 'text-zone'">
-            </app-text-zone>
-          </div>
-          <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>
+        <div
+          [attr.data-content]="'COMMON.LABEL.OR' | translate | uppercase"
+          class="divider m-top-40 m-bottom-40">
         </div>
+
+        <!-- video -->
+        <div class="form-group">
+          <app-shared-upload-zone-video (cbFn)="onUploadMedia($event, 'VIDEO')"></app-shared-upload-zone-video>
+        </div>
+        <!-- /video -->
+
+      </ng-container>
+    </div>
+    <!-- /media -->
+
+    <!-- summary | issue | solution -->
+    <div *ngSwitchDefault>
+      <div class="form-group p-top-10">
+        <div *ngIf="isEditable" class="box-shadow">
+          <app-text-zone
+            (onTextChange)="onTextChange($event)"
+            [data]="cardContent"
+            [id]="type ? type.toLowerCase() : 'text-zone'">
+          </app-text-zone>
+        </div>
+        <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>
       </div>
-      <!-- /summary | issue | solution -->
+    </div>
+    <!-- /summary | issue | solution -->
 
-      <!-- remaining text -->
-      <div
-        *ngIf="type && type !== 'MEDIA' && isEditable"
-        [ngStyle]="{'color': remaining('COLOR')}"
-        class="text-right text-medium text-xs">
-        {{ remaining('CHAR') }} {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
-      </div>
-      <!-- /remaining text -->
+    <!-- remaining text -->
+    <div
+      *ngIf="type && type !== 'MEDIA' && isEditable"
+      [ngStyle]="{'color': remaining('COLOR')}"
+      class="text-right text-medium text-xs">
+      {{ remaining('CHAR') }} {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
+    </div>
+    <!-- /remaining text -->
 
-    </section>
-    <!-- /fields -->
+  </section>
+  <!-- /fields -->
 
-    <!-- show media -->
-    <section
-      *ngIf="type && type === 'MEDIA' && cardContent.length > 0"
-      [ngClass]="{ 'p-top-50': isEditable, 'p-top-10': !isEditable }"
-      class="d-flex flex-wrap justify-center p-bottom-50">
-      <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">
+  <!-- show media -->
+  <section
+    *ngIf="type && type === 'MEDIA' && cardContent.length > 0"
+    [ngClass]="{ 'p-top-50': isEditable, 'p-top-10': !isEditable }"
+    class="d-flex flex-wrap justify-center p-bottom-50">
+    <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">
 
-        <!-- if type === 'PHOTO' -->
-        <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
-          <img
-            [src]="mediaSrc(media, 'IMAGE')"
-            alt=" "
-            class="img-responsive"
-            height="159"
-            width="180">
-        </figure>
-        <!-- /if type === 'PHOTO' -->
-
-        <!-- if type === 'VIDEO' -->
-        <iframe
-          *ngIf="media['type'] && media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
-          [src]="mediaSrc(media, 'VIDEO')"
-          height="119.25"
+      <!-- if type === 'PHOTO' -->
+      <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
+        <img
+          [src]="mediaSrc(media, 'IMAGE')"
+          alt=" "
+          class="img-responsive"
+          height="159"
           width="180">
-        </iframe>
-        <!-- /if type === 'VIDEO' -->
+      </figure>
+      <!-- /if type === 'PHOTO' -->
 
-        <!-- set principal -->
-        <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
+      <!-- if type === 'VIDEO' -->
+      <iframe
+        *ngIf="media['type'] && media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
+        [src]="mediaSrc(media, 'VIDEO')"
+        height="119.25"
+        width="180">
+      </iframe>
+      <!-- /if type === 'VIDEO' -->
+
+      <!-- set principal -->
+      <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
           <span
             (click)="onSetPrincipal(media)"
             [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
@@ -129,15 +128,15 @@
             id="btn-principal-media">
             {{ 'SIDEBAR.PROJECT_PITCH.SET_PRINCIPAL' | translate }}
           </span>
-        </div>
-        <!-- /set principal -->
+      </div>
+      <!-- /set principal -->
 
-        <!-- delete button -->
-        <div
-          *ngIf="cardContent.length > 1 && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))
+      <!-- delete button -->
+      <div
+        *ngIf="cardContent.length > 1 && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))
           && isEditable"
-          [ngClass]="{'p-top-2': !isNotMainMedia(media)}"
-          class="text-sm">
+        [ngClass]="{'p-top-2': !isNotMainMedia(media)}"
+        class="text-sm">
           <span
             (click)="onDeleteMedia(media)"
             [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
@@ -145,70 +144,69 @@
             id="btn-delete-media">
             {{ 'COMMON.BUTTON.DELETE' | translate }}
           </span>
-        </div>
-        <!-- /delete button -->
+      </div>
+      <!-- /delete button -->
 
-      </div>
-    </section>
-    <!-- /show media -->
+    </div>
+  </section>
+  <!-- /show media -->
 
-    <!-- umi comment -->
-    <section *ngIf="comment && comment.comment" class="p-top-30">
-      <div class="d-flex align-center m-bottom-10">
-        <div class="d-flex align-center m-right-10">
-          <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.COMMENT' | translate }}</span>
-          <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
-        </div>
-        <div (click)="toggle($event, 'COMMENT')" class="icon-container is-sm is-overlay">
-          <i [ngClass]="showComment ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
-        </div>
+  <!-- umi comment -->
+  <section *ngIf="comment && comment.comment" class="p-top-30">
+    <div class="d-flex align-center m-bottom-10">
+      <div class="d-flex align-center m-right-10">
+        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.COMMENT' | translate }}</span>
+        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
       </div>
-      <div *ngIf="showComment" class="message animate-fade is-2">
-        <p class="message-body" [innerHTML]="comment.comment"></p>
+      <div (click)="toggle($event, 'COMMENT')" class="icon-container is-sm is-overlay">
+        <i [ngClass]="showComment ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
       </div>
-    </section>
-    <!-- /umi comment -->
+    </div>
+    <div *ngIf="showComment" class="message animate-fade is-2">
+      <p class="message-body" [innerHTML]="comment.comment"></p>
+    </div>
+  </section>
+  <!-- /umi comment -->
 
-    <!-- umi suggestion -->
-    <section *ngIf="comment && comment.comment" class="p-top-30">
-      <div class="d-flex align-center m-bottom-10">
-        <div class="d-flex align-center m-right-10">
-          <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.SUGGESTION' | translate }}</span>
-          <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
-        </div>
-        <div (click)="toggle($event, 'SUGGESTION')" class="icon-container is-sm is-overlay">
-          <i [ngClass]="showSuggestion ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
-        </div>
+  <!-- umi suggestion -->
+  <section *ngIf="comment && comment.comment" class="p-top-30">
+    <div class="d-flex align-center m-bottom-10">
+      <div class="d-flex align-center m-right-10">
+        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.SUGGESTION' | translate }}</span>
+        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
       </div>
-      <div *ngIf="showSuggestion" class="message animate-fade is-2">
-        <p class="message-body" [innerHTML]="comment.suggestion"></p>
+      <div (click)="toggle($event, 'SUGGESTION')" class="icon-container is-sm is-overlay">
+        <i [ngClass]="showSuggestion ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
       </div>
-    </section>
-    <!-- /umi suggestion -->
+    </div>
+    <div *ngIf="showSuggestion" class="message animate-fade is-2">
+      <p class="message-body" [innerHTML]="comment.suggestion"></p>
+    </div>
+  </section>
+  <!-- /umi suggestion -->
 
-    <!-- help text -->
-    <section *ngIf="type && type !== 'MEDIA' && help('TEXT')" class="p-top-30">
-      <div class="d-flex align-center m-bottom-10">
-        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.HELP' | translate }}</span>
-        <span (click)="toggle($event, 'HELP')" class="icon-container is-sm is-overlay">
+  <!-- help text -->
+  <section *ngIf="type && type !== 'MEDIA' && help('TEXT')" class="p-top-30">
+    <div class="d-flex align-center m-bottom-10">
+      <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.HELP' | translate }}</span>
+      <span (click)="toggle($event, 'HELP')" class="icon-container is-sm is-overlay">
           <i [ngClass]="showHelp ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
         </span>
-      </div>
-      <p *ngIf="showHelp" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('TEXT')"></p>
-    </section>
-    <!-- /help text -->
+    </div>
+    <p *ngIf="showHelp" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('TEXT')"></p>
+  </section>
+  <!-- /help text -->
 
-    <!-- example -->
-    <section *ngIf="type && type !== 'MEDIA' && help('EXAMPLE')" class="p-top-30">
-      <div class="d-flex align-center m-bottom-10">
-        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.EXAMPLE' | translate }}</span>
-        <span (click)="toggle($event, 'EXAMPLE')" class="icon-container is-sm is-overlay">
+  <!-- example -->
+  <section *ngIf="type && type !== 'MEDIA' && help('EXAMPLE')" class="p-top-30">
+    <div class="d-flex align-center m-bottom-10">
+      <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.EXAMPLE' | translate }}</span>
+      <span (click)="toggle($event, 'EXAMPLE')" class="icon-container is-sm is-overlay">
           <i [ngClass]="showExample ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
         </span>
-      </div>
-      <p *ngIf="showExample" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('EXAMPLE')"></p>
-    </section>
-    <!-- /example -->
+    </div>
+    <p *ngIf="showExample" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('EXAMPLE')"></p>
+  </section>
+  <!-- /example -->
 
-  </div>
 </div>
