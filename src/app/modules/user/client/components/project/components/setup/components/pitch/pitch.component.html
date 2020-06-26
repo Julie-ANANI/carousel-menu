@@ -63,16 +63,17 @@
       <!-- /action buttons -->
 
       <!-- sections -->
-      <section
-        *ngFor="let section of sections"
-        [ngClass]="{ 'is-filled': (section.content && section.content.length),
-        'is-not-filled': !(section.content && section.content.length > 0),
-        'is-active': activeSection === section.type }"
-        class="field-wrapper">
+      <section *ngFor="let section of sections">
+        <div
+          *ngIf="section.visibility"
+          [ngClass]="{ 'is-filled': (section.content && section.content.length),
+          'is-not-filled': !(section.content && section.content.length > 0),
+          'is-active': activeSection === section.type }"
+          class="field-wrapper">
 
-        <!-- header -->
-        <div class="flex-between w-full">
-          <div class="d-flex align-center m-right-1">
+          <!-- header -->
+          <div class="flex-between w-full">
+            <div class="d-flex align-center m-right-1">
             <span class="m-right-2 field-heading">
               <ng-container *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'; else defTitle">
                 {{ section.title | InnovCardTitle:section.content:activeInnovCard.lang }}
@@ -81,70 +82,71 @@
                 {{ section.title }}
               </ng-template>
             </span>
-            <span *ngIf="sectionCommentLabel(section.type)" class="label is-primary is-sm text-xs p-left-3 p-right-3">
+              <span *ngIf="sectionCommentLabel(section.type)" class="label is-primary is-sm text-xs p-left-3 p-right-3">
               {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
             </span>
-          </div>
-          <span (click)="openSidebar(section.type, section.content)" class="icon-container is-overlay">
+            </div>
+            <span (click)="openSidebar(section.type, section.content)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
-        </div>
-        <!-- /header -->
-
-        <!-- content -->
-        <div
-          *ngIf="section.type !== 'MEDIA'"
-          [ngStyle]="{'margin-bottom': section.type === 'SUMMARY' ? '-8px' : '0'}"
-          [innerHTML]="section.content"
-          class="text-sm p-top-h">
-        </div>
-        <!-- /content -->
-
-        <!-- content for section === 'MEDIA' -->
-        <div
-          *ngIf="section.type === 'MEDIA'"
-          [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-15px' }"
-          class="m-top-10 d-flex flex-wrap">
-
-          <!-- principal media -->
-          <div
-            *ngIf="activeInnovCard.principalMedia && mediaSrc(activeInnovCard.principalMedia)"
-            class="text-center media-wrapper">
-            <figure>
-              <img
-                [src]="mediaSrc(activeInnovCard.principalMedia)"
-                alt=" "
-                class="img-responsive"
-                height="79.5"
-                width="120">
-            </figure>
-            <span class="text-xs p-top-1">{{ 'PROJECT_PITCH.DESCRIPTION.MAIN_MEDIA' | translate }}</span>
           </div>
-          <!-- /principal media -->
+          <!-- /header -->
 
-          <!-- secondary medias -->
-          <ng-container *ngIf="section.content && section.content.length > 0">
-            <ng-container *ngFor="let media of section.content">
-              <div
-                *ngIf="mediaSrc(media) &&
+          <!-- content -->
+          <div
+            *ngIf="section.type !== 'MEDIA'"
+            [ngStyle]="{'margin-bottom': section.type === 'SUMMARY' ? '-8px' : '0'}"
+            [innerHTML]="section.content"
+            class="text-sm p-top-h">
+          </div>
+          <!-- /content -->
+
+          <!-- content for section === 'MEDIA' -->
+          <div
+            *ngIf="section.type === 'MEDIA'"
+            [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-15px' }"
+            class="m-top-10 d-flex flex-wrap">
+
+            <!-- principal media -->
+            <div
+              *ngIf="activeInnovCard.principalMedia && mediaSrc(activeInnovCard.principalMedia)"
+              class="text-center media-wrapper">
+              <figure>
+                <img
+                  [src]="mediaSrc(activeInnovCard.principalMedia)"
+                  alt=" "
+                  class="img-responsive"
+                  height="79.5"
+                  width="120">
+              </figure>
+              <span class="text-xs p-top-1">{{ 'PROJECT_PITCH.DESCRIPTION.MAIN_MEDIA' | translate }}</span>
+            </div>
+            <!-- /principal media -->
+
+            <!-- secondary medias -->
+            <ng-container *ngIf="section.content && section.content.length > 0">
+              <ng-container *ngFor="let media of section.content">
+                <div
+                  *ngIf="mediaSrc(media) &&
                 media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
-                class="media-wrapper">
-                <figure>
-                  <img
-                    [src]="mediaSrc(media)"
-                    alt=" "
-                    class="img-responsive"
-                    height="79.5"
-                    width="120">
-                </figure>
-              </div>
+                  class="media-wrapper">
+                  <figure>
+                    <img
+                      [src]="mediaSrc(media)"
+                      alt=" "
+                      class="img-responsive"
+                      height="79.5"
+                      width="120">
+                  </figure>
+                </div>
+              </ng-container>
             </ng-container>
-          </ng-container>
-          <!-- /secondary medias -->
+            <!-- /secondary medias -->
+
+          </div>
+          <!-- /content for section === 'MEDIA' -->
 
         </div>
-        <!-- /content for section === 'MEDIA' -->
-
       </section>
       <!-- /sections -->
 
