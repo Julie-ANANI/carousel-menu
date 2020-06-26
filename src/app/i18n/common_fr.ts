@@ -260,6 +260,8 @@ export const COMMON = {
     'REQUESTING_PROOFREADING': 'en cours de demander...',
     'VALIDATE_DEFINITIVELY': 'Valider définitivement',
     'VALIDATING_DEFINITIVELY': 'en cours de soumission...',
+    'COMMENT': 'Commentaire',
+    'SENDING_MESSAGE': 'en cours de l\'envoie...',
   },
 
   'PROJECT': {

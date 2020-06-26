@@ -51,6 +51,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public unsavedChanges = false;
 
+  private _isSendingMessage = false;
+
+  private _message = '';
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -58,6 +62,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
+      console.log(innovation.preset);
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
     });
@@ -294,6 +299,14 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onSendMessage(event: Event) {
+    event.preventDefault();
+    if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
+      this._isSendingMessage = true;
+      //Todo add service call.
+    }
+  }
+
   get activeInnovCard(): InnovCard {
     return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
   }
@@ -365,6 +378,18 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   set showModal(value: boolean) {
     this._showModal = value;
+  }
+
+  get isSendingMessage(): boolean {
+    return this._isSendingMessage;
+  }
+
+  get message(): string {
+    return this._message;
+  }
+
+  set message(value: string) {
+    this._message = value;
   }
 
   ngOnDestroy(): void {

@@ -15,7 +15,8 @@ export const PROJECT_PITCH = {
 
   'QUESTIONNAIRE': {
     'HEADING': 'My Questions',
-    'SUB_HEADING': 'They will be asked to market professionals'
+    'SUB_HEADING': 'They will be asked to market professionals',
+    'MESSAGE_HEADING': 'Do you have any comments on your questionnaire?'
   },
 
   'MODAL': {
@@ -29,6 +30,7 @@ export const PROJECT_PITCH = {
 
   'POPOVER': {
     'REQUEST_PROOFREADING': 'It will send the proofreading request to your Market Test Manager.',
-  }
+  },
+
 
 };

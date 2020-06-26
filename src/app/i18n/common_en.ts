@@ -258,9 +258,11 @@ export const COMMON = {
     'CONTACT_COMMERCIAL': 'Contact commercial',
     'EXAMPLE': 'Example',
     'REQUEST_PROOFREADING': 'Request a proofreading',
-    'REQUESTING_PROOFREADING': 'requesting a proofreading...',
+    'REQUESTING_PROOFREADING': 'requesting the proofreading...',
     'VALIDATE_DEFINITIVELY': 'Validate definitively',
     'VALIDATING_DEFINITIVELY': 'submitting the project...',
+    'COMMENT': 'Comment',
+    'SENDING_MESSAGE': 'sending the message...',
   },
 
   'PROJECT': {

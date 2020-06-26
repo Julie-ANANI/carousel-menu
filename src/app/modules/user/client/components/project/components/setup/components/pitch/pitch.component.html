@@ -30,9 +30,7 @@
                 src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-bell-blue.svg"
                 class="icon-right">
             </ng-container>
-            <ng-template #defReqText>
-              {{ 'COMMON.BUTTON.REQUESTING_PROOFREADING' | translate }}
-            </ng-template>
+            <ng-template #defReqText>{{ 'COMMON.BUTTON.REQUESTING_PROOFREADING' | translate }}</ng-template>
           </button>
 
           <div *ngIf="!isRequesting && !isSaving && !isSubmitting" class="popover-container is-sm">
@@ -63,12 +61,12 @@
       <!-- /action buttons -->
 
       <!-- sections -->
-      <section *ngFor="let section of sections">
+      <section *ngFor="let section of sections; let i=index;">
         <div
           *ngIf="section.visibility"
           [ngClass]="{ 'is-filled': (section.content && section.content.length),
           'is-not-filled': !(section.content && section.content.length > 0),
-          'is-active': activeSection === section.type }"
+          'is-active': activeSection === section.type, 'm-no-bottom': i === (sections.length-1) }"
           class="field-wrapper">
 
           <!-- header -->
@@ -78,9 +76,7 @@
               <ng-container *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'; else defTitle">
                 {{ section.title | InnovCardTitle:section.content:activeInnovCard.lang }}
               </ng-container>
-              <ng-template #defTitle>
-                {{ section.title }}
-              </ng-template>
+              <ng-template #defTitle>{{ section.title }}</ng-template>
             </span>
               <span *ngIf="sectionCommentLabel(section.type)" class="label is-primary is-sm text-xs p-left-3 p-right-3">
               {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
@@ -128,7 +124,7 @@
               <ng-container *ngFor="let media of section.content">
                 <div
                   *ngIf="mediaSrc(media) &&
-                media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
+                  media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
                   class="media-wrapper">
                   <figure>
                     <img
@@ -164,6 +160,40 @@
         <h2 class="subtitle">{{ 'PROJECT_PITCH.QUESTIONNAIRE.SUB_HEADING' | translate }}</h2>
       </section>
       <!-- /heading / sub heading -->
+
+      <!-- comment box -->
+      <section *ngIf="innovation.status !== 'DONE'" class="text-center">
+
+        <div class="divider"></div>
+
+        <h3 class="text-sm text-normal m-bottom-10">{{ 'PROJECT_PITCH.QUESTIONNAIRE.MESSAGE_HEADING' | translate }}</h3>
+
+        <div class="form-group m-bottom-15">
+          <label>
+            <textarea
+              [(ngModel)]="message"
+              class="form-input is-shadowed"
+              id="message"
+              rows="3">
+            </textarea>
+          </label>
+        </div>
+
+        <div class="text-right">
+          <button
+            (click)="onSendMessage($event)"
+            [disabled]="isSendingMessage"
+            class="button is-sm is-community"
+            id="btn-send">
+            <ng-container *ngIf="isSendingMessage; else defText">
+              {{ 'COMMON.BUTTON.SENDING_MESSAGE' | translate }}
+            </ng-container>
+            <ng-template #defText>{{ 'COMMON.BUTTON.COMMENT' | translate }}</ng-template>
+          </button>
+        </div>
+
+      </section>
+      <!-- /comment box -->
 
     </div>
   </div>
@@ -203,9 +233,7 @@
       <ng-container *ngIf="isSubmitting; else defText">
         {{ 'COMMON.BUTTON.VALIDATING_DEFINITIVELY' | translate }}
       </ng-container>
-      <ng-template #defText>
-        {{ 'COMMON.BUTTON.CONFIRM' | translate }}
-      </ng-template>
+      <ng-template #defText>{{ 'COMMON.BUTTON.CONFIRM' | translate }}</ng-template>
     </button>
 
   </footer>

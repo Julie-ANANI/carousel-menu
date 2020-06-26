@@ -15,7 +15,8 @@ export const PROJECT_PITCH = {
 
   'QUESTIONNAIRE': {
     'HEADING': 'Mes questions',
-    'SUB_HEADING': 'Elles seront posées aux professionnels du marché'
+    'SUB_HEADING': 'Elles seront posées aux professionnels du marché',
+    'MESSAGE_HEADING': 'Avez-vous des commentaires à apporter sur votre questionnaire ?'
   },
 
   'MODAL': {
