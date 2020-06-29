@@ -157,7 +157,7 @@
       <section
         *ngFor="let batch of stats['batches'];
         let batchIndex = index;"
-        [ngStyle]="{ 'animation-duration': ((batchIndex+1) * 200) + 'ms' }"
+        [ngStyle]="{ 'animation-duration': (batchIndex * 200) + 'ms' }"
         class="card animate-slide slide-down">
 
         <div class="card-header">

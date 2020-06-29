@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../../../../services/answer/answer.service';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
@@ -10,22 +10,19 @@ import { Question } from '../../../../../../../models/question';
 import { Section } from '../../../../../../../models/section';
 import { Table } from '../../../../../../table/models/table';
 import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Config } from '../../../../../../../models/config';
+import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-project-exploration',
   templateUrl: 'exploration.component.html',
   styleUrls: ['exploration.component.scss']
 })
 
-export class ExplorationComponent implements OnInit {
+export class ExplorationComponent implements OnInit, OnDestroy {
 
-  @Input() set project(value: Innovation) {
-    this._innovation = value;
-  }
-
-  private _innovation: Innovation = {};
+  private _innovation: Innovation = <Innovation>{};
 
   private _campaignsStats: {
     nbPros: number,
@@ -35,15 +32,17 @@ export class ExplorationComponent implements OnInit {
     nbValidatedResp: number
   };
 
-  private _countries: Array<string>;
+  private _countries: Array<string> = [];
 
-  private _questions: Array<Question>;
+  private _questions: Array<Question> = [];
 
-  private _modalAnswer: Answer;
+  private _modalAnswer: Answer = <Answer>{};
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = {
+    animate_state: 'inactive'
+  };
 
-  private _tableInfos: Table;
+  private _tableInfos: Table = <Table>{};
 
   private _anonymousAnswers: boolean = false;
 
@@ -55,18 +54,23 @@ export class ExplorationComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
+              private _innovationFrontService: InnovationFrontService,
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-
-    if (this._innovation) {
-      this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers;
-    }
-
-    this.loadAnswers();
+    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._innovation = innovation;
+      this._anonymousAnswers = this._innovation._metadata && this._innovation._metadata.campaign
+        && this._innovation._metadata.campaign.anonymous_answers;
+      if (this._innovation._id) {
+        this.loadAnswers();
+      }
+    });
   }
 
   loadAnswers() {
@@ -214,6 +218,11 @@ export class ExplorationComponent implements OnInit {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

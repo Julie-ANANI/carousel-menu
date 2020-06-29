@@ -47,45 +47,8 @@
   </section>
   <!-- /header -->
 
-  <!-- different pages -->
-  <div [ngSwitch]="currentPage">
-
-    <!-- settings -->
-    <div *ngSwitchCase="'settings'">
-      <app-project-settings></app-project-settings>
-    </div>
-    <!-- /settings -->
-
-    <!-- setup -->
-    <div *ngSwitchCase="'setup'">
-      <app-project-setup></app-project-setup>
-    </div>
-    <!-- /setup -->
-
-    <!-- exploration -->
-    <div *ngSwitchCase="'exploration'" class="p-bottom-50">
-      <app-project-exploration *ngIf="innovation._id" [project]="innovation"></app-project-exploration>
-    </div>
-    <!-- /exploration -->
-
-    <!-- synthesis -->
-    <div *ngSwitchCase="'synthesis'">
-      <app-shared-market-report
-        *ngIf="innovation._id"
-        [project]="innovation"
-        [adminSide]="false"
-        [reportShared]="false">
-      </app-shared-market-report>
-    </div>
-    <!-- /synthesis -->
-
-    <!-- documents -->
-    <div *ngSwitchCase="'documents'">
-      <app-project-documents></app-project-documents>
-    </div>
-    <!-- /documents -->
-
+  <div>
+    <router-outlet></router-outlet>
   </div>
-  <!-- /different pages -->
 
 </div>

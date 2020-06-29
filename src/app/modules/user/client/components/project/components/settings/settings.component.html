@@ -1,9 +1,9 @@
-<div class="container fluid grid-2xl p-top-50 p-bottom-50" id="settings">
+<div class="container fluid grid-2xl p-top-50 p-bottom-50" id="project-settings">
   <div class="column col-sm-12 col-11 col-mx-auto">
-    <section class="d-flex flex-wrap settings-wrapper">
+    <div class="d-flex flex-wrap settings-wrapper">
 
       <!-- menu wrapper -->
-      <div *ngIf="isVisibleMenu" class="menu-wrapper">
+      <aside *ngIf="isVisibleMenu" class="menu-wrapper">
         <ul>
           <ng-container *ngFor="let tab of sections">
             <li *ngIf="tab.isVisible">
@@ -21,12 +21,12 @@
             </li>
           </ng-container>
         </ul>
-      </div>
+      </aside>
       <!-- /menu wrapper -->
 
       <!-- content wrapper -->
       <div class="content-wrapper">
-        <div *ngFor="let section of sections; let i = index;">
+        <section *ngFor="let section of sections; let i = index;">
           <div
             *ngIf="section.isVisible"
             [id]="section.name.toLowerCase()"
@@ -331,11 +331,11 @@
 
             </div>
           </div>
-        </div>
+        </section>
       </div>
       <!-- /content wrapper -->
 
-    </section>
+    </div>
   </div>
 </div>
 
@@ -418,7 +418,7 @@
       </button>
 
       <button
-        [disabled]="!canPerformAction()"
+        [disabled]="!canPerformAction"
         (click)="onClickSaveModal($event)"
         class="button is-community"
         id="btn-save">

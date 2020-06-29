@@ -25,7 +25,6 @@ interface Tab {
 }
 
 @Component({
-  selector: 'app-project-setup',
   templateUrl: 'setup.component.html',
   styleUrls: ['setup.component.scss']
 })
@@ -51,8 +50,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   private _activeInnovCard: InnovCard = <InnovCard>{};
 
   private _tabs: Array<Tab> = [
-    { route: 'setup/pitch', iconClass: 'icon icon-check', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
-    { route: 'setup/targeting', iconClass: 'icon icon-check', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
+    { route: 'pitch', iconClass: 'icon icon-check', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
+    { route: 'targeting', iconClass: 'icon icon-check', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
   ];
 
   private _showCardModal = false;
@@ -145,7 +144,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   public navigateTo(event: Event, route: string) {
     event.preventDefault();
-    this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
+    this._router.navigate([`/user/projects/${this._innovation._id}/setup/${route}`]);
   }
 
   /***

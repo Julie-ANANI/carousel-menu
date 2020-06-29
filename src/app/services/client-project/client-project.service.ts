@@ -17,15 +17,14 @@ export class ClientProjectService {
 
   constructor(private _http: HttpClient) { }
 
-  public create(clientObj: ClientProject, missionObj: Mission, innovationObj: { name: string, lang: string, domain: string }): Observable<CreateResponse> {
-
-    const data = {
+  public create(clientObj: ClientProject, missionObj: Mission, innovationObj: { name: string, lang: string, domain: string }):
+    Observable<CreateResponse> {
+    const _data = {
       clientProjectObj: clientObj,
       missionObj: missionObj,
       innovationObj: innovationObj
     };
-
-    return this._http.post<CreateResponse>('/clientProject/create', data);
+    return this._http.post<CreateResponse>('/clientProject/create', _data);
   }
 
   public get(clientProjectId: string, config?: Config): Observable<ClientProject> {

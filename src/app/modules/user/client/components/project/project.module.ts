@@ -33,6 +33,7 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { BannerModule } from '../../../../utility/banner/banner.module';
 import { SidebarProjectPitchModule } from '../../../../sidebars/components/sidebar-project-pitch/sidebar-project-pitch.module';
 import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/innovCardTitlePipe.module';
+import { SynthesisComponent } from './components/synthesis/synthesis.component';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/inn
     SettingsComponent,
     DocumentsComponent,
     PitchComponent,
-    TargetingComponent
+    TargetingComponent,
+    SynthesisComponent
   ],
   exports: [
     ProjectComponent

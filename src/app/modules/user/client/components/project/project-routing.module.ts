@@ -4,6 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProjectComponent } from './project.component';
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+import { SetupComponent } from './components/setup/setup.component';
+import { ExplorationComponent } from './components/exploration/exploration.component';
+import { SynthesisComponent } from './components/synthesis/synthesis.component';
 
 import { AuthGuard } from '../../../../../guards/auth-guard.service';
 
@@ -13,20 +18,21 @@ const projectRoutes: Routes = [
     component: ProjectComponent,
     canActivateChild: [AuthGuard],
     children: [
-      { path: 'exploration', pathMatch: 'full' },
-      { path: 'synthesis', pathMatch: 'full' },
-      { path: 'settings', pathMatch: 'full' },
-      { path: 'documents', pathMatch: 'full' },
+      { path: '', redirectTo: 'settings', pathMatch: 'full' },
+      { path: 'settings', component: SettingsComponent, pathMatch: 'full' },
+      { path: 'exploration', component: ExplorationComponent, pathMatch: 'full' },
+      { path: 'synthesis', component: SynthesisComponent, pathMatch: 'full' },
+      { path: 'documents', component: DocumentsComponent, pathMatch: 'full' },
       {
         path: 'setup',
         canActivateChild: [AuthGuard],
+        component: SetupComponent,
         children: [
           { path: '', redirectTo: 'pitch', pathMatch: 'full' },
           { path: 'pitch', component: PitchComponent, pathMatch: 'full' },
           { path: 'targeting', component: TargetingComponent, pathMatch: 'full' },
         ]
-      },
-      { path: '', redirectTo: 'settings', pathMatch: 'full' }
+      }
     ]
   }
 ];

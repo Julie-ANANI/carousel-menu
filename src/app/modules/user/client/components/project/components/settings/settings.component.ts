@@ -27,7 +27,6 @@ interface Section {
 }
 
 @Component({
-  selector: 'app-project-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
@@ -501,16 +500,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _deleteCollaborator(collaborator: User) {
-    this._innovationService.removeCollaborator(this._innovation._id, collaborator).pipe(first()).subscribe((collaborators: Array<User>) => {
-      this._innovation.collaborators = collaborators;
-      this._innovationFrontService.setInnovation(this._innovation);
-      this.closeModal();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-    }, (err: HttpErrorResponse) => {
-      console.error(err);
-      this._isDeleting = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
+    this._innovationService.removeCollaborator(this._innovation._id, collaborator).pipe(first())
+      .subscribe((collaborators: Array<User>) => {
+        this._innovation.collaborators = collaborators;
+        this._innovationFrontService.setInnovation(this._innovation);
+        this.closeModal();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._isDeleting = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
   }
 
   /***
@@ -551,14 +551,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
   }
 
-  public canPerformAction(): boolean {
+  get canPerformAction(): boolean {
     switch (this._activeModalSection.level) {
       case 'COLLABORATOR':
-        return this._collaboratorConsent && (!!this.selectedValue || !this.isSaving);
-      case 'INNOVATION':
-      case 'MISSION':
+        return this._collaboratorConsent && !!this._selectedValue && !this._isSaving;
       default:
-        return !this.selectedValue || this.isSaving;
+        return !!this._selectedValue && !this._isSaving;
     }
   }
 
@@ -623,10 +621,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get datePickerOptions(): IAngularMyDpOptions {
     return this._datePickerOptions;
-  }
-
-  get isSaving(): boolean {
-    return this._isSaving;
   }
 
   get showDeleteModal(): boolean {

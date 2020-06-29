@@ -1,4 +1,4 @@
-<div class="container fluid grid-2xl p-top-50 p-bottom-50" id="documents">
+<div class="container fluid grid-2xl p-top-50 p-bottom-50" id="project-documents">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- status EDITING || SUBMITTED -->
@@ -105,7 +105,7 @@
                   (click)="onClickShare($event)"
                   [disabled]="isGeneratingLink || !isOwner || !ownerConsent"
                   [ngClass]="{ 'is-primary': isGeneratingLink || !isLinkCopied,
-                'is-success is-outlined': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
+                  'is-success is-outlined': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
                   class="button"
                   id="btn-document-share">
                   <ng-container *ngIf="!isLinkCopied; else copied">
