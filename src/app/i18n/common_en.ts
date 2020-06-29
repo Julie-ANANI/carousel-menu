@@ -263,6 +263,7 @@ export const COMMON = {
     'VALIDATING_DEFINITIVELY': 'submitting the project...',
     'COMMENT': 'Comment',
     'SENDING_MESSAGE': 'sending the message...',
+    'SEND_MESSAGE': 'Send message'
   },
 
   'PROJECT': {

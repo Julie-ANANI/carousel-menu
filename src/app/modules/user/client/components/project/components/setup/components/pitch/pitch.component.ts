@@ -54,6 +54,8 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _preset: Preset = <Preset>{};
 
+  private _newMessage = false;
+
   constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -294,6 +296,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onChangeMessage(event: Event) {
+    this._newMessage = ((event.target) as HTMLInputElement).value === this._innovation.questionnaireComment;
+  }
+
   public onSendMessage(event: Event) {
     event.preventDefault();
     if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
@@ -381,6 +387,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get preset(): Preset {
     return this._preset;
+  }
+
+  get newMessage(): boolean {
+    return this._newMessage;
   }
 
   ngOnDestroy(): void {

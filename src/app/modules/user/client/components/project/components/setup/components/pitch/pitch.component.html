@@ -198,6 +198,7 @@
         <div class="form-group m-bottom-15">
           <label>
             <textarea
+              (keypress)="onChangeMessage($event)"
               [(ngModel)]="innovation.questionnaireComment"
               class="form-input is-shadowed"
               id="message"
@@ -209,13 +210,13 @@
         <div class="text-right">
           <button
             (click)="onSendMessage($event)"
-            [disabled]="isSendingMessage"
+            [disabled]="isSendingMessage || !newMessage || !innovation.questionnaireComment"
             class="button is-sm is-community"
             id="btn-send">
             <ng-container *ngIf="isSendingMessage; else defMsgText">
               {{ 'COMMON.BUTTON.SENDING_MESSAGE' | translate }}
             </ng-container>
-            <ng-template #defMsgText>{{ 'COMMON.BUTTON.COMMENT' | translate }}</ng-template>
+            <ng-template #defMsgText>{{ 'COMMON.BUTTON.SEND_MESSAGE' | translate }}</ng-template>
           </button>
         </div>
 
