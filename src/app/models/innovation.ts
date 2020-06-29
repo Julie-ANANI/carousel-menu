@@ -91,7 +91,6 @@ export interface Innovation {
 
   operator?: User;
   previewMode?: boolean;
-  completion?: number;
 
   readonly similar?: Array<{
     matched_inno_id: string,

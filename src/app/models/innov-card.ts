@@ -36,7 +36,6 @@ export class InnovCard extends Model {
   summary?: string;
   problem?: string; // todo remove
   solution?: string; // todo remove
-  completion?: number;
   advantages?: Array<{ text: string }>;
   operatorComment?: InnovCardComment;
   sections?: Array<InnovCardSection>;

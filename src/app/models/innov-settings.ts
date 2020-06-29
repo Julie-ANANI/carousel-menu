@@ -49,6 +49,5 @@ export interface InnovationSettings {
   };
 
   domain?: any; // {en: string, fr: string},
-  completion?: number
 
 }
