@@ -37,18 +37,19 @@
           <!-- card example -->
 
           <!-- preview -->
-          <button
+          <a
+            *ngIf="previewLink"
+            [href]="previewLink"
             [ngClass]="{'m-right-15': isDropdownLang}"
             class="button is-link is-sm m-bottom-15 p-no"
-            id="btn-preview">
-            <a [href]="previewLink" target="_blank">
-              <img
-                src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
-                alt=""
-                class="icon-left">
-              {{ 'COMMON.BUTTON.PREVIEW' | translate }}
-            </a>
-          </button>
+            id="btn-preview"
+            target="_blank">
+            <img
+              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
+              alt=""
+              class="icon-left">
+            {{ 'COMMON.BUTTON.PREVIEW' | translate }}
+          </a>
           <!-- preview -->
 
           <!-- card lang -->
