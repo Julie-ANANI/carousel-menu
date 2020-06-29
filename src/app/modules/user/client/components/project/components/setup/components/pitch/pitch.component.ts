@@ -14,6 +14,7 @@ import {TranslateNotificationsService} from '../../../../../../../../../services
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
 import {Media, Video} from '../../../../../../../../../models/media';
 import {Preset} from '../../../../../../../../../models/preset';
+import {MissionService} from '../../../../../../../../../services/mission/mission.service';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -56,7 +57,12 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _newMessage = false;
 
+  private _mission: Mission = <Mission>{};
+
+  private _authorisation: Array<string> = ['SOCIAL', 'UMI', 'COMMUNITY'];
+
   constructor(private _innovationService: InnovationService,
+              private _missionService: MissionService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
 
@@ -65,6 +71,9 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._innovation = innovation;
       if (this._innovation.preset && !this._preset.sections) {
         this._preset = this._innovation.preset;
+      }
+      if (this._innovation.mission) {
+        this._mission = <Mission>this._innovation.mission;
       }
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
@@ -308,6 +317,29 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
+  /***
+   * when the user toggles the authorisation value.
+   * @param event
+   * @param type
+   */
+  public onChangeAuthorisation(event: Event, type: string) {
+    this._mission.externalDiffusion[type] = ((event.target) as HTMLInputElement).checked;
+    this._updateMission();
+  }
+
+  /***
+   * this updates the mission object external diffusion.
+   * @private
+   */
+  private _updateMission() {
+    this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
+      this._mission = mission;
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+      this._isSaving = false;
+    });
+  }
+
   get activeInnovCard(): InnovCard {
     return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
   }
@@ -391,6 +423,14 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get newMessage(): boolean {
     return this._newMessage;
+  }
+
+  get mission(): Mission {
+    return this._mission;
+  }
+
+  get authorisation(): Array<string> {
+    return this._authorisation;
   }
 
   ngOnDestroy(): void {

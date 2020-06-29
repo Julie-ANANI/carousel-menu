@@ -22,10 +22,7 @@ export const PROJECT_PITCH = {
   'MODAL': {
     'HEADING_SUBMIT': 'Soumission du projet',
     'SUBMIT_TEXT': 'En cliquant sur “Confirmer”, vous donnez votre accord pour communiquer votre questionnaire aux professionnels ' +
-      'ciblés et autorisez UMI à diffuser, anonymement, sur ces réseaux : <br> ' +
-      '<i class="fas fa-check-circle text-success m-top-10"></i> Réseaux sociaux<br>' +
-      '<i class="fas fa-check-circle text-success"></i> Site web<br>' +
-      '<i class="fas fa-check-circle text-success"></i> Espace communauté'
+      'ciblés et autorisez UMI à diffuser, anonymement, sur ces réseaux :'
   },
 
   'POPOVER': {

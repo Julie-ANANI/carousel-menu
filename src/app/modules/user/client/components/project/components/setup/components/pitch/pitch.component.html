@@ -258,11 +258,26 @@
 <app-utility-modal-empty [(showModal)]="showModal">
 
   <!-- body -->
-  <section class="modal-body p-bottom-30">
+  <section class="modal-body">
+
     <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold">
       {{ 'PROJECT_PITCH.MODAL.HEADING_SUBMIT' | translate }}
     </h2>
-    <div [innerHTML]="'PROJECT_PITCH.MODAL.SUBMIT_TEXT' | translate" class="mxw-550 m-right-auto m-left-auto"></div>
+
+    <div *ngIf="mission.externalDiffusion" class="mxw-550 authorise-wrapper form-group">
+      <p>{{ 'PROJECT_PITCH.MODAL.SUBMIT_TEXT' | translate }}</p>
+      <div *ngFor="let diffusion of authorisation">
+        <label class="form-checkbox">
+          <input
+            (change)="onChangeAuthorisation($event, diffusion.toLowerCase())"
+            [checked]="mission.externalDiffusion[diffusion.toLowerCase()]"
+            [id]="diffusion.toLowerCase()"
+            type="checkbox">
+          <i class="form-icon"></i> {{ 'PROJECT_SETTINGS.' + diffusion | translate }}
+        </label>
+      </div>
+    </div>
+
   </section>
   <!-- /body -->
 

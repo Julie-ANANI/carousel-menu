@@ -150,6 +150,23 @@
 
 }
 
+.authorise-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+
+  .form-checkbox {
+    padding-left: 30px;
+    padding-right: 8px;
+
+    .form-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+  }
+
+}
+
 @media screen {
 
   @media (max-width: $size-xl) {
