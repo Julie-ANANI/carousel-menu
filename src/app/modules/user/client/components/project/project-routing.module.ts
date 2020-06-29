@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProjectComponent } from './project.component';
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
-import { SharedProjectSettingsComponent } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.component';
+import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 
 import { AuthGuard } from '../../../../../guards/auth-guard.service';
 
@@ -23,7 +23,7 @@ const projectRoutes: Routes = [
         children: [
           { path: '', redirectTo: 'pitch', pathMatch: 'full' },
           { path: 'pitch', component: PitchComponent, pathMatch: 'full' },
-          { path: 'targeting', component: SharedProjectSettingsComponent, pathMatch: 'full' },
+          { path: 'targeting', component: TargetingComponent, pathMatch: 'full' },
         ]
       },
       { path: '', redirectTo: 'settings', pathMatch: 'full' }

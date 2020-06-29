@@ -7,11 +7,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
-import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { HistoryProjectComponent } from './components/history/history.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
+import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
@@ -65,11 +65,11 @@ import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/inn
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
-    SurveyComponent,
     HistoryProjectComponent,
     SettingsComponent,
     DocumentsComponent,
-    PitchComponent
+    PitchComponent,
+    TargetingComponent
   ],
   exports: [
     ProjectComponent

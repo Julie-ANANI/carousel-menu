@@ -1,5 +1,3 @@
-import { SURVEY } from '../components/survey/i18n/fr';
-
 export const PROJECT_SETUP = {
 
   'TITLE': 'Détails du projet',
@@ -47,8 +45,6 @@ export const SETUP = {
   'OBJECTIVES_TAB': 'Objectifs',
 
   'SURVEY_TAB': 'Questionnaire',
-
-  'SURVEY': SURVEY,
 
   'DELETE_BUTTON': 'Supprimer le projet',
 

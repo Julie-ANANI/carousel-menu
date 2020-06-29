@@ -16,7 +16,6 @@ import {Media, Video} from '../../../../../../../../../models/media';
 import {Preset} from '../../../../../../../../../models/preset';
 
 @Component({
-  selector: 'app-project-pitch',
   templateUrl: './pitch.component.html',
   styleUrls: ['./pitch.component.scss']
 })
