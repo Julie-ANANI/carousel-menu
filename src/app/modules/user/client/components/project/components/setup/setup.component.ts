@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 import { Mission } from '../../../../../../../models/mission';
 import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
+import { environment } from '../../../../../../../../environments/environment';
 
 interface Banner {
   message: string;
@@ -62,6 +63,8 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _quizExample = '';
 
+  private _previewLink = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
               private _innovationService: InnovationService,
@@ -81,6 +84,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
+      this._previewLink = `${environment.quizUrl}/quiz/${innovation._id}/preview`;
       this._initBanner();
       this._initInnovCard();
       this._quizExample = MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
@@ -155,14 +159,6 @@ export class SetupComponent implements OnInit, OnDestroy {
   public onViewExample(event: Event) {
     event.preventDefault();
     window.open(this._quizExample, '_blank');
-  }
-
-  /***
-   * this function is called when the user clicks on the Preview button.
-   * @param event
-   */
-  public onViewPreview(event: Event) {
-    event.preventDefault();
   }
 
   public isComplete(tabName: string) {
@@ -299,6 +295,10 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get quizExample(): string {
     return this._quizExample;
+  }
+
+  get previewLink(): string {
+    return this._previewLink;
   }
 
   ngOnDestroy(): void {
