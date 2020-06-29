@@ -15,7 +15,7 @@ const appRoutes: Routes = [
   { path: 'register', canActivate: [NonAuthGuard], loadChildren: './modules/common/signup/signup.module#SignupModule' },
   { path: 'logout', canActivate: [AuthGuard], loadChildren: './modules/common/logout/logout.module#LogoutModule' },
   { path: 'welcome', loadChildren: './modules/common/welcome/welcome.module#WelcomeModule' },
-  { path: 'discover', loadChildren: './modules/public/public-discover/public-discover.module#PublicDiscoverModule' },
+  { path: 'discover', loadChildren: './modules/public/discover/discover.module#DiscoverModule' },
   { path: 'share', canActivate: [ShareSynthesisGuard], loadChildren: './modules/public/share/share.module#ShareModule' },
   { path: 'wordpress/discover', loadChildren: './modules/wordpress/discover/discover.module#DiscoverModule' },
   { path: 'sample', loadChildren: './modules/public/share/share.module#ShareModule' },

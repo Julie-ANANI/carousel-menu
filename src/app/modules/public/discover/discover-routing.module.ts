@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PublicDiscoverComponent } from './public-discover.component';
-import { PublicDiscoverInnovationsComponent } from './components/public-discover-innovations/public-discover-innovations.component';
-import { PublicDiscoverDescriptionComponent } from './components/public-discover-description/public-discover-description.component';
+import { DiscoverComponent } from './discover.component';
+import { DiscoverInnovationsComponent } from './components/discover-innovations/discover-innovations.component';
+import { DiscoverDescriptionComponent } from './components/discover-description/discover-description.component';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 
 const discoverRoutes: Routes = [
   {
     path: '',
-    component: PublicDiscoverComponent,
+    component: DiscoverComponent,
     children: [
-      { path: '', component: PublicDiscoverInnovationsComponent, pathMatch: 'full' },
+      { path: '', component: DiscoverInnovationsComponent, pathMatch: 'full' },
       {
         path: ':projectId/:lang',
-        component: PublicDiscoverDescriptionComponent,
+        component: DiscoverDescriptionComponent,
         resolve: { innovation: InnovationResolver },
         runGuardsAndResolvers: 'always',
         pathMatch: 'full'
@@ -34,4 +34,4 @@ const discoverRoutes: Routes = [
   ]
 })
 
-export class PublicDiscoverRoutingModule { }
+export class DiscoverRoutingModule { }

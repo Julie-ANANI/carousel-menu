@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { PublicDiscoverRoutingModule } from './public-discover-routing.module';
+import { DiscoverRoutingModule } from './discover-routing.module';
 
-import { PublicDiscoverComponent } from './public-discover.component';
-import { PublicDiscoverDescriptionComponent } from './components/public-discover-description/public-discover-description.component';
-import { PublicDiscoverInnovationsComponent } from './components/public-discover-innovations/public-discover-innovations.component';
-import { FiltersComponent } from './components/public-discover-innovations/components/filters/filters.component';
-import { CardsComponent } from './components/public-discover-innovations/components/cards/cards.component';
+import { DiscoverComponent } from './discover.component';
+import { DiscoverDescriptionComponent } from './components/discover-description/discover-description.component';
+import { DiscoverInnovationsComponent } from './components/discover-innovations/discover-innovations.component';
+import { FiltersComponent } from './components/discover-innovations/components/filters/filters.component';
+import { CardsComponent } from './components/discover-innovations/components/cards/cards.component';
 
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SharedLoaderModule } from '../../shared/components/shared-loader/shared-loader.module';
@@ -23,7 +23,7 @@ import { PaginationTemplate2Module } from '../../utility/paginations/pagination-
 @NgModule({
   imports: [
     CommonModule,
-    PublicDiscoverRoutingModule,
+    DiscoverRoutingModule,
     TranslateModule.forChild(),
     PipeModule,
     SharedLoaderModule,
@@ -37,12 +37,12 @@ import { PaginationTemplate2Module } from '../../utility/paginations/pagination-
     PaginationTemplate2Module
   ],
   declarations: [
-    PublicDiscoverComponent,
-    PublicDiscoverDescriptionComponent,
-    PublicDiscoverInnovationsComponent,
+    DiscoverComponent,
+    DiscoverDescriptionComponent,
+    DiscoverInnovationsComponent,
     FiltersComponent,
     CardsComponent
   ]
 })
 
-export class PublicDiscoverModule {}
+export class DiscoverModule {}

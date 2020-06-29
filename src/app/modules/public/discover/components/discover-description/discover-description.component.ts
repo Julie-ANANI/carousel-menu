@@ -12,15 +12,14 @@ import { first } from 'rxjs/operators';
 import { Media } from '../../../../../models/media';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { Config } from '../../../../../models/config';
 import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
 
 @Component({
-  templateUrl: './public-discover-description.component.html',
-  styleUrls: ['./public-discover-description.component.scss']
+  templateUrl: './discover-description.component.html',
+  styleUrls: ['./discover-description.component.scss']
 })
 
-export class PublicDiscoverDescriptionComponent implements OnInit {
+export class DiscoverDescriptionComponent implements OnInit {
 
   private _relatedInnovationConfig = {
     fields: 'innovationCards tags principalMedia',
@@ -163,8 +162,8 @@ export class PublicDiscoverDescriptionComponent implements OnInit {
     return `/discover/${innovCard.innovation_reference}/${innovCard.lang}`;
   }
 
-  get relatedInnovationConfig(): Config {
-    return this._relatedInnovationConfig;
+  public sectionInfo(field: 'ISSUE' | 'SOLUTION'): string {
+    return <string>InnovationFrontService.cardDynamicSection(this._innovationCard, field).content;
   }
 
   get lang(): string {

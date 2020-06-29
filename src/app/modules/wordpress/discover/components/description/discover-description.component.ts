@@ -167,6 +167,10 @@ export class DiscoverDescriptionComponent implements OnInit {
     }
   }
 
+  public sectionInfo(field: 'ISSUE' | 'SOLUTION'): string {
+    return <string>InnovationFrontService.cardDynamicSection(this._innovationCard, field).content;
+  }
+
   get lang(): string {
     return this._lang;
   }

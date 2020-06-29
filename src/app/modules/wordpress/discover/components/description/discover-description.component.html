@@ -93,20 +93,20 @@
 
 
           <!-- issue -->
-          <section *ngIf="innovationCard.problem" class="p-bottom-20">
+          <section *ngIf="sectionInfo('ISSUE')" class="p-bottom-20">
             <h2 class="d-d-title-secondary" [innerText]="'DISCOVERDESCRIPTION.ISSUE'" translate></h2>
             <div class="d-d-issue-wrapper">
-              <div [innerHTML]="innovationCard.problem"></div>
+              <div [innerHTML]="sectionInfo('ISSUE')"></div>
             </div>
           </section>
           <!-- /issue -->
 
 
           <!-- solution -->
-          <section *ngIf="innovationCard.solution" class="p-bottom-20">
+          <section *ngIf="sectionInfo('SOLUTION')" class="p-bottom-20">
             <h2 class="d-d-title-secondary" [innerText]="'DISCOVERDESCRIPTION.SOLUTION'" translate></h2>
             <div class="d-d-solution-wrapper">
-              <div [innerHTML]="innovationCard.solution"></div>
+              <div [innerHTML]="sectionInfo('SOLUTION')"></div>
             </div>
           </section>
           <!-- /solution -->

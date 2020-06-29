@@ -13,11 +13,11 @@ import { Response } from '../../../../../models/response';
 import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
-  templateUrl: './public-discover-innovations.component.html',
-  styleUrls: ['./public-discover-innovations.component.scss']
+  templateUrl: './discover-innovations.component.html',
+  styleUrls: ['./discover-innovations.component.scss']
 })
 
-export class PublicDiscoverInnovationsComponent implements OnInit {
+export class DiscoverInnovationsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'created principalMedia innovationCards tags status projectStatus',

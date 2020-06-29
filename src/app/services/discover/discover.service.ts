@@ -8,11 +8,13 @@ import { Subject } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class DiscoverService {
 
-  filterRemove: Subject<string> = new Subject<string>();
+  private _filterRemove: Subject<string> = new Subject<string>();
 
-  static highlight: Array<string> = ['civil engineering', 'construction', 'industry', 'manufacturing', 'energy', 'healthcare', 'pharma', 'chemistry', 'transport', 'service', 'environment', 'telecom', 'materials', 'chemicals', 'electronic', 'food', 'medical device', 'agriculture', 'it'];
+  static highlight: Array<string> = ['civil engineering', 'construction', 'industry', 'manufacturing', 'energy', 'healthcare',
+    'pharma', 'chemistry', 'transport', 'service', 'environment', 'telecom', 'materials', 'chemicals', 'electronic', 'food',
+    'medical device', 'agriculture', 'it'];
 
-  constructor(private multiling: MultilingPipe) {}
+  constructor(private _multilingPipe: MultilingPipe) {}
 
   static getAllSectorTags(totalInnovations: Array<Innovation>): Array<Tag> {
     const sectorTags: Array<Tag> = [];
@@ -73,23 +75,23 @@ export class DiscoverService {
     return [];
   }
 
-  setFilterToRemove(value: string) {
-    this.filterRemove.next(value);
-  }
-
-  getFilterToRemove(): Subject<string> {
-    return this.filterRemove;
-  }
-
   public sortTags(tags: Array<Tag>, userLang: string) {
     if (tags.length > 0) {
       return tags.sort((a: Tag, b: Tag) => {
-        const labelA = this.multiling.transform(a.label, userLang).toLowerCase();
-        const labelB =  this.multiling.transform(b.label, userLang).toLowerCase();
+        const labelA = this._multilingPipe.transform(a.label, userLang).toLowerCase();
+        const labelB =  this._multilingPipe.transform(b.label, userLang).toLowerCase();
         return labelA.localeCompare(labelB);
       });
     }
     return [];
+  }
+
+  setFilterToRemove(value: string) {
+    this._filterRemove.next(value);
+  }
+
+  getFilterToRemove(): Subject<string> {
+    return this._filterRemove;
   }
 
 }
