@@ -64,7 +64,7 @@
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- no answers -->
-    <section *ngIf="totalAnswers === 0" class="p-top-50 p-bottom-50 animate-fade is-4">
+    <section *ngIf="totalAnswers === 0" class="p-top-50 p-bottom-50">
       <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
         <div class="text-center">
           <h4 class="text-background">Could not found any answers for this campaign. Try to import some!</h4>
@@ -90,7 +90,7 @@
     <!-- /no answers -->
 
     <!-- answers -->
-    <div *ngIf="totalAnswers > 0" class="p-top-25 p-bottom-30 animate-fade is-4">
+    <div *ngIf="totalAnswers > 0" class="p-top-25 p-bottom-30">
 
       <!-- quiz links / buttons -->
       <section *ngIf="authorizedActions(2) || quizLinks.length" class="flex-between">
@@ -141,7 +141,7 @@
       <!-- /quiz links / buttons -->
 
       <!-- table -->
-      <section class="p-top-25">
+      <section class="p-top-25 animate-fade is-7">
         <app-shared-table
           (editRow)="onEdit($event)"
           (performAction)="onActions($event)"

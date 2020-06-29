@@ -386,6 +386,7 @@ export class AdminProjectManagementComponent implements OnInit {
       this._more = {
         animate_state: 'active',
         title: 'SIDEBAR.TITLE.EDIT_MISSION',
+        type: 'mission',
         size: '726px'
       };
     }

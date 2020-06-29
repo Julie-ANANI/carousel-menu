@@ -866,7 +866,7 @@
                  [tagType]="tagTypes"
                  (newTags)="addTags($event)">
   </app-tags>
-  <app-mission-form [(mission)]="mission"></app-mission-form>
+  <app-mission-form *ngIf="more && more.type && more.type === 'mission'" [(mission)]="mission"></app-mission-form>
 </app-sidebar>
 
 

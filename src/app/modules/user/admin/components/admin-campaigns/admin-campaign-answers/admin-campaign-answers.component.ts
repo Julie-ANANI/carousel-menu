@@ -73,8 +73,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._adminMode = this._authService.adminLevel > 2 || (this._authService.adminLevel > 0 && this._authService.isOperator);
 
     if (this._campaign._id) {
+      this._reinitializeVariables();
       this._getAnswers();
       this._initQuestions();
+
       if (this._campaign.innovation && this._campaign.innovation.quizId) {
         this._quizLinks = ['fr', 'en'].map((lang) => {
           return QuizService.getQuizUrl(this._campaign, lang);
@@ -96,7 +98,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this._reinitializeVariables();
       this._campaignService.getAnswers(this._campaign._id).pipe(first()).subscribe((response: Response) => {
         this._answers = response.answers && response.answers.localAnswers;
         this._totalAnswers = this._answers.length;
@@ -122,6 +123,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     if (!this._isImportingAnswers) {
       this._isImportingAnswers = true;
       this._answerService.importAsCsv(this._campaign._id, file).pipe(first()).subscribe(() => {
+        this._reinitializeVariables();
         this._getAnswers();
         this._translateNotificationsService.success('Success', 'The answers has been imported successfully.');
         this._isImportingAnswers = false;
