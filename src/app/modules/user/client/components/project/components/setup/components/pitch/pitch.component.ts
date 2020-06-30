@@ -253,7 +253,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   private _resetVariables() {
-    if (this._isSubmitting && this._innovation.status === 'SUBMITTED') {
+    if (this._isSubmitting && this._innovation.status === 'SUBMITTED' && this._showModal) {
       this.onCloseModal();
     }
     this._isSaving = false;
@@ -336,7 +336,6 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._mission = mission;
     }, (err: HttpErrorResponse) => {
       console.error(err);
-      this._isSaving = false;
     });
   }
 

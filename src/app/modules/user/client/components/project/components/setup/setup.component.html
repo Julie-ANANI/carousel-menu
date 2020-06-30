@@ -127,7 +127,6 @@
             [ngClass]="tab.tracking"
             [routerLink]="tab.route"
             routerLinkActive="active">
-            <i *ngIf="isComplete(tab.name)" [ngClass]="tab.iconClass"></i>
             {{ 'PROJECT_SETUP.TAB.' + tab.name | translate }}
           </a>
         </li>

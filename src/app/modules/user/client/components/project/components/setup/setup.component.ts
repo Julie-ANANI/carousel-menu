@@ -20,7 +20,6 @@ interface Banner {
 
 interface Tab {
   route: string;
-  iconClass: string;
   name: string;
   tracking: string;
 }
@@ -51,8 +50,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   private _activeInnovCard: InnovCard = <InnovCard>{};
 
   private _tabs: Array<Tab> = [
-    { route: 'pitch', iconClass: 'icon icon-check', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
-    { route: 'targeting', iconClass: 'icon icon-check', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
+    { route: 'pitch', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
+    { route: 'targeting', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
   ];
 
   private _showCardModal = false;
@@ -159,21 +158,6 @@ export class SetupComponent implements OnInit, OnDestroy {
   public onViewExample(event: Event) {
     event.preventDefault();
     window.open(this._quizExample, '_blank');
-  }
-
-  public isComplete(tabName: string) {
-    if (tabName === 'PITCH' && this._innovation.innovationCards && this._innovation.innovationCards.length) {
-      let total = 0;
-      this._innovation.innovationCards.forEach((innovationCard: InnovCard) => {
-        total += innovationCard.completion;
-      });
-      return (total / this._innovation.innovationCards.length) === 100;
-    } else if (tabName === 'TARGETING' && this._innovation.settings && this._innovation.settings.completion) {
-      return this._innovation.settings.completion === 100;
-    } else if (tabName === 'QUESTIONNAIRE' && this._innovation.quizId) {
-      return this._innovation.quizId !== '';
-    }
-    return false;
   }
 
   public onAddCard(event: Event) {
