@@ -256,6 +256,9 @@ export class PitchComponent implements OnInit, OnDestroy {
     if (this._isSubmitting && this._innovation.status === 'SUBMITTED' && this._showModal) {
       this.onCloseModal();
     }
+    if (this._isSendingMessage) {
+      this._newMessage = false;
+    }
     this._isSaving = false;
     this._isRequesting = false;
     this._isSubmitting = false;

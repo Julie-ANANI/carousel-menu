@@ -26,11 +26,7 @@ export const PROJECT_PITCH = {
   },
 
   'POPOVER': {
-    'REQUEST_PROOFREADING': 'Une demande de relecture sera envoyée à votre Market Test Manager.',
-    'COMPLETION': {
-      'PITCH': 'Description en ',
-      'TARGETING': 'Ciblage'
-    }
+    'REQUEST_PROOFREADING': 'Une demande de relecture sera envoyée à votre Market Test Manager.'
   }
 
 };

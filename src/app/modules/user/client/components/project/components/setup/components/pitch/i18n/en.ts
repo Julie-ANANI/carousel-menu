@@ -26,11 +26,7 @@ export const PROJECT_PITCH = {
   },
 
   'POPOVER': {
-    'REQUEST_PROOFREADING': 'It will send the proofreading request to your Market Test Manager.',
-    'COMPLETION': {
-      'PITCH': 'Pitch in ',
-      'TARGETING': 'Targeting'
-    }
+    'REQUEST_PROOFREADING': 'It will send the proofreading request to your Market Test Manager.'
   },
 
 };

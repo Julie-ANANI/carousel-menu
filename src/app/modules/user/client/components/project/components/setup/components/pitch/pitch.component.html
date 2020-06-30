@@ -43,42 +43,18 @@
         <!-- /proofreading -->
 
         <!-- validate -->
-        <div>
-
-          <button
-            (click)="onOpenModal($event)"
-            [disabled]="isRequesting || isSaving || isSubmitting"
-            [ngStyle]="{ 'min-height': '46px', 'min-width': '226px' }"
-            class="button is-community is-sm m-bottom-15"
-            id="btn-submit">
-            {{ 'COMMON.BUTTON.VALIDATE_DEFINITIVELY' | translate }}
-            <img
-              alt=" "
-              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-validate-white.svg"
-              class="icon-right">
-          </button>
-
-          <!-- commented for the moment -->
-          <!--<div *ngIf="innovation.completion !== 100" class="popover-container is-sm">
-            <div class="card p-left-15 p-right-15">
-              <p class="m-bottom-10 text-background text-center text-bold">
-                Completion: {{ innovation.completion }}%
-              </p>
-              <div *ngFor="let card of innovation.innovationCards" class="flex-between m-bottom-1">
-                <span>
-                  {{ 'PROJECT_PITCH.POPOVER.COMPLETION.PITCH' | translate }}
-                  {{ 'COMMON.LANG.' + card.lang | uppercase | translate }}
-                </span>
-                <span class="text-notify">{{ card.completion }}%</span>
-              </div>
-              <div class="flex-between">
-                <span>{{ 'PROJECT_PITCH.POPOVER.COMPLETION.TARGETING' | translate }}</span>
-                <span class="text-notify">{{ innovation.settings && innovation.settings.completion }}%</span>
-              </div>
-            </div>
-          </div>-->
-
-        </div>
+        <button
+          (click)="onOpenModal($event)"
+          [disabled]="isRequesting || isSaving || isSubmitting"
+          [ngStyle]="{ 'min-height': '46px', 'min-width': '226px' }"
+          class="button is-community is-sm m-bottom-15"
+          id="btn-submit">
+          {{ 'COMMON.BUTTON.VALIDATE_DEFINITIVELY' | translate }}
+          <img
+            alt=" "
+            src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-validate-white.svg"
+            class="icon-right">
+        </button>
         <!-- /validate -->
 
       </section>
@@ -195,7 +171,7 @@
           SECTION {{ section.label[activeInnovCard.lang] | uppercase }}
         </p>
 
-        <div *ngFor="let question of section.questions" class="m-top-10">
+        <div *ngFor="let question of section.questions" [ngStyle]="{'margin-top': '18px'}">
           <div (click)="question.toggle = !question.toggle" class="d-flex align-center c-hand">
             <div class="icon-container is-overlay m-right-1 is-sm">
               <i [ngClass]="question.toggle ? 'icon-arrow-down' : 'icon-arrow-up'" class="icon"></i>
