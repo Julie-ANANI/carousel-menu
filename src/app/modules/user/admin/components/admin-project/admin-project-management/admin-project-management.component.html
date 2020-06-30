@@ -118,15 +118,25 @@
           </li>
         </ul>
         <div *ngIf="edit.missionTeam">
-          <label class="form-checkbox" *ngFor="let operator of operators">
-            <input
-              type="checkbox"
-              [name]="operator.id"
-              (change)="updateMissionTeam(operator)"
-              [id]="operator.id"
-              [checked]="missionTeam.indexOf(operator['_id']) > -1">
-            <i class="form-icon"></i> {{ operator.firstName }} {{ operator.lastName }}
-          </label>
+          <div class="dropdown is-right">
+            <a class="button dropdown-toggle is-draft is-link" tabindex="0">
+              {{ 'PROJECT.MISSION_TEAM' | translate }}
+              <i class="fas fa-caret-down"> </i>
+            </a>
+            <ul class="menu" style="max-height: 300px">
+                <li class="menu-item" *ngFor="let operator of operators">
+                  <label class="form-checkbox">
+                    <input
+                      type="checkbox"
+                      [name]="operator.id"
+                      (change)="updateMissionTeam(operator)"
+                      [id]="operator.id"
+                      [checked]="missionTeam.indexOf(operator['_id']) > -1">
+                    <i class="form-icon"></i> {{ operator.firstName }} {{ operator.lastName }}
+                  </label>
+                </li>
+              </ul>
+          </div>
         </div>
 
 
