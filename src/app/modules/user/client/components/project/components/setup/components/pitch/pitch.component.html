@@ -178,7 +178,8 @@
             </div>
             <span *ngIf="question.label[activeInnovCard.lang]">{{ question.label[activeInnovCard.lang] }}</span>
           </div>
-          <div *ngIf="!question.toggle" class="m-left-30 d-flex flex-wrap">
+          <div *ngIf="!question.toggle && (question.controlType === 'checkbox' || question.controlType === 'radio')"
+               class="m-left-30 d-flex flex-wrap">
             <div *ngFor="let option of question.options" class="label">
               {{ option.label[activeInnovCard.lang] }}
             </div>
