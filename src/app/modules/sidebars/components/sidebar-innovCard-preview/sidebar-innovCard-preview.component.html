@@ -2,7 +2,7 @@
 
   <!-- nothing to show -->
   <section *ngIf="!sectionInfo('ISSUE') && !sectionInfo('SOLUTION') && !innovCard.summary && !innovCard.title
-    && innovCard.advantages.length === 0" class="p-top-50">
+    && innovCard.advantages && innovCard.advantages.length === 0" class="p-top-50">
     <message-template-1 [widthMax]="'321px'">
       {{ 'SIDEBAR.INNOV_CARD_PREVIEW.BOT_MESSAGE' | translate }}
     </message-template-1>
@@ -11,7 +11,7 @@
 
   <!-- innovation card -->
   <div *ngIf="sectionInfo('SOLUTION') || sectionInfo('ISSUE') || innovCard.summary || innovCard.title
-    || innovCard.advantages.length !== 0">
+    || (innovCard.advantages && innovCard.advantages.length !== 0)">
 
     <!-- title -->
     <h1 class="title m-no-top m-bottom-10">{{ innovCard.title }}</h1>
