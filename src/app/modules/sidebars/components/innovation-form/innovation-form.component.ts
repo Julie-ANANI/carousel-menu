@@ -5,7 +5,6 @@ import {InnovationSettings} from '../../../../models/innov-settings';
 import {TemplatesService} from '../../../../services/templates/templates.service';
 import {EmailSignature} from '../../../../models/email-signature';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {FrontendService} from '../../../../services/frontend/frontend.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import {takeUntil} from 'rxjs/operators';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
@@ -65,8 +64,7 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
   constructor(private _templatesService: TemplatesService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService,
-              private _innovationFrontService: InnovationFrontService,
-              private frontendService: FrontendService) {
+              private _innovationFrontService: InnovationFrontService) {
 
     this._innovationFrontService.getSelectedInnovationIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response: number) => {
 
@@ -181,7 +179,6 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this._isChange = false;
     if (this.type === 'pitch' || this.type === 'targeting') {
-      this.calculatePercentage();
       if (this._saveCardComment) {
         this._saveComment();
       }
@@ -222,21 +219,6 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
     } else {
       this._isChange = true;
       this._project.status = event;
-    }
-  }
-
-  calculatePercentage() {
-    this.frontendService.completionCalculation(this.project);
-
-    const percentages = this.frontendService.calculatedPercentages;
-
-    if (percentages) {
-      this.project.settings.completion = percentages.settingPercentage;
-      this.project.completion = percentages.totalPercentage;
-      percentages.innovationCardsPercentage.forEach((item: any) => {
-        const index = this.project.innovationCards.findIndex(card => card.lang === item.lang);
-        this.project.innovationCards[index].completion = item.percentage;
-      });
     }
   }
 

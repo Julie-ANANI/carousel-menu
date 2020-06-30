@@ -19,10 +19,8 @@ export interface InnovCardComment {
   innovationCardId?: string;
   owner?: User;
   title?: CardComment;
-  problem?: CardComment; //TODO remove
-  summary?: CardComment; //TODO remove
+  summary?: CardComment;
   sections?: Array<CardComment>;
-  solution?: CardComment;
   advantages?: CardComment;
 }
 
@@ -34,8 +32,6 @@ export class InnovCard extends Model {
   media?: Array<Media>;
   principalMedia?: Media;
   summary?: string;
-  problem?: string; // todo remove
-  solution?: string; // todo remove
   advantages?: Array<{ text: string }>;
   operatorComment?: InnovCardComment;
   sections?: Array<InnovCardSection>;

@@ -129,7 +129,7 @@ export class InnovationFrontService {
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].problem) {
+      /*if (value.innovationCards[i].problem) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
@@ -137,7 +137,7 @@ export class InnovationFrontService {
       if (value.innovationCards[i].solution) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
-      }
+      }*/
 
       if (value.innovationCards[i].advantages) {
         this.totalFieldsPresent++;

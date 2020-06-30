@@ -48,6 +48,10 @@ export class SidebarInnovCardPreviewComponent {
     return InnovationFrontService.imageSrc(media, '180', '119');
   }
 
+  public sectionInfo(field: 'ISSUE' | 'SOLUTION'): string {
+    return <string>InnovationFrontService.cardDynamicSection(this.innovCard, field).content;
+  }
+
   get domSanitizer() {
     return this._domSanitizer1;
   }
