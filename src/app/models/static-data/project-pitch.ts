@@ -284,7 +284,7 @@ class ProjectPitch {
         return `https://quiz.umi.us/quiz/5e7a56bd80ea600015b4e3da/5e7a475633698d6dcf10ab6e?lang=${lang}`;
 
       case 'Validating market needs':
-        return `https://quiz.umi.us/quiz/5ee746ec12eb250014627407/5e84a6b10b6ee50ed40be4c9?lang=${lang}`;
+        return `https://quiz.umi.us/quiz/5efb41935a7c64002186695d/5efb4143c635012865583efd`;
 
       case 'Sourcing innovative solutions / partners':
         return 'https://quiz.umi.us/quiz/5e3292a580ea600015b49c04/5e1f6489733e215e4f5a5635';
@@ -294,7 +294,7 @@ class ProjectPitch {
 
       case 'Discovering new applications / markets':
       case 'Targeting the most receptive application / market':
-        return `https://quiz.umi.us/quiz/5dde944580ea600015b4714b/5da49e135bc26796fba961a9?lang=${lang}`;
+        return `https://quiz.umi.us/quiz/5eea141daf43c4001afcfa4e/5da49e135bc26796fba961a9?lang=${lang}`;
 
       case 'Optimizing my value proposition':
         return `https://quiz.umi.us/quiz/5c9e33c6e0ce7d001cde8a98/5c92425a01ea6d73469107ce?lang=${lang}`;
@@ -581,72 +581,21 @@ class ProjectPitch {
         }
 
       case 'Validating market needs':
-        if (lang === 'fr') {
-          return {
-            title: 'Solution d\'évaluation de la qualité de soudage de pièces plastiques par simulation',
-            summary: 'Il s\'agit d\'un dispositif breveté qui permet d’évaluer la qualité de soudure entre deux pièces plastiques, ' +
-              'en simulant l’opération réelle en amont de la réalisation de cette dernière.',
-            issue: 'Les réseaux de distribution de fluides (eau, gaz, fluides industriels) sont majoritairement constitués ' +
-              'de tube plastiques. ' +
-              'Que ce soit pour déployer, étendre ou encore maintenir ces réseaux, les exploitants sont amenés à réaliser ' +
-              'des opérations ' +
-              'de soudage de pièces plastiques.<br>' +
-              'Malgré la maturité des techniques de soudage de tubes plastiques - electrofusion et soudage bout à bout pour les plus ' +
-              'communes - on constate des défaillances qui peuvent parfois ne pas se révéler lors des contrôles qualité par ' +
-              'échantillonnage ' +
-              'en fabrication des tubes ou des accessoires electrosoudables. Elles peuvent se traduire à terme par des ' +
-              'fuites remettant en ' +
-              'cause la sécurité du réseau et ayant des répercussions financières. <br>' +
-              'Des méthodes de contrôles telles que l\'inspection visuelle, les essais de résistance en pression ou de ' +
-              'détection de fuite ' +
-              'sont utilisées sur chantier et à l\'occasion d\'audits, mais ces dernières interviennent systématiquement ' +
-              'a posteriori ' +
-              'de l\'opération de soudage.<br>' +
-              'Il existe aujourd\'hui des méthodes complémentaires basées sur la mesure de champs de températures qui ' +
-              'permettent de s\'assurer ' +
-              'du bon fonctionnement d\'une opération de soudage : <br>' +
-              '- Les mesures par caméras thermiques permettent de réaliser des mesures trop globales (accès à l\'interface difficile ' +
-              'du fait des interférences) et générant des volumes d\'informations difficiles à traiter et à interpréter.<br>' +
-              '- Les mesures par intégration de capteurs thermiques sur ou au sein des pièces à tester permettent d\'accéder à ' +
-              'l\'interface de ces pièces. L’intégration de capteurs thermiques au sein même des pièces peut se révéler difficile du ' +
-              'fait des techniques d\'intégration. L\'utilisation de film à micro-capteurs déposé en surface des pièces est ' +
-              'une solution ' +
-              'chère présentant un risque de pollution de la mesure, et est non-réutilisable. De plus ces films ne sont ' +
-              'pas adaptés à la ' +
-              'gamme des températures rencontrées durant le soudage par fusion de polymères thermoplastiques.'
-          }
-        } else {
-          return {
-            title: 'Solution for evaluating the welding quality of plastic parts by simulation',
-            summary: 'It is a patented device to evaluate the weld quality between two plastic parts by simulating ' +
-              'the real weld operation ' +
-              'before actually doing it.',
-            issue: 'Fluid distribution networks (water, gas, industrial fluids) are mainly made up of plastic pipes. ' +
-              'Whether to deploy, ' +
-              'extend, branch out or maintain these networks, operators have to carry out welding operations on plastic parts.<br>' +
-              'Despite the maturity of plastic pipe welding techniques - the most common being electrofusion and butt ' +
-              'welding - they are ' +
-              'failures that may not be revealed during the quality control sampling in the manufacture of electrofusion ' +
-              'tubes or fittings. ' +
-              'These failures may eventually result in leaks that compromise the safety of the system and have financial ' +
-              'repercussions. <br>' +
-              'Control methods such as visual inspection, pressure resistance or leak detection tests are used on site and ' +
-              'during audits, ' +
-              'but these are systematically carried out after the welding operation.<br>' +
-              'There are nowadays complementary methods based on the measurement of temperature fields which allow to ensure ' +
-              'the correct ' +
-              'functioning of a welding operation: <br>' +
-              '- Measurements by thermal cameras make it possible to carry out measurements that are too global (difficult access to ' +
-              'the interface due to interference) and generate volumes of information that are difficult to process ' +
-              'and interpret.<br>' +
-              '- Measurements by integration of thermal sensors on or within the test parts allow access to the ' +
-              'interface of these parts. ' +
-              'The integration of thermal sensors within the parts themselves can be difficult due to integration techniques. The use ' +
-              'of micro-sensor film deposited on the surface of the parts is an expensive solution with a risk of pollution of the ' +
-              'measurement, and is non-reusable. Moreover, these films are not adapted to the range of temperatures ' +
-              'encountered during fusion ' +
-              'welding of thermoplastic polymers.'
-          }
+        return {
+          title: 'New molecules for drug production',
+          summary: 'We have designed a robust and efficient process to provide cubane derivatives at kilogram scale ' +
+            'for cubane-based drug production under cGMP. We would like to better understand the reason behind their ' +
+            'disuse in the pharmaceutical industry thus far, if they could be of interest at an industrial scale and ' +
+            'if not, why.',
+          issue: 'Cubanes are molecules in the shape of a cube. They have been discovered in the 1960s, and have become ' +
+            'a popular template in drug design and medicinal chemistry in the 2000s. <br>' +
+            'Currently, they are quite expensive, and there are no suppliers capable of larger scale availability ' +
+            '(several kg). <br>' +
+            'This would make the initial development of a cubane-based drug rather tedious, with the obligation to ' +
+            'synthesize this moiety or have it made by a third-party contract research organization. Hence, their ' +
+            'availability is not immediate and/or of a lower quality compared to an experienced supplier. <br>' +
+            'If this initial step was successful, the supply of kilogram quantities of cubane derivatives, ' +
+            'in cGMP conditions, is not possible.'
         }
 
       case 'Sourcing innovative solutions / partners':
