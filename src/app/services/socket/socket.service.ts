@@ -9,9 +9,9 @@ export class SocketService {
 
   constructor(public socket: Socket) { }
 
-  getProjectUpdates() {
+  getProjectUpdates(projectId: string) {
     return this.socket
-      .fromEvent<any>('projectUpdate');
+      .fromEvent<any>(`projectUpdate_${projectId}`);
   }
 
   sendMessage(eventName: string, message: string) {

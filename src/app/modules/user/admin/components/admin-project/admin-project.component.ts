@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
+import {SocketService} from '../../../../../services/socket/socket.service';
 
 @Component({
   selector: 'app-admin-project',
@@ -18,6 +19,8 @@ import { first } from 'rxjs/operators';
 export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
+
+  private _newChanges = false;
 
   private _fetchingError: boolean;
 
@@ -45,7 +48,8 @@ export class AdminProjectComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
               private _authService: AuthService,
-              private _frontendService: FrontendService) {
+              private _frontendService: FrontendService,
+              private _socketService: SocketService) {
 
     this._setPageTitle('COMMON.PAGE_TITLE.PROJECT');
 
@@ -58,10 +62,20 @@ export class AdminProjectComponent implements OnInit {
       this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._translateService.currentLang, 'TITLE');
       this._setPageTitle(this.title );
       this._metadata();
+
+      this._socketService
+        .getProjectUpdates(this._project._id)
+        .subscribe((project: Innovation) => {
+          this._newChanges = true;
+        });
     } else {
       this._fetchingError = true;
     }
 
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   private _setPageTitle(value: string) {
@@ -177,6 +191,10 @@ export class AdminProjectComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get newChanges(): boolean {
+    return this._newChanges;
   }
 
   get innovationTitle(): string {

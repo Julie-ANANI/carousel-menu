@@ -107,5 +107,6 @@ export const PROJECT = {
     'UPDATE': 'Update the stats',
     'UPDATED': 'Stats were updated on',
   },
-  'ROADMAP': 'Roadmap'
+  'ROADMAP': 'Roadmap',
+  'NEW_CHANGES': 'This project has been updated by someone else'
 };
