@@ -101,14 +101,14 @@
 
 
     <!-- banner project message  -->
-      <app-utility-banner [showBanner]="newChanges" [position]="'relative'">
-        {{ 'PROJECT.NEW_CHANGES' | translate }} - <a (click)="refresh()">{{ 'COMMON.UPDATE' | translate }}</a>
+      <app-utility-banner [showBanner]="!!updatedProject" [position]="'relative'">
+        {{ 'PROJECT.NEW_CHANGES' | translate }} - <a (click)="updateProject()">{{ 'COMMON.UPDATE' | translate }}</a>
       </app-utility-banner>
     <!-- banner project message  -->
 
     <!-- different pages -->
     <div>
-      <router-outlet></router-outlet>
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
     <!-- /different pages -->
 

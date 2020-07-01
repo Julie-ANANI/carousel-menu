@@ -68,6 +68,9 @@ export class AdminProjectCampaignsComponent implements OnInit {
     }
   }
 
+  _updateProject(innovation: Innovation) {
+    this._innovation = innovation;
+  }
 
   getAuthorizationLevel(level: number): boolean {
     const adminLevel = this.authService.adminLevel;

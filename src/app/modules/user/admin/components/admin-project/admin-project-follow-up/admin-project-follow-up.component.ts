@@ -20,6 +20,10 @@ export class AdminProjectFollowUpComponent implements OnInit {
     }
   }
 
+  _updateProject(innovation: Innovation) {
+    this._innovation = innovation;
+  }
+
   get innovation(): Innovation {
     return this._innovation;
   }

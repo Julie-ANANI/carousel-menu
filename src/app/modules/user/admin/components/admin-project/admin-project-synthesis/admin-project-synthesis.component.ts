@@ -23,6 +23,10 @@ export class AdminProjectSynthesisComponent implements OnInit {
   public adminMode(): boolean {
     return this._authService.adminLevel > 2;
   }
-  
+
+  _updateProject(innovation: Innovation) {
+    this._project = innovation;
+  }
+
   get project() { return this._project; }
 }

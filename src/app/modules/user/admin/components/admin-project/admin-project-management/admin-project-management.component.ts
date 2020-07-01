@@ -126,33 +126,13 @@ export class AdminProjectManagementComponent implements OnInit {
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
 
-    if (this._project.clientProject) {
-      this._clientProject = <ClientProject>this._project.clientProject;
-    }
-
-    if (this._project.mission) {
-      this._mission = <Mission>this._project.mission;
-      this.missionTeam = this._mission.team.map((user: User) => user.id);
-    }
-
-    this.projectDomains = [{name: 'umi'},
-            {name: 'dynergie'},
-            {name: 'novanexia'},
-            {name: 'inomer'},
-            {name: 'multivalente'},
-            {name: 'salveo'},
-            {name: 'schneider'},
-            {name: 'bnpparibas'}];
-
-    this._domain = this._project && this._project.settings && this._project.settings.domain ? this._project.settings.domain : '';
+    this._updateProject(this._project);
 
     this._dashboardService.getOperators().subscribe((operators: any) => this.operators = operators.result);
 
     this.operatorId = this._project && this._project.operator
       ? (this._project.operator.id ? this._project.operator.id : this._project.operator.toString())
       : undefined;
-
-    this._project.innovationCards.forEach(value => this.innovCards.push(new InnovCard(value)));
 
     this.isInnovationSidebar = false;
 
@@ -172,6 +152,34 @@ export class AdminProjectManagementComponent implements OnInit {
         },
         (error: any) => this._notificationsService.error('ERROR', error.message)
       );
+  }
+
+
+
+  _updateProject(innovation: Innovation) {
+    this._project = innovation;
+    if (this._project.clientProject) {
+      this._clientProject = <ClientProject>this._project.clientProject;
+    }
+
+    if (this._project.mission) {
+      this._mission = <Mission>this._project.mission;
+      this.missionTeam = this._mission.team.map((user: User) => user.id);
+    }
+
+    this.projectDomains = [{name: 'umi'},
+      {name: 'dynergie'},
+      {name: 'novanexia'},
+      {name: 'inomer'},
+      {name: 'multivalente'},
+      {name: 'salveo'},
+      {name: 'schneider'},
+      {name: 'bnpparibas'}];
+
+    this._domain = this._project && this._project.settings && this._project.settings.domain ? this._project.settings.domain : '';
+
+    this.innovCards = [];
+    this._project.innovationCards.forEach(value => this.innovCards.push(new InnovCard(value)));
   }
 
   /***

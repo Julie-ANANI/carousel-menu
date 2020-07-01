@@ -37,6 +37,10 @@ export class AdminProjectQuestionnaireComponent {
 
   }
 
+  _updateProject(innovation: Innovation) {
+    this._innovation = innovation;
+  }
+
   private _setQuizLink() {
     if (this._innovation && this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
       this._quizLink = `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` || '';

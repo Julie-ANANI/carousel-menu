@@ -20,7 +20,9 @@ export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
 
-  private _newChanges = false;
+  private _updatedProject: Innovation | null = null;
+
+  private _childComponents = new Set();
 
   private _fetchingError: boolean;
 
@@ -66,7 +68,7 @@ export class AdminProjectComponent implements OnInit {
       this._socketService
         .getProjectUpdates(this._project._id)
         .subscribe((project: Innovation) => {
-          this._newChanges = true;
+          this._updatedProject = project;
         });
     } else {
       this._fetchingError = true;
@@ -76,6 +78,20 @@ export class AdminProjectComponent implements OnInit {
 
   refresh(): void {
     window.location.reload();
+  }
+
+  updateProject() {
+    this._project = this._updatedProject;
+    this._childComponents.forEach(childComponent => {
+      if (childComponent._updateProject) {
+        childComponent._updateProject(this._project);
+      }
+    });
+    this._updatedProject = null;
+  }
+
+  onActivate(childComponent: any) {
+    this._childComponents.add(childComponent);
   }
 
   private _setPageTitle(value: string) {
@@ -193,8 +209,8 @@ export class AdminProjectComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get newChanges(): boolean {
-    return this._newChanges;
+  get updatedProject(): Innovation | null {
+    return this._updatedProject;
   }
 
   get innovationTitle(): string {
