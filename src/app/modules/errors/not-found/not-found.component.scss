@@ -1,0 +1,33 @@
+@import "../../../../style/framework/src/variables";
+
+#not-found {
+
+  .error-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    .navbar {
+      border: none;
+    }
+
+    .content-wrapper {
+      text-align: center;
+      flex: 1 0 auto;
+      width: 100%;
+
+      img {
+        height: 247.4px;
+        margin-bottom: 30px;
+      }
+
+      p {
+        opacity: 0.5;
+      }
+
+    }
+
+  }
+
+}
+
