@@ -59,7 +59,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   public toggleState(event: Event, target: any) {
     if ((event.target as HTMLElement).id === 'close') {
-      this._template.animate_state = 'inactive';
       this._emitChanges();
       setTimeout(() => {
         target.scrollIntoView();
@@ -68,7 +67,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   private _emitChanges() {
-    this.templateChange.emit(this._template);
+    this.templateChange.emit({
+      type: this._template.type,
+      title: this._template.title,
+      animate_state: 'inactive',
+      size: this._template.size
+    });
     this.closeSidebar.emit({
       animate_state: this._template.animate_state,
       title: this._template.title,
