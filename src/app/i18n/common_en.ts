@@ -107,7 +107,8 @@ export const COMMON = {
     'USERS': 'Users',
     'COMMUNITY_PROJECTS': 'Projects | Community',
     'ANSWER_TAGS': 'Answer tags | Project',
-    'NEW_PROJECT': 'Add project'
+    'NEW_PROJECT': 'Add project',
+    'NOT_FOUND': 'Page not found'
   },
 
   'LABEL': {
@@ -263,7 +264,8 @@ export const COMMON = {
     'VALIDATING_DEFINITIVELY': 'submitting the project...',
     'COMMENT': 'Comment',
     'SENDING_MESSAGE': 'sending the message...',
-    'SEND_MESSAGE': 'Send message'
+    'SEND_MESSAGE': 'Send message',
+    'RETURN_HOMEPAGE': 'Return to the homepage'
   },
 
   'PROJECT': {

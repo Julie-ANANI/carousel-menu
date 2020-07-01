@@ -120,8 +120,8 @@
             <!-- /principal media -->
 
             <!-- secondary medias -->
-            <ng-container *ngIf="section.content && section.content.length > 0">
-              <ng-container *ngFor="let media of section.content">
+            <ng-container *ngIf="activeInnovCard.media && activeInnovCard.media.length > 0">
+              <ng-container *ngFor="let media of activeInnovCard.media">
                 <div
                   *ngIf="mediaSrc(media) &&
                   media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
@@ -291,8 +291,9 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
-    [cardContent]="cardContent"
+    (tobeSavedChanges)="onChangesToBeSaved($event)"
     [(isSaving)]="isSaving"
+    [cardContent]="cardContent"
     [comment]="operatorComment"
     [imagePostUri]="imagePostUri"
     [isEditable]="isEditable"

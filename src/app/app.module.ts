@@ -16,7 +16,7 @@ const config: SocketIoConfig = { url: environment.apiUrl.replace('/api', ''), op
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NotFoundModule } from './modules/common/not-found/not-found.module';
+import { NotFoundModule } from './modules/errors/not-found/not-found.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SpinnerLoaderModule } from './modules/utility/spinner-loader/spinner-loader.module';
 

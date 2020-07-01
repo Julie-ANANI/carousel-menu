@@ -49,8 +49,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
-  // public unsavedChanges = false;
-
   private _isSendingMessage = false;
 
   private _preset: Preset = <Preset>{};
@@ -60,6 +58,8 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _mission: Mission = <Mission>{};
 
   private _authorisation: Array<string> = ['SOCIAL', 'UMI', 'COMMUNITY'];
+
+  private _toBeSaved = false;
 
   constructor(private _innovationService: InnovationService,
               private _missionService: MissionService,
@@ -84,15 +84,6 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._initDefaultSections();
     });
   }
-
-  /*canDeactivate(): boolean {
-    if (this.unsavedChanges && this._sidebarValue.animate_state === 'active') {
-      const message = 'Are you sure? Unsaved changes will be lost.';
-      return confirm(message);
-    }
-    return true;
-  }*/
-
 
   private _initDefaultSections() {
     const _defaultSections: Array<InnovCardSection> = [
@@ -145,17 +136,34 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public openSidebar(section: string, content: string | Array<Media>) {
-    this._activeSection = <CardSectionTypes>section;
-    this._cardContent = content;
+    if (!this._toBeSaved) {
+      this._activeSection = <CardSectionTypes>section;
+      this._cardContent = content;
 
-    this._sidebarValue = {
-      animate_state: 'active',
-      type: section,
-      size: '726px',
-      title: 'SIDEBAR.PROJECT_PITCH.' + section
-    };
-
+      this._sidebarValue = {
+        animate_state: 'active',
+        type: section,
+        size: '726px',
+        title: 'SIDEBAR.PROJECT_PITCH.' + section
+      };
+    } else {
+      this._changesToSave();
+    }
   };
+
+  private _changesToSave() {
+    if (this._toBeSaved) {
+      const _msg = this.activeInnovCard.lang === 'fr'
+        ? 'Souhaitez vous vraiment quitter sans savegarder? Tous vos changements seront perdus.'
+        : 'Do you really want to leave without saving? All the changes will be lost.';
+      if (window.confirm(_msg)) {
+        this._toBeSaved = false;
+        this._sidebarValue = {
+          animate_state: 'inactive'
+        };
+      }
+    }
+  }
 
   public mediaSrc(media: Media) {
     return InnovationFrontService.getMedia(media);
@@ -263,14 +271,12 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._isRequesting = false;
     this._isSubmitting = false;
     this._isSendingMessage = false;
-    // this.unsavedChanges = false;
   }
 
   private _uploadVideo(video: Video) {
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
       .pipe(first()).subscribe((video) => {
-        this._innovation.innovationCards[this._activeCardIndex].media.push(video);
-        this._innovationFrontService.setInnovation(this._innovation);
+        this.activeInnovCard.media.push(video);
         this._cardContent = this.activeInnovCard.media;
         this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
@@ -342,6 +348,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onChangesToBeSaved(value: boolean) {
+    this._toBeSaved = value;
+  }
+
   get activeInnovCard(): InnovCard {
     return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
   }
@@ -369,9 +379,13 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   set sidebarValue(value: SidebarInterface) {
-    this._sidebarValue = value;
-    if (this._sidebarValue.animate_state === 'inactive') {
-      this._activeSection = '';
+    if (!this._toBeSaved) {
+      this._sidebarValue = value;
+      if (this._sidebarValue.animate_state === 'inactive') {
+        this._activeSection = '';
+      }
+    } else if (this._toBeSaved) {
+      this._changesToSave();
     }
   }
 

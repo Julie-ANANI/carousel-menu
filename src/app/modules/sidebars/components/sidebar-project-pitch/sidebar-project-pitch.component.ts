@@ -27,6 +27,7 @@ import {CardComment} from '../../../../models/innov-card';
  * you can perform the logic. The type are passed based on the functionality used in the sidebar.
  * 2. isSavingChange: to listen in the parent component to execute the functionality and disabled the Save button in
  * the sidebar.
+ * 3. tobeSavedChanges: there are some changes to be saved before closing sidebar.
  */
 
 @Component({
@@ -52,8 +53,6 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   @Input() pitchHelp: PitchHelpFields = <PitchHelpFields>{};
 
-  // @Output() unsavedChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   @Input() set comment(value: CardComment) {
     this._comment = value;
     if (this._comment && (this._comment.comment || this._comment.suggestion)) {
@@ -72,6 +71,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
 
   @Output() isSavingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output() tobeSavedChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private _comment: CardComment = <CardComment>{};
 
@@ -104,6 +105,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
   public onSave(event: Event) {
     event.preventDefault();
     if (this.isEditable) {
+      this.tobeSavedChanges.emit(false);
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: this.type, content: this.cardContent});
     }
@@ -114,8 +116,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
    */
   public onChangeValue() {
     if (this.isEditable) {
+      this.tobeSavedChanges.emit(true);
       this._toBeSaved = true;
-      // this.unsavedChanges.emit(true);
     }
   }
 
@@ -138,7 +140,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
   public onUploadMedia(media: Media | Video, type: 'IMAGE' | 'VIDEO') {
     if (media && type && this.isEditable) {
       this.isSavingChange.emit(true);
-      this.saveProject.emit({type: type, content: <Video>media});
+      this.saveProject.emit({type: type, content: media});
     }
   }
 
