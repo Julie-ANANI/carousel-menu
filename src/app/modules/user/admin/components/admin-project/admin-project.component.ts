@@ -65,11 +65,15 @@ export class AdminProjectComponent implements OnInit {
       this._setPageTitle(this.title );
       this._metadata();
 
-      this._socketService
-        .getProjectUpdates(this._project._id)
-        .subscribe((project: Innovation) => {
-          this._updatedProject = project;
-        });
+      try {
+        this._socketService
+          .getProjectUpdates(this._project._id)
+          .subscribe((project: Innovation) => {
+            this._updatedProject = project;
+          });
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       this._fetchingError = true;
     }
