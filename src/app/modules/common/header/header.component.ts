@@ -1,14 +1,24 @@
-import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
-import { isPlatformBrowser, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { User } from '../../../models/user.model';
-import { Header } from './interface/header';
 import { initTranslation, TranslateService } from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { SpinnerService } from '../../../services/spinner/spinner.service';
+import { UserFrontService } from '../../../services/user/user-front.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+interface Header {
+  pageName: string;
+  pageLink: string;
+  trackingClass?: string;
+  adminLevel?: number;
+}
 
 @Component({
   selector: 'app-header',
@@ -47,15 +57,15 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
   ]
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  private _backOfficeValue: boolean = false; // if true, then display back office menu options.
+  private _backOfficeValue = false; // if true, then display back office menu options.
 
-  private _displayMenuOptions: boolean = false; // on small devices if true then display menu options.
+  private _flag = this._translateService.currentLang === 'fr' ? 'FR' : 'US';
 
-  private _flag: string;
-
-  private _sidebarValues: SidebarInterface = {};
+  private _sidebarValues: SidebarInterface = {
+    animate_state: 'inactive'
+  };
 
   private _showLangs = false;
 
@@ -71,39 +81,46 @@ export class HeaderComponent {
     { pageName: 'Search', pageLink: '/user/admin/search/pros', adminLevel: 3 },
   ];
 
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
+  private _hide = false;
+
+  private _company = environment.companyShortName;
+
+  private _logo = environment.logoURL;
+
+  private _isMainDomain = environment.domain === 'umi';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _location: Location,
               private _router: Router,
+              private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
               private _cookieService: CookieService) {
 
-    this._initializeVariables();
+    initTranslation(this._translateService);
 
     this._router.events.subscribe((event) => {
-      if (event instanceof NavigationStart || event instanceof NavigationEnd
-        || event instanceof NavigationCancel || event instanceof NavigationError) {
+      if (event instanceof NavigationStart || event instanceof NavigationEnd || event instanceof NavigationCancel
+        || event instanceof NavigationError) {
         this._backOfficeValue = this._location.path().slice(5, 11) === '/admin';
       }
     });
 
   }
 
+  ngOnInit(): void {
+    this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((state) => {
+      this._hide = state;
+    });
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(_event: Event) {
     if (window.innerWidth > 960) {
-      this._sidebarValues.animate_state = 'inactive';
+      this._sidebarValues = { animate_state: 'inactive' };
     }
-  }
-
-  /***
-   * initializing all the variables.
-   * @private
-   */
-  private _initializeVariables() {
-    initTranslation(this._translateService);
-    this._setFlag();
-    this._sidebarValues.animate_state = 'inactive';
   }
 
   /***
@@ -111,7 +128,7 @@ export class HeaderComponent {
    * @private
    */
   private _setFlag() {
-    this._flag = this.currentLang === 'en' ? 'US' : 'FR';
+    this._flag = this.currentLang === 'fr' ? 'FR' : 'US';
   }
 
   /***
@@ -120,14 +137,8 @@ export class HeaderComponent {
    */
   public setLang(lang: string) {
     this._cookieService.put('user_lang', lang || 'en');
-
-    if (isPlatformBrowser(this._platformId)) {
-      document.location.reload();
-    } else {
-      this._translateService.use(lang || 'en');
-      this._setFlag();
-    }
-
+    this._translateService.use(lang || 'en');
+    this._setFlag();
   }
 
   /***
@@ -141,24 +152,20 @@ export class HeaderComponent {
    * to toggle the value of menu options display.
    */
   public toggleMenuState() {
-    this._displayMenuOptions = !this._displayMenuOptions;
-    this._sidebarValues.animate_state = 'active';
+    this._sidebarValues = { animate_state: 'active' };
   }
 
   public closeSidebar() {
-    this._sidebarValues.animate_state = 'inactive';
+    this._sidebarValues = { animate_state: 'inactive' };
   }
 
   /***
    * set the menu display value false when click on link
    */
   public onClickLink() {
-    this._displayMenuOptions = false;
-
     if (this._sidebarValues.animate_state === 'active') {
       this.closeSidebar();
     }
-
   }
 
   public onClickAccount() {
@@ -169,20 +176,8 @@ export class HeaderComponent {
     return reqLevel && ( this.authService.adminLevel & reqLevel) === reqLevel;
   }
 
-  public getLogo(): string {
-    return environment.logoURL;
-  }
-
-  public getCompany(): string {
-    return environment.companyShortName;
-  }
-
   public hasProfilePic(): boolean {
     return !!this.profilePicture && this.profilePicture !== '';
-  }
-
-  public isMainDomain(): boolean {
-    return environment.domain === 'umi';
   }
 
   public getContactUrl(): string {
@@ -211,8 +206,7 @@ export class HeaderComponent {
   }
 
   get userInitial(): string {
-    return  this.user.firstName && this.user.lastName ?
-      `${this.user.firstName.slice(0, 1)}${this.user.lastName.slice(0, 1)}` : this.user.firstName.slice(0, 2);
+    return UserFrontService.initial(this.user);
   }
 
   get currentLang(): string {
@@ -235,8 +229,25 @@ export class HeaderComponent {
     return this._showLangs;
   }
 
-  get displayMenuOptions(): boolean {
-    return this._displayMenuOptions;
+  get hide(): boolean {
+    return this._hide;
+  }
+
+  get company(): string {
+    return this._company;
+  }
+
+  get logo(): string {
+    return this._logo;
+  }
+
+  get isMainDomain(): boolean {
+    return this._isMainDomain;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }
