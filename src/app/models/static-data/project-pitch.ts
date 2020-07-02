@@ -150,72 +150,106 @@ class ProjectPitch {
 
       case 'Detecting needs / trends':
         if (lang === 'fr') {
-          return 'Cette partie permet de contextualiser et d\'introduire la thématique du questionnaire aux professionnels. <br>' +
-            '<br>' +
-            '1. Introduction <br>' +
-            'Introduisez la thématique / le contexte marché.<br>' +
-            '2. Enjeux à venir<br>' +
-            'Expliquez les enjeux à venir sur la thématique.<br>' +
-            '3. Démarche<br>' +
-            'Expliquer la démarche : dans quel but vous souhaitez collecter ces informations et à quoi elles vont servir.'
+          return '<p>Cette partie permet de contextualiser et d\'introduire la thématique du questionnaire aux professionnels.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction <br> <span class="text-normal p-left-15"> Introduisez la thématique/ le contexte marché.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Enjeux à venir <br> <span class="text-normal p-left-15"> Expliquez les enjeux à venir sur la thématique.</span>' +
+            '</p>' +
+            '3. Démarche <br> <span class="text-normal p-left-15"> Expliquez la démarche : dans quel but vous souhaitez collecter ' +
+            'ces informations et à quoi elles vont servir.</span>' +
+            '</p>'
         } else {
-          return 'This part helps to contextualize and introduce the subject matter of the questionnaire to the professionals. <br>' +
-            '1. Introduction<br>' +
-            'Introduce the subject matter / the market context.<br>' +
-            '2. Implications<br>' +
-            'Explain what\'s at stake, the upcoming issues in your field.<br>' +
-            '3. Approach<br>' +
-            'Explain your approach : why you\'re collecting this data and what your purpose is.'
+          return '<p>This part helps to contextualize and introduce the subject matter of the questionnaire to the professionals.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction <br> <span class="text-normal p-left-15"> Introduce the subject matter / the market context.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Implications <br> <span class="text-normal p-left-15"> Explain what\'s at stake, the upcoming issues in your field.</span>' +
+            '</p>' +
+            '3. Approach <br> <span class="text-normal p-left-15"> Explain your approach : why you\'re collecting this data and' +
+            ' what your purpose is.</span>' +
+            '</p>'
         }
 
       case 'Validating market needs':
         if (lang === 'fr') {
-          return 'Cette partie permet de contextualiser le questionnaire et d\'introduire les problématiques identifiées ' +
-            'aux professionnels. <br>' +
-            '1. Introduction <br>' +
-            'Introduisez la thématique/ le contexte marché.<br>' +
-            '2. Problématique générale <br>' +
-            'Expliquez le principal point de douleur.<br>' +
-            '3. Problématiques des solutions actuelles<br>' +
-            'Listez les solutions actuelles et expliquez en quoi elles ne répondent pas bien à cette problématique.<br>' +
-            '4. Démarche<br>' +
-            'Expliquez la démarche : dans quel but vous souhaitez collecter ces informations et à quoi elles vont servir.'
+          return '<p>Cette partie permet de contextualiser le questionnaire et d\'introduire les problématiques identifiées ' +
+            'aux professionnels.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction <br> <span class="text-normal p-left-15"> Introduisez la thématique/ le contexte marché.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Problématique générale <br> <span class="text-normal p-left-15"> Expliquez le principal point de douleur.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Problématiques des solutions actuelles <br> <span class="text-normal p-left-15"> Listez les solutions actuelles et ' +
+            'expliquez en quoi elles ne répondent pas bien à cette problématique.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '4. Démarche <br> <span class="text-normal p-left-15"> Expliquez la démarche : dans quel but vous souhaitez collecter ' +
+            'ces informations et à quoi elles vont servir.</span>' +
+            '</p>'
         } else {
-          return 'This part helps to contextualize and introduce the identified issues to the professionals.<br>' +
-            '1. Introduction<br>' +
-            'Introduce the subject matter / the market context.<br>' +
-            '2. Main issue<br>' +
-            'Outline the major pain point.<br>' +
-            '3. Current solutions\' issues<br>' +
-            'List the current solutions and expose why they\'re not relevant.<br>' +
-            '4. Approach<br>' +
-            'Explain your approach : why you\'re collecting this data and what your purpose is.'
+          return '<p>This part helps to contextualize and introduce the identified issues to the professionals.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction <br> <span class="text-normal p-left-15"> Introduce the subject matter / the market context.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Main issue <br> <span class="text-normal p-left-15"> Outline the major pain point.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Current solutions\' issues <br> <span class="text-normal p-left-15"> List the current solutions and expose why ' +
+            'they\'re not relevant.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '4. Approach <br> <span class="text-normal p-left-15"> Explain your approach : why you\'re collecting this data and' +
+            ' what your purpose is.</span>' +
+            '</p>'
         }
 
       case 'Sourcing innovative solutions / partners':
         if (lang === 'fr') {
-          return 'Cette partie permet de contextualiser le questionnaire et d\'introduire les problématiques identifiées ' +
-            'aux professionnels. <br>' +
-            '1. Introduction <br>' +
-            'Introduisez la thématique/le contexte ayant amené à la recherche de solutions innovantes.<br>' +
-            '2. Problématiques à résoudre <br>' +
-            'Expliquez les problématiques à résoudre pour laquelle vous cherchez des solutions.<br>' +
-            '3. Contraintes/caractéristiques recherchées<br>' +
-            'Expliquez les contraintes/caractéristiques ou usages des solutions/partenaires recherché(e)s.<br>' +
-            '4. Solutions connues/exclues<br>' +
-            'Listez les solutions déjà connues ou exclues.<br>' +
-            '5. Démarche<br>' +
-            'Expliquez la démarche : dans quel but vous souhaitez collecter ces informations.';
+          return '<p>Cette partie permet de contextualiser le questionnaire et d\'introduire les problématiques identifiées ' +
+            'aux professionnels.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction <br> <span class="text-normal p-left-15"> Introduisez la thématique/le contexte ayant amené à la ' +
+            'recherche de solutions innovantes.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Problématiques à résoudre <br> <span class="text-normal p-left-15">Expliquez les problématiques à résoudre pour laquelle ' +
+            'vous cherchez des solutions.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Contraintes/caractéristiques recherchées <br> <span class="text-normal p-left-15">Expliquez les ' +
+            'contraintes/caractéristiques ou usages des solutions/partenaires recherché(e)s.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '4. Solutions connues/exclues<br> <span class="text-normal p-left-15">Listez les solutions déjà connues ou exclues.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '5. Démarche <br> <span class="text-normal p-left-15">Expliquez la démarche : dans quel but vous souhaitez collecter ' +
+            'ces informations.</span>' +
+            '</p>';
         } else {
-          return 'This part helps to contextualize and introduce the identified issues to the professionals. <br>' +
-            '1. Introduction<br>' +
-            'Introduce the subject matter / the context waging to the sourcing of innovative solutions.<br>' +
-            '2. The issues to solve<br>' +
-            'Expose the issues your facing, for which your looking for solutions.<br>' +
-            '3. Strains / Specifications required<br>' +
-            'Explain the strains / specifications or use cases of the solutions / partners you\'re looking for.<br>' +
-            '4. Approach<br>' +
-            'Explain your approach : what\'s your purpose in collecting this data.';
+          return '<p>This part helps to contextualize and introduce the identified issues to the professionals.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction <br> <span class="text-normal p-left-15">Introduce the subject matter / the context waging to the sourcing ' +
+            'of innovative solutions.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. The issues to solve <br> <span class="text-normal p-left-15">Expose the issues your facing, for which your ' +
+            'looking for solutions.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Strains / Specifications required <br> <span class="text-normal p-left-15">Explain the strains / specifications or ' +
+            'use cases of the solutions / partners you\'re looking for.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '4. Approach <br> <span class="text-normal p-left-15">Explain your approach : what\'s your purpose in collecting this ' +
+            'data.</span>' +
+            '</p>';
         }
 
       case 'Validating the interest of my solution':
@@ -224,22 +258,31 @@ class ProjectPitch {
       case 'Optimizing my value proposition':
       case 'Other':
         if (lang === 'fr') {
-          return 'Cette partie permet de contextualiser le questionnaire et d\'introduire les problématiques identifiées ' +
-            'aux professionnels. <br>' +
-            '1. Introduction <br>' +
-            'Introduisez le périmètre / la thématique et le contexte marché.<br>' +
-            '2. Problématique générale <br>' +
-            'Expliquez le principal point de douleur.<br>' +
-            '3. Problématiques des solutions actuelles <br>' +
-            'Listez les solutions actuelles et expliquez en quoi elles ne répondent pas bien à cette problématique.';
+          return '<p>Cette partie permet de contextualiser le questionnaire et d\'introduire les problématiques identifiées ' +
+            'aux professionnels.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction <br> <span class="text-normal p-left-15">Introduisez le périmètre / la thématique et le contexte ' +
+            'marché.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Problématique générale <br> <span class="text-normal p-left-15">Expliquez le principal point de douleur.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Problématiques des solutions actuelles <br> <span class="text-normal p-left-15">Listez les solutions actuelles et ' +
+            'expliquez en quoi elles ne répondent pas bien à cette problématique.</span>' +
+            '</p>';
         } else {
-          return 'This part helps to contextualize the questionnaire and to introduce the identified issues to the professionals. <br>' +
-            '1. Introduction<br>' +
-            'Introduce the scope / subject matter and the market context.<br>' +
-            '2. Wider issue<br>' +
-            'Outline the major pain point.<br>' +
-            '3. Current solutions\' issues<br>' +
-            'List the current solutions and expose why they\'re not relevant.';
+          return '<p>This part helps to contextualize the questionnaire and to introduce the identified issues to the professionals.</p>' +
+            '<p class="text-medium">' +
+            '1. Introduction<br> <span class="text-normal p-left-15">Introduce the scope / subject matter and the market context.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Main issue <br> <span class="text-normal p-left-15">Outline the major pain point.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Current solutions\' issues<br> <span class="text-normal p-left-15">List the current solutions and expose why ' +
+            'they\'re not relevant.</span>' +
+            '</p>';
         }
 
     }
@@ -254,24 +297,32 @@ class ProjectPitch {
       case 'Optimizing my value proposition':
       case 'Other':
         if (lang === 'fr') {
-          return 'Cette partie permet d\'expliquer votre solution en termes de fonctionnalités, de bénéfices d\'usage, ' +
-            'de propriétés et de répondre aux problématiques identifées dans la partie "problématiques" <br>' +
-            '1. Votre solution<br>' +
-            'Décrivez ce qu\'est la solution.<br>' +
-            '2. Problématique principale solutionnée<br>' +
-            'Expliquez comment elle résoud la problématique principale.<br>' +
-            '3. Différentiation<br>' +
-            'Expliquez en quoi elle se différencie des solutions actuelles.';
+          return '<p>Cette partie permet d\'expliquer votre solution en termes de fonctionnalités, de bénéfices d\'usage, ' +
+            'de propriétés et de répondre aux problématiques identifées dans la partie "problématiques"</p>' +
+            '<p class="text-medium">' +
+            '1. Votre solution<br> <span class="text-normal p-left-15">Décrivez ce qu\'est la solution.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Problématique principale solutionnée<br> <span class="text-normal p-left-15">Expliquez comment elle résoud ' +
+            'la problématique principale.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Différentiation<br> <span class="text-normal p-left-15">Expliquez en quoi elle se différencie des solutions actuelles.</span>' +
+            '</p>';
         } else {
-          return 'This section is meant to describe your solution in terms of features, benefits to the user, ' +
+          return '<p>This section is meant to describe your solution in terms of features, benefits to the user, ' +
             'properties and to address ' +
-            'the issues identified in the "Issues" part. <br>' +
-            '1. Solution<br>' +
-            'Describe the solution<br>' +
-            '2. Main solved issue<br>' +
-            'Explain how your solution solves the main issue.<br>' +
-            '3. Differentiation<br>' +
-            'Explain in which way your it stands out from the current solutions.';
+            'the issues identified in the "Issues" part.</p>' +
+            '<p class="text-medium">' +
+            '1. Solution<br> <span class="text-normal p-left-15">Describe the solution.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '2. Main solved issue<br> <span class="text-normal p-left-15">Explain how your solution solves the main issue.</span>' +
+            '</p>' +
+            '<p class="text-medium">' +
+            '3. Differentiation<br> <span class="text-normal p-left-15">Explain in which way your it stands out from the current ' +
+            'solutions.</span>' +
+            '</p>';
         }
 
     }
