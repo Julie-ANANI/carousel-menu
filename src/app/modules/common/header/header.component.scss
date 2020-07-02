@@ -35,6 +35,7 @@
               flex-direction: column;
               word-break: break-all;
               max-width: 195px;
+              justify-content: center;
             }
 
           }
@@ -62,7 +63,7 @@
 
           &.lang-wrapper {
             background-color: $bg-page-color;
-            padding-left: 2rem;
+            padding-left: 40px;
           }
 
         }

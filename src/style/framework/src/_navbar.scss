@@ -2,7 +2,7 @@
 @import "mixins";
 
 .navbar {
-  min-height: 3.75rem;
+  min-height: 75px;
   position: relative;
   background-color: $bg-white-color;
   border-bottom: $border-width solid $border-light-color;
@@ -10,7 +10,7 @@
   .navbar-brand {
     display: flex;
     align-items: stretch;
-    min-height: 3.75rem;
+    min-height: 75px;
   }
 
   .navbar-burger, .navbar-item, .dropdown-toggle {
@@ -21,9 +21,9 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    height: 3.75rem;
+    height: 75px;
     position: absolute;
-    min-width: 2rem;
+    min-width: 40px;
     right: 0;
     top: 0;
     font-size: $font-size-sm;
@@ -65,7 +65,7 @@
         .navbar-item {
           display: flex;
           margin: 0;
-          padding: $unit-2 1.1rem;
+          padding: $unit-2 22px;
         }
 
       }
@@ -106,7 +106,7 @@
       position: relative;
       margin: 0;
       list-style: none;
-      padding: $unit-3 1.1rem;
+      padding: $unit-3 22px;
       border-bottom: $border-width solid $border-default-color;
 
       &.active, &:active, &:hover {
@@ -255,7 +255,7 @@
         flex-direction: column;
         background-color: $bg-white-color;
         box-shadow: 0 8px 16px rgba(10,10,10,.1);
-        padding: 0.5rem 0;
+        padding: 10px 0;
         position: absolute;
         z-index: $zindex-1;
         left: 0;
@@ -264,7 +264,7 @@
         .navbar-item {
           margin: 0;
           order: 2;
-          padding: $unit-3 1.1rem;
+          padding: $unit-3 20px;
 
           &.has-dropdown {
             flex-direction: column;
@@ -274,8 +274,8 @@
 
               .icon.icon-arrow-down {
                 position: absolute;
-                top: 0.75rem;
-                right: 1.1rem;
+                top: 15px;
+                right: 22px;
                 color: $text-warning-color;
               }
 
