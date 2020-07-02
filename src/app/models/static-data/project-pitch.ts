@@ -184,7 +184,7 @@ class ProjectPitch {
           return 'This part helps to contextualize and introduce the identified issues to the professionals.<br>' +
             '1. Introduction<br>' +
             'Introduce the subject matter / the market context.<br>' +
-            '2. Wider issue<br>' +
+            '2. Main issue<br>' +
             'Outline the major pain point.<br>' +
             '3. Current solutions\' issues<br>' +
             'List the current solutions and expose why they\'re not relevant.<br>' +

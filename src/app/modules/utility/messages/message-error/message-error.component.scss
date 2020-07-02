@@ -1,0 +1,19 @@
+@import "../../../../../style/framework/src/variables";
+
+#message-error {
+  min-height: calc(100vh - 127px);
+  width: 100%;
+  flex-direction: column;
+  text-align: center;
+  padding: 50px 25px;
+
+  img {
+    height: 200px;
+    margin-bottom: 30px;
+  }
+
+  p {
+    opacity: 0.5;
+  }
+
+}

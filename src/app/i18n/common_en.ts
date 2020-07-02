@@ -265,7 +265,8 @@ export const COMMON = {
     'COMMENT': 'Comment',
     'SENDING_MESSAGE': 'sending the message...',
     'SEND_MESSAGE': 'Send message',
-    'RETURN_HOMEPAGE': 'Return to the homepage'
+    'RETURN_HOMEPAGE': 'Return to the homepage',
+    'RELOAD_PAGE': 'Reload the page'
   },
 
   'PROJECT': {

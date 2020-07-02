@@ -1,0 +1,15 @@
+<div class="flex-centered animate-fade is-5" id="message-error">
+  <img
+    src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot/error.svg"
+    class="img-responsive"
+    alt=" ">
+  <h1 class="title is-4 m-bottom-10">Whoops!</h1>
+  <p class="m-bottom-30 text-md mxw-550 m-left-auto m-right-auto">{{ errorMessage }}</p>
+  <button
+    (click)="onReloadPage($event)"
+    class="button is-primary is-xl"
+    id="'btn-reload'"
+    type="button">
+    {{ 'COMMON.BUTTON.RELOAD_PAGE' | translate }}
+  </button>
+</div>

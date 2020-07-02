@@ -264,7 +264,8 @@ export const COMMON = {
     'COMMENT': 'Commentaire',
     'SENDING_MESSAGE': 'en cours d\'envoi...',
     'SEND_MESSAGE': 'Envoyer le message',
-    'RETURN_HOMEPAGE': 'Retour à la page d\'accueil'
+    'RETURN_HOMEPAGE': 'Retour à la page d\'accueil',
+    'RELOAD_PAGE': 'Rechargez la page'
   },
 
   'PROJECT': {

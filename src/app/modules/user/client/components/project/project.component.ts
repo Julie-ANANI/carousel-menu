@@ -6,12 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Mission } from '../../../../../models/mission';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 
@@ -51,6 +49,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
+  private _fetchingError = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
@@ -58,8 +58,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _router: Router,
               private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
-              private _innovationFrontService: InnovationFrontService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _innovationFrontService: InnovationFrontService) {
 
     this._initPageTitle();
 
@@ -123,9 +122,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.error(err);
+        this._fetchingError = true;
+        this._isLoading = false;
         this._setSpinner(false);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      })
+      });
     }
   }
 
@@ -180,6 +180,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get currentPage(): string {
     return this._currentPage;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
   ngOnDestroy(): void {

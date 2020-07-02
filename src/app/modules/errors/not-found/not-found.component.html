@@ -16,7 +16,7 @@
       <!-- /logo -->
 
       <!-- content -->
-      <section class="content-wrapper p-top-50 p-bottom-50">
+      <section class="content-wrapper">
 
         <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/not-found.svg" alt=" ">
 
@@ -27,11 +27,11 @@
 
         <p class="m-bottom-30 text-md mxw-500 m-left-auto m-right-auto">
           <ng-container *ngIf="currentLang === 'fr'; else messageEn">
-            Désolé mais la page que vous recherchez n'existe pas, a été supprimée, a changé de nom ou est
+            Désolé, mais la page que vous recherchez n'existe pas, a été supprimée, a changé de nom ou est
             temporairement indisponible.
           </ng-container>
           <ng-template #messageEn>
-            Sorry but the page you're looking for doesn't exist, have been removed, name changed or is temporarily
+            Sorry, but the page you're looking for doesn't exist, have been removed, name changed or is temporarily
             unavailable.
           </ng-template>
         </p>
