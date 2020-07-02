@@ -342,7 +342,6 @@ export class PitchComponent implements OnInit, OnDestroy {
    */
   private _updateMission() {
     this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
-      this._mission = mission;
     }, (err: HttpErrorResponse) => {
       console.error(err);
     });
