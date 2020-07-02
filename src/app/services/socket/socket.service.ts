@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { Observable, Subscriber } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import * as io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -7,14 +9,29 @@ import { Socket } from 'ngx-socket-io';
 
 export class SocketService {
 
-  constructor(public socket: Socket) { }
+  socket: SocketIOClient.Socket;
 
-  getProjectUpdates(projectId: string) {
-    return this.socket
-      .fromEvent<any>(`projectUpdate_${projectId}`);
+  constructor() {
+    this.socket = io(environment.apiUrl.replace('/api', ''));
   }
 
-  sendMessage(eventName: string, message: string) {
-    this.socket.emit(eventName, message);
+  listenToSocket(): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on('hello', (data: any) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
+  getProjectUpdates(projectId: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`projectUpdate_${projectId}`, (data: any) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
+  sendDataToApi(name: string, data: any) {
+    this.socket.emit(name, data);
   }
 }

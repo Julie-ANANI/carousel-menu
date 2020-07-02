@@ -9,6 +9,8 @@ import { ErrorService } from './services/error/error.service';
 import { ErrorBackendService } from './services/error/errorBackend.service';
 import { LocalStorageBackendService } from './services/localStorage/localStorageBackend.service';
 import { LocalStorageService } from './services/localStorage/localStorage.service';
+import { SocketService } from './services/socket/socket.service';
+import { SocketSsrService } from './services/socket/socket-ssr.service';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
@@ -30,6 +32,7 @@ import { AppComponent } from './app.component';
     },
     { provide: ErrorService, useClass: ErrorBackendService },
     { provide: LocalStorageService, useClass: LocalStorageBackendService },
+    { provide: SocketService, useClass: SocketSsrService },
   ],
   bootstrap: [ AppComponent ],
 })

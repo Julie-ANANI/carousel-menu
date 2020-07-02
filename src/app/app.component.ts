@@ -6,8 +6,10 @@ import { environment } from '../environments/environment';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
+import { SocketService } from './services/socket/socket.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private _translateService: TranslateService,
               private _authService: AuthService,
               private _mouseService: MouseService,
+              private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._setFavicon();
@@ -50,10 +53,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
   }
 
-
   ngOnInit(): void {
+    this._socketEvent();
     this._mouseEvent();
     //this._setSwellRTScript();
+  }
+
+  private _socketEvent() {
+    this._socketService.listenToSocket().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+      this._socketService.sendDataToApi('helloBack', { 'hello': 'back' });
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
   }
 
   private _mouseEvent() {
