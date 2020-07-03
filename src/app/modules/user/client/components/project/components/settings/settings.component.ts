@@ -57,7 +57,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _collaboratorConsent = false;
 
   private _sections: Array<Section> = [
-    { name: 'TITLE', isVisible: false, isEditable: false, level: 'INNOVATION' },
+    { name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION' },
     { name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
     { name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
     { name: 'ROADMAP', isVisible: false, isEditable: false , level: 'MISSION' },
@@ -164,7 +164,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           case 'TITLE':
             section.isVisible = !!this._innovation.name;
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
             break;
 
           case 'PRINCIPAL_OBJECTIVE':
