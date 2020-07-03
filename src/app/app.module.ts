@@ -7,11 +7,6 @@ import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from '../environments/environment';
-
-const config: SocketIoConfig = { url: environment.apiUrl.replace('/api', ''), options: {}  };
-
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -43,8 +38,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
         provide: TranslateLoader,
         useFactory: (CreateTranslateLoader)
       }
-    }),
-    SocketIoModule.forRoot(config),
+    })
   ],
   declarations: [
     AppComponent
