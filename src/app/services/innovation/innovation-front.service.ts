@@ -269,7 +269,7 @@ export class InnovationFrontService {
    * @param height
    */
   public static principalMedia(innovation: Innovation, lang = 'en', width = '240', height = '159'): string {
-    if (innovation.principalMedia) {
+    if (innovation.principalMedia && innovation.principalMedia.cloudinary) {
       return InnovationFrontService._getMedia(innovation.principalMedia, width, height);
     } else if (innovation.innovationCards && innovation.innovationCards.length > 0) {
       const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'card');
@@ -284,7 +284,7 @@ export class InnovationFrontService {
    * @param height
    */
   public static innovCardPrincipalMedia(innovCard: InnovCard, width = '240', height = '159'): string {
-    if (innovCard.principalMedia) {
+    if (innovCard.principalMedia && innovCard.principalMedia.cloudinary) {
       return InnovationFrontService._getMedia(innovCard.principalMedia, width, height);
     } else if (innovCard.media && innovCard.media.length > 0) {
       const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');

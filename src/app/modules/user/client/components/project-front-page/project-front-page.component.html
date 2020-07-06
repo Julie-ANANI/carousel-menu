@@ -12,8 +12,10 @@
     <h2 [innerHTML]="project.summary"></h2>
     <div *ngIf="project.objective" class="body-objective">{{ project.objective }}</div>
     <img [src]="project.media" alt=" " class="body-media img-responsive">
-    <div class="body-leader">{{ userLang === 'fr' ? 'Chef de projet' : 'Project leader' }}</div>
-    <div class="body-owner">{{ project.ownerName }} / {{ project.ownerEmail }}</div>
+    <ng-container *ngIf="project.ownerName && project.ownerEmail">
+      <div class="body-leader">{{ userLang === 'fr' ? 'Chef de projet' : 'Project leader' }}</div>
+      <div class="body-owner">{{ project.ownerName }} / {{ project.ownerEmail }}</div>
+    </ng-container>
   </div>
   <!-- body -->
 
