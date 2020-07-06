@@ -2,7 +2,7 @@
 
   <!-- description edition -->
   <div class="main-wrapper is-description">
-    <div class="content-wrapper animate-fade is-5">
+    <div class="content-wrapper">
 
       <!-- heading / sub heading -->
       <section class="text-center">
@@ -12,7 +12,9 @@
       <!-- /heading / sub heading -->
 
       <!-- action buttons -->
-      <section *ngIf="innovation.status === 'EDITING'" class="flex-between m-bottom-20 action-btn-wrapper">
+      <section
+        *ngIf="innovation.status === 'EDITING'"
+        class="flex-between m-bottom-20 action-btn-wrapper animate-fade is-5">
 
         <!-- proofreading -->
         <div [ngClass]="{'popover': !isRequesting && !isSaving && !isSubmitting}" class="m-right-15 m-bottom-15">
@@ -61,7 +63,10 @@
       <!-- /action buttons -->
 
       <!-- sections -->
-      <section *ngFor="let section of sections; let i=index;">
+      <section
+        *ngFor="let section of sections; let i=index;"
+        [ngStyle]="{ 'animation-duration': ((i+1) * 110) + 'ms' }"
+        class="animate-slide slide-down">
         <div
           *ngIf="section.visibility"
           [ngClass]="{ 'is-filled': (section.content && section.content.length),
@@ -171,7 +176,10 @@
           SECTION {{ section.label[activeInnovCard.lang] | uppercase }}
         </p>
 
-        <div *ngFor="let question of section.questions" [ngStyle]="{'margin-top': '18px'}">
+        <div
+          *ngFor="let question of section.questions; let j = index;"
+          [ngStyle]="{'margin-top': '18px', 'animation-duration': ((j+1) * 110) + 'ms'}"
+          class="animate-slide slide-down">
           <div (click)="question.toggle = !question.toggle" class="d-flex align-center c-hand">
             <div class="icon-container is-overlay m-right-1 is-sm">
               <i [ngClass]="question.toggle ? 'icon-arrow-down' : 'icon-arrow-up'" class="icon"></i>
@@ -234,7 +242,7 @@
 
 
 <!-- modal to confirm the submission -->
-<app-utility-modal-empty [(showModal)]="showModal">
+<app-utility-modal-empty [(showModal)]="showModal" [maxWidth]="'780px'">
 
   <!-- body -->
   <section class="modal-body">
@@ -243,7 +251,7 @@
       {{ 'PROJECT_PITCH.MODAL.HEADING_SUBMIT' | translate }}
     </h2>
 
-    <div *ngIf="mission.externalDiffusion" class="mxw-550 authorise-wrapper form-group">
+    <div *ngIf="mission.externalDiffusion" class="mxw-650 authorise-wrapper form-group">
       <p>{{ 'PROJECT_PITCH.MODAL.SUBMIT_TEXT' | translate }}</p>
       <div *ngFor="let diffusion of authorisation">
         <label class="form-checkbox">

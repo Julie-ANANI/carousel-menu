@@ -88,15 +88,15 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _initDefaultSections() {
     const _defaultSections: Array<InnovCardSection> = [
       {
-        title: this.activeInnovCard.title ? this.activeInnovCard.lang === 'fr' ? 'Titre' : 'Title' : this.activeInnovCard.lang === 'fr'
-          ? 'Remplir le titre' : 'Fill in the title',
+        title: this.activeInnovCard.title ? this.activeInnovCard.lang === 'fr' ? 'Titre' : 'Title'
+          : this.activeInnovCard.lang === 'fr' ? 'Remplir le titre' : 'Fill in the title',
         content: this.activeInnovCard.title,
         visibility: true,
         type: 'TITLE'
       },
       {
-        title: this.activeInnovCard.summary ? this.activeInnovCard.lang === 'fr' ? 'Résumé' : 'Summary' : this.activeInnovCard.lang === 'fr'
-          ? 'Remplir le résumé' : 'Fill in the summary',
+        title: this.activeInnovCard.summary ? this.activeInnovCard.lang === 'fr' ? 'Résumé' : 'Summary'
+          : this.activeInnovCard.lang === 'fr' ? 'Remplir le résumé' : 'Fill in the summary',
         content: this.activeInnovCard.summary,
         visibility: true,
         type: 'SUMMARY'

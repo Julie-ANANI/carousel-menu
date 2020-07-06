@@ -345,90 +345,88 @@
   *ngIf="activeModalSection.name && showModal"
   [(showModal)]="showModal"
   [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? '963px' : '640px'">
-  <div [ngSwitch]="activeModalSection.name">
 
-    <!-- body -->
-    <section class="modal-body p-bottom-40">
+  <!-- body -->
+  <section [ngSwitch]="activeModalSection.name" class="modal-body p-bottom-40">
 
-      <!-- heading -->
-      <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
-        {{ 'PROJECT_SETTINGS.HEADING.' + activeModalSection.name | translate }}
-      </h2>
-      <!-- /heading -->
+    <!-- heading -->
+    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
+      {{ 'PROJECT_SETTINGS.HEADING.' + activeModalSection.name | translate }}
+    </h2>
+    <!-- /heading -->
 
-      <!-- TITLE -->
-      <div *ngSwitchCase="'TITLE'" class="mxw-400 m-left-auto m-right-auto">
-        <div class="form-group">
-          <label>
-            <input
-              [(ngModel)]="selectedValue"
-              class="form-input is-sm is-shadowed"
-              type="text">
-          </label>
-        </div>
+    <!-- TITLE -->
+    <div *ngSwitchCase="'TITLE'" class="mxw-400 m-left-auto m-right-auto">
+      <div class="form-group">
+        <label>
+          <input
+            [(ngModel)]="selectedValue"
+            class="form-input is-sm is-shadowed"
+            type="text">
+        </label>
       </div>
-      <!-- /TITLE -->
+    </div>
+    <!-- /TITLE -->
 
-      <!-- PRINCIPAL_OBJECTIVE -->
-      <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'" class="p-top-10 p-bottom-10">
-        <app-objectives-primary [(objective)]="selectedValue"></app-objectives-primary>
+    <!-- PRINCIPAL_OBJECTIVE -->
+    <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'" class="p-top-10 p-bottom-10">
+      <app-objectives-primary [(objective)]="selectedValue"></app-objectives-primary>
+    </div>
+    <!-- /PRINCIPAL_OBJECTIVE -->
+
+    <!-- COLLABORATORS -->
+    <div *ngSwitchCase="'COLLABORATORS'">
+
+      <!-- Warning text -->
+      <div [ngStyle]="{'max-width': '530px'}" class="m-left-auto m-right-auto m-bottom-30">
+        <label class="form-checkbox p-left-30">
+          <input
+            [(ngModel)]="consent"
+            id="collaborator-consent"
+            type="checkbox">
+          <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
+          {{ 'PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
+        </label>
       </div>
-      <!-- /PRINCIPAL_OBJECTIVE -->
+      <!-- /Warning text -->
 
-      <!-- COLLABORATORS -->
-      <div *ngSwitchCase="'COLLABORATORS'">
-
-        <!-- Warning text -->
-        <div [ngStyle]="{'max-width': '530px'}" class="m-left-auto m-right-auto m-bottom-30">
-          <label class="form-checkbox p-left-30">
-            <input
-              [(ngModel)]="consent"
-              id="collaborator-consent"
-              type="checkbox">
-            <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
-            {{ 'PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
-          </label>
-        </div>
-        <!-- /Warning text -->
-
-        <div class="form-group mxw-400 m-left-auto m-right-auto">
-          <label>
-            <input
-              [(ngModel)]="selectedValue"
-              placeholder="jhon.smith@gmail.com"
-              class="form-input is-sm is-shadowed"
-              type="email">
-          </label>
-        </div>
-
+      <div class="form-group mxw-400 m-left-auto m-right-auto">
+        <label>
+          <input
+            [(ngModel)]="selectedValue"
+            placeholder="jhon.smith@gmail.com"
+            class="form-input is-sm is-shadowed"
+            type="email">
+        </label>
       </div>
-      <!-- /COLLABORATORS -->
 
-    </section>
-    <!-- /body -->
+    </div>
+    <!-- /COLLABORATORS -->
 
-    <!-- footer -->
-    <footer class="modal-footer justify-center">
+  </section>
+  <!-- /body -->
 
-      <button
-        (click)="closeModal()"
-        [id]="'btn-cancel'"
-        class="button modal-cancel">
-        {{ 'COMMON.BUTTON.CANCEL' | translate }}
-      </button>
+  <!-- footer -->
+  <footer class="modal-footer justify-center">
 
-      <button
-        [disabled]="!canPerformAction"
-        (click)="onClickSaveModal($event)"
-        class="button is-community"
-        id="btn-save">
-        {{ 'COMMON.BUTTON.SAVE' | translate }}
-      </button>
+    <button
+      (click)="closeModal()"
+      [id]="'btn-cancel'"
+      class="button modal-cancel">
+      {{ 'COMMON.BUTTON.CANCEL' | translate }}
+    </button>
 
-    </footer>
-    <!-- /footer -->
+    <button
+      [disabled]="!canPerformAction"
+      (click)="onClickSaveModal($event)"
+      class="button is-community"
+      id="btn-save">
+      {{ 'COMMON.BUTTON.SAVE' | translate }}
+    </button>
 
-  </div>
+  </footer>
+  <!-- /footer -->
+
 </app-utility-modal-empty>
 <!-- /modals -->
 

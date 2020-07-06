@@ -157,6 +157,7 @@ class ProjectPitch {
             '<p class="text-medium">' +
             '2. Enjeux à venir <br> <span class="text-normal p-left-15"> Expliquez les enjeux à venir sur la thématique.</span>' +
             '</p>' +
+            '<p class="text-medium">' +
             '3. Démarche <br> <span class="text-normal p-left-15"> Expliquez la démarche : dans quel but vous souhaitez collecter ' +
             'ces informations et à quoi elles vont servir.</span>' +
             '</p>'
@@ -168,6 +169,7 @@ class ProjectPitch {
             '<p class="text-medium">' +
             '2. Implications <br> <span class="text-normal p-left-15"> Explain what\'s at stake, the upcoming issues in your field.</span>' +
             '</p>' +
+            '<p class="text-medium">' +
             '3. Approach <br> <span class="text-normal p-left-15"> Explain your approach : why you\'re collecting this data and' +
             ' what your purpose is.</span>' +
             '</p>'

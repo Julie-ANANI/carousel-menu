@@ -321,7 +321,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
         break;
 
       case 'MISSION':
-        this._updateMission();
+        if (this._activeModalSection.name === 'PRINCIPAL_OBJECTIVE') {
+          this._updateMainObjective();
+        } else {
+          this._updateMission();
+        }
         break;
 
       case 'COLLABORATOR':
@@ -361,14 +365,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _updateMission() {
-
-    if (this._activeModalSection.name === 'PRINCIPAL_OBJECTIVE') {
-      this._mission.objective.principal = this._selectedValue;
-      if (this._mission.objective.principal['en'] === 'Other') {
-        this._mission.objective.secondary = [];
-      }
-    }
-
     this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
       this._innovation.mission = mission;
       this._innovationFrontService.setInnovation(this._innovation);
@@ -378,6 +374,23 @@ export class SettingsComponent implements OnInit, OnDestroy {
       console.error(err);
       this._isSaving = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+    });
+  }
+
+  private _updateMainObjective() {
+    this._mission.objective.principal = this._selectedValue;
+    if (this._mission.objective.principal['en'] === 'Other') {
+      this._mission.objective.secondary = [];
+    }
+
+    this._missionService.updateMainObjective(this._mission._id, this._mission).pipe(first()).subscribe((innovation) => {
+      this._innovationFrontService.setInnovation(innovation);
+      this.closeModal();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+      this._isSaving = false;
     });
 
   }
