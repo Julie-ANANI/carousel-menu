@@ -2,7 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.31.0 (Unreleased)
+## 1.32.0 - 07 July 2020 (Unreleased)
+
+### Added
+<ul>
+    <li>The new interface to do the pitch description.</li>
+    <li>Show Questionnaire template in the pitch page.</li>
+    <li>Admin/Client interactions and notifications.</li>
+    <li>CanDeactivate guard.</li>
+    <li>Sidebar to edit pitch description.</li>
+    <li>Error message component to show fetching error message.</li>
+    <li>Based on the objective create the campaign, questionnaire automatic</li>
+    <li>Example button (to show the questionnaire) and preview button (to show the representation of the questionnaire) 
+    based on the mission objective.</li>
+    <li>Language button in the setup page to add the innovation card in the new language.</li>
+    <li>Save button in the targeting page to save the project.</li>
+</ul>
+
+### Updated
+<ul>
+    <li>The visual of the not found page.</li>
+    <li>Banner message for the project status.</li>
+    <li>Discover page with the new innovation card model.</li>
+    <li>Header component is more redefine and animation.</li>
+    <li>The visual of the targeting page.</li>
+    <li>Roadmap dates sort.</li>
+</ul>
+
+### Changed
+<ul>
+    <li>Use the angular routing for the project page instead of the switch.</li>
+</ul>
+
+### Bug fixed
+<ul>
+    <li>Every time make the changes in the Answer table it gets reload.</li>
+    <li>Showing of the Roadmap functionality in every sidebar.</li>
+    <li>Shared synthesis page not showing the innovation image.</li>
+    <li>Modal is not scrollable.</li>
+</ul>
+
+## 1.31.0 - 16 June 2020
 
 ### Added
 <ul>
