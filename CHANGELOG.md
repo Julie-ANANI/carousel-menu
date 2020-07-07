@@ -40,6 +40,7 @@ All notable changes to this project will be documented in this file.
     <li>Showing of the Roadmap functionality in every sidebar.</li>
     <li>Shared synthesis page not showing the innovation image.</li>
     <li>Modal is not scrollable.</li>
+    <li>Setting page sidebar was not closing - Admin side.</li>
 </ul>
 
 ## 1.31.0 - 16 June 2020
