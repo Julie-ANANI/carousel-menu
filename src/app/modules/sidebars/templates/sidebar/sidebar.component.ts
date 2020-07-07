@@ -74,7 +74,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       size: this._template.size
     });
     this.closeSidebar.emit({
-      animate_state: this._template.animate_state,
+      animate_state: 'inactive',
       title: this._template.title,
       type: this._template.type
     }); // todo: remove this line

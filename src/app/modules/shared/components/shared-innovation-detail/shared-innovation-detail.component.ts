@@ -44,7 +44,17 @@ export class SharedInnovationDetailComponent implements OnInit {
    * @returns {string}
    */
   public getSrc(innovCard: InnovCard): string {
-    return InnovationFrontService.getMediaSrc(innovCard, 'default', '220', '146');
+    return InnovationFrontService.innovCardPrincipalMedia(innovCard, '220', '146');
+  }
+
+  public sectionInfo(field: 'ISSUE' | 'SOLUTION') {
+    if (this._innovation && this._innovation.innovationCards && this._innovation.innovationCards[this.currentInnovationIndex]) {
+      const _section = InnovationFrontService.cardDynamicSection(this._innovation.innovationCards[this.currentInnovationIndex], field);
+      if (_section && _section.visibility) {
+        return _section.content;
+      }
+    }
+    return '';
   }
 
   get innovation(): Innovation {

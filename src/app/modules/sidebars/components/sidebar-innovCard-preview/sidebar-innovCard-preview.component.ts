@@ -49,7 +49,11 @@ export class SidebarInnovCardPreviewComponent {
   }
 
   public sectionInfo(field: 'ISSUE' | 'SOLUTION'): string {
-    return <string>InnovationFrontService.cardDynamicSection(this.innovCard, field).content;
+    const _section = InnovationFrontService.cardDynamicSection(this.innovCard, field);
+    if (_section && _section.visibility) {
+      return <string>_section.content;
+    }
+    return '';
   }
 
   get domSanitizer() {
