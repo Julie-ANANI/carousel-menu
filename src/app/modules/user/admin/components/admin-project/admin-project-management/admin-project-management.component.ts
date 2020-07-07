@@ -43,7 +43,9 @@ export class AdminProjectManagementComponent implements OnInit {
   private _project: Innovation;
   private _domain = {fr: '', en: ''};
 
-  private _more: SidebarInterface = {};
+  private _more: SidebarInterface = {
+    animate_state: 'inactive'
+  };
   sidebarState = new Subject<string>();
   projectSubject = new Subject<Innovation>();
 
@@ -763,11 +765,12 @@ export class AdminProjectManagementComponent implements OnInit {
    * This function is call when the user close the sidebar
    * @param {string} value
    */
-  closeSidebar(value: string) {
+  /*closeSidebar(value: string) {
+    console.log(value);
     this.more.animate_state = value;
     this.sidebarState.next(this.more.animate_state);
     this.projectSubject.next(this._project);
-  }
+  }*/
 
   public updateOwnerLanguage(language: string) {
     this._project.owner.language = language;
@@ -854,6 +857,14 @@ export class AdminProjectManagementComponent implements OnInit {
   }
   get clientProject(): ClientProject {
     return this._clientProject;
+  }
+
+  set more(value: SidebarInterface) {
+    this._more = value;
+    if (value.animate_state === 'inactive') {
+      this.sidebarState.next(this._more.animate_state);
+      this.projectSubject.next(this._project);
+    }
   }
 
 }

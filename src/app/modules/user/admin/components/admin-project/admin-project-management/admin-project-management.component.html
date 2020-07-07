@@ -852,8 +852,7 @@
 </div>
 
 <!-- Sidebars -->
-<app-sidebar
-  [template]="more" (closeSidebar)="closeSidebar($event)">
+<app-sidebar [(template)]="more">
   <app-innovation-form
     *ngIf="isInnovationSidebar"
     [sidebarState]="sidebarState"

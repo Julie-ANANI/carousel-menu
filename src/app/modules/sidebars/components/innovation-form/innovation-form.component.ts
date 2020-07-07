@@ -128,7 +128,7 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
   loadTypes() {
     this.reinitialiseForm();
 
-    switch (this.type) {
+    switch (this._type) {
       case('pitch') : {
         this.isPitch = true;
         break;
@@ -157,8 +157,6 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
         this._templatesService.getAllSignatures({limit: '0', sort: '{"id":-1}'}).subscribe((signatures: any) => {
           this._signatures = signatures.result;
         });
-        break;
-      } default: {
         break;
       }
     }
