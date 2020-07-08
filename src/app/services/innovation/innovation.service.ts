@@ -120,7 +120,8 @@ export class InnovationService {
   }
 
   public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
-    return this._http.get(`/sharing/synthesis/${id}/${sharedKey}?fields=innovationCards`); //TODO I don't like hardcoded things
+    return this._http.get(`/sharing/synthesis/${id}/${sharedKey}?fields=innovationCards,principalMedia,tags,mission,
+    owner, operator,clientProject`); //TODO I don't like hardcoded things
   }
 
   public getRecommendation(innovationId: string): Observable<any> {
