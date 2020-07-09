@@ -63,6 +63,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
         if (this._innovation._id) {
           this.getCommentSections();
           this._canEdit = this._innovation.status === 'EDITING';
+          this._setTargetCountries();
         }
       }
     });
