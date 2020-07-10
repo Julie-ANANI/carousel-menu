@@ -59,8 +59,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
    */
   @Output() closeSidebar: EventEmitter<void> = new EventEmitter<void>();
 
-  // 'MARKET_TYPE' | 'FOLLOW_UP'
-  private _templateType = 'MARKET_TYPE';
+  // 'MARKET_REPORT' | 'FOLLOW_UP'
+  private _templateType = 'MARKET_REPORT';
 
   private _isModalEnd: boolean;
 
@@ -135,9 +135,9 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
       if (!this._seeMore[question.identifier]) {
         this._seeMore[question.identifier] = false;
       }
-      if (this._templateType === 'MARKET_TYPE' || question.controlType === 'checkbox' ||
-        question.controlType === 'radio' || this.answersTagsLists[question.identifier] &&
-        this.answersTagsLists[question.identifier].length) {
+      if (this._templateType === 'MARKET_REPORT' || question.controlType === 'checkbox' ||
+        question.controlType === 'radio' || (this.answersTagsLists[question.identifier] &&
+        this.answersTagsLists[question.identifier].length)) {
         this._displayedQuestions.push(question);
       }
     });
