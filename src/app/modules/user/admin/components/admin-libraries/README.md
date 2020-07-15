@@ -8,9 +8,14 @@ Please always updates the roles / functionalities in this file.
 ### Functionalities
 
 1. WORKFLOWS: Add, Edit, View, Change_Language, Import, Export, Delete.
+
 2. EMAILS: Add, Modify, View, Change_Language, Delete.
-3. QUESTIONNAIRE: Add, Edit, View, Delete, SEARCH: 'Name, Domain'. 
-4. SIGNATURES: Add, View, Edit, Delete, SEARCH: 'Name, Author, Language, Email_Address'.
+
+3. QUESTIONNAIRE: Add, Edit, View, Delete, 
+<br><br>SEARCH_BY: 'Name, Domain'. 
+
+4. SIGNATURES: Add, View, Edit, Delete, 
+<br><br>SEARCH_BY: 'Name, Author, Language, Email_Address'.
 
 Here WORKFLOWS, EMAILS, QUESTIONNAIRE, SIGNATURES represent the sub tabs.
 
@@ -28,7 +33,9 @@ No definition of a Role means no access to that user.
 #### Market Test Manager:
 
 1. WORKFLOWS: Add, Edit, Change_Language.
-2. QUESTIONNAIRE: Add, Edit, View, Delete, SEARCH: 'Name'.
+
+2. QUESTIONNAIRE: Add, Edit, View, Delete, 
+<br><br>SEARCH_BY: 'Name'.
 
 ### Example - Market Test Manager role
 
@@ -45,7 +52,7 @@ nav: {
             edit: true, 
             view: true, 
             delete: true, 
-            search: {
+            searchBy: {
                 name: true
             } 
         }

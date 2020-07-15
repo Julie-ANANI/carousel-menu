@@ -7,9 +7,13 @@ Please always updates the roles / functionalities in this file.
 
 ### Functionalities
 
-1. MAILGUN: SEARCH: 'Name, Professionals', SORT: 'Status', T_COLUMNS: 'Name, Status, 
-Professionals'.
+1. MAILGUN: 
+<br><br>SEARCH_BY: 'Name, Professionals', 
+<br><br>SORT_BY: 'Status', 
+<br><br>T_COLUMNS: 'Name, Status, Professionals'.
+
 2. GMAIL: Import_Campaign.   
+
 3. SHIELD: T_COLUMNS: 'Name, Email_Address, Company, Release_Time, Ambassador'. 
 
 Here MAILGUN, GMAIL, SHIELD represent the sub tabs.

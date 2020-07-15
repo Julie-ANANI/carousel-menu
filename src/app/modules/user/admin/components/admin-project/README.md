@@ -13,7 +13,8 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 2. ANSWER_TAGS: View, Edit, Add, Delete.
 
-3. QUESTIONNAIRE: Import, View, Edit, Add_Questions_Tags, Delete_Tag, QUIZ: 'View, Save, Generate'. 
+3. QUESTIONNAIRE: Import, View, Edit, Add_Questions_Tags, Delete_Tag, 
+<br><br>QUIZ: 'View, Save, Generate'. 
 
 4. CAMPAIGNS: View, Edit, Add, Update_Statistics, Delete.
  
@@ -21,7 +22,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments', 
 <br><br>EDIT: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments'.
 
-6. STORYBOARD: View, Generate_Video, Change_Language, Visible_To_Client, Edit. 
+6. STORYBOARD: Create, View, Generate_Video, Change_Language, Make_Visible_To_Client, Edit. 
 
 7. FOLLOW_UP: Filter, Select_Respondents, Test_Workflow, Send_Workflow
 <br><br>VIEW: 'Respondents_Answer, Objective, Language', 
@@ -95,26 +96,102 @@ No definition of a Role means no access to that user.
 
 2. FOLLOW_UP: All 
 
-### Example -  Market Test Manager role
+### Example - Market Test Manager role
 
 ```
 nav: { 
     projects: { 
-        project: { 
-            settings: {
-            }
-        },
-        waitingLine: {
-            launchModule: true,
-            cancelSearch: true,
-            stopSearch: true, 
-            addSearchInCampaign: true,
-            searchEmails: true,
-            putBackSearchInLine: true,
-            search: {
-                keywords: true,
-                innovation: true
+        project: {
+            storyboard: {
+                edit: true,
+                create: true,
+                makeVisibleToClient: true,
+                changeLang: true,
+                generateVideo: true,
+                view: true
             },
+            synthesis: {
+                edit : {
+                    respondentComments: true,
+                    statistics: true,
+                    respondentProfile: true,
+                    answersTags: true,
+                    profilesTags: true,
+                    questionTags: true,
+                    prosTags: true,
+                    umiWord: true
+                },
+                view : {
+                    respondentComments: true,
+                    statistics: true,
+                    respondentProfile: true,
+                    answersTags: true,
+                    profilesTags: true,
+                    questionTags: true,
+                    prosTags: true,
+                    umiWord: true
+                },
+                filter: true,
+                views: true
+            },
+            campaigns: {
+                updateStatistics: true,
+                add: true,
+                delete: true,
+                view: true,
+                edit: true
+            }, 
+            questionnaire: {
+                quiz: {
+                    generate: true,
+                    save: true,
+                    view: true
+                },
+                deleteTag: true,
+                addQuestionsTags: true,
+                import: true,
+                view: true,
+                edit: true
+            },
+            answerTags: {
+                delete: true
+                view: true,
+                edit: true
+            },
+            settings: {
+                edit: {
+                    statistics: true,
+                    publishedProject: true,
+                    publicProject: true,
+                    answersAnonymous: true,
+                    projectTags: true,
+                    domain: true,
+                    operator: true,
+                    roadmap: true,
+                    marketTestType: true,
+                    mainObjective: true,
+                    commercial: true,
+                    description: true,
+                    targeting: true,
+                    blacklist: true
+                }
+                view: {
+                    statistics: true,
+                    publishedProject: true,
+                    publicProject: true,
+                    answersAnonymous: true,
+                    projectTags: true,
+                    domain: true,
+                    operator: true,
+                    roadmap: true,
+                    marketTestType: true,
+                    mainObjective: true,
+                    commercial: true,
+                    description: true,
+                    targeting: true,
+                    blacklist: true
+                }
+            }
         }
     } 
 }

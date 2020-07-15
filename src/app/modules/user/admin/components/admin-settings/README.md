@@ -7,11 +7,17 @@ Please always updates the roles / functionalities in this file.
 
 ### Functionalities
 
-1. BLACKLIST: SEARCH: 'Email_Address', SORT: 'Reason, Type', T_COLUMNS: 'Email_Address,
-Created, Expires, Reason, Type', View, Edit, Add.
-2. COUNTRIES: Exclude, SEARCH: 'Country'.
-3. ENTERPRISES: Add, View, Edit, SEARCH: 'Name', T_COLUMNS: 'Logo, Name, Domain, 
-Patterns, Url, Subsidiary, Parent'. 
+1. BLACKLIST: View, Edit, Add,
+<br><br>SEARCH_BY: 'Email_Address', 
+<br><br>SORT_BY: 'Reason, Type', 
+<br><br>T_COLUMNS: 'Email_Address, Created, Expires, Reason, Type'.
+
+2. COUNTRIES: Exclude, 
+<br><br>SEARCH_BY: 'Country'.
+
+3. ENTERPRISES: Add, View, Edit, 
+<br><br>SEARCH_BY: 'Name', 
+<br><br>T_COLUMNS: 'Logo, Name, Domain, Patterns, Url, Subsidiary, Parent'. 
 
 Here BLACKLIST, COUNTRIES, ENTERPRISES represent the sub tabs.
 
@@ -38,10 +44,10 @@ nav: {
             add: true, 
             edit: true, 
             view: true,
-            search: {
+            searchBy: {
                 emailAddress: true
             },
-            sort: {
+            sortBy: {
                 reason: true,
                 type: true
             },
