@@ -67,7 +67,7 @@ No definition of a Role means no access to that user.
 ### Example - Market Test Manager role
 
 ```
-nav: { 
+access: { 
     adminSide: {
         projects: { 
             searchBy: { 
@@ -188,7 +188,7 @@ nav: {
                         answers: {
                             tableColumns: {
                                 validationScore: true,
-                                status: true
+                                status: true,
                                 created: true,
                                 job: true,
                                 name: true,
@@ -239,7 +239,7 @@ nav: {
                     edit: true
                 },
                 answerTags: {
-                    delete: true
+                    delete: true,
                     view: true,
                     edit: true
                 },
@@ -259,7 +259,7 @@ nav: {
                         description: true,
                         targeting: true,
                         blacklist: true
-                    }
+                    },
                     view: {
                         statistics: true,
                         publishedProject: true,
@@ -295,7 +295,7 @@ nav: {
                     searchInCampaign: true
                 },
                 view: {
-                    search: true
+                    search: true,
                     campaign: true,
                     searchFilles: true,
                 },

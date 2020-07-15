@@ -36,7 +36,7 @@ No definition of a Role means no access to that user.
 ### Example - Market Test Manager role
 
 ```
-nav: { 
+access: { 
     professionals: { 
         searchBy: { 
             name: true, 

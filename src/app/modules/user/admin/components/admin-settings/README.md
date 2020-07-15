@@ -38,7 +38,7 @@ No definition of a Role means no access to that user.
 ### Example - Hotline role
 
 ```
-nav: { 
+access: { 
     settings: { 
         blacklist: { 
             add: true, 
