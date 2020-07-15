@@ -180,7 +180,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }*/
 
   public canAccessRoute(key: string) {
-    return this._rolesFrontService.canAccessRoute(key);
+    return this._rolesFrontService.hasAccessAdminSide([key]);
   }
 
   public hasProfilePic(): boolean {
