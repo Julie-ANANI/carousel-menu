@@ -79,7 +79,7 @@
           <ng-container *ngFor="let route of adminRoutes">
             <a
               (click)="onClickLink()"
-              *ngIf="canShow(route.adminLevel)"
+              *ngIf="hasAdminSide && canAccessRoute(route.key)"
               [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="route.pageLink"
               class="navbar-item"
@@ -168,7 +168,7 @@
             <!-- admin side -->
             <a
               (click)="toggleBackOfficeState(); onClickLink();"
-              *ngIf="!backOfficeValue && canShow(1)"
+              *ngIf="!backOfficeValue && hasAdminSide"
               [routerLink]="'/user/admin/projects'"
               class="navbar-item"
               routerLinkActive="active">
@@ -179,7 +179,7 @@
             <!-- client side -->
             <a
               (click)="toggleBackOfficeState(); onClickLink();"
-              *ngIf="backOfficeValue && canShow(1)"
+              *ngIf="backOfficeValue && hasAdminSide"
               [routerLink]="'/user/projects'"
               class="navbar-item"
               routerLinkActive="active">
@@ -304,7 +304,7 @@
           <ng-container *ngFor="let route of adminRoutes">
             <a
               (click)="onClickLink()"
-              *ngIf="canShow(route.adminLevel)"
+              *ngIf="hasAdminSide && canAccessRoute(route.key)"
               [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="route.pageLink"
               class="navbar-item"
@@ -329,7 +329,7 @@
         <!-- admin side -->
         <a
           (click)="toggleBackOfficeState(); onClickLink();"
-          *ngIf="user && user.state === 'confirmed' && !backOfficeValue && canShow(1)"
+          *ngIf="user && user.state === 'confirmed' && !backOfficeValue && hasAdminSide"
           [routerLink]="'/user/admin/projects'"
           class="navbar-item"
           routerLinkActive="active">
@@ -340,7 +340,7 @@
         <!-- client side -->
         <a
           (click)="toggleBackOfficeState(); onClickLink();"
-          *ngIf="user && user.state === 'confirmed' && backOfficeValue && canShow(1)"
+          *ngIf="user && user.state === 'confirmed' && backOfficeValue && hasAdminSide"
           [routerLink]="'/user/projects'"
           class="navbar-item"
           routerLinkActive="active">
