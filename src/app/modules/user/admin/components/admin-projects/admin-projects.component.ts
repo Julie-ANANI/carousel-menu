@@ -16,9 +16,9 @@ import { UserService } from '../../../../../services/user/user.service';
 import { environment } from '../../../../../../environments/environment';
 import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
 
 @Component({
-  selector: 'admin-projects',
   templateUrl: './admin-projects.component.html',
   styleUrls: ['./admin-projects.component.scss']
 })
@@ -39,7 +39,7 @@ export class AdminProjectsComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  private _operators: Array<User>;
+  private _operators: Array<User> = [];
 
   private _isLoading = true;
 
@@ -54,6 +54,7 @@ export class AdminProjectsComponent implements OnInit {
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService,
               private _userService: UserService) {
 
@@ -70,6 +71,7 @@ export class AdminProjectsComponent implements OnInit {
         this._getProjects();
       }, err => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
     }
   }
@@ -85,8 +87,8 @@ export class AdminProjectsComponent implements OnInit {
       this._totalProjects = innovations._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
-      console.error(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
@@ -97,7 +99,7 @@ export class AdminProjectsComponent implements OnInit {
   private _getOperators() {
     return new Promise( (resolve, reject) => {
       const operatorConfig = <Config>{
-        fields: '',
+        fields: 'firstName,lastName',
         limit: '10',
         offset: '0',
         search: '{}',
@@ -123,15 +125,15 @@ export class AdminProjectsComponent implements OnInit {
    */
   private _searchMissionsByOther(config: Config) {
     // Change here the fields. This will hit an aggregate on the back
-    this._innovationService.advancedSearch(config)
-      .subscribe(innovations => {
-        this._projects = innovations.result;
-        this._initProjects();
-        this._totalProjects = innovations._metadata.totalCount;
-        this._initializeTable();
-      }, err => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
+    this._innovationService.advancedSearch(config).pipe(first()).subscribe(innovations => {
+      this._projects = innovations.result;
+      this._initProjects();
+      this._totalProjects = innovations._metadata.totalCount;
+      this._initializeTable();
+    }, err => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   private _initProjects() {
@@ -159,16 +161,27 @@ export class AdminProjectsComponent implements OnInit {
       _clickIndex: 1,
       _isPaginable: true,
       _columns: [
-        {_attrs: ['name'], _name: 'Name', _type: 'TEXT', _isSortable: true, _isSearchable: true, _width: '200px' },
+        {
+          _attrs: ['name'],
+          _name: 'Name',
+          _type: 'TEXT',
+          _isSortable: true,
+          _isSearchable: true
+        },
         {
           _attrs: ['innovationCards.title'],
-          _name: 'Innovation card title',
+          _name: 'Innovation Card Title',
           _type: 'TEXT',
           _isSearchable: true,
-          _width: '200px',
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
-        {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'Owner', _type: 'TEXT', _width: '180px' },
+        {
+          _attrs: ['owner.firstName', 'owner.lastName'],
+          _name: 'Owner',
+          _type: 'TEXT',
+          _width: '180px',
+          _isHidden: !this.canAccess(['projects', 'tableColumns', 'owner'])
+        },
         { _attrs: ['owner.company.name'],
           _name: 'Company',
           _type: 'TEXT',
@@ -190,19 +203,37 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Objective',
           _type: 'TEXT',
           _isSearchable: true,
-          _width: '120px',
+          _width: '200px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
-        {_attrs: ['updated'], _name: 'Last Updated', _type: 'DATE_TIME', _isSortable: true, _width: '200px' },
-        {_attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '130px' },
-        {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _isSortable: true, _isSearchable: true, _width: '150px',
+        {
+          _attrs: ['updated'],
+          _name: 'Last Updated',
+          _type: 'DATE_TIME',
+          _isSortable: true,
+          _width: '200px',
+          _isHidden: !this.canAccess(['projects', 'tableColumns', 'lastUpdated'])
+        },
+        { _attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '130px' },
+        {
+          _attrs: ['status'],
+          _name: 'Status',
+          _type: 'MULTI-CHOICES',
+          _isSortable: true,
+          _isSearchable: true,
+          _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
             {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label is-progress'},
             {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
           ]},
-        {_attrs: ['operator'], _name: 'Operator', _type: 'MULTI-CHOICES', _isSearchable: true, _isHidden: true,
+        {
+          _attrs: ['operator'],
+          _name: 'Operator',
+          _type: 'MULTI-CHOICES',
+          _isSearchable: true,
+          _isHidden: true,
           _choices: this._operators && this._operators.length ? this._operators.map(oper => {
             return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
           }) : []
@@ -224,12 +255,18 @@ export class AdminProjectsComponent implements OnInit {
    * @param file
    */
   public onClickImport(file: File) {
-    this._innovationService.import(file).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
-    }, (err: HttpErrorResponse) => {
-      console.error(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
+    if (this.canAccess(['projects', 'importProject'])) {
+      this._innovationService.import(file).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.PROJECT');
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+    }
+  }
+
+  public canAccess(path: Array<string>) {
+    return this._rolesFrontService.hasAccessAdminSide(path);
   }
 
   set config(value: Config) {
@@ -242,8 +279,9 @@ export class AdminProjectsComponent implements OnInit {
         this._getProjects();
       }
     } catch (ex) {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.message));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.status));
       this._getProjects();
+      console.error(ex);
     }
   }
 
