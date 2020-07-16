@@ -10,9 +10,9 @@ import { Config } from '../../../../../models/config';
 import { Response } from '../../../../../models/response';
 import { ConfigService } from '../../../../../services/config/config.service';
 import { isPlatformBrowser } from '@angular/common';
+import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
 
 @Component({
-  selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.scss']
 })
@@ -49,6 +49,7 @@ export class AdminUsersComponent implements OnInit {
               private _configService: ConfigService,
               private _translateTitleService: TranslateTitleService,
               private _userService: UserService,
+              private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.USERS');
@@ -71,31 +72,73 @@ export class AdminUsersComponent implements OnInit {
       });
 
     }
-
   }
 
   private _initializeTable() {
     this._table = {
       _selector: 'admin-user-limit',
-      _title: 'TABLE.TITLE.USERS',
+      _title: 'users',
       _content: this._users,
       _total: this._total,
       _isSearchable: true,
-      _isDeletable: true,
-      _isSelectable: true,
-      _isEditable: true,
+      _isDeletable: this.canAccess(['users', 'profile', 'delete']),
+      _isSelectable: this.canAccess(['users', 'profile', 'delete']),
       _isTitle: true,
       _isPaginable: true,
-      _clickIndex: 1,
+      _clickIndex: this.canAccess(['users', 'profile', 'view']) ? 1 : null,
       _columns: [
-        {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['email'], _name: 'TABLE.HEADING.EMAIL_ADDRESS', _type: 'TEXT', _isSearchable: true, _isSortable: true, _isHidden: true},
-        {_attrs: ['jobTitle'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-        {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-        {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true}
+        {
+          _attrs: ['firstName', 'lastName'],
+          _name: 'Name',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true
+        },
+        {
+          _attrs: ['email'],
+          _name: 'Email Address',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: true
+        },
+        {
+          _attrs: ['jobTitle'],
+          _name: 'Job',
+          _type: 'TEXT',
+          _isSortable: true,
+          _isSearchable: this.canAccess(['users', 'searchBy', 'job'])
+        },
+        {
+          _attrs: ['company.name'],
+          _name: 'Company',
+          _type: 'TEXT',
+          _isSortable: true,
+          _isSearchable: this.canAccess(['users', 'searchBy', 'enterprise'])
+        },
+        {
+          _attrs: ['domain'],
+          _name: 'Domain',
+          _type: 'TEXT',
+          _isSortable: true,
+          _width: '200px',
+          _isSearchable: this.canAccess(['users', 'searchBy', 'domain']),
+          _isHidden: !this.canAccess(['users', 'tableColumns', 'domain'])
+        },
+        {
+          _attrs: ['created'],
+          _name: 'Created',
+          _type: 'DATE',
+          _isSortable: true,
+          _width: '130px',
+          _isHidden: !this.canAccess(['users', 'tableColumns', 'created'])
+        }
       ]
     };
+  }
+
+  public canAccess(path: Array<string>) {
+    return this._rolesFrontService.hasAccessAdminSide(path);
   }
 
   private _getUsers() {
@@ -129,7 +172,6 @@ export class AdminUsersComponent implements OnInit {
       };
 
     });
-
   }
 
   public updateUser(value: User) {
@@ -143,9 +185,11 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public onClickDelete(users: Array<User>) {
-    this._usersToRemove = [];
-    users.forEach(value => this._usersToRemove.push(new User(value)));
-    this._modalDelete = true;
+    if (this.canAccess(['users', 'profile', 'delete'])) {
+      this._usersToRemove = [];
+      users.forEach(value => this._usersToRemove.push(new User(value)));
+      this._modalDelete = true;
+    }
   }
 
   public onClickConfirm() {

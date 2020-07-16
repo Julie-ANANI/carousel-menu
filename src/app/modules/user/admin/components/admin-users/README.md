@@ -9,7 +9,7 @@ Please always updates the roles / functionalities in this file.
 
 1. SEARCH_BY: Name, Email, Job, Domain.
 2. T_COLUMNS: Name, Job, Enterprise, Domain, Created.   
-3. PROFILE: View, Edit, Impersonate, Affect as Admin. 
+3. PROFILE: View, Edit, Impersonate, Affect as Admin, Delete. 
 
 ### Access of the functionalities based on the roles - by default Root will access all.
 

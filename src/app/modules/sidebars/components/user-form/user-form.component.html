@@ -6,9 +6,15 @@
       <div class="buttons">
         <button type="button"
                 class="button is-secondary is-outlined"
-                *ngIf="authService.isSuperAdmin && type == 'editUser'"
+                *ngIf="canImpersonate"
                 (click)="impersonateUser($event)">Impersonate</button>
-        <button type="submit" class="button is-primary" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+        <button
+          type="submit"
+          class="button is-primary"
+          *ngIf="isEditable"
+          [disabled]="userForm.invalid">
+          {{ 'COMMON.BUTTON.SAVE' | translate }}
+        </button>
       </div>
 
       <!-- operator -->
@@ -26,7 +32,7 @@
             </label>
           </ng-container>
 
-          <ng-container *ngIf="!isSuperAdmin && authService.adminLevel > 1 && authService.userId !== user.id">
+          <ng-container *ngIf="canAffectAsAdmin">
             <label class="form-switch" for="user-form-role">
               <input
                 type="checkbox"
@@ -49,7 +55,9 @@
             <label class="form-label">
               Actual domain:
               <span>{{ userForm.get('domain').value }}</span>
-              <a (click)="startEditInstanceDomain($event)"><ng-container *ngIf="!isSelf && !isSuperAdmin"><i class="fas fa-pencil-alt"></i></ng-container></a>
+              <a *ngIf="isEditable" (click)="startEditInstanceDomain($event)">
+                <ng-container *ngIf="!isSelf && !isSuperAdmin"><i class="fas fa-pencil-alt"></i></ng-container>
+              </a>
             </label>
           </ng-container>
 

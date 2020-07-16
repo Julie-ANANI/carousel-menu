@@ -1,5 +1,5 @@
 export interface SidebarInterface {
-  type?: string;
+  type?: any;
   animate_state?: string;
   title?: string;
   size?: string;

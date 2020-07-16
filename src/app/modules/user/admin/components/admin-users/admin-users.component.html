@@ -49,6 +49,9 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-user-form
     (finalUserData)="updateUser($event)"
+    [canAffectAsAdmin]="canAccess(['users', 'profile', 'affectAsAdmin'])"
+    [canImpersonate]="canAccess(['users', 'profile', 'impersonate'])"
+    [isEditable]="canAccess(['users', 'profile', 'edit'])"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
     [user]="selectedUser">
@@ -58,7 +61,10 @@
 
 
 <!-- modal -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal
+  *ngIf="canAccess(['users', 'profile', 'delete'])"
+  [(showModal)]="modalDelete"
+  [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     <div class="text-background text-medium">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>

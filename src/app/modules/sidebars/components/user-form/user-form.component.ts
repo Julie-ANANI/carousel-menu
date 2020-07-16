@@ -29,6 +29,12 @@ import { ProfessionalsService } from '../../../../services/professionals/profess
 
 export class UserFormComponent implements OnInit {
 
+  @Input() canImpersonate = false;
+
+  @Input() isEditable = false;
+
+  @Input() canAffectAsAdmin = false;
+
   @Input() set sidebarState(value: string) {
     if (value === undefined || value ===  'active') {
       this.buildForm();
@@ -234,27 +240,28 @@ export class UserFormComponent implements OnInit {
   }
 
   onClickSave() {
-
-    for (const code in this._countries) {
-      if (this._countries[code] === this._userForm.get('country').value) {
-        this._userForm.value['country'] = code;
+    if (this.isEditable) {
+      for (const code in this._countries) {
+        if (this._countries[code] === this._userForm.get('country').value) {
+          this._userForm.value['country'] = code;
+        }
       }
-    }
 
-    if (this._isEditUser) {
-      const user = new User(this._userForm.value);
-      user.id = this._user.id;
-      this.finalUserData.emit(user);
-    } else if (this._isProfessional && this._type === 'professional') {
-      const pro = this._userForm.value;
-      pro._id = this._pro._id;
-      pro.company = this._userForm.get('company.name').value;
-      pro.tags = this._tags;
-      this.finalProfessionalData.emit(pro);
-    } else if (this._isProfessional && this._type === 'addPro') {
-      const pro = this._userForm.value;
-      pro.company = this._userForm.get('company.name').value;
-      this.finalProfessionalData.emit(pro);
+      if (this._isEditUser) {
+        const user = new User(this._userForm.value);
+        user.id = this._user.id;
+        this.finalUserData.emit(user);
+      } else if (this._isProfessional && this._type === 'professional') {
+        const pro = this._userForm.value;
+        pro._id = this._pro._id;
+        pro.company = this._userForm.get('company.name').value;
+        pro.tags = this._tags;
+        this.finalProfessionalData.emit(pro);
+      } else if (this._isProfessional && this._type === 'addPro') {
+        const pro = this._userForm.value;
+        pro.company = this._userForm.get('company.name').value;
+        this.finalProfessionalData.emit(pro);
+      }
     }
   }
 
@@ -304,7 +311,9 @@ export class UserFormComponent implements OnInit {
 
   startEditInstanceDomain(event: Event): void {
     event.preventDefault();
-    this._editInstanceDomain = true;
+    if (this.isEditable) {
+      this._editInstanceDomain = true;
+    }
   }
 
 
@@ -332,10 +341,12 @@ export class UserFormComponent implements OnInit {
 
 
   changeRole(event: Event) {
-    if ((event.target as HTMLInputElement).checked) {
-      this._userForm.get('roles').setValue('admin');
-    } else {
-      this._userForm.get('roles').setValue('user');
+    if (this.canAffectAsAdmin) {
+      if ((event.target as HTMLInputElement).checked) {
+        this._userForm.get('roles').setValue('admin');
+      } else {
+        this._userForm.get('roles').setValue('user');
+      }
     }
   }
 
@@ -379,12 +390,14 @@ export class UserFormComponent implements OnInit {
 
   public impersonateUser(event: Event) {
     event.preventDefault();
-    this._authService.forceLogin(this._user.id).subscribe(response => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', '');
-      this.router.navigate(['/user']);
-    }, err => {
-      this.translateNotificationsService.error('ERROR.ERROR', err.message);
-    });
+    if (this.canImpersonate) {
+      this._authService.forceLogin(this._user.id).subscribe(response => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', '');
+        this.router.navigate(['/user']);
+      }, err => {
+        this.translateNotificationsService.error('ERROR.ERROR', err.message);
+      });
+    }
   }
 
   get isSuperAdmin(): boolean {

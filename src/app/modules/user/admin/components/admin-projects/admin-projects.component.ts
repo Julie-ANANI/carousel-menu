@@ -152,7 +152,7 @@ export class AdminProjectsComponent implements OnInit {
   private _initializeTable() {
     this._table = {
       _selector: 'admin-projects-limit',
-      _title: 'TABLE.TITLE.PROJECTS',
+      _title: 'projects',
       _content: this._projects,
       _total: this._totalProjects,
       _isSearchable: true,
