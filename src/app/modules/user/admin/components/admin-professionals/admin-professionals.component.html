@@ -1,29 +1,23 @@
-<section id="admin-professionals" class="section-light-pad">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <div class="restrict-width">
+<div *ngIf="canAccess(['professionals'])" class="container fluid grid-2xl" id="admin-professionals">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
+    <!-- error message while fetching -->
+    <app-utility-message-error *ngIf="!isLoading && fetchingError"></app-utility-message-error>
+    <!-- /error message while fetching -->
 
-      <!-- fetching error -->
-      <ng-container *ngIf="fetchingError">
-        <div class="a-p-error-wrapper d-flex align-center">
-          <app-utility-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
-        </div>
-      </ng-container>
-      <!-- /fetching error -->
+    <!-- no fetching error -->
+    <section [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
+      <app-shared-professionals-list
+        [(config)]="config"
+        [professionals]="professionals"
+        [profilePath]="['professionals', 'profile']"
+        [searchByPath]="['professionals', 'searchBy']"
+        [tableColumnsPath]="['professionals', 'tableColumns']"
+        [tableSelector]="'admin-pros-limit'"
+        [total]="total">
+      </app-shared-professionals-list>
+    </section>
+    <!-- /no fetching error -->
 
-
-      <!-- professionals -->
-      <ng-container *ngIf="!fetchingError">
-        <app-shared-professionals-list
-          [(config)]="config"
-          [professionals]="professionals"
-          [tableSelector]="'admin-pros-limit'"
-          [total]="total">
-        </app-shared-professionals-list>
-      </ng-container>
-      <!-- /professionals -->
-
-
-    </div>
   </div>
-</section>
+</div>

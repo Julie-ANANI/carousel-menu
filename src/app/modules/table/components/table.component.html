@@ -96,7 +96,8 @@
                 *ngFor="let column of visibleColumns; let i = index;"
                 (click)="selectColumn(getName(column))"
                 [ngClass]="{ 'active': column._isSelected && isSortable(column) }"
-                [ngStyle]="{ 'max-width': column._width, 'min-width': column._width }">
+                [ngStyle]="{ 'max-width': column._width ? column._width : visibleColumns.length < 5 ? '450px' : '300px'
+                , 'min-width': column._width }">
                 <div class="flex-wrapper">
 
                   <!-- not sortable text -->
@@ -145,21 +146,23 @@
 
                   <!-- different buttons -->
                   <ng-container *ngIf="table._buttons && table._buttons.length > 0">
-                    <div *ngFor="let button of table._buttons" class="d-inline-flex m-right-25">
-                      <button
-                        (click)="onActionClick(button._label)"
-                        [ngClass]="button._colorClass"
-                        class="button is-link p-no text-sm is-sm"
-                        type="button">
-                        <i
-                          *ngIf="button._icon"
-                          [ngClass]="button._icon"
-                          [ngStyle]="{ 'font-size': button._iconSize ? button._iconSize : '14px' }"
-                          class="icon-left text-no-underline">
-                        </i>
-                        {{ button._label | translate }}
-                      </button>
-                    </div>
+                    <ng-container *ngFor="let button of table._buttons">
+                      <div *ngIf="!button._isHidden" class="d-inline-flex m-right-25">
+                        <button
+                          (click)="onActionClick(button._label)"
+                          [ngClass]="button._colorClass"
+                          class="button is-link p-no text-sm is-sm"
+                          type="button">
+                          <i
+                            *ngIf="button._icon"
+                            [ngClass]="button._icon"
+                            [ngStyle]="{ 'font-size': button._iconSize ? button._iconSize : '14px' }"
+                            class="icon-left text-no-underline">
+                          </i>
+                          {{ button._label | translate }}
+                        </button>
+                      </div>
+                    </ng-container>
                   </ng-container>
                   <!-- /different buttons -->
 
@@ -198,7 +201,10 @@
               <td class="cell-checkbox">
                 <div class="flex-wrapper">
                   <div class="text-ellipsis truncate-text">
-                    <label class="flex-centered" [ngClass]="{ 'active': table._content[row]?._isSelected, 'disabled': disabledRow(table._content[row]) }">
+                    <label
+                      class="flex-centered"
+                      [ngClass]="{ 'active': table._content[row]?._isSelected,
+                      'disabled': disabledRow(table._content[row]) }">
                       <input type="checkbox" (click)="selectRow(row);" [disabled]=disabledRow(table._content[row])>
                       <i class="icon icon-check"></i>
                     </label>
@@ -212,7 +218,8 @@
             <!-- rest columns -->
             <td
               *ngFor="let column of visibleColumns; let i = index"
-              [ngStyle]="{ 'max-width': column._width, 'min-width': column._width }">
+              [ngStyle]="{ 'max-width': column._width ? column._width : visibleColumns.length < 5 ? '450px' : '300px',
+              'min-width': column._width }">
               <ng-container [ngSwitch]="getType(column)">
                 <div class="flex-wrapper">
 

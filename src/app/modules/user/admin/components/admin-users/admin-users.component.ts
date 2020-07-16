@@ -114,7 +114,7 @@ export class AdminUsersComponent implements OnInit {
           _name: 'Company',
           _type: 'TEXT',
           _isSortable: true,
-          _isSearchable: this.canAccess(['users', 'searchBy', 'enterprise'])
+          _isSearchable: this.canAccess(['users', 'searchBy', 'company'])
         },
         {
           _attrs: ['domain'],

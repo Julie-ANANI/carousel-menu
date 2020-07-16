@@ -12,7 +12,7 @@ Root, Tech, Hotline, Marketing, Commercial, Market Test Manager, Community.
 1. ADMIN_SIDE: USERS, COMMUNITY, PROFESSIONALS, 
 <br><br>LIBRARIES: 'WORKFLOWS, EMAILS, QUESTIONNAIRE, SIGNATURES', 
 <br><br>MONITORING: 'MAILGUN, GMAIL, SHIELD',
-<br><br>SETTINGS: 'BLACKLIST, COUNTRIES, ENTERPRISES', 
+<br><br>SETTINGS: 'BLACKLIST, COUNTRIES, COMPANY', 
 <br><br>SEARCH: 'PROFESSIONAL, HISTORY, WAITING_LINE',
 <br><br>PROJECTS: 
 <br>'PROJECT: 'SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD, FOLLOW_UP', 
@@ -74,7 +74,7 @@ access: {
                 name: true, 
                 innovationCard: true, 
                 type: true, 
-                enterprise: true, 
+                company: true, 
                 status: true, 
                 operator: true, 
                 objective: true 
@@ -82,7 +82,7 @@ access: {
             tableColumns: { 
                 name: true, 
                 innovationCard: true, 
-                enterprise: true, 
+                company: true, 
                 type: true, 
                 objective: true 
             }, 
@@ -211,7 +211,7 @@ access: {
                                 company: true,
                                 name: true,
                                 job: true,
-                                emailAddress: true
+                                email: true
                             },
                             tableColumns: {
                                 company: true,
@@ -348,12 +348,12 @@ access: {
                 email: true, 
                 job: true, 
                 country: true,
-                enterprise: true
+                company: true
             }, 
             tableColumns: { 
                 name: true, 
                 job: true, 
-                enterprise: true, 
+                company: true, 
                 member: true, 
                 country: true 
             }, 
@@ -373,7 +373,7 @@ access: {
             tableColumns: { 
                 name: true, 
                 job: true, 
-                enterprise: true, 
+                company: true, 
                 domain: true, 
                 created: true 
             }, 

@@ -6,8 +6,8 @@ All notable changes to the Market Tests page will be documented in this file.
 Please always updates the roles / functionalities in this file.  
 
 ### Functionalities
-1. SEARCH_BY: Name, InnovationCard, Type, Enterprise, Status, Operator, Objective.
-2. T_COLUMNS: Name, InnovationCard, Owner, Enterprise, Type, Objective, Last updated,
+1. SEARCH_BY: Name, InnovationCard, Type, Company, Status, Operator, Objective.
+2. T_COLUMNS: Name, InnovationCard, Owner, Company, Type, Objective, Last updated,
 Created, Status.   
 3. IMPORT_PROJECT
 4. BATCH
@@ -25,18 +25,18 @@ No definition of a Role means no access to that user.
 #### Hotline: 
 
 1. SEARCH_BY: All
-2. T_COLUMNS: Name, InnovationCard, Enterprise, Type, Objective, Created, Status.
+2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
 3. BATCH
 
 #### Marketing:
 
 1. SEARCH_BY: ALL
-2. T_COLUMNS: Name, InnovationCard, Enterprise, Type, Objective, Created, Status.
+2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
 
 #### Commercial:
 
 1. SEARCH_BY: ALL
-2. T_COLUMNS: Name, InnovationCard, Enterprise, Type, Objective, Created, Status.
+2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
 
 #### Market Test Manager:
 
@@ -53,7 +53,7 @@ access: {
             name: true, 
             innovationCard: true, 
             type: true, 
-            enterprise: true, 
+            company: true, 
             status: true, 
             operator: true, 
             objective: true 
@@ -61,7 +61,7 @@ access: {
         tableColumns: { 
             name: true, 
             innovationCard: true, 
-            enterprise: true, 
+            company: true, 
             type: true, 
             objective: true 
         }, 

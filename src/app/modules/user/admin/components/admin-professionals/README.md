@@ -7,8 +7,8 @@ Please always updates the roles / functionalities in this file.
 
 ### Functionalities
 
-1. SEARCH_BY: Name, Email, Job, Country, Enterprise.
-2. T_COLUMNS: Member, Name, Country, Job, Enterprise, Campaign, Contact.   
+1. SEARCH_BY: Name, Email, Job, Country, Company.
+2. T_COLUMNS: Member, Name, Country, Job, Company, Campaign, Contact.   
 3. PROFILE: View, Edit, Delete. 
 
 ### Access of the functionalities based on the roles - by default Root will access all.
@@ -24,13 +24,13 @@ No definition of a Role means no access to that user.
 #### Hotline:
 
 1. SEARCH_BY: All
-2. T_COLUMNS: Member, Name, Country, Job, Enterprise.
+2. T_COLUMNS: Member, Name, Country, Job, Company.
 3. PROFILE: All
 
 #### Market Test Manager:
 
 1. SEARCH_BY: All
-2. T_COLUMNS: Member, Name, Country, Job, Enterprise.
+2. T_COLUMNS: Member, Name, Country, Job, Company.
 3. PROFILE: All
 
 ### Example - Market Test Manager role
@@ -43,12 +43,12 @@ access: {
             email: true, 
             job: true, 
             country: true,
-            enterprise: true
+            Company: true
         }, 
         tableColumns: { 
             name: true, 
             job: true, 
-            enterprise: true, 
+            company: true, 
             member: true, 
             country: true 
         }, 

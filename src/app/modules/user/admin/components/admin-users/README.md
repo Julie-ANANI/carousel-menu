@@ -8,7 +8,7 @@ Please always updates the roles / functionalities in this file.
 ### Functionalities
 
 1. SEARCH_BY: Name, Email, Job, Domain.
-2. T_COLUMNS: Name, Job, Enterprise, Domain, Created.   
+2. T_COLUMNS: Name, Job, Company, Domain, Created.   
 3. PROFILE: View, Edit, Impersonate, Affect as Admin, Delete. 
 
 ### Access of the functionalities based on the roles - by default Root will access all.
@@ -24,7 +24,7 @@ No definition of a Role means no access to that user.
 #### Commercial:
 
 1. SEARCH_BY: Name, Email.
-2. T_COLUMNS: Name, Job, Enterprise.
+2. T_COLUMNS: Name, Job, Company.
 3. PROFILE: View
 
 #### Market Test Manager:
@@ -53,7 +53,7 @@ access: {
         tableColumns: { 
             name: true, 
             job: true, 
-            enterprise: true, 
+            company: true, 
             domain: true, 
             created: true 
         }, 

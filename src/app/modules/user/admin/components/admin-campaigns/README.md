@@ -16,9 +16,10 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>ADD: 'Search_In_Campaign', 
 <br><br>LAUNCH: 'Module', STOP: 'Search', CANCEL: 'Search'.
 
-3. PROS: View, Edit, Import, Add, Export,
-<br><br>SEARCH_BY: 'Name, Email_Address, Country, Job, Company', 
-<br><br>T_COLUMNS: 'Member, Name, Country, Job, Company, Campaign, Contact'.
+3. PROS:
+<br><br>SEARCH_BY: 'Name, Email, Country, Job, Company', 
+<br><br>T_COLUMNS: 'Member, Name, Country, Job, Company, Campaign, Contact'
+<br><br>PROFILE: 'View, Edit, Import, Add, Export, Delete'.
 
 4. WORKFLOWS: Select_Template, Edit_Template, View, Change_Language, Import, Test. 
 
@@ -47,8 +48,9 @@ No definition of a Role means no access to that user.
 
 #### Hotline:
 
-1. PROS: View, Edit, Add, Export,
-<br><br>SEARCH_BY: 'Name, Email_Address'.
+1. PROS:
+<br><br>SEARCH_BY: 'Name, Email,
+<br><br>PROFILE: 'View, Edit, Add, Export'.
 
 2. ANSWERS: View_Response, Edit_Response,
 <br><br>FILTER: 'Status', 
@@ -68,9 +70,10 @@ No definition of a Role means no access to that user.
 <br><br>STOP: 'Search', 
 <br><br>CANCEL: 'Search'.
 
-3. PROS: View, Edit, Import, Add,
-<br><br>SEARCH_BY: 'Name, Email_Address, Job, Company', 
-<br><br>T_COLUMNS: 'Name, Country, Job, Company'.
+3. PROS:
+<br><br>SEARCH_BY: 'Name, Email, Job, Company', 
+<br><br>T_COLUMNS: 'Name, Country, Job, Company',
+<br><br>PROFILE: 'View, Edit, Import, Add'.
 
 4. WORKFLOWS: Select_Template, Edit_Template, Change_Language, Test. 
 
@@ -173,7 +176,7 @@ access: {
                                 company: true,
                                 name: true,
                                 job: true,
-                                emailAddress: true
+                                email: true
                             },
                             tableColumns: {
                                 company: true,
@@ -181,10 +184,12 @@ access: {
                                 name: true,
                                 country: true
                             },
-                            import: true,
-                            add: true,
-                            edit: true,
-                            view: true
+                            profile: {
+                                import: true,
+                                add: true,
+                                edit: true,
+                                view: true
+                            }
                         }
                     }
                 }

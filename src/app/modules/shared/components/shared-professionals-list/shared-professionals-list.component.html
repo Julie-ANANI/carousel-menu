@@ -19,6 +19,7 @@
     <app-user-form
       (finalProfessionalData)="updateProfessional($event)"
       [campaign]="campaign"
+      [isEditable]="canAccessProfile(['edit'])"
       [pro]="selectedProfessional"
       [sidebarState]="sidebarValue.animate_state"
       [type]="sidebarValue.type">
