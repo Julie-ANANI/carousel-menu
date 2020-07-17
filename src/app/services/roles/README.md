@@ -84,7 +84,11 @@ access: {
                 innovationCard: true, 
                 company: true, 
                 type: true, 
-                objective: true 
+                objective: true,
+                lastUpdated: true,
+                created: true,
+                status: true,
+                owner: true
             }, 
             batch: true,
             project: {

@@ -43,11 +43,15 @@ export class AdminProjectsComponent implements OnInit {
 
   private _isLoading = true;
 
-  private _mainObjective = this._translateService.currentLang === 'en' ?
+  private _currentLang = this._translateService.currentLang;
+
+  private _mainObjective = this._currentLang === 'en' ?
     'mission.objective.principal.en' : 'mission.objective.principal.fr';
 
-  private _objectiveSearchKey = this._translateService.currentLang === 'en' ?
+  private _objectiveSearchKey = this._currentLang === 'en' ?
     'objective.principal.en' : 'objective.principal.fr';
+
+  private _fetchingError = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
@@ -69,8 +73,10 @@ export class AdminProjectsComponent implements OnInit {
       this._initializeTable();
       this._getOperators().then( _ => {
         this._getProjects();
-      }, err => {
+      }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isLoading = false;
+        this._fetchingError = true;
         console.error(err);
       });
     }
@@ -81,13 +87,15 @@ export class AdminProjectsComponent implements OnInit {
    * @private
    */
   private _getProjects() {
-    this._innovationService.getAll(this._config).pipe(first()).subscribe((innovations: Response) => {
-      this._projects = innovations.result;
+    this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+      this._projects = response && response.result;
       this._initProjects();
-      this._totalProjects = innovations._metadata.totalCount;
+      this._totalProjects = response && response._metadata && response._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isLoading = false;
+      this._fetchingError = true;
       console.error(err);
     });
   }
@@ -107,13 +115,12 @@ export class AdminProjectsComponent implements OnInit {
         domain: environment.domain,
         isOperator: 'true'
       };
-      this._userService.getAll(operatorConfig).pipe(first())
-        .subscribe(operators => {
-          this._operators = operators && operators['result'] ? operators['result'] : [];
-          resolve(true);
-        }, err => {
-          reject(err);
-        });
+      this._userService.getAll(operatorConfig).pipe(first()).subscribe(operators => {
+        this._operators = operators && operators['result'] ? operators['result'] : [];
+        resolve(true);
+        }, (err: HttpErrorResponse) => {
+        reject(err);
+      });
     });
   }
 
@@ -139,7 +146,8 @@ export class AdminProjectsComponent implements OnInit {
   private _initProjects() {
     this._projects = this._projects.map((project) => {
       if (project.innovationCards && project.innovationCards.length) {
-        project.innovationCards = InnovationFrontService.currentLangInnovationCard(project, this._translateService.currentLang, 'CARD');
+        project.innovationCards =
+          InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
       return project;
     });
@@ -166,13 +174,15 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Name',
           _type: 'TEXT',
           _isSortable: true,
-          _isSearchable: true
+          _isSearchable: this.canAccess(['searchBy', 'name']),
+          _isHidden: !this.canAccess(['tableColumns', 'name'])
         },
         {
           _attrs: ['innovationCards.title'],
           _name: 'Innovation Card Title',
           _type: 'TEXT',
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
+          _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
         {
@@ -180,13 +190,14 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Owner',
           _type: 'TEXT',
           _width: '180px',
-          _isHidden: !this.canAccess(['projects', 'tableColumns', 'owner'])
+          _isHidden: !this.canAccess(['tableColumns', 'owner'])
         },
         { _attrs: ['owner.company.name'],
           _name: 'Company',
           _type: 'TEXT',
           _width: '180px',
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'company']),
+          _isHidden: !this.canAccess(['tableColumns', 'company']),
           _searchConfig: {_collection: 'user', _searchKey: 'company.name' }
         },
         {
@@ -194,7 +205,8 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Type',
           _type: 'TEXT',
           _isSortable: true,
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'type']),
+          _isHidden: !this.canAccess(['tableColumns', 'type']),
           _width: '100px',
           _searchConfig: {_collection: 'mission', _searchKey: 'type' }
           }, // Using _searchConfig for advanced search
@@ -202,7 +214,8 @@ export class AdminProjectsComponent implements OnInit {
           _attrs: [this._mainObjective],
           _name: 'Objective',
           _type: 'TEXT',
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'objective']),
+          _isHidden: !this.canAccess(['tableColumns', 'objective']),
           _width: '200px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
@@ -212,15 +225,23 @@ export class AdminProjectsComponent implements OnInit {
           _type: 'DATE_TIME',
           _isSortable: true,
           _width: '200px',
-          _isHidden: !this.canAccess(['projects', 'tableColumns', 'lastUpdated'])
+          _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
         },
-        { _attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true, _width: '130px' },
+        {
+          _attrs: ['created'],
+          _name: 'Created',
+          _type: 'DATE',
+          _isSortable: true,
+          _width: '130px',
+          _isHidden: !this.canAccess(['tableColumns', 'created'])
+        },
         {
           _attrs: ['status'],
           _name: 'Status',
           _type: 'MULTI-CHOICES',
           _isSortable: true,
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'status']),
+          _isHidden: !this.canAccess(['tableColumns', 'status']),
           _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
@@ -232,7 +253,7 @@ export class AdminProjectsComponent implements OnInit {
           _attrs: ['operator'],
           _name: 'Operator',
           _type: 'MULTI-CHOICES',
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'operator']),
           _isHidden: true,
           _choices: this._operators && this._operators.length ? this._operators.map(oper => {
             return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
@@ -255,7 +276,7 @@ export class AdminProjectsComponent implements OnInit {
    * @param file
    */
   public onClickImport(file: File) {
-    if (this.canAccess(['projects', 'importProject'])) {
+    if (this.canAccess(['importProject'])) {
       this._innovationService.import(file).pipe(first()).subscribe(() => {
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.PROJECT');
       }, (err: HttpErrorResponse) => {
@@ -265,8 +286,12 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  public canAccess(path: Array<string>) {
-    return this._rolesFrontService.hasAccessAdminSide(path);
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['projects'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['projects']);
+    }
   }
 
   set config(value: Config) {
@@ -299,6 +324,10 @@ export class AdminProjectsComponent implements OnInit {
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }

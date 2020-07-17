@@ -6,10 +6,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminProjectsComponent } from './admin-projects.component';
 
-import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminBatchesDisplayModule } from '../admin-batches-display/admin-batches-display.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -20,8 +20,8 @@ import { AdminBatchesDisplayModule } from '../admin-batches-display/admin-batche
     TranslateModule.forChild(),
     PipeModule,
     RouterModule,
-    ErrorTemplate1Module,
-    AdminBatchesDisplayModule
+    AdminBatchesDisplayModule,
+    MessageErrorModule
   ],
   declarations: [
     AdminProjectsComponent
