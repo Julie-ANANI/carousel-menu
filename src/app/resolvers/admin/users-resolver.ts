@@ -40,7 +40,7 @@ export class UsersResolver implements Resolve<Response> {
 
     } else {
 
-      this._config.limit = this._configService.configLimit('admin-user-limit');
+      this._config.limit = this._configService.configLimit('admin-users-limit');
 
       return this._userService.getAll(this._config)
         .pipe(

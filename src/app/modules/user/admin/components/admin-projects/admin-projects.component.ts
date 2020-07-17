@@ -74,7 +74,7 @@ export class AdminProjectsComponent implements OnInit {
       this._getOperators().then( _ => {
         this._getProjects();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
         this._isLoading = false;
         this._fetchingError = true;
         console.error(err);
@@ -93,7 +93,7 @@ export class AdminProjectsComponent implements OnInit {
       this._totalProjects = response && response._metadata && response._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
       this._isLoading = false;
       this._fetchingError = true;
       console.error(err);
@@ -138,7 +138,7 @@ export class AdminProjectsComponent implements OnInit {
       this._totalProjects = innovations._metadata.totalCount;
       this._initializeTable();
     }, err => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -278,11 +278,13 @@ export class AdminProjectsComponent implements OnInit {
   public onClickImport(file: File) {
     if (this.canAccess(['importProject'])) {
       this._innovationService.import(file).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.PROJECT');
+        this._translateNotificationsService.success('Success', 'The project has been imported successfully.');
       }, (err: HttpErrorResponse) => {
         console.error(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
       });
+    } else {
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(403));
     }
   }
 
@@ -304,7 +306,7 @@ export class AdminProjectsComponent implements OnInit {
         this._getProjects();
       }
     } catch (ex) {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.status));
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(ex.status));
       this._getProjects();
       console.error(ex);
     }

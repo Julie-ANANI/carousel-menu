@@ -10,7 +10,7 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../../sidebars/components/user-form/sidebar-user-form.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
-import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -23,7 +23,7 @@ import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-
     FormsModule,
     SidebarUserFormModule,
     ModalModule,
-    ErrorTemplate1Module
+    MessageErrorModule
   ],
   declarations: [
     AdminUsersComponent
