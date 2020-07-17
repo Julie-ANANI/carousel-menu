@@ -25,7 +25,7 @@ export class AdminProfessionalsComponent implements OnInit {
 
   private _professionals: Array<SelectedProfessional> = [];
 
-  private _total: number = -1;
+  private _total = -1;
 
   private _config: Config = {
     fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.is',
@@ -46,12 +46,13 @@ export class AdminProfessionalsComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
 
-    this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROFESSIONALS');
+    this._translateTitleService.setTitle('Professionals');
 
   }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
+      this._isLoading = false;
       this._config.limit = this._configService.configLimit('admin-pros-limit');
       this._getProfessionals();
     }
@@ -59,19 +60,18 @@ export class AdminProfessionalsComponent implements OnInit {
 
   private _getProfessionals() {
     this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-      this._professionals = response.result;
-      this._total = response._metadata.totalCount;
-      this._isLoading = false;
+      this._professionals = response && response.result || [];
+      this._total = response && response._metadata && response._metadata.totalCount || 0;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
       this._fetchingError = true;
       this._isLoading = false;
       console.error(err);
     });
   }
 
-  public canAccess(path: Array<string>) {
-    return this._rolesFrontService.hasAccessAdminSide(path);
+  public canAccess() {
+    return this._rolesFrontService.hasAccessAdminSide(['professionals']);
   }
 
   set config(value: Config) {
