@@ -28,6 +28,7 @@ import {ClientProjectService} from '../../../../../../services/client-project/cl
 import {HttpErrorResponse} from '@angular/common/http';
 import {MissionService} from '../../../../../../services/mission/mission.service';
 import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
+import {RolesFrontService} from "../../../../../../services/roles/roles-front.service";
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -112,6 +113,7 @@ export class AdminProjectManagementComponent implements OnInit {
               private _authService: AuthService,
               private _router: Router,
               private _userService: UserService,
+              private _rolesFrontService: RolesFrontService,
               private _tagService: TagsService,
               private _notificationsService: TranslateNotificationsService,
               private _dashboardService: DashboardService,
@@ -189,12 +191,14 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param {Innovation} innovation
    */
   public updateStats() {
-    this._innovationService.updateStats(this._project._id)
-      .subscribe((project: any) => {
-        this._project = project;
-      }, (error: any) => {
-        this._notificationsService.error('ERROR', error.message);
-      });
+    if (this.canAccess(['edit', 'statistics'])) {
+      this._innovationService.updateStats(this._project._id)
+        .subscribe((project: any) => {
+          this._project = project;
+        }, (error: any) => {
+          this._notificationsService.error('ERROR', error.message);
+        });
+    }
   }
 
   /***
@@ -264,14 +268,16 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   public updateMissionTeam(selectedOperator: User) {
-    const operatorIndex = this._mission.team.findIndex((operator: User) => operator.id === selectedOperator['_id']);
-    if (operatorIndex > -1) {
-      this._mission.team.splice(operatorIndex, 1);
-      this.missionTeam.splice(operatorIndex, 1);
-    } else {
-      selectedOperator.id = selectedOperator['_id'];
-      this._mission.team.push(selectedOperator);
-      this.missionTeam.push(selectedOperator['_id']);
+    if (this.canAccess(['edit', 'mission'])) {
+      const operatorIndex = this._mission.team.findIndex((operator: User) => operator.id === selectedOperator['_id']);
+      if (operatorIndex > -1) {
+        this._mission.team.splice(operatorIndex, 1);
+        this.missionTeam.splice(operatorIndex, 1);
+      } else {
+        selectedOperator.id = selectedOperator['_id'];
+        this._mission.team.push(selectedOperator);
+        this.missionTeam.push(selectedOperator['_id']);
+      }
     }
   }
 
@@ -312,10 +318,12 @@ export class AdminProjectManagementComponent implements OnInit {
    * Change the owner of the project
    */
   ownerEditionFinished() {
-    this._project.owner = this.owner;
-    this.save('Le propriétaire à été mis à jour avec succès !');
-    this._saveClientProject('OWNER');
-    this.saveMission('OWNER');
+    if (this.canAccess(['edit', 'owner'])) {
+      this._project.owner = this.owner;
+      this.save('Le propriétaire à été mis à jour avec succès !');
+      this._saveClientProject('OWNER');
+      this.saveMission('OWNER');
+    }
   }
 
   /***
@@ -323,8 +331,10 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param {string} value
    */
   changeProjectDomain(value: string) {
-    this._project.domain = value;
-    this.save('le domaine a été mis à jour avec succès !');
+    if (this.canAccess(['edit', 'domain'])) {
+      this._project.domain = value;
+      this.save('le domaine a été mis à jour avec succès !');
+    }
   }
 
   /***
@@ -332,43 +342,51 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param value
    */
   changeProjectOperator(value: any) {
-    this._project.operator = value || null;
-    this.operatorId = value || undefined;
-    this.save('L\'opérateur à été mis à jour avec succès');
+    if (this.canAccess(['edit', 'operator'])) {
+      this._project.operator = value || null;
+      this.operatorId = value || undefined;
+      this.save('L\'opérateur à été mis à jour avec succès');
+    }
   }
 
   changeMissionType(type: MissionType) {
-    this._mission.type = type;
-    this.saveMission();
+    if (this.canAccess(['edit', 'missionType'])) {
+      this._mission.type = type;
+      this.saveMission();
+    }
   }
 
   changeMissionObjective(objective: string) {
-    const index = this._missionObjectives.findIndex((value) => value[this._currentLang]['label'] === objective);
+    if (this.canAccess(['edit', 'mainObjective'])) {
+      const index = this._missionObjectives.findIndex((value) =>
+        value[this._currentLang]['label'] === objective);
 
-    if (index !== -1) {
+      if (index !== -1) {
 
-      if (!this._mission.objective) {
-        this._mission.objective = {
-          principal: {},
-          secondary: [],
-          comment: ''
+        if (!this._mission.objective) {
+          this._mission.objective = {
+            principal: {},
+            secondary: [],
+            comment: ''
+          };
+        }
+
+        this._mission.objective.principal = {
+          en: this._missionObjectives[index].en.label,
+          fr: this._missionObjectives[index].fr.label,
         };
+
+        this.saveMission();
+
       }
-
-      this._mission.objective.principal = {
-        en: this._missionObjectives[index].en.label,
-        fr: this._missionObjectives[index].fr.label,
-      };
-
-      this.saveMission();
-
     }
-
   }
 
   changeCommercial(id: any) {
-    this._clientProject.commercial = id;
-    this._saveClientProject();
+    if (this.canAccess(['edit', 'commercial'])) {
+      this._clientProject.commercial = id;
+      this._saveClientProject();
+    }
   }
 
   /***
@@ -386,14 +404,16 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editRoadmap() {
-    this.changeSidebar('mission-form');
-    if (this._project.mission) {
-      this._more = {
-        animate_state: 'active',
-        title: 'SIDEBAR.TITLE.EDIT_MISSION',
-        type: 'mission',
-        size: '726px'
-      };
+    if (this.canAccess(['edit', 'roadmap'])) {
+      this.changeSidebar('mission-form');
+      if (this._project.mission) {
+        this._more = {
+          animate_state: 'active',
+          title: 'SIDEBAR.TITLE.EDIT_MISSION',
+          type: 'mission',
+          size: '726px'
+        };
+      }
     }
   }
 
@@ -428,12 +448,14 @@ export class AdminProjectManagementComponent implements OnInit {
    * Change the sidebar to the excludeEmails sidebar
    */
   editBlacklist() {
-    this.changeSidebar('blacklist-emails-domains');
-    this._more = {
-      animate_state: 'active',
-      title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
-      type: 'excludeEmails',
-    };
+    if (this.canAccess(['edit', 'blacklist'])) {
+      this.changeSidebar('blacklist-emails-domains');
+      this._more = {
+        animate_state: 'active',
+        title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
+        type: 'excludeEmails',
+      };
+    }
   }
 
   /***
@@ -469,13 +491,15 @@ export class AdminProjectManagementComponent implements OnInit {
    * Change the sidebar to the status sidebar
    */
   editStatus() {
-    this.changeSidebar('innovation-form');
-    this._more = {
-      animate_state: 'active',
-      title: 'PROJECT.PREPARATION.UPDATE_STATUS',
-      type: 'status',
-      size: '650px',
-    };
+    if (this.canAccess(['edit', 'status'])) {
+      this.changeSidebar('innovation-form');
+      this._more = {
+        animate_state: 'active',
+        title: 'PROJECT.PREPARATION.UPDATE_STATUS',
+        type: 'status',
+        size: '650px',
+      };
+    }
   }
 
   // Campaign section
@@ -502,12 +526,14 @@ export class AdminProjectManagementComponent implements OnInit {
    * Change the sidebar to the addTags sidebar
    */
   editProjectTags() {
-    this.changeSidebar('tags-form');
-    this._more = {
-      animate_state: 'active',
-      title: 'COMMON.ADD-TAGS',
-      type: 'addTags',
-    };
+    if (this.canAccess(['edit', 'projectTags'])) {
+      this.changeSidebar('tags-form');
+      this._more = {
+        animate_state: 'active',
+        title: 'COMMON.ADD-TAGS',
+        type: 'addTags',
+      };
+    }
   }
 
   /***
@@ -530,7 +556,9 @@ export class AdminProjectManagementComponent implements OnInit {
    * Go to the answer tags edition page
    */
   goToAnswerTagsEdition() {
-    this._router.navigate(['/user/admin/projects/project/' + this._project._id + '/answer_tags']);
+    if (this.canAccess(['edit', 'answersTags'])) {
+      this._router.navigate(['/user/admin/projects/project/' + this._project._id + '/answer_tags']);
+    }
   }
 
   /***
@@ -779,7 +807,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   public onValidateProject(event: Event) {
     event.preventDefault();
-    if (this._project.status === 'SUBMITTED') {
+    if (this.canAccess(['edit', 'validateProject']) && this._project.status === 'SUBMITTED') {
       this._project.status = 'EVALUATING';
       this.save('The project has been validated successfully');
       if (this._mission && this._mission._id && this._mission.type === 'USER') {
@@ -791,10 +819,14 @@ export class AdminProjectManagementComponent implements OnInit {
 
   public onRevisionProject(event: Event) {
     event.preventDefault();
-    if (this._project.status === 'SUBMITTED') {
+    if (this._project.status === 'SUBMITTED' && this.canAccess(['edit', 'projectRevision'])) {
       this._project.status = 'EDITING';
       this.save('The project has been placed in revision status, please notify the owner of the changes to be made.');
     }
+  }
+
+  public canAccess(path: Array<string>) {
+    return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'settings'].concat(path));
   }
 
   formatText(text: string) {

@@ -8,8 +8,8 @@ Please always updates the roles / functionalities in this file. The Keys should 
 ### Functionalities
 
 1. SETTINGS: 
-<br><br>VIEW: 'Domain, Operator, Owner, Mission, Roadmap, Market_Test_Type, Main_Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project_Tags, Synthesis_Tags, Answers_Anonymous, Professional_Identified, AB_TESTING, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Ending_Mail_Campaign, Project_Restitution, Client_Satisfaction, Mission_Feedback, Statistics', 
-<br><br>EDIT: 'Domain, Operator, Owner, Mission, Roadmap, Market_Test_Type, Main_Objective, Commercial Description, Language, Targeting, Blacklist, Status, Project_Tags, Synthesis_Tags, Answers_Anonymous, Professional_Identified, AB_TESTING, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Ending_Mail_Campaign, Project_Restitution, Client_Satisfaction, Mission_Feedback, Statistics'.
+<br><br>VIEW: 'Domain, Operator, Owner, Mission, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project_Tags, Answers_Tags, Answers_Anonymous, Professional_Identified, Ab_Testing, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Go_To_Synthesis, Ending_Mail_Campaign, Project_Restitution, Client_Satisfaction, Mission_Feedback, Statistics', 
+<br><br>EDIT: 'Domain, Operator, Owner, Mission, Roadmap, Mission_Type, Main_Objective, Commercial Description, Language, Targeting, Blacklist, Status, Project_Tags, Answers_Tags, Answers_Anonymous, Professional_Identified, Ab_Testing, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Go_To_Synthesis, Ending_Mail_Campaign, Client_Satisfaction, Mission_Feedback, Statistics, Validate_Project, Project_Revision'.
 
 2. ANSWER_TAGS: View, Edit, Add, Delete.
 
@@ -48,7 +48,7 @@ No definition of a Role means no access to that user.
 #### Hotline:
 
 1. SETTINGS:
-<br><br>VIEW: 'Operator, Market_Test_Type, Main_Objective, Commercial, Blacklist, Statistics',
+<br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Blacklist, Statistics',
 <br><br>EDIT: 'Blacklist, Statistics'.
 
 2. CAMPAIGNS: View
@@ -58,7 +58,7 @@ No definition of a Role means no access to that user.
 #### Marketing:
 
 1. SETTINGS:
-<br><br>VIEW: 'Operator, Market_Test_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
+<br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
 
 2. SYNTHESIS: 
 <br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments'
@@ -66,7 +66,7 @@ No definition of a Role means no access to that user.
 #### Commercial:
 
 1. SETTINGS:
-<br><br>VIEW: 'Operator, Market_Test_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
+<br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
 
 2. SYNTHESIS: Filter, Views, 
 <br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments', 
@@ -77,8 +77,8 @@ No definition of a Role means no access to that user.
 #### Market Test Manager:
 
 1. SETTINGS:
-<br><br>VIEW: 'Domain, Operator, Roadmap, Market_Test_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics',
-<br><br>EDIT: 'Domain, Operator, Roadmap, Market_Test_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics'.
+<br><br>VIEW: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics',
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
 
 2. ANSWER_TAGS: View, Edit, Delete.
 
@@ -168,12 +168,14 @@ access: {
                     domain: true,
                     operator: true,
                     roadmap: true,
-                    marketTestType: true,
+                    missionType: true,
                     mainObjective: true,
                     commercial: true,
                     description: true,
                     targeting: true,
-                    blacklist: true
+                    blacklist: true,
+                    validateProject: true,
+                    projectRevision: true
                 }
                 view: {
                     statistics: true,
@@ -184,7 +186,7 @@ access: {
                     domain: true,
                     operator: true,
                     roadmap: true,
-                    marketTestType: true,
+                    missionType: true,
                     mainObjective: true,
                     commercial: true,
                     description: true,

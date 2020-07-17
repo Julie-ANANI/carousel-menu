@@ -253,12 +253,14 @@ access: {
                         domain: true,
                         operator: true,
                         roadmap: true,
-                        marketTestType: true,
+                        missionType: true,
                         mainObjective: true,
                         commercial: true,
                         description: true,
                         targeting: true,
-                        blacklist: true
+                        blacklist: true,
+                        validateProject: true,
+                        projectRevision: true
                     },
                     view: {
                         statistics: true,
@@ -269,7 +271,7 @@ access: {
                         domain: true,
                         operator: true,
                         roadmap: true,
-                        marketTestType: true,
+                        missionType: true,
                         mainObjective: true,
                         commercial: true,
                         description: true,

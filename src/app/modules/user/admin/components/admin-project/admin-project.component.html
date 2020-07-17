@@ -83,12 +83,13 @@
 
         <!-- tabs -->
         <ul class="tab">
-          <li *ngFor="let tab of authorizedTabs" class="tab-item">
+          <li *ngFor="let tab of tabs" class="tab-item">
             <a
+              *ngIf="canAccess(['projects', 'project', tab.key])"
               [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="['/user/admin/projects/project', project._id, tab]"
+              [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
               routerLinkActive="active">
-              {{ 'PROJECT.' + tab.toUpperCase() | translate }}
+              {{ tab.name }}
             </a>
           </li>
         </ul>
