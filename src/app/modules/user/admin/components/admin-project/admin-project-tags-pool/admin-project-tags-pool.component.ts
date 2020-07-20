@@ -54,7 +54,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _tagsService: TagsService) {
 
-    this._translateTitleService.setTitle('Answers tags');
+    this._setPageTitle();
   }
 
   ngOnInit(): void {
@@ -65,9 +65,18 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       if (this._activatedRoute.snapshot.parent.data['innovation']
         && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
         this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
+        this._setPageTitle(this._innovation.name);
         this._getTagsFromPool();
       }
 
+    }
+  }
+
+  private _setPageTitle(title?: string) {
+    if (title) {
+      this._translateTitleService.setTitle('Answers tags | ' + title);
+    } else {
+      this._translateTitleService.setTitle('Answers tags');
     }
   }
 
@@ -131,6 +140,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public onClickAdd() {
     if (this.canAccess(['add'])) {
       this._openTagSidebar('addTags', 'Add Tags')
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
   }
 
@@ -164,6 +175,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
           })
         });
       }
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
   }
 
@@ -180,6 +193,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
           console.error(err);
         });
       });
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
   }
 
@@ -187,6 +202,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     if (this.canAccess(['view']) || this.canAccess(['edit'])) {
       this._tagToEdit = tag;
       this._openTagSidebar('editTag', 'Edit Tag');
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
   }
 
@@ -203,6 +220,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
   }
 

@@ -7,8 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
-import {SocketService} from '../../../../../services/socket/socket.service';
-import {RolesFrontService} from "../../../../../services/roles/roles-front.service";
+import { SocketService } from '../../../../../services/socket/socket.service';
+import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
 
 @Component({
   templateUrl: './admin-project.component.html',

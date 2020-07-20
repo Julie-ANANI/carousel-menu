@@ -233,7 +233,6 @@ access: {
                 questionnaire: {
                     quiz: {
                         generate: true,
-                        save: true,
                         view: true
                     },
                     deleteTag: true,

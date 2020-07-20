@@ -14,7 +14,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 2. ANSWER_TAGS: View, Edit, Add, Delete.
 
 3. QUESTIONNAIRE: Import, View, Edit, Add_Questions_Tags, Delete_Tag, 
-<br><br>QUIZ: 'View, Save, Generate'. 
+<br><br>QUIZ: 'View, Generate'. 
 
 4. CAMPAIGNS: View, Edit, Add, Update_Statistics, Delete.
  
@@ -144,7 +144,6 @@ access: {
             questionnaire: {
                 quiz: {
                     generate: true,
-                    save: true,
                     view: true
                 },
                 deleteTag: true,
