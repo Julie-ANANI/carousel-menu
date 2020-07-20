@@ -128,7 +128,6 @@ access: {
                     updateStatistics: true,
                     add: true,
                     delete: true,
-                    view: true,
                     edit: true,
                     campaign: {
                         batch: {

@@ -16,7 +16,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 3. QUESTIONNAIRE: Import, View, Edit, Add_Questions_Tags, Delete_Tag, 
 <br><br>QUIZ: 'View, Generate'. 
 
-4. CAMPAIGNS: View, Edit, Add, Update_Statistics, Delete.
+4. CAMPAIGNS: Edit, Add, Update_Statistics, Delete.
  
 5. SYNTHESIS: Filter, Views, 
 <br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments', 
@@ -138,7 +138,6 @@ access: {
                 updateStatistics: true,
                 add: true,
                 delete: true,
-                view: true,
                 edit: true
             }, 
             questionnaire: {
