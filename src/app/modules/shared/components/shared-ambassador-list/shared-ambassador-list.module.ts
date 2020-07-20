@@ -8,7 +8,7 @@ import { SharedAmbassadorListComponent } from './shared-ambassador-list.componen
 import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebars/components/user-form/sidebar-user-form.module';
-import { SidebarTagsModule } from '../../../sidebars/components/tags/sidebar-tags.module';
+import { SidebarTagsModule } from '../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate1Module } from '../../../utility/messages/message-template-1/message-template-1.module';

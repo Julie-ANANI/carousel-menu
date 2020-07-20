@@ -12,12 +12,12 @@ import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-tags',
-  templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss']
+  selector: 'app-sidebar-tags',
+  templateUrl: './sidebar-tags.component.html',
+  styleUrls: ['./sidebar-tags.component.scss']
 })
 
-export class TagsComponent {
+export class SidebarTagsComponent {
 
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {

@@ -24,7 +24,7 @@ import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/a
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
-import { SidebarTagsModule } from '../../../../sidebars/components/tags/sidebar-tags.module';
+import { SidebarTagsModule } from '../../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebars/components/innovation-form/sidebar-innovation-form.module';
 import { SidebarCampaignFormModule } from '../../../../sidebars/components/campaign-form/sidebar-campaign-form.module';
@@ -35,6 +35,7 @@ import { MessageTemplate2Module } from '../../../../utility/messages/message-tem
 import { SharedFollowUpModule } from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 import { MissionFormModule } from '../../../../sidebars/components/mission-form/mission-form.module';
 import { BannerModule } from '../../../../utility/banner/banner.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { BannerModule } from '../../../../utility/banner/banner.module';
     MessageTemplate2Module,
     SharedFollowUpModule,
     MissionFormModule,
-    BannerModule
+    BannerModule,
+    MessageErrorModule
   ],
   declarations: [
     AdminProjectComponent,

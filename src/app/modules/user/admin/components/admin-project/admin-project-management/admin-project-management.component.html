@@ -929,13 +929,13 @@
     [initialEmails]="project.settings.blacklist.emails"
     (emailsToBlacklists)="addBlacklists($event)">
   </app-emails-form>
-  <app-tags [sidebarState]="sidebarState"
+  <app-sidebar-tags [sidebarState]="sidebarState"
                  *ngIf="isTagsSidebar"
                  [type]="more.type"
                  [tags]="project.tags"
                  [tagType]="tagTypes"
                  (newTags)="addTags($event)">
-  </app-tags>
+  </app-sidebar-tags>
   <app-mission-form *ngIf="more && more.type && more.type === 'mission'" [(mission)]="mission"></app-mission-form>
 </app-sidebar>
 

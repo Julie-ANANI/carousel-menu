@@ -149,7 +149,11 @@
   color: $text-white-color;
   background-color: $color;
   border-color: $color;
-  box-shadow: $box-shadow-button-hover;
+
+  &:hover {
+    transition: box-shadow 0.4s ease;
+    box-shadow: $box-shadow-button-hover;
+  }
 
   &[disabled], &:disabled, &.disabled {
     box-shadow: none;
