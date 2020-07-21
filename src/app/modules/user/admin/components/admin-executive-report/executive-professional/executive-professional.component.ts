@@ -25,6 +25,8 @@ interface Professional {
 
 export class ExecutiveProfessionalComponent implements OnInit {
 
+  @Input() isEditable = false;
+
   @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveProfessional) {
@@ -137,7 +139,9 @@ export class ExecutiveProfessionalComponent implements OnInit {
   }
 
   public emitChanges() {
-    this.configChange.emit(this._config);
+    if (this.isEditable) {
+      this.configChange.emit(this._config);
+    }
   }
 
   public selectPro(event: Event, index: number) {

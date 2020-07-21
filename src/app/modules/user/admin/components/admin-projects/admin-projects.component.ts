@@ -276,16 +276,12 @@ export class AdminProjectsComponent implements OnInit {
    * @param file
    */
   public onClickImport(file: File) {
-    if (this.canAccess(['importProject'])) {
-      this._innovationService.import(file).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('Success', 'The project is imported successfully.');
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._innovationService.import(file).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Success', 'The project is imported successfully.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   public canAccess(path?: Array<string>) {

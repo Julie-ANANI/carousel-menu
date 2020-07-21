@@ -1,4 +1,7 @@
-<div *ngIf="canAccess()" class="container fluid grid-2xl animate-fade is-5" id="admin-project-campaigns">
+<div
+  *ngIf="canAccess() && canAccess(['view'])"
+  class="container fluid grid-2xl animate-fade is-5"
+  id="admin-project-campaigns">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- error message while fetching -->
@@ -77,7 +80,7 @@
 
 <!-- modal to ask the admin to delete the campaign -->
 <app-utility-modal
-  *ngIf="canAccess() && canAccess(['delete'])"
+  *ngIf="canAccess() && canAccess(['view']) && canAccess(['delete'])"
   [(showModal)]="activateModal"
   [title]="'Delete Board'">
 
@@ -95,7 +98,7 @@
 
 
 <!-- sidebar to edit campaign -->
-<app-sidebar *ngIf="canAccess() && canAccess(['edit'])" [(template)]="sidebarValue">
+<app-sidebar *ngIf="canAccess() && canAccess(['view']) && canAccess(['edit'])" [(template)]="sidebarValue">
   <app-campaign-form
     (campaignOutput)="updateCampaign($event)"
     [campaign]="selectCampaign"

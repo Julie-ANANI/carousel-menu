@@ -12,6 +12,8 @@ import { ExecutiveReportFrontService } from '../../../../../../services/executiv
 
 export class ExecutiveTargetingComponent {
 
+  @Input() isEditable = false;
+
   @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveTargeting) {
@@ -28,7 +30,9 @@ export class ExecutiveTargetingComponent {
   constructor(private _executiveReportFrontService: ExecutiveReportFrontService) { }
 
   public emitChanges() {
-    this.configChange.emit(this._config);
+    if (this.isEditable) {
+      this.configChange.emit(this._config);
+    }
   }
 
   public textColor() {

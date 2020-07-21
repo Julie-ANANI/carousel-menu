@@ -10,6 +10,7 @@ import { AdminExecutiveReportModule } from '../admin-executive-report/admin-exec
 import { FormsModule } from '@angular/forms';
 import { ModalEmptyModule } from '../../../../utility/modals/modal-empty/modal-empty.module';
 import { BannerModule } from '../../../../utility/banner/banner.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { BannerModule } from '../../../../utility/banner/banner.module';
     AdminExecutiveReportModule,
     FormsModule,
     ModalEmptyModule,
-    BannerModule
+    BannerModule,
+    MessageErrorModule
   ],
   declarations: [
     AdminProjectStoryboardComponent

@@ -98,7 +98,9 @@ access: {
                     makeVisibleToClient: true,
                     changeLang: true,
                     generateVideo: true,
-                    view: true
+                    view: true,
+                    autofill: true,
+                    generatePdf: true
                 },
                 synthesis: {
                     edit : {
@@ -129,6 +131,7 @@ access: {
                     add: true,
                     delete: true,
                     edit: true,
+                    view: true,
                     campaign: {
                         batch: {
                             view: true,

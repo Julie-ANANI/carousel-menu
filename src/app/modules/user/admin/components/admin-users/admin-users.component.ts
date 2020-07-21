@@ -205,15 +205,11 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public onClickConfirm() {
-    if (this.canAccess(['profile', 'delete'])) {
-      for (const user of this._usersToRemove) {
-        this._removeUser(user.id);
-      }
-      this._getUsers();
-      this._usersToRemove = [];
-    } else {
-      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(403));
+    for (const user of this._usersToRemove) {
+      this._removeUser(user.id);
     }
+    this._getUsers();
+    this._usersToRemove = [];
     this._modalDelete = false;
   }
 
@@ -227,15 +223,13 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public synchronizeSRTUsers() {
-    if (this._isJuan) {
-      this._userService.createSwellUsers().pipe(first()).subscribe(response => {
-        this._translateNotificationsService.success('Success', 'All the users are updated.');
-        this._getUsers();
-        console.log(response);
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-      });
-    }
+    this._userService.createSwellUsers().pipe(first()).subscribe(response => {
+      this._translateNotificationsService.success('Success', 'All the users are updated.');
+      this._getUsers();
+      console.log(response);
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+    });
   }
 
   // TODO

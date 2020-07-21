@@ -26,9 +26,9 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import FileSaver from 'file-saver';
 import { DeliverableService } from '../../../../../services/deliverable/deliverable.service';
 import { Job, JobType } from '../../../../../models/job';
+import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
 
 @Component({
-  selector: 'app-admin-storyboard',
   templateUrl: './admin-project-storyboard.component.html',
   styleUrls: ['./admin-project-storyboard.component.scss']
 })
@@ -67,6 +67,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _videoJobs: Array<Job> = [];
 
+  private _fetchingError = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
@@ -75,6 +77,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _innovationFrontService: InnovationFrontService,
               private _commonService: CommonService,
               private _answerService: AnswerService,
+              private _rolesFrontService: RolesFrontService,
               private _executiveReportFrontService: ExecutiveReportFrontService,
               private _multilingPipe: MultilingPipe,
               private _innovationService: InnovationService,
@@ -84,46 +87,47 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _deliverableService: DeliverableService) {
 
     this._setSpinner(true);
-
+    this._setTitle();
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this._platformId)) {
 
-    this._innovation = this._activatedRoute.snapshot.data['innovation'];
-    this._setTitle(InnovationFrontService.currentLangInnovationCard(this._innovation, this.currentLang, 'TITLE'));
-    this._innovationFrontService.setInnovation(this._innovation);
-    this._questions = ResponseService.presets(this._innovation);
+      this._innovation = this._activatedRoute.snapshot.data['innovation'];
+      this._setTitle(this._innovation.name);
+      this._innovationFrontService.setInnovation(this._innovation);
+      this._questions = ResponseService.presets(this._innovation);
 
-    if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
-      this._setSpinner(false);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage());
-    } else if (this._innovation && this._innovation.executiveReportId) {
-      this._getExecutiveReport();
-    } else if (this._innovation && !this._innovation.executiveReportId) {
-      this._setSpinner(false);
-      this._isLoading = false;
+      if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
+        this._setSpinner(false);
+        this._isLoading = false;
+        this._fetchingError = true;
+      } else if (this._innovation && this._innovation.executiveReportId) {
+        this._getExecutiveReport();
+      } else if (this._innovation && !this._innovation.executiveReportId) {
+        this._setSpinner(false);
+        this._isLoading = false;
+      }
+
+      this._getVideoJob();
+
     }
-
-    this._getVideoJob();
-
   }
 
   private _getExecutiveReport() {
-    if (isPlatformBrowser(this._platformId) && this._innovation && this._innovation.executiveReportId) {
-      this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((response) => {
-        this._executiveReport = response;
-        this._setSpinner(false);
-        this._isLoading = false;
-      }, (err: HttpErrorResponse) => {
-        this._setSpinner(false);
-        console.log(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
-    }
+    this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((response) => {
+      this._executiveReport = response;
+      this._setSpinner(false);
+      this._isLoading = false;
+    }, (err: HttpErrorResponse) => {
+      this._setSpinner(false);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   private _getVideoJob() {
-    if (isPlatformBrowser(this._platformId) && this._innovation._id) {
+    if (this._innovation._id) {
       this._innovationService.getDeliverableJob(this._innovation._id).pipe(first()).subscribe((jobs) => {
         this._videoJobs = jobs;
         const _jobs: Array<Job> = this._jobs();
@@ -152,11 +156,19 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   private _setTitle(title?: string) {
-    this._translateTitleService.setTitle(title ? title + ' | Storyboard' : 'Storyboard');
+    this._translateTitleService.setTitle(title ?  'Storyboard | ' + title : 'Storyboard');
   }
 
   public setNewSelectedLang(value: string) {
     this._selectedLang = value;
+  }
+
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'storyboard'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'storyboard']);
+    }
   }
 
   public autofillExecutiveReport(event: Event) {
@@ -173,16 +185,17 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   private _getAnswers() {
-    this._answerService.getInnovationValidAnswers(this._innovation._id).pipe(first()).subscribe((response) => {
-      const answers: Array<Answer> = response.answers.sort((a, b) => {
-        return b.profileQuality - a.profileQuality;
+    this._answerService.getInnovationValidAnswers(this._innovation._id).pipe(first())
+      .subscribe((response) => {
+        const answers: Array<Answer> = response.answers.sort((a, b) => {
+          return b.profileQuality - a.profileQuality;
+        });
+        this._setReportSections(answers);
+      }, (err: HttpErrorResponse) => {
+        this._setSpinner(false);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
-      this._setReportSections(answers);
-    }, (err: HttpErrorResponse) => {
-      this._setSpinner(false);
-      console.log(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
   }
 
   private _setReportSections(answers: Array<Answer>) {
@@ -248,7 +261,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
   public openLangModal(event: Event, type: string) {
     event.preventDefault();
     this._reportType = type;
-    this._modalTitle = this._executiveReport.lang ? 'ADMIN_STORYBOARD.MODAL.CHANGE_TITLE' : 'ADMIN_STORYBOARD.MODAL.SELECT_TITLE';
+    this._modalTitle = this._executiveReport.lang ? 'ADMIN_STORYBOARD.MODAL.CHANGE_TITLE'
+      : 'ADMIN_STORYBOARD.MODAL.SELECT_TITLE';
     this._isModalLang = true;
   }
 
@@ -275,15 +289,16 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   private _createExecutiveReport() {
-    this._executiveReportService.create(this._selectedLang, this._innovation._id).pipe(first()).subscribe((response) => {
-      this._executiveReport = response;
-      this._setSpinner(false);
-      this._isLoading = false;
-    }, (err: HttpErrorResponse) => {
-      this._setSpinner(false);
-      console.log(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
+    this._executiveReportService.create(this._selectedLang, this._innovation._id).pipe(first())
+      .subscribe((response) => {
+        this._executiveReport = response;
+        this._setSpinner(false);
+        this._isLoading = false;
+      }, (err: HttpErrorResponse) => {
+        this._setSpinner(false);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
   }
 
   private _resetExecutiveReport() {
@@ -291,8 +306,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._createExecutiveReport();
     }, (err: HttpErrorResponse) => {
       this._setSpinner(false);
-      console.log(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
@@ -317,7 +332,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
    */
   public closeModal() {
    this._isModalVideo = false;
-    this._selectedVideoType = 'VIDEO_TEST';
+   this._selectedVideoType = 'VIDEO_TEST';
   }
 
   /***
@@ -344,9 +359,9 @@ export class AdminProjectStoryboardComponent implements OnInit {
           this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
         }, (err: HttpErrorResponse) => {
-          console.error(err);
-          this._isGeneratingVideo = false;
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._isGeneratingVideo = false;
+          console.error(err);
         });
     }
   }
@@ -362,8 +377,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
         FileSaver.saveAs(blob, filename);
         this._isGeneratingReport = false;
       }, (err: HttpErrorResponse) => {
-        this._isGeneratingReport = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isGeneratingReport = false;
         console.error(err);
       });
     }
@@ -371,24 +386,27 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public saveExecutiveReport(event: Event) {
     event.preventDefault();
-    // Clean the client company to leave only the id
-    const ex_report = <any>this._executiveReport;
-    if (this._executiveReport.client && this._executiveReport.client.company) {
-      ex_report.client.company = this._executiveReport.client.company.id;
+    if (this._toBeSaved) {
+      // Clean the client company to leave only the id
+      const ex_report = <any>this._executiveReport;
+      if (this._executiveReport.client && this._executiveReport.client.company) {
+        ex_report.client.company = this._executiveReport.client.company.id;
+      }
+      // TODO is this a good solution?
+      this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
+        this._executiveReport = response;
+        this._toBeSaved = false;
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
     }
-    // TODO is this a good solution?
-    this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
-      this._executiveReport = response;
-      this._toBeSaved = false;
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
   }
 
   get bannerBackground(): string {
-    return this._bannerVideo.status === 'ERROR' ? '#EA5858' : this._bannerVideo.status === 'DONE' ? '#2ECC71' : '#FFB300';
+    return this._bannerVideo.status === 'ERROR' ? '#EA5858' : this._bannerVideo.status === 'DONE'
+      ? '#2ECC71' : '#FFB300';
   }
 
   get isVideoDisabled(): boolean {
@@ -413,7 +431,9 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   set executiveReport(value: ExecutiveReport) {
     this._executiveReport = value;
-    this._toBeSaved = true;
+    if (this.canAccess(['edit'])) {
+      this._toBeSaved = true;
+    }
   }
 
   get isLoading(): boolean {
@@ -470,6 +490,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get videoJobs(): Array<Job> {
     return this._videoJobs;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }

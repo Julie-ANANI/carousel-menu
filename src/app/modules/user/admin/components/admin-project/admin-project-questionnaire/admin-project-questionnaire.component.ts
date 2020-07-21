@@ -92,18 +92,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
    */
   public generateQuiz(event: Event) {
     event.preventDefault();
-    if (this.canAccess(['quiz', 'generate'])) {
-      this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
-        this._innovation = innovation;
-        this._setQuizLink();
-        this._translateNotificationsService.success('Success', 'The quiz is generated successfully.');
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
+      this._innovation = innovation;
+      this._setQuizLink();
+      this._translateNotificationsService.success('Success', 'The quiz is generated successfully.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   /***
@@ -112,12 +108,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
    */
   public openPresetSelection(event: Event) {
     event.preventDefault();
-    if (this.canAccess(['import'])) {
-      this._chosenPreset = null;
-      this._showPresetModal = true;
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._chosenPreset = null;
+    this._showPresetModal = true;
   }
 
   public presetSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
@@ -140,13 +132,9 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   public importPreset(event: Event): void {
     event.preventDefault();
-    if (this.canAccess(['import'])) {
-      this._innovation.preset = this._chosenPreset;
-      this._saveInnovation();
-      this._showPresetModal = false;
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._innovation.preset = this._chosenPreset;
+    this._saveInnovation();
+    this._showPresetModal = false;
   }
 
   /***

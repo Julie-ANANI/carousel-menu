@@ -138,11 +138,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
    * when the user clicks on the Add tag button.
    */
   public onClickAdd() {
-    if (this.canAccess(['add'])) {
-      this._openTagSidebar('addTags', 'Add Tags')
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._openTagSidebar('addTags', 'Add Tags');
   }
 
   private _openTagSidebar(type: string, title: string) {

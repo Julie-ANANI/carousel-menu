@@ -27,6 +27,8 @@ interface Commercial {
 
 export class ExecutiveObjectiveComponent implements OnInit {
 
+  @Input() isEditable = false;
+
   @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveObjective) {
@@ -144,7 +146,9 @@ export class ExecutiveObjectiveComponent implements OnInit {
   }
 
   public emitChanges() {
-    this.configChange.emit(this._config);
+    if (this.isEditable) {
+      this.configChange.emit(this._config);
+    }
   }
 
   public onClickPlay(event: Event) {

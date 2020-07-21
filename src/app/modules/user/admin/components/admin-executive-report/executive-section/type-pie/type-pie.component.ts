@@ -11,6 +11,8 @@ import { ExecutivePieChart } from '../../../../../../../models/pie-chart';
 
 export class TypePieComponent {
 
+  @Input() isEditable = false;
+
   @Input() set section(value: ExecutiveSection) {
     this._section = value;
     this._content = <SectionPie>this._section.content;
@@ -70,8 +72,10 @@ export class TypePieComponent {
   }
 
   public emitChanges() {
-    this._section.content = this._content;
-    this.sectionChange.emit(this._section);
+    if (this.isEditable) {
+      this._section.content = this._content;
+      this.sectionChange.emit(this._section);
+    }
   }
 
   public toggleResponses() {

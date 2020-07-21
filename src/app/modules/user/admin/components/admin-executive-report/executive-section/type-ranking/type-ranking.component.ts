@@ -10,6 +10,8 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 
 export class TypeRankingComponent {
 
+  @Input() isEditable = false;
+
   @Input() set section(value: ExecutiveSection) {
     this._section = value;
     this._content = <SectionRanking>this._section.content;
@@ -52,8 +54,10 @@ export class TypeRankingComponent {
   constructor() { }
 
   public emitChanges() {
-    this._section.content = this._content;
-    this.sectionChange.emit(this._section);
+    if (this.isEditable) {
+      this._section.content = this._content;
+      this.sectionChange.emit(this._section);
+    }
   }
 
   public textColor(field: string, index?: number) {

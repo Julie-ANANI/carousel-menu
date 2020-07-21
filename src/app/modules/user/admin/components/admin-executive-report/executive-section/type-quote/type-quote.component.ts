@@ -10,6 +10,8 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 
 export class TypeQuoteComponent {
 
+  @Input() isEditable = false;
+
   @Input() set section(value: ExecutiveSection) {
     this._section = value;
     this._content = <SectionQuote>this._section.content;
@@ -46,8 +48,10 @@ export class TypeQuoteComponent {
   constructor() { }
 
   public emitChanges() {
-    this._section.content = this._content;
-    this.sectionChange.emit(this._section);
+    if (this.isEditable) {
+      this._section.content = this._content;
+      this.sectionChange.emit(this._section);
+    }
   }
 
   public textColor(field: string) {

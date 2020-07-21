@@ -4,6 +4,7 @@
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
     <app-admin-executive-objective
       [(config)]="objectiveConfig"
+      [isEditable]="isEditable"
       [lang]="executiveReport.lang">
     </app-admin-executive-objective>
   </section>
@@ -17,7 +18,11 @@
 
   <!-- pitch -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <app-admin-executive-pitch [(pitch)]="summary" [lang]="executiveReport.lang"></app-admin-executive-pitch>
+    <app-admin-executive-pitch
+      [(pitch)]="summary"
+      [isEditable]="isEditable"
+      [lang]="executiveReport.lang">
+    </app-admin-executive-pitch>
   </section>
   <!-- /pitch -->
 
@@ -29,7 +34,11 @@
 
   <!-- targeting -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <app-admin-executive-targeting [(config)]="targetingConfig" [lang]="executiveReport.lang"></app-admin-executive-targeting>
+    <app-admin-executive-targeting
+      [(config)]="targetingConfig"
+      [isEditable]="isEditable"
+      [lang]="executiveReport.lang">
+    </app-admin-executive-targeting>
   </section>
   <!-- /targeting -->
 
@@ -41,7 +50,11 @@
 
   <!-- professionals -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <app-admin-executive-professional [(config)]="professionalConfig" [lang]="executiveReport.lang"></app-admin-executive-professional>
+    <app-admin-executive-professional
+      [(config)]="professionalConfig"
+      [isEditable]="isEditable"
+      [lang]="executiveReport.lang">
+    </app-admin-executive-professional>
   </section>
   <!-- /professionals -->
 
@@ -65,6 +78,7 @@
     <section [ngStyle]="{ 'margin-bottom': '-30px' }">
       <app-admin-executive-section
         (sectionChange)="onSectionChange($event, i)"
+        [isEditable]="isEditable"
         [answers]="answers"
         [questions]="questions"
         [reportLang]="executiveReport.lang"
@@ -76,8 +90,8 @@
 
 
     <!-- reset button -->
-    <div *ngIf="section.questionId && section.questionType" class="p-top-40 text-center">
-      <button (click)="resetModal($event, i)" class="button is-outlined is-info" type="button">
+    <div *ngIf="section.questionId && section.questionType && isEditable" class="p-top-40 text-center">
+      <button (click)="resetModal($event, i)" class="button is-sm is-outlined is-info" type="button">
         {{ 'ADMIN_EXECUTIVE_REPORT.RESET_SECTION' | translate }}
       </button>
     </div>
@@ -94,7 +108,11 @@
 
   <!-- conclusion -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
-    <app-admin-executive-conclusion [(config)]="conclusionConfig" [lang]="executiveReport.lang"></app-admin-executive-conclusion>
+    <app-admin-executive-conclusion
+      [(config)]="conclusionConfig"
+      [isEditable]="isEditable"
+      [lang]="executiveReport.lang">
+    </app-admin-executive-conclusion>
   </section>
   <!-- /conclusion -->
 
@@ -102,7 +120,10 @@
 
 
 <!-- Modal to confirm action: Reset section -->
-<app-utility-modal *ngIf="showModal" [(showModal)]="showModal" [title]="'COMMON.MODAL.TITLE_CONFIRMATION' | translate">
+<app-utility-modal
+  *ngIf="showModal && isEditable"
+  [(showModal)]="showModal"
+  [title]="'COMMON.MODAL.TITLE_CONFIRMATION' | translate">
 
   <section class="modal-body p-top-30 p-bottom-30">
 

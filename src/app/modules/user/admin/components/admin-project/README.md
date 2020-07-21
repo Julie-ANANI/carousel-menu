@@ -16,13 +16,13 @@ Please always updates the roles / functionalities in this file. The Keys should 
 3. QUESTIONNAIRE: Import, View, Edit, Add_Questions_Tags, Delete_Tag, 
 <br><br>QUIZ: 'View, Generate'. 
 
-4. CAMPAIGNS: Edit, Add, Update_Statistics, Delete.
+4. CAMPAIGNS: Edit, Add, Update_Statistics, Delete, View.
  
 5. SYNTHESIS: Filter, Views, 
 <br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments', 
 <br><br>EDIT: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments'.
 
-6. STORYBOARD: Create, View, Generate_Video, Change_Language, Make_Visible_To_Client, Edit. 
+6. STORYBOARD: Create, View, Generate_Video, Generate_Pdf, Change_Language, Make_Visible_To_Client, Edit, Autofill. 
 
 7. FOLLOW_UP: Filter, Select_Respondents, Test_Workflow, Send_Workflow
 <br><br>VIEW: 'Respondents_Answer, Objective, Language', 
@@ -108,7 +108,9 @@ access: {
                 makeVisibleToClient: true,
                 changeLang: true,
                 generateVideo: true,
-                view: true
+                view: true,
+                autofill: true,
+                generatePdf: true
             },
             synthesis: {
                 edit : {
@@ -138,7 +140,8 @@ access: {
                 updateStatistics: true,
                 add: true,
                 delete: true,
-                edit: true
+                edit: true,
+                view: true
             }, 
             questionnaire: {
                 quiz: {
