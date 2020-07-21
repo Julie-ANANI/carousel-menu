@@ -426,7 +426,15 @@
                               [ngClass]="getChoiceDisabledClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
                               class="fas fa-paper-plane m-right-2 text-xs">
                             </i>
-                            <span class="text-notify text-medium">{{ (getContentValue(row, getDisabledState(column)._attrs) | date:dateFormat) }}</span>
+                            <span class="text-notify text-medium">
+                              <ng-container
+                                *ngIf="(getContentValue(row, getDisabledState(column)._attrs) | date:dateFormat); else textDrop">
+                                {{ (getContentValue(row, getDisabledState(column)._attrs) | date:dateFormat) }}
+                              </ng-container>
+                              <ng-template #textDrop>
+                                {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])))) | translate }}
+                              </ng-template>
+                            </span>
                           </div>
                         </ng-container>
                         <!-- /type DATE -->

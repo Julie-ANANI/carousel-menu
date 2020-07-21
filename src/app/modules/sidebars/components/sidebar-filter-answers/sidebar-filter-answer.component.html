@@ -70,13 +70,14 @@
   <!-- views type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
   <div>
 
-    <h6>My views</h6>
+    <h6>{{ 'SIDEBAR_MARKET_REPORT.MY_VIEWS' | translate }}</h6>
 
     <!-- show views -->
     <div *ngFor="let filter of sharedFiltersList" class="d-flex align-center m-top-1 m-bottom-1">
 
       <div
         (click)="deleteCustomFilter($event, filter.name)"
+        *ngIf="isViewsEditable"
         [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
         class="c-hand m-right-1 tooltip is-right">
         <img
@@ -97,7 +98,7 @@
     <!-- /show views -->
 
     <!-- form to register view -->
-    <form (ngSubmit)="registerNewFilter()">
+    <form *ngIf="isViewsEditable" (ngSubmit)="registerNewFilter()">
 
       <div class="form-group p-top-1">
         <label>

@@ -1,118 +1,123 @@
-<div *ngIf="project" id="shared-follow-up">
-  <!-- table -->
-  <section class="column col-xl-12">
-    <!-- emails and finish button -->
-    <div class="d-flex justify-space" [ngStyle]="{alignItems: 'stretch'}">
+<div id="shared-follow-up">
 
-      <!-- emails -->
+  <!-- emails and finish button -->
+  <section class="header-wrapper">
+
+    <!-- emails -->
+    <div [ngClass]="{'p-right-40': canAccess(['workflow', 'send'])}" class="email-wrapper">
 
       <!-- appointment -->
-      <div class="p-top-1 p-bottom-3">
-
+      <div class="email-content">
         <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
-          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">{{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}</span>
-          <span (click)="onClickSee($event, 'interview')" [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs">
-                {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
-              </span>
+          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
+            {{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}
+          </span>
+          <span
+            (click)="onClickSee($event, 'interview')"
+            *ngIf="canAccess(['workflow', 'view'])"
+            [ngStyle]="{ 'margin-top': '3px' }"
+            class="text-link text-xs">
+            {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
+          </span>
         </div>
 
         <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
           <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosInterviewSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
-
       </div>
       <!-- /appointment -->
 
-
-      <!-- divider -->
       <div class="divider-vert is-lg"></div>
-      <!-- /divider -->
-
 
       <!-- open -->
-      <div class="p-top-1 p-bottom-3">
-
+      <div class="email-content">
         <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
-          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">{{ 'SHARED_FOLLOW_UP.OPENING' | translate }}</span>
-          <span (click)="onClickSee($event, 'opening')" [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs">
-                {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
-              </span>
+          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
+            {{ 'SHARED_FOLLOW_UP.OPENING' | translate }}
+          </span>
+          <span
+            (click)="onClickSee($event, 'opening')"
+            *ngIf="canAccess(['workflow', 'view'])"
+            [ngStyle]="{ 'margin-top': '3px' }"
+            class="text-link text-xs">
+            {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
+          </span>
         </div>
 
         <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
           <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosOpeningSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
-
       </div>
       <!-- /open -->
 
-
-      <!-- divider -->
       <div class="divider-vert is-lg"></div>
-      <!-- /divider -->
-
 
       <!-- thank -->
-      <div class="p-top-1 p-bottom-3">
-
+      <div class="email-content">
         <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
-          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">{{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}</span>
-          <span (click)="onClickSee($event, 'noFollow')" [ngStyle]="{ 'margin-top': '3px' }" class="text-link text-xs">
-                {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
-              </span>
+          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
+            {{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}
+          </span>
+          <span
+            (click)="onClickSee($event, 'noFollow')"
+            *ngIf="canAccess(['workflow', 'view'])"
+            [ngStyle]="{ 'margin-top': '3px' }"
+            class="text-link text-xs">
+            {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
+          </span>
         </div>
 
         <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
           <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosNoFollowSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
-
       </div>
       <!-- /thank -->
 
-      <!-- /emails -->
+    </div>
+    <!-- /emails -->
 
+    <!-- button -->
+    <div *ngIf="canAccess(['workflow', 'send'])" class="text-center">
 
-      <!-- button -->
-      <div class="text-center">
+      <button
+        (click)="openModal($event)"
+        class="button is-primary is-lg"
+        id="btn-send-mail">
+        {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
+      </button>
 
-        <button (click)="showSendModal = true" class="button is-lg is-primary">
-          {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
-        </button>
-
-        <p class="m-bottom-15 text-notify text-sm">
-          {{ prosWithoutObjective.length }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
-        </p>
-
-      </div>
-      <!-- /button -->
+      <p class="text-notify m-top-2 m-no-bottom text-sm">
+        {{ prosWithoutObjective.length }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
+      </p>
 
     </div>
-    <!-- /emails and finish button -->
+    <!-- /button -->
 
-    <div class="p-bottom-30">
+  </section>
+  <!-- /emails and finish button -->
 
-      <!-- heading -->
-      <h6 class="text-sm text-notify m-bottom-10">
-        <span class="text-background">{{ this.tableInfos._total === -1 ? 0 : this.tableInfos._total }}</span> contacts /
-        <span class="text-background">{{ prosWithoutObjective.length }}</span> {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
-      </h6>
-      <!-- /heading -->
+  <!-- table -->
+  <section class="p-top-30">
 
+    <h6 class="text-sm text-notify m-bottom-10">
+      <span class="text-background">{{ this.tableInfos._total === -1 ? 0 : this.tableInfos._total }}</span> contacts /
+      <span class="text-background">{{ prosWithoutObjective.length }}</span>
+      {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
+    </h6>
 
-      <!-- table -->
+    <div>
       <app-shared-table
-        [(config)]="config"
-        [data]="tableInfos"
-        (editRow)="seeAnswer($event)"
         (dropdownAction)="assignObjective($event)"
-        (performAction)="performActions($event)">
+        (editRow)="seeAnswer($event)"
+        (performAction)="performActions($event)"
+        [(config)]="localConfig"
+        [data]="tableInfos">
       </app-shared-table>
-      <!-- /table -->
-
     </div>
+
   </section>
   <!-- /table -->
 
@@ -120,10 +125,12 @@
 
 
 <!-- answer sidebar -->
-<app-sidebar [(template)]="sidebarAnswer">
+<app-sidebar
+  *ngIf="canAccess(['view', 'answer']) || canAccess(['edit', 'answer'])"
+  [(template)]="sidebarAnswer">
   <app-user-answer
     [sidebarState]="sidebarAnswer.animate_state"
-    [adminMode]="true"
+    [adminMode]="canAccess(['edit', 'answer'])"
     [(userAnswer)]="modalAnswer"
     [projectId]="project._id"
     [questions]="questions">
@@ -133,20 +140,23 @@
 
 
 <!-- filter sidebar -->
-<sidebar-left [(sidebarTemplate)]="sidebarTemplate">
+<sidebar-left *ngIf="canAccess()" [(sidebarTemplate)]="sidebarTemplate">
   <app-sidebar-filter-answers
-    [innovation]="project"
-    [templateType]="sidebarTemplate.type"
-    [questions]="questions"
+    (closeSidebar)="closeSidebar()"
     [answers]="answers"
-    (closeSidebar)="closeSidebar()">
+    [innovation]="project"
+    [isViewsEditable]="canAccess(['edit', 'views'])"
+    [questions]="questions"
+    [templateType]="sidebarTemplate.type">
   </app-sidebar-filter-answers>
 </sidebar-left>
 <!-- /filter sidebar -->
 
 
 <!-- modal for mails -->
-<app-utility-modal *ngIf="emailsObject && showEmailsModal" [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
+<app-utility-modal
+  *ngIf="emailsObject && showEmailsModal && canAccess(['workflow'])"
+  [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
   <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
     <!-- heading -->
@@ -155,31 +165,33 @@
     </h5>
     <!-- /heading -->
 
-
     <!-- close button -->
     <div [ngStyle]="{ 'right': '15px', 'top': '21px' }" class="absolute">
       <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
     </div>
     <!-- /close button -->
 
-
     <!-- mail wrapper -->
     <div>
-      <shared-mail-editor
+      <app-shared-mail-editor
+        [isEditableMode]="canAccess(['workflow', 'edit'])"
+        [canTestMails]="canAccess(['workflow', 'test'])"
         [templateType]="'FOLLOW-UP'"
         [professionals]="pros"
         [(ccEmail)]="ccEmail"
         [customFields]="customFields"
         (sendTestEmails)="sendTestEmails()"
         [(emailsObject)]="emailsObject">
-      </shared-mail-editor>
+      </app-shared-mail-editor>
     </div>
     <!-- /mail wrapper -->
 
-
     <!-- save button -->
-    <div class="text-center">
-      <button (click)="saveProject()" [ngStyle]="{ 'min-width': '141px' }" class="button is-primary">
+    <div *ngIf="canAccess(['workflow', 'edit'])" class="text-center">
+      <button
+        (click)="saveProject()"
+        [ngStyle]="{ 'min-width': '141px' }"
+        class="button is-primary">
         {{ 'COMMON.BUTTON.SAVE' | translate }}
       </button>
     </div>
@@ -191,66 +203,50 @@
 
 
 <!-- modal for warning : objective already assigned -->
-<app-utility-modal [(showModal)]="showWarningModal">
-  <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
+<app-utility-modal
+  *ngIf="canAccess(['edit', 'objective'])"
+  [(showModal)]="showWarningModal"
+  [title]="'Objective Board'">
 
-    <!-- close button -->
-    <div [ngStyle]="{ 'right': '15px', 'top': '23px' }" class="absolute">
-      <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
-    </div>
-    <!-- /close button -->
+  <section class="modal-body">
+    <p>{{ 'SHARED_FOLLOW_UP.MODAL.WARNING_1' | translate }}</p>
+    <ul>
+      <li *ngFor="let pro of pendingAction.assignedAnswers">
+        {{ pro.name }}: {{ 'SHARED_FOLLOW_UP.BUTTON.' + pro.objective | translate }}
+      </li>
+    </ul>
+    <p class="text-sm p-top-10 text-alert">{{ 'SHARED_FOLLOW_UP.MODAL.WARNING_2' | translate }}</p>
+  </section>
 
-    <div>
-      <p>
-        {{ 'SHARED_FOLLOW_UP.MODAL.WARNING_1' | translate }}
-      </p>
-
-      <ul>
-        <li *ngFor="let pro of pendingAction.assignedAnswers">
-          {{ pro.name }}: {{ 'SHARED_FOLLOW_UP.BUTTON.' + pro.objective | translate }}
-        </li>
-      </ul>
-
-      <p>
-        {{ 'SHARED_FOLLOW_UP.MODAL.WARNING_2' | translate }}
-      </p>
-    </div>
-
-
-    <!-- confirm button -->
+  <footer class="modal-footer">
+    <button class="button modal-cancel">Cancel</button>
     <button
       (click)="updateManyObjectives(pendingAction.answersIds, pendingAction.objective)"
-      [textContent]="'COMMON.BUTTON.CONFIRM'"
-      class="button is-primary"
-      translate>
+      class="button is-primary">
+      Confirm
     </button>
-    <!-- /confirm button -->
-    <!-- cancel button -->
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <!-- /cancel button -->
+  </footer>
 
-  </section>
 </app-utility-modal>
-<!-- /modal for mails -->
+<!-- /modal for warning : objective already assigned -->
 
 
 <!-- modal for sending emails : are you sure ? -->
-<app-utility-modal *ngIf="showSendModal" [(showModal)]="showSendModal">
+<app-utility-modal *ngIf="showSendModal && canAccess(['workflow', 'send'])" [(showModal)]="showSendModal">
   <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
     <!-- heading -->
     <h5 class="title text-lg text-bold text-center">
-      {{ prosInterview.length + prosOpening.length + prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.MODAL.EMAILS_READY' | translate }}
+      {{ prosInterview.length + prosOpening.length + prosNoFollow.length }}
+      {{ 'SHARED_FOLLOW_UP.MODAL.EMAILS_READY' | translate }}
     </h5>
     <!-- /heading -->
-
 
     <!-- close button -->
     <div [ngStyle]="{ 'right': '15px', 'top': '21px' }" class="absolute">
       <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
     </div>
     <!-- /close button -->
-
 
     <!-- content -->
     <div [ngStyle]="{ 'min-height': '150px' }" class="p-bottom-20">
@@ -266,7 +262,6 @@
           </div>
         </div>
         <!-- /image -->
-
 
         <!-- emails -->
         <div class="column col-sm-12 col-6">
@@ -286,11 +281,7 @@
             </div>
             <!-- /appointment -->
 
-
-            <!-- divider -->
             <div class="divider is-lg"></div>
-            <!-- /divider -->
-
 
             <!-- open -->
             <div class="p-top-2 p-bottom-3">
@@ -306,11 +297,7 @@
             </div>
             <!-- /open -->
 
-
-            <!-- divider -->
             <div class="divider is-lg"></div>
-            <!-- /divider -->
-
 
             <!-- thank -->
             <div class="p-top-2 p-bottom-3">
@@ -333,7 +320,6 @@
       </div>
     </div>
     <!-- /content -->
-
 
     <!-- button -->
     <div class="text-center">

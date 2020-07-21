@@ -19,13 +19,17 @@ interface Mapping {
 }
 
 @Component({
-  selector: 'shared-mail-editor',
+  selector: 'app-shared-mail-editor',
   templateUrl: './shared-mail-editor.component.html',
   styleUrls: ['./shared-mail-editor.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 
 export class SharedMailEditorComponent {
+
+  @Input() isEditableMode = true;
+
+  @Input() canTestMails = false;
 
   @Input() set templateType(value: editorTypes) {
     if (value) {
@@ -107,7 +111,7 @@ export class SharedMailEditorComponent {
     fr: { language: 'fr', subject: '', content: '' }
   };
 
-  private _language: string = 'en';
+  private _language = 'en';
 
   private _email: EmailTemplate = {
     language: this._language,
@@ -115,29 +119,25 @@ export class SharedMailEditorComponent {
     content: ''
   };
 
-  private _languageHasBeenSet: boolean = false;
+  private _languageHasBeenSet = false;
 
-  private _isEditableMode: boolean = true;
-
-  private _ccEmail: string = '';
+  private _ccEmail = '';
 
   private _variableMapping: Mapping = {
     en: {},
     fr: {}
   };
 
-  private _professionalPreview: string = '';
+  private _professionalPreview = '';
 
   constructor(private _translateService: TranslateService) { }
 
   public changeLanguage(value: string) {
     this._language = value;
     this._languageHasBeenSet = true;
-
     if (this._emailsObject) {
       this._email = this._emailsObject[this._language];
     }
-
   }
 
   public insertTextAtCursor(text: string) {
@@ -170,21 +170,21 @@ export class SharedMailEditorComponent {
   }
 
   public onPreview() {
-    this._isEditableMode = !this._isEditableMode;
+    this.isEditableMode = !this.isEditableMode;
   }
 
-  setLanguage(value: string) {
+  public setLanguage(value: string) {
     this.changeLanguage(value);
     this.languageChange.emit(value);
   }
 
-  onUpdate(event: any, language?: string) {
+  public onUpdate(event: any, language?: string) {
     language = language || this._language;
     this._emailsObject[language].subject = event;
     this.emailChange.emit(this._emailsObject);
   }
 
-  updateContent(event: any, language?: string) {
+  public updateContent(event: any, language?: string) {
     language = language || this._language;
     this._emailsObject[language].content = event.content;
     this.emailChange.emit(this._emailsObject);
@@ -208,10 +208,6 @@ export class SharedMailEditorComponent {
 
   set email(value: EmailTemplate) {
     this._email = value;
-  }
-
-  get isEditableMode(): boolean {
-    return this._isEditableMode;
   }
 
   get customField(): Array<{label: string, value: string}> {

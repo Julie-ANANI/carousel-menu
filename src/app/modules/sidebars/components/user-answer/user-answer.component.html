@@ -115,11 +115,11 @@
             <!-- language -->
             <ng-container *ngIf="!assignNewPro">
               <div class="language-active"  *ngIf="!modeAdmin || !editMode">
-                {{ modalAnswer.professional.language }}
+                {{ modalAnswer.professional?.language }}
               </div>
               <div *ngIf="modeAdmin && editMode">
-                <div (click)="onClickLanguage('fr')" [class]='"language" + (modalAnswer.professional.language === "fr" ? "-active": "")'>fr</div>
-                <div (click)="onClickLanguage('en')" [class]='"language" + (modalAnswer.professional.language === "en" ? "-active": "")'>en</div>
+                <div (click)="onClickLanguage('fr')" [class]='"language" + (modalAnswer.professional?.language === "fr" ? "-active": "")'>fr</div>
+                <div (click)="onClickLanguage('en')" [class]='"language" + (modalAnswer.professional?.language === "en" ? "-active": "")'>en</div>
               </div>
             </ng-container>
 
@@ -349,7 +349,7 @@
       <!-- /section user details -->
 
       <!-- section tags -->
-      <ng-container *ngIf="modalAnswer?.tags.length > 0 || editMode">
+      <ng-container *ngIf="modalAnswer?.tags?.length > 0 || editMode">
         <div class="section-tags">
           <label class="form-label">Tags</label>
           <app-shared-tag

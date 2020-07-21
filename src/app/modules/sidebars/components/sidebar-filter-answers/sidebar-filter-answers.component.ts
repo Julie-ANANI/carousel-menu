@@ -25,6 +25,8 @@ import { AnswerFrontService } from '../../../../services/answer/answer-front.ser
 
 export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
+  @Input() isViewsEditable = false;
+
   @Input() set innovation(value: Innovation) {
     if (value._id) {
       this._innovation = value;
@@ -62,9 +64,9 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   // 'MARKET_TYPE' | 'FOLLOW_UP'
   private _templateType = 'MARKET_TYPE';
 
-  private _isModalEnd: boolean;
+  private _isModalEnd = false;
 
-  private _isModalPreview: boolean;
+  private _isModalPreview = false;
 
   private _filterNumber = 0;
 

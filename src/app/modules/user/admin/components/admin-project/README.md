@@ -24,10 +24,11 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 6. STORYBOARD: Create, View, Generate_Video, Generate_Pdf, Change_Language, Make_Visible_To_Client, Edit, Autofill. 
 
-7. FOLLOW_UP: Filter, Select_Respondents, Test_Workflow, Send_Workflow
-<br><br>VIEW: 'Respondents_Answer, Objective, Language', 
-<br><br>EDIT: 'Respondents_Answer, Objective, Language',
-<br><br>WORKFLOW: 'View, Edit, Test, Send'. 
+7. FOLLOW_UP:
+<br><br>VIEW: 'Answer', 
+<br><br>EDIT: 'Answer, Objective, Views',
+<br><br>WORKFLOW: 'View, Edit, Test, Send',
+<br><br>T_COLUMNS: 'Name, Country, Language, Job, Company, Objective'.  
 
 Here SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, CAMPAIGNS, SYNTHESIS, STORYBOARD, FOLLOW_UP represent the sub tabs.
 

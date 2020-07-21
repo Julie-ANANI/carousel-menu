@@ -45,7 +45,7 @@ export class UserAnswerComponent {
 
   @Output() answerUpdated = new EventEmitter<boolean>();
 
-  private _modalAnswer: Answer;
+  private _modalAnswer: Answer = <Answer>{};
 
   private _floor: any;
 
