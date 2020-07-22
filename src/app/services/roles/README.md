@@ -200,16 +200,19 @@ access: {
                                 name: true,
                                 country: true
                             },
-                            searchBY: {
+                            searchBy: {
                                 name: true,
                                 country: true
                             },
-                            filter: {
+                            filterBy: {
                                 status: true
                             },
-                            editResponse: true,
-                            viewResponse: true,
+                            edit: true,
+                            view: true,
                             import: true,
+                            quiz: true,
+                            validate: true,
+                            reject: true,
                             export: true
                         },
                         pros: {

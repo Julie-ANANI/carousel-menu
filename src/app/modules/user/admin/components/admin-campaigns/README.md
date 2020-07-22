@@ -25,8 +25,8 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 5. BATCH: Launch_AutoBatch, Create, Pause, Edit, View.
 
-6. ANSWERS: Import, Export, View_Response, Edit_Response,
-<br><br>FILTER: 'Status', 
+6. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
+<br><br>FILTER_BY: 'Status', 
 <br><br>SEARCH_BY: 'Name, Job, Country, Validation_Score', 
 <br><br>T_Columns: 'Name, Country, Job, Validation_Score, Updated, Created, Status'.
 
@@ -52,8 +52,8 @@ No definition of a Role means no access to that user.
 <br><br>SEARCH_BY: 'Name, Email,
 <br><br>PROFILE: 'View, Edit, Add, Export'.
 
-2. ANSWERS: View_Response, Edit_Response,
-<br><br>FILTER: 'Status', 
+2. ANSWERS: View, Edit,
+<br><br>FILTER_BY: 'Status', 
 <br><br>SEARCH_BY: 'Name', 
 <br><br>T_Columns: 'Name, Country, Job, Created, Status'.
 
@@ -79,8 +79,8 @@ No definition of a Role means no access to that user.
 
 5. BATCH: Launch_AutoBatch, Pause, Edit, View.
 
-6. ANSWERS: Import, Export, View_Response, Edit_Response
-<br><br>FILTER: 'Status', 
+6. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
+<br><br>FILTER_BY: 'Status', 
 <br><br>SEARCH_BY: 'Name, Country', 
 <br><br>T_Columns: 'Name, Country, Job, Validation_Score, Created, Status'.
 
@@ -159,16 +159,19 @@ access: {
                                 name: true,
                                 country: true
                             },
-                            searchBY: {
+                            searchBy: {
                                 name: true,
                                 country: true
                             },
-                            filter: {
+                            filterBy: {
                                 status: true
                             },
-                            editResponse: true,
-                            viewResponse: true,
+                            edit: true,
+                            view: true,
                             import: true,
+                            quiz: true,
+                            validate: true,
+                            reject: true,
                             export: true
                         },
                         pros: {

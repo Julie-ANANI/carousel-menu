@@ -1,5 +1,5 @@
 <div
-  *ngIf="canAccess() && canAccess(['view'])"
+  *ngIf="canAccess(['view'])"
   class="container fluid grid-2xl animate-fade is-5"
   id="admin-project-campaigns">
   <div class="column col-sm-12 col-11 col-mx-auto">
@@ -29,11 +29,16 @@
           <div class="card-content">
 
             <div class="d-flex align-center">
-              <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign['_id'] + '/answers'" class="m-right-10">
+              <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign['_id'] + '/answers'">
                 {{ campaign.title }}
               </a>
-              <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-success">{{ campaign.type }}</div>
-              <div *ngIf="canAccess(['edit'])" class="text-link text-sm" (click)="onEditCampaign($event, campaign)">
+              <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-sm text-bold is-success m-left-10">
+                {{ campaign.type }}
+              </div>
+              <div
+                *ngIf="canAccess(['edit'])"
+                class="text-link text-sm m-left-20 m-top-1"
+                (click)="onEditCampaign($event, campaign)">
                 {{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}
               </div>
             </div>
@@ -80,7 +85,7 @@
 
 <!-- modal to ask the admin to delete the campaign -->
 <app-utility-modal
-  *ngIf="canAccess() && canAccess(['view']) && canAccess(['delete'])"
+  *ngIf="canAccess(['delete'])"
   [(showModal)]="activateModal"
   [title]="'Delete Board'">
 
@@ -98,7 +103,7 @@
 
 
 <!-- sidebar to edit campaign -->
-<app-sidebar *ngIf="canAccess() && canAccess(['view']) && canAccess(['edit'])" [(template)]="sidebarValue">
+<app-sidebar *ngIf="canAccess(['edit'])" [(template)]="sidebarValue">
   <app-campaign-form
     (campaignOutput)="updateCampaign($event)"
     [campaign]="selectCampaign"

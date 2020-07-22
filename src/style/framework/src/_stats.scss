@@ -15,24 +15,24 @@
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 0;
-    padding: 0.75rem 0.75rem 0.5rem 0;
+    padding: 15px 15px 10px 0;
     border-right: $border-width solid $border-default-color;
 
     .stat-heading {
       font-size: $font-size-md;
       color: $text-draft-color;
-      margin: 0 0.5rem 0.5rem 0.5rem;
+      margin: 0 10px 10px 10px;
     }
 
     .stat-body {
       @include inline-flex-centered();
       flex-direction: column;
-      margin: 0 0.5rem 0.5rem 0.5rem;
+      margin: 0 10px 10px 10px;
 
       .stat-sub-heading {
         font-size: $font-size-xs;
         color: $text-meta-color;
-        margin-bottom: 0.25rem;
+        margin-bottom: 5px;
       }
 
       .stat-value {
@@ -44,7 +44,7 @@
     }
 
     &:not(:first-child) {
-      padding-left: 0.75rem;
+      padding-left: 15px;
     }
 
     &:last-child {
@@ -55,11 +55,11 @@
     &.fluid {
 
       &:first-child {
-        padding-left: 0.75rem;
+        padding-left: 15px;
       }
 
       &:last-child {
-        padding-right: 0.75rem;
+        padding-right: 15px;
       }
 
     }

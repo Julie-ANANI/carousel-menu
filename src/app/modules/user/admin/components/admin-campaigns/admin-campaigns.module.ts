@@ -32,6 +32,7 @@ import { SidebarUserFormModule } from '../../../../sidebars/components/user-form
 import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../utility/messages/message-template-2/message-template-2.module';
 import { SharedProfessionalsListModule } from '../../../../shared/components/shared-professionals-list/shared-professionals-list.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
     SidebarUserFormModule,
     ErrorTemplate1Module,
     MessageTemplate2Module,
-    SharedProfessionalsListModule
+    SharedProfessionalsListModule,
+    MessageErrorModule
   ],
   declarations: [
     AdminCampaignComponent,

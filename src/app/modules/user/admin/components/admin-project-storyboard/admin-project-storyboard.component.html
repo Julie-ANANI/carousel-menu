@@ -1,4 +1,4 @@
-<div *ngIf="canAccess() && canAccess(['view'])" class="animate-fade is-5 relative">
+<div *ngIf="canAccess(['view'])" class="animate-fade is-5 relative">
 
   <!-- error message while fetching -->
   <div *ngIf="fetchingError && !isLoading" class="container fluid grid-2xl">
