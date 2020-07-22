@@ -1,10 +1,17 @@
 <ul class="stat">
-  <li *ngFor="let stat of config" class="stat-container fluid">
+  <li *ngFor="let stat of config; let i = index;" class="stat-container fluid">
     <h5 class="stat-heading">{{ stat.heading }}</h5>
     <div *ngFor="let content of stat.content" class="stat-body">
       <h5 class="stat-sub-heading">{{ content.subHeading }}</h5>
       <span class="stat-value">{{ content.value }}</span>
     </div>
+    <a
+      *ngIf="i === config.length - 1 && updateBtn"
+      (click)="onUpdateStats($event)"
+      [ngStyle]="{'font-size': '20px'}"
+      class="c-hand text-primary m-right-15">
+      <i class="fa fa-sync"></i>
+    </a>
   </li>
 </ul>
 

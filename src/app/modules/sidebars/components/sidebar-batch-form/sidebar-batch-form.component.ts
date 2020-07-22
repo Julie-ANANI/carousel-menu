@@ -15,6 +15,8 @@ import {ErrorFrontService} from '../../../../services/error/error-front.service'
 
 export class SidebarBatchFormComponent implements OnChanges {
 
+  @Input() isEditable = false;
+
   @Input() currentRow: any = <any>{};
 
   @Input() content: any = <any>{};
@@ -69,16 +71,18 @@ export class SidebarBatchFormComponent implements OnChanges {
   }
 
   public onSubmit() {
-    switch (this.templateType) {
+    if (this.isEditable) {
+      switch (this.templateType) {
 
-      case 'NEW_BATCH':
-        this._sendNewBatch();
-        break;
+        case 'NEW_BATCH':
+          this._sendNewBatch();
+          break;
 
-      case 'EDIT_BATCH':
-        this._updateBatch();
-        break;
+        case 'EDIT_BATCH':
+          this._updateBatch();
+          break;
 
+      }
     }
   }
 

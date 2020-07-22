@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 export interface StatsInterface {
   heading: string;
@@ -18,12 +18,15 @@ export class AdminCampaignStatsComponent {
 
   @Input() config: Array<StatsInterface> = [];
 
+  @Input() updateBtn = false;
+
+  @Output() updateStats: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor() { }
 
-  /*getCampaignStat(searchKey: any): number {
-    if (this._campaign) {
-      return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
-    }
-  }*/
+  public onUpdateStats(event: Event) {
+    event.preventDefault();
+    this.updateStats.emit(true);
+  }
 
 }

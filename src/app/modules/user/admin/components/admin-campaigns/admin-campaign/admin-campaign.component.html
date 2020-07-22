@@ -37,7 +37,7 @@
             <ng-container *ngFor="let tab of tabs">
               <li *ngIf="canAccess([tab.key])" class="tab-item">
                 <a
-                  (click)="onClickTab($event, tab.key, tab.name)"
+                  (click)="onClickTab($event, tab.key)"
                   [routerLinkActiveOptions]="{ exact: true }"
                   [routerLink]="['/user/admin/campaigns/campaign/', campaign._id, tab.route]"
                   routerLinkActive="active">

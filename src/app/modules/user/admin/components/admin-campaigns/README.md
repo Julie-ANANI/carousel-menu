@@ -23,7 +23,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 4. WORKFLOWS: Select_Template, Edit_Template, View, Change_Language, Import, Test. 
 
-5. BATCH: Launch_AutoBatch, Create, Pause, Edit, View.
+5. BATCH: AutoBatch, Create, Pause, Edit, View, Delete.
 
 6. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
 <br><br>FILTER_BY: 'Status', 
@@ -77,7 +77,7 @@ No definition of a Role means no access to that user.
 
 4. WORKFLOWS: Select_Template, Edit_Template, Change_Language, Test. 
 
-5. BATCH: Launch_AutoBatch, Pause, Edit, View.
+5. BATCH: AutoBatch, Pause, Edit, View.
 
 6. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
 <br><br>FILTER_BY: 'Status', 
@@ -96,7 +96,7 @@ access: {
                             view: true,
                             edit: true,
                             pause: true,
-                            launchAutoBatch: true
+                            autoBatch: true
                         },
                         workflows: {
                             test: true,

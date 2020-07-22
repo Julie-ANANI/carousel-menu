@@ -3,7 +3,7 @@
     <form [formGroup]="formData" autocomplete="off" (ngSubmit)="onSubmit()">
 
       <!-- save / send -->
-      <div class="p-bottom-25 text-right">
+      <div *ngIf="isEditable" class="p-bottom-25 text-right">
 
         <!-- templateType !== 'NEW_BATCH' -->
         <button
@@ -54,11 +54,13 @@
         <label class="form-label" for="batch-form-date">Date</label>
         <input
           (change)="onKeyboardPress($event)"
+          *ngIf="isEditable"
           [value]="mailDate | date:'yyyy-MM-dd'"
           class="form-input"
           formControlName="date"
           id="batch-form-date"
           type="date">
+        <div *ngIf="!isEditable" class="text-md">{{ mailDate | date:'yyyy-MM-dd' }}</div>
         <div *ngIf="templateType === 'NEW_BATCH'" class="text-error">
           Leave this blank to send the batch immediately.
         </div>
@@ -70,11 +72,13 @@
         <label class="form-label" for="batch-form-time">Time</label>
         <input
           (change)="onKeyboardPress($event)"
+          *ngIf="isEditable"
           [value]="mailTime"
           class="form-input"
           formControlName="time"
           id="batch-form-time"
           type="time">
+        <div *ngIf="!isEditable" class="text-md">{{ mailTime }}</div>
         <div *ngIf="templateType === 'NEW_BATCH'" class="text-error">
           Leave this blank to send the batch immediately.
         </div>
@@ -105,7 +109,9 @@
       <!-- content fr -->
 
       <!-- workflows -->
-      <div *ngIf="templateType === 'EDIT_BATCH' && campaignWorkflows && campaignWorkflows.length > 1" class="form-group">
+      <div
+        *ngIf="templateType === 'EDIT_BATCH' && campaignWorkflows && campaignWorkflows.length > 1 && isEditable"
+        class="form-group">
         <label class="form-label" for="batch-email-template">Modify Email Template</label>
         <select
           class="form-select"
@@ -119,7 +125,7 @@
       <!-- /workflows -->
 
       <!-- update status -->
-      <div *ngIf="templateType === 'EDIT_BATCH' && content" class="form-group">
+      <div *ngIf="templateType === 'EDIT_BATCH' && content && isEditable" class="form-group">
         <label class="form-label" for="batch-update-status">Modify Status</label>
         <input
           (change)="updateBatchStatus($event)"

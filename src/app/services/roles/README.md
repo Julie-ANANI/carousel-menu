@@ -137,7 +137,7 @@ access: {
                             view: true,
                             edit: true,
                             pause: true,
-                            launchAutoBatch: true
+                            autoBatch: true
                         },
                         workflows: {
                             test: true,

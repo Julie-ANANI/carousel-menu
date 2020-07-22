@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Campaign} from '../../../../../../models/campaign';
 import {TranslateTitleService} from "../../../../../../services/title/title.service";
 import {RolesFrontService} from "../../../../../../services/roles/roles-front.service";
@@ -22,16 +22,18 @@ export class AdminCampaignComponent implements OnInit {
     {key: 'answers', name: 'Answers', route: 'answers'}
   ];
 
-  private _heading = AdminCampaignComponent._initHeading('answers');
+  private _heading = '';
 
   private _isLoading = true;
 
   private _fetchingError = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
+              private _router: Router,
               private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService) {
 
+    this._initHeading();
     this._setPageTitle();
   }
 
@@ -40,7 +42,7 @@ export class AdminCampaignComponent implements OnInit {
       && typeof this._activatedRoute.snapshot.data['campaign'] !== undefined) {
       this._campaign = this._activatedRoute.snapshot.data['campaign'];
       this._isLoading = false;
-      this._setPageTitle('Answers', this._campaign && this._campaign.title);
+      this._setPageTitle();
 
       if (this._campaign && this._campaign.stats) {
         this._campaign.stats.nbPros = this._campaign.stats.campaign && this._campaign.stats.campaign.nbProfessionals || 0;
@@ -61,11 +63,22 @@ export class AdminCampaignComponent implements OnInit {
     }
   }
 
-  private _setPageTitle(route?: string, title?: string) {
-    if (title && route) {
-      this._translateTitleService.setTitle( route + ' | ' + title + ' | Campaign');
+  private _initHeading() {
+    const _url = this._router.routerState.snapshot.url.split('/');
+    if (_url.length === 7) {
+      const _params = _url[6].indexOf('?');
+      const _value = _params > 0 ? _url[6].substring(0, _params) : _url[6];
+      this._heading = AdminCampaignComponent._initHeading(_value);
     } else {
-      this._translateTitleService.setTitle('Answers | Campaign');
+      this._heading = AdminCampaignComponent._initHeading('answers');
+    }
+  }
+
+  private _setPageTitle() {
+    if (this._campaign && this._campaign.title) {
+      this._translateTitleService.setTitle( this._heading + ' | ' + this._campaign.title + ' | Campaign');
+    } else {
+      this._translateTitleService.setTitle( this._heading + ' | Campaign');
     }
   }
 
@@ -81,30 +94,27 @@ export class AdminCampaignComponent implements OnInit {
   private static _initHeading(value: string): string {
     switch (value) {
 
-      case 'search' || 'history':
+      case 'search':
+      case 'history':
         return 'Search';
 
       case 'batch':
         return 'Batch';
 
-      case 'history':
-        return 'Search';
-
       case 'workflows':
         return 'Workflows';
 
       case 'answers':
-        return 'Insights';
-
       case 'pros':
         return 'Insights';
+
     }
   }
 
-  public onClickTab(event: Event, key: string, name: string) {
+  public onClickTab(event: Event, key: string) {
     event.preventDefault();
     this._heading = AdminCampaignComponent._initHeading(key);
-    this._setPageTitle(name, this._campaign.title);
+    this._setPageTitle();
   }
 
   get campaign(): Campaign {
