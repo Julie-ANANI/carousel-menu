@@ -1,110 +1,105 @@
-<section id="admin-campaign-pros">
-
+<div *ngIf="canAccess()" class="container grid-2xl fluid animate-fade is-7" id="admin-campaign-pros">
 
   <!-- stats -->
-  <app-admin-campaign-stats></app-admin-campaign-stats>
+  <app-admin-campaign-stats [config]="statsConfig()"></app-admin-campaign-stats>
   <!-- /stats -->
 
+  <!-- content -->
+  <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
-  <div class="section-light-pad">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <div class="restrict-width">
+    <!-- buttons -->
+    <section
+      *ngIf="canAccess(['import']) || canAccess(['export']) || canAccess(['add'])"
+      class="text-right p-bottom-10 flex-wrap">
 
-
-        <!-- fetching error -->
-        <ng-container *ngIf="fetchingError">
-          <div class="a-c-p-error-wrapper d-flex align-center">
-            <app-utility-error-template-1 [errorMessage]="'CAMPAIGNS.ERROR_MESSAGE.FETCHING_PROFESSIONALS'"></app-utility-error-template-1>
-          </div>
+      <!-- add -->
+      <button
+        (click)="onClickAdd()"
+        *ngIf="canAccess(['add'])"
+        [disabled]="isCreating"
+        [ngClass]="{'m-right-20': canAccess(['import']) || canAccess(['export'])}"
+        class="button is-primary is-outlined is-sm m-bottom-20"
+        type="button">
+        <ng-container *ngIf="isCreating; else textAdd">
+          adding the professional...
         </ng-container>
-        <!-- /fetching error -->
+        <ng-template #textAdd>
+          Add
+        </ng-template>
+      </button>
+      <!-- /add -->
 
-
-        <!-- no professional -->
-        <ng-container *ngIf="!fetchingError && noResult && total === 0">
-          <div class="a-c-p-no-result-wrapper d-flex align-center">
-            <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
-
-              <div class="text-center">
-
-                <h4 [innerText]="'CAMPAIGNS.NO_PROFESSIONALS'" class="text-background" translate></h4>
-
-                <div class="m-top-25">
-
-                  <button (click)="onClickAdd()" class="btn btn-primary rounded shadow m-right-20 m-bottom-20" type="button">
-                    <i class="fas fa-plus m-no-left"></i>
-                    {{ 'COMMON.BUTTON.ADD' | translate }} professional
-                  </button>
-
-                  <button (click)="onClickImport()" class="btn btn-primary rounded shadow m-bottom-20 m-right-20" type="button">
-                    <i class="fas fa-file-import m-no-left"></i>
-                    {{ 'COMMON.BUTTON.IMPORT' | translate }} professionals
-                  </button>
-
-                </div>
-
-              </div>
-
-            </app-message-template-2>
-          </div>
+      <!-- import -->
+      <button
+        (click)="onClickImport()"
+        *ngIf="canAccess(['import'])"
+        [disabled]="isImporting"
+        [ngClass]="{'m-right-20': canAccess(['export'])}"
+        class="button is-primary is-outlined is-sm m-bottom-20"
+        type="button">
+        <ng-container *ngIf="isImporting; else textImport">
+          importing the professionals...
         </ng-container>
-        <!-- /no professional -->
+        <ng-template #textImport>
+          Import
+        </ng-template>
+      </button>
+      <!-- /import -->
 
-
-        <!-- professionals -->
-        <ng-container *ngIf="!fetchingError && !noResult">
-
-
-          <!-- buttons -->
-          <div class="text-right p-bottom-10">
-
-            <!-- import -->
-            <button (click)="onClickImport()" class="btn btn-sm ghost-primary m-bottom-20 m-right-20" type="button">
-              {{ 'COMMON.BUTTON.IMPORT' | translate }}
-            </button>
-
-            <!-- add -->
-            <button (click)="onClickAdd()" class="btn btn-sm ghost-primary m-bottom-20 m-right-20" type="button">
-              {{ 'COMMON.BUTTON.ADD' | translate }}
-            </button>
-
-            <!-- export -->
-            <button (click)="onClickExport()" class="btn btn-sm btn-primary m-bottom-20" type="button">
-              {{ 'COMMON.BUTTON.EXPORT' | translate }}
-            </button>
-
-          </div>
-          <!-- /buttons -->
-
-
-          <!-- table -->
-          <app-shared-professionals-list
-            (selectedProfessionalChange)="selectedProsEvent($event)"
-            [(config)]="config"
-            [campaign]="campaign"
-            [professionals]="professionals"
-            [tableSelector]="'admin-campaign-pros-limit'"
-            [total]="total">
-          </app-shared-professionals-list>
-          <!-- /table -->
-
-
+      <!-- export -->
+      <button
+        (click)="onClickExport()"
+        *ngIf="canAccess(['export'])"
+        [disabled]="isExporting"
+        class="button is-primary is-sm m-bottom-20"
+        type="button">
+        <ng-container *ngIf="isExporting; else textExport">
+          exporting the professionals...
         </ng-container>
-        <!-- /professionals -->
+        <ng-template #textExport>
+          Export
+        </ng-template>
+      </button>
+      <!-- /export -->
 
+    </section>
+    <!-- /buttons -->
 
-      </div>
-    </div>
+    <!-- no professional -->
+    <section *ngIf="noResult && total === 0" class="p-top-20">
+      <message-template-1 [widthMax]="'354px'">
+        Don't have any professionals?
+        <br>
+        Try to add some by clicking on "Import" / "Add" button.
+      </message-template-1>
+    </section>
+    <!-- /no professional -->
+
+    <!-- professionals -->
+    <section class="p-top-20">
+      <app-shared-professionals-list
+        (selectedProfessionalChange)="selectedProsEvent($event)"
+        [(config)]="config"
+        [accessPath]="['projects', 'project', 'campaigns', 'campaign', 'pros']"
+        [campaign]="campaign"
+        [professionals]="professionals"
+        [tableSelector]="'admin-campaign-pros-limit'"
+        [total]="total">
+      </app-shared-professionals-list>
+    </section>
+    <!-- /professionals -->
+
   </div>
+  <!-- /content -->
 
-
-</section>
+</div>
 
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="canAccess(['add'])" [(template)]="sidebarValue">
   <app-user-form
     (finalProfessionalData)="onClickSave($event)"
+    [isEditable]="true"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-user-form>
@@ -112,34 +107,53 @@
 <!-- /sidebar -->
 
 
-<!-- modal -->
-<app-utility-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_IMPORT'">
+<!-- modal to import -->
+<app-utility-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
 
   <section class="modal-body">
 
-    <label class="form-label">{{ 'CAMPAIGNS.LABEL_IMPORT' | translate }}</label>
+    <label class="form-label">Import professionals from campaign (only one campaign at a time)</label>
+
     <app-auto-complete-input
       (update)="updateCampaign($event)"
       [onlyOne]="true"
-      [config]="{ placeholder: 'CAMPAIGNS.PROS_PAGE.MODAL.IMPORT.PLACEHOLDER', initialData: originCampaign, type: 'campaign' }">
+      [config]="{ placeholder: 'Enter the campaign name', initialData: originCampaign, type: 'campaign' }">
     </app-auto-complete-input>
 
+    <div data-content="or" class="divider mxw-250 m-left-auto m-right-auto m-top-40"></div>
+
     <div class="text-center p-top-25">
-      <label class="btn btn-sm ghost-primary">
+      <label [ngClass]="{'disabled': isImporting}" class="button is-sm is-primary is-outlined">
         <input #fileupload type="file" [hidden]="true" (change)="onClickImportCsv(fileupload.files[0])" />
-        Import file
+        <ng-container *ngIf="isImporting; else importCSV">
+          importing the csv...
+        </ng-container>
+        <ng-template #importCSV>
+          Import file
+        </ng-template>
       </label>
     </div>
 
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL'  | translate }}</button>
-    <button (click)="onClickConfirm()" [disabled]="!originCampaign.length" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button [disabled]="isImporting" class="button modal-cancel" type="button">Cancel</button>
+    <button
+      (click)="onClickConfirm()"
+      [disabled]="!originCampaign.length || isImporting"
+      class="button is-primary"
+      type="button">
+      <ng-container *ngIf="isImporting; else textImport">
+        importing the professionals...
+      </ng-container>
+      <ng-template #textImport>
+        Confirm
+      </ng-template>
+      </button>
   </footer>
 
 </app-utility-modal>
-<!-- /modal -->
+<!-- /modal to import -->
 
 
 

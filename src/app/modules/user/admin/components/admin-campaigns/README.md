@@ -16,10 +16,10 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>ADD: 'Search_In_Campaign', 
 <br><br>LAUNCH: 'Module', STOP: 'Search', CANCEL: 'Search'.
 
-3. PROS:
+3. PROS: Import, Export, Add,
 <br><br>SEARCH_BY: 'Name, Email, Country, Job, Company', 
 <br><br>T_COLUMNS: 'Member, Name, Country, Job, Company, Campaign, Contact'
-<br><br>PROFILE: 'View, Edit, Import, Add, Export, Delete'.
+<br><br>PROFILE: 'View, Edit, Delete'.
 
 4. WORKFLOWS: Select, Edit, View, Import, Test, Delete. 
 
@@ -73,7 +73,7 @@ No definition of a Role means no access to that user.
 3. PROS:
 <br><br>SEARCH_BY: 'Name, Email, Job, Company', 
 <br><br>T_COLUMNS: 'Name, Country, Job, Company',
-<br><br>PROFILE: 'View, Edit, Import, Add'.
+<br><br>PROFILE: 'View, Edit'.
 
 4. WORKFLOWS: Select, Edit, Test, Import. 
 
@@ -174,6 +174,7 @@ access: {
                             export: true
                         },
                         pros: {
+                            add: true,
                             searchBy: {
                                 company: true,
                                 name: true,
@@ -187,8 +188,6 @@ access: {
                                 country: true
                             },
                             profile: {
-                                import: true,
-                                add: true,
                                 edit: true,
                                 view: true
                             }
