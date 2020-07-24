@@ -1,12 +1,13 @@
 <div *ngIf="canAccess()" class="container grid-2xl fluid" id="admin-campaign-batch">
 
   <!-- stats -->
-  <app-admin-campaign-stats
-    class="animate-fade is-7"
-    (updateStats)="onUpdateStats($event)"
-    [config]="statsConfig()"
-    [updateBtn]="true">
-  </app-admin-campaign-stats>
+  <div class="animate-fade is-7">
+    <app-admin-campaign-stats
+      (updateStats)="onUpdateStats($event)"
+      [config]="statsConfig()"
+      [updateBtn]="true">
+    </app-admin-campaign-stats>
+  </div>
   <!-- /stats -->
 
   <!-- content -->
@@ -133,15 +134,17 @@
           <div class="card-title">
             <span class="m-right-2">Batch for {{ batch.size }} pros</span>
             <span *ngIf="batch.error" class="text-error m-right-2 m-top-1 text-xs text-normal">
-              There has been an error when sending this batch!
+              There has been an error while sending this batch!
             </span>
             <div
               (click)="onDeleteBatch($event, batch)"
               *ngIf="getDeleteStatus(batch) && canAccess(['delete'])"
-              [ngStyle]="{'height': '23px'}"
-              class="icons is-delete tooltip"
-              data-tooltip="Delete batch">
-              <i class="fas fa-trash-alt"></i>
+              class="icon-container is-overlay">
+              <span data-tooltip="Delete batch" class="tooltip">
+                <img
+                  src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-delete-danger.svg"
+                  alt="">
+              </span>
             </div>
           </div>
 

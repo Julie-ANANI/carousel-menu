@@ -18,7 +18,6 @@ interface Header {
   pageName: string;
   pageLink: string;
   trackingClass?: string;
-  // adminLevel?: number; // no need
   key: string
 }
 
@@ -72,18 +71,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private _showLangs = false;
 
   private _adminRoutes: Array<Header> = [
-    // { pageName: 'Dashboard', pageLink: '/user/admin', adminLevel: 1 },
-    { pageName: 'Market Tests', pageLink: '/user/admin/projects', /*adminLevel: 1,*/ key: 'projects' },
-    { pageName: 'Users', pageLink: '/user/admin/users', /*adminLevel: 1,*/ key: 'users' },
-    { pageName: 'Community', pageLink: '/user/admin/community', /*adminLevel: 3,*/ key: 'community' },
-    { pageName: 'Professionals', pageLink: '/user/admin/professionals', /*adminLevel: 3,*/ key: 'professionals' },
-    { pageName: 'Libraries', pageLink: '/user/admin/libraries', /*adminLevel: 3,*/ key: 'libraries' },
-    { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', /*adminLevel: 3,*/ key: 'monitoring' },
-    { pageName: 'Settings', pageLink: '/user/admin/settings', /*adminLevel: 3,*/ key: 'settings' },
-    { pageName: 'Search', pageLink: '/user/admin/search/pros', /*adminLevel: 3,*/ key: 'search' },
+    { pageName: 'Market Tests', pageLink: '/user/admin/projects', key: 'projects' },
+    { pageName: 'Users', pageLink: '/user/admin/users', key: 'users' },
+    { pageName: 'Community', pageLink: '/user/admin/community', key: 'community' },
+    { pageName: 'Professionals', pageLink: '/user/admin/professionals', key: 'professionals' },
+    { pageName: 'Libraries', pageLink: '/user/admin/libraries', key: 'libraries' },
+    { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', key: 'monitoring' },
+    { pageName: 'Settings', pageLink: '/user/admin/settings', key: 'settings' },
+    { pageName: 'Search', pageLink: '/user/admin/search/pros', key: 'search' },
   ];
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _hide = false;
 

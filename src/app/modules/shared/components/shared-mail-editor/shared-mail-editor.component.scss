@@ -19,20 +19,18 @@
     padding: 4px 10px;
   }
 
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .header-wrapper {
     flex-wrap: wrap;
 
     .language-wrapper{
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      font-size: 15px;
 
       .form-label, .text-link {
-        margin-right: 0.75rem;
-        margin-bottom: 0.75rem;
+        margin-right: 15px;
+        margin-bottom: 15px;
       }
 
       .text-link {
@@ -55,7 +53,7 @@
     }
 
     .form-switch {
-      margin-bottom: 0.75rem;
+      margin-bottom: 15px;
     }
 
   }
@@ -65,20 +63,13 @@
   }
 
   .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 25px;
   }
 
-  .section-content {
+  .content-wrapper {
     display: flex;
     flex-direction: column;
-    padding-top: 0.5rem;
-
-    .text.text-notify{
-      padding-top: 0.5rem;
-      font-size: $font-size-sm;
-      font-weight: 600;
-    }
-
+    padding-top: 10px;
   }
 
 }

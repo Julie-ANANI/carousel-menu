@@ -27,15 +27,15 @@ interface Mapping {
 
 export class SharedMailEditorComponent {
 
+  @Input() isEnablePreviewBtn = false; // to show / Hide the Preview button in the Default template.
+
   @Input() isEditableMode = true;
 
   @Input() canTestMails = false;
 
-  @Input() set templateType(value: editorTypes) {
-    if (value) {
-      this._templateType = value;
-    }
-  }
+  @Input() templateType: editorTypes = '';
+
+  @Input() ccEmail = '';
 
   @Input() set emailsObject(value: EmailsObject) {
     if (value) {
@@ -62,17 +62,7 @@ export class SharedMailEditorComponent {
 
   }
 
-  @Input() set ccEmail(value: string) {
-    if (value) {
-      this._ccEmail = value;
-    }
-  }
-
-  @Input() set professionals(value: Array<Professional>) {
-    if (value) {
-      this._professionals = value;
-    }
-  }
+  @Input() professionals: Array<Professional> = [];
 
   @Input() set inputLanguage(value: any) {
     if (value) {
@@ -82,9 +72,9 @@ export class SharedMailEditorComponent {
 
   @Input() signatures: Array<EmailSignature> = [];
 
-  @Input() noLanguage: Boolean;
+  @Input() noLanguage = false;
 
-  @Input() id: string = '';
+  @Input() id = '';
 
   @Output() languageChange = new EventEmitter<string>();
 
@@ -98,11 +88,7 @@ export class SharedMailEditorComponent {
 
   @ViewChild('textZone') child: any;
 
-  private _professionals: Array<Professional> = [];
-
   private _display = false;
-
-  private _templateType: editorTypes = '';
 
   private _customField: Array<{label: string, value: string}> = [];
 
@@ -120,8 +106,6 @@ export class SharedMailEditorComponent {
   };
 
   private _languageHasBeenSet = false;
-
-  private _ccEmail = '';
 
   private _variableMapping: Mapping = {
     en: {},
@@ -151,7 +135,7 @@ export class SharedMailEditorComponent {
 
   public onSelectProfessional(professionalId: string) {
     if (professionalId) {
-      const pro = this._professionals.find(pro => pro._id === professionalId);
+      const pro = this.professionals.find(pro => pro._id === professionalId);
       const language = pro.language;
       const html = '<span class="variable">';
       this._professionalPreview = `${this._emailsObject[language].subject}<p>${this._emailsObject[language].content}</p>`
@@ -198,10 +182,6 @@ export class SharedMailEditorComponent {
     return this._languageHasBeenSet;
   }
 
-  get ccEmail(): string {
-    return this._ccEmail;
-  }
-
   get email(): EmailTemplate {
     return this._email;
   }
@@ -216,14 +196,6 @@ export class SharedMailEditorComponent {
 
   get variableMapping(): Mapping {
     return this._variableMapping;
-  }
-
-  get templateType(): editorTypes {
-    return this._templateType;
-  }
-
-  get professionals(): Array<Professional> {
-    return this._professionals;
   }
 
   get emailsObject(): EmailsObject {

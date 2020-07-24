@@ -28,13 +28,13 @@
 
 <!-- sidebar to edit email -->
 <app-sidebar [(template)]="sidebarValue">
-  <app-workflow
+  <app-sidebar-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
     (emailChange)="updateEmail($event)"
     [signatures]="signatures"
     [inputLanguage]="language">
-  </app-workflow>
+  </app-sidebar-workflow>
 </app-sidebar>
 <!-- /sidebar to edit email -->
 

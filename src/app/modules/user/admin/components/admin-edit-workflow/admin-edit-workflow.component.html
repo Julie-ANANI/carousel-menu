@@ -1,52 +1,103 @@
-<section id="admin-edit-workflow-component">
+<div id="admin-edit-workflow">
 
-  <!-- section header -->
-  <div class="section-header">
-    <span class="text">{{ campaignScenario.name }}</span>
-    &nbsp;-
-    <ng-container *ngIf="inCampaign && defaultScenario === campaignScenario.name">
+  <!-- header -->
+  <div class="header-wrapper">
+
+    <div>{{ campaignScenario.name }} - </div>
+
+    <div *ngIf="inCampaign && defaultScenario === campaignScenario.name" class="m-left-10">
       By default
-    </ng-container>
-    <ng-container *ngIf="inCampaign && defaultScenario != campaignScenario.name">
-      <span (click)="setDefaultScenario()">Use by default</span>
-    </ng-container>
-    <div [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'" class="shape is-circle is-sm"><i class="fas fa-check"></i></div>
-    <span [ngClass]="{ 'active': language === 'en' }" class="text-link" (click)="changeLanguage('en')">{{ 'COMMON.LANG.EN' | translate }}</span>
+    </div>
+
+    <div
+      (click)="setDefaultScenario()"
+      *ngIf="inCampaign && defaultScenario != campaignScenario.name && isEditable"
+      class="m-left-10">
+      Use by default
+    </div>
+
+    <div
+      [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"
+      class="shape is-circle m-left-2">
+      <i class="fas fa-check"></i>
+    </div>
+
+    <div
+      (click)="changeLanguage('en')"
+      [ngClass]="{ 'active': language === 'en' }"
+      class="text-link">
+      English
+
+    </div>
+
     &nbsp;&nbsp;|
-    <div [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'" class="shape is-circle is-sm"><i class="fas fa-check"></i></div>
-    <span [ngClass]="{ 'active': language === 'fr' }" class="text-link" (click)="changeLanguage('fr')">{{ 'COMMON.LANG.FR' | translate }}</span>
-    <div (click)="onClickDelete()" class="icons is-delete tooltip" data-tooltip="Delete Workflow"><i class="fas fa-trash-alt"></i></div>
+
+    <div
+      [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"
+      class="shape is-circle m-left-2">
+      <i class="fas fa-check"></i>
+    </div>
+
+    <div
+      (click)="changeLanguage('fr')"
+      [ngClass]="{ 'active': language === 'fr' }"
+      class="text-link">
+      French
+    </div>
+
+    <div
+      (click)="onClickDelete()"
+      class="icon-container is-overlay m-left-2">
+      <span data-tooltip="Delete workflow" class="tooltip">
+        <img
+          src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-delete-danger.svg"
+          alt="">
+      </span>
+    </div>
+
   </div>
+  <!-- /header -->
 
-  <!-- section table -->
-  <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [(config)]="config"></app-shared-table>
+  <!-- table -->
+  <app-shared-table
+    (editRow)="editEmail($event)"
+    [(config)]="localConfig"
+    [data]="tableInfos">
+  </app-shared-table>
+  <!-- /table -->
 
-</section>
+</div>
 
 
 <!-- modal to delete the scenario -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal *ngIf="isDeletable" [(showModal)]="modalDelete" [title]="'Delete Board'">
 
   <section class="modal-body">
-    {{ 'EDIT_WORKFLOW.MODAL.CONTENT' | translate }}
+    Do you really want to delete this workflow? This action is irreversible.
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="button is-primary" (click)="deleteScenario()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
+    <button
+      (click)="deleteScenario()"
+      class="button is-primary"
+      type="button">
+      Confirm
+    </button>
   </footer>
 
 </app-utility-modal>
 <!-- /modal to delete the scenario -->
 
 
-<!-- sidebar to edit workflow -->
-<app-sidebar [(template)]="more">
-  <app-workflow
-    [id]="getId()"
+<!-- sidebar to edit / view workflow -->
+<app-sidebar [(template)]="sidebar">
+  <app-sidebar-workflow
+    (emailChange)="updateEmail($event)"
     [emailsObject]="emailToEdit"
+    [id]="getId()"
     [inputLanguage]="language"
-    (emailChange)="updateEmail($event)">
-  </app-workflow>
+    [isEditable]="isEditable">
+  </app-sidebar-workflow>
 </app-sidebar>
-<!-- /sidebar to edit workflow -->
+<!-- /sidebar to edit / view workflow -->

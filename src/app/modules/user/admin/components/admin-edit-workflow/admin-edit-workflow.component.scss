@@ -1,21 +1,23 @@
 @import "../../../../../../style/framework/src/variables";
 
-#admin-edit-workflow-component {
+#admin-edit-workflow {
 
-  .section-header {
+  .header-wrapper {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: $unit-5;
+    margin-bottom: 20px;
+    font-size: 16px;
     color: $meta-color;
 
-    .icons-delete, .is-circle {
-      margin-left: $unit-2;
+    .shape.is-circle {
+      width: 16px;
+      height: 16px;
     }
 
     .incomplete {
-      background-color: $alert-color;
-      border-color: $alert-color;
+      background-color: $bg-alert-color;
+      border-color: $border-alert-color;
 
       .fa-check {
         visibility: hidden;
@@ -24,21 +26,22 @@
     }
 
     .complete {
-      background-color: $success-color;
-      border-color: $success-color;
+      background-color: $bg-success-color;
+      border-color: $border-success-color;
 
       .fa-check {
-        color: $white-color;
+        color: $text-white-color;
         visibility: visible;
       }
 
     }
 
     .text-link {
-      color: $meta-color;
+      color: $text-meta-color;
+      font-size: 15px;
 
       &.active {
-        color: $primary-color;
+        color: $text-primary-color;
         text-decoration: none;
         cursor: default;
       }
@@ -46,7 +49,7 @@
     }
 
     .text-link:hover {
-      color: $primary-color;
+      color: $text-primary-color;
       text-decoration: none;
     }
 

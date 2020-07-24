@@ -21,7 +21,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>T_COLUMNS: 'Member, Name, Country, Job, Company, Campaign, Contact'
 <br><br>PROFILE: 'View, Edit, Import, Add, Export, Delete'.
 
-4. WORKFLOWS: Select_Template, Edit_Template, View, Change_Language, Import, Test. 
+4. WORKFLOWS: Select, Edit, View, Import, Test, Delete. 
 
 5. BATCH: AutoBatch, Create, Pause, Edit, View, Delete.
 
@@ -75,7 +75,7 @@ No definition of a Role means no access to that user.
 <br><br>T_COLUMNS: 'Name, Country, Job, Company',
 <br><br>PROFILE: 'View, Edit, Import, Add'.
 
-4. WORKFLOWS: Select_Template, Edit_Template, Change_Language, Test. 
+4. WORKFLOWS: Select, Edit, Test, Import. 
 
 5. BATCH: AutoBatch, Pause, Edit, View.
 
@@ -100,9 +100,8 @@ access: {
                         },
                         workflows: {
                             test: true,
-                            changeLanguage: true,
-                            editTemplate: true,
-                            selectTemplate: true
+                            edit: true,
+                            select: true
                         },
                         history: {
                             cancel: {

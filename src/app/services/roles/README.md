@@ -141,9 +141,8 @@ access: {
                         },
                         workflows: {
                             test: true,
-                            changeLanguage: true,
-                            editTemplate: true,
-                            selectTemplate: true
+                            edit: true,
+                            select: true
                         },
                         history: {
                             cancel: {
