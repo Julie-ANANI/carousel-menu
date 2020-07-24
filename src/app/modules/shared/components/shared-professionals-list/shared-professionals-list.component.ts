@@ -94,6 +94,7 @@ export class SharedProfessionalsListComponent {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isTitle: true,
       _isPaginable: true,
+      _isNoMinHeight: this.total < 11,
       _isDeletable: this.canAccess(['profile', 'delete']),
       _isSelectable: this.canAccess(['profile', 'delete']) || this.canAccess(['profile', 'edit']),
       _buttons: [
