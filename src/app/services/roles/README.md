@@ -146,21 +146,24 @@ access: {
                         },
                         history: {
                             cancel: {
-                                search: true
+                                requests: true
                             },
                             stop: {
-                                search: true
+                                requests: true
                             },
                             launch: {
-                                module: true
+                                module: true,
+                                googleRequests: true,
+                                emailsSearch: true
                             },
                             add: {
-                                searchInCampaign: true
+                                toCampaign: true
                             },
                             view: {
-                                search: true,
+                                request: true,
                                 campaign: true,
-                                searchFilles: true
+                                results: true,
+                                requests: true
                             },
                             tableColumns: {
                                 underShield: true,
@@ -174,7 +177,7 @@ access: {
                             searchBy: {
                                 keywords: true
                             },
-                            putBackSearchInLine: true
+                            putBackInQueue: true
                         },
                         search: {
                             import: {

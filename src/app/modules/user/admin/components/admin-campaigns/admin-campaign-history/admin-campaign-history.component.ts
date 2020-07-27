@@ -1,28 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
-import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
 
 @Component({
-  selector: 'app-admin-campaign-history',
   templateUrl: './admin-campaign-history.component.html',
   styleUrls: ['./admin-campaign-history.component.scss']
 })
 
-export class AdminCampaignHistoryComponent {
+export class AdminCampaignHistoryComponent implements OnInit {
 
-  private _campaign: Campaign;
+  private _campaign: Campaign = <Campaign>{};
+
+  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'history'];
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateTitleService: TranslateTitleService) {
+              private _rolesFrontService: RolesFrontService) { }
 
-    this._translateTitleService.setTitle('History | Campaign');
-    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-
+  ngOnInit(): void {
+    if (this._activatedRoute.snapshot.parent.data['campaign']
+      && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
+      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+    }
   }
 
-  get campaignId(): string {
-    return this._campaign && this._campaign._id ? this._campaign._id : '';
+  public canAccess() {
+    return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
   }
 
 }

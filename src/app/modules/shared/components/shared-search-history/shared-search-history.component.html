@@ -1,45 +1,56 @@
-<h6>
-  <i (click)="relaunchRequests()" class="c-hand fa fa-bolt"></i>
-  <span *ngIf="paused" class="text-error">Module en pause</span>
-  <span *ngIf="!paused" class="text-success">
-      Module en fonctionnement
-    </span>
-  -
-  <span [ngClass]="{
-  'text-success': googleQuota > 10000,
-  'text-warning': googleQuota < 10000 && googleQuota > 5000,
-  'text-error': googleQuota < 5000}">
-    {{ googleQuota }} requêtes google restantes</span>
-</h6>
+<div id="shared-search-history">
 
-<div class="column col-6 col-mx-auto p-20">
-  <app-auto-complete-input
-    (update)="updateInno($event)"
-    [config]="{placeholder: 'Innovation', type: 'innovation'}">
-  </app-auto-complete-input>
-</div>
+  <!-- google request -->
+  <section class="text-md text-medium p-bottom-30">
+    <div *ngIf="canAccess(['launch', 'googleRequests'])" class="icon-container m-right-1 is-overlay is-sm">
+      <span [attr.data-tooltip]="'Relaunch google request'" class="tooltip">
+        <i (click)="relaunchRequests()" class="c-hand fa fa-bolt text-primary-dark"></i>
+      </span>
+    </div>
+    <span *ngIf="paused" class="text-error">Module is paused.</span>
+    <span *ngIf="!paused" class="text-success">Module is functioning.</span>
+    <span [ngClass]="{ 'text-success': googleQuota > 10000, 'text-warning': googleQuota < 10000 && googleQuota > 5000,
+    'text-error': googleQuota < 5000}">
+    {{ googleQuota }} remaining google requests.</span>
+  </section>
+  <!-- /google request -->
 
-<div class="analysis-content">
-  <ng-container *ngIf="suggestions.length">
-    <p class="text-primary m-h"> {{ 'SEARCH.ROBOT.SUGGESTED' | translate }} </p>
-    <ul class="text-secondary text-sm">
-      <li *ngFor="let suggestion of suggestions" class="d-inline-flex m-right-10">
-        {{suggestion}}
-      </li>
+  <!-- search by innovation -->
+  <section *ngIf="canAccess(['searchBy', 'innovation'])" class="mxw-700 m-left-auto m-right-auto p-bottom-30">
+    <app-auto-complete-input
+      (update)="updateInnovation($event)"
+      [config]="{placeholder: 'Search an innovation here...', type: 'innovation'}">
+    </app-auto-complete-input>
+  </section>
+  <!-- /search by innovation -->
+
+  <!-- robot suggested -->
+  <section *ngIf="suggestions.length" class="p-bottom-30">
+    <h5>Robot suggested searches</h5>
+    <ul class="d-flex flex-wrap">
+      <li *ngFor="let suggestion of suggestions" class="text-sm m-right-20">{{ suggestion }}</li>
     </ul>
-  </ng-container>
+  </section>
+  <!-- /robot suggested -->
+
+  <!-- table -->
+  <section>
+    <app-shared-table
+      (editRow)="openSidebar($event)"
+      (performAction)="onClickActions($event)"
+      [(config)]="config"
+      [data]="tableInfos"
+    ></app-shared-table>
+  </section>
+  <!-- /table -->
+
 </div>
 
-<app-shared-table
-  [(config)]="config"
-  [data]="tableInfos"
-  (editRow)="openSidebar($event)"
-  (performAction)="onClickActions($event)"
-></app-shared-table>
 
 <!-- sidebar to request details -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="canAccess(['view', 'request'])" [(template)]="sidebarValue">
   <app-sidebar-search-history
+    [accessPath]="accessPath"
     [request]="selectedRequest">
   </app-sidebar-search-history>
 </app-sidebar>
@@ -47,39 +58,57 @@
 
 
 <!-- MODAL : Ajout de pros à une campagne -->
-<app-utility-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
+<app-utility-modal
+  *ngIf="canAccess(['add', 'toCampaign'])"
+  [(showModal)]="addToCampaignModal"
+  [title]="'Add to a campaign'">
 
   <section class="modal-body">
 
-    <small><strong>{{ total }}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
-    <div id="campaign-autocomplete">
+    <div class="m-bottom-25">
+      <label class="form-switch" for="launchNewRequests">
+        <input
+          type="checkbox"
+          name="role"
+          id="launchNewRequests"
+          [checked]="launchNewRequests"
+          (change)="launchNewRequests = !launchNewRequests">
+        <i class="form-icon"></i>Launch new queries to complete targeting
+      </label>
+    </div>
+
+    <p class="form-label">{{ total }} Professional(s) selected</p>
+
+    <div [ngStyle]="{'min-height': chosenCampaign && chosenCampaign._id ? 'auto': '300px'}">
       <app-auto-complete-input
         (update)="updateCampaign($event)"
         [onlyOne]="true"
-        [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
+        [config]="{placeholder: 'Search a campaign here...', initialData: chosenCampaign, type: 'campaign'}">
       </app-auto-complete-input>
     </div>
-    <label class="form-switch" for="launchNewRequests">
-      <input
-        type="checkbox"
-        name="role"
-        id="launchNewRequests"
-        [checked]="launchNewRequests"
-        (change)="launchNewRequests = !launchNewRequests">
-      <i class="form-icon"></i>Lancer des nouvelles requêtes pour compléter le ciblage
-    </label>
-    <app-shared-targeting-world *ngIf="chosenCampaign" [(geography)]="geography" [isEditable]="true"></app-shared-targeting-world>
 
+    <div *ngIf="chosenCampaign && chosenCampaign._id" class="p-top-25">
+      <app-shared-targeting-world
+        [(geography)]="geography"
+        [isEditable]="true">
+      </app-shared-targeting-world>
+    </div>
 
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign" class="button is-primary">
-      {{ 'SEARCH.CAMPAIGN.ADDANDSEE' | translate }}
+    <button class="button modal-cancel">Cancel</button>
+    <button
+      (click)="addToCampaign(chosenCampaign, true)"
+      [disabled]="!chosenCampaign"
+      class="button is-primary">
+      Add and see the campaign
     </button>
-    <button (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign" class="button is-primary">
-      {{ 'SEARCH.ADD' | translate }}
+    <button
+      (click)="addToCampaign(chosenCampaign)"
+      [disabled]="!chosenCampaign"
+      class="button is-primary">
+      Confirm
     </button>
   </footer>
 

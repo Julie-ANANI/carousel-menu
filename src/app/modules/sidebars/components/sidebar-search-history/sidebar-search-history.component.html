@@ -1,36 +1,75 @@
-<div class="column col-11 col-mx-auto" *ngIf="request">
-  <h3> {{ request.pros }}  ({{ request.cost?.totalCost }}€)</h3>
-  <h6>{{ 'SEARCH.HISTORY.LAUNCHED_BY' | translate}} {{ request.metadata.user.name }}
-    le {{request.created | date:'d/MM/yy à hh:mm:ss'}} </h6>
-  <h6> {{ 'SEARCH.HISTORY.TIME' | translate }}: {{ request.elapsedTime  | date:'m:ss' }} </h6>
+<div *ngIf="request" class="column col-sm-12 col-11 col-mx-auto p-top-30">
 
-  <h6> {{ 'SEARCH.HISTORY.TARGETTING' | translate }}</h6>
+  <h1 class="title is-4 m-bottom-15">
+    <ng-container *ngIf="request['pros']">{{ request['pros'] }}</ng-container>
+    <ng-container *ngIf="request['cost'] && request['cost']['totalCost']">
+      ({{ request['cost']['totalCost'] }}€)
+    </ng-container>
+  </h1>
 
-  Liens :
-  <ul>
-    <li class="text-link">
-      <a [href]="'/user/admin/search/results/' + request._id" target="_blank">{{ 'SEARCH.HISTORY.REQUEST' | translate }}</a>
-    </li>
-    <li class="text-link" *ngIf="request.campaign">
-      <a [href]="'/user/admin/campaigns/campaign/' + request.campaign" target="_blank">{{ 'PROJECT.CAMPAIGN.CAMPAIGN' | translate }}</a>
-    </li>
-    <li class="text-link" *ngIf="request.innovation">
-      <a [href]="'/user/admin/projects/project/' + request.innovation" target="_blank">{{ 'COMMON.PAGE_TITLE.PROJECT' | translate }}</a>
-    </li>
-  </ul>
+  <h6 class="text-normal">
+    Launched by:
+    <ng-container *ngIf="request.metadata && request.metadata.user && request.metadata.user.name">
+      {{ request.metadata.user.name }}
+    </ng-container>
+    <ng-container *ngIf="request['created']">
+      on {{ request['created'] | date:'d/MM/yy'}} at {{ request['created'] | date:'hh:mm:ss'}}
+    </ng-container>
+  </h6>
 
+  <h6 *ngIf="request.elapsedTime" class="text-normal">Time: {{ request.elapsedTime  | date:'m:ss' }}</h6>
 
-  <span class="text-link" (click)="getChildren()" *ngIf="request.entity === 'PERSON_BY_COUNTRIES'">
-    <span *ngIf="!showChildren">Voir</span><span *ngIf="showChildren">Cacher</span> les requêtes filles
-  </span>
+  <div
+    *ngIf="canAccess(['view', 'results']) || canAccess(['view', 'campaign'])
+    || canAccess(['view', 'project'])"
+    class="text-md p-top-20">
+    <h2 class="title is-5 m-no-bottom">Links:</h2>
+    <ul>
+      <li *ngIf="canAccess(['view', 'results'])" class="text-link text-sm text-normal">
+        <a
+          [href]="'/user/admin/search/results/' + request['_id']"
+          target="_blank">
+          Requests
+        </a>
+      </li>
+      <li *ngIf="request['campaign'] && canAccess(['view', 'campaign'])" class="text-link text-sm text-normal">
+        <a
+          [href]="'/user/admin/campaigns/campaign/' + request['campaign']"
+          target="_blank">
+          Campaign
+        </a>
+      </li>
+      <li *ngIf="request['innovation'] && canAccess(['view', 'project'])" class="text-link text-sm text-normal">
+        <a
+          [href]="'/user/admin/projects/project/' + request['innovation']"
+          target="_blank">
+          Market Test
+        </a>
+      </li>
+    </ul>
+  </div>
 
-  <div *ngIf="showChildren">
+  <div class="p-top-25 text-center">
+    <button
+      (click)="getChildren()"
+      *ngIf="request['entity'] === 'PERSON_BY_COUNTRIES' && canAccess(['view', 'requests'])"
+      class="button is-outlined is-sm is-info"
+      type="button">
+      <ng-container *ngIf="showChildren">Hide the requests</ng-container>
+      <ng-container *ngIf="!showChildren">Show the requests</ng-container>
+    </button>
+  </div>
+
+  <!-- table -->
+  <div *ngIf="showChildren" class="p-top-30">
     <app-shared-table
       [(config)]="config"
       [data]="tableInfos"
       (editRow)="goToRequest($event)"
-      (performAction)="onClickActions($event)"
-    ></app-shared-table>
+      (performAction)="onClickActions($event)">
+    </app-shared-table>
   </div>
+  <!-- /table -->
+
 </div>
 

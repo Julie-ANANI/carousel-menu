@@ -1,2 +1,9 @@
-<app-shared-search-history [campaignId]="campaignId"></app-shared-search-history>
+<div *ngIf="canAccess()" class="container fluid grid-2xl p-top-30 p-bottom-30 animate-fade is-5">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+    <app-shared-search-history
+      [campaignId]="campaign._id"
+      [accessPath]="accessPath">
+    </app-shared-search-history>
+  </div>
+</div>
 

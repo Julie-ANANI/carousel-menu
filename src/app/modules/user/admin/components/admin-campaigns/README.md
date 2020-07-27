@@ -9,12 +9,14 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 1. SEARCH: LAUNCH: 'CAT, Search', VIEW: 'Settings', EDIT: 'Settings', IMPORT: 'Pros'.
 
-2. HISTORY: Put_Back_Search_In_Line
+2. HISTORY: Put_Back_In_Queue
 <br><br>SEARCH_BY: 'Keywords, Innovation', 
 <br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield, Ambassador',
-<br><br>VIEW: 'Search_Filles, Campaign, Search, Project', 
-<br><br>ADD: 'Search_In_Campaign', 
-<br><br>LAUNCH: 'Module', STOP: 'Search', CANCEL: 'Search'.
+<br><br>VIEW: 'Campaign, Request, Project, Results, Requests', 
+<br><br>ADD: 'To_Campaign', 
+<br><br>LAUNCH: 'Module, Google_Requests, Emails_Search', 
+<br><br>STOP: 'Requests', 
+<br><br>CANCEL: 'Requests'.
 
 3. PROS: Import, Export, Add,
 <br><br>SEARCH_BY: 'Name, Email, Country, Job, Company', 
@@ -61,14 +63,14 @@ No definition of a Role means no access to that user.
 
 1. SEARCH: LAUNCH: 'Search', VIEW: 'Settings', EDIT: 'Settings', IMPORT: 'Pros'.
 
-2. HISTORY: Put_Back_Search_In_Line
+2. HISTORY: Put_Back_In_Queue
 <br><br>SEARCH_BY: 'Keywords', 
 <br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield',
-<br><br>VIEW: 'Search_Filles, Campaign, Search', 
-<br><br>ADD: 'Search_In_Campaign', 
-<br><br>LAUNCH: 'Module', 
-<br><br>STOP: 'Search', 
-<br><br>CANCEL: 'Search'.
+<br><br>VIEW: 'Campaign, Request, Results, Requests', 
+<br><br>ADD: 'To_Campaign', 
+<br><br>LAUNCH: 'Module, Google_Requests, Emails_Search', 
+<br><br>STOP: 'Requests', 
+<br><br>CANCEL: 'Requests'.
 
 3. PROS:
 <br><br>SEARCH_BY: 'Name, Email, Job, Company', 
@@ -105,21 +107,24 @@ access: {
                         },
                         history: {
                             cancel: {
-                                search: true
+                                requests: true
                             },
                             stop: {
-                                search: true
+                                requests: true
                             },
                             launch: {
-                                module: true
+                                module: true,
+                                googleRequests: true,
+                                emailsSearch: true
                             },
                             add: {
-                                searchInCampaign: true
+                                toCampaign: true
                             },
                             view: {
-                                search: true,
+                                request: true,
                                 campaign: true,
-                                searchFilles: true
+                                results: true,
+                                requests: true
                             },
                             tableColumns: {
                                 underShield: true,
@@ -133,7 +138,7 @@ access: {
                             searchBy: {
                                 keywords: true
                             },
-                            putBackSearchInLine: true
+                            putBackInQueue: true
                         },
                         search: {
                             import: {
