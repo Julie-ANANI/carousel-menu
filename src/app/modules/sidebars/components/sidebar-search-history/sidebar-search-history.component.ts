@@ -90,6 +90,7 @@ export class SidebarSearchHistoryComponent {
       _isSelectable: true,
       _isTitle: true,
       _isLocal: true,
+      _isNoMinHeight: this._total < 11,
       _buttons: [
         {
           _icon: 'fas fa-times',

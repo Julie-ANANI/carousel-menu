@@ -7,7 +7,11 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 ### Functionalities
 
-1. SEARCH: LAUNCH: 'CAT, Search', VIEW: 'Settings', EDIT: 'Settings', IMPORT: 'Pros'.
+1. SEARCH: 
+<br><br>LAUNCH: 'CAT, Search', 
+<br><br>VIEW: 'Settings', 
+<br><br>EDIT: 'Settings', 
+<br><br>IMPORT: 'Pros'.
 
 2. HISTORY: Put_Back_In_Queue
 <br><br>SEARCH_BY: 'Keywords, Innovation', 

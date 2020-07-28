@@ -131,7 +131,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
       this._answerService.importAsCsv(this._campaign._id, file).pipe(first()).subscribe(() => {
         this._reinitializeVariables();
         this._getAnswers();
-        this._translateNotificationsService.success('Success', 'The answers has been imported successfully.');
+        this._translateNotificationsService.success('Success', 'The answers has been imported.');
         this._isImportingAnswers = false;
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -157,6 +157,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
       _clickIndex: (this.canAccess(['view']) || this.canAccess(['edit'])) ? 1 : null,
       _isTitle: true,
       _isLocal: true,
+      _isNoMinHeight: this._totalAnswers < 11,
       _buttons: [{
         _label: 'Validate', _icon: 'fas fa-check', _isHidden: !this.canAccess(['validate'])},
         {_label: 'Reject', _icon: 'fas fa-times', _isHidden: !this.canAccess(['reject'])}

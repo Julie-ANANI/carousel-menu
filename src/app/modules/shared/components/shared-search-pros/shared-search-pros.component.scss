@@ -1,13 +1,12 @@
 @import "../../../../../style/framework/src/variables";
 @import "../../../../../style/framework/src/mixins";
 
-
 #hiddenLinks a {
   font-size: 12px;
   color: #DDDDDD;
 }
 
-#shared-search-pros-component{
+#shared-search-pros {
 
   .search-section {
     display: flex;
@@ -27,7 +26,7 @@
             .card-body {
               padding: 10px 5px;
               font-size: 12px;
-              color: $draft-color;
+              color: $text-draft-color;
               font-weight: 600;
             }
 
@@ -41,6 +40,7 @@
         display: flex;
         align-items: center;
         margin-bottom: -15px;
+        min-height: 45px;
 
         .title-secondary, .text-link, .line {
           margin-right: 8px;
@@ -48,22 +48,21 @@
         }
 
         .title-secondary {
-          color: $meta-color;
+          color: $text-meta-color;
           font-size: 16px;
           margin-right: 10px;
         }
 
         .line {
-          color: $meta-color;
+          color: $text-meta-color;
         }
 
         .popover {
           margin-bottom: 15px;
 
           .text-help {
-            color: $primary-color;
+            color: $text-primary-color;
             font-size: 14px;
-            font-weight: 600;
             cursor: default;
           }
 
@@ -78,6 +77,7 @@
 
                   li {
                     margin-left: 5px;
+                    margin-top: 2px;
                     padding: 0;
                   }
 
@@ -115,7 +115,7 @@
             position: absolute;
             right: 10px;
             bottom: 4px;
-            color: $primary-color;
+            color: $text-primary-color;
 
             &:hover {
               cursor: pointer;
@@ -129,7 +129,7 @@
           display: flex;
           justify-content: space-between;
           font-size: 12px;
-          color: $meta-color;
+          color: $text-meta-color;
           font-weight: 600;
         }
 
@@ -144,7 +144,7 @@
     .loader-wrapper {
 
       .loading::after {
-        border-color: $primary-color;
+        border-color: $text-primary-color;
         border-right-color: transparent;
         border-top-color: transparent;
       }
@@ -154,7 +154,7 @@
     .analysis-content, .suggested-content, .profile-content {
       font-size: 14px;
       font-weight: 600;
-      color: $draft-color;
+      color: $text-draft-color;
       padding-top: 2px;
       padding-bottom: 25px;
       border-bottom: 1px solid $border-default-color;
@@ -195,7 +195,7 @@
             }
 
             .fa-plus-circle {
-              color: $meta-color;
+              color: $text-meta-color;
               font-size: 20px;
               vertical-align: middle;
 
@@ -245,7 +245,7 @@
             margin-bottom: 15px;
 
             .text-title:hover {
-              color: $primary-color;
+              color: $text-primary-color;
               cursor: pointer;
             }
 
@@ -268,7 +268,7 @@
 
 @media (max-width: $size-md) {
 
-  #shared-search-pros-component {
+  #shared-search-pros {
 
     .search-section {
       flex-direction: column;
@@ -288,7 +288,7 @@
 
 @media (max-width: $size-sm) {
 
-  #shared-search-pros-component {
+  #shared-search-pros {
 
     .search-section {
 

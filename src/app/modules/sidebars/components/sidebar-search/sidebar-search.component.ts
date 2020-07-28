@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GeographySettings } from "../../../../models/innov-settings";
 
 @Component({
@@ -6,23 +6,33 @@ import { GeographySettings } from "../../../../models/innov-settings";
   templateUrl: './sidebar-search.component.html',
   styleUrls: ['./sidebar-search.component.scss']
 })
+
 export class SidebarSearchComponent {
 
-  @Output() paramsChange = new EventEmitter <any>();
-  @Output() geographyChange = new EventEmitter <any>();
-  @Output() close = new EventEmitter <any>();
-  @Input() params: any;
-  @Input() geography: GeographySettings;
+  @Input() isEditable = false;
 
+  @Input() params: any = null;
+
+  @Input() geography: GeographySettings = <GeographySettings>{};
+
+  @Output() paramsChange = new EventEmitter <any>();
+
+  @Output() geographyChange = new EventEmitter <any>();
+
+  private _prosCount: Array<string> = ['10', '20', '30', '40', '50', '100'];
 
   constructor() {}
 
   public saveParams(event: any) {
     event.preventDefault();
-    event.target.id = "close";
-    this.close.emit(event);
-    this.paramsChange.emit(this.params);
-    this.geographyChange.emit(this.geography);
+    if (this.isEditable) {
+      this.paramsChange.emit(this.params);
+      this.geographyChange.emit(this.geography);
+    }
+  }
+
+  get prosCount(): Array<string> {
+    return this._prosCount;
   }
 
 }

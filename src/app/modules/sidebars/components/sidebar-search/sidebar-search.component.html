@@ -1,61 +1,123 @@
-<div id="search-settings-wrapper" class="column col-11 col-mx-auto">
-  <form *ngIf="!params.profile">
-    <div class="form-group">
-      <button (click)="saveParams($event)" class="btn btn-primary">
-        {{'COMMON.SAVE' | translate}}
-      </button>
-    </div>
-    <div class="form-group">
-      <label class="form-group-flex">
-        <h4>{{ 'SEARCH.NUMBER' | translate }}</h4>
-        <select name="count" class="form-control" [(ngModel)]="params.count">
-          <option value="10">{{10}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="20">{{20}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="30">{{30}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="40">{{40}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="50">{{50}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="100">{{100}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        </select>
-      </label>
-    </div>
-    <div class="form-group">
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.options.smart" name="smart">
-        <i class="form-icon"></i> {{ 'SEARCH.SMART' | translate }}
-      </label>
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.options.regions" name="regions">
-        <i class="form-icon"></i> {{ 'SEARCH.REGIONS' | translate }}
-      </label>
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.options.automated" name="automated">
-        <i class="form-icon"></i> {{ 'SEARCH.SEARCHMAILS' | translate }}
-      </label>
-    </div>
-    <div class="form-group">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="sidebar-search">
 
-      <h4>{{ 'SEARCH.ENGINE' | translate }}</h4>
-      <label class="tooltip" data-tooltip="Index">
-        <input type="checkbox" name="indexSearch" value="indexSearch"
-               [(ngModel)]="params.options.indexSearch">
-        [0]
-      </label>
-      <label class="tooltip" data-tooltip="LinkedIn">
-        <input type="checkbox" name="linkedin" value="linkedin"
-               [(ngModel)]="params.websites.linkedin">
-        [1]
-      </label>
-      <label class="tooltip" data-tooltip="Viadeo">
-        <input type="checkbox" name="viadeo" value="viadeo" [(ngModel)]="params.websites.viadeo">
-        [2]
-      </label>
-      <label class="tooltip" data-tooltip="Xing">
-        <input type="checkbox" name="xing" value="xing"
-               [(ngModel)]="params.websites.xing">
-        [3]
-      </label>
-    </div>
-    <app-shared-targeting-world [(geography)]="geography" [isEditable]="true"></app-shared-targeting-world>
-  </form>
+  <!-- save button -->
+  <div *ngIf="isEditable" class="text-right p-bottom-30">
+    <button
+      (click)="saveParams($event)"
+      class="button is-sm is-community"
+      id="btn-save"
+      type="button">
+      Save
+    </button>
+  </div>
+  <!-- /save button -->
+
+  <!-- number of pros -->
+  <div class="form-group align-center m-bottom-30">
+    <label class="title is-6 m-no-bottom m-right-20" for="sidebar-pros-number">Search</label>
+    <select
+      [(ngModel)]="params && params.count"
+      [disabled]="!isEditable"
+      class="form-select is-sm mxw-250"
+      id="sidebar-pros-number"
+      name="sidebar-pros-count">
+      <option value="''">Select</option>
+      <option *ngFor="let count of prosCount" [value]="count">
+        {{ count }} pros
+      </option>
+    </select>
+  </div>
+  <!-- /number of pros -->
+
+  <!-- smart search -->
+  <div class="form-group">
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params && params.options && params.options['smart']"
+        [disabled]="!isEditable"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Smart search
+    </label>
+  </div>
+  <!-- /smart search -->
+
+  <!-- regions -->
+  <div class="form-group">
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params && params.options && params.options['regions']"
+        [disabled]="!isEditable"
+        name="sidebar-regions"
+        type="checkbox">
+      <i class="form-icon"></i> Regions
+    </label>
+  </div>
+  <!-- /regions -->
+
+  <!-- automated -->
+  <div class="form-group m-bottom-25">
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params && params.options && params.options['automated']"
+        [disabled]="!isEditable"
+        name="sidebar-automated"
+        type="checkbox">
+      <i class="form-icon"></i> Search emails
+    </label>
+  </div>
+  <!-- /automated -->
+
+  <!-- use -->
+  <h6 class="title is-6 m-bottom-15">Select the options</h6>
+  <div class="form-group m-bottom-30">
+    <label class="form-checkbox is-inline">
+      <input
+        [(ngModel)]="params && params.options && params.options['indexSearch']"
+        [disabled]="!isEditable"
+        name="sidebar-use-indexSearch"
+        type="checkbox"
+        value="indexSearch">
+      <i class="form-icon"></i> Index
+    </label>
+    <label class="form-checkbox is-inline">
+      <input
+        [(ngModel)]="params && params['websites'] && params['websites']['linkedin']"
+        [disabled]="!isEditable"
+        name="sidebar-use-linkedin"
+        type="checkbox"
+        value="linkedin">
+      <i class="form-icon"></i> LinkedIn
+    </label>
+    <label class="form-checkbox is-inline">
+      <input
+        [(ngModel)]="params && params['websites'] && params['websites']['viadeo']"
+        [disabled]="!isEditable"
+        name="sidebar-use-viadeo"
+        type="checkbox"
+        value="viadeo">
+      <i class="form-icon"></i> Viadeo
+    </label>
+    <label class="form-checkbox is-inline">
+      <input
+        [(ngModel)]="params && params['websites'] && params['websites']['xing']"
+        [disabled]="!isEditable"
+        name="sidebar-use-xing"
+        type="checkbox"
+        value="xing">
+      <i class="form-icon"></i> Xing
+    </label>
+  </div>
+  <!-- /use -->
+
+  <!-- targeting -->
+  <div>
+    <app-shared-targeting-world
+      [(geography)]="geography"
+      [isEditable]="isEditable">
+    </app-shared-targeting-world>
+  </div>
+  <!-- /targeting -->
+
 </div>
 
