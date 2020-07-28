@@ -9,7 +9,6 @@ import { Innovation } from '../../../../../../models/innovation';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
-import { TranslateTitleService } from "../../../../../../services/title/title.service";
 import { isPlatformBrowser} from "@angular/common";
 import { Response } from "../../../../../../models/response";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -56,31 +55,18 @@ export class AdminProjectCampaignsComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _rolesFrontService: RolesFrontService,
-              private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _campaignService: CampaignService) {
-
-    this._setPageTitle();
-  }
+              private _campaignService: CampaignService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
       if (this._activatedRoute.snapshot.parent.data['innovation']
         && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
         this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
-        this._setPageTitle(this._innovation.name);
         if (this._innovation._id) {
           this._getCampaigns();
         }
       }
-    }
-  }
-
-  private _setPageTitle(title?: string) {
-    if (title) {
-      this._translateTitleService.setTitle('Campaigns | ' + title);
-    } else {
-      this._translateTitleService.setTitle('Campaigns');
     }
   }
 

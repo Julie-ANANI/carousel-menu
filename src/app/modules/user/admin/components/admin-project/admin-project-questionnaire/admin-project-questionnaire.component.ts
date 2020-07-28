@@ -8,7 +8,6 @@ import { Innovation } from '../../../../../../models/innovation';
 import { environment } from '../../../../../../../environments/environment';
 import { Preset } from '../../../../../../models/preset';
 import { Observable } from 'rxjs';
-import { TranslateTitleService } from "../../../../../../services/title/title.service";
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
 import { first } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -33,27 +32,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
               private _rolesFrontService: RolesFrontService,
-              private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationService: InnovationService) {
-
-    this._setPageTitle();
-  }
+              private _innovationService: InnovationService) { }
 
   ngOnInit(): void {
     if (this._activatedRoute.snapshot.parent.data['innovation']
       && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
       this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
-      this._setPageTitle(this._innovation.name);
       this._setQuizLink();
-    }
-  }
-
-  private _setPageTitle(title?: string) {
-    if (title) {
-      this._translateTitleService.setTitle('Questionnaire | ' + title);
-    } else {
-      this._translateTitleService.setTitle('Questionnaire');
     }
   }
 
@@ -79,7 +65,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
    this._innovationService.save(this._innovation._id, this._innovation).subscribe((innovation: Innovation) => {
       this._innovation = innovation;
       this._setQuizLink();
-      this._translateNotificationsService.success('Success', 'The preset is updated successfully.');
+      this._translateNotificationsService.success('Success', 'The preset is updated.');
     }, (err: HttpErrorResponse) => {
      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
      console.error(err);
@@ -95,7 +81,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
       this._innovation = innovation;
       this._setQuizLink();
-      this._translateNotificationsService.success('Success', 'The quiz is generated successfully.');
+      this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);

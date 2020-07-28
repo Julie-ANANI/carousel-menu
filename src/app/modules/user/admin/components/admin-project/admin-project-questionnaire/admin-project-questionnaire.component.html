@@ -19,7 +19,7 @@
       <button
         (click)="generateQuiz($event)"
         *ngIf="innovation.preset && canAccess(['quiz', 'generate'])"
-        class="button is-primary is-outlined is-sm m-bottom-20"
+        class="button is-primary is-sm m-bottom-20"
         id="btn-generate-quiz"
         type="button">
         Generate quiz
@@ -32,7 +32,7 @@
     <!-- section quiz link -->
     <section *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30">
       <span class="text-md m-right-2" translate>URL to access the quiz:</span>
-      <a [href]="quizLink" class="text-link text-md text-normal" target="_blank">
+      <a [href]="quizLink" class="text-link text-md" target="_blank">
         {{ quizLink }}
       </a>
     </section>
@@ -53,7 +53,7 @@
 
 <!-- modal -->
 <app-utility-modal
-  *ngIf="canAccess() && canAccess(['import'])"
+  *ngIf="canAccess(['import'])"
   [(showModal)]="showPresetModal"
   [title]="'Import Board'">
 

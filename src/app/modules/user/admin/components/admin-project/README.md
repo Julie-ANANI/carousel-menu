@@ -13,7 +13,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 2. ANSWER_TAGS: View, Edit, Add, Delete.
 
-3. QUESTIONNAIRE: Import, View, Edit, Add_Questions_Tags, Delete_Tag, 
+3. QUESTIONNAIRE: Import, View, Edit, 
 <br><br>QUIZ: 'View, Generate'. 
 
 4. CAMPAIGNS: Edit, Add, Update_Statistics, Delete, View.
@@ -109,7 +109,8 @@ No definition of a Role means no access to that user.
 
 #### Community
 
-1. QUESTIONNAIRE: View, Edit, Add_Questions_Tags, Delete_Tag, QUIZ: 'View, Save'. 
+1. QUESTIONNAIRE: View, Edit,
+<br><br>QUIZ: 'View, Edit'. 
 
 2. FOLLOW_UP: All 
 
@@ -165,8 +166,6 @@ access: {
                     generate: true,
                     view: true
                 },
-                deleteTag: true,
-                addQuestionsTags: true,
                 import: true,
                 view: true,
                 edit: true

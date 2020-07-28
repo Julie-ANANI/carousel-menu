@@ -255,8 +255,6 @@ access: {
                         generate: true,
                         view: true
                     },
-                    deleteTag: true,
-                    addQuestionsTags: true,
                     import: true,
                     view: true,
                     edit: true
