@@ -9,6 +9,7 @@ import { first } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
 import { RandomUtil } from "../../../utils/randomUtil";
 import { isPlatformBrowser } from '@angular/common';
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -18,17 +19,20 @@ import { isPlatformBrowser } from '@angular/common';
 
 export class LoginComponent implements OnInit {
 
-  private _formData: FormGroup;
+  private _formData: FormGroup = this._formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]]
+  });
 
-  private _linkedInLink: string;
+  private _linkedInLink = '';
 
-  private _linkedInState: string = Date.now().toString();
+  private _linkedInState = Date.now().toString();
 
   private _displayLoading = false;
 
   private _displayLoadingLinkedIn = false;
 
-  private _backgroundImage: string;
+  private _backgroundImage = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -38,24 +42,14 @@ export class LoginComponent implements OnInit {
               private _router: Router) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
-    this.buildForm();
-    this.linkedInUrl();
-
-    if (isPlatformBrowser(this._platformId)) {
-      this._backgroundImage = environment.background;
-    }
-
   }
 
 
   ngOnInit() {
-  }
-
-  private buildForm() {
-    this._formData = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      this._backgroundImage = environment.background;
+      this.linkedInUrl();
+    }
   }
 
   private linkedInUrl() {
@@ -67,7 +61,6 @@ export class LoginComponent implements OnInit {
     };
 
     this._linkedInState = RandomUtil.generateUUID();
-
     this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
 
   }
@@ -80,8 +73,9 @@ export class LoginComponent implements OnInit {
       state: this._linkedInState
     };
 
-    this._authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{console.log(_);
-      }, (err) => {
+    this._authService.preRegisterDataOAuth2('linkedin', data).pipe(first()).subscribe(_ => {
+      console.log(_);
+      }, (err: HttpErrorResponse) => {
       this._displayLoadingLinkedIn = false;
       console.error(err);
       }, () => {
@@ -90,16 +84,13 @@ export class LoginComponent implements OnInit {
 
   }
 
-  public onClickContinue() {
+  public onClickLogin() {
     if (this._formData.valid) {
-
       this._displayLoading = true;
-
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
       this._authService.login(user).pipe(first()).subscribe(() => {
-
         if (this._authService.isAuthenticated) {
 
           // Get the redirect URL from our auth service. If no redirect has been set, use the default.

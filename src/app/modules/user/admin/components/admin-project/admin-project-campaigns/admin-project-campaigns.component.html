@@ -107,6 +107,7 @@
   <app-campaign-form
     (campaignOutput)="updateCampaign($event)"
     [campaign]="selectCampaign"
+    [isEditable]="canAccess(['edit'])"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-campaign-form>

@@ -44,12 +44,14 @@
 
 
 <!-- sidebar -->
-<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+<app-sidebar
+  *ngIf="canAccess(['user', 'view']) || canAccess(['user', 'edit'])"
+  [(template)]="sidebarValue">
   <app-user-form
     (finalUserData)="updateUser($event)"
-    [canAffectAsAdmin]="canAccess(['profile', 'affectAsAdmin'])"
-    [canImpersonate]="canAccess(['profile', 'impersonate'])"
-    [isEditable]="canAccess(['profile', 'edit'])"
+    [canAffectAsAdmin]="canAccess(['user', 'affectAsAdmin'])"
+    [canImpersonate]="canAccess(['user', 'impersonate'])"
+    [isEditable]="canAccess(['user', 'edit'])"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
     [user]="selectedUser">
@@ -60,7 +62,7 @@
 
 <!-- modal to delete user -->
 <app-utility-modal
-  *ngIf="canAccess() && canAccess(['profile', 'delete'])"
+  *ngIf="canAccess() && canAccess(['user', 'delete'])"
   [(showModal)]="modalDelete"
   [title]="'Delete Board'">
 

@@ -29,7 +29,7 @@ export class AdminProfessionalsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.is',
-    limit: '10',
+    limit: this._configService.configLimit('admin-pros-limit'),
     offset: '0',
     search: '{}',
     sort: '{"created":-1}'
@@ -53,7 +53,6 @@ export class AdminProfessionalsComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
-      this._config.limit = this._configService.configLimit('admin-pros-limit');
       this._getProfessionals();
     }
   }
@@ -61,7 +60,7 @@ export class AdminProfessionalsComponent implements OnInit {
   private _getProfessionals() {
     this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
       this._professionals = response && response.result || [];
-      this._total = response && response._metadata && response._metadata.totalCount || 0;
+      this._total = response && response._metadata && response._metadata.totalCount;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
       this._fetchingError = true;

@@ -95,27 +95,27 @@ export class SharedProfessionalsListComponent {
       _isTitle: true,
       _isPaginable: true,
       _isNoMinHeight: this.total < 11,
-      _isDeletable: this.canAccess(['profile', 'delete']),
-      _isSelectable: this.canAccess(['profile', 'delete']) || this.canAccess(['profile', 'edit']),
+      _isDeletable: this.canAccess(['user', 'delete']),
+      _isSelectable: this.canAccess(['user', 'delete']) || this.canAccess(['user', 'edit']),
       _buttons: [
           {
             _label: 'Merge',
             _icon: 'fas fa-object-group',
-            _isHidden: !this.canAccess(['profile', 'edit'])
+            _isHidden: !this.canAccess(['user', 'edit'])
           },
           {
             _label: 'Convert to ambassador',
             _icon: 'fas fa-user-graduate',
-            _isHidden: !this.canAccess(['profile', 'edit'])
+            _isHidden: !this.canAccess(['user', 'edit'])
           },
           {
             _label: 'Add tags',
             _icon: 'icon icon-plus',
             _iconSize: '12px',
-            _isHidden: !this.canAccess(['profile', 'edit'])
+            _isHidden: !this.canAccess(['user', 'edit'])
           }
           ],
-      _clickIndex: (this.canAccess(['profile', 'view']) || this.canAccess(['profile', 'edit'])) ?
+      _clickIndex: (this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit'])) ?
         this.canAccess(['tableColumns', 'member']) ? 2 : 1 : null,
       _columns: [
         {

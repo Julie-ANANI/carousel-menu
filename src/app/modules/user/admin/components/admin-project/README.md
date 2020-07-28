@@ -91,6 +91,22 @@ No definition of a Role means no access to that user.
 
 6. STORYBOARD: All.
 
+#### Market Test Manager UMI:
+
+1. SETTINGS:
+<br><br>VIEW: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics',
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
+
+2. ANSWER_TAGS: View, Edit, Delete.
+
+3. QUESTIONNAIRE: All
+
+4. CAMPAIGNS: All
+
+5. SYNTHESIS: All
+
+6. STORYBOARD: All.
+
 #### Community
 
 1. QUESTIONNAIRE: View, Edit, Add_Questions_Tags, Delete_Tag, QUIZ: 'View, Save'. 

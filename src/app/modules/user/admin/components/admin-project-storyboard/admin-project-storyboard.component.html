@@ -38,7 +38,6 @@
             </div>
             <!-- /heading -->
 
-
             <!-- autofill / change lang -->
             <div
               *ngIf="executiveReport.lang && (canAccess(['autofill']) || canAccess(['changeLang']))"
@@ -59,7 +58,6 @@
             </div>
             <!-- /autofill / change lang -->
 
-
             <!-- select lang -->
             <div *ngIf="!executiveReport.lang && canAccess(['create'])" class="text-md">
               {{ 'ADMIN_STORYBOARD.SELECT_LANG.A' | translate }}
@@ -70,7 +68,6 @@
 
           </div>
           <!-- /heading / lang -->
-
 
           <!-- buttons / links -->
           <div
@@ -122,7 +119,6 @@
             </div>
             <!-- /video -->
 
-
             <!-- pdf -->
             <div *ngIf="canAccess(['makeVisibleToClient']) || canAccess(['generatePdf'])" class="pdf-wrapper">
 
@@ -164,7 +160,6 @@
         </section>
         <!-- /header section -->
 
-
         <!-- executive report section -->
         <section *ngIf="executiveReport.lang" class="p-top-50">
           <app-admin-executive-report
@@ -173,7 +168,6 @@
           </app-admin-executive-report>
         </section>
         <!-- /executive report section -->
-
 
         <!-- save button -->
         <div *ngIf="toBeSaved && executiveReport.lang && canAccess(['edit'])" class="btn-save-float-wrapper">
@@ -238,7 +232,6 @@
         </label>
 
       </div>
-
 
       <div *ngIf="executiveReport.lang" class="m-top-30 text-sm">
         <span class="text-alert text-medium">{{ 'ADMIN_STORYBOARD.MODAL.ATTENTION' | translate }}</span>

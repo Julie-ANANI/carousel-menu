@@ -3,9 +3,10 @@
 All notable changes to the header and roles will be documented in this file. 
 Please always updates the roles / routes in this file. 
 
-### Roles
+### Roles defined in the order as in the Api (bootstrapRoles). 
 
-Root, Tech, Hotline, Marketing, Commercial, Market Test Manager, Community.
+Guest, User, Supervisor, Community, Commercial, Marketing, Hotline, Market Test Manager, 
+Market Test Manager UMI, Oper-supervisor, Tech, Root.
 
 ### Routes
 
@@ -19,7 +20,7 @@ Root, Tech, Hotline, Marketing, Commercial, Market Test Manager, Community.
 <br><br>CAMPAIGNS: 
 <br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS'''.
 
-### Access of the routes based on the roles - by default Root will access all.
+### Access of the routes based on the roles.
 
 No definition of a Role means no access to that user.
 
@@ -56,7 +57,17 @@ No definition of a Role means no access to that user.
 <br><br>PROJECTS: 
 <br>'PROJECT: 'SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD', 
 <br><br>CAMPAIGNS: 
-<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS'''.
+<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS''.
+
+#### Market Test Manager UMI:
+
+1. ADMIN_SIDE: USERS, PROFESSIONALS
+<br><br>LIBRARIES: 'WORKFLOWS, QUESTIONNAIRE',
+<br><br>SEARCH: 'HISTORY, WAITING_LINE',
+<br><br>PROJECTS: 
+<br>'PROJECT: 'SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD', 
+<br><br>CAMPAIGNS: 
+<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS''.
 
 #### Community:
 
@@ -70,13 +81,15 @@ No definition of a Role means no access to that user.
 access: { 
     adminSide: {
         projects: { 
+            filterBy: {
+                status: true, 
+                operator: true
+            }, 
             searchBy: { 
                 name: true, 
                 innovationCard: true, 
                 type: true, 
-                company: true, 
-                status: true, 
-                operator: true, 
+                company: true,
                 objective: true 
             }, 
             tableColumns: { 
@@ -369,7 +382,7 @@ access: {
                 member: true, 
                 country: true 
             }, 
-            profile: { 
+            user: { 
                 view: true, 
                 edit: true, 
                 delete: true
@@ -389,7 +402,7 @@ access: {
                 domain: true, 
                 created: true 
             }, 
-            profile: { 
+            user: { 
                 view: true, 
                 edit: true, 
                 impersonate: true

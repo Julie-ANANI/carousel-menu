@@ -10,11 +10,9 @@
   </section>
   <!-- /objective / owner / umi commercial -->
 
-
   <!-- divider -->
   <div class="divider"></div>
   <!-- /divider -->
-
 
   <!-- pitch -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
@@ -26,11 +24,9 @@
   </section>
   <!-- /pitch -->
 
-
   <!-- divider -->
   <div class="divider"></div>
   <!-- /divider -->
-
 
   <!-- targeting -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
@@ -42,11 +38,9 @@
   </section>
   <!-- /targeting -->
 
-
   <!-- divider -->
   <div class="divider"></div>
   <!-- /divider -->
-
 
   <!-- professionals -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">
@@ -58,11 +52,9 @@
   </section>
   <!-- /professionals -->
 
-
   <!-- divider -->
   <div class="divider"></div>
   <!-- /divider -->
-
 
   <!-- sections -->
   <div *ngFor="let section of executiveReport.sections; let i = index;">
@@ -72,7 +64,6 @@
       Section {{ i + 1 }}
     </h2>
     <!-- /section number -->
-
 
     <!-- section -->
     <section [ngStyle]="{ 'margin-bottom': '-30px' }">
@@ -88,7 +79,6 @@
     </section>
     <!-- /section -->
 
-
     <!-- reset button -->
     <div *ngIf="section.questionId && section.questionType && isEditable" class="p-top-40 text-center">
       <button (click)="resetModal($event, i)" class="button is-sm is-outlined is-info" type="button">
@@ -97,14 +87,12 @@
     </div>
     <!-- /reset button -->
 
-
     <!-- divider -->
     <div class="divider"></div>
     <!-- /divider -->
 
   </div>
   <!-- /sections -->
-
 
   <!-- conclusion -->
   <section [ngStyle]="{ 'margin-bottom': '-30px' }">

@@ -23,7 +23,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _config: Config = {
     fields: 'id company jobTitle created domain location firstName lastName',
-    limit: '10',
+    limit: this._configService.configLimit('admin-users-limit'),
     offset: '0',
     search: '{}',
     sort: '{ "created": -1 }'
@@ -61,10 +61,9 @@ export class AdminUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._initializeTable();
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
-      this._config.limit = this._configService.configLimit('admin-users-limit');
-      this._initializeTable();
       this._getUsers();
     }
   }
@@ -97,12 +96,12 @@ export class AdminUsersComponent implements OnInit {
       _title: 'users',
       _content: this._users,
       _total: this._total,
-      _isSearchable: true,
-      _isDeletable: this.canAccess(['profile', 'delete']),
-      _isSelectable: this.canAccess(['profile', 'delete']),
+      _isSearchable: !!this.canAccess(['searchBy']),
+      _isDeletable: this.canAccess(['user', 'delete']),
+      _isSelectable: this.canAccess(['user', 'delete']),
       _isTitle: true,
       _isPaginable: true,
-      _clickIndex: this.canAccess(['profile', 'view']) ? 1 : null,
+      _clickIndex: this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit']) ? 1 : null,
       _columns: [
         {
           _attrs: ['firstName', 'lastName'],
@@ -172,7 +171,7 @@ export class AdminUsersComponent implements OnInit {
       this._sidebarValue = {
         animate_state: 'active',
         type: 'editUser',
-        title: 'Edit User'
+        title: this.canAccess(['user', 'edit']) ? 'Edit User' : 'View User'
       };
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
@@ -181,10 +180,10 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public updateUser(value: User) {
-    if (this.canAccess(['profile', 'edit'])) {
+    if (this.canAccess(['user', 'edit'])) {
       this._userService.updateOther(value).pipe(first()).subscribe(() => {
         this._getUsers();
-        this._translateNotificationsService.success('Success', 'The user has been updated successfully.');
+        this._translateNotificationsService.success('Success', 'The user has been updated.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -195,13 +194,9 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public onClickDelete(users: Array<User>) {
-    if (this.canAccess(['profile', 'delete'])) {
-      this._usersToRemove = [];
-      users.forEach(value => this._usersToRemove.push(new User(value)));
-      this._modalDelete = true;
-    } else {
-      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(403));
-    }
+    this._usersToRemove = [];
+    users.forEach(value => this._usersToRemove.push(new User(value)));
+    this._modalDelete = true;
   }
 
   public onClickConfirm() {
@@ -215,7 +210,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _removeUser(value: string) {
     this._userService.deleteUser(value).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The user has been deleted successfully.');
+      this._translateNotificationsService.success('Success', 'The user has been deleted.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);

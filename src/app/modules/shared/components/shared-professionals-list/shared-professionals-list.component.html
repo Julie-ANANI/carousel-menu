@@ -19,7 +19,7 @@
     <app-user-form
       (finalProfessionalData)="updateProfessional($event)"
       [campaign]="campaign"
-      [isEditable]="canAccess(['profile', 'edit'])"
+      [isEditable]="canAccess(['user', 'edit'])"
       [pro]="selectedProfessional"
       [sidebarState]="sidebarValue.animate_state"
       [type]="sidebarValue.type">
@@ -42,7 +42,10 @@
 
 
 <!-- modal -->
-<app-utility-modal *ngIf="canAccess(['profile', 'delete'])" [(showModal)]="modalDelete" [title]="'Delete Board'">
+<app-utility-modal
+  *ngIf="canAccess(['user', 'delete'])"
+  [(showModal)]="modalDelete"
+  [title]="'Delete Board'">
 
   <section class="modal-body">
     <div>Do you really want to delete the selected professional(s)?</div>

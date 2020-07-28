@@ -17,6 +17,7 @@ import { environment } from '../../../../../../environments/environment';
 import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { Router } from "@angular/router";
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -33,7 +34,7 @@ export class AdminProjectsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator',
-    limit: '10',
+    limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
     sort: '{"created":-1}'
@@ -60,6 +61,7 @@ export class AdminProjectsComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService,
+              private _router: Router,
               private _userService: UserService) {
 
     this._translateTitleService.setTitle('Market Tests');
@@ -67,10 +69,10 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._initializeTable();
+
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
-      this._config.limit = this._configService.configLimit('admin-projects-limit');
-      this._initializeTable();
       this._getOperators().then( _ => {
         this._getProjects();
       }, (err: HttpErrorResponse) => {
@@ -80,6 +82,7 @@ export class AdminProjectsComponent implements OnInit {
         console.error(err);
       });
     }
+
   }
 
   /***
@@ -163,8 +166,7 @@ export class AdminProjectsComponent implements OnInit {
       _title: 'projects',
       _content: this._projects,
       _total: this._totalProjects,
-      _isSearchable: true,
-      _isEditable: false,
+      _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isTitle: true,
       _clickIndex: 1,
       _isPaginable: true,
@@ -240,7 +242,7 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Status',
           _type: 'MULTI-CHOICES',
           _isSortable: true,
-          _isSearchable: this.canAccess(['searchBy', 'status']),
+          _isSearchable: this.canAccess(['filterBy', 'status']),
           _isHidden: !this.canAccess(['tableColumns', 'status']),
           _width: '150px',
           _choices: [
@@ -253,7 +255,7 @@ export class AdminProjectsComponent implements OnInit {
           _attrs: ['operator'],
           _name: 'Operator',
           _type: 'MULTI-CHOICES',
-          _isSearchable: this.canAccess(['searchBy', 'operator']),
+          _isSearchable: this.canAccess(['filterBy', 'operator']),
           _isHidden: true,
           _choices: this._operators && this._operators.length ? this._operators.map(oper => {
             return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
@@ -268,7 +270,7 @@ export class AdminProjectsComponent implements OnInit {
    * @param innovation
    */
   public navigate(innovation: Innovation) {
-    window.open(`/user/admin/projects/project/${innovation._id}`, '_blank');
+    this._router.navigate([`/user/admin/projects/project/${innovation._id}`]);
   }
 
   /***
@@ -277,7 +279,7 @@ export class AdminProjectsComponent implements OnInit {
    */
   public onClickImport(file: File) {
     this._innovationService.import(file).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The project is imported successfully.');
+      this._translateNotificationsService.success('Success', 'The project is imported.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);

@@ -10,9 +10,9 @@ import { Campaign } from '../../../../models/campaign';
 
 export class CampaignFormComponent implements OnInit {
 
-  @Input() set campaign(value: Campaign) {
-    this._innovationCampaign = value;
-  }
+  @Input() isEditable = false;
+
+  @Input() campaign: Campaign = <Campaign>{};
 
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
@@ -31,8 +31,6 @@ export class CampaignFormComponent implements OnInit {
 
   private _campaignForm: FormGroup;
 
-  private _innovationCampaign: Campaign = null;
-
   private _actionType = '';
 
   private _isEditName = false;
@@ -49,11 +47,9 @@ export class CampaignFormComponent implements OnInit {
     });
   }
 
-
   private reinitialiseVariables() {
     this._isEditName = false;
   }
-
 
   private loadTemplate() {
     this.reinitialiseVariables();
@@ -71,38 +67,29 @@ export class CampaignFormComponent implements OnInit {
 
   }
 
-
   private patchValue() {
-    if (this._innovationCampaign !== null && this._campaignForm) {
-      this._campaignForm.get('title').setValue(this._innovationCampaign.title);
+    if (this.campaign && this.campaign._id && this._campaignForm) {
+      this._campaignForm.get('title').setValue(this.campaign.title);
     }
   }
 
+  public onSave() {
+    if (this.isEditable) {
+      switch (this._actionType) {
 
-  onSave() {
-    switch (this._actionType) {
+        case 'editName':
+          this.campaignOutput.emit(this._campaignForm);
+          break;
 
-      case 'editName':
-        this.campaignOutput.emit(this._campaignForm);
-        break;
+        default:
+        // do nothing...
 
-      default:
-      // do nothing...
-
+      }
     }
-
   }
 
   get campaignForm(): FormGroup {
     return this._campaignForm;
-  }
-
-  get innovationCampaign(): Campaign {
-    return this._innovationCampaign;
-  }
-
-  get actionType(): string {
-    return this._actionType;
   }
 
   get isEditName(): boolean {

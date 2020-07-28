@@ -6,11 +6,12 @@ All notable changes to the Market Tests page will be documented in this file.
 Please always updates the roles / functionalities in this file.  
 
 ### Functionalities
-1. SEARCH_BY: Name, InnovationCard, Type, Company, Status, Operator, Objective.
+1. SEARCH_BY: Name, InnovationCard, Type, Company, Objective.
 2. T_COLUMNS: Name, InnovationCard, Owner, Company, Type, Objective, Last updated,
 Created, Status.   
-3. IMPORT_PROJECT
+3. IMPORT
 4. BATCH
+5. FILTER_BY: Status, Operator
 
 ### Access of the functionalities based on the roles - by default Root will access all.
 
@@ -21,41 +22,55 @@ No definition of a Role means no access to that user.
 1. SEARCH_BY: All
 2. T_COLUMNS: All
 3. BATCH
+4. FILTER_BY: All
 
 #### Hotline: 
 
 1. SEARCH_BY: All
 2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
 3. BATCH
+4. FILTER_BY: All
 
 #### Marketing:
 
 1. SEARCH_BY: ALL
 2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
+4. FILTER_BY: All
 
 #### Commercial:
 
 1. SEARCH_BY: ALL
 2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
+4. FILTER_BY: All
 
 #### Market Test Manager:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: ALL
 3. BATCH
+4. FILTER_BY: All
+
+#### Market Test Manager UMI:
+
+1. SEARCH_BY: All
+2. T_COLUMNS: ALL
+3. BATCH
+4. FILTER_BY: All
 
 ### Example - Hotline role
 
 ```
 access: { 
-    projects: { 
+    projects: {
+        filterBy: {
+            status: true, 
+            operator: true
+        } 
         searchBy: { 
             name: true, 
             innovationCard: true, 
             type: true, 
-            company: true, 
-            status: true, 
-            operator: true, 
+            company: true,
             objective: true 
         }, 
         tableColumns: { 

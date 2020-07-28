@@ -9,7 +9,7 @@ Please always updates the roles / functionalities in this file.
 
 1. SEARCH_BY: Name, Email, Job, Domain.
 2. T_COLUMNS: Name, Job, Company, Domain, Created.   
-3. PROFILE: View, Edit, Impersonate, Affect as Admin, Delete. 
+3. USER: View, Edit, Impersonate, Affect as Admin, Delete. 
 
 ### Access of the functionalities based on the roles - by default Root will access all.
 
@@ -19,25 +19,31 @@ No definition of a Role means no access to that user.
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All
-3. PROFILE: All
+3. USER: All
 
 #### Commercial:
 
 1. SEARCH_BY: Name, Email.
 2. T_COLUMNS: Name, Job, Company.
-3. PROFILE: View
+3. USER: View
 
 #### Market Test Manager:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All
-3. PROFILE: View, Edit, Impersonate.
+3. USER: View, Edit, Impersonate.
+
+#### Market Test Manager UMI:
+
+1. SEARCH_BY: All
+2. T_COLUMNS: All
+3. USER: View, Edit, Impersonate.
 
 #### Community:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All
-3. PROFILE: View, Edit, Impersonate.
+3. USER: View, Edit, Impersonate.
 
 ### Example - Market Test Manager role
 
@@ -57,7 +63,7 @@ access: {
             domain: true, 
             created: true 
         }, 
-        profile: { 
+        user: { 
             view: true, 
             edit: true, 
             impersonate: true

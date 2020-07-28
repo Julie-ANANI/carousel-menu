@@ -125,7 +125,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
     this._campaignService.create(_newCampaign).pipe(first()).subscribe((campaign: Campaign) => {
       this._campaigns.push(campaign);
-      this._translateNotificationsService.success('Success', 'The new campaign is added successfully.');
+      this._translateNotificationsService.success('Success', 'The new campaign is added.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -142,7 +142,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._selectCampaign = campaign;
     this._sidebarValue = {
       animate_state: 'active',
-      title: 'Edit Campaign',
+      title: this.canAccess(['edit']) ? 'Edit Campaign' : 'View Campaign',
       type: 'editName'
     };
   }
@@ -152,18 +152,14 @@ export class AdminProjectCampaignsComponent implements OnInit {
    * @param formGroup
    */
   public updateCampaign(formGroup: FormGroup) {
-    if (this.canAccess(['edit'])) {
-      this._selectCampaign.title = formGroup.value['title'];
-      this._campaignService.put(this._selectCampaign).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('Success', 'The campaign is updated successfully.');
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._selectCampaign = null;
-        console.error(err);
-      });
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._selectCampaign.title = formGroup.value['title'];
+    this._campaignService.put(this._selectCampaign).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Success', 'The campaign is updated.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._selectCampaign = null;
+      console.error(err);
+    });
   }
 
   /***
