@@ -114,9 +114,10 @@ export class SharedFollowUpComponent implements OnInit {
         return this.canAccess(['edit', 'objective']) ? answer.followUp && answer.followUp.date
           : false;
       },
-      _clickIndex: this.canAccess(['view', 'answer']) ? 1 : null,
+      _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
       _isPaginable: true,
       _isLocal: true,
+      _isNoMinHeight: this._total < 11,
       _buttons: [
         { _label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
         { _label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
@@ -236,7 +237,8 @@ export class SharedFollowUpComponent implements OnInit {
            */
           this._questions.forEach((question) => {
             const tags = ResponseService.tagsList(response.answers, question);
-            const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
+            const identifier = (question.controlType === 'textarea')
+              ? question.identifier : question.identifier + 'Comment';
             this._tagFiltersService.setAnswerTags(identifier, tags);
           });
 
@@ -264,7 +266,8 @@ export class SharedFollowUpComponent implements OnInit {
         { value: '*|LASTNAME|*', label: 'Nom du pro' },
         {
           value: '*|TITLE|*',
-          label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'TITLE') || 'TITLE'},
+          label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'TITLE')
+            || 'TITLE'},
         {
           value: '*|COMPANY_NAME|*',
           label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
@@ -275,7 +278,8 @@ export class SharedFollowUpComponent implements OnInit {
         { value: '*|LASTNAME|*', label: 'Last name' },
         {
           value: '*|TITLE|*',
-          label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'TITLE') || 'TITLE'},
+          label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'TITLE')
+            || 'TITLE'},
         {
           value: '*|COMPANY_NAME|*',
           label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
@@ -389,7 +393,8 @@ export class SharedFollowUpComponent implements OnInit {
     const assignedAnswers = action._rows
       .filter((answer: any) => answer.followUp.objective && answer.followUp.objective != objective)
       .map((answer: any) => {
-        return {name: `${answer.professional.firstName} ${answer.professional.lastName}`, objective: answer.followUp.objective};
+        return {name: `${answer.professional.firstName} ${answer.professional.lastName}`,
+          objective: answer.followUp.objective};
       });
 
     if (assignedAnswers.length) {
@@ -429,7 +434,8 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   get emailsObject(): any {
-    return this._project.followUpEmails[this._modalTemplateType] || { en: {content: '', subject: ''}, fr: {content: '', subject: ''} }
+    return this._project.followUpEmails[this._modalTemplateType] || { en: {content: '', subject: ''},
+      fr: {content: '', subject: ''} }
   }
 
   get project(): Innovation {
@@ -535,7 +541,8 @@ export class SharedFollowUpComponent implements OnInit {
     return this._total;
   }
 
-  get pendingAction(): { answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', assignedAnswers?: Array<{name: string, objective: string}>} {
+  get pendingAction(): { answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
+    assignedAnswers?: Array<{name: string, objective: string}>} {
     return this._pendingAction;
   }
 

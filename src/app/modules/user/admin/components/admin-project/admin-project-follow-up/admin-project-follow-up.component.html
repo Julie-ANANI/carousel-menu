@@ -1,7 +1,7 @@
 <div *ngIf="canAccess()" class="container fluid grid-2xl animate-fade is-5" id="admin-project-follow-up">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
     <app-shared-follow-up
-      [accessPath]="['projects', 'project', 'followUp']"
+      [accessPath]="accessPath"
       [project]="innovation">
     </app-shared-follow-up>
   </div>
