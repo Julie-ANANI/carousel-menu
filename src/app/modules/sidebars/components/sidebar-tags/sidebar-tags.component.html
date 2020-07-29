@@ -1,191 +1,190 @@
-<section id="tags" class="p-top-30">
-  <div class="column col-xs-12 col-11 col-mx-auto">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="sidebar-tags">
 
+  <!-- save button -->
+  <div *ngIf="isEditable" class="text-right p-bottom-30">
+    <button
+      (click)="onClickSave()"
+      [disabled]="!enableSaveButton"
+      class="button is-sm is-community"
+      type="button">
+      Save
+    </button>
+  </div>
+  <!-- /save button -->
 
-    <!-- save button -->
-    <div class="text-right p-bottom-25">
-      <button
-        (click)="onClickSave()"
-        [disabled]="!enableSaveButton"
-        [innerText]="'COMMON.BUTTON.SAVE'"
-        class="btn btn-primary btn-sm"
-        translate
-        type="submit">
-      </button>
+  <!-- different templates based on type -->
+  <div [ngSwitch]="type">
+
+    <!-- type ADD_TAGS -->
+    <div *ngSwitchCase="'ADD_TAGS'">
+      <label class="form-label">Tag Name</label>
+      <app-shared-tag
+        (addTag)="onAddTag($event)"
+        (createTag)="onCreateTag($event)"
+        (removeTag)="onRemoveTag($event)"
+        [editMode]="isEditable"
+        [placeholder]="placeholder"
+        [projectId]="projectId"
+        [tags]="tags"
+        [type]="tagType">
+      </app-shared-tag>
     </div>
-    <!-- /save button -->
+    <!-- /type ADD_TAGS -->
 
+    <!-- type EDIT_TAG -->
+    <div *ngSwitchCase="'EDIT_TAG'">
 
-    <!-- different templates based on type -->
-    <div [ngSwitch]="type">
-
-
-      <!-- type addTags -->
-      <ng-container *ngSwitchCase="'addTags'">
-        <label class="form-label">{{ 'COMMON.LABEL.TAG_NAME' | translate }}</label>
-        <app-shared-tag
-          (addTag)="onAddTag($event)"
-          (removeTag)="onRemoveTag($event)"
-          (createTag)="onCreateTag($event)"
-          [editMode]="true"
-          [placeholder]="placeholder"
-          [projectId]="innovationId"
-          [tags]="tags"
-          [type]="tagType">
-        </app-shared-tag>
-      </ng-container>
-      <!-- /type addTags -->
-
-
-      <!-- edit Tag -->
-      <ng-container *ngSwitchCase="'editTag'">
-
-
-        <!-- when not to set tag as original -->
-        <div *ngIf="!needToSetOriginalTag">
-
-          <!-- label -->
-          <h1 class="text-background m-bottom-10 relative">Original Tag Details
-            <span
-              (click)="needToSetOriginalTag = true"
-              [attr.data-tooltip]="'COMMON.TOOLTIP.EDIT' | translate"
-              [ngStyle]="{ 'top': '-12px' }"
-              class="absolute tooltip c-hand m-left-1">
-              <i class="fas fa-edit text-warning text-xs"></i>
-            </span>
-          </h1>
-          <!-- /label -->
-
-          <!-- id -->
-          <div class="p-bottom-10">
-            <p class="form-label m-no-bottom">ID</p>
-            <p class="text-sm m-no-bottom">{{ tag.originalTagId }}</p>
-          </div>
-          <!-- /id -->
-
-          <!-- name -->
-          <div class="p-bottom-10">
-            <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.NAME' | translate }}</p>
-            <p class="text-sm m-no-bottom">{{ tag.originalLabel | multiling:lang }}</p>
-          </div>
-          <!-- /name -->
-
-          <!-- type -->
-          <div>
-            <p class="form-label m-no-bottom">{{ 'COMMON.LABEL.TYPE' | translate }}</p>
-            <p class="text-sm">{{ 'TAGS.TYPE.' + tag.type | translate }}</p>
-          </div>
-          <!-- /type -->
-
-        </div>
-        <!-- /when not to set tag as original -->
-
-
-        <!-- when to set tag -->
-        <div *ngIf="needToSetOriginalTag" class="p-bottom-10">
-          <label class="form-label" for="tags-form-tagSelector">{{ 'COMMON.TAG.CHOOSE_TAG' | translate }}</label>
-          <div class="flex-between">
-
-            <input
-              auto-complete
-              [(ngModel)]="tag.originalTagId"
-              [ngModelOptions]="{standalone: true}"
-              [source]="suggestions.bind(this)"
-              select-value-of="_id"
-              id="tags-form-tagSelector"
-              [list-formatter]="autocompleListFormatter"
-              [value-formatter]="autocompleValueFormatter"
-              [attr.placeholder]="'COMMON.TAG.TAG_PLACEHOLDER' | translate"
-              class="form-input input-tag">
-
-            <div>
-              <button (click)="connectToTag(tag)" class="btn btn-round btn-round-md btn-primary">
-                <i class="fas fa-save"></i>
-              </button>
-            </div>
-
-          </div>
-        </div>
-        <!-- /when to set tag -->
-
+      <!-- when not to set tag as original -->
+      <div *ngIf="!needToSetOriginalTag">
 
         <!-- label -->
-        <div class="p-top-25">
-
-          <h1 class="text-background m-bottom-10">Actual Tag Label</h1>
-
-          <div class="form-group">
-            <label for="tags-form-enLabel" class="form-label">{{ 'COMMON.LANG.EN' | translate }}</label>
-            <input
-              (ngModelChange)="saveButton(true)"
-              [(ngModel)]="tag.label.en"
-              [ngModelOptions]="{ standalone: true }"
-              [placeholder]="'COMMON.TAG.LABEL_EN_PLACEHOLDER' | translate"
-              alt="label"
-              class="form-input"
-              id="tags-form-enLabel"
-              type="text">
-          </div>
-
-          <div class="form-group">
-            <label for="tags-form-frLabel" class="form-label">{{ 'COMMON.LANG.FR' | translate }}</label>
-            <input
-              (ngModelChange)="saveButton(true)"
-              [(ngModel)]="tag.label.fr"
-              [ngModelOptions]="{ standalone: true }"
-              [placeholder]="'COMMON.TAG.LABEL_FR_PLACEHOLDER' | translate"
-              alt="label"
-              class="form-input"
-              id="tags-form-frLabel"
-              type="text">
-          </div>
-
-        </div>
+        <h1 class="title is-5 relative">
+          Original Tag Details
+          <span
+            (click)="needToSetOriginalTag = true"
+            *ngIf="isEditable"
+            [attr.data-tooltip]="'Edit tag'"
+            [ngStyle]="{ 'top': '-12px' }"
+            class="absolute tooltip c-hand m-left-2">
+              <i class="fas fa-edit text-warning text-xs"></i>
+            </span>
+        </h1>
         <!-- /label -->
 
+        <!-- id -->
+        <div class="p-bottom-15">
+          <p class="form-label m-no-bottom">ID</p>
+          <p class="text-md m-no-bottom">{{ tag.originalTagId }}</p>
+        </div>
+        <!-- /id -->
 
-        <!-- description -->
-        <div class="p-top-20">
+        <!-- name -->
+        <div class="p-bottom-15">
+          <p class="form-label m-no-bottom">Name</p>
+          <p class="text-md m-no-bottom">{{ tag.originalLabel | multiling:lang }}</p>
+        </div>
+        <!-- /name -->
 
-          <h1 class="text-background m-bottom-10">Actual Tag Description</h1>
+        <!-- type -->
+        <div>
+          <p class="form-label m-no-bottom">Type</p>
+          <p class="text-md">{{ tag.type | titlecase }}</p>
+        </div>
+        <!-- /type -->
 
-          <div class="form-group">
-            <label for="tags-form-enDesc" class="form-label">{{ 'COMMON.LANG.EN' | translate }}</label>
-            <input
-              (ngModelChange)="saveButton(true)"
-              [(ngModel)]="tag.description.en"
-              [ngModelOptions]="{ standalone: true }"
-              [placeholder]="'COMMON.TAG.DESC_EN_PLACEHOLDER' | translate"
-              alt="description"
-              class="form-input"
-              id="tags-form-enDesc"
-              type="text">
-          </div>
+      </div>
+      <!-- /when not to set tag as original -->
 
-          <div class="form-group">
-            <label for="tags-form-frDesc" class="form-label">{{ 'COMMON.LANG.FR' | translate }}</label>
-            <input
-              (ngModelChange)="saveButton(true)"
-              [(ngModel)]="tag.description.fr"
-              [ngModelOptions]="{ standalone: true }"
-              [placeholder]="'COMMON.TAG.DESC_FR_PLACEHOLDER' | translate"
-              alt="description"
-              class="form-input"
-              id="tags-form-frDesc"
-              type="text">
+      <!-- when to set tag -->
+      <div *ngIf="needToSetOriginalTag" class="p-bottom-10">
+        <label class="form-label p-bottom-15" for="sidebar-tags-tagSelector">
+          Choose the tag to associate with this actual tag
+        </label>
+        <div class="flex-between">
+
+          <input
+            [(ngModel)]="tag.originalTagId"
+            [attr.placeholder]="placeholder"
+            [list-formatter]="autocompleListFormatter"
+            [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'max-width': '80%'}"
+            [source]="suggestions.bind(this)"
+            [value-formatter]="autocompleValueFormatter"
+            auto-complete
+            class="form-input is-shadowed"
+            id="sidebar-tags-tagSelector"
+            select-value-of="_id">
+
+          <div>
+            <button
+              (click)="connectToTag(tag)"
+              [attr.data-tooltip]="'Add tag'"
+              class="button tooltip is-circled is-sm is-primary">
+              <i class="icon icon-plus text-md"></i>
+            </button>
           </div>
 
         </div>
-        <!-- /description -->
+      </div>
+      <!-- /when to set tag -->
 
+      <!-- label -->
+      <div class="p-top-25">
 
-      </ng-container>
-      <!-- /edit Tag -->
+        <h1 class="title is-5 m-bottom-20">Actual Tag Label</h1>
 
+        <div class="form-group">
+          <label for="sidebar-tags-enLabel" class="form-label">English</label>
+          <input
+            (ngModelChange)="saveButton(true)"
+            [(ngModel)]="tag.label.en"
+            [disabled]="!isEditable"
+            [ngModelOptions]="{ standalone: true }"
+            [placeholder]="'Enter the label in English'"
+            class="form-input is-shadowed"
+            id="sidebar-tags-enLabel"
+            type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="sidebar-tags-frLabel" class="form-label">French</label>
+          <input
+            (ngModelChange)="saveButton(true)"
+            [(ngModel)]="tag.label.fr"
+            [disabled]="!isEditable"
+            [ngModelOptions]="{ standalone: true }"
+            [placeholder]="'Enter the label in French'"
+            class="form-input is-shadowed"
+            id="sidebar-tags-frLabel"
+            type="text">
+        </div>
+
+      </div>
+      <!-- /label -->
+
+      <!-- description -->
+      <div class="p-top-20">
+
+        <h1 class="title is-5 m-bottom-20">Actual Tag Description</h1>
+
+        <div class="form-group">
+          <label for="sidebar-tags-enDesc" class="form-label">English</label>
+          <textarea
+            (ngModelChange)="saveButton(true)"
+            [(ngModel)]="tag.description.en"
+            [disabled]="!isEditable"
+            [ngModelOptions]="{ standalone: true }"
+            [placeholder]="'Write down the description in English'"
+            rows="3"
+            class="form-input is-shadowed p-10"
+            type="text"
+            id="sidebar-tags-enDesc">
+          </textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="sidebar-tags-frDesc" class="form-label">French</label>
+          <textarea
+            (ngModelChange)="saveButton(true)"
+            [(ngModel)]="tag.description.fr"
+            [disabled]="!isEditable"
+            [ngModelOptions]="{ standalone: true }"
+            [placeholder]="'Write down the description in French'"
+            rows="3"
+            class="form-input is-shadowed p-10"
+            type="text"
+            id="sidebar-tags-frDesc">
+          </textarea>
+        </div>
+
+      </div>
+      <!-- /description -->
 
     </div>
-    <!-- /different template based on type -->
-
+    <!-- /type EDIT_TAG -->
 
   </div>
-</section>
+  <!-- /different templates based on type -->
+
+</div>
+

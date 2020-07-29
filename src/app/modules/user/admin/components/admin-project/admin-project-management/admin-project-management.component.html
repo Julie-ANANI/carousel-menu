@@ -930,6 +930,7 @@
     (emailsToBlacklists)="addBlacklists($event)">
   </app-emails-form>
   <app-sidebar-tags [sidebarState]="sidebarState"
+                    [isEditable]="true"
                  *ngIf="isTagsSidebar"
                  [type]="more.type"
                  [tags]="project.tags"

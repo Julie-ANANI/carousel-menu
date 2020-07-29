@@ -7,13 +7,15 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 
+type Template = 'NEW_BATCH' | 'EDIT_BATCH' | '';
+
 @Component({
-  selector: 'app-sidebar-batch-form',
-  templateUrl: './sidebar-batch-form.component.html',
-  styleUrls: ['./sidebar-batch-form.component.scss']
+  selector: 'app-sidebar-batch',
+  templateUrl: './sidebar-batch.component.html',
+  styleUrls: ['./sidebar-batch.component.scss']
 })
 
-export class SidebarBatchFormComponent implements OnChanges {
+export class SidebarBatchComponent implements OnChanges {
 
   @Input() isEditable = false;
 
@@ -27,8 +29,7 @@ export class SidebarBatchFormComponent implements OnChanges {
 
   @Input() sidebarState = 'inactive';
 
-  // NEW_BATCH | EDIT_BATCH
-  @Input() templateType = '';
+  @Input() templateType: Template = '';
 
   @Output() batchOutput: EventEmitter<any> = new EventEmitter <any>();
 
@@ -106,7 +107,7 @@ export class SidebarBatchFormComponent implements OnChanges {
   public updateBatchStatus(event: Event){
     const _status = (event.target as HTMLInputElement).valueAsNumber;
     this._campaignService.updateBatchStatus(this.content._id, _status).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The batch status has been successfully modified.');
+      this._translateNotificationsService.success('Success', 'The batch status has been modified.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);

@@ -1,17 +1,7 @@
-@import "../../../../../style/framework/src/variables";
-
-#tags {
-
-  h1 {
-    font-size: $font-size-lg;
-  }
+#sidebar-tags {
 
   .form-group {
-    margin-bottom: $unit-5;
-  }
-
-  .input-tag {
-    max-width: 80%;
+    margin-bottom: 20px;
   }
 
 }

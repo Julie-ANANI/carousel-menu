@@ -43,8 +43,8 @@
   <app-sidebar-tags
     (newTags)="onNewTags($event)"
     (updateTag)="onUpdateTag($event)"
-    [placeholder]="'An an existing tag...'"
-    [project]="innovation"
+    [isEditable]="isEditable"
+    [projectId]="innovation._id"
     [sidebarState]="sidebarValue.animate_state"
     [tagType]="'tags'"
     [tag]="tagToEdit"

@@ -27,7 +27,7 @@ import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar
 import { SidebarTagsModule } from '../../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebars/components/innovation-form/sidebar-innovation-form.module';
-import { SidebarCampaignFormModule } from '../../../../sidebars/components/campaign-form/sidebar-campaign-form.module';
+import { SidebarCampaignModule } from '../../../../sidebars/components/sidebar-campaign/sidebar-campaign.module';
 import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
@@ -60,7 +60,7 @@ import { MessageErrorModule } from "../../../../utility/messages/message-error/m
     SidebarTagsModule,
     SidebarEmailFormModule,
     SidebarInnovationFormModule,
-    SidebarCampaignFormModule,
+    SidebarCampaignModule,
     MessageTemplate1Module,
     ModalModule,
     ErrorTemplate1Module,

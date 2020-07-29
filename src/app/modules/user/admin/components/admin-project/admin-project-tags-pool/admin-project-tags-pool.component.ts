@@ -7,7 +7,6 @@ import { Table } from '../../../../../table/models/table';
 import { Tag } from '../../../../../../models/tag';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Config } from '../../../../../../models/config';
-import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { ConfigService } from '../../../../../../services/config/config.service';
@@ -46,16 +45,14 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _isLoading = true;
 
+  private _isEditable = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _configService: ConfigService,
-              private _translateTitleService: TranslateTitleService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _tagsService: TagsService) {
-
-    this._setPageTitle();
-  }
+              private _tagsService: TagsService) { }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -65,18 +62,9 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       if (this._activatedRoute.snapshot.parent.data['innovation']
         && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
         this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
-        this._setPageTitle(this._innovation.name);
         this._getTagsFromPool();
       }
 
-    }
-  }
-
-  private _setPageTitle(title?: string) {
-    if (title) {
-      this._translateTitleService.setTitle('Answers tags | ' + title);
-    } else {
-      this._translateTitleService.setTitle('Answers tags');
     }
   }
 
@@ -138,7 +126,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
    * when the user clicks on the Add tag button.
    */
   public onClickAdd() {
-    this._openTagSidebar('addTags', 'Add Tags');
+    this._isEditable = true;
+    this._openTagSidebar('ADD_TAGS', 'Add Tags');
   }
 
   private _openTagSidebar(type: string, title: string) {
@@ -154,53 +143,42 @@ export class AdminProjectTagsPoolComponent implements OnInit {
    * @param value
    */
   public onNewTags(value: Array<Tag>) {
-    if (this.canAccess(['add'])) {
-      if (value && value.length > 0) {
-        value.forEach((tag: Tag, index) => {
-          this._tagsService.addTagToPool(this._innovation._id, tag._id).pipe(first()).subscribe(() => {
-            if (index === (value.length - 1)) {
-              this._getTagsFromPool();
-            }
-            this._translateNotificationsService.success('Success' , 'The tag is added successfully.');
-          }, (err: HttpErrorResponse) => {
-            if (this._tags.length > 0 && this._tags.find((existTag) => existTag.originalTagId === tag._id)) {
-              this._translateNotificationsService.error('Error', 'The tag is already exists.');
-            } else {
-              this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-            }
-          })
-        });
-      }
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
-  }
-
-  public onClickDelete(value: Array<Tag>) {
-    if (this.canAccess(['delete'])) {
+    if (value && value.length > 0) {
       value.forEach((tag: Tag, index) => {
-        this._tagsService.removeTagFromPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
-          this._translateNotificationsService.success('Success' , 'The tag is removed successfully.');
+        this._tagsService.addTagToPool(this._innovation._id, tag._id).pipe(first()).subscribe(() => {
+          this._translateNotificationsService.success('Success' , 'The tag is added.');
           if (index === (value.length - 1)) {
             this._getTagsFromPool();
           }
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          console.error(err);
-        });
+          if (this._tags.length > 0 && this._tags.find((existTag) => existTag.originalTagId === tag._id)) {
+            this._translateNotificationsService.error('Error', 'The tag is already exists.');
+          } else {
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          }
+        })
       });
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
   }
 
+  public onClickDelete(value: Array<Tag>) {
+    value.forEach((tag: Tag, index) => {
+      this._tagsService.removeTagFromPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('Success' , 'The tag is removed.');
+        if (index === (value.length - 1)) {
+          this._getTagsFromPool();
+        }
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    });
+  }
+
   public onClickEdit(tag: Tag) {
-    if (this.canAccess(['view']) || this.canAccess(['edit'])) {
-      this._tagToEdit = tag;
-      this._openTagSidebar('editTag', 'Edit Tag');
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._isEditable = this.canAccess(['edit']);
+    this._tagToEdit = tag;
+    this._openTagSidebar('EDIT_TAG', this.canAccess(['edit']) ? 'Edit Tag' : 'View Tag');
   }
 
   /***
@@ -208,17 +186,13 @@ export class AdminProjectTagsPoolComponent implements OnInit {
    * @param tag
    */
   public onUpdateTag(tag: Tag): void {
-    if (this.canAccess(['edit'])) {
-      this._tagsService.updateTagInPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
-        this._getTagsFromPool();
-        this._translateNotificationsService.success('Success' , 'The tag is updated successfully.');
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
-    }
+    this._tagsService.updateTagInPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
+      this._getTagsFromPool();
+      this._translateNotificationsService.success('Success' , 'The tag is updated.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   get localConfig(): Config {
@@ -259,6 +233,10 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
   }
 
 }

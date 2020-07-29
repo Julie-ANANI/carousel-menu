@@ -1,4 +1,4 @@
-<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="campaign-form">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="sidebar-campaign">
   <form novalidate [formGroup]="campaignForm" (ngSubmit)="onSave()" autocomplete="off">
 
     <!-- save button -->
@@ -17,7 +17,7 @@
       <label class="form-label" for="sidebar-campaign-title">Campaign Name</label>
       <input
         [disabled]="!isEditable"
-        class="form-input"
+        class="form-input is-shadowed"
         formControlName="title"
         id="sidebar-campaign-title"
         placeholder="Enter the campaign name"

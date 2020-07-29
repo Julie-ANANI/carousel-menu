@@ -219,7 +219,7 @@
 
 <!-- sidebars to perform batch operations -->
 <app-sidebar *ngIf="canAccess(['view']) || canAccess(['edit'])" [(template)]="sidebarValue">
-  <app-sidebar-batch-form
+  <app-sidebar-batch
     (batchOutput)="onSidebarOutput($event)"
     [isEditable]="canAccess(['edit'])"
     [campaignWorkflows]="campaignWorkflows"
@@ -228,7 +228,7 @@
     [sidebarState]="sidebarValue.animate_state"
     [templateType]="sidebarValue.type"
     [workflow]="currentBatch?.workflow || (campaign.settings && campaign.settings.defaultWorkflow)">
-  </app-sidebar-batch-form>
+  </app-sidebar-batch>
 </app-sidebar>
 <!-- /sidebars to perform batch operations  -->
 

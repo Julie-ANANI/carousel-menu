@@ -171,7 +171,7 @@ access: {
                 edit: true
             },
             answerTags: {
-                delete: true
+                delete: true,
                 view: true,
                 edit: true
             },

@@ -104,12 +104,12 @@
 
 <!-- sidebar to edit campaign -->
 <app-sidebar *ngIf="canAccess(['edit'])" [(template)]="sidebarValue">
-  <app-campaign-form
+  <app-sidebar-campaign
     (campaignOutput)="updateCampaign($event)"
     [campaign]="selectCampaign"
     [isEditable]="canAccess(['edit'])"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
-  </app-campaign-form>
+  </app-sidebar-campaign>
 </app-sidebar>
 <!-- /sidebar to edit campaign -->

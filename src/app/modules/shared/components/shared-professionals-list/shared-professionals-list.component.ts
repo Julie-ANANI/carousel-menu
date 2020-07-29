@@ -323,7 +323,7 @@ export class SharedProfessionalsListComponent {
     this._sidebarValue = {
       animate_state: 'active',
       title: 'Add Tags',
-      type: 'addTags'
+      type: 'ADD_TAGS'
     };
   }
 
@@ -359,7 +359,7 @@ export class SharedProfessionalsListComponent {
       }
     }, (err: HttpErrorResponse) => {
       if(err && err.error.code && err.error.code === 11000) {
-        this._translateNotificationsService.error('Error', 'A professional with that e-mail already exists. ' +
+        this._translateNotificationsService.error('Error', 'A professional with that E-mail already exists. ' +
           'Try to manually merge both professionals. For more info, ask the tech team.');
       } else {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));

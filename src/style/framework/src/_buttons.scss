@@ -583,10 +583,16 @@
   }
 
   &.is-circled {
-    border-radius: 50%;
-    padding-left: 5px;
-    padding-right: 5px;
-    min-width: unset;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    width: 50px;
+    height: 50px;
+    min-width: unset !important;
+
+    i {
+      font-size: 20px;
+    }
+
   }
 
   &.is-normal {
@@ -597,19 +603,19 @@
       font-size: $font-icon;
     }
 
-    &.is-circled {
-      padding-left: 5px;
-      padding-right: 5px;
-    }
-
   }
 
   &.is-sm {
     padding: 11px 20px;
 
     &.is-circled {
-      padding-left: 1px;
-      padding-right: 1px;
+      width: 45px;
+      height: 45px;
+
+      i {
+        font-size: 18px;
+      }
+
     }
 
   }

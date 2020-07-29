@@ -129,7 +129,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._sidebarValue = {
       animate_state: 'active',
       title: this.canAccess(['edit']) ? 'Edit Campaign' : 'View Campaign',
-      type: 'editName'
+      type: 'EDIT_NAME'
     };
   }
 

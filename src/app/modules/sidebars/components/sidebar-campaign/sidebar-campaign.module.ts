@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CampaignFormComponent } from './campaign-form.component';
+import { SidebarCampaignComponent } from './sidebar-campaign.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 
@@ -16,11 +16,11 @@ import { SidebarModule } from '../../templates/sidebar/sidebar.module';
     SidebarModule,
   ],
   declarations: [
-    CampaignFormComponent
+    SidebarCampaignComponent
   ],
   exports: [
-    CampaignFormComponent
+    SidebarCampaignComponent
   ]
 })
 
-export class SidebarCampaignFormModule {}
+export class SidebarCampaignModule {}

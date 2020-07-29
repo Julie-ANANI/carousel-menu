@@ -25,6 +25,7 @@
 
   <ng-container *ngIf="isTagsForm">
     <app-sidebar-tags
+      [isEditable]="true"
       [sidebarState]="sidebarValue.animate_state"
       [type]="sidebarValue.type"
       (newTags)="addTagsToPro($event)">

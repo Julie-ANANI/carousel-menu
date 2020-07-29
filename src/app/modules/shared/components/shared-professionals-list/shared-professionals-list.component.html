@@ -2,8 +2,8 @@
   <app-shared-table
     (configChange)="onConfigChange($event)"
     (editRow)="onClickEdit($event)"
-    (removeRows)="onClickDelete($event)"
     (performAction)="onClickActions($event)"
+    (removeRows)="onClickDelete($event)"
     (selectRows)="onSelectRows($event)"
     [config]="localConfig"
     [data]="table">
@@ -28,13 +28,13 @@
   <!-- /professional -->
 
   <!-- tags -->
-  <ng-container *ngIf="isTagsSidebar">
-    <app-sidebar-tags
-      [sidebarState]="sidebarValue.animate_state"
-      [type]="sidebarValue.type"
-      (newTags)="addProfessionalTags($event)">
-    </app-sidebar-tags>
-  </ng-container>
+  <app-sidebar-tags
+    (newTags)="addProfessionalTags($event)"
+    *ngIf="isTagsSidebar"
+    [isEditable]="canAccess(['user', 'edit'])"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type">
+  </app-sidebar-tags>
   <!-- /tags -->
 
 </app-sidebar>

@@ -1,6 +1,6 @@
 # Facts about Me
 
-The selector is **<app-campaign-form>**. It includes 2 inputs and 1 output. This component is only used when we want to update the innovation campaign information's.   
+The selector is **<app-sidebar-campaign>**. It includes 2 inputs and 1 output. This component is only used when we want to update the innovation campaign information's.   
 
 ## Input - campaign
 
@@ -21,8 +21,8 @@ After updating the value in this component we output the value using the event e
 Include this in the parent component html file, 
 
 <sidebar [(template)]="sidebarTemplate">
-<br><app-campaign-form [sidebarState]="sidebarTemplate.animate_state" [type]="sidebarTemplate.type" [campaign]="selectCampaign" (campaignOutput)="updateCampaign($event)">
-<br></app-campaign-form>
+<br><app-sidebar-campaign [sidebarState]="sidebarTemplate.animate_state" [type]="sidebarTemplate.type" [campaign]="selectCampaign" (campaignOutput)="updateCampaign($event)">
+<br></app-sidebar-campaign>
 <br></sidebar>
 
 ## Can be used for

@@ -2,13 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Campaign } from '../../../../models/campaign';
 
+type Template = 'EDIT_NAME' | '';
+
 @Component({
-  selector: 'app-campaign-form',
-  templateUrl: './campaign-form.component.html',
-  styleUrls: ['./campaign-form.component.scss']
+  selector: 'app-sidebar-campaign',
+  templateUrl: './sidebar-campaign.component.html',
+  styleUrls: ['./sidebar-campaign.component.scss']
 })
 
-export class CampaignFormComponent implements OnInit {
+export class SidebarCampaignComponent implements OnInit {
 
   @Input() isEditable = false;
 
@@ -22,16 +24,18 @@ export class CampaignFormComponent implements OnInit {
     }
   }
 
-  @Input() set type(value: string) {
-    this._actionType = value;
-    this.loadTemplate();
+  @Input() set type(value: Template) {
+    if (value) {
+      this._type = value;
+      this.loadTemplate();
+    }
   }
 
   @Output() campaignOutput = new EventEmitter<FormGroup>();
 
   private _campaignForm: FormGroup;
 
-  private _actionType = '';
+  private _type: Template = '';
 
   private _isEditName = false;
 
@@ -54,9 +58,9 @@ export class CampaignFormComponent implements OnInit {
   private loadTemplate() {
     this.reinitialiseVariables();
 
-    switch (this._actionType) {
+    switch (this._type) {
 
-      case 'editName':
+      case 'EDIT_NAME':
         this._isEditName = true;
         break;
 
@@ -75,9 +79,9 @@ export class CampaignFormComponent implements OnInit {
 
   public onSave() {
     if (this.isEditable) {
-      switch (this._actionType) {
+      switch (this._type) {
 
-        case 'editName':
+        case 'EDIT_NAME':
           this.campaignOutput.emit(this._campaignForm);
           break;
 

@@ -10,6 +10,11 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorFrontService} from "../../../../services/error/error-front.service";
+
+type Template = 'ADD_TAGS' | 'EDIT_TAG' | '';
+type TagType = 'tags' | '';
 
 @Component({
   selector: 'app-sidebar-tags',
@@ -19,11 +24,13 @@ import { first } from 'rxjs/operators';
 
 export class SidebarTagsComponent {
 
+  @Input() isEditable = false;
+
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this._tags = [];
     } else {
-      this.needToSetOriginalTag = false;
+      this._needToSetOriginalTag = false;
       this.saveButton(false);
     }
   }
@@ -38,27 +45,23 @@ export class SidebarTagsComponent {
    * @param tag
    */
   @Input() set tag(tag: Tag) {
-    if (tag) {
+    if (tag && tag._id) {
       this._tag = {...tag};
-      this.needToSetOriginalTag = !(tag.originalTagId);
+      this._needToSetOriginalTag = !(tag.originalTagId);
     }
   }
 
   @Input() set project(value: Innovation) {
-    this._innovationId = value._id;
+
   }
 
-  @Input() set type(type: string) {
-    this._type = type;
-  }
+  @Input() placeholder = 'Add an existing tag here...';
 
-  @Input() set tagType(value: string) {
-    this._tagType = value;
-  }
+  @Input() projectId = '';
 
-  @Input() set placeholder(value: string) {
-    this._placeholder = value;
-  }
+  @Input() type: Template = '';
+
+  @Input() tagType: TagType = '';
 
   @Output() newTags: EventEmitter<Array<Tag>> = new EventEmitter<Array<Tag>>();
 
@@ -66,19 +69,11 @@ export class SidebarTagsComponent {
 
   private _tags: Array<Tag> = [];
 
-  private _tag: Tag;
+  private _tag: Tag = <Tag>{};
 
-  private _innovationId: string;
+  private _needToSetOriginalTag = false;
 
-  private _type: string;
-
-  public needToSetOriginalTag = false;
-
-  private _tagType: string;
-
-  private _placeholder: string = 'COMMON.TAG.TAG_PLACEHOLDER';
-
-  private _enableSaveButton: boolean;
+  private _enableSaveButton = false;
 
   constructor(private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService,
@@ -86,7 +81,6 @@ export class SidebarTagsComponent {
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateService: TranslateService,
               private _domSanitizer: DomSanitizer) { }
-
 
   public suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
@@ -106,15 +100,14 @@ export class SidebarTagsComponent {
   };
 
   public onAddTag(value: any) {
-    const id = value.tag ? value.tag : value._id;
-
-    this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
-      this._tags.push(res.tags[0]);
+    const _id = value.tag ? value.tag : value._id;
+    this._tagsService.get(_id).pipe(first()).subscribe((res: any) => {
+      this._tags.push(res && res.tags && res.tags.length && res.tags[0]);
       this.saveButton(true);
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.TAG_FETCHING_ERROR');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
-
   }
 
   public onRemoveTag(tag: any) {
@@ -128,43 +121,47 @@ export class SidebarTagsComponent {
 
   public onCreateTag(value: Tag) {
     this._tagsService.create(value).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.CREATED');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.TAG_FETCHING_ERROR');
+      this._translateNotificationsService.success('Success' , 'The tag is created.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
   public onClickSave() {
+    if (this.isEditable) {
+      switch (this.type) {
 
-    switch (this._type) {
+        case 'ADD_TAGS':
+          this.newTags.emit(this._tags);
+          break;
 
-      case 'addTags':
-        this.newTags.emit(this._tags);
-        break;
+        case 'EDIT_TAG':
+          this.updateTag.emit(this._tag);
+          this.saveButton(true);
+          break;
 
-      case 'editTag':
-        this.updateTag.emit(this._tag);
-        this.saveButton(true);
-        break;
-
+      }
     }
-
   }
 
   public saveButton(value: boolean) {
-    this._enableSaveButton = value;
+    if (this.isEditable) {
+      this._enableSaveButton = value;
+    }
   }
 
   public connectToTag(tag: Tag) {
-    this._tagsService.updateTagInPool(this._innovationId, tag).pipe(first()).subscribe((data: Array<Tag>) => {
+    this._tagsService.updateTagInPool(this.projectId, tag).pipe(first()).subscribe((data: Array<Tag>) => {
       const index = data.findIndex((item) => item._id === tag._id);
       if (index !== -1) {
         this._tag = data[index];
       }
-      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.UPDATED');
-      this.needToSetOriginalTag = false;
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      this._translateNotificationsService.success('Success' , 'The tag is updated.');
+      this._needToSetOriginalTag = false;
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
@@ -176,28 +173,20 @@ export class SidebarTagsComponent {
     return this._tags;
   }
 
-  get type(): string {
-    return this._type;
-  }
-
-  get innovationId(): string {
-    return this._innovationId;
-  }
-
   get lang(): string {
     return this._translateService.currentLang;
   }
 
-  get tagType(): string {
-    return this._tagType;
-  }
-
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
   get enableSaveButton(): boolean {
     return this._enableSaveButton;
+  }
+
+  get needToSetOriginalTag(): boolean {
+    return this._needToSetOriginalTag;
+  }
+
+  set needToSetOriginalTag(value: boolean) {
+    this._needToSetOriginalTag = value;
   }
 
 }

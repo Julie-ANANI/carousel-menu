@@ -545,7 +545,7 @@ textarea {
 
   &:disabled, &.disabled {
     background: $form-disabled-color none;
-    color: $form-label-color;
+    color: $form-disabled-text-color;
     border-color: $border-default-color;
     cursor: not-allowed;
   }
