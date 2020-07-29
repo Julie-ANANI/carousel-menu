@@ -1,4 +1,4 @@
-<div *ngIf="canAccess()" class="container grid-2xl fluid animate-fade is-7" id="admin-campaign-pros">
+<div *ngIf="canAccess()" class="container grid-2xl fluid animate-fade is-5" id="admin-campaign-pros">
 
   <!-- stats -->
   <app-admin-campaign-stats [config]="statsConfig()"></app-admin-campaign-stats>
@@ -9,13 +9,13 @@
 
     <!-- buttons -->
     <section
-      *ngIf="canAccess(['import']) || canAccess(['export']) || canAccess(['add'])"
+      *ngIf="canAccess(['import']) || canAccess(['export']) || canAccess(['user', 'add'])"
       class="text-right p-bottom-10 flex-wrap">
 
       <!-- add -->
       <button
         (click)="onClickAdd()"
-        *ngIf="canAccess(['add'])"
+        *ngIf="canAccess(['user', 'add'])"
         [disabled]="isCreating"
         [ngClass]="{'m-right-20': canAccess(['import']) || canAccess(['export'])}"
         class="button is-primary is-outlined is-sm m-bottom-20"
@@ -80,7 +80,7 @@
       <app-shared-professionals-list
         (selectedProfessionalChange)="selectedProsEvent($event)"
         [(config)]="config"
-        [accessPath]="['projects', 'project', 'campaigns', 'campaign', 'pros']"
+        [accessPath]="accessPath"
         [campaign]="campaign"
         [professionals]="professionals"
         [tableSelector]="'admin-campaign-pros-limit'"
@@ -96,7 +96,7 @@
 
 
 <!-- sidebar -->
-<app-sidebar *ngIf="canAccess(['add'])" [(template)]="sidebarValue">
+<app-sidebar *ngIf="canAccess(['user', 'add'])" [(template)]="sidebarValue">
   <app-user-form
     (finalProfessionalData)="onClickSave($event)"
     [isEditable]="true"

@@ -3,9 +3,9 @@
   <!-- save button -->
   <div *ngIf="isEditable" class="text-right p-bottom-30">
     <button
-      type="button"
+      (click)="onClickSave()"
       class="button is-community is-sm"
-      (click)="onClickSave()">
+      type="button">
       Save
     </button>
   </div>

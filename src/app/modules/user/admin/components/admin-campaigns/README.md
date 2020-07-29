@@ -18,14 +18,14 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield, Ambassador',
 <br><br>VIEW: 'Campaign, Request, Project, Results, Requests', 
 <br><br>ADD: 'To_Campaign', 
-<br><br>LAUNCH: 'Module, Google_Requests, Emails_Search', 
+<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
 <br><br>STOP: 'Requests', 
 <br><br>CANCEL: 'Requests'.
 
-3. PROS: Import, Export, Add,
+3. PROS: Import, Export,
 <br><br>SEARCH_BY: 'Name, Email, Country, Job, Company', 
 <br><br>T_COLUMNS: 'Member, Name, Country, Job, Company, Campaign, Contact'
-<br><br>PROFILE: 'View, Edit, Delete'.
+<br><br>USER: 'Add, View, Edit, Delete'.
 
 4. WORKFLOWS: Select, Edit, View, Import, Test, Delete. 
 
@@ -56,7 +56,7 @@ No definition of a Role means no access to that user.
 
 1. PROS:
 <br><br>SEARCH_BY: 'Name, Email,
-<br><br>PROFILE: 'View, Edit, Add, Export'.
+<br><br>USER: 'View, Edit, Add, Export'.
 
 2. ANSWERS: View, Edit,
 <br><br>FILTER_BY: 'Status', 
@@ -72,14 +72,41 @@ No definition of a Role means no access to that user.
 <br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield',
 <br><br>VIEW: 'Campaign, Request, Results, Requests', 
 <br><br>ADD: 'To_Campaign', 
-<br><br>LAUNCH: 'Module, Google_Requests, Emails_Search', 
+<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
 <br><br>STOP: 'Requests', 
 <br><br>CANCEL: 'Requests'.
 
 3. PROS:
 <br><br>SEARCH_BY: 'Name, Email, Job, Company', 
 <br><br>T_COLUMNS: 'Name, Country, Job, Company',
-<br><br>PROFILE: 'View, Edit'.
+<br><br>USER: 'View, Edit'.
+
+4. WORKFLOWS: Select, Edit, Test, Import. 
+
+5. BATCH: AutoBatch, Pause, Edit, View.
+
+6. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
+<br><br>FILTER_BY: 'Status', 
+<br><br>SEARCH_BY: 'Name, Country', 
+<br><br>T_Columns: 'Name, Country, Job, Validation_Score, Created, Status'.
+
+#### Market Test Manager UMI:
+
+1. SEARCH: LAUNCH: 'Search', VIEW: 'Settings', EDIT: 'Settings', IMPORT: 'Pros'.
+
+2. HISTORY: Put_Back_In_Queue
+<br><br>SEARCH_BY: 'Keywords', 
+<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield',
+<br><br>VIEW: 'Campaign, Request, Results, Requests', 
+<br><br>ADD: 'To_Campaign', 
+<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
+<br><br>STOP: 'Requests', 
+<br><br>CANCEL: 'Requests'.
+
+3. PROS:
+<br><br>SEARCH_BY: 'Name, Email, Job, Company', 
+<br><br>T_COLUMNS: 'Name, Country, Job, Company',
+<br><br>USER: 'View, Edit'.
 
 4. WORKFLOWS: Select, Edit, Test, Import. 
 
@@ -117,7 +144,6 @@ access: {
                                 requests: true
                             },
                             launch: {
-                                module: true,
                                 googleRequests: true,
                                 emailsSearch: true
                             },
@@ -161,7 +187,7 @@ access: {
                         answers: {
                             tableColumns: {
                                 validationScore: true,
-                                status: true
+                                status: true,
                                 created: true,
                                 job: true,
                                 name: true,
@@ -183,7 +209,6 @@ access: {
                             export: true
                         },
                         pros: {
-                            add: true,
                             searchBy: {
                                 company: true,
                                 name: true,
@@ -196,7 +221,7 @@ access: {
                                 name: true,
                                 country: true
                             },
-                            profile: {
+                            user: {
                                 edit: true,
                                 view: true
                             }

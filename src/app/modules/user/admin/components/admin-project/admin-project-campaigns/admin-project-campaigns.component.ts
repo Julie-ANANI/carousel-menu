@@ -157,7 +157,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     event.preventDefault();
     this._campaignService.updateStats(campaign._id).pipe(first()).subscribe((updatedCampaign: Campaign) => {
       campaign = updatedCampaign;
-      this._translateNotificationsService.success('Success', 'The campaign stats is updated successfully.');
+      this._translateNotificationsService.success('Success', 'The campaign stats is updated.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -182,7 +182,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe(() => {
       this._campaigns = this._campaigns.filter((c) => c._id !== this._selectCampaign._id);
       this._selectCampaign = null;
-      this._translateNotificationsService.success('Success', 'The campaign is deleted successfully.');
+      this._translateNotificationsService.success('Success', 'The campaign is deleted.');
       this._activateModal = false;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));

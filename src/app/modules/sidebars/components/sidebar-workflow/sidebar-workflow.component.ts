@@ -3,11 +3,11 @@ import { EmailSignature } from '../../../../models/email-signature';
 
 @Component({
   selector: 'app-sidebar-workflow',
-  templateUrl: './sidebar-workflow-form.component.html',
-  styleUrls: ['./sidebar-workflow-form.component.scss']
+  templateUrl: './sidebar-workflow.component.html',
+  styleUrls: ['./sidebar-workflow.component.scss']
 })
 
-export class SidebarWorkflowFormComponent {
+export class SidebarWorkflowComponent {
 
   @Input() isEditable = false;
 
@@ -17,27 +17,21 @@ export class SidebarWorkflowFormComponent {
 
   @Input() inputLanguage = 'en';
 
-  @Input() set id(value: string) {
-    this._id = value || this.inputLanguage;
-  }
+  @Input() id = this.inputLanguage;
 
   @Output() emailChange: EventEmitter<any> = new EventEmitter<any>();
-
-  private _id = '';
 
   constructor() { }
 
   public onClickSave() {
-    this.emailsObject[this.inputLanguage].modified = true;
-    this.emailChange.emit(this.emailsObject);
+    if (this.isEditable) {
+      this.emailsObject[this.inputLanguage].modified = true;
+      this.emailChange.emit(this.emailsObject);
+    }
   }
 
   public onChangeEmail(value: any) {
     this.emailsObject = value;
-  }
-
-  get id(): string {
-    return this._id;
   }
 
 }

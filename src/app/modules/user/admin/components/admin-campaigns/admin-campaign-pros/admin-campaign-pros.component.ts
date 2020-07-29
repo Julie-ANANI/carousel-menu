@@ -30,7 +30,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages campaigns',
-    limit: '10',
+    limit: this._configService.configLimit('admin-campaign-pros-limit'),
     offset: '0',
     search: '{}',
     sort: '{ "created": -1 }'
@@ -69,6 +69,8 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _isCreating = false;
 
+  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'pros'];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _rolesFrontService: RolesFrontService,
@@ -82,18 +84,16 @@ export class AdminCampaignProsComponent implements OnInit {
         && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
         this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
         this._config.campaigns = this._campaign ? this._campaign._id : '';
-        this._config.limit = this._configService.configLimit('admin-campaign-pros-limit');
         this._getProfessionals();
       }
     }
   }
 
   public canAccess(path?: Array<string>) {
-    const _default: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'pros'];
     if (path) {
-      return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
+      return this._rolesFrontService.hasAccessAdminSide(this._accessPath.concat(path));
     } else {
-      return this._rolesFrontService.hasAccessAdminSide(_default);
+      return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
     }
   }
 
@@ -232,7 +232,8 @@ export class AdminCampaignProsComponent implements OnInit {
       this._isExporting = true;
 
       const _config: any = {
-        fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country jobTitle messages',
+        fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country ' +
+          'jobTitle messages',
         professionals: [],
         campaignId: this._campaign._id,
         query: {
@@ -324,6 +325,10 @@ export class AdminCampaignProsComponent implements OnInit {
 
   get isCreating(): boolean {
     return this._isCreating;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
   }
 
 }

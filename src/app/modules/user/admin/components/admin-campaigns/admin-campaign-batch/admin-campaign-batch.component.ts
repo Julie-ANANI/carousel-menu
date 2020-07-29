@@ -56,6 +56,8 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   private _isLoading = true;
 
+  private _isEditable = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -284,7 +286,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       this._campaignService.updateStats(this._campaign._id).pipe(first()).subscribe(() => {
         this._reinitializeVariables();
         this._getBatches();
-        this._translateNotificationsService.success('Success', 'The stats have been updated successfully.');
+        this._translateNotificationsService.success('Success', 'The stats have been updated.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -296,6 +298,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     switch (type) {
 
       case 'NEW_BATCH':
+        this._isEditable = true;
         this._sidebarValue = {
           animate_state: 'active',
           type: 'NEW_BATCH',
@@ -304,10 +307,11 @@ export class AdminCampaignBatchComponent implements OnInit {
         break;
 
       case 'EDIT_BATCH':
+        this._isEditable = this.canAccess(['edit']);
         this._sidebarValue = {
           animate_state: 'active',
           type: 'EDIT_BATCH',
-          title: 'Edit Batch',
+          title: this.canAccess(['edit']) ? 'Edit Batch' : 'Batch',
           size: '726px'
         };
         break;
@@ -335,9 +339,9 @@ export class AdminCampaignBatchComponent implements OnInit {
     this._campaignService.setNuggets(this._campaign._id).pipe(first()).subscribe((result: Campaign) => {
       this._campaign = result;
       if (this._campaign.nuggets) {
-        this._translateNotificationsService.success('Success', 'The nuggets have been activated successfully.');
+        this._translateNotificationsService.success('Success', 'The nuggets have been activated.');
       } else {
-        this._translateNotificationsService.success('Success', 'The nuggets have been deactivated successfully.');
+        this._translateNotificationsService.success('Success', 'The nuggets have been deactivated.');
       }
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -370,7 +374,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     };
 
     this._campaignService.createNewBatch(this._campaign._id, _newBatch).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The batch is created successfully.');
+      this._translateNotificationsService.success('Success', 'The batch is created.');
       this._closeSidebar();
       this._reinitializeVariables();
       this._getBatches();
@@ -445,7 +449,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         this._reinitializeVariables();
         this._getBatches();
         this._modalDelete = false;
-        this._translateNotificationsService.success('Success', 'The batch is deleted successfully.');
+        this._translateNotificationsService.success('Success', 'The batch is deleted.');
       }, (err: HttpErrorResponse) => {
         this._isDeletingBatch = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -458,7 +462,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     event.preventDefault();
     this._campaignService.freezeStatus(batch).pipe(first()).subscribe((modifiedBatch: any) => {
       this._stats.batches[this._getBatchIndex(modifiedBatch._id)] = modifiedBatch;
-      this._translateNotificationsService.success('Success', 'The batch is frozen successfully.');
+      this._translateNotificationsService.success('Success', 'The batch is frozen.');
     }, (err: HttpErrorResponse) => {
       (event.target as HTMLInputElement).checked = batch.active;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -546,7 +550,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         }
         return true;
       });
-      this._translateNotificationsService.success('Success', 'The batch is updated successfully.');
+      this._translateNotificationsService.success('Success', 'The batch is updated.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -653,6 +657,10 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
   }
 
 }

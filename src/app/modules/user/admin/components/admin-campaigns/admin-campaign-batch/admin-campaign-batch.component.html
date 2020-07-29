@@ -16,7 +16,7 @@
     <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
 
     <!-- section no batches -->
-    <section *ngIf="!batchesTable.length && !isLoading" class="p-top-30 p-bottom-30 animate-fade is-7">
+    <section *ngIf="!batchesTable.length && !isLoading" class="p-top-30 p-bottom-30 animate-fade is-5">
 
       <!-- note -->
       <div *ngIf="!autoBatchStatus" class="error-wrapper p-bottom-30">
@@ -218,10 +218,10 @@
 
 
 <!-- sidebars to perform batch operations -->
-<app-sidebar *ngIf="canAccess(['view']) || canAccess(['edit'])" [(template)]="sidebarValue">
+<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
   <app-sidebar-batch
     (batchOutput)="onSidebarOutput($event)"
-    [isEditable]="canAccess(['edit'])"
+    [isEditable]="isEditable"
     [campaignWorkflows]="campaignWorkflows"
     [content]="content"
     [currentRow]="currentRow"

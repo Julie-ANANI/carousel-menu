@@ -151,15 +151,15 @@ export class AdminCampaignAnswersComponent implements OnInit {
       _title: 'answers',
       _content: this._answers,
       _total: this._totalAnswers,
-      _isSearchable: this.canAccess(['searchBy']) || this.canAccess(['filterBy']),
+      _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isSelectable: this.canAccess(['validate']) || this.canAccess(['reject']),
       _isPaginable: true,
       _clickIndex: (this.canAccess(['view']) || this.canAccess(['edit'])) ? 1 : null,
       _isTitle: true,
       _isLocal: true,
       _isNoMinHeight: this._totalAnswers < 11,
-      _buttons: [{
-        _label: 'Validate', _icon: 'fas fa-check', _isHidden: !this.canAccess(['validate'])},
+      _buttons: [
+        {_label: 'Validate', _icon: 'fas fa-check', _isHidden: !this.canAccess(['validate'])},
         {_label: 'Reject', _icon: 'fas fa-times', _isHidden: !this.canAccess(['reject'])}
         ],
       _columns: [
@@ -239,11 +239,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public onActions(action: any) {
     switch (action._label) {
-      case 'ANSWER.VALID_ANSWER':
+      case 'Validate':
         this._updateStatus(action._rows, 'VALIDATED');
         break;
 
-      case 'ANSWER.REJECT_ANSWER':
+      case 'Reject':
         this._updateStatus(action._rows, 'REJECTED');
         break;
     }
@@ -253,7 +253,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     answers.forEach((answer: Answer, index) => {
       answer.status = status;
       this._answerService.save(answer._id, answer).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('Success', 'The answer has been updated successfully.');
+        this._translateNotificationsService.success('Success', 'The answer has been updated.');
         if (index === (answers.length - 1)) {
           this._getAnswers();
         }

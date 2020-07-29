@@ -57,7 +57,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _config: Config = {
     fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
       'innovation motherRequest totalResults metadata results',
-    limit: "10",
+    limit: this._configService.configLimit('admin-search-history-limit'),
     offset: "0",
     search: "{}",
     sort: '{ "created": -1 }'
@@ -83,8 +83,8 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this._initTable();
+
     if (isPlatformBrowser(this._platformId)) {
-      this._config.limit = this._configService.configLimit('admin-search-history-limit');
       // On récupère le quota Google
       this._getGoogleQuota();
 
@@ -109,6 +109,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._loadHistory();
 
     }
+
   }
 
   private _loadHistory() {
@@ -340,7 +341,8 @@ export class SharedSearchHistoryComponent implements OnInit {
 
         this._searchService.searchMails(params).pipe(first()).subscribe((result: any) => {
           if (index === requestsIds.length - 1) {
-            this._translateNotificationsService.success('Success', `The search for e-mails has been launched.`);
+            this._translateNotificationsService.success('Success',
+              `The search for e-mails has been launched.`);
           }
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -382,7 +384,8 @@ export class SharedSearchHistoryComponent implements OnInit {
       newTargetCountries: this._geography.include.map((country) => country.code)
     };
     this._professionalsService.addFromHistory(params).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The pros will be on the move in a few minutes.');
+      this._translateNotificationsService.success('Success',
+        'The pros will be on the move in a few minutes.');
       if (goToCampaign) {
         this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
       }

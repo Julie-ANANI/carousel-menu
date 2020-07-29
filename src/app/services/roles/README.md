@@ -165,7 +165,6 @@ access: {
                                 requests: true
                             },
                             launch: {
-                                module: true,
                                 googleRequests: true,
                                 emailsSearch: true
                             },
@@ -243,10 +242,10 @@ access: {
                                 name: true,
                                 country: true
                             },
-                            import: true,
-                            add: true,
-                            edit: true,
-                            view: true
+                            user: {
+                                edit: true,
+                                view: true
+                            }
                         }
                     }        
                 }, 

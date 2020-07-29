@@ -9,7 +9,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 
 1. SETTINGS: 
 <br><br>VIEW: 'Domain, Operator, Owner, Mission, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project_Tags, Answers_Tags, Answers_Anonymous, Professional_Identified, Ab_Testing, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Go_To_Synthesis, Ending_Mail_Campaign, Project_Restitution, Client_Satisfaction, Mission_Feedback, Statistics', 
-<br><br>EDIT: 'Domain, Operator, Owner, Mission, Roadmap, Mission_Type, Main_Objective, Commercial Description, Language, Targeting, Blacklist, Status, Project_Tags, Answers_Tags, Answers_Anonymous, Professional_Identified, Ab_Testing, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Go_To_Synthesis, Ending_Mail_Campaign, Client_Satisfaction, Mission_Feedback, Statistics, Validate_Project, Project_Revision'.
+<br><br>EDIT: 'Domain, Operator, Owner, Mission, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project_Tags, Answers_Tags, Answers_Anonymous, Professional_Identified, Ab_Testing, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Go_To_Synthesis, Ending_Mail_Campaign, Client_Satisfaction, Mission_Feedback, Statistics, Validate_Project, Project_Revision'.
 
 2. ANSWER_TAGS: View, Edit, Add, Delete.
 
@@ -193,7 +193,7 @@ access: {
                     blacklist: true,
                     validateProject: true,
                     projectRevision: true
-                }
+                },
                 view: {
                     statistics: true,
                     publishedProject: true,

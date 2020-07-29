@@ -208,7 +208,7 @@
 
         <!-- language choice -->
         <div *ngIf="!noLanguage" class="language-wrapper">
-          <label class="form-label">Choose language</label>
+          <label class="form-label">Choose language:</label>
           <div (click)="changeLanguage('en')" [ngClass]="{ active: language === 'en' }" class="text-link">
             English
           </div>
@@ -221,10 +221,10 @@
         <!-- no language set -->
         <div *ngIf="noLanguage && !languageHasBeenSet" class="language-wrapper">
           <label class="form-label">Which language would you like to communicate with the project owner?</label>
-          <div (click)="setLanguage('en')"  [ngClass]="{ active: language === 'en' }" class="text-link">
+          <div (click)="setLanguage('en')" [ngClass]="{ active: language === 'en' }" class="text-link">
             English
           </div>
-          <div (click)="setLanguage('fr')"  [ngClass]="{ active: language === 'fr' }" class="text-link">
+          <div (click)="setLanguage('fr')" [ngClass]="{ active: language === 'fr' }" class="text-link">
             French
           </div>
         </div>
@@ -246,7 +246,7 @@
         <!-- subject -->
         <div class="form-group">
 
-          <label class="form-label text-notify" for="shared-mail-editor-subject">Subject</label>
+          <label class="form-label" for="shared-mail-editor-subject">Subject</label>
 
           <input
             *ngIf="isEditableMode"
@@ -266,7 +266,7 @@
         <!-- message -->
         <div class="form-group">
 
-          <label class="form-label text-notify">Message</label>
+          <label class="form-label">Message</label>
 
           <app-text-zone
             (onTextChange)="updateContent($event)"

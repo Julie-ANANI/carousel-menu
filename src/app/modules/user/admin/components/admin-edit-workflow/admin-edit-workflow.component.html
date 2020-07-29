@@ -47,6 +47,7 @@
 
     <div
       (click)="onClickDelete()"
+      *ngIf="isDeletable"
       class="icon-container is-overlay m-left-2">
       <span data-tooltip="Delete workflow" class="tooltip">
         <img

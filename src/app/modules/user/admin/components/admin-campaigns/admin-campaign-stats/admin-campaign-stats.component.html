@@ -9,7 +9,8 @@
       *ngIf="i === config.length - 1 && updateBtn"
       (click)="onUpdateStats($event)"
       [ngStyle]="{'font-size': '20px'}"
-      class="c-hand text-primary m-right-15">
+      data-tooltip="Update stats"
+      class="c-hand tooltip text-primary m-right-15">
       <i class="fa fa-sync"></i>
     </a>
   </li>

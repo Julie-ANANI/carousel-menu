@@ -118,7 +118,7 @@ export class AdminEditWorkflowComponent {
     this._sidebar = {
       size: '726px',
       animate_state: 'active',
-      title: this.isEditable ? 'Edit Workflow' : 'Preview Workflow'
+      title: this.isEditable ? 'Edit Workflow' : 'Workflow'
     };
   }
 

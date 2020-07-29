@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { SidebarWorkflowFormComponent } from './sidebar-workflow-form.component';
+import { SidebarWorkflowComponent } from './sidebar-workflow.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SidebarSignatureModule } from '../sidebar-signature/sidebar-signature.module';
@@ -21,11 +21,11 @@ import { SharedMailEditorModule } from '../../../shared/components/shared-mail-e
     SharedMailEditorModule
   ],
   declarations: [
-   SidebarWorkflowFormComponent
+   SidebarWorkflowComponent
   ],
   exports: [
-    SidebarWorkflowFormComponent
+    SidebarWorkflowComponent
   ]
 })
 
-export class SidebarWorkflowFormModule {}
+export class SidebarWorkflowModule {}
