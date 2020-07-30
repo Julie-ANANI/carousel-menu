@@ -88,7 +88,7 @@
 
 
         <!-- company -->
-        <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
+        <div *ngIf="!anonymous" [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
           {{ pro.company }}
         </div>
         <!-- /company -->

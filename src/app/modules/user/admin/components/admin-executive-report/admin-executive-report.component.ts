@@ -56,6 +56,8 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _activeIndex: number = null;
 
+  private _anonymous = false;
+
   constructor (private _innovationFrontService: InnovationFrontService,
                private _answerService: AnswerService,
                private _translateNotificationsService: TranslateNotificationsService) { }
@@ -63,6 +65,8 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._anonymous = innovation._metadata && innovation._metadata.campaign ?
+        !!innovation._metadata.campaign.anonymous_answers : false;
       this._getAnswers(innovation._id);
       this._questions = ResponseService.presets(innovation);
     });
@@ -236,6 +240,10 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   get isResetModal(): boolean {
     return this._isResetModal;
+  }
+
+  get anonymous(): boolean {
+    return this._anonymous;
   }
 
   ngOnDestroy(): void {

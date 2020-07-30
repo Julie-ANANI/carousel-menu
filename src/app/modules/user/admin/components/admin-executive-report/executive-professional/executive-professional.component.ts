@@ -31,6 +31,10 @@ export class ExecutiveProfessionalComponent implements OnInit {
     this._config = value;
   }
 
+  @Input() set anonymous(value: boolean) {
+    this._anonymous = !!value;
+  }
+
   @Output() configChange: EventEmitter<ExecutiveProfessional> = new EventEmitter<ExecutiveProfessional>();
 
   private _config: ExecutiveProfessional = <ExecutiveProfessional>{
@@ -45,6 +49,8 @@ export class ExecutiveProfessionalComponent implements OnInit {
   private _top4Pro: Array<Professional> = [<Professional>{}, <Professional>{}, <Professional>{}, <Professional>{}];
 
   private _restPro: Array<Professional> = [];
+
+  private _anonymous = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _executiveReportFrontService: ExecutiveReportFrontService,
@@ -174,4 +180,7 @@ export class ExecutiveProfessionalComponent implements OnInit {
     return this._restPro;
   }
 
+  get anonymous(): boolean {
+    return this._anonymous;
+  }
 }
