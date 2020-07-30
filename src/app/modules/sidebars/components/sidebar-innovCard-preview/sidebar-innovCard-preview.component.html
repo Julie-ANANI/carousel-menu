@@ -3,9 +3,9 @@
   <!-- nothing to show -->
   <section *ngIf="!sectionInfo('ISSUE') && !sectionInfo('SOLUTION') && !innovCard.summary && !innovCard.title
     && innovCard.advantages && innovCard.advantages.length === 0" class="p-top-50">
-    <message-template-1 [widthMax]="'321px'">
+    <message-template [widthMax]="'321px'">
       {{ 'SIDEBAR.INNOV_CARD_PREVIEW.BOT_MESSAGE' | translate }}
-    </message-template-1>
+    </message-template>
   </section>
   <!-- /nothing to show -->
 

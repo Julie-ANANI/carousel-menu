@@ -1,18 +1,20 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'message-template-1',
-  templateUrl: './message-template-1.component.html',
-  styleUrls: ['./message-template-1.component.scss']
+  selector: 'message-template',
+  templateUrl: './message-template.component.html',
+  styleUrls: ['./message-template.component.scss']
 })
 
-export class MessageTemplate1Component {
+export class MessageTemplateComponent {
 
   @Input() srcImage = 'https://res.cloudinary.com/umi/image/upload/app/default-images/bot/info.svg';
 
   @Input() widthMax = '273px';
 
   @Input() backgroundColor = '#4F5D6B';
+
+  @Input() isFetching = false;
 
   constructor() { }
 

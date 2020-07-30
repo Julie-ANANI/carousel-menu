@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { AdminWorkflowsLibraryComponent } from './admin-workflows-library/admin-workflows-library.component';
+import { AdminLibrariesWorkflowsComponent } from './admin-libraries-workflows/admin-libraries-workflows.component';
 import { AdminSignaturesLibraryComponent } from './admin-signatures-library/admin-signatures-library.component';
 import { AdminEmailsLibraryComponent } from './admin-emails-library/admin-emails-library.component';
 import { AdminPresetsListComponent } from './admin-presets/admin-presets-list/admin-presets-list.component';
@@ -12,7 +12,7 @@ import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver
 
 export const librariesRoutes: Routes = [
   { path: '', redirectTo: 'workflows', pathMatch: 'full' },
-  { path: 'workflows', component: AdminWorkflowsLibraryComponent, pathMatch: 'full' },
+  { path: 'workflows', component: AdminLibrariesWorkflowsComponent, pathMatch: 'full' },
   { path: 'emails', component: AdminEmailsLibraryComponent, pathMatch: 'full' },
   {
     path: 'signatures',

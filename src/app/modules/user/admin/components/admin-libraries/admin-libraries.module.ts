@@ -8,7 +8,7 @@ import { AdminEmailBlacklistComponent } from '../admin-settings/admin-email-blac
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SharedSortModule } from '../../../../shared/components/shared-sort/shared-sort.module';
-import { AdminWorkflowsLibraryModule } from './admin-workflows-library/admin-workflows-library.module';
+import { AdminLibrariesWorkflowsModule } from './admin-libraries-workflows/admin-libraries-workflows.module';
 import { AdminSignaturesLibraryModule } from './admin-signatures-library/admin-signatures-library.module';
 import { AdminCountryManagementModule } from '../admin-settings/admin-country-management/admin-country-management.module';
 import { AdminEmailsLibraryModule } from './admin-emails-library/admin-emails-library.module';
@@ -25,7 +25,7 @@ import { ModalModule } from '../../../../utility/modals/modal/modal.module';
     RouterModule,
     TranslateModule.forChild(),
     PipeModule,
-    AdminWorkflowsLibraryModule,
+    AdminLibrariesWorkflowsModule,
     AdminSignaturesLibraryModule,
     AdminEmailsLibraryModule,
     AdminPresetsModule,

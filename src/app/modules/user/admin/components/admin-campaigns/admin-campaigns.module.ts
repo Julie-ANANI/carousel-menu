@@ -26,7 +26,7 @@ import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workf
 import { AutoCompleteInputModule } from "../../../../utility/auto-complete-input/auto-complete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';
 import { SidebarBatchModule } from '../../../../sidebars/components/sidebar-batch/sidebar-batch.module';
-import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebars/components/user-form/sidebar-user-form.module';
 import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
@@ -52,7 +52,7 @@ import { MessageErrorModule } from "../../../../utility/messages/message-error/m
     AutoCompleteInputModule,
     SidebarUserAnswerModule,
     SidebarBatchModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     ModalModule,
     SidebarUserFormModule,
     ErrorTemplate1Module,

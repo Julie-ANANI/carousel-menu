@@ -80,6 +80,21 @@ No definition of a Role means no access to that user.
 ```
 access: { 
     adminSide: {
+        libraries: { 
+            workflows: { 
+                add: true, 
+                edit: true
+            }, 
+            questionnaire: { 
+                add: true, 
+                edit: true, 
+                delete: true,
+                clone: true, 
+                searchBy: {
+                    name: true
+                } 
+            }
+        }, 
         projects: { 
             filterBy: {
                 status: true, 

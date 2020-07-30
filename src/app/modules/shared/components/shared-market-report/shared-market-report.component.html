@@ -7,9 +7,9 @@
         <div class="column col-xs-12 col-11 col-mx-auto">
           <h1 class="title-primary">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
           <div class="section-light-pad rm-pad-bottom">
-            <message-template-1 [widthMax]="'337px'">
+            <message-template [widthMax]="'337px'">
               <span>{{ 'MARKET_REPORT.MESSAGE.EDITING' | translate }}</span>
-            </message-template-1>
+            </message-template>
           </div>
         </div>
       </div>
@@ -21,9 +21,9 @@
   <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
     <section class="section-pad rm-pad-bottom">
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <message-template-1 [widthMax]="'337px'">
+        <message-template [widthMax]="'337px'">
           <span>{{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}</span>
-        </message-template-1>
+        </message-template>
       </div>
     </section>
   </ng-container>

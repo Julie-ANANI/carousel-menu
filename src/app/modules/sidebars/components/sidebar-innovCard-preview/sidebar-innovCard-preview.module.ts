@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarInnovCardPreviewComponent } from './sidebar-innovCard-preview.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-import { MessageTemplate1Module } from '../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
 @NgModule({
@@ -13,7 +13,7 @@ import { PipeModule } from '../../../../pipe/pipe.module';
     CommonModule,
     TranslateModule.forChild(),
     SidebarModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     PipeModule
   ],
   declarations: [

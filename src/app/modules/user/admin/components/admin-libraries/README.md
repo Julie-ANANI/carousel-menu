@@ -7,11 +7,11 @@ Please always updates the roles / functionalities in this file.
 
 ### Functionalities
 
-1. WORKFLOWS: Add, Edit, View, Change_Language, Import, Export, Delete.
+1. WORKFLOWS: Add, Edit, View, Delete.
 
-2. EMAILS: Add, Modify, View, Change_Language, Delete.
+2. EMAILS: Add, Modify, View, Delete.
 
-3. QUESTIONNAIRE: Add, Edit, View, Delete, 
+3. QUESTIONNAIRE: Add, Edit, View, Delete, Clone, 
 <br><br>SEARCH_BY: 'Name, Domain'. 
 
 4. SIGNATURES: Add, View, Edit, Delete, 
@@ -32,9 +32,16 @@ No definition of a Role means no access to that user.
 
 #### Market Test Manager:
 
-1. WORKFLOWS: Add, Edit, Change_Language.
+1. WORKFLOWS: Add, Edit.
 
-2. QUESTIONNAIRE: Add, Edit, View, Delete, 
+2. QUESTIONNAIRE: Add, Edit, Delete, Clone, 
+<br><br>SEARCH_BY: 'Name'.
+
+#### Market Test Manager UMI:
+
+1. WORKFLOWS: Add, Edit.
+
+2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
 <br><br>SEARCH_BY: 'Name'.
 
 ### Example - Market Test Manager role
@@ -44,14 +51,13 @@ access: {
     libraries: { 
         workflows: { 
             add: true, 
-            edit: true, 
-            changeLanguage: true
+            edit: true
         }, 
         questionnaire: { 
             add: true, 
-            edit: true, 
-            view: true, 
-            delete: true, 
+            edit: true,
+            delete: true,
+            clone: true, 
             searchBy: {
                 name: true
             } 

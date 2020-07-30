@@ -13,7 +13,7 @@ import { ProjectModule } from './components/project/project.module';
 import { AccountModule } from './components/account/account.module';
 import { SynthesisListModule } from './components/synthesis-list/synthesis-list.module';
 import { SynthesisCompleteModule } from '../../public/share/component/synthesis-complete/synthesis-complete.module';
-import { MessageTemplate1Module } from '../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../utility/modals/modal/modal.module';
 import { PaginationTemplate2Module } from '../../utility/paginations/pagination-template-2/pagination-template-2.module';
 import { NewProjectModule } from './components/new-project/new-project.module';
@@ -29,7 +29,7 @@ import { NewProjectModule } from './components/new-project/new-project.module';
     AccountModule,
     SynthesisListModule,
     SynthesisCompleteModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     ModalModule,
     PaginationTemplate2Module,
     NewProjectModule

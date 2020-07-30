@@ -17,7 +17,7 @@ import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { ShowcaseHistoryModule } from '../../../sidebars/components/showcase-history/showcase-history.module';
-import { MessageTemplate1Module } from '../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
 import { ErrorTemplate1Module } from '../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../utility/messages/message-template-2/message-template-2.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
@@ -33,7 +33,7 @@ import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap
     ShowcaseRoutingModule,
     SidebarModule,
     ShowcaseHistoryModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     ErrorTemplate1Module,
     MessageTemplate2Module,
     SharedWorldmapModule

@@ -27,4 +27,8 @@ export class RolesFrontService {
 		}
 	}
 
+	public isTechRole(): boolean {
+		return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'tech');
+	}
+
 }

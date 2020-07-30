@@ -5,6 +5,9 @@ import { PresetService } from '../../../../../services/preset/preset.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
+import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 interface ActionOption {
   functionality: string;
@@ -13,7 +16,6 @@ interface ActionOption {
 }
 
 @Component({
-  selector: 'app-admin-libraries',
   templateUrl: './admin-libraries.component.html',
   styleUrls: ['./admin-libraries.component.scss']
 })
@@ -28,14 +30,16 @@ export class AdminLibrariesComponent {
               private _router: Router,
               private _translateNotificationsService: TranslateNotificationsService,
               private _presetService: PresetService,
+              private _rolesFrontService: RolesFrontService,
               private _templateService: TemplatesService) {
 
-    this._translateTitleService.setTitle('Libraries');
+    this.setPageTitle();
 
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
         const url = this._router.routerState.snapshot.url.split('/');
         if (url.length > 4 && url[3] === 'libraries') {
+          this.setPageTitle(url[4]);
           this._setOptions(url[4]);
         }
       }
@@ -43,20 +47,28 @@ export class AdminLibrariesComponent {
 
   }
 
+  public setPageTitle(title?: string) {
+    if (title) {
+      this._translateTitleService.setTitle( title.slice(0,1).toUpperCase() + title.slice(1) + ' | Libraries');
+    } else {
+      this._translateTitleService.setTitle('Libraries');
+    }
+  }
+
   private _setOptions(page: string) {
     switch (page) {
 
       case 'questionnaire':
         this._options = [
-          { functionality: 'import', optionName: 'COMMON.BUTTON.IMPORT_QUESTIONNAIRE', activePage: 'questionnaire' },
-          { functionality: 'export', optionName: 'COMMON.BUTTON.EXPORT_QUESTIONNAIRE', activePage: 'questionnaire' },
+          { functionality: 'IMPORT', optionName: 'Import questionnaire', activePage: 'questionnaire' },
+          { functionality: 'EXPORT', optionName: 'Export questionnaires', activePage: 'questionnaire' },
           ];
         break;
 
       case 'workflows':
         this._options = [
-          { functionality: 'import', optionName: 'COMMON.BUTTON.IMPORT_WORKFLOW', activePage: 'workflows' },
-          { functionality: 'export', optionName: 'COMMON.BUTTON.EXPORT_WORKFLOW', activePage: 'workflows' }
+          { functionality: 'IMPORT', optionName: 'Import workflow', activePage: 'workflows' },
+          { functionality: 'EXPORT', optionName: 'Export workflows', activePage: 'workflows' }
           ];
         break;
 
@@ -67,27 +79,39 @@ export class AdminLibrariesComponent {
     }
   }
 
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['libraries'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['libraries']);
+    }
+  }
+
   private _importPreset(file: File) {
     this._presetService.import(file).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.RELOADING_PAGE');
+      this._translateNotificationsService.success('Success', 'The CSV has been imported.');
+      this._translateNotificationsService.success('Success',
+        'The page is going to reload automatically in few seconds. Thank you for your patience.');
       setTimeout(() => {
         document.location.reload();
       }, 5000);
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
   private _importWorkflow(file: File) {
     this._templateService.import(file).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.IMPORT.CSV');
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.RELOADING_PAGE');
+      this._translateNotificationsService.success('Success', 'The CSV has been imported.');
+      this._translateNotificationsService.success('Success',
+        'The page is going to reload automatically in few seconds. Thank you for your patience.');
       setTimeout(() => {
         document.location.reload();
       }, 5000);
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
@@ -120,6 +144,10 @@ export class AdminLibrariesComponent {
 
     }
 
+  }
+
+  get isTech(): boolean {
+    return this._rolesFrontService.isTechRole();
   }
 
   get tabs(): Array<string> {

@@ -66,17 +66,19 @@
     <!-- /select / import / test workflow -->
 
     <!-- no campaign -->
-    <div *ngIf="!availableScenarios.length && (canAccess(['edit']) || canAccess(['view']))" class="p-top-20">
-      <message-template-1 [widthMax]="'354px'">
+    <div *ngIf="!availableScenarios.length" class="p-top-20">
+      <message-template [widthMax]="'354px'">
         Don't have any workflow?
-        <br>
-        Try to add a one by clicking on "Import" button.
-      </message-template-1>
+        <span *ngIf="canAccess(['import'])">
+          <br>
+          Try to add a one by clicking on "Import" button.
+        </span>
+      </message-template>
     </div>
     <!-- /no campaign -->
 
     <!-- campaign -->
-    <div *ngIf="availableScenarios.length && (canAccess(['edit']) || canAccess(['view']))">
+    <div *ngIf="availableScenarios.length">
 
       <div *ngIf="modifiedScenarios.length === 0" class="text-sm text-alert text-medium">
         You must have at least one workflow with all the modified emails.

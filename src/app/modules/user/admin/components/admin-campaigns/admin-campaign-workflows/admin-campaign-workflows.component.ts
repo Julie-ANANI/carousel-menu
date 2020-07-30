@@ -47,9 +47,9 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     sort: '{ "created" : -1 }'
   };
 
-  isImporting = false;
+  private _isImporting = false;
 
-  isTesting = false;
+  private _isTesting = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -209,16 +209,16 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   public onClickTestWorkflow() {
-    if (this.isTesting) {
+    if (this._isTesting) {
       for (let i = 1; i < 4; i++) {
         this._campaignService.sendTestEmails(this._campaign._id, i).pipe(first()).subscribe((res) => {
           if (i === 3) {
             this._translateNotificationsService.success('Success', 'The mail has been sent.');
-            this.isTesting = false;
+            this._isTesting = false;
           }
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          this.isTesting = false;
+          this._isTesting = false;
           console.error(err);
         });
       }
@@ -228,15 +228,15 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   private _saveTemplates(message: string) {
     this._campaignService.put(this._campaign).pipe(first()).subscribe(() => {
       this._modalImport = false;
-      if (this.isImporting) {
-        this.isImporting = false;
+      if (this._isImporting) {
+        this._isImporting = false;
       }
       this._translateNotificationsService.success('Success', message);
       this.generateModifiedScenarios();
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      if (this.isImporting) {
-        this.isImporting = false;
+      if (this._isImporting) {
+        this._isImporting = false;
       }
       console.error(err);
     });
@@ -246,8 +246,8 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
    * this function is called when the user clicks on the confirm button.
    */
   public onClickConfirm() {
-    if (!this.isImporting) {
-      this.isImporting = true;
+    if (!this._isImporting) {
+      this._isImporting = true;
       this.updateAvailableScenario(this._selectedTemplate);
       this._saveTemplates('The workflow is added.');
     }
@@ -332,6 +332,14 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   get modalContent(): string {
     return this._modalContent;
+  }
+
+  get isImporting(): boolean {
+    return this._isImporting;
+  }
+
+  get isTesting(): boolean {
+    return this._isTesting;
   }
 
 }
