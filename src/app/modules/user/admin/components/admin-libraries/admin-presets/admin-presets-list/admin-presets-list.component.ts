@@ -1,21 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { PresetService } from '../../../../../../../services/preset/preset.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../../../models/config';
-import { TranslateTitleService } from '../../../../../../../services/title/title.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { Table } from '../../../../../../table/models/table';
 import { Response } from '../../../../../../../models/response';
+import { isPlatformBrowser } from "@angular/common";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../../services/error/error-front.service";
+import { RolesFrontService } from "../../../../../../../services/roles/roles-front.service";
 
 @Component({
-  selector: 'app-admin-presets-list',
   templateUrl: './admin-presets-list.component.html',
   styleUrls: ['./admin-presets-list.component.scss']
 })
 
-export class AdminPresetsListComponent {
+export class AdminPresetsListComponent implements OnInit {
 
   private _config: Config = {
     fields: '',
@@ -25,59 +27,68 @@ export class AdminPresetsListComponent {
     sort: '{ "created": -1 }'
   };
 
-  private _fetchingError: boolean;
+  private _fetchingError = false;
 
-  private _total: number;
+  private _total = -1;
 
-  private _modalOpen: boolean;
+  private _modalOpen = false;
 
-  private _isModalAdd: boolean;
+  private _isModalAdd = false;
 
-  private _modalTitle: string;
+  private _modalTitle = '';
 
-  private _newPresetName: string;
+  private _newPresetName = '';
 
   private _presets: Array<Preset> = [];
 
-  private _table: Table;
+  private _table: Table = <Table>{};
 
-  private _isModalDelete: boolean;
+  private _isModalDelete = false;
 
   private _presetsToRemove: Array<Preset> = [];
 
-  private _isModalClone: boolean;
+  private _isModalClone = false;
 
-  private _isModalCloneAdd: boolean;
+  private _isModalCloneAdd = false;
 
-  private _presetToClone: Preset;
+  private _presetToClone: Preset = <Preset>{};
 
-  private _noResult: boolean;
+  private _noResult = false;
 
-  constructor(private _presetService: PresetService,
-              private _translateTitleService: TranslateTitleService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _presetService: PresetService,
               private _activatedRoute: ActivatedRoute,
+              private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _router: Router) {
+              private _router: Router) { }
 
-    this._translateTitleService.setTitle('Questionnaires | Libraries');
+  ngOnInit(): void {
+    this._initializeTable();
 
-    if (this._activatedRoute.snapshot.data.presets && Array.isArray(this._activatedRoute.snapshot.data.presets.result)) {
-       this._presets = this._activatedRoute.snapshot.data.presets.result;
-       this._total = this._activatedRoute.snapshot.data.presets._metadata.totalCount;
-       this._noResult = this._total === 0;
-       this._initializeTable();
-    } else {
-      this._fetchingError = true;
+    if (isPlatformBrowser(this._platformId)) {
+      if (this._activatedRoute.snapshot.data.presets
+        && Array.isArray(this._activatedRoute.snapshot.data.presets.result)) {
+        this._initPresets(this._activatedRoute.snapshot.data.presets);
+      } else {
+        this._fetchingError = true;
+      }
     }
 
   }
 
+  private _initPresets(response: Response) {
+    this._presets = response.result;
+    this._total = response._metadata.totalCount;
+    this._noResult = this._config.search.length > 2 ? false : this._total === 0;
+    this._initializeTable();
+  }
+
   private _getPresets() {
     this._presetService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-      this._presets = response.result;
-      this._total = response._metadata.totalCount;
-      this._noResult = this._config.search.length > 2 ? false : this._total === 0;
-      this._initializeTable();
+      this._initPresets(response);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
@@ -87,21 +98,42 @@ export class AdminPresetsListComponent {
       _title: 'preset(s)',
       _content: this._presets,
       _total: this._total,
-      _isSearchable: true,
-      _isDeletable: true,
-      _isSelectable: true,
+      _isSearchable: !!this.canAccess(['searchBy']),
+      _isDeletable: this.canAccess(['delete']),
+      _isSelectable: this.canAccess(['delete']) || this.canAccess(['clone']),
       _isPaginable: true,
       _isTitle: true,
-      _clickIndex: 1,
-      _buttons: [{ _icon: 'fas fa-clone', _label: 'Clone' }],
+      _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 1 : null,
+      _isNoMinHeight: this._total < 11,
+      _buttons: [{ _icon: 'fas fa-clone', _label: 'Clone', _isHidden: !this.canAccess(['clone']) }],
       _columns: [
-        {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['sections'], _name: 'TABLE.HEADING.SECTIONS', _type: 'LENGTH', _isSortable: true},
-        {_attrs: ['domain'], _name: 'TABLE.HEADING.DOMAIN', _type: 'TEXT', _isSearchable: true, _isSortable: true},
-        {_attrs: ['updated'], _name: 'TABLE.HEADING.UPDATED', _type: 'DATE', _isSortable: true},
-        {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true}
+        {
+          _attrs: ['name'],
+          _name: 'Name',
+          _type: 'TEXT',
+          _isSearchable: this.canAccess(['searchBy', 'name']),
+          _isSortable: true
+        },
+        { _attrs: ['sections'], _name: 'Sections', _type: 'LENGTH', _isSortable: true },
+        {
+          _attrs: ['domain'],
+          _name: 'Domain',
+          _type: 'TEXT',
+          _isSearchable: this.canAccess(['searchBy', 'domain']),
+          _isSortable: true
+        },
+        { _attrs: ['updated'], _name: 'updated', _type: 'DATE', _isSortable: true },
+        { _attrs: ['created'], _name: 'Created', _type: 'DATE', _isSortable: true }
       ]
     };
+  }
+
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['libraries', 'questionnaire'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['libraries', 'questionnaire']);
+    }
   }
 
   private _resetModalVariables() {
@@ -113,7 +145,7 @@ export class AdminPresetsListComponent {
 
   public onClickAdd() {
     this._resetModalVariables();
-    this._modalTitle = 'COMMON.MODAL.TITLE_CREATE';
+    this._modalTitle = 'Addition Board';
     this._newPresetName = '';
     this._isModalAdd = true;
     this._modalOpen = true;
@@ -124,31 +156,31 @@ export class AdminPresetsListComponent {
       name: this._newPresetName,
       sections: []
     };
-    this._createPreset(newPreset, true, 'PRESETS.ADDED');
+    this._createPreset(newPreset, true, 'The preset is added.');
   }
 
   private _createPreset(preset: Preset, navigate: boolean, message: string) {
     this._presetService.create(preset).pipe(first()).subscribe((response: Preset) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', message);
-
+      this._translateNotificationsService.success('Success', message);
       if (navigate) {
         this._router.navigate(['/user/admin/libraries/questionnaire/' + response._id]);
       } else {
         this._getPresets();
         this._modalOpen = false;
       }
-
-    }, () => {
-      this._checkPresetAlready();
+    }, (err: HttpErrorResponse) => {
+      this._checkPresetAlready(err);
     });
   }
 
-  private _checkPresetAlready() {
-    if (this._presets.length > 0 && this._newPresetName && this._presets.find((preset) => preset.name === this._newPresetName)) {
-      this._translateNotificationsService.error('ERROR.ERROR', 'PRESETS.ALREADY_EXIST');
+  private _checkPresetAlready(err: HttpErrorResponse) {
+    if (this._presets.length > 0 && this._newPresetName && this._presets.find((preset) =>
+      preset.name === this._newPresetName)) {
+      this._translateNotificationsService.error('Error', 'The preset with the same name already exists.');
     } else {
       this._modalOpen = false;
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     }
   }
 
@@ -159,24 +191,24 @@ export class AdminPresetsListComponent {
   public OnClickDelete(values: Array<Preset>) {
     this._presetsToRemove = values;
     this._resetModalVariables();
-    this._modalTitle = 'COMMON.MODAL.TITLE_DELETE';
+    this._modalTitle = 'Delete Board';
     this._isModalDelete = true;
     this._modalOpen = true;
   }
 
   public onDeleteConfirm() {
-
-    this._presetsToRemove.forEach((preset) => {
+    this._presetsToRemove.forEach((preset, index) => {
       this._presetService.remove(preset._id).pipe(first()).subscribe(() => {
-        this._getPresets();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'PRESETS.DELETED');
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+        this._translateNotificationsService.success('Success', 'The preset is deleted.');
+        if (index === this._presetsToRemove.length - 1) {
+          this._getPresets();
+        }
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       })
     });
-
     this._modalOpen = false;
-
   }
 
   public onClickActions(value: any) {
@@ -184,13 +216,13 @@ export class AdminPresetsListComponent {
       if (value._rows.length === 1) {
         this._resetModalVariables();
         this._presetToClone = value._rows[0];
-        this._modalTitle = 'COMMON.MODAL.TITLE_CONFIRMATION';
+        this._modalTitle = 'Clone Board';
         this._isModalClone = true;
         this._modalOpen = true;
       } else {
-        this._translateNotificationsService.error('ERROR.ERROR', 'PRESETS.NO_MULTIPLE_CLONE');
+        this._translateNotificationsService.error('Error',
+          'This functionality is not available on multiple presets.');
       }
-
     }
   }
 
@@ -198,14 +230,14 @@ export class AdminPresetsListComponent {
     this._resetModalVariables();
     delete this._presetToClone._id;
     this._newPresetName =  this._presetToClone.name;
-    this._modalTitle = 'COMMON.MODAL.TITLE_CREATE';
+    this._modalTitle = 'Addition Board';
     this._isModalCloneAdd = true;
     this._modalOpen = true;
   }
 
   public onClickCloneAdd() {
     this._presetToClone.name = this._newPresetName;
-    this._createPreset(this._presetToClone, false, 'PRESETS.CLONED');
+    this._createPreset(this._presetToClone, false, 'The preset is cloned.');
   }
 
   get config(): Config {

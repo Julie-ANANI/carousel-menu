@@ -1,16 +1,16 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { EmailScenario } from '../../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../../models/email-template';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
-import {RolesFrontService} from "../../../../../../services/roles/roles-front.service";
-import {HttpErrorResponse} from "@angular/common/http";
-import {ErrorFrontService} from "../../../../../../services/error/error-front.service";
-import {isPlatformBrowser} from "@angular/common";
-import {Config} from "../../../../../../models/config";
-import {Response} from "../../../../../../models/response";
+import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import { isPlatformBrowser } from "@angular/common";
+import { Config } from "../../../../../../models/config";
+import { Response } from "../../../../../../models/response";
 
 @Component({
   templateUrl: 'admin-libraries-workflows.component.html',

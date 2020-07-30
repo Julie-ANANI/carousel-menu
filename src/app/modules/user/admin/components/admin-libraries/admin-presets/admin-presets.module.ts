@@ -10,9 +10,9 @@ import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-li
 import { SharedPresetModule } from '../../../../../shared/components/shared-preset/shared-preset.module';
 import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-project-questionnaire/admin-project-questionnaire.module';
 import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
-import { ErrorTemplate1Module } from '../../../../../utility/errors/error-template-1/error-template-1.module';
-import { MessageTemplate2Module } from '../../../../../utility/messages/message-template-2/message-template-2.module';
 import { TableModule } from '../../../../../table/table.module';
+import { MessageErrorModule } from "../../../../../utility/messages/message-error/message-error.module";
+import { MessageTemplateModule } from "../../../../../utility/messages/message-template/message-template.module";
 
 @NgModule({
   imports: [
@@ -22,10 +22,10 @@ import { TableModule } from '../../../../../table/table.module';
     AdminProjectQuestionnaireModule,
     SharedPresetModule,
     ModalModule,
-    ErrorTemplate1Module,
-    MessageTemplate2Module,
     TableModule,
-    FormsModule
+    FormsModule,
+    MessageErrorModule,
+    MessageTemplateModule
   ],
   declarations: [
     AdminPresetsEditComponent,
