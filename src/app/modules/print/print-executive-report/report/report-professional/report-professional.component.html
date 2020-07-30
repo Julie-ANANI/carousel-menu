@@ -25,7 +25,7 @@
             alt=" ">
           <div>
             <h4 *ngIf="pro.jobTitle">{{ pro.jobTitle }}</h4>
-            <h5 *ngIf="pro.company">{{ pro.company }}</h5>
+            <h5 *ngIf="pro.company && !anonymous">{{ pro.company }}</h5>
           </div>
         </div>
         <!-- /picto / jobTitle / company -->

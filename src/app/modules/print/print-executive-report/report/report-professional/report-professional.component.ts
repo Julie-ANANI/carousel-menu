@@ -27,9 +27,15 @@ export class ReportProfessionalComponent implements OnChanges {
 
   @Input() answers: Array<Answer> = [];
 
+  @Input() set anonymous(value: boolean) {
+    this._anonymous = !!value;
+  }
+
   private _pros: Array<{ company: string; jobTitle: string; country: string; }> = [];
 
   private _professional: ProfessionalColumn = <ProfessionalColumn>{};
+
+  private _anonymous = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _professionalsService: ProfessionalsService) { }
@@ -158,6 +164,10 @@ export class ReportProfessionalComponent implements OnChanges {
 
   get pros(): Array<{ company: string; jobTitle: string; country: string }> {
     return this._pros;
+  }
+
+  get anonymous(): boolean {
+    return this._anonymous;
   }
 
 }

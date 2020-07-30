@@ -25,6 +25,8 @@ export class PrintExecutiveReportComponent implements OnInit {
 
   private _userLang = this._translateService.currentLang;
 
+  private _anonymous = false;
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService) { }
 
@@ -36,6 +38,7 @@ export class PrintExecutiveReportComponent implements OnInit {
       this._initData();
     } else if (this._activatedRoute.snapshot.parent.data.innovation && this._activatedRoute.snapshot.parent.data.innovation.executiveReport) {
       this._data = <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
+      this._anonymous = this._data._metadata && this._data._metadata.campaign ? !!this._data._metadata.campaign.anonymous_answers : false;
       this._data.executiveReport.lang = InnovationFrontService.currentLangInnovationCard(<Innovation>this.data, this._userLang, 'LANG');
       this._data.executiveReport.operator = this._data.operator || <User>{};
       this._data.executiveReport.conclusion = this._data.marketReport && this._data.marketReport.finalConclusion
@@ -54,6 +57,7 @@ export class PrintExecutiveReportComponent implements OnInit {
   private _initData() {
     const innovation: Innovation = this._activatedRoute.snapshot.parent.data && this._activatedRoute.snapshot.parent.data.innovation
       && <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
+    this._anonymous = innovation._metadata && innovation._metadata.campaign ? !!innovation._metadata.campaign.anonymous_answers : false;
     this._title = InnovationFrontService.currentLangInnovationCard(innovation, this._userLang, 'TITLE');
     this._media = InnovationFrontService.principalMedia(innovation, this._userLang, '173', '110');
   }
@@ -105,6 +109,10 @@ export class PrintExecutiveReportComponent implements OnInit {
 
   get userLang(): string {
     return this._userLang;
+  }
+
+  get anonymous(): boolean {
+    return this._anonymous;
   }
 
 }

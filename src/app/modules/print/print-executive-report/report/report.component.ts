@@ -15,7 +15,11 @@ import { AnswerFrontService } from '../../../../services/answer/answer-front.ser
 
 export class ReportComponent implements OnChanges {
 
-  @Input() data: Innovation | ExecutiveReport = <Innovation | ExecutiveReport>{}
+  @Input() data: Innovation | ExecutiveReport = <Innovation | ExecutiveReport>{};
+
+  @Input() set anonymous(value: boolean) {
+    this._anonymous = !!value;
+  }
 
   private _firstPageSections = [0, 1, 2, 3];
 
@@ -26,6 +30,8 @@ export class ReportComponent implements OnChanges {
   private _totalSection = 8;
 
   private _report: OldExecutiveReport | ExecutiveReport = <OldExecutiveReport | ExecutiveReport>{};
+
+  private _anonymous = false;
 
   constructor (private _answerService: AnswerService) { }
 
@@ -97,6 +103,10 @@ export class ReportComponent implements OnChanges {
 
   get report(): OldExecutiveReport | ExecutiveReport {
     return this._report;
+  }
+
+  get anonymous(): boolean {
+    return this._anonymous;
   }
 
 }
