@@ -244,11 +244,11 @@ export class AuthService {
     return this._isOperator;
   }
 
-  get user () {
+  get user(): User {
     return this._user;
   }
 
-  get userId (): string {
+  get userId(): string {
     return this._user ? this._user.id : '';
   }
 

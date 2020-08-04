@@ -17,10 +17,11 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>QUIZ: 'View, Generate'. 
 
 4. CAMPAIGNS: Edit, Add, Update_Statistics, Delete, View.
+  
+ <br><br>EDIT: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments, Views'.
  
-5. SYNTHESIS: Filter, Views, 
-<br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments', 
-<br><br>EDIT: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments'.
+5. SYNTHESIS: 
+<br><br>EDIT: 'UMI_Word, Respondent_Profile, Views, Question_Tags'.
 
 6. STORYBOARD: Create, View, Generate_Video, Generate_Pdf, Change_Language, Make_Visible_To_Client, Edit, Autofill. 
 
@@ -61,17 +62,15 @@ No definition of a Role means no access to that user.
 1. SETTINGS:
 <br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
 
-2. SYNTHESIS: 
-<br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments'
+2. SYNTHESIS
 
 #### Commercial:
 
 1. SETTINGS:
 <br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
 
-2. SYNTHESIS: Filter, Views, 
-<br><br>VIEW: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments', 
-<br><br>EDIT: 'UMI_Word'.
+2. SYNTHESIS:
+<br><br>EDIT: 'UMI_Word, Views'.
 
 3. STORYBOARD: View.
 
@@ -132,27 +131,11 @@ access: {
             },
             synthesis: {
                 edit : {
-                    respondentComments: true,
-                    statistics: true,
                     respondentProfile: true,
-                    answersTags: true,
-                    profilesTags: true,
                     questionTags: true,
-                    prosTags: true,
-                    umiWord: true
-                },
-                view : {
-                    respondentComments: true,
-                    statistics: true,
-                    respondentProfile: true,
-                    answersTags: true,
-                    profilesTags: true,
-                    questionTags: true,
-                    prosTags: true,
-                    umiWord: true
-                },
-                filter: true,
-                views: true
+                    umiWord: true,
+                    views: true
+                }
             },
             campaigns: {
                 updateStatistics: true,

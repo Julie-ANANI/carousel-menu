@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
 import { SharedFilter } from '../../../shared/components/shared-market-report/models/shared-filter';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -16,6 +16,11 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
+import { isPlatformBrowser } from "@angular/common";
+import { Professional } from "../../../../models/professional";
+import { UserFrontService } from "../../../../services/user/user-front.service";
+
+type Template = 'MARKET_TYPE' | 'FOLLOW_UP';
 
 @Component({
   selector: 'app-sidebar-filter-answers',
@@ -27,8 +32,18 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   @Input() isViewsEditable = false;
 
+  @Input() isOwner = false;
+
+  @Input() isAdminSide = false;
+
+  @Input() questions: Array<Question> = [];
+
+  @Input() answers: Array<Answer> = [];
+
+  @Input() templateType: Template = 'MARKET_TYPE';
+
   @Input() set innovation(value: Innovation) {
-    if (value._id) {
+    if (value && value._id) {
       this._innovation = value;
       if (this._innovation.marketReport) {
         this._isKeyLearning = this._innovation.marketReport.keyLearning
@@ -41,28 +56,11 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     }
   }
 
-  @Input() answers: Array<Answer> = [];
-
-  @Input() isAdmin = false;
-
-  @Input() isOwner = false;
-
-  @Input() isAdminSide = false;
-
-  @Input() set templateType(value: string) {
-    this._templateType = value;
-  }
-
-  @Input() questions: Array<Question> = [];
-
   /***
    * this is to emit the event that will close the
    * sidebar.
    */
   @Output() closeSidebar: EventEmitter<void> = new EventEmitter<void>();
-
-  // 'MARKET_TYPE' | 'FOLLOW_UP'
-  private _templateType = 'MARKET_TYPE';
 
   private _isModalEnd = false;
 
@@ -99,7 +97,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _professionalsTags: Array<Tag> = [];
 
-  constructor(private _innovationService: InnovationService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _worldmapFilterService: WorldmapFiltersService,
               private _tagService: TagsFiltersService,
@@ -118,14 +117,16 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   }
 
   private _loadSharedFiltersList() {
-    this._innovationService.getFiltersList(this._innovation._id).pipe(first()).subscribe((results) => {
-      if (Array.isArray(results)) {
-        this._sharedFiltersList = results;
-      }
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      this._innovationService.getFiltersList(this._innovation._id).pipe(first()).subscribe((results) => {
+        if (Array.isArray(results)) {
+          this._sharedFiltersList = results;
+        }
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   private _initQuestions() {
@@ -137,7 +138,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
       if (!this._seeMore[question.identifier]) {
         this._seeMore[question.identifier] = false;
       }
-      if (this._templateType === 'MARKET_TYPE' || question.controlType === 'checkbox' ||
+      if (this.templateType === 'MARKET_TYPE' || question.controlType === 'checkbox' ||
         question.controlType === 'radio' || this.answersTagsLists[question.identifier] &&
         this.answersTagsLists[question.identifier].length) {
         this._displayedQuestions.push(question);
@@ -208,7 +209,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         console.error(err);
       });
     } else {
-      this._translateNotificationsService.error('ERROR.ERROR', 'SIDEBAR_MARKET_REPORT.ERRORS.VIEW_ALREADY_EXIST');
+      this._translateNotificationsService.error('ERROR.ERROR',
+        'SIDEBAR_MARKET_REPORT.ERRORS.VIEW_ALREADY_EXIST');
     }
   }
 
@@ -219,7 +221,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     if (this._filterService.filters[question.identifier]) {
       filterValue = this._filterService.filters[question.identifier].value;
     } else {
-      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
+      filterValue = question.options.reduce((acc, opt) =>
+      { acc[opt.identifier] = true; return acc; }, {} as any);
     }
     filterValue[(event.target as HTMLInputElement).name] = checked;
     const removeFilter = checked && Object.keys(filterValue).every((k) => filterValue[k] === true);
@@ -262,7 +265,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
    */
   public onClickEndInnovationConfirm(event: Event) {
     event.preventDefault();
-    if (this.isAdmin && this.isAdminSide) {
+    if (this.isAdminSide) {
       this._innovationService.save(this._innovation._id, {status: 'DONE'}).pipe(first())
         .subscribe(() => {
           this._isModalEnd = false;
@@ -319,7 +322,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   public checkCountry(event: Event) {
     event.preventDefault();
-    this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
+    this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name,
+      (event.target as HTMLInputElement).checked);
   }
 
   public checkTag(event: Event, tagId: string) {
@@ -329,7 +333,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   public checkAnswerTag(event: Event, questionIdentifier: string) {
     event.preventDefault();
-    this._tagService.checkAnswerTag(questionIdentifier, (event.target as HTMLInputElement).name, (event.target as HTMLInputElement).checked);
+    this._tagService.checkAnswerTag(questionIdentifier, (event.target as HTMLInputElement).name,
+      (event.target as HTMLInputElement).checked);
   }
 
   public filterEverything(isChecked: boolean, filterArray: Array<any>, typeFilter: string) {
@@ -358,7 +363,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         if (isChecked) {
           this._filterService.deleteFilter(question.identifier);
         } else {
-          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = isChecked; return acc; }, {} as any);
+          const filterValue = question.options.reduce((acc, opt) =>
+          { acc[opt.identifier] = isChecked; return acc; }, {} as any );
           this._filterService.addFilter({
             status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
             questionId: question.identifier,
@@ -369,8 +375,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     }
   }
 
-  get templateType(): string {
-    return this._templateType;
+  public professionalName(value: Professional): string {
+    return UserFrontService.fullName(value);
   }
 
   get innovation(): Innovation {

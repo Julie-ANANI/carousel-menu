@@ -69,6 +69,17 @@
     border-radius: 25px;
   }
 
+  &.is-tag {
+    @include label-variant($text-white-color, $bg-draft-color);
+    padding: 6px 12px;
+    font-size: 12px;
+
+    i {
+      font-size: 10px;
+    }
+
+  }
+
   &.is-sm {
     font-size: 10px;
     padding: $unit-1 $unit-2;

@@ -1,6 +1,7 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#professional-comment-component {
+#professional-comment {
+  display: flex;
   align-items: center;
   font-size: $font-size-sm;
   height: 100%;
@@ -15,11 +16,12 @@
 
   .hr {
     height: 80%;
-    margin-left: 1.25rem;
-    margin-right: 1.25rem;
+    margin-left: 20px;
+    margin-right: 20px;
   }
 
   .comment-wrapper {
+    text-align: center;
     max-height: 145px;
     overflow-y: auto;
   }
@@ -28,11 +30,11 @@
 
 @media (max-width: $size-md) {
 
-  #professional-comment-component {
+  #professional-comment {
     flex-direction: column;
 
     .hr {
-      margin: 1.25rem 0 !important;
+      margin: 20px 0 !important;
       width: 90%;
       height: $unit-o !important;
     }

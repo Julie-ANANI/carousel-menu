@@ -82,6 +82,10 @@
   justify-content: space-around !important;
 }
 
+.justify-between {
+  justify-content: space-between !important;
+}
+
 .align-center {
   align-items: center !important;
 }
@@ -104,6 +108,10 @@
 
 .flex-d-column {
   flex-direction: column;
+}
+
+.flex-full {
+  flex: 1;
 }
 
 .centered {

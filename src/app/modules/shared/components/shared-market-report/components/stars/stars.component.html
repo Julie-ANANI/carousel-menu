@@ -1,22 +1,22 @@
-<ng-container *ngIf="notesData && notesData.length > 0">
-  <section id="star-component">
-    <div *ngFor="let note of notesData" class="data-wrapper">
+<div *ngIf="notesData.length > 0" id="star">
+  <div *ngFor="let note of notesData" class="p-top-25 text-lg">
 
-      <div class="flex-between text-medium star-label-wrapper">
-        <span class="text-background">{{ note.label | multiling:lang }}</span>
-        <span class="text-notify">{{ 'MARKET_REPORT.GRADE' | translate }}: {{ note.percentage }}</span>
-      </div>
-
-      <ng-container *ngIf="note.sum">
-        <div class="bar">
-          <div class="bar-item tooltip" [attr.data-tooltip]="note.sum" [ngStyle]="{ 'width': note.percentage, 'background': '#2ECC71' }"></div>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="!note.sum">
-        <div><span class="text-notify">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span></div>
-      </ng-container>
-
+    <div class="flex-between text-medium m-bottom-10">
+      <span class="text-background">{{ note.label | multiling:currentLang }}</span>
+      <span class="text-notify text-md">{{ 'MARKET_REPORT.GRADE' | translate }}: {{ note.percentage }}</span>
     </div>
-  </section>
-</ng-container>
+
+    <div *ngIf="note.sum; else noteText" [ngStyle]="{'height': '12px'}" class="bar">
+      <div
+        [attr.data-tooltip]="note.sum"
+        [ngStyle]="{ 'width': note.percentage, 'background': '#2ECC71' }"
+        class="bar-item tooltip">
+      </div>
+    </div>
+
+    <ng-template #noteText>
+      <div class="text-notify text-sm">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</div>
+    </ng-template>
+
+  </div>
+</div>

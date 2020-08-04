@@ -132,27 +132,11 @@ access: {
                 },
                 synthesis: {
                     edit : {
-                        respondentComments: true,
-                        statistics: true,
                         respondentProfile: true,
-                        answersTags: true,
-                        profilesTags: true,
                         questionTags: true,
-                        prosTags: true,
-                        umiWord: true
-                    },
-                    view : {
-                        respondentComments: true,
-                        statistics: true,
-                        respondentProfile: true,
-                        answersTags: true,
-                        profilesTags: true,
-                        questionTags: true,
-                        prosTags: true,
-                        umiWord: true
-                    },
-                    filter: true,
-                    views: true
+                        umiWord: true,
+                        views: true
+                    }
                 },
                 campaigns: {
                     updateStatistics: true,

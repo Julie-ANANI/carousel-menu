@@ -1,6 +1,8 @@
-<section id="bluesquare-component">
-  <h4>{{ numberFocus || 0 }}</h4>
-  <span class="text-medium" [ngStyle]="{ 'display': subtitle !== '' ? 'block' : 'none' }">{{ subtitle }}</span>
-</section>
+<div id="bluesquare">
+  <div [ngStyle]="{'font-size': '100px'}">{{ numberFocus || 0 }}</div>
+  <div [ngStyle]="{ 'display': subtitle !== '' ? 'block' : 'none' }" class="text-medium text-sm">
+    {{ subtitle }}
+  </div>
+</div>
 
 

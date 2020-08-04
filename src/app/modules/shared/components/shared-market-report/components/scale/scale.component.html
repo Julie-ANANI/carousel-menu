@@ -1,15 +1,12 @@
-<section id="scale-component">
+<div class="p-top-25" id="scale">
   <div class="bar-scale">
     <div *ngFor="let bar of bars" class="bar-item is-number-{{ bar }}">
-
       <ng-container *ngIf="barsData[bar]">
-        <div class="bar-fill" [style.height]="barsData[bar].percentage"></div>
+        <div class="bar-fill" [style.height]="barsData[bar]['percentage']"></div>
         <div class="bar-stat">{{ barsData[bar].count }}</div>
         <div class="bar-picture"></div>
       </ng-container>
-
       <div class="bar-score">{{ bar }}</div>
-
     </div>
   </div>
-</section>
+</div>

@@ -1,134 +1,14 @@
 @import "../../../../../style/framework/src/variables";
-@import "../../../../../style/framework/src/mixins";
 
-#market-report {
-
-  .title-primary {
-    font-size: 1.35rem;
-  }
-
-  .bg-white {
-    background-color: $bg-white-color;
-    border-radius: $border-radius;
-  }
-
-  .text {
-    font-size: 0.75rem;
-  }
-
-  .full-width {
-    width: 100%;
-  }
-
-  .origin-wrapper {
-    border-radius: $border-radius;
-  }
-
-  #professionals {
-
-    .btn {
-
-      i {
-        font-size: $font-size-lg;
-      }
-
-    }
-
-    .professional-wrapper {
-      @include control-transition();
-      height: 100%;
-
-      .card-wrapper {
-        flex-wrap: wrap;
-        margin-right: -$unit-5;
-        margin-bottom: -$unit-5;
-
-        .card {
-          padding: 0.5rem;
-
-          .icon-container {
-            top: 4px;
-            left: 10px;
-            visibility: hidden;
-          }
-
-          .card-body {
-            padding: 0;
-            width: 100%;
-            height: 100%;
-          }
-
-          &.is-card-3 {
-            margin-bottom: $unit-5;
-          }
-
-          &:hover {
-            box-shadow: $box-shadow-7;
-
-            .icon-container {
-              visibility: visible;
-            }
-
-          }
-
-        }
-
-      }
-
-      &.collapse-wrapper {
-        height: 0;
-        transform: scaleY(0);
-        visibility: hidden;
-        transform-origin: 100% 0;
-      }
-
-      &.expand-wrapper {
-        height: 100%;
-        transform: scaleY(1);
-        visibility: visible;
-        transform-origin: 0 100%;
-      }
-
-    }
-
-  }
-
-  .conclusion-wrapper, .key-learning-wrapper {
-    border-radius: $border-radius;
-
-    .op-text {
-      color: $text-draft-color;
-      font-size: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-  }
-
-}
-
-.bsf-wrapper {
+.save-wrapper {
   position: fixed;
   right: 25px;
   bottom: 30px;
   z-index: 1;
 
   .button {
-    min-width: 80px;
+    min-width: 100px;
     box-shadow: $box-shadow-button-hover;
-  }
-
-}
-
-@media (min-width: $size-sm) {
-
-  .filter-wrapper {
-    top: 0;
-    position: sticky;
-    height: 100vh;
-    background-color: $bg-white-color;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border-right: $border-width solid $border-default-color;
   }
 
 }

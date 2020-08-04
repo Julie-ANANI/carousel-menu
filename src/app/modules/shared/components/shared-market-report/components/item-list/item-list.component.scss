@@ -1,25 +1,16 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#item-list-component {
-  flex-wrap: wrap;
+#item-list {
+  display: flex;
   justify-content: space-between;
-  margin-bottom: -$unit-5;
-  font-size: 0.75rem;
+  font-size: 15px;
 
   .card {
-    margin-bottom: $unit-5;
-    min-height: 6rem;
-    flex: 0 1 calc(32% - 1rem);
+    min-height: 120px;
+    flex: 0 1 calc(32% - 20px);
 
     .card-body {
-      padding: 0.5rem;
       flex-direction: column;
-      height: 100%;
-      width: 100%;
-
-      .label {
-        margin-bottom: $unit-2;
-      }
 
       img {
         width: 50px;
@@ -39,7 +30,6 @@
     }
 
     &:hover {
-      box-shadow: $box-shadow-6;
 
       .popup-wrapper {
         visibility: visible !important;
@@ -54,7 +44,7 @@
 
 @media (max-width: $size-sm) {
 
-  #item-list-component {
+  #item-list {
     flex-direction: column;
 
     .card {

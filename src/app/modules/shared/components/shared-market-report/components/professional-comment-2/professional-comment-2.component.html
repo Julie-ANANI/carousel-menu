@@ -1,52 +1,61 @@
-<section id="professional-comment-2-component">
+<div id="professional-comment-2">
 
-  <div class="flex-start">
+  <div class="flex-start flex-wrap">
 
-  <!-- name -->
-  <p *ngIf="!answer.professional?.firstName" class="text-medium">
-    <span class="text-link" (click)="seeAnswer(answer)">
-        {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
-      </span>
-  </p>
-
-  <p *ngIf="answer.professional?.firstName">
+    <!-- name -->
+    <p class="text-medium m-right-20">
       <span class="text-link" (click)="seeAnswer(answer)">
-        {{ answer?.professional?.firstName | FormatText }} {{ answer?.professional?.lastName }}
+        <ng-container *ngIf="!(answer.professional && answer.professional.firstName); else profName">
+          {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
+        </ng-container>
+        <ng-template #profName>
+          {{ professionalName | FormatText }}
+        </ng-template>
       </span>
-  </p>
-  <!-- /name -->
+    </p>
+    <!-- /name -->
 
-  <!-- tag button -->
-  <ng-container *ngIf="answerTags.length > 0 || canEditTags">
-    <div class="pad-top">
+    <!-- tag button -->
+    <div *ngIf="answerTags.length > 0 || canEditQuestionTags" [ngStyle]="{'margin': '-2px'}" class="m-bottom-2">
       <app-shared-tag
-        [tags]="answerTags"
-        [editMode]="canEditTags"
-        [projectId]="answer.innovation"
         (addTag)="addTag($event)"
         (createTag)="createTag($event)"
-        (removeTag)="removeTag($event)">
+        (removeTag)="removeTag($event)"
+        [editMode]="canEditQuestionTags"
+        [isSmall]="true"
+        [projectId]="answer.innovation"
+        [tags]="answerTags">
       </app-shared-tag>
     </div>
-  </ng-container>
-  <!-- /tag button -->
+    <!-- /tag button -->
 
   </div>
 
-  <div class="detail-wrapper d-flex text-notify text-medium">
+  <div class="d-flex text-notify text-medium p-top-1">
 
-    <div class="flag-wrapper">
-      <app-utility-country-flag [country]="answer.country" [width]="23" [height]="16"></app-utility-country-flag>
+    <div class="m-bottom-2 m-right-15 m-top-h">
+      <app-utility-country-flag
+        [country]="answer.country"
+        [width]="23"
+        [height]="16">
+      </app-utility-country-flag>
     </div>
 
     <p *ngIf="answer.job || answer.professional?.jobTitle || answer.company?.name || answer.professional?.company">
-      <ng-container *ngIf="answer.job || answer.professional?.jobTitle">{{ answer.job || answer.professional?.jobTitle }}</ng-container>
-      <ng-container *ngIf="(answer.job || answer.professional?.jobTitle) && (answer.company?.name || answer.professional?.company)">-</ng-container>
-      <ng-container *ngIf="answer.company?.name || answer.professional?.company">{{ answer.company?.name || answer.professional?.company }}</ng-container>
+      <ng-container *ngIf="answer.job || answer.professional?.jobTitle">
+        {{ answer.job || answer.professional?.jobTitle }}
+      </ng-container>
+      <ng-container *ngIf="(answer.job || answer.professional?.jobTitle)
+      && (answer.company?.name || answer.professional?.company)">
+        -
+      </ng-container>
+      <ng-container *ngIf="answer.company?.name || answer.professional?.company">
+        {{ answer.company?.name || answer.professional?.company }}
+      </ng-container>
     </p>
 
   </div>
 
-  <p *ngIf="answer.answers[questionId]?.length > 0" class="text">{{ answer.answers[questionId] }}</p>
+  <p *ngIf="answer.answers[questionId]?.length > 0" class="text-15 m-no p-top-h">{{ answer.answers[questionId] }}</p>
 
-</section>
+</div>

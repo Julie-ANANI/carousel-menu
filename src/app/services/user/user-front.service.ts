@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user.model';
+import { Professional } from "../../models/professional";
 
 @Injectable({ providedIn: 'root' })
 export class UserFrontService {
@@ -8,10 +9,10 @@ export class UserFrontService {
    * this function is to return the user full name.
    * @param user
    */
-  public static fullName(user: User): string {
+  public static fullName(user: User | Professional): string {
     if (user) {
-      if (user.name) {
-        return user.name;
+      if (typeof User && (<User>user).name) {
+        return (<User>user).name;
       } else if (user.firstName && user.lastName) {
         return `${user.firstName} ${user.lastName}`;
       } else if (user.firstName) {

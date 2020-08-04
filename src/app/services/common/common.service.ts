@@ -16,7 +16,6 @@ export class CommonService {
    */
   public static getLimitColor(textLength: number, limit: number): string {
     const _length = limit - textLength;
-
     if (_length <= 0) {
       return '#EA5858';
     } else if (_length > 0 && _length < (limit / 2)) {
@@ -24,7 +23,6 @@ export class CommonService {
     } else {
       return '#2ECC71';
     }
-
   }
 
   /*
