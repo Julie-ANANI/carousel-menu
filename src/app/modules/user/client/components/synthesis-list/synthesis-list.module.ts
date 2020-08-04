@@ -5,14 +5,14 @@ import { RouterModule } from '@angular/router';
 
 import { SynthesisListComponent } from './synthesis-list.component';
 
-import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
     RouterModule,
-    MessageTemplate1Module
+    MessageTemplateModule
   ],
   declarations: [
     SynthesisListComponent

@@ -1,7 +1,8 @@
-<ng-container *ngIf="campaign">
-  <section id="admin-campaign-search-component">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <app-shared-search-pros [campaign]="campaign"></app-shared-search-pros>
-    </div>
-  </section>
-</ng-container>
+<div *ngIf="canAccess()" class="container fluid grid-2xl p-top-30 p-bottom-30 animate-fade is-5">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+    <app-shared-search-pros
+      [campaign]="campaign"
+      [accessPath]="accessPath">
+    </app-shared-search-pros>
+  </div>
+</div>

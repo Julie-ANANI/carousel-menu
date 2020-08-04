@@ -1,77 +1,48 @@
-<div *ngIf="innovation" id="admin-project-questionnaire">
-  <div class="column col-xs-12 col-11 col-mx-auto">
+<div *ngIf="canAccess()" class="container fluid grid-2xl animate-fade is-5" id="admin-project-questionnaire">
+  <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
     <!-- section actions -->
-    <section class="flex-between apq-toggle-wrapper">
+    <section *ngIf="canAccess(['import']) || canAccess(['quiz', 'generate'])" class="text-right p-bottom-10">
 
-      <div class="buttons m-top-25 m-right-10">
-        <!-- import preset -->
-        <button
-          (click)="openPresetSelection($event)"
-          [innerText]="'PROJECT.PRESET.IMPORT'"
-          class="button is-secondary is-outlined"
-          translate>
-        </button>
-        <!-- /import preset -->
+      <!-- import preset -->
+      <button
+        (click)="openPresetSelection($event)"
+        *ngIf="canAccess(['import'])"
+        class="button is-info is-sm m-right-25 is-outlined m-bottom-20"
+        id="btn-import-preset"
+        type="button">
+        Import preset
+      </button>
+      <!-- /import preset -->
 
-        <!-- generate quiz -->
-        <button
-          *ngIf="innovation.preset"
-          (click)="generateQuiz($event)"
-          [innerText]="'PROJECT.PRESET.GENERATE_QUIZ'"
-          class="button is-primary is-outlined"
-          translate>
-        </button>
-        <!-- /generate quiz -->
-      </div>
-
-      <!-- edit & hide preset
-      <div class="d-flex flex-wrap m-top-25">
-
-        edit toggle
-        <div class="form-group">
-          <label class="form-switch">
-            <input
-              (change)="saveInnovation()"
-              [(ngModel)]="innovation.preset.accessibility.editable"
-              id="presetModify"
-              name="presetModify"
-              type="checkbox">
-            <i class="form-icon"></i>{{ 'PROJECT.PRESET.CAN_EDIT' | translate }}
-          </label>
-        </div>
-
-         hide toggle
-        <div class="form-group">
-          <label class="form-switch">
-            <input
-              (change)="saveInnovation()"
-              [(ngModel)]="innovation.preset.accessibility.hidden"
-              id="presetHide"
-              name="presetHide"
-              type="checkbox">
-            <i class="form-icon"></i>{{ 'PROJECT.PRESET.HIDE' | translate }}
-          </label>
-        </div>
-
-      </div>
-       /edit & hide preset -->
+      <!-- generate quiz -->
+      <button
+        (click)="generateQuiz($event)"
+        *ngIf="innovation.preset && canAccess(['quiz', 'generate'])"
+        class="button is-primary is-sm m-bottom-20"
+        id="btn-generate-quiz"
+        type="button">
+        Generate quiz
+      </button>
+      <!-- /generate quiz -->
 
     </section>
     <!-- /section actions -->
 
     <!-- section quiz link -->
-    <section *ngIf="quizLink" class="m-top-25">
-      <span [innerText]="'PROJECT.PRESET.QUIZ_URL'" class="text-md m-right-2" translate></span>
-      <a [href]="quizLink" [innerText]="quizLink" class="text-link text-md" target="_blank"></a>
+    <section *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30">
+      <span class="text-md m-right-2" translate>URL to access the quiz:</span>
+      <a [href]="quizLink" class="text-link text-md" target="_blank">
+        {{ quizLink }}
+      </a>
     </section>
     <!-- /section quiz link -->
 
     <!-- section to add preset -->
-    <section class="m-top-25">
+    <section *ngIf="canAccess(['view']) || canAccess(['edit'])">
       <app-shared-preset
-        [preset]="innovation.preset"
-        (save)="savePreset($event)">
+        (save)="updatePreset($event)"
+        [preset]="innovation.preset">
       </app-shared-preset>
     </section>
     <!-- /section to add preset -->
@@ -81,7 +52,10 @@
 
 
 <!-- modal -->
-<app-utility-modal [(showModal)]="showPresetModal" [title]="'COMMON.MODAL.TITLE_IMPORT'">
+<app-utility-modal
+  *ngIf="canAccess(['import'])"
+  [(showModal)]="showPresetModal"
+  [title]="'Import Board'">
 
   <section class="modal-body" [ngStyle]="{ 'height': '250px' }">
 
@@ -102,8 +76,10 @@
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button [disabled]="!chosenPreset" (click)="importPreset($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
+    <button [disabled]="!chosenPreset" (click)="importPreset($event)" class="button is-primary">
+      Confirm
+    </button>
   </footer>
 
 </app-utility-modal>

@@ -1,30 +1,30 @@
-<section class="pie-chart">
+<div *ngIf="isBrowser" class="text-sm text-medium" id="piechart">
 
-  <p *ngIf="showFavorable" class="percentage">
-    {{ pieChart?.percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}
+  <p *ngIf="showFavorable && pieChart && pieChart.percentage" class="m-bottom-15">
+    {{ pieChart.percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}
   </p>
 
-  <ng-container *ngIf="isBrowser && pieChart">
-    <canvas
-      class="chart chart-pie"
-      baseChart
-      [chartType]="'pie'"
-      [datasets]="datasets"
-      [legend]="false"
-      [colors]="colors"
-      [labels]="pieChart.labels | multiling:lang">
-    </canvas>
-  </ng-container>
+  <canvas
+    *ngIf="pieChart"
+    [chartType]="'pie'"
+    [colors]="colors"
+    [datasets]="datasets"
+    [labels]="pieChart.labels | multiling:lang"
+    [legend]="false"
+    [options]="options"
+    baseChart>
+  </canvas>
 
-  <ng-container *ngIf="pieChart">
-    <ul class="pie-data-wrapper flex-centered">
-      <li *ngFor="let label of (pieChart.labels | multiling:lang); let i = index">
-        <span class="shape is-circle is-xs" [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }"></span>
-        <span class="response">{{ pieChart.data[i] }}</span>
-        <span class="text-label">{{ label }}</span>
-        <span>({{ pieChart.labelPercentage[i] }})</span>
-      </li>
-    </ul>
-  </ng-container>
+  <ul *ngIf="pieChart" class="pie-data-wrapper animate-fade is-5">
+    <li *ngFor="let label of (pieChart.labels | multiling:lang); let i = index">
+      <span
+        class="shape is-circle is-xs m-right-1"
+        [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }">
+      </span>
+      <span class="m-right-1">{{ pieChart.data[i] }}</span>
+      <span class="m-right-1">{{ label }}</span>
+      ({{ pieChart.labelPercentage[i] }})
+    </li>
+  </ul>
 
-</section>
+</div>

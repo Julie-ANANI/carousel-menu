@@ -5,6 +5,7 @@ import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interf
 import { EmailSignature } from '../../../../../models/email-signature';
 import { Config } from '../../../../../models/config';
 import { Column } from '../../../../table/models/column';
+import {Table} from "../../../../table/models/table";
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -14,6 +15,10 @@ import { Column } from '../../../../table/models/column';
 
 export class AdminEditWorkflowComponent {
 
+  @Input() isEditable = false;
+
+  @Input() isDeletable = false;
+
   @Input() set scenario(value: EmailScenario) {
     this._campaignScenario = value;
     this._inCampaign = this._campaignScenario.emails[0] && this._campaignScenario.emails[0].modified != undefined;
@@ -21,9 +26,7 @@ export class AdminEditWorkflowComponent {
     this._initTable();
   };
 
-  @Input() isDeletable: boolean = true;
-
-  @Input() defaultScenario: string = null;
+  @Input() defaultScenario = '';
 
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
@@ -36,13 +39,13 @@ export class AdminEditWorkflowComponent {
 
   @Output() deletedScenario = new EventEmitter<EmailScenario>();
 
-  private _modalDelete: boolean;
+  private _modalDelete = false;
 
-  private _isModifiedEn: boolean = false;
+  private _isModifiedEn = false;
 
-  private _isModifiedFr: boolean = false;
+  private _isModifiedFr = false;
 
-  private _inCampaign: boolean = false;
+  private _inCampaign = false;
 
   private _language = 'en';
 
@@ -50,17 +53,17 @@ export class AdminEditWorkflowComponent {
 
   private _emails: Array<any> = [];
 
-  private _total: number = 0;
+  private _total = 0;
 
   private _emailToEdit: any;
 
-  private _more: SidebarInterface = {};
+  private _sidebar: SidebarInterface = <SidebarInterface>{};
 
-  private _tableInfos: any;
+  private _tableInfos: Table = <Table>{};
 
-  private _campaignScenario: EmailScenario;
+  private _campaignScenario: EmailScenario = <EmailScenario>{};
 
-  private _config: Config = {
+  private _localConfig: Config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -69,7 +72,6 @@ export class AdminEditWorkflowComponent {
   };
 
   constructor() { }
-
 
   private _initTable() {
     const steps: any = {
@@ -89,13 +91,14 @@ export class AdminEditWorkflowComponent {
 
     this._total = this._campaignScenario.emails.length;
 
-    const columns: Array<Column> = [{_attrs: ['num', `${this._language}.subject`], _name: 'TABLE.HEADING.EMAILS', _type: 'TEXT', _choices: null},
-      {_attrs: [`${this._language}.defaultSignatureName`], _name: 'TABLE.HEADING.SIGNATURES', _type: 'TEXT', _choices: null}];
+    const columns: Array<Column> = [
+      {_attrs: ['num', `${this._language}.subject`], _name: 'Emails', _type: 'TEXT', _choices: null},
+      {_attrs: [`${this._language}.defaultSignatureName`], _name: 'Signatures', _type: 'TEXT', _choices: null}];
 
     if (this._inCampaign) {
-      columns.push({_attrs: [`${this._language}.status`], _name: 'TABLE.HEADING.STATUS', _type: 'MULTI-CHOICES', _choices: [
-          {_name: 'false', _alias: 'TABLE.STATUS.TO_MODIFY', _class: 'label is-draft'},
-          {_name: 'true', _alias: 'TABLE.STATUS.MODIFIED', _class: 'label is-success'},
+      columns.push({_attrs: [`${this._language}.status`], _name: 'Status', _type: 'MULTI-CHOICES', _choices: [
+          {_name: 'false', _alias: 'To modify', _class: 'label is-draft'},
+          {_name: 'true', _alias: 'Modified', _class: 'label is-success'},
         ]});
     }
 
@@ -103,7 +106,6 @@ export class AdminEditWorkflowComponent {
       _selector: 'admin-scenario',
       _content: this._emails,
       _total: this._total,
-      _isEditable: true,
       _clickIndex: 1,
       _isNoMinHeight: true,
       _columns: columns
@@ -111,18 +113,14 @@ export class AdminEditWorkflowComponent {
 
   }
 
-
   public editEmail(email: any) {
     this._emailToEdit = email;
-
-    this._more = {
+    this._sidebar = {
       size: '726px',
       animate_state: 'active',
-      title: 'SIDEBAR.TITLE.EDIT_WORKFLOW'
+      title: this.isEditable ? 'Edit Workflow' : 'Workflow'
     };
-
   }
-
 
   public updateEmail(emailsObject: any) {
     this._setModified();
@@ -139,41 +137,38 @@ export class AdminEditWorkflowComponent {
     this.scenarioChange.emit(this._campaignScenario);
   }
 
-
   public deleteScenario() {
-    if (this.isDeletable) {
-      this.deletedScenario.emit(this._campaignScenario);
-      this._modalDelete = false;
-    }
+    this.deletedScenario.emit(this._campaignScenario);
+    this._modalDelete = false;
   }
 
   public setDefaultScenario() {
     this.defaultScenario = this._campaignScenario.name;
     this.defaultScenarioChange.emit(this.defaultScenario);
   }
-
-
+  
   public changeLanguage(value: string) {
     this._language = value;
     this._initTable();
   }
 
-
   private _setModified() {
     this._isModifiedEn = this._isModified('en');
     this._isModifiedFr = this._isModified('fr');
   }
-
-
+  
   private _isModified(language: string) {
     return this._campaignScenario.emails.reduce((acc, current) => {
       return (acc && (current.language != language || current.modified));
     }, true);
   }
-
-
-  onClickDelete() {
+  
+  public onClickDelete() {
     this._modalDelete = true;
+  }
+
+  public getId(): string {
+    return `${this._language}_${this._campaignScenario.name.replace(/\s/ig, '_').toLowerCase()}`;
   }
 
   get tableInfos(): any {
@@ -188,16 +183,12 @@ export class AdminEditWorkflowComponent {
     return this._emailToEdit;
   }
 
-  set more(value: SidebarInterface) {
-    this._more = value;
+  set sidebar(value: SidebarInterface) {
+    this._sidebar = value;
   }
 
-  get more(): SidebarInterface {
-    return this._more;
-  }
-
-  set emailToEdit(value: any) {
-    this._emailToEdit = value;
+  get sidebar(): SidebarInterface {
+    return this._sidebar;
   }
 
   get modalDelete(): boolean {
@@ -228,16 +219,12 @@ export class AdminEditWorkflowComponent {
     return this._campaignScenario;
   }
 
-  public getId(): string {
-    return `${this._language}_${this._campaignScenario.name.replace(/\s/ig, '_').toLowerCase()}`;
+  get localConfig(): Config {
+    return this._localConfig;
   }
 
-  get config(): Config {
-    return this._config;
-  }
-
-  set config(value: Config) {
-    this._config = value;
+  set localConfig(value: Config) {
+    this._localConfig = value;
   }
 
 }

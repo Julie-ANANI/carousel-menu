@@ -1,0 +1,123 @@
+<div *ngIf="canAccess()" class="container grid-2xl fluid animate-fade is-5" id="admin-libraries-workflows">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- loading -->
+    <section *ngIf="isLoading && !fetchingError" class="p-top-50 p-bottom-30">
+      <message-template [widthMax]="'320px'" [isFetching]="true"></message-template>
+    </section>
+    <!-- /loading -->
+
+    <!-- error message while fetching -->
+    <section *ngIf="!isLoading && fetchingError">
+      <app-utility-message-error></app-utility-message-error>
+    </section>
+    <!-- /error message while fetching -->
+
+    <!-- no fetching error -->
+    <div *ngIf="!fetchingError && !isLoading" class="p-bottom-30">
+
+      <!-- add button -->
+      <section *ngIf="canAccess(['add'])" class="text-right p-top-30 m-bottom-30">
+        <button
+          (click)="onClickAdd()"
+          [disabled]="isAdding"
+          class="button is-primary is-sm"
+          type="button">
+          <ng-container *ngIf="isAdding; else textAdd">
+            adding the workflow...
+          </ng-container>
+          <ng-template #textAdd>
+            Add workflow
+          </ng-template>
+        </button>
+      </section>
+      <!-- /add button -->
+
+      <!-- no workflows -->
+      <section *ngIf="scenarios.length === 0" class="p-top-50">
+        <message-template [widthMax]="'354px'">
+          Don't have any workflows?
+          <span *ngIf="canAccess(['add'])">
+            <br>
+            Try to add a one by clicking on "Add" button.
+          </span>
+        </message-template>
+      </section>
+      <!-- no workflows -->
+
+      <!-- workflows -->
+      <div *ngIf="scenarios.length > 0">
+        <section *ngFor="let scenario of scenarios" class="p-top-30">
+          <app-admin-edit-workflow
+            (deletedScenario)="deleteScenario($event)"
+            (scenarioChange)="updateScenario($event)"
+            [isDeletable]="canAccess(['delete'])"
+            [isEditable]="canAccess(['edit'])"
+            [scenario]="scenario"
+            [signatures]="signatures">
+          </app-admin-edit-workflow>
+        </section>
+      </div>
+      <!-- /workflows -->
+
+    </div>
+    <!-- /no fetching error -->
+
+  </div>
+</div>
+
+
+<!-- modal to add the new workflow -->
+<app-utility-modal *ngIf="canAccess(['add'])" [(showModal)]="modalAdd" [title]="'Addition Board'">
+
+  <section class="modal-body">
+
+    <div class="form-group m-bottom-15">
+      <label class="form-label" for="add-workflow">Workflow Name</label>
+      <input
+        [(ngModel)]="newScenarioName"
+        class="form-input is-shadowed"
+        id="add-workflow"
+        name="scenarioName"
+        placeholder="Enter the workflow name"
+        type="text">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="add-workflow-signature">Workflow Default Signature</label>
+      <select
+        class="form-select is-shadowed"
+        id="add-workflow-signature"
+        [ngModel]="scenarioSignature.name"
+        (ngModelChange)="changeScenarioSignature($event)"
+        [ngModelOptions]="{standalone: true}">
+        <option [ngValue]="undefined" selected>Select one signature</option>
+        <option *ngFor="let signature of signatures" [ngValue]="signature">
+          {{ signature.name }}
+        </option>
+      </select>
+    </div>
+
+  </section>
+
+  <footer class="modal-footer">
+
+    <button [disabled]="isAdding" class="button modal-cancel" type="button">Cancel</button>
+
+    <button
+      (click)="onClickConfirm()"
+      [disabled]="!newScenarioName || isAdding"
+      class="button is-primary"
+      type="button">
+      <ng-container *ngIf="isAdding; else textAdd">
+        adding the workflow...
+      </ng-container>
+      <ng-template #textAdd>
+        Confirm
+      </ng-template>
+    </button>
+
+  </footer>
+
+</app-utility-modal>
+<!-- /modal to add the new workflow -->

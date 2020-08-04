@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
@@ -15,159 +15,270 @@ import { CampaignService } from '../../../../services/campaign/campaign.service'
 import { GeographySettings } from '../../../../models/innov-settings';
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { IndexService } from '../../../../services/index/index.service';
+import { HttpErrorResponse } from "@angular/common/http";
+import { isPlatformBrowser } from "@angular/common";
+import { RolesFrontService } from "../../../../services/roles/roles-front.service";
+import { ErrorFrontService } from "../../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-shared-search-history',
   templateUrl: './shared-search-history.component.html',
   styleUrls: ['./shared-search-history.component.scss']
 })
+
 export class SharedSearchHistoryComponent implements OnInit {
 
-  @Input() campaignId: string;
-  @Input() status: string;
-  @Input() mails: boolean;
+  @Input() accessPath: Array<string> = [];
 
+  @Input() campaignId = '';
+
+  @Input() status = '';
+
+  @Input() mails = false;
 
   private _sidebarValue: SidebarInterface = {};
+
   private _tableInfos: Table;
+
   private _selectedRequest: any = null;
+
   private _requestsToImport: Array<any> = [];
+
   private _paused = false;
+
   private _requests: Array<any> = [];
+
   private _suggestedKeywords: Array<string> = [];
-  private _total = 0;
+
+  private _total = -1;
+
   private _googleQuota = 30000;
+
   private _config: Config = {
-    fields: 'entity region keywords created country elapsedTime status countries cost flag campaign innovation motherRequest totalResults metadata results',
-    limit: "10",
+    fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
+      'innovation motherRequest totalResults metadata results',
+    limit: this._configService.configLimit('admin-search-history-limit'),
     offset: "0",
     search: "{}",
     sort: '{ "created": -1 }'
   };
-  private _chosenCampaign: Campaign;
-  private _launchNewRequests: boolean = false;
-  private _addToCampaignModal: boolean = false;
-  private _geography: GeographySettings;
 
-  constructor(
-    private _router: Router,
-    private _configService: ConfigService,
-    private _campaignService: CampaignService,
-    private _searchService: SearchService,
-    private _professionalsService: ProfessionalsService,
-    private _notificationsService: TranslateNotificationsService,
-    private _indexService: IndexService
-  ) {}
+  private _chosenCampaign: Campaign = null;
+
+  private _launchNewRequests = false;
+
+  private _addToCampaignModal = false;
+
+  private _geography: GeographySettings = <GeographySettings>{};
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _router: Router,
+              private _configService: ConfigService,
+              private _campaignService: CampaignService,
+              private _searchService: SearchService,
+              private _rolesFrontService: RolesFrontService,
+              private _professionalsService: ProfessionalsService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _indexService: IndexService) { }
 
   ngOnInit(): void {
-    // On récupère le quota Google
-    this.getGoogleQuota();
-    if (this.campaignId) {
-      this._config.campaign = this.campaignId;
-    }
-    if (this.mails) {
-      this.config.entity = 'MAIL_ADDRESS';
-    } else {
-      if (this.status) {
-        this.config.entity = 'PERSON';
-      } else {
-        this.config.motherRequest = 'null';
+    this._initTable();
+
+    if (isPlatformBrowser(this._platformId)) {
+      // On récupère le quota Google
+      this._getGoogleQuota();
+
+      if (this.campaignId) {
+        this._config.campaign = this.campaignId;
       }
+
+      if (this.mails) {
+        this._config.entity = 'MAIL_ADDRESS';
+      } else {
+        if (this.status) {
+          this._config.entity = 'PERSON';
+        } else {
+          this._config.motherRequest = 'null';
+        }
+      }
+
+      if (this.status) {
+        this._config.status = this.status;
+      }
+
+      this._loadHistory();
+
     }
-    if (this.status) {
-      this.config.status = this.status;
-    }
-    this._config.limit = this._configService.configLimit('admin-search-history-limit');
-    this.loadHistory();
+
   }
 
-  public loadHistory() {
+  private _loadHistory() {
     this._suggestedKeywords = [];
-    this._searchService.getRequests(this._config)
-      .pipe(first())
-      .subscribe((result: any) => {
-        if(result.requests) {
-          this._requests = result.requests.map((request: any) => {
-            request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
-            if (request.region) {
-              request.targetting = request.region;
-              request.keywords = request.keywords.replace(`"${request.region}"`, "");
-            } else if (request.country) {
-              request.targetting = countries[request.country];
-            } else if (request.countries && request.countries.length) {
-              request.targetting = "";
-              const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
-              request.countries.forEach((country: string) => {
-                if (COUNTRIES.europe.indexOf(country) != - 1) counter.EU++;
-                else if (COUNTRIES.americaNord.indexOf(country) != - 1) counter.NA++;
-                else if (COUNTRIES.americaSud.indexOf(country) != - 1) counter.SA++;
-                else if (COUNTRIES.asia.indexOf(country) != - 1) counter.AS++;
-                else if (COUNTRIES.africa.indexOf(country) != - 1) counter.AF++;
-                else if (COUNTRIES.oceania.indexOf(country) != - 1) counter.OC++;
-              });
-              for (let key of Object.keys(counter)) {
-                if (counter[key]) request.targetting += ` ${key}(${counter[key]})`;
-              }
+    this._searchService.getRequests(this._config).pipe(first()).subscribe((result: any) => {
+
+      if(result.requests) {
+        this._requests = result.requests.map((request: any) => {
+          request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
+          if (request.region) {
+            request.targetting = request.region;
+            request.keywords = request.keywords.replace(`"${request.region}"`, "");
+          } else if (request.country) {
+            request.targetting = countries[request.country];
+          } else if (request.countries && request.countries.length) {
+            request.targetting = "";
+            const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
+            request.countries.forEach((country: string) => {
+              if (COUNTRIES.europe.indexOf(country) != - 1) counter.EU++;
+              else if (COUNTRIES.americaNord.indexOf(country) != - 1) counter.NA++;
+              else if (COUNTRIES.americaSud.indexOf(country) != - 1) counter.SA++;
+              else if (COUNTRIES.asia.indexOf(country) != - 1) counter.AS++;
+              else if (COUNTRIES.africa.indexOf(country) != - 1) counter.AF++;
+              else if (COUNTRIES.oceania.indexOf(country) != - 1) counter.OC++;
+            });
+            for (let key of Object.keys(counter)) {
+              if (counter[key]) request.targetting += ` ${key}(${counter[key]})`;
             }
-            return request;
-          });
-        }
+          }
+          return request;
+        });
+      }
+
         if (result._metadata) {
           this._total = result._metadata.totalCount;
           this._paused = result._metadata.paused;
         }
+        this._initTable();
 
-        this._tableInfos = {
-          _selector: 'admin-search-history-limit',
-          _title: 'SEARCH.HISTORY.SEARCHES',
-          _content: this._requests,
-          _total: this._total,
-          _clickIndex: 1,
-          _isSearchable: true,
-          _isPaginable: true,
-          _isSelectable: true,
-          _isTitle: true,
-          _buttons: [
-            { _icon: 'fas fa-times', _label: 'SEARCH.HISTORY.CANCEL' },
-            { _icon: 'fas fa-hourglass-half', _label: 'SEARCH.HISTORY.BACK_QUEUE' },
-            { _icon: 'fas fa-times', _label: 'SEARCH.HISTORY.STOP' },
-            { _icon: 'fas fa-share-square', _label: 'SEARCH.ADDTOCAMPAIGN' },
-            { _icon: 'fas fa-envelope', _label: 'SEARCH.HISTORY.SEARCH_MAILS' }
-          ],
-          _columns: [
-            {_attrs: ['keywords'], _name: 'SEARCH.HISTORY.KEYWORDS', _type: 'TEXT', _isSearchable: true, _isSortable: false},
-            {_attrs: ['pros'], _name: '', _type: 'TEXT', _isSearchable: false, _isSortable: false},
-            {_attrs: ['targetting'], _name: 'SEARCH.HISTORY.TARGETTING', _type: 'TEXT'},
-            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
-            {_attrs: ['status'], _name: 'SEARCH.HISTORY.STATUS', _type: 'MULTI-CHOICES', _choices: [
-              {_name: 'DONE', _alias: 'SEARCH.HISTORY.DONE', _class: 'label is-success'},
-              {_name: 'PROCESSING', _alias: 'SEARCH.HISTORY.PROCESSING', _class: 'label is-progress'},
-              {_name: 'QUEUED', _alias: 'SEARCH.HISTORY.QUEUED', _class: 'label is-danger'},
-              {_name: 'CANCELED', _alias: 'SEARCH.HISTORY.CANCELED', _class: 'label is-danger'}
-            ]},
-            {_attrs: ['flag'], _name: 'SEARCH.HISTORY.FLAG', _type: 'MULTI-CHOICES', _choices: [
-                {_name: 'PROS_ADDED', _alias: 'SEARCH.HISTORY.PROS_ADDED', _class: 'label is-success'},
-                {_name: 'EMAILS_FOUND', _alias: 'SEARCH.HISTORY.EMAILS_FOUND', _class: 'label is-success'},
-                {_name: 'EMAILS_SEARCHING', _alias: 'SEARCH.HISTORY.EMAILS_SEARCHING', _class: 'label is-progress'},
-                {_name: 'EMAILS_QUEUED', _alias: 'SEARCH.HISTORY.EMAILS_QUEUED', _class: 'label is-danger'}
-              ]},
-            {_attrs: ['metadata.shield'], _name: 'SEARCH.HISTORY.NBSHIELD', _type: 'TEXT', _isSortable: true},
-            {_attrs: ['metadata.ambassadors'], _name: 'SEARCH.HISTORY.NBAMB', _type: 'TEXT', _isSortable: true},
-          ]
-        };
-      });
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
-  openSidebar(request: any) {
+  private _initTable() {
+    this._tableInfos = {
+      _selector: 'admin-search-history-limit',
+      _title: 'searches',
+      _content: this._requests,
+      _total: this._total,
+      _clickIndex: this.canAccess(['view', 'request']) ? 1 : null,
+      _isSearchable: this.canAccess(['searchBy', 'keywords']),
+      _isPaginable: true,
+      _isSelectable: true,
+      _isTitle: true,
+      _isNoMinHeight: this._total < 11,
+      _buttons: [
+        {
+          _icon: 'fas fa-times',
+          _label: 'Stop the requests',
+          _colorClass: 'text-alert',
+          _isHidden: !this.canAccess(['stop', 'requests'])
+        },
+        {
+          _icon: 'fas fa-times',
+          _label: 'Cancel the requests',
+          _isHidden: !this.canAccess(['cancel', 'requests'])
+        },
+        {
+          _icon: 'fas fa-hourglass-half',
+          _label: 'Put back in queue',
+          _isHidden: !this.canAccess(['putBackInQueue'])
+        },
+        {
+          _icon: 'fas fa-share-square',
+          _label: 'Add to campaign',
+          _isHidden: !this.canAccess(['add', 'toCampaign'])
+        },
+        {
+          _icon: 'fas fa-envelope',
+          _label: 'Search emails',
+          _isHidden: !this.canAccess(['launch', 'emailsSearch'])
+        }
+      ],
+      _columns: [
+        {
+          _attrs: ['keywords'],
+          _name: 'Keywords',
+          _type: 'TEXT',
+          _isSearchable: this.canAccess(['searchBy', 'keywords']),
+          _isHidden: !this.canAccess(['tableColumns', 'keywords']),
+          _isSortable: false
+        },
+        {
+          _attrs: ['pros'],
+          _name: 'Pros',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'pros'])
+        },
+        {
+          _attrs: ['targetting'],
+          _name: 'Targeting',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'targeting'])
+        },
+        {
+          _attrs: ['created'],
+          _name: 'Created',
+          _type: 'DATE',
+          _isSortable: true,
+          _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'created'])
+        },
+        {
+          _attrs: ['status'],
+          _name: 'Status',
+          _type: 'MULTI-CHOICES',
+          _isHidden: !this.canAccess(['tableColumns', 'status']),
+          _choices: [
+            {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
+            {_name: 'PROCESSING', _alias: 'Processing', _class: 'label is-progress'},
+            {_name: 'QUEUED', _alias: 'Queued', _class: 'label is-danger'},
+            {_name: 'CANCELED', _alias: 'Canceled', _class: 'label is-danger'}
+          ]},
+        {
+          _attrs: ['flag'],
+          _name: 'Email status',
+          _type: 'MULTI-CHOICES',
+          _isHidden: !this.canAccess(['tableColumns', 'emailStatus']),
+          _choices: [
+            {_name: 'PROS_ADDED', _alias: 'Pros added', _class: 'label is-success'},
+            {_name: 'EMAILS_FOUND', _alias: 'Found', _class: 'label is-success'},
+            {_name: 'EMAILS_SEARCHING', _alias: 'Searching', _class: 'label is-progress'},
+            {_name: 'EMAILS_QUEUED', _alias: 'Queued', _class: 'label is-danger'}
+          ]},
+        {
+          _attrs: ['metadata.shield'],
+          _name: 'Under shield',
+          _type: 'TEXT',
+          _width: '150px',
+          _isHidden: !this.canAccess(['tableColumns', 'underShield']),
+          _isSortable: true
+        },
+        {
+          _attrs: ['metadata.ambassadors'],
+          _name: 'Ambassadors',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'ambassador']),
+          _isSortable: true
+        },
+      ]
+    };
+  }
+
+  public canAccess(path: Array<string>) {
+    return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
+  }
+
+  public openSidebar(request: any) {
+    this._selectedRequest = request;
     this._sidebarValue = {
       animate_state: 'active',
       title: request.keywords,
-      size: '726px'
+      size: '850px'
     };
-    this._selectedRequest = request;
   }
 
-  public updateInno(object: any) {
+  public updateInnovation(object: any) {
     if (object.value.length) {
       this._config.innovation = JSON.stringify({
         "$in": object.value.map((v: any) => v._id)
@@ -175,36 +286,51 @@ export class SharedSearchHistoryComponent implements OnInit {
     } else {
       delete this._config.innovation;
     }
-    this.loadHistory();
+    this._loadHistory();
   }
 
   public onClickActions(value: any) {
     const requestsIds = value._rows.map((r: any) => r._id);
-    if (value._action === 'SEARCH.HISTORY.CANCEL') {
+
+    if (value._action === 'Cancel the requests') {
+
       this._searchService.cancelManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId : string) => {
-          this._requests[this._getRequestIndex(requestId, this._requests)].status = 'CANCELED';
+          this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)].status = 'CANCELED';
         });
-        this._notificationsService.success('Requêtes annulées', `Les requêtes ont bien été annulées`);
+        this._translateNotificationsService.success('Success', 'The requests have been cancelled.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
-    } else if (value._action === 'SEARCH.HISTORY.BACK_QUEUE') {
+
+    } else if (value._action === 'Put back in queue') {
+
       this._searchService.queueManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId : string) => {
-          const request = this._requests[this._getRequestIndex(requestId, this._requests)];
+          const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
           if (request.status != "DONE") request.status = 'QUEUED';
         });
-        this._notificationsService.success('Requêtes mises en attente', `Les requêtes ont bien été mises en attente`);
+        this._translateNotificationsService.success('Success', 'The queries have been put on hold.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
-    } else if (value._action === 'SEARCH.HISTORY.STOP') {
+    } else if (value._action === 'Stop the requests') {
+
       this._searchService.stopManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId : string) => {
-          const request = this._requests[this._getRequestIndex(requestId, this._requests)];
+          const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
           request.status = 'DONE';
         });
-        this._notificationsService.success('Requêtes arrêtées', `Les requêtes ont bien été arrêtées`);
+        this._translateNotificationsService.success('Success', 'The requests have been stopped.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
-    }  else if (value._action === 'SEARCH.HISTORY.SEARCH_MAILS') {
-      requestsIds.forEach((requestId: string) => {
+
+    }  else if (value._action === 'Search emails') {
+      requestsIds.forEach((requestId: string, index: number) => {
         const params: any = {
           requestId: requestId,
           query: {
@@ -213,8 +339,14 @@ export class SharedSearchHistoryComponent implements OnInit {
           all: true
         };
 
-        this._searchService.searchMails(params).subscribe((result: any) => {
-          this._notificationsService.success('Recherche lancée', `La recherche de mails a été lancée`);
+        this._searchService.searchMails(params).pipe(first()).subscribe((result: any) => {
+          if (index === requestsIds.length - 1) {
+            this._translateNotificationsService.success('Success',
+              `The search for e-mails has been launched.`);
+          }
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
         });
       });
     } else {
@@ -223,16 +355,18 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
-  updateCampaign(event: any) {
+  public updateCampaign(event: any) {
     if (Array.isArray(event.value)) {
       if (event.value.length > 0) {
-        this._campaignService.get(event.value[0]._id).subscribe((campaign) => {
+        this._campaignService.get(event.value[0]._id).pipe(first()).subscribe((campaign) => {
           this._geography = {
             include: campaign.targetCountries.map((country) => { return {code: country}; }),
             exclude: [],
             continentTarget: WorldmapService.setContinents(false)
           };
           this._chosenCampaign = campaign;
+        }, (err: HttpErrorResponse) => {
+          console.error(err);
         });
       } else {
         this._chosenCampaign = undefined;
@@ -240,7 +374,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
-  addToCampaign(campaign: Campaign, goToCampaign?: boolean) {
+  public addToCampaign(campaign: Campaign, goToCampaign?: boolean) {
     this._addToCampaignModal = false;
     const params: any = {
       newCampaignId: campaign._id,
@@ -249,33 +383,40 @@ export class SharedSearchHistoryComponent implements OnInit {
       launchNewRequests: this._launchNewRequests,
       newTargetCountries: this._geography.include.map((country) => country.code)
     };
-    this._professionalsService.addFromHistory(params).subscribe((result: any) => {
-      this._notificationsService.success(
-        'Import des requêtes en cours',
-        'Les pros seront bien déplacés d\'ici quelques minutes');
+    this._professionalsService.addFromHistory(params).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Success',
+        'The pros will be on the move in a few minutes.');
       if (goToCampaign) {
         this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
       }
       this._requestsToImport = [];
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
   public relaunchRequests() {
     this._searchService.relaunchRequests().pipe(first()).subscribe((_: any) => {
-      this.loadHistory();
+      this._loadHistory();
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
-  public getGoogleQuota() {
+  private _getGoogleQuota() {
     this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
       this._googleQuota = 30000;
       if (result.hours) {
         this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
       }
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
     });
   }
 
-  private _getRequestIndex(requestId: string, array: Array<any>): number {
+  private static _getRequestIndex(requestId: string, array: Array<any>): number {
     for (const request of array) {
       if (requestId === request._id) {
         return array.indexOf(request);
@@ -332,7 +473,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   set config(value: Config) {
     this._config = value;
     const tmp = JSON.parse(value.search);
-    this.loadHistory();
+    this._loadHistory();
     if ('keywords' in tmp) {
       this._keywordsSuggestion(tmp['keywords']);
     }
@@ -361,7 +502,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   get chosenCampaign(): Campaign {
     return this._chosenCampaign;
   }
-  get addToCampaignModal () {
+
+  get addToCampaignModal(): boolean {
     return this._addToCampaignModal;
   }
 
@@ -369,7 +511,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._addToCampaignModal = value;
   }
 
-  get geography() {
+  get geography(): GeographySettings {
     return this._geography;
   }
 
@@ -377,7 +519,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._geography = value;
   }
 
-  get suggestions() {
+  get suggestions(): Array<string> {
     return this._suggestedKeywords;
   }
 
@@ -388,4 +530,5 @@ export class SharedSearchHistoryComponent implements OnInit {
   set launchNewRequests(value: boolean) {
     this._launchNewRequests = value;
   }
+
 }

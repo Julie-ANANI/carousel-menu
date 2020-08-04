@@ -21,7 +21,7 @@ import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
-import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SharedTextZoneModule } from '../../../../shared/components/shared-text-zone/shared-text-zone.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
@@ -49,7 +49,7 @@ import { MessageErrorModule } from '../../../../utility/messages/message-error/m
     SharedWorldmapModule,
     SidebarUserAnswerModule,
     SharedMarketReportModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     ModalModule,
     FormsModule,
     SharedTextZoneModule,

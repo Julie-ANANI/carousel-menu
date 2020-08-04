@@ -1,28 +1,64 @@
-<ng-container *ngIf="campaign">
-  <section id="admin-campaign-component">
+<div *ngIf="canAccess()" id="admin-campaign">
+
+  <!-- error message while fetching -->
+  <div *ngIf="!isLoading && fetchingError" class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <app-utility-message-error></app-utility-message-error>
+    </div>
+  </div>
+  <!-- /error message while fetching -->
+
+  <!-- no fetching error -->
+  <div [hidden]="fetchingError && !isLoading">
 
     <!-- section header -->
-    <div class="section-header">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+    <section class="p-top-25 bg-white">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
 
-        <div class="heading-wrapper">
-          <span class="title-primary">{{ getHeading() }}</span><span class="title-primary title-campaign">&nbsp;/&nbsp;{{ campaign.title }}</span>&nbsp;
-          <a [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/campaigns'" class="text-link text-sm">{{ 'COMMON.BUTTON.BACK_TO_CAMPAIGNS' | translate }}</a>
-        </div>
-
-        <ul class="tab">
-          <li *ngFor="let tab of authorizedTabs" class="tab-item tab-item-lg">
-            <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }" (click)="onClickTab($event, tab)">
-              {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
+          <!-- heading -->
+          <div class="d-flex m-bottom-25 align-baseline">
+            <h1 class="title is-4 m-right-25 m-no-bottom">
+              {{ heading }} /
+              <span [ngStyle]="{'font-size': '20px'}" class="m-left-1 text-normal text-notify">
+                {{ campaign.title }}
+              </span>
+            </h1>
+            <a
+              [href]="'/user/admin/projects/project/' + campaign.innovation._id + '/campaigns'"
+              class="text-link text-sm">
+              Back to campaigns
             </a>
-          </li>
-        </ul>
+          </div>
+          <!-- /heading -->
 
+          <!-- tabs -->
+          <ul class="tab">
+            <ng-container *ngFor="let tab of tabs">
+              <li *ngIf="canAccess([tab.key])" class="tab-item">
+                <a
+                  (click)="onClickTab($event, tab.key)"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  [routerLink]="['/user/admin/campaigns/campaign/', campaign._id, tab.route]"
+                  routerLinkActive="active">
+                  {{ tab.name }}
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+          <!-- /tabs -->
+
+        </div>
       </div>
+    </section>
+    <!-- /section header -->
+
+    <div>
+      <router-outlet></router-outlet>
     </div>
 
-    <!-- section views -->
-    <router-outlet></router-outlet>
+  </div>
+  <!-- /no fetching error -->
 
-  </section>
-</ng-container>
+</div>
+

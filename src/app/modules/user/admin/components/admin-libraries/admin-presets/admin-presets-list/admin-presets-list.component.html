@@ -1,141 +1,134 @@
-<section id="admin-presets-list">
-  <div class="restrict-width">
+<div *ngIf="canAccess()" class="container fluid grid-2xl animate-fade is-5" id="admin-presets-list">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
+    <!-- error message while fetching -->
+    <section *ngIf="fetchingError">
+      <app-utility-message-error></app-utility-message-error>
+    </section>
+    <!-- /error message while fetching -->
 
-    <!-- fetching error -->
-    <ng-container *ngIf="fetchingError">
-      <div class="a-p-l-error-wrapper d-flex align-center">
-        <app-utility-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
-      </div>
-    </ng-container>
-    <!-- /fetching error -->
-
-
-    <!-- no questionnaire -->
-    <ng-container *ngIf="!fetchingError && noResult && total === 0">
-      <div class="a-p-l-create-questionnaire-wrapper d-flex align-center">
-        <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
-
-          <div class="text-center">
-
-            <h4 [innerText]="'PRESETS.NO_PRESETS'" class="text-background" translate></h4>
-
-            <div class="m-top-25">
-              <button (click)="onClickAdd()" class="btn btn-primary rounded shadow" type="button">
-                <i class="fas fa-plus m-no-left"></i>
-                {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
-              </button>
-
-            </div>
-
-          </div>
-
-        </app-message-template-2>
-      </div>
-    </ng-container>
-    <!-- /no questionnaire -->
-
-
-    <!-- questionnaire -->
-    <ng-container *ngIf="!fetchingError && !noResult">
+    <!-- no fetching error -->
+    <div *ngIf="!fetchingError" class="p-top-30 p-bottom-30">
 
       <!-- add button -->
-      <div class="text-right p-bottom-25">
-        <button (click)="onClickAdd()" class="btn btn-primary btn-sm" type="button">
-          {{ 'COMMON.BUTTON.ADD' | translate }} questionnaire
+      <section *ngIf="canAccess(['add'])" class="text-right p-bottom-30">
+        <button
+          (click)="onClickAdd()"
+          class="button is-primary is-sm"
+          type="button">
+          Add questionnaire
         </button>
-      </div>
+      </section>
       <!-- /add button -->
 
-      <!-- table -->
-      <app-shared-table
-        (editRow)="showPreset($event)"
-        (removeRows)="OnClickDelete($event)"
-        (performAction)="onClickActions($event)"
-        [(config)]="config"
-        [data]="table">
-      </app-shared-table>
-      <!-- /table -->
+      <!-- no questionnaire -->
+      <section *ngIf="noResult && total === 0" class="p-top-20">
+        <message-template [widthMax]="'354px'">
+          Don't have any questionnaires?
+          <span *ngIf="canAccess(['add'])">
+            <br>
+            Try to add a one by clicking on "Add" button.
+          </span>
+        </message-template>
+      </section>
+      <!-- /no questionnaire -->
 
-    </ng-container>
-    <!-- /questionnaire-->
+      <!-- questionnaires -->
+      <section *ngIf="!noResult">
+        <app-shared-table
+          (editRow)="showPreset($event)"
+          (performAction)="onClickActions($event)"
+          (removeRows)="OnClickDelete($event)"
+          [(config)]="config"
+          [data]="table">
+        </app-shared-table>
+      </section>
+      <!-- /questionnaires -->
 
+    </div>
+    <!-- /no fetching error -->
 
   </div>
-</section>
+</div>
 
 
 <!-- modal -->
-<app-utility-modal [(showModal)]="modalOpen" [title]="modalTitle">
+<app-utility-modal
+  *ngIf="canAccess(['add']) || canAccess(['clone']) || canAccess(['delete'])"
+  [(showModal)]="modalOpen"
+  [title]="modalTitle">
 
   <section class="modal-body">
 
-    <!-- isAdd -->
-    <ng-container *ngIf="isModalAdd || isModalCloneAdd">
-      <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
-        <label class="form-label" for="add-preset" *ngIf="isModalAdd">{{ 'COMMON.LABEL.PRESET_NAME' | translate }}</label>
-        <label class="form-label" for="add-preset" *ngIf="isModalCloneAdd">Preset Clone</label>
-        <input
-          [(ngModel)]="newPresetName"
-          class="form-input"
-          id="add-preset"
-          name="preset"
-          [placeholder]="'COMMON.PLACEHOLDER.PRESET_NAME' | translate"
-          type="text">
-      </div>
-    </ng-container>
-    <!-- /isAdd -->
+    <!-- isAdd / isCloneAdd -->
+    <div *ngIf="isModalAdd || isModalCloneAdd" class="form-group">
+      <label class="form-label" for="add-preset" *ngIf="isModalAdd">Preset Name</label>
+      <label class="form-label" for="add-preset" *ngIf="isModalCloneAdd">Preset Clone</label>
+      <input
+        [(ngModel)]="newPresetName"
+        class="form-input is-shadowed"
+        id="add-preset"
+        name="preset"
+        [placeholder]="'Enter the preset name' | translate"
+        type="text">
+    </div>
+    <!-- /isAdd / isCloneAdd -->
 
     <!-- isDelete -->
-    <ng-container *ngIf="isModalDelete">
-      <div class="text-background text-medium">{{ 'PRESETS.MODAL.DELETE' | translate }}</div>
-
-      <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+    <div *ngIf="isModalDelete">
+      <span class="text-medium">Do you really want to delete the selected preset(s)?</span>
+      <ul class="d-flex flex-wrap text-sm m-top-3">
         <li *ngFor="let preset of presetsToRemove" class="m-right-3 m-top-1">
           {{ preset.name }}
         </li>
       </ul>
-    </ng-container>
+    </div>
     <!-- /isDelete -->
 
     <!-- isClone -->
-    <ng-container *ngIf="isModalClone">
-      <div class="text-background text-medium">{{ 'PRESETS.MODAL.CLONE' | translate }}</div>
-
-      <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
-        <li class="m-right-3 m-top-1">
-          {{ presetToClone.name }}
-        </li>
+    <div *ngIf="isModalClone">
+      <span class="text-medium">Do you really want to clone the selected preset?</span>
+      <ul class="text-sm m-top-3">
+        <li class="m-top-1">{{ presetToClone.name }}</li>
       </ul>
-    </ng-container>
+    </div>
     <!-- /isClone -->
 
   </section>
 
   <footer class="modal-footer">
 
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
 
     <!-- isAdd || isCloneAdd -->
-    <ng-container *ngIf="isModalAdd || isModalCloneAdd">
-      <button
-        (click)="isModalAdd ? onAddConfirm() : onClickCloneAdd()"
-        [disabled]="!newPresetName"
-        class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}
-      </button>
-    </ng-container>
+    <button
+      (click)="isModalAdd ? onAddConfirm() : onClickCloneAdd()"
+      *ngIf="isModalAdd || isModalCloneAdd"
+      [disabled]="!newPresetName"
+      class="button is-primary"
+      type="button">
+      Confirm
+    </button>
     <!-- /isAdd || /isCloneAdd -->
 
     <!-- isDelete -->
-    <ng-container *ngIf="isModalDelete">
-      <button (click)="onDeleteConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-    </ng-container>
+    <button
+      (click)="onDeleteConfirm()"
+      *ngIf="isModalDelete"
+      class="button is-primary"
+      type="button">
+      Confirm
+    </button>
     <!-- /isDelete -->
 
     <!-- isClone -->
-    <ng-container *ngIf="isModalClone">
-      <button (click)="onCloneConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
-    </ng-container>
+    <button
+      (click)="onCloneConfirm()"
+      *ngIf="isModalClone"
+      class="button is-primary"
+      type="button">
+      Confirm
+    </button>
     <!-- /isClone -->
 
   </footer>

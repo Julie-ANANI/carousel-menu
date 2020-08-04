@@ -1,67 +1,63 @@
-<section id="pro-tag-component" class="d-flex text-center">
-
+<div id="pro-tag">
 
   <!-- top profile -->
-  <ng-container *ngIf="answer && answer.profileQuality === 2">
-    <div class="label is-info">
-      <span>Top Profile</span>
-    </div>
-  </ng-container>
-
+  <div *ngIf="answer.profileQuality && answer.profileQuality === 2" class="label is-info m-bottom-2">
+    Top Profile
+  </div>
+  <!-- /top profile -->
 
   <!-- flag -->
-  <ng-container *ngIf="answer && answer.country && answer.country.flag">
-    <div class="flag-wrapper">
-      <app-utility-country-flag [country]="answer.country" [width]="23" [height]="16"></app-utility-country-flag>
-    </div>
-  </ng-container>
+  <div *ngIf="answer.country && answer.country.flag" class="m-bottom-10">
+    <app-utility-country-flag
+      [country]="answer.country"
+      [width]="23"
+      [height]="16">
+    </app-utility-country-flag>
+  </div>
+  <!-- /flag -->
 
-
-  <!-- detail -->
-  <div class="detail-wrapper d-flex text-center">
+  <!-- details -->
+  <div [ngStyle]="{'flex': '1 0 auto'}" class="detail-wrapper flex-centered flex-d-column text-center">
 
     <!-- name -->
-    <ng-container *ngIf="!answer?.professional?.firstName">
-      <p class="text-medium">
+    <p class="text-medium">
+      <ng-container *ngIf="!(answer.professional && answer.professional.firstName); else profName">
         <span class="text-link" (click)="seeAnswer($event, answer)">
-          {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
-        </span>
-      </p>
-    </ng-container>
-
-    <ng-container *ngIf="answer && answer.professional && answer.professional.firstName">
-      <p>
+        {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
+      </span>
+      </ng-container>
+      <ng-template #profName>
         <span class="text-link" (click)="seeAnswer($event, answer)">
-          {{ answer.professional.firstName | FormatText:true }} {{ answer.professional?.lastName | FormatText:true }}
+          {{ professionalName | FormatText:true }}
         </span>
-      </p>
-    </ng-container>
+      </ng-template>
+    </p>
     <!-- /name -->
 
     <!-- job -->
-    <ng-container *ngIf="answer.job || answer?.professional?.jobTitle">
-      <p class="text text-background">
-        {{ (answer.job || answer?.professional?.jobTitle) | FormatText:true }}
-      </p>
-    </ng-container>
+    <p *ngIf="answer.job || (answer.professional && answer.professional.jobTitle)" class="text-15 text-background">
+      {{ (answer.job || answer?.professional?.jobTitle) | FormatText:true }}
+    </p>
+    <!-- /job -->
 
     <!-- company -->
-    <ng-container *ngIf="answer.company?.name || answer.professional?.company">
-      <p class="text-notify text-medium">
-        {{ (answer?.company?.name || answer?.professional?.company || "") |FormatText:true }}
-      </p>
-    </ng-container>
+    <p
+      *ngIf="(answer.company && answer.company.name) || (answer.professional && answer.professional.company)"
+      class="text-notify text-medium">
+      {{ (answer.company?.name || answer.professional?.company || '') | FormatText:true }}
+    </p>
+    <!-- /company -->
 
   </div>
-  <!-- /detail -->
-
+  <!-- /details -->
 
   <!-- tag -->
-  <div *ngIf="tags && tags.length > 0" class="tag-wrapper">
-    <div *ngFor="let tag of tags" class="label label-tag is-rounded" [title]="tag.description | multiling:userLang">
-      <i class="fas fa-tag"></i><span>{{ tag.label | multiling:userLang }}</span>
+  <div *ngIf="tags.length > 0" class="tags-wrapper">
+    <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-tag is-rounded">
+      <i class="fas fa-tag icon-left"></i>
+      {{ tag.label | multiling:currentLang }}
     </div>
   </div>
   <!-- /tag -->
 
-</section>
+</div>

@@ -3,6 +3,7 @@ import { DataService } from '../../services/data.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
+import { AnswersStats } from "../../models/stats";
 
 export interface Item {
   rating: number;
@@ -21,25 +22,19 @@ export interface Item {
 
 export class ItemListComponent implements OnInit {
 
-  @Input() public innovation: Innovation;
+  @Input() innovation: Innovation = <Innovation>{};
 
-  @Input() public question: Question;
+  @Input() question: Question = <Question>{};
 
-  @Input() public readonly: boolean;
+  @Input() readonly = true;
 
-  @Input() set showDetails(value: boolean) {
-    this._details = value;
-  }
-
-  @Input() stats: any;
+  @Input() stats: AnswersStats = null;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   @Output() updateNumberOfItems = new EventEmitter<number>();
 
-  private _details: boolean;
-
-  private _listItems: Array<Item>;
+  private _listItems: Array<Item> = [];
 
   constructor(private _dataService: DataService) { }
 
@@ -47,7 +42,8 @@ export class ItemListComponent implements OnInit {
     /* Update Answers Data */
     this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
 
-      const answerItems: {[value: string]: {rating: number, count: number, domain: string, logo: string, answers: Array<Answer>}} = {};
+      const answerItems: {[value: string]: { rating: number, count: number, domain: string, logo: string,
+          answers: Array<Answer> }} = {};
 
       answers.forEach((answer) => {
         if (answer.answers[this.question.identifier] && Array.isArray(answer.answers[this.question.identifier])) {
@@ -106,10 +102,6 @@ export class ItemListComponent implements OnInit {
 
   get listItems() {
     return this._listItems;
-  }
-
-  get details() {
-    return this._details;
   }
 
 }

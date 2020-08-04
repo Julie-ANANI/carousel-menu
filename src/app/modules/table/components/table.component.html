@@ -31,12 +31,12 @@
   <!-- when fetching or initializing -->
   <ng-container *ngIf="table._total === -1">
     <div class="section-light-pad">
-      <message-template-1 [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
+      <message-template [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
         <div class="flex-centered">
           <div class="loading is-white" style="margin-right: 0.8rem"></div>
           <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
         </div>
-      </message-template-1>
+      </message-template>
     </div>
   </ng-container>
   <!-- /when fetching or initializing -->
@@ -45,11 +45,11 @@
   <!-- when no result -->
   <ng-container *ngIf="table._total === 0 || isSearching">
     <div class="section-light-pad">
-      <message-template-1
+      <message-template
         [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
         [widthMax]="isSearching ? '362px' : '273px'">
         <span [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'" translate></span>
-      </message-template-1>
+      </message-template>
     </div>
   </ng-container>
   <!-- /when no result -->
@@ -81,7 +81,10 @@
                     <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
                       <input type="checkbox" (change)="selectAll($event)">
                       <i *ngIf="selectedRows === table._content.length" class="icon icon-check"></i>
-                      <span *ngIf="selectedRows < table._content.length && selectedRows > 0" class="icon icon-minus text-primary"></span>
+                      <span
+                        *ngIf="selectedRows < table._content.length && selectedRows > 0"
+                        class="icon icon-minus text-primary">
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -96,7 +99,8 @@
                 *ngFor="let column of visibleColumns; let i = index;"
                 (click)="selectColumn(getName(column))"
                 [ngClass]="{ 'active': column._isSelected && isSortable(column) }"
-                [ngStyle]="{ 'max-width': column._width, 'min-width': column._width }">
+                [ngStyle]="{ 'max-width': column._width ? column._width : visibleColumns.length < 6 ? '100%' : '300px'
+                , 'min-width': column._width }">
                 <div class="flex-wrapper">
 
                   <!-- not sortable text -->
@@ -145,21 +149,23 @@
 
                   <!-- different buttons -->
                   <ng-container *ngIf="table._buttons && table._buttons.length > 0">
-                    <div *ngFor="let button of table._buttons" class="d-inline-flex m-right-25">
-                      <button
-                        (click)="onActionClick(button._label)"
-                        [ngClass]="button._colorClass"
-                        class="button is-link p-no text-sm is-sm"
-                        type="button">
-                        <i
-                          *ngIf="button._icon"
-                          [ngClass]="button._icon"
-                          [ngStyle]="{ 'font-size': button._iconSize ? button._iconSize : '14px' }"
-                          class="icon-left text-no-underline">
-                        </i>
-                        {{ button._label | translate }}
-                      </button>
-                    </div>
+                    <ng-container *ngFor="let button of table._buttons">
+                      <div *ngIf="!button._isHidden" class="d-inline-flex m-right-25">
+                        <button
+                          (click)="onActionClick(button._label)"
+                          [ngClass]="button._colorClass"
+                          class="button is-link p-no text-sm is-sm"
+                          type="button">
+                          <i
+                            *ngIf="button._icon"
+                            [ngClass]="button._icon"
+                            [ngStyle]="{ 'font-size': button._iconSize ? button._iconSize : '14px' }"
+                            class="icon-left text-no-underline">
+                          </i>
+                          {{ button._label | translate }}
+                        </button>
+                      </div>
+                    </ng-container>
                   </ng-container>
                   <!-- /different buttons -->
 
@@ -198,7 +204,10 @@
               <td class="cell-checkbox">
                 <div class="flex-wrapper">
                   <div class="text-ellipsis truncate-text">
-                    <label class="flex-centered" [ngClass]="{ 'active': table._content[row]?._isSelected, 'disabled': disabledRow(table._content[row]) }">
+                    <label
+                      class="flex-centered"
+                      [ngClass]="{ 'active': table._content[row]?._isSelected,
+                      'disabled': disabledRow(table._content[row]) }">
                       <input type="checkbox" (click)="selectRow(row);" [disabled]=disabledRow(table._content[row])>
                       <i class="icon icon-check"></i>
                     </label>
@@ -212,7 +221,8 @@
             <!-- rest columns -->
             <td
               *ngFor="let column of visibleColumns; let i = index"
-              [ngStyle]="{ 'max-width': column._width, 'min-width': column._width }">
+              [ngStyle]="{ 'max-width': column._width ? column._width : visibleColumns.length < 6 ? '100%' : '300px',
+              'min-width': column._width }">
               <ng-container [ngSwitch]="getType(column)">
                 <div class="flex-wrapper">
 
@@ -419,7 +429,15 @@
                               [ngClass]="getChoiceDisabledClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
                               class="fas fa-paper-plane m-right-2 text-xs">
                             </i>
-                            <span class="text-notify text-medium">{{ (getContentValue(row, getDisabledState(column)._attrs) | date:dateFormat) }}</span>
+                            <span class="text-notify text-medium">
+                              <ng-container
+                                *ngIf="(getContentValue(row, getDisabledState(column)._attrs) | date:dateFormat); else textDrop">
+                                {{ (getContentValue(row, getDisabledState(column)._attrs) | date:dateFormat) }}
+                              </ng-container>
+                              <ng-template #textDrop>
+                                {{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0])))) | translate }}
+                              </ng-template>
+                            </span>
                           </div>
                         </ng-container>
                         <!-- /type DATE -->

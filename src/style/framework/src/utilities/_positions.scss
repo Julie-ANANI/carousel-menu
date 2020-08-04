@@ -82,12 +82,16 @@
   justify-content: space-around !important;
 }
 
+.justify-between {
+  justify-content: space-between !important;
+}
+
 .align-center {
   align-items: center !important;
 }
 
 .align-baseline {
-  align-items: baseline;
+  align-items: baseline !important;
 }
 
 .whitespace-nowrap {
@@ -104,6 +108,10 @@
 
 .flex-d-column {
   flex-direction: column;
+}
+
+.flex-full {
+  flex: 1;
 }
 
 .centered {

@@ -1,7 +1,7 @@
 <div [ngClass]="{ 'inactive flex-centered': !section.questionId || !section.questionType }" id="executive-section">
 
   <!-- no question selected -->
-  <div *ngIf="!section.questionId || !section.questionType">
+  <div *ngIf="isEditable && (!section.questionId || !section.questionType)">
 
     <!-- title -->
     <h4>{{ 'ADMIN_EXECUTIVE_REPORT.WANT_TO_DISPLAY' | translate }}</h4>
@@ -74,6 +74,7 @@
         <app-admin-section-type-kpi
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
+          [isEditable]="isEditable"
           [section]="section">
         </app-admin-section-type-kpi>
       </div>
@@ -85,6 +86,7 @@
         <app-admin-section-type-quote
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
+          [isEditable]="isEditable"
           [section]="section">
         </app-admin-section-type-quote>
       </div>
@@ -96,6 +98,7 @@
         <app-admin-section-type-bar
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
+          [isEditable]="isEditable"
           [section]="section">
         </app-admin-section-type-bar>
       </div>
@@ -107,6 +110,7 @@
         <app-admin-section-type-ranking
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
+          [isEditable]="isEditable"
           [section]="section">
         </app-admin-section-type-ranking>
       </div>
@@ -118,6 +122,7 @@
         <app-admin-section-type-pie
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
+          [isEditable]="isEditable"
           [section]="section">
         </app-admin-section-type-pie>
       </div>

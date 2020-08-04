@@ -1,169 +1,180 @@
-<ng-container *ngIf="questionReceived">
-  <section class="question-section-component section-pad" [id]="questionReceived.identifier">
+<div class="question-section" [id]="questionReceived.identifier">
 
-    <!-- if the question type is checkbox or radio -->
-    <ng-container *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
-      <app-bar-chart
-        [innovation]="innovation"
-        [question]="questionReceived"
-        [readonly]="readonly"
-        [stats]="stats"
-        [toggleAnswers]="toggleAnswers"
-        (modalAnswerChange)="seeAnswer($event)"
-        (answerButtonClicked)="answerBtnClicked($event)">
-      </app-bar-chart>
-    </ng-container>
-    <!-- /if the question type is checkbox or radio -->
+  <!-- if the question type is checkbox or radio -->
+  <div *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
+    <app-bar-chart
+      (answerButtonClicked)="answerBtnClicked($event)"
+      (modalAnswerChange)="seeAnswer($event)"
+      [innovation]="innovation"
+      [question]="questionReceived"
+      [readonly]="readonly"
+      [stats]="stats"
+      [toggleAnswers]="toggleAnswers">
+    </app-bar-chart>
+  </div>
+  <!-- /if the question type is checkbox or radio -->
 
+  <!-- if the question type is not checkbox and radio -->
+  <div
+    *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'"
+    class="box-style">
+    <app-question-conclusion
+      [innovation]="innovation"
+      [question]="questionReceived"
+      [readonly]="readonly"
+      [stats]="stats">
+    </app-question-conclusion>
+  </div>
+  <!-- /if the question type is not checkbox and radio -->
 
-    <!-- if the question type is not checkbox and radio -->
-    <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'">
-      <div class="bg-white">
-        <app-question-conclusion
-          [innovation]="innovation"
-          [question]="questionReceived"
-          [readonly]="readonly"
-          [stats]="stats">
-        </app-question-conclusion>
-      </div>
-    </ng-container>
-    <!-- /if the question type is not checkbox and radio -->
+  <!-- if the question type is list or clearbit -->
+  <div *ngIf="questionReceived.controlType === 'list' || questionReceived.controlType === 'clearbit'">
 
+    <!-- answer toggle button -->
+    <div class="p-top-25 text-center">
+      <button
+        (click)="toggleAnswers = !toggleAnswers"
+        class="button is-community is-sm"
+        type="button">
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
+      </button>
+    </div>
+    <!-- /answer toggle button -->
 
-    <!-- if the question type is list or clearbit -->
-    <ng-container *ngIf="questionReceived.controlType === 'list' || questionReceived.controlType === 'clearbit'">
+    <!-- now showing the answers, this contains both the answers to show and comments  -->
+    <div [ngClass]="toggleAnswers ? 'is-expand' : 'is-collapse'" class="answers-wrapper">
+      <ng-container *ngIf="toggleAnswers">
+        <div class="d-flex justify-between clearbit-list-wrapper flex-wrap">
 
-      <!-- answer button -->
-      <div class="section-light-pad rm-pad-bottom text-center">
-        <button type="button" class="btn btn-primary" (click)="toggleAnswers = !toggleAnswers">
-          {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-          <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
-        </button>
-      </div>
-
-      <!-- now showing the answers, this contains both the answers to show and comments  -->
-      <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
-        <div *ngIf="toggleAnswers">
-          <div class="d-flex section-light-pad rm-pad-bottom clearbit-list-wrapper rm-margin">
-
-            <div *ngIf="answersWithComment.length > 0" class="clearbit-comment-wrapper">
-              <div *ngFor="let answer of answersWithComment" class="card">
-                <div class="card-body">
-                  <app-market-comment-2
-                    [answer]="answer"
-                    [canEditTags]="adminSide"
-                    [question]="questionReceived"
-                    (modalAnswerChange)="seeAnswer($event)">
-                  </app-market-comment-2>
-                </div>
+          <div *ngIf="answersWithComment.length > 0" class="flex-full m-right-20 p-top-25 card-wrapper">
+            <div *ngFor="let answer of answersWithComment" class="card">
+              <div class="card-body p-15">
+                <app-market-comment-2
+                  [answer]="answer"
+                  [canEditQuestionTags]="canEditQuestionTags"
+                  [question]="questionReceived"
+                  (modalAnswerChange)="seeAnswer($event)">
+                </app-market-comment-2>
               </div>
             </div>
-
-            <div class="clearbit-icon-wrapper">
-              <app-item-list
-                [innovation]="innovation"
-                [question]="questionReceived"
-                [readonly]="readonly"
-                [stats]="stats"
-                (updateNumberOfItems)="updateNumberOfItems($event)"
-                (modalAnswerChange)="seeAnswer($event)">
-              </app-item-list>
-            </div>
-
           </div>
+
+          <div class="p-top-25 flex-full">
+            <app-item-list
+              (modalAnswerChange)="seeAnswer($event)"
+              (updateNumberOfItems)="updateNumberOfItems($event)"
+              [innovation]="innovation"
+              [question]="questionReceived"
+              [readonly]="readonly"
+              [stats]="stats">
+            </app-item-list>
+          </div>
+
         </div>
-      </div>
+      </ng-container>
+    </div>
 
-    </ng-container>
-    <!-- /if the question type is list or clearbit -->
+  </div>
+  <!-- /if the question type is list or clearbit -->
 
+  <!-- showing answers if the question type is not clearbit, radio, checkbox and list -->
+  <div *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'
+  && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
 
-    <!-- showing answers if the question type is not clearbit, radio, checkbox and list -->
-    <div *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio' && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
+    <!-- answer toggle button -->
+    <div class="p-top-25 text-center">
+      <button
+        (click)="toggleAnswers = !toggleAnswers"
+        class="button is-community is-sm"
+        type="button">
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
+      </button>
+    </div>
+    <!-- answer toggle button -->
 
-      <!-- answer button -->
-      <div class="section-light-pad rm-pad-bottom text-center">
-        <button type="button" class="btn btn-primary" (click)="toggleAnswers = !toggleAnswers">
-          {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-          <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
-        </button>
-      </div>
-
-      <!-- now showing the answers that we have for the textarea, scale, toggle and star type -->
-      <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
-        <div *ngIf="toggleAnswers">
+    <!-- now showing the answers that we have for the textarea, scale, toggle and star type -->
+    <div [ngClass]="toggleAnswers ? 'is-expand' : 'is-collapse'" class="answers-wrapper">
+      <ng-container *ngIf="toggleAnswers">
+        <ng-container [ngSwitch]="questionReceived.controlType">
 
           <!-- star -->
-          <div *ngIf="questionReceived.controlType === 'stars'">
-            <div class="section-light-pad rm-pad-bottom">
-              <app-stars [question]="questionReceived"></app-stars>
-            </div>
+          <div *ngSwitchCase="'stars'">
+            <app-stars [question]="questionReceived"></app-stars>
           </div>
+          <!-- star -->
 
           <!-- rating -->
-          <div *ngIf="questionReceived.controlType === 'scale'">
-            <div class="section-light-pad rm-pad-bottom">
-              <app-scale [question]="questionReceived"></app-scale>
-            </div>
+          <div *ngSwitchCase="'scale'">
+            <app-scale [question]="questionReceived"></app-scale>
           </div>
+          <!-- rating -->
 
           <!-- textarea -->
-          <div *ngIf="questionReceived.controlType === 'textarea'">
-            <div class="section-light-pad rm-pad-bottom rm-margin">
+          <div *ngSwitchCase="'textarea'" class="textarea-wrapper p-top-25">
+            <div class="card-wrapper">
               <div *ngFor="let answer of answersToShow | async" class="card">
-                <div class="card-body less-padding">
+                <div class="card-body p-15">
                   <app-market-comment-2
+                    (modalAnswerChange)="seeAnswer($event)"
                     [answer]="answer"
-                    [canEditTags]="adminSide"
-                    [question]="questionReceived"
-                    (modalAnswerChange)="seeAnswer($event)">
+                    [canEditQuestionTags]="canEditQuestionTags"
+                    [question]="questionReceived">
                   </app-market-comment-2>
                 </div>
               </div>
             </div>
           </div>
+          <!-- textarea -->
 
           <!-- toggle ---->
-          <div *ngIf="questionReceived.controlType === 'toggle'">
-            <div class="toggle-wrapper rm-margin d-flex section-light-pad rm-pad-bottom">
+          <div *ngSwitchCase="'toggle'" class="toggle-wrapper p-top-25">
+            <div class="card-wrapper">
               <div *ngFor="let answer of answersToShow | async" class="card is-responsive">
                 <div class="card-body">
-                  <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                  <app-pro-tag
+                    (modalAnswerChange)="seeAnswer($event)"
+                    [answer]="answer">
+                  </app-pro-tag>
                 </div>
               </div>
             </div>
           </div>
+          <!-- /toggle ---->
 
-        </div>
-      </div>
-
+        </ng-container>
+      </ng-container>
     </div>
-    <!-- /showing answers if the question type is not clearbit, radio, checkbox and list -->
 
+  </div>
+  <!-- /showing answers if the question type is not clearbit, radio, checkbox and list -->
 
-    <!-- comments that are not related to answers like general comments but not for list and clearbit question type -->
-    <ng-container *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit' && answersWithComment.length > 0">
+  <!-- comments that are not related to answers like general comments but not for list and clearbit question type -->
+  <div *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'
+  && answersWithComment.length > 0" class="animate-fade is-5 comment-wrapper p-bottom-20">
 
-      <div class="section-pad rm-pad-bottom">
-        <h5 class="title-secondary">{{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}</h5>
-      </div>
+    <div class="p-top-40">
+      <h5 class="title is-5 text-secondary m-bottom-15">
+        {{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}
+      </h5>
+    </div>
 
-      <!-- showing the comments ---->
-      <div class="comment-wrapper rm-margin">
-        <div *ngFor="let answer of answersWithComment" class="card">
-          <div class="card-body less-padding">
-            <app-market-comment-2
-              [answer]="answer"
-              [canEditTags]="adminSide"
-              [question]="questionReceived"
-              (modalAnswerChange)="seeAnswer($event)"></app-market-comment-2>
-          </div>
+    <!-- showing the comments ---->
+    <div class="card-wrapper">
+      <div *ngFor="let answer of answersWithComment" class="card flex-full m-bottom-20">
+        <div class="card-body p-15">
+          <app-market-comment-2
+            (modalAnswerChange)="seeAnswer($event)"
+            [answer]="answer"
+            [canEditQuestionTags]="canEditQuestionTags"
+            [question]="questionReceived"></app-market-comment-2>
         </div>
       </div>
+    </div>
+    <!-- /showing the comments ---->
 
-    </ng-container>
-    <!-- /comments that are not related to answers like general comments but not for list and clearbit question type -->
+  </div>
+  <!-- /comments that are not related to answers like general comments but not for list and clearbit question type -->
 
-
-  </section>
-</ng-container>
+</div>

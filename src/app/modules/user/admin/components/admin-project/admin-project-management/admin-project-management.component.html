@@ -6,7 +6,10 @@
     <div class="project-section">
 
       <!-- Project operator -->
-      <div class="project-line" [ngClass]="{disabled: authService.adminLevel < 3}">
+      <div
+        *ngIf="canAccess(['view', 'domain']) || canAccess(['edit', 'domain'])"
+        class="project-line"
+        [ngClass]="{disabled: authService.adminLevel < 3}">
 
         <label class="form-switch" for="seeDomain">
           <input
@@ -21,6 +24,7 @@
         <select class="form-select"
                 name="setDomain"
                 id="setDomain"
+                [disabled]="!canAccess(['edit', 'domain'])"
                 [ngModel]="project && project.domain ? project.domain : ''"
                 (ngModelChange)="changeProjectDomain($event)"
                 [ngModelOptions]="{standalone: true}">
@@ -31,7 +35,10 @@
       </div>
 
       <!-- Project operator -->
-      <div class="project-line" [ngClass]="{disabled: authService.adminLevel < 3}">
+      <div
+        *ngIf="canAccess(['view', 'operator']) || canAccess(['edit', 'operator'])"
+        class="project-line"
+        [ngClass]="{disabled: authService.adminLevel < 3}">
 
         <label class="form-switch" for="seeOperator">
           <input
@@ -46,6 +53,7 @@
         <select class="form-select"
                 name="setOperator"
                 id="setOperator"
+                [disabled]="!canAccess(['edit', 'operator'])"
                 [ngModel]="operatorId"
                 (ngModelChange)="changeProjectOperator($event)"
                 [ngModelOptions]="{standalone: true}">
@@ -58,7 +66,8 @@
       </div>
 
       <!-- Project owner -->
-      <div class="project-line"> <!-- [ngClass]="{disabled: authService.userId !== operatorId}" -->
+      <div *ngIf="canAccess(['view', 'owner']) || canAccess(['edit', 'owner'])"
+           class="project-line"> <!-- [ngClass]="{disabled: authService.userId !== operatorId}" -->
         <label class="form-switch" for="editOwner">
           <input
             type="checkbox"
@@ -71,7 +80,7 @@
         <label *ngIf="!edit.owner" class="form-label">{{project.owner.name}}</label>
 
         <!-- if we click on update we show an autoComplete of all users -->
-        <div [formGroup]="formData" class="form-group" style="position: relative" *ngIf="edit.owner">
+        <div [formGroup]="formData" class="form-group" style="position: relative" *ngIf="edit.owner && canAccess(['edit', 'owner'])">
           <input
             class="form-input"
             formControlName="owner"
@@ -93,6 +102,7 @@
         </div>
 
         <button class="btn btn-xs ghost-edit"
+                [disabled]="!canAccess(['edit', 'owner'])"
                 [ngClass]="{'showOnHover': !edit.owner}"
                 (click)="edit.owner ? ownerEditionFinished() : edit.owner = true">
           {{(edit.owner ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
@@ -101,7 +111,8 @@
       </div>
 
       <!-- Mission Team -->
-      <div class="project-line" *ngIf="mission">
+      <div class="project-line" *ngIf="mission && (canAccess(['view', 'mission'])
+      || canAccess(['edit', 'mission']))">
         <label class="form-switch" for="editMission">
           <input
             type="checkbox"
@@ -117,7 +128,7 @@
             {{ operator.firstName }} {{ operator.lastName }}
           </li>
         </ul>
-        <div *ngIf="edit.missionTeam">
+        <div *ngIf="edit.missionTeam && canAccess(['edit', 'mission'])">
           <div class="dropdown is-right">
             <a class="button dropdown-toggle is-draft is-link" tabindex="0">
               {{ 'PROJECT.MISSION_TEAM' | translate }}
@@ -140,19 +151,24 @@
         </div>
 
 
-        <button class="btn btn-xs ghost-edit showOnHover" *ngIf="!edit.missionTeam"
-                (click)="edit.missionTeam = true">
+        <button
+          class="btn btn-xs ghost-edit showOnHover" *ngIf="!edit.missionTeam && canAccess(['edit', 'mission'])"
+          [disabled]="!canAccess(['edit', 'mission'])"
+          (click)="edit.missionTeam = true">
           {{ 'COMMON.CHANGE' | translate}}
         </button>
-        <button class="btn btn-xs ghost-edit" *ngIf="edit.missionTeam"
-                (click)="saveMission()">
+        <button
+          [disabled]="!canAccess(['edit', 'mission'])"
+          class="btn btn-xs ghost-edit"
+          *ngIf="edit.missionTeam && canAccess(['edit', 'mission'])"
+          (click)="saveMission()">
           {{ 'COMMON.SAVE' | translate}}
         </button>
 
       </div>
 
       <!-- Roadmap -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'roadmap']) || canAccess(['edit', 'roadmap'])" class="project-line">
         <label class="form-switch" for="editRoadmap">
           <input
             type="checkbox"
@@ -163,7 +179,10 @@
           Roadmap
         </label>
 
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="editRoadmap()" [disabled]="!mission">
+        <button
+          class="showOnHover btn btn-xs ghost-edit"
+          (click)="editRoadmap()"
+          [disabled]="!mission && !canAccess(['edit', 'roadmap'])">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
@@ -171,7 +190,8 @@
       <!--/ Roadmap -->
 
       <!-- mission type -->
-      <div *ngIf="project.mission" class="project-line">
+      <div *ngIf="project.mission && (canAccess(['view', 'missionType']) || canAccess(['edit', 'missionType']))"
+           class="project-line">
 
         <label class="form-switch" for="editMissionType">
           <input
@@ -184,6 +204,7 @@
         </label>
 
         <select
+          [disabled]="!canAccess(['edit', 'missionType'])"
           class="form-select"
           name="setMissionType"
           id="setMissionType"
@@ -200,7 +221,8 @@
       <!-- /mission type -->
 
       <!-- mission objective -->
-      <div *ngIf="project.mission" class="project-line">
+      <div *ngIf="project.mission && (canAccess(['view', 'mainObjective']) || canAccess(['edit', 'mainObjective']))"
+           class="project-line">
 
         <label class="form-switch" for="editMissionObjective">
           <input
@@ -216,6 +238,7 @@
           class="form-select"
           name="setMissionObjective"
           id="setMissionObjective"
+          [disabled]="!canAccess(['edit', 'mainObjective'])"
           [ngModel]="mission.objective.principal[currentLang]"
           (ngModelChange)="changeMissionObjective($event)"
           [ngModelOptions]="{standalone: true}">
@@ -231,7 +254,8 @@
       <!-- /mission objective -->
 
       <!-- commercial -->
-      <div *ngIf="project.clientProject" class="project-line">
+      <div *ngIf="project.clientProject && (canAccess(['view', 'commercial']) || canAccess(['edit', 'commercial']))"
+           class="project-line">
 
         <label class="form-switch" for="editCommercial">
           <input
@@ -247,6 +271,7 @@
           class="form-select"
           name="setCommercial"
           id="setCommercial"
+          [disabled]="!canAccess(['edit', 'commercial'])"
           [ngModel]="clientProject.commercial && clientProject.commercial.id"
           (ngModelChange)="changeCommercial($event)"
           [ngModelOptions]="{standalone: true}">
@@ -262,7 +287,7 @@
       <!-- /commercial -->
 
       <!-- Project description edition -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'description']) || canAccess(['edit', 'description'])" class="project-line">
         <label class="form-switch" for="editProjectDescription">
           <input
             type="checkbox"
@@ -281,7 +306,7 @@
       </div>
 
       <!-- Project translation -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'language']) || canAccess(['edit', 'language'])" class="project-line">
         <label class="form-switch" for="seeTranslation">
           <input
             type="checkbox"
@@ -295,14 +320,14 @@
         <div *ngFor="let lang of innovCards">
           <label class="form-label">
             {{lang?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}
-            <span>{{lang?.completion?.toFixed(0)}} %</span>
+            <span *ngIf="lang && lang['completion']">{{lang['completion'].toFixed(0)}} %</span>
           </label>
         </div>
         <div></div>
       </div>
 
       <!-- Project targeting edition -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'targeting']) || canAccess(['edit', 'targeting'])" class="project-line">
         <label class="form-switch" for="editMarketTargeting">
           <input
             type="checkbox"
@@ -321,7 +346,7 @@
       </div>
 
       <!-- add emails / domains to blacklist -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'blacklist']) || canAccess(['edit', 'blacklist'])" class="project-line">
         <label class="form-switch" for="blacklistDomainsAndEmails">
           <input
             type="checkbox"
@@ -338,14 +363,15 @@
           {{project.settings.blacklist.emails.length.toString()}} Email(s)
         </label>
 
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="editBlacklist()">
+        <button [disabled]="!canAccess(['edit', 'blacklist'])"
+                class="showOnHover btn btn-xs ghost-edit" (click)="editBlacklist()">
           {{'COMMON.EDIT' | translate}}
         </button>
 
       </div>
 
       <!-- update status -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'status']) || canAccess(['edit', 'status'])" class="project-line">
         <label class="form-switch" for="updateStatus">
           <input
             type="checkbox"
@@ -362,6 +388,7 @@
         </label>
 
         <button class="showOnHover btn btn-xs ghost-edit"
+                [disabled]="!canAccess(['edit', 'status'])"
                 (click)="editStatus()"
                 [ngStyle]="{'visibility' : project.status === 'DONE' ? 'hidden' : ''}">
           {{'COMMON.EDIT' | translate}}
@@ -374,60 +401,63 @@
 
     <div class="project-summary">
 
-      <div class="completion">
-        <h6>{{'PROJECT.STATS.COMPLETION' | translate}}</h6>
-        <span *ngFor="let innov of project.innovationCards" class="text-center">
+      <ng-container *ngIf="canAccess(['view', 'statistics']) || canAccess(['edit', 'statistics'])">
+        <div class="completion">
+          <h6>{{'PROJECT.STATS.COMPLETION' | translate}}</h6>
+          <span *ngFor="let innov of project.innovationCards" class="text-center">
           <label class="form-label">{{innov?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}</label>
           <label>{{innov?.completion?.toFixed(0) || 0}} %</label>
         </span>
-      </div>
-      <div class="emails">
-        <h6>Emails</h6>
-        <span class="text-center">
+        </div>
+        <div class="emails">
+          <h6>Emails</h6>
+          <span class="text-center">
           <label class="form-label">{{'PROJECT.STATS.TO_SEND' | translate}}</label>
           <label>{{project?.stats?.emailsOK || '?'}}</label>
         </span>
-        <span class="text-center">
+          <span class="text-center">
           <label class="form-label">{{'PROJECT.STATS.DELIVERED' | translate}}</label>
           <label>{{project?.stats?.received || '?'}}</label>
         </span>
-        <span class="text-center">
+          <span class="text-center">
           <label class="form-label">{{'PROJECT.STATS.OPEN_RATE' | translate}}</label>
           <label>{{getRate(project?.stats?.opened, project?.stats?.received)}}</label>
         </span>
-        <span class="text-center">
+          <span class="text-center">
           <label class="form-label">{{'PROJECT.STATS.CLICK_RATE' | translate}}</label>
           <label>{{getRate(project?.stats?.clicked, project?.stats?.opened)}}</label>
         </span>
-      </div>
-      <div class="answers">
-        <h6>{{'PROJECT.STATS.ANSWERS' | translate}}</h6>
-        <span class="text-center">
+        </div>
+        <div class="answers">
+          <h6>{{'PROJECT.STATS.ANSWERS' | translate}}</h6>
+          <span class="text-center">
           <label class="form-label">{{'PROJECT.STATS.QUESTIONNAIRE_QUALITY' | translate}}</label>
           <label>{{getRate(project?.stats?.answers, project?.stats?.clicked)}}</label>
         </span>
-        <span class="text-center">
+          <span class="text-center">
           <label class="form-label">{{'CAMPAIGNS.VALIDATED' | translate}}</label>
           <label>{{project?.stats?.validatedAnswers || '?'}}</label>
         </span>
-        <span class="text-center">
+          <span class="text-center">
           <label class="form-label">{{'PROJECT.STATS.ANSWER_RATE' | translate}}</label>
           <label>{{getRate(project?.stats?.validatedAnswers, project?.stats?.received)}}</label>
         </span>
-      </div>
-      <div class="update">
+        </div>
+        <div *ngIf="canAccess(['edit', 'statistics'])" class="update">
         <span *ngIf="project.updatedStats">
           {{'PROJECT.STATS.UPDATED' | translate}} : {{ project.updatedStats | date }}
         </span>
-        <a (click)="updateStats()">
-          {{'PROJECT.STATS.UPDATE' | translate}}
-        </a>
-      </div>
+          <a (click)="updateStats()">
+            {{'PROJECT.STATS.UPDATE' | translate}}
+          </a>
+        </div>
+      </ng-container>
 
-      <div class="p-top-25 p-no-left">
+      <div *ngIf="canAccess(['edit', 'validateProject']) || canAccess(['edit', 'projectRevision'])"
+           class="p-top-25 p-no-left">
 
         <button
-          *ngIf="project && project.status === 'SUBMITTED'"
+          *ngIf="project && project.status === 'SUBMITTED' && canAccess(['edit', 'validateProject'])"
           (click)="onValidateProject($event)"
           class="button is-primary is-sm m-right-20 m-bottom-15"
           id="btn-validate-project">
@@ -435,7 +465,7 @@
         </button>
 
         <button
-          *ngIf="project && project.status === 'SUBMITTED'"
+          *ngIf="project && project.status === 'SUBMITTED' && canAccess(['edit', 'projectRevision'])"
           (click)="onRevisionProject($event)"
           class="button is-danger is-sm m-bottom-15"
           id="btn-revision-project">
@@ -443,7 +473,6 @@
         </button>
 
       </div>
-
     </div>
 
   </div>
@@ -454,7 +483,7 @@
     <div class="project-section">
 
       <!-- Project tags -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'projectTags']) || canAccess(['edit', 'projectTags'])" class="project-line">
 
         <label class="form-switch" for="seeProjectTags">
           <input
@@ -466,13 +495,14 @@
           {{'PROJECT.PROJECT_TAGS' | translate}}
         </label>
         <label class="form-label">{{project.tags.length}} tags</label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="editProjectTags()">
+        <button [disabled]="!canAccess(['edit', 'projectTags'])"
+                class="showOnHover btn btn-xs ghost-edit" (click)="editProjectTags()">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
 
       <!-- Answer tags-->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'answersTags']) || canAccess(['edit', 'answersTags'])" class="project-line">
 
         <label class="form-switch" for="seeAnswerTags">
           <input
@@ -485,19 +515,22 @@
           {{'PROJECT.CAMPAIGN.EDIT_ANSWER_TAGS' | translate}}
         </label>
         <label class="form-label">{{answerTags}} tags</label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
+        <button [disabled]="!canAccess(['edit', 'answersTags'])"
+                class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
 
       <!-- Answer anonymization-->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'answersAnonymous']) || canAccess(['edit', 'answersAnonymous'])"
+           class="project-line">
 
         <label class="form-switch" for="anonymizeAnswers">
           <input
               type="checkbox"
               name="anonymizeAnswers"
               id="anonymizeAnswers"
+              [disabled]="!canAccess(['edit', 'answersAnonymous'])"
               [checked]="getMetadata('campaign', 'anonymous_answers')"
               (change)="setMetadata('campaign', 'anonymous_answers', $event)">
           <i class="form-icon"></i>
@@ -522,7 +555,8 @@
       <div *ngIf="currentCampaign !== null">
 
         <!-- Campaign professionnals -->
-        <div class="project-line" [ngClass]="{disabled: answerTags === 0}">
+        <div *ngIf="canAccess(['view', 'professionalIdentified']) || canAccess(['edit', 'professionalIdentified'])"
+             class="project-line" [ngClass]="{disabled: answerTags === 0}">
 
           <label class="form-switch" for="seeProfessionnals">
             <input
@@ -537,6 +571,7 @@
           <label class="form-label">{{currentCampaign?.stats?.campaign.nbProfessionals}} {{'COMMON.PROFESSIONALS' |
             translate}}</label>
           <button class="showOnHover btn btn-xs ghost-edit"
+                  [disabled]="!canAccess(['edit', 'professionalIdentified'])"
                   (click)="goToProfessionalsList()">
             {{'COMMON.MORE' | translate}}
           </button>
@@ -546,7 +581,8 @@
         <!-- TODO
         Ask Adrien about this task
         -->
-        <div class="project-line" [ngClass]="{disabled: currentCampaign?.stats?.campaign.nbProfessionals === 0}">
+        <div *ngIf="canAccess(['view', 'abTesting']) || canAccess(['edit', 'abTesting'])"
+             class="project-line" [ngClass]="{disabled: currentCampaign?.stats?.campaign.nbProfessionals === 0}">
 
           <label class="form-switch" for="activateABTesting">
             <input
@@ -559,13 +595,15 @@
             {{'PROJECT.CAMPAIGN.ACTIVATE_AB_TESTING' | translate}}
           </label>
           <button class="showOnHover btn btn-xs ghost-edit"
+                  [disabled]="!canAccess(['edit', 'abTesting'])"
                   (click)="goToTemplates()">
             {{'COMMON.MORE' | translate}}
           </button>
         </div>
 
         <!-- Mails edition -->
-        <div class="project-line">
+        <div *ngIf="canAccess(['view', 'workflowEmails']) || canAccess(['edit', 'workflowEmails'])"
+             class="project-line">
 
           <label class="form-switch" for="editWorkflowMails">
             <input
@@ -578,13 +616,15 @@
             {{'PROJECT.CAMPAIGN.EDIT_WORKFLOW' | translate}}
           </label>
           <button class="showOnHover btn btn-xs ghost-edit"
+                  [disabled]="!canAccess(['edit', 'workflowEmails'])"
                   (click)="goToTemplates()">
             {{'COMMON.MORE' | translate}}
           </button>
         </div>
 
         <!-- Choose default Workflow -->
-        <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
+        <div *ngIf="canAccess(['view', 'workflowSelect']) || canAccess(['edit', 'workflowSelect'])"
+             class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
 
           <label class="form-switch" for="seeWorkflows">
             <input
@@ -599,6 +639,7 @@
           <select class="form-select"
                   name="setWorkflow"
                   id="setWorkflow"
+                  [disabled]="!canAccess(['edit', 'workflowSelect'])"
                   [ngModel]="currentCampaign.settings.defaultWorkflow || ''"
                   (ngModelChange)="updateDefaultWorkflow($event)"
                   [ngModelOptions]="{standalone: true}">
@@ -611,7 +652,8 @@
         </div>
 
         <!-- Launch Auto Batch -->
-        <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
+        <div *ngIf="canAccess(['view', 'launchAutoBatch']) || canAccess(['edit', 'launchAutoBatch'])"
+             class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
 
           <label class="form-switch" for="lauchAutoBatch">
             <input
@@ -624,13 +666,15 @@
             {{'PROJECT.CAMPAIGN.LAUNCH_AUTO_BATCH' | translate}}
           </label>
           <button class="showOnHover btn btn-xs ghost-edit"
+                  [disabled]="!canAccess(['edit', 'launchAutoBatch'])"
                   (click)="goToAutoBatch()">
             {{'COMMON.MORE' | translate}}
           </button>
         </div>
 
         <!-- Validate insights -->
-        <div class="project-line">
+        <div *ngIf="canAccess(['view', 'insightsToValidate']) || canAccess(['edit', 'insightsToValidate'])"
+             class="project-line">
 
           <label class="form-switch" for="validateInsights">
             <input
@@ -645,6 +689,7 @@
           <label class="label is-danger">{{currentCampaign?.stats?.campaign.nbToValidateResp}}
             {{'PROJECT.CAMPAIGN.INSIGHTS_TO_VALIDATE' | translate}}</label>
           <button class="showOnHover btn btn-xs ghost-edit"
+                  [disabled]="!canAccess(['edit', 'insightsToValidate'])"
                   (click)="goToInsights()">
             {{'COMMON.MORE' | translate}}
           </button>
@@ -654,10 +699,9 @@
 
     </div>
 
-    <div class="tags">
+    <div *ngIf="canAccess(['view', 'projectTags'])" class="tags">
       <label class="form-label">{{'PROJECT.PROJECT_TAGS' | translate}}</label>
-      <app-shared-tag [tags]="project.tags">
-      </app-shared-tag>
+      <app-shared-tag [tags]="project.tags"></app-shared-tag>
     </div>
   </div>
 
@@ -671,7 +715,8 @@
     <div class="project-section">
 
       <!-- Public project -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'publicProject']) || canAccess(['edit', 'publicProject'])"
+           class="project-line">
 
         <label class="form-switch" for="publicProject">
           <input
@@ -686,6 +731,7 @@
 
         <label class="label is-danger">{{publishedNote()}}</label>
         <button class="btn btn-xs ghost-edit"
+                *ngIf="canAccess(['edit', 'publicProject'])"
                 [ngClass]="{disabled: !project.isPublic || hasBeenPublished()}"
                 (click)="publish()">
           Publish
@@ -693,7 +739,8 @@
       </div>
 
       <!-- Update answer tags -->
-      <div class="project-line" [ngClass]="{disabled: answerTags === 0}">
+      <div *ngIf="canAccess(['view', 'answersTags']) || canAccess(['edit', 'answersTags'])"
+           class="project-line" [ngClass]="{disabled: answerTags === 0}">
 
         <label class="form-switch" for="updateTags">
           <input
@@ -706,13 +753,15 @@
           {{'PROJECT.DELIVERY.UPDATE_ANSWER_TAGS' | translate}}
         </label>
         <label class="form-label">{{answerTags}} tags</label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
+        <button *ngIf="canAccess(['edit', 'answersTags'])"
+                class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
           {{'COMMON.UPDATE' | translate}}
         </button>
       </div>
 
       <!-- Write conclusion -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'goToSynthesis']) || canAccess(['edit', 'goToSynthesis'])"
+           class="project-line">
 
         <label class="form-switch" for="writeConclusions">
           <input
@@ -724,13 +773,15 @@
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.WRITE_CONCLUSIONS' | translate}}
         </label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToSynthesis()">
+        <button *ngIf="canAccess(['edit', 'goToSynthesis'])"
+                class="showOnHover btn btn-xs ghost-edit" (click)="goToSynthesis()">
           {{'COMMON.MORE' | translate}}
         </button>
       </div>
 
       <!-- Send Ending mail -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'endingMailCampaign']) || canAccess(['edit', 'endingMailCampaign'])"
+           class="project-line">
 
         <label class="form-switch" for="writeEndingMail">
           <input
@@ -743,13 +794,15 @@
           {{'PROJECT.DELIVERY.WRITE_ENDING_MAIL' | translate}}
         </label>
         <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()"
-                *ngIf="getMetadata('delivery', 'endingmail') === false">
+                *ngIf="getMetadata('delivery', 'endingmail') === false
+                && canAccess(['edit', 'endingMailCampaign'])">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
 
       <!-- Restitution -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'projectRestitution'])"
+           class="project-line">
 
         <label class="form-switch" for="projectRestitution">
           <input
@@ -764,7 +817,8 @@
       </div>
 
       <!-- Client satisfaction -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'clientSatisfaction']) || canAccess(['edit', 'clientSatisfaction'])"
+           class="project-line">
 
         <label class="form-switch" for="editClientSatisfaction">
           <input
@@ -800,13 +854,15 @@
             <label>{{'PROJECT.DELIVERY.SATISFACTIONS.VERY_BAD' | translate}}</label>
           </div>
         </div>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="editClientSatisfaction()">
+        <button *ngIf="canAccess(['edit', 'clientSatisfaction'])"
+                class="showOnHover btn btn-xs ghost-edit" (click)="editClientSatisfaction()">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
 
       <!-- Operator feedback -->
-      <div class="project-line">
+      <div *ngIf="canAccess(['view', 'missionFeedback']) || canAccess(['edit', 'missionFeedback'])"
+           class="project-line">
 
         <label class="form-switch" for="review">
           <input
@@ -818,14 +874,15 @@
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.OPERATOR_FEEDBACK' | translate}}
         </label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="editFeedback()">
+        <button *ngIf="canAccess(['edit', 'missionFeedback'])"
+                class="showOnHover btn btn-xs ghost-edit" (click)="editFeedback()">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
 
     </div>
 
-    <div class="project-commentaries">
+    <div *ngIf="canAccess(['view', 'missionFeedback']) " class="project-commentaries">
       <div class="user-message"
            *ngIf="project.clientSatisfaction.message">
         <label class="form-label">{{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}</label>
@@ -856,6 +913,8 @@
   <app-innovation-form
     *ngIf="isInnovationSidebar"
     [sidebarState]="sidebarState"
+    [isEditableDescription]="canAccess(['edit', 'description'])"
+    [isEditableTargeting]="canAccess(['edit', 'targeting'])"
     [type]="more.type"
     [initialProject]="project"
     [setProject]="projectSubject"
@@ -870,13 +929,14 @@
     [initialEmails]="project.settings.blacklist.emails"
     (emailsToBlacklists)="addBlacklists($event)">
   </app-emails-form>
-  <app-tags [sidebarState]="sidebarState"
+  <app-sidebar-tags [sidebarState]="sidebarState"
+                    [isEditable]="true"
                  *ngIf="isTagsSidebar"
                  [type]="more.type"
                  [tags]="project.tags"
                  [tagType]="tagTypes"
                  (newTags)="addTags($event)">
-  </app-tags>
+  </app-sidebar-tags>
   <app-mission-form *ngIf="more && more.type && more.type === 'mission'" [(mission)]="mission"></app-mission-form>
 </app-sidebar>
 

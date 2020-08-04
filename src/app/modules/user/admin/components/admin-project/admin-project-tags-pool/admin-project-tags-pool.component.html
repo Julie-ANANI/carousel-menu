@@ -1,81 +1,54 @@
-<section id="admin-project-tags-pool" class="section-light-pad">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <div class="restrict-width">
+<div *ngIf="canAccess()" class="container fluid grid-2xl animate-fade is-5" id="admin-project-tags-pool">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
+    <!-- error message while fetching -->
+    <app-utility-message-error *ngIf="!isLoading && fetchingError"></app-utility-message-error>
+    <!-- /error message while fetching -->
 
-      <!-- fetching error -->
-      <ng-container *ngIf="fetchingError">
-        <div class="a-p-t-p-error-wrapper d-flex align-center">
-          <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
-            <p [innerText]="'ERROR.ERRORS.PROJECT_FETCHING_ERROR'" translate></p>
-          </app-utility-error-template-1>
-        </div>
-      </ng-container>
-      <!-- /fetching error -->
+    <!-- no fetching error -->
+    <div [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
 
+      <!-- add tag button -->
+      <section *ngIf="canAccess(['add'])" class="text-right p-bottom-30">
+        <button
+          (click)="onClickAdd()"
+          class="button is-primary is-shadowed is-sm"
+          type="button"
+          id="btn-add-tags">
+          Add tags
+        </button>
+      </section>
+      <!-- /add tag button -->
 
-      <!-- no result -->
-      <ng-container *ngIf="!fetchingError && total === 0 && noResult">
-        <div class="a-p-t-p-no-result-wrapper d-flex align-center">
-          <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
-            <div class="text-center">
-
-              <h4 [innerText]="'COMMON.TAG.NO_TAGS_POOL'" class="text-background" translate></h4>
-
-              <div class="m-top-25">
-                <button (click)="onClickAdd()" type="button" class="btn btn-primary rounded shadow">
-                  <i class="fas fa-plus m-no-left"></i>
-                  {{ 'COMMON.BUTTON.ADD' | translate }} tags
-                </button>
-              </div>
-
-            </div>
-          </app-message-template-2>
-        </div>
-      </ng-container>
-      <!-- /no result -->
-
-
-      <!-- result -->
-      <ng-container *ngIf="!fetchingError && !noResult">
-
-        <!-- button -->
-        <div class="text-right p-bottom-30">
-          <button (click)="onClickAdd()" type="button" class="btn btn-primary btn-sm">
-            {{ 'COMMON.BUTTON.ADD' | translate }} tags
-          </button>
-        </div>
-        <!-- /button -->
-
-        <!-- table -->
+      <!-- table -->
+      <section>
         <app-shared-table
           (removeRows)="onClickDelete($event)"
           (editRow)="onClickEdit($event)"
-          [config]="config"
+          [config]="localConfig"
           [data]="table">
         </app-shared-table>
-        <!-- /table -->
-
-      </ng-container>
-      <!-- /result -->
-
+      </section>
+      <!-- /table -->
 
     </div>
+    <!-- /no fetching error -->
+
   </div>
-</section>
+</div>
 
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
-  <app-tags
+<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+  <app-sidebar-tags
     (newTags)="onNewTags($event)"
     (updateTag)="onUpdateTag($event)"
-    [placeholder]="'COMMON.PLACEHOLDER.EXISTING_TAG'"
-    [project]="innovation"
+    [isEditable]="isEditable"
+    [projectId]="innovation._id"
     [sidebarState]="sidebarValue.animate_state"
     [tagType]="'tags'"
     [tag]="tagToEdit"
     [type]="sidebarValue.type">
-  </app-tags>
+  </app-sidebar-tags>
 </app-sidebar>
 <!-- /sidebar -->

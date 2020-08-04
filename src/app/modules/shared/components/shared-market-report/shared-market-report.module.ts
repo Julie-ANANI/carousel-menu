@@ -12,7 +12,7 @@ import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.modul
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { SidebarUserAnswerModule } from '../../../sidebars/components/user-answer/sidebar-user-answer.module';
 import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
-import { MessageTemplate1Module } from '../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { PieChartModule } from '../../../utility/canvas/piechart/pie-chart.module';
 
@@ -51,7 +51,7 @@ import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar
     ReactiveFormsModule,
     SidebarUserAnswerModule,
     CountryFlagModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     ModalModule,
     SharedTagModule,
     PieChartModule,

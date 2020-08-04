@@ -1,9 +1,9 @@
-<section id="item-list-component" class="d-flex">
+<div class="card-wrapper" id="item-list">
   <div *ngFor="let item of listItems; let i = index;" class="card">
     <div class="card-body flex-centered text-center relative">
 
-      <div *ngIf="item.count > 1" class="label is-info">
-        <span>{{ item.count }}x</span>
+      <div *ngIf="item.count > 1" class="label is-sm is-info m-bottom-2">
+        {{ item.count }}x
       </div>
 
       <div [attr.data-tooltip]="item.value" [ngClass]="{ 'tooltip': item.logo }">
@@ -12,9 +12,12 @@
       </div>
 
       <div class="popup-wrapper">
-        <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
+        <app-market-report-popover
+          [answers]="item.answers"
+          (modalAnswerChange)="seeAnswer($event)">
+        </app-market-report-popover>
       </div>
 
     </div>
   </div>
-</section>
+</div>

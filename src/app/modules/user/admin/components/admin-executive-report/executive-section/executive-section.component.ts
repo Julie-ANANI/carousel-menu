@@ -18,6 +18,8 @@ import { ExecutiveReportFrontService } from '../../../../../../services/executiv
 
 export class ExecutiveSectionComponent {
 
+  @Input() isEditable = false;
+
   @Input() questions: Array<Question> = [];
 
   @Input() answers: Array<Answer> = [];
@@ -51,7 +53,9 @@ export class ExecutiveSectionComponent {
               private _responseService: ResponseService) { }
 
   public emitChanges() {
-    this.sectionChange.emit(this._section);
+    if (this.isEditable) {
+      this.sectionChange.emit(this._section);
+    }
   }
 
   private _resetVisuals() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { PresetService } from '../../../../../../services/preset/preset.service';
@@ -8,33 +8,47 @@ import { Innovation } from '../../../../../../models/innovation';
 import { environment } from '../../../../../../../environments/environment';
 import { Preset } from '../../../../../../models/preset';
 import { Observable } from 'rxjs';
+import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { first } from "rxjs/operators";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 
 @Component({
-  selector: 'app-admin-project-questionnaire',
   templateUrl: './admin-project-questionnaire.component.html',
   styleUrls: ['./admin-project-questionnaire.component.scss']
 })
 
-export class AdminProjectQuestionnaireComponent {
+export class AdminProjectQuestionnaireComponent implements OnInit {
 
-  private _innovation: Innovation;
+  private _innovation: Innovation = <Innovation>{};
 
-  private _quizLink: string;
+  private _quizLink = '';
 
-  public showPresetModal: boolean;
-  private _chosenPreset: Preset;
+  private _showPresetModal = false;
+
+  private _chosenPreset: Preset = <Preset>{};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
+              private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationService: InnovationService) {
+              private _innovationService: InnovationService) { }
 
-    if (this._activatedRoute.snapshot.parent.data['innovation']) {
+  ngOnInit(): void {
+    if (this._activatedRoute.snapshot.parent.data['innovation']
+      && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
       this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
       this._setQuizLink();
     }
+  }
 
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'questionnaire'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'questionnaire']);
+    }
   }
 
   _updateProject(innovation: Innovation) {
@@ -42,36 +56,46 @@ export class AdminProjectQuestionnaireComponent {
   }
 
   private _setQuizLink() {
-    if (this._innovation && this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
+    if (this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
       this._quizLink = `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` || '';
     }
   }
 
-  public saveInnovation() {
-   this._innovationService.save(this._innovation._id, this._innovation).subscribe((response: Innovation) => {
-      this._innovation = response;
+  private _saveInnovation() {
+   this._innovationService.save(this._innovation._id, this._innovation).subscribe((innovation: Innovation) => {
+      this._innovation = innovation;
       this._setQuizLink();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PRESET.UPDATED');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
+      this._translateNotificationsService.success('Success', 'The preset is updated.');
+    }, (err: HttpErrorResponse) => {
+     this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+     console.error(err);
     });
   }
 
+  /***
+   * when the user clicks on the Generate button to generate quiz.
+   * @param event
+   */
   public generateQuiz(event: Event) {
     event.preventDefault();
-    this._innovationService.createQuiz(this._innovation._id).subscribe((result: any) => {
-      this._innovation = result;
+    this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
+      this._innovation = innovation;
       this._setQuizLink();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.GENERATED');
-    }, (err: any) => {
-      this._translateNotificationsService.error('ERROR.ERROR', err.message);
+      this._translateNotificationsService.success('Success', 'The quiz is generated.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
+  /***
+   * when the user clicks on the Import button, open the modal.
+   * @param event
+   */
   public openPresetSelection(event: Event) {
     event.preventDefault();
     this._chosenPreset = null;
-    this.showPresetModal = true;
+    this._showPresetModal = true;
   }
 
   public presetSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
@@ -84,33 +108,51 @@ export class AdminProjectQuestionnaireComponent {
 
   public choosePreset(event: {name: string, _id: string}) {
     this._chosenPreset = null;
-    this._presetService.get(event._id).subscribe((preset) => {
+    this._presetService.get(event._id).pipe(first()).subscribe((preset) => {
       this._chosenPreset = preset;
-    }, (err) => {
-      this._translateNotificationsService.error('ERROR.ERROR', err.message);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
   public importPreset(event: Event): void {
     event.preventDefault();
     this._innovation.preset = this._chosenPreset;
-    this.showPresetModal = false;
+    this._saveInnovation();
+    this._showPresetModal = false;
   }
 
-  public savePreset(_preset: Preset): void {
-    this.saveInnovation();
+  /***
+   * when the users updates the existing preset.
+   * @param preset
+   */
+  public updatePreset(preset: Preset): void {
+    if (this.canAccess(['edit'])) {
+      this._saveInnovation();
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
+    }
   }
 
-  get innovation() {
+  get innovation(): Innovation {
     return this._innovation;
   }
 
-  get quizLink() {
+  get quizLink(): string {
     return this._quizLink;
   }
 
-  get chosenPreset() {
+  get chosenPreset(): Preset {
     return this._chosenPreset;
+  }
+
+  get showPresetModal(): boolean {
+    return this._showPresetModal;
+  }
+
+  set showPresetModal(value: boolean) {
+    this._showPresetModal = value;
   }
 
 }

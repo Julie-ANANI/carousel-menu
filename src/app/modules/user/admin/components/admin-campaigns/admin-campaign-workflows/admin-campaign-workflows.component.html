@@ -1,89 +1,130 @@
-<ng-container *ngIf="campaign">
-  <section id="admin-campaign-workflows-component">
+<div *ngIf="canAccess()" class="container grid-2xl fluid animate-fade is-7" id="admin-campaign-workflows">
 
-    <!-- section stats -->
-    <app-admin-campaign-stats></app-admin-campaign-stats>
-    <!-- /section stats -->
+  <!-- stats -->
+  <app-admin-campaign-stats [config]="statsConfig()"></app-admin-campaign-stats>
+  <!-- /stats -->
 
+  <!-- content -->
+  <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
-    <div class="column col-xs-12 col-11 col-mx-auto">
+    <!-- select / import / test workflow -->
+    <div
+      *ngIf="canAccess(['import']) || canAccess(['test']) || canAccess(['select'])"
+      class="p-bottom-10 form-group flex-centered flex-wrap">
 
-      <!-- section select workflow -->
-      <div class="section-light-pad rm-pad-bottom">
-        <div class="form-group">
+      <label
+        *ngIf="canAccess(['select'])"
+        class="form-label m-bottom-20 m-right-10"
+        for="workflows">
+        Select the workflow
+      </label>
 
-          <label class="form-label" for="admin-campaign-workflows">{{ 'COMMON.LABEL.SELECT_WORKFLOW' | translate }}</label>
+      <select
+        *ngIf="canAccess(['select'])"
+        class="form-select is-sm mxw-350 m-right-25 m-bottom-20"
+        id="workflows"
+        [ngModel]="templates ? templates[0] : null"
+        (ngModelChange)="onClickSelect($event)"
+        [ngModelOptions]="{ standalone: true }">
+        <option *ngIf="templates.length === 0" [ngValue]="null">Select</option>
+        <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
+      </select>
 
-          <select
-            class="form-select"
-            id="admin-campaign-workflows"
-            [ngModel]="templates ? templates[0] : null"
-            (ngModelChange)="onClickSelect($event)"
-            [ngModelOptions]="{ standalone: true }">
-            <option *ngIf="templates.length === 0" [ngValue]="null">{{ 'COMMON.LABEL.SELECT' | translate }}</option>
-            <option *ngFor="let template of templates" [ngValue]="template">{{ template.name }}</option>
-          </select>
-
-          <button type="button" class="btn btn-sm btn-primary" (click)="onClickImport()">{{ 'COMMON.BUTTON.IMPORT' | translate }}</button>
-
-          <ng-container *ngIf="availableScenarios && availableScenarios.length">
-            <button type="button" class="btn btn-sm btn-primary" (click)="onClickTestWorkflow()">{{ 'CAMPAIGNS.WORKFLOW_PAGE.BUTTON.TEST_WORKFLOW' | translate }}</button>
-          </ng-container>
-
-        </div>
-      </div>
-      <!-- /section select workflow -->
-
-      <!-- section no campaign -->
-      <ng-container *ngIf="!availableScenarios || !availableScenarios.length">
-        <div class="section-pad">
-          <message-template-1 [widthMax]="'354px'">
-            {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_A' | translate }}
-            <br>
-            {{ 'CAMPAIGNS.WORKFLOW_PAGE.BOT.MESSAGE_B' | translate }}
-          </message-template-1>
-        </div>
-      </ng-container>
-      <!-- /section no campaign -->
-
-      <!-- section campaign -->
-      <ng-container *ngIf="availableScenarios && availableScenarios.length">
-
-        <ng-container *ngIf="modifiedScenarios.length === 0">
-          <div class="text text-alert text-medium">You must have at least one workflow with all modified emails.</div>
+      <!-- import button -->
+      <button
+        (click)="onClickImport()"
+        *ngIf="canAccess(['import'])"
+        [disabled]="isImporting"
+        class="button is-sm is-primary m-right-25 m-bottom-20"
+        type="button">
+        <ng-container *ngIf="isImporting; else textImport">
+          importing the workflow...
         </ng-container>
+        <ng-template #textImport>
+          Import
+        </ng-template>
+      </button>
+      <!-- /import button -->
 
-        <div *ngFor="let scenario of availableScenarios" class="section-light-pad">
-          <app-admin-edit-workflow
-            [scenario]="scenario"
-            [defaultScenario]="campaign.settings.defaultWorkflow"
-            [signatures]="signatures"
-            (scenarioChange)="updateAvailableScenario($event)"
-            (deletedScenario)="removeScenario($event)"
-            (defaultScenarioChange)="setDefaultScenario($event)"
-            [isDeletable]="campaign.settings.defaultWorkflow != scenario.name && campaign.settings.ABsettings.nameWorkflowA !=scenario.name && campaign.settings.ABsettings.nameWorkflowB !=scenario.name">
-          </app-admin-edit-workflow>
-        </div>
-
-      </ng-container>
-      <!-- /section campaign -->
+      <!-- test button -->
+      <button
+        (click)="onClickTestWorkflow()"
+        *ngIf="availableScenarios && availableScenarios.length && canAccess(['test'])"
+        [disabled]="isTesting"
+        class="button is-sm is-outlined is-primary m-bottom-20"
+        type="button">
+        <ng-container *ngIf="isTesting; else textTest">
+          testing the workflow...
+        </ng-container>
+        <ng-template #textTest>
+          Test workflow
+        </ng-template>
+      </button>
+      <!-- /test button -->
 
     </div>
+    <!-- /select / import / test workflow -->
 
-  </section>
-</ng-container>
+    <!-- no campaign -->
+    <div *ngIf="!availableScenarios.length" class="p-top-20">
+      <message-template [widthMax]="'354px'">
+        Don't have any workflow?
+        <span *ngIf="canAccess(['import'])">
+          <br>
+          Try to add a one by clicking on "Import" button.
+        </span>
+      </message-template>
+    </div>
+    <!-- /no campaign -->
+
+    <!-- campaign -->
+    <div *ngIf="availableScenarios.length">
+
+      <div *ngIf="modifiedScenarios.length === 0" class="text-sm text-alert text-medium">
+        You must have at least one workflow with all the modified emails.
+      </div>
+
+      <div *ngFor="let scenario of availableScenarios" class="p-top-30">
+        <app-admin-edit-workflow
+          (defaultScenarioChange)="setDefaultScenario($event)"
+          (deletedScenario)="removeScenario($event)"
+          (scenarioChange)="updateAvailableScenario($event)"
+          [defaultScenario]="campaign.settings && campaign.settings.defaultWorkflow"
+          [isDeletable]="canDelete(scenario)"
+          [isEditable]="canAccess(['edit'])"
+          [scenario]="scenario"
+          [signatures]="signatures">
+        </app-admin-edit-workflow>
+      </div>
+
+    </div>
+    <!-- /campaign -->
+
+  </div>
+  <!-- /content -->
+
+</div>
 
 
 <!-- modal to ask for the confirmation if importing the same template -->
-<app-utility-modal [(showModal)]="modalImport" [title]="'COMMON.MODAL.TITLE_CONFIRMATION'">
+<app-utility-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
 
-  <section class="modal-body">
-    {{ modalContent | translate }}
-  </section>
+  <section class="modal-body">{{ modalContent | translate }}</section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button [disabled]="isImporting" class="button modal-cancel" type="button">Cancel</button>
+    <button
+      (click)="onClickConfirm()"
+      [disabled]="isImporting"
+      class="button is-primary"
+      type="button">
+      <ng-container *ngIf="isImporting; else textImport">
+        importing the workflow...
+      </ng-container>
+      <ng-template #textImport>
+        Confirm
+      </ng-template>
+    </button>
   </footer>
 
 </app-utility-modal>

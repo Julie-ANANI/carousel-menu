@@ -1,3 +1,9 @@
-<app-shared-market-report [project]="project" [adminMode]="adminMode()" [adminSide]="true"></app-shared-market-report>
+<div *ngIf="canAccess()" class="animate-fade is-5" id="admin-project-synthesis">
+  <app-shared-market-report
+    [project]="innovation"
+    [accessPath]="accessPath"
+    [adminSide]="true">
+  </app-shared-market-report>
+</div>
 
 

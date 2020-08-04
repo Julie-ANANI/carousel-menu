@@ -1,93 +1,18 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#bar-chart-component {
-
-  .icon-size {
-    font-size: 18px;
-  }
-
-  .bg-white {
-    background-color: $bg-white-color;
-  }
-
-  .title-primary {
-    font-size: 1.35rem;
-  }
-
-  .content-wrapper {
-    transition: all 0.25s ease;
-    height: 100%;
-
-    .bar-name {
-      font-size: $font-size-lg;
-      margin-left: $unit-2;
-      margin-right: $unit-2;
-    }
-
-    .response-wrapper {
-      font-size: $font-size-md;
-      align-items: center;
-
-      .bar-count {
-        margin-right: $unit-2;
-      }
-
-    }
-
-    .bar {
-      margin-top: 0.75rem;
-    }
-
-    .card-wrapper {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-bottom: -$unit-5;
-
-      .card {
-        min-height: 9.5rem;
-        margin-bottom: $unit-5;
-        flex: 0 1 calc(50% - 1rem);
-
-        .card-body {
-          padding: 0.5rem;
-          height: 100%;
-          width: 100%;
-        }
-
-        &:hover {
-          box-shadow: $box-shadow-7;
-        }
-
-      }
-
-    }
-
-    &.collapse-wrapper {
-      height: 0;
-      transform: scaleY(0);
-      visibility: hidden;
-    }
-
-    &.expand-wrapper {
-      height: 100%;
-      transform: scaleY(1);
-      visibility: visible;
-    }
-
-  }
-
-}
-
-
 @media (max-width: $size-sm) {
 
-  #bar-chart-component {
+  #bar-chart {
 
-    .card-wrapper {
-      flex-direction: column;
+    .answers-wrapper {
 
-      .card {
-        min-height: 100% !important;
+      .card-wrapper {
+        flex-direction: column !important;
+
+        .card {
+          min-height: 100% !important;
+        }
+
       }
 
     }

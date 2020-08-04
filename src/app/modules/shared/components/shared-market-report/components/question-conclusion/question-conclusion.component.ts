@@ -16,21 +16,21 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 
 export class QuestionConclusionComponent implements OnInit {
 
-  @Input() set originAnswers(value: any) {
-    this._answersOrigin = value;
-  }
+  @Input() originAnswers: {[c: string]: number} = null
 
   @Input() readonly = true;
 
-  @Input() pieChart: PieChart;
+  @Input() pieChart: PieChart = <PieChart>{};
 
-  @Input() innovation: Innovation;
+  @Input() innovation: Innovation = <Innovation>{};
 
-  @Input() question: Question;
+  @Input() question: Question = <Question>{};
 
-  @Input() stats: { nbAnswers: number, percentage: number };
+  @Input() stats: { nbAnswers: number, percentage: number } = null;
 
-  private _answersOrigin: {[c: string]: number} = null;
+  private _currentLang = this._translateService.currentLang;
+
+  private _isMainDomain = environment.domain === 'umi' || false;
 
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
@@ -47,20 +47,16 @@ export class QuestionConclusionComponent implements OnInit {
     this._innovationFrontService.setNotifyChanges(true);
   }
 
-  public isMainDomain(): boolean {
-    return environment.domain === 'umi';
-  }
-
-  get lang() {
-    return this._translateService.currentLang;
-  }
-
   get tags(): Array<Tag> {
     return this._dataService.answersTagsLists[this.question._id];
   }
 
-  get answersOrigin(): { [p: string]: number } {
-    return this._answersOrigin;
+  get currentLang(): string {
+    return this._currentLang;
+  }
+
+  get isMainDomain(): boolean {
+    return this._isMainDomain;
   }
 
 }

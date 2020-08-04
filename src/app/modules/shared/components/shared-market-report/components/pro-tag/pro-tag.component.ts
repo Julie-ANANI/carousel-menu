@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TagsFiltersService } from '../../services/tags-filter.service';
 import { Answer } from '../../../../../../models/answer';
 import { Tag } from '../../../../../../models/tag';
+import { UserFrontService } from "../../../../../../services/user/user-front.service";
 
 @Component({
   selector: 'app-pro-tag',
@@ -12,18 +12,19 @@ import { Tag } from '../../../../../../models/tag';
 
 export class ProfessionalTagComponent implements OnInit {
 
-  @Input() answer: Answer;
+  @Input() answer: Answer = <Answer>{};
 
-  @Input() questionId: string;
+  @Input() questionId = '';
 
-  @Input() sectorTag: boolean = false;
+  @Input() sectorTag = false;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  private _tags: Array<Tag>;
+  private _tags: Array<Tag> = [];
 
-  constructor(private tagService: TagsFiltersService,
-              private translateService: TranslateService) {}
+  private _currentLang = this.translateService.currentLang;
+
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit() {
     if (this.questionId) {
@@ -39,21 +40,16 @@ export class ProfessionalTagComponent implements OnInit {
     this.modalAnswerChange.emit(answer);
   }
 
-  public checkTag(event: Event, tag: Tag) {
-    event.preventDefault();
-    if (this.questionId) {
-      this.tagService.checkAnswerTag(this.questionId, tag._id, false);
-    } else {
-      this.tagService.checkTag(tag._id, false);
-    }
+  get professionalName(): string {
+    return UserFrontService.fullName(this.answer.professional)
   }
 
   get tags() {
     return this._tags;
   }
 
-  get userLang() {
-    return this.translateService.currentLang;
+  get currentLang(): string {
+    return this._currentLang;
   }
 
 }

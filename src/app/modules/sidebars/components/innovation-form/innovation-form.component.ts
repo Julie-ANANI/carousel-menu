@@ -16,6 +16,10 @@ import {InnovationFrontService} from '../../../../services/innovation/innovation
 })
 export class InnovationFormComponent implements OnInit, OnDestroy {
 
+  @Input() isEditableDescription = false;
+
+  @Input() isEditableTargeting = false;
+
   @Input() setProject: Subject<Innovation>;
 
   @Input() set initialProject(value: Innovation) {
@@ -176,7 +180,7 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
   // TODO : Implement functionality to send mail
   onSubmit() {
     this._isChange = false;
-    if (this.type === 'pitch' || this.type === 'targeting') {
+    if ((this.isEditableDescription && this.type === 'pitch') || (this.isEditableTargeting && this.type === 'targeting')) {
       if (this._saveCardComment) {
         this._saveComment();
       }

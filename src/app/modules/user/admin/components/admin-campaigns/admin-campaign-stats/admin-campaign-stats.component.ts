@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Campaign } from '../../../../../../models/campaign';
-import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+
+export interface StatsInterface {
+  heading: string;
+  content: Array<{
+    subHeading: string;
+    value: string;
+  }>;
+}
 
 @Component({
   selector: 'app-admin-campaign-stats',
@@ -9,19 +14,19 @@ import { CampaignFrontService } from '../../../../../../services/campaign/campai
   styleUrls: ['./admin-campaign-stats.component.scss']
 })
 
-export class AdminCampaignStatsComponent implements OnInit {
-  private _campaign: Campaign;
+export class AdminCampaignStatsComponent {
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  @Input() config: Array<StatsInterface> = [];
 
-  ngOnInit() {
-    this._campaign = this.activatedRoute.snapshot.parent.data['campaign'];
+  @Input() updateBtn = false;
+
+  @Output() updateStats: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  constructor() { }
+
+  public onUpdateStats(event: Event) {
+    event.preventDefault();
+    this.updateStats.emit(true);
   }
 
-
-  getCampaignStat(searchKey: any): number {
-    if (this._campaign) {
-      return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
-    }
-  }
 }

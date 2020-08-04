@@ -1,0 +1,27 @@
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="sidebar-workflow">
+
+  <!-- save button -->
+  <div *ngIf="isEditable" class="text-right p-bottom-30">
+    <button
+      (click)="onClickSave()"
+      class="button is-community is-sm"
+      type="button">
+      Save
+    </button>
+  </div>
+  <!-- /save button -->
+
+  <!-- email content -->
+  <app-shared-mail-editor
+    (emailChange)="onChangeEmail($event)"
+    [emailsObject]="emailsObject"
+    [id]="id"
+    [inputLanguage]="inputLanguage"
+    [isEditableMode]="isEditable"
+    [isEnablePreviewBtn]="isEditable"
+    [signatures]="signatures">
+  </app-shared-mail-editor>
+  <!-- /email content -->
+
+</div>
+

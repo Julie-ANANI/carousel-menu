@@ -1,9 +1,10 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#admin-campaign-batch-component {
+#admin-campaign-batch {
 
-  .toggle {
-    padding: 15px 0;
+  .toggle-wrapper {
+    display: flex;
+    justify-content: center;
 
     .form-group {
       margin-bottom: 0;
@@ -11,20 +12,16 @@
 
   }
 
-  .nuggets {
-    padding-top: 0;
+  .icons.is-white {
+    top: 7px;
+    right: -30px;
   }
 
-  .icon.is-white {
-    right: 0;
-    bottom: 5px;
-  }
-
-  .section-error {
+  .error-wrapper {
     display: flex;
     align-items: center;
 
-    .left {
+    .is-left {
       margin-left: $unit-5;
     }
 
@@ -51,26 +48,16 @@
 
   }
 
-  .section-status {
-
-    .form-group {
-      display: inline-flex;
-      margin-right: 25px;
-
-      .form-switch {
-        color: $text-meta-color;
-      }
-
-    }
-
-  }
-
   .card {
-    margin-bottom: 30px;
     background: transparent;
     border: none;
 
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+
     .card-header {
+      padding-bottom: 5px;
 
       .card-title {
         display: inline-flex;

@@ -187,7 +187,8 @@ export const ERROR = {
 
 
   'IMPORT': {
-    'CSV': 'Le CSV a été importé avec succès.'
+    'CSV': 'Le CSV a été importé avec succès.',
+    'PROJECT': 'Le projet a été importé avec succès.'
   },
 
 

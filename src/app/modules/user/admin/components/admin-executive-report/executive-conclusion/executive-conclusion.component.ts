@@ -22,6 +22,8 @@ interface Operator {
 
 export class ExecutiveConclusionComponent implements OnInit {
 
+  @Input() isEditable = false;
+
   @Input() lang = 'en';
 
   @Input() set config(value: ExecutiveConclusion) {
@@ -82,7 +84,9 @@ export class ExecutiveConclusionComponent implements OnInit {
   }
 
   public emitChanges() {
-    this.configChange.emit(this.config);
+    if (this.isEditable) {
+      this.configChange.emit(this.config);
+    }
   }
 
   public textColor() {

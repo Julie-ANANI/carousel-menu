@@ -6,8 +6,8 @@ import { AdminProfessionalsComponent } from './admin-professionals.component';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { SharedProfessionalsListModule } from '../../../../shared/components/shared-professionals-list/shared-professionals-list.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -15,8 +15,8 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
     ReactiveFormsModule,
     TranslateModule.forChild(),
     PipeModule,
-    ErrorTemplate1Module,
-    SharedProfessionalsListModule
+    SharedProfessionalsListModule,
+    MessageErrorModule
   ],
   declarations: [
     AdminProfessionalsComponent

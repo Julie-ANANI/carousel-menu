@@ -24,17 +24,18 @@ import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/a
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
-import { SidebarTagsModule } from '../../../../sidebars/components/tags/sidebar-tags.module';
+import { SidebarTagsModule } from '../../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
 import { SidebarInnovationFormModule } from '../../../../sidebars/components/innovation-form/sidebar-innovation-form.module';
-import { SidebarCampaignFormModule } from '../../../../sidebars/components/campaign-form/sidebar-campaign-form.module';
-import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
+import { SidebarCampaignModule } from '../../../../sidebars/components/sidebar-campaign/sidebar-campaign.module';
+import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../utility/messages/message-template-2/message-template-2.module';
 import { SharedFollowUpModule } from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 import { MissionFormModule } from '../../../../sidebars/components/mission-form/mission-form.module';
 import { BannerModule } from '../../../../utility/banner/banner.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -59,14 +60,15 @@ import { BannerModule } from '../../../../utility/banner/banner.module';
     SidebarTagsModule,
     SidebarEmailFormModule,
     SidebarInnovationFormModule,
-    SidebarCampaignFormModule,
-    MessageTemplate1Module,
+    SidebarCampaignModule,
+    MessageTemplateModule,
     ModalModule,
     ErrorTemplate1Module,
     MessageTemplate2Module,
     SharedFollowUpModule,
     MissionFormModule,
-    BannerModule
+    BannerModule,
+    MessageErrorModule
   ],
   declarations: [
     AdminProjectComponent,

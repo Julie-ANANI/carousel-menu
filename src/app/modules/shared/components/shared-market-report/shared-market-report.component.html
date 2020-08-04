@@ -1,39 +1,29 @@
-<div *ngIf="innovation" id="market-report">
+<div class="shared-market-report" id="shared-market-report">
 
   <!-- project status not done at client side -->
-  <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !previewMode">
-    <section [ngStyle]="{ 'background-color': '#FFFFFF' }">
-      <div class="section-light-pad rm-pad-bottom">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <h1 class="title-primary">{{ 'MARKET_REPORT.TITLE'  | translate }}</h1>
-          <div class="section-light-pad rm-pad-bottom">
-            <message-template-1 [widthMax]="'337px'">
-              <span>{{ 'MARKET_REPORT.MESSAGE.EDITING' | translate }}</span>
-            </message-template-1>
-          </div>
-        </div>
-      </div>
-    </section>
-  </ng-container>
+  <section
+    *ngIf="innovation.status !== 'DONE' && !adminSide && !previewMode"
+    class="p-top-100 p-bottom-30 p-left-15 p-right-15">
+    <message-template [widthMax]="'337px'">
+      {{ 'MARKET_REPORT.MESSAGE.EDITING' | translate }}
+    </message-template>
+  </section>
   <!-- /project status not done at client side -->
 
   <!-- project status not submitted admin side -->
-  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
-    <section class="section-pad rm-pad-bottom">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <message-template-1 [widthMax]="'337px'">
-          <span>{{ 'MARKET_REPORT.MESSAGE_ADMIN.NOT_SUBMITTED' | translate }}</span>
-        </message-template-1>
-      </div>
-    </section>
-  </ng-container>
+  <section *ngIf="innovation.status === 'EDITING' && adminSide" class="p-top-50 p-bottom-30 p-left-15 p-right-15">
+    <message-template [widthMax]="'337px'">
+      The client hasn't submitted the project yet. You will be able to edit the market report after
+      he submits his project.
+    </message-template>
+  </section>
   <!-- /project status not submitted admin side -->
 
   <!-- project status done or preview mode or not editing -->
   <div
     *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)"
     [ngStyle]="{'background-color': '#F5F5F5'}">
-    <div class="container fluid grid-2xl">
+    <div class="container fluid grid-2xl animate-fade is-5">
       <div class="pws-wrapper">
 
         <!-- sidebar -->
@@ -42,12 +32,11 @@
             <app-sidebar-filter-answers
               [innovation]="innovation"
               [templateType]="leftSidebarTemplateValue.type"
+              [isViewsEditable]="canAccess(['edit', 'views'])"
               [questions]="questions"
               [answers]="answers"
-              [isAdmin]="adminMode"
               [isAdminSide]="adminSide"
-              [isOwner]="isOwner"
-              (closeSidebar)="closeSidebar()">
+              [isOwner]="isOwner">
             </app-sidebar-filter-answers>
           </app-sidebar-in-page>
         </aside>
@@ -58,17 +47,17 @@
 
           <!-- key learning section -->
           <section
-            *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide"
+            *ngIf="innovation.marketReport?.keyLearning?.conclusion?.length > 0 || adminSide"
             [ngClass]="{ 'p-top-50': !reportShared }"
             class="p-bottom-50"
             id="key-learnings">
-            <div class="section-pad full key-learning-wrapper bg-white text">
-              <h2 class="title-primary" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
-              <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+            <div class="box-style p-50">
+              <h2 class="title is-main" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
+              <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
               <app-text-zone
-                [readonly]="!adminSide"
+                (onTextChange)="saveOperatorComment($event, 'keyLearning')"
                 [data]="innovation.marketReport?.keyLearning?.conclusion"
-                (onTextChange)="saveOperatorComment($event, 'keyLearning')">
+                [readonly]="!canAccess(['edit', 'umiWord'])">
               </app-text-zone>
             </div>
           </section>
@@ -76,16 +65,16 @@
 
           <!-- origin comment and professional responses -->
           <section
-            [ngClass]="{ 'p-top-50': !reportShared && innovation.marketReport?.keyLearning?.conclusion.length !== 0 }"
-            class="p-bottom-50"
+            [ngClass]="{ 'p-top-50': !innovation.marketReport?.keyLearning?.conclusion?.length }"
+            class="p-bottom-30"
             id="origin-responses">
-            <div class="origin-wrapper bg-white text">
+            <div class="box-style">
               <app-question-conclusion
                 [innovation]="innovation"
+                [originAnswers]="answersOrigins"
                 [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
-                [readonly]="!adminSide"
-                [originAnswers]="answersOrigins"
+                [readonly]="!canAccess(['edit', 'umiWord'])"
                 [stats]="{ nbAnswers: answers.length, percentage: 0 }">
               </app-question-conclusion>
             </div>
@@ -93,33 +82,27 @@
           <!-- /origin comment and professional responses -->
 
           <!-- map -->
-          <section class="p-top-25 p-bottom-25" id="map">
-            <div class="map-wrapper">
-              <app-shared-worldmap [countriesData]="answersByCountries"></app-shared-worldmap>
-            </div>
+          <section class="p-top-15" id="map">
+            <app-shared-worldmap [countriesData]="answersByCountries"></app-shared-worldmap>
           </section>
           <!-- /map -->
 
           <!-- professionals -->
-          <section class="section-pad" id="professionals">
+          <section class="p-bottom-50" id="professionals">
 
-            <div class="text-center">
+            <div class="text-center p-top-25">
               <button
-                type="button"
-                class="btn btn-primary"
-                (click)="toggleProfessional = !toggleProfessional">
+                (click)="toggleProfessional = !toggleProfessional"
+                class="button is-community is-sm"
+                type="button">
                 {{ (toggleProfessional ? 'MARKET_REPORT.BTN_PROFESSIONAL_CLOSE'
                 : 'MARKET_REPORT.BTN_PROFESSIONAL_OPEN') | translate }}
-                <i
-                  class="fas"
-                  aria-hidden="true"
-                  [ngClass]="toggleProfessional ? 'fa-angle-down' : 'fa-angle-right'">
-                </i>
+                <i class="icon" [ngClass]="toggleProfessional ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
               </button>
             </div>
 
-            <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'expand-wrapper' : 'collapse-wrapper' ">
-              <div class="card-wrapper d-flex p-top-50">
+            <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'is-expand' : 'is-collapse' ">
+              <div class="card-wrapper">
                 <div *ngFor="let answer of filteredAnswers" class="card is-card-3 relative">
                   <div (click)="filterPro(answer, $event)" class="icon-container text-alert absolute">
                     <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translate">
@@ -127,7 +110,10 @@
                     </span>
                   </div>
                   <div class="card-body">
-                    <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                    <app-pro-tag
+                      (modalAnswerChange)="seeAnswer($event)"
+                      [answer]="answer">
+                    </app-pro-tag>
                   </div>
                 </div>
               </div>
@@ -137,32 +123,31 @@
           <!-- /professionals -->
 
           <!-- other question sections -->
-          <section id="questions">
-            <div *ngFor="let question of questions">
-              <app-question-section
-                [project]="innovation"
-                [question]="question"
-                [answers]="filteredAnswers"
-                [toggleAnswers]="toggleAnswers"
-                [readonly]="!adminSide"
-                (modalAnswerChange)="seeAnswer($event)">
-              </app-question-section>
-            </div>
+          <section *ngFor="let question of questions" class="p-bottom-50" id="questions">
+            <app-question-section
+              (modalAnswerChange)="seeAnswer($event)"
+              [answers]="filteredAnswers"
+              [canEditQuestionTags]="canAccess(['edit', 'questionTags'])"
+              [innovation]="innovation"
+              [questionReceived]="question"
+              [readonly]="!canAccess(['edit', 'umiWord'])"
+              [toggleAnswers]="toggleAnswers">
+            </app-question-section>
           </section>
           <!-- /other question sections -->
 
           <!-- conclusion -->
           <section
-            *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
-            class="p-top-50 p-bottom-50"
+            *ngIf="innovation.marketReport?.finalConclusion?.conclusion?.length > 0 || adminSide"
+            class="p-bottom-50"
             id="conclusion">
-            <div class="p-50 bg-white text conclusion-wrapper">
-              <h2 class="title-primary" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
-              <h6 *ngIf="mainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+            <div class="box-style p-50">
+              <h2 class="title is-main" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
+              <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
               <app-text-zone
-                [readonly]="!adminSide"
+                (onTextChange)="saveOperatorComment($event, 'finalConclusion')"
                 [data]="innovation.marketReport?.finalConclusion?.conclusion"
-                (onTextChange)="saveOperatorComment($event, 'finalConclusion')">
+                [readonly]="!canAccess(['edit', 'umiWord'])">
               </app-text-zone>
             </div>
           </section>
@@ -179,23 +164,24 @@
 </div>
 
 <!-- save button -->
-<div *ngIf="toBeSaved" class="bsf-wrapper">
+<div *ngIf="toBeSaved" class="save-wrapper">
   <button
     (click)="saveInnovation($event)"
-    class="button is-primary animate-zoom is-3 is-rounded">
+    class="button is-primary animate-zoom is-3 is-rounded"
+    type="button">
     Save
   </button>
 </div>
 <!-- /save button -->
 
-<!-- insight preview -->
-<app-sidebar *ngIf="innovation" [(template)]="sidebarTemplateValue">
+<!-- sidebar insight preview -->
+<app-sidebar *ngIf="innovation && innovation._id" [(template)]="sidebarTemplateValue">
   <app-user-answer
     *ngIf="modalAnswer._id"
     [(userAnswer)]="modalAnswer"
-    [adminMode]="adminMode"
+    [adminMode]="canAccess(['edit', 'respondentProfile'])"
     [projectId]="innovation._id"
     [questions]="questions">
   </app-user-answer>
 </app-sidebar>
-<!-- /insight preview -->
+<!-- /sidebar insight preview-->

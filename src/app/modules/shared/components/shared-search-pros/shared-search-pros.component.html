@@ -1,264 +1,300 @@
-<section id="shared-search-pros-component">
-  <div class="search-section">
+<div id="shared-search-pros">
 
-    <!-- search wrapper -->
-    <div class="search-wrapper">
+  <!-- search wrapper -->
+  <div *ngIf="canAccess(['launch', 'cat'])" class="search-wrapper">
 
-      <!-- heading -->
-      <div class="heading-wrapper">
+    <!-- heading -->
+    <div class="heading-wrapper">
 
-        <h2 class="title-secondary">Rocket Testing</h2>
+      <h2 class="title-secondary">Rocket Testing</h2>
 
-        <span class="text-link" (click)="onReset()">Reset</span>
+      <span class="text-link text-sm" (click)="onReset()">Reset</span>
 
-        <span class="line">|</span>
+      <span class="line">|</span>
 
-        <div class="popover popover-top">
-
-          <span class="text-help">Help</span>
-
-          <div class="popover-container">
-            <div class="card">
-              <div class="card-body">
-
-                <div class="d-flex align-center">
-                  <div class="shape is-circle is-xs bg-success"></div>
-                  <span>Relevant</span>
-                </div>
-
-                <div class="d-flex align-center">
-                  <div class="shape is-circle is-xs bg-progress"></div>
-                  <span>Average</span>
-                </div>
-
-                <div class="d-flex align-center">
-                  <div class="shape is-circle is-xs bg-alert"></div>
-                  <span>Overused</span>
-                </div>
-
-                <div class="d-flex align-center">
-                  <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
-                  <span>Too much pros duplicated</span>
-                </div>
-
-                <hr class="hr">
-
-                <ul>
-                  <li>No capital letters or "s".</li>
-                  <li>Numbers can't be processed.</li>
-                  <li>Please enter at least 2 requests.</li>
-                </ul>
-
+      <div class="popover is-bottom">
+        <span class="text-help">Help</span>
+        <div class="popover-container">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-center">
+                <div class="shape is-circle is-xs bg-success"></div>
+                <span>Relevant</span>
               </div>
+              <div class="d-flex align-center">
+                <div class="shape is-circle is-xs bg-progress"></div>
+                <span>Average</span>
+              </div>
+              <div class="d-flex align-center">
+                <div class="shape is-circle is-xs bg-alert"></div>
+                <span>Overused</span>
+              </div>
+              <div class="d-flex align-center">
+                <div class="icons icons-delete"><i class="fas fa-exclamation-triangle"></i></div>
+                <span>Too much pros duplicated</span>
+              </div>
+              <hr class="hr m-top-10 m-bottom-10">
+              <ul>
+                <li>No capital letters or "s".</li>
+                <li>Numbers can't be processed.</li>
+                <li>Please enter at least 2 requests.</li>
+              </ul>
             </div>
           </div>
-
         </div>
-
       </div>
-      <!-- /heading -->
 
-      <!-- input -->
-      <div class="input-wrapper">
+    </div>
+    <!-- /heading -->
 
-        <div class="form-group">
+    <!-- input -->
+    <div class="input-wrapper">
+
+      <div class="form-group">
+        <label>
             <textarea
-              type="text"
+              [(ngModel)]="params['catKeywords']"
               class="form-input"
               name="cat-keywords"
+              placeholder="Search here using Computer Aided Targeting. One request per line."
               rows="5"
-              [(ngModel)]="params.catKeywords"
-              placeholder="Search here using Computer Aided Targeting. One request per line.">
+              type="text">
             </textarea>
-          <ng-container *ngIf="params.catKeywords">
-            <span class="search-button-wrapper" (click)="onClickSearchCat($event)"><i class="fas fa-search"></i></span>
-          </ng-container>
+        </label>
+        <span
+          (click)="onClickSearchCat($event)"
+          *ngIf="params['catKeywords']"
+          [attr.data-tooltip]="'Search'"
+          class="search-button-wrapper tooltip">
+              <i class="fas fa-search"></i>
+            </span>
+      </div>
+
+      <div class="remaining-wrapper">
+        <div class="d-flex align-center">
+          <span [ngClass]="getCatCircleClass()" class="shape is-circle is-xs"></span>
+          <span>Search Requests</span>
+        </div>
+        <div>Remaining for today: {{ catQuota }}</div>
+      </div>
+
+    </div>
+    <!-- /input -->
+
+    <!-- loader -->
+    <div *ngIf="displayLoader" class="loader-wrapper">
+      <div class="loading is-lg"></div>
+    </div>
+    <!-- /loader -->
+
+    <!-- display cat result -->
+    <div *ngIf="catProcessDone && !displayLoader">
+
+      <!-- analysis -->
+      <div class="analysis-wrapper">
+
+        <div class="heading-wrapper">
+          <h2 class="title-secondary">Analysis</h2>
+          <div
+            *ngIf="catResult && catResult['duplicate_status'] && catResult['duplicate_status'] !== 'ok'"
+            class="icon is-delete">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
         </div>
 
-        <div class="remaining-wrapper">
-          <div class="d-flex align-center">
-            <span class="shape is-circle is-xs" [ngClass]="getCatCircleClass()"></span>
-            <span>Search Requests</span>
-          </div>
-          <div><span>Remaining for today: {{ catQuota }}</span></div>
+        <div class="analysis-content">
+          <ul>
+            <li *ngFor="let suggestion of suggestions">
+              <div class="d-flex"><span class="text-pros">
+                  {{ suggestion.expected_result }} pros</span>
+                <div [innerHTML]="suggestion.search_keywords"></div>
+              </div>
+              <div
+                (click)="onClickPlus(suggestion.keywords)"
+                [ngStyle]="{ 'visibility':  checkKeywords(suggestion.keywords) }">
+                <i class="fas fa-plus-circle"></i>
+              </div>
+            </li>
+          </ul>
         </div>
 
       </div>
-      <!-- /input -->
+      <!-- /analysis -->
 
-      <!-- loader -->
-      <ng-container *ngIf="displayLoader">
-        <div class="loader-wrapper">
-          <div class="loading is-lg"></div>
+      <!-- suggested -->
+      <div class="suggested-wrapper">
+
+        <div class="heading-wrapper">
+          <h2 class="title-secondary">Suggested Keywords</h2>
         </div>
-      </ng-container>
-      <!-- /loader -->
 
-      <!-- display cat result -->
-      <ng-container *ngIf="catProcessDone && !displayLoader">
-
-        <!-- analysis -->
-        <div class="analysis-wrapper">
-
-          <div class="heading-wrapper">
-            <h2 class="title-secondary">Analysis</h2>
-            <ng-container *ngIf="catResult && catResult.duplicate_status !== 'ok'">
-              <div class="icon is-delete"><i class="fas fa-exclamation-triangle"></i></div>
-            </ng-container>
-          </div>
-
-          <div class="analysis-content">
-            <ul>
-              <li *ngFor="let suggestion of suggestions">
-                <div class="d-flex"><span class="text-pros">{{ suggestion.expected_result }} pros</span><div [innerHTML]="suggestion.search_keywords"></div></div>
-                <div (click)="onClickPlus(suggestion.keywords)" [ngStyle]="{ 'visibility':  checkKeywords(suggestion.keywords) }"><i class="fas fa-plus-circle"></i></div>
-              </li>
-            </ul>
-          </div>
-
+        <div class="suggested-content">
+          <ul>
+            <li *ngFor="let keyword of catResult['new_keywords']">
+              {{ keyword }}
+            </li>
+          </ul>
         </div>
-        <!-- /analysis -->
 
-        <!-- suggested -->
-        <div class="suggested-wrapper">
+      </div>
+      <!-- /suggested -->
 
-          <div class="heading-wrapper">
-            <h2 class="title-secondary">Suggested Keywords</h2>
-          </div>
+      <!-- star profiles -->
+      <div class="profile-wrapper">
 
-          <div class="suggested-content">
-            <ul>
-              <li *ngFor="let keyword of catResult.new_keywords">
-                <span>{{ keyword }}</span>
-              </li>
-            </ul>
-          </div>
-
+        <div class="heading-wrapper">
+          <h2 class="title-secondary">4 Star Profiles</h2>
         </div>
-        <!-- /suggested -->
 
-        <!-- star profiles -->
-        <div class="profile-wrapper">
-
-          <div class="heading-wrapper">
-            <h2 class="title-secondary">4 Star Profiles</h2>
-          </div>
-
-          <div class="profile-content">
-            <ul>
-              <li *ngFor="let profile of catResult.profile | keyvalue">
-                <div class="popover popover-top">
-                  <a [href]="profile.key" target="_blank"><span class="text-title">{{ profile.value.title }}</span></a>
-                  <div class="popover-container">
-                    <div class="card">
-                      <div class="card-body">
-                        <span>{{ profile.value.snippet }}</span>
-                      </div>
+        <div class="profile-content">
+          <ul>
+            <li *ngFor="let profile of catResult.profile | keyvalue">
+              <div class="popover">
+                <a [href]="profile.key" target="_blank">
+                  <span class="text-title">{{ profile.value.title }}</span>
+                </a>
+                <div class="popover-container">
+                  <div class="card">
+                    <div class="card-body">
+                        <span *ngIf="profile.value && profile.value['snippet']">
+                          {{ profile.value['snippet'] }}
+                        </span>
                     </div>
                   </div>
                 </div>
-              </li>
-            </ul>
-          </div>
-
+              </div>
+            </li>
+          </ul>
         </div>
-        <!-- /star profiles -->
 
-      </ng-container>
-      <!-- /display cat result -->
+      </div>
+      <!-- /star profiles -->
 
     </div>
-    <!-- /search wrapper -->
-
-    <!-- search wrapper -->
-    <div class="search-wrapper">
-
-      <!-- heading -->
-      <div class="heading-wrapper">
-        <h2 class="title-secondary">Rocket Launching</h2>
-        <span class="text-link" (click)="onClickSettings()">Settings</span>
-      </div>
-      <!-- /heading -->
-
-      <!-- input -->
-      <div class="input-wrapper">
-
-        <div class="form-group">
-            <textarea
-              type="text"
-              class="form-input"
-              name="keywords"
-              rows="5"
-              (ngModelChange)="estimateNumberOfGoogleRequests()"
-              [(ngModel)]="params.keywords"
-              placeholder="Search here like 'Google'. One request per line.">
-            </textarea>
-          <ng-container *ngIf="params.keywords">
-            <span class="search-button-wrapper" (click)="onClickSearch($event)"><i class="fas fa-search"></i></span>
-          </ng-container>
-        </div>
-
-        <div class="remaining-wrapper">
-          <div>
-            <a (click)="showModal = true">{{ 'COMMON.BUTTON.IMPORT_PROS' | translate }}</a>
-          </div>
-          <div class="d-flex align-center">
-            <span class="shape is-circle is-xs" [ngClass]="getCircleClass()"></span>
-            <span>Remaining requests: {{ googleQuota }}</span>
-          </div>
-        </div>
-      </div>
-      <!-- /input -->
-
-    </div>
-    <!-- /search wrapper -->
+    <!-- /display cat result -->
 
   </div>
-</section>
+  <!-- /search wrapper -->
+
+  <!-- search wrapper -->
+  <div *ngIf="canAccess(['launch', 'search'])" class="search-wrapper">
+
+    <!-- heading -->
+    <div class="heading-wrapper">
+      <h2 class="title-secondary">Rocket Launching</h2>
+      <span
+        (click)="onClickSettings()"
+        *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])"
+        class="text-link text-sm">
+          Settings
+        </span>
+    </div>
+    <!-- /heading -->
+
+    <!-- input -->
+    <div class="input-wrapper">
+
+      <div class="form-group">
+        <label>
+            <textarea
+              (ngModelChange)="estimateNumberOfGoogleRequests()"
+              [(ngModel)]="params['keywords']"
+              class="form-input"
+              name="keywords"
+              placeholder="Search here like 'Google'. One request per line."
+              rows="5"
+              type="text">
+            </textarea>
+        </label>
+        <span
+          (click)="onClickSearch($event)"
+          *ngIf="params['keywords']"
+          [attr.data-tooltip]="'Search'"
+          class="search-button-wrapper tooltip">
+              <i class="fas fa-search"></i>
+            </span>
+      </div>
+
+      <div class="remaining-wrapper">
+        <a
+          *ngIf="canAccess(['import', 'pros'])"
+          (click)="showModal = true"
+          class="text-link">
+          Import a list of pros
+        </a>
+        <div class="d-flex align-center">
+          <span [ngClass]="getCircleClass()" class="shape is-circle is-xs"></span>
+          <span>Remaining requests: {{ googleQuota }}</span>
+        </div>
+      </div>
+
+    </div>
+    <!-- /input -->
+
+  </div>
+  <!-- /search wrapper -->
+
+</div>
 
 
 <!-- sidebar to advanced search -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar
+  *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])"
+  [(template)]="sidebarValue">
   <app-sidebar-search
-    [params]="params"
+    (geographyChange)="onGeographyChange($event)"
     (paramsChange)="updateSettings($event)"
     [geography]="geography"
-    (geographyChange)="onGeographyChange($event)">
+    [isEditable]="canAccess(['edit', 'settings'])"
+    [params]="params">
   </app-sidebar-search>
 </app-sidebar>
 <!-- /sidebar to advanced search -->
 
 
-
 <!-- MODAL : import a professionals list -->
-<app-utility-modal [(showModal)]="showModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
+<app-utility-modal
+  *ngIf="canAccess(['import', 'pros'])"
+  [(showModal)]="showModal"
+  [title]="'Import Board'">
 
-  <section class="modal-body"> <!-- import button -->
-    <div class="form-group">
-      <label class="form-label" for="name">
-        Nom à donner à la requête:
+  <section class="modal-body">
+
+    <div class="form-group m-bottom-30">
+      <label class="form-label" for="shared-search-modal-name">
+        Name to be given to the request
       </label>
-      <input type="text" class="form-input" placeholder="Fichier import" id="name" [(ngModel)]="importRequestKeywords">
+      <input
+        [(ngModel)]="importRequestKeywords"
+        class="form-input"
+        id="shared-search-modal-name"
+        placeholder="Give a name to the import file"
+        type="text">
     </div>
 
-    <div class="text-center text-sm">
-      <label class="button is-primary is-outlined">
-        <input #fileupload type="file" [hidden]="true" (change)="onClickImport(fileupload.files[0])" />
-        <i class="fas fa-file-import icon-left"></i> {{ 'COMMON.BUTTON.IMPORT_PROS' | translate }}
+    <!-- import button -->
+    <div class="text-center p-bottom-30">
+      <label class="button is-primary is-sm is-outlined">
+        <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
+        <i class="fas fa-file-import icon-left"></i> Import pros
       </label>
-      <p class="text-justify">
-        Le fichier doit utiliser ces <b>noms exacts</b> pour les colonnes: <b>First Name UMI</b>,
-        <b>Last Name UMI</b>, <b>Company UMI</b>, Language, Email UMI, emailConfidence, Linkedin, Company Site, Country UMI, Job UMI.
-      </p>
-      <p>
-        Les colonnes en gras sont obligatoires, les autres facultatives. L'ordre des colonnes n'a pas d'importance.
-      </p>
     </div>
+    <!-- /import button -->
+
+    <p class="text-center text-sm">
+      The file must use these <b>exact names</b> for the columns: <b>First Name UMI</b>,
+      <b>Last Name UMI</b>, <b>Company UMI</b>, Language, Email UMI, emailConfidence, Linkedin, Company Site,
+      Country UMI, Job UMI.
+    </p>
+
+    <p class="text-center text-sm">
+      Bold columns are mandatory, other columns are optional. The order of the columns does not matter.
+    </p>
 
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
   </footer>
 
 </app-utility-modal>

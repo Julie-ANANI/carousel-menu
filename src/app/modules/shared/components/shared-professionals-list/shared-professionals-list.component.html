@@ -1,14 +1,14 @@
-<section id="shared-professionals-list">
+<div id="shared-professionals-list">
   <app-shared-table
     (configChange)="onConfigChange($event)"
     (editRow)="onClickEdit($event)"
-    (removeRows)="onClickDelete($event)"
     (performAction)="onClickActions($event)"
+    (removeRows)="onClickDelete($event)"
     (selectRows)="onSelectRows($event)"
-    [config]="config"
+    [config]="localConfig"
     [data]="table">
   </app-shared-table>
-</section>
+</div>
 
 
 <!-- sidebar -->
@@ -19,6 +19,7 @@
     <app-user-form
       (finalProfessionalData)="updateProfessional($event)"
       [campaign]="campaign"
+      [isEditable]="canAccess(['user', 'edit'])"
       [pro]="selectedProfessional"
       [sidebarState]="sidebarValue.animate_state"
       [type]="sidebarValue.type">
@@ -27,13 +28,13 @@
   <!-- /professional -->
 
   <!-- tags -->
-  <ng-container *ngIf="isTagsSidebar">
-    <app-tags
-      [sidebarState]="sidebarValue.animate_state"
-      [type]="sidebarValue.type"
-      (newTags)="addProfessionalTags($event)">
-    </app-tags>
-  </ng-container>
+  <app-sidebar-tags
+    (newTags)="addProfessionalTags($event)"
+    *ngIf="isTagsSidebar"
+    [isEditable]="canAccess(['user', 'edit'])"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type">
+  </app-sidebar-tags>
   <!-- /tags -->
 
 </app-sidebar>
@@ -41,23 +42,34 @@
 
 
 <!-- modal -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal
+  *ngIf="canAccess(['user', 'delete'])"
+  [(showModal)]="modalDelete"
+  [title]="'Delete Board'">
 
   <section class="modal-body">
-
-    <div class="text-background text-medium">{{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}</div>
-
-    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+    <div>Do you really want to delete the selected professional(s)?</div>
+    <ul class="d-flex flex-wrap text-sm text-notify text-medium m-top-3">
       <li *ngFor="let professional of professionalsToRemove" class="m-right-3 m-top-1">
         {{ professional?.firstName }} {{ professional?.lastName }}
       </li>
     </ul>
-
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button [disabled]="isDeleting" class="button modal-cancel" type="button">Cancel</button>
+    <button
+      [disabled]="isDeleting"
+      (click)="onClickConfirm()"
+      class="button is-primary"
+      type="button">
+      <ng-container *ngIf="isDeleting; else textDelete">
+        deleting the professionals...
+      </ng-container>
+      <ng-template #textDelete>
+        Confirm
+      </ng-template>
+    </button>
   </footer>
 
 </app-utility-modal>

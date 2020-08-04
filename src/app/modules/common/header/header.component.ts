@@ -12,12 +12,13 @@ import { SpinnerService } from '../../../services/spinner/spinner.service';
 import { UserFrontService } from '../../../services/user/user-front.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { RolesFrontService } from "../../../services/roles/roles-front.service";
 
 interface Header {
   pageName: string;
   pageLink: string;
   trackingClass?: string;
-  adminLevel?: number;
+  key: string
 }
 
 @Component({
@@ -70,18 +71,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private _showLangs = false;
 
   private _adminRoutes: Array<Header> = [
-    // { pageName: 'Dashboard', pageLink: '/user/admin', adminLevel: 1 },
-    { pageName: 'Market Tests', pageLink: '/user/admin/projects', adminLevel: 1 },
-    { pageName: 'Users', pageLink: '/user/admin/users', adminLevel: 1 },
-    { pageName: 'Community', pageLink: '/user/admin/community', adminLevel: 3 },
-    { pageName: 'Professionals', pageLink: '/user/admin/professionals', adminLevel: 3 },
-    { pageName: 'Libraries', pageLink: '/user/admin/libraries', adminLevel: 3 },
-    { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', adminLevel: 3 },
-    { pageName: 'Settings', pageLink: '/user/admin/settings', adminLevel: 3 },
-    { pageName: 'Search', pageLink: '/user/admin/search/pros', adminLevel: 3 },
+    { pageName: 'Market Tests', pageLink: '/user/admin/projects', key: 'projects' },
+    { pageName: 'Users', pageLink: '/user/admin/users', key: 'users' },
+    { pageName: 'Community', pageLink: '/user/admin/community', key: 'community' },
+    { pageName: 'Professionals', pageLink: '/user/admin/professionals', key: 'professionals' },
+    { pageName: 'Libraries', pageLink: '/user/admin/libraries', key: 'libraries' },
+    { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', key: 'monitoring' },
+    { pageName: 'Settings', pageLink: '/user/admin/settings', key: 'settings' },
+    { pageName: 'Search', pageLink: '/user/admin/search/pros', key: 'search' },
   ];
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _hide = false;
 
@@ -95,6 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private _authService: AuthService,
               private _location: Location,
               private _router: Router,
+              private _rolesFrontService: RolesFrontService,
               private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
               private _cookieService: CookieService) {
@@ -172,8 +173,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._backOfficeValue = false;
   }
 
-  public canShow(reqLevel: number): boolean {
+  /*public canShow(reqLevel: number): boolean {
     return reqLevel && ( this.authService.adminLevel & reqLevel) === reqLevel;
+  }*/
+
+  public canAccessRoute(key: string) {
+    return this._rolesFrontService.hasAccessAdminSide([key]);
   }
 
   public hasProfilePic(): boolean {
@@ -187,6 +192,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public toggleLangOptions(event: Event) {
     event.preventDefault();
     this._showLangs = !this._showLangs;
+  }
+
+  get hasAdminSide(): boolean {
+    return this._rolesFrontService.hasAdminSide();
   }
 
   get backOfficeValue(): boolean {

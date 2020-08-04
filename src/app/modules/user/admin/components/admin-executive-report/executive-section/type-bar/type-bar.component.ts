@@ -10,6 +10,8 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 
 export class TypeBarComponent {
 
+  @Input() isEditable = false;
+
   @Input() lang = 'en';
 
   @Input() set section(value: ExecutiveSection) {
@@ -55,8 +57,10 @@ export class TypeBarComponent {
   constructor() { }
 
   public emitChanges() {
-    this._section.content = this._content;
-    this.sectionChange.emit(this._section);
+    if (this.isEditable) {
+      this._section.content = this._content;
+      this.sectionChange.emit(this._section);
+    }
   }
 
   public toggleExamples() {

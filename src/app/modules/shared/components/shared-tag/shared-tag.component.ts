@@ -16,6 +16,9 @@ import { Observable } from 'rxjs';
 
 export class SharedTagComponent implements OnInit {
 
+  // make it true to make the input field and tag label size small.
+  @Input() isSmall = false;
+
   @Input() set tags(value: Array<Tag>) {
     this._tags = value;
   }

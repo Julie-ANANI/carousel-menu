@@ -45,7 +45,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FlexboxComponent } from './layout/flexbox/flexbox.component';
 import { ResponsiveComponent } from './layout/responsive/responsive.component';
 import { MessageTemplatesComponent } from './angular/message-templates/message-templates.component';
-import { MessageTemplate1Module } from '../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../utility/messages/message-template/message-template.module';
 import { MessageTemplate2Module } from '../../utility/messages/message-template-2/message-template-2.module';
 
 @NgModule({
@@ -54,7 +54,7 @@ import { MessageTemplate2Module } from '../../utility/messages/message-template-
     TranslateModule.forChild(),
     DocsCssRoutingModule,
     ReactiveFormsModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     MessageTemplate2Module
   ],
   declarations: [

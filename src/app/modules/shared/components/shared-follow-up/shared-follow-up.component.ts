@@ -18,42 +18,46 @@ import { TagsFiltersService }  from "../shared-market-report/services/tags-filte
 import { FilterService } from "../shared-market-report/services/filters.service";
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { RolesFrontService } from "../../../../services/roles/roles-front.service";
 
 @Component({
-  selector: 'shared-follow-up',
+  selector: 'app-shared-follow-up',
   templateUrl: './shared-follow-up.component.html',
   styleUrls: ['./shared-follow-up.component.scss']
 })
 
 export class SharedFollowUpComponent implements OnInit {
 
+  // ex: ['projects', 'project', 'followUp']
+  @Input() accessPath: Array<string> = [];
+
   @Input() set project(value: Innovation) {
-    if (value) {
+    if (value && value._id) {
       this._project = value;
     }
   }
 
-  private _config: Config = {
+  private _localConfig: Config = {
     fields: '',
-    limit: '',
+    limit: '10',
     offset: '0',
     search: '{}',
     sort: '{ "created": "-1" }'
   };
 
-  private _project: Innovation = {};
+  private _project: Innovation = <Innovation>{};
 
   private _questions: Array<Question> = [];
 
   private _modalAnswer: Answer = null;
 
-  private _sidebarAnswer: SidebarInterface = {};
+  private _sidebarAnswer: SidebarInterface = <SidebarInterface>{};
 
   private _answers: Array<Answer> = [];
 
   private _filteredAnswers: Array<Answer> = [];
 
-  private _tableInfos: Table;
+  private _tableInfos: Table = <Table>{};
 
   private _pendingAction: {
     answersIds?: Array<string>,
@@ -71,34 +75,33 @@ export class SharedFollowUpComponent implements OnInit {
     type: 'FOLLOW_UP'
   };
 
-  private _modalTemplateType: string = '';
+  private _modalTemplateType = '';
 
-  private _loadingButton: boolean = false;
+  private _loadingButton = false;
 
-  private _showEmailsModal: boolean = false;
+  private _showEmailsModal = false;
 
-  private _showWarningModal: boolean = false;
+  private _showWarningModal = false;
 
-  private _showSendModal: boolean = false;
+  private _showSendModal = false;
 
-  private _total: number = -1;
+  private _total = -1;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
               private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
+              private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
-
-    if (this._project) {
+    this._initializeTable();
+    if (this._project && this._project._id) {
       this._project.followUpEmails = this._project.followUpEmails || {};
       this._questions = InnovationFrontService.presets(this._project);
-      this._initializeTable();
       this._getAnswers();
     }
-
   }
 
   private _initializeTable() {
@@ -106,11 +109,15 @@ export class SharedFollowUpComponent implements OnInit {
       _selector: 'follow-up-answers',
       _content: this._answers,
       _total: this._total,
-      _isSelectable: true,
-      _isRowDisabled: (answer: any) => {
-        return answer.followUp && answer.followUp.date},
-      _isEditable: true,
-      _clickIndex: 1,
+      _isSelectable: this.canAccess(['edit', 'objective']),
+      _isRowDisabled: (answer: Answer) => {
+        return this.canAccess(['edit', 'objective']) ? answer.followUp && answer.followUp.date
+          : false;
+      },
+      _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
+      _isPaginable: true,
+      _isLocal: true,
+      _isNoMinHeight: this._total < 11,
       _buttons: [
         { _label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
         { _label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
@@ -118,17 +125,68 @@ export class SharedFollowUpComponent implements OnInit {
         { _label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
       ],
       _columns: [
-        {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.LABEL.NAME', _type: 'TEXT'},
-        {_attrs: ['country'], _name: 'COMMON.LABEL.COUNTRY', _type: 'COUNTRY', _width: '80px'},
-        {_attrs: ['professional.language'], _name: 'COMMON.LABEL.LANGUAGE', _type: 'TEXT', _width: '80px'},
-        {_attrs: ['professional.jobTitle'], _name: 'COMMON.LABEL.JOBTITLE', _type: 'TEXT'},
-        {_attrs: ['professional.company'], _name: 'COMMON.LABEL.COMPANY', _type: 'TEXT'},
-        {_attrs: ['followUp.objective'], _name: 'TABLE.HEADING.OBJECTIVE', _type: 'DROPDOWN',
+        {
+          _attrs: ['professional.firstName', 'professional.lastName'],
+          _name: 'COMMON.LABEL.NAME',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'name'])
+        },
+        {
+          _attrs: ['country'],
+          _name: 'COMMON.LABEL.COUNTRY',
+          _type: 'COUNTRY',
+          _width: '100px',
+          _isHidden: !this.canAccess(['tableColumns', 'country'])
+        },
+        {
+          _attrs: ['professional.language'],
+          _name: 'COMMON.LABEL.LANGUAGE',
+          _type: 'TEXT',
+          _width: '110px',
+          _isHidden: !this.canAccess(['tableColumns', 'language'])
+        },
+        {
+          _attrs: ['professional.jobTitle'],
+          _name: 'COMMON.LABEL.JOBTITLE',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'job'])
+        },
+        {
+          _attrs: ['professional.company'],
+          _name: 'COMMON.LABEL.COMPANY',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'company'])
+        },
+        {
+          _attrs: ['followUp.objective'],
+          _name: 'TABLE.HEADING.OBJECTIVE',
+          _type: 'DROPDOWN',
+          _width: '200px',
+          _isHidden: !this.canAccess(['tableColumns', 'objective']),
           _choices: [
-            {_name: 'INTERVIEW', _alias: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW', _class: 'button is-secondary', _disabledClass: 'text-secondary'},
-            {_name: 'OPENING', _alias: 'SHARED_FOLLOW_UP.BUTTON.OPENING', _class: 'button is-draft', _disabledClass: 'text-draft'},
-            {_name: 'NO_FOLLOW', _alias: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW', _class: 'button is-danger', _disabledClass: 'text-alert'},
-            {_name: '', _alias: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE', _class: ''}
+            {
+              _name: 'INTERVIEW',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW',
+              _class: 'button is-secondary',
+              _disabledClass: 'text-secondary'
+            },
+            {
+              _name: 'OPENING',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.OPENING',
+              _class: 'button is-draft',
+              _disabledClass: 'text-draft'
+            },
+            {
+              _name: 'NO_FOLLOW',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW',
+              _class: 'button is-danger',
+              _disabledClass: 'text-alert'
+            },
+            {
+              _name: '',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE',
+              _class: ''
+            }
           ],
         _disabledState: { _attrs: 'followUp.date', _type: 'DATE' }
         },
@@ -136,57 +194,68 @@ export class SharedFollowUpComponent implements OnInit {
     };
   }
 
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(this.accessPath);
+    }
+  }
+
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this._answerService.getInnovationValidAnswers(this._project._id).pipe(first()).subscribe((response) => {
+      this._answerService.getInnovationValidAnswers(this._project._id).pipe(first())
+        .subscribe((response) => {
 
-        this._answers = response.answers.map((answer: Answer) => {
-          answer.followUp = answer.followUp || {};
-          return answer;
-        });
+          this._answers = response && response.answers && response.answers.map((answer: Answer) => {
+            answer.followUp = answer.followUp || {};
+            return answer;
+          }) || [];
 
-        this._total = this._answers.length;
-        this._initializeTable();
+          this._total = this._answers.length;
+          this._initializeTable();
 
-        this._filterService.filtersUpdate.pipe(first()).subscribe(() => {
-          this._selectContacts();
-        });
-
-        /*
-         * compute tag list globally
-         */
-        const tagsDict = response.answers.reduce(function (acc, answer) {
-          answer.tags.forEach((tag) => {
-            if (!acc[tag._id]) {
-              acc[tag._id] = tag;
-            }
+          this._filterService.filtersUpdate.pipe(first()).subscribe(() => {
+            this._selectContacts();
           });
-          return acc;
-        }, {} as {[id: string]: Tag});
-        this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
 
-        /*
-         * compute tags lists for each questions of type textarea
-         */
-        this._questions.forEach((question) => {
-          const tags = ResponseService.tagsList(response.answers, question);
-          const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
-          this._tagFiltersService.setAnswerTags(identifier, tags);
+          /*
+           * compute tag list globally
+           */
+          const tagsDict = response.answers.reduce(function (acc, answer) {
+            answer.tags.forEach((tag) => {
+              if (!acc[tag._id]) {
+                acc[tag._id] = tag;
+              }
+            });
+            return acc;
+          }, {} as {[id: string]: Tag});
+          this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
+
+          /*
+           * compute tags lists for each questions of type textarea
+           */
+          this._questions.forEach((question) => {
+            const tags = ResponseService.tagsList(response.answers, question);
+            const identifier = (question.controlType === 'textarea')
+              ? question.identifier : question.identifier + 'Comment';
+            this._tagFiltersService.setAnswerTags(identifier, tags);
+          });
+
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
         });
-
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
     }
   }
 
   public saveProject() {
     this._innovationService.save(this._project._id, this._project).subscribe((response: Innovation) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       this._project = response;
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
-      console.log(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
@@ -195,15 +264,25 @@ export class SharedFollowUpComponent implements OnInit {
       fr: [
         { value: '*|FIRSTNAME|*', label: 'Prénom du pro' },
         { value: '*|LASTNAME|*', label: 'Nom du pro' },
-        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'TITLE') || 'TITLE'},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
+        {
+          value: '*|TITLE|*',
+          label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'TITLE')
+            || 'TITLE'},
+        {
+          value: '*|COMPANY_NAME|*',
+          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
         { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
       ],
       en: [
         { value: '*|FIRSTNAME|*', label: 'First name' },
         { value: '*|LASTNAME|*', label: 'Last name' },
-        { value: '*|TITLE|*', label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'TITLE') || 'TITLE'},
-        { value: '*|COMPANY_NAME|*', label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
+        {
+          value: '*|TITLE|*',
+          label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'TITLE')
+            || 'TITLE'},
+        {
+          value: '*|COMPANY_NAME|*',
+          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
         { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
       ]
     };
@@ -212,12 +291,15 @@ export class SharedFollowUpComponent implements OnInit {
   public assignObjective(event: any) {
     const answerId = event.content._id;
     const objective = event.item._name;
-    this._answerService.updateLinkingStatus([answerId], objective).subscribe(() => {
+
+    this._answerService.updateLinkingStatus([answerId], objective).pipe(first()).subscribe(() => {
       const answerToUpdate = this._answers.findIndex(answer => answer._id === answerId);
       this._answers[answerToUpdate].followUp.objective = objective;
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
+
   }
 
   private _prosByObjective(objective: string, sent: boolean): Array<Answer> {
@@ -230,6 +312,11 @@ export class SharedFollowUpComponent implements OnInit {
     this._showWarningModal = false;
     this._showSendModal = false;
     this._modalTemplateType = '';
+  }
+
+  public openModal(event: Event) {
+    event.preventDefault();
+    this.showSendModal = true;
   }
 
   public closeModal(event: Event) {
@@ -262,23 +349,21 @@ export class SharedFollowUpComponent implements OnInit {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
       this._loadingButton = false;
     }, (err: HttpErrorResponse) => {
-      console.log(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       this._loadingButton = false;
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
 
   }
 
   public sendTestEmails() {
     const objective = this._modalTemplateType;
-
     this._innovationService.sendFollowUpEmails(this._project._id, objective).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
     }, (err: HttpErrorResponse) => {
-      console.log(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
-
   }
 
   private _selectContacts() {
@@ -293,24 +378,25 @@ export class SharedFollowUpComponent implements OnInit {
 
   public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
-
     this._sidebarAnswer = {
       animate_state: 'active',
       title: 'SIDEBAR.TITLE.EDIT_INSIGHT',
       size: '726px'
     };
-
   }
 
-  performActions(action: any) {
+  public performActions(action: any) {
     const objective = action._action === 'WITHOUT_OBJECTIVE' ? '' : action._action.split('.').slice(-1)[0];
     const answersIds = action._rows.map((answer: any) => answer._id);
+
     // First we check if some of the selected users already have an objective
     const assignedAnswers = action._rows
       .filter((answer: any) => answer.followUp.objective && answer.followUp.objective != objective)
       .map((answer: any) => {
-        return {name: `${answer.professional.firstName} ${answer.professional.lastName}`, objective: answer.followUp.objective};
+        return {name: `${answer.professional.firstName} ${answer.professional.lastName}`,
+          objective: answer.followUp.objective};
       });
+
     if (assignedAnswers.length) {
       // If so, we open the confirmation modal
       this._showWarningModal = true;
@@ -323,12 +409,12 @@ export class SharedFollowUpComponent implements OnInit {
       // Otherwise, we save the objectives
       this.updateManyObjectives(answersIds, objective);
     }
+
   }
 
   public closeSidebar() {
     this._sidebarTemplate = {
-      animate_state: 'inactive',
-      type: 'FOLLOW_UP'
+      animate_state: 'inactive'
     };
   }
 
@@ -348,7 +434,8 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   get emailsObject(): any {
-    return this._project.followUpEmails[this._modalTemplateType] || { en: {content: '', subject: ''}, fr: {content: '', subject: ''} }
+    return this._project.followUpEmails[this._modalTemplateType] || { en: {content: '', subject: ''},
+      fr: {content: '', subject: ''} }
   }
 
   get project(): Innovation {
@@ -407,12 +494,12 @@ export class SharedFollowUpComponent implements OnInit {
     return this._tableInfos;
   }
 
-  set config(value: Config) {
-    this._config = value;
+  set localConfig(value: Config) {
+    this._localConfig = value;
   }
 
-  get config(): Config {
-    return this._config;
+  get localConfig(): Config {
+    return this._localConfig;
   }
 
   get pros(): Array<Professional> {
@@ -454,7 +541,8 @@ export class SharedFollowUpComponent implements OnInit {
     return this._total;
   }
 
-  get pendingAction(): { answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', assignedAnswers?: Array<{name: string, objective: string}>} {
+  get pendingAction(): { answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
+    assignedAnswers?: Array<{name: string, objective: string}>} {
     return this._pendingAction;
   }
 

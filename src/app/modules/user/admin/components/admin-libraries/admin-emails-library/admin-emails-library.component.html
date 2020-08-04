@@ -17,9 +17,9 @@
 
   <ng-container *ngIf="emails.length === 0">
     <div class="section-pad rm-pad-bottom">
-      <message-template-1 [widthMax]="'320px'">
+      <message-template [widthMax]="'320px'">
         Don't have any emails? Create the email by clicking on "Add" button.
-      </message-template-1>
+      </message-template>
     </div>
   </ng-container>
 
@@ -28,13 +28,13 @@
 
 <!-- sidebar to edit email -->
 <app-sidebar [(template)]="sidebarValue">
-  <app-workflow
+  <app-sidebar-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
     (emailChange)="updateEmail($event)"
     [signatures]="signatures"
     [inputLanguage]="language">
-  </app-workflow>
+  </app-sidebar-workflow>
 </app-sidebar>
 <!-- /sidebar to edit email -->
 

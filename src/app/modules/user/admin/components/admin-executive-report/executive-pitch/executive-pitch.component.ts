@@ -12,6 +12,8 @@ import { ExecutiveReportFrontService } from '../../../../../../services/executiv
 
 export class ExecutivePitchComponent {
 
+  @Input() isEditable = false;
+
   @Input() lang = 'en';
 
   @Input() set pitch(value: string) {
@@ -30,7 +32,9 @@ export class ExecutivePitchComponent {
   constructor(private _executiveReportFrontService: ExecutiveReportFrontService) { }
 
   public emitChanges() {
-    this.pitchChange.emit(this._pitch);
+    if (this.isEditable) {
+      this.pitchChange.emit(this._pitch);
+    }
   }
 
   public update(value: string) {

@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { PieChart } from '../../../../models/pie-chart';
@@ -9,7 +9,7 @@ import { PieChart } from '../../../../models/pie-chart';
   styleUrls: ['piechart.component.scss']
 })
 
-export class PiechartComponent implements OnInit {
+export class PiechartComponent {
 
   @Input() showFavorable = true;
 
@@ -18,28 +18,22 @@ export class PiechartComponent implements OnInit {
     this._loadData();
   }
 
-  private _pieChart: PieChart;
+  private _pieChart: PieChart = <PieChart>{};
 
-  private _datasets: Array<{data: Array<number>}>;
+  private _datasets: Array<{data: Array<number>}> = [];
 
-  private _colors: Array<{backgroundColor: Array<string>}>;
+  private _colors: Array<{backgroundColor: Array<string>}> = [];
 
-  private readonly _lang: string;
+  private readonly _lang = this._translateService.currentLang;
 
-  private readonly _isBrowser: boolean;
+  private readonly _isBrowser = isPlatformBrowser(this.platformId);
+
+  private _options = {
+    responsive: true
+  }
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private _translateService: TranslateService) {
-
-    this._isBrowser = isPlatformBrowser(this.platformId);
-    this._lang = this._translateService.currentLang || 'en';
-
-  }
-
-  ngOnInit() {
-    this._loadData();
-  }
-
+              private _translateService: TranslateService) { }
 
   private _loadData() {
     if (this._pieChart) {
@@ -47,7 +41,6 @@ export class PiechartComponent implements OnInit {
       this._datasets = [{data: this._pieChart.data || []}];
     }
   }
-
 
   get pieChart(): PieChart {
     return this._pieChart;
@@ -67,6 +60,10 @@ export class PiechartComponent implements OnInit {
 
   get isBrowser(): boolean {
     return this._isBrowser;
+  }
+
+  get options(): { responsive: boolean } {
+    return this._options;
   }
 
 }

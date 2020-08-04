@@ -1,78 +1,101 @@
-<section class="section-light-pad rm-pad-bottom" id="admin-project-campaigns-component">
-  <div class="column col-xs-12 col-11 col-mx-auto">
+<div
+  *ngIf="canAccess(['view'])"
+  class="container fluid grid-2xl animate-fade is-5"
+  id="admin-project-campaigns">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
-    <!-- section add campaign -->
-    <ng-container *ngIf="getAuthorizationLevel(2)">
-      <div class="section-light-pad rm-pad-top text-right">
-        <button class="btn btn-primary" (click)="onClickAdd($event)">{{ 'CAMPAIGNS.ADD_BUTTON' | translate }}</button>
-      </div>
-    </ng-container>
+    <!-- error message while fetching -->
+    <app-utility-message-error *ngIf="!isLoading && fetchingError"></app-utility-message-error>
+    <!-- /error message while fetching -->
 
-    <!-- section no campaign -->
-    <ng-container *ngIf="campaigns.length === 0">
-      <div class="section-pad rm-pad-bottom">
-        <message-template-1 [widthMax]="'354px'">
-          {{ 'CAMPAIGNS.BOT_TEXT.A' | translate }}
-          <br>
-          {{ 'CAMPAIGNS.BOT_TEXT.B' | translate }}
-        </message-template-1>
-      </div>
-    </ng-container>
+    <!-- no fetching error -->
+    <div [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
 
-    <!-- section campaigns -->
-    <ng-container *ngIf="campaigns.length > 0">
-      <div class="section-light-pad rm-pad-bottom">
-        <div [@listAnimation]="campaigns.length">
-          <div *ngFor="let campaign of campaigns" class="card-campaign">
-            <div class="card-content">
-              <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign._id + '/answers'">
-                <span>{{ campaign.title }}</span>
+      <!-- section add campaign -->
+      <section *ngIf="canAccess(['add'])" class="text-right p-bottom-50">
+        <button
+          (click)="onAddCampaign($event)"
+          class="button is-primary is-shadowed is-sm"
+          id="btn-add-campaign"
+          type="button">
+          Add Campaign
+        </button>
+      </section>
+      <!-- /section add campaign -->
+
+      <!-- section campaigns -->
+      <section [@listAnimation]="campaigns.length" [ngStyle]="{'margin-bottom': '-30px'}">
+        <div *ngFor="let campaign of campaigns" class="card-wrapper">
+          <div class="card-content">
+
+            <div class="d-flex align-center">
+              <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign['_id'] + '/answers'">
+                {{ campaign.title }}
               </a>
-              <span *ngIf="campaign.type === 'COMMUNITY'" class="label is-success">{{campaign.type}}</span>
-              <span *ngIf="getAuthorizationLevel(2)" class="text-link text-sm" (click)="onClickEdit($event, campaign)">{{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}</span>
-              <p class="d-flex text text-notify align-center">
-                {{ campaign.stats ? campaign.stats['campaign']['nbProfessionals'] || 0 : 0 }} {{ 'CAMPAIGNS.PROFESSIONAL' | translate  }}
-                •
-                {{ campaign.stats ? campaign.stats['campaign']['nbFirstTierMails'] || 0 : 0 }} {{ 'CAMPAIGNS.STATS.TITLE.GOOD_EMAILS' | translate  }}
-                •
-                {{ campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.VALIDATED' | translate }}
-                •
-                {{ campaign.stats ? ((campaign.stats['campaign']['nbToValidateResp'] || 0)) : 0 }} {{ 'CAMPAIGNS.STATS.TITLE.LOOK' | translate }}
-                •
-                {{ campaign.status | FormatText }} {{ 'CAMPAIGNS.STATUS' | translate }}
-                <ng-container *ngIf="getAuthorizationLevel(2)">
-                  |
-                  <span class="text-link" (click)="onClickUpdateStatus($event, campaign)">{{ 'CAMPAIGNS.UPDATE_BUTTON' | translate }}</span>
-                  <!--|
-                  <span class="text text-notify clone">{{ 'CAMPAIGNS.CLONE_BUTTON' | translate }}</span>-->
-                  |
-                  <span (click)="onClickDelete($event, campaign)" class="icon-container is-overlay text-alert">
-                    <span class="tooltip" data-tooltip="Delete Campaign">
-                      <i class="icon icon-delete"></i>
-                    </span>
-                  </span>
-                </ng-container>
-              </p>
+              <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-sm text-bold is-success m-left-10">
+                {{ campaign.type }}
+              </div>
+              <div
+                *ngIf="canAccess(['edit'])"
+                class="text-link text-sm m-left-20 m-top-1"
+                (click)="onEditCampaign($event, campaign)">
+                {{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}
+              </div>
             </div>
+
+            <div class="d-flex text-notify text-medium text-sm m-top-2 align-center">
+
+              {{ campaign['stats'] ? campaign['stats']['campaign']['nbProfessionals'] || 0 : 0 }} Professional(s)
+              •
+              {{ campaign['stats'] ? campaign['stats']['campaign']['nbFirstTierMails'] || 0 : 0 }} Good email(s)
+              •
+              {{ campaign['stats'] ? ((campaign['stats']['campaign']['nbValidatedResp'] || 0)) : 0 }} Validated answer(s)
+              •
+              {{ campaign['stats'] ? ((campaign['stats']['campaign']['nbToValidateResp'] || 0)) : 0 }} To look at
+              •
+              {{ campaign.status | FormatText }} status
+
+              <ng-container *ngIf="canAccess(['updateStatistics'])">
+                |
+                <span class="text-link m-left-h m-right-h" (click)="onUpdateStats($event, campaign)">
+                  Update stats
+                </span>
+              </ng-container>
+
+              <ng-container *ngIf="canAccess(['delete'])">
+                |
+                <span (click)="onDelete($event, campaign)" class="text-link text-alert m-left-h">
+                  Delete
+                </span>
+              </ng-container>
+
+            </div>
+
           </div>
         </div>
-      </div>
-    </ng-container>
+      </section>
+      <!-- /section campaigns -->
+
+    </div>
+    <!-- /no fetching error -->
 
   </div>
-</section>
+</div>
 
 
 <!-- modal to ask the admin to delete the campaign -->
-<app-utility-modal [(showModal)]="activateModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal
+  *ngIf="canAccess(['delete'])"
+  [(showModal)]="activateModal"
+  [title]="'Delete Board'">
 
   <section class="modal-body">
-    {{ 'COMMON.CAMPAIGN.DELETE_BOARD.CONTENT' | translate }}
+    Do you really want to delete this campaign?
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onClickSubmit()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
+    <button (click)="onConfirmDelete()" class="button is-primary">Confirm</button>
   </footer>
 
 </app-utility-modal>
@@ -80,12 +103,13 @@
 
 
 <!-- sidebar to edit campaign -->
-<app-sidebar [(template)]="sidebarValue">
-  <app-campaign-form
+<app-sidebar *ngIf="canAccess(['edit'])" [(template)]="sidebarValue">
+  <app-sidebar-campaign
     (campaignOutput)="updateCampaign($event)"
     [campaign]="selectCampaign"
+    [isEditable]="canAccess(['edit'])"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
-  </app-campaign-form>
+  </app-sidebar-campaign>
 </app-sidebar>
 <!-- /sidebar to edit campaign -->

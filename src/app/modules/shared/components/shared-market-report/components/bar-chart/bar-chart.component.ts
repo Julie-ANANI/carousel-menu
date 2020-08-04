@@ -1,15 +1,16 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
-import { Location } from '@angular/common';
 import { ResponseService } from '../../services/response.service';
 import { BarData } from '../../models/bar-data';
-import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { PieChart } from '../../../../../../models/pie-chart';
 import { DataService } from "../../services/data.service";
+import { AnswersStats } from "../../models/stats";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: 'app-bar-chart',
@@ -17,49 +18,47 @@ import { DataService } from "../../services/data.service";
   styleUrls: ['bar-chart.component.scss']
 })
 
-export class BarChartComponent implements OnInit {
+export class BarChartComponent implements OnInit, OnDestroy {
 
-  @Input() innovation: Innovation;
+  @Input() innovation: Innovation = <Innovation>{};
 
-  @Input() question: Question;
+  @Input() question: Question = <Question>{};
 
-  @Input() readonly: boolean;
+  @Input() readonly = true;
 
-  @Input() stats: any;
+  @Input() stats: AnswersStats = null;
 
-  @Input() toggleAnswers: boolean = false;
+  @Input() toggleAnswers = false;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   @Output() answerButtonClicked = new EventEmitter<boolean>();
 
-  private _adminSide: boolean = false;
-
   private _barsData: Array<BarData> = [];
 
-  private _pieChart: PieChart;
+  private _pieChart: PieChart = <PieChart>{};
 
   private _showAnswers: {[index: string]: boolean} = {};
 
   private _toggleFilterIcon: {[index: string]: boolean} = {};
 
+  private _currentLang = this._translateService.currentLang;
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
-              private _filterService: FilterService,
-              private _location: Location) {
-
-    this._adminSide = this._location.path().slice(5, 11) === '/admin';
-
-  }
+              private _filterService: FilterService) { }
 
   ngOnInit() {
     /* Update Answers Data */
-    this._dataService.getAnswers(this.question).subscribe((answers: Array<Answer>) => {
-      this._barsData = ResponseService.barsData(this.question, answers);
-      if (this.question.controlType === 'radio') {
-        this._pieChart = ResponseService.pieChartData(this._barsData, answers);
-      }
-    });
+    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((answers: Array<Answer>) => {
+        this._barsData = ResponseService.barsData(this.question, answers);
+        if (this.question.controlType === 'radio') {
+          this._pieChart = ResponseService.pieChartData(this._barsData, answers);
+        }
+      });
   }
 
   public filterAnswer(data: BarData, event: Event) {
@@ -68,7 +67,8 @@ export class BarChartComponent implements OnInit {
     if (this._filterService.filters[this.question.identifier]) {
       filterValue = this._filterService.filters[this.question.identifier].value;
     } else {
-      filterValue = this.question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
+      filterValue = this.question.options.reduce((acc, opt) => {
+        acc[opt.identifier] = true; return acc; }, {} as any);
     }
     filterValue[data.identifier] = !filterValue[data.identifier];
     const removeFilter = Object.keys(filterValue).every((k) => filterValue[k] === true);
@@ -83,11 +83,9 @@ export class BarChartComponent implements OnInit {
     }
   }
 
-
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
   }
-
 
   public toggleAnswer(event: Event) {
     event.preventDefault();
@@ -95,8 +93,10 @@ export class BarChartComponent implements OnInit {
     this.answerButtonClicked.emit(this.toggleAnswers);
   }
 
-  public color(length: number, limit: number) {
-    return InnovationFrontService.getColor(length, limit);
+  public onShowAnswers(index: number, length: number) {
+    if (length > 0) {
+      this._showAnswers[index] = !this._showAnswers[index];
+    }
   }
 
   get filter() {
@@ -107,16 +107,8 @@ export class BarChartComponent implements OnInit {
     return this._barsData;
   }
 
-  get lang(): string {
-    return this._translateService.currentLang;
-  }
-
   get pieChart(): PieChart {
     return this._pieChart;
-  }
-
-  get adminSide(): boolean {
-    return this._adminSide;
   }
 
   get showAnswers(): { [p: string]: boolean } {
@@ -125,6 +117,15 @@ export class BarChartComponent implements OnInit {
 
   get toggleFilterIcon(): { [p: string]: boolean } {
     return this._toggleFilterIcon;
+  }
+
+  get currentLang(): string {
+    return this._currentLang;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

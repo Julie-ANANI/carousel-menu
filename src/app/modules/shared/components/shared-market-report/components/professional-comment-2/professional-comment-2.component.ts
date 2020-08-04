@@ -6,6 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
+import { first } from "rxjs/operators";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import { UserFrontService } from "../../../../../../services/user/user-front.service";
 
 @Component({
   selector: 'app-market-comment-2',
@@ -15,64 +19,68 @@ import { Tag } from '../../../../../../models/tag';
 
 export class SharedMarketComment2Component {
 
-  @Input() answer: Answer;
+  @Input() answer: Answer = <Answer>{};
 
-  @Input() canEditTags: boolean;
+  @Input() canEditQuestionTags = false;
 
-  @Input() question: Question;
+  @Input() question: Question = <Question>{};
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor(private answerService: AnswerService,
-              private dataService: DataService,
-              private translateService: TranslateService,
-              private translateNotificationsService: TranslateNotificationsService) { }
+  private _currentLang = this._translateService.currentLang;
+
+  constructor(private _answerService: AnswerService,
+              private _dataService: DataService,
+              private _translateService: TranslateService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   public seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
   }
 
   public addTag(tag: Tag): void {
-    this.answerService
-      .addTag(this.answer._id, tag._id, this.questionId)
-      .subscribe((a: any) => {
-        if (this.answer.answerTags[this.questionId]) {
-          this.answer.answerTags[this.questionId].push(tag);
-        } else {
-          this.answer.answerTags[this.questionId] = [tag];
-        }
-        this.dataService.updateTagsList(this.question);
-        this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, (err: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
-      });
+    this._answerService.addTag(this.answer._id, tag._id, this.questionId).pipe(first()).subscribe((a: any) => {
+      if (this.answer.answerTags[this.questionId]) {
+        this.answer.answerTags[this.questionId].push(tag);
+      } else {
+        this.answer.answerTags[this.questionId] = [tag];
+      }
+      this._dataService.updateTagsList(this.question);
+      this._translateNotificationsService.success('Success' , 'The tag has been added.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
-  createTag(tag: Tag): void {
-    this.answerService.createTag(this.answer._id, tag, this.questionId)
-      .subscribe((newTag: any) => {
-        if (this.answer.answerTags[this.questionId]) {
-          this.answer.answerTags[this.questionId].push(newTag);
-        } else {
-          this.answer.answerTags[this.questionId] = [newTag];
-        }
-        this.dataService.updateTagsList(this.question);
-        this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, (err: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
-      });
+  public createTag(tag: Tag): void {
+    this._answerService.createTag(this.answer._id, tag, this.questionId).pipe(first()).subscribe((newTag: any) => {
+      if (this.answer.answerTags[this.questionId]) {
+        this.answer.answerTags[this.questionId].push(newTag);
+      } else {
+        this.answer.answerTags[this.questionId] = [newTag];
+      }
+      this._dataService.updateTagsList(this.question);
+      this._translateNotificationsService.success('Success' , 'The tag has been added.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   public removeTag(tag: Tag): void {
-    this.answerService
-      .removeTag(this.answer._id, tag._id, this.questionId)
-      .subscribe((a: any) => {
-        this.answer.answerTags[this.questionId] = this.answer.answerTags[this.questionId].filter(t => t._id !== tag._id);
-        this.dataService.updateTagsList(this.question);
-        this.translateNotificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
-      }, (err: any) => {
-        this.translateNotificationsService.error('ERROR.ERROR', err.message);
-      });
+    this._answerService.removeTag(this.answer._id, tag._id, this.questionId).pipe(first()).subscribe((a: any) => {
+      this.answer.answerTags[this.questionId] = this.answer.answerTags[this.questionId].filter(t => t._id !== tag._id);
+      this._dataService.updateTagsList(this.question);
+      this._translateNotificationsService.success('Success' , 'The tag has been removed.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+  }
+
+  get professionalName(): string {
+    return UserFrontService.fullName(this.answer && this.answer.professional);
   }
 
   get answerTags(): Array<any> {
@@ -80,7 +88,7 @@ export class SharedMarketComment2Component {
   }
 
   get currentLang(): string {
-    return this.translateService.currentLang;
+    return this._currentLang;
   }
 
   get questionId(): string {

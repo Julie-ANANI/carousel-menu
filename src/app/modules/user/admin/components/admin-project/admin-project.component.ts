@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../../../services/auth/auth.service';
 import { FrontendService } from '../../../../../services/frontend/frontend.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
-import {SocketService} from '../../../../../services/socket/socket.service';
+import { SocketService } from '../../../../../services/socket/socket.service';
+import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
 
 @Component({
-  selector: 'app-admin-project',
   templateUrl: './admin-project.component.html',
   styleUrls: ['./admin-project.component.scss']
 })
@@ -45,11 +44,21 @@ export class AdminProjectComponent implements OnInit {
     anonymous: true
   };
 
+  private _tabs: Array<{key: string, name: string, route: string}> = [
+    {key: 'settings', name: 'Settings', route: 'settings'},
+    {key: 'answerTags', name: 'Answer tags', route: 'answer_tags'},
+    {key: 'questionnaire', name: 'Questionnaire', route: 'questionnaire'},
+    {key: 'campaigns', name: 'Campaigns', route: 'campaigns'},
+    {key: 'synthesis', name: 'Synthesis', route: 'synthesis'},
+    {key: 'storyboard', name: 'Storyboard', route: 'storyboard'},
+    {key: 'followUp', name: 'Follow up', route: 'follow-up'}
+  ];
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
-              private _authService: AuthService,
+              private _rolesFrontService: RolesFrontService,
               private _frontendService: FrontendService,
               private _socketService: SocketService) {
 
@@ -100,7 +109,7 @@ export class AdminProjectComponent implements OnInit {
     }
   }
 
-  get authorizedTabs(): Array<string> {
+  /*get authorizedTabs(): Array<string> {
     const adminLevel = this._authService.adminLevel;
 
     if (adminLevel > 1) {
@@ -109,7 +118,7 @@ export class AdminProjectComponent implements OnInit {
       return ['cards', 'campaigns', 'synthesis'];
     }
 
-  }
+  }*/
 
   private _resetModals() {
     this._isProjectModal = false;
@@ -186,6 +195,10 @@ export class AdminProjectComponent implements OnInit {
     this._frontendService.calculateInnovationMetadataPercentages(this._project, 'delivery');
   }
 
+  public canAccess(path: Array<string>) {
+    return this._rolesFrontService.hasAccessAdminSide(path);
+  }
+
   // todo remove.
   getColor(length: number) {
     if (length < 34 && length >= 0) {
@@ -213,10 +226,6 @@ export class AdminProjectComponent implements OnInit {
     return this._updatedProject;
   }
 
-  get innovationTitle(): string {
-    return this._innovationTitle;
-  }
-
   get project(): Innovation {
     return this._project;
   }
@@ -235,6 +244,10 @@ export class AdminProjectComponent implements OnInit {
 
   get projectExportConfig(): any {
     return this._projectExportConfig;
+  }
+
+  get tabs(): Array<{ key: string; name: string; route: string }> {
+    return this._tabs;
   }
 
 }

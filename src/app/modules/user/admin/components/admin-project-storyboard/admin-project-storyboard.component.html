@@ -1,13 +1,23 @@
-<div *ngIf="!isLoading" class="animate-fade relative">
+<div *ngIf="canAccess(['view'])" class="animate-fade is-5 relative">
 
-  <!-- banner to show last requested video status -->
-  <app-utility-banner [(showBanner)]="showBanner" [background]="bannerBackground">
-    {{ bannerVideo.lastMessage && bannerVideo.lastMessage.message }}
-  </app-utility-banner>
-  <!-- /banner to show last requested video status -->
+  <!-- error message while fetching -->
+  <div *ngIf="fetchingError && !isLoading" class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <app-utility-message-error></app-utility-message-error>
+    </div>
+  </div>
+  <!-- /error message while fetching -->
 
-  <div class="p-top-30 p-bottom-40" id="admin-project-storyboard">
-    <div class="container fluid grid-2xl">
+  <!-- no fetching error -->
+  <div *ngIf="!fetchingError && !isLoading">
+
+    <!-- banner to show last requested video status -->
+    <app-utility-banner [(showBanner)]="showBanner" [background]="bannerBackground">
+      {{ bannerVideo.lastMessage && bannerVideo.lastMessage.message }}
+    </app-utility-banner>
+    <!-- /banner to show last requested video status -->
+
+    <div class="container fluid grid-2xl p-top-30 p-bottom-40" id="admin-project-storyboard">
       <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- header section -->
@@ -28,17 +38,18 @@
             </div>
             <!-- /heading -->
 
-
             <!-- autofill / change lang -->
-            <div *ngIf="executiveReport.lang" class="text-md">
+            <div
+              *ngIf="executiveReport.lang && (canAccess(['autofill']) || canAccess(['changeLang']))"
+              class="text-md">
 
-              <div>
+              <div *ngIf="canAccess(['autofill'])">
                 {{ 'ADMIN_STORYBOARD.AUTOFILL.A' | translate }}
                 <span (click)="autofillExecutiveReport($event)" class="text-link text-normal">
                   {{ 'ADMIN_STORYBOARD.AUTOFILL.B' | translate }}</span> {{ 'ADMIN_STORYBOARD.AUTOFILL.C' | translate }}
               </div>
 
-              <div>
+              <div *ngIf="canAccess(['changeLang'])">
                 {{ 'ADMIN_STORYBOARD.CHANGE_LANG.A' | translate }}
                 <span (click)="openLangModal($event, 'RESET')" class="text-link text-normal">
                   {{ 'ADMIN_STORYBOARD.CHANGE_LANG.B' | translate }}</span>{{ 'ADMIN_STORYBOARD.CHANGE_LANG.C' | translate }}
@@ -47,9 +58,8 @@
             </div>
             <!-- /autofill / change lang -->
 
-
             <!-- select lang -->
-            <div *ngIf="!executiveReport.lang" class="text-md">
+            <div *ngIf="!executiveReport.lang && canAccess(['create'])" class="text-md">
               {{ 'ADMIN_STORYBOARD.SELECT_LANG.A' | translate }}
               <span (click)="openLangModal($event, 'CREATE')" class="text-link text-normal">
                 {{ 'ADMIN_STORYBOARD.SELECT_LANG.B' | translate }}</span> {{ 'ADMIN_STORYBOARD.SELECT_LANG.C' | translate }}
@@ -59,12 +69,14 @@
           </div>
           <!-- /heading / lang -->
 
-
           <!-- buttons / links -->
-          <div *ngIf="executiveReport.lang" class="content-wrapper p-bottom-15">
+          <div
+            *ngIf="executiveReport.lang && (canAccess(['generateVideo']) || canAccess(['generatePdf'])
+            || canAccess(['makeVisibleToClient']))"
+            class="content-wrapper p-bottom-15">
 
             <!-- video -->
-            <div class="video-wrapper">
+            <div *ngIf="canAccess(['generateVideo'])" class="video-wrapper">
 
               <!-- link -->
               <!--<div class="text-sm m-right-15 m-bottom-15">
@@ -107,12 +119,14 @@
             </div>
             <!-- /video -->
 
-
             <!-- pdf -->
-            <div class="pdf-wrapper">
+            <div *ngIf="canAccess(['makeVisibleToClient']) || canAccess(['generatePdf'])" class="pdf-wrapper">
 
               <!-- link -->
-              <div class="text-sm form-group m-bottom-15 m-right-15">
+              <div
+                *ngIf="canAccess(['makeVisibleToClient'])"
+                [ngClass]="{'m-right-15': canAccess(['generatePdf'])}"
+                class="text-sm form-group m-bottom-15">
                 <label class="form-switch">
                   <input
                     (change)="onChangeDiffusion($event)"
@@ -125,6 +139,7 @@
               <!-- /link -->
 
               <button
+                *ngIf="canAccess(['generatePdf'])"
                 [disabled]="isGeneratingReport || executiveReport.completion !== 100"
                 (click)="generatePdf($event)"
                 class="button is-primary is-outlined m-bottom-15">
@@ -145,16 +160,17 @@
         </section>
         <!-- /header section -->
 
-
         <!-- executive report section -->
         <section *ngIf="executiveReport.lang" class="p-top-50">
-          <app-admin-executive-report [(executiveReport)]="executiveReport"></app-admin-executive-report>
+          <app-admin-executive-report
+            [(executiveReport)]="executiveReport"
+            [isEditable]="canAccess(['edit'])">
+          </app-admin-executive-report>
         </section>
         <!-- /executive report section -->
 
-
         <!-- save button -->
-        <div *ngIf="toBeSaved && executiveReport.lang" class="btn-save-float-wrapper">
+        <div *ngIf="toBeSaved && executiveReport.lang && canAccess(['edit'])" class="btn-save-float-wrapper">
           <button
             (click)="saveExecutiveReport($event)"
             class="button is-primary animate-zoom is-3 is-rounded">
@@ -165,13 +181,18 @@
 
       </div>
     </div>
+
   </div>
+  <!-- /no fetching error -->
+
 </div>
 
 
-
 <!-- modal to select/change language -->
-<app-utility-modal [(showModal)]="isModalLang" [title]="modalTitle | translate">
+<app-utility-modal
+  *ngIf="canAccess(['changeLang']) || canAccess(['create'])"
+  [(showModal)]="isModalLang"
+  [title]="modalTitle | translate">
   <ng-container *ngIf="!isLoading && isModalLang">
 
     <section [ngClass]="executiveReport.lang ? 'p-top-30 p-bottom-10' : 'p-top-40'" class="modal-body">
@@ -212,7 +233,6 @@
 
       </div>
 
-
       <div *ngIf="executiveReport.lang" class="m-top-30 text-sm">
         <span class="text-alert text-medium">{{ 'ADMIN_STORYBOARD.MODAL.ATTENTION' | translate }}</span>
         {{ 'ADMIN_STORYBOARD.MODAL.ATTENTION_MSG' | translate }}
@@ -233,7 +253,7 @@
 
 
 <!-- modal to select type of video -->
-<app-utility-modal-empty [(showModal)]="isModalVideo">
+<app-utility-modal-empty *ngIf="canAccess(['generateVideo'])" [(showModal)]="isModalVideo">
   <ng-container *ngIf="isModalVideo && !isLoading">
 
     <!-- body -->

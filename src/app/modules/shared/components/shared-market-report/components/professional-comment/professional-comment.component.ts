@@ -10,21 +10,22 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class SharedMarketCommentComponent {
 
-  @Input() answer: Answer;
+  @Input() answer: Answer = <Answer>{};
 
-  @Input() questionId: string;
+  @Input() questionId = '';
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor(private translateService: TranslateService) {
-  }
+  private _currentLang = this.translateService.currentLang;
+
+  constructor(private translateService: TranslateService) { }
 
   public seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
   }
 
   get currentLang(): string {
-    return this.translateService.currentLang;
+    return this._currentLang;
   }
 
 }

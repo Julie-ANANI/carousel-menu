@@ -25,13 +25,14 @@ import { TableModule } from '../../../../table/table.module';
 import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
 import { AutoCompleteInputModule } from "../../../../utility/auto-complete-input/auto-complete-input.module";
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';
-import { SidebarBatchFormModule } from '../../../../sidebars/components/sidebar-batch-form/sidebar-batch-form.module';
-import { MessageTemplate1Module } from '../../../../utility/messages/message-template-1/message-template-1.module';
+import { SidebarBatchModule } from '../../../../sidebars/components/sidebar-batch/sidebar-batch.module';
+import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SidebarUserFormModule } from '../../../../sidebars/components/user-form/sidebar-user-form.module';
 import { ErrorTemplate1Module } from '../../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../utility/messages/message-template-2/message-template-2.module';
 import { SharedProfessionalsListModule } from '../../../../shared/components/shared-professionals-list/shared-professionals-list.module';
+import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
 
 @NgModule({
   imports: [
@@ -50,13 +51,14 @@ import { SharedProfessionalsListModule } from '../../../../shared/components/sha
     PipeModule,
     AutoCompleteInputModule,
     SidebarUserAnswerModule,
-    SidebarBatchFormModule,
-    MessageTemplate1Module,
+    SidebarBatchModule,
+    MessageTemplateModule,
     ModalModule,
     SidebarUserFormModule,
     ErrorTemplate1Module,
     MessageTemplate2Module,
-    SharedProfessionalsListModule
+    SharedProfessionalsListModule,
+    MessageErrorModule
   ],
   declarations: [
     AdminCampaignComponent,

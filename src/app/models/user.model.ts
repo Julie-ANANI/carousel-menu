@@ -21,6 +21,7 @@ export class User extends Model {
   private _jobTitle: string;
   private _country: string;
   private _provider: string;
+  private _access?: {adminSide?: object};
 
   constructor(user?: any) {
     super(user);
@@ -188,5 +189,12 @@ export class User extends Model {
     this._provider = value;
   }
 
+  get access(): {adminSide?: object} {
+    return this._access;
+  }
+
+  set access(value: {adminSide?: object}) {
+    this._access = value;
+  }
 
 }

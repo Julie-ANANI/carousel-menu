@@ -32,7 +32,7 @@
   <!-- /selected contacts type === 'FOLLOW_UP -->
 
   <!-- actions button for admin type === 'MARKET_REPORT' -->
-  <div *ngIf="templateType === 'MARKET_REPORT' && isAdmin && isAdminSide">
+  <div *ngIf="templateType === 'MARKET_REPORT' && isAdminSide">
 
     <!-- button -->
     <div class="dropdown m-right-auto">
@@ -70,13 +70,14 @@
   <!-- views type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
   <div>
 
-    <h6>My views</h6>
+    <h6>{{ 'SIDEBAR_MARKET_REPORT.MY_VIEWS' | translate }}</h6>
 
     <!-- show views -->
     <div *ngFor="let filter of sharedFiltersList" class="d-flex align-center m-top-1 m-bottom-1">
 
       <div
         (click)="deleteCustomFilter($event, filter.name)"
+        *ngIf="isViewsEditable || !isAdminSide"
         [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
         class="c-hand m-right-1 tooltip is-right">
         <img
@@ -97,7 +98,7 @@
     <!-- /show views -->
 
     <!-- form to register view -->
-    <form (ngSubmit)="registerNewFilter()">
+    <form *ngIf="isViewsEditable || !isAdminSide" (ngSubmit)="registerNewFilter()">
 
       <div class="form-group p-top-1">
         <label>
@@ -300,12 +301,12 @@
           class="tooltip prof-hidden-wrapper"
           [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_UNHIDE_PROFESSIONAL' | translate">
           <i class="fas fa-eye-slash text-alert"></i>
-          <ng-container *ngIf="professional.value['professional']['firstName']">
-            {{ professional.value['professional']['firstName'] }}
+          <ng-container *ngIf="!professionalName(professional.value); else profName">
+            {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
           </ng-container>
-          <ng-container *ngIf="professional.value['professional']['lastName']">
-            {{ professional.value['professional']['lastName'] }}
-          </ng-container>
+          <ng-template #profName>
+            {{ professionalName(professional.value) }}
+          </ng-template>
         </div>
       </ng-container>
     </div>
@@ -485,7 +486,7 @@
 </div>
 
 <!-- Modal to ask the operator to confirm for the preview of the synthesis at the side of the client -->
-<app-utility-modal *ngIf="isAdminSide" [title]="'Confirmation'" [(showModal)]="isModalPreview">
+<app-utility-modal *ngIf="isAdminSide" [title]="'Confirmation Board'" [(showModal)]="isModalPreview">
 
   <section class="modal-body">
     <div>
@@ -509,13 +510,11 @@
 <!-- /Modal to ask the admin to confirm for the preview of the synthesis at the side of the client -->
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-utility-modal *ngIf="isAdminSide && isAdmin" [(showModal)]="isModalEnd" [title]="'Confirmation'">
+<app-utility-modal *ngIf="isAdminSide" [(showModal)]="isModalEnd" [title]="'Confirmation Board'">
 
   <section class="modal-body">
-    <div>
-      Do you really want to end this project? Please keep in mind that after this you won't be able to make
-      any further changes.
-    </div>
+    Do you really want to end this project? Please keep in mind that after this you won't be able to make
+    any further changes.
   </section>
 
   <!-- footer -->

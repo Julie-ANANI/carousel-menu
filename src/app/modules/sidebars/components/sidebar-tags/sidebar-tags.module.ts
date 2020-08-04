@@ -1,0 +1,34 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { SidebarTagsComponent } from './sidebar-tags.component';
+
+import { SidebarModule } from '../../templates/sidebar/sidebar.module';
+import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
+import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
+import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild(),
+    SidebarModule,
+    SharedTagModule,
+    AutoCompleteInputModule,
+    PipeModule,
+    NguiAutoCompleteModule,
+  ],
+  declarations: [
+   SidebarTagsComponent
+  ],
+  exports: [
+    SidebarTagsComponent
+  ]
+})
+
+export class SidebarTagsModule {}

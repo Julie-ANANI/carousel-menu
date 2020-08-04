@@ -7,9 +7,9 @@ import { AdminEmailsLibraryComponent } from "./admin-emails-library.component";
 
 import { SidebarModule } from "../../../../../sidebars/templates/sidebar/sidebar.module";
 import { TableModule } from "../../../../../table/table.module";
-import { SidebarWorkflowFormModule } from '../../../../../sidebars/components/workflow-form/sidebar-workflow-form.module';
+import { SidebarWorkflowModule } from '../../../../../sidebars/components/sidebar-workflow/sidebar-workflow.module';
 import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
-import { MessageTemplate1Module } from '../../../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../../../utility/messages/message-template/message-template.module';
 
 @NgModule({
   imports: [
@@ -18,9 +18,9 @@ import { MessageTemplate1Module } from '../../../../../utility/messages/message-
     FormsModule,
     SidebarModule,
     TableModule,
-    SidebarWorkflowFormModule,
+    SidebarWorkflowModule,
     ModalModule,
-    MessageTemplate1Module
+    MessageTemplateModule
   ],
   declarations: [
     AdminEmailsLibraryComponent

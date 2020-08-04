@@ -93,9 +93,7 @@ export class ResponseService {
   public answersToShow(answers: Array<Answer>, question: Question): Array<Answer> {
 
     let answersToShow: Array<Answer>;
-
     const questionID = question.identifier;
-
     answersToShow = answers.filter((a) => (a.answers[questionID]));
 
     switch (question.controlType) {
@@ -184,7 +182,8 @@ export class ResponseService {
    * @returns {string}
    */
   getInnovationAbstract(innovation: Innovation, quesId: string): string {
-    const abstract = innovation.executiveReport.abstracts.find((ques) => ques.quesId === quesId);
+    const abstract = innovation.executiveReport.abstracts.find((ques) =>
+      ques.quesId === quesId);
     return abstract ? abstract.value : '';
   }
 
@@ -194,7 +193,7 @@ export class ResponseService {
    * @param question
    * @param answers
    */
-  static getStarsAnswers(question: Question, answers: Array<Answer>) {
+  public static getStarsAnswers(question: Question, answers: Array<Answer>) {
 
     let notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
 
@@ -240,7 +239,7 @@ export class ResponseService {
    * @param question
    * @param answers
    */
-  static barsData(question: Question, answers: Array<Answer>) {
+  public static barsData(question: Question, answers: Array<Answer>) {
 
     let barsData: Array<BarData> = [];
 
@@ -251,7 +250,8 @@ export class ResponseService {
         let filteredAnswers: Array<Answer> = [];
 
         if (question.controlType === 'checkbox') {
-          filteredAnswers = answers.filter((a) => a.answers[question.identifier] && a.answers[question.identifier][q.identifier]
+          filteredAnswers = answers.filter((a) => a.answers[question.identifier]
+            && a.answers[question.identifier][q.identifier]
             && a.answers[question.identifier + 'Quality'] !== 0);
         } else if (question.controlType === 'radio')  {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
@@ -303,13 +303,12 @@ export class ResponseService {
 
   }
 
-
   /***
    * this function is to get the pie chart data for the question type radio.
    * @param barsData
    * @param answers
    */
-  static pieChartData(barsData: Array<BarData>, answers: Array<Answer>) {
+  public static pieChartData(barsData: Array<BarData>, answers: Array<Answer>) {
 
     let positiveAnswersCount = 0;
 
@@ -338,6 +337,48 @@ export class ResponseService {
 
     return pieChartData;
 
+  }
+
+  public static filterCommentAnswers(question: Question = <Question>{}, answers: Array<Answer> = []) {
+    if (question && question.controlType && question.identifier && answers.length > 0) {
+      const _id = question.identifier;
+
+      switch (question.controlType) {
+
+        case 'checkbox':
+          return answers.filter(function(a) {
+            return !(a.answers[_id] && Object.keys(a.answers[_id]).some((k) => a.answers[_id][k]))
+              && a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
+          });
+
+        case 'radio':
+          return  answers.filter(function(a) {
+            return !a.answers[_id] && a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
+          });
+
+        default:
+          return answers.filter(function(a) {
+            return a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
+          });
+
+      }
+    }
+    return [];
+  }
+
+  public static sortComments(question: Question = <Question>{}, answer: Array<Answer> = []) {
+    if (question.identifier && answer.length > 0) {
+      const _id = question.identifier;
+
+      return answer.sort((a, b) => {
+        if ((b.answers[_id + 'CommentQuality'] || 1) - (a.answers[_id + 'CommentQuality'] || 1) === 0) {
+          return b.answers[_id + 'Comment'].length - a.answers[_id + 'Comment'].length;
+        } else {
+          return (b.answers[_id + 'CommentQuality'] || 1) - (a.answers[_id + 'CommentQuality'] || 1);
+        }
+      });
+    }
+    return [];
   }
 
 }

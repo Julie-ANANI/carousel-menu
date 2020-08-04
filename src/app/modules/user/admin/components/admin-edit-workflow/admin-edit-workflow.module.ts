@@ -7,7 +7,7 @@ import { AdminEditWorkflowComponent } from './admin-edit-workflow.component';
 
 import { TableModule } from '../../../../table/table.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
-import { SidebarWorkflowFormModule } from '../../../../sidebars/components/workflow-form/sidebar-workflow-form.module';
+import { SidebarWorkflowModule } from '../../../../sidebars/components/sidebar-workflow/sidebar-workflow.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 
 
@@ -18,7 +18,7 @@ import { ModalModule } from '../../../../utility/modals/modal/modal.module';
     RouterModule,
     TableModule,
     SidebarModule,
-    SidebarWorkflowFormModule,
+    SidebarWorkflowModule,
     ModalModule
   ],
   declarations: [

@@ -1,80 +1,24 @@
-<div [hidden]="fetchingError" id="admin-campaign-answers">
+<div *ngIf="canAccess()" class="container grid-2xl fluid animate-fade is-5" id="admin-campaign-answers">
 
   <!-- stats -->
-  <ul class="stat is-admin-campaign animate-fade is-4">
-
-    <!-- stat col 1 -->
-    <li class="stat-container fluid">
-      <h5 class="stat-heading">Insight</h5>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Answer rate</h5>
-        <span class="stat-value">{{ campaignStat('answer_rate') }}</span>
-      </div>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Validated</h5>
-        <span class="stat-value">{{ campaignStat('status', 'VALIDATED') }}</span>
-      </div>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Rejected by mail</h5>
-        <span class="stat-value">{{ campaignStat('status', 'REJECTED_GMAIL') }}</span>
-      </div>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Auto-validated</h5>
-        <span class="stat-value">{{ campaignStat('status', 'VALIDATED_UMIBOT') }}</span>
-      </div>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Auto-rejected</h5>
-        <span class="stat-value">{{ campaignStat('status', 'REJECTED_UMIBOT') }}</span>
-      </div>
-    </li>
-    <!-- /stat col 1 -->
-
-    <!-- stat col 2
-    <li class="stat-container fluid">
-      <h5 class="stat-heading">Profile</h5>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Standard</h5>
-        <span class="stat-value">{{ campaignStat('profile', 1) }}</span>
-      </div>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Top profile</h5>
-        <span class="stat-value">{{ campaignStat('profile', 2) }}</span>
-      </div>
-    </li>
-     /stat col 2 -->
-
-    <!-- stat col 3 -->
-    <li class="stat-container fluid">
-      <h5 class="stat-heading">Quality</h5>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Fill rate</h5>
-        <span class="stat-value">--</span>
-      </div>
-      <div class="stat-body">
-        <h5 class="stat-sub-heading">Time spent</h5>
-        <span class="stat-value">{{ campaignStat('quality', 'time_elapsed') }}" min.</span>
-      </div>
-    </li>
-    <!-- /stat col 3 -->
-
-  </ul>
+  <app-admin-campaign-stats [config]="statsConfig()"></app-admin-campaign-stats>
   <!-- /stats -->
 
   <!-- content -->
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- no answers -->
-    <section *ngIf="totalAnswers === 0" class="p-top-50 p-bottom-50">
-      <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+    <section *ngIf="totalAnswers === 0 && canAccess(['import'])" class="p-top-50 p-bottom-50">
+      <app-message-template-2 [animation]="true" class="w-full">
         <div class="text-center">
-          <h4 class="text-background">Could not found any answers for this campaign. Try to import some!</h4>
-          <div *ngIf="authorizedActions(2)" class="m-top-25">
+          <h4>Could not found any answers for this campaign. Try to import some!</h4>
+          <div class="m-top-25">
             <label class="button is-primary is-rounded is-shadowed">
               <input
-                #fileupload
-                (change)="onImport(fileupload.files[0])"
-                [hidden]="true"
-                type="file"/>
+                  #fileupload
+                  (change)="onImport(fileupload.files[0])"
+                  [hidden]="true"
+                  type="file"/>
               <ng-container *ngIf="!isImportingAnswers; else importFile">
                 <i class="fas fa-file-import m-no-left"></i>
                 Import answers
@@ -90,13 +34,15 @@
     <!-- /no answers -->
 
     <!-- answers -->
-    <div *ngIf="totalAnswers > 0" class="p-top-25 p-bottom-30">
+    <div *ngIf="totalAnswers > 0" class="p-top-30 p-bottom-30">
 
       <!-- quiz links / buttons -->
-      <section *ngIf="authorizedActions(2) || quizLinks.length" class="flex-between">
+      <section
+        *ngIf="canAccess(['import']) || canAccess(['export']) || canAccess(['quiz'])"
+        class="flex-between">
 
         <!-- quiz links -->
-        <div *ngIf="quizLinks.length" class="m-bottom-15 m-right-15">
+        <div *ngIf="quizLinks.length && canAccess(['quiz'])" class="m-bottom-15 m-right-15">
           <p class="text-md">Visit these below links to see the questionnaire:</p>
           <ul class="m-no-bottom">
             <li *ngFor="let url of quizLinks" class="text-sm m-top-1 text-hover-underline">
@@ -107,15 +53,18 @@
         <!-- /quiz links -->
 
         <!-- buttons -->
-        <div *ngIf="authorizedActions(2)">
+        <div *ngIf="canAccess(['import']) || canAccess(['export'])">
 
           <!-- import -->
-          <label class="button is-primary is-sm is-outlined m-right-25 m-bottom-15">
+          <label
+            *ngIf="canAccess(['import'])"
+            [ngClass]="{'m-right-25': canAccess(['export'])}"
+            class="button is-primary is-sm is-outlined m-bottom-15">
             <input
-              #fileupload
-              (change)="onImport(fileupload.files[0])"
-              [hidden]="true"
-              type="file"/>
+                #fileupload
+                (change)="onImport(fileupload.files[0])"
+                [hidden]="true"
+                type="file"/>
             <ng-container *ngIf="!isImportingAnswers; else importFile">
               Import
             </ng-container>
@@ -128,6 +77,7 @@
           <!-- export -->
           <button
             (click)="onExport()"
+            *ngIf="canAccess(['export'])"
             class="button is-primary is-sm m-bottom-15"
             id="btn-export-answers">
             Export
@@ -141,11 +91,11 @@
       <!-- /quiz links / buttons -->
 
       <!-- table -->
-      <section class="p-top-25 animate-fade is-7">
+      <section class="p-top-30">
         <app-shared-table
           (editRow)="onEdit($event)"
           (performAction)="onActions($event)"
-          [(config)]="config"
+          [(config)]="localConfig"
           [data]="table">
         </app-shared-table>
       </section>
@@ -159,12 +109,14 @@
 
 </div>
 
+
 <!-- sidebar insight preview -->
-<app-sidebar [hidden]="fetchingError && answers.length === 0" [(template)]="sidebarValue">
+<app-sidebar
+  *ngIf="answers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
+  [(template)]="sidebarValue">
   <app-user-answer
-    *ngIf="modalAnswer._id"
     [sidebarState]="sidebarValue.animate_state"
-    [adminMode]="adminMode"
+    [adminMode]="canAccess(['edit'])"
     [excludedCompanies]="excludedCompanies"
     [(userAnswer)]="modalAnswer"
     [projectId]="campaign.innovation._id"

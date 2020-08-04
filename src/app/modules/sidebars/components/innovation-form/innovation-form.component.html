@@ -13,6 +13,7 @@
     </div>
     <button type="button"
             class="btn btn-primary"
+            *ngIf="isEditableTargeting || isEditableDescription || isStatus || isMail"
             (click)="onSubmit()">
       {{(isStatus || isMail) ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
     </button>
@@ -20,7 +21,7 @@
 
   <app-shared-project-edit-cards
     [innovation]="project"
-    [isEditable]="true"
+    [isEditable]="isEditableDescription"
     *ngIf="isPitch">
   </app-shared-project-edit-cards>
 
@@ -29,17 +30,17 @@
     [project]="project"
     [modeAdmin]="true"
     [sideAdmin]="true"
-    [editable]="true">
+    [editable]="isEditableTargeting">
   </app-shared-project-settings>
 
-  <shared-mail-editor *ngIf="isStatus || isMail"
+  <app-shared-mail-editor *ngIf="isStatus || isMail"
                       [signatures]="signatures"
                       [emailsObject]="email"
                       [inputLanguage]="project.owner.language"
                       [noLanguage]="true"
                       (emailChange)="email = $event"
                       (languageChange)="updateOwnerLanguage($event)">
-  </shared-mail-editor>
+  </app-shared-mail-editor>
 
   <div *ngIf="isUserSatisfaction" class="form-group-inline-space satisfaction">
 

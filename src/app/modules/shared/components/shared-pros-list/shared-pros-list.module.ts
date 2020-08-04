@@ -8,7 +8,7 @@ import { SharedProsListComponent } from './shared-pros-list.component';
 import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebars/components/user-form/sidebar-user-form.module';
-import { SidebarTagsModule } from '../../../sidebars/components/tags/sidebar-tags.module';
+import { SidebarTagsModule } from '../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 
 @NgModule({

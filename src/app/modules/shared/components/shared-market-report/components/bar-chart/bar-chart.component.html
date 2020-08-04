@@ -1,7 +1,7 @@
-<section id="bar-chart-component">
+<div id="bar-chart">
 
   <!-- header section -->
-  <div class="bg-white">
+  <div class="box-style">
     <app-question-conclusion
       [innovation]="innovation"
       [pieChart]="pieChart"
@@ -16,17 +16,22 @@
   <div>
 
     <!-- button to toggle answers display -->
-    <div class="section-light-pad rm-pad-bottom text-center">
-      <button type="button" class="btn btn-primary" (click)="toggleAnswer($event)">
+    <div *ngIf="barsData.length > 0" class="p-top-25 text-center">
+      <button
+        (click)="toggleAnswer($event)"
+        class="button is-community is-sm"
+        type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
-        <i class="fas icon-size" aria-hidden="true" [ngClass]="toggleAnswers ? 'fa-angle-down' : 'fa-angle-right'"></i>
+        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
       </button>
     </div>
+    <!-- /button to toggle answers display -->
 
-    <div [ngClass]=" toggleAnswers ? 'expand-wrapper' : 'collapse-wrapper' " class="content-wrapper">
-      <div *ngIf="toggleAnswers">
+    <!-- show answers -->
+    <div [ngClass]=" toggleAnswers ? 'is-expand' : 'is-collapse' " class="answers-wrapper">
+      <ng-container *ngIf="toggleAnswers">
         <div *ngFor="let barData of barsData; let i = index;" [attr.data-index]="i">
-          <div *ngIf="filter ? filter.value[barData.identifier] : true" class="section-light-pad">
+          <div *ngIf="filter ? filter.value[barData.identifier] : true" class="p-top-25">
 
             <!-- row 1 -->
             <div class="flex-between text-medium">
@@ -36,37 +41,53 @@
                   (click)="filterAnswer(barData, $event); toggleFilterIcon[i] = false"
                   (mouseenter)="toggleFilterIcon[i] = true;"
                   (mouseleave)="toggleFilterIcon[i] = false;"
-                  style="width: 20px; height: 20px"
+                  [ngStyle]="{ 'width': '20px', 'height': '20px' }"
                   class="c-hand icon-container">
-                  <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate">
-                    <i class="fas icon-size" [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash text-alert' : 'fa-eye text-info'"></i>
+                  <span [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate" class="tooltip">
+                    <i
+                      [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash text-alert' : 'fa-eye text-info'"
+                      class="fas">
+                    </i>
                   </span>
                 </div>
-                <span class="bar-name text-background">{{ barData.label | multiling:lang }}</span>
+                <span class="text-lg m-left-3 m-right-2 text-background">
+                  {{ barData.label | multiling:currentLang }}
+                </span>
               </div>
 
-              <div class="d-flex text-notify text-medium response-wrapper c-hand" (click)="showAnswers[i] = !showAnswers[i]">
-                <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
-                <span class="icon-size"><i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-down' : 'fa-angle-right'"></i></span>
+              <div
+                (click)="onShowAnswers(i, (barData.answers && barData.answers.length))"
+                [ngClass]="{'c-hand': barData.answers && barData.answers.length}"
+                class="d-flex text-notify text-medium align-center text-md">
+                <span class="m-right-2">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+                <i [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-up'" aria-hidden="true" class="icon"></i>
               </div>
 
             </div>
             <!-- /row 1 -->
 
             <!-- row 2 -->
-            <div class="bar c-hand" (click)="showAnswers[i] = !showAnswers[i]">
-              <div class="bar-item tooltip" [attr.data-tooltip]="barData.absolutePercentage" [ngStyle]="{ 'width': barData.absolutePercentage , 'background': barData.color }"></div>
+            <div
+              (click)="onShowAnswers(i, (barData.answers && barData.answers.length))"
+              [ngClass]="{'c-hand': barData.answers && barData.answers.length}"
+              [ngStyle]="{'height': '12px'}"
+              class="bar m-top-10">
+              <div
+                class="bar-item tooltip"
+                [attr.data-tooltip]="barData.absolutePercentage"
+                [ngStyle]="{ 'width': barData.absolutePercentage , 'background': barData.color }">
+              </div>
             </div>
             <!-- /row 2 -->
 
             <!-- row 3 -->
-            <div *ngIf="showAnswers[i]" class="d-flex card-wrapper section-light-pad rm-pad-bottom">
+            <div *ngIf="showAnswers[i]" class="d-flex card-wrapper p-top-25 justify-between">
               <div *ngFor="let answer of barData.answers" class="card">
                 <div class="card-body">
                   <app-market-comment
+                    (modalAnswerChange)="seeAnswer($event)"
                     [answer]="answer"
-                    [questionId]="question.identifier+'Comment'"
-                    (modalAnswerChange)="seeAnswer($event)">
+                    [questionId]="question.identifier+'Comment'">
                   </app-market-comment>
                 </div>
               </div>
@@ -75,11 +96,11 @@
 
           </div>
         </div>
-      </div>
+      </ng-container>
     </div>
+    <!-- /show answers -->
 
   </div>
   <!-- /content section -->
 
-
-</section>
+</div>

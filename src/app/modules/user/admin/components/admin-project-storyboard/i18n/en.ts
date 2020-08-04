@@ -19,8 +19,8 @@ export const ADMIN_STORYBOARD = {
   },
 
   'MODAL':{
-    'CHANGE_TITLE': 'Changing language',
-    'SELECT_TITLE': 'Selecting language',
+    'CHANGE_TITLE': 'Changing Language',
+    'SELECT_TITLE': 'Selecting Language',
     'CURRENT_LANG': 'Current language: ',
     'ATTENTION': 'Attention:',
     'ATTENTION_MSG': 'It will reset everything and you won\'t be able to go back.'

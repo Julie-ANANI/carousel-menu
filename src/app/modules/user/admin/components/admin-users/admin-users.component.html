@@ -1,16 +1,12 @@
-<section id="admin-users" class="section-light-pad">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <div class="restrict-width">
+<div *ngIf="canAccess()" class="container fluid grid-2xl" id="admin-users">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
+    <!-- error message while fetching -->
+    <app-utility-message-error *ngIf="!isLoading && fetchingError"></app-utility-message-error>
+    <!-- /error message while fetching -->
 
-      <!-- fetching error -->
-      <ng-container *ngIf="fetchingError">
-        <div class="a-u-error-wrapper d-flex align-center">
-          <app-utility-error-template-1 [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
-        </div>
-      </ng-container>
-      <!-- /fetching error -->
-
+    <!-- no fetching error -->
+    <div [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
 
       <!-- TODO
       <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
@@ -18,37 +14,44 @@
         <p>{{ pending_invitations.join(', ') }}</p>
       </div> -->
 
-
       <!-- if juan -->
-      <ng-container *ngIf="isJuan() && !fetchingError">
-        <div class="text-right m-bottom-25">
-          <button (click)="synchronizeSRTUsers()" class="btn btn-sm rounded shadow btn-edit" type="button">Update everybody</button>
-        </div>
-      </ng-container>
+      <section *ngIf="isJuan" class="text-right p-bottom-30">
+        <button
+          (click)="synchronizeSRTUsers()"
+          class="button is-primary is-sm is-outlined"
+          type="button">
+          Update everybody
+        </button>
+      </section>
       <!-- /if juan -->
 
-
-      <!-- table users -->
-      <ng-container *ngIf="!fetchingError">
+      <!-- table -->
+      <section>
         <app-shared-table
           (editRow)="onClickEdit($event)"
           (removeRows)="onClickDelete($event)"
           [(config)]="config"
           [data]="table">
         </app-shared-table>
-      </ng-container>
-      <!-- /table users -->
-
+      </section>
+      <!-- /table -->
 
     </div>
+    <!-- /no fetching error -->
+
   </div>
-</section>
+</div>
 
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar
+  *ngIf="canAccess(['user', 'view']) || canAccess(['user', 'edit'])"
+  [(template)]="sidebarValue">
   <app-user-form
     (finalUserData)="updateUser($event)"
+    [canAffectAsAdmin]="canAccess(['user', 'affectAsAdmin'])"
+    [canImpersonate]="canAccess(['user', 'impersonate'])"
+    [isEditable]="canAccess(['user', 'edit'])"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type"
     [user]="selectedUser">
@@ -57,12 +60,14 @@
 <!-- /sidebar -->
 
 
-<!-- modal -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<!-- modal to delete user -->
+<app-utility-modal
+  *ngIf="canAccess() && canAccess(['user', 'delete'])"
+  [(showModal)]="modalDelete"
+  [title]="'Delete Board'">
 
   <section class="modal-body">
-    <div class="text-background text-medium">{{ 'COMMON.USER.DELETE_BOARD.CONTENT' | translate }}</div>
-
+    <div class="text-background text-medium">Do you really want to delete the selected user(s)?</div>
     <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
       <li *ngFor="let user of usersToRemove" class="m-right-3 m-top-1">
         {{ user?.firstName }} {{ user?.lastName }}
@@ -71,9 +76,9 @@
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="onClickConfirm()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
+    <button (click)="onClickConfirm()" class="button is-primary">Confirm</button>
   </footer>
 
 </app-utility-modal>
-<!-- /modal -->
+<!-- /modal to delete user -->

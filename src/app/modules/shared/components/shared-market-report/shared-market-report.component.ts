@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -20,7 +20,11 @@ import { InnovationFrontService } from '../../../../services/innovation/innovati
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
+import { RolesFrontService } from "../../../../services/roles/roles-front.service";
+import { isPlatformBrowser } from "@angular/common";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-shared-market-report',
@@ -30,35 +34,28 @@ import { takeUntil } from 'rxjs/operators';
 
 export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
-  @Input() set adminMode(value: boolean) {
-    this._adminMode = value;
-  }
+  @Input() accessPath: Array<string> = [];
+
+  @Input() adminSide = false;
+
+  @Input() reportShared = false;
+
+  @Input() showAnonymousAnswers = false;
 
   @Input() set project(value: Innovation) {
-    if (value) {
+    if (value && value._id) {
       this._innovation = value;
       this._initializeReport();
-      this._isOwner = (this._authService.userId === this._innovation.owner.id) || this._authService.adminLevel > 2;
+      this._isOwner = (this._authService.userId === (this._innovation.owner && this._innovation.owner.id))
+        || this._authService.adminLevel > 3;
     }
   }
 
-  @Input() set reportShared(value: boolean) {
-    this._reportShared = value;
-  }
+  private _innovation: Innovation = <Innovation>{};
 
-  @Input() set adminSide(value: boolean) {
-    this._adminSide = value;
-  }
+  private _isOwner = false;
 
-  private _innovation: Innovation = {};
-
-  private _reportShared: boolean;
-
-  private _adminSide: boolean;
-
-  private _isOwner: boolean;
-
-  private _previewMode: boolean;
+  private _previewMode = false;
 
   private _answers: Array<Answer> = [];
 
@@ -72,9 +69,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _questions: Array<Question> = [];
 
-  private _adminMode: boolean;
-
-  private _toggleAnswers: boolean;
+  private _toggleAnswers = false;
 
   private _modalAnswer: Answer = <Answer>{};
 
@@ -83,23 +78,27 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     type: 'MARKET_REPORT'
   };
 
-  private _sidebarTemplateValue: SidebarInterface = {};
+  private _sidebarTemplateValue: SidebarInterface = <SidebarInterface>{};
 
-  private _companies: Array<Clearbit>;
+  private _companies: Array<Clearbit> = [];
 
-  private _toggleProfessional: boolean;
+  private _toggleProfessional = false;
 
-  private _anonymousAnswers: boolean = false;
+  private _anonymousAnswers = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _toBeSaved = false;
 
-  constructor(private _translateService: TranslateService,
+  private _isMainDomain = environment.domain === 'umi';
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateService: TranslateService,
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService,
               private _authService: AuthService,
+              private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
               private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
@@ -109,40 +108,95 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._filterService.reset();
 
-    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
-      this._toBeSaved = value;
-    });
-
+    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((value) => {
+        this._toBeSaved = value;
+      });
   }
 
+  public canAccess(path: Array<string>) {
+    return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
+  }
 
   /***
    * This function is calling all the initial functions.
    */
   private _initializeReport() {
-    this._initializeVariable();
+    this._anonymousAnswers = !!(this._innovation._metadata && this._innovation._metadata.campaign
+      && this._innovation._metadata.campaign.anonymous_answers) && this.showAnonymousAnswers;
+
     this._getAnswers();
-    this.resetMap();
-    this.presets();
-  }
 
-
-  /***
-   *This function is to initialize the variables regarding the innovation and the projectt.
-   */
-  private _initializeVariable() {
-
-    /***
-     * this is to check, if the admin make the synthesis available before the status is Done.
-     * @type {boolean | undefined}
-     * @user
-     */
+    // this is to check, if the admin make the synthesis available before the status is Done.
     this._previewMode = this._innovation.previewMode ? this._innovation.previewMode : false;
 
-    this._anonymousAnswers = !!this._innovation._metadata.campaign.anonymous_answers && !this._adminMode;
-
+    this._worldmapFiltersService.reset();
+    this._questions = ResponseService.presets(this._innovation);
   }
 
+  /***
+   * This function is to fetch the answers from the server.
+   */
+  private _getAnswers() {
+    if(isPlatformBrowser(this._platformId)) {
+      this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first())
+        .subscribe((response) => {
+          this._answers = AnswerFrontService.qualitySort(response.answers);
+
+          if (this._anonymousAnswers) {
+            this._answers = AnswerFrontService.anonymous(this._answers);
+          }
+
+          this._filteredAnswers = this._answers;
+          this._updateAnswersToShow();
+
+          this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() =>
+            this._updateAnswersToShow()
+          );
+
+          this._companies = response.answers.map((answer: any) => answer.company || {
+            name: answer.professional.company
+          }).filter(function(item: any, pos: any, self: any) {
+            return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
+          });
+
+          this._countries = response.answers.reduce((acc, answer) => {
+            if (!!answer.country && !!answer.country.flag && acc.indexOf(answer.country.flag) === -1) {
+              acc.push(answer.country.flag);
+            }
+            return acc;
+          }, []);
+
+          /*
+					 * compute tag list globally
+					 */
+          const tagsDict = response.answers.reduce(function (acc, answer) {
+            answer.tags.forEach((tag) => {
+              if (!acc[tag._id]) {
+                acc[tag._id] = tag;
+              }
+            });
+            return acc;
+          }, {} as {[id: string]: Tag});
+
+          this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
+
+          /*
+					 * compute tags lists for each questions of type textarea
+					 */
+          this._questions.forEach((question) => {
+            const tags = ResponseService.tagsList(response.answers, question);
+            const identifier = (question.controlType === 'textarea') ? question.identifier
+              : question.identifier + 'Comment';
+            this._tagFiltersService.setAnswerTags(identifier, tags);
+          });
+
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+        });
+    }
+  }
 
   private _updateAnswersToShow(): void {
     const addAnswer = (country: string) => {
@@ -170,90 +224,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._answersOrigins = this._sharedWorldMapService.getCountriesRepartition(countriesList);
   }
 
-
-  /***
-   * This function is to fetch the answers from the server.
-   */
-  private _getAnswers() {
-    this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).subscribe((response) => {
-      this._answers = AnswerFrontService.qualitySort(response.answers);
-
-      if ( this._anonymousAnswers ) {
-        this._answers = AnswerFrontService.anonymous(this._answers);
-      }
-
-      this._filteredAnswers = this._answers;
-      this._updateAnswersToShow();
-      this._filterService.filtersUpdate.subscribe(() => this._updateAnswersToShow());
-
-      this._companies = response.answers.map((answer: any) => answer.company || {
-        name: answer.professional.company
-      }).filter(function(item: any, pos: any, self: any) {
-        return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
-      });
-
-      this._countries = response.answers.reduce((acc, answer) => {
-        if (!!answer.country && !!answer.country.flag && acc.indexOf(answer.country.flag) === -1) {
-          acc.push(answer.country.flag);
-        }
-        return acc;
-      }, []);
-
-      /*
-       * compute tag list globally
-       */
-      const tagsDict = response.answers.reduce(function (acc, answer) {
-        answer.tags.forEach((tag) => {
-          if (!acc[tag._id]) {
-            acc[tag._id] = tag;
-          }
-        });
-        return acc;
-      }, {} as {[id: string]: Tag});
-      this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
-
-      /*
-       * compute tags lists for each questions of type textarea
-       */
-      this._questions.forEach((question) => {
-        const tags = ResponseService.tagsList(response.answers, question);
-        const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
-        this._tagFiltersService.setAnswerTags(identifier, tags);
-      });
-
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
-  }
-
-
-  /***
-   * This function is to reset the map configuration.
-   */
-  private resetMap() {
-    this._worldmapFiltersService.reset();
-  }
-
-
-  /***
-   * This function is to get the questions.
-   */
-  private presets() {
-   if (this._innovation.preset && this._innovation.preset.sections) {
-     this._questions = ResponseService.presets(this._innovation);
-   }
-  }
-
-  /***
-   * This function returns the color according to the length of the input data.
-   * @param {number} length
-   * @param {number} limit
-   * @returns {string}
-   */
-  public getColor(length: number, limit: number) {
-    return InnovationFrontService.getColor(length, limit);
-  }
-
   /***
    * This function saves the comment of the operator.
    * @param event
@@ -268,23 +238,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
       this._toBeSaved = false;
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+      this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
-
-  /***
-   * This function is to filter by the countries.
-   * @param event
-   */
-  filterByContinents(event: {continents: {[continent: string]: boolean}, allChecked: boolean}): void {
-    this._worldmapFiltersService.selectContinents(event);
-  }
-
-
-  filterPro(answer: Answer, event: Event) {
+  public filterPro(answer: Answer, event: Event) {
     event.preventDefault();
     let proFiltered: any = {};
     if (this._filterService.filters['professionals']) {
@@ -298,28 +259,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     });
   }
 
-
   public seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
-
     this._sidebarTemplateValue = {
       animate_state: 'active',
       title: 'Insight',
       size: '726px'
     };
-
-  }
-
-  public closeSidebar() {
-    this._leftSidebarTemplateValue = {
-      animate_state: 'inactive',
-      type: 'MARKET_REPORT'
-    };
-  }
-
-
-  public get mainDomain(): boolean {
-    return environment.domain === 'umi';
   }
 
   public get userLang(): string {
@@ -354,10 +300,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._countries;
   }
 
-  get continentTarget(): any {
-    return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
-  }
-
   get questions(): Array<Question> {
     return this._questions;
   }
@@ -368,10 +310,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   set modalAnswer(modalAnswer: Answer) {
     this._modalAnswer = modalAnswer;
-  }
-
-  get adminSide(): boolean {
-    return this._adminSide;
   }
 
   get leftSidebarTemplateValue(): SidebarInterface {
@@ -394,24 +332,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._innovation;
   }
 
-  get reportShared(): boolean {
-    return this._reportShared;
-  }
-
   get isOwner(): boolean {
     return this._isOwner;
   }
 
-  get mapSelectedContinents(): { [p: string]: boolean } {
-    return this._worldmapFiltersService.selectedContinents;
-  }
-
   get answersOrigins(): {[c: string]: number} {
     return this._answersOrigins;
-  }
-
-  get adminMode(): boolean {
-    return this._adminMode;
   }
 
   get answersByCountries(): boolean {
@@ -428,6 +354,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get toBeSaved(): boolean {
     return this._toBeSaved;
+  }
+
+  get isMainDomain(): boolean {
+    return this._isMainDomain;
   }
 
   ngOnDestroy(): void {

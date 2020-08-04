@@ -25,6 +25,8 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 
 export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
+  @Input() isEditable = false;
+
   @Input() set executiveReport(value: ExecutiveReport) {
     this._executiveReport = value;
     this._setData();
@@ -80,8 +82,8 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
           return b.profileQuality - a.profileQuality;
         });
       }, (err: HttpErrorResponse) => {
-        console.log(err);
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       })
     }
   }

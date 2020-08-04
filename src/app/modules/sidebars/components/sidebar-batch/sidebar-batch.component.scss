@@ -1,0 +1,19 @@
+@import "../../../../../style/framework/src/variables";
+
+#sidebar-batch {
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .text-error {
+    color: $text-alert-color;
+    font-size: 12px;
+    padding-top: 4px;
+  }
+
+  .form-input, .form-select {
+    max-width: 400px;
+  }
+
+}

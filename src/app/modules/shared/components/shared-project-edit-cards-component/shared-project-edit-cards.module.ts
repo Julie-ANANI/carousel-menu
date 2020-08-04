@@ -10,7 +10,7 @@ import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
 import { SharedUploadZonePhotoModule } from '../shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { SharedUploadZoneVideoModule } from '../shared-upload-zone-video/shared-upload-zone-video.module';
-import { MessageTemplate1Module } from '../../../utility/messages/message-template-1/message-template-1.module';
+import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 
 
@@ -24,7 +24,7 @@ import { ModalModule } from '../../../utility/modals/modal/modal.module';
     InputListModule,
     SharedUploadZonePhotoModule,
     SharedUploadZoneVideoModule,
-    MessageTemplate1Module,
+    MessageTemplateModule,
     ModalModule
   ],
   declarations: [

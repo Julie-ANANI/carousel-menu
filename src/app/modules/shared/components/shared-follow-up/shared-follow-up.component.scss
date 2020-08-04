@@ -2,4 +2,27 @@
 
 #shared-follow-up {
 
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .email-wrapper {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+
+      .email-content {
+        flex: 1;
+        min-height: 80px;
+      }
+
+      .divider-vert {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+
+    }
+
+  }
+
 }
