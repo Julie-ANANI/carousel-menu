@@ -20,7 +20,7 @@ import { isPlatformBrowser } from "@angular/common";
 import { Professional } from "../../../../models/professional";
 import { UserFrontService } from "../../../../services/user/user-front.service";
 
-type Template = 'MARKET_TYPE' | 'FOLLOW_UP';
+type Template = 'MARKET_REPORT' | 'FOLLOW_UP';
 
 @Component({
   selector: 'app-sidebar-filter-answers',
@@ -40,7 +40,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   @Input() answers: Array<Answer> = [];
 
-  @Input() templateType: Template = 'MARKET_TYPE';
+  @Input() templateType: Template = 'MARKET_REPORT';
 
   @Input() set innovation(value: Innovation) {
     if (value && value._id) {
@@ -138,7 +138,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
       if (!this._seeMore[question.identifier]) {
         this._seeMore[question.identifier] = false;
       }
-      if (this.templateType === 'MARKET_TYPE' || question.controlType === 'checkbox' ||
+      if (this.templateType === 'MARKET_REPORT' || question.controlType === 'checkbox' ||
         question.controlType === 'radio' || this.answersTagsLists[question.identifier] &&
         this.answersTagsLists[question.identifier].length) {
         this._displayedQuestions.push(question);

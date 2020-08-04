@@ -1,0 +1,206 @@
+@import "../style/framework/src/variables";
+@import "../style/framework/src/mixins";
+
+.shared-market-report {
+
+  .content-wrapper {
+
+    .title.is-main {
+      margin-bottom: 0;
+      font-size: 26px;
+    }
+
+    .box-style {
+      box-shadow: $box-shadow;
+      border-radius: 6px;
+      font-size: 15px;
+      background-color: $bg-white-color;
+    }
+
+    .op-text {
+      color: $text-draft-color;
+      margin-top: 25px;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .question-section .answers-wrapper, .professional-wrapper, .comment-wrapper {
+      height: 100%;
+
+      .card-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: -20px;
+
+        .card {
+          box-shadow: $box-shadow;
+
+          .card-body {
+            width: 100%;
+            height: 100%;
+          }
+
+          &:hover {
+            box-shadow: $box-shadow-7;
+          }
+
+        }
+
+      }
+
+      &.is-collapse {
+        height: 0;
+        transform: scaleY(0);
+        transform-origin: 100% 0;
+        visibility: hidden;
+      }
+
+      &.is-expand {
+        transition: all 0.4s ease;
+        height: 100%;
+        transform: scaleY(1);
+        visibility: visible;
+        transform-origin: 0 100%;
+      }
+
+    }
+
+    .answers-wrapper {
+
+      .card-wrapper {
+
+        .card {
+          min-height: 190px;
+          margin-bottom: 20px;
+          flex: 0 1 calc(50% - 20px);
+
+          .card-body {
+            padding: 10px;
+          }
+
+        }
+
+      }
+
+    }
+
+    .answers-wrapper .clearbit-list-wrapper, .answers-wrapper .textarea-wrapper, .comment-wrapper {
+
+      .card-wrapper {
+        display: block;
+
+        .card {
+          min-height: unset;
+          flex: unset;
+        }
+
+      }
+
+    }
+
+    .toggle-wrapper {
+      margin-right: -20px;
+
+      .card-wrapper .card {
+        min-height: 190px;
+      }
+
+    }
+
+    .professional-wrapper {
+
+      .card-wrapper {
+        margin-right: -20px;
+        padding-top: 30px;
+
+        .card {
+          padding: 10px;
+
+          .icon-container {
+            top: 4px;
+            left: 10px;
+            visibility: hidden;
+          }
+
+          .card-body {
+            padding: 0;
+          }
+
+          &.is-card-3 {
+            margin-bottom: $unit-5;
+          }
+
+          &:hover {
+
+            .icon-container {
+              visibility: visible;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+    .content-body {
+      display: flex;
+      justify-content: center;
+
+      .conclusion-wrapper {
+        flex: 1;
+        padding: 50px;
+
+        .title.is-main {
+          margin-bottom: 10px;
+        }
+
+        .tags-wrapper {
+          margin: -4px;
+          margin-top: 10px;
+        }
+
+      }
+
+      .stats-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 10px;
+        text-align: center;
+        width: 360px;
+        background-color: $bg-draft-color;
+        color: $text-white-color;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+
+    }
+
+  }
+
+}
+
+@media screen and (max-width: $size-lg) {
+
+  .shared-market-report {
+
+    .content-wrapper {
+
+      .content-body {
+        justify-content: unset;
+        flex-direction: column;
+
+        .stats-wrapper {
+          width: 100%;
+          border-radius: 6px;
+        }
+
+      }
+
+    }
+
+  }
+
+}
