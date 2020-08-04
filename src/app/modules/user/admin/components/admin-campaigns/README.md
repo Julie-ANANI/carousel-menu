@@ -56,16 +56,16 @@ No definition of a Role means no access to that user.
 
 1. PROS:
 <br><br>SEARCH_BY: 'Name, Email,
-<br><br>USER: 'View, Edit, Add, Export'.
+<br><br>USER: 'Edit, Add, Export'.
 
-2. ANSWERS: View, Edit,
+2. ANSWERS: Edit,
 <br><br>FILTER_BY: 'Status', 
 <br><br>SEARCH_BY: 'Name', 
 <br><br>T_Columns: 'Name, Country, Job, Created, Status'.
 
 #### Market Test Manager:
 
-1. SEARCH: LAUNCH: 'Search', VIEW: 'Settings', EDIT: 'Settings', IMPORT: 'Pros'.
+1. SEARCH: LAUNCH: 'Search', EDIT: 'Settings', IMPORT: 'Pros'.
 
 2. HISTORY: Put_Back_In_Queue
 <br><br>SEARCH_BY: 'Keywords', 
@@ -79,20 +79,20 @@ No definition of a Role means no access to that user.
 3. PROS:
 <br><br>SEARCH_BY: 'Name, Email, Job, Company', 
 <br><br>T_COLUMNS: 'Name, Country, Job, Company',
-<br><br>USER: 'View, Edit'.
+<br><br>USER: 'Edit'.
 
 4. WORKFLOWS: Select, Edit, Test, Import. 
 
-5. BATCH: AutoBatch, Pause, Edit, View.
+5. BATCH: AutoBatch, Pause, Edit.
 
-6. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
+6. ANSWERS: Import, Export, Edit, Quiz, Validate, Reject,
 <br><br>FILTER_BY: 'Status', 
 <br><br>SEARCH_BY: 'Name, Country', 
 <br><br>T_Columns: 'Name, Country, Job, Validation_Score, Created, Status'.
 
 #### Market Test Manager UMI:
 
-1. SEARCH: LAUNCH: 'Search', VIEW: 'Settings', EDIT: 'Settings', IMPORT: 'Pros'.
+1. SEARCH: LAUNCH: 'Search', EDIT: 'Settings', IMPORT: 'Pros'.
 
 2. HISTORY: Put_Back_In_Queue
 <br><br>SEARCH_BY: 'Keywords', 
@@ -106,13 +106,13 @@ No definition of a Role means no access to that user.
 3. PROS:
 <br><br>SEARCH_BY: 'Name, Email, Job, Company', 
 <br><br>T_COLUMNS: 'Name, Country, Job, Company',
-<br><br>USER: 'View, Edit'.
+<br><br>USER: 'Edit'.
 
 4. WORKFLOWS: Select, Edit, Test, Import. 
 
-5. BATCH: AutoBatch, Pause, Edit, View.
+5. BATCH: AutoBatch, Pause, Edit.
 
-6. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
+6. ANSWERS: Import, Export, Edit, Quiz, Validate, Reject,
 <br><br>FILTER_BY: 'Status', 
 <br><br>SEARCH_BY: 'Name, Country', 
 <br><br>T_Columns: 'Name, Country, Job, Validation_Score, Created, Status'.
@@ -126,7 +126,6 @@ access: {
                 campaigns: {
                     campaign: {
                         batch: {
-                            view: true,
                             edit: true,
                             pause: true,
                             autoBatch: true
@@ -177,9 +176,6 @@ access: {
                             edit: {
                                 settings: true
                             },
-                            view: {
-                                settings: true
-                            },
                             launch: {
                                 search: true
                             }
@@ -201,7 +197,6 @@ access: {
                                 status: true
                             },
                             edit: true,
-                            view: true,
                             import: true,
                             quiz: true,
                             validate: true,
@@ -222,8 +217,7 @@ access: {
                                 country: true
                             },
                             user: {
-                                edit: true,
-                                view: true
+                                edit: true
                             }
                         }
                     }

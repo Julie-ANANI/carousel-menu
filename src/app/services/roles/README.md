@@ -143,10 +143,8 @@ access: {
                     add: true,
                     delete: true,
                     edit: true,
-                    view: true,
                     campaign: {
                         batch: {
-                            view: true,
                             edit: true,
                             pause: true,
                             autoBatch: true
@@ -197,9 +195,6 @@ access: {
                             edit: {
                                 settings: true
                             },
-                            view: {
-                                settings: true
-                            },
                             launch: {
                                 search: true
                             }
@@ -221,7 +216,6 @@ access: {
                                 status: true
                             },
                             edit: true,
-                            view: true,
                             import: true,
                             quiz: true,
                             validate: true,
@@ -242,8 +236,7 @@ access: {
                                 country: true
                             },
                             user: {
-                                edit: true,
-                                view: true
+                                edit: true
                             }
                         }
                     }        
@@ -254,12 +247,10 @@ access: {
                         view: true
                     },
                     import: true,
-                    view: true,
                     edit: true
                 },
                 answerTags: {
                     delete: true,
-                    view: true,
                     edit: true
                 },
                 settings: {
@@ -280,22 +271,6 @@ access: {
                         blacklist: true,
                         validateProject: true,
                         projectRevision: true
-                    },
-                    view: {
-                        statistics: true,
-                        publishedProject: true,
-                        publicProject: true,
-                        answersAnonymous: true,
-                        projectTags: true,
-                        domain: true,
-                        operator: true,
-                        roadmap: true,
-                        missionType: true,
-                        mainObjective: true,
-                        commercial: true,
-                        description: true,
-                        targeting: true,
-                        blacklist: true
                     }
                 }
             }
@@ -356,7 +331,6 @@ access: {
             questionnaire: { 
                 add: true, 
                 edit: true, 
-                view: true, 
                 delete: true, 
                 searchBy: {
                     name: true
@@ -379,7 +353,6 @@ access: {
                 country: true 
             }, 
             user: { 
-                view: true, 
                 edit: true, 
                 delete: true
             },
@@ -399,7 +372,6 @@ access: {
                 created: true 
             }, 
             user: { 
-                view: true, 
                 edit: true, 
                 impersonate: true
             },

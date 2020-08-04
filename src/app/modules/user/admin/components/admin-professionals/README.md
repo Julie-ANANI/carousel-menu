@@ -59,7 +59,6 @@ access: {
             country: true 
         }, 
         user: { 
-            view: true, 
             edit: true, 
             delete: true
         },

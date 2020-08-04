@@ -17,8 +17,6 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>QUIZ: 'View, Generate'. 
 
 4. CAMPAIGNS: Edit, Add, Update_Statistics, Delete, View.
-  
- <br><br>EDIT: 'UMI_Word, Pros_Tags, Questions_Tags, Profiles_Tags, Answers_Tags, Respondent_Profile, Statistics, Respondent_Comments, Views'.
  
 5. SYNTHESIS: 
 <br><br>EDIT: 'UMI_Word, Respondent_Profile, Views, Question_Tags'.
@@ -77,10 +75,9 @@ No definition of a Role means no access to that user.
 #### Market Test Manager:
 
 1. SETTINGS:
-<br><br>VIEW: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics',
 <br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
 
-2. ANSWER_TAGS: View, Edit, Delete.
+2. ANSWER_TAGS: Edit, Delete.
 
 3. QUESTIONNAIRE: All
 
@@ -93,10 +90,9 @@ No definition of a Role means no access to that user.
 #### Market Test Manager UMI:
 
 1. SETTINGS:
-<br><br>VIEW: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics',
 <br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
 
-2. ANSWER_TAGS: View, Edit, Delete.
+2. ANSWER_TAGS: Edit, Delete.
 
 3. QUESTIONNAIRE: All
 
@@ -108,8 +104,8 @@ No definition of a Role means no access to that user.
 
 #### Community
 
-1. QUESTIONNAIRE: View, Edit,
-<br><br>QUIZ: 'View, Edit'. 
+1. QUESTIONNAIRE: Edit,
+<br><br>QUIZ: 'VIEW'. 
 
 2. FOLLOW_UP: All 
 
@@ -125,7 +121,6 @@ access: {
                 makeVisibleToClient: true,
                 changeLang: true,
                 generateVideo: true,
-                view: true,
                 autofill: true,
                 generatePdf: true
             },
@@ -141,8 +136,7 @@ access: {
                 updateStatistics: true,
                 add: true,
                 delete: true,
-                edit: true,
-                view: true
+                edit: true
             }, 
             questionnaire: {
                 quiz: {
@@ -150,12 +144,10 @@ access: {
                     view: true
                 },
                 import: true,
-                view: true,
                 edit: true
             },
             answerTags: {
                 delete: true,
-                view: true,
                 edit: true
             },
             settings: {
@@ -176,22 +168,6 @@ access: {
                     blacklist: true,
                     validateProject: true,
                     projectRevision: true
-                },
-                view: {
-                    statistics: true,
-                    publishedProject: true,
-                    publicProject: true,
-                    answersAnonymous: true,
-                    projectTags: true,
-                    domain: true,
-                    operator: true,
-                    roadmap: true,
-                    missionType: true,
-                    mainObjective: true,
-                    commercial: true,
-                    description: true,
-                    targeting: true,
-                    blacklist: true
                 }
             }
         }

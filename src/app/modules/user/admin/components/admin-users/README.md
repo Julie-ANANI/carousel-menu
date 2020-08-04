@@ -31,19 +31,19 @@ No definition of a Role means no access to that user.
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All
-3. USER: View, Edit, Impersonate.
+3. USER: Edit, Impersonate.
 
 #### Market Test Manager UMI:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All
-3. USER: View, Edit, Impersonate.
+3. USER: Edit, Impersonate.
 
 #### Community:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All
-3. USER: View, Edit, Impersonate.
+3. USER: Edit, Impersonate.
 
 ### Example - Market Test Manager role
 
@@ -64,7 +64,6 @@ access: {
             created: true 
         }, 
         user: { 
-            view: true, 
             edit: true, 
             impersonate: true
         },
