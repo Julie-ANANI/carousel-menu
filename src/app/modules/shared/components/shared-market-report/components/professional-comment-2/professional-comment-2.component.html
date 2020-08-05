@@ -17,7 +17,7 @@
 
     <!-- tag button -->
     <div *ngIf="answerTags.length > 0 || canEditQuestionTags" [ngStyle]="{'margin': '-2px'}" class="m-bottom-2">
-      <app-shared-tag
+      <app-shared-tags
         (addTag)="addTag($event)"
         (createTag)="createTag($event)"
         (removeTag)="removeTag($event)"
@@ -25,7 +25,7 @@
         [isSmall]="true"
         [projectId]="answer.innovation"
         [tags]="answerTags">
-      </app-shared-tag>
+      </app-shared-tags>
     </div>
     <!-- /tag button -->
 

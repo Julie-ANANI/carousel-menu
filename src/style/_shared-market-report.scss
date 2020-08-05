@@ -7,7 +7,8 @@
 
     .title.is-main {
       margin-bottom: 0;
-      font-size: 26px;
+      font-size: 30px;
+      font-weight: bold;
     }
 
     .box-style {
@@ -22,6 +23,7 @@
       margin-top: 25px;
       font-size: 14px;
       margin-bottom: 15px;
+      font-weight: $font-weight-medium;
     }
 
     .question-section .answers-wrapper, .professional-wrapper, .comment-wrapper {

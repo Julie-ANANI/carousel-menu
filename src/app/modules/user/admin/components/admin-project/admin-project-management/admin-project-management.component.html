@@ -701,7 +701,7 @@
 
     <div *ngIf="canAccess(['view', 'projectTags'])" class="tags">
       <label class="form-label">{{'PROJECT.PROJECT_TAGS' | translate}}</label>
-      <app-shared-tag [tags]="project.tags"></app-shared-tag>
+      <app-shared-tags [tags]="project.tags"></app-shared-tags>
     </div>
   </div>
 

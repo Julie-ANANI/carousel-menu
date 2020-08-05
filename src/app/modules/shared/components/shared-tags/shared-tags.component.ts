@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,40 +8,28 @@ import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
 import { Observable } from 'rxjs';
 
+type TagType = 'tags';
+
 @Component({
-  selector: 'app-shared-tag',
-  templateUrl: './shared-tag.component.html',
-  styleUrls: ['./shared-tag.component.scss']
+  selector: 'app-shared-tags',
+  templateUrl: './shared-tags.component.html',
+  styleUrls: ['./shared-tags.component.scss']
 })
 
-export class SharedTagComponent implements OnInit {
+export class SharedTagsComponent implements OnInit {
 
-  // make it true to make the input field and tag label size small.
+  // make it true to make the input field size small.
   @Input() isSmall = false;
 
-  @Input() set tags(value: Array<Tag>) {
-    this._tags = value;
-  }
+  @Input() tags: Array<Tag> = [];
 
-  @Input() set type(value: string){
-    this._type = value;
-  }
+  @Input() type: TagType = 'tags';
 
-  @Input() set projectId(project: string) {
-    this._projectId = project;
-  };
+  @Input() projectId = '';
 
-  @Input() set editMode(value: boolean) {
-    this._editMode = value;
-  }
+  @Input() editMode = false;
 
-  @Input() set isAdmin(value: boolean) {
-    this._isAdmin = value;
-  }
-
-  @Input() set placeholder(value: string) {
-    this._placeholder = value;
-  }
+  @Input() placeholder = 'Add an existing tag here...';
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter<Tag>();
 
@@ -51,48 +39,33 @@ export class SharedTagComponent implements OnInit {
 
   private _tagForm: FormGroup;
 
-  private _showModal: boolean;
+  private _showModal = false;
 
-  private _projectId: string;
-
-  private _placeholder: string = 'COMMON.TAG.TAG_PLACEHOLDER';
-
-  private _type: string;
-
-  private _editMode: boolean;
-
-  private _tags: Array<Tag> = [];
-
-  private _isAdmin: boolean;
+  private _currentLang = this._translateService.currentLang;
 
   constructor(private _translateService: TranslateService,
               private _formBuilder: FormBuilder,
               private _multilingPipe: MultilingPipe,
               private _domSanitizer: DomSanitizer,
               private _tagsService: TagsService,
-              private _autocompleteService: AutocompleteService) {}
+              private _autocompleteService: AutocompleteService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._tagForm = this._formBuilder.group({
       tag: null,
     });
   }
 
   public tagSuggestions(query: string): Observable<Array<any>> {
-
-    if (this._projectId && !this._type) {
-      return this._tagsService.searchTagInPool(this._projectId, query);
+    if (this.projectId && !this.type) {
+      return this._tagsService.searchTagInPool(this.projectId, query);
     } else {
-
       const queryConf: any = { query: query, type: 'tags' };
-
-      if (this._type) { // && this._type === 'SECTOR'
-        queryConf['tagType'] = this._type;
+      if (this.type) {
+        queryConf['tagType'] = this.type;
       }
-
       return this._autocompleteService.get(queryConf);
     }
-
   }
 
   public autocompleListFormatter = (data: any): SafeHtml => {
@@ -101,7 +74,7 @@ export class SharedTagComponent implements OnInit {
   };
 
   public autocompleValueFormatter = (data: any) : string => {
-    if (!this._projectId || this._type) {
+    if (!this.projectId || this.type) {
       return this._multilingPipe.transform(data.name, this._translateService.currentLang);
     } else {
       return this._multilingPipe.transform(data.label, this._translateService.currentLang);
@@ -122,7 +95,6 @@ export class SharedTagComponent implements OnInit {
   }
 
   public createNewTag(): void {
-
     const name = this._tagForm.get('tag').value;
     this._tagForm.get('tag').reset();
 
@@ -131,11 +103,10 @@ export class SharedTagComponent implements OnInit {
     }
 
     this._showModal = false;
-
   }
 
-  get userLang(): string {
-    return this._translateService.currentLang;
+  get currentLang(): string {
+    return this._currentLang;
   }
 
   get canAdd(): boolean {
@@ -146,36 +117,12 @@ export class SharedTagComponent implements OnInit {
     return this._tagForm;
   }
 
-  get projectId(): string {
-    return this._projectId;
-  }
-
   get showModal(): boolean {
     return this._showModal;
   }
 
   set showModal(value: boolean) {
     this._showModal = value;
-  }
-
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
-  get type(): string {
-    return this._type;
-  }
-
-  get editMode(): boolean {
-    return this._editMode;
-  }
-
-  get tags(): Array<Tag> {
-    return this._tags;
-  }
-
-  get isAdmin(): boolean {
-    return this._isAdmin;
   }
 
 }

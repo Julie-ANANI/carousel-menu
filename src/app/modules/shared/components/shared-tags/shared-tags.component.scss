@@ -1,0 +1,15 @@
+@import "../../../../../style/framework/src/variables";
+
+#shared-tags {
+
+  .form-group {
+    min-width: 420px;
+    max-width: 550px;
+
+    .form-input {
+      max-width: 80%;
+    }
+
+  }
+
+}

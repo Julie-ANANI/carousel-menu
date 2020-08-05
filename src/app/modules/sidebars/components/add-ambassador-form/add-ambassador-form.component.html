@@ -9,7 +9,7 @@
     <!-- show tags -->
     <div *ngIf="isProfessional && tags.length > 0" class="form-group">
       <label class="form-label">Tags</label>
-      <app-shared-tag [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag>
+      <app-shared-tags [tags]="tags" (removeTag)="removeTag($event)" [editMode]="true"></app-shared-tags>
     </div>
 
     <!-- first name -->

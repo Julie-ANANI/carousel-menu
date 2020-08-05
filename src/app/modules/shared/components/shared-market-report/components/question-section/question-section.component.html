@@ -154,8 +154,8 @@
   <div *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'
   && answersWithComment.length > 0" class="animate-fade is-5 comment-wrapper p-bottom-20">
 
-    <div class="p-top-40">
-      <h5 class="title is-5 text-secondary m-bottom-15">
+    <div class="p-top-50">
+      <h5 [ngStyle]="{'font-size': '22px'}" class="title text-secondary">
         {{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}
       </h5>
     </div>

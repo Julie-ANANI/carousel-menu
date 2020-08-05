@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserFormComponent } from './user-form.component';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
-import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
+import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-tags.module';
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { SidebarModule } from '../../templates/sidebar/sidebar.module';
     TranslateModule.forChild(),
     AutoCompleteInputModule,
     NguiAutoCompleteModule,
-    SharedTagModule,
+    SharedTagsModule,
     SidebarModule
   ],
   declarations: [

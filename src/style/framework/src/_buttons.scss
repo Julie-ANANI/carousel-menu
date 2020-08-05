@@ -613,7 +613,7 @@
       height: 45px;
 
       i {
-        font-size: 18px;
+        font-size: 16px;
       }
 
     }
@@ -623,6 +623,17 @@
   &.is-xs {
     padding: 5px 20px;
     font-size: $font-size-xs;
+
+    &.is-circled {
+      width: 30px;
+      height: 30px;
+
+      i {
+        font-size: 10px;
+      }
+
+    }
+
   }
 
   &.is-lg, &.is-xl {

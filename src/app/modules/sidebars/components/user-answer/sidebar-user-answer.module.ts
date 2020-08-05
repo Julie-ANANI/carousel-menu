@@ -10,7 +10,7 @@ import { RatingItemComponent } from './rating-item/rating-item.component';
 
 import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
-import { SharedTagModule } from '../../../shared/components/shared-tag/shared-tag.module';
+import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-tags.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
 
@@ -23,7 +23,7 @@ import { InputListModule } from '../../../utility/input-list/input-list.module';
     SidebarModule,
     CountryFlagModule,
     AutoCompleteInputModule,
-    SharedTagModule,
+    SharedTagsModule,
     PipeModule,
     InputListModule
   ],

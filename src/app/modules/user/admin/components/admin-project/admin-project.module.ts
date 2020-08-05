@@ -18,7 +18,7 @@ import { SharedTextZoneModule } from '../../../../shared/components/shared-text-
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
-import { SharedTagModule } from '../../../../shared/components/shared-tag/shared-tag.module';
+import { SharedTagsModule } from '../../../../shared/components/shared-tags/shared-tags.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/admin-project-questionnaire.module';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
@@ -48,7 +48,7 @@ import { MessageErrorModule } from "../../../../utility/messages/message-error/m
     PipeModule,
     SharedProjectEditCardsModule,
     SharedProjectSettingsModule,
-    SharedTagModule,
+    SharedTagsModule,
     TableModule,
     RouterModule,
     SidebarModule,

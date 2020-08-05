@@ -18,7 +18,7 @@
     <!-- type ADD_TAGS -->
     <div *ngSwitchCase="'ADD_TAGS'">
       <label class="form-label">Tag Name</label>
-      <app-shared-tag
+      <app-shared-tags
         (addTag)="onAddTag($event)"
         (createTag)="onCreateTag($event)"
         (removeTag)="onRemoveTag($event)"
@@ -27,7 +27,7 @@
         [projectId]="projectId"
         [tags]="tags"
         [type]="tagType">
-      </app-shared-tag>
+      </app-shared-tags>
     </div>
     <!-- /type ADD_TAGS -->
 
@@ -100,7 +100,7 @@
               (click)="connectToTag(tag)"
               [attr.data-tooltip]="'Add tag'"
               class="button tooltip is-circled is-sm is-primary">
-              <i class="icon icon-plus text-md"></i>
+              <i class="icon icon-plus"></i>
             </button>
           </div>
 

@@ -4,14 +4,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { Multiling } from '../../../../models/multiling';
 import { Tag } from '../../../../models/tag';
-import { Innovation } from '../../../../models/innovation';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import {HttpErrorResponse} from "@angular/common/http";
-import {ErrorFrontService} from "../../../../services/error/error-front.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../services/error/error-front.service";
 
 type Template = 'ADD_TAGS' | 'EDIT_TAG' | '';
 type TagType = 'tags' | '';
@@ -49,10 +48,6 @@ export class SidebarTagsComponent {
       this._tag = {...tag};
       this._needToSetOriginalTag = !(tag.originalTagId);
     }
-  }
-
-  @Input() set project(value: Innovation) {
-
   }
 
   @Input() placeholder = 'Add an existing tag here...';

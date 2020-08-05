@@ -7,7 +7,7 @@
       {{ question.title | multiling:currentLang }}
     </h3>
 
-    <h4 *ngIf="question.label" class="m-no-bottom text-lg">
+    <h4 *ngIf="question.label" [ngStyle]="{'color': '#484848'}" class="m-no-bottom text-lg">
       {{ question.label | multiling:currentLang }}
     </h4>
 
