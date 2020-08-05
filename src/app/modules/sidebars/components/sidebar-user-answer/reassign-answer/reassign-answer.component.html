@@ -1,0 +1,86 @@
+<div id="reassign-answer">
+
+  <!-- firstName | lastName -->
+  <div class="input-group m-bottom-20">
+
+    <div class="form-group">
+      <label class="form-label" for="reassign-answer-firstName">First Name</label>
+      <input
+        (change)="emitPro()"
+        [(ngModel)]="newPro.firstName"
+        class="form-input is-sm is-shadowed"
+        id="reassign-answer-firstName"
+        placeholder="Enter the first name"
+        type="text">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="reassign-answer-lastName">Last Name</label>
+      <input
+        (change)="emitPro()"
+        [(ngModel)]="newPro.lastName"
+        class="form-input is-sm is-shadowed"
+        id="reassign-answer-lastName"
+        placeholder="Enter the last name"
+        type="text">
+    </div>
+
+  </div>
+  <!-- /firstName | lastName -->
+
+  <!-- email | job title -->
+  <div class="input-group m-bottom-20">
+
+    <div class="form-group">
+      <label class="form-label" for="reassign-answer-email">Email Address</label>
+      <input
+        (change)="emitPro()"
+        [(ngModel)]="newPro.email"
+        class="form-input is-sm is-shadowed"
+        id="reassign-answer-email"
+        placeholder="Enter the email address"
+        type="text">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="reassign-answer-job">Job Title</label>
+      <input
+        (change)="emitPro()"
+        [(ngModel)]="newPro.jobTitle"
+        class="form-input is-sm is-shadowed"
+        id="reassign-answer-job"
+        placeholder="Enter the job title"
+        type="text">
+    </div>
+
+  </div>
+  <!-- /email | job title -->
+
+  <!-- company | country -->
+  <div class="input-group m-bottom-20">
+
+    <div class="form-group">
+      <label class="form-label" for="reassign-answer-company">Company</label>
+      <input
+        (change)="emitPro()"
+        [(ngModel)]="newPro.company"
+        class="form-input is-sm is-shadowed"
+        id="reassign-answer-company"
+        placeholder="Enter the company"
+        type="text">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Country</label>
+      <app-auto-complete-input
+        (update)="updateCountry($event)"
+        [isSmall]="true"
+        [config]="{ placeholder: 'Enter the country', type: 'countries' }"
+        [onlyOne]="true">
+      </app-auto-complete-input>
+    </div>
+
+  </div>
+  <!-- /company | country -->
+
+</div>

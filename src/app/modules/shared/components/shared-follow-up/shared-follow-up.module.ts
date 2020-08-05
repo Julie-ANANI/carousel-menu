@@ -10,7 +10,7 @@ import { SharedMailEditorModule } from "../shared-mail-editor/shared-mail-editor
 import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module';
 import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from "../../../sidebars/templates/sidebar/sidebar.module";
-import { SidebarUserAnswerModule } from "../../../sidebars/components/user-answer/sidebar-user-answer.module";
+import { SidebarUserAnswerModule } from "../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module";
 
 @NgModule({
   imports: [

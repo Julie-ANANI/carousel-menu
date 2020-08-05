@@ -12,7 +12,7 @@ import { TAGS } from '../modules/user/admin/components/admin-tags/i18n/en';
 import { PROJECT_MODULE } from '../modules/user/client/components/project/i18n/en';
 import { DISCOVER } from '../modules/public/discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/discover-description/i18n/en';
-import { ANSWER } from '../modules/sidebars/components/user-answer/i18n/en';
+import { SIDEBAR_USER_ANSWER } from '../modules/sidebars/components/sidebar-user-answer/i18n/en';
 import { LOG_IN } from '../modules/common/login/i18n/en';
 import { SIGN_UP } from '../modules/common/signup/i18n/en';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
@@ -52,7 +52,7 @@ export const en = {
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
-  'ANSWER': ANSWER,
+  'SIDEBAR_USER_ANSWER': SIDEBAR_USER_ANSWER,
   'DISCOVER': DISCOVER,
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,
   'LOG_IN': LOG_IN,

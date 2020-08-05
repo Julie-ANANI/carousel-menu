@@ -128,13 +128,12 @@
 <app-sidebar
   *ngIf="canAccess(['view', 'answer']) || canAccess(['edit', 'answer'])"
   [(template)]="sidebarAnswer">
-  <app-user-answer
-    [sidebarState]="sidebarAnswer.animate_state"
+  <app-sidebar-user-answer
     [adminMode]="canAccess(['edit', 'answer'])"
     [(userAnswer)]="modalAnswer"
     [projectId]="project._id"
     [questions]="questions">
-  </app-user-answer>
+  </app-sidebar-user-answer>
 </app-sidebar>
 <!-- /answer sidebar -->
 

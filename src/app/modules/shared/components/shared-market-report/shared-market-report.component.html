@@ -176,12 +176,12 @@
 
 <!-- sidebar insight preview -->
 <app-sidebar *ngIf="innovation && innovation._id" [(template)]="sidebarTemplateValue">
-  <app-user-answer
+  <app-sidebar-user-answer
     *ngIf="modalAnswer._id"
     [(userAnswer)]="modalAnswer"
     [adminMode]="canAccess(['edit', 'respondentProfile'])"
     [projectId]="innovation._id"
     [questions]="questions">
-  </app-user-answer>
+  </app-sidebar-user-answer>
 </app-sidebar>
 <!-- /sidebar insight preview-->

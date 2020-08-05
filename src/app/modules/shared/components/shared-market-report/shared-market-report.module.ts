@@ -10,7 +10,7 @@ import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module'
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
-import { SidebarUserAnswerModule } from '../../../sidebars/components/user-answer/sidebar-user-answer.module';
+import { SidebarUserAnswerModule } from '../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
 import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
 import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';

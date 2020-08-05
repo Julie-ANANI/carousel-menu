@@ -128,14 +128,13 @@
 
   <!-- sidebar to view user answer -->
   <app-sidebar [(template)]="sidebarValue">
-    <app-user-answer
+    <app-sidebar-user-answer
       *ngIf="modalAnswer._id"
       [adminMode]="false"
-      [sidebarState]="sidebarValue.animate_state"
       [(userAnswer)]="modalAnswer"
       [questions]="questions"
       [projectId]="innovation._id">
-    </app-user-answer>
+    </app-sidebar-user-answer>
   </app-sidebar>
   <!-- /sidebar to view user answer -->
 

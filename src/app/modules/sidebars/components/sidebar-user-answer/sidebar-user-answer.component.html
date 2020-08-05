@@ -1,0 +1,441 @@
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="sidebar-user-answer">
+
+  <!-- labels Status | Mail type -->
+  <div *ngIf="adminMode && (!editMode || mailType)" class="m-bottom-15">
+    <div
+      [ngClass]="{ 'is-danger': userAnswer.status === 'REJECTED' || userAnswer.status === 'REJECTED_GMAIL',
+      'is-progress': userAnswer.status === 'SUBMITTED', 'is-success': userAnswer.status === 'VALIDATED' }"
+      class="label m-right-15">
+      {{ 'SIDEBAR_USER_ANSWER.STATUS.' + userAnswer.status | translate }}
+    </div>
+    <div *ngIf="mailType" class="label is-info">{{ mailType }}</div>
+  </div>
+  <!-- /labels Status | Mail type -->
+
+  <!-- buttons -->
+  <div *ngIf="adminMode" class="flex-between flex-wrap m-bottom-30">
+
+    <!-- reassign answer | edit answer -->
+    <div *ngIf="userAnswer.localStatus !== 'draft'" class="d-flex align-center">
+      <label *ngIf="!assignNewPro" class="form-switch m-right-20 p-no-bottom" for="sidebar-user-answer-editMode">
+        <input
+          (change)="OnChangeEdit($event)"
+          [checked]="editMode"
+          [disabled]="isSaving || toBeSaved"
+          id="sidebar-user-answer-editMode"
+          type="checkbox">
+        <i class="form-icon"></i> Edit answer
+      </label>
+      <label *ngIf="!editMode" class="form-switch p-no-bottom m-right-20" for="sidebar-user-answer-reassign">
+        <input
+          (change)="onChangeAssign($event)"
+          [checked]="assignNewPro"
+          [disabled]="isReassigning"
+          id="sidebar-user-answer-reassign"
+          type="checkbox">
+        <i class="form-icon"></i> Reassign answer
+      </label>
+    </div>
+    <!-- /reassign answer | edit answer -->
+
+    <!-- reassign the answer to new pro -->
+    <div *ngIf="userAnswer.localStatus !== 'draft' && assignNewPro && !editMode">
+      <button
+        class="button is-community is-sm"
+        (click)="onReassignAnswer($event)"
+        [disabled]="!newPro.firstName || !newPro.lastName || !newPro.email || isReassigning"
+        id="btn-confirm-assign"
+        type="button">
+        <ng-container *ngIf="!isReassigning; else assignText">Confirm</ng-container>
+        <ng-template #assignText>reassigning the answer...</ng-template>
+      </button>
+    </div>
+    <!-- /reassign the answer to new pro -->
+
+    <!-- import -->
+    <div *ngIf="userAnswer.localStatus === 'draft'">
+      <button
+        (click)="onImportAnswer($event)"
+        [disabled]="isImporting"
+        class="button is-sm is-outlined is-community m-right-20"
+        id="btn-import-answer"
+        type="button">
+        <ng-container *ngIf="!isImporting; else importText">Import</ng-container>
+        <ng-template #importText>importing the answer...</ng-template>
+      </button>
+    </div>
+    <!-- /import -->
+
+    <!-- save -->
+    <button
+      (click)="onSaveAnswer($event)"
+      *ngIf="!assignNewPro"
+      [disabled]="!editMode || isSaving || !toBeSaved"
+      class="button is-sm is-community"
+      id="btn-save"
+      type="button">
+      <ng-container *ngIf="!isSaving; else saveText">Save</ng-container>
+      <ng-template #saveText>saving the answer...</ng-template>
+    </button>
+    <!-- /save -->
+
+  </div>
+  <!-- /buttons -->
+
+  <!-- when reassign the answer to new pro -->
+  <div *ngIf="adminMode && assignNewPro && !editMode">
+    <app-reassign-answer (proToAssign)="onProToAssign($event)"></app-reassign-answer>
+  </div>
+  <!-- /when reassign the answer to new pro -->
+
+  <!-- user details -->
+  <div *ngIf="!assignNewPro">
+
+    <!-- name | flag | rating | language -->
+    <div class="d-flex align-center flex-wrap">
+
+      <!-- name -->
+      <h1 class="title is-4 m-right-25 m-bottom-20">
+        <ng-container *ngIf="professionalName; else profDef">
+          {{ professionalName | FormatText:true }}
+        </ng-container>
+        <ng-template #profDef>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</ng-template>
+        <sup
+          *ngIf="userAnswer.professional && userAnswer.professional.language && !editMode"
+          class="text-normal text-sm p-left-1 text-notify">
+          {{ userAnswer.professional.language }}
+        </sup>
+      </h1>
+      <!-- /name -->
+
+      <!-- language -->
+      <div *ngIf="editMode" class="m-right-25 m-bottom-20">
+        <span
+          (click)="onClickLanguage('fr')"
+          class="text-link p-right-10 text-normal tooltip"
+          data-tooltip="Set pro lang French"
+          [ngClass]="userAnswer.professional && userAnswer.professional.language === 'fr'
+          ? 'text-primary' : 'text-primary-dark'">
+          fr
+        </span>
+        <span
+          (click)="onClickLanguage('en')"
+          class="text-link text-normal tooltip"
+          data-tooltip="Set pro lang English"
+          [ngClass]="userAnswer.professional && userAnswer.professional.language === 'en'
+          ? 'text-primary' : 'text-primary-dark'">
+          en
+        </span>
+      </div>
+      <!-- /language -->
+
+      <!-- rating -->
+      <div *ngIf="editMode" class="m-right-25 m-bottom-20">
+        <app-rating-item
+          (ratingChange)="updateProfileQuality($event)"
+          [editMode]="adminMode"
+          [prop]="'profile'"
+          [rating]="userAnswer.profileQuality">
+        </app-rating-item>
+      </div>
+      <!-- /rating -->
+
+      <!-- country -->
+      <div class="d-flex align-center m-bottom-20">
+        <app-utility-country-flag
+          [country]="userAnswer.country"
+          [width]="50"
+          [height]="35">
+        </app-utility-country-flag>
+        <div
+          (click)="onClickEdit('COUNTRY')"
+          *ngIf="adminMode && editMode"
+          class="icon-container m-top-20 m-left-1">
+          <span class="tooltip" data-tooltip="Edit country">
+            <i class="fas fa-pencil-alt text-primary"></i>
+          </span>
+        </div>
+      </div>
+      <!-- /country -->
+
+    </div>
+    <!-- /name | flag | rating | language -->
+
+    <!-- country edit -->
+    <div *ngIf="editCountry" class="m-bottom-30 form-group mxw-500">
+      <label class="form-label">Country</label>
+      <app-auto-complete-input
+        (update)="updateCountry($event)"
+        [isSmall]="true"
+        [config]="{ placeholder: 'Enter the country', type: 'countries' }"
+        [onlyOne]="true">
+      </app-auto-complete-input>
+    </div>
+    <!-- /country edit -->
+
+  </div>
+  <!-- /user details -->
+
+</div>
+
+<ng-container *ngIf="userAnswer">
+  <section id="user-answer-component">
+
+    <div class="column col-xs-12 col-11 col-mx-auto">
+
+      <!-- section user details -->
+      <div class="section-details">
+
+        <!-- blacklist company -->
+        <ng-container *ngIf="adminMode && userAnswer.localStatus !== 'draft' && userAnswer.blacklistedCompany && !assignNewPro">
+          <div class="icon-container text-alert"><i class="fas fa-exclamation-triangle"></i></div>
+          <span class="text text-alert text-medium">{{ 'ANSWER.BLACKLISTED_COMPANY' | translate }}</span>
+        </ng-container>
+
+        <!-- linkedin -->
+        <ng-container *ngIf="adminMode && userAnswer.professional?.profileUrl && !assignNewPro">
+          <div class="linkedin-wrapper">
+            <span class="icon-container text-secondary picto"><i class="fab fa-linkedin-in"></i></span>
+            <a [href]="userAnswer.professional.profileUrl" target="_blank">
+              <span class="text-link">{{ userAnswer.professional.profileUrl }}</span>
+            </a>
+          </div>
+        </ng-container>
+
+        <!-- job -->
+        <ng-container *ngIf="userAnswer.job || userAnswer.professional?.jobTitle || editMode">
+          <div class="job-wrapper">
+
+            <span class="icon-container text-notify picto"><i class="fas fa-address-card" aria-hidden="true"></i></span>
+
+            <ng-container *ngIf="!editJob && !assignNewPro">
+              <span>{{ (userAnswer.job || userAnswer.professional?.jobTitle) | FormatText:true }}</span>
+              <span
+                *ngIf="adminMode && editMode"
+                class="icon-container is-sm text-notify tooltip"
+                data-tooltip="Modify Profession"
+                (click)="onClickEdit('job')">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+            </ng-container>
+
+            <ng-container *ngIf="editJob">
+              <div class="form-group">
+                <label class="form-label" for="answer-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
+                <input
+                  type="text"
+                  [(ngModel)]="userAnswer.job"
+                  id="answer-jobTitle"
+                  alt="Job title"
+                  class="form-input"
+                  [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
+              </div>
+            </ng-container>
+
+          </div>
+        </ng-container>
+
+        <!-- company -->
+        <ng-container *ngIf="userAnswer.company.name || userAnswer.professional?.company || editMode">
+          <div class="company-wrapper">
+
+            <span class="icon-container text-notify picto"><i class="fas fa-building" aria-hidden="true"></i></span>
+
+            <ng-container *ngIf="!editCompany && !assignNewPro">
+
+              <span [ngClass]="{'popover': excludedCompanies.length > 0,
+              'is-right': excludedCompanies.length > 0 && companyLength <= 30}">
+                {{ (userAnswer.company.name || userAnswer.professional?.company) | FormatText:true }}
+                <div *ngIf="excludedCompanies.length > 0" class="popover-container is-sm">
+                  <div
+                    [ngStyle]="{ 'max-height': '300px', 'overflow-y': 'auto' }"
+                    class="p-top-20 p-left-25 p-bottom-20 p-right-25">
+                    <h3 class="text-center text-sm">Companies blacklisted by the client</h3>
+                    <ul class="m-no">
+                      <li *ngFor="let company of excludedCompanies" class="m-top-h text-xs">
+                        {{ company.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </span>
+
+              <span
+                *ngIf="adminMode && editMode"
+                class="icon-container is-sm text-notify tooltip"
+                data-tooltip="Modify Company"
+                (click)="onClickEdit('company')">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+
+            </ng-container>
+
+            <ng-container *ngIf="editCompany">
+              <div class="form-group">
+                <label class="form-label" for="answer-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+                <input
+                  type="text"
+                  [(ngModel)]="userAnswer.company.name"
+                  id="answer-company"
+                  alt="Company"
+                  class="form-input"
+                  [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
+              </div>
+            </ng-container>
+
+          </div>
+        </ng-container>
+
+        <!-- email -->
+        <ng-container *ngIf="userAnswer.professional?.email && !assignNewPro">
+          <div class="email-wrapper">
+            <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
+            <a [href]="'mailto:'+userAnswer.professional.email">
+              <span class="text-link">{{ userAnswer.professional.email }}</span>
+            </a>
+          </div>
+        </ng-container>
+
+        <!-- second email -->
+        <ng-container *ngIf="adminMode && userAnswer.professional?.secondEmail && !assignNewPro">
+          <div class="email-wrapper">
+            <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
+            <a [href]="'mailto:'+userAnswer.professional.secondEmail">
+              <span class="text-link">{{ userAnswer.professional.secondEmail }}</span>
+            </a>
+          </div>
+        </ng-container>
+
+        <!-- assign second email -->
+        <ng-container *ngIf="adminMode && !userAnswer.professional?.secondEmail && !assignNewPro">
+          <ng-container *ngIf="addNewEmail">
+            <div class="email-wrapper">
+              <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
+              <input type="email" [(ngModel)]="newEmail">
+              <button class="btn ghost-primary" (click)="addContactEmail()">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!addNewEmail">
+            <a class="text-xs" (click)="addNewEmail = true">{{ 'ANSWER.ADD_NEW_EMAIL' | translate }}</a>
+          </ng-container>
+
+        </ng-container>
+
+        <!-- section autoTags -->
+        <ng-container *ngIf="autoTags?.length > 0">
+          <div class="tags-wrapper">
+            <div *ngFor="let tag of autoTags" class="label is-tag is-rounded">
+              {{ tag }}
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- received date and time, and time spent -->
+        <ng-container *ngIf="userAnswer.created || userAnswer.time_elapsed">
+          <div class="text text-notify text-bold receive-wrapper">
+            <span *ngIf="userAnswer.created">
+              {{ 'ANSWER.RECEIVED.A' | translate }}
+              {{ createdDate(userAnswer.created) }}
+              {{ 'ANSWER.RECEIVED.B' | translate }}
+              {{ createdTime(userAnswer.created)  }}
+            </span>
+            <span *ngIf="adminMode && userAnswer.created && userAnswer.time_elapsed">&nbsp; • &nbsp;</span>
+            <span *ngIf="adminMode && userAnswer.time_elapsed">
+              {{ 'ANSWER.RECEIVED.C' | translate }} {{ floor(userAnswer.time_elapsed/60) }} min. {{ floor(userAnswer.time_elapsed%60) }} sec.
+            </span>
+          </div>
+        </ng-container>
+
+        <!-- ip -->
+        <ng-container *ngIf="userAnswer.ip && editMode">
+          <div class="text text-notify text-bold i-wrapper">
+            <span>{{ 'ANSWER.IP' | translate }} {{ userAnswer.ip }}</span>
+          </div>
+        </ng-container>
+
+      </div>
+      <!-- /section user details -->
+
+      <!-- section tags -->
+      <ng-container *ngIf="userAnswer?.tags?.length > 0 || editMode">
+        <div class="section-tags">
+          <label class="form-label">Tags</label>
+          <app-shared-tags
+            [tags]="userAnswer.tags"
+            [editMode]="editMode"
+            [projectId]="projectId"
+            (addTag)="addTag($event)"
+            (createTag)="createTag($event)"
+            (removeTag)="removeTag($event)">
+          </app-shared-tags>
+        </div>
+      </ng-container>
+      <!-- /section tags -->
+
+      <!-- section status -->
+      <ng-container *ngIf="adminMode && userAnswer.status !== 'REJECTED_GMAIL' && userAnswer.localStatus !== 'draft'">
+        <div class="section-status flex-between">
+
+          <!-- to reject -->
+          <div class="status-rejected">
+            <div class="label is-danger"><span>{{ 'ANSWER.STATUS.REJECTED' | translate }}</span></div>
+            <button class="btn btn-radio rejected" [ngClass]="{ 'active': userAnswer.status === 'REJECTED' }" (click)="updateStatus($event, 'REJECTED')">
+              <span>•</span>
+            </button>
+          </div>
+
+          <!-- submitted -->
+          <div class="status-submitted">
+            <div class="label is-progress"><span>{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span></div>
+            <button class="btn btn-radio submitted" [ngClass]="{ 'active': userAnswer.status === 'SUBMITTED' }" (click)="updateStatus($event, 'SUBMITTED')">
+              <span>•</span>
+            </button>
+          </div>
+
+          <!-- validated -->
+          <div class="status-validated">
+            <div class="label is-success"><span>{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span></div>
+            <button
+              class="btn btn-radio validated"
+              [ngClass]="{ 'active': userAnswer.status === 'VALIDATED' }"
+              (click)="updateStatus($event, 'VALIDATED')">
+              <span>•</span>
+            </button>
+          </div>
+
+        </div>
+      </ng-container>
+      <!-- /section status -->
+
+      <!-- rejected by gmail -->
+      <ng-container *ngIf="adminMode && userAnswer.status === 'REJECTED_GMAIL'">
+        <div class="status-gmail">
+
+          <div class="label is-danger">
+            <span>{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
+          </div>
+
+          <!-- the original reply message sent to Karine -->
+          <ng-container *ngIf="meta && !editMode">
+            <p class="text">{{ meta }}</p>
+          </ng-container>
+
+        </div>
+      </ng-container>
+      <!-- /rejected by gmail -->
+
+      <!-- section questions -->
+      <ng-container *ngFor="let question of questions">
+        <app-answer-question
+          [editMode]="editMode"
+          [adminMode]="adminMode"
+          [question]="question"
+          [fullAnswer]="userAnswer"
+          [innoid]="projectId">
+        </app-answer-question>
+      </ng-container>
+      <!-- /section questions -->
+
+    </div>
+  </section>
+</ng-container>

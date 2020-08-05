@@ -19,7 +19,7 @@ import { SharedProjectSettingsModule } from '../../../../shared/components/share
 import { SharedProjectEditCardsModule } from '../../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
-import { SidebarUserAnswerModule } from '../../../../sidebars/components/user-answer/sidebar-user-answer.module';
+import { SidebarUserAnswerModule } from '../../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';

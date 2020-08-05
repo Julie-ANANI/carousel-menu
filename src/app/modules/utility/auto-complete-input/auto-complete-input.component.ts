@@ -18,6 +18,9 @@ import { AutoCompleteInputSuggestionInterface } from './interfaces/auto-complete
 
 export class AutoCompleteInputComponent {
 
+  // make it true to make input field and button small.
+  @Input() isSmall = false;
+
   @Input() tempActive: boolean = true; // its temp don't use it.
 
   @Input() isEditable: boolean = true; // false: will disable it.

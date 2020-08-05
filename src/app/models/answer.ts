@@ -35,4 +35,5 @@ export interface Answer {
   scoreStatus?: number;
   autoTags?: Array<string>;
   followUp?: {objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', date?: Date};
+  readonly localStatus?: string;
 }

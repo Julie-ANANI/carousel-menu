@@ -114,14 +114,12 @@
 <app-sidebar
   *ngIf="answers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
   [(template)]="sidebarValue">
-  <app-user-answer
-    [sidebarState]="sidebarValue.animate_state"
+  <app-sidebar-user-answer
     [adminMode]="canAccess(['edit'])"
     [excludedCompanies]="excludedCompanies"
-    [(userAnswer)]="modalAnswer"
     [projectId]="campaign.innovation._id"
     [questions]="questions"
-    (answerUpdated)="updateAnswer($event)">
-  </app-user-answer>
+    [userAnswer]="modalAnswer">
+  </app-sidebar-user-answer>
 </app-sidebar>
 <!-- /sidebar insight preview -->

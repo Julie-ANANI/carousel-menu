@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 
-import { UserAnswerComponent } from './user-answer.component';
+import { SidebarUserAnswerComponent } from './sidebar-user-answer.component';
 import { AnswerQuestionComponent } from './answer-question/answer-question.component';
 import { RatingItemComponent } from './rating-item/rating-item.component';
 
@@ -13,6 +13,7 @@ import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/au
 import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-tags.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
+import { ReassignAnswerComponent } from './reassign-answer/reassign-answer.component';
 
 @NgModule({
   imports: [
@@ -28,12 +29,13 @@ import { InputListModule } from '../../../utility/input-list/input-list.module';
     InputListModule
   ],
   declarations: [
-    UserAnswerComponent,
+    SidebarUserAnswerComponent,
     AnswerQuestionComponent,
-    RatingItemComponent
+    RatingItemComponent,
+    ReassignAnswerComponent
   ],
   exports: [
-    UserAnswerComponent
+    SidebarUserAnswerComponent
   ]
 })
 

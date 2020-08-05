@@ -15,6 +15,8 @@ export interface Professional {
 
   readonly urlCompany?: string;
 
+  readonly secondEmail?: string;
+
   profileUrl?: string;
 
   email: string;

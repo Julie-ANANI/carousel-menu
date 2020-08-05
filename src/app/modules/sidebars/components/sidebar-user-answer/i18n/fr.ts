@@ -1,4 +1,4 @@
-export const ANSWER = {
+export const SIDEBAR_USER_ANSWER = {
   'RECEIVED': {
     'A': 'Reçu',
     'B': 'à',

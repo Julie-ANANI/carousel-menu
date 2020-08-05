@@ -1,14 +1,17 @@
 @import "../../../../../../style/framework/src/variables";
 
-.rating-item-component {
+.rating-item {
   display: flex;
 
   .fas {
-    color: $meta-color;
+    color: $text-meta-color;
+    font-size: 14px;
   }
 
   .thumbs-down-wrapper, .thumbs-up-wrapper, .c-thumbs-up-wrapper, .c-thumbs-down-wrapper {
-    padding: 0.3rem $unit-3;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
   }
 
   .thumbs-up-wrapper {
@@ -26,45 +29,45 @@
   }
 
   .thumbs-up-wrapper:hover, .thumbs-up-wrapper.active {
-    background-color: $success-color;
+    background-color: $bg-success-color;
     cursor: pointer;
 
     .fa-thumbs-up {
-      color: $white-color;
+      color: $text-white-color;
     }
 
   }
 
   .thumbs-down-wrapper:hover, .thumbs-down-wrapper.active {
-    background-color: $alert-color;
+    background-color: $bg-alert-color;
     cursor: pointer;
 
     .fa-thumbs-down {
-      color: $white-color;
+      color: $text-white-color;
     }
 
   }
 
   .c-thumbs-up-wrapper {
-    border: $border-width solid $success-color;
-    background-color: $success-color;
+    border: $border-width solid $border-success-color;
+    background-color: $bg-success-color;
     border-radius: $border-radius;
-    color: $white-color;
+    color: $text-white-color;
 
     .fa-thumbs-up {
-      color: $white-color;
+      color: $text-white-color;
     }
 
   }
 
   .c-thumbs-down-wrapper {
-    border: $border-width solid $alert-color;
+    border: $border-width solid $border-alert-color;
     border-radius: $border-radius;
-    background-color: $alert-color;
-    color: $white-color;
+    background-color: $bg-alert-color;
+    color: $text-white-color;
 
     .fa-thumbs-down {
-      color: $white-color;
+      color: $text-white-color;
     }
 
   }

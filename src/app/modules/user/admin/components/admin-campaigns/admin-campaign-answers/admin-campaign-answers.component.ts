@@ -264,10 +264,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
     });
   }
 
-  public updateAnswer(value: boolean) {
-    this._getAnswers();
-  }
-
   private _campaignStat(type: string, searchKey?: any): number {
     return CampaignFrontService.answerStat(this._answers, type, searchKey);
   }

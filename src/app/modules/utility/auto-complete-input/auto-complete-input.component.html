@@ -10,8 +10,9 @@
           [display-property-name]="identifier"
           [list-formatter]="autocompleteListFormatter.bind(this)"
           [source]="suggestions.bind(this)"
+          [ngClass]="{'is-sm': isSmall}"
           auto-complete
-          class="form-input"
+          class="form-input is-shadowed"
           formControlName="answer"
           value-property-name="id">
       </label>
@@ -19,7 +20,8 @@
       <button
         *ngIf="isShowButton"
         [disabled]="!canAdd || !isEditable"
-        class="button is-action is-circled is-primary is-shadowed p-no">
+        [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
+        class="button is-circled is-primary">
         <i class="icon icon-plus"></i>
       </button>
 

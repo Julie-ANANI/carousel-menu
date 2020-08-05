@@ -8,23 +8,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class RatingItemComponent {
 
-  @Input() editMode: boolean;
+  @Input() editMode = false;
 
-  @Input() prop: string;
+  @Input() prop = '';
 
   @Input() set rating(value: number) {
     this._rating = Number.isInteger(value) ? value : 1;
   }
 
-  @Output() ratingChange = new EventEmitter<any>();
+  @Output() ratingChange: EventEmitter<any> = new EventEmitter<any>();
 
-  private _rating: number;
+  private _rating: number = null;
 
   constructor() {}
 
-  thumbsUp(event: Event) {
+  public thumbsUp(event: Event) {
     event.preventDefault();
-
     if (this.editMode) {
       if (this._rating === 2) {
         this._rating = 1;
@@ -33,12 +32,10 @@ export class RatingItemComponent {
       }
       this.ratingChange.emit({key: this.prop, value: this._rating});
     }
-
   }
 
-  thumbsDown(event: Event) {
+  public thumbsDown(event: Event) {
     event.preventDefault();
-
     if (this.editMode) {
       if (this._rating === 0) {
         this._rating = 1;
@@ -47,7 +44,6 @@ export class RatingItemComponent {
       }
       this.ratingChange.emit({key: this.prop, value: this._rating});
     }
-
   }
 
   get rating() {
