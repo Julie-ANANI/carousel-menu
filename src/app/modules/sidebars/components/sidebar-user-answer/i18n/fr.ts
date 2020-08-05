@@ -1,18 +1,20 @@
 export const SIDEBAR_USER_ANSWER = {
   'RECEIVED': {
-    'A': 'Reçu',
+    'A': 'Reçu :',
     'B': 'à',
-    'C': 'Temps passé:'
+    'C': 'Temps passé :'
   },
-
-  'IP': 'Ip:',
 
   'STATUS': {
     'REJECTED': 'Rejeté',
     'REJECTED_GMAIL': 'Rejeté par Mail',
     'VALIDATED': 'Validé',
     'SUBMITTED': 'A regarder',
-    'EMAIL': 'Envoyer email'
+    'EMAIL': 'Envoyer email',
+    'DRAFT': 'Draft',
+    'VALIDATED_NO_MAIL': 'Validé aucun mail',
+    'VALIDATED_UMIBOT': 'Validé par le bot',
+    'REJECTED_UMIBOT': 'Rejeté par le bot',
   },
 
   'VALIDATED_ANSWER': 'Réponse validée',

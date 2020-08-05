@@ -31,7 +31,7 @@
   <!-- /input field -->
 
   <!-- displaying tags -->
-  <div *ngIf="tags.length" class="flex-wrap d-flex">
+  <div *ngIf="tags.length" [ngStyle]="{'margin': '-4px'}" class="flex-wrap d-flex">
     <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-tag is-rounded">
       <i class="fas fa-tag icon-left"></i>
       {{ tag.label | multiling:currentLang }}

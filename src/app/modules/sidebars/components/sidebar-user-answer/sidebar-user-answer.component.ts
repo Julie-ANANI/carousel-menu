@@ -13,6 +13,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {NewPro} from './reassign-answer/reassign-answer.component';
 import {UserFrontService} from '../../../../services/user/user-front.service';
+import {Professional} from '../../../../models/professional';
 
 @Component({
   selector: 'app-sidebar-user-answer',
@@ -50,8 +51,6 @@ export class SidebarUserAnswerComponent {
 
   private _editCompany = false;
 
-  private _addNewEmail = false;
-
   private _editCountry = false;
 
   private _editMode = false;
@@ -70,6 +69,8 @@ export class SidebarUserAnswerComponent {
 
   toBeSaved = false;
 
+  editSecondEmail = false;
+
   constructor(private _translateService: TranslateService,
               private _answerService: AnswerService,
               private _professionalsService: ProfessionalsService,
@@ -78,6 +79,7 @@ export class SidebarUserAnswerComponent {
 
   private _reinitVariables() {
     this._editMode = false;
+    this.toBeSaved = false;
     this._resetEdit();
   }
 
@@ -86,6 +88,7 @@ export class SidebarUserAnswerComponent {
     this._editJob = false;
     this._editCompany = false;
     this._editCountry = false;
+    this.editSecondEmail = false;
   }
 
   public OnChangeEdit(event: Event) {
@@ -101,57 +104,68 @@ export class SidebarUserAnswerComponent {
   }
 
   public onClickEdit(activate: string) {
-
     switch (activate) {
 
       case 'COUNTRY':
         this._editCountry = !this._editCountry;
         break;
 
-      case 'job':
-        this._editJob = true;
+      case 'JOB':
+        this._editJob = !this._editJob;
         break;
 
-      case 'company':
-        this._editCompany = true;
+      case 'COMPANY':
+        this._editCompany = !this._editCompany;
         break;
 
-      default:
-        //do nothing...
+      case 'SECOND_EMAIL':
+        this.editSecondEmail = !this.editSecondEmail;
+        break;
 
     }
-
   }
 
 
   public onSaveAnswer(event: Event) {
     event.preventDefault();
-    if (!this.isSaving) {
+    if (!this.isSaving && this.toBeSaved) {
       this.isSaving = true;
-      this._resetEdit();
-
-      if (this._userAnswer.professional && this._userAnswer.professional.email) {
-        // Hack : les réponses anciennes n'ont pas de champ quizReference,
-        // mais il faut forcément une valeur pour sauvegarder la réponse
-        // TODO: remove this hack
-        this._userAnswer.originalAnswerReference = this._userAnswer.originalAnswerReference || 'oldQuiz';
-        this._userAnswer.quizReference = this._userAnswer.quizReference || 'oldQuiz';
-
-        this._answerService.save(this._userAnswer._id, this._userAnswer).pipe(first()).subscribe(() => {
-          this._translateNotificationsService.success('Success', 'The answer is updated.');
-          this.isSaving = false;
-          this.answerUpdated.emit(true);
-        }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          this.isSaving = false;
-        });
+      if (this.editSecondEmail) {
+        this._addContactEmail();
       } else {
-        this._translateNotificationsService.error('Error',
-          'The email of the professional associated with this answer is not exist.');
-        this.isSaving = false;
+        this._updateAnswer();
       }
-
     }
+  }
+
+  private _updateAnswer() {
+    if (this._userAnswer.professional && this._userAnswer.professional.email) {
+      // Hack : les réponses anciennes n'ont pas de champ quizReference,
+      // mais il faut forcément une valeur pour sauvegarder la réponse
+      // TODO: remove this hack
+      this._userAnswer.originalAnswerReference = this._userAnswer.originalAnswerReference || 'oldQuiz';
+      this._userAnswer.quizReference = this._userAnswer.quizReference || 'oldQuiz';
+
+      this._answerService.save(this._userAnswer._id, this._userAnswer).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('Success', 'The answer is updated.');
+        this._resetEdit();
+        this._resetSaveVariables();
+        this.answerUpdated.emit(true);
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._resetSaveVariables();
+        console.error(err);
+      });
+    } else {
+      this._translateNotificationsService.error('Error',
+        'The email of the professional associated with this answer is not exist.');
+      this._resetSaveVariables();
+    }
+  }
+
+  private _resetSaveVariables() {
+    this.isSaving = false;
+    this.toBeSaved = false;
   }
 
   public onProToAssign(pro: NewPro) {
@@ -167,24 +181,24 @@ export class SidebarUserAnswerComponent {
           }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this.isSaving = false;
+          console.error(err);
         });
     }
   }
 
-  private _enableSave() {
+  public enableSave() {
     this.toBeSaved = true;
   }
 
   public updateProfileQuality(object: {value: number}) {
     this._userAnswer.profileQuality = object.value;
-    this._enableSave();
+    this.enableSave();
   }
 
   public updateCountry(event: {value: Array<any>}) {
     this._userAnswer.country = event.value[0];
-    this._enableSave();
+    this.enableSave();
   }
-
 
   public updateStatus(event: Event, status: any) {
     event.preventDefault();
@@ -197,39 +211,38 @@ export class SidebarUserAnswerComponent {
 
   }
 
-
   public addTag(tag: Tag): void {
-    this._answerService.addTag(this._userAnswer._id, tag._id).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
+    this._answerService.addTag(this._userAnswer._id, tag._id).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Success' , 'The tag is added.');
       this._userAnswer.tags.push(tag);
       this.answerUpdated.emit(true);
-      }, (err: any) => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Error', 'The tag is already added.');
+      console.error(err);
     });
   }
-
 
   public createTag(tag: Tag): void {
-    this._answerService.createTag(this._userAnswer._id, tag).subscribe((newTag) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
+    this._answerService.createTag(this._userAnswer._id, tag).pipe(first()).subscribe((newTag) => {
+      this._translateNotificationsService.success('Success' , 'The tag is created.');
       this._userAnswer.tags.push(newTag);
       this.answerUpdated.emit(true);
-      }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Error', 'The tag is already added.');
+      console.error(err);
     });
   }
-
 
   public removeTag(tag: Tag): void {
-    this._answerService.removeTag(this._userAnswer._id, tag._id).subscribe((a: any) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
+    this._answerService.removeTag(this._userAnswer._id, tag._id).pipe(first()).subscribe((a: any) => {
+      this._translateNotificationsService.success('Success' , 'The tag is removed.');
       this._userAnswer.tags = this._userAnswer.tags.filter(t => t._id !== tag._id);
       this.answerUpdated.emit(true);
-      }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
-
 
   public onImportAnswer(event: Event): void {
     event.preventDefault();
@@ -241,6 +254,7 @@ export class SidebarUserAnswerComponent {
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this.isImporting = false;
+        console.error(err);
       });
     }
   }
@@ -261,17 +275,24 @@ export class SidebarUserAnswerComponent {
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this.isReassigning = false;
+        console.error(err);
       });
 
     }
   }
 
-  public addContactEmail() {
-    this._professionalsService.addContactEmail(this._userAnswer.professional._id, this.newEmail).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.SUCCESS');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ERROR');
-    });
+  private _addContactEmail() {
+    this._professionalsService.addContactEmail(this._userAnswer.professional._id, this.newEmail).pipe(first())
+      .subscribe(() => {
+        this._translateNotificationsService.success('Success' , 'The second email is added.');
+        this._resetSaveVariables();
+        this.editSecondEmail = false;
+        }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._resetSaveVariables();
+        this.editSecondEmail = false;
+        console.error(err);
+      });
   }
 
   public createdDate(date: Date) {
@@ -287,8 +308,12 @@ export class SidebarUserAnswerComponent {
     this._userAnswer.professional && this._userAnswer.professional.company && this._userAnswer.professional.company.length) || 30;
   }
 
+  get professional(): Professional {
+    return this._userAnswer.professional ? this._userAnswer.professional : <Professional>{};
+  }
+
   get professionalName(): string {
-    return UserFrontService.fullName(this._userAnswer.professional);
+    return UserFrontService.fullName(this.professional);
   }
 
   get meta(): any {
@@ -323,28 +348,12 @@ export class SidebarUserAnswerComponent {
     return this._editMode;
   }
 
-  get addNewEmail(): boolean {
-    return this._addNewEmail;
-  }
-
-  set addNewEmail(value: boolean) {
-    this._addNewEmail = value;
-  }
-
   get assignNewPro(): boolean {
     return this._assignNewPro;
   }
 
-  set assignNewPro(value: boolean) {
-    this._assignNewPro = value;
-  }
-
   get newPro(): NewPro {
     return this._newPro;
-  }
-
-  set newPro(value: NewPro) {
-    this._newPro = value;
   }
 
   get mailType(): string {
@@ -352,7 +361,7 @@ export class SidebarUserAnswerComponent {
   }
 
   get autoTags(): Array<string> {
-    return this._userAnswer.autoTags;
+    return this._userAnswer.autoTags && this._userAnswer.autoTags.length ? this._userAnswer.autoTags : [];
   }
 
 }

@@ -1,10 +1,12 @@
-<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="sidebar-user-answer">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30 text-sm" id="sidebar-user-answer">
 
   <!-- labels Status | Mail type -->
   <div *ngIf="adminMode && (!editMode || mailType)" class="m-bottom-15">
     <div
-      [ngClass]="{ 'is-danger': userAnswer.status === 'REJECTED' || userAnswer.status === 'REJECTED_GMAIL',
-      'is-progress': userAnswer.status === 'SUBMITTED', 'is-success': userAnswer.status === 'VALIDATED' }"
+      [ngClass]="{ 'is-danger': userAnswer.status === 'REJECTED' || userAnswer.status === 'REJECTED_GMAIL' ||
+      userAnswer.status === 'REJECTED_UMIBOT', 'is-info': userAnswer.status === 'DRAFT',
+      'is-progress': userAnswer.status === 'SUBMITTED', 'is-success': userAnswer.status === 'VALIDATED'
+      || userAnswer.status === 'VALIDATED_NO_MAIL' || userAnswer.status === 'VALIDATED_UMIBOT' }"
       class="label m-right-15">
       {{ 'SIDEBAR_USER_ANSWER.STATUS.' + userAnswer.status | translate }}
     </div>
@@ -88,7 +90,7 @@
   </div>
   <!-- /when reassign the answer to new pro -->
 
-  <!-- user details -->
+  <!-- user details not assignPro -->
   <div *ngIf="!assignNewPro">
 
     <!-- name | flag | rating | language -->
@@ -96,15 +98,16 @@
 
       <!-- name -->
       <h1 class="title is-4 m-right-25 m-bottom-20">
+
         <ng-container *ngIf="professionalName; else profDef">
           {{ professionalName | FormatText:true }}
         </ng-container>
         <ng-template #profDef>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</ng-template>
-        <sup
-          *ngIf="userAnswer.professional && userAnswer.professional.language && !editMode"
-          class="text-normal text-sm p-left-1 text-notify">
+
+        <sup *ngIf="professional.language && !editMode" class="text-normal p-left-1 text-notify">
           {{ userAnswer.professional.language }}
         </sup>
+
       </h1>
       <!-- /name -->
 
@@ -114,7 +117,7 @@
           (click)="onClickLanguage('fr')"
           class="text-link p-right-10 text-normal tooltip"
           data-tooltip="Set pro lang French"
-          [ngClass]="userAnswer.professional && userAnswer.professional.language === 'fr'
+          [ngClass]="professional.language === 'fr'
           ? 'text-primary' : 'text-primary-dark'">
           fr
         </span>
@@ -122,7 +125,7 @@
           (click)="onClickLanguage('en')"
           class="text-link text-normal tooltip"
           data-tooltip="Set pro lang English"
-          [ngClass]="userAnswer.professional && userAnswer.professional.language === 'en'
+          [ngClass]="professional.language === 'en'
           ? 'text-primary' : 'text-primary-dark'">
           en
         </span>
@@ -149,11 +152,9 @@
         </app-utility-country-flag>
         <div
           (click)="onClickEdit('COUNTRY')"
-          *ngIf="adminMode && editMode"
-          class="icon-container m-top-20 m-left-1">
-          <span class="tooltip" data-tooltip="Edit country">
-            <i class="fas fa-pencil-alt text-primary"></i>
-          </span>
+          *ngIf="editMode"
+          class="tooltip m-top-20 m-left-10" data-tooltip="Edit country">
+          <i class="fas fa-pencil-alt text-primary"></i>
         </div>
       </div>
       <!-- /country -->
@@ -162,7 +163,7 @@
     <!-- /name | flag | rating | language -->
 
     <!-- country edit -->
-    <div *ngIf="editCountry" class="m-bottom-30 form-group mxw-500">
+    <div *ngIf="editCountry" class="m-bottom-25 form-group mxw-500">
       <label class="form-label">Country</label>
       <app-auto-complete-input
         (update)="updateCountry($event)"
@@ -173,8 +174,188 @@
     </div>
     <!-- /country edit -->
 
+    <!-- blacklisted company -->
+    <div
+      *ngIf="adminMode && userAnswer.localStatus !== 'draft' && userAnswer.blacklistedCompany"
+      class="text-alert m-bottom-15">
+      <i class="fas fa-exclamation-triangle m-right-10"></i>
+      <span class="text-medium">This answer may come from a blacklisted company!</span>
+    </div>
+    <!-- /blacklisted company -->
+
+    <!-- linkedin -->
+    <div *ngIf="adminMode && professional.profileUrl" class="m-bottom-15">
+      <i class="fab text-secondary fa-linkedin-in m-right-10"></i>
+      <a [href]="professional.profileUrl" target="_blank" class="text-link">
+        {{ professional.profileUrl }}
+      </a>
+    </div>
+    <!-- /linkedin -->
+
+    <!-- job -->
+    <div *ngIf="userAnswer.job || professional.jobTitle || editMode" class="m-bottom-15">
+      <i class="fas fa-address-card text-notify m-right-10"></i>
+      {{ userAnswer.job || professional.jobTitle | FormatText:true }}
+      <span
+        (click)="onClickEdit('JOB')"
+        *ngIf="editMode"
+        class="tooltip" data-tooltip="Edit job">
+        <i class="fas fa-pencil-alt text-primary"></i>
+      </span>
+    </div>
+    <!-- /job -->
+
+    <!-- edit job title -->
+    <div *ngIf="editJob" class="form-group m-top-25 m-bottom-25">
+      <label class="form-label" for="sidebar-user-answer-job">Job Title</label>
+      <input
+        (change)="enableSave()"
+        [(ngModel)]="userAnswer.job"
+        class="form-input is-sm is-shadowed"
+        id="sidebar-user-answer-job"
+        placeholder="Enter the job"
+        type="text">
+    </div>
+    <!-- /edit job title -->
+
+    <!-- company -->
+    <div *ngIf="(userAnswer.company && userAnswer.company.name) || professional.company || editMode" class="m-bottom-15">
+
+      <i class="fas fa-building text-notify m-right-10"></i>
+
+      <span [ngClass]="{'popover': excludedCompanies.length > 0, 'is-right': excludedCompanies.length > 0
+      && companyLength <= 30}">
+        {{ (userAnswer.company && userAnswer.company.name) || professional.company | FormatText:true }}
+        <div *ngIf="excludedCompanies.length > 0" class="popover-container is-sm">
+          <div
+            [ngStyle]="{ 'max-height': '300px', 'overflow-y': 'auto' }"
+            class="p-top-20 p-left-25 p-bottom-20 p-right-25">
+            <h3 class="text-center text-sm">Companies blacklisted by the client</h3>
+            <ul class="m-no">
+              <li *ngFor="let company of excludedCompanies" class="m-top-h text-xs">
+                {{ company.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </span>
+
+      <span
+        (click)="onClickEdit('COMPANY')"
+        *ngIf="editMode"
+        class="tooltip" data-tooltip="Edit company">
+        <i class="fas fa-pencil-alt text-primary"></i>
+      </span>
+
+    </div>
+    <!-- /company -->
+
+    <!-- edit company -->
+    <div *ngIf="editCompany" class="form-group m-top-25 m-bottom-25 mxw-500">
+      <label class="form-label" for="sidebar-user-answer-company">Company</label>
+      <input
+        (change)="enableSave()"
+        [(ngModel)]="userAnswer.company.name"
+        class="form-input is-sm is-shadowed"
+        id="sidebar-user-answer-company"
+        placeholder="Enter the company"
+        type="text">
+    </div>
+    <!-- /edit company -->
+
+    <!-- email -->
+    <div *ngIf="professional.email" class="m-bottom-15">
+      <i class="fas fa-envelope text-notify m-right-10"></i>
+      <a [href]="'mailto:'+professional.email" target="_blank" class="text-link">
+        {{ professional.email }}
+      </a>
+    </div>
+    <!-- /email -->
+
+    <!-- second email -->
+    <div *ngIf="adminMode" class="m-bottom-15">
+      <i class="fas fa-envelope text-notify m-right-10"></i>
+      <ng-container *ngIf="professional.secondEmail; else emailText">
+        <a [href]="'mailto:'+professional.secondEmail" target="_blank" class="text-link">
+          {{ professional.secondEmail }}
+        </a>
+      </ng-container>
+      <ng-template #emailText>
+        No second email
+        <span
+          (click)="onClickEdit('SECOND_EMAIL')"
+          *ngIf="editMode"
+          class="tooltip" data-tooltip="Edit second email">
+          <i class="fas fa-pencil-alt text-primary"></i>
+        </span>
+      </ng-template>
+    </div>
+    <!-- /second email -->
+
+    <!-- edit second email -->
+    <div *ngIf="editSecondEmail" class="form-group m-top-25 m-bottom-25 mxw-500">
+      <label class="form-label" for="sidebar-user-answer-email">Second Email</label>
+      <input
+        (change)="enableSave()"
+        [(ngModel)]="newEmail"
+        class="form-input is-sm is-shadowed"
+        id="sidebar-user-answer-email"
+        placeholder="Enter the second email"
+        type="email">
+    </div>
+    <!-- /edit second email -->
+
   </div>
-  <!-- /user details -->
+  <!-- /user details not assignPro -->
+
+  <!-- received date and time, and time spent -->
+  <div *ngIf="userAnswer.created || userAnswer.time_elapsed" class="text-notify text-bold m-bottom-15">
+    <ng-container *ngIf="userAnswer.created">
+      {{ 'SIDEBAR_USER_ANSWER.RECEIVED.A' | translate }}
+      {{ createdDate(userAnswer.created) }}
+      {{ 'SIDEBAR_USER_ANSWER.RECEIVED.B' | translate }}
+      {{ createdTime(userAnswer.created)  }}
+    </ng-container>
+    <ng-container *ngIf="adminMode && userAnswer.created && userAnswer.time_elapsed">&nbsp; • &nbsp;</ng-container>
+    <ng-container *ngIf="adminMode && userAnswer.time_elapsed">
+      {{ 'SIDEBAR_USER_ANSWER.RECEIVED.C' | translate }} {{ floor(userAnswer.time_elapsed/60) }} min.
+      {{ floor(userAnswer.time_elapsed%60) }} sec.
+    </ng-container>
+  </div>
+  <!-- /received date and time, and time spent -->
+
+  <!-- ip -->
+  <div *ngIf="userAnswer.ip && adminMode" class="text-notify text-bold m-bottom-15">
+    IP: {{ userAnswer.ip }}
+  </div>
+  <!-- /ip -->
+
+  <!-- auto tags -->
+  <div *ngIf="autoTags.length > 0" class="m-top-30">
+    <label class="form-label p-bottom-10">Auto Tags</label>
+    <div class="tags-wrapper">
+      <div *ngFor="let tag of autoTags" class="label is-tag is-rounded">
+        <i class="fas fa-tag icon-left"></i>
+        {{ tag }}
+      </div>
+    </div>
+  </div>
+  <!-- /auto tags -->
+
+  <!-- tags -->
+  <div *ngIf="(userAnswer.tags && userAnswer.tags.length) || editMode" class="m-top-30">
+    <label class="form-label p-bottom-10">Tags</label>
+    <app-shared-tags
+      (addTag)="addTag($event)"
+      (createTag)="createTag($event)"
+      (removeTag)="removeTag($event)"
+      [editMode]="editMode"
+      [isSmall]="true"
+      [projectId]="projectId"
+      [tags]="userAnswer.tags">
+    </app-shared-tags>
+  </div>
+  <!-- /tags -->
 
 </div>
 
@@ -182,195 +363,6 @@
   <section id="user-answer-component">
 
     <div class="column col-xs-12 col-11 col-mx-auto">
-
-      <!-- section user details -->
-      <div class="section-details">
-
-        <!-- blacklist company -->
-        <ng-container *ngIf="adminMode && userAnswer.localStatus !== 'draft' && userAnswer.blacklistedCompany && !assignNewPro">
-          <div class="icon-container text-alert"><i class="fas fa-exclamation-triangle"></i></div>
-          <span class="text text-alert text-medium">{{ 'ANSWER.BLACKLISTED_COMPANY' | translate }}</span>
-        </ng-container>
-
-        <!-- linkedin -->
-        <ng-container *ngIf="adminMode && userAnswer.professional?.profileUrl && !assignNewPro">
-          <div class="linkedin-wrapper">
-            <span class="icon-container text-secondary picto"><i class="fab fa-linkedin-in"></i></span>
-            <a [href]="userAnswer.professional.profileUrl" target="_blank">
-              <span class="text-link">{{ userAnswer.professional.profileUrl }}</span>
-            </a>
-          </div>
-        </ng-container>
-
-        <!-- job -->
-        <ng-container *ngIf="userAnswer.job || userAnswer.professional?.jobTitle || editMode">
-          <div class="job-wrapper">
-
-            <span class="icon-container text-notify picto"><i class="fas fa-address-card" aria-hidden="true"></i></span>
-
-            <ng-container *ngIf="!editJob && !assignNewPro">
-              <span>{{ (userAnswer.job || userAnswer.professional?.jobTitle) | FormatText:true }}</span>
-              <span
-                *ngIf="adminMode && editMode"
-                class="icon-container is-sm text-notify tooltip"
-                data-tooltip="Modify Profession"
-                (click)="onClickEdit('job')">
-                <i class="fas fa-pencil-alt"></i>
-              </span>
-            </ng-container>
-
-            <ng-container *ngIf="editJob">
-              <div class="form-group">
-                <label class="form-label" for="answer-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
-                <input
-                  type="text"
-                  [(ngModel)]="userAnswer.job"
-                  id="answer-jobTitle"
-                  alt="Job title"
-                  class="form-input"
-                  [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate">
-              </div>
-            </ng-container>
-
-          </div>
-        </ng-container>
-
-        <!-- company -->
-        <ng-container *ngIf="userAnswer.company.name || userAnswer.professional?.company || editMode">
-          <div class="company-wrapper">
-
-            <span class="icon-container text-notify picto"><i class="fas fa-building" aria-hidden="true"></i></span>
-
-            <ng-container *ngIf="!editCompany && !assignNewPro">
-
-              <span [ngClass]="{'popover': excludedCompanies.length > 0,
-              'is-right': excludedCompanies.length > 0 && companyLength <= 30}">
-                {{ (userAnswer.company.name || userAnswer.professional?.company) | FormatText:true }}
-                <div *ngIf="excludedCompanies.length > 0" class="popover-container is-sm">
-                  <div
-                    [ngStyle]="{ 'max-height': '300px', 'overflow-y': 'auto' }"
-                    class="p-top-20 p-left-25 p-bottom-20 p-right-25">
-                    <h3 class="text-center text-sm">Companies blacklisted by the client</h3>
-                    <ul class="m-no">
-                      <li *ngFor="let company of excludedCompanies" class="m-top-h text-xs">
-                        {{ company.name }}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </span>
-
-              <span
-                *ngIf="adminMode && editMode"
-                class="icon-container is-sm text-notify tooltip"
-                data-tooltip="Modify Company"
-                (click)="onClickEdit('company')">
-                <i class="fas fa-pencil-alt"></i>
-              </span>
-
-            </ng-container>
-
-            <ng-container *ngIf="editCompany">
-              <div class="form-group">
-                <label class="form-label" for="answer-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
-                <input
-                  type="text"
-                  [(ngModel)]="userAnswer.company.name"
-                  id="answer-company"
-                  alt="Company"
-                  class="form-input"
-                  [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
-              </div>
-            </ng-container>
-
-          </div>
-        </ng-container>
-
-        <!-- email -->
-        <ng-container *ngIf="userAnswer.professional?.email && !assignNewPro">
-          <div class="email-wrapper">
-            <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
-            <a [href]="'mailto:'+userAnswer.professional.email">
-              <span class="text-link">{{ userAnswer.professional.email }}</span>
-            </a>
-          </div>
-        </ng-container>
-
-        <!-- second email -->
-        <ng-container *ngIf="adminMode && userAnswer.professional?.secondEmail && !assignNewPro">
-          <div class="email-wrapper">
-            <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
-            <a [href]="'mailto:'+userAnswer.professional.secondEmail">
-              <span class="text-link">{{ userAnswer.professional.secondEmail }}</span>
-            </a>
-          </div>
-        </ng-container>
-
-        <!-- assign second email -->
-        <ng-container *ngIf="adminMode && !userAnswer.professional?.secondEmail && !assignNewPro">
-          <ng-container *ngIf="addNewEmail">
-            <div class="email-wrapper">
-              <span class="icon-container text-notify picto"><i class="fas fa-envelope"></i></span>
-              <input type="email" [(ngModel)]="newEmail">
-              <button class="btn ghost-primary" (click)="addContactEmail()">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="!addNewEmail">
-            <a class="text-xs" (click)="addNewEmail = true">{{ 'ANSWER.ADD_NEW_EMAIL' | translate }}</a>
-          </ng-container>
-
-        </ng-container>
-
-        <!-- section autoTags -->
-        <ng-container *ngIf="autoTags?.length > 0">
-          <div class="tags-wrapper">
-            <div *ngFor="let tag of autoTags" class="label is-tag is-rounded">
-              {{ tag }}
-            </div>
-          </div>
-        </ng-container>
-
-        <!-- received date and time, and time spent -->
-        <ng-container *ngIf="userAnswer.created || userAnswer.time_elapsed">
-          <div class="text text-notify text-bold receive-wrapper">
-            <span *ngIf="userAnswer.created">
-              {{ 'ANSWER.RECEIVED.A' | translate }}
-              {{ createdDate(userAnswer.created) }}
-              {{ 'ANSWER.RECEIVED.B' | translate }}
-              {{ createdTime(userAnswer.created)  }}
-            </span>
-            <span *ngIf="adminMode && userAnswer.created && userAnswer.time_elapsed">&nbsp; • &nbsp;</span>
-            <span *ngIf="adminMode && userAnswer.time_elapsed">
-              {{ 'ANSWER.RECEIVED.C' | translate }} {{ floor(userAnswer.time_elapsed/60) }} min. {{ floor(userAnswer.time_elapsed%60) }} sec.
-            </span>
-          </div>
-        </ng-container>
-
-        <!-- ip -->
-        <ng-container *ngIf="userAnswer.ip && editMode">
-          <div class="text text-notify text-bold i-wrapper">
-            <span>{{ 'ANSWER.IP' | translate }} {{ userAnswer.ip }}</span>
-          </div>
-        </ng-container>
-
-      </div>
-      <!-- /section user details -->
-
-      <!-- section tags -->
-      <ng-container *ngIf="userAnswer?.tags?.length > 0 || editMode">
-        <div class="section-tags">
-          <label class="form-label">Tags</label>
-          <app-shared-tags
-            [tags]="userAnswer.tags"
-            [editMode]="editMode"
-            [projectId]="projectId"
-            (addTag)="addTag($event)"
-            (createTag)="createTag($event)"
-            (removeTag)="removeTag($event)">
-          </app-shared-tags>
-        </div>
-      </ng-container>
-      <!-- /section tags -->
 
       <!-- section status -->
       <ng-container *ngIf="adminMode && userAnswer.status !== 'REJECTED_GMAIL' && userAnswer.localStatus !== 'draft'">

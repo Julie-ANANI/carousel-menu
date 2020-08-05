@@ -1,7 +1,26 @@
 @import "../../../../../style/framework/src/variables";
 
+#sidebar-user-answer {
+
+  .fas, .fab {
+    width: 20px;
+    text-align: left;
+  }
+
+  .fas.fa-pencil-alt {
+    cursor: pointer;
+    margin-left: $unit-2;
+    width: unset;
+  }
+
+  .tags-wrapper {
+    margin: -$unit-2;
+  }
+
+}
+
 #user-answer-component {
-  font-size: $font-size-sm;
+
   padding-top: 1.5rem;
 
   .language {
