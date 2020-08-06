@@ -1,396 +1,384 @@
-<!--<div
-  *ngIf="fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode"
+<div
+  *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier]
+  || fullAnswer.answers[question.identifier + 'Comment'] || editMode)"
   [id]="question.identifier"
-  class="p-top-30 answer-question">
+  class="p-top-40 answer-question">
 
-  &lt;!&ndash; label &ndash;&gt;
-  <div class="text-14 text-background text-medium p-bottom-20">
-    {{ question.label | multiling:currentLang }}
-  </div>
-  &lt;!&ndash; /label &ndash;&gt;
+  <!-- label -->
+  <div class="text-14 text-bold p-bottom-15">{{ question.label | multiling:currentLang }}</div>
+  <!-- /label -->
 
-  &lt;!&ndash; answers &ndash;&gt;
+  <!-- answers -->
   <div [ngSwitch]="question.controlType" class="answer-wrapper">
-  </div>
-  &lt;!&ndash; /answers &ndash;&gt;
-
-</div>-->
-
-<ng-container *ngIf="fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode">
-  <section class="answer-question-component">
-
-    <!-- question label -->
-    <div class="text text-question">
-      <span class="text-notify text-medium">{{ question.label | multiling:currentLang }}</span>
-    </div>
-
-    <!-- answers -->
-    <div [ngSwitch]="question.controlType" class="answer-wrapper">
+    <div *ngIf="editMode || fullAnswer.answers[question.identifier]">
 
       <!-- radio case -->
-      <ng-container *ngSwitchCase="'radio'">
-        <ng-container *ngIf="editMode || fullAnswer.answers[question.identifier]">
-          <div class="flex-between pad-top">
+      <div *ngSwitchCase="'radio'" class="flex-between">
 
-            <ng-container *ngIf="!editMode && fullAnswer.answers[question.identifier]">
-              <span>{{ optionLabel(fullAnswer.answers[question.identifier]) }}</span>
-            </ng-container>
-
-            <ng-container *ngIf="editMode">
-              <div *ngFor="let option of question.options"
-                   class="c-hand"
-                   [ngClass]="{ 'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier] }"
-                   (click)="selectOption($event, option)">
-                <span>{{ optionLabel(option.identifier) }}</span>
-              </div>
-            </ng-container>
-
-            <app-rating-item
-              [editMode]="editMode"
-              [prop]="question.identifier"
-              [rating]="fullAnswer.answers[question.identifier + 'Quality']"
-              (ratingChange)="updateQuality($event)">
-            </app-rating-item>
-
+        <!-- edit -->
+        <ng-container *ngIf="editMode">
+          <div
+            (click)="selectOption($event, option)"
+            *ngFor="let option of question.options"
+            [ngClass]="{ 'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier] }"
+            class="c-hand">
+            {{ optionLabel(option.identifier) }}
           </div>
         </ng-container>
-      </ng-container>
+        <!-- edit -->
+
+        <!-- not edit mode -->
+        <div *ngIf="!editMode && optionLabel(fullAnswer.answers[question.identifier])" class="text-medium">
+          {{ optionLabel(fullAnswer.answers[question.identifier]) }}
+        </div>
+        <!-- /not edit mode -->
+
+        <app-rating-item
+          [editMode]="editMode"
+          [prop]="question.identifier"
+          [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+          (ratingChange)="updateQuality($event)">
+        </app-rating-item>
+
+      </div>
       <!-- /radio case -->
 
       <!-- clearbit case -->
-      <ng-container *ngSwitchCase="'clearbit'">
+      <div *ngSwitchCase="'clearbit'">
 
-        <ng-container *ngIf="!editMode && fullAnswer.answers[question.identifier]">
-          <div class="pad-top clearbit-wrapper">
-            <div *ngFor="let item of fullAnswer.answers[question.identifier]" class="label label-answer">
+        <!-- edit mode -->
+        <div *ngIf="editMode">
+          <app-auto-complete-input
+            (update)="setAnswer($event)"
+            [config]="{ placeholder: 'Enter the company name',
+            initialData: fullAnswer.answers[question.identifier] || [], type: 'company' }"
+            [isAdmin]="editMode"
+            [isEditable]="editMode"
+            [isSmall]="true"
+            [tempActive]="false">
+          </app-auto-complete-input>
+        </div>
+        <!-- /edit mode -->
 
-              <ng-container *ngIf="item.logo">
-                <img [src]=item.logo alt=" ">
-              </ng-container>
-
-              <ng-container *ngIf="!item.domain">
-                <span>{{ item.name }}</span>
-              </ng-container>
-
-              <ng-container *ngIf="item.domain">
-                <a [href]=link(item.domain) target="_blank">{{ item.name }}</a>
-              </ng-container>
-
-              <ng-container *ngIf="item.rating === 2">
-                <span class="sa-thumbs-up"><i class="fas fa-thumbs-up"></i></span>
-              </ng-container>
-
-              <ng-container *ngIf="item.rating === 0">
-                <span class="sa-thumbs-down"><i class="fas fa-thumbs-down"></i></span>
-              </ng-container>
-
-            </div>
+        <!-- not edit mode -->
+        <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" class="clearbit-wrapper">
+          <div *ngFor="let item of fullAnswer.answers[question.identifier]" class="label label-answer">
+            <img *ngIf="item.logo" [src]=item.logo alt=" " class="img-responsive m-right-2">
+            <ng-container *ngIf="!item.domain">{{ item.name }}</ng-container>
+            <a *ngIf="item.domain" [href]=link(item.domain) target="_blank">{{ item.name }}</a>
+            <span *ngIf="item.rating === 2" class="sa-thumbs-up"><i class="fas fa-thumbs-up"></i></span>
+            <span *ngIf="item.rating === 0" class="sa-thumbs-down"><i class="fas fa-thumbs-down"></i></span>
           </div>
-        </ng-container>
+        </div>
+        <!-- /not edit mode -->
 
-        <ng-container *ngIf="editMode">
-          <div class="pad-top">
-            <app-auto-complete-input
-              (update)="setAnswer($event)"
-              [config]="{ placeholder: 'COMMON.LABEL.COMPANY', initialData: fullAnswer.answers[question.identifier] || [], type: 'company' }"
-              [isAdmin]="editMode"
-              [isEditable]="true"
-              [tempActive]="false">
-            </app-auto-complete-input>
-          </div>
-        </ng-container>
-
-      </ng-container>
+      </div>
       <!-- /clearbit case -->
 
       <!-- list case -->
-      <ng-container *ngSwitchCase="'list'">
+      <div *ngSwitchCase="'list'">
 
-        <ng-container *ngIf="!editMode && fullAnswer.answers[question.identifier]">
-          <div class="pad-top">
-            <div *ngFor="let item of fullAnswer.answers[question.identifier]" class="label label-answer">
+        <!-- edit mode -->
+        <div *ngIf="editMode">
+          <app-input-list
+            (update)="setAnswer($event)"
+            [isSmall]="true"
+            [config]="{ placeholder: 'Enter your response',
+            initialData: fullAnswer.answers[question.identifier] || [] }"
+            [isAdminMode]="editMode"
+            [isEditable]="editMode">
+          </app-input-list>
+        </div>
+        <!-- /edit mode -->
 
-                <ng-container *ngIf="!item.link">
-                  <span>{{ item.text }}</span>
-                </ng-container>
-
-                <ng-container *ngIf="item.link">
-                  <a [href]=item.link target="_blank">{{ item.text }}</a>
-                </ng-container>
-
-                <ng-container *ngIf="item.rating === 2">
-                  <span class="sa-thumbs-up"><i class="fas fa-thumbs-up"></i></span>
-                </ng-container>
-
-                <ng-container *ngIf="item.rating === 0">
-                  <span class="sa-thumbs-down"><i class="fas fa-thumbs-down"></i></span>
-                </ng-container>
-
-            </div>
+        <!-- not edit mode -->
+        <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" class="list-wrapper">
+          <div *ngFor="let item of fullAnswer.answers[question.identifier]" class="label label-answer">
+            <ng-container *ngIf="!item.link">{{ item.text }}</ng-container>
+            <a *ngIf="item.link" [href]=item.link target="_blank">{{ item.text }}</a>
+            <span *ngIf="item.rating === 2" class="sa-thumbs-up"><i class="fas fa-thumbs-up"></i></span>
+            <span *ngIf="item.rating === 0" class="sa-thumbs-down"><i class="fas fa-thumbs-down"></i></span>
           </div>
-        </ng-container>
+        </div>
+        <!-- /not edit mode -->
 
-        <ng-container *ngIf="editMode">
-          <div class="pad-top">
-            <app-input-list
-              (update)="setAnswer($event)"
-              [isEditable]="true"
-              [config]="{ placeholder: 'Enter your response', initialData: fullAnswer.answers[question.identifier] || [] }"
-              [isAdminMode]="editMode">
-            </app-input-list>
-          </div>
-        </ng-container>
-
-      </ng-container>
+      </div>
       <!-- /list case -->
 
       <!-- checkbox case -->
-      <ng-container *ngSwitchCase="'checkbox'">
-        <div class="pad-top checkbox-wrapper">
-          <ng-container *ngFor="let option of question.options">
+      <div *ngSwitchCase="'checkbox'" class="checkbox-wrapper">
+        <ng-container *ngFor="let option of question.options">
 
-            <ul *ngIf="(!!fullAnswer.answers[question.identifier] && !!fullAnswer.answers[question.identifier][option.identifier]) && !editMode" class="label label-answer">
-              <li class="flex-between">
-                <span>{{ optionLabel(option.identifier) }}</span>
-              </li>
-            </ul>
+          <!-- edit mode -->
+          <div *ngIf="editMode" class="m-1">
+            <div class="flex-between text-primary-dark m-bottom-10">
+              <label class="form-checkbox" for="{{question.identifier}}-{{option.identifier}}">
+                <input
+                  (change)="emitChanges()"
+                  [(ngModel)]="fullAnswer.answers[question.identifier][option.identifier]"
+                  id="{{question.identifier}}-{{option.identifier}}"
+                  type="checkbox">
+                <i class="form-icon"></i>
+              </label>
+              {{ optionLabel(option.identifier) }}
+            </div>
+          </div>
+          <!-- /edit mode -->
 
-            <ul *ngIf="editMode" class="edit-answer">
-              <li class="flex-between">
-                <input id="{{question.identifier}}-{{option.identifier}}" type="checkbox"
-                       [(ngModel)]="fullAnswer.answers[question.identifier][option.identifier]">
-                <label for="{{question.identifier}}-{{option.identifier}}">
-                  {{ optionLabel(option.identifier) }}
-                </label>
-              </li>
-            </ul>
-          </ng-container>
-        </div>
-      </ng-container>
+          <!-- not edit mode -->
+          <div *ngIf="!!optionLabel(option.identifier) && !editMode" class="label label-answer">
+            {{ optionLabel(option.identifier) }}
+          </div>
+          <!-- /not edit mode -->
+
+        </ng-container>
+      </div>
       <!-- /checkbox case -->
 
       <!-- textarea case -->
-      <ng-container *ngSwitchCase="'textarea'">
+      <div
+        *ngSwitchCase="'textarea'"
+        [ngStyle]="{'margin-top': answerTags(question.identifier).length > 0 && !editMode ? '-15px' : '0'}"
+        class="textarea-wrapper">
 
-        <ng-container *ngIf="editMode">
-          <form class="d-flex pad-top textarea-wrapper">
+        <!-- edit mode -->
+        <form *ngIf="editMode" class="d-flex justify-center m-1">
 
+          <label class="d-block flex-full">
             <textarea
-              class="form-input"
+              (change)="emitChanges()"
               [(ngModel)]="fullAnswer.answers[question.identifier]"
+              class="form-input is-shadowed"
               name="comment"
               rows="4">
              </textarea>
+          </label>
 
-            <app-rating-item
-              [editMode]="editMode"
-              [prop]="question.identifier"
-              [rating]="fullAnswer.answers[question.identifier + 'Quality']"
-              (ratingChange)="updateQuality($event)">
-            </app-rating-item>
+          <app-rating-item
+            [editMode]="editMode"
+            [prop]="question.identifier"
+            [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+            (ratingChange)="updateQuality($event)">
+          </app-rating-item>
 
-          </form>
-        </ng-container>
+        </form>
+        <!-- /edit mode -->
 
-        <ng-container *ngIf="answerTags(question.identifier).length > 0 || editMode">
-          <div class="pad-top">
-            <app-shared-tags
-              [tags]="answerTags(question.identifier)"
-              [editMode]="editMode"
-              [projectId]="projectId"
-              (addTag)="addTag($event, question.identifier)"
-              (createTag)="createTag($event, question.identifier)"
-              (removeTag)="removeTag($event, question.identifier)">
-            </app-shared-tags>
-          </div>
-        </ng-container>
+        <!-- tags -->
+        <div
+          *ngIf="answerTags(question.identifier).length > 0 || editMode"
+          [ngClass]="{'p-top-20': editMode, 'p-bottom-2': !editMode}"
+          class="m-1">
+          <app-shared-tags
+            [isSmall]="true"
+            [tags]="answerTags(question.identifier)"
+            [editMode]="editMode"
+            [projectId]="projectId"
+            (addTag)="addTag($event, question.identifier)"
+            (createTag)="createTag($event, question.identifier)"
+            (removeTag)="removeTag($event, question.identifier)">
+          </app-shared-tags>
+        </div>
+        <!-- /tags -->
 
-        <ng-container *ngIf="fullAnswer.answers[question.identifier] && !editMode">
-          <div class="pad-top">
-            <div class="label label-answer">
+        <!-- not edit mode -->
+        <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" class="label label-answer">
 
-              <ng-container *ngIf="!showQuestionTranslation">
-                <span>{{ fullAnswer.answers[question.identifier] }}</span>
-                <button *ngIf="adminMode && fullAnswer.used_language != currentLang"
-                        class="button is-secondary is-sm is-outlined"
-                        (click)="showQuestionTranslation = true">
-                  {{ 'COMMON.TRANSLATE' | translate}}
-                </button>
-              </ng-container>
+          <ng-container *ngIf="!showQuestionTranslation">
+            {{ fullAnswer.answers[question.identifier] }}
+            <button
+              (click)="showQuestionTranslation = true"
+              *ngIf="adminMode && fullAnswer.used_language != currentLang"
+              class="button is-secondary is-xs is-link">
+              {{ 'COMMON.TRANSLATE' | translate }}
+            </button>
+          </ng-container>
 
-              <ng-container *ngIf="showQuestionTranslation">
-                <span>{{ fullAnswer.answers_translations[question.identifier][currentLang] }}</span>
-                <button *ngIf="adminMode" class="button is-secondary is-sm is-outlined" (click)="showQuestionTranslation = false">
-                  {{ 'COMMON.RESET' | translate}}
-                </button>
-              </ng-container>
+          <ng-container *ngIf="showQuestionTranslation">
+            {{ fullAnswer.answers_translations[question.identifier][currentLang] }}
+            <button
+              (click)="showQuestionTranslation = false"
+              *ngIf="adminMode"
+              class="button is-secondary is-xs is-link">
+              Reset translation
+            </button>
+          </ng-container>
 
-              <span *ngIf="fullAnswer.answers[question.identifier + 'Quality'] === 2" class="sa-thumbs-up"><i class="fas fa-thumbs-up"></i></span>
-              <span *ngIf="fullAnswer.answers[question.identifier + 'Quality'] === 0" class="sa-thumbs-down"><i class="fas fa-thumbs-down"></i></span>
+          <span
+            *ngIf="fullAnswer.answers[question.identifier + 'Quality'] === 2"
+            class="sa-thumbs-up">
+              <i class="fas fa-thumbs-up"></i>
+            </span>
 
-            </div>
-          </div>
-        </ng-container>
+          <span
+            *ngIf="fullAnswer.answers[question.identifier + 'Quality'] === 0"
+            class="sa-thumbs-down">
+              <i class="fas fa-thumbs-down"></i>
+          </span>
 
-      </ng-container>
+        </div>
+        <!-- /not edit mode -->
+
+      </div>
       <!-- /textarea case -->
 
       <!-- scale case -->
-      <ng-container *ngSwitchCase="'scale'">
-        <div class="pad-top">
-          <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier ] }}</span></div>
-      </ng-container>
+      <div *ngSwitchCase="'scale'" class="text-primary-dark">
+        {{ fullAnswer.answers[question.identifier ] }}
+      </div>
       <!-- /scale case -->
 
       <!-- star case -->
-      <ng-container *ngSwitchCase="'stars'">
-        <ul *ngIf="fullAnswer.answers[question.identifier] && !editMode" class="pad-top star-wrapper text-primary-dark">
-          <li *ngFor="let opt of question.options">
-            {{ opt.label | multiling:currentLang }}: <span>{{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}</span>
-          </li>
-        </ul>
-        <ul *ngIf="editMode" class="pad-top star-wrapper text-primary-dark">
-          <li *ngFor="let opt of question.options; index as i;">
+      <div *ngSwitchCase="'stars'" class="text-primary-dark">
+
+        <!-- not edit mode -->
+        <div *ngIf="fullAnswer.answers[question.identifier] && !editMode">
+          <div
+            *ngFor="let opt of question.options; let i = index"
+            [ngClass]="{'m-bottom-10': i !== (question.options && question.options.length - 1)}">
             {{ opt.label | multiling:currentLang }}:
-            <label for="{{question.identifier}}-benefit{{i}}-rate1">1</label>
-            <input id="{{question.identifier}}-benefit{{i}}-rate1" type="radio"
-                   name="{{question.identifier}}-benefit{{opt.identifier}}"
-                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="1">
-            <label for="{{question.identifier}}-benefit{{i}}-rate2">2</label>
-            <input id="{{question.identifier}}-benefit{{i}}-rate2" type="radio"
-                   name="{{question.identifier}}-benefit{{opt.identifier}}"
-                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="2">
-            <label for="{{question.identifier}}-benefit{{i}}-rate3">3</label>
-            <input id="{{question.identifier}}-benefit{{i}}-rate3" type="radio"
-                   name="{{question.identifier}}-benefit{{opt.identifier}}"
-                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="3">
-            <label for="{{question.identifier}}-benefit{{i}}-rate4">4</label>
-            <input id="{{question.identifier}}-benefit{{i}}-rate4" type="radio"
-                   name="{{question.identifier}}-benefit{{opt.identifier}}"
-                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="4">
-            <label for="{{question.identifier}}-benefit{{i}}-rate5">5</label>
-            <input id="{{question.identifier}}-benefit{{i}}-rate5" type="radio"
-                   name="{{question.identifier}}-benefit{{opt.identifier}}"
-                   [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]" value="5">
-          </li>
-        </ul>
-      </ng-container>
+            <span class="text-primary m-left-2">
+              {{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}
+            </span>
+          </div>
+        </div>
+        <!-- /not edit mode -->
+
+        <!-- edit mode -->
+        <div *ngIf="editMode">
+          <div *ngFor="let opt of question.options; index as i" class="d-flex align-center">
+            {{ opt.label | multiling:currentLang }}:
+            <label
+              *ngFor="let value of starCase"
+              class="form-radio m-left-2 p-right-10"
+              [for]="question.identifier+'-benefit'+i+'-rate'+value">
+              <input
+                (change)="emitChanges()"
+                [(ngModel)]="fullAnswer.answers[question.identifier][opt.identifier]"
+                [value]="value"
+                [id]="question.identifier+'-benefit'+i+'-rate'+value"
+                name="{{question.identifier}}-benefit{{opt.identifier}}"
+                type="radio">
+              <i class="form-icon"></i> {{ value }}
+            </label>
+          </div>
+        </div>
+        <!-- /edit mode -->
+
+      </div>
       <!-- /star case -->
 
       <!-- toggle case -->
-      <ng-container *ngSwitchCase="'toggle'">
-        <label class="form-switch toggle-wrapper">
+      <div *ngSwitchCase="'toggle'">
+        <label class="form-switch">
           <input
-            type="checkbox"
-            name="toggle-input"
-            [ngClass]="{ 'disabled': fullAnswer.answers[question.identifier] !== null, 'active': fullAnswer.answers[question.identifier] }"
+            (change)="emitChanges()"
             [(ngModel)]="fullAnswer.answers[question.identifier]"
-            [ngModelOptions]="{ standalone: true }">
+            [ngClass]="{ 'disabled': fullAnswer.answers[question.identifier] !== null,
+            'active': fullAnswer.answers[question.identifier] }"
+            [ngModelOptions]="{ standalone: true }"
+            name="toggle-input"
+            type="checkbox">
           <i class="form-icon"></i>
         </label>
-      </ng-container>
+      </div>
       <!-- /toggle case -->
 
       <!-- default case -->
-      <ng-container *ngSwitchDefault>
-        <div class="pad-top">
-          <span class="text-alert">Unknown Response Type.</span>
-        </div>
-      </ng-container>
+      <div *ngSwitchDefault>
+        <div class="text-alert">Unknown Response Type.</div>
+      </div>
       <!-- /default case -->
 
     </div>
-     <!--/answers -->
+  </div>
+  <!-- /answers -->
 
-    <!-- comment part not edit mode -->
-    <ng-container *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !editMode">
+  <!-- comment part not edit mode -->
+  <div
+    *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !editMode"
+    class="p-top-20">
 
-      <div class="comment-text c-pad-top">
-        <span>{{ 'COMMON.COMMENT' | translate }}</span>
-      </div>
+    <div class="text-secondary text-medium">Comment</div>
 
-      <div class="c-pad-top" *ngIf="!showCommentTranslation">
-        <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier + 'Comment'] }}</span>
-        <button *ngIf="adminMode && fullAnswer.used_language != currentLang"
-                class="button is-secondary is-sm is-outlined"
-                (click)="showCommentTranslation = true">
-          {{ 'COMMON.TRANSLATE' | translate}}
-        </button>
-      </div>
+    <div *ngIf="answerTags(question.identifier + 'Comment').length > 0" class="p-top-10 p-bottom-10">
+      <app-shared-tags
+        (addTag)="addTag($event, question.identifier + 'Comment')"
+        (createTag)="createTag($event, question.identifier + 'Comment')"
+        (removeTag)="removeTag($event, question.identifier + 'Comment')"
+        [editMode]="false"
+        [projectId]="projectId"
+        [tags]="answerTags(question.identifier + 'Comment')">
+      </app-shared-tags>
+    </div>
 
-      <div class="c-pad-top" *ngIf="showCommentTranslation">
-        <span class="text-primary-dark">{{ fullAnswer.answers_translations[question.identifier + 'Comment'][currentLang] }}</span>
-        <button *ngIf="adminMode" class="button is-secondary is-sm is-outlined" (click)="showCommentTranslation = false">
-          {{ 'COMMON.RESET' | translate}}
-        </button>
-      </div>
+    <div *ngIf="!showCommentTranslation" class="p-top-10 text-primary-dark">
+      {{ fullAnswer.answers[question.identifier + 'Comment'] }}
+      <button
+        (click)="showCommentTranslation = true"
+        *ngIf="adminMode && fullAnswer.used_language != currentLang"
+        class="button is-secondary is-xs is-link">
+        {{ 'COMMON.TRANSLATE' | translate }}
+      </button>
+    </div>
 
-      <ng-container *ngIf="answerTags(question.identifier + 'Comment').length > 0">
-        <div class="pad-top">
-          <app-shared-tags
-            [tags]="answerTags(question.identifier + 'Comment')"
-            [editMode]="editMode"
-            [projectId]="projectId"
-            (addTag)="addTag($event, question.identifier + 'Comment')"
-            (createTag)="createTag($event, question.identifier + 'Comment')"
-            (removeTag)="removeTag($event, question.identifier + 'Comment')">
-          </app-shared-tags>
-        </div>
-      </ng-container>
+    <div *ngIf="showCommentTranslation" class="p-top-10 text-primary-dark">
+      {{ fullAnswer.answers_translations[question.identifier + 'Comment'][currentLang] }}
+      <button
+        (click)="showCommentTranslation = false"
+        *ngIf="adminMode"
+        class="button is-secondary is-xs is-link">
+        Reset translation
+      </button>
+    </div>
 
-    </ng-container>
-    <!-- comment part not edit mode -->
+  </div>
+  <!-- /comment part not edit mode -->
 
-    <!-- comment part edit mode -->
-    <ng-container *ngIf="editMode">
+  <!-- comment part edit mode -->
+  <div *ngIf="editMode" class="p-top-20">
 
-      <ng-container *ngIf="!commenting">
-        <div class="text-warning c-pad-top">
-          <span class="c-hand" (click)="commenting = true">{{ 'COMMON.COMMENT' | translate }} <i class="fas fa-angle-right"></i></span>
-        </div>
-      </ng-container>
+    <div class="text-warning text-medium">
+      <span class="c-hand" (click)="commenting = !commenting">
+        Comment <i [ngClass]="commenting ? 'icon-arrow-down' : 'icon-arrow-right'" class="icon m-left-1"></i>
+      </span>
+    </div>
 
-      <ng-container *ngIf="commenting">
-        <form>
+    <div *ngIf="commenting" class="p-top-15 p-bottom-1 mxw-500">
+      <app-shared-tags
+        (addTag)="addTag($event, question.identifier + 'Comment')"
+        (createTag)="createTag($event, question.identifier + 'Comment')"
+        (removeTag)="removeTag($event, question.identifier + 'Comment')"
+        [editMode]="editMode"
+        [isSmall]="true"
+        [projectId]="projectId"
+        [tags]="answerTags(question.identifier + 'Comment')">
+      </app-shared-tags>
+    </div>
 
-          <div class="text-warning c-pad-top">
-            <span class="c-hand" (click)="commenting = false">{{ 'COMMON.COMMENT' | translate }} <i class="fas fa-angle-down"></i></span>
-          </div>
+    <div *ngIf="commenting" class="d-flex justify-between comment-wrapper p-top-15">
 
-          <div class="d-flex comment-wrapper pad-top">
+      <label class="d-block flex-full">
+        <textarea
+          (change)="emitChanges()"
+          [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']"
+          class="form-input is-shadowed"
+          name="comment"
+          rows="4">
+         </textarea>
+      </label>
 
-            <textarea
-              class="form-input"
-              name="comment"
-              rows="4"
-              [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']">
-            </textarea>
+      <app-rating-item
+        (ratingChange)="updateQuality($event)"
+        [editMode]="editMode"
+        [prop]="question.identifier + 'Comment'"
+        [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']">
+      </app-rating-item>
 
-            <app-rating-item
-              [editMode]="editMode"
-              [prop]="question.identifier + 'Comment'"
-              [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
-              (ratingChange)="updateQuality($event)">
-            </app-rating-item>
+    </div>
 
-          </div>
+  </div>
+  <!-- /comment part edit mode -->
 
-          <div class="pad-top">
-            <app-shared-tags
-              [tags]="answerTags(question.identifier + 'Comment')"
-              [editMode]="editMode"
-              [projectId]="projectId"
-              (addTag)="addTag($event, question.identifier + 'Comment')"
-              (createTag)="createTag($event, question.identifier + 'Comment')"
-              (removeTag)="removeTag($event, question.identifier + 'Comment')">
-            </app-shared-tags>
-          </div>
-
-        </form>
-      </ng-container>
-
-    </ng-container>
-
-  </section>
-</ng-container>
+</div>
 

@@ -1,4 +1,4 @@
-<div class="column col-sm-12 col-11 col-mx-auto p-top-30 text-sm" id="sidebar-user-answer">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-20 text-sm" id="sidebar-user-answer">
 
   <!-- labels Status | Mail type -->
   <div *ngIf="adminMode && (!editMode || mailType)" class="m-bottom-10">
@@ -124,19 +124,17 @@
       <div *ngIf="editMode" class="m-right-25 m-bottom-20">
         <span
           (click)="onClickLanguage('fr')"
+          [ngClass]="professional.language === 'fr' ? 'text-primary' : 'text-primary-dark'"
           class="text-link p-right-10 text-normal tooltip"
-          data-tooltip="Set pro lang French"
-          [ngClass]="professional.language === 'fr'
-          ? 'text-primary' : 'text-primary-dark'">
+          data-tooltip="Set pro lang French">
           fr
-        </span>
         <span
           (click)="onClickLanguage('en')"
+          [ngClass]="professional.language === 'en' ? 'text-primary' : 'text-primary-dark'"
           class="text-link text-normal tooltip"
-          data-tooltip="Set pro lang English"
-          [ngClass]="professional.language === 'en'
-          ? 'text-primary' : 'text-primary-dark'">
+          data-tooltip="Set pro lang English">
           en
+        </span>
         </span>
       </div>
       <!-- /language -->
@@ -258,7 +256,7 @@
         [(ngModel)]="userAnswer.company.name"
         class="form-input is-sm is-shadowed"
         id="sidebar-user-answer-company"
-        placeholder="Enter the company"
+        placeholder="Enter the company name"
         type="text">
     </div>
     <!-- /edit company -->
@@ -360,7 +358,7 @@
   <!-- status -->
   <div
     *ngIf="adminMode && editMode && userAnswer.status !== 'REJECTED_GMAIL' && userAnswer.localStatus !== 'draft'"
-    class="m-top-25 flex-wrap flex-between status-wrapper">
+    class="m-top-25 m-bottom-10 flex-wrap flex-between status-wrapper">
     <div *ngFor="let status of answerStatus" class="d-inline-flex flex-d-column align-center text-center m-top-10">
       <div [ngClass]="status.class" class="label m-bottom-10">
         {{ 'SIDEBAR_USER_ANSWER.STATUS.' + status.name | translate }}
@@ -386,16 +384,15 @@
   <!-- /rejected by gmail -->
 
   <!-- questions -->
-  <div class="p-top-25">
-    <div *ngFor="let question of questions">
-      <app-answer-question
-        [editMode]="editMode"
-        [adminMode]="adminMode"
-        [question]="question"
-        [fullAnswer]="userAnswer"
-        [projectId]="projectId">
-      </app-answer-question>
-    </div>
+  <div *ngFor="let question of questions">
+    <app-answer-question
+      (fullAnswerChange)="enableSave()"
+      [adminMode]="adminMode"
+      [editMode]="editMode"
+      [fullAnswer]="userAnswer"
+      [projectId]="projectId"
+      [question]="question">
+    </app-answer-question>
   </div>
   <!-- /questions -->
 

@@ -128,7 +128,6 @@ export class SidebarUserAnswerComponent {
     }
   }
 
-
   public onSaveAnswer(event: Event) {
     event.preventDefault();
     if (!this._isSaving && this._toBeSaved) {
@@ -211,29 +210,29 @@ export class SidebarUserAnswerComponent {
 
   public addTag(tag: Tag): void {
     this._answerService.addTag(this._userAnswer._id, tag._id).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success' , 'The tag is added.');
+      this._translateNotificationsService.success('Success' , 'The tag is added to the answer.');
       this._userAnswer.tags.push(tag);
       this.answerUpdated.emit(true);
       }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', 'The tag is already added.');
+      this._translateNotificationsService.error('Error', 'The tag is already added to the answer.');
       console.error(err);
     });
   }
 
   public createTag(tag: Tag): void {
     this._answerService.createTag(this._userAnswer._id, tag).pipe(first()).subscribe((newTag) => {
-      this._translateNotificationsService.success('Success' , 'The tag is created.');
+      this._translateNotificationsService.success('Success' , 'The tag is created and added to the answer.');
       this._userAnswer.tags.push(newTag);
       this.answerUpdated.emit(true);
       }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', 'The tag is already added.');
+      this._translateNotificationsService.error('Error', 'The tag is already created/added to the answer.');
       console.error(err);
     });
   }
 
   public removeTag(tag: Tag): void {
     this._answerService.removeTag(this._userAnswer._id, tag._id).pipe(first()).subscribe((a: any) => {
-      this._translateNotificationsService.success('Success' , 'The tag is removed.');
+      this._translateNotificationsService.success('Success' , 'The tag is removed from the answer.');
       this._userAnswer.tags = this._userAnswer.tags.filter(t => t._id !== tag._id);
       this.answerUpdated.emit(true);
       }, (err: HttpErrorResponse) => {
@@ -266,7 +265,8 @@ export class SidebarUserAnswerComponent {
 
       this._answerService.answerReassign(this._userAnswer.campaign, this._userAnswer.originalAnswerReference,
         this._userAnswer._id, this._newPro).pipe(first()).subscribe((_res: any) => {
-        this._translateNotificationsService.success('Success' , 'The answer has been reassigned.');
+        this._translateNotificationsService.success('Success' ,
+          'The answer has been reassigned to the new professional.');
         this._isReassigning = false;
         this._assignNewPro = false;
         this._newPro = <NewPro>{};
@@ -282,7 +282,7 @@ export class SidebarUserAnswerComponent {
   private _addContactEmail() {
     this._professionalsService.addContactEmail(this._userAnswer.professional._id, this.newEmail).pipe(first())
       .subscribe(() => {
-        this._translateNotificationsService.success('Success' , 'The second email is added.');
+        this._translateNotificationsService.success('Success' , 'The second email is added to the professional.');
         this._resetSaveVariables();
         this._editSecondEmail = false;
         }, (err: HttpErrorResponse) => {

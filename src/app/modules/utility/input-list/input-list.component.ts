@@ -11,6 +11,9 @@ import { domainRegEx, emailRegEx } from '../../../utils/regex';
 
 export class InputListComponent {
 
+  // make input field small.
+  @Input() isSmall = false;
+
   @Input() set config(config: any) {
     if (config) {
       this._placeholder = config.placeholder;

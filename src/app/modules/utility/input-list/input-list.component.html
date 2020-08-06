@@ -8,8 +8,9 @@
         <input
           [(ngModel)]="answer"
           [attr.placeholder]="placeholder | translate"
+          [ngClass]="{'is-sm': isSmall}"
           autocomplete="off"
-          class="form-input"
+          class="form-input is-shadowed"
           name="answers"
           required
           type="text">
@@ -17,7 +18,8 @@
 
       <button
         [disabled]="f.form.invalid || !isEditable"
-        class="button is-action is-circled is-primary is-shadowed p-no"
+        [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
+        class="button is-circled is-primary"
         type="submit">
         <i class="icon icon-plus"></i>
       </button>
