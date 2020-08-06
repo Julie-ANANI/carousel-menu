@@ -43,6 +43,18 @@ No definition of a Role means no access to that user.
 2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
 4. FILTER_BY: All
 
+#### Supervisor:
+
+1. SEARCH_BY: ALL
+2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
+4. FILTER_BY: All
+
+#### Community
+
+1. SEARCH_BY: ALL
+2. T_COLUMNS: Name, InnovationCard, Company, Type, Objective, Created, Status.
+4. FILTER_BY: All
+
 #### Market Test Manager:
 
 1. SEARCH_BY: All
@@ -57,6 +69,20 @@ No definition of a Role means no access to that user.
 3. BATCH
 4. FILTER_BY: All
 
+#### Oper Supervisor:
+
+1. SEARCH_BY: All
+2. T_COLUMNS: ALL
+3. BATCH
+4. FILTER_BY: All
+
+#### Tech:
+
+1. SEARCH_BY: All
+2. T_COLUMNS: ALL
+3. BATCH
+4. FILTER_BY: All
+
 ### Example - Hotline role
 
 ```
@@ -65,7 +91,7 @@ access: {
         filterBy: {
             status: true, 
             operator: true
-        } 
+        }, 
         searchBy: { 
             name: true, 
             innovationCard: true, 

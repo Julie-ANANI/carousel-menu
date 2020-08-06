@@ -23,13 +23,6 @@ Here WORKFLOWS, EMAILS, QUESTIONNAIRE, SIGNATURES represent the sub tabs.
 
 No definition of a Role means no access to that user.
 
-#### Tech:
-
-1. WORKFLOWS: All
-2. EMAILS: All
-3. QUESTIONNAIRE: All 
-4. SIGNATURES: All
-
 #### Market Test Manager:
 
 1. WORKFLOWS: Add, Edit.
@@ -38,6 +31,20 @@ No definition of a Role means no access to that user.
 <br><br>SEARCH_BY: 'Name'.
 
 #### Market Test Manager UMI:
+
+1. WORKFLOWS: Add, Edit.
+
+2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
+<br><br>SEARCH_BY: 'Name'.
+
+#### Oper Supervisor:
+
+1. WORKFLOWS: Add, Edit.
+
+2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
+<br><br>SEARCH_BY: 'Name'.
+
+#### Tech:
 
 1. WORKFLOWS: Add, Edit.
 

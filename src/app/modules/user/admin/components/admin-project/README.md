@@ -35,15 +35,12 @@ Here SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, CAMPAIGNS, SYNTHESIS, STORYBOARD, FOL
 
 No definition of a Role means no access to that user.
 
-#### Tech:
+#### Community
 
-1. SETTINGS: All
-2. ANSWER_TAGS: All
-3. QUESTIONNAIRE: All,
-4. CAMPAIGNS: All,
-5. SYNTHESIS: All,
-6. STORYBOARD: All,
-7. FOLLOW_UP: All
+1. QUESTIONNAIRE: Edit,
+<br><br>QUIZ: 'VIEW'. 
+
+2. FOLLOW_UP: All 
 
 #### Hotline:
 
@@ -71,6 +68,17 @@ No definition of a Role means no access to that user.
 <br><br>EDIT: 'UMI_Word, Views'.
 
 3. STORYBOARD: View.
+
+#### SuperVisor:
+
+1. STORYBOARD: Generate_Pdf, View.
+
+2. SYNTHESIS:
+
+3. CAMPAIGNS: View
+
+4. SETTINGS:
+<br><br>VIEW: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Answers_Anonymous, Public_Project, Published_Project, Statistics'
 
 #### Market Test Manager:
 
@@ -102,12 +110,35 @@ No definition of a Role means no access to that user.
 
 6. STORYBOARD: All.
 
-#### Community
+#### Oper Supervisor:
 
-1. QUESTIONNAIRE: Edit,
-<br><br>QUIZ: 'VIEW'. 
+1. SETTINGS:
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
 
-2. FOLLOW_UP: All 
+2. ANSWER_TAGS: Edit, Delete.
+
+3. QUESTIONNAIRE: All
+
+4. CAMPAIGNS: All
+
+5. SYNTHESIS: All
+
+6. STORYBOARD: All.
+
+#### Tech:
+
+1. SETTINGS:
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
+
+2. ANSWER_TAGS: Edit, Delete.
+
+3. QUESTIONNAIRE: All
+
+4. CAMPAIGNS: All
+
+5. SYNTHESIS: All
+
+6. STORYBOARD: All.
 
 ### Example - Market Test Manager role
 
