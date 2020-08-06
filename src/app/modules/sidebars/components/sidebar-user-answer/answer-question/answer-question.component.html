@@ -1,9 +1,27 @@
+<!--<div
+  *ngIf="fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode"
+  [id]="question.identifier"
+  class="p-top-30 answer-question">
+
+  &lt;!&ndash; label &ndash;&gt;
+  <div class="text-14 text-background text-medium p-bottom-20">
+    {{ question.label | multiling:currentLang }}
+  </div>
+  &lt;!&ndash; /label &ndash;&gt;
+
+  &lt;!&ndash; answers &ndash;&gt;
+  <div [ngSwitch]="question.controlType" class="answer-wrapper">
+  </div>
+  &lt;!&ndash; /answers &ndash;&gt;
+
+</div>-->
+
 <ng-container *ngIf="fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode">
   <section class="answer-question-component">
 
     <!-- question label -->
     <div class="text text-question">
-      <span class="text-notify text-medium">{{ question.label | multiling:lang }}</span>
+      <span class="text-notify text-medium">{{ question.label | multiling:currentLang }}</span>
     </div>
 
     <!-- answers -->
@@ -179,7 +197,7 @@
             <app-shared-tags
               [tags]="answerTags(question.identifier)"
               [editMode]="editMode"
-              [projectId]="innoid"
+              [projectId]="projectId"
               (addTag)="addTag($event, question.identifier)"
               (createTag)="createTag($event, question.identifier)"
               (removeTag)="removeTag($event, question.identifier)">
@@ -193,7 +211,7 @@
 
               <ng-container *ngIf="!showQuestionTranslation">
                 <span>{{ fullAnswer.answers[question.identifier] }}</span>
-                <button *ngIf="adminMode && fullAnswer.used_language != lang"
+                <button *ngIf="adminMode && fullAnswer.used_language != currentLang"
                         class="button is-secondary is-sm is-outlined"
                         (click)="showQuestionTranslation = true">
                   {{ 'COMMON.TRANSLATE' | translate}}
@@ -201,7 +219,7 @@
               </ng-container>
 
               <ng-container *ngIf="showQuestionTranslation">
-                <span>{{ fullAnswer.answers_translations[question.identifier][lang] }}</span>
+                <span>{{ fullAnswer.answers_translations[question.identifier][currentLang] }}</span>
                 <button *ngIf="adminMode" class="button is-secondary is-sm is-outlined" (click)="showQuestionTranslation = false">
                   {{ 'COMMON.RESET' | translate}}
                 </button>
@@ -228,12 +246,12 @@
       <ng-container *ngSwitchCase="'stars'">
         <ul *ngIf="fullAnswer.answers[question.identifier] && !editMode" class="pad-top star-wrapper text-primary-dark">
           <li *ngFor="let opt of question.options">
-            {{ opt.label | multiling:lang }}: <span>{{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}</span>
+            {{ opt.label | multiling:currentLang }}: <span>{{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}</span>
           </li>
         </ul>
         <ul *ngIf="editMode" class="pad-top star-wrapper text-primary-dark">
           <li *ngFor="let opt of question.options; index as i;">
-            {{ opt.label | multiling:lang }}:
+            {{ opt.label | multiling:currentLang }}:
             <label for="{{question.identifier}}-benefit{{i}}-rate1">1</label>
             <input id="{{question.identifier}}-benefit{{i}}-rate1" type="radio"
                    name="{{question.identifier}}-benefit{{opt.identifier}}"
@@ -293,7 +311,7 @@
 
       <div class="c-pad-top" *ngIf="!showCommentTranslation">
         <span class="text-primary-dark">{{ fullAnswer.answers[question.identifier + 'Comment'] }}</span>
-        <button *ngIf="adminMode && fullAnswer.used_language != lang"
+        <button *ngIf="adminMode && fullAnswer.used_language != currentLang"
                 class="button is-secondary is-sm is-outlined"
                 (click)="showCommentTranslation = true">
           {{ 'COMMON.TRANSLATE' | translate}}
@@ -301,7 +319,7 @@
       </div>
 
       <div class="c-pad-top" *ngIf="showCommentTranslation">
-        <span class="text-primary-dark">{{ fullAnswer.answers_translations[question.identifier + 'Comment'][lang] }}</span>
+        <span class="text-primary-dark">{{ fullAnswer.answers_translations[question.identifier + 'Comment'][currentLang] }}</span>
         <button *ngIf="adminMode" class="button is-secondary is-sm is-outlined" (click)="showCommentTranslation = false">
           {{ 'COMMON.RESET' | translate}}
         </button>
@@ -312,7 +330,7 @@
           <app-shared-tags
             [tags]="answerTags(question.identifier + 'Comment')"
             [editMode]="editMode"
-            [projectId]="innoid"
+            [projectId]="projectId"
             (addTag)="addTag($event, question.identifier + 'Comment')"
             (createTag)="createTag($event, question.identifier + 'Comment')"
             (removeTag)="removeTag($event, question.identifier + 'Comment')">
@@ -361,7 +379,7 @@
             <app-shared-tags
               [tags]="answerTags(question.identifier + 'Comment')"
               [editMode]="editMode"
-              [projectId]="innoid"
+              [projectId]="projectId"
               (addTag)="addTag($event, question.identifier + 'Comment')"
               (createTag)="createTag($event, question.identifier + 'Comment')"
               (removeTag)="removeTag($event, question.identifier + 'Comment')">

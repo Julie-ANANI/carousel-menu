@@ -1,5 +1,13 @@
 @import "../../../../../../style/framework/src/variables";
 
+.answer-question {
+
+  .answer-wrapper {
+    color: $text-success-color;
+  }
+
+}
+
 .answer-question-component {
   padding-bottom: 1.5rem;
 
