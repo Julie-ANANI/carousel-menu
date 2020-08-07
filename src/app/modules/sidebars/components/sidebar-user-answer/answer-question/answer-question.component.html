@@ -5,7 +5,7 @@
   class="p-top-40 answer-question">
 
   <!-- label -->
-  <div class="text-14 text-bold p-bottom-15">{{ question.label | multiling:currentLang }}</div>
+  <div class="text-15 text-bold text-notify p-bottom-15">{{ question.label | multiling:currentLang }}</div>
   <!-- /label -->
 
   <!-- answers -->
@@ -48,15 +48,14 @@
 
         <!-- edit mode -->
         <div *ngIf="editMode">
-          <app-auto-complete-input
+          <app-utility-auto-complete-input
             (update)="setAnswer($event)"
             [config]="{ placeholder: 'Enter the company name',
             initialData: fullAnswer.answers[question.identifier] || [], type: 'company' }"
-            [isAdmin]="editMode"
+            [isAdmin]="adminMode"
             [isEditable]="editMode"
-            [isSmall]="true"
-            [tempActive]="false">
-          </app-auto-complete-input>
+            [isSmall]="true">
+          </app-utility-auto-complete-input>
         </div>
         <!-- /edit mode -->
 
@@ -80,14 +79,14 @@
 
         <!-- edit mode -->
         <div *ngIf="editMode">
-          <app-input-list
+          <app-utility-input-list
             (update)="setAnswer($event)"
             [isSmall]="true"
             [config]="{ placeholder: 'Enter your response',
             initialData: fullAnswer.answers[question.identifier] || [] }"
-            [isAdminMode]="editMode"
+            [isAdminMode]="adminMode"
             [isEditable]="editMode">
-          </app-input-list>
+          </app-utility-input-list>
         </div>
         <!-- /edit mode -->
 

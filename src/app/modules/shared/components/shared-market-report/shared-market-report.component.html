@@ -178,10 +178,11 @@
 <app-sidebar *ngIf="innovation && innovation._id" [(template)]="sidebarTemplateValue">
   <app-sidebar-user-answer
     *ngIf="modalAnswer._id"
-    [(userAnswer)]="modalAnswer"
     [adminMode]="canAccess(['edit', 'respondentProfile'])"
     [projectId]="innovation._id"
-    [questions]="questions">
+    [questions]="questions"
+    [sidebarState]="sidebarTemplateValue.animate_state"
+    [userAnswer]="modalAnswer">
   </app-sidebar-user-answer>
 </app-sidebar>
 <!-- /sidebar insight preview-->

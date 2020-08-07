@@ -104,10 +104,10 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_INCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-auto-complete-input
+                <app-utility-auto-complete-input
                   (update)="addCompanyToInclude($event)"
                   [config]="getConfig('includedCompanies')">
-                </app-auto-complete-input>
+                </app-utility-auto-complete-input>
               </div>
             </div>
           </ng-container>
@@ -133,10 +133,10 @@
                   {{ 'SHARED_PROJECT_SETTINGS.COMPANIES.TO_EXCLUDE' | translate }}
                 </span>
               <div class="pd-input">
-                <app-auto-complete-input
+                <app-utility-auto-complete-input
                   (update)="addCompanyToExclude($event)"
                   [config]="getConfig('excludedCompanies')">
-                </app-auto-complete-input>
+                </app-utility-auto-complete-input>
               </div>
             </div>
           </ng-container>
@@ -252,7 +252,7 @@
 
             <ng-container *ngIf="displayPersonsToExcludeSection">
               <div class="pd-input">
-                <app-input-list (update)="addPeopleToExclude($event)" [config]="getConfig('excludedPeople')"></app-input-list>
+                <app-utility-input-list (update)="addPeopleToExclude($event)" [config]="getConfig('excludedPeople')"></app-utility-input-list>
               </div>
             </ng-container>
 
@@ -337,12 +337,12 @@
 
             <ng-container *ngIf="displayKeywordsSection">
               <div class="pd-input">
-                <app-input-list
+                <app-utility-input-list
                   (update)="addKeywordToExclude($event)"
                   [isEditable]="true"
                   id="keywords"
                   [config]="getConfig('keywords')">
-                </app-input-list>
+                </app-utility-input-list>
               </div>
             </ng-container>
 

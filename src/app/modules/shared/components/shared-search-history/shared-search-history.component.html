@@ -17,10 +17,10 @@
 
   <!-- search by innovation -->
   <section *ngIf="canAccess(['searchBy', 'innovation'])" class="mxw-700 m-left-auto m-right-auto p-bottom-30">
-    <app-auto-complete-input
+    <app-utility-auto-complete-input
       (update)="updateInnovation($event)"
       [config]="{placeholder: 'Search an innovation here...', type: 'innovation'}">
-    </app-auto-complete-input>
+    </app-utility-auto-complete-input>
   </section>
   <!-- /search by innovation -->
 
@@ -80,11 +80,11 @@
     <p class="form-label">{{ total }} Professional(s) selected</p>
 
     <div [ngStyle]="{'min-height': chosenCampaign && chosenCampaign._id ? 'auto': '300px'}">
-      <app-auto-complete-input
+      <app-utility-auto-complete-input
         (update)="updateCampaign($event)"
         [onlyOne]="true"
         [config]="{placeholder: 'Search a campaign here...', initialData: chosenCampaign, type: 'campaign'}">
-      </app-auto-complete-input>
+      </app-utility-auto-complete-input>
     </div>
 
     <div *ngIf="chosenCampaign && chosenCampaign._id" class="p-top-25">

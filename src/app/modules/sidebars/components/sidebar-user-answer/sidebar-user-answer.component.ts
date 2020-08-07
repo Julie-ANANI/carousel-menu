@@ -22,15 +22,17 @@ import { Professional } from '../../../../models/professional';
 
 export class SidebarUserAnswerComponent {
 
-  @Input() projectId = '';
+  @Input() set sidebarState(value: any) {
+    this._reinitVariables();
+  }
+
+  @Input() projectId = ''; // id of the innovation
 
   @Input() questions: Array<Question> = [];
 
-  // companies to show in the popover when hover over Company.
-  @Input() excludedCompanies: Array<Company> = [];
+  @Input() excludedCompanies: Array<Company> = []; // companies to show in the popover when hover over Company.
 
-  // make true to show the Edit toggle button.
-  @Input() adminMode = false;
+  @Input() adminMode = false; // true to show the Edit toggle button and also shows the actions for the admin.
 
   @Input() set userAnswer(value: Answer) {
     this._reinitVariables();
@@ -40,7 +42,7 @@ export class SidebarUserAnswerComponent {
     }
   }
 
-  @Output() answerUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() answerUpdated: EventEmitter<boolean> = new EventEmitter<boolean>(); // sends updated answer.
 
   private _userAnswer: Answer = <Answer>{};
 

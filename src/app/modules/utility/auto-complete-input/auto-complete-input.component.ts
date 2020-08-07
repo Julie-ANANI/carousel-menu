@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,34 +8,33 @@ import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 import { AutoCompleteInputConfigInterface } from './interfaces/auto-complete-input-config-interface';
 import { AnswerList } from './interfaces/auto-complete-input-answerlist-interface';
 import { AutoCompleteInputSuggestionInterface } from './interfaces/auto-complete-input-suggestion-interface';
+import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../services/error/error-front.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'app-auto-complete-input',
+  selector: 'app-utility-auto-complete-input',
   templateUrl: './auto-complete-input.component.html',
   styleUrls: ['./auto-complete-input.component.scss']
 })
 
-export class AutoCompleteInputComponent {
+export class AutoCompleteInputComponent implements OnInit {
 
-  // make it true to make input field and button small.
-  @Input() isSmall = false;
+  @Input() isSmall = false; // true: to make input field and button small.
 
-  @Input() tempActive: boolean = true; // its temp don't use it.
+  @Input() isEditable = true; // false: will not allow to edit the fields and perform actions.
 
-  @Input() isEditable: boolean = true; // false: will disable it.
+  @Input() isShowable = true; // false: to hide the form field and add button.
 
-  @Input() isShowable: boolean = true; // false: to hide the form field.
+  @Input() isShowButton = true; // false: to hide the button.
 
-  @Input() isShowButton: boolean = true; // false: to hide the button.
+  @Input() isAdmin = false; // true: to show the admin options.
 
-  @Input() isAdmin: boolean = false;
+  @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
 
-  @Input() onlyOne: boolean = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
+  @Input() multiLangObjects = false;
 
-  @Input() multiLangObjects: boolean = false;
-
-  @Input() isHideAnswerList: boolean = false; // true: to hide the answer list.
+  @Input() isHideAnswerList = false; // true: to hide the answer list.
 
   @Input() set config(config: AutoCompleteInputConfigInterface) {
     if (config) {
@@ -61,36 +60,37 @@ export class AutoCompleteInputComponent {
     }
   }
 
-  @Output() update = new EventEmitter<any>();
+  @Output() update: EventEmitter<any> = new EventEmitter<any>(); // sends the updated list.
 
-  @Output() add = new EventEmitter<any>();
+  @Output() add: EventEmitter<any> = new EventEmitter<any>(); // send the single new added answer
 
-  @Output() remove = new EventEmitter<any>();
+  @Output() remove: EventEmitter<any> = new EventEmitter<any>(); // send the single answer that needs to be removed
 
-  private readonly _autoCompleteInputForm: FormGroup;
+  private _autoCompleteInputForm: FormGroup;
 
   private _answerList: Array<AnswerList> = [];
 
-  private _answer: string = '';
+  private _answer = '';
 
-  private _placeholder: string;
+  private _placeholder = '';
 
-  private _autocompleteType: string;
+  private _autocompleteType = '';
 
-  private _identifier: string;
+  private _identifier = '';
 
-  private _canOrder: boolean;
+  private _canOrder = false;
 
   constructor(private _formBuilder: FormBuilder,
               private _domSanitizer: DomSanitizer,
               private _autocompleteService: AutocompleteService,
               private _multilingPipe: MultilingPipe,
-              private _translateService: TranslateService) {
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateService: TranslateService) { }
 
+  ngOnInit(): void {
     this._autoCompleteInputForm = this._formBuilder.group({
       answer: '',
     });
-
   }
 
   public suggestions(query: any): Observable<Array<AutoCompleteInputSuggestionInterface>> {
@@ -115,13 +115,34 @@ export class AutoCompleteInputComponent {
   }
 
   public addProposition(val: any): void {
-    val = val ? val.get('answer').value : '';
+    if (this.isEditable) {
+      val = val ? val.get('answer').value : '';
 
-    if (val) {
+      if (val) {
+
+        // Verify here if the value has the expected fields (name, logo and domain)
+        if (typeof val === 'string') {
+          val = { [this._identifier]: val };
+        }
+
+        if (val && this._answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
+          if (this.onlyOne) {
+            this._answerList = [val];
+          } else {
+            this._answerList.push(val);
+          }
+
+          this._autoCompleteInputForm.get('answer').setValue('');
+          this.update.emit({ value: this._answerList });
+        }
+
+      }
 
       // Verify here if the value has the expected fields (name, logo and domain)
       if (typeof val === 'string') {
         val = { [this._identifier]: val };
+      } else if (this.multiLangObjects) {
+        val.name = this._multilingPipe.transform(val.name, this._translateService.currentLang);
       }
 
       if (val && this._answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
@@ -133,55 +154,33 @@ export class AutoCompleteInputComponent {
 
         this._autoCompleteInputForm.get('answer').setValue('');
         this.update.emit({ value: this._answerList });
+        this.add.emit({ value: val });
       }
-
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
-
-    // Verify here if the value has the expected fields (name, logo and domain)
-    if (typeof val === 'string') {
-      val = { [this._identifier]: val };
-    } else if (this.multiLangObjects) {
-      val.name = this._multilingPipe.transform(val.name, this._translateService.currentLang);
-    }
-
-    if (val && this._answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
-      if (this.onlyOne) {
-        this._answerList = [val];
-      } else {
-        this._answerList.push(val);
-      }
-
-      this._autoCompleteInputForm.get('answer').setValue('');
-      this.update.emit({ value: this._answerList });
-      this.add.emit({ value: val });
-    }
-
   }
 
   public onClickOrderUp(event: Event, i: number): void {
     event.preventDefault();
-
-    if (i !== 0) {
+    if (i !== 0 && this.isEditable) {
       const elem = this._answerList.splice(i, 1);
       this._answerList.splice(i - 1, 0, elem[0]);
       this.update.emit({ value: this._answerList });
     }
-
   }
 
   public onClickOrderDown(event: Event, i: number): void {
     event.preventDefault();
-
-    if (i !== this._answerList.length - 1) {
+    if (i !== this._answerList.length - 1 && this.isEditable) {
       const elem = this._answerList.splice(i, 1);
       this._answerList.splice(i + 1, 0, elem[0]);
       this.update.emit({ value: this._answerList });
     }
-
   }
 
   public removeProposition(index: number) {
-    if (this.isEditable || this.isAdmin) {
+    if (this.isEditable) {
       const val = this._answerList.splice(index, 1).pop();
       this.update.emit({ value: this._answerList });
       this.remove.emit({ value: val });
@@ -190,8 +189,7 @@ export class AutoCompleteInputComponent {
 
   public thumbsUp(event: Event, index: number): void {
     event.preventDefault();
-
-    if (this.isAdmin) {
+    if (this.isAdmin && this.isEditable) {
       if (this._answerList[index].rating === 2) {
         this._answerList[index].rating = 1;
       } else {
@@ -200,13 +198,11 @@ export class AutoCompleteInputComponent {
 
       this.update.emit({value: this._answerList});
     }
-
   }
 
   public thumbsDown(event: Event, index: number): void {
     event.preventDefault();
-
-    if (this.isAdmin) {
+    if (this.isAdmin && this.isEditable) {
       if (this._answerList[index].rating === 0) {
         this._answerList[index].rating = 1;
       } else {
@@ -214,7 +210,6 @@ export class AutoCompleteInputComponent {
       }
       this.update.emit({value: this._answerList});
     }
-
   }
 
   public updateItem(event: Event): void {

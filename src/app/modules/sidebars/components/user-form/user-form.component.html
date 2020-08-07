@@ -63,12 +63,12 @@
 
           <ng-container *ngIf="editInstanceDomain">
             <label class="form-label">New domain:</label>
-            <app-auto-complete-input
+            <app-utility-auto-complete-input
               id="domain"
               (update)="updateInstanceDomain($event)"
               [onlyOne]="true"
               [config]="buildInstanceDomainListConfig()">
-            </app-auto-complete-input>
+            </app-utility-auto-complete-input>
           </ng-container>
 
         </div>

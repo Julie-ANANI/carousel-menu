@@ -1,16 +1,20 @@
 <div id="auto-complete-input">
 
   <!-- input area -->
-  <form [formGroup]="autoCompleteInputForm" (ngSubmit)="addProposition(autoCompleteInputForm)" novalidate>
-    <div *ngIf="isShowable" class="aci-input-wrapper">
+  <form
+    (ngSubmit)="addProposition(autoCompleteInputForm)"
+    *ngIf="isShowable"
+    [formGroup]="autoCompleteInputForm"
+    novalidate>
+    <div class="aci-input-wrapper">
 
-      <label class="m-right-2">
+      <label [ngStyle]="{'width': isShowButton ? '80%' : '100%'}" class="m-right-2">
         <input
           [attr.placeholder]="placeholder | translate"
           [display-property-name]="identifier"
           [list-formatter]="autocompleteListFormatter.bind(this)"
-          [source]="suggestions.bind(this)"
           [ngClass]="{'is-sm': isSmall}"
+          [source]="suggestions.bind(this)"
           auto-complete
           class="form-input is-shadowed"
           formControlName="answer"
@@ -21,7 +25,8 @@
         *ngIf="isShowButton"
         [disabled]="!canAdd || !isEditable"
         [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
-        class="button is-circled is-primary">
+        class="button is-circled is-primary"
+        type="button">
         <i class="icon icon-plus"></i>
       </button>
 
@@ -30,25 +35,38 @@
   <!-- /input area -->
 
   <!-- answer area -->
-  <ul *ngIf="answerList.length > 0 && !isHideAnswerList" [ngClass]="{ 'fixed-height': answerList.length > 5 }" class="aci-answers-wrapper">
+  <ul
+    *ngIf="answerList.length > 0 && !isHideAnswerList"
+    [ngClass]="{ 'fixed-height': answerList.length > 5 }"
+    class="aci-answers-wrapper">
     <li *ngFor="let answer of answerList; let i = index">
 
       <!-- can order -->
       <div *ngIf="canOrder" class="aci-icons-wrapper">
 
         <!-- up icon -->
-        <div (click)="onClickOrderUp($event, i)" class="icon-container m-no-left is-overlay">
+        <div
+          (click)="onClickOrderUp($event, i)"
+          *ngIf="isEditable || isAdmin"
+          [ngClass]="{'disabled': !isEditable}"
+          class="icon-container m-no-left is-overlay">
           <span [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_UP' | translate" class="tooltip">
             <i class="icon icon-arrow-up"></i>
           </span>
         </div>
+        <!-- /up icon -->
 
         <!-- down icon -->
-        <div (click)="onClickOrderDown($event, i)" class="icon-container m-no-left m-right-2 is-overlay">
+        <div
+          (click)="onClickOrderDown($event, i)"
+          *ngIf="isEditable || isAdmin"
+          [ngClass]="{'disabled': !isEditable}"
+          class="icon-container m-no-left m-right-2 is-overlay">
           <span [attr.data-tooltip]="'COMMON.TOOLTIP.MOVE_DOWN' | translate" class="tooltip">
             <i class="icon icon-arrow-down"></i>
           </span>
         </div>
+        <!-- /down icon -->
 
       </div>
       <!-- /can order -->
@@ -66,31 +84,35 @@
         <div *ngIf="isAdmin" class="d-flex">
 
           <!-- edit-icon -->
-          <div class="popover">
+          <div [ngClass]="{'popover': isEditable}">
 
-            <div class="icon-container is-overlay c-default">
+            <div [ngClass]="{'disabled': !isEditable, 'c-default': isEditable}" class="icon-container is-overlay">
               <i class="fas fa-pencil-alt text-notify"></i>
             </div>
 
-            <div class="popover-container" style="width: 260px">
+            <div *ngIf="isEditable" class="popover-container" style="width: 260px">
               <div class="card p-no">
 
                 <div class="card-body">
                   <div class="form-group">
-                    <label class="form-label" for="answer">{{ 'COMMON.LABEL.ANSWER' | translate }}</label>
+                    <label class="form-label" [for]="answer[identifier]">Answer</label>
                     <input
                       [(ngModel)]="answer[identifier]"
+                      [id]="answer[identifier]"
                       autocomplete="off"
-                      class="form-input"
-                      id="answer"
+                      class="form-input is-sm is-shadowed"
                       name="answer"
-                      type="text"/>
+                      type="text">
                   </div>
                 </div>
 
                 <div class="card-footer text-center">
-                  <button (click)="updateItem($event)" class="button is-primary is-sm" type="submit">
-                    {{ 'COMMON.BUTTON.UPDATE' | translate }}
+                  <button
+                    (click)="updateItem($event)"
+                    [disabled]="!answer[identifier]"
+                    class="button is-secondary is-outlined is-xs"
+                    type="submit">
+                    Update
                   </button>
                 </div>
 
@@ -98,33 +120,40 @@
             </div>
 
           </div>
+          <!-- /edit-icon -->
 
           <!-- domain-icon -->
-          <div class="popover">
+          <div [ngClass]="{'popover': isEditable}">
 
-            <div class="icon-container is-overlay c-default" [ngClass]="{ 'opacity': !(answer.domain && answer.domain.length > 0) } ">
+            <div
+              class="icon-container is-overlay"
+              [ngClass]="{ 'opacity': !(answer.domain && answer.domain.length > 0), 'disabled': !isEditable,
+               'c-default': isEditable } ">
               <i class="fas fa-at"></i>
             </div>
 
-            <div class="popover-container" style="width: 260px">
+            <div *ngIf="isEditable" class="popover-container" style="width: 260px">
               <div class="card p-no">
 
                 <div class="card-body">
                   <div class="form-group">
-                    <label class="form-label" for="domain">{{ 'COMMON.LABEL.DOMAIN_NAME' | translate }}</label>
+                    <label class="form-label" [for]="answer.domain">Domain Name</label>
                     <input
                       [(ngModel)]="answer.domain"
+                      [id]="answer.domain"
                       autocomplete="off"
-                      class="form-input"
-                      id="domain"
+                      class="form-input is-sm is-shadowed"
                       name="domain"
-                      type="text"/>
+                      type="text">
                   </div>
                 </div>
 
                 <div class="card-footer text-center">
-                  <button (click)="updateItem($event)" class="button is-primary is-sm" type="submit">
-                    {{ 'COMMON.BUTTON.UPDATE' | translate }}
+                  <button
+                    (click)="updateItem($event)"
+                    class="button is-secondary is-outlined is-xs"
+                    type="submit">
+                    Update
                   </button>
                 </div>
 
@@ -132,26 +161,40 @@
             </div>
 
           </div>
+          <!-- /domain-icon -->
 
           <!-- thumbs-up icon -->
-          <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
-            <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
+          <div
+            (click)="thumbsUp($event, i)"
+            [ngClass]="{ 'disabled': !isEditable }"
+            class="icon-container is-overlay">
+            <i [ngClass]="{ 'active': answer.rating === 2, 'c-hand': isEditable }" class="fas fa-thumbs-up"></i>
           </div>
+          <!-- /thumbs-up icon -->
 
           <!-- thumbs-down icon -->
-          <div (click)="thumbsDown($event, i)" class="icon-container is-overlay">
-            <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
+          <div
+            (click)="thumbsDown($event, i)"
+            [ngClass]="{ 'disabled': !isEditable }"
+            class="icon-container is-overlay">
+            <i [ngClass]="{ 'active': answer.rating === 0, 'c-hand': isEditable }" class="fas fa-thumbs-down"></i>
           </div>
+          <!-- /thumbs-down icon -->
 
         </div>
         <!-- /if admin mode -->
 
         <!-- delete icon -->
-        <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable && !isAdmin }" class="icon-container is-overlay">
+        <div
+          (click)="removeProposition(i)"
+          *ngIf="isEditable || isAdmin"
+          [ngClass]="{ 'disabled': !isEditable }"
+          class="icon-container is-overlay">
           <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
             <i class="icon icon-delete text-alert"></i>
           </span>
         </div>
+        <!-- /delete icon -->
 
       </div>
       <!-- /icons -->

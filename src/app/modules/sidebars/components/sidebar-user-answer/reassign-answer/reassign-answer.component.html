@@ -72,12 +72,12 @@
 
     <div class="form-group">
       <label class="form-label">Country</label>
-      <app-auto-complete-input
+      <app-utility-auto-complete-input
         (update)="updateCountry($event)"
         [isSmall]="true"
         [config]="{ placeholder: 'Enter the country', type: 'countries' }"
         [onlyOne]="true">
-      </app-auto-complete-input>
+      </app-utility-auto-complete-input>
     </div>
 
   </div>

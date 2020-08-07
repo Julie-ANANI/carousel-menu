@@ -128,13 +128,13 @@
           class="text-link p-right-10 text-normal tooltip"
           data-tooltip="Set pro lang French">
           fr
+        </span>
         <span
           (click)="onClickLanguage('en')"
           [ngClass]="professional.language === 'en' ? 'text-primary' : 'text-primary-dark'"
           class="text-link text-normal tooltip"
           data-tooltip="Set pro lang English">
           en
-        </span>
         </span>
       </div>
       <!-- /language -->
@@ -172,12 +172,12 @@
     <!-- country edit -->
     <div *ngIf="editCountry" class="m-bottom-30 form-group mxw-500">
       <label class="form-label">Country</label>
-      <app-auto-complete-input
+      <app-utility-auto-complete-input
         (update)="updateCountry($event)"
         [isSmall]="true"
         [config]="{ placeholder: 'Enter the country', type: 'countries' }"
         [onlyOne]="true">
-      </app-auto-complete-input>
+      </app-utility-auto-complete-input>
     </div>
     <!-- /country edit -->
 

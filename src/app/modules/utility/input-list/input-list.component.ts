@@ -1,109 +1,111 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { domainRegEx, emailRegEx } from '../../../utils/regex';
+import { ErrorFrontService } from '../../../services/error/error-front.service';
+
+interface InputListConfig {
+  placeholder: string;
+  initialData: Array<any>;
+}
 
 @Component({
   moduleId: module.id,
-  selector: 'app-input-list',
+  selector: 'app-utility-input-list',
   templateUrl: './input-list.component.html',
   styleUrls: ['./input-list.component.scss']
 })
 
 export class InputListComponent {
 
-  // make input field small.
-  @Input() isSmall = false;
+  @Input() isSmall = false; // true: to make input field and button small.
 
-  @Input() set config(config: any) {
+  @Input() isEditable = true; // false: will not allow to edit the fields and perform actions.
+
+  @Input() isAdminMode = false; // true: to show the admin options.
+
+  @Input() isEmail = false; // true: if the answerList is of email. ex: app-emails-form component
+
+  @Input() isDomain = false; // true: if the answerList is of domain. ex: app-emails-form component
+
+  @Input() set config(config: InputListConfig) {
     if (config) {
       this._placeholder = config.placeholder;
       this._answerList = config.initialData || [];
     }
   }
 
-  @Input() isEditable: boolean = true;
+  @Output() update: EventEmitter<any> = new EventEmitter<any>(); // sends the updated list.
 
-  @Input() isAdminMode: boolean = false;
+  private _answer = '';
 
-  @Input() isEmail: boolean = false;
+  private _answerList: Array<any> = [];
 
-  @Input() isDomain: boolean = false;
+  private _placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
-  @Output() update: EventEmitter<any> = new EventEmitter<any>();
+  private _enableUpdate = false;
 
-  public answer: string;
+  private _indexNumber: number = null;
 
-  private _answerList: Array<any>;
-
-  private _placeholder: string = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
-
-  private _enableUpdate: boolean = false;
-
-  private _indexNumber: number;
-
-  constructor(private _translateNotificationsService: TranslateNotificationsService) {}
+  constructor(private _translateNotificationsService: TranslateNotificationsService) { }
 
   public addProposition(val: string) {
+    if (this.isEditable) {
+      if (this._answerList.findIndex(t => { return t.text === val }) === -1) {
+        let _testValue: any;
 
-    if (this._answerList.findIndex(t => { return t.text === val }) === -1) {
-      // if we want to test if it's an email
-      if (this.isEmail) {
-        const testValue = emailRegEx;
+        // if we want to test if it's an email
+        if (this.isEmail) {
+          _testValue = emailRegEx;
 
-        if (testValue.test(val)) {
-          this._answerList.push({text: val});
-          this.answer = '';
-          this.update.emit({ value: this._answerList });
+          if (_testValue.test(val)) {
+            this._answerList.push({text: val});
+            this._answer = '';
+            this.update.emit({ value: this._answerList });
+          } else {
+            this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+          }
+
+        } else if (this.isDomain) {
+          _testValue = domainRegEx;
+
+          if (_testValue.test(val)) {
+            this._answerList.push({text: val});
+            this._answer = '';
+            this.update.emit({ value: this._answerList });
+          } else {
+            this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.DOMAIN');
+          }
+
         } else {
-          this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+          this._answerList.push({text: val});
+          this._answer = '';
+          this.update.emit({ value: this._answerList });
         }
 
-      } else if (this.isDomain) {
-        const testValue = domainRegEx;
-
-        if (testValue.test(val)) {
-          this._answerList.push({text: val});
-          this.answer = '';
-          this.update.emit({ value: this._answerList });
-        } else {
-          this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
-        }
-
-      } else {
-        this._answerList.push({text: val});
-        this.answer = '';
-        this.update.emit({ value: this._answerList });
       }
-
+    } else {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
     }
-
   }
 
   public onClickEdit(event: Event, index: number) {
     event.preventDefault();
-
     if (this.isEditable) {
-
       if (this._indexNumber === index) {
         this._enableUpdate = !this._enableUpdate;
       } else {
         this._enableUpdate = true;
       }
-
       this._indexNumber = index;
-
     }
-
   }
 
   public updateProposition(event: Event, index: number, value: string) {
     event.preventDefault();
-
     this._answerList[index].text = value;
     this.update.emit({ value: this._answerList });
     this._enableUpdate = false;
     this._indexNumber = null;
-
   }
 
   public removeProposition(index: number): void {
@@ -115,8 +117,7 @@ export class InputListComponent {
 
   public thumbsUp(event: Event, index: number): void {
     event.preventDefault();
-
-    if (this.isAdminMode) {
+    if (this.isAdminMode && this.isEditable) {
       if (this._answerList[index].rating === 2) {
         this._answerList[index].rating = 1;
       } else {
@@ -124,13 +125,11 @@ export class InputListComponent {
       }
       this.update.emit({ value: this._answerList });
     }
-
   }
 
   public thumbsDown(event: Event, index: number): void {
     event.preventDefault();
-
-    if (this.isAdminMode) {
+    if (this.isAdminMode && this.isEditable) {
       if (this._answerList[index].rating === 0) {
         this._answerList[index].rating = 1;
       } else {
@@ -138,7 +137,6 @@ export class InputListComponent {
       }
       this.update.emit({ value: this._answerList });
     }
-
   }
 
   get placeholder(): string {
@@ -155,6 +153,14 @@ export class InputListComponent {
 
   get answerList(): Array<any> {
     return this._answerList;
+  }
+
+  get answer(): string {
+    return this._answer;
+  }
+
+  set answer(value: string) {
+    this._answer = value;
   }
 
 }
