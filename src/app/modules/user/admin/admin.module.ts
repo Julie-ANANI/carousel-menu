@@ -49,6 +49,7 @@ import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-p
 import { ShieldService } from '../../../services/shield/shield.service';
 import { EnterpriseService } from '../../../services/enterprise/enterprise.service';
 import { AdminProjectStoryboardModule } from './components/admin-project-storyboard/admin-project-storyboard.module';
+import {RolesService} from '../../../services/roles/roles.service';
 
 @NgModule({
   imports: [
@@ -106,7 +107,8 @@ import { AdminProjectStoryboardModule } from './components/admin-project-storybo
     CampaignProfessionalsResolver,
     ProjectTagsPoolResolver,
     ShieldService,
-    EnterpriseService
+    EnterpriseService,
+    RolesService
   ]
 })
 
