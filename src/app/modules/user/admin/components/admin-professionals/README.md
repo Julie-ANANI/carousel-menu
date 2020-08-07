@@ -15,12 +15,6 @@ Please always updates the roles / functionalities in this file.
 
 No definition of a Role means no access to that user.
 
-#### Tech:
-
-1. SEARCH_BY: All
-2. T_COLUMNS: All
-3. USER: All
-
 #### Hotline:
 
 1. SEARCH_BY: All
@@ -34,6 +28,18 @@ No definition of a Role means no access to that user.
 3. USER: All
 
 #### Market Test Manager UMI:
+
+1. SEARCH_BY: All
+2. T_COLUMNS: Member, Name, Country, Job, Company.
+3. USER: All
+
+#### Oper Supervisor:
+
+1. SEARCH_BY: All
+2. T_COLUMNS: Member, Name, Country, Job, Company.
+3. USER: All
+
+#### Tech:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: Member, Name, Country, Job, Company.

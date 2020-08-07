@@ -45,8 +45,8 @@
       <div class="form-group" *ngIf="isExcludeEmails">
         <label class="form-label">{{ 'COMMON.EXCLUDE-EMAILS' | translate }}</label>
         <div class="input-group">
-          <app-input-list [isEmail]="true" (update)="addEmail($event)" [config]="{initialData: formData.get('email').value, placeholder: 'john@catco.com'}">
-          </app-input-list>
+          <app-utility-input-list [isEmail]="true" (update)="addEmail($event)" [config]="{initialData: formData.get('email').value, placeholder: 'john@catco.com'}">
+          </app-utility-input-list>
         </div>
       </div>
 
@@ -54,8 +54,8 @@
       <div class="form-group" *ngIf="isExcludeEmails">
         <label class="form-label">{{ 'COMMON.EXCLUDE-DOMAINS' | translate }}</label>
         <div class="input-group">
-          <app-input-list [isDomain]="true" (update)="addDomain($event)" [config]="{initialData: formData.get('domain').value, placeholder: '*@catco.com'}">
-          </app-input-list>
+          <app-utility-input-list [isDomain]="true" (update)="addDomain($event)" [config]="{initialData: formData.get('domain').value, placeholder: '*@catco.com'}">
+          </app-utility-input-list>
         </div>
       </div>
 
@@ -63,12 +63,12 @@
       <app-shared-table [config]="config" [data]="tableInfos" *ngIf="isShowCampaignInfos"></app-shared-table>
 
       <!-- Create new filter on a country -->
-      <app-auto-complete-input
+      <app-utility-auto-complete-input
         *ngIf="isFilterCountry"
         (update)="updateCountry($event)"
         [onlyOne]="true"
         [config]="getConfig('countries')">
-      </app-auto-complete-input>
+      </app-utility-auto-complete-input>
 
       <!-- If a country is selected we show the settings -->
       <div class="form-group country-wrapper" *ngIf="(country !== null) || (isEditCountry)" style="margin-top: 50px">

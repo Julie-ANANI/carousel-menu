@@ -1,7 +1,7 @@
-<div class="column col-sm-12 col-11 col-mx-auto p-top-30 text-sm" id="sidebar-user-answer">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-20 text-sm" id="sidebar-user-answer">
 
   <!-- labels Status | Mail type -->
-  <div *ngIf="adminMode && (!editMode || mailType)" class="m-bottom-15">
+  <div *ngIf="adminMode && (!editMode || mailType)" class="m-bottom-10">
     <div
       [ngClass]="{ 'is-danger': userAnswer.status === 'REJECTED' || userAnswer.status === 'REJECTED_GMAIL' ||
       userAnswer.status === 'REJECTED_UMIBOT', 'is-info': userAnswer.status === 'DRAFT',
@@ -13,6 +13,15 @@
     <div *ngIf="mailType" class="label is-info">{{ mailType }}</div>
   </div>
   <!-- /labels Status | Mail type -->
+
+  <!-- blacklisted company -->
+  <div
+    *ngIf="adminMode && userAnswer.localStatus !== 'draft' && userAnswer.blacklistedCompany"
+    class="text-alert m-bottom-10">
+    <i class="fas fa-exclamation-triangle m-right-10"></i>
+    <span class="text-medium">This answer may come from a blacklisted company!</span>
+  </div>
+  <!-- /blacklisted company -->
 
   <!-- buttons -->
   <div *ngIf="adminMode" class="flex-between flex-wrap m-bottom-30">
@@ -104,7 +113,7 @@
         </ng-container>
         <ng-template #profDef>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</ng-template>
 
-        <sup *ngIf="professional.language && !editMode" class="text-normal p-left-1 text-notify">
+        <sup *ngIf="professional.language && !editMode" class="p-left-1 text-notify">
           {{ userAnswer.professional.language }}
         </sup>
 
@@ -115,18 +124,16 @@
       <div *ngIf="editMode" class="m-right-25 m-bottom-20">
         <span
           (click)="onClickLanguage('fr')"
+          [ngClass]="professional.language === 'fr' ? 'text-primary' : 'text-primary-dark'"
           class="text-link p-right-10 text-normal tooltip"
-          data-tooltip="Set pro lang French"
-          [ngClass]="professional.language === 'fr'
-          ? 'text-primary' : 'text-primary-dark'">
+          data-tooltip="Set pro lang French">
           fr
         </span>
         <span
           (click)="onClickLanguage('en')"
+          [ngClass]="professional.language === 'en' ? 'text-primary' : 'text-primary-dark'"
           class="text-link text-normal tooltip"
-          data-tooltip="Set pro lang English"
-          [ngClass]="professional.language === 'en'
-          ? 'text-primary' : 'text-primary-dark'">
+          data-tooltip="Set pro lang English">
           en
         </span>
       </div>
@@ -163,28 +170,19 @@
     <!-- /name | flag | rating | language -->
 
     <!-- country edit -->
-    <div *ngIf="editCountry" class="m-bottom-25 form-group mxw-500">
+    <div *ngIf="editCountry" class="m-bottom-30 form-group mxw-500">
       <label class="form-label">Country</label>
-      <app-auto-complete-input
+      <app-utility-auto-complete-input
         (update)="updateCountry($event)"
         [isSmall]="true"
         [config]="{ placeholder: 'Enter the country', type: 'countries' }"
         [onlyOne]="true">
-      </app-auto-complete-input>
+      </app-utility-auto-complete-input>
     </div>
     <!-- /country edit -->
 
-    <!-- blacklisted company -->
-    <div
-      *ngIf="adminMode && userAnswer.localStatus !== 'draft' && userAnswer.blacklistedCompany"
-      class="text-alert m-bottom-15">
-      <i class="fas fa-exclamation-triangle m-right-10"></i>
-      <span class="text-medium">This answer may come from a blacklisted company!</span>
-    </div>
-    <!-- /blacklisted company -->
-
     <!-- linkedin -->
-    <div *ngIf="adminMode && professional.profileUrl" class="m-bottom-15">
+    <div *ngIf="adminMode && professional.profileUrl" class="m-bottom-10">
       <i class="fab text-secondary fa-linkedin-in m-right-10"></i>
       <a [href]="professional.profileUrl" target="_blank" class="text-link">
         {{ professional.profileUrl }}
@@ -193,7 +191,7 @@
     <!-- /linkedin -->
 
     <!-- job -->
-    <div *ngIf="userAnswer.job || professional.jobTitle || editMode" class="m-bottom-15">
+    <div *ngIf="userAnswer.job || professional.jobTitle || editMode" class="m-bottom-10">
       <i class="fas fa-address-card text-notify m-right-10"></i>
       {{ userAnswer.job || professional.jobTitle | FormatText:true }}
       <span
@@ -206,7 +204,7 @@
     <!-- /job -->
 
     <!-- edit job title -->
-    <div *ngIf="editJob" class="form-group m-top-25 m-bottom-25">
+    <div *ngIf="editJob" class="form-group m-top-20 m-bottom-30">
       <label class="form-label" for="sidebar-user-answer-job">Job Title</label>
       <input
         (change)="enableSave()"
@@ -219,7 +217,7 @@
     <!-- /edit job title -->
 
     <!-- company -->
-    <div *ngIf="(userAnswer.company && userAnswer.company.name) || professional.company || editMode" class="m-bottom-15">
+    <div *ngIf="(userAnswer.company && userAnswer.company.name) || professional.company || editMode" class="m-bottom-10">
 
       <i class="fas fa-building text-notify m-right-10"></i>
 
@@ -251,20 +249,20 @@
     <!-- /company -->
 
     <!-- edit company -->
-    <div *ngIf="editCompany" class="form-group m-top-25 m-bottom-25 mxw-500">
+    <div *ngIf="editCompany" class="form-group m-top-20 m-bottom-30 mxw-500">
       <label class="form-label" for="sidebar-user-answer-company">Company</label>
       <input
         (change)="enableSave()"
         [(ngModel)]="userAnswer.company.name"
         class="form-input is-sm is-shadowed"
         id="sidebar-user-answer-company"
-        placeholder="Enter the company"
+        placeholder="Enter the company name"
         type="text">
     </div>
     <!-- /edit company -->
 
     <!-- email -->
-    <div *ngIf="professional.email" class="m-bottom-15">
+    <div *ngIf="professional.email" class="m-bottom-10">
       <i class="fas fa-envelope text-notify m-right-10"></i>
       <a [href]="'mailto:'+professional.email" target="_blank" class="text-link">
         {{ professional.email }}
@@ -273,7 +271,7 @@
     <!-- /email -->
 
     <!-- second email -->
-    <div *ngIf="adminMode" class="m-bottom-15">
+    <div *ngIf="adminMode" class="m-bottom-10">
       <i class="fas fa-envelope text-notify m-right-10"></i>
       <ng-container *ngIf="professional.secondEmail; else emailText">
         <a [href]="'mailto:'+professional.secondEmail" target="_blank" class="text-link">
@@ -293,7 +291,7 @@
     <!-- /second email -->
 
     <!-- edit second email -->
-    <div *ngIf="editSecondEmail" class="form-group m-top-25 m-bottom-25 mxw-500">
+    <div *ngIf="editSecondEmail" class="form-group m-top-20 m-bottom-30 mxw-500">
       <label class="form-label" for="sidebar-user-answer-email">Second Email</label>
       <input
         (change)="enableSave()"
@@ -309,7 +307,7 @@
   <!-- /user details not assignPro -->
 
   <!-- received date and time, and time spent -->
-  <div *ngIf="userAnswer.created || userAnswer.time_elapsed" class="text-notify text-bold m-bottom-15">
+  <div *ngIf="userAnswer.created || userAnswer.time_elapsed" class="text-notify text-bold m-bottom-10">
     <ng-container *ngIf="userAnswer.created">
       {{ 'SIDEBAR_USER_ANSWER.RECEIVED.A' | translate }}
       {{ createdDate(userAnswer.created) }}
@@ -325,13 +323,13 @@
   <!-- /received date and time, and time spent -->
 
   <!-- ip -->
-  <div *ngIf="userAnswer.ip && adminMode" class="text-notify text-bold m-bottom-15">
+  <div *ngIf="userAnswer.ip && adminMode" class="text-notify text-bold m-bottom-10">
     IP: {{ userAnswer.ip }}
   </div>
   <!-- /ip -->
 
   <!-- auto tags -->
-  <div *ngIf="autoTags.length > 0" class="m-top-30">
+  <div *ngIf="autoTags.length > 0" class="m-top-20">
     <label class="form-label p-bottom-10">Auto Tags</label>
     <div class="tags-wrapper">
       <div *ngFor="let tag of autoTags" class="label is-tag is-rounded">
@@ -343,7 +341,7 @@
   <!-- /auto tags -->
 
   <!-- tags -->
-  <div *ngIf="(userAnswer.tags && userAnswer.tags.length) || editMode" class="m-top-30">
+  <div *ngIf="(userAnswer.tags && userAnswer.tags.length) || editMode" class="m-top-20">
     <label class="form-label p-bottom-10">Tags</label>
     <app-shared-tags
       (addTag)="addTag($event)"
@@ -357,77 +355,46 @@
   </div>
   <!-- /tags -->
 
+  <!-- status -->
+  <div
+    *ngIf="adminMode && editMode && userAnswer.status !== 'REJECTED_GMAIL' && userAnswer.localStatus !== 'draft'"
+    class="m-top-25 m-bottom-10 flex-wrap flex-between status-wrapper">
+    <div *ngFor="let status of answerStatus" class="d-inline-flex flex-d-column align-center text-center m-top-10">
+      <div [ngClass]="status.class" class="label m-bottom-10">
+        {{ 'SIDEBAR_USER_ANSWER.STATUS.' + status.name | translate }}
+      </div>
+      <label [ngClass]="status.class" class="form-radio p-no-left p-right-15">
+        <input
+          (change)="updateStatus($event, status.name)"
+          [id]="status.name"
+          [checked]="status.name === userAnswer.status"
+          name="sidebar-user-answer-status"
+          type="radio">
+        <i class="form-icon"></i>
+      </label>
+    </div>
+  </div>
+  <!-- /status -->
+
+  <!-- rejected by gmail -->
+  <div *ngIf="adminMode && userAnswer.status === 'REJECTED_GMAIL'" class="m-top-20">
+    <div class="label is-danger">{{ 'SIDEBAR_USER_ANSWER.STATUS.REJECTED_GMAIL' | translate }}</div>
+    <p *ngIf="meta && !editMode" [innerHTML]="meta" class="m-top-15"></p>
+  </div>
+  <!-- /rejected by gmail -->
+
+  <!-- questions -->
+  <div *ngFor="let question of questions">
+    <app-answer-question
+      (fullAnswerChange)="enableSave()"
+      [adminMode]="adminMode"
+      [editMode]="editMode"
+      [fullAnswer]="userAnswer"
+      [projectId]="projectId"
+      [question]="question">
+    </app-answer-question>
+  </div>
+  <!-- /questions -->
+
 </div>
 
-<ng-container *ngIf="userAnswer">
-  <section id="user-answer-component">
-
-    <div class="column col-xs-12 col-11 col-mx-auto">
-
-      <!-- section status -->
-      <ng-container *ngIf="adminMode && userAnswer.status !== 'REJECTED_GMAIL' && userAnswer.localStatus !== 'draft'">
-        <div class="section-status flex-between">
-
-          <!-- to reject -->
-          <div class="status-rejected">
-            <div class="label is-danger"><span>{{ 'ANSWER.STATUS.REJECTED' | translate }}</span></div>
-            <button class="btn btn-radio rejected" [ngClass]="{ 'active': userAnswer.status === 'REJECTED' }" (click)="updateStatus($event, 'REJECTED')">
-              <span>•</span>
-            </button>
-          </div>
-
-          <!-- submitted -->
-          <div class="status-submitted">
-            <div class="label is-progress"><span>{{ 'ANSWER.STATUS.SUBMITTED' | translate }}</span></div>
-            <button class="btn btn-radio submitted" [ngClass]="{ 'active': userAnswer.status === 'SUBMITTED' }" (click)="updateStatus($event, 'SUBMITTED')">
-              <span>•</span>
-            </button>
-          </div>
-
-          <!-- validated -->
-          <div class="status-validated">
-            <div class="label is-success"><span>{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span></div>
-            <button
-              class="btn btn-radio validated"
-              [ngClass]="{ 'active': userAnswer.status === 'VALIDATED' }"
-              (click)="updateStatus($event, 'VALIDATED')">
-              <span>•</span>
-            </button>
-          </div>
-
-        </div>
-      </ng-container>
-      <!-- /section status -->
-
-      <!-- rejected by gmail -->
-      <ng-container *ngIf="adminMode && userAnswer.status === 'REJECTED_GMAIL'">
-        <div class="status-gmail">
-
-          <div class="label is-danger">
-            <span>{{ 'ANSWER.STATUS.REJECTED_GMAIL' | translate }}</span>
-          </div>
-
-          <!-- the original reply message sent to Karine -->
-          <ng-container *ngIf="meta && !editMode">
-            <p class="text">{{ meta }}</p>
-          </ng-container>
-
-        </div>
-      </ng-container>
-      <!-- /rejected by gmail -->
-
-      <!-- section questions -->
-      <ng-container *ngFor="let question of questions">
-        <app-answer-question
-          [editMode]="editMode"
-          [adminMode]="adminMode"
-          [question]="question"
-          [fullAnswer]="userAnswer"
-          [innoid]="projectId">
-        </app-answer-question>
-      </ng-container>
-      <!-- /section questions -->
-
-    </div>
-  </section>
-</ng-container>

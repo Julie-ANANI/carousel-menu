@@ -8,8 +8,10 @@
         <input
           [(ngModel)]="answer"
           [attr.placeholder]="placeholder | translate"
+          [disabled]="!isEditable"
+          [ngClass]="{'is-sm': isSmall}"
           autocomplete="off"
-          class="form-input"
+          class="form-input is-shadowed"
           name="answers"
           required
           type="text">
@@ -17,7 +19,8 @@
 
       <button
         [disabled]="f.form.invalid || !isEditable"
-        class="button is-action is-circled is-primary is-shadowed p-no"
+        [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
+        class="button is-circled is-primary"
         type="submit">
         <i class="icon icon-plus"></i>
       </button>
@@ -31,20 +34,17 @@
 
         <!-- text -->
         <div class="answer-wrapper text-sm text-primary-dark m-right-2">
-
           <span *ngIf="!(enableUpdate && i === indexNumber)">{{ answer.text }}</span>
-
           <label *ngIf="enableUpdate && i === indexNumber">
             <input
-              #updateAnswer
-              (keyup.enter)="updateProposition($event, i, updateAnswer.value)"
-              [name]="'text' + [i]"
-              [ngModel]="answerList[i].text"
-              autocomplete="off"
-              class="form-input is-sm"
-              type="text">
+                #updateAnswer
+                (keyup.enter)="updateProposition($event, i, updateAnswer.value)"
+                [name]="'text' + [i]"
+                [ngModel]="answerList[i].text"
+                autocomplete="off"
+                class="form-input is-sm"
+                type="text">
           </label>
-
         </div>
         <!-- /text -->
 
@@ -52,38 +52,55 @@
         <div class="icons-wrapper">
 
           <!-- edit icon -->
-          <div (click)="onClickEdit($event, i)" [ngClass]="{ 'disabled': !isEditable }"
-               class="icon-container is-overlay">
+          <div
+            (click)="onClickEdit($event, i)"
+            *ngIf="isEditable || isAdminMode"
+            [ngClass]="{ 'disabled': !isEditable }"
+            class="icon-container is-overlay">
             <span
-              [attr.data-tooltip]="(!(enableUpdate && i === indexNumber) ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
+              [attr.data-tooltip]="(!(enableUpdate && i === indexNumber)
+              ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
               class="tooltip">
               <i class="fas fa-pencil-alt text-notify"></i>
             </span>
           </div>
+          <!-- /edit icon -->
 
           <!-- if admin mode -->
           <div *ngIf="isAdminMode" class="d-flex">
 
             <!-- thumbs-up icon -->
-            <div (click)="thumbsUp($event, i)" class="icon-container is-overlay">
-              <i [ngClass]="{ 'active': answer.rating === 2 }" class="fas fa-thumbs-up c-hand"></i>
+            <div
+              (click)="thumbsUp($event, i)"
+              [ngClass]="{ 'disabled': !isEditable }"
+              class="icon-container is-overlay">
+              <i [ngClass]="{ 'active': answer.rating === 2, 'c-hand': isEditable }" class="fas fa-thumbs-up"></i>
             </div>
+            <!-- /thumbs-up icon -->
 
             <!-- thumbs-down icon -->
-            <div (click)="thumbsDown($event, i)" class="icon-container is-overlay">
-              <i [ngClass]="{ 'active': answer.rating === 0 }" class="fas fa-thumbs-down c-hand"></i>
+            <div
+              (click)="thumbsDown($event, i)"
+              [ngClass]="{ 'disabled': !isEditable }"
+              class="icon-container is-overlay">
+              <i [ngClass]="{ 'active': answer.rating === 0, 'c-hand': isEditable }" class="fas fa-thumbs-down"></i>
             </div>
+            <!-- /thumbs-down icon -->
 
           </div>
           <!-- /if admin mode -->
 
           <!-- delete icon -->
-          <div (click)="removeProposition(i)" [ngClass]="{ 'disabled': !isEditable }"
-               class="icon-container m-no-right is-overlay">
+          <div
+            (click)="removeProposition(i)"
+            *ngIf="isEditable || isAdminMode"
+            [ngClass]="{ 'disabled': !isEditable }"
+            class="icon-container m-no-right is-overlay">
             <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
               <i class="icon icon-delete text-alert"></i>
             </span>
           </div>
+          <!-- /delete icon -->
 
         </div>
         <!-- /icons -->

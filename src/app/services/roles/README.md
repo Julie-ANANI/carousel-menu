@@ -24,9 +24,11 @@ Market Test Manager UMI, Oper-supervisor, Tech, Root.
 
 No definition of a Role means no access to that user.
 
-#### Tech:
+#### Community:
 
-1. ADMIN_SIDE: All
+1. ADMIN_SIDE: USERS 
+<br><br>PROJECTS: 
+<br>'PROJECT: 'QUESTIONNAIRE, FOLLOW_UP''.
 
 #### Hotline:
 
@@ -49,6 +51,14 @@ No definition of a Role means no access to that user.
 <br><br>PROJECTS: 
 <br>'PROJECT: 'SETTINGS, SYNTHESIS, STORYBOARD''.
 
+#### Supervisor:
+
+1. ADMIN_SIDE: USERS
+<br><br>PROJECTS: 
+<br>'PROJECT: 'SETTINGS, SYNTHESIS, STORYBOARD'
+<br><br>CAMPAIGNS: 
+<br>'CAMPAIGN: 'ANSWERS''.
+
 #### Market Test Manager:
 
 1. ADMIN_SIDE: USERS, PROFESSIONALS
@@ -57,7 +67,7 @@ No definition of a Role means no access to that user.
 <br><br>PROJECTS: 
 <br>'PROJECT: 'SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD', 
 <br><br>CAMPAIGNS: 
-<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS''.
+<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS'.
 
 #### Market Test Manager UMI:
 
@@ -67,13 +77,27 @@ No definition of a Role means no access to that user.
 <br><br>PROJECTS: 
 <br>'PROJECT: 'SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD', 
 <br><br>CAMPAIGNS: 
-<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS''.
+<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS'.
 
-#### Community:
+#### Oper Supervisor:
 
-1. ADMIN_SIDE: USERS 
+1. ADMIN_SIDE: USERS, PROFESSIONALS
+<br><br>LIBRARIES: 'WORKFLOWS, QUESTIONNAIRE',
+<br><br>SEARCH: 'HISTORY, WAITING_LINE',
 <br><br>PROJECTS: 
-<br>'PROJECT: 'QUESTIONNAIRE, FOLLOW_UP''.
+<br>'PROJECT: 'SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD', 
+<br><br>CAMPAIGNS: 
+<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS'.
+
+#### Tech:
+
+1. ADMIN_SIDE: USERS, PROFESSIONALS
+<br><br>LIBRARIES: 'WORKFLOWS, QUESTIONNAIRE',
+<br><br>SEARCH: 'HISTORY, WAITING_LINE',
+<br><br>PROJECTS: 
+<br>'PROJECT: 'SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD', 
+<br><br>CAMPAIGNS: 
+<br>'CAMPAIGN: 'SEARCH, HISTORY, PROS, WORKFLOWS, BATCH, ANSWERS'.
 
 ### Example - Market Test Manager role
 

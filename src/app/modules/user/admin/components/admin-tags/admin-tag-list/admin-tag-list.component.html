@@ -42,9 +42,9 @@
                   </select>
                 </td>
                 <td>
-                    <app-auto-complete-input id="attachments"
+                    <app-utility-auto-complete-input id="attachments"
                                             (update)="addAttachment($event, datum)"
-                                            [config]="buildAttachmentsListConfig(datum.attachments)"></app-auto-complete-input>
+                                            [config]="buildAttachmentsListConfig(datum.attachments)"></app-utility-auto-complete-input>
                 </td>
                 <td>{{ datum.created | date}}</td>
                 <td>

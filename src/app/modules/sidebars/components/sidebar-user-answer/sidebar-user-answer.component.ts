@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../models/question';
 import { Answer } from '../../../../models/answer';
-import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
@@ -9,11 +8,11 @@ import { ProfessionalsService } from '../../../../services/professionals/profess
 import { Company } from '../../../../models/company';
 import * as momentTimeZone from 'moment-timezone';
 import { first } from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../services/error/error-front.service';
-import {NewPro} from './reassign-answer/reassign-answer.component';
-import {UserFrontService} from '../../../../services/user/user-front.service';
-import {Professional} from '../../../../models/professional';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { NewPro } from './reassign-answer/reassign-answer.component';
+import { UserFrontService } from '../../../../services/user/user-front.service';
+import { Professional } from '../../../../models/professional';
 
 @Component({
   selector: 'app-sidebar-user-answer',
@@ -23,15 +22,17 @@ import {Professional} from '../../../../models/professional';
 
 export class SidebarUserAnswerComponent {
 
-  @Input() projectId = '';
+  @Input() set sidebarState(value: any) {
+    this._reinitVariables();
+  }
+
+  @Input() projectId = ''; // id of the innovation
 
   @Input() questions: Array<Question> = [];
 
-  // companies to show in the popover when hover over Company.
-  @Input() excludedCompanies: Array<Company> = [];
+  @Input() excludedCompanies: Array<Company> = []; // companies to show in the popover when hover over Company.
 
-  // make true to show the Edit toggle button.
-  @Input() adminMode = false;
+  @Input() adminMode = false; // true to show the Edit toggle button and also shows the actions for the admin.
 
   @Input() set userAnswer(value: Answer) {
     this._reinitVariables();
@@ -41,7 +42,7 @@ export class SidebarUserAnswerComponent {
     }
   }
 
-  @Output() answerUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() answerUpdated: EventEmitter<boolean> = new EventEmitter<boolean>(); // sends updated answer.
 
   private _userAnswer: Answer = <Answer>{};
 
@@ -61,25 +62,29 @@ export class SidebarUserAnswerComponent {
 
   public newEmail = '';
 
-  isReassigning = false;
+  private _isReassigning = false;
 
-  isImporting = false;
+  private _isImporting = false;
 
-  isSaving = false;
+  private _isSaving = false;
 
-  toBeSaved = false;
+  private _toBeSaved = false;
 
-  editSecondEmail = false;
+  private _editSecondEmail = false;
 
-  constructor(private _translateService: TranslateService,
-              private _answerService: AnswerService,
+  private _answerStatus: Array<{name: any, class: string}> = [
+    {name: 'REJECTED', class: 'is-danger'},
+    {name: 'SUBMITTED', class: 'is-progress'},
+    {name: 'VALIDATED', class: 'is-success'}
+    ];
+
+  constructor(private _answerService: AnswerService,
               private _professionalsService: ProfessionalsService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
-
   private _reinitVariables() {
     this._editMode = false;
-    this.toBeSaved = false;
+    this._toBeSaved = false;
     this._resetEdit();
   }
 
@@ -88,7 +93,7 @@ export class SidebarUserAnswerComponent {
     this._editJob = false;
     this._editCompany = false;
     this._editCountry = false;
-    this.editSecondEmail = false;
+    this._editSecondEmail = false;
   }
 
   public OnChangeEdit(event: Event) {
@@ -119,18 +124,17 @@ export class SidebarUserAnswerComponent {
         break;
 
       case 'SECOND_EMAIL':
-        this.editSecondEmail = !this.editSecondEmail;
+        this._editSecondEmail = !this._editSecondEmail;
         break;
 
     }
   }
 
-
   public onSaveAnswer(event: Event) {
     event.preventDefault();
-    if (!this.isSaving && this.toBeSaved) {
-      this.isSaving = true;
-      if (this.editSecondEmail) {
+    if (!this._isSaving && this._toBeSaved) {
+      this._isSaving = true;
+      if (this._editSecondEmail) {
         this._addContactEmail();
       } else {
         this._updateAnswer();
@@ -164,8 +168,8 @@ export class SidebarUserAnswerComponent {
   }
 
   private _resetSaveVariables() {
-    this.isSaving = false;
-    this.toBeSaved = false;
+    this._isSaving = false;
+    this._toBeSaved = false;
   }
 
   public onProToAssign(pro: NewPro) {
@@ -180,14 +184,14 @@ export class SidebarUserAnswerComponent {
           this._translateNotificationsService.success('Success', 'The professional language is updated.');
           }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          this.isSaving = false;
+          this._isSaving = false;
           console.error(err);
         });
     }
   }
 
   public enableSave() {
-    this.toBeSaved = true;
+    this._toBeSaved = true;
   }
 
   public updateProfileQuality(object: {value: number}) {
@@ -200,42 +204,37 @@ export class SidebarUserAnswerComponent {
     this.enableSave();
   }
 
-  public updateStatus(event: Event, status: any) {
+  public updateStatus(event: Event, status: 'REJECTED' | 'VALIDATED' | 'SUBMITTED') {
     event.preventDefault();
-
-    if (this._editMode) {
-      this._userAnswer.status = status;
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.NOT_MODIFIED.USER_ANSWER');
-    }
-
+    this._userAnswer.status = status;
+    this.enableSave();
   }
 
   public addTag(tag: Tag): void {
     this._answerService.addTag(this._userAnswer._id, tag._id).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success' , 'The tag is added.');
+      this._translateNotificationsService.success('Success' , 'The tag is added to the answer.');
       this._userAnswer.tags.push(tag);
       this.answerUpdated.emit(true);
       }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', 'The tag is already added.');
+      this._translateNotificationsService.error('Error', 'The tag is already added to the answer.');
       console.error(err);
     });
   }
 
   public createTag(tag: Tag): void {
     this._answerService.createTag(this._userAnswer._id, tag).pipe(first()).subscribe((newTag) => {
-      this._translateNotificationsService.success('Success' , 'The tag is created.');
+      this._translateNotificationsService.success('Success' , 'The tag is created and added to the answer.');
       this._userAnswer.tags.push(newTag);
       this.answerUpdated.emit(true);
       }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', 'The tag is already added.');
+      this._translateNotificationsService.error('Error', 'The tag is already created/added to the answer.');
       console.error(err);
     });
   }
 
   public removeTag(tag: Tag): void {
     this._answerService.removeTag(this._userAnswer._id, tag._id).pipe(first()).subscribe((a: any) => {
-      this._translateNotificationsService.success('Success' , 'The tag is removed.');
+      this._translateNotificationsService.success('Success' , 'The tag is removed from the answer.');
       this._userAnswer.tags = this._userAnswer.tags.filter(t => t._id !== tag._id);
       this.answerUpdated.emit(true);
       }, (err: HttpErrorResponse) => {
@@ -246,14 +245,14 @@ export class SidebarUserAnswerComponent {
 
   public onImportAnswer(event: Event): void {
     event.preventDefault();
-    if (!this.isImporting) {
-      this.isImporting = true;
+    if (!this._isImporting) {
+      this._isImporting = true;
       this._answerService.importFromQuiz(this._userAnswer).pipe(first()).subscribe(() => {
         this._translateNotificationsService.success('Success' , 'The answer is imported.');
-        this.isImporting = false;
+        this._isImporting = false;
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this.isImporting = false;
+        this._isImporting = false;
         console.error(err);
       });
     }
@@ -261,20 +260,21 @@ export class SidebarUserAnswerComponent {
 
   public onReassignAnswer(event: Event): void {
     event.preventDefault();
-    if (!this.isReassigning) {
-      this.isReassigning = true;
+    if (!this._isReassigning) {
+      this._isReassigning = true;
       // this._newPro.country = this._userAnswer.country && this._userAnswer.country.flag;
       // this._newPro.company = this._userAnswer.company && this._userAnswer.company.name;
 
       this._answerService.answerReassign(this._userAnswer.campaign, this._userAnswer.originalAnswerReference,
         this._userAnswer._id, this._newPro).pipe(first()).subscribe((_res: any) => {
-        this._translateNotificationsService.success('Success' , 'The answer has been reassigned.');
-        this.isReassigning = false;
+        this._translateNotificationsService.success('Success' ,
+          'The answer has been reassigned to the new professional.');
+        this._isReassigning = false;
         this._assignNewPro = false;
         this._newPro = <NewPro>{};
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this.isReassigning = false;
+        this._isReassigning = false;
         console.error(err);
       });
 
@@ -284,13 +284,13 @@ export class SidebarUserAnswerComponent {
   private _addContactEmail() {
     this._professionalsService.addContactEmail(this._userAnswer.professional._id, this.newEmail).pipe(first())
       .subscribe(() => {
-        this._translateNotificationsService.success('Success' , 'The second email is added.');
+        this._translateNotificationsService.success('Success' , 'The second email is added to the professional.');
         this._resetSaveVariables();
-        this.editSecondEmail = false;
+        this._editSecondEmail = false;
         }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._resetSaveVariables();
-        this.editSecondEmail = false;
+        this._editSecondEmail = false;
         console.error(err);
       });
   }
@@ -304,8 +304,8 @@ export class SidebarUserAnswerComponent {
   }
 
   get companyLength(): number {
-    return this._userAnswer && (this._userAnswer.company && this._userAnswer.company.name && this._userAnswer.company.name.length ||
-    this._userAnswer.professional && this._userAnswer.professional.company && this._userAnswer.professional.company.length) || 30;
+    return (this._userAnswer.company && this._userAnswer.company.name && this._userAnswer.company.name.length
+      || this.professional.company && this.professional.company.length) || 30;
   }
 
   get professional(): Professional {
@@ -318,10 +318,6 @@ export class SidebarUserAnswerComponent {
 
   get meta(): any {
     return this._userAnswer.meta || {};
-  }
-
-  get lang(): string {
-    return this._translateService.currentLang;
   }
 
   get userAnswer(): Answer {
@@ -362,6 +358,30 @@ export class SidebarUserAnswerComponent {
 
   get autoTags(): Array<string> {
     return this._userAnswer.autoTags && this._userAnswer.autoTags.length ? this._userAnswer.autoTags : [];
+  }
+
+  get isReassigning(): boolean {
+    return this._isReassigning;
+  }
+
+  get isImporting(): boolean {
+    return this._isImporting;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
+  get editSecondEmail(): boolean {
+    return this._editSecondEmail;
+  }
+
+  get answerStatus(): Array<{ name: any; class: string }> {
+    return this._answerStatus;
   }
 
 }

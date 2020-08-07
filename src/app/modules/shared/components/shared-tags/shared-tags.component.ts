@@ -18,8 +18,7 @@ type TagType = 'tags';
 
 export class SharedTagsComponent implements OnInit {
 
-  // make it true to make the input field size small.
-  @Input() isSmall = false;
+  @Input() isSmall = false; // true: to make the input field and add button size small.
 
   @Input() tags: Array<Tag> = [];
 

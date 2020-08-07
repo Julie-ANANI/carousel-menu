@@ -17,163 +17,35 @@
     margin: -$unit-2;
   }
 
-}
+  .status-wrapper {
 
-#user-answer-component {
+    .form-radio {
 
-  padding-top: 1.5rem;
+      .form-icon {
+        width: 20px;
+        height: 20px;
+      }
 
-  .language {
-    cursor: pointer;
-  }
+      &.is-danger input {
 
-  .language-active {
-    color: $progress-color;
-  }
-
-  .form-switch {
-    color: $meta-color;
-  }
-
-  .form-group {
-    margin-bottom: 0.75rem;
-  }
-
-  .section-details {
-
-    .header-wrapper {
-      flex-wrap: wrap;
-
-      .title-wrapper {
-        flex-wrap: wrap;
-        margin-right: -1.25rem;
-
-        h4, .rating-wrapper, .country-wrapper {
-          margin-right: 1.25rem;
-          margin-bottom: 0.75rem;
-        }
-
-        .flex-between {
-          align-items: baseline;
-        }
-
-        h4 {
-          word-break: break-all;
+        &:checked + .form-icon {
+          background: $bg-alert-color none;
+          border-color: $border-alert-color;
         }
 
       }
 
-      .button-wrapper {
-        margin-bottom: 0.75rem;
-      }
+      &.is-progress input {
 
-    }
+        &:checked + .form-icon {
+          background: $bg-progress-color none;
+          border-color: $border-progress-color;
+        }
 
-    .text.text-alert {
-      font-size: 0.75rem;
-    }
-
-    .linkedin-wrapper, .job-wrapper, .company-wrapper, .email-wrapper, .icon-container.text-alert {
-      padding-bottom: 0.25rem;
-    }
-
-    .picto, .icon-container.text-alert {
-      margin-left: 0;
-    }
-
-    .receive-wrapper, .i-wrapper {
-      padding-top: $unit-5;
-      padding-bottom: 0.25rem;
-      font-size: $font-size-sm;
-    }
-
-  }
-
-  .section-tags, .section-status {
-    padding-top: $unit-5;
-    padding-bottom: 0.5rem;
-  }
-
-  .section-tags {
-    padding-bottom: 1rem;
-  }
-
-  .section-status {
-    flex-wrap: wrap;
-    margin-left: -$unit-1;
-
-    .btn-radio {
-      margin-top: $unit-1;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .status-rejected, .status-validated, .status-submitted, .status-email {
-      display: inline-flex;
-      flex-direction: column;
-      text-align: center;
-      margin-bottom: 1.25rem;
-    }
-
-    .rejected:hover, .rejected.active {
-      background-color: $alert-color;
-      border-color: $alert-color;
-
-      span {
-        color: white;
-      }
-
-    }
-
-    .submitted:hover, .submitted.active {
-      background-color: $progress-color;
-      border-color: $progress-color;
-
-      span {
-        color: white;
-      }
-
-    }
-
-    .validated:hover, .validated.active {
-      background-color: $success-color;
-      border-color: $success-color;
-
-      span {
-        color: white;
-      }
-
-    }
-
-    .status-email {
-
-      .form-switch {
-        top: -17px;
       }
 
     }
 
   }
-
-  .status-gmail {
-    margin-left: -$unit-1;
-
-    .text {
-      margin-top: $unit-1;
-      margin-left: $unit-1;
-      font-size: $font-size-sm;
-    }
-
-  }
-
-  .question-wrapper {
-    padding-bottom: 1.5rem;
-
-    &:last-child {
-      padding-bottom: 0;
-    }
-
-  }
-
 
 }

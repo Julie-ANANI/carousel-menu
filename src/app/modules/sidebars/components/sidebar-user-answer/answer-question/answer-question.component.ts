@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 import { Question } from '../../../../../models/question';
@@ -7,6 +7,9 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { TranslationService } from '../../../../../services/translation/translation.service';
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { Tag } from '../../../../../models/tag';
+import { first} from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-answer-question',
@@ -16,126 +19,151 @@ import { Tag } from '../../../../../models/tag';
 
 export class AnswerQuestionComponent {
 
-  @Input() innoid: string;
+  @Input() projectId = '';
 
-  @Input() question: Question;
+  @Input() question: Question = <Question>{};
 
-  @Input() editMode: boolean;
+  @Input() editMode = false;
 
-  @Input() adminMode: boolean;
+  @Input() adminMode = false;
 
   @Input() set fullAnswer(value: Answer) {
     this._fullAnswer = value;
-    if ((this.question.controlType === 'checkbox' || this.question.controlType === 'stars') && !this._fullAnswer.answers[this.question.identifier]) {
+
+    if ((this.question.controlType === 'checkbox' || this.question.controlType === 'stars')
+      && this._fullAnswer.answers && !this._fullAnswer.answers[this.question.identifier]) {
       this._fullAnswer.answers[this.question.identifier] = {};
     }
+
     this._commenting = !!(this._fullAnswer.answers && this._fullAnswer.answers[this.question.identifier + 'Comment']);
     this._showQuestionTranslation = false;
     this._showCommentTranslation = false;
   }
 
-  _commenting: boolean;
+  @Output() fullAnswerChange: EventEmitter<Answer> = new EventEmitter<Answer>();
 
-  _fullAnswer: Answer;
+  private _commenting = false;
+
+  private _fullAnswer: Answer = <Answer>{};
 
   private _showQuestionTranslation = false;
 
   private _showCommentTranslation = false;
 
+  private _currentLang = this._translateService.currentLang;
+
+  private _starCase: Array<string> = ['1', '2', '3', '4', '5'];
+
   constructor(private _translateService: TranslateService,
-              private _notificationsService: TranslateNotificationsService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _answerService: AnswerService,
               private _deepl: TranslationService) { }
 
-  updateQuality(object: {key: string, value: 0 | 1 | 2}) {
+
+  public updateQuality(object: {key: string, value: 0 | 1 | 2}) {
     this.fullAnswer.answers[object.key + 'Quality'] = object.value;
+    this.emitChanges();
   }
 
-  link(domain: string): string {
+  public link(domain: string): string {
     return 'http://www.' + domain;
   }
 
-  optionLabel(identifier: string) {
+  public emitChanges() {
+    this.fullAnswerChange.emit(this.fullAnswer);
+  }
+
+  public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
     if (option && option.label) {
-      return option.label[this.lang];
+      return option.label[this._currentLang];
     } else {
       return undefined;
     }
   }
 
-  selectOption(event: Event, option: any) {
+  public selectOption(event: Event, option: any) {
     event.preventDefault();
     this.fullAnswer.answers[this.question.identifier] = option.identifier;
+    this.emitChanges();
   }
 
-  setAnswer(event: any) {
+  public setAnswer(event: any) {
     this.fullAnswer.answers[this.question.identifier] = event.value;
+    this.emitChanges();
   }
 
   public addTag(tag: Tag, q_identifier: string): void {
-    this._answerService
-      .addTag(this.fullAnswer._id, tag._id, q_identifier)
+    this._answerService.addTag(this.fullAnswer._id, tag._id, q_identifier)
+      .pipe(first())
       .subscribe((a: any) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(tag);
         } else {
           this.fullAnswer.answerTags[q_identifier] = [tag];
         }
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+        this._translateNotificationsService.success('Success' , 'The tag is added to the answer.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Error', 'The tag is already added to the answer.');
+        console.error(err);
       });
   }
 
-  createTag(tag: Tag, q_identifier: string): void {
+  public createTag(tag: Tag, q_identifier: string): void {
     this._answerService.createTag(this.fullAnswer._id, tag, q_identifier)
+      .pipe(first())
       .subscribe((newTag: Tag) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(newTag);
         } else {
           this.fullAnswer.answerTags[q_identifier] = [newTag];
         }
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+        this._translateNotificationsService.success('Success' , 'The tag is created and added to the answer.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Error', 'The tag is already created/added to the answer.');
+        console.error(err);
       });
   }
 
   public removeTag(tag: Tag, q_identifier: string): void {
-    this._answerService
-      .removeTag(this.fullAnswer._id, tag._id, q_identifier)
+    this._answerService.removeTag(this.fullAnswer._id, tag._id, q_identifier)
+      .pipe(first())
       .subscribe((a: any) => {
         this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.ERROR', err.message);
+        this._translateNotificationsService.success('Success' , 'The tag is removed from the answer.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
       });
   }
 
   public answerTags(identifier: string): Array<any> {
-    return this.fullAnswer.answerTags && this.fullAnswer.answerTags[identifier] ? this.fullAnswer.answerTags[identifier] : [];
+    return this.fullAnswer.answerTags && this.fullAnswer.answerTags[identifier]
+      ? this.fullAnswer.answerTags[identifier] : [];
   }
 
   set showQuestionTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier][this.lang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier][this._currentLang]) {
           this._showQuestionTranslation = true;
         } else {
           throw new Error('no translation');
         }
-      } catch (_err) {
+      } catch (err) {
         if (!this._fullAnswer.answers_translations[this.question.identifier]) {
           this._fullAnswer.answers_translations[this.question.identifier] = {};
         }
-        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this.lang).subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier][this.lang] = value.translation;
+        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this._currentLang)
+          .pipe(first())
+          .subscribe((value) => {
+          this._fullAnswer.answers_translations[this.question.identifier][this._currentLang] = value.translation;
           this._showQuestionTranslation = true;
-          const objToSave = {answers_translations: {[this.question.identifier]: {[this.lang]: value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).subscribe((value) => {});
-        }, (_e) => {
-          this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+          const objToSave = {answers_translations: {[this.question.identifier]: {[this._currentLang]: value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
+        }, (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            console.error(err);
         });
       }
     } else {
@@ -150,23 +178,28 @@ export class AnswerQuestionComponent {
   set showCommentTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.lang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang]) {
           this._showCommentTranslation = true;
         } else {
           throw new Error('no translation');
         }
-      } catch (_err) {
+      } catch (err) {
         if (!this._fullAnswer.answers_translations[this.question.identifier + 'Comment']) {
           this._fullAnswer.answers_translations[this.question.identifier + 'Comment'] = {};
         }
-        this._deepl.translate(this._fullAnswer.answers[this.question.identifier + 'Comment'], this.lang).subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.lang] = value.translation;
+        this._deepl.translate(this._fullAnswer.answers[this.question.identifier + 'Comment'],
+          this._currentLang)
+          .pipe(first())
+          .subscribe((value) => {
+          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang] = value.translation;
           this._showCommentTranslation = true;
-          const objToSave = {answers_translations: {[this.question.identifier + 'Comment']: {[this.lang]: value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).subscribe((value) => {});
-        }, (_e) => {
-          this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-        });
+          const objToSave = {answers_translations: {[this.question.identifier + 'Comment']:
+                {[this._currentLang]: value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
+        }, (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            console.error(err);
+          });
       }
     } else {
       this._showCommentTranslation = false;
@@ -177,18 +210,24 @@ export class AnswerQuestionComponent {
     return this._showCommentTranslation;
   }
 
-  get lang (): string {
-    return this._translateService.currentLang;
+  get currentLang(): string {
+    return this._currentLang;
   }
 
-  get fullAnswer() { return this._fullAnswer; }
+  get fullAnswer(): Answer {
+    return this._fullAnswer;
+  }
 
-  get commenting() {
+  get commenting(): boolean {
     return this._commenting;
   }
 
   set commenting(val: boolean) {
     this._commenting = val;
+  }
+
+  get starCase(): Array<string> {
+    return this._starCase;
   }
 
 }

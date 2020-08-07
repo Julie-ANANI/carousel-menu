@@ -1,61 +1,46 @@
 @import "../../../../../../style/framework/src/variables";
+@import "../../../../../../style/framework/src/mixins";
 
-.answer-question-component {
-  padding-bottom: 1.5rem;
-
-
-  .pad-top {
-    padding-top: $unit-5;
-  }
-
-  .c-pad-top {
-    padding-top: 0.75rem;
-  }
-
-  .comment-text {
-    color: $secondary-color;
-    font-weight: $font-weight-medium;
-  }
-
-  .sa-thumbs-up {
-    margin-left: $unit-2;
-    color: $success-color;
-
-    i {
-      vertical-align: 4px;
-    }
-
-  }
-
-  .sa-thumbs-down {
-    margin-left: $unit-2;
-    color: $alert-color;
-
-    i {
-      vertical-align: -1px;
-    }
-
-  }
-
-  .text {
-
-    &.text-question {
-      font-size: $font-size-sm;
-    }
-
-  }
+.answer-question {
 
   .answer-wrapper {
-    color: $success-color;
+    color: $text-success-color;
+
+    .label-answer {
+      @include label-variant($text-dark-color, #F8F4F4);
+      font-size: 12px;
+    }
+
+    .sa-thumbs-up {
+      margin-left: $unit-2;
+      color: $text-success-color;
+
+      i {
+        vertical-align: 4px;
+      }
+
+    }
+
+    .sa-thumbs-down {
+      margin-left: $unit-2;
+      color: $text-alert-color;
+
+      i {
+        vertical-align: -1px;
+      }
+
+    }
+
+    .list-wrapper, .clearbit-wrapper, .checkbox-wrapper, .textarea-wrapper {
+      margin: -$unit-1;
+    }
 
     .clearbit-wrapper {
-      margin: -$unit-1;
 
-      .label.label-answer {
+      .label {
         height: 36px;
 
         img {
-          margin-right: $unit-2;
           width: 20px;
           height: 20px;
         }
@@ -64,73 +49,17 @@
 
     }
 
-    .checkbox-wrapper {
-      margin: -$unit-1;
-
-      ul {
-        list-style: none;
-
-        li {
-          margin: 0;
-        }
-
-      }
-
-      .edit-answer {
-        color: $text-dark-color;
-
-        li {
-          margin-top: $unit-2;
-        }
-
-      }
-
-      .answer {
-        color: $success-color;
-      }
-
-    }
-
-    .star-wrapper {
-      list-style: none;
-      margin: 0;
-
-      li {
-
-        &:first-child {
-          margin-top: 0;
-        }
-
-        span {
-          color: $primary-color;
-          margin-left: $unit-2;
-        }
-
-      }
-
-    }
-
-    .toggle-wrapper {
-      margin-top: $unit-5;
-      margin-bottom: 0.75rem;
-    }
-
-  }
-
-  .fa-angle-right, .fa-angle-down {
-    font-size: $font-icon-lg;
-    vertical-align: -3px;
   }
 
   .textarea-wrapper, .comment-wrapper {
-    justify-content: space-between;
 
     textarea {
       max-width: 80%;
-      margin-right: 0.6rem;
+      margin-right: 10px;
+      padding: 10px;
+      font-size: 14px;
     }
 
   }
-
 
 }

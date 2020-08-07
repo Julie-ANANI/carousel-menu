@@ -4,17 +4,17 @@
   <form (ngSubmit)="onSubmit()" *ngIf="editMode" [formGroup]="tagForm">
     <div class="form-group flex-between">
 
-      <label class="d-none" for="shared-tags-item"></label>
-      <input
-        [attr.placeholder]="placeholder | translate"
-        [list-formatter]="autocompleListFormatter"
-        [source]="tagSuggestions.bind(this)"
-        [value-formatter]="autocompleValueFormatter"
-        [ngClass]="{'is-sm': isSmall}"
-        auto-complete
-        class="form-input is-shadowed"
-        formControlName="tag"
-        id="shared-tags-item">
+      <label class="d-block w-full">
+        <input
+          [attr.placeholder]="placeholder | translate"
+          [list-formatter]="autocompleListFormatter"
+          [source]="tagSuggestions.bind(this)"
+          [value-formatter]="autocompleValueFormatter"
+          [ngClass]="{'is-sm': isSmall}"
+          auto-complete
+          class="form-input is-shadowed"
+          formControlName="tag">
+      </label>
 
       <div>
         <button

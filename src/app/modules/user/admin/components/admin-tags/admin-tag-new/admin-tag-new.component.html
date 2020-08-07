@@ -54,9 +54,9 @@
                                 <option *ngFor="let ctype of codeTypes" [ngValue]="ctype.value">{{ctype.name}}</option>
                             </select>-->
                             <label class="form-label h4" for="attachments">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
-                            <app-auto-complete-input id="attachments"
+                            <app-utility-auto-complete-input id="attachments"
                                                     (update)="addAttachment($event)"
-                                                    [config]="addAttachmentConfig"></app-auto-complete-input>
+                                                    [config]="addAttachmentConfig"></app-utility-auto-complete-input>
                         </div>
                         <div class="column col-6 col-mx-auto">
                           <label class="form-label h4" for="type">{{ 'TAGS.TYPE.LABEL' | translate }}</label>

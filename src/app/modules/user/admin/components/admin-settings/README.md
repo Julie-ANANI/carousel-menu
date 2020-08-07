@@ -25,12 +25,6 @@ Here BLACKLIST, COUNTRIES, ENTERPRISES represent the sub tabs.
 
 No definition of a Role means no access to that user.
 
-#### Tech:
-
-1. BLACKLIST: All
-2. COUNTRIES: All
-3. ENTERPRISES: All 
-
 #### Hotline:
 
 1. BLACKLIST: All
@@ -43,7 +37,6 @@ access: {
         blacklist: { 
             add: true, 
             edit: true, 
-            view: true,
             searchBy: {
                 emailAddress: true
             },

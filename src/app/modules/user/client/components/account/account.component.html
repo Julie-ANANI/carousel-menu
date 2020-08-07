@@ -190,10 +190,10 @@
             <div class="form-group">
               <label class="form-label">{{ 'COMMON.LABEL.ACTIVITY_FIELDS' | translate }}</label>
               <div class="input-gap">
-                <app-input-list
+                <app-utility-input-list
                   (update)="addSector($event)"
                   [config]="{ placeholder: ('COMMON.PLACEHOLDER.ACTIVITY_FIELDS' | translate), initialData: formData.get('sectors').value }">
-                </app-input-list>
+                </app-utility-input-list>
               </div>
             </div>
 
@@ -201,10 +201,10 @@
             <div class="form-group">
               <label class="form-label">{{ 'COMMON.LABEL.TECHNOLOGIES' | translate }}</label>
               <div class="input-gap">
-                <app-input-list
+                <app-utility-input-list
                   (update)="addTechnology($event)"
                   [config]="{ placeholder: ('COMMON.PLACEHOLDER.TECHNOLOGIES' | translate), initialData: formData.get('technologies').value }">
-                </app-input-list>
+                </app-utility-input-list>
               </div>
             </div>
 

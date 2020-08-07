@@ -114,11 +114,11 @@
 
     <label class="form-label">Import professionals from campaign (only one campaign at a time)</label>
 
-    <app-auto-complete-input
+    <app-utility-auto-complete-input
       (update)="updateCampaign($event)"
       [onlyOne]="true"
       [config]="{ placeholder: 'Enter the campaign name', initialData: originCampaign, type: 'campaign' }">
-    </app-auto-complete-input>
+    </app-utility-auto-complete-input>
 
     <div data-content="or" class="divider mxw-250 m-left-auto m-right-auto m-top-40"></div>
 

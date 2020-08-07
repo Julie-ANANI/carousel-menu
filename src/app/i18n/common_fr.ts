@@ -201,7 +201,8 @@ export const COMMON = {
   'INVALID': {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
     'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir au minimum 9 caractères.',
-    'MUST_CONTAIN': 'Le mot de passe doit contenir un symbole spécial ($@&!#).'
+    'MUST_CONTAIN': 'Le mot de passe doit contenir un symbole spécial ($@&!#).',
+    'DOMAIN': 'Veuillez entrer un domaine valide.'
   },
 
   'BUTTON': {

@@ -15,13 +15,19 @@ Please always updates the roles / functionalities in this file.
 
 No definition of a Role means no access to that user.
 
-#### Tech:
+#### Community:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All
-3. USER: All
+3. USER: Edit, Impersonate.
 
 #### Commercial:
+
+1. SEARCH_BY: Name, Email.
+2. T_COLUMNS: Name, Job, Company.
+3. USER: View
+
+#### Supervisor:
 
 1. SEARCH_BY: Name, Email.
 2. T_COLUMNS: Name, Job, Company.
@@ -39,7 +45,13 @@ No definition of a Role means no access to that user.
 2. T_COLUMNS: All
 3. USER: Edit, Impersonate.
 
-#### Community:
+#### Oper Supervisor:
+
+1. SEARCH_BY: All
+2. T_COLUMNS: All
+3. USER: Edit, Impersonate.
+
+#### Tech:
 
 1. SEARCH_BY: All
 2. T_COLUMNS: All

@@ -28,11 +28,11 @@
   <section class="modal-body">
     <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
 
-    <app-auto-complete-input
+    <app-utility-auto-complete-input
       (update)="updateCampaign($event)"
       [onlyOne]="true"
       [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}">
-    </app-auto-complete-input>
+    </app-utility-auto-complete-input>
   </section>
 
   <footer class="modal-footer">
