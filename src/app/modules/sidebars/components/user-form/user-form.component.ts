@@ -154,6 +154,10 @@ export class UserFormComponent implements OnInit {
     this._getRoles();
   }
 
+  public adminLevel(): boolean {
+    return this._authService.adminLevel >= 5;
+  }
+
 
   private buildForm() {
     this._userForm = this.formBuilder.group( {
@@ -180,7 +184,9 @@ export class UserFormComponent implements OnInit {
       .subscribe((roles: any) => {
         this._roles = roles.result || [];
       }, err => {
-        this.translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+        if (err.status !== 401) {
+          this.translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+        }
       });
   }
 

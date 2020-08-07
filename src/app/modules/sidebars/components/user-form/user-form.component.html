@@ -29,7 +29,7 @@
                   Actual role:
                   <span>{{ userForm.get('roles').value }}</span>
                   <a *ngIf="isEditable" (click)="startEditInstanceDomain($event)">
-                    <ng-container *ngIf="!isSelf"><i class="fas fa-pencil-alt"></i></ng-container>
+                    <ng-container *ngIf="!isSelf && adminLevel()"><i class="fas fa-pencil-alt"></i></ng-container>
                   </a>
                 </label>
               </ng-container>
