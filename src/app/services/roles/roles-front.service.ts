@@ -31,4 +31,21 @@ export class RolesFrontService {
 		return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'tech');
 	}
 
+	/***
+	 * returns the key/route if the Admin has access to that provided in the path.
+	 * Here the order in the routes matter.
+	 * @param routes ex: ['pros', 'history', 'waitingLine']
+	 * @param path ex: ['search']
+	 */
+	public canAccessRoute(routes: Array<string>, path: Array<string>): string {
+		if (routes.length) {
+			routes.forEach((route) => {
+				if (this.hasAccessAdminSide(path.concat(route))) {
+					return route;
+				}
+			});
+		}
+		return '';
+	}
+
 }

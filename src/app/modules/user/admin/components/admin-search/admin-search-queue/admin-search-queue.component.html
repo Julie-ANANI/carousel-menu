@@ -1,2 +1,26 @@
-<app-shared-search-history status="PROCESSING"></app-shared-search-history>
-<app-shared-search-history status="QUEUED"></app-shared-search-history>
+<div
+  *ngIf="canAccess()"
+  class="container fluid grid-2xl p-top-30 p-bottom-30 animate-fade is-5"
+  id="admin-search-queue">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <div class="p-bottom-100">
+      <app-shared-search-history
+        [accessPath]="accessPath"
+        [status]="'PROCESSING'">
+      </app-shared-search-history>
+    </div>
+
+    <div>
+      <app-shared-search-history
+        [accessPath]="accessPath"
+        [status]="'QUEUED'">
+      </app-shared-search-history>
+    </div>
+
+  </div>
+</div>
+
+
+
+

@@ -7,9 +7,11 @@ Please always updates the roles / functionalities in this file.
 
 ### Functionalities
 
-1. PROFESSIONAL: Import,
-<br><br>LAUNCH: 'CAT, Search',
-<br><br>SETTINGS: 'View, Edit'.
+1. PROS: Import,
+<br><br>LAUNCH: 'Cat, Search', 
+<br><br>VIEW: 'Settings', 
+<br><br>EDIT: 'Settings', 
+<br><br>IMPORT: 'Pros'.
 
 2. HISTORY: Put_Back_In_Queue
 <br><br>SEARCH_BY: 'Keywords, Innovation', 
@@ -24,8 +26,10 @@ Please always updates the roles / functionalities in this file.
 <br><br>LAUNCH: 'Emails_Search', 
 <br><br>ADD: 'To_Campaign',
 <br><br>STOP: 'Requests', 
-<br><br>CANCEL: 'Requests'.
-<br><br>SEARCH_BY: 'Keywords, Innovation' 
+<br><br>CANCEL: 'Requests'
+<br><br>SEARCH_BY: 'Keywords, Innovation',
+<br><br>VIEW: 'Campaign, Request, Project, Results, Requests', 
+<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield, Ambassador'. 
 
 Here PROFESSIONAL, HISTORY, WAITING_LINE represent the sub tabs.
 
@@ -136,7 +140,22 @@ access: {
             },
             add: {
                 toCampaign: true
-            }
+            },
+            view: {
+               request: true,
+               campaign: true,
+               results: true,
+               requests: true
+            },
+            tableColumns: {
+               underShield: true,
+               emailStatus: true,
+               status: true,
+               created: true,
+               targeting: true,
+               pros: true,
+               keywords: true
+            },
             putBackInQueue: true,
             searchBy: {
                 keywords: true,

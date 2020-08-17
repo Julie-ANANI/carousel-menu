@@ -8,7 +8,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 ### Functionalities
 
 1. SEARCH: 
-<br><br>LAUNCH: 'CAT, Search', 
+<br><br>LAUNCH: 'Cat, Search', 
 <br><br>VIEW: 'Settings', 
 <br><br>EDIT: 'Settings', 
 <br><br>IMPORT: 'Pros'.

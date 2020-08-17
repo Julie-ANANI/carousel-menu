@@ -1,24 +1,42 @@
-<ul class="tab tab-block">
-  <li class="tab-item"><a [routerLink]="'/user/admin/search/pros'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-    {{ 'SEARCH.PRO' | translate }}
-  </a></li>
-  <!--<li class="tab-item"><a [routerLink]="'/admin/search/mail'" routerLinkActive="active">
-    {{ 'COMMON.EMAIL' | translate }}
-  </a></li>-->
-  <li class="tab-item"><a [routerLink]="'/user/admin/search/history'" routerLinkActive="active">
-    {{ 'CAMPAIGNS.HISTORY' | translate }}
-  </a></li>
-  <li class="tab-item"><a [routerLink]="'/user/admin/search/queue'" routerLinkActive="active">
-    File d'attente
-  </a></li>
-  <!-- Hide this tab for now
+<div *ngIf="canAccess()" id="admin-search">
+
+  <!-- section header -->
+  <section class="p-top-25 bg-white">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+
+        <!-- heading -->
+        <h1 class="title is-4">Search</h1>
+        <!-- /heading -->
+
+        <!-- tabs -->
+        <ul class="tab">
+          <ng-container *ngFor="let tab of tabs">
+            <li *ngIf="canAccess([tab.key])" class="tab-item">
+              <a
+                (click)="onClickTab($event, tab.route)"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="['/user/admin/search/', tab.route]"
+                routerLinkActive="active">
+                {{ tab.name }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+        <!-- /tabs -->
+
+      </div>
+    </div>
+  </section>
+  <!-- /section header -->
+
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+<!-- Hide this tab for now
   <li class="tab-item"><a [routerLink]="'/user/admin/search/demo'" routerLinkActive="active">
     Démo
   </a></li>-->
-</ul>
-
-<div class="tabs">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <router-outlet></router-outlet>
-  </div>
-</div>
