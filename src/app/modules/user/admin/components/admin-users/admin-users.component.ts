@@ -10,9 +10,9 @@ import { Config } from '../../../../../models/config';
 import { Response } from '../../../../../models/response';
 import { ConfigService } from '../../../../../services/config/config.service';
 import { isPlatformBrowser } from '@angular/common';
-import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../services/error/error-front.service";
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-users.component.html',
@@ -157,11 +157,11 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public canAccess(path?: Array<string>) {
-   if (path) {
-     return this._rolesFrontService.hasAccessAdminSide(['users'].concat(path));
-   } else {
-     return this._rolesFrontService.hasAccessAdminSide(['users']);
-   }
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['users'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['users']);
+    }
   }
 
   public onClickEdit(value: User) {

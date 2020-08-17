@@ -11,7 +11,7 @@ import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
-import { distinctUntilChanged } from 'rxjs/operators';
+import {distinctUntilChanged, first} from 'rxjs/operators';
 import { Clearbit } from '../../../../models/clearbit';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
@@ -20,6 +20,8 @@ import { countries } from '../../../../models/static-data/country';
 import { SearchService } from '../../../../services/search/search.service';
 import { Observable} from 'rxjs';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import {RolesService} from '../../../../services/roles/roles.service';
 
 @Component({
   selector: 'app-user-form',
@@ -132,6 +134,8 @@ export class UserFormComponent implements OnInit {
 
   private _proKeywords: Array<string> = null;
 
+  private _roles: Array<any> = [];
+
   constructor(@Inject(PLATFORM_ID) private platform: Object,
               private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
@@ -142,10 +146,16 @@ export class UserFormComponent implements OnInit {
               private searchService: SearchService,
               private userService: UserService,
               private _authService: AuthService,
-              private _professionalService: ProfessionalsService) {}
+              private _professionalService: ProfessionalsService,
+              private _rolesService: RolesService) {}
 
   ngOnInit() {
     this._user = new User();
+    this._getRoles();
+  }
+
+  public adminLevel(): boolean {
+    return this._authService.adminLevel >= 5;
   }
 
 
@@ -163,6 +173,21 @@ export class UserFormComponent implements OnInit {
       domain: [''],
       phone: ['']
     });
+  }
+
+  private _getRoles() {
+    const config = {
+      fields: 'name',
+      level: JSON.stringify({$gt: 0})
+    };
+    this._rolesService.get(config).pipe(first())
+      .subscribe((roles: any) => {
+        this._roles = roles.result || [];
+      }, err => {
+        if (err.status !== 401) {
+          this.translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+        }
+      });
   }
 
 
@@ -237,6 +262,10 @@ export class UserFormComponent implements OnInit {
 
   public selectCompany(c: string | Clearbit) {
     this._userForm.get('company').reset((typeof c === 'string') ? {name: c} : c);
+  }
+
+  public setRole(event: Event) {
+    this._userForm.get('roles').setValue(event.target['value']);
   }
 
   onClickSave() {
@@ -487,6 +516,10 @@ export class UserFormComponent implements OnInit {
 
   get isProShielded(): boolean {
     return this._isProShielded;
+  }
+
+  get roles(): Array<any> {
+    return this._roles || [];
   }
 
 }

@@ -1,10 +1,10 @@
-import {Injectable} from "@angular/core";
-import {AuthService} from "../auth/auth.service";
+import {Injectable} from '@angular/core';
+import {AuthService} from '../auth/auth.service';
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: 'root'})
 export class RolesFrontService {
 
-	constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService) { }
 
 	/***
 	 * returns true if the user nav object contains the adminSide object. For example: access: {adminSide: {}}.

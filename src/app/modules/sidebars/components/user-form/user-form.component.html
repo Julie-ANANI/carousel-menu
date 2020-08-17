@@ -21,15 +21,28 @@
       <ng-container *ngIf="isEditUser">
         <div class="operator-wrapper">
 
-          <ng-container *ngIf="(isSuperAdmin || isDomainAdmin)&& authService.userId !== user.id">
-            <label class="form-switch" for="user-form-operator">
-              <input
-                type="checkbox"
-                name="operator"
-                id="user-form-operator"
-                formControlName="isOperator">
-              <i class="form-icon"></i>{{ 'COMMON.LABEL.OPERATOR' | translate }}
-            </label>
+          <ng-container *ngIf="authService.userId !== user.id">
+            <div  class="domain-wrapper">
+
+              <ng-container *ngIf="!editInstanceDomain">
+                <label class="form-label">
+                  Actual role:
+                  <span>{{ userForm.get('roles').value }}</span>
+                  <a *ngIf="isEditable" (click)="startEditInstanceDomain($event)">
+                    <ng-container *ngIf="!isSelf && adminLevel()"><i class="fas fa-pencil-alt"></i></ng-container>
+                  </a>
+                </label>
+              </ng-container>
+
+              <ng-container *ngIf="editInstanceDomain">
+                <label class="form-label" for="roles-list">New role:</label>
+                <select name="roles-list" id="roles-list" (change)="setRole($event)">
+                  <option *ngFor="let role of roles" [ngValue]="role">
+                    {{role.name}}
+                  </option>
+                </select>
+              </ng-container>
+            </div>
           </ng-container>
 
           <ng-container *ngIf="canAffectAsAdmin">
@@ -70,7 +83,6 @@
               [config]="buildInstanceDomainListConfig()">
             </app-utility-auto-complete-input>
           </ng-container>
-
         </div>
       </ng-container>
 
