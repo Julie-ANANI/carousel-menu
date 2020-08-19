@@ -7,7 +7,7 @@ import { AdminSearchQueueComponent } from './admin-search-queue/admin-search-que
 import { AdminSearchResultsComponent } from './admin-search-results/admin-search-results.component';
 
 export const searchRoutes: Routes = [
-  { path: '', redirectTo: 'pros', pathMatch: 'full'},
+  // { path: '', redirectTo: 'pros', pathMatch: 'full'},
   { path: 'pros', component: AdminSearchProsComponent, pathMatch: 'full' },
   { path: 'mail', component: AdminSearchMailComponent, pathMatch: 'full' },
   { path: 'history', component: AdminSearchHistoryComponent, pathMatch: 'full' },

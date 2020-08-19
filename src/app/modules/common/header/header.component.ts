@@ -13,6 +13,7 @@ import { UserFrontService } from '../../../services/user/user-front.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { RolesFrontService } from "../../../services/roles/roles-front.service";
+import { RouteFrontService } from '../../../services/route/route-front.service';
 
 interface Header {
   pageName: string;
@@ -78,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { pageName: 'Libraries', pageLink: '/user/admin/libraries', key: 'libraries' },
     { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', key: 'monitoring' },
     { pageName: 'Settings', pageLink: '/user/admin/settings', key: 'settings' },
-    { pageName: 'Search', pageLink: '/user/admin/search/pros', key: 'search' },
+    { pageName: 'Search', pageLink: '/user/admin/search', key: 'search' },
   ];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
@@ -95,6 +96,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private _authService: AuthService,
               private _location: Location,
               private _router: Router,
+              private _routeFrontService: RouteFrontService,
               private _rolesFrontService: RolesFrontService,
               private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
@@ -194,8 +196,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._showLangs = !this._showLangs;
   }
 
+  get adminDefaultRoute(): string {
+    return this._routeFrontService.adminDefaultRoute();
+  }
+
   get hasAdminSide(): boolean {
-    return this._rolesFrontService.hasAdminSide();
+    return this._authService.hasAdminSide();
   }
 
   get backOfficeValue(): boolean {
@@ -216,6 +222,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get userInitial(): string {
     return UserFrontService.initial(this.user);
+  }
+
+  get userName(): string {
+    return UserFrontService.fullName(this.user);
   }
 
   get currentLang(): string {

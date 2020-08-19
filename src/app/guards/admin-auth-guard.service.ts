@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AdminAuthGuard implements CanActivate, CanActivateChild {
+
   constructor(private _authService: AuthService,
               private _router: Router) { }
 
@@ -22,7 +23,7 @@ export class AdminAuthGuard implements CanActivate, CanActivateChild {
     if (!this._authService.isAuthenticated) {
       this._authService.redirectUrl = url;
       this._router.navigate(['/login']);
-    } else if (this._authService.adminLevel > 0) {
+    } else if (this._authService.adminLevel > 1) {
       return true;
     }
 

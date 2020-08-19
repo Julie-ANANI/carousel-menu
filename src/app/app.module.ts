@@ -20,6 +20,7 @@ import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { GlobalErrorHandler } from './handlers/error-handler';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
+
 @NgModule({
   imports: [
     NotFoundModule,

@@ -21,15 +21,15 @@ export class AuthService {
 
   private _authenticated = false;
 
-  private _admin = 0;
+  private _admin: number = 0; // based on the value of adminLevel
 
   private _confirmed = false;
 
-  private _redirectUrl: string;
+  private _redirectUrl = '';
 
-  private _isOperator: boolean = false;
+  private _isOperator = false;
 
-  private _user: User;
+  private _user: User = null;
 
   private _errorUrl: string | null = null;
 
@@ -40,7 +40,9 @@ export class AuthService {
 
   private _cookieObserver: any = null;
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+  // private _adminAccess: any = null;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _http: HttpClient,
               private _cookieService: CookieService,
               private _state: TransferState,
@@ -55,6 +57,7 @@ export class AuthService {
     this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
     this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
     this._setIsOperatorTo(this._cookieService.get('isOperator') === 'true' );
+    // this._setAdminAccess(this._cookieService.get('adminAccess'));
   }
 
   public startCookieObservator() {
@@ -92,6 +95,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
           this._user = res;
+          // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
             //this.startCookieObservator();
             this._setMHash(res.email);
@@ -111,6 +115,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
           this._user = res;
+          // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
             //this.startCookieObservator();
             this._setMHash(res.email);
@@ -131,6 +136,7 @@ export class AuthService {
           this._cookieService.removeAll();
           this._redirectUrl = '';
           this._user = null;
+          // this._setAdminAccess(null);
           //this.stopSwellRTSession();
           clearInterval(this._cookieObserver);
           return res;
@@ -148,7 +154,8 @@ export class AuthService {
       this._setAdminTo(res.adminLevel);
       this._setConfirmedTo(res.isConfirmed);
       this._user = res.user || null;
-      this._setIsOperatorTo(this._user? this._user.isOperator : false );
+      // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
+      this._setIsOperatorTo(this._user ? this._user.isOperator : false );
     };
     if (this._state.hasKey(AUTH_SESSION_KEY)) {
       const res = this._state.get(AUTH_SESSION_KEY, {});
@@ -159,7 +166,7 @@ export class AuthService {
       return this._http.get('/auth/session')
         .pipe(
           tap((res: any) => {
-            if (isPlatformServer(this.platformId)) {
+            if (isPlatformServer(this._platformId)) {
               this._state.set(AUTH_SESSION_KEY, res);
             }
             callback(res);
@@ -173,28 +180,28 @@ export class AuthService {
 
   private _setIsOperatorTo(newValue: boolean): void {
     this._isOperator = newValue;
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       this._cookieService.put('isOperator', newValue.toString(), this._cookieOptions);
     }
   }
 
   private _setConfirmedTo(newValue: boolean): void {
     this._confirmed = newValue;
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       this._cookieService.put('hasBeenConfirmed', newValue.toString(), this._cookieOptions);
     }
   }
 
   private _setAuthenticatedTo(newValue: boolean): void {
     this._authenticated = newValue;
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
     }
   }
 
   private _setAdminTo(newValue: number): void {
     this._admin = newValue;
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       this._cookieService.put('hasBeenAdmin', `${newValue}`, this._cookieOptions);
     }
   }
@@ -204,6 +211,13 @@ export class AuthService {
     const mhash = md5.appendStr(newValue).end();
     this._cookieService.put('mhash', `${mhash}`, this._cookieOptions);
   }
+
+  /*private _setAdminAccess(newValue: any) {
+    this._adminAccess = typeof newValue === 'string' ? JSON.parse(newValue) : newValue;
+    if (isPlatformBrowser(this._platformId)) {
+      this._cookieService.put('adminAccess', JSON.stringify(newValue), this._cookieOptions);
+    }
+  }*/
 
   public getUserInfo(): any {
     if (this._user) {
@@ -220,6 +234,14 @@ export class AuthService {
     return this._cookieService.get('mhash') || null;
   }
 
+  /***
+   * returns true if the user nav object contains the adminSide object.
+   * For example: access: {adminSide: {}}.
+   */
+  public hasAdminSide(): boolean {
+    return !!(this.adminAccess);
+  }
+
   get isAuthenticated(): boolean {
     return this._authenticated;
   }
@@ -228,16 +250,14 @@ export class AuthService {
     return this._confirmed;
   }
 
+  // > 1 means can go to the admin side.
   get adminLevel(): number {
     return this._admin;
   }
 
   get isAdmin(): boolean {
-    return (this._admin & 1) === 1;
-  }
-
-  get isSuperAdmin(): boolean {
-    return (this._admin & 2) === 2;
+    return this._admin > 1;
+    // return (this._admin & 1) === 1;
   }
 
   get isOperator(): boolean {
@@ -250,6 +270,13 @@ export class AuthService {
 
   get userId(): string {
     return this._user ? this._user.id : '';
+  }
+
+  /***
+   * returns the access object of the admin.
+   */
+  get adminAccess(): Object {
+    return this._user && this._user.access && this._user.access.adminSide;
   }
 
   get isAcceptingCookies(): boolean {
@@ -269,7 +296,7 @@ export class AuthService {
     this._confirmed = confirmed;
   }
 
-  get redirectUrl() {
+  get redirectUrl(): string {
     return this._redirectUrl;
   }
 
@@ -284,14 +311,22 @@ export class AuthService {
 
   }
 
-  get errorUrl() {
+  get errorUrl(): string {
     return this._errorUrl;
   }
 
-  set errorUrl (url) {
+  set errorUrl (url: string) {
     if (!!url) {
       this._errorUrl = url;
     }
   }
+
+  /*get adminAccess(): any {
+    return this._adminAccess;
+  }
+
+  set adminAccess(value: any) {
+    this._adminAccess = value;
+  }*/
 
 }

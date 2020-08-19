@@ -108,6 +108,7 @@ export const COMMON = {
     'ANSWER_TAGS': 'Tags réponse | Projet',
     'NEW_PROJECT': 'Ajouter un projet',
     'NOT_FOUND': 'Page non trouvée',
+    'NOT_AUTHORIZED': 'Accès refusé',
   },
 
   'LABEL': {
@@ -266,7 +267,8 @@ export const COMMON = {
     'SENDING_MESSAGE': 'en cours d\'envoi...',
     'SEND_MESSAGE': 'Envoyer le message',
     'RETURN_HOMEPAGE': 'Retour à la page d\'accueil',
-    'RELOAD_PAGE': 'Rechargez la page'
+    'RELOAD_PAGE': 'Rechargez la page',
+    'RETURNING_HOMEPAGE': 'retour à la page d\'accueil...'
   },
 
   'PROJECT': {

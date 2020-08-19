@@ -159,7 +159,7 @@
               </figure>
 
               <div class="d-flex info">
-                <span class="text-medium text-ellipsis">{{ user.name }}</span>
+                <span class="text-medium text-ellipsis">{{ userName }}</span>
                 <span [ngStyle]="{'font-size': '13px'}" class="text-ellipsis">{{ user.email }}</span>
               </div>
 
@@ -170,7 +170,7 @@
               (click)="toggleBackOfficeState(); onClickLink();"
               *ngIf="!backOfficeValue && hasAdminSide"
               [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="'/user/admin/projects'"
+              [routerLink]="adminDefaultRoute"
               class="navbar-item"
               routerLinkActive="active">
               {{ 'HEADER.ADMIN_SIDE' | translate }}
@@ -247,7 +247,7 @@
             <img *ngIf="hasProfilePic()" [src]="profilePicture" class="img-responsive" alt=" ">
           </figure>
           <div class="d-flex info">
-            <span class="text-ellipsis">{{ user.name }}</span>
+            <span class="text-ellipsis">{{ userName }}</span>
             <span [ngStyle]="{'font-size': '13px'}" class="text-ellipsis text-normal">{{ user.email }}</span>
           </div>
         </a>
@@ -335,7 +335,7 @@
           (click)="toggleBackOfficeState(); onClickLink();"
           *ngIf="user && user.state === 'confirmed' && !backOfficeValue && hasAdminSide"
           [routerLinkActiveOptions]="{ exact: true }"
-          [routerLink]="'/user/admin/projects'"
+          [routerLink]="adminDefaultRoute"
           class="navbar-item"
           routerLinkActive="active">
           {{ 'HEADER.ADMIN_SIDE' | translate }}

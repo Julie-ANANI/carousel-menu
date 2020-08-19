@@ -108,7 +108,8 @@ export const COMMON = {
     'COMMUNITY_PROJECTS': 'Projects | Community',
     'ANSWER_TAGS': 'Answer tags | Project',
     'NEW_PROJECT': 'Add project',
-    'NOT_FOUND': 'Page not found'
+    'NOT_FOUND': 'Page not found',
+    'NOT_AUTHORIZED': 'Access denied',
   },
 
   'LABEL': {
@@ -267,7 +268,8 @@ export const COMMON = {
     'SENDING_MESSAGE': 'sending the message...',
     'SEND_MESSAGE': 'Send message',
     'RETURN_HOMEPAGE': 'Return to the homepage',
-    'RELOAD_PAGE': 'Reload the page'
+    'RELOAD_PAGE': 'Reload the page',
+    'RETURNING_HOMEPAGE': 'returning to the homepage...'
   },
 
   'PROJECT': {

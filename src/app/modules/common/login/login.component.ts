@@ -9,7 +9,8 @@ import { first } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
 import { RandomUtil } from "../../../utils/randomUtil";
 import { isPlatformBrowser } from '@angular/common';
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
+import { RouteFrontService } from '../../../services/route/route-front.service';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
               private _authService: AuthService,
+              private _routeFrontService: RouteFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _router: Router) {
 
@@ -94,8 +96,9 @@ export class LoginComponent implements OnInit {
         if (this._authService.isAuthenticated) {
 
           // Get the redirect URL from our auth service. If no redirect has been set, use the default.
-          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : this._authService.isSuperAdmin
-            ? '/user/admin/projects' : '/';
+          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : this._authService.isAdmin
+            ? this._routeFrontService.adminDefaultRoute() : '/';
+
           this._authService.redirectUrl = '';
 
           // Set our navigation extras object that passes on our global query params and fragment
@@ -134,10 +137,6 @@ export class LoginComponent implements OnInit {
 
   get formData(): FormGroup {
     return this._formData;
-  }
-
-  get linkedInLink(): string {
-    return this._linkedInLink;
   }
 
   get displayLoading(): boolean {
