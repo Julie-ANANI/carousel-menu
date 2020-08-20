@@ -12,10 +12,10 @@ Please always updates the roles / functionalities in this file.
 2. EMAILS: Add, Modify, View, Delete.
 
 3. QUESTIONNAIRE: Add, Edit, View, Delete, Clone, 
-<br><br>SEARCH_BY: 'Name, Domain'. 
+<br><br>SEARCH BY:  Name, Domain. 
 
 4. SIGNATURES: Add, View, Edit, Delete, 
-<br><br>SEARCH_BY: 'Name, Author, Language, Email_Address'.
+<br><br>SEARCH BY:  Name, Author, Language, Email Address.
 
 Here WORKFLOWS, EMAILS, QUESTIONNAIRE, SIGNATURES represent the sub tabs.
 
@@ -28,28 +28,28 @@ No definition of a Role means no access to that user.
 1. WORKFLOWS: Add, Edit.
 
 2. QUESTIONNAIRE: Add, Edit, Delete, Clone, 
-<br><br>SEARCH_BY: 'Name'.
+<br><br>SEARCH BY:  Name.
 
 #### Market Test Manager UMI:
 
 1. WORKFLOWS: Add, Edit.
 
 2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
-<br><br>SEARCH_BY: 'Name'.
+<br><br>SEARCH BY:  Name.
 
 #### Oper Supervisor:
 
 1. WORKFLOWS: Add, Edit.
 
 2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
-<br><br>SEARCH_BY: 'Name'.
+<br><br>SEARCH BY:  Name.
 
 #### Tech:
 
 1. WORKFLOWS: Add, Edit.
 
 2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
-<br><br>SEARCH_BY: 'Name'.
+<br><br>SEARCH BY:  Name.
 
 ### Example - Market Test Manager role
 

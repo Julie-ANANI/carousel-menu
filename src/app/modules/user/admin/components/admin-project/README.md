@@ -3,33 +3,33 @@
 #### Application route: /user/admin/projects/project/:projectId/settings
 
 All notable changes to the Project page will be documented in this file. 
-Please always updates the roles / functionalities in this file. The Keys should be same in the back also.
+Please always updates the roles / functionalities in this file. The Keys should be same in the back as well.
 
 ### Functionalities
 
 1. SETTINGS: 
-<br><br>VIEW: 'Domain, Operator, Owner, Mission, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project_Tags, Answers_Tags, Answers_Anonymous, Professional_Identified, Ab_Testing, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Go_To_Synthesis, Ending_Mail_Campaign, Project_Restitution, Client_Satisfaction, Mission_Feedback, Statistics', 
-<br><br>EDIT: 'Domain, Operator, Owner, Mission, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project_Tags, Answers_Tags, Answers_Anonymous, Professional_Identified, Ab_Testing, Workflow_Emails, Workflow_Select, Launch_Auto_Batch, Insights_To_Validate, Public_Project, Published_Project, Go_To_Synthesis, Ending_Mail_Campaign, Client_Satisfaction, Mission_Feedback, Statistics, Validate_Project, Project_Revision'.
+<br><br>VIEW: Domain, Operator, Owner, Mission, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Project Restitution, Client Satisfaction, Mission Feedback, Statistics, 
+<br><br>EDIT: Domain, Operator, Owner, Mission, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Client Satisfaction, Mission Feedback, Statistics, Validate Project, Project Revision.
 
-2. ANSWER_TAGS: View, Edit, Add, Delete.
+2. ANSWER TAGS: View, Edit, Add, Delete.
 
 3. QUESTIONNAIRE: Import, View, Edit, 
 <br><br>QUIZ: 'View, Generate'. 
 
-4. CAMPAIGNS: Edit, Add, Update_Statistics, Delete, View.
+4. CAMPAIGNS: Edit, Add, Update Statistics, Delete, View.
  
-5. SYNTHESIS: 
-<br><br>EDIT: 'UMI_Word, Respondent_Profile, Views, Question_Tags'.
+5. SYNTHESIS: View
+<br><br>EDIT: UMI Word, Respondent Profile, Views, Question Tags.
 
-6. STORYBOARD: Create, View, Generate_Video, Generate_Pdf, Change_Language, Make_Visible_To_Client, Edit, Autofill. 
+6. STORYBOARD: Create, View, Generate Video, Generate Pdf, Change Language, Make Visible To Client, Edit, Autofill. 
 
-7. FOLLOW_UP:
-<br><br>VIEW: 'Answer', 
-<br><br>EDIT: 'Answer, Objective, Views',
-<br><br>WORKFLOW: 'View, Edit, Test, Send',
-<br><br>T_COLUMNS: 'Name, Country, Language, Job, Company, Objective'.  
+7. FOLLOW UP:
+<br><br>VIEW: Answer, 
+<br><br>EDIT: Answer, Objective, Views,
+<br><br>WORKFLOW: View, Edit, Test, Send,
+<br><br>T COLUMNS: Name, Country, Language, Job, Company, Objective.  
 
-Here SETTINGS, ANSWER_TAGS, QUESTIONNAIRE, CAMPAIGNS, SYNTHESIS, STORYBOARD, FOLLOW_UP represent the sub tabs.
+Here SETTINGS, ANSWER TAGS, QUESTIONNAIRE, CAMPAIGNS, SYNTHESIS, STORYBOARD, FOLLOW UP represent the sub tabs.
 
 ### Access of the functionalities based on the roles - by default Root will access all.
 
@@ -40,52 +40,52 @@ No definition of a Role means no access to that user.
 1. QUESTIONNAIRE: Edit,
 <br><br>QUIZ: 'VIEW'. 
 
-2. FOLLOW_UP: All 
+2. FOLLOW UP: All 
 
 #### Hotline:
 
 1. SETTINGS:
-<br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Blacklist, Statistics',
+<br><br>VIEW: 'Operator, Mission Type, Main Objective, Commercial, Blacklist, Statistics',
 <br><br>EDIT: 'Blacklist, Statistics'.
 
 2. CAMPAIGNS: View
 
-3. FOLLOW_UP: All
+3. FOLLOW UP: All
 
 #### Marketing:
 
 1. SETTINGS:
-<br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
+<br><br>VIEW: 'Operator, Mission Type, Main Objective, Commercial, Public Project, Published Project'.
 
-2. SYNTHESIS
+2. SYNTHESIS: View
 
 #### Commercial:
 
 1. SETTINGS:
-<br><br>VIEW: 'Operator, Mission_Type, Main_Objective, Commercial, Public_Project, Published_Project'.
+<br><br>VIEW: 'Operator, Mission Type, Main Objective, Commercial, Public Project, Published Project'.
 
 2. SYNTHESIS:
-<br><br>EDIT: 'UMI_Word, Views'.
+<br><br>EDIT: 'UMI Word, Views'.
 
 3. STORYBOARD: View.
 
 #### SuperVisor:
 
-1. STORYBOARD: Generate_Pdf, View.
+1. STORYBOARD: Generate Pdf, View.
 
-2. SYNTHESIS:
+2. SYNTHESIS: View
 
 3. CAMPAIGNS: View
 
 4. SETTINGS:
-<br><br>VIEW: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Answers_Anonymous, Public_Project, Published_Project, Statistics'
+<br><br>VIEW: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Answers Anonymous, Public Project, Published Project, Statistics'
 
 #### Market Test Manager:
 
 1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
 
-2. ANSWER_TAGS: Edit, Delete.
+2. ANSWER TAGS: Edit, Delete.
 
 3. QUESTIONNAIRE: All
 
@@ -98,9 +98,9 @@ No definition of a Role means no access to that user.
 #### Market Test Manager UMI:
 
 1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
 
-2. ANSWER_TAGS: Edit, Delete.
+2. ANSWER TAGS: Edit, Delete.
 
 3. QUESTIONNAIRE: All
 
@@ -113,9 +113,9 @@ No definition of a Role means no access to that user.
 #### Oper Supervisor:
 
 1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
 
-2. ANSWER_TAGS: Edit, Delete.
+2. ANSWER TAGS: Edit, Delete.
 
 3. QUESTIONNAIRE: All
 
@@ -128,9 +128,9 @@ No definition of a Role means no access to that user.
 #### Tech:
 
 1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission_Type, Main_Objective, Commercial, Description, Targeting, Blacklist, Project_Tags, Answers_Anonymous, Public_Project, Published_Project, Statistics, Validate_Project, Project_Revision'.
+<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
 
-2. ANSWER_TAGS: Edit, Delete.
+2. ANSWER TAGS: Edit, Delete.
 
 3. QUESTIONNAIRE: All
 

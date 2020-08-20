@@ -8,16 +8,16 @@ Please always updates the roles / functionalities in this file.
 ### Functionalities
 
 1. BLACKLIST: View, Edit, Add,
-<br><br>SEARCH_BY: 'Email_Address', 
-<br><br>SORT_BY: 'Reason, Type', 
-<br><br>T_COLUMNS: 'Email_Address, Created, Expires, Reason, Type'.
+<br><br>SEARCH BY:  Email Address, 
+<br><br>SORT BY:  Reason, Type, 
+<br><br>T COLUMNS:  Email Address, Created, Expires, Reason, Type.
 
 2. COUNTRIES: Exclude, 
-<br><br>SEARCH_BY: 'Country'.
+<br><br>SEARCH BY:  Country.
 
 3. ENTERPRISES: Add, View, Edit, 
-<br><br>SEARCH_BY: 'Name', 
-<br><br>T_COLUMNS: 'Logo, Name, Domain, Patterns, Url, Subsidiary, Parent'. 
+<br><br>SEARCH BY:  Name, 
+<br><br>T COLUMNS:  Logo, Name, Domain, Patterns, Url, Subsidiary, Parent. 
 
 Here BLACKLIST, COUNTRIES, ENTERPRISES represent the sub tabs.
 

@@ -8,30 +8,30 @@ Please always updates the roles / functionalities in this file.
 ### Functionalities
 
 1. PROS: Import,
-<br><br>LAUNCH: 'Cat, Search', 
-<br><br>VIEW: 'Settings', 
-<br><br>EDIT: 'Settings', 
-<br><br>IMPORT: 'Pros'.
+<br><br>LAUNCH:  Cat, Search, 
+<br><br>VIEW:  Settings, 
+<br><br>EDIT:  Settings, 
+<br><br>IMPORT:  Pros.
 
-2. HISTORY: Put_Back_In_Queue
-<br><br>SEARCH_BY: 'Keywords, Innovation', 
-<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield, Ambassador',
-<br><br>VIEW: 'Campaign, Request, Project, Results, Requests', 
-<br><br>ADD: 'To_Campaign', 
-<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
-<br><br>STOP: 'Requests', 
-<br><br>CANCEL: 'Requests'.
+2. HISTORY: Put Back In Queue
+<br><br>SEARCH BY:  Keywords, Innovation, 
+<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield, Ambassador ,
+<br><br>VIEW:  Campaign, Request, Project, Results, Requests, 
+<br><br>ADD:  To Campaign, 
+<br><br>LAUNCH:  Google Requests, Emails Search, 
+<br><br>STOP:  Requests, 
+<br><br>CANCEL:  Requests.
 
-3. WAITING_LINE: Put_Back_In_Queue,
-<br><br>LAUNCH: 'Emails_Search', 
-<br><br>ADD: 'To_Campaign',
-<br><br>STOP: 'Requests', 
-<br><br>CANCEL: 'Requests'
-<br><br>SEARCH_BY: 'Keywords, Innovation',
-<br><br>VIEW: 'Campaign, Request, Project, Results, Requests', 
-<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield, Ambassador'. 
+3. WAITING LINE: Put Back In Queue,
+<br><br>LAUNCH:  Emails Search, 
+<br><br>ADD:  To Campaign,
+<br><br>STOP:  Requests, 
+<br><br>CANCEL:  Requests 
+<br><br>SEARCH BY:  Keywords, Innovation,
+<br><br>VIEW:  Campaign, Request, Project, Results, Requests, 
+<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield, Ambassador. 
 
-Here PROFESSIONAL, HISTORY, WAITING_LINE represent the sub tabs.
+Here PROFESSIONAL, HISTORY, WAITING LINE represent the sub tabs.
 
 ### Access of the functionalities based on the roles - by default Root will access all.
 
@@ -39,55 +39,55 @@ No definition of a Role means no access to that user.
 
 #### Market Test Manager:
 
-1. HISTORY: Put_Back_In_Queue
-<br><br>SEARCH_BY: 'Keywords', 
-<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield',
-<br><br>VIEW: 'Campaign, Request, Results, Requests', 
-<br><br>ADD: 'To_Campaign', 
-<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
-<br><br>STOP: 'Requests', 
-<br><br>CANCEL: 'Requests'.
+1. HISTORY: Put Back In Queue
+<br><br>SEARCH BY:  Keywords , 
+<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
+<br><br>VIEW:  Campaign, Request, Results, Requests , 
+<br><br>ADD:  To Campaign , 
+<br><br>LAUNCH:  Google Requests, Emails Search , 
+<br><br>STOP:  Requests , 
+<br><br>CANCEL:  Requests .
 
-2. WAITING_LINE: All
+2. WAITING LINE: All
 
 #### Market Test Manager UMI:
 
-1. HISTORY: Put_Back_In_Queue
-<br><br>SEARCH_BY: 'Keywords', 
-<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield',
-<br><br>VIEW: 'Campaign, Request, Results, Requests', 
-<br><br>ADD: 'To_Campaign', 
-<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
-<br><br>STOP: 'Requests', 
-<br><br>CANCEL: 'Requests'.
+1. HISTORY: Put Back In Queue
+<br><br>SEARCH BY:  Keywords , 
+<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
+<br><br>VIEW:  Campaign, Request, Results, Requests , 
+<br><br>ADD:  To Campaign , 
+<br><br>LAUNCH:  Google Requests, Emails Search , 
+<br><br>STOP:  Requests , 
+<br><br>CANCEL:  Requests .
 
-2. WAITING_LINE: All
+2. WAITING LINE: All
 
 #### Oper Supervisor:
 
-1. HISTORY: Put_Back_In_Queue
-<br><br>SEARCH_BY: 'Keywords', 
-<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield',
-<br><br>VIEW: 'Campaign, Request, Results, Requests', 
-<br><br>ADD: 'To_Campaign', 
-<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
-<br><br>STOP: 'Requests', 
-<br><br>CANCEL: 'Requests'.
+1. HISTORY: Put Back In Queue
+<br><br>SEARCH BY:  Keywords , 
+<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
+<br><br>VIEW:  Campaign, Request, Results, Requests , 
+<br><br>ADD:  To Campaign , 
+<br><br>LAUNCH:  Google Requests, Emails Search , 
+<br><br>STOP:  Requests , 
+<br><br>CANCEL:  Requests .
 
-2. WAITING_LINE: All
+2. WAITING LINE: All
 
 #### Tech:
 
-1. HISTORY: Put_Back_In_Queue
-<br><br>SEARCH_BY: 'Keywords', 
-<br><br>T_COLUMNS: 'Keywords, Pros, Targeting, Created, Status, Email_Status, Under_Shield',
-<br><br>VIEW: 'Campaign, Request, Results, Requests', 
-<br><br>ADD: 'To_Campaign', 
-<br><br>LAUNCH: 'Google_Requests, Emails_Search', 
-<br><br>STOP: 'Requests', 
-<br><br>CANCEL: 'Requests'.
+1. HISTORY: Put Back In Queue
+<br><br>SEARCH BY:  Keywords , 
+<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
+<br><br>VIEW:  Campaign, Request, Results, Requests , 
+<br><br>ADD:  To Campaign , 
+<br><br>LAUNCH:  Google Requests, Emails Search , 
+<br><br>STOP:  Requests , 
+<br><br>CANCEL:  Requests .
 
-2. WAITING_LINE: All
+2. WAITING LINE: All
 
 ### Example - Market Test Manager role
 
