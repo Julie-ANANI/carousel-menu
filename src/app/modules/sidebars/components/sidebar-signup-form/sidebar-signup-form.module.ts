@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-import { SignupFormComponent } from './signup-form.component';
+import { SidebarSignupFormComponent } from './sidebar-signup-form.component';
 
 @NgModule({
   imports: [
@@ -16,10 +16,10 @@ import { SignupFormComponent } from './signup-form.component';
     SidebarModule,
   ],
   declarations: [
-    SignupFormComponent
+    SidebarSignupFormComponent
   ],
   exports: [
-    SignupFormComponent
+    SidebarSignupFormComponent
   ]
 })
 

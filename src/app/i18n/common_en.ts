@@ -81,7 +81,7 @@ export const COMMON = {
   'DOMAIN': 'Domain',
 
   'TERMS': {
-    'A': 'By clicking "Continue" I agree to',
+    'A': 'By clicking "Create and account" I agree to',
     'B': 'terms and conditions of use.',
   },
 
@@ -269,7 +269,9 @@ export const COMMON = {
     'SEND_MESSAGE': 'Send message',
     'RETURN_HOMEPAGE': 'Return to the homepage',
     'RELOAD_PAGE': 'Reload the page',
-    'RETURNING_HOMEPAGE': 'returning to the homepage...'
+    'RETURNING_HOMEPAGE': 'returning to the homepage...',
+    'CREATE_AN_ACCOUNT': 'Create an account',
+    'CREATING_AN_ACCOUNT': 'is creating account...',
   },
 
   'PROJECT': {

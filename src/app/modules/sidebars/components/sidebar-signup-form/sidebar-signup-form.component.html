@@ -1,0 +1,173 @@
+<div class="column col-xs-12 col-11 col-mx-auto p-top-30 p-bottom-30" id="sidebar-signup-form">
+  <form novalidate [formGroup]="signupForm" (ngSubmit)="onContinue()" autocomplete="off">
+
+    <!-- First name -->
+    <div class="form-group has-error">
+      <label class="form-label" for="signup-form-firstName">{{ 'COMMON.LABEL.FIRSTNAME' | translate }}</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="firstName"
+        id="signup-form-firstName"
+        placeholder="John"
+        type="text">
+      <div
+        *ngIf="signupForm.get('firstName').touched && signupForm.get('firstName').invalid
+        && signupForm.get('firstName').hasError('required')"
+        class="form-input-hint">
+          {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
+        </div>
+    </div>
+    <!-- /First name -->
+
+    <!-- Last name -->
+    <div class="form-group has-error">
+      <label class="form-label" for="signup-form-lastName">{{ 'COMMON.LABEL.LASTNAME' | translate }}</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="lastName"
+        id="signup-form-lastName"
+        placeholder="Smith"
+        type="text">
+      <div
+        *ngIf="signupForm.get('lastName').touched && signupForm.get('lastName').invalid
+        && signupForm.get('lastName').hasError('required')"
+        class="form-input-hint">
+        {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
+      </div>
+    </div>
+    <!-- /Last name -->
+
+    <!-- Email -->
+    <div class="form-group has-error">
+      <label class="form-label" for="signup-form-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="email"
+        id="signup-form-email"
+        placeholder="john@catco.com"
+        type="email">
+      <div *ngIf="signupForm.get('email').touched && signupForm.get('email').invalid" class="form-input-hint">
+          <ng-container *ngIf="signupForm.get('email').hasError('required')">
+            {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+          </ng-container>
+          <ng-container *ngIf="signupForm.get('email').hasError('email')
+          && signupForm.get('email').value !== ''">
+            {{ 'COMMON.INVALID.EMAIL' | translate }}
+          </ng-container>
+        </div>
+    </div>
+    <!-- /Email -->
+
+    <!-- Password -->
+    <div class="form-group has-error">
+      <label class="form-label" for="signup-form-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
+      <input
+        [attr.placeholder]="'COMMON.PLACEHOLDER.PASSWORD_SIGNUP' | translate"
+        class="form-input is-shadowed"
+        formControlName="password"
+        id="signup-form-password"
+        type="password">
+      <div *ngIf="signupForm.get('password').touched && signupForm.get('password').invalid" class="form-input-hint">
+          <ng-container *ngIf="signupForm.get('password').hasError('required')">
+            {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+          </ng-container>
+          <ng-container *ngIf="signupForm.get('password').hasError('minlength')">
+            {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
+          </ng-container>
+        </div>
+    </div>
+    <!-- /Password -->
+
+    <!-- Job -->
+    <div class="form-group has-error">
+      <label class="form-label" for="signup-form-jobTitle">{{ 'COMMON.LABEL.JOBTITLE' | translate }}</label>
+      <input
+        [attr.placeholder]="'COMMON.PLACEHOLDER.JOBTITLE' | translate"
+        class="form-input is-shadowed"
+        formControlName="jobTitle"
+        id="signup-form-jobTitle"
+        type="text">
+      <div
+        *ngIf="signupForm.get('jobTitle').touched && signupForm.get('jobTitle').invalid
+        && signupForm.get('jobTitle').hasError('required')"
+        class="form-input-hint">
+          {{ 'COMMON.REQUIRED.JOBTITLE' | translate }}
+        </div>
+    </div>
+    <!-- /Job -->
+
+    <!-- company -->
+    <div class="form-group" formGroupName="company">
+      <label class="form-label" for="user-form-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
+      <input
+        (valueChanged)="selectCompany($event)"
+        [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate"
+        [list-formatter]="autocompleteCompanyListFormatter"
+        [min-chars]="2"
+        [source]="companiesSuggestions"
+        auto-complete
+        class="form-input is-shadowed"
+        formControlName="name"
+        id="user-form-company"
+        type="text">
+    </div>
+    <!-- /company -->
+
+    <!-- Country -->
+    <div class="form-group has-error" [ngStyle]="{ 'position': 'relative' }">
+      <label class="form-label" for="signup-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+      <input
+        (keypress)="onSuggestCountries()"
+        [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
+        class="form-input is-shadowed"
+        formControlName="country"
+        id="signup-form-country"
+        type="text">
+      <ul
+        *ngIf="signupForm.get('country').value"
+        [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }"
+        class="menu">
+        <li
+          (click)="onValueSelect(suggestion)"
+          *ngFor="let suggestion of countriesSuggestion.sort()"
+          class="menu-item">
+          {{ suggestion }}
+        </li>
+      </ul>
+      <div
+        *ngIf="signupForm.get('country').touched && signupForm.get('country').invalid
+        && signupForm.get('country').hasError('required')"
+        class="form-input-hint">
+          {{ 'COMMON.REQUIRED.COUNTRY' | translate }}
+        </div>
+    </div>
+    <!-- /Country -->
+
+    <!-- Terms -->
+    <ng-container *ngIf="checkIsMainDomain()">
+      <div class="p-top-20 text-sm p-left-15 p-right-15 text-notify text-center">
+        {{ 'COMMON.TERMS.A' | translate }} {{ companyName }}'s
+        <a [href]="getTermsLink()" target="_blank" rel="noopener">
+          <span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span>
+        </a>
+      </div>
+    </ng-container>
+
+    <!-- Submit button -->
+    <div class="p-top-30 text-center">
+      <button
+        [disabled]="signupForm.invalid || isCreating"
+        class="button is-primary is-lg gtm-signup-email-validated"
+        id="btn-submit"
+        type="submit">
+        <ng-container *ngIf="isCreating; else createText">
+          {{ 'COMMON.BUTTON.CREATING_AN_ACCOUNT' | translate }}
+        </ng-container>
+        <ng-template #createText>
+          {{ 'COMMON.BUTTON.CREATE_AN_ACCOUNT' | translate }}
+        </ng-template>
+      </button>
+    </div>
+
+  </form>
+</div>

@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderUnauthComponent } from './header-unauth.component';
 
 import { SidebarModule}  from '../../sidebars/templates/sidebar/sidebar.module';
-import { SidebarSignupFormModule } from '../../sidebars/components/signup-form/sidebar-signup-form.module';
+import { SidebarSignupFormModule } from '../../sidebars/components/sidebar-signup-form/sidebar-signup-form.module';
 import { ModalModule } from '../../utility/modals/modal/modal.module';
 
 

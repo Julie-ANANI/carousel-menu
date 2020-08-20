@@ -80,7 +80,7 @@ export const COMMON = {
   'DOMAIN': 'Domaine',
 
   'TERMS': {
-    'A': 'En cliquant sur "Continuer", j\'accepte',
+    'A': 'En cliquant sur "Inscription", j\'accepte',
     'B': 'termes et conditions d\'utilisation.',
   },
 
@@ -268,7 +268,9 @@ export const COMMON = {
     'SEND_MESSAGE': 'Envoyer le message',
     'RETURN_HOMEPAGE': 'Retour à la page d\'accueil',
     'RELOAD_PAGE': 'Rechargez la page',
-    'RETURNING_HOMEPAGE': 'retour à la page d\'accueil...'
+    'RETURNING_HOMEPAGE': 'retour à la page d\'accueil...',
+    'CREATE_AN_ACCOUNT': 'Inscription',
+    'CREATING_AN_ACCOUNT': 'en cours de créer...',
   },
 
   'PROJECT': {

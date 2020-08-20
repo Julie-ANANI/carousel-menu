@@ -1,21 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { environment } from '../../../../../environments/environment';
 import { Clearbit } from '../../../../models/clearbit';
 import { countries } from '../../../../models/static-data/country';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-signup-form',
-  templateUrl: './signup-form.component.html',
-  styleUrls: ['./signup-form.component.scss']
+  selector: 'app-sidebar-signup-form',
+  templateUrl: './sidebar-signup-form.component.html',
+  styleUrls: ['./sidebar-signup-form.component.scss']
 })
 
-export class SignupFormComponent {
+export class SidebarSignupFormComponent implements OnDestroy {
 
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
@@ -23,6 +24,8 @@ export class SignupFormComponent {
       this._signupForm.reset();
     }
   }
+
+  @Input() isCreating = false;
 
   @Output() finalOutput = new EventEmitter<FormGroup>();
 
@@ -34,13 +37,14 @@ export class SignupFormComponent {
 
   private _countries = countries;
 
-  private _displayLoading: boolean = false;
+  private _displayLoading = false;
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private _formBuilder: FormBuilder,
               private _autoCompleteService: AutocompleteService,
               private _sanitizer: DomSanitizer,
               private _translatesService: TranslateService) { }
-
 
   private _buildForm() {
     this._signupForm = this._formBuilder.group( {
@@ -54,12 +58,11 @@ export class SignupFormComponent {
     });
   }
 
-
   public onSuggestCountries() {
     this._signupForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
       this._displayCountrySuggestion = true;
       this._countriesSuggestion = [];
-      this._autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
+      this._autoCompleteService.get({query: input, type: 'countries'}).pipe(takeUntil(this._ngUnsubscribe)).subscribe((res: any) => {
         if (res.length === 0) {
           this._displayCountrySuggestion = false;
         } else {
@@ -70,52 +73,46 @@ export class SignupFormComponent {
             }
           });
         }
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
       });
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
     });
   }
-
 
   public onValueSelect(value: string) {
     this._signupForm.get('country').setValue(value);
     this._displayCountrySuggestion = false;
   }
 
-
   public onContinue() {
-
-    this._displayLoading = true;
-
+    this.isCreating = true;
     for (let code in this._countries) {
       if (this._countries[code] === this._signupForm.get('country').value) {
         this._signupForm.value['country'] = code;
       }
     }
-
     this.finalOutput.emit(this._signupForm);
-
   }
-
 
   public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
-
   public getTermsLink(): string {
     return this._translatesService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/confidentialite/';
   }
-
 
   public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
     return this._autoCompleteService.get({query: searchString, type: 'company'});
   };
 
-
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this._sanitizer.bypassSecurityTrustHtml(`<img src="${data.logo}" height="22" alt=" "/><span>${data.name}</span>`);
   };
 
-  public selectCompany(c: string | Clearbit) {
+  public selectCompany(c: string | Clearbit | any) {
     this._signupForm.get('company').reset((typeof c === 'string') ? {name: c} : c);
   }
 
@@ -141,6 +138,11 @@ export class SignupFormComponent {
 
   get displayLoading(): boolean {
     return this._displayLoading;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

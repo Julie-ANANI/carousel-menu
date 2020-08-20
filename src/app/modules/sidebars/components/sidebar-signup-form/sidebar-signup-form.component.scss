@@ -1,0 +1,17 @@
+@import "../../../../../style/framework/src/variables";
+
+#sidebar-signup-form {
+
+  .form-group {
+    margin-bottom: $unit-5;
+  }
+
+  .menu {
+    max-height: 180px;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+}

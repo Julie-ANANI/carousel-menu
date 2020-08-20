@@ -39,6 +39,8 @@ export class HeaderUnauthComponent implements OnInit {
 
   private _showLangs: boolean = false;
 
+  private _isCreatingAccount = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateNotificationsService: TranslateNotificationsService,
               private _authService: AuthService,
@@ -158,20 +160,24 @@ export class HeaderUnauthComponent implements OnInit {
       user.domain = environment.domain;
 
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
+        this._isCreatingAccount = false;
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       } else {
         this._userService.create(user).pipe(first()).subscribe(() => {
           this._authService.login(user).pipe(first()).subscribe(() => {
             this._router.navigate(['/welcome']);
           }, () => {
+            this._isCreatingAccount = false;
             this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
           });
         }, () => {
+          this._isCreatingAccount = false;
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
         });
       }
 
     } else {
+      this._isCreatingAccount = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
@@ -230,6 +236,10 @@ export class HeaderUnauthComponent implements OnInit {
 
   get showLangs(): boolean {
     return this._showLangs;
+  }
+
+  get isCreatingAccount(): boolean {
+    return this._isCreatingAccount;
   }
 
 }

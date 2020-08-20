@@ -22,13 +22,15 @@ export class SignupComponent implements OnInit {
 
   private _isInvitation = false;
 
-  private _linkedInLink: string;
+  private _linkedInLink = '';
 
   private _linkedInState: string = Date.now().toString();
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  private _backgroundImage: string;
+  private _backgroundImage = '';
+
+  private _isCreatingAccount = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -52,8 +54,7 @@ export class SignupComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   private linkedInUrl() {
     const linkedinConfig = {
@@ -87,13 +88,11 @@ export class SignupComponent implements OnInit {
 
   public onSignUpClick(event: Event) {
     event.preventDefault();
-
+    this._isCreatingAccount = false;
     this._sidebarValue = {
       animate_state: 'active',
-      title: 'SIDEBAR.TITLE.SIGN_UP',
-      type: 'signup'
+      title: 'SIDEBAR.TITLE.SIGN_UP'
     }
-
   }
 
   public createUser(formValue: FormGroup) {
@@ -102,20 +101,24 @@ export class SignupComponent implements OnInit {
       user.domain = environment.domain;
 
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
+        this._isCreatingAccount = false;
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       } else {
         this._userService.create(user).pipe(first()).subscribe(() => {
           this._authService.login(user).pipe(first()).subscribe(() => {
             this._router.navigate(['/welcome']);
           }, () => {
+            this._isCreatingAccount = false;
             this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
           });
         }, () => {
+          this._isCreatingAccount = false;
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
         });
       }
 
     } else {
+      this._isCreatingAccount = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
@@ -136,10 +139,6 @@ export class SignupComponent implements OnInit {
     return this._isInvitation;
   }
 
-  get linkedInLink(): string {
-    return this._linkedInLink;
-  }
-
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
   }
@@ -150,6 +149,10 @@ export class SignupComponent implements OnInit {
 
   get backgroundImage(): string {
     return this._backgroundImage;
+  }
+
+  get isCreatingAccount(): boolean {
+    return this._isCreatingAccount;
   }
 
 }
