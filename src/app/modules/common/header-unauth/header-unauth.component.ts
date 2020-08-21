@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie';
 import { initTranslation } from '../../../i18n/i18n';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-header-unauth',
@@ -21,25 +20,25 @@ import { isPlatformBrowser } from '@angular/common';
 
 export class HeaderUnauthComponent implements OnInit {
 
-  private _sidebarValue: SidebarInterface = {};
-
-  private _toggleSignInForm = false;
+  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
   private _formData: FormGroup;
 
-  private _currentLang: string;
+  private _flag = 'US';
 
-  private _flag: string;
+  private _modalSignIn = false;
 
-  private _modalSignIn: boolean = false;
+  private _displayMenuOptions = false; // on small devices if true then display menu options.
 
-  private _displayMenuOptions: boolean = false; // on small devices if true then display menu options.
-
-  private _displayLoading = false;
-
-  private _showLangs: boolean = false;
+  private _showLangs = false;
 
   private _isCreatingAccount = false;
+
+  private _company = environment.companyShortName;
+
+  private _logo = environment.logoURL;
+
+  private _isLogging = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -51,15 +50,11 @@ export class HeaderUnauthComponent implements OnInit {
               private _cookieService: CookieService) {
 
     initTranslation(this._translateService);
-    this._currentLang = this._translateService.currentLang;
-    this._setFlag();
   }
 
   ngOnInit() {
-    this._buildForm();
-  }
+    this._setFlag();
 
-  private _buildForm() {
     this._formData = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -67,7 +62,7 @@ export class HeaderUnauthComponent implements OnInit {
   }
 
   private _setFlag() {
-    this._flag = this._currentLang === 'en' ? 'US' : 'FR';
+    this._flag = this.currentLang === 'en' ? 'US' : 'FR';
   }
 
   /***
@@ -76,15 +71,8 @@ export class HeaderUnauthComponent implements OnInit {
    */
   public setLang(lang: string) {
     this._cookieService.put('user_lang', lang || 'en');
-
-    if (isPlatformBrowser(this._platformId)) {
-      document.location.reload();
-    } else {
-      this._currentLang = lang;
-      this._translateService.use(lang || 'en');
-      this._setFlag();
-    }
-
+    this._translateService.use(lang || 'en');
+    this._setFlag();
   }
 
   /***
@@ -111,18 +99,18 @@ export class HeaderUnauthComponent implements OnInit {
   }
 
   /***
-   * this function is called when the user clicks on the continue buttion in the
-   * sign in form wrapper and redirect the user according to the requested page.
+   * this function is called when the user clicks on the continue button in the
+   * login form wrapper and redirect the user according to the requested page.
    */
   public onClickContinue() {
     if (this._formData.valid) {
-      this._displayLoading = true;
+      this._isLogging = true;
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
       this._authService.login(user).pipe(first()).subscribe(() => {
       }, () => {
-        this._displayLoading = false;
+        this._isLogging = false;
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
       });
@@ -141,13 +129,10 @@ export class HeaderUnauthComponent implements OnInit {
    */
   public onClickSignUp(event: Event) {
     event.preventDefault();
-
     this._sidebarValue = {
       animate_state: 'active',
       title: 'SIDEBAR.TITLE.SIGN_UP',
-      type: 'signup'
     }
-
   }
 
   /***
@@ -156,6 +141,7 @@ export class HeaderUnauthComponent implements OnInit {
    */
   public createUser(formValue: FormGroup) {
     if (formValue.valid) {
+      this._isCreatingAccount = true;
       const user = new User(formValue.value);
       user.domain = environment.domain;
 
@@ -186,12 +172,12 @@ export class HeaderUnauthComponent implements OnInit {
     return environment.logoURL;
   }
 
-  public getCompany(): string {
-    return environment.companyShortName;
+  get company(): string {
+    return this._company;
   }
 
-  public getContactUrl(): string {
-    return this._currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
+  get contactUrl(): string {
+    return this.currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
   }
 
   get sidebarValue(): SidebarInterface {
@@ -202,16 +188,12 @@ export class HeaderUnauthComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get toggleSignInForm(): boolean {
-    return this._toggleSignInForm;
-  }
-
   get formData(): FormGroup {
     return this._formData;
   }
 
   get currentLang(): string {
-    return this._currentLang;
+    return this._translateService.currentLang;
   }
 
   get flag(): string {
@@ -230,16 +212,20 @@ export class HeaderUnauthComponent implements OnInit {
     return this._displayMenuOptions;
   }
 
-  get displayLoading(): boolean {
-    return this._displayLoading;
-  }
-
   get showLangs(): boolean {
     return this._showLangs;
   }
 
   get isCreatingAccount(): boolean {
     return this._isCreatingAccount;
+  }
+
+  get logo(): string {
+    return this._logo;
+  }
+
+  get isLogging(): boolean {
+    return this._isLogging;
   }
 
 }

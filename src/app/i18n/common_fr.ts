@@ -271,6 +271,8 @@ export const COMMON = {
     'RETURNING_HOMEPAGE': 'retour à la page d\'accueil...',
     'CREATE_AN_ACCOUNT': 'Inscription',
     'CREATING_AN_ACCOUNT': 'en cours de créer...',
+    'LOGIN': 'Connexion',
+    'LOGGING': 'en cours de connexion...',
   },
 
   'PROJECT': {
@@ -419,7 +421,8 @@ export const COMMON = {
     'TITLE_SHARE': 'Partage',
     'TITLE_SELECT': 'Sélection',
     'TITLE_CREATE': 'Création',
-    'TITLE_VIDEO_STORYBOARD': 'Sélectionnez le type de vidéo à générer'
+    'TITLE_VIDEO_STORYBOARD': 'Sélectionnez le type de vidéo à générer',
+    'LOGIN': 'Bienvenue !'
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Commencez à taper pour chercher....',

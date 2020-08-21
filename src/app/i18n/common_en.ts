@@ -272,6 +272,8 @@ export const COMMON = {
     'RETURNING_HOMEPAGE': 'returning to the homepage...',
     'CREATE_AN_ACCOUNT': 'Create an account',
     'CREATING_AN_ACCOUNT': 'is creating account...',
+    'LOGIN': 'Login',
+    'LOGGING': 'is logging...',
   },
 
   'PROJECT': {
@@ -423,7 +425,8 @@ export const COMMON = {
     'TITLE_SHARE': 'Share Board',
     'TITLE_SELECT': 'Selection Board',
     'TITLE_CREATE': 'Creation Board',
-    'TITLE_VIDEO_STORYBOARD': 'Select the video type to generate'
+    'TITLE_VIDEO_STORYBOARD': 'Select the video type to generate',
+    'LOGIN': 'Welcome back!'
   },
 
   'SEARCH_INPUT_PLACEHOLDER': 'Start typing to search...',

@@ -1,77 +1,102 @@
-<header id="header">
-  <div class="container fluid grid-2xl">
-    <div class="column col-sm-12 col-11 col-mx-auto">
-      <nav class="navbar">
+<header class="container fluid grid-2xl" id="header-unauth">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+    <nav class="navbar">
 
-        <!-- brand -->
-        <div class="navbar-brand">
-          <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
-            <img [alt]="getCompany()" [src]="getLogo()" height="33" style="height: 33px; width: 110px" width="110">
-          </a>
-        </div>
-        <!-- /brand -->
+      <!-- brand -->
+      <div class="navbar-brand">
+        <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
+          <img
+            [ngStyle]="{'width': '110px', 'height': '33px'}"
+            [alt]="company"
+            [src]="logo"
+            height="33"
+            width="110">
+        </a>
+      </div>
+      <!-- /brand -->
 
-        <!-- hamburger icon for mobile -->
-        <div class="navbar-burger" (click)="toggleMenuState($event)">
-          <i class="icon icon-menu"></i>
-          <span class="m-left-2 text-medium">Menu</span>
-        </div>
-        <!-- /hamburger icon for mobile -->
+      <!-- hamburger icon for mobile -->
+      <div class="navbar-burger" (click)="toggleMenuState($event)">
+        <i class="icon icon-menu"></i>
+        <span class="m-left-2 text-medium">Menu</span>
+      </div>
+      <!-- /hamburger icon for mobile -->
 
-        <!-- navigation -->
-        <div class="navbar-menu" [ngClass]="{ 'active': displayMenuOptions }">
+      <!-- navigation -->
+      <div class="navbar-menu" [ngClass]="{ 'active': displayMenuOptions }">
 
-          <!-- language select dropdown -->
-          <div class="navbar-item has-dropdown dropdown-lang" (click)="toggleLangOptions($event)">
+        <!-- language select dropdown -->
+        <div class="navbar-item has-dropdown dropdown-lang" (click)="toggleLangOptions($event)">
 
           <span>
             <a class="dropdown-toggle">
               <img
                 [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
                 [alt]="currentLang.toUpperCase()">
-                <i class="icon icon-arrow-down" style="font-size: 0.5rem"></i>
+                <i [ngStyle]="{'font-size': '10px'}" class="icon icon-arrow-down"></i>
             </a>
           </span>
 
-            <!-- options -->
-            <ul class="navbar-dropdown p-no" [ngClass]="{ 'm-show-langs': showLangs }">
-              <li class="navbar-item text-center" (click)="setLang('fr')">
-                <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
-              </li>
-              <li class="navbar-item text-center" (click)="setLang('en')">
-                <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
-              </li>
-            </ul>
-
-          </div>
-          <!-- /language select dropdown -->
-
-          <!-- contact us -->
-          <div class="navbar-item has-button">
-            <a [href]="getContactUrl()" rel="noopener" target="_blank" class="button is-info text-background is-outlined">
-              {{ 'HEADER.CONTACT_US' | translate }}
-            </a>
-          </div>
-
-          <!-- sign in button -->
-          <div class="navbar-item has-button">
-            <button (click)="onClickSignIn($event)" class="button is-primary is-outlined" type="button">
-              {{ 'LOG_IN.LOG_IN_BTN' | translate }}
-            </button>
-          </div>
-
-          <!-- sign up button -->
-          <div class="navbar-item has-button m-no-right">
-            <button (click)="onClickSignUp($event)" class="button is-primary" type="button">
-              {{ 'COMMON.BUTTON.SIGN_UP' | translate }}
-            </button>
-          </div>
+          <!-- options -->
+          <ul [ngClass]="{ 'm-show-langs': showLangs }" class="navbar-dropdown p-no">
+            <li (click)="setLang('fr')" [title]="'COMMON.LANG.FR' | translate" class="navbar-item text-center">
+              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/FR.png'" alt="FR">
+            </li>
+            <li (click)="setLang('en')" [title]="'COMMON.LANG.EN' | translate" class="navbar-item text-center">
+              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/US.png'" alt="EN">
+            </li>
+          </ul>
+          <!-- /options -->
 
         </div>
-        <!-- /navigation -->
+        <!-- /language select dropdown -->
 
-      </nav>
-    </div>
+        <!-- contact us -->
+        <div class="navbar-item has-button">
+          <a
+            [href]="contactUrl"
+            class="button is-info is-sm text-background is-outlined"
+            rel="noopener"
+            target="_blank">
+            {{ 'HEADER.CONTACT_US' | translate }}
+          </a>
+        </div>
+        <!-- contact us -->
+
+        <!-- login button -->
+        <div class="navbar-item has-button">
+          <button
+            (click)="onClickSignIn($event)"
+            [disabled]="isLogging"
+            class="button is-primary is-outlined is-sm"
+            type="button">
+            <ng-container *ngIf="isLogging; else loginText">
+              {{ 'COMMON.BUTTON.LOGGING' | translate }}
+            </ng-container>
+            <ng-template #loginText>{{ 'COMMON.BUTTON.LOGIN' | translate }}</ng-template>
+          </button>
+        </div>
+        <!-- /login button -->
+
+        <!-- sign up button -->
+        <div class="navbar-item has-button m-no-right">
+          <button
+            (click)="onClickSignUp($event)"
+            [disabled]="isCreatingAccount"
+            class="button is-primary is-sm"
+            type="button">
+            <ng-container *ngIf="isCreatingAccount; else signUpText">
+              {{ 'COMMON.BUTTON.CREATING_AN_ACCOUNT' | translate }}
+            </ng-container>
+            <ng-template #signUpText>{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</ng-template>
+          </button>
+        </div>
+        <!-- /sign up button -->
+
+      </div>
+      <!-- /navigation -->
+
+    </nav>
   </div>
 </header>
 
@@ -87,72 +112,75 @@
 <!-- /sign up sidebar -->
 
 
-<!-- sign in modal -->
-<app-utility-modal [(showModal)]="modalSignIn" [maxWidth]="'400px'" [enableCloseButton]="true">
+<!-- login modal -->
+<app-utility-modal-empty [(showModal)]="modalSignIn" [maxWidth]="'420px'">
   <section class="modal-body">
 
     <!-- heading -->
-    <div class="text-center">
-      <h2 class="title-primary text-background" style="font-size: 1.4rem">{{ 'LOG_IN.HEADING' | translate }}</h2>
-    </div>
+    <h2 [ngStyle]="{'font-size': '28px'}" class="title text-background text-center m-bottom-30">
+      {{ 'COMMON.MODAL.LOGIN' | translate }}
+    </h2>
+    <!-- /heading -->
 
     <!-- form -->
-    <form novalidate [formGroup]="formData" (submit)="onClickContinue()">
+    <div class="mxw-400 m-left-auto m-right-auto">
+      <form novalidate [formGroup]="formData" (submit)="onClickContinue()">
 
-      <!-- email address -->
-      <div class="form-group has-error m-bottom-15">
-        <label class="form-label" for="header-unauth-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+        <!-- email address -->
+        <div class="form-group has-error m-bottom-15">
+          <label class="form-label" for="header-unauth-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+          <input
+            class="form-input is-shadowed"
+            formControlName="email"
+            id="header-unauth-email"
+            placeholder="john@catco.com"
+            type="email">
+          <div *ngIf="formData.get('email').touched" class="form-input-hint">
+            <ng-container *ngIf="formData.get('email').hasError('required')">
+              {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+            </ng-container>
+            <ng-container *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+              {{ 'COMMON.INVALID.EMAIL' | translate }}
+            </ng-container>
+          </div>
+        </div>
+        <!-- /email address -->
 
-        <input
-          class="form-input"
-          formControlName="email"
-          id="header-unauth-email"
-          placeholder="john@catco.com"
-          type="email">
+        <!-- password -->
+        <div class="form-group has-error">
+          <label class="form-label" for="header-unauth-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
+          <input
+            [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate "
+            class="form-input is-shadowed"
+            formControlName="password"
+            id="header-unauth-password"
+            type="password">
+          <div
+            *ngIf="formData.get('password').hasError('required') && formData.get('password').touched"
+            class="form-input-hint">
+            {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+          </div>
+        </div>
+        <!-- /password -->
 
-        <ng-container *ngIf="formData.get('email').touched">
+        <!-- login button -->
+        <div class="text-center m-top-40 p-bottom-15">
+          <button
+            [disabled]="formData.invalid || isLogging"
+            class="button is-primary is-lg gtm-signin-email"
+            type="submit">
+            <ng-container *ngIf="isLogging; else modalLoginText">
+              {{ 'COMMON.BUTTON.LOGGING' | translate }}
+            </ng-container>
+            <ng-template #modalLoginText>{{ 'COMMON.BUTTON.CONTINUE' | translate }}</ng-template>
+          </button>
+        </div>
+        <!-- login button -->
 
-          <ng-container *ngIf="formData.get('email').hasError('required')">
-            <span class="form-input-hint">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-          </ng-container>
-
-          <ng-container *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
-            <span class="form-input-hint">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
-          </ng-container>
-
-        </ng-container>
-      </div>
-      <!-- /email address -->
-
-      <!-- password -->
-      <div class="form-group has-error">
-        <label class="form-label" for="header-unauth-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
-
-        <input
-          [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate "
-          class="form-input"
-          formControlName="password"
-          id="header-unauth-password"
-          type="password">
-
-        <ng-container *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
-          <span class="form-input-hint">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
-        </ng-container>
-
-      </div>
-      <!-- /password -->
-
-      <!-- login button -->
-      <div class="text-center p-top-15 p-bottom-10">
-        <button [disabled]="formData.invalid" class="button is-primary is-lg gtm-signin-email" style="min-width: 150px" type="submit">
-          <span *ngIf="displayLoading" class="loading is-white absolute" style="left: 1.25rem"></span>
-          {{ 'LOG_IN.LOG_IN_BTN' | translate }}
-        </button>
-      </div>
-
-    </form>
+      </form>
+    </div>
     <!-- /form -->
 
   </section>
-</app-utility-modal>
-<!-- /sign in modal -->
+</app-utility-modal-empty>
+<!-- /login modal -->

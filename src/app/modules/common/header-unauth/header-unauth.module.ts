@@ -8,8 +8,7 @@ import { HeaderUnauthComponent } from './header-unauth.component';
 
 import { SidebarModule}  from '../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarSignupFormModule } from '../../sidebars/components/sidebar-signup-form/sidebar-signup-form.module';
-import { ModalModule } from '../../utility/modals/modal/modal.module';
-
+import { ModalEmptyModule } from '../../utility/modals/modal-empty/modal-empty.module';
 
 @NgModule({
   imports: [
@@ -20,7 +19,7 @@ import { ModalModule } from '../../utility/modals/modal/modal.module';
     ReactiveFormsModule,
     SidebarModule,
     SidebarSignupFormModule,
-    ModalModule
+    ModalEmptyModule
   ],
   declarations: [
     HeaderUnauthComponent
