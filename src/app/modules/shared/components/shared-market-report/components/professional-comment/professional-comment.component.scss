@@ -6,11 +6,11 @@
   font-size: $font-size-sm;
   height: 100%;
 
-  app-pro-tag, .comment-wrapper {
+  .pro-tag-wrapper, .comment-wrapper {
     flex: 1;
   }
 
-  app-pro-tag {
+  .pro-tag-wrapper {
     height: 100%;
   }
 

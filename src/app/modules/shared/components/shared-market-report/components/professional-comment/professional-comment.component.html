@@ -3,6 +3,7 @@
   <!-- user details -->
   <app-pro-tag
     (modalAnswerChange)="seeAnswer(answer)"
+    class="pro-tag-wrapper"
     [answer]="answer"
     [questionId]="questionId"
     [sectorTag]="true">
@@ -12,7 +13,7 @@
   <!-- comment -->
   <ng-container *ngIf="answer.answers[questionId] && answer.answers[questionId].length > 0">
     <hr class="hr">
-    <div class="comment-wrapper">
+    <div class="comment-wrapper flex-centered">
       {{ answer.answers[questionId] }}
     </div>
   </ng-container>
