@@ -22,7 +22,7 @@ Please always updates the roles / functionalities in this file.
 <br><br>STOP:  Requests, 
 <br><br>CANCEL:  Requests.
 
-3. WAITING LINE: Put Back In Queue,
+3. QUEUE: Put Back In Queue,
 <br><br>LAUNCH:  Emails Search, 
 <br><br>ADD:  To Campaign,
 <br><br>STOP:  Requests, 
@@ -31,7 +31,7 @@ Please always updates the roles / functionalities in this file.
 <br><br>VIEW:  Campaign, Request, Project, Results, Requests, 
 <br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield, Ambassador. 
 
-Here PROFESSIONAL, HISTORY, WAITING LINE represent the sub tabs.
+Here PROFESSIONAL, HISTORY, QUEUE represent the sub tabs.
 
 ### Access of the functionalities based on the roles - by default Root will access all.
 
@@ -48,7 +48,7 @@ No definition of a Role means no access to that user.
 <br><br>STOP:  Requests , 
 <br><br>CANCEL:  Requests .
 
-2. WAITING LINE: All
+2. QUEUE: All
 
 #### Market Test Manager UMI:
 
@@ -61,7 +61,7 @@ No definition of a Role means no access to that user.
 <br><br>STOP:  Requests , 
 <br><br>CANCEL:  Requests .
 
-2. WAITING LINE: All
+2. QUEUE: All
 
 #### Oper Supervisor:
 
@@ -74,7 +74,7 @@ No definition of a Role means no access to that user.
 <br><br>STOP:  Requests , 
 <br><br>CANCEL:  Requests .
 
-2. WAITING LINE: All
+2. QUEUE: All
 
 #### Tech:
 
@@ -87,7 +87,7 @@ No definition of a Role means no access to that user.
 <br><br>STOP:  Requests , 
 <br><br>CANCEL:  Requests .
 
-2. WAITING LINE: All
+2. QUEUE: All
 
 ### Example - Market Test Manager role
 
@@ -128,7 +128,7 @@ access: {
            },
            putBackInQueue: true
         },
-        waitingLine: {
+        queue: {
             cancel: {
                 requests: true
             },
@@ -160,7 +160,7 @@ access: {
             searchBy: {
                 keywords: true,
                 innovation: true
-            },
+            }
         }
     } 
 }

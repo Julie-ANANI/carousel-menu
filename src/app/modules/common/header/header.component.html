@@ -81,7 +81,7 @@
               (click)="onClickLink()"
               *ngIf="hasAdminSide && canAccessRoute(route.key)"
               [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="route.pageLink"
+              [routerLink]="adminRouteLink(route.key, route.pageLink, route.subRoutes)"
               class="navbar-item"
               routerLinkActive="active">
               <span>{{ route.pageName }}</span>
@@ -310,7 +310,7 @@
               (click)="onClickLink()"
               *ngIf="hasAdminSide && canAccessRoute(route.key)"
               [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="route.pageLink"
+              [routerLink]="adminRouteLink(route.key, route.pageLink, route.subRoutes)"
               class="navbar-item"
               routerLinkActive="active">
               {{ route.pageName }}

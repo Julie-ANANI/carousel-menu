@@ -19,7 +19,8 @@ interface Header {
   pageName: string;
   pageLink: string;
   trackingClass?: string;
-  key: string
+  key: string;
+  subRoutes?: Array<string>; // put the key of the sub-routes
 }
 
 @Component({
@@ -76,10 +77,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { pageName: 'Users', pageLink: '/user/admin/users', key: 'users' },
     { pageName: 'Community', pageLink: '/user/admin/community', key: 'community' },
     { pageName: 'Professionals', pageLink: '/user/admin/professionals', key: 'professionals' },
-    { pageName: 'Libraries', pageLink: '/user/admin/libraries', key: 'libraries' },
+    {
+      pageName: 'Libraries',
+      pageLink: '/user/admin/libraries',
+      key: 'libraries',
+      subRoutes: ['workflows', 'emails', 'questionnaire', 'signatures']
+    },
     { pageName: 'Monitoring', pageLink: '/user/admin/monitoring', key: 'monitoring' },
-    { pageName: 'Settings', pageLink: '/user/admin/settings', key: 'settings' },
-    { pageName: 'Search', pageLink: '/user/admin/search', key: 'search' },
+    {
+      pageName: 'Settings',
+      pageLink: '/user/admin/settings',
+      key: 'settings',
+      subRoutes: ['blacklist', 'countries', 'enterprises'] },
+    {
+      pageName: 'Search',
+      pageLink: '/user/admin/search',
+      key: 'search',
+      subRoutes: ['pros', 'history', 'queue']
+    },
   ];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
@@ -181,6 +196,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public canAccessRoute(key: string) {
     return this._rolesFrontService.hasAccessAdminSide([key]);
+  }
+
+  public adminRouteLink(key: string, pageLink: string, subRoutes?: Array<string>) {
+    if (subRoutes && subRoutes.length) {
+      return pageLink + '/' + this._rolesFrontService.canAccessRoute(subRoutes, key.split(', '));
+    }
+    return pageLink;
   }
 
   public hasProfilePic(): boolean {

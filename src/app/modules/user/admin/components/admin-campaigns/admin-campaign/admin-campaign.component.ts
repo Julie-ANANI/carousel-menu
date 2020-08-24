@@ -111,6 +111,10 @@ export class AdminCampaignComponent implements OnInit {
     }
   }
 
+  public backToCampaigns(): string {
+    return `/user/admin/projects/project/${this._campaign.innovation && this._campaign.innovation._id}/campaigns`;
+  }
+
   public onClickTab(event: Event, key: string) {
     event.preventDefault();
     this._heading = AdminCampaignComponent._initHeading(key);

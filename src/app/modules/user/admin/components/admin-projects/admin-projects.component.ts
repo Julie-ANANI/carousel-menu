@@ -270,7 +270,7 @@ export class AdminProjectsComponent implements OnInit {
    * @param innovation
    */
   public navigate(innovation: Innovation) {
-    this._router.navigate([`/user/admin/projects/project/${innovation._id}`]);
+    this._router.navigate([`/user/admin/projects/project/${innovation._id}/${this._rolesFrontService.projectDefaultRoute()}`]);
   }
 
   /***

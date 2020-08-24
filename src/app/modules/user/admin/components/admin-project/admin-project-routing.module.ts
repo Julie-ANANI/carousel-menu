@@ -8,7 +8,7 @@ import { AdminProjectManagementComponent } from './admin-project-management/admi
 import { AdminProjectFollowUpComponent } from './admin-project-follow-up/admin-project-follow-up.component';
 
 export const projectRoutes: Routes = [
-  { path: '', redirectTo: 'settings', pathMatch: 'full'},
+  // { path: '', redirectTo: 'settings', pathMatch: 'full'},
   { path: 'settings', component: AdminProjectManagementComponent, pathMatch: 'full' },
   { path: 'synthesis', component: AdminProjectSynthesisComponent, pathMatch: 'full' },
   { path: 'campaigns', component: AdminProjectCampaignsComponent, pathMatch: 'full' },

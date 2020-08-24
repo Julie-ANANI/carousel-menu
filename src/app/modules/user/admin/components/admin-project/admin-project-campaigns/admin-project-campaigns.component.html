@@ -29,7 +29,7 @@
           <div class="card-content">
 
             <div class="d-flex align-center">
-              <a [routerLink]="'/user/admin/campaigns/campaign/' + campaign['_id'] + '/answers'">
+              <a [routerLink]="route(campaign._id)">
                 {{ campaign.title }}
               </a>
               <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-sm text-bold is-success m-left-10">

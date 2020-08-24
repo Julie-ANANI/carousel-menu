@@ -14,7 +14,7 @@ export class AdminSearchComponent {
   private _tabs: Array<{key: string, name: string, route: string}> = [
     {key: 'pros', name: 'Professionals', route: 'pros'},
     {key: 'history', name: 'History', route: 'history'},
-    {key: 'waitingLine', name: 'File d\'attente', route: 'queue'}
+    {key: 'queue', name: 'File d\'attente', route: 'queue'}
   ];
 
   private _heading = '';

@@ -11,7 +11,7 @@ import { SignaturesResolver } from '../../../../../resolvers/admin/signatures-re
 import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver';
 
 export const librariesRoutes: Routes = [
-  { path: '', redirectTo: 'workflows', pathMatch: 'full' },
+  // { path: '', redirectTo: 'workflows', pathMatch: 'full' },
   { path: 'workflows', component: AdminLibrariesWorkflowsComponent, pathMatch: 'full' },
   { path: 'emails', component: AdminEmailsLibraryComponent, pathMatch: 'full' },
   {

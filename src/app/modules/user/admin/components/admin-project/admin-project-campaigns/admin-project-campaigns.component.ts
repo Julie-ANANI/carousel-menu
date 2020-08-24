@@ -118,6 +118,10 @@ export class AdminProjectCampaignsComponent implements OnInit {
     });
   }
 
+  public route(id: string): string {
+    return `/user/admin/campaigns/campaign/${id}/${this._rolesFrontService.campaignDefaultRoute()}`;
+  }
+
   /***
    * when the user clicks on the Edit button.
    * @param event
@@ -191,7 +195,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     });
   }
 
-  get campaigns(): Array<any> {
+  get campaigns(): Array<Campaign> {
     return this._campaigns;
   }
 

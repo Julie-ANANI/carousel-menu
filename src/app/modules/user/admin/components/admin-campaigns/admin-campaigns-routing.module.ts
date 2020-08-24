@@ -11,7 +11,7 @@ import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admi
 import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
 
 export const campaignRoutes: Routes = [
-  { path: '', redirectTo: 'answers', pathMatch: 'full' },
+  // { path: '', redirectTo: 'answers', pathMatch: 'full' },
   { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full' },
   { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full' },
   { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full' },

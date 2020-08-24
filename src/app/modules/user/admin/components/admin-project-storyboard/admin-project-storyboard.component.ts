@@ -311,6 +311,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
     });
   }
 
+  public backToProjectLink(): string {
+    return `/user/admin/projects/project/${this._innovation._id}/${this._rolesFrontService.projectDefaultRoute()}`;
+  }
+
   public copyLink(event: Event, linkToCopy: string) {
     event.preventDefault();
     this._commonService.copyToClipboard(linkToCopy);

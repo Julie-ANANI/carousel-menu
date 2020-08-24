@@ -31,7 +31,7 @@
               <h1 class="title m-no-bottom m-right-15 text-background">Storyboard</h1>
               <a
                 *ngIf="innovation && innovation._id"
-                [routerLink]="'/user/admin/projects/project/'+innovation._id"
+                [routerLink]="backToProjectLink()"
                 class="text-sm text-notify back-to-wrapper">
                 {{ 'ADMIN_STORYBOARD.BACK_TO' | translate }}
               </a>

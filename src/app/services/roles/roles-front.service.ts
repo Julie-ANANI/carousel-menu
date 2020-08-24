@@ -25,20 +25,43 @@ export class RolesFrontService {
 	/***
 	 * returns the key/route if the Admin has access to that provided in the path.
 	 * Here the order in the routes matter.
-	 * @param routes ex: ['pros', 'history', 'waitingLine'] || ['projects', 'user', 'professionals']
+	 * @param routes ex: ['pros', 'history', 'queue'] || ['projects', 'user', 'professionals']
 	 * @param path ex: ['search']
 	 */
 	public canAccessRoute(routes: Array<string>, path?: Array<string>): string {
+		let _route = '';
+
 		if (routes.length) {
-			routes.forEach((route) => {
-				if (path.length && !!this.hasAccessAdminSide(path.concat(route))) {
-					return route
-				} else if (!!this.hasAccessAdminSide(route.split(', '))) {
-					return route;
+			for (let i = 0; i <= routes.length; i++) {
+				if (path.length && !!this.hasAccessAdminSide(path.concat(routes[i]))) {
+					_route = routes[i];
+					break;
+				} else if (!!(this.hasAccessAdminSide([routes[i]]) && this.hasAccessAdminSide(routes[i].split(', ')))) {
+					_route = routes[i];
+					break;
 				}
-			});
+			}
 		}
-		return '';
+
+		return _route;
+	}
+
+	/***
+	 * this will return the sub-route of the single project.
+	 */
+	public projectDefaultRoute() : string {
+		return this.canAccessRoute(
+			['settings', 'answerTags', 'questionnaire', 'campaigns', 'synthesis', 'followUp', 'storyboard'],
+			['projects', 'project']);
+	}
+
+	/***
+	 * this will return the sub-route of the single campaign.
+	 */
+	public campaignDefaultRoute(): string {
+		return this.canAccessRoute(
+			['answers', 'batch', 'workflows', 'pros', 'history', 'search'],
+			['projects', 'project', 'campaigns', 'campaign']);
 	}
 
 }

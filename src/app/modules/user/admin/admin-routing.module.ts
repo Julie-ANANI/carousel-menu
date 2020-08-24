@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminProfessionalsComponent } from './components/admin-professionals/admin-professionals.component';
 import { AdminProjectComponent } from './components/admin-project/admin-project.component';
@@ -37,7 +36,6 @@ const adminRoutes: Routes = [
     path: '',
     canActivateChild: [AdminAuthGuard],
     children: [
-      { path: '', component: AdminDashboardComponent, pathMatch: 'full' },
       { path: 'users', component: AdminUsersComponent, pathMatch: 'full' },
       { path: 'professionals', component: AdminProfessionalsComponent, pathMatch: 'full' },
       {

@@ -8,7 +8,7 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 
 export class AdminSearchQueueComponent {
 
-  private _accessPath: Array<string> = ['search', 'waitingLine'];
+  private _accessPath: Array<string> = ['search', 'queue'];
 
   constructor(private _rolesFrontService: RolesFrontService) { }
 

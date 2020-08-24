@@ -35,5 +35,7 @@ export interface Campaign {
   autoBatch: Boolean;
   nuggets?: Boolean;
   targetCountries?: Array<string>;
+  type?: string;
+  status?: string;
 }
 

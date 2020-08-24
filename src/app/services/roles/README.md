@@ -14,7 +14,7 @@ Guest, User, Supervisor, Community, Commercial, Marketing, Hotline, Market-test-
 <br><br>LIBRARIES:  WORKFLOWS, EMAILS, QUESTIONNAIRE, SIGNATURES , 
 <br><br>MONITORING:  MAILGUN, GMAIL, SHIELD ,
 <br><br>SETTINGS:  BLACKLIST, COUNTRIES, COMPANY , 
-<br><br>SEARCH:  PROFESSIONAL, HISTORY, WAITING LINE ,
+<br><br>SEARCH:  PROFESSIONAL, HISTORY, QUEUE,
 <br><br>PROJECTS: 
 <br> PROJECT:  SETTINGS, ANSWER TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD, FOLLOW UP , 
 <br><br>CAMPAIGNS: 
@@ -63,7 +63,7 @@ No definition of a Role means no access to that user.
 
 1. ADMIN SIDE: USERS, PROFESSIONALS
 <br><br>LIBRARIES:  WORKFLOWS, QUESTIONNAIRE ,
-<br><br>SEARCH:  HISTORY, WAITING LINE ,
+<br><br>SEARCH:  HISTORY, QUEUE,
 <br><br>PROJECTS: 
 <br> PROJECT:  SETTINGS, ANSWER TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD , 
 <br><br>CAMPAIGNS: 
@@ -73,7 +73,7 @@ No definition of a Role means no access to that user.
 
 1. ADMIN SIDE: USERS, PROFESSIONALS
 <br><br>LIBRARIES:  WORKFLOWS, QUESTIONNAIRE ,
-<br><br>SEARCH:  HISTORY, WAITING LINE ,
+<br><br>SEARCH:  HISTORY, QUEUE,
 <br><br>PROJECTS: 
 <br> PROJECT:  SETTINGS, ANSWER TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD , 
 <br><br>CAMPAIGNS: 
@@ -83,7 +83,7 @@ No definition of a Role means no access to that user.
 
 1. ADMIN SIDE: USERS, PROFESSIONALS
 <br><br>LIBRARIES:  WORKFLOWS, QUESTIONNAIRE ,
-<br><br>SEARCH:  HISTORY, WAITING LINE ,
+<br><br>SEARCH:  HISTORY, QUEUE,
 <br><br>PROJECTS: 
 <br> PROJECT:  SETTINGS, ANSWER TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD , 
 <br><br>CAMPAIGNS: 
@@ -93,7 +93,7 @@ No definition of a Role means no access to that user.
 
 1. ADMIN SIDE: USERS, PROFESSIONALS
 <br><br>LIBRARIES:  WORKFLOWS, QUESTIONNAIRE ,
-<br><br>SEARCH:  HISTORY, WAITING LINE ,
+<br><br>SEARCH:  HISTORY, QUEUE,
 <br><br>PROJECTS: 
 <br> PROJECT:  SETTINGS, ANSWER TAGS, QUESTIONNAIRE, SYNTHESIS, STORYBOARD , 
 <br><br>CAMPAIGNS: 
@@ -333,13 +333,35 @@ access: {
                     underShield: true
                 }
             },
-            waitingLine: {
-                launchModule: true,
-                cancelSearch: true,
-                stopSearch: true, 
-                addSearchInCampaign: true,
-                searchEmails: true,
-                putBackSearchInLine: true,
+            queue: {
+                cancel: {
+                    requests: true
+                },
+                stop: {
+                    requests: true
+                },
+                launch: {
+                    emailsSearch: true
+                },
+                add: {
+                    toCampaign: true
+                },
+                view: {
+                   request: true,
+                   campaign: true,
+                   results: true,
+                   requests: true
+                },
+                tableColumns: {
+                   underShield: true,
+                   emailStatus: true,
+                   status: true,
+                   created: true,
+                   targeting: true,
+                   pros: true,
+                   keywords: true
+                },
+                putBackInQueue: true,
                 searchBy: {
                     keywords: true,
                     innovation: true
