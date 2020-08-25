@@ -55,7 +55,7 @@ access: {
             email: true, 
             job: true, 
             country: true,
-            Company: true
+            company: true
         }, 
         tableColumns: { 
             name: true, 
