@@ -66,8 +66,7 @@
       </div>
 
       <!-- Project owner -->
-      <div *ngIf="canAccess(['view', 'owner']) || canAccess(['edit', 'owner'])"
-           class="project-line"> <!-- [ngClass]="{disabled: authService.userId !== operatorId}" -->
+      <div class="project-line"> <!-- [ngClass]="{disabled: authService.userId !== operatorId}" -->
         <label class="form-switch" for="editOwner">
           <input
             type="checkbox"
@@ -80,7 +79,7 @@
         <label *ngIf="!edit.owner" class="form-label">{{project.owner.name}}</label>
 
         <!-- if we click on update we show an autoComplete of all users -->
-        <div [formGroup]="formData" class="form-group" style="position: relative" *ngIf="edit.owner && canAccess(['edit', 'owner'])">
+        <div [formGroup]="formData" class="form-group" style="position: relative" *ngIf="edit.owner">
           <input
             class="form-input"
             formControlName="owner"
@@ -102,7 +101,6 @@
         </div>
 
         <button class="btn btn-xs ghost-edit"
-                [disabled]="!canAccess(['edit', 'owner'])"
                 [ngClass]="{'showOnHover': !edit.owner}"
                 (click)="edit.owner ? ownerEditionFinished() : edit.owner = true">
           {{(edit.owner ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
