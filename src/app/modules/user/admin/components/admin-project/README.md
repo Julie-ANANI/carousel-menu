@@ -46,11 +46,14 @@ No definition of a Role means no access to that user.
 
 1. SETTINGS:
 <br><br>VIEW: 'Operator, Mission Type, Main Objective, Commercial, Blacklist, Statistics',
-<br><br>EDIT: 'Blacklist, Statistics'.
+<br><br>EDIT: 'Blacklist, Statistics, Description, Project Tags'.
 
 2. CAMPAIGNS: View
 
 3. FOLLOW UP: All
+
+4. QUESTIONNAIRE: Edit,
+<br><br>QUIZ: 'VIEW'.
 
 #### Marketing:
 
