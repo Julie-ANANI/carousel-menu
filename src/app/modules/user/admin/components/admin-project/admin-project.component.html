@@ -83,15 +83,16 @@
 
         <!-- tabs -->
         <ul class="tab">
-          <li *ngFor="let tab of tabs" class="tab-item">
-            <a
-              *ngIf="canAccess(['projects', 'project', tab.key])"
-              [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
-              routerLinkActive="active">
-              {{ tab.name }}
-            </a>
-          </li>
+          <ng-container *ngFor="let tab of tabs">
+            <li *ngIf="canAccess(['projects', 'project', tab.key])" class="tab-item">
+              <a
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
+                routerLinkActive="active">
+                {{ tab.name }}
+              </a>
+            </li>
+          </ng-container>
         </ul>
         <!-- /tabs -->
 

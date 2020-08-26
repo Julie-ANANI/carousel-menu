@@ -36,8 +36,8 @@ export class SidebarUserAnswerComponent {
 
   @Input() set userAnswer(value: Answer) {
     this._reinitVariables();
-    this._userAnswer = value;
-    if (this._userAnswer && !this._userAnswer.company) {
+    this._userAnswer = value || <Answer>{};
+    if (!this._userAnswer.company) {
       this._userAnswer.company = {};
     }
   }
