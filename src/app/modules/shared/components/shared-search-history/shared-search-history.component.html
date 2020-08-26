@@ -48,7 +48,7 @@
 
 
 <!-- sidebar to request details -->
-<app-sidebar *ngIf="canAccess(['view', 'request'])" [(template)]="sidebarValue">
+<app-sidebar *ngIf="canAccess(['view'])" [(template)]="sidebarValue">
   <app-sidebar-search-history
     [accessPath]="accessPath"
     [request]="selectedRequest">
