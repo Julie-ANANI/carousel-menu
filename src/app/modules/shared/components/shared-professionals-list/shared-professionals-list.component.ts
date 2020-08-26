@@ -35,7 +35,7 @@ export class SharedProfessionalsListComponent {
 
   @Input() total = -1;
 
-  @Input() campaign: Campaign = <Campaign>{};
+  @Input() campaign: Campaign = null; // This needs to be initialized as null because of some verifications below !!campaign
 
   @Input() set professionals(value: Array<SelectedProfessional>) {
     this._professionals = value;
