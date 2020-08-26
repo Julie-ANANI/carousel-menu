@@ -524,7 +524,7 @@ export class AdminProjectManagementComponent implements OnInit {
       this._more = {
         animate_state: 'active',
         title: 'COMMON.ADD-TAGS',
-        type: 'addTags',
+        type: 'ADD_TAGS',
       };
     }
   }
