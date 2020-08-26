@@ -40,7 +40,7 @@ No definition of a Role means no access to that user.
 #### Market Test Manager:
 
 1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords , 
+<br><br>SEARCH BY:  Keywords, Innovation, 
 <br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
 <br><br>VIEW:  Campaign, Request, Results, Requests , 
 <br><br>ADD:  To Campaign , 
@@ -53,7 +53,7 @@ No definition of a Role means no access to that user.
 #### Market Test Manager UMI:
 
 1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords , 
+<br><br>SEARCH BY:  Keywords, Innovation, 
 <br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
 <br><br>VIEW:  Campaign, Request, Results, Requests , 
 <br><br>ADD:  To Campaign , 
@@ -66,7 +66,7 @@ No definition of a Role means no access to that user.
 #### Oper Supervisor:
 
 1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords , 
+<br><br>SEARCH BY:  Keywords, Innovation , 
 <br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
 <br><br>VIEW:  Campaign, Request, Results, Requests , 
 <br><br>ADD:  To Campaign , 
@@ -79,7 +79,7 @@ No definition of a Role means no access to that user.
 #### Tech:
 
 1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords , 
+<br><br>SEARCH BY:  Keywords, Innovation , 
 <br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
 <br><br>VIEW:  Campaign, Request, Results, Requests , 
 <br><br>ADD:  To Campaign , 
@@ -124,7 +124,8 @@ access: {
                keywords: true
            },
            searchBy: {
-               keywords: true
+               keywords: true,
+               innovation: true
            },
            putBackInQueue: true
         },
