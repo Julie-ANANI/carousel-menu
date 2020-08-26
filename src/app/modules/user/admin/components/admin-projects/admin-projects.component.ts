@@ -17,7 +17,6 @@ import { environment } from '../../../../../../environments/environment';
 import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
-import { Router } from "@angular/router";
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -61,7 +60,6 @@ export class AdminProjectsComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService,
-              private _router: Router,
               private _userService: UserService) {
 
     this._translateTitleService.setTitle('Market Tests');
@@ -270,7 +268,7 @@ export class AdminProjectsComponent implements OnInit {
    * @param innovation
    */
   public navigate(innovation: Innovation) {
-    this._router.navigate([`/user/admin/projects/project/${innovation._id}/${this._rolesFrontService.projectDefaultRoute()}`]);
+    window.open(`/user/admin/projects/project/${innovation._id}/${this._rolesFrontService.projectDefaultRoute()}`, '_blank');
   }
 
   /***

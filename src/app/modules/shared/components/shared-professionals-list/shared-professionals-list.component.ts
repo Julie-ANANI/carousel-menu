@@ -254,8 +254,8 @@ export class SharedProfessionalsListComponent {
   }
 
   private _removeProfessionalFromCampaign(value: string, index: number) {
-    const _campaignId = this.campaign._id;
-    const _innovationId = this.campaign.innovation._id;
+    const _campaignId = this.campaign && this.campaign._id;
+    const _innovationId = this.campaign && this.campaign.innovation && this.campaign.innovation._id;
 
     this._professionalsService.removeFromCampaign(value, _campaignId, _innovationId).pipe(first()).subscribe(result => {
       if (index === this._professionalsToRemove.length - 1) {
