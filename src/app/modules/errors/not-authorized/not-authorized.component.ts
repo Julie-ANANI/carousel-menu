@@ -41,11 +41,7 @@ export class NotAuthorizedComponent implements OnInit {
 
   public onClickReload() {
     this.isReloading = true;
-    this._router.navigate([this.adminDefaultRoute]);
-  }
-
-  get adminDefaultRoute(): string {
-    return this._routeFrontService.adminDefaultRoute();
+    this._router.navigate([this._routeFrontService.adminDefaultRoute()]);
   }
 
   get isLoading(): boolean {

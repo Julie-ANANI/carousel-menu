@@ -46,7 +46,9 @@ export class AppComponent implements OnInit, OnDestroy {
     initTranslation(this._translateService);
 
     if (this._authService.isAcceptingCookies) {
-      this._authService.initializeSession().subscribe(() => {}, () => {
+      this._authService.initializeSession().subscribe(() => {
+        console.log('The application has been started.');
+      }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', { timeOut: 0 });
       });
     }

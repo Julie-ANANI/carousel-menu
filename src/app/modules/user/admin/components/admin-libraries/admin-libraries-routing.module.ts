@@ -10,15 +10,31 @@ import { PresetResolver } from '../../../../../resolvers/preset.resolver';
 import { SignaturesResolver } from '../../../../../resolvers/admin/signatures-resolver';
 import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver';
 
+import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
+
 export const librariesRoutes: Routes = [
   // { path: '', redirectTo: 'workflows', pathMatch: 'full' },
-  { path: 'workflows', component: AdminLibrariesWorkflowsComponent, pathMatch: 'full' },
-  { path: 'emails', component: AdminEmailsLibraryComponent, pathMatch: 'full' },
+  {
+    path: 'workflows',
+    component: AdminLibrariesWorkflowsComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['libraries', 'workflows'] }
+  },
+  {
+    path: 'emails',
+    component: AdminEmailsLibraryComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['libraries', 'emails'] }
+  },
   {
     path: 'signatures',
     component: AdminSignaturesLibraryComponent,
     resolve: { signatures: SignaturesResolver },
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['libraries', 'signatures'] }
   },
    /*{ path: 'questionnaire', children: [
       { path: '', component: AdminPresetsListComponent, pathMatch: 'full' },
@@ -30,7 +46,9 @@ export const librariesRoutes: Routes = [
     path: 'questionnaire',
     component: AdminPresetsListComponent,
     resolve: { presets: PresetsResolver },
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['libraries', 'questionnaire'] }
   },
   {
     path: 'questionnaire/:presetId',

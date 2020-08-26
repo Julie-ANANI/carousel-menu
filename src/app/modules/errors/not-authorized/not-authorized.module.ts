@@ -4,12 +4,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 
 import { NotAuthorizedComponent } from './not-authorized.component';
+import { NotAuthorizedRoutingModule } from './not-authorized-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    RouterModule
+    RouterModule,
+    NotAuthorizedRoutingModule
   ],
   declarations: [
     NotAuthorizedComponent

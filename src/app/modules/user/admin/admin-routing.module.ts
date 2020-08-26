@@ -26,6 +26,8 @@ import { communityRoutes } from "./components/admin-community/admin-community-ro
 import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
 
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
+import { AdminRoleGuard } from '../../../guards/admin-role-guard.service';
+
 import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
@@ -36,18 +38,34 @@ const adminRoutes: Routes = [
     path: '',
     canActivateChild: [AdminAuthGuard],
     children: [
-      { path: 'users', component: AdminUsersComponent, pathMatch: 'full' },
-      { path: 'professionals', component: AdminProfessionalsComponent, pathMatch: 'full' },
+      {
+        path: 'users',
+        component: AdminUsersComponent,
+        pathMatch: 'full',
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['users'] },
+      },
+      {
+        path: 'professionals',
+        component: AdminProfessionalsComponent,
+        pathMatch: 'full',
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['professionals'] },
+      },
       {
         path: 'projects/project/:projectId/storyboard',
         component: AdminProjectStoryboardComponent,
         pathMatch: 'full',
         resolve: { innovation : InnovationResolver },
         runGuardsAndResolvers: 'always',
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['projects', 'project', 'storyboard'] },
       },
       {
         path: 'projects',
         canActivateChild: [AdminAuthGuard],
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['projects'] },
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
           {
@@ -59,6 +77,18 @@ const adminRoutes: Routes = [
             children: [
               ...projectRoutes
             ]}
+        ]
+      },
+      {
+        path: 'campaigns/campaign/:campaignId',
+        component: AdminCampaignComponent,
+        resolve: { campaign : CampaignResolver },
+        runGuardsAndResolvers: 'always',
+        canActivateChild: [AdminAuthGuard],
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['projects', 'project', 'campaigns', 'campaign'] },
+        children: [
+          ...campaignRoutes
         ]
       },
       {
@@ -99,24 +129,18 @@ const adminRoutes: Routes = [
         path: 'search',
         component: AdminSearchComponent,
         canActivateChild: [AdminAuthGuard],
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['search'] },
         children: [
           ...searchRoutes
-        ]
-      },
-      {
-        path: 'campaigns/campaign/:campaignId',
-        component: AdminCampaignComponent,
-        resolve: { campaign : CampaignResolver },
-        runGuardsAndResolvers: 'always',
-        canActivateChild: [AdminAuthGuard],
-        children: [
-          ...campaignRoutes
         ]
       },
       {
         path: 'settings',
         component: AdminSettingsComponent,
         canActivateChild: [AdminAuthGuard],
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['settings'] },
         children: [
           ...settingsRoutes,
         ]
@@ -125,6 +149,8 @@ const adminRoutes: Routes = [
         path: 'libraries',
         component: AdminLibrariesComponent,
         canActivateChild: [AdminAuthGuard],
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['libraries'] },
         children: [
           ...librariesRoutes
         ]

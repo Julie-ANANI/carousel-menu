@@ -7,12 +7,50 @@ import { AdminProjectQuestionnaireComponent } from './admin-project-questionnair
 import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
 import { AdminProjectFollowUpComponent } from './admin-project-follow-up/admin-project-follow-up.component';
 
+import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
+
 export const projectRoutes: Routes = [
   // { path: '', redirectTo: 'settings', pathMatch: 'full'},
-  { path: 'settings', component: AdminProjectManagementComponent, pathMatch: 'full' },
-  { path: 'synthesis', component: AdminProjectSynthesisComponent, pathMatch: 'full' },
-  { path: 'campaigns', component: AdminProjectCampaignsComponent, pathMatch: 'full' },
-  { path: 'answer_tags', component: AdminProjectTagsPoolComponent, pathMatch: 'full' },
-  { path: 'questionnaire', component: AdminProjectQuestionnaireComponent, pathMatch: 'full' },
-  { path: 'follow-up', component: AdminProjectFollowUpComponent, pathMatch: 'full' }
+  {
+    path: 'settings',
+    component: AdminProjectManagementComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'settings'] }
+  },
+  {
+    path: 'synthesis',
+    component: AdminProjectSynthesisComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'synthesis'] }
+  },
+  {
+    path: 'campaigns',
+    component: AdminProjectCampaignsComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'campaigns'] }
+  },
+  {
+    path: 'answer_tags',
+    component: AdminProjectTagsPoolComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'answerTags'] }
+  },
+  {
+    path: 'questionnaire',
+    component: AdminProjectQuestionnaireComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'questionnaire'] }
+  },
+  {
+    path: 'follow-up',
+    component: AdminProjectFollowUpComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'followUp'] }
+  }
 ];

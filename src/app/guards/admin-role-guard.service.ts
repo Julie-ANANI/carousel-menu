@@ -1,30 +1,46 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { RolesFrontService } from '../services/roles/roles-front.service';
+import { AuthService } from '../services/auth/auth.service';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, map, takeUntil } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
-export class AdminRoleGuardService implements CanActivate {
+export class AdminRoleGuard implements CanActivate, OnDestroy {
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
               private _router: Router) { }
 
-  canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
-    const url: string = routerStateSnapshot.url;
-    return this.checkRouteAccess(url, activatedRouteSnapshot);
-  }
+  canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean | Observable<boolean> {
+    const _path = activatedRouteSnapshot.data['accessPath'] as Array<string> || [];
 
-  // Todo check it again having problem while recovering the user object.
-  public checkRouteAccess(url: string, route: ActivatedRouteSnapshot): boolean {
-    const _data = route.data;
-    const _path = _data['accessPath'] as Array<string> || [];
-
-    if (_path.length && !!this._rolesFrontService.hasAccessAdminSide(_path)) {
-      return true;
+    if (!this._authService.adminAccess && this._authService.isAcceptingCookies) {
+      return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map (() => {
+        return this._navigateTo(_path);
+      }), catchError((err) => {
+        this._router.navigate(['/user']);
+        return of(false);
+      }));
+    } else {
+      return this._navigateTo(_path);
     }
 
+  }
+
+  private _navigateTo(path: Array<string>): boolean {
+    if (path.length && !!this._rolesFrontService.hasAccessAdminSide(path)) {
+      return true;
+    }
     this._router.navigate(['/not-authorized']);
     return false;
+  }
 
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }
