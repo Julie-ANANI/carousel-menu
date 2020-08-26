@@ -259,9 +259,6 @@ export class AdminProjectManagementComponent implements OnInit {
       case('tags-form') :
         this.isTagsSidebar = true;
         break;
-      case('mission-form'):
-        this.isTagsSidebar = true;
-        break;
       default:
         // NOOP
     }
@@ -404,17 +401,13 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editRoadmap() {
-    if (this.canAccess(['edit', 'roadmap'])) {
-      this.changeSidebar('mission-form');
-      if (this._project.mission) {
-        this._more = {
-          animate_state: 'active',
-          title: 'SIDEBAR.TITLE.EDIT_MISSION',
-          type: 'mission',
-          size: '726px'
-        };
-      }
-    }
+    this.changeSidebar('mission-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'SIDEBAR.TITLE.EDIT_MISSION',
+      type: 'mission',
+      size: '726px'
+    };
   }
 
   /***
