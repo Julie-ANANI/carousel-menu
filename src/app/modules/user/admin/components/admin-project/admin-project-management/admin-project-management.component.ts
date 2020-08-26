@@ -102,7 +102,7 @@ export class AdminProjectManagementComponent implements OnInit {
   private _missionObjectives: Array<Objective> = ObjectivesPrincipal;
 
   private _commercials: Observable<Array<User>> = this._userService
-    .getAll({ roles: 'super-admin', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'})
+    .getAll({ roles: 'commercial', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'})
     .map((response: any) => response.result);
 
   public missionTeam: string[];
