@@ -20,13 +20,13 @@ export const settingsRoutes: Routes = [
     component: AdminCountryManagementComponent,
     pathMatch: 'full',
     canActivate: [AdminRoleGuard],
-    data: { accessPath: ['search', 'countries'] }
+    data: { accessPath: ['settings', 'countries'] }
   },
   {
     path: 'enterprises',
     component: AdminEnterpriseManagementComponent,
     pathMatch: 'full',
     canActivate: [AdminRoleGuard],
-    data: { accessPath: ['search', 'company'] }
+    data: { accessPath: ['settings', 'enterprises'] }
   },
 ];

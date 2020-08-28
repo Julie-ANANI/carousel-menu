@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class RouteFrontService {
@@ -34,6 +35,10 @@ export class RouteFrontService {
 	private static _firstAccessRoute(object: any, url: string): string {
 		const _keys = Object.keys(object);
 		return url + (_keys && _keys.length && _keys[0]);
+	}
+
+	public redirectRoute(url: string): any {
+  	return url === environment.clientUrl + '/not-authorized' ? '/user' : url;
 	}
 
 }
