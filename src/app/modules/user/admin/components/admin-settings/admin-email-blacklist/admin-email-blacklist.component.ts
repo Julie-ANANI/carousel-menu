@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Table} from '../../../../../table/models/table';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
-
+import {Config} from '../../../../../../models/config';
+import {isPlatformBrowser} from '@angular/common';
+import {first, takeUntil} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 
 @Component({
-  selector: 'app-shared-email-blacklist',
   templateUrl: 'admin-email-blacklist.component.html',
   styleUrls: ['admin-email-blacklist.component.scss']
 })
-export class AdminEmailBlacklistComponent implements OnInit {
 
-  private _config: any = {
+export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
+
+  private _config: Config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -21,186 +26,228 @@ export class AdminEmailBlacklistComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  private _emailDataset: {blacklists: Array<any>, _metadata: any};
+  private _emailDataset: {blacklists: Array<any>, _metadata: any} = {
+    blacklists: [],
+    _metadata: {
+      totalCount: -1
+    }
+  };
 
-  private _searchConfiguration = '';
-  private _addressToBL = '';
+  private _tableInfos: Table = <Table>{};
 
-  public editDatum: {[propString: string]: boolean} = {};
-
-  private _emailInfos: Table;
-
-  private _more: SidebarInterface = {};
-  sidebarState = new Subject<string>();
   private _currentEmailToBlacklist: any = {};
 
-  constructor( private _emailService: EmailService,
-               private _notificationsService: TranslateNotificationsService) { }
+  private _isLoading = true;
+
+  private _fetchingError = false;
+
+  private _sidebarValue = <SidebarInterface>{};
+
+  private _isEditable = false;
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _emailService: EmailService,
+              private _rolesFrontService: RolesFrontService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._emailDataset = {
-      blacklists: [],
-      _metadata: {
-        totalCount: 0
-      }
-    };
-
-    this.loadEmails(this._config);
-
+    if (isPlatformBrowser(this._platformId)) {
+      this._isLoading = false;
+      this._initTable();
+      this._getBlacklist(this._config);
+    }
   }
 
-  public loadEmails(config: any) {
+  private _getBlacklist(config: Config) {
     this._config = config || this._config;
-    this._emailService.getBlacklist(this._config)
-        .subscribe((result: any) => {
-          if (result && result.message) {
-            // The server may be busy...
-            this._notificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
-          } else {
-            this._emailDataset._metadata = result._metadata;
-              this._emailDataset.blacklists = result.blacklists.map((entry: any) => {
-                entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
-                return entry;
-              });
 
-            this._emailInfos = {
-              _selector: 'shared-blacklisted-emails',
-              _title: 'COMMON.BLACKLIST.EMAILS',
-              _content: this._emailDataset.blacklists,
-              _total: this._emailDataset._metadata.totalCount,
-              _isTitle: true,
-              _isSearchable: true,
-              _isSelectable: true,
-              _isEditable: true,
-              _isPaginable: true,
-              _clickIndex: 1,
-              _columns: [
-                {_attrs: ['email'], _name: 'COMMON.LABEL.EMAIL', _type: 'TEXT', _isSearchable: true},
-                {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE', _isSortable: true},
-                {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE', _isSortable: true},
-                {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES', _isSearchable: true,
-                  _choices: [
-                    {
-                      _name: 'MANUALLY_ADDED',
-                      _alias: this.reasonFormat('MANUALLY_ADDED'),
-                    }, {
-                      _name: 'USER_SUPPRESSION',
-                      _alias: this.reasonFormat('USER_SUPPRESSION'),
-                    }, {
-                      _name: 'PROFESSIONAL_SUPPRESSION',
-                      _alias: this.reasonFormat('PROFESSIONAL_SUPPRESSION'),
-                    },
-                    {
-                      _name: 'MAIL_EVENT',
-                      _alias: this.reasonFormat('MAIL_EVENT'),
-                    }
-                    ]},
-                {_attrs: ['type'], _name: 'COMMON.LABEL.TYPE', _type: 'MULTI-CHOICES', _isSearchable: true,
-                  _choices: [
-                    {_name: 'EMAIL', _alias: 'COMMON.LABEL.EMAIL', _class: 'label is-draft'},
-                    {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label is-secondary'}
-                  ]}]
-            };
-          }
-        }, (error: any) => {
-          this._notificationsService.error('Error', error.message);
-        });
+    this._emailService.getBlacklist(this._config).pipe(first()).subscribe((result: any) => {
+      if (result && result.message) {
+        // The server may be busy...
+        this._translateNotificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
+      } else {
+        this._emailDataset._metadata = result._metadata;
+          this._emailDataset.blacklists = result.blacklists.map((entry: any) => {
+            entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
+            return entry;
+          });
+        this._initTable();
+      }
+    }, (error: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(error.status));
+      console.error(error);
+      this._fetchingError = true;
+    });
+
   }
 
-  public resetSearch() {
-    this.searchConfiguration = '';
-    this.loadEmails(null);
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'blacklist'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'blacklist']);
+    }
   }
 
-  editBlacklist(email: any) {
-    this._currentEmailToBlacklist = this._emailDataset.blacklists.find(value => value._id === email._id);
-      this._more = {
-        animate_state: 'active',
-        title: 'COMMON.EDIT-BLACKLIST',
-        type: 'editBlacklist'
-      };
-  }
-
-  excludeEmails() {
-    this._more = {
-      animate_state: 'active',
-      title: 'COMMON.EXCLUDE-EMAILS',
-      type: 'excludeEmails'
-    };
-
-    this._emailDataset.blacklists.forEach(value => {this._emailService.updateBlacklistEntry(value._id, value)
-      .subscribe((result: any) => {
-      }, (error: any) => {
-        this._notificationsService.error('Error', error.message);
-      }); });
-  }
-
-  closeSidebar(value: SidebarInterface) {
-    this.more.animate_state = value.animate_state;
-    this.sidebarState.next(this.more.animate_state);
-  }
-
-  blacklistEditionFinish(email: any) {
-    console.log(email);
-    this._emailService.updateBlacklistEntry(email._id, email)
-      .subscribe(
-        (data: any) => {
-          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-          this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadEmails(this._config);
+  private _initTable() {
+    this._tableInfos = {
+      _selector: 'admin-blacklisted-emails',
+      _title: 'Blacklisted e-mails',
+      _content: this._emailDataset.blacklists,
+      _total: this._emailDataset._metadata.totalCount,
+      _isTitle: true,
+      _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['sortBy']),
+      _isPaginable: this._emailDataset._metadata.totalCount > 10,
+      _clickIndex: this.canAccess(['view']) || this.canAccess(['edit']) ? 1 : null,
+      _columns: [
+        {
+          _attrs: ['email'],
+          _name: 'E-mail Address',
+          _type: 'TEXT',
+          _isSearchable: this.canAccess(['searchBy', 'emailAddress']),
+          _isHidden: !this.canAccess(['tableColumns', 'emailAddress'])
         },
-        (error: any) => {
-          this._notificationsService.error('ERROR.ERROR', error.message);
-        });
+        {
+          _attrs: ['created'],
+          _name: 'Created On',
+          _type: 'DATE',
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'created'])
+        },
+        {
+          _attrs: ['expiration'],
+          _name: 'Expires On',
+          _type: 'DATE',
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'expires'])
+        },
+        {
+          _attrs: ['reason'],
+          _name: 'Reason',
+          _type: 'MULTI-CHOICES',
+          _isSearchable: this.canAccess(['sortBy', 'reason']),
+          _isHidden: !this.canAccess(['tableColumns', 'reason']),
+          _choices: [
+            {
+              _name: 'MANUALLY_ADDED',
+              _alias: this.reasonFormat('MANUALLY_ADDED'),
+            }, {
+              _name: 'USER_SUPPRESSION',
+              _alias: this.reasonFormat('USER_SUPPRESSION'),
+            }, {
+              _name: 'PROFESSIONAL_SUPPRESSION',
+              _alias: this.reasonFormat('PROFESSIONAL_SUPPRESSION'),
+            },
+            {
+              _name: 'MAIL_EVENT',
+              _alias: this.reasonFormat('MAIL_EVENT'),
+            }
+          ]},
+        {
+          _attrs: ['type'],
+          _name: 'Type',
+          _type: 'MULTI-CHOICES',
+          _isSearchable: this.canAccess(['sortBy', 'type']),
+          _isHidden: !this.canAccess(['tableColumns', 'type']),
+          _choices: [
+            {_name: 'EMAIL', _alias: 'COMMON.LABEL.EMAIL', _class: 'label is-draft'},
+            {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label is-secondary'}
+          ]}]
+    };
   }
 
-  addEmailsToBlacklistFinish(emails: Array<string>) {
-    emails.forEach((value: any) => {
-      this._emailService.addToBlacklist({email: value.text})
-        .subscribe((result: any) => {
-          this._notificationsService.success('Blacklist', `The address ${value.text} has been added successfully to the blacklist`);
-          this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadEmails(this._config);
-        }, (error: any) => {
-          this._notificationsService.error('Error', error.message);
-        });
+  public editBlacklist(email: any) {
+    this._currentEmailToBlacklist = this._emailDataset.blacklists.find(value => value._id === email._id);
+    this._isEditable = this.canAccess(['edit']);
+    this._sidebarValue = {
+      animate_state: 'active',
+      title: this._isEditable ? 'Edit Blacklisted E-mail' : 'Blacklisted E-mail',
+      type: 'EDIT_EMAILS'
+    };
+  }
+
+  public excludeSidebar(event: Event) {
+    event.preventDefault();
+    this._isEditable = this.canAccess(['add']);
+    this._sidebarValue = {
+      animate_state: 'active',
+      title: 'Exclude E-mails / Domains',
+      type: 'EXCLUDE_EMAILS_DOMAINS'
+    };
+  }
+
+  public blacklistEditionFinish(email: any) {
+    this._emailService.updateBlacklistEntry(email._id, email).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Success', 'The E-mail information is updated.');
+      this._getBlacklist(this._config);
+      },
+      (error: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Error', error.message);
+      console.error(error);
     });
   }
 
-  public updateEntry(datum: any, event: Event) {
-    event.preventDefault();
-    this.editDatum[datum._id] = false;
-    this._emailService.updateBlacklistEntry(datum._id, datum)
-        .subscribe((result: any) => {
-          this.resetSearch();
-          this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been updated`);
-        }, (error: any) => {
-          this._notificationsService.error('Error', error.message);
-        });
+  public toBlacklists(values: {emails: Array<string>, domains: Array<string>}) {
+    if (values.emails && values.emails.length) {
+      this._addToBlacklist(values.emails);
+    }
+    if (values.domains && values.domains.length) {
+      this._addToBlacklist(values.domains);
+    }
+  }
+
+  private _addToBlacklist(values: Array<string>) {
+    values.forEach((value: any, index) => {
+      this._emailService.addToBlacklist({email: value.text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+        this._refreshList(index, values.length - 1);
+        this._translateNotificationsService.success('Success',
+          `The address ${value.text} has been added to the blacklist.`);
+      }, (error: HttpErrorResponse) => {
+        this._refreshList(index, values.length - 1);
+        this._translateNotificationsService.error('Error', error.message);
+        console.error(error);
+      });
+    });
+  }
+
+  private _refreshList(index: number, total: number) {
+    if (index === total) {
+      this._getBlacklist(this._config);
+    }
   }
 
   public reasonFormat(reason: string): string {
-    let result = '';
     switch (reason || '') {
+
       case( 'USER_SUPPRESSION' ):
-        result = 'Deleted user';
-        break;
+        return 'Deleted user';
+
       case('PROFESSIONAL_SUPPRESSION'):
-          result = 'Deleted professional';
-        break;
+        return 'Deleted professional';
+
       case('MAIL_EVENT'):
-        result = 'Unsubscribe event';
-        break;
+        return  'Unsubscribe event';
+
       case('MANUALLY_ADDED'):
       default:
-        result = 'Added by operator';
+        return 'Added by operator';
+
     }
-    return result;
   }
 
-  get emailInfos(): Table { return this._emailInfos; }
-  get data(): Array<any> { return this._emailDataset.blacklists; };
-  get metadata(): any { return this._emailDataset._metadata; };
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get data(): Array<any> {
+    return this._emailDataset.blacklists;
+  };
+
+  get metadata(): any {
+    return this._emailDataset._metadata;
+  };
 
   get config(): any {
     return this._config;
@@ -208,14 +255,44 @@ export class AdminEmailBlacklistComponent implements OnInit {
 
   set config(value: any) {
     this._config = value;
-    this.loadEmails(this._config);
+    this._getBlacklist(this._config);
   };
 
-  get total(): number { return this._emailDataset._metadata.totalCount; };
-  get searchConfiguration(): string { return this._searchConfiguration; };
-  get addressToBL(): string { return this._addressToBL; };
-  get more(): SidebarInterface { return this._more; }
-  get currentEmailToBlacklist(): any { return this._currentEmailToBlacklist; }
-  set searchConfiguration(value: string) { this._searchConfiguration = value; };
-  set addressToBL(address: string ) { this._addressToBL = address; };
+  get total(): number {
+    return this._emailDataset._metadata.totalCount;
+  };
+
+  get currentEmailToBlacklist(): any {
+    return this._currentEmailToBlacklist;
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
 }

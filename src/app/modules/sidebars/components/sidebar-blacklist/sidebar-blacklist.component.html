@@ -1,0 +1,138 @@
+<div class="column col-11 col-sm-12 p-top-30 col-mx-auto" id="sidebar-blacklist">
+  <form novalidate [formGroup]="formData" autocomplete="off" (ngSubmit)="onSubmit()">
+
+    <!-- save button -->
+    <div *ngIf="isEditable" class="text-right p-bottom-30">
+      <button
+        [disabled]="!toBeSaved"
+        class="button is-community is-sm"
+        id="btn-save"
+        type="submit">
+        Save
+      </button>
+    </div>
+    <!-- /save button -->
+
+    <!-- templates -->
+    <div>
+
+      <!-- type === 'EXCLUDE_EMAILS_DOMAINS' -->
+      <div *ngIf="type === 'EXCLUDE_EMAILS_DOMAINS'">
+
+        <!-- emails to blacklist -->
+        <div class="form-group">
+          <label class="form-label">Emails to exclude</label>
+          <app-utility-input-list
+            (update)="addEmail($event)"
+            [config]="{initialData: formData.get('email').value,
+            placeholder: 'john@catco.com'}"
+            [isEmail]="true">
+          </app-utility-input-list>
+        </div>
+        <!-- /emails to blacklist -->
+
+        <!-- domains to blacklist -->
+        <div class="form-group">
+          <label class="form-label">Domains to exclude</label>
+          <app-utility-input-list
+            (update)="addDomain($event)"
+            [config]="{initialData: formData.get('domain').value,
+            placeholder: '*@catco.com'}"
+            [isDomain]="true">
+          </app-utility-input-list>
+        </div>
+        <!-- domains to blacklist -->
+
+      </div>
+      <!-- /type === 'EXCLUDE_EMAILS_DOMAINS' -->
+
+      <!-- type === 'EDIT_EMAILS' -->
+      <div *ngIf="'EDIT_EMAILS'" class="form-group m-bottom-20">
+        <label class="form-label" for="email">E-mail Address</label>
+        <input
+          (change)="saveChanges()"
+          [disabled]="!isEditable"
+          class="form-input is-shadowed"
+          formControlName="email"
+          id="email"
+          placeholder="john@catco.com"
+          type="email">
+        <div class="form-error" *ngIf="formData.get('email').touched && formData.get('email').invalid">
+          <ng-container *ngIf="formData.get('email').hasError('required')">
+            {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+          </ng-container>
+          <ng-container *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+            {{ 'COMMON.INVALID.EMAIL' | translate }}
+          </ng-container>
+        </div>
+      </div>
+      <!-- /type === 'EDIT_EMAILS' -->
+
+      <!-- type === 'EDIT_EMAILS' | 'EXCLUDE_COUNTRIES' -->
+      <div *ngIf="'EDIT_EMAILS' || 'EXCLUDE_COUNTRIES'">
+
+        <div class="form-group">
+          <label class="form-label">Expires On</label>
+          <label class="form-checkbox">
+            <input
+              type="checkbox"
+              [disabled]="!isEditable"
+              [checked]="formData.value.expiration === ''"
+              (change)="resetExpirationDate($event)">
+            <i class="form-icon"></i> Never
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="expirationDate">Or specify a Date</label>
+          <input
+            (change)="saveChanges()"
+            [disabled]="!isEditable"
+            [value]="formData.value.expiration | date:'yyyy-MM-dd'"
+            class="form-input is-shadowed"
+            formControlName="expiration"
+            id="expirationDate"
+            type="date">
+        </div>
+
+      </div>
+      <!-- /type === 'EDIT_EMAILS' | 'EXCLUDE_COUNTRIES' -->
+
+      <!-- type === 'EXCLUDE_COUNTRY' Create new filter on a country -->
+      <div *ngIf="'EXCLUDE_COUNTRY'">
+        <app-utility-auto-complete-input
+          (update)="updateCountry($event)"
+          [config]="getConfig('countries')"
+          [onlyOne]="true">
+        </app-utility-auto-complete-input>
+      </div>
+      <!-- /type === 'EXCLUDE_COUNTRIES' Create new filter on a country -->
+
+      <!-- type === 'EDIT_COUNTRY' If a country is selected we show the settings -->
+      <div class="form-group" *ngIf=" type === 'EDIT_COUNTRY' && (country !== null)">
+        <label class="form-label" for="accept">Acceptance mails percentage
+          <span class="text-notify">{{ formData.get('acceptation').value }}</span>
+        </label>
+        <input
+          (change)="saveChanges()"
+          class="form-input is-shadowed"
+          formControlName="acceptation"
+          id="accept"
+          max="100"
+          min="0"
+          name="accept"
+          type="range">
+      </div>
+      <!-- /type === 'EDIT_COUNTRY' If a country is selected we show the settings -->
+
+      <!-- type ==== 'SHOW_CAMPAIGN_INFOS' Show all professionals related to a campaign -->
+      <div *ngIf="type === 'SHOW_CAMPAIGN_INFOS'">
+        <app-shared-table [config]="config" [data]="tableInfos"></app-shared-table>
+      </div>
+      <!-- /type ==== 'SHOW_CAMPAIGN_INFOS' Show all professionals related to a campaign -->
+
+    </div>
+    <!-- /templates -->
+
+  </form>
+</div>

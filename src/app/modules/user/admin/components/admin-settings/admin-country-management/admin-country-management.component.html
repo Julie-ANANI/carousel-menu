@@ -1,40 +1,72 @@
-<div class="country-management-wrapper">
-  <div class="form-group-inline-right">
-    <button class="btn btn-primary" (click)="filterCountry()">{{'COMMON.EXCLUDE-COUNTRIES' | translate}}</button>
+<div *ngIf="canAccess()" class="container grid-2xl fluid" id="admin-country-management">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- error message while fetching -->
+    <section *ngIf="!isLoading && fetchingError">
+      <app-utility-message-error></app-utility-message-error>
+    </section>
+    <!-- /error message while fetching -->
+
+    <!-- no fetching error -->
+    <div *ngIf="!fetchingError && !isLoading" class="p-bottom-30">
+
+      <!-- button -->
+      <section *ngIf="canAccess(['add'])" class="text-right p-bottom-30 p-top-30">
+        <button
+          (click)="excludeSidebar($event)"
+          class="button is-primary is-sm"
+          type="button">
+          Exclude countries
+        </button>
+      </section>
+      <!-- /button -->
+
+      <!-- table -->
+      <section>
+        <app-shared-table
+          (editRow)="editCountry($event)"
+          (removeRows)="deleteCountriesModal($event)"
+          [(config)]="config"
+          [data]="countriesTable">
+        </app-shared-table>
+      </section>
+      <!-- /table -->
+
+    </div>
+    <!-- /no fetching error -->
+
   </div>
-
-  <app-shared-table [data]="countriesTable"
-                    [(config)]="config"
-                    (editRow)="editCountry($event)"
-                    (removeRows)="deleteCountriesModal($event)"></app-shared-table>
-
-  <app-sidebar
-    [template]="more" (closeSidebar)="closeSidebar($event)">
-    <app-emails-form
-      [sidebarState]="sidebarState"
-      [type]="more.type" (countryToFilter)="addCountry($event)"
-      [countryInfos]="currentCountry" (editCountry)="countryEditionFinish($event)">
-    </app-emails-form>
-  </app-sidebar>
 </div>
 
 
+<!-- sidebar -->
+<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+  <app-sidebar-blacklist
+    (countryToFilter)="addCountry($event)"
+    (editCountry)="countryEditionFinish($event)"
+    [countryInfos]="currentCountry"
+    [isEditable]="canAccess(['edit'])"
+    [type]="sidebarValue.type">
+  </app-sidebar-blacklist>
+</app-sidebar>
+<!-- /sidebar -->
+
+
 <!-- modal to delete -->
-<app-utility-modal [(showModal)]="showDeleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<app-utility-modal *ngIf="canAccess(['delete'])" [(showModal)]="showDeleteModal" [title]="'Delete Board'">
 
   <section class="modal-body">
-
-    {{ 'USERS.PITCH-DELETE' | translate }}
-
-    <ul>
-      <li *ngFor="let country of countriesToRemove">{{country.name}}</li>
+    Do you really want to delete the selected countries(s)?
+    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+      <li *ngFor="let country of countriesToRemove" class="m-right-3 m-top-1">
+        {{ country.name }}
+      </li>
     </ul>
-
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button (click)="removeCountries()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel">Cancel</button>
+    <button (click)="removeCountries()" class="button is-primary">Confirm</button>
   </footer>
 
 </app-utility-modal>

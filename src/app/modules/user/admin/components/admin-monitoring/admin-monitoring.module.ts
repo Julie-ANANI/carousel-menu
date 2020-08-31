@@ -12,7 +12,7 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { TableModule } from '../../../../table/table.module';
-import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
+import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
 
 @NgModule({
   imports: [
@@ -22,7 +22,7 @@ import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-f
     PipeModule,
     TableModule,
     RouterModule,
-    SidebarEmailFormModule
+    SidebarBlacklistModule
   ],
   declarations: [
     AdminMonitoringComponent,

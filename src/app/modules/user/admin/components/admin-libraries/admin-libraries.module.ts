@@ -10,13 +10,13 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SharedSortModule } from '../../../../shared/components/shared-sort/shared-sort.module';
 import { AdminLibrariesWorkflowsModule } from './admin-libraries-workflows/admin-libraries-workflows.module';
 import { AdminSignaturesLibraryModule } from './admin-signatures-library/admin-signatures-library.module';
-import { AdminCountryManagementModule } from '../admin-settings/admin-country-management/admin-country-management.module';
 import { AdminEmailsLibraryModule } from './admin-emails-library/admin-emails-library.module';
 import { AdminPresetsModule } from './admin-presets/admin-presets.module';
 import { TableModule } from '../../../../table/table.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
-import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
+import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
+import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
 
 @NgModule({
   imports: [
@@ -29,11 +29,11 @@ import { ModalModule } from '../../../../utility/modals/modal/modal.module';
     AdminSignaturesLibraryModule,
     AdminEmailsLibraryModule,
     AdminPresetsModule,
-    AdminCountryManagementModule,
     TableModule,
     SidebarModule,
-    SidebarEmailFormModule,
+    SidebarBlacklistModule,
     ModalModule,
+    MessageErrorModule,
   ],
   declarations: [
     AdminLibrariesComponent,

@@ -919,14 +919,13 @@
     (projectChange)="changeProject($event)"
     (ownerLanguageChange)="updateOwnerLanguage($event)">
   </app-innovation-form>
-  <app-emails-form
+  <app-sidebar-blacklist
     *ngIf="isEmailsDomainsSidebar"
-    [sidebarState]="sidebarState"
     [type]="more.type"
     [initialDomains]="project.settings.blacklist.domains"
     [initialEmails]="project.settings.blacklist.emails"
-    (emailsToBlacklists)="addBlacklists($event)">
-  </app-emails-form>
+    (toBlacklists)="addBlacklists($event)">
+  </app-sidebar-blacklist>
   <app-sidebar-tags [sidebarState]="sidebarState"
                     [isEditable]="true"
                  *ngIf="isTagsSidebar"

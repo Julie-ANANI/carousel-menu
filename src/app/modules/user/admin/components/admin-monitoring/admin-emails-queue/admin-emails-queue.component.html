@@ -4,8 +4,7 @@
 
 <app-sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
-  <app-emails-form
-    [sidebarState]="sidebarState"
+  <app-sidebar-blacklist
     [type]="more.type" [campaignInfos]="currentQueue">
-  </app-emails-form>
+  </app-sidebar-blacklist>
 </app-sidebar>

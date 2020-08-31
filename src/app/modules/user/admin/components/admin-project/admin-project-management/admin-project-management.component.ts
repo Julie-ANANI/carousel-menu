@@ -456,24 +456,35 @@ export class AdminProjectManagementComponent implements OnInit {
    * Add mails and domains to blacklist
    * @param {Array<any>} values
    */
-  addBlacklists(values: Array<any>) {
-    if (values.length > 0) {
+  addBlacklists(values: {emails: Array<string>, domains: Array<string>}) {
+    if (values.emails.length > 0) {
       const domainExp = domainRegEx;
       const emailExp = emailRegEx;
 
       // We test if it's an array of domains or emails and we clean the corresponding array
-      domainExp.test(values[0].text)
+      /*domainExp.test(values[0].text)
         ? this._project.settings.blacklist.domains = []
-        : this._project.settings.blacklist.emails = [];
+        : this._project.settings.blacklist.emails = [];*/
 
-      // We insert all the domains or emails in the corresponding array
-      values.forEach((value: any) => {
-        if (domainExp.test(value.text)) {
-          this._project.settings.blacklist.domains.push(value.text.split('@')[1]);
-        } else if (emailExp.test(value.text)) {
-          this._project.settings.blacklist.emails.push(value.text);
-        }
-      });
+      if (values.domains.length) {
+        this._project.settings.blacklist.domains = [];
+        values.domains.forEach((value: any) => {
+          if (domainExp.test(value.text)) {
+            this._project.settings.blacklist.domains.push(value.text.split('@')[1]);
+          }
+        });
+      }
+
+      if (values.emails.length) {
+        this._project.settings.blacklist.emails = [];
+        // We insert all the domains or emails in the corresponding array
+        values.emails.forEach((value: any) => {
+          if (emailExp.test(value.text)) {
+            this._project.settings.blacklist.emails.push(value.text);
+          }
+        });
+      }
+
       this.save('Les emails / domaines ont bien été blaklistés');
       this._more = {animate_state: 'inactive', title: this._more.title};
     }

@@ -23,9 +23,9 @@ export class InputListComponent {
 
   @Input() isAdminMode = false; // true: to show the admin options.
 
-  @Input() isEmail = false; // true: if the answerList is of email. ex: app-emails-form component
+  @Input() isEmail = false; // true: if the answerList is of email. ex: app-sidebar-blacklist component
 
-  @Input() isDomain = false; // true: if the answerList is of domain. ex: app-emails-form component
+  @Input() isDomain = false; // true: if the answerList is of domain. ex: app-sidebar-blacklist component
 
   @Input() set config(config: InputListConfig) {
     if (config) {

@@ -12,8 +12,9 @@ Please always updates the roles / functionalities in this file.
 <br><br>SORT BY:  Reason, Type, 
 <br><br>T COLUMNS:  Email Address, Created, Expires, Reason, Type.
 
-2. COUNTRIES: Exclude, 
-<br><br>SEARCH BY:  Country.
+2. COUNTRIES: Exclude, Delete, Edit, View 
+<br><br>SEARCH BY:  Country, Acceptation,
+<br><br>T COLUMNS: Country, Acceptation, Expiration
 
 3. ENTERPRISES: Add, View, Edit, 
 <br><br>SEARCH BY:  Name, 

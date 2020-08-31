@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { EmailsFormComponent } from './emails-form.component';
+import { SidebarBlacklistComponent } from './sidebar-blacklist.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { TableModule } from '../../../table/table.module';
@@ -22,11 +22,11 @@ import { InputListModule } from '../../../utility/input-list/input-list.module';
     InputListModule
   ],
   declarations: [
-   EmailsFormComponent
+   SidebarBlacklistComponent
   ],
   exports: [
-    EmailsFormComponent
+    SidebarBlacklistComponent
   ]
 })
 
-export class SidebarEmailFormModule {}
+export class SidebarBlacklistModule {}

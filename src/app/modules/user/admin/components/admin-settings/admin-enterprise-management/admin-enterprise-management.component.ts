@@ -12,7 +12,6 @@ import {first} from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-admin-enterprise-management',
   templateUrl: './admin-enterprise-management.component.html',
   styleUrls: ['./admin-enterprise-management.component.scss']
 })

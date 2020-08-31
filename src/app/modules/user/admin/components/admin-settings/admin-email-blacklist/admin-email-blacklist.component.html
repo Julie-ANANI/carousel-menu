@@ -1,19 +1,52 @@
-<div class="form-group-inline-right">
-  <button class="btn btn-primary" (click)="excludeEmails()">{{'BLACKLISTS.BLACKLIST-EMAILS-DOMAINS' | translate}}</button>
+<div *ngIf="canAccess()" class="container grid-2xl fluid" id="admin-email-blacklist">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- error message while fetching -->
+    <section *ngIf="!isLoading && fetchingError">
+      <app-utility-message-error></app-utility-message-error>
+    </section>
+    <!-- /error message while fetching -->
+
+    <!-- no fetching error -->
+    <div *ngIf="!fetchingError && !isLoading" class="p-bottom-30">
+
+      <!-- button -->
+      <section *ngIf="canAccess(['add'])" class="text-right p-bottom-30 p-top-30">
+        <button
+          (click)="excludeSidebar($event)"
+          class="button is-primary is-sm"
+          type="button">
+          Blacklist E-mails/Domains
+        </button>
+      </section>
+      <!-- /button -->
+
+      <!-- table -->
+      <section>
+        <app-shared-table
+          (editRow)="editBlacklist($event)"
+          [(config)]="config"
+          [data]="tableInfos">
+        </app-shared-table>
+      </section>
+      <!-- /table -->
+
+    </div>
+    <!-- /no fetching error -->
+
+  </div>
 </div>
 
-<app-shared-table
-  [data]="emailInfos"
-  [(config)]="config"
-  (editRow)="editBlacklist($event)">
-</app-shared-table>
 
-<app-sidebar
-  [template]="more" (closeSidebar)="closeSidebar($event)">
-  <app-emails-form
-    [sidebarState]="sidebarState"
-    [type]="more.type"
-    [editBlacklistEmail]="currentEmailToBlacklist" (editBlacklist)="blacklistEditionFinish($event)"
-    (emailsToBlacklists)="addEmailsToBlacklistFinish($event)">
-  </app-emails-form>
+<!-- sidebar to add/edit blacklist -->
+<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+  <app-sidebar-blacklist
+    (editBlacklist)="blacklistEditionFinish($event)"
+    (toBlacklists)="toBlacklists($event)"
+    [editBlacklistEmail]="currentEmailToBlacklist"
+    [isEditable]="isEditable"
+    [type]="sidebarValue.type">
+  </app-sidebar-blacklist>
 </app-sidebar>
+<!-- /sidebar to add/edit blacklist -->
+

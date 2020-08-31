@@ -8,7 +8,6 @@ import { DASHBOARD } from '../modules/user/admin/components/admin-dashboard/i18n
 import { PRESETS } from '../modules/user/admin/components/admin-libraries/admin-presets/i18n/fr';
 import { CAMPAIGNS } from '../modules/user/admin/components/admin-campaigns/i18n/fr';
 import { SEARCH } from '../modules/user/admin/components/admin-search/i18n/fr';
-import { BLACKLISTS } from '../modules/user/admin/components/admin-settings/admin-email-blacklist/i18n/fr';
 import { TAGS } from '../modules/user/admin/components/admin-tags/i18n/fr';
 import { PROJECT_MODULE } from '../modules/user/client/components/project/i18n/fr';
 import { DISCOVER } from '../modules/public/discover/i18n/fr';
@@ -67,7 +66,6 @@ export const fr = {
   'PRESETS': PRESETS,
   'CAMPAIGNS': CAMPAIGNS,
   'SEARCH': SEARCH,
-  'BLACKLISTS': BLACKLISTS,
   'TAGS': TAGS,
   'PROJECT_MODULE': PROJECT_MODULE,
   'SHARE': SHARE,

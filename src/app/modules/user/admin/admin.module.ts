@@ -5,7 +5,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
@@ -17,7 +16,6 @@ import { AdminProjectModule } from './components/admin-project/admin-project.mod
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
-import { AdminCountryManagementModule } from './components/admin-settings/admin-country-management/admin-country-management.module';
 import { PipeModule } from '../../../pipe/pipe.module';
 import { SidebarModule } from '../../sidebars/templates/sidebar/sidebar.module';
 import { LogoutModule } from '../../common/logout/logout.module';
@@ -25,7 +23,6 @@ import { InputListModule } from '../../utility/input-list/input-list.module';
 import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { AdminCommunityModule } from './components/admin-community/admin-community.module';
-import { AdminEnterpriseManagementModule } from './components/admin-settings/admin-enterprise-management/admin-enterprise-management.module';
 
 import { SearchService } from '../../../services/search/search.service';
 import { FrontendService } from '../../../services/frontend/frontend.service';
@@ -49,7 +46,7 @@ import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-p
 import { ShieldService } from '../../../services/shield/shield.service';
 import { EnterpriseService } from '../../../services/enterprise/enterprise.service';
 import { AdminProjectStoryboardModule } from './components/admin-project-storyboard/admin-project-storyboard.module';
-import {RolesService} from '../../../services/roles/roles.service';
+import { AdminSettingsModule } from './components/admin-settings/admin-settings.module';
 
 @NgModule({
   imports: [
@@ -68,7 +65,6 @@ import {RolesService} from '../../../services/roles/roles.service';
     TranslateModule.forChild(),
     SidebarModule,
     PipeModule,
-    AdminCountryManagementModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -76,13 +72,12 @@ import {RolesService} from '../../../services/roles/roles.service';
     LogoutModule,
     InputListModule,
     AdminCommunityModule,
-    AdminEnterpriseManagementModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminProjectStoryboardModule
+    AdminProjectStoryboardModule,
+    AdminSettingsModule
   ],
   declarations: [
-    AdminSettingsComponent
   ],
   providers: [
     DashboardService,
@@ -107,8 +102,7 @@ import {RolesService} from '../../../services/roles/roles.service';
     CampaignProfessionalsResolver,
     ProjectTagsPoolResolver,
     ShieldService,
-    EnterpriseService,
-    RolesService
+    EnterpriseService
   ]
 })
 

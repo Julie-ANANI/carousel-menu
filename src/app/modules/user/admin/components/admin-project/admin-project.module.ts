@@ -25,7 +25,7 @@ import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
 import { SidebarTagsModule } from '../../../../sidebars/components/sidebar-tags/sidebar-tags.module';
-import { SidebarEmailFormModule } from '../../../../sidebars/components/emails-form/sidebar-email-form.module';
+import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
 import { SidebarInnovationFormModule } from '../../../../sidebars/components/innovation-form/sidebar-innovation-form.module';
 import { SidebarCampaignModule } from '../../../../sidebars/components/sidebar-campaign/sidebar-campaign.module';
 import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
@@ -58,7 +58,7 @@ import { MessageErrorModule } from "../../../../utility/messages/message-error/m
     AdminProjectQuestionnaireModule,
     ProgressBarModule,
     SidebarTagsModule,
-    SidebarEmailFormModule,
+    SidebarBlacklistModule,
     SidebarInnovationFormModule,
     SidebarCampaignModule,
     MessageTemplateModule,
