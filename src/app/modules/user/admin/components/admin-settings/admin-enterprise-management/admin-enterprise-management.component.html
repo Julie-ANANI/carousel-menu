@@ -1,13 +1,39 @@
+<div [hidden]="!canAccess() && isLoading" class="container fluid grid-2xl p-top-30" id="admin-enterprise-management">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- button create -->
+    <div *ngIf="canAccess(['add'])" class="text-right p-bottom-30">
+      <button
+        (click)="openSidebar($event, 'CREATE')"
+        class="button is-primary is-sm"
+        id="btn-create"
+        type="button">
+        Create enterprise
+      </button>
+    </div>
+    <!-- /button create -->
+
+    <!-- search bar -->
+    <div *ngIf="canAccess(['searchBy', 'name'])" class="flex-centered flex-wrap">
+      
+    </div>
+    <!-- /search bar -->
+
+
+  </div>
+</div>
+
+
 <div class="enterprise-management-wrapper">
-  <div class="top-button-container">
+  <!--<div class="top-button-container">
     <button
         class="button is-primary is-lg"
         style="min-width: 215px"
         type="submit"
-        (click)="openSidebar($event, 'create')">
+        (click)="openSidebar($event, 'CREATE')">
       <span><i class="fas fa-plus"></i>Create enterprise</span>
     </button>
-  </div>
+  </div>-->
   <div [hidden]="false">
     <form novalidate [formGroup]="searchForm" (ngSubmit)="doSearch()" autocomplete="off">
       <!-- First name -->
@@ -39,7 +65,7 @@
     <app-shared-table
         [data]="resultTableConfiguration"
         [(config)]="queryConfig"
-        (editRow)="openSidebar($event, 'edit')"
+        (editRow)="openSidebar($event, 'EDIT')"
         (removeRows)="removeCompanies($event)"
         [loading]="displayLoading">
     </app-shared-table>
@@ -49,9 +75,15 @@
   </div>
 </div>
 
+<!-- sidebar -->
+<app-sidebar [(template)]="sidebarValue">
+
+</app-sidebar>
+<!-- /sidebar -->
+
 
 <!-- new/edit enterprise sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="false">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <form novalidate [formGroup]="newEnterpriseForm" (ngSubmit)="saveEnterprise()" autocomplete="off">
       <!-- Company name -->

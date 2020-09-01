@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {EnterpriseService} from '../../../../../../services/enterprise/enterprise.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
@@ -9,32 +9,44 @@ import {AutocompleteService} from '../../../../../../services/autocomplete/autoc
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Table} from '../../../../../table/models/table';
 import {first} from 'rxjs/operators';
-
+import {Config} from '../../../../../../models/config';
+import {isPlatformBrowser} from '@angular/common';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
   styleUrls: ['./admin-enterprise-management.component.scss']
 })
+
 export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
 
-  private _searchForm: FormGroup;
+  private _searchForm: FormGroup = this._formBuilder.group( {
+    searchString: [''],
+  });
+
   private _newEnterpriseForm: FormGroup;
 
   private _newEnterprise: Enterprise;
+
   private _parentEntreprise: Enterprise;
+
   private _enterpriseSidebarPatterns: Array<Pattern> = [];
+
   private _displayLoading = false;
-  private _sidebarValue: SidebarInterface = {};
+
+  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+
   private _uploadLogoModal = false;
 
   private _results = false;
+
   private _nothingFound = false;
 
   private _editEnterpriseId: string = null;
 
-  private _queryConfig: any = {
+  private _queryConfig: Config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -65,18 +77,16 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     ]
   };
 
-  constructor(private _enterpriseService: EnterpriseService,
+  private _isLoading = true;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _enterpriseService: EnterpriseService,
               private _formBuilder: FormBuilder,
+              private _rolesFrontService: RolesFrontService,
               private _autoCompleteService: AutocompleteService,
-              private _sanitizer: DomSanitizer, ) {
-  }
+              private _sanitizer: DomSanitizer) {}
 
   private _buildForm() {
-    // Search form
-    this._searchForm = this._formBuilder.group( {
-      searchString: [''],
-    });
-
     // New company form
     this._newEnterpriseForm = this._formBuilder.group({
       name: [null, [Validators.required]],
@@ -95,7 +105,18 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this._platformId)) {
+      this._isLoading = false;
+    }
     this._buildForm();
+  }
+
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises']);
+    }
   }
 
   public doSearch() {
@@ -120,19 +141,20 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       });
   }
 
-  public openSidebar(event: any, type: string) {
+  public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
+    event.preventDefault();
+
     switch (type) {
-      case 'create':
-        event.preventDefault();
-        this._editEnterpriseId = null;
-        this._newEnterpriseForm.reset();
+      case 'CREATE':
+        // this._editEnterpriseId = null;
+        // this._newEnterpriseForm.reset();
         this._sidebarValue = {
           animate_state: 'active',
-          title: 'Add a new enterprise',
-          type: 'enterprise'
+          title: 'Create Enterprise',
+          type: 'CREATE'
         };
         break;
-      case 'edit':
+      case 'EDIT':
         this._editEnterpriseId = event._id;
         this._enterpriseSidebarPatterns = event.patterns;
         this._newEnterpriseForm.patchValue(event);
@@ -144,9 +166,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           type: 'enterprise'
         };
         break;
-      default:
-        // NOOP
     }
+
   }
 
   public saveEnterprise() {
@@ -353,6 +374,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   get parentEnterprise(): Enterprise {
     return this._parentEntreprise;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
 }
