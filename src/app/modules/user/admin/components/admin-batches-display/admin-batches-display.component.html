@@ -6,8 +6,8 @@
 
       <button
         (click)="onClickLast()"
-        [ngStyle]="{ 'padding-top': '9px', 'padding-bottom': '9px', 'min-width': 'unset' }"
-        class="button is-outlined is-info is-sm"
+        [ngStyle]="{ 'min-width': 'unset' }"
+        class="button is-outlined is-info is-xs"
         id="btn-last"
         type="button">
         Last week
@@ -21,8 +21,8 @@
 
       <button
         (click)="onClickNext()"
-        [ngStyle]="{ 'padding-top': '9px', 'padding-bottom': '9px', 'min-width': 'unset' }"
-        class="button is-outlined is-info is-sm"
+        [ngStyle]="{ 'min-width': 'unset' }"
+        class="button is-outlined is-info is-xs"
         id="btn-next"
         type="button">
         Next week
@@ -73,8 +73,8 @@
 
               <div class="text-link">see more...</div>
 
-              <div class="popover-container w-200">
-                <div class="card">
+              <div class="popover-container w-250">
+                <div class="card p-10">
                   <div class="card-body p-no">
                     <ng-container *ngFor="let batchesOver of days; let index3 = index">
                       <div *ngIf="index3 > 0" class="batch-body">

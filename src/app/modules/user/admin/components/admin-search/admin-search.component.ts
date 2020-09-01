@@ -44,7 +44,7 @@ export class AdminSearchComponent {
     switch (value) {
 
       case 'history':
-        return 'Search';
+        return 'History';
 
       case 'pros':
         return 'Insights';
