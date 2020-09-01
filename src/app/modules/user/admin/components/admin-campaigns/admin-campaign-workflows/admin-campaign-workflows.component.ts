@@ -209,11 +209,12 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   public onClickTestWorkflow() {
-    // if (this._isTesting) { // TODO why is this condition? it's never true!
+    if (!this._isTesting) {
+      this._isTesting = true;
       for (let i = 1; i < 4; i++) {
         this._campaignService.sendTestEmails(this._campaign._id, i).pipe(first()).subscribe((res) => {
           if (i === 3) {
-            this._translateNotificationsService.success('Success', 'The mail has been sent.');
+            this._translateNotificationsService.success('Success', 'The test mails have been sent.');
             this._isTesting = false;
           }
         }, (err: HttpErrorResponse) => {
@@ -222,7 +223,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
           console.error(err);
         });
       }
-    // }
+    }
   }
 
   private _saveTemplates(message: string) {
