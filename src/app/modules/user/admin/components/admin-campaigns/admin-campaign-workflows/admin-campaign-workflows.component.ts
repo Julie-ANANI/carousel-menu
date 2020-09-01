@@ -209,7 +209,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   public onClickTestWorkflow() {
-    if (this._isTesting) {
+    // if (this._isTesting) { // TODO why is this condition? it's never true!
       for (let i = 1; i < 4; i++) {
         this._campaignService.sendTestEmails(this._campaign._id, i).pipe(first()).subscribe((res) => {
           if (i === 3) {
@@ -222,7 +222,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
           console.error(err);
         });
       }
-    }
+    // }
   }
 
   private _saveTemplates(message: string) {
