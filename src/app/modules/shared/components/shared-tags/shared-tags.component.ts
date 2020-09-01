@@ -22,7 +22,7 @@ export class SharedTagsComponent implements OnInit {
 
   @Input() tags: Array<Tag> = [];
 
-  @Input() type: TagType = 'tags';
+  @Input() type: TagType = null; // 'tags';
 
   @Input() projectId = '';
 
