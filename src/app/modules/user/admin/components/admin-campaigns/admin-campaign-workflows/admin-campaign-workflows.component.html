@@ -1,4 +1,4 @@
-<div *ngIf="canAccess()" class="container grid-2xl fluid animate-fade is-7" id="admin-campaign-workflows">
+<div class="container grid-2xl fluid" id="admin-campaign-workflows">
 
   <!-- stats -->
   <app-admin-campaign-stats [config]="statsConfig()"></app-admin-campaign-stats>
@@ -9,18 +9,18 @@
 
     <!-- select / import / test workflow -->
     <div
-      *ngIf="canAccess(['import']) || canAccess(['test']) || canAccess(['select'])"
+      *ngIf="canAccess(['import']) || canAccess(['test'])"
       class="p-bottom-10 form-group flex-centered flex-wrap">
 
       <label
-        *ngIf="canAccess(['select'])"
+        *ngIf="canAccess(['import'])"
         class="form-label m-bottom-20 m-right-10"
         for="workflows">
         Select the workflow
       </label>
 
       <select
-        *ngIf="canAccess(['select'])"
+        *ngIf="canAccess(['import'])"
         class="form-select is-sm mxw-350 m-right-25 m-bottom-20"
         id="workflows"
         [ngModel]="templates ? templates[0] : null"
