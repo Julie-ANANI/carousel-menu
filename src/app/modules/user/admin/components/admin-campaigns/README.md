@@ -27,7 +27,7 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>T COLUMNS:  Member, Name, Country, Job, Company, Campaign, Contact 
 <br><br>USER:  Add, View, Edit, Delete.
 
-4. WORKFLOWS: Select, Edit, View, Import, Test, Delete. 
+4. WORKFLOWS: Edit, View, Import, Test, Delete. 
 
 5. BATCH: AutoBatch, Create, Pause, Edit, View, Delete.
 
@@ -79,7 +79,7 @@ No definition of a Role means no access to that user.
 <br><br>T COLUMNS:  Name, Country, Job, Company ,
 <br><br>USER:  Edit .
 
-4. WORKFLOWS: Select, Edit, Test, Import. 
+4. WORKFLOWS: Edit, Test, Import. 
 
 5. BATCH: AutoBatch, Pause, Edit.
 
@@ -106,7 +106,7 @@ No definition of a Role means no access to that user.
 <br><br>T COLUMNS:  Name, Country, Job, Company ,
 <br><br>USER:  Edit .
 
-4. WORKFLOWS: Select, Edit, Test, Import. 
+4. WORKFLOWS: Edit, Test, Import. 
 
 5. BATCH: AutoBatch, Pause, Edit.
 
@@ -133,7 +133,7 @@ No definition of a Role means no access to that user.
 <br><br>T COLUMNS:  Name, Country, Job, Company ,
 <br><br>USER:  Edit .
 
-4. WORKFLOWS: Select, Edit, Test, Import. 
+4. WORKFLOWS: Edit, Test, Import. 
 
 5. BATCH: AutoBatch, Pause, Edit.
 
@@ -160,7 +160,7 @@ No definition of a Role means no access to that user.
 <br><br>T COLUMNS:  Name, Country, Job, Company ,
 <br><br>USER:  Edit .
 
-4. WORKFLOWS: Select, Edit, Test, Import. 
+4. WORKFLOWS: Edit, Test, Import. 
 
 5. BATCH: AutoBatch, Pause, Edit.
 
@@ -185,7 +185,7 @@ access: {
                         workflows: {
                             test: true,
                             edit: true,
-                            select: true
+                            import: true
                         },
                         history: {
                             cancel: {
