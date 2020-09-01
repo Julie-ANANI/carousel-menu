@@ -125,7 +125,10 @@
           <!-- /edit mode -->
 
           <!-- not edit mode -->
-          <div *ngIf="!!optionLabel(option.identifier) && !editMode" class="label label-answer">
+          <div
+            *ngIf="(!!fullAnswer.answers[question.identifier] &&
+            !!fullAnswer.answers[question.identifier][option.identifier]) && !editMode"
+            class="label label-answer">
             {{ optionLabel(option.identifier) }}
           </div>
           <!-- /not edit mode -->
