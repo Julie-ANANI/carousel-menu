@@ -23,6 +23,7 @@
 
       <button
         *ngIf="isShowButton"
+        (click)="addProposition(autoCompleteInputForm)"
         [disabled]="!canAdd || !isEditable"
         [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
         class="button is-circled is-primary"
