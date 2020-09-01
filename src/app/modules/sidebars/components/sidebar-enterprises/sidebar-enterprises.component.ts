@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-type Template = 'CREATE' | 'EDIT';
+// type Template = 'CREATE' | 'EDIT';
 
 @Component({
   selector: 'app-sidebar-enterprises',
@@ -10,7 +10,6 @@ type Template = 'CREATE' | 'EDIT';
 
 export class SidebarEnterprisesComponent implements OnInit {
 
-  type
 
   constructor() { }
 
