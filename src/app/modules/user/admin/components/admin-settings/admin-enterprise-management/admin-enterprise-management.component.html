@@ -2,91 +2,91 @@
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- button create -->
-    <div *ngIf="canAccess(['add'])" class="text-right p-bottom-30">
+    <section *ngIf="canAccess(['add'])" class="text-right p-bottom-30">
       <button
         (click)="openSidebar($event, 'CREATE')"
-        class="button is-primary is-sm"
+        class="button is-primary is-outlined is-sm"
         id="btn-create"
         type="button">
         Create enterprise
       </button>
-    </div>
+    </section>
     <!-- /button create -->
 
     <!-- search bar -->
-    <div *ngIf="canAccess(['searchBy', 'name'])" class="flex-centered flex-wrap">
-      
-    </div>
+    <section *ngIf="canAccess(['searchBy', 'name'])" class="m-bottom-30">
+      <form novalidate [formGroup]="searchForm" (ngSubmit)="doSearch()" autocomplete="off" class="text-center">
+
+        <!-- input field -->
+        <div class="m-bottom-30 w-full mxw-600 m-left-auto m-right-auto">
+          <label>
+            <input
+              class="form-input is-shadowed"
+              formControlName="searchString"
+              id="search-form-searchString"
+              placeholder="Start typing here to search..."
+              type="text">
+          </label>
+        </div>
+        <!-- /input field -->
+
+        <!-- button -->
+        <button
+          [disabled]="searchForm.get('searchString').value === ''"
+          class="button is-primary is-lg"
+          id="btn-search"
+          type="submit">
+          <ng-container *ngIf="isSearching; else searchText">
+            <span class="loading is-white"></span>
+          </ng-container>
+          <ng-template #searchText>Search</ng-template>
+        </button>
+        <!-- /button -->
+
+      </form>
+    </section>
     <!-- /search bar -->
 
+    <!-- searching finished and no result -->
+    <message-template *ngIf="!isSearching && nothingFound" [widthMax]="'450px'">
+      I tried hard, but couldn't find anything. Try harder and refine your search (or create a new enterprise).
+    </message-template>
+    <!-- /searching finished and no result -->
 
-  </div>
-</div>
-
-
-<div class="enterprise-management-wrapper">
-  <!--<div class="top-button-container">
-    <button
-        class="button is-primary is-lg"
-        style="min-width: 215px"
-        type="submit"
-        (click)="openSidebar($event, 'CREATE')">
-      <span><i class="fas fa-plus"></i>Create enterprise</span>
-    </button>
-  </div>-->
-  <div [hidden]="false">
-    <form novalidate [formGroup]="searchForm" (ngSubmit)="doSearch()" autocomplete="off">
-      <!-- First name -->
-      <div class="form-group has-error">
-        <label class="form-label" for="search-form-searchString">Search here!</label>
-        <input
-            class="form-input"
-            formControlName="searchString"
-            id="search-form-searchString"
-            type="text"
-            placeholder="Your search here">
-
-        <div class="search-button text-center">
-          <button
-              [disabled]="searchForm.get('searchString').value === ''"
-              class="button is-primary is-lg"
-              style="min-width: 215px"
-              type="submit">
-            <span [hidden]="!displayLoading" class="loading is-white"></span>
-            <span [hidden]="displayLoading">Search</span>
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- the results go here! -->
-  <div [hidden]="!results">
-    <app-shared-table
-        [data]="resultTableConfiguration"
-        [(config)]="queryConfig"
+    <!-- searching finished and result -->
+    <section *ngIf="results && !nothingFound">
+      <app-shared-table
         (editRow)="openSidebar($event, 'EDIT')"
         (removeRows)="removeCompanies($event)"
-        [loading]="displayLoading">
-    </app-shared-table>
-  </div>
-  <div [hidden]="!nothingFound">
-    <h5>I tried hard, but couldn't find anything. Try harder and refine your search (or create a new enterprise)</h5>
+        [(config)]="queryConfig"
+        [data]="resultTableConfiguration"
+        [loading]="isSearching">
+      </app-shared-table>
+    </section>
+    <!-- /searching finished and result -->
+
   </div>
 </div>
 
 <!-- sidebar -->
 <app-sidebar [(template)]="sidebarValue">
-
+  <app-sidebar-enterprises
+    (finalOutput)="updateEnterprise($event)"
+    [enterprise]="selectedEnterprise"
+    [isEditable]="isEditable"
+    [isSaving]="isSaving"
+    [sidebarState]="sidebarValue.animate_state"
+    [type]="sidebarValue.type">
+  </app-sidebar-enterprises>
 </app-sidebar>
 <!-- /sidebar -->
 
 
 <!-- new/edit enterprise sidebar -->
-<app-sidebar *ngIf="false">
+<!--<app-sidebar *ngIf="false">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <form novalidate [formGroup]="newEnterpriseForm" (ngSubmit)="saveEnterprise()" autocomplete="off">
-      <!-- Company name -->
+      &lt;!&ndash; Company name &ndash;&gt;
       <label class="form-label" for="enterprise-form-name">Enterprise name</label>
       <input
           auto-complete
@@ -100,7 +100,7 @@
           [source]="companiesSuggestions"
           (valueChanged)="selectCompany($event)">
 
-      <!-- Top level domain -->
+      &lt;!&ndash; Top level domain &ndash;&gt;
       <label class="form-label" for="enterprise-form-domain">Enterprise domain</label>
       <input
           class="form-input"
@@ -109,7 +109,7 @@
           type="text"
           placeholder="Enterprise domain (enterprise.com)">
 
-      <!-- URL -->
+      &lt;!&ndash; URL &ndash;&gt;
       <label class="form-label" for="enterprise-form-url">Enterprise url</label>
       <input
           class="form-input"
@@ -118,7 +118,7 @@
           type="text"
           placeholder="Enterprise url">
 
-      <!-- Logo -->
+      &lt;!&ndash; Logo &ndash;&gt;
       <label class="form-label" for="enterprise-form-logo">Enterprise logo</label>
       <div id="enterprise-form-logo" class="logo-info-container">
         <div class="add-milestone logo-item">
@@ -139,7 +139,7 @@
             placeholder="Enterprise logo">
       </div>
 
-      <!-- Subsidiaries -->
+      &lt;!&ndash; Subsidiaries &ndash;&gt;
       <label class="form-label" for="enterprise-form-subsidiaries">Enterprise subsidiaries</label>
       <input
           class="form-input"
@@ -148,7 +148,7 @@
           type="text"
           placeholder="Enterprise subsidiaries">
 
-      <!-- Parent enterprise -->
+      &lt;!&ndash; Parent enterprise &ndash;&gt;
       <label class="form-label" for="enterprise-form-parent">Parent enterprise</label>
       <div class="patterns-container">
         <div id="enterprise-form-parent" class="patterns-form-container">
@@ -163,7 +163,7 @@
               [source]="enterpriseSuggestions"
               (valueChanged)="selectEnterprise($event)">
         </div>
-        <!-- <div class="patterns-container" *ngFor="let pattern of activePatterns; index as i">
+        &lt;!&ndash; <div class="patterns-container" *ngFor="let pattern of activePatterns; index as i">
           <div class="patterns-form-container">
             <div class="pattern-item">
               <p>{{pattern}}</p>
@@ -172,9 +172,9 @@
               <span><i class="fas fa-trash"></i></span>
             </div>
           </div>
-        </div> -->
+        </div> &ndash;&gt;
       </div>
-      <!-- Patterns -->
+      &lt;!&ndash; Patterns &ndash;&gt;
       <label class="form-label" for="enterprise-form-patterns">Enterprise pattern</label>
       <div class="patterns-container">
         <div id="enterprise-form-patterns" class="patterns-form-container">
@@ -199,7 +199,7 @@
         </div>
       </div>
 
-      <!-- <div formArrayName="patterns" id="enterprise-form-patterns">
+      &lt;!&ndash; <div formArrayName="patterns" id="enterprise-form-patterns">
         <ng-container *ngFor="let pattern of patterns.controls; index as i">
           <div [formGroupName]="i" class="columns">
             <div class="column col-5">
@@ -223,9 +223,9 @@
         <div class="add-milestone" (click)="newPattern($event)">
           <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
         </div>
-      </div> -->
+      </div> &ndash;&gt;
 
-      <!-- Enterprise type -->
+      &lt;!&ndash; Enterprise type &ndash;&gt;
       <label class="form-label" for="enterprise-form-enterpriseType">Enterprise type</label>
       <input
           class="form-input"
@@ -234,7 +234,7 @@
           type="text"
           placeholder="Enterprise type">
 
-      <!-- Enterprise industries -->
+      &lt;!&ndash; Enterprise industries &ndash;&gt;
       <label class="form-label" for="enterprise-form-industries">Enterprise industries</label>
       <input
           class="form-input"
@@ -243,7 +243,7 @@
           type="text"
           placeholder="Enterprise industries">
 
-      <!-- Enterprise brands -->
+      &lt;!&ndash; Enterprise brands &ndash;&gt;
       <label class="form-label" for="enterprise-form-brands">Enterprise brands</label>
       <input
           class="form-input"
@@ -252,7 +252,7 @@
           type="text"
           placeholder="Enterprise brands">
 
-      <!-- Enterprise geographical zone -->
+      &lt;!&ndash; Enterprise geographical zone &ndash;&gt;
       <label class="form-label" for="enterprise-form-geographicalZone">Enterprise geographical zone</label>
       <input
           class="form-input"
@@ -261,7 +261,7 @@
           type="text"
           placeholder="Enterprise geographical zone">
 
-      <!-- Submit button -->
+      &lt;!&ndash; Submit button &ndash;&gt;
       <div class="signup-wrapper section-light-pad rm-pad-bottom text-center">
         <button
             [disabled]="newEnterpriseForm.invalid"
@@ -274,14 +274,14 @@
 
     </form>
   </div>
-</app-sidebar>
+</app-sidebar>-->
 <!-- /new/edit enterprise sidebar -->
 
-<app-utility-modal [(showModal)]="uploadLogoModal" [title]="'Upload a file for the new logo'">
+<!--<app-utility-modal [(showModal)]="uploadLogoModal" [title]="'Upload a file for the new logo'">
   <section class="modal-body">
   <div>
     <app-shared-upload-zone-photo [uri]="logoUploadUri" (cbFn)="uploadImage($event)"></app-shared-upload-zone-photo>
   </div>
   </section>
-</app-utility-modal>
+</app-utility-modal>-->
 

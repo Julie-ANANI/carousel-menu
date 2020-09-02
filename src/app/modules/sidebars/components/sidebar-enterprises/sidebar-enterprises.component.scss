@@ -1,0 +1,27 @@
+@import "../../../../../style/framework/src/variables";
+
+#sidebar-enterprise {
+
+  .form-group {
+    margin-bottom: 20px;
+
+    .img-hover-button {
+
+      .img-button {
+        max-width: 85px;
+      }
+
+      &.no-logo .img-button {
+        opacity: 1;
+        visibility: visible;
+        cursor: pointer;
+        background: $bg-overlay-dark-color;
+        border-color: $bg-overlay-dark-color;
+        color: $text-white-color;
+      }
+
+    }
+
+  }
+
+}

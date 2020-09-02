@@ -16,8 +16,8 @@ Please always updates the roles / functionalities in this file.
 <br><br>SEARCH BY:  Country, Acceptation,
 <br><br>T COLUMNS: Country, Acceptation, Expiration
 
-3. ENTERPRISES: Add, View, Edit, 
-<br><br>SEARCH BY:  Name, 
+3. ENTERPRISES: Add, View, Edit, Delete 
+<br><br>SEARCH BY:  Name, Parent
 <br><br>T COLUMNS:  Logo, Name, Domain, Patterns, Url, Subsidiary, Parent. 
 
 Here BLACKLIST, COUNTRIES, ENTERPRISES represent the sub tabs.

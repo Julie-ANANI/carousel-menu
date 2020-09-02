@@ -100,6 +100,9 @@ import { MessageTemplate2Module } from '../../utility/messages/message-template-
     ResponsiveComponent,
     MessageTemplatesComponent
   ],
+  exports: [
+    ModalComponent
+  ]
 })
 
 export class DocsCssModule {
