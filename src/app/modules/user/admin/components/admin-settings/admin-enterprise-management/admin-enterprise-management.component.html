@@ -54,7 +54,7 @@
     <!-- /searching finished and no result -->
 
     <!-- searching finished and result -->
-    <section *ngIf="results && !nothingFound">
+    <section *ngIf="results && !nothingFound" class="p-bottom-30 p-top-20">
       <app-shared-table
         (editRow)="openSidebar($event, 'EDIT')"
         (removeRows)="removeCompanies($event)"
