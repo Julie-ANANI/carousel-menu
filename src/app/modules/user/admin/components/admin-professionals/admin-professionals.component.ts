@@ -73,6 +73,12 @@ export class AdminProfessionalsComponent implements OnInit {
     return this._rolesFrontService.hasAccessAdminSide(['professionals']);
   }
 
+  public updateDatabase() {
+    this._professionalsService.cleanPros().pipe(first()).subscribe(() => {
+      console.log('OK');
+    });
+  }
+
   set config(value: Config) {
     this._config = value;
     this._getProfessionals();
