@@ -356,11 +356,54 @@
             </div>
             <!-- /suggestion umi -->
 
+            <!-- delete section -->
+              <a (click)="deleteSection(idx)" *ngIf="allowAdminToComment" class="text-error text-sm">
+                <i class="fas fa-trash">Supprimer la section</i>
+              </a>
+            <!-- /delete section -->
+
           </div>
           <!-- /operator comment -->
 
         </div>
         <!-- issue/solution sections -->
+
+        <!-- add a new section -->
+        <ng-container *ngIf="allowAdminToComment">
+          <button (click)="createNewSection()" class="btn ghost-secondary">
+            {{ 'SHARED_PROJECT_EDIT.DESCRIPTION.ADD_SECTION' | translate }}
+          </button><br/>
+          <ng-container *ngIf="newSection">
+            <label>
+              Title
+              <input
+                [(ngModel)]="newSection.title"
+                autocomplete="off"
+                class="form-input"
+                name="newSectionTitle"
+                type="text">
+            </label>
+            <label>
+              Type
+              <select
+                [(ngModel)]="newSection.type"
+                autocomplete="off"
+                class="form-input"
+                name="newSectionType">
+                <option value="ISSUE">Issue</option>
+                <option value="SOLUTION">Solution</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </label>
+            <button (click)="newSection = null" class="btn ghost-primary">
+              {{ 'COMMON.BUTTON.CANCEL' | translate }}
+            </button>
+            <button (click)="addSection()" class="btn btn-primary">
+              {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+            </button>
+          </ng-container>
+        </ng-container>
+        <!-- add a new section -->
 
         <!-- advantages -->
         <div class="m-top-50">
