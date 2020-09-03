@@ -19,7 +19,7 @@
     <div
       [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"
       class="shape is-circle m-left-2">
-      <i class="fas fa-check"></i>
+      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
     <div
@@ -35,7 +35,7 @@
     <div
       [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"
       class="shape is-circle m-left-2">
-      <i class="fas fa-check"></i>
+      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
     <div
