@@ -11,7 +11,7 @@ steps:
     dockerfile: ./Dockerfile.image
     volumes:
       - name: cache
-        path: /drone/src/node_modules
+        path: /drone/src/images
     build_args:
       - APP_NAME=umi
       - ENV_NAME=dev
@@ -208,7 +208,7 @@ steps:
 volumes:
   - name: cache
     host:
-      path: /tmp/drone/cache/node_modules
+      path: /tmp/drone/cache/images
 
 #- name: dockerProdInomer
 #  depends_on: [baseimageProd, rancherProd, rancherProdDynergie, rancherProdMultivalente]
