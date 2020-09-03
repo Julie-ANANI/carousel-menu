@@ -7,6 +7,7 @@
   <ng-container *ngIf="editSection" class="form-group">
     <select class="form-select" [(ngModel)]="section.description" *ngIf="sectionsNames && sectionsNames.length">
       <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
+      <option [ngValue]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.nothing" | translate }}</option>
     </select>
     <select class="form-select" [(ngModel)]="section.description" *ngIf="!sectionsNames || !sectionsNames.length">
       <option [ngValue]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.nothing" | translate }}</option>

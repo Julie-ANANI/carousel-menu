@@ -67,10 +67,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   private _setSectionsNames() {
       this._sectionsNames = [];
+      let customSection = false;
       let frenchTitles: Array<string> = [];
       let englishTitles: Array<string> = [];
       this._innovation.innovationCards.forEach(card => {
         if (card.sections) {
+          if (card.sections.some(section => section.type === 'OTHER')) {
+            customSection = true;
+          }
           const titles = card.sections.map(s => s.title);
           if (card.lang === 'fr') {
             frenchTitles = titles;
@@ -80,8 +84,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
         }
       });
       const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
-      for (let i = 0; i < sectionsNb; i++) {
-        this._sectionsNames.push(`${englishTitles[i] || 'No section'} || ${frenchTitles[i] || 'Pas de section'}`);
+      if (sectionsNb > 2 || customSection) {
+        for (let i = 0; i < sectionsNb; i++) {
+          this._sectionsNames.push(`${englishTitles[i] || 'No section'} || ${frenchTitles[i] || 'Pas de section'}`);
+        }
       }
   }
 
