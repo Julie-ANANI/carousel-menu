@@ -1,0 +1,186 @@
+<div class="column col-xs-12 col-11 col-mx-auto p-top-30 p-bottom-30" id="sidebar-enterprise">
+  <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <!-- button -->
+    <div *ngIf="isEditable" class="text-right p-bottom-30">
+      <button
+        [disabled]="!isSaving || form.invalid"
+        class="button is-community is-sm"
+        id="btn-save"
+        type="submit">
+        Save
+      </button>
+    </div>
+    <!-- /button -->
+
+    <!-- name -->
+    <div class="form-group has-error">
+      <label class="form-label" for="form-name">Name</label>
+      <input
+        (valueChanged)="selectCompany($event)"
+        [list-formatter]="autocompleteCompanyListFormatter"
+        [min-chars]="2"
+        [source]="companiesSuggestions"
+        auto-complete
+        class="form-input is-shadowed"
+        formControlName="name"
+        id="form-name"
+        placeholder="Enter the enterprise name"
+        type="text">
+      <div
+        *ngIf="form.get('name').touched && form.get('name').invalid && form.get('name').hasError('required')"
+        class="form-input-hint">
+        The enterprise name is required.
+      </div>
+    </div>
+    <!-- /name -->
+
+    <!-- top level domain -->
+    <div class="form-group has-error">
+      <label class="form-label" for="form-domain">Domain</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="topLevelDomain"
+        id="form-domain"
+        placeholder="enterprise.com"
+        type="text">
+      <div
+        *ngIf="form.get('topLevelDomain').touched && form.get('topLevelDomain').invalid
+        && form.get('topLevelDomain').hasError('required')"
+        class="form-input-hint">
+        The enterprise domain is required.
+      </div>
+    </div>
+    <!-- /top level domain -->
+
+    <!-- url -->
+    <div class="form-group">
+      <label class="form-label" for="form-url">Url</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="enterpriseURL"
+        id="form-url"
+        placeholder="Enter the enterprise url"
+        type="text">
+    </div>
+    <!-- /url -->
+
+    <!-- logo -->
+    <div class="form-group">
+      <label class="form-label" for="form-logo">Logo</label>
+      <figure
+        [ngClass]="{'no-logo': !logo}"
+        [ngStyle]="{'width': '120px', 'height': '120px'}"
+        class="img-hover-button">
+        <img
+          [ngStyle]="{'width': '120px', 'height': '120px'}"
+          [src]="logo ? logo : defaultLogoURI"
+          alt=" "
+          class="img-fit-cover">
+        <span (click)="changeLogo($event)" class="img-button">Edit</span>
+        <input class="form-input" formControlName="logo" type="hidden" id="form-logo">
+      </figure>
+    </div>
+    <!-- /logo -->
+
+    <!-- subsidiaries -->
+    <div class="form-group">
+      <label class="form-label" for="form-subsidiaries">Subsidiaries</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="subsidiaries"
+        id="form-subsidiaries"
+        placeholder="Enter the enterprise subsidiaries"
+        type="text">
+    </div>
+    <!-- /subsidiaries -->
+
+    <!-- parent -->
+    <div class="form-group">
+      <label class="form-label" for="form-parent">Parent Enterprise</label>
+      <input
+        (valueChanged)="selectEnterprise($event)"
+        [list-formatter]="autocompleteEnterpriseListFormatter"
+        [min-chars]="2"
+        [source]="enterpriseSuggestions"
+        auto-complete
+        class="form-input is-shadowed"
+        formControlName="parentEnterprise"
+        id="form-parent"
+        placeholder="Enter the parent enterprise"
+        type="text">
+    </div>
+    <!-- /parent -->
+
+    <!-- patterns -->
+    <div class="form-group">
+      <label class="form-label" for="form-patterns">Patterns</label>
+      <app-utility-input-list
+        (update)="patternsUpdate($event)"
+        [config]="patternConfig"
+        [isEditable]="isEditable">
+      </app-utility-input-list>
+      <input class="form-input" formControlName="patterns" type="hidden" id="form-patterns">
+    </div>
+    <!-- /patterns -->
+
+    <!-- type -->
+    <div class="form-group">
+      <label class="form-label" for="form-type">Type</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="enterpriseType"
+        id="form-type"
+        placeholder="Enter the enterprise type"
+        type="text">
+    </div>
+    <!-- /type -->
+
+    <!-- industry -->
+    <div class="form-group">
+      <label class="form-label" for="form-industry">Industry</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="industries"
+        id="form-industry"
+        placeholder="Enter the enterprise industry"
+        type="text">
+    </div>
+    <!-- industry -->
+
+    <!-- brand -->
+    <div class="form-group">
+      <label class="form-label" for="form-brands">Brand</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="brands"
+        id="form-brands"
+        placeholder="Enter the enterprise brand"
+        type="text">
+    </div>
+    <!-- /brand -->
+
+    <!-- geographical zone -->
+    <label class="form-label" for="form-geographicalZone">Geographical Zone</label>
+    <input
+      class="form-input is-shadowed"
+      formControlName="geographicalZone"
+      id="form-geographicalZone"
+      placeholder="Enter the enterprise geographical zone"
+      type="text">
+    <!-- /geographical zone -->
+
+  </form>
+</div>
+
+
+<!-- to upload logo -->
+<app-utility-modal [(showModal)]="showModal" [enableCloseButton]="true">
+  <section class="modal-body">
+    <app-shared-upload-zone-photo
+      [uri]="'/media/companyLogo'"
+      (cbFn)="uploadImage($event)">
+    </app-shared-upload-zone-photo>
+  </section>
+</app-utility-modal>
+<!-- /to upload logo -->

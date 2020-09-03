@@ -10,7 +10,7 @@ interface LogoMedia {
 }
 
 export interface Enterprise {
-  id?: string;
+  _id?: string;
   name: string;
   topLevelDomain: string;
   enterpriseURL?: string;
@@ -22,4 +22,4 @@ export interface Enterprise {
   industries?: Array<string>;
   brands?: Array<string>;
   geographicalZone?: Array<string>;
-};
+}

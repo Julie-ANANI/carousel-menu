@@ -1,40 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {EnterpriseService} from '../../../../../../services/enterprise/enterprise.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {/*FormArray,*/ FormBuilder, FormGroup/*, Validators*/} from '@angular/forms';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
-import {Enterprise, Pattern} from '../../../../../../models/enterprise';
-import {Observable, combineLatest} from 'rxjs';
-import {Clearbit} from '../../../../../../models/clearbit';
-import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Enterprise/*, Pattern*/} from '../../../../../../models/enterprise';
+import {/*Observable,*/ combineLatest} from 'rxjs';
+// import {Clearbit} from '../../../../../../models/clearbit';
+// import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
+/*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
 import {Table} from '../../../../../table/models/table';
 import {first} from 'rxjs/operators';
-
+import {Config} from '../../../../../../models/config';
+import {isPlatformBrowser} from '@angular/common';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
   styleUrls: ['./admin-enterprise-management.component.scss']
 })
+
 export class AdminEnterpriseManagementComponent implements OnInit {
 
-  private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
+  // private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
 
-  private _searchForm: FormGroup;
-  private _newEnterpriseForm: FormGroup;
+  private _searchForm: FormGroup = this._formBuilder.group( {
+    searchString: [''],
+  });
 
-  private _newEnterprise: Enterprise;
-  private _parentEntreprise: Enterprise;
-  private _enterpriseSidebarPatterns: Array<Pattern> = [];
-  private _displayLoading = false;
-  private _sidebarValue: SidebarInterface = {};
-  private _uploadLogoModal = false;
+  // private _newEnterpriseForm: FormGroup;
+
+  // private _newEnterprise: Enterprise;
+
+  // private _parentEntreprise: Enterprise;
+
+  // private _enterpriseSidebarPatterns: Array<Pattern> = [];
+
+  private _isSearching = false;
+
+  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+
+  // private _uploadLogoModal = false;
 
   private _results = false;
+
   private _nothingFound = false;
 
-  private _editEnterpriseId: string = null;
+  // private _editEnterpriseId: string = null;
 
-  private _queryConfig: any = {
+  private _queryConfig: Config = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -42,43 +57,27 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  private _resultTableConfiguration: Table = {
-    _selector: 'admin-enterprises-table',
-    _title: 'ENTERPRISE.TITLE',
-    _content: [],
-    _total: 0,
-    _isTitle: true,
-    _isSearchable: false,
-    _isSelectable: true,
-    _isEditable: true,
-    _isPaginable: true,
-    _isDeletable: true,
-    _clickIndex: 2,
-    _columns: [
-      {_attrs: ['logo.uri'], _name: 'ENTERPRISE.LOGO', _type: 'PICTURE', _isSearchable: false},
-      {_attrs: ['name'], _name: 'ENTERPRISE.NAME', _type: 'TEXT', _isSearchable: true},
-      {_attrs: ['topLevelDomain'], _name: 'ENTERPRISE.TOP_LEVEL_DOMAIN', _type: 'TEXT', _isSortable: true},
-      {_attrs: ['patterns'], _name: 'ENTERPRISE.PATTERNS', _type: 'LENGTH', _isSearchable: false},
-      {_attrs: ['enterpriseURL'], _name: 'ENTERPRISE.ENTERPRISE_URL', _type: 'TEXT', _isSortable: true},
-      {_attrs: ['subsidiaries'], _name: 'ENTERPRISE.SUBSIDIARIES', _type: 'LENGTH', _isSearchable: false},
-      {_attrs: ['parentEnterprise'], _name: 'ENTERPRISE.PARENT_ENTERPRISE', _type: 'TEXT', _isSearchable: true}
-    ]
-  };
+  private _resultTableConfiguration: Table = <Table>{};
 
-  constructor(private _enterpriseService: EnterpriseService,
+  private _isLoading = true;
+
+  private _selectedEnterprise: Enterprise = <Enterprise>{};
+
+  private _isEditable = false;
+
+  private _isSaving = false;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _enterpriseService: EnterpriseService,
               private _formBuilder: FormBuilder,
-              private _autoCompleteService: AutocompleteService,
-              private _sanitizer: DomSanitizer, ) {
-  }
+              private _rolesFrontService: RolesFrontService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              /*private _autoCompleteService: AutocompleteService,*/
+              /*private _sanitizer: DomSanitizer*/) {}
 
   private _buildForm() {
-    // Search form
-    this._searchForm = this._formBuilder.group( {
-      searchString: [''],
-    });
-
     // New company form
-    this._newEnterpriseForm = this._formBuilder.group({
+    /*this._newEnterpriseForm = this._formBuilder.group({
       name: [null, [Validators.required]],
       topLevelDomain: [null, [Validators.required]],
       enterpriseURL: [null],
@@ -90,66 +89,151 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       industries: [null],
       brands: [null],
       geographicalZone: [null]
-    });
+    });*/
   }
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this._platformId)) {
+      this._isLoading = false;
+    }
     this._buildForm();
   }
 
-  public doSearch() {
-    this._displayLoading = true;
-    this._nothingFound = false;
-    this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
-    // This is a search because the fucking indexes are not working grrrr
-    this._enterpriseService.get(null, this._queryConfig)
-      .subscribe( (enterprises: any) => {
-        if (enterprises && enterprises.result && enterprises.result.length) {
-          this._resultTableConfiguration._content = enterprises.result;
-          this._resultTableConfiguration._total = enterprises._metadata.totalCount;
-          this._results = true;
-        } else {
-          this._results = false;
-          this._nothingFound = true;
-        }
-        this._displayLoading = false;
-      }, (err: any) => {
-        console.error(err);
-        this._displayLoading = false;
-      });
-  }
-
-  public openSidebar(event: any, type: string) {
-    switch (type) {
-      case 'create':
-        event.preventDefault();
-        this._editEnterpriseId = null;
-        this._newEnterpriseForm.reset();
-        this._sidebarValue = {
-          animate_state: 'active',
-          title: 'Add a new enterprise',
-          type: 'enterprise'
-        };
-        break;
-      case 'edit':
-        this._editEnterpriseId = event._id;
-        this._enterpriseSidebarPatterns = event.patterns;
-        this._newEnterpriseForm.patchValue(event);
-        this._newEnterpriseForm.get('patterns').reset('');
-        this._newEnterpriseForm.get('logo').reset(event.logo.uri);
-        this._sidebarValue = {
-          animate_state: 'active',
-          title: 'Edit enterprise',
-          type: 'enterprise'
-        };
-        break;
-      default:
-        // NOOP
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises']);
     }
   }
 
-  public saveEnterprise() {
+  public doSearch() {
+    this._isSearching = true;
+    this._nothingFound = false;
+
+    this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
+    // This is a search because the fucking indexes are not working
+
+    this._enterpriseService.get(null, this._queryConfig).pipe(first()).subscribe( (enterprises: any) => {
+      if (enterprises && enterprises.result && enterprises.result.length) {
+        this._results = true;
+        this._initTable(enterprises.result, enterprises._metadata.totalCount)
+      } else {
+        this._results = false;
+        this._nothingFound = true;
+      }
+      this._isSearching = false;
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isSearching = false;
+      console.error(err);
+    });
+
+  }
+
+  private _initTable(content: Array<any> = [], total: number = -1) {
+    this._resultTableConfiguration = {
+      _selector: 'admin-enterprises-table',
+      _title: 'Enterprises',
+      _content: content,
+      _total: total,
+      _isTitle: true,
+      _isSearchable: !!this.canAccess(['searchBy']),
+      _isSelectable: this.canAccess(['delete']),
+      _isPaginable: content.length > 10,
+      _isDeletable: this.canAccess(['delete']),
+      _isNoMinHeight: total < 11,
+      _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
+      _columns: [
+        {
+          _attrs: ['logo.uri'],
+          _name: 'Logo',
+          _type: 'PICTURE',
+          _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'logo'])
+        },
+        {
+          _attrs: ['name'],
+          _name: 'Name',
+          _type: 'TEXT',
+          _isSearchable: this.canAccess(['searchBy', 'name']),
+          _isHidden: !this.canAccess(['tableColumns', 'name'])
+        },
+        {
+          _attrs: ['topLevelDomain'],
+          _name: 'Domain',
+          _type: 'TEXT',
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'domain'])
+        },
+        {
+          _attrs: ['patterns'],
+          _name: 'Patterns',
+          _type: 'LENGTH',
+          _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'patterns'])
+        },
+        {
+          _attrs: ['enterpriseURL'],
+          _name: 'Enterprise Url',
+          _type: 'TEXT',
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'url'])
+        },
+        {
+          _attrs: ['subsidiaries'],
+          _name: 'Subsidiaries',
+          _type: 'LENGTH',
+          _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'subsidiary'])
+        },
+        {
+          _attrs: ['parentEnterprise'],
+          _name: 'Parent Enterprise',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        }
+      ]
+    }
+  }
+
+  public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
+    switch (type) {
+
+      case 'CREATE':
+        // this._editEnterpriseId = null;
+        // this._newEnterpriseForm.reset();
+        this._isEditable = this.canAccess(['add']);
+        this._isSaving = false;
+        this._selectedEnterprise = <Enterprise>{};
+        this._sidebarValue = {
+          animate_state: 'active',
+          title: 'Create Enterprise',
+          type: 'CREATE'
+        };
+        break;
+
+      case 'EDIT':
+        this._isEditable = this.canAccess(['edit']);
+        this._isSaving = false;
+        // this._editEnterpriseId = event._id;
+        // this._enterpriseSidebarPatterns = event.patterns;
+        // this._newEnterpriseForm.patchValue(event);
+        // this._newEnterpriseForm.get('patterns').reset('');
+        // this._newEnterpriseForm.get('logo').reset(event.logo.uri);
+        this._sidebarValue = {
+          animate_state: 'active',
+          title: this._isEditable ? 'Edit Enterprise' : 'Enterprise',
+          type: 'EDIT'
+        };
+        this._selectedEnterprise = event;
+        break;
+    }
+  }
+
+  /*public saveEnterprise() {
     this._newEnterprise = {
       name: this._newEnterpriseForm.get('name').value,
       topLevelDomain: this._newEnterpriseForm.get('topLevelDomain').value,
@@ -191,47 +275,82 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       }, err => {
         console.error(err);
       });
+  }*/
+
+  public updateEnterprise(event: {enterprise: Enterprise, opType: string}) {
+    switch (event.opType) {
+
+      case 'CREATE':
+        this._enterpriseService.create(event.enterprise).pipe(first()).subscribe((result) => {
+          this._isSaving = false;
+          this._translateNotificationsService.success('Success', 'The enterprise is created.');
+          this._selectedEnterprise = <Enterprise>{};
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._isSaving = false;
+          console.error(err);
+        });
+        break;
+
+      case 'EDIT':
+        this._enterpriseService.save(this._selectedEnterprise._id, event.enterprise).pipe(first()).subscribe((result) => {
+          this._isSaving = false;
+          this._translateNotificationsService.success('Success', 'The enterprise is updated.');
+          const idx = this._resultTableConfiguration._content.findIndex((value) => {
+            return value._id === result['_id'];
+          });
+          if (idx > -1) {
+            this._resultTableConfiguration._content[idx] = result;
+          }
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._isSaving = false;
+          console.error(err);
+        });
+        break;
+
+    }
   }
 
-  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+  /*public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
     return this._autoCompleteService.get({query: searchString, type: 'company'});
-  }
+  }*/
 
-  public enterpriseSuggestions = (searchString: string): Observable<Array<{name: string, logo: any, domain: string, _id: string}>> => {
+  /*public enterpriseSuggestions = (searchString: string): Observable<Array<{name: string, logo: any, domain: string, _id: string}>> => {
     return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
-  }
+  }*/
 
-  public selectCompany(c: string | Clearbit) {
+  /*public selectCompany(c: string | Clearbit) {
     if (typeof c === 'object') {
       // Maybe there's a logo...
       this._newEnterpriseForm.get('name').reset(c.name);
       this._newEnterpriseForm.get('topLevelDomain').reset(c.domain);
       this._newEnterpriseForm.get('logo').reset(c.logo);
     } // If typeof c === string, leave the thing alone.
-  }
+  }*/
 
-  public selectEnterprise(c: string | Enterprise) {
+  /*public selectEnterprise(c: string | Enterprise) {
     if (typeof c === 'object') {
       this._parentEntreprise = c;
     }
     this._newEnterpriseForm.get('parentEnterprise').reset('');
-  }
+  }*/
 
-  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
+  /*public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
-  }
+  }*/
 
-  public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
+  /*public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
     return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo.uri}" height="35" alt=" "/><span>${data.name}</span>`);
-  }
+  }*/
 
-  public newPattern(event: Event) {
+  /*public newPattern(event: Event) {
     event.preventDefault();
     if (this._newEnterpriseForm.get('patterns').value) {
       this._enterpriseSidebarPatterns.push({pattern: {expression: this._newEnterpriseForm.get('patterns').value}, avg: 0});
       this._newEnterpriseForm.get('patterns').reset('');
     }
-  }
+  }*/
 
   public removeCompanies(event: any) {
     const requests = event.map( (evt: any) => {
@@ -267,26 +386,26 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       });*/
   }
 
-  public changeLogo(event: Event) {
+  /*public changeLogo(event: Event) {
     event.preventDefault();
     this._uploadLogoModal = true;
-  }
+  }*/
 
-  public removePattern(event: Event, index: number) {
+  /*public removePattern(event: Event, index: number) {
     event.preventDefault();
     this._enterpriseSidebarPatterns.splice(index, 1);
-  }
+  }*/
 
-  public uploadImage(event: any) {
+  /*public uploadImage(event: any) {
     if (event && event.url) {
       this._newEnterpriseForm.get('logo').reset(event.url);
     }
     this._uploadLogoModal = false;
   }
-
-  get logoUploadUri(): string {
+*/
+  /*get logoUploadUri(): string {
     return `/media/companyLogo`;
-  }
+  }*/
 
   get results(): boolean {
     return this._results;
@@ -296,12 +415,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return this._searchForm;
   }
 
-  get newEnterpriseForm(): FormGroup {
+  /*get newEnterpriseForm(): FormGroup {
     return this._newEnterpriseForm;
-  }
+  }*/
 
-  get displayLoading(): boolean {
-    return this._displayLoading;
+  get isSearching(): boolean {
+    return this._isSearching;
   }
 
   get sidebarValue(): SidebarInterface {
@@ -312,23 +431,23 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get patterns(): FormArray {
+  /*get patterns(): FormArray {
     return this._newEnterpriseForm.get('patterns') as FormArray;
-  }
+  }*/
 
-  get logoUrl(): string {
+  /*get logoUrl(): string {
     let logoValue = this._newEnterpriseForm.get('logo').value;
     logoValue = logoValue && typeof logoValue === 'object' ?  logoValue.uri || this._defaultLogoURI : logoValue;
     return  logoValue || this._defaultLogoURI;
-  }
+  }*/
 
-  get uploadLogoModal(): boolean {
+  /*get uploadLogoModal(): boolean {
     return this._uploadLogoModal;
-  }
+  }*/
 
-  set uploadLogoModal(value: boolean) {
-    this._uploadLogoModal = value;
-  }
+  // set uploadLogoModal(value: boolean) {
+  //   this._uploadLogoModal = value;
+  // }
 
   get resultTableConfiguration(): Table {
     return this._resultTableConfiguration;
@@ -347,12 +466,28 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return this._nothingFound;
   }
 
-  get activePatterns(): Array<Pattern> {
+  /*get activePatterns(): Array<Pattern> {
     return this._enterpriseSidebarPatterns;
+  }*/
+
+  /*get parentEnterprise(): Enterprise {
+    return this._parentEntreprise;
+  }*/
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
-  get parentEnterprise(): Enterprise {
-    return this._parentEntreprise;
+  get selectedEnterprise(): Enterprise {
+    return this._selectedEnterprise;
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
   }
 
 }
