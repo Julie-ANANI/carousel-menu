@@ -9,6 +9,9 @@ steps:
     repo: unitedmotionideas/frontbase
     target: baseimage
     dockerfile: ./Dockerfile.image
+    volumes:
+      - name: cache
+        path: /drone/src/node_modules
     build_args:
       - APP_NAME=umi
       - ENV_NAME=dev
@@ -201,6 +204,11 @@ steps:
 
 ## Group 2
   ## Inomer production steps
+
+volumes:
+  - name: cache
+    host:
+      path: /tmp/drone/cache/node_modules
 
 #- name: dockerProdInomer
 #  depends_on: [baseimageProd, rancherProd, rancherProdDynergie, rancherProdMultivalente]
