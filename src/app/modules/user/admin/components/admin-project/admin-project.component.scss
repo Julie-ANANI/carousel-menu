@@ -2,31 +2,16 @@
 
 #admin-project {
 
-  .header-wrapper {
-    border-bottom: $border-width solid $border-default-color;
-  }
+  .objective-wrapper {
+    display: flex;
+    align-items: center;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    color: $text-meta-color;
 
-  .tab {
-    border-bottom: none;
-  }
-
-}
-
-@media (max-width: $size-md) {
-
-  #admin-project {
-
-    .header-wrapper {
-
-      .flex-between {
-        margin-bottom: 0.5rem;
-
-        .dropdown.is-right .menu {
-          left: 0;
-        }
-
-      }
-
+    i {
+      font-size: 25px;
+      margin-right: 10px;
     }
 
   }

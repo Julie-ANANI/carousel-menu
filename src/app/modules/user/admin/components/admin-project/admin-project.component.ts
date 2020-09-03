@@ -1,31 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { Innovation } from '../../../../../models/innovation';
-import { ActivatedRoute } from '@angular/router';
-import { FrontendService } from '../../../../../services/frontend/frontend.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { SocketService } from '../../../../../services/socket/socket.service';
 import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { isPlatformBrowser } from '@angular/common';
+import { Mission } from '../../../../../models/mission';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+
+interface Tab {
+  route: string;
+  name: string;
+  key: string;
+}
 
 @Component({
   templateUrl: './admin-project.component.html',
   styleUrls: ['./admin-project.component.scss']
 })
 
-export class AdminProjectComponent implements OnInit {
+export class AdminProjectComponent implements OnInit, OnDestroy {
 
-  private _project: Innovation;
+  private _project: Innovation = <Innovation>{};
 
   private _updatedProject: Innovation | null = null;
 
   private _childComponents = new Set();
 
-  private _fetchingError: boolean;
-
-  private _innovationTitle: string;
+  private _fetchingError = false;
 
   private _showModal = false;
 
@@ -44,52 +54,97 @@ export class AdminProjectComponent implements OnInit {
     anonymous: true
   };
 
-  private _tabs: Array<{key: string, name: string, route: string}> = [
+  private _tabs: Array<Tab> = [
     {key: 'settings', name: 'Settings', route: 'settings'},
-    {key: 'answerTags', name: 'Answer tags', route: 'answer_tags'},
-    {key: 'questionnaire', name: 'Questionnaire', route: 'questionnaire'},
-    {key: 'campaigns', name: 'Campaigns', route: 'campaigns'},
-    {key: 'synthesis', name: 'Synthesis', route: 'synthesis'},
-    {key: 'storyboard', name: 'Storyboard', route: 'storyboard'},
+    {key: 'preparation', name: 'Preparation', route: 'preparation'},
+    {key: 'collection', name: 'Collection', route: 'collection'},
+    {key: 'analysis', name: 'Analysis', route: 'analysis'},
     {key: 'followUp', name: 'Follow up', route: 'follow-up'}
   ];
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  private _isLoading = false;
+
+  private _activatedTab = '';
+
+  private _currentLang = this._translateService.currentLang || 'en';
+
+  private _showBanner = false;
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _status: Array<string> = ['SUBMITTED', 'REJECTED', 'VALIDATED', 'REJECTED_GMAIL',
+    'VALIDATED_UMIBOT', 'REJECTED_UMIBOT'];
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
+              private _router: Router,
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _rolesFrontService: RolesFrontService,
-              private _frontendService: FrontendService,
               private _socketService: SocketService) {
 
-    this._setPageTitle('COMMON.PAGE_TITLE.PROJECT');
-
+    this._initPageTitle();
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this._platformId)) {
+      if (this._activatedRoute.snapshot.data['innovation']
+        && typeof this._activatedRoute.snapshot.data['innovation'] !== undefined) {
+        this._project = this._activatedRoute.snapshot.data['innovation'];
+        this._isLoading = false;
+        this.setPageTitle();
 
-    if (this._activatedRoute.snapshot.data['innovation'] && typeof this._activatedRoute.snapshot.data['innovation'] !== undefined) {
-      this._project = this._activatedRoute.snapshot.data['innovation'];
-      this._innovationTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._translateService.currentLang, 'TITLE');
-      this._setPageTitle(this.title );
-      this._metadata();
+        this._socketService.getProjectUpdates(this._project._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((project: Innovation) => {
+            this._updatedProject = project;
+            this._showBanner = !!this._updatedProject;
+            }, (error) => {
+            console.error(error);
+          });
 
-      this._socketService
-        .getProjectUpdates(this._project._id)
-        .subscribe((project: Innovation) => {
-          this._updatedProject = project;
-        });
-    } else {
-      this._fetchingError = true;
+      } else {
+        this._isLoading = false;
+        this._fetchingError = true
+      }
     }
-
   }
 
-  refresh(): void {
-    window.location.reload();
+  private _initPageTitle() {
+    const _url = this._router.routerState.snapshot.url.split('/');
+    if (_url.length === 7) {
+      const _params = _url[6].indexOf('?');
+      this._activatedTab = _params > 0 ? _url[6].substring(0, _params) : _url[6];
+      this.setPageTitle();
+    } else {
+      this.setPageTitle();
+    }
   }
 
-  updateProject() {
+  public setPageTitle() {
+    if (this._activatedTab && this._project.name) {
+      this._translateTitleService.setTitle(this._activatedTab.slice(0,1).toUpperCase()
+        + this._activatedTab.slice(1) + ' | ' + this._project.name);
+    } else if (this._activatedTab) {
+      this._translateTitleService.setTitle(this._activatedTab.slice(0,1).toUpperCase()
+        + this._activatedTab.slice(1) + ' | Project');
+    } else {
+      this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECT');
+    }
+  }
+
+  public canAccess(path?: Array<string>) {
+    const _default: Array<string> = ['projects', 'project'];
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(_default);
+    }
+  }
+
+  public updateProject() {
     this._project = this._updatedProject;
     this._childComponents.forEach(childComponent => {
       if (childComponent._updateProject) {
@@ -99,26 +154,9 @@ export class AdminProjectComponent implements OnInit {
     this._updatedProject = null;
   }
 
-  onActivate(childComponent: any) {
+  public onActivate(childComponent: any) {
     this._childComponents.add(childComponent);
   }
-
-  private _setPageTitle(value: string) {
-    if (value) {
-      this._translateTitleService.setTitle(value);
-    }
-  }
-
-  /*get authorizedTabs(): Array<string> {
-    const adminLevel = this._authService.adminLevel;
-
-    if (adminLevel > 1) {
-      return ['settings', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis', 'storyboard', 'follow-up' ];
-    } else {
-      return ['cards', 'campaigns', 'synthesis'];
-    }
-
-  }*/
 
   private _resetModals() {
     this._isProjectModal = false;
@@ -131,7 +169,7 @@ export class AdminProjectComponent implements OnInit {
 
     switch (modalToActive) {
 
-      case 'project':
+      case 'PROJECT':
         this._isProjectModal = true;
         break;
 
@@ -143,6 +181,10 @@ export class AdminProjectComponent implements OnInit {
     event.preventDefault();
     this._innovationService.updateFollowUpEmails(this._project._id).pipe(first()).subscribe((result: Innovation) => {
       this._project.followUpEmails = result.followUpEmails;
+      this._translateNotificationsService.success('Success', 'The e-mails have been imported into the project.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
   }
 
@@ -188,42 +230,26 @@ export class AdminProjectComponent implements OnInit {
 
   }
 
-  // todo remove.
-  private _metadata() {
-    this._frontendService.calculateInnovationMetadataPercentages(this._project, 'preparation');
-    this._frontendService.calculateInnovationMetadataPercentages(this._project, 'campaign');
-    this._frontendService.calculateInnovationMetadataPercentages(this._project, 'delivery');
-  }
-
-  public canAccess(path: Array<string>) {
-    return this._rolesFrontService.hasAccessAdminSide(path);
-  }
-
-  // todo remove.
-  getColor(length: number) {
-    if (length < 34 && length >= 0) {
-      return '#EA5858';
-    } else if (length >= 34 && length < 67) {
-      return '#f0ad4e';
-    } else {
-      return '#2ECC71';
-    }
-  }
-
   get title(): string {
-    return  this._innovationTitle ? this._innovationTitle : this._project.name;
+    const _innovTitle = InnovationFrontService.currentLangInnovationCard(this._project,
+      this._currentLang, 'TITLE');
+    return  _innovTitle ? _innovTitle : this._project.name;
   }
 
-  get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  get mission(): Mission {
+    return this._project.mission && (<Mission>this._project.mission)._id ? <Mission>this._project.mission : <Mission>{};
+  }
+
+  get iconClass(): string {
+    return MissionFrontService.objectiveInfo(<Mission>this.mission, 'FONT_AWESOME_ICON');
+  }
+
+  get isTech(): boolean {
+    return this._rolesFrontService.isTechRole();
   }
 
   get fetchingError(): boolean {
     return this._fetchingError;
-  }
-
-  get updatedProject(): Innovation | null {
-    return this._updatedProject;
   }
 
   get project(): Innovation {
@@ -246,8 +272,37 @@ export class AdminProjectComponent implements OnInit {
     return this._projectExportConfig;
   }
 
-  get tabs(): Array<{ key: string; name: string; route: string }> {
+  get tabs(): Array<Tab> {
     return this._tabs;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  set activatedTab(value: string) {
+    this._activatedTab = value;
+  }
+
+  get showBanner(): boolean {
+    return this._showBanner;
+  }
+
+  set showBanner(value: boolean) {
+    this._showBanner = value;
+  }
+
+  get currentLang(): string {
+    return this._currentLang;
+  }
+
+  get status(): Array<string> {
+    return this._status;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }
