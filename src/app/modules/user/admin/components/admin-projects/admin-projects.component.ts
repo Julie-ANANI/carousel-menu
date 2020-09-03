@@ -109,7 +109,7 @@ export class AdminProjectsComponent implements OnInit {
     return new Promise( (resolve, reject) => {
       const operatorConfig = <Config>{
         fields: 'firstName,lastName',
-        limit: '10',
+        limit: '20',
         offset: '0',
         search: '{}',
         sort: '{"created":-1}',
