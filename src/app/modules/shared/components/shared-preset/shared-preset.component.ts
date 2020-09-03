@@ -13,6 +13,10 @@ export class SharedPresetComponent {
     this.presetService.preset = value;
   }
 
+  @Input() set sectionsNames(value: Array<string>) {
+    this.presetService.sectionsNames = value;
+  }
+
   @Output() save = new EventEmitter<Preset>();
 
   constructor(private presetService: PresetService) {}

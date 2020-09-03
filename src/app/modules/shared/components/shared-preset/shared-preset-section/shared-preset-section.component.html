@@ -5,7 +5,10 @@
   </div>
 
   <ng-container *ngIf="editSection" class="form-group">
-    <select class="form-select" [(ngModel)]="section.description">
+    <select class="form-select" [(ngModel)]="section.description" *ngIf="sectionsNames && sectionsNames.length">
+      <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
+    </select>
+    <select class="form-select" [(ngModel)]="section.description" *ngIf="!sectionsNames || !sectionsNames.length">
       <option [ngValue]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.nothing" | translate }}</option>
       <option [ngValue]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.1st" | translate }}</option>
       <option [ngValue]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.2nd" | translate }}</option>
@@ -18,7 +21,8 @@
 
   <ng-container *ngIf="!editSection">
     <select class="form-select" disabled>
-      <option>{{ "PRESETS.SECTION.DESCRIPTION." + section.description | translate }}</option>
+      <option *ngIf="!isNumber(section.description)">{{ "PRESETS.SECTION.DESCRIPTION." + section.description | translate }}</option>
+      <option *ngIf="isNumber(section.description)">{{ sectionsNames[section.description] }}</option>
     </select>
     <div [innerHtml]="section.label | multiling:lang"></div>
   </ng-container>

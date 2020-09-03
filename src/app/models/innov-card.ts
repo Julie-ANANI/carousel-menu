@@ -37,4 +37,4 @@ export class InnovCard extends Model {
   sections?: Array<InnovCardSection>;
 }
 
-export type CardSectionTypes = 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | '';
+export type CardSectionTypes = 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | '';

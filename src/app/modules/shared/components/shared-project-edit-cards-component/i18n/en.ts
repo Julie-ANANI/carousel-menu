@@ -4,6 +4,7 @@ export const SHARED_PROJECT_EDIT = {
     'SUBMIT_BUTTON': 'Submit',
 
     'IMPORT_TRANSLATION': 'Import translation',
+    'ADD_SECTION': 'Add a new section',
 
     'LANGUAGE': {
       'HEADING': 'You are describing the project in:',
