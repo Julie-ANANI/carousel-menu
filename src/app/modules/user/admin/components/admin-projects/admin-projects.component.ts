@@ -114,7 +114,7 @@ export class AdminProjectsComponent implements OnInit {
         search: '{}',
         sort: '{"created":-1}',
         domain: environment.domain,
-        isOperator: 'true'
+        $or: JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'}])
       };
       this._userService.getAll(operatorConfig).pipe(first()).subscribe(operators => {
         this._operators = operators && operators['result'] ? operators['result'] : [];
