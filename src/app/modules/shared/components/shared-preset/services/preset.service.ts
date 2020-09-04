@@ -78,6 +78,8 @@ export class PresetService {
     target_contact: 'textarea',
   };
 
+  private _sectionsNames: Array<string>;
+
   private _preset: Preset;
 
   constructor() {}
@@ -197,4 +199,6 @@ export class PresetService {
   get preset(): Preset { return this._preset; }
   set preset(value: Preset) { this._preset = value; }
 
+  get sectionsNames(): Array<string> { return this._sectionsNames; }
+  set sectionsNames(value: Array<string>) { this._sectionsNames = value; }
 }
