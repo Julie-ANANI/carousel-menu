@@ -28,7 +28,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   private _chosenPreset: Preset = <Preset>{};
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  private _sectionsNames: Array<string>;
+
+
+    constructor(private _activatedRoute: ActivatedRoute,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
               private _rolesFrontService: RolesFrontService,
@@ -40,6 +43,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
       && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
       this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
       this._setQuizLink();
+      this._setSectionsNames();
     }
   }
 
@@ -59,6 +63,32 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     if (this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
       this._quizLink = `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` || '';
     }
+  }
+
+  private _setSectionsNames() {
+      this._sectionsNames = [];
+      let customSection = false;
+      let frenchTitles: Array<string> = [];
+      let englishTitles: Array<string> = [];
+      this._innovation.innovationCards.forEach(card => {
+        if (card.sections) {
+          if (card.sections.some(section => section.type === 'OTHER')) {
+            customSection = true;
+          }
+          const titles = card.sections.map(s => s.title);
+          if (card.lang === 'fr') {
+            frenchTitles = titles;
+          } else {
+            englishTitles = titles;
+          }
+        }
+      });
+      const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
+      if (sectionsNb > 2 || customSection) {
+        for (let i = 0; i < sectionsNb; i++) {
+          this._sectionsNames.push(`${englishTitles[i] || 'No section'} || ${frenchTitles[i] || 'Pas de section'}`);
+        }
+      }
   }
 
   private _saveInnovation() {
@@ -153,6 +183,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   set showPresetModal(value: boolean) {
     this._showPresetModal = value;
+  }
+
+  get sectionsNames(): Array<string> {
+    return this._sectionsNames;
   }
 
 }

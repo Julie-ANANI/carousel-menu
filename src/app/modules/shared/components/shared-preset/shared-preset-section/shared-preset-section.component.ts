@@ -48,7 +48,12 @@ export class SharedPresetSectionComponent {
     }
   }
 
+  public isNumber(value: string) {
+    return /^\d+$/.test(value);
+  }
+
   get sectionIndex(): number { return this._sectionIndex; }
   get section(): Section { return this._section; }
+  get sectionsNames(): Array< string> { return this.presetService.sectionsNames; }
   get lang() { return this.translateService.currentLang; }
 }

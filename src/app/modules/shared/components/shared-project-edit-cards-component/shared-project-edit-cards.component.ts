@@ -8,6 +8,7 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import {InnovCardSection} from '../../../../models/innov-card';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -22,6 +23,7 @@ export class SharedProjectEditCardsComponent {
   @Input() isEditable: boolean = false;
 
   private _selectedCardIndex: number = 0;
+  public newSection: InnovCardSection | null = null;
 
   constructor(private _translationService: TranslationService,
               private _innovationService: InnovationService,
@@ -95,6 +97,32 @@ export class SharedProjectEditCardsComponent {
       this.innovation.innovationCards[this._selectedCardIndex].sections[index].content = event.content;
     }
     this.notifyChanges();
+  }
+
+  public createNewSection() {
+    this.newSection = {
+      title: 'Section',
+      type: 'OTHER',
+      content: '',
+      visibility: true
+    };
+  }
+
+  public addSection() {
+    this.innovation.innovationCards[this._selectedCardIndex].sections.push(this.newSection);
+    this.innovation.innovationCards[this._selectedCardIndex].operatorComment.sections.push({
+      type: this.newSection.type,
+      comment: '',
+      suggestion: ''
+    });
+    this._innovationFrontService.setCardCommentNotifyChanges(true);
+    this.newSection = null;
+  }
+
+  public deleteSection(index: number) {
+    this.innovation.innovationCards[this._selectedCardIndex].sections.splice(index, 1);
+    this.innovation.innovationCards[this._selectedCardIndex].operatorComment.sections.splice(index, 1);
+    this._translateNotificationsService.success('Section supprimée', 'La section sera effectivement supprimée quand vous cliquerez sur sauvegarder');
   }
 
   public updateUMIComment(event: { content: string }, cardProperty:  'summary' | 'sections', type: 'comment' | 'suggestion', index?: number) {
