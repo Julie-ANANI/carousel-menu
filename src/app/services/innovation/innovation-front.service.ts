@@ -50,6 +50,8 @@ export class InnovationFrontService {
 
   private _activeCardIndex: Subject<number> = new Subject<number>();
 
+  private _activeCardLang: Subject<string> = new Subject<string>();
+
   constructor(private _domSanitizer: DomSanitizer) { }
 
   /*
@@ -435,6 +437,18 @@ export class InnovationFrontService {
 
   activeCardIndex(): Subject<number> {
     return this._activeCardIndex;
+  }
+
+  /***
+   * these function to set and get active card lang.
+   * @param value
+   */
+  setActiveCardLang(value: string) {
+    this._activeCardLang.next(value);
+  }
+
+  activeCardLang(): Subject<string>  {
+    return this._activeCardLang;
   }
 
   /***

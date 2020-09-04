@@ -7,11 +7,31 @@
     align-items: center;
     font-weight: $font-weight-medium;
     font-size: $font-size-sm;
-    color: $text-meta-color;
+    color: $text-white-color;
+    opacity: 0.7;
 
     i {
       font-size: 25px;
       margin-right: 10px;
+    }
+
+  }
+
+  .tab {
+    border-bottom: none;
+
+    .tab-item {
+      color: $text-white-color;
+      border-bottom: none;
+
+      a {
+        border-bottom: none;
+        background-color: #747d88;
+        font-weight: $font-weight-medium;
+        border-top-right-radius: $border-width-xl;
+        border-top-left-radius: $border-width-xl;
+      }
+
     }
 
   }

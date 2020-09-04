@@ -60,7 +60,7 @@ export class RolesFrontService {
 	 */
 	public campaignDefaultRoute(): string {
 		return this.canAccessRoute(
-			['answers', 'batch', 'workflows', 'pros', 'history', 'search'],
+			['batch', 'workflows', 'pros', 'history', 'search'],
 			['projects', 'project', 'campaigns', 'campaign']);
 	}
 

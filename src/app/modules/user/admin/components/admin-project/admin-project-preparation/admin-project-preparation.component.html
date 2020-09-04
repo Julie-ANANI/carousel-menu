@@ -1,3 +1,194 @@
-<p>
-  admin-project-preparation works!
-</p>
+<div id="admin-project-preparation">
+
+  <!-- section header -->
+  <section class="bg-white">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 p-top-20 col-mx-auto relative">
+
+        <!-- tabs -->
+        <ul class="tab">
+          <ng-container *ngFor="let tab of showCampaignTabs ? campaignTabs : defaultTabs">
+            <li class="tab-item">
+              <a
+                (click)="navigateTo(tab)"
+                [routerLink]="routeToNavigate(tab)"
+                routerLinkActive="active">
+                {{ tab | titlecase }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+        <!-- /tabs -->
+
+        <!-- actions buttons -->
+        <div class="header-btn-action-wrapper">
+
+          <!-- list of campaigns -->
+          <div *ngIf="showCampaignTabs" class="d-flex align-center">
+
+            <!-- back -->
+            <a (click)="backToCampaigns()" class="button is-link is-sm m-right-10">
+              Back to campaigns
+            </a>
+            <!-- /back -->
+
+            <!-- show campaigns -->
+            <div class="dropdown is-right">
+              <a class="button is-sm is-info is-outlined dropdown-toggle" tabindex="0">
+                <span class="text-ellipsis w-120">{{ selectedCampaign.title }}</span><i class="fas fa-caret-down"></i>
+              </a>
+              <ul class="menu is-lg">
+                <li *ngFor="let campaign of allCampaigns" (click)="setCampaign(campaign)" class="menu-item">
+                  {{ campaign.title }}
+                </li>
+              </ul>
+            </div>
+            <!-- /show campaigns -->
+
+          </div>
+          <!-- /list of campaigns  -->
+
+          <!-- Description || Targeting -->
+          <div *ngIf="activeTab === 'description' || activeTab === 'targeting'" class="d-flex align-center">
+
+            <!-- add lang -->
+            <button
+              (click)="openModal($event, 'ADD_LANG')"
+              *ngIf="canAddCard && activeTab === 'description'"
+              [disabled]="isAddingCard"
+              class="button is-link is-sm m-right-10"
+              id="btn-add-card">
+              <i class="fas fa-plus-circle"></i>
+              <ng-container *ngIf="activeCard.lang === 'en'">Add french</ng-container>
+              <ng-container *ngIf="activeCard.lang === 'fr'">Add english</ng-container>
+            </button>
+            <!-- /add lang -->
+
+            <!-- lang change -->
+            <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
+              <a class="button is-sm is-link dropdown-toggle" tabindex="0">
+                {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down"></i>
+              </a>
+              <ul class="menu">
+                <li
+                  (click)="setCardLang(card.lang)"
+                  *ngFor="let card of project.innovationCards"
+                  class="menu-item flex-between">
+                  {{ card.lang === 'fr' ? 'French' : 'English' }}
+                  <div
+                    (click)="openModal($event, 'DELETE_LANG', card)"
+                    [ngClass]="{'disabled': isDeletingCard}"
+                    class="icon-container is-sm is-overlay">
+                    <i class="icon text-alert icon-delete"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- /lang change -->
+
+            <!-- save -->
+            <button
+              (click)="onSaveProject($event)"
+              [disabled]="isSaving"
+              [ngStyle]="{'min-width': '110px'}"
+              class="button is-sm is-outlined is-primary"
+              id="btn-save"
+              type="button">
+              <ng-container *ngIf="isSaving; else saveText">saving the project...</ng-container>
+              <ng-template #saveText>Save</ng-template>
+            </button>
+            <!-- /save -->
+
+          </div>
+          <!-- /Description || Targeting -->
+
+        </div>
+        <!-- /actions buttons -->
+
+      </div>
+    </div>
+  </section>
+  <!-- /section header -->
+
+  <!-- different pages -->
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+  <!-- /different pages -->
+
+</div>
+
+<!-- modal to innovation card add lang -->
+<app-utility-modal-empty [(showModal)]="showCardModal">
+
+  <!-- body -->
+  <section class="modal-body p-bottom-40">
+    <h2 [ngStyle]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
+      <ng-container *ngIf="modelType === 'ADD_LANG'">Add project language</ng-container>
+      <ng-container *ngIf="modelType === 'DELETE_LANG'">Delete project language</ng-container>
+    </h2>
+    <div class="mxw-550 m-right-auto m-left-auto">
+      <ng-container *ngIf="modelType === 'ADD_LANG'">
+        Do you really want to add the project in {{ activeCard.lang === 'fr' ? 'English' : 'French' }} language?
+      </ng-container>
+      <ng-container *ngIf="modelType === 'DELETE_LANG'">
+        Do you really want to delete the project in {{ cardToDelete.lang === 'fr' ? 'French' : 'English' }} language?
+      </ng-container>
+    </div>
+  </section>
+  <!-- body -->
+
+  <!-- footer -->
+  <footer [ngSwitch]="modelType" class="modal-footer justify-center">
+
+    <!-- Add Lang -->
+    <ng-container *ngSwitchCase="'ADD_LANG'">
+
+      <button
+        (click)="closeModal()"
+        [disabled]="isAddingCard"
+        [id]="'btn-cancel'"
+        class="button modal-cancel">
+        Cancel
+      </button>
+
+      <button
+        (click)="addInnovationCard($event)"
+        [disabled]="isAddingCard"
+        [id]="'btn-confirm-card'"
+        class="button is-community">
+        <ng-container *ngIf="isAddingCard; else defConfirmAdd">adding the language...</ng-container>
+        <ng-template #defConfirmAdd>Confirm</ng-template>
+      </button>
+
+    </ng-container>
+    <!-- /Add Lang -->
+
+    <!-- Add Lang -->
+    <ng-container *ngSwitchCase="'DELETE_LANG'">
+
+      <button
+        (click)="closeModal()"
+        [disabled]="isDeletingCard"
+        [id]="'btn-cancel'"
+        class="button modal-cancel">
+        Cancel
+      </button>
+
+      <button
+        (click)="deleteInnovationCard($event)"
+        [disabled]="isDeletingCard"
+        [id]="'btn-confirm-card'"
+        class="button is-community">
+        <ng-container *ngIf="isDeletingCard; else defConfirmDelete">deleting the language...</ng-container>
+        <ng-template #defConfirmDelete>Confirm</ng-template>
+      </button>
+
+    </ng-container>
+    <!-- /Add Lang -->
+
+  </footer>
+  <!-- /footer -->
+
+</app-utility-modal-empty>
+<!-- modal to innovation card add lang -->

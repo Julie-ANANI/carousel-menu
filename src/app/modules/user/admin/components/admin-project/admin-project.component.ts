@@ -20,6 +20,7 @@ interface Tab {
   route: string;
   name: string;
   key: string;
+  icon: string;
 }
 
 @Component({
@@ -32,8 +33,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   private _project: Innovation = <Innovation>{};
 
   private _updatedProject: Innovation | null = null;
-
-  private _childComponents = new Set();
 
   private _fetchingError = false;
 
@@ -55,11 +54,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   };
 
   private _tabs: Array<Tab> = [
-    {key: 'settings', name: 'Settings', route: 'settings'},
-    {key: 'preparation', name: 'Preparation', route: 'preparation'},
-    {key: 'collection', name: 'Collection', route: 'collection'},
-    {key: 'analysis', name: 'Analysis', route: 'analysis'},
-    {key: 'followUp', name: 'Follow up', route: 'follow-up'}
+    {key: 'settings', name: 'Settings', route: 'settings', icon: 'fas fa-cog'},
+    {key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt'},
+    {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
+    {key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area'},
+    {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
   ];
 
   private _isLoading = false;
@@ -82,19 +81,18 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
-              private _socketService: SocketService) {
-
-    this._initPageTitle();
-  }
+              private _socketService: SocketService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
       if (this._activatedRoute.snapshot.data['innovation']
         && typeof this._activatedRoute.snapshot.data['innovation'] !== undefined) {
         this._project = this._activatedRoute.snapshot.data['innovation'];
+        this._setInnovation();
         this._isLoading = false;
-        this.setPageTitle();
+        this._initPageTitle();
 
         this._socketService.getProjectUpdates(this._project._id)
           .pipe(takeUntil(this._ngUnsubscribe))
@@ -127,11 +125,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     if (this._activatedTab && this._project.name) {
       this._translateTitleService.setTitle(this._activatedTab.slice(0,1).toUpperCase()
         + this._activatedTab.slice(1) + ' | ' + this._project.name);
-    } else if (this._activatedTab) {
-      this._translateTitleService.setTitle(this._activatedTab.slice(0,1).toUpperCase()
-        + this._activatedTab.slice(1) + ' | Project');
     } else {
-      this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECT');
+      this._translateTitleService.setTitle('Project');
     }
   }
 
@@ -144,18 +139,13 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  public updateProject() {
-    this._project = this._updatedProject;
-    this._childComponents.forEach(childComponent => {
-      if (childComponent._updateProject) {
-        childComponent._updateProject(this._project);
-      }
-    });
-    this._updatedProject = null;
+  private _setInnovation() {
+    this._innovationFrontService.setInnovation(this._project);
   }
 
-  public onActivate(childComponent: any) {
-    this._childComponents.add(childComponent);
+  public updateProject() {
+    this._project = this._updatedProject;
+    this._setInnovation();
   }
 
   private _resetModals() {
@@ -181,6 +171,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._innovationService.updateFollowUpEmails(this._project._id).pipe(first()).subscribe((result: Innovation) => {
       this._project.followUpEmails = result.followUpEmails;
+      this._setInnovation();
       this._translateNotificationsService.success('Success', 'The e-mails have been imported into the project.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));

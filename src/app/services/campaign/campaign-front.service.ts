@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
+import {Subject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class CampaignFrontService {
+
+  private _allCampaigns: Subject<Array<Campaign>> = new Subject<Array<Campaign>>();
+
+  private _activeCampaign: Subject<Campaign> = new Subject<Campaign>();
+
+  private _showCampaignTabs: Subject<boolean> = new Subject<boolean>();
 
   /***
    * this function is to calculate the campaign stat for the answers component in the
@@ -149,5 +156,40 @@ export class CampaignFrontService {
     return isNaN(value) ? 0 : value;
   }
 
+  /***
+   * these function to set and get all the campaigns
+   * @param value
+   */
+  public setAllCampaigns(value: Array<Campaign>) {
+    this._allCampaigns.next(value);
+  }
+
+  public allCampaigns(): Subject<Campaign[]> {
+    return this._allCampaigns;
+  }
+
+  /***
+   * these function to set and get the active campaign
+   * @param value
+   */
+  public setActiveCampaign(value: Campaign) {
+    this._activeCampaign.next(value);
+  }
+
+  public activeCampaign(): Subject<Campaign> {
+    return this._activeCampaign;
+  }
+
+  /***
+   * these function to set and get the show campaign tabs
+   * @param value
+   */
+  public setShowCampaignTabs(value: boolean) {
+    this._showCampaignTabs.next(value);
+  }
+
+  public showCampaignTabs(): Subject<boolean> {
+    return this._showCampaignTabs;
+  }
 
 }

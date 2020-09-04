@@ -9,6 +9,7 @@ import {MessageErrorModule} from '../../../../utility/messages/message-error/mes
 import {BannerModule} from '../../../../utility/banner/banner.module';
 import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminProjectFollowUpModule} from './admin-project-follow-up/admin-project-follow-up.module';
+import {AdminProjectPreparationModule} from './admin-project-preparation/admin-project-preparation.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {AdminProjectFollowUpModule} from './admin-project-follow-up/admin-projec
     MessageErrorModule,
     BannerModule,
     ModalModule,
-    AdminProjectFollowUpModule
+    AdminProjectFollowUpModule,
+    AdminProjectPreparationModule
   ],
   declarations: [
     AdminProjectComponent

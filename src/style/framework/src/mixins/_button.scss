@@ -67,6 +67,10 @@
       background-color: lighten($color, 46%);
     }
 
+    @if $color == $bg-community-color {
+      background-color: lighten($color, 46%);
+    }
+
   }
 
   &[disabled], &:disabled, &.disabled {

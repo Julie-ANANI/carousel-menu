@@ -64,8 +64,8 @@ const adminRoutes: Routes = [
       {
         path: 'projects',
         canActivateChild: [AdminAuthGuard],
-        canActivate: [AdminRoleGuard],
-        data: { accessPath: ['projects'] },
+        /*canActivate: [AdminRoleGuard],
+        data: { accessPath: ['projects'] },*/
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
           {

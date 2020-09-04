@@ -1,8 +1,10 @@
-<div [hidden]="isLoading" class="container fluid grid-2xl" id="admin-project">
+<div [hidden]="isLoading" id="admin-project">
 
   <!-- error message while fetching -->
-  <section *ngIf="fetchingError" class="column col-sm-12 col-11 col-mx-auto">
-    <app-utility-message-error></app-utility-message-error>
+  <section *ngIf="fetchingError" class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <app-utility-message-error></app-utility-message-error>
+    </div>
   </section>
   <!-- /error message while fetching -->
 
@@ -19,87 +21,87 @@
     <!-- banner project message  -->
 
     <!-- section header -->
-    <section class="p-top-25 bg-white">
-      <div class="column col-sm-12 col-11 col-mx-auto">
+    <section class="bg-draft">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 p-top-25 col-mx-auto">
 
-        <!-- heading / actions button -->
-        <div class="flex-between flex-wrap">
+          <!-- heading / actions button -->
+          <div class="flex-between flex-wrap m-bottom-10">
 
-          <!-- heading / view like client / objective -->
-          <div class="m-right-15 m-bottom-15">
+            <!-- heading / view like client / objective -->
+            <div class="m-right-15 m-bottom-15">
 
-            <div class="d-flex align-center flex-wrap m-bottom-1">
-              <h1 class="title is-4 text-background m-bottom-2">{{ title }}</h1>
-              <a
-                [routerLink]="['/user/projects/', project._id]"
-                class="button is-link is-sm"
-                target="_blank">
-                View like client
-              </a>
-            </div>
-
-            <!-- mission objective -->
-            <div
-              *ngIf="mission.objective && mission.objective.principal
-              && mission.objective.principal['en'] && mission.objective.principal['en'] !== 'Other'"
-              [ngStyle]="{ 'min-height': '25px' }"
-              class="m-bottom-1">
-              <div class="objective-wrapper">
-                <i [ngClass]="iconClass"></i>
-                {{ mission.objective.principal[currentLang] }}
+              <div class="d-flex align-center flex-wrap m-bottom-1">
+                <h1 class="title is-4 text-white m-bottom-2">{{ title }}</h1>
+                <a
+                  [routerLink]="['/user/projects/', project._id]"
+                  class="button is-link text-white is-xs"
+                  target="_blank">
+                  View like client
+                </a>
               </div>
-            </div>
-            <!-- /mission objective -->
 
-          </div>
-          <!-- /heading / view like client / objective -->
+              <!-- mission objective -->
+              <div
+                *ngIf="mission.objective && mission.objective.principal
+              && mission.objective.principal['en'] && mission.objective.principal['en'] !== 'Other'"
+                [ngStyle]="{ 'min-height': '25px' }"
+                class="m-bottom-1">
+                <div class="objective-wrapper">
+                  <i [ngClass]="iconClass"></i>
+                  {{ mission.objective.principal[currentLang] }}
+                </div>
+              </div>
+              <!-- /mission objective -->
+
+            </div>
+            <!-- /heading / view like client / objective -->
 
           <!-- actions button -->
           <div *ngIf="isTech" class="dropdown is-right m-bottom-15">
 
-            <a class="button is-danger is-sm is-outlined dropdown-toggle" tabindex="0">
-              Actions <i class="icon icon-caret icon-right"></i>
-            </a>
+              <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
+                Actions <i class="icon icon-caret icon-right"></i>
+              </a>
 
-            <ul class="menu is-md">
-              <li (click)="openModal($event, 'PROJECT')" class="menu-item">
-                Export project
-              </li>
-              <li (click)="onClickImportFollowUp($event)" class="menu-item">
-                Import follow up emails
-              </li>
-            </ul>
+              <ul class="menu is-md">
+                <li (click)="openModal($event, 'PROJECT')" class="menu-item">
+                  Export project
+                </li>
+                <li (click)="onClickImportFollowUp($event)" class="menu-item">
+                  Import follow up emails
+                </li>
+              </ul>
+
+            </div>
+            <!-- /actions button -->
 
           </div>
-          <!-- /actions button -->
+          <!-- /heading / actions button -->
+
+          <!-- tabs -->
+          <ul class="tab is-fullwidth">
+            <ng-container *ngFor="let tab of tabs">
+              <li class="tab-item">
+                <a
+                  (click)="activatedTab = tab.name; setPageTitle()"
+                  [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
+                  routerLinkActive="active">
+                  <i [ngClass]="tab.icon"></i> {{ tab.name }}
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+          <!-- /tabs -->
 
         </div>
-        <!-- /heading / actions button -->
-
-        <!-- Todo -->
-        <!-- tabs *ngIf="canAccess([tab.key])"  -->
-        <ul class="tab">
-          <ng-container *ngFor="let tab of tabs">
-            <li class="tab-item">
-              <a
-                (click)="activatedTab = tab.name; setPageTitle()"
-                [routerLinkActiveOptions]="{ exact: true }"
-                [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
-                routerLinkActive="active">
-                {{ tab.name }}
-              </a>
-            </li>
-          </ng-container>
-        </ul>
-        <!-- /tabs -->
-
       </div>
     </section>
     <!-- /section header -->
 
     <!-- different pages -->
     <div>
-      <router-outlet (activate)="onActivate($event)"></router-outlet>
+      <router-outlet></router-outlet>
     </div>
     <!-- /different pages -->
 
