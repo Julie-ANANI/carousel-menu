@@ -93,7 +93,11 @@ export class ExecutiveObjectiveComponent implements OnInit {
    */
   private _getCommercials() {
     if (isPlatformBrowser(this._platformId)) {
-      this._userService.getAll({ roles: 'super-admin', fields: '_id firstName lastName phone email' })
+      const config = {
+        roles: 'commercial',
+        fields: '_id firstName lastName phone email'
+      };
+      this._userService.getAll(config)
         .pipe(first()).subscribe((response) => {
 
           this._allCommercials = response && response['result'] ? response['result'] : [];

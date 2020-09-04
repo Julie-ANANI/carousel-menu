@@ -54,7 +54,11 @@ export class ExecutiveConclusionComponent implements OnInit {
 
   private _getOperators() {
     if (isPlatformBrowser(this._platformId)) {
-      this._userService.getAll({ roles: 'super-admin', fields: '_id firstName lastName' })
+      const config = {
+        '$or': JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'}]),
+        fields: '_id firstName lastName'
+      };
+      this._userService.getAll(config)
         .pipe(first()).subscribe((response) => {
           this._allOperators = response && response['result'] ? response['result'] : [];
 
