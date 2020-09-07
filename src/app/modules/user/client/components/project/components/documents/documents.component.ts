@@ -131,7 +131,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   private _getExecutiveReport() {
     if (isPlatformBrowser(this._platformId) && this._innovation.executiveReportId) {
       this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((response) => {
-        const index = this._documents.findIndex((document) => document.name === 'REPORT');
+        const index = this._documents.findIndex((_document) => _document.name === 'REPORT');
         if (index !== -1) {
           this._documents[index].isExportable = response.externalDiffusion;
         }
