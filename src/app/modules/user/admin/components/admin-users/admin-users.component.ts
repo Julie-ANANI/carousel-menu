@@ -26,6 +26,7 @@ export class AdminUsersComponent implements OnInit {
     limit: this._configService.configLimit('admin-users-limit'),
     offset: '0',
     search: '{}',
+    roles: JSON.stringify({'$ne': 'root'}),
     sort: '{ "created": -1 }'
   };
 

@@ -2,23 +2,22 @@ import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
-import { Config } from "../../../../models/config";
+import { Config } from '../../../../models/config';
 import { Table } from '../../../table/models/table';
-import { SidebarInterface } from "../../../sidebars/interfaces/sidebar-interface";
-import { COUNTRIES } from "../shared-search-pros/COUNTRIES";
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
+import { COUNTRIES } from '../shared-search-pros/COUNTRIES';
 import { countries } from '../../../../models/static-data/country';
-import { Campaign } from "../../../../models/campaign";
-import { ProfessionalsService } from "../../../../services/professionals/professionals.service";
-import { Router } from "@angular/router";
-import { ConfigService } from "../../../../services/config/config.service";
+import { Campaign } from '../../../../models/campaign';
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { Router } from '@angular/router';
+import { ConfigService } from '../../../../services/config/config.service';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { GeographySettings } from '../../../../models/innov-settings';
-import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { IndexService } from '../../../../services/index/index.service';
-import { HttpErrorResponse } from "@angular/common/http";
-import { isPlatformBrowser } from "@angular/common";
-import { RolesFrontService } from "../../../../services/roles/roles-front.service";
-import { ErrorFrontService } from "../../../../services/error/error-front.service";
+import { HttpErrorResponse } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -27,6 +26,93 @@ import { ErrorFrontService } from "../../../../services/error/error-front.servic
 })
 
 export class SharedSearchHistoryComponent implements OnInit {
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _router: Router,
+              private _configService: ConfigService,
+              private _campaignService: CampaignService,
+              private _searchService: SearchService,
+              private _rolesFrontService: RolesFrontService,
+              private _professionalsService: ProfessionalsService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _indexService: IndexService) { }
+
+  get requests(): Array<any> {
+    return this._requests;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get googleQuota(): number {
+    return this._googleQuota;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    const tmp = JSON.parse(value.search);
+    this._loadHistory();
+    if ('keywords' in tmp) {
+      this._keywordsSuggestion(tmp['keywords']);
+    }
+  }
+
+  get paused(): boolean {
+    return this._paused;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get selectedRequest(): any {
+    return this._selectedRequest;
+  }
+
+  get chosenCampaign(): Campaign {
+    return this._chosenCampaign;
+  }
+
+  get addToCampaignModal(): boolean {
+    return this._addToCampaignModal;
+  }
+
+  set addToCampaignModal(value: boolean) {
+    this._addToCampaignModal = value;
+  }
+
+  get geography(): GeographySettings {
+    return this._geography;
+  }
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
+  }
+
+  get suggestions(): Array<string> {
+    return this._suggestedKeywords;
+  }
+
+  get launchNewRequests(): boolean {
+    return this._launchNewRequests;
+  }
+
+  set launchNewRequests(value: boolean) {
+    this._launchNewRequests = value;
+  }
 
   @Input() accessPath: Array<string> = [];
 
@@ -58,8 +144,8 @@ export class SharedSearchHistoryComponent implements OnInit {
     fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
       'innovation motherRequest totalResults metadata results',
     limit: this._configService.configLimit('admin-search-history-limit'),
-    offset: "0",
-    search: "{}",
+    offset: '0',
+    search: '{}',
     sort: '{ "created": -1 }'
   };
 
@@ -71,15 +157,13 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _geography: GeographySettings = <GeographySettings>{};
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _router: Router,
-              private _configService: ConfigService,
-              private _campaignService: CampaignService,
-              private _searchService: SearchService,
-              private _rolesFrontService: RolesFrontService,
-              private _professionalsService: ProfessionalsService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _indexService: IndexService) { }
+  private static _getRequestIndex(requestId: string, array: Array<any>): number {
+    for (const request of array) {
+      if (requestId === request._id) {
+        return array.indexOf(request);
+      }
+    }
+  }
 
   ngOnInit(): void {
     this._initTable();
@@ -116,27 +200,27 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._suggestedKeywords = [];
     this._searchService.getRequests(this._config).pipe(first()).subscribe((result: any) => {
 
-      if(result.requests) {
+      if (result.requests) {
         this._requests = result.requests.map((request: any) => {
-          request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
+          request.pros = (request.results.person.length || request.totalResults || 0) + ' pros';
           if (request.region) {
             request.targetting = request.region;
-            request.keywords = request.keywords.replace(`"${request.region}"`, "");
+            request.keywords = request.keywords.replace(`"${request.region}"`, '');
           } else if (request.country) {
             request.targetting = countries[request.country];
           } else if (request.countries && request.countries.length) {
-            request.targetting = "";
+            request.targetting = '';
             const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
             request.countries.forEach((country: string) => {
-              if (COUNTRIES.europe.indexOf(country) != - 1) counter.EU++;
-              else if (COUNTRIES.americaNord.indexOf(country) != - 1) counter.NA++;
-              else if (COUNTRIES.americaSud.indexOf(country) != - 1) counter.SA++;
-              else if (COUNTRIES.asia.indexOf(country) != - 1) counter.AS++;
-              else if (COUNTRIES.africa.indexOf(country) != - 1) counter.AF++;
-              else if (COUNTRIES.oceania.indexOf(country) != - 1) counter.OC++;
+              if (COUNTRIES.europe.indexOf(country) !== - 1) { counter.EU++; }
+              else if (COUNTRIES.americaNord.indexOf(country) !== - 1) { counter.NA++; }
+              else if (COUNTRIES.americaSud.indexOf(country) !== - 1) { counter.SA++; }
+              else if (COUNTRIES.asia.indexOf(country) !== - 1) { counter.AS++; }
+              else if (COUNTRIES.africa.indexOf(country) !== - 1) { counter.AF++; }
+              else if (COUNTRIES.oceania.indexOf(country) !== - 1) { counter.OC++; }
             });
-            for (let key of Object.keys(counter)) {
-              if (counter[key]) request.targetting += ` ${key}(${counter[key]})`;
+            for (const key of Object.keys(counter)) {
+              if (counter[key]) { request.targetting += ` ${key}(${counter[key]})`; }
             }
           }
           return request;
@@ -281,7 +365,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   public updateInnovation(object: any) {
     if (object.value.length) {
       this._config.innovation = JSON.stringify({
-        "$in": object.value.map((v: any) => v._id)
+        '$in': object.value.map((v: any) => v._id)
       });
     } else {
       delete this._config.innovation;
@@ -295,7 +379,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     if (value._action === 'Cancel the requests') {
 
       this._searchService.cancelManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
-        requestsIds.forEach((requestId : string) => {
+        requestsIds.forEach((requestId: string) => {
           this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)].status = 'CANCELED';
         });
         this._translateNotificationsService.success('Success', 'The requests have been cancelled.');
@@ -307,9 +391,9 @@ export class SharedSearchHistoryComponent implements OnInit {
     } else if (value._action === 'Put back in queue') {
 
       this._searchService.queueManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
-        requestsIds.forEach((requestId : string) => {
+        requestsIds.forEach((requestId: string) => {
           const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
-          if (request.status != "DONE") request.status = 'QUEUED';
+          if (request.status !== 'DONE') { request.status = 'QUEUED'; }
         });
         this._translateNotificationsService.success('Success', 'The queries have been put on hold.');
       }, (err: HttpErrorResponse) => {
@@ -319,7 +403,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     } else if (value._action === 'Stop the requests') {
 
       this._searchService.stopManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
-        requestsIds.forEach((requestId : string) => {
+        requestsIds.forEach((requestId: string) => {
           const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
           request.status = 'DONE';
         });
@@ -359,11 +443,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     if (Array.isArray(event.value)) {
       if (event.value.length > 0) {
         this._campaignService.get(event.value[0]._id).pipe(first()).subscribe((campaign) => {
-          this._geography = {
-            include: campaign.targetCountries.map((country) => { return {code: country}; }),
-            exclude: [],
-            continentTarget: WorldmapService.setContinents(false)
-          };
+          this._geography = campaign.innovation.settings.geography;
           this._chosenCampaign = campaign;
         }, (err: HttpErrorResponse) => {
           console.error(err);
@@ -409,19 +489,11 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
       this._googleQuota = 30000;
       if (result.hours) {
-        this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
+        this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
       }
     }, (err: HttpErrorResponse) => {
       console.error(err);
     });
-  }
-
-  private static _getRequestIndex(requestId: string, array: Array<any>): number {
-    for (const request of array) {
-      if (requestId === request._id) {
-        return array.indexOf(request);
-      }
-    }
   }
 
   private _keywordsSuggestion(query: string) {
@@ -432,7 +504,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         if (!itm) {continue; }
         if (o[itm] === undefined) {o[itm] = 1; } else {++o[itm]; }
       }
-      for (let p in o) {a[a.length] = p; }
+      for (const p in o) {a[a.length] = p; }
       return a.sort(function(a, b) {
         return o[b] - o[a];
       });
@@ -452,83 +524,6 @@ export class SharedSearchHistoryComponent implements OnInit {
       });
       this._suggestedKeywords = byCount(kw).slice(0, 4) || [];
     });
-  }
-
-  get requests(): Array<any> {
-    return this._requests;
-  }
-
-  get total(): number {
-    return this._total;
-  }
-
-  get googleQuota(): number {
-    return this._googleQuota;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-    const tmp = JSON.parse(value.search);
-    this._loadHistory();
-    if ('keywords' in tmp) {
-      this._keywordsSuggestion(tmp['keywords']);
-    }
-  }
-
-  get paused(): boolean {
-    return this._paused;
-  }
-
-  get tableInfos(): Table {
-    return this._tableInfos;
-  }
-
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
-  }
-
-  set sidebarValue(value: SidebarInterface) {
-    this._sidebarValue = value;
-  }
-
-  get selectedRequest(): any {
-    return this._selectedRequest;
-  }
-
-  get chosenCampaign(): Campaign {
-    return this._chosenCampaign;
-  }
-
-  get addToCampaignModal(): boolean {
-    return this._addToCampaignModal;
-  }
-
-  set addToCampaignModal(value: boolean) {
-    this._addToCampaignModal = value;
-  }
-
-  get geography(): GeographySettings {
-    return this._geography;
-  }
-
-  set geography(value: GeographySettings) {
-    this._geography = value;
-  }
-
-  get suggestions(): Array<string> {
-    return this._suggestedKeywords;
-  }
-
-  get launchNewRequests(): boolean {
-    return this._launchNewRequests;
-  }
-
-  set launchNewRequests(value: boolean) {
-    this._launchNewRequests = value;
   }
 
 }
