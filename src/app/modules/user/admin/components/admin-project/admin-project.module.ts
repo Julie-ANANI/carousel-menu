@@ -10,6 +10,7 @@ import {BannerModule} from '../../../../utility/banner/banner.module';
 import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminProjectFollowUpModule} from './admin-project-follow-up/admin-project-follow-up.module';
 import {AdminProjectPreparationModule} from './admin-project-preparation/admin-project-preparation.module';
+import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {AdminProjectPreparationModule} from './admin-project-preparation/admin-p
     BannerModule,
     ModalModule,
     AdminProjectFollowUpModule,
-    AdminProjectPreparationModule
+    AdminProjectPreparationModule,
+    AdminProjectQuestionnaireModule
   ],
   declarations: [
     AdminProjectComponent

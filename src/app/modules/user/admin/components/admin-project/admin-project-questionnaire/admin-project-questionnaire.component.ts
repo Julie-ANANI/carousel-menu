@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -7,18 +6,20 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Innovation } from '../../../../../../models/innovation';
 import { environment } from '../../../../../../../environments/environment';
 import { Preset } from '../../../../../../models/preset';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { first } from "rxjs/operators";
+import {first, takeUntil} from 'rxjs/operators';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
   styleUrls: ['./admin-project-questionnaire.component.scss']
 })
 
-export class AdminProjectQuestionnaireComponent implements OnInit {
+export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -28,18 +29,22 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   private _chosenPreset: Preset = <Preset>{};
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
               private _rolesFrontService: RolesFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) { }
 
   ngOnInit(): void {
-    if (this._activatedRoute.snapshot.parent.data['innovation']
-      && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
-      this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
-      this._setQuizLink();
+    if (isPlatformBrowser(this._platformId)) {
+      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+        this._innovation = innovation || <Innovation>{};
+        this._setQuizLink();
+      });
     }
   }
 
@@ -49,10 +54,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     } else {
       return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'questionnaire']);
     }
-  }
-
-  _updateProject(innovation: Innovation) {
-    this._innovation = innovation;
   }
 
   private _setQuizLink() {
@@ -153,6 +154,11 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   set showPresetModal(value: boolean) {
     this._showPresetModal = value;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }
