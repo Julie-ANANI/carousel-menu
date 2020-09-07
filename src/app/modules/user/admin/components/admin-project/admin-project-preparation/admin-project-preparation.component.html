@@ -24,7 +24,7 @@
         <div class="header-btn-action-wrapper">
 
           <!-- list of campaigns -->
-          <div *ngIf="showCampaignTabs" class="d-flex align-center">
+          <div *ngIf="showCampaignTabs" class="d-flex align-center animate-fade is-3">
 
             <!-- back -->
             <a (click)="backToCampaigns()" class="button is-link is-sm m-right-10">
@@ -49,7 +49,7 @@
           <!-- /list of campaigns  -->
 
           <!-- Description || Targeting -->
-          <div *ngIf="activeTab === 'description' || activeTab === 'targeting'" class="d-flex align-center">
+          <div *ngIf="activeTab === 'description' || activeTab === 'targeting'" class="d-flex align-center animate-fade is-3">
 
             <!-- add lang -->
             <button

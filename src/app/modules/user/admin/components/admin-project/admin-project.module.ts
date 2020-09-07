@@ -11,6 +11,7 @@ import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminProjectFollowUpModule} from './admin-project-follow-up/admin-project-follow-up.module';
 import {AdminProjectPreparationModule} from './admin-project-preparation/admin-project-preparation.module';
 import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
+import {AdminProjectTargetingModule} from './admin-project-targeting/admin-project-targeting.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/adm
     ModalModule,
     AdminProjectFollowUpModule,
     AdminProjectPreparationModule,
-    AdminProjectQuestionnaireModule
+    AdminProjectQuestionnaireModule,
+    AdminProjectTargetingModule
   ],
   declarations: [
     AdminProjectComponent

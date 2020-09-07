@@ -7,6 +7,7 @@ import { AdminProjectQuestionnaireComponent } from './admin-project-questionnair
 // import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
 import { AdminProjectFollowUpComponent } from './admin-project-follow-up/admin-project-follow-up.component';
 import { AdminProjectPreparationComponent } from './admin-project-preparation/admin-project-preparation.component';
+import { AdminProjectTargetingComponent } from './admin-project-targeting/admin-project-targeting.component';
 
 // import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 
@@ -26,6 +27,7 @@ export const projectRoutes: Routes = [
       },
       {
         path: 'targeting',
+        component: AdminProjectTargetingComponent,
         pathMatch: 'full',
       },
       {

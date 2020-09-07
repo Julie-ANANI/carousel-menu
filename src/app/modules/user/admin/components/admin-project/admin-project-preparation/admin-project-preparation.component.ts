@@ -155,9 +155,11 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     if (!this._isSaving) {
       this._isSaving = true;
       this._innovationService.save(this._project._id, this._project).pipe(first()).subscribe(() => {
+        this._isSaving = false;
         this._setInnovation();
         this._translateNotificationsService.success('Success', 'The project has been updated.');
       }, (err: HttpErrorResponse) => {
+        this._isSaving = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
