@@ -37,7 +37,9 @@ export interface Professional {
 
   fullName?: string;
 
-  company?: string;
+  company?: any;
+
+  companyOriginalName?: string;
 
   companyDomain?: string;
 
