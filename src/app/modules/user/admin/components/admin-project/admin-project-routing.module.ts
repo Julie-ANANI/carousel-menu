@@ -1,13 +1,11 @@
 import { Routes } from '@angular/router';
 
 import { AdminProjectCampaignsComponent } from './admin-project-campaigns/admin-project-campaigns.component';
-// import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
-// import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-project-tags-pool.component';
 import { AdminProjectQuestionnaireComponent } from './admin-project-questionnaire/admin-project-questionnaire.component';
-// import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
 import { AdminProjectFollowUpComponent } from './admin-project-follow-up/admin-project-follow-up.component';
 import { AdminProjectPreparationComponent } from './admin-project-preparation/admin-project-preparation.component';
 import { AdminProjectTargetingComponent } from './admin-project-targeting/admin-project-targeting.component';
+import { AdminProjectDescriptionComponent } from './admin-project-description/admin-project-description.component';
 
 // import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 
@@ -18,6 +16,7 @@ export const projectRoutes: Routes = [
     children: [
       {
         path: 'description',
+        component: AdminProjectDescriptionComponent,
         pathMatch: 'full',
       },
       {

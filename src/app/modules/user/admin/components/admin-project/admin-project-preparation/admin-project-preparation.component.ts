@@ -51,6 +51,8 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _toBeSaved = false;
+
   constructor(private _routeFrontService: RouteFrontService,
               private _router: Router,
               private _innovationService: InnovationService,
@@ -79,6 +81,10 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._showCampaignTabs = show;
     });
 
+    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((save) => {
+      this._toBeSaved = save;
+    });
+
   }
 
   private _setInnovation() {
@@ -104,6 +110,10 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     if (this._showCampaignTabs) {
 
     } else {
+      if (value === 'description') {
+        this._activeCardIndex = 0;
+        this._setActiveCardIndex();
+      }
       this._router.navigate([this.routeToNavigate(value)]);
     }
   }
@@ -144,22 +154,24 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   public setCardLang(value: string) {
-    if (this.activeCard && this.activeCard.lang !== value && !(this._cardToDelete._id)) {
-      this._activeCardIndex = this._activeCardIndex === 0 ? 1 : 0;
+    if (this.activeCard && !(this._cardToDelete._id)) {
+      this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');
       this._setActiveCardIndex();
     }
   }
 
   public onSaveProject(event: Event) {
     event.preventDefault();
-    if (!this._isSaving) {
+    if (!this._isSaving && this._toBeSaved) {
       this._isSaving = true;
+      this._toBeSaved = false;
       this._innovationService.save(this._project._id, this._project).pipe(first()).subscribe(() => {
         this._isSaving = false;
         this._setInnovation();
         this._translateNotificationsService.success('Success', 'The project has been updated.');
       }, (err: HttpErrorResponse) => {
         this._isSaving = false;
+        this._toBeSaved = true;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
@@ -290,6 +302,10 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   get allCampaigns(): Array<Campaign> {
     return this._allCampaigns;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
   }
 
   ngOnDestroy(): void {

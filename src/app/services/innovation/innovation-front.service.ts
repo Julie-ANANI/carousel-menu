@@ -253,6 +253,9 @@ export class InnovationFrontService {
         case 'LANG':
           return _card.lang;
 
+        case 'INDEX':
+          return _cardIndex;
+
       }
 
     }

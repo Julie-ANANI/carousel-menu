@@ -89,13 +89,15 @@
             <!-- save -->
             <button
               (click)="onSaveProject($event)"
-              [disabled]="isSaving"
+              [disabled]="isSaving || !toBeSaved"
               [ngStyle]="{'min-width': '110px'}"
+              [ngClass]="{'is-saved': toBeSaved}"
               class="button is-sm is-outlined is-primary"
               id="btn-save"
               type="button">
               <ng-container *ngIf="isSaving; else saveText">saving the project...</ng-container>
               <ng-template #saveText>Save</ng-template>
+              <span *ngIf="!isSaving && toBeSaved" class="shape is-circle"><i class="fas fa-save"></i></span>
             </button>
             <!-- /save -->
 

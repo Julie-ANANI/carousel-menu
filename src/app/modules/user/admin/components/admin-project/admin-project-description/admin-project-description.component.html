@@ -1,0 +1,667 @@
+<div class="container fluid grid-2xl" id="admin-project-description">
+  <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
+
+    <!-- section title -->
+    <section
+      [ngStyle]="{ 'animation-duration': '110ms' }"
+      class="animate-slide slide-down section-wrapper p-no-top">
+      <div class="section-body">
+
+        <!-- content -->
+        <div class="section-content">
+          <div class="form-group">
+
+            <div class="d-flex align-center flex-wrap title-wrapper">
+
+              <label
+                [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
+                class="form-label"
+                for="project-title">
+                <span class="shape is-rounded bg-draft">1</span>Title
+              </label>
+
+              <!-- translation button -->
+              <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
+                <button
+                  (click)="importTranslation($event, 'TITLE')"
+                  [disabled]="activeInnovCard.title"
+                  class="button is-link is-sm"
+                  type="button">
+                  Import translation
+                </button>
+              </div>
+              <!-- /translation button -->
+
+            </div>
+
+            <input
+              (change)="updateInnovation()"
+              *ngIf="isEditable"
+              [(ngModel)]="activeInnovCard.title"
+              autocomplete="off"
+              class="form-input is-shadowed"
+              id="project-title"
+              name="title"
+              placeholder="Add the project title here..."
+              type="text">
+
+            <!-- remaining text -->
+            <div
+              *ngIf="isEditable"
+              [ngStyle]="{'color': remaining('COLOR', 'TITLE')}"
+              class="text-right text-bold p-top-1 text-xs">
+              {{ remaining('CHAR', 'TITLE') }} characters remaining
+            </div>
+            <!-- /remaining text -->
+
+            <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.title" class="text-15"></p>
+
+          </div>
+        </div>
+        <!-- /content -->
+
+        <!-- suggestion / comments -->
+        <div class="section-suggestion">
+
+          <!-- comment -->
+          <div class="m-bottom-25">
+            <div class="d-flex align-center">
+              <div (click)="onToggleComment($event, 'title')" class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleComment.title ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleComment($event, 'title')" class="spec-text-op">Comment</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
+                <app-text-zone
+                  (onTextChange)="onCommentChange($event, 'title', 'comment')"
+                  [data]="activeInnovCard.operatorComment.title.comment"
+                  id="title-comment">
+                </app-text-zone>
+              </div>
+              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleComment.title}" class="message">
+                <p [innerHTML]="activeInnovCard.operatorComment.title.comment" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /comment -->
+
+          <!-- suggestion -->
+          <div>
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleSuggestion($event, 'title')"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleSuggestion.title ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleSuggestion($event, 'title')" class="spec-text-op">Suggestion</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="box-shadow">
+                <app-text-zone
+                  (onTextChange)="onCommentChange($event, 'title', 'suggestion')"
+                  [data]="activeInnovCard.operatorComment.title.suggestion"
+                  id="title-suggestion">
+                </app-text-zone>
+              </div>
+              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="message">
+                <p [innerHTML]="activeInnovCard.operatorComment.title.suggestion" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /suggestion -->
+
+        </div>
+        <!-- /suggestion / comments -->
+
+      </div>
+    </section>
+    <!-- /section title -->
+
+    <!-- section summary -->
+    <section [ngStyle]="{ 'animation-duration': '220ms' }" class="animate-slide slide-down has-border section-wrapper">
+      <div class="section-body">
+
+        <!-- content -->
+        <div class="section-content">
+          <div class="form-group">
+
+            <div class="d-flex align-center flex-wrap title-wrapper">
+
+              <label
+                [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
+                class="form-label"
+                for="project-summary">
+                <span class="shape is-rounded bg-draft">2</span>Summary
+              </label>
+
+              <!-- translation button -->
+              <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
+                <button
+                  (click)="importTranslation($event, 'SUMMARY')"
+                  [disabled]="activeInnovCard.summary"
+                  class="button is-link is-sm"
+                  type="button">
+                  Import translation
+                </button>
+              </div>
+              <!-- /translation button -->
+
+            </div>
+
+            <div *ngIf="isEditable" class="box-shadow">
+              <app-text-zone
+                (onTextChange)="onContentChange($event, 'summary')"
+                [data]="activeInnovCard.summary"
+                id="project-summary">
+              </app-text-zone>
+            </div>
+
+            <!-- remaining text -->
+            <div
+              *ngIf="isEditable"
+              [ngStyle]="{'color': remaining('COLOR', 'SUMMARY')}"
+              class="text-right text-bold p-top-1 text-xs">
+              {{ remaining('CHAR', 'SUMMARY') }} characters remaining
+            </div>
+            <!-- /remaining text -->
+
+            <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
+
+          </div>
+        </div>
+        <!-- /content -->
+
+        <!-- suggestion / comments -->
+        <div class="section-suggestion">
+
+          <!-- comment -->
+          <div class="m-bottom-25">
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleComment($event, 'summary')"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleComment.summary ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleComment($event, 'summary')" class="spec-text-op">Comment</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
+                <app-text-zone
+                  (onTextChange)="onCommentChange($event, 'summary', 'comment')"
+                  [data]="activeInnovCard.operatorComment.summary.comment"
+                  id="summary-comment">
+                </app-text-zone>
+              </div>
+              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleComment.summary}" class="message">
+                <p [innerHTML]="activeInnovCard.operatorComment.summary.comment" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /comment -->
+
+          <!-- suggestion -->
+          <div>
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleSuggestion($event, 'summary')"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleSuggestion.summary ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleSuggestion($event, 'summary')" class="spec-text-op">Suggestion</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="box-shadow">
+                <app-text-zone
+                  (onTextChange)="onCommentChange($event, 'summary', 'suggestion')"
+                  [data]="activeInnovCard.operatorComment.summary.suggestion"
+                  id="summary-suggestion">
+                </app-text-zone>
+              </div>
+              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="message">
+                <p [innerHTML]="activeInnovCard.operatorComment.summary.suggestion" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /suggestion -->
+
+        </div>
+        <!-- /suggestion / comments -->
+
+      </div>
+    </section>
+    <!-- /section summary -->
+
+    <!-- sections dynamic -->
+    <section
+      *ngFor="let section of activeInnovCard.sections; let i=index;"
+      [ngStyle]="{ 'animation-duration': ((i+3) * 110) + 'ms' }"
+      class="animate-slide slide-down section-wrapper has-border">
+      <div class="section-body">
+
+        <!-- content -->
+        <div class="section-content">
+          <div class="form-group">
+
+            <!-- label / actions -->
+            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap">
+
+              <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom">
+
+                <label
+                  [for]="section.type+i"
+                  [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
+                  class="form-label">
+                  <span class="shape is-rounded bg-draft">{{ i + 3 }}</span>
+                  <ng-container *ngIf="!isEditable">{{ section.title }}</ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <input
+                      (change)="updateInnovation()"
+                      [(ngModel)]="section.title"
+                      [id]="section.type.toLowerCase()+'-'+i+3"
+                      autocomplete="off"
+                      class="form-input is-sm is-shadowed w-300"
+                      type="text">
+                  </ng-container>
+                </label>
+
+                <!-- translation button -->
+                <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
+                  <button
+                    (click)="importTranslation($event, section.type, i)"
+                    [disabled]="section.content"
+                    class="button is-link is-sm m-right-10"
+                    type="button">
+                    Import translation
+                  </button>
+                </div>
+                <!-- /translation button -->
+
+              </div>
+
+              <!-- visibility -->
+              <div
+                *ngIf="isEditable"
+                (click)="toggleVisibility($event, i)"
+                [ngClass]="{'m-right-15': section.type === 'OTHER'}"
+                class="icon-container is-overlay">
+                <span class="tooltip" [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Unhide section'">
+                  <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
+                </span>
+              </div>
+              <!-- /visibility -->
+
+              <!-- delete -->
+              <div
+                *ngIf="isEditable && section.type === 'OTHER'"
+                (click)="openModal($event, 'DELETE_SECTION', i)"
+                class="icon-container is-overlay">
+                <span class="tooltip" data-tooltip="Delete section">
+                  <i class="text-alert icon icon-delete"></i>
+                </span>
+              </div>
+              <!-- /delete -->
+
+            </div>
+            <!-- /label / actions -->
+
+            <div *ngIf="isEditable" class="box-shadow">
+              <app-text-zone
+                (onTextChange)="onContentChange($event, 'sections', i)"
+                [data]="section.content"
+                [id]="'project-'+section.type.toLowerCase()+'-'+i+3">
+              </app-text-zone>
+            </div>
+
+            <!-- remaining text -->
+            <div
+              *ngIf="isEditable"
+              [ngStyle]="{'color': remaining('COLOR', section.type, i)}"
+              class="text-right text-bold p-top-1 text-xs">
+              {{ remaining('CHAR', section.type, i) }} characters remaining
+            </div>
+            <!-- /remaining text -->
+
+            <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
+
+          </div>
+        </div>
+        <!-- /content -->
+
+        <!-- suggestion / comments -->
+        <div class="section-suggestion">
+
+          <!-- comment -->
+          <div class="m-bottom-25">
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleComment($event, i.toString(10))"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleComment[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleComment($event, i.toString(10))" class="spec-text-op">Comment</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}" class="box-shadow">
+                <app-text-zone
+                  (onTextChange)="onCommentChange($event, 'sections', 'comment', i)"
+                  [data]="activeInnovCard.operatorComment.sections[i]['comment']"
+                  [id]="section.type.toLowerCase()+'-'+i+3+'-comment'">
+                </app-text-zone>
+              </div>
+              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}" class="message">
+                <p [innerHTML]="activeInnovCard.operatorComment.sections[i]['comment']" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /comment -->
+
+          <!-- suggestion -->
+          <div>
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleSuggestion($event, i.toString(10))"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleSuggestion[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleSuggestion($event, i.toString(10))" class="spec-text-op">Suggestion</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div
+                *ngIf="isEditable"
+                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
+                class="box-shadow">
+                <app-text-zone
+                  (onTextChange)="onCommentChange($event, 'sections', 'suggestion', i)"
+                  [data]="activeInnovCard.operatorComment.sections[i]['suggestion']"
+                  [id]="section.type.toLowerCase()+'-'+i+3+'-suggestion'">
+                </app-text-zone>
+              </div>
+              <div
+                *ngIf="!isEditable"
+                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
+                class="message">
+                <p [innerHTML]="activeInnovCard.operatorComment.sections[i]['suggestion']" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /suggestion -->
+
+        </div>
+        <!-- /suggestion / comments -->
+
+      </div>
+    </section>
+    <!-- /sections dynamic -->
+
+    <!-- add new section -->
+    <section
+      *ngIf="isEditable && activeInnovCard.sections.length < 3"
+      class="section-wrapper text-center has-border p-bottom-50">
+      <button
+        (click)="openModal($event, 'NEW_SECTION')"
+        class="button is-primary is-lg"
+        type="button">
+        Add new section
+      </button>
+    </section>
+    <!-- /add new section -->
+
+    <!-- section media -->
+    <section
+      [ngStyle]="{ 'animation-duration': ((activeInnovCard.sections.length) * 110) + 'ms' }"
+      class="section-wrapper has-border p-no-bottom">
+
+      <div class="section-body">
+
+        <!-- image -->
+        <div class="section-content">
+          <div class="form-group">
+            <div class="title-wrapper">
+              <label class="form-label">
+                <span class="shape is-rounded bg-draft">{{ activeInnovCard.sections.length + 3 }}</span>
+                Add medias
+              </label>
+            </div>
+            <div *ngIf="isEditable" class="bg-white box-shadow">
+              <app-shared-upload-zone-photo
+                [uri]="'/innovation/'+innovation._id+'/innovationCard/'+innovation._id+'/media/image'"
+                (cbFn)="uploadImage($event)">
+              </app-shared-upload-zone-photo>
+            </div>
+          </div>
+        </div>
+        <!-- /image -->
+
+        <!-- video -->
+        <div [ngStyle]="{'padding-top': '45px'}" class="section-suggestion">
+          <div *ngIf="isEditable" class="bg-white box-shadow">
+            <app-shared-upload-zone-video (cbFn)="uploadVideo($event)"></app-shared-upload-zone-video>
+          </div>
+        </div>
+        <!-- /video -->
+
+      </div>
+
+      <!-- medias display -->
+      <div
+        *ngIf="activeInnovCard.media.length"
+        [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-20px' }"
+        class="d-flex flex-wrap">
+
+        <!-- principal media -->
+        <div *ngIf="activeInnovCard.principalMedia" class="text-center media-wrapper">
+
+          <!-- if type === 'PHOTO' -->
+          <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
+          && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')">
+            <img
+              [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE')"
+              alt=" "
+              class="img-responsive"
+              height="159"
+              width="240">
+          </figure>
+          <!-- /if type === 'PHOTO' -->
+
+          <!-- if type === 'VIDEO' -->
+          <iframe
+            *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'VIDEO'
+            && mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
+            [src]="mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
+            height="159"
+            width="240">
+          </iframe>
+          <!-- /if type === 'VIDEO' -->
+
+          <span class="text-sm p-top-1">Main media</span>
+
+        </div>
+        <!-- /principal media -->
+
+        <!-- secondary medias -->
+        <ng-container *ngIf="activeInnovCard.media.length > 0">
+          <ng-container *ngFor="let media of activeInnovCard.media; let i=index;">
+            <div
+              *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
+              class="media-wrapper text-center">
+
+              <!-- if type === 'PHOTO' -->
+              <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
+                <img
+                  [src]="mediaSrc(media, 'IMAGE')"
+                  alt=" "
+                  class="img-responsive"
+                  height="159"
+                  width="240">
+              </figure>
+              <!-- /if type === 'PHOTO' -->
+
+              <!-- if type === 'VIDEO' -->
+              <iframe
+                *ngIf="media['type'] && media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
+                [src]="mediaSrc(media, 'VIDEO')"
+                height="159"
+                width="240">
+              </iframe>
+              <!-- /if type === 'VIDEO' -->
+
+              <!-- set principal -->
+              <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
+                <span
+                  (click)="onSetPrincipal(media)"
+                  [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+                  class="text-primary"
+                  [id]="'btn-principal-media-'+i">
+                  Set as main media
+                </span>
+              </div>
+              <!-- /set principal -->
+
+              <!-- delete button -->
+              <div
+                *ngIf="activeInnovCard.media.length > 1 && (mediaSrc(media, 'VIDEO')
+                || mediaSrc(media, 'IMAGE')) && isEditable"
+                class="text-sm p-top-1">
+                  <span
+                    (click)="onDeleteMedia(media)"
+                    [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+                    class="text-alert"
+                    [id]="'btn-delete-media-'+i">
+                    Delete media
+                  </span>
+              </div>
+              <!-- /delete button -->
+
+            </div>
+          </ng-container>
+        </ng-container>
+        <!-- /secondary medias -->
+
+      </div>
+      <!-- /medias display -->
+
+    </section>
+    <!-- section media -->
+
+  </div>
+</div>
+
+<!-- modal to add New section | Delete section -->
+<app-utility-modal-empty [(showModal)]="showModal">
+
+  <section class="modal-body">
+
+    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-30">
+      <ng-container *ngIf="modalType === 'NEW_SECTION'">Add new section</ng-container>
+      <ng-container *ngIf="modalType === 'DELETE_SECTION'">Delete section</ng-container>
+    </h2>
+
+    <div [ngSwitch]="modalType">
+
+      <!-- delete section -->
+      <div *ngSwitchCase="'DELETE_SECTION'">
+        Do you really want to delete this section? Please keep in mind that to delete
+        the section successfully you have to save the project.
+      </div>
+      <!-- /delete section -->
+
+      <!-- new section -->
+      <div *ngSwitchCase="'NEW_SECTION'" class="mxw-450 m-left-auto m-right-auto">
+
+        <!-- title -->
+        <div class="form-group m-bottom-20">
+          <label class="form-label" for="new-section-title">Title</label>
+          <input
+            [(ngModel)]="newSection.title"
+            class="form-input is-sm is-shadowed"
+            id="new-section-title"
+            placeholder="Add the new section title here..."
+            type="text">
+        </div>
+        <!-- /title -->
+
+        <!-- type -->
+        <div class="form-group m-bottom-20">
+          <label class="form-label" for="new-section-type">Type</label>
+          <select
+            [(ngModel)]="newSection.type"
+            id="new-section-type"
+            class="form-select is-shadowed is-sm">
+            <!--<option value="ISSUE">Issue</option>-->
+            <!--<option value="SOLUTION">Solution</option>-->
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+        <!-- /type -->
+
+        <p class="text-alert text-sm">
+          Please keep in mind that to create a new section successfully you have to save the project.
+        </p>
+
+      </div>
+      <!-- /new section -->
+
+    </div>
+
+  </section>
+
+  <footer [ngSwitch]="modalType" class="modal-footer justify-center">
+
+    <button
+      (click)="closeModal()"
+      [id]="'btn-cancel'"
+      class="button modal-cancel"
+      type="button">
+      Cancel
+    </button>
+
+    <!-- new section -->
+    <button
+      *ngSwitchCase="'NEW_SECTION'"
+      (click)="createNewSection($event)"
+      [disabled]="!newSection.title"
+      class="button is-community"
+      type="button">
+      Confirm
+    </button>
+    <!-- new section -->
+
+    <!-- delete section -->
+    <button
+      *ngSwitchCase="'DELETE_SECTION'"
+      (click)="deleteSection($event)"
+      class="button is-community"
+      type="button">
+      Confirm
+    </button>
+    <!-- delete section -->
+
+  </footer>
+
+</app-utility-modal-empty>
+<!-- /modal to add New section | Delete section -->
