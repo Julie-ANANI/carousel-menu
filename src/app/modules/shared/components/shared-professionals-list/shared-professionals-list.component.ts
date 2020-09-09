@@ -168,7 +168,7 @@ export class SharedProfessionalsListComponent {
           _isHidden: !this.canAccess(['tableColumns', 'job'])
         },
         {
-          _attrs: ['company'],
+          _attrs: ['companyOriginalName'],
           _name: 'Company',
           _type: 'TEXT',
           _isSortable: true,
