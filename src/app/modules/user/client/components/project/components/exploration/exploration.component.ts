@@ -75,7 +75,12 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   loadAnswers() {
     this.answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first()).subscribe((response: any) => {
-
+      response.answers.map((answer: Answer) => {
+        if (!answer.job) {
+          answer.job = answer.professional.jobTitle;
+        }
+        return answer;
+      });
       if (this._anonymousAnswers) {
         this._tableInfos = {
           _selector: 'client-answer',
