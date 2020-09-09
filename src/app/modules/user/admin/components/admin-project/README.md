@@ -101,7 +101,7 @@ No definition of a Role means no access to that user.
 #### Market Test Manager UMI:
 
 1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
+<br><br>EDIT: 'Domain, Operator, Owner, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
 
 2. ANSWER TAGS: Edit, Delete.
 
@@ -116,7 +116,7 @@ No definition of a Role means no access to that user.
 #### Oper Supervisor:
 
 1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
+<br><br>EDIT: 'Domain, Operator, Roadmap, Owner, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
 
 2. ANSWER TAGS: Edit, Delete.
 
