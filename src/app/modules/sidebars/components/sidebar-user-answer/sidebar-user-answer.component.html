@@ -193,7 +193,7 @@
     <!-- job -->
     <div *ngIf="professional.jobTitle || userAnswer.job || editMode" class="m-bottom-10">
       <i class="fas fa-address-card text-notify m-right-10"></i>
-      {{ professional.jobTitle || userAnswer.job | FormatText:true }}
+      {{ userAnswer.job || professional.jobTitle |  FormatText:true }}
       <span
         (click)="onClickEdit('JOB')"
         *ngIf="editMode"
