@@ -29,7 +29,7 @@ export interface SelectedProfessional extends Professional {
 export class AdminCampaignProsComponent implements OnInit {
 
   private _config: Config = {
-    fields: 'language firstName lastName company email emailConfidence country jobTitle personId messages campaigns',
+    fields: 'language firstName lastName companyOriginalName email emailConfidence country jobTitle personId messages campaigns',
     limit: this._configService.configLimit('admin-campaign-pros-limit'),
     offset: '0',
     search: '{}',

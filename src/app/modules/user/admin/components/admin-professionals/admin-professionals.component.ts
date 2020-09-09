@@ -28,7 +28,7 @@ export class AdminProfessionalsComponent implements OnInit {
   private _total = -1;
 
   private _config: Config = {
-    fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.is',
+    fields: 'language firstName lastName companyOriginalName country jobTitle campaigns tags messages ambassador.is',
     limit: this._configService.configLimit('admin-pros-limit'),
     offset: '0',
     search: '{}',
