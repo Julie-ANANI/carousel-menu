@@ -10,6 +10,8 @@ export class CampaignFrontService {
 
   private _activeCampaign: Subject<Campaign> = new Subject<Campaign>();
 
+  private _activeCampaignTab: Subject<string> = new Subject<string>();
+
   private _showCampaignTabs: Subject<boolean> = new Subject<boolean>();
 
   /***
@@ -190,6 +192,18 @@ export class CampaignFrontService {
 
   public showCampaignTabs(): Subject<boolean> {
     return this._showCampaignTabs;
+  }
+
+  /***
+   * these function to set and get the campaign active tab
+   * @param value
+   */
+  public setActiveCampaignTab(value: string) {
+    this._activeCampaignTab.next(value);
+  }
+
+  public activeCampaignTab(): Subject<string> {
+    return this._activeCampaignTab;
   }
 
 }

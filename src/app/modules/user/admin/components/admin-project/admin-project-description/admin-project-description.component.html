@@ -4,7 +4,7 @@
     <!-- section title -->
     <section
       [ngStyle]="{ 'animation-duration': '110ms' }"
-      class="animate-slide slide-down section-wrapper p-no-top">
+      class="animate-slide slide-down section-wrapper p-top-20">
       <div class="section-body">
 
         <!-- content -->
@@ -49,7 +49,7 @@
             <div
               *ngIf="isEditable"
               [ngStyle]="{'color': remaining('COLOR', 'TITLE')}"
-              class="text-right text-bold p-top-1 text-xs">
+              class="text-right text-medium p-top-1 text-xs">
               {{ remaining('CHAR', 'TITLE') }} characters remaining
             </div>
             <!-- /remaining text -->
@@ -169,7 +169,7 @@
             <div
               *ngIf="isEditable"
               [ngStyle]="{'color': remaining('COLOR', 'SUMMARY')}"
-              class="text-right text-bold p-top-1 text-xs">
+              class="text-right text-medium p-top-1 text-xs">
               {{ remaining('CHAR', 'SUMMARY') }} characters remaining
             </div>
             <!-- /remaining text -->
@@ -333,7 +333,7 @@
             <div
               *ngIf="isEditable"
               [ngStyle]="{'color': remaining('COLOR', section.type, i)}"
-              class="text-right text-bold p-top-1 text-xs">
+              class="text-right text-medium p-top-1 text-xs">
               {{ remaining('CHAR', section.type, i) }} characters remaining
             </div>
             <!-- /remaining text -->
@@ -419,9 +419,7 @@
     <!-- /sections dynamic -->
 
     <!-- add new section -->
-    <section
-      *ngIf="isEditable && activeInnovCard.sections.length < 3"
-      class="section-wrapper text-center has-border p-bottom-50">
+    <section *ngIf="isEditable" class="section-wrapper text-center has-border p-bottom-50">
       <button
         (click)="openModal($event, 'NEW_SECTION')"
         class="button is-primary is-lg"

@@ -13,6 +13,7 @@ import {AdminProjectPreparationModule} from './admin-project-preparation/admin-p
 import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
 import {AdminProjectTargetingModule} from './admin-project-targeting/admin-project-targeting.module';
 import {AdminProjectDescriptionModule} from './admin-project-description/admin-project-description.module';
+import {AdminCampaignsModule} from '../admin-campaigns/admin-campaigns.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {AdminProjectDescriptionModule} from './admin-project-description/admin-p
     AdminProjectPreparationModule,
     AdminProjectQuestionnaireModule,
     AdminProjectTargetingModule,
-    AdminProjectDescriptionModule
+    AdminProjectDescriptionModule,
+    AdminCampaignsModule
   ],
   declarations: [
     AdminProjectComponent

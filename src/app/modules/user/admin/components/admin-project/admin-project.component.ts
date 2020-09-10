@@ -15,6 +15,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { CampaignFrontService } from '../../../../../services/campaign/campaign-front.service';
 
 interface Tab {
   route: string;
@@ -80,6 +81,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _router: Router,
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
+              private _campaignFrontService: CampaignFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
@@ -115,19 +117,26 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     if (_url.length === 7) {
       const _params = _url[6].indexOf('?');
       this._activatedTab = _params > 0 ? _url[6].substring(0, _params) : _url[6];
-      this.setPageTitle();
+      this._setPageTitle();
     } else {
-      this.setPageTitle();
+      this._setPageTitle();
     }
   }
 
-  public setPageTitle() {
+  private _setPageTitle() {
     if (this._activatedTab && this._project.name) {
       this._translateTitleService.setTitle(this._activatedTab.slice(0,1).toUpperCase()
         + this._activatedTab.slice(1) + ' | ' + this._project.name);
     } else {
       this._translateTitleService.setTitle('Project');
     }
+  }
+
+  public onClickTab(event: Event, tab: string) {
+    event.preventDefault();
+    this._activatedTab = tab;
+    this._campaignFrontService.setShowCampaignTabs(false);
+    this._setPageTitle();
   }
 
   public canAccess(path?: Array<string>) {
@@ -273,10 +282,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   get isLoading(): boolean {
     return this._isLoading;
-  }
-
-  set activatedTab(value: string) {
-    this._activatedTab = value;
   }
 
   get showBanner(): boolean {

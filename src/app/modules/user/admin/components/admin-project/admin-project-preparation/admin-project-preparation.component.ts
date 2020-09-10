@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {RouteFrontService} from '../../../../../../services/route/route-front.service';
 import {TranslateTitleService} from '../../../../../../services/title/title.service';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
@@ -13,6 +13,8 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {Campaign} from '../../../../../../models/campaign';
 import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {Response} from '../../../../../../models/response';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -53,13 +55,14 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _toBeSaved = false;
 
-  constructor(private _routeFrontService: RouteFrontService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _routeFrontService: RouteFrontService,
               private _router: Router,
               private _innovationService: InnovationService,
               private _campaignFrontService: CampaignFrontService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService,) {}
+              private _translateTitleService: TranslateTitleService) {}
 
   ngOnInit() {
 
@@ -68,6 +71,17 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this.setPageTitle();
       this._setActiveCardIndex();
     });
+
+    this._campaignFrontService.activeCampaignTab().pipe(takeUntil(this._ngUnsubscribe)).subscribe((tab) => {
+      if (tab && this._activeTab !== tab) {
+        this._activeTab = tab;
+        this._getAllCampaigns();
+        setTimeout(() => {
+          this._showCampaignTabs = true;
+          this.setPageTitle();
+        }, 100);
+      }
+    })
 
     this._campaignFrontService.allCampaigns().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaigns) => {
       this._allCampaigns = campaigns || [];
@@ -93,34 +107,44 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   public setCampaign(campaign: Campaign) {
     this._selectedCampaign = campaign;
+    this._campaignFrontService.setActiveCampaign(this._selectedCampaign);
   }
 
   public setPageTitle(tab?: string) {
     this._activeTab = tab ? tab : this._activeTab;
     if (this._showCampaignTabs) {
-
+      this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)} 
+      | Campaign | Campaigns | Preparation | ${this._project.name}`);
     } else {
       this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)} 
       | Preparation | ${this._project.name}`);
     }
   }
 
+  private _getAllCampaigns() {
+    if (isPlatformBrowser(this._platformId) && !this._allCampaigns.length) {
+      this._innovationService.campaigns(this._project._id).pipe(first()).subscribe((response: Response) => {
+        this._allCampaigns = response && response.result || [];
+        this._campaignFrontService.setAllCampaigns(this._allCampaigns);
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
+  }
+
   public navigateTo(value: string) {
     this.setPageTitle(value);
-    if (this._showCampaignTabs) {
-
-    } else {
-      if (value === 'description') {
-        this._activeCardIndex = 0;
-        this._setActiveCardIndex();
-      }
-      this._router.navigate([this.routeToNavigate(value)]);
+    if (value === 'description') {
+      this._activeCardIndex = 0;
+      this._setActiveCardIndex();
     }
+    this._router.navigate([this.routeToNavigate(value)]);
   }
 
   public routeToNavigate(tab: string): string {
     if (this._showCampaignTabs) {
-
+      return `/user/admin/projects/project/${this._project._id}/preparation/campaigns/campaign/${this._selectedCampaign._id}/${tab}`;
     } else {
       return `/user/admin/projects/project/${this._project._id}/preparation/${tab}`;
     }
@@ -266,10 +290,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   get project(): Innovation {
     return this._project;
-  }
-
-  get activeCardIndex(): number {
-    return this._activeCardIndex;
   }
 
   get isSaving(): boolean {

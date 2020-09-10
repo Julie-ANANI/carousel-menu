@@ -9,12 +9,12 @@ export interface StatsInterface {
 }
 
 @Component({
-  selector: 'app-admin-campaign-stats',
-  templateUrl: './admin-campaign-stats.component.html',
-  styleUrls: ['./admin-campaign-stats.component.scss']
+  selector: 'app-admin-stats-banner',
+  templateUrl: './admin-stats-banner.component.html',
+  styleUrls: ['./admin-stats-banner.component.scss']
 })
 
-export class AdminCampaignStatsComponent {
+export class AdminStatsBannerComponent {
 
   @Input() config: Array<StatsInterface> = [];
 

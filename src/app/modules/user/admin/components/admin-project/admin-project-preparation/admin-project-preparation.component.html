@@ -34,8 +34,12 @@
 
             <!-- show campaigns -->
             <div class="dropdown is-right">
-              <a class="button is-sm is-info is-outlined dropdown-toggle" tabindex="0">
-                <span class="text-ellipsis w-120">{{ selectedCampaign.title }}</span><i class="fas fa-caret-down"></i>
+              <a
+                [ngStyle]="{'padding-top': '9px', 'padding-bottom': '9px', 'padding-left': '10px',
+                'padding-right': '5px'}"
+                class="button is-sm is-info is-outlined dropdown-toggle" tabindex="0">
+                <span class="text-ellipsis w-120">{{ selectedCampaign.title }}</span>
+                <i class="fas fa-caret-down"></i>
               </a>
               <ul class="menu is-lg">
                 <li *ngFor="let campaign of allCampaigns" (click)="setCampaign(campaign)" class="menu-item">
@@ -49,7 +53,9 @@
           <!-- /list of campaigns  -->
 
           <!-- Description || Targeting -->
-          <div *ngIf="activeTab === 'description' || activeTab === 'targeting'" class="d-flex align-center animate-fade is-3">
+          <div
+            *ngIf="activeTab === 'description' || activeTab === 'targeting'"
+            class="d-flex align-center animate-fade is-3">
 
             <!-- add lang -->
             <button
@@ -90,7 +96,7 @@
             <button
               (click)="onSaveProject($event)"
               [disabled]="isSaving || !toBeSaved"
-              [ngStyle]="{'min-width': '110px'}"
+              [ngStyle]="{'min-width': '110px', 'padding-top': '9px', 'padding-bottom': '9px'}"
               [ngClass]="{'is-saved': toBeSaved}"
               class="button is-sm is-outlined is-primary"
               id="btn-save"

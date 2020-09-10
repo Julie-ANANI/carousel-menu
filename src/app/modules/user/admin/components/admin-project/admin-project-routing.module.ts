@@ -7,6 +7,10 @@ import { AdminProjectPreparationComponent } from './admin-project-preparation/ad
 import { AdminProjectTargetingComponent } from './admin-project-targeting/admin-project-targeting.component';
 import { AdminProjectDescriptionComponent } from './admin-project-description/admin-project-description.component';
 
+import { campaignRoutes } from '../admin-campaigns/admin-campaigns-routing.module';
+
+import { CampaignResolver } from '../../../../../resolvers/campaign.resolver';
+
 // import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 
 export const projectRoutes: Routes = [
@@ -33,6 +37,14 @@ export const projectRoutes: Routes = [
         path: 'campaigns',
         component: AdminProjectCampaignsComponent,
         pathMatch: 'full',
+      },
+      {
+        path: 'campaigns/campaign/:campaignId',
+        resolve: { campaign : CampaignResolver },
+        runGuardsAndResolvers: 'always',
+        children: [
+          ...campaignRoutes
+        ]
       }
     ]
   },

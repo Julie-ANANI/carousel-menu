@@ -7,7 +7,7 @@ import { AdminProjectComponent } from './components/admin-project/admin-project.
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
-import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
+// import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { AdminCommunityComponent } from "./components/admin-community/admin-community.component";
 import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
 import { AdminLibrariesComponent } from './components/admin-libraries/admin-libraries.component';
@@ -23,12 +23,12 @@ import { projectRoutes } from './components/admin-project/admin-project-routing.
 import { librariesRoutes } from './components/admin-libraries/admin-libraries-routing.module';
 import { settingsRoutes } from './components/admin-settings/admin-settings-routing.module';
 import { communityRoutes } from "./components/admin-community/admin-community-routing.module";
-import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
+// import { campaignRoutes } from './components/admin-campaigns/admin-campaigns-routing.module';
 
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
 import { AdminRoleGuard } from '../../../guards/admin-role-guard.service';
 
-import { CampaignResolver } from '../../../resolvers/campaign.resolver';
+// import { CampaignResolver } from '../../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
 import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
 import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
@@ -79,7 +79,7 @@ const adminRoutes: Routes = [
             ]}
         ]
       },
-      {
+      /*{
         path: 'campaigns/campaign/:campaignId',
         component: AdminCampaignComponent,
         resolve: { campaign : CampaignResolver },
@@ -90,7 +90,7 @@ const adminRoutes: Routes = [
         children: [
           ...campaignRoutes
         ]
-      },
+      },*/
       {
         path: 'community',
         canActivateChild: [AdminAuthGuard],

@@ -84,7 +84,7 @@
             <ng-container *ngFor="let tab of tabs">
               <li class="tab-item">
                 <a
-                  (click)="activatedTab = tab.name; setPageTitle()"
+                  (click)="onClickTab($event, tab.name)"
                   [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
                   routerLinkActive="active">
                   <i [ngClass]="tab.icon"></i> {{ tab.name }}
