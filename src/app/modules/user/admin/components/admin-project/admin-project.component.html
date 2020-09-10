@@ -58,14 +58,14 @@
             <!-- /heading / view like client / objective -->
 
           <!-- actions button -->
-          <div *ngIf="isTech" class="dropdown is-right m-bottom-15">
+          <div *ngIf="isTech || isCommunity" class="dropdown is-right m-bottom-15">
 
               <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
                 Actions <i class="icon icon-caret icon-right"></i>
               </a>
 
               <ul class="menu is-md">
-                <li (click)="openModal($event, 'PROJECT')" class="menu-item">
+                <li *ngIf="isTech" (click)="openModal($event, 'PROJECT')" class="menu-item">
                   Export project
                 </li>
                 <li (click)="onClickImportFollowUp($event)" class="menu-item">

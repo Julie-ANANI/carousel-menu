@@ -239,6 +239,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.isTechRole();
   }
 
+  get isCommunity(): boolean {
+    return this._rolesFrontService.isCommunityRole();
+  }
+
   get fetchingError(): boolean {
     return this._fetchingError;
   }

@@ -22,6 +22,10 @@ export class RolesFrontService {
 		return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'tech');
 	}
 
+	public isCommunityRole(): boolean {
+		return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'community');
+	}
+
 	/***
 	 * returns the key/route if the Admin has access to that provided in the path.
 	 * Here the order in the routes matter.
