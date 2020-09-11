@@ -85,9 +85,9 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
 
   public canAccess(path?: Array<string>) {
     if (path) {
-      return this._rolesFrontService.hasAccessAdminSide(['settings', 'blacklist'].concat(path));
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'blocklist'].concat(path));
     } else {
-      return this._rolesFrontService.hasAccessAdminSide(['settings', 'blacklist']);
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'blocklist']);
     }
   }
 
