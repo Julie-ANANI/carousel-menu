@@ -77,8 +77,6 @@ import { AdminSettingsModule } from './components/admin-settings/admin-settings.
     AdminProjectStoryboardModule,
     AdminSettingsModule
   ],
-  declarations: [
-  ],
   providers: [
     DashboardService,
     SearchService,

@@ -3,7 +3,7 @@
   <!-- section header -->
   <section class="bg-white">
     <div class="container fluid grid-2xl">
-      <div class="column col-sm-12 col-11 p-top-20 col-mx-auto relative">
+      <div class="column col-sm-12 col-11 p-top-1 col-mx-auto relative">
 
         <!-- tabs -->
         <ul class="tab">
@@ -65,8 +65,7 @@
               class="button is-link is-sm m-right-10"
               id="btn-add-card">
               <i class="fas fa-plus-circle"></i>
-              <ng-container *ngIf="activeCard.lang === 'en'">Add french</ng-container>
-              <ng-container *ngIf="activeCard.lang === 'fr'">Add english</ng-container>
+              {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
             </button>
             <!-- /add lang -->
 
@@ -101,8 +100,7 @@
               class="button is-sm is-outlined is-primary"
               id="btn-save"
               type="button">
-              <ng-container *ngIf="isSaving; else saveText">saving the project...</ng-container>
-              <ng-template #saveText>Save</ng-template>
+              {{ isSaving ? 'saving the project...' : 'Save' }}
               <span *ngIf="!isSaving && toBeSaved" class="shape is-circle"><i class="fas fa-save"></i></span>
             </button>
             <!-- /save -->
@@ -165,8 +163,7 @@
         [disabled]="isAddingCard"
         [id]="'btn-confirm-card'"
         class="button is-community">
-        <ng-container *ngIf="isAddingCard; else defConfirmAdd">adding the language...</ng-container>
-        <ng-template #defConfirmAdd>Confirm</ng-template>
+        {{ isAddingCard ? 'adding the language...' : 'Confirm' }}
       </button>
 
     </ng-container>
@@ -188,8 +185,7 @@
         [disabled]="isDeletingCard"
         [id]="'btn-confirm-card'"
         class="button is-community">
-        <ng-container *ngIf="isDeletingCard; else defConfirmDelete">deleting the language...</ng-container>
-        <ng-template #defConfirmDelete>Confirm</ng-template>
+        {{ isDeletingCard ? 'deleting the language...' : 'Confirm' }}
       </button>
 
     </ng-container>

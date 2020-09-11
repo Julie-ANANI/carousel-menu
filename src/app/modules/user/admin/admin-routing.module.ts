@@ -14,7 +14,7 @@ import { AdminLibrariesComponent } from './components/admin-libraries/admin-libr
 import { AdminCommunityMemberComponent } from './components/admin-community/admin-community-members/components/admin-community-member/admin-community-member.component';
 import { AdminCommunityProjectComponent } from './components/admin-community/admin-community-projects/component/admin-community-project/admin-community-project.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
-import { AdminProjectStoryboardComponent } from './components/admin-project-storyboard/admin-project-storyboard.component';
+// import { AdminProjectStoryboardComponent } from './components/admin-project-storyboard/admin-project-storyboard.component';
 
 import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
@@ -52,7 +52,7 @@ const adminRoutes: Routes = [
         canActivate: [AdminRoleGuard],
         data: { accessPath: ['professionals'] },
       },
-      {
+      /*{
         path: 'projects/project/:projectId/storyboard',
         component: AdminProjectStoryboardComponent,
         pathMatch: 'full',
@@ -60,7 +60,7 @@ const adminRoutes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [AdminRoleGuard],
         data: { accessPath: ['projects', 'project', 'storyboard'] },
-      },
+      },*/
       {
         path: 'projects',
         canActivateChild: [AdminAuthGuard],

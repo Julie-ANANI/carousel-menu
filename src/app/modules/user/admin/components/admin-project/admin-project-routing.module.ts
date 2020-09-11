@@ -6,6 +6,10 @@ import { AdminProjectFollowUpComponent } from './admin-project-follow-up/admin-p
 import { AdminProjectPreparationComponent } from './admin-project-preparation/admin-project-preparation.component';
 import { AdminProjectTargetingComponent } from './admin-project-targeting/admin-project-targeting.component';
 import { AdminProjectDescriptionComponent } from './admin-project-description/admin-project-description.component';
+import { AdminProjectAnalysisComponent } from './admin-project-analysis/admin-project-analysis.component';
+import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
+// import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-project-tags-pool.component';
+// import { AdminProjectStoryboardComponent } from '../admin-project-storyboard/admin-project-storyboard.component';
 
 import { campaignRoutes } from '../admin-campaigns/admin-campaigns-routing.module';
 
@@ -46,6 +50,27 @@ export const projectRoutes: Routes = [
           ...campaignRoutes
         ]
       }
+    ]
+  },
+  {
+    path: 'analysis',
+    component: AdminProjectAnalysisComponent,
+    children: [
+      {
+        path: 'synthesis',
+        component: AdminProjectSynthesisComponent,
+        pathMatch: 'full',
+      },
+      // {
+      //   path: 'answer-tags',
+      //   component: AdminProjectTagsPoolComponent,
+      //   pathMatch: 'full',
+      // },
+      // {
+      //   path: 'storyboard',
+      //   component: AdminProjectStoryboardComponent,
+      //   pathMatch: 'full',
+      // }
     ]
   },
   {
