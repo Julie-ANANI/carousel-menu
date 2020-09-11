@@ -45,7 +45,6 @@ import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign
 import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
 import { ShieldService } from '../../../services/shield/shield.service';
 import { EnterpriseService } from '../../../services/enterprise/enterprise.service';
-import { AdminProjectStoryboardModule } from './components/admin-project-storyboard/admin-project-storyboard.module';
 import { AdminSettingsModule } from './components/admin-settings/admin-settings.module';
 
 @NgModule({
@@ -74,7 +73,6 @@ import { AdminSettingsModule } from './components/admin-settings/admin-settings.
     AdminCommunityModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminProjectStoryboardModule,
     AdminSettingsModule
   ],
   providers: [

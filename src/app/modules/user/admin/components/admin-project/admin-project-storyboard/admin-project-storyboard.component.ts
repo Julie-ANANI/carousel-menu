@@ -1,32 +1,29 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { SpinnerService } from '../../../../../services/spinner/spinner.service';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ErrorFrontService} from '../../../../../services/error/error-front.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { ExecutiveReport, ExecutiveSection } from '../../../../../models/executive-report';
-import { Innovation } from '../../../../../models/innovation';
-import { CommonService } from '../../../../../services/common/common.service';
-import { ExecutiveReportService } from '../../../../../services/executive-report/executive-report.service';
+import { ExecutiveReport, ExecutiveSection } from '../../../../../../models/executive-report';
+import { Innovation } from '../../../../../../models/innovation';
+import { CommonService } from '../../../../../../services/common/common.service';
+import { ExecutiveReportService } from '../../../../../../services/executive-report/executive-report.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Question } from '../../../../../models/question';
-import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
-import { AnswerService } from '../../../../../services/answer/answer.service';
-import { Answer } from '../../../../../models/answer';
-import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
-import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
-import { PieChart } from '../../../../../models/pie-chart';
-import { ExecutiveReportFrontService } from '../../../../../services/executive-report/executive-report-front.service';
-import { Tag } from '../../../../../models/tag';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { Question } from '../../../../../../models/question';
+import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
+import { AnswerService } from '../../../../../../services/answer/answer.service';
+import { Answer } from '../../../../../../models/answer';
+import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
+import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
+import { PieChart } from '../../../../../../models/pie-chart';
+import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
+import { Tag } from '../../../../../../models/tag';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import FileSaver from 'file-saver';
-import { DeliverableService } from '../../../../../services/deliverable/deliverable.service';
-import { Job, JobType } from '../../../../../models/job';
-import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { DeliverableService } from '../../../../../../services/deliverable/deliverable.service';
+import { Job, JobType } from '../../../../../../models/job';
+import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './admin-project-storyboard.component.html',
@@ -69,12 +66,12 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _fetchingError = false;
 
+  private _isChargingReport = true;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _spinnerService: SpinnerService,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _executiveReportService: ExecutiveReportService,
-              private _innovationFrontService: InnovationFrontService,
               private _commonService: CommonService,
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
@@ -83,29 +80,22 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _innovationService: InnovationService,
               private _responseService: ResponseService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService,
-              private _deliverableService: DeliverableService) {
-
-    this._setSpinner(true);
-    this._setTitle();
-  }
+              private _deliverableService: DeliverableService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
 
-      this._innovation = this._activatedRoute.snapshot.data['innovation'];
-      this._setTitle(this._innovation.name);
-      this._innovationFrontService.setInnovation(this._innovation);
+      this._innovation = this._activatedRoute.snapshot.parent.parent.data['innovation'];
       this._questions = ResponseService.presets(this._innovation);
 
       if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
-        this._setSpinner(false);
+        this._isChargingReport = false;
         this._isLoading = false;
         this._fetchingError = true;
       } else if (this._innovation && this._innovation.executiveReportId) {
         this._getExecutiveReport();
       } else if (this._innovation && !this._innovation.executiveReportId) {
-        this._setSpinner(false);
+        this._isChargingReport = false;
         this._isLoading = false;
       }
 
@@ -117,17 +107,17 @@ export class AdminProjectStoryboardComponent implements OnInit {
   private _getExecutiveReport() {
     this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((response) => {
       this._executiveReport = response;
-      this._setSpinner(false);
       this._isLoading = false;
+      this._isChargingReport = false;
     }, (err: HttpErrorResponse) => {
-      this._setSpinner(false);
+      this._isChargingReport = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
 
   private _getVideoJob() {
-    if (this._innovation._id) {
+    if (this._innovation && this._innovation._id) {
       this._innovationService.getDeliverableJob(this._innovation._id).pipe(first()).subscribe((jobs) => {
         this._videoJobs = jobs;
         const _jobs: Array<Job> = this._jobs();
@@ -151,14 +141,6 @@ export class AdminProjectStoryboardComponent implements OnInit {
     return this._videoJobs.filter((video) => video.jobType === 'VIDEO_TEST' || video.jobType === 'VIDEO_FINAL');
   }
 
-  private _setSpinner(value: boolean) {
-    this._spinnerService.state(value);
-  }
-
-  private _setTitle(title?: string) {
-    this._translateTitleService.setTitle(title ?  'Storyboard | ' + title : 'Storyboard');
-  }
-
   public setNewSelectedLang(value: string) {
     this._selectedLang = value;
   }
@@ -173,26 +155,27 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public autofillExecutiveReport(event: Event) {
     event.preventDefault();
-    this._setSpinner(true);
+    this._isChargingReport = true;
 
     if (this._questions && this._questions.length > 0) {
       this._getAnswers();
     } else {
-      this._setSpinner(false);
+      this._isChargingReport = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'ADMIN_STORYBOARD.NO_QUESTIONS_MSG');
     }
 
   }
 
   private _getAnswers() {
-    this._answerService.getInnovationValidAnswers(this._innovation._id).pipe(first())
+    this._answerService.getInnovationValidAnswers(this._innovation._id)
+      .pipe(first())
       .subscribe((response) => {
         const answers: Array<Answer> = response.answers.sort((a, b) => {
           return b.profileQuality - a.profileQuality;
         });
         this._setReportSections(answers);
       }, (err: HttpErrorResponse) => {
-        this._setSpinner(false);
+        this._isChargingReport = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
@@ -247,7 +230,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     });
 
     this._executiveReport.sections = sections;
-    this._setSpinner(false);
+    this._isChargingReport = false;
     this._toBeSaved = true;
 
   }
@@ -268,9 +251,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   public onClickConfirm(event: Event) {
     event.preventDefault();
-    this._setSpinner(true);
+    this._isChargingReport = true;
     this._isModalLang = false;
-    this._isLoading = true;
 
     switch (this._reportType) {
 
@@ -289,13 +271,14 @@ export class AdminProjectStoryboardComponent implements OnInit {
   }
 
   private _createExecutiveReport() {
-    this._executiveReportService.create(this._selectedLang, this._innovation._id).pipe(first())
+    this._executiveReportService.create(this._selectedLang, this._innovation._id)
+      .pipe(first())
       .subscribe((response) => {
         this._executiveReport = response;
-        this._setSpinner(false);
         this._isLoading = false;
+        this._isChargingReport = false;
       }, (err: HttpErrorResponse) => {
-        this._setSpinner(false);
+        this._isChargingReport = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
@@ -305,14 +288,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
     this._executiveReportService.delete(this._executiveReport._id).pipe(first()).subscribe((response) => {
       this._createExecutiveReport();
     }, (err: HttpErrorResponse) => {
-      this._setSpinner(false);
+      this._isChargingReport = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
-  }
-
-  public backToProjectLink(): string {
-    return `/user/admin/projects/project/${this._innovation._id}/${this._rolesFrontService.projectDefaultRoute()}`;
   }
 
   public copyLink(event: Event, linkToCopy: string) {
@@ -498,6 +477,10 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get isChargingReport(): boolean {
+    return this._isChargingReport;
   }
 
 }

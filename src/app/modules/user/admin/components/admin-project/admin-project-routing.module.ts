@@ -9,7 +9,7 @@ import { AdminProjectDescriptionComponent } from './admin-project-description/ad
 import { AdminProjectAnalysisComponent } from './admin-project-analysis/admin-project-analysis.component';
 import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
 import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-project-tags-pool.component';
-// import { AdminProjectStoryboardComponent } from '../admin-project-storyboard/admin-project-storyboard.component';
+import { AdminProjectStoryboardComponent } from './admin-project-storyboard/admin-project-storyboard.component';
 
 import { campaignRoutes } from '../admin-campaigns/admin-campaigns-routing.module';
 
@@ -66,11 +66,11 @@ export const projectRoutes: Routes = [
         component: AdminProjectTagsPoolComponent,
         pathMatch: 'full',
       },
-      // {
-      //   path: 'storyboard',
-      //   component: AdminProjectStoryboardComponent,
-      //   pathMatch: 'full',
-      // }
+      {
+        path: 'storyboard',
+        component: AdminProjectStoryboardComponent,
+        pathMatch: 'full'
+      }
     ]
   },
   {

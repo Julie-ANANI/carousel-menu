@@ -35,7 +35,7 @@ import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targ
 import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/fr';
 import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-filter-answers/i18n/fr';
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/fr';
-import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project-storyboard/i18n/fr';
+import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project/admin-project-storyboard/i18n/fr';
 import { ADMIN_EXECUTIVE_REPORT } from '../modules/user/admin/components/admin-executive-report/i18n/fr';
 import { NEW_PROJECT } from '../modules/user/client/components/new-project/i18n/fr';
 import { PROJECT_SETTINGS } from '../modules/user/client/components/project/components/settings/i18n/fr';

@@ -1,4 +1,4 @@
-<div *ngIf="canAccess()" class="animate-fade is-5 relative">
+<div [hidden]="!canAccess()" class="animate-fade is-5 relative" id="admin-project-storyboard">
 
   <!-- error message while fetching -->
   <div *ngIf="fetchingError && !isLoading" class="container fluid grid-2xl">
@@ -17,26 +17,14 @@
     </app-utility-banner>
     <!-- /banner to show last requested video status -->
 
-    <div class="container fluid grid-2xl p-top-30 p-bottom-40" id="admin-project-storyboard">
+    <div class="container fluid grid-2xl p-top-30 p-bottom-40">
       <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- header section -->
         <section class="header-wrapper d-flex flex-wrap">
 
-          <!-- heading / lang -->
+          <!-- lang -->
           <div class="content-wrapper p-right-10 p-bottom-30">
-
-            <!-- heading -->
-            <div class="d-flex align-baseline">
-              <h1 class="title m-no-bottom m-right-15 text-background">Storyboard</h1>
-              <a
-                *ngIf="innovation && innovation._id"
-                [routerLink]="backToProjectLink()"
-                class="text-sm text-notify back-to-wrapper">
-                {{ 'ADMIN_STORYBOARD.BACK_TO' | translate }}
-              </a>
-            </div>
-            <!-- /heading -->
 
             <!-- autofill / change lang -->
             <div
@@ -67,7 +55,7 @@
             <!-- /select lang -->
 
           </div>
-          <!-- /heading / lang -->
+          <!-- /lang -->
 
           <!-- buttons / links -->
           <div
@@ -160,8 +148,14 @@
         </section>
         <!-- /header section -->
 
+        <!-- charging report -->
+        <div *ngIf="isChargingReport" class="text-center">
+          <div class="loading is-primary is-md"></div>
+        </div>
+        <!-- /charging report -->
+
         <!-- executive report section -->
-        <section *ngIf="executiveReport.lang" class="p-top-50">
+        <section *ngIf="executiveReport.lang && !isChargingReport" class="p-top-50">
           <app-admin-executive-report
             [(executiveReport)]="executiveReport"
             [isEditable]="canAccess(['edit'])">

@@ -6,13 +6,15 @@ import {AdminProjectAnalysisComponent} from './admin-project-analysis.component'
 
 import {AdminProjectSynthesisModule} from '../admin-project-synthesis/admin-project-synthesis.module';
 import {AdminProjectTagsPoolModule} from '../admin-project-tags-pool/admin-project-tags-pool.module';
+import {AdminProjectStoryboardModule} from '../admin-project-storyboard/admin-project-storyboard.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     AdminProjectSynthesisModule,
-    AdminProjectTagsPoolModule
+    AdminProjectTagsPoolModule,
+    AdminProjectStoryboardModule
   ],
   declarations: [
     AdminProjectAnalysisComponent
