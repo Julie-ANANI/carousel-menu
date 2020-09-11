@@ -7,13 +7,12 @@ import { AdminEnterpriseManagementComponent } from "./admin-enterprise-managemen
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 
 export const settingsRoutes: Routes = [
-  // { path: '', redirectTo: 'blacklist', pathMatch: 'full'},
   {
-    path: 'blacklist',
+    path: 'blocklist',
     component: AdminEmailBlacklistComponent,
     pathMatch: 'full',
     canActivate: [AdminRoleGuard],
-    data: { accessPath: ['settings', 'blacklist'] }
+    data: { accessPath: ['settings', 'blocklist'] }
   },
   {
     path: 'countries',

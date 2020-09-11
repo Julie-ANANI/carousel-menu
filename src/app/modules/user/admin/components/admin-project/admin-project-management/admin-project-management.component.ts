@@ -445,8 +445,8 @@ export class AdminProjectManagementComponent implements OnInit {
       this.changeSidebar('blacklist-emails-domains');
       this._more = {
         animate_state: 'active',
-        title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
-        type: 'excludeEmails',
+        title: 'Exclude E-mails / Domains',
+        type: 'EXCLUDE_EMAILS_DOMAINS'
       };
     }
   }
@@ -485,7 +485,7 @@ export class AdminProjectManagementComponent implements OnInit {
         });
       }
 
-      this.save('Les emails / domaines ont bien été blaklistés');
+      this.save('Les emails / domaines ont bien été blacklistés');
       this._more = {animate_state: 'inactive', title: this._more.title};
     }
   }
