@@ -441,7 +441,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * Change the sidebar to the excludeEmails sidebar
    */
   editBlacklist() {
-    if (this.canAccess(['edit', 'blacklist'])) {
+    if (this.canAccess(['edit', 'blocklist'])) {
       this.changeSidebar('blacklist-emails-domains');
       this._more = {
         animate_state: 'active',

@@ -344,7 +344,7 @@
       </div>
 
       <!-- add emails / domains to blacklist -->
-      <div *ngIf="canAccess(['view', 'blacklist']) || canAccess(['edit', 'blacklist'])" class="project-line">
+      <div *ngIf="canAccess(['view', 'blocklist']) || canAccess(['edit', 'blocklist'])" class="project-line">
         <label class="form-switch" for="blacklistDomainsAndEmails">
           <input
             type="checkbox"
@@ -361,7 +361,7 @@
           {{project.settings.blacklist.emails.length.toString()}} Email(s)
         </label>
 
-        <button [disabled]="!canAccess(['edit', 'blacklist'])"
+        <button [disabled]="!canAccess(['edit', 'blocklist'])"
                 class="showOnHover btn btn-xs ghost-edit" (click)="editBlacklist()">
           {{'COMMON.EDIT' | translate}}
         </button>
