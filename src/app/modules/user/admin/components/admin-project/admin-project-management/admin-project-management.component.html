@@ -924,6 +924,7 @@
     [type]="more.type"
     [initialDomains]="project.settings.blacklist.domains"
     [initialEmails]="project.settings.blacklist.emails"
+    [isEditable]="true"
     (toBlacklists)="addBlacklists($event)">
   </app-sidebar-blacklist>
   <app-sidebar-tags [sidebarState]="sidebarState"
