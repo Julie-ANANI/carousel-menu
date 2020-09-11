@@ -10,10 +10,6 @@ import {BannerModule} from '../../../../utility/banner/banner.module';
 import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminProjectFollowUpModule} from './admin-project-follow-up/admin-project-follow-up.module';
 import {AdminProjectPreparationModule} from './admin-project-preparation/admin-project-preparation.module';
-import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
-import {AdminProjectTargetingModule} from './admin-project-targeting/admin-project-targeting.module';
-import {AdminProjectDescriptionModule} from './admin-project-description/admin-project-description.module';
-import {AdminCampaignsModule} from '../admin-campaigns/admin-campaigns.module';
 import {AdminProjectAnalysisModule} from './admin-project-analysis/admin-project-analysis.module';
 
 @NgModule({
@@ -26,10 +22,6 @@ import {AdminProjectAnalysisModule} from './admin-project-analysis/admin-project
     ModalModule,
     AdminProjectFollowUpModule,
     AdminProjectPreparationModule,
-    AdminProjectQuestionnaireModule,
-    AdminProjectTargetingModule,
-    AdminProjectDescriptionModule,
-    AdminCampaignsModule,
     AdminProjectAnalysisModule
   ],
   declarations: [

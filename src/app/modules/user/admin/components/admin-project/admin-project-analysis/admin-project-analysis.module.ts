@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 import {AdminProjectAnalysisComponent} from './admin-project-analysis.component';
 
 import {AdminProjectSynthesisModule} from '../admin-project-synthesis/admin-project-synthesis.module';
+import {AdminProjectTagsPoolModule} from '../admin-project-tags-pool/admin-project-tags-pool.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    AdminProjectSynthesisModule
+    AdminProjectSynthesisModule,
+    AdminProjectTagsPoolModule
   ],
   declarations: [
     AdminProjectAnalysisComponent

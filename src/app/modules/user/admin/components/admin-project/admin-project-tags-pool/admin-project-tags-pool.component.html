@@ -1,4 +1,4 @@
-<div *ngIf="canAccess()" class="container fluid grid-2xl animate-fade is-5" id="admin-project-tags-pool">
+<div [hidden]="!canAccess()" class="container fluid grid-2xl animate-fade is-5" id="admin-project-tags-pool">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- error message while fetching -->
