@@ -7,7 +7,7 @@ Document link:
 
 ### Functionalities
 
-1. BLACKLIST: View, Edit, Add,
+1. BLOCKLIST: View, Edit, Add,
 <br><br>SEARCH BY:  Email Address, 
 <br><br>SORT BY:  Reason, Type, 
 <br><br>T COLUMNS:  Email Address, Created, Expires, Reason, Type.
@@ -26,7 +26,7 @@ Document link:
 ```
 access: { 
     settings: { 
-        blacklist: { 
+        blocklist: { 
             add: true, 
             edit: true, 
             searchBy: {
