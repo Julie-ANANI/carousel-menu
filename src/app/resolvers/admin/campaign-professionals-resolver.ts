@@ -11,7 +11,7 @@ import { ProfessionalsService } from '../../services/professionals/professionals
 
 const CAMPAIGN_PROFESSIONALS_KEY = makeStateKey('campaign_professionals');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CampaignProfessionalsResolver implements Resolve<Response> {
 
   private _config: Config = {

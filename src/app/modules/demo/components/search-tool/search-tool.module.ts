@@ -6,8 +6,6 @@ import { SearchToolRoutingModule } from './search-tool-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SearchToolComponent } from './search-tool.component';
-import { SearchService } from '../../../../services/search/search.service';
-import { DownloadService } from "../../../../services/download/download.service";
 
 import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
 import { SidebarModule } from "../../../sidebars/templates/sidebar/sidebar.module";
@@ -31,10 +29,6 @@ import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap
   ],
   declarations: [
     SearchToolComponent
-  ],
-  providers: [
-    SearchService,
-    DownloadService
   ]
 })
 

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../../models/user.model';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DashboardService {
 
   constructor(private _http: HttpClient) {}

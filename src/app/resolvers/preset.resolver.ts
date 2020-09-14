@@ -12,7 +12,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 const PRESET_KEY = makeStateKey('preset');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PresetResolver implements Resolve<Preset> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,

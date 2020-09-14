@@ -3,7 +3,7 @@ import { Preset } from '../../../../../models/preset';
 import { Question, QuestionType } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PresetService {
 
   private taggedQuestionsTypes: {[identifier: string]: QuestionType} = {
