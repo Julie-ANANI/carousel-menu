@@ -2,6 +2,11 @@
 
 #admin-project-preparation {
 
+  .header-wrapper {
+    z-index: 1;
+    top: 0;
+  }
+
   .header-btn-action-wrapper {
     background: $bg-white-color;
     position: absolute;

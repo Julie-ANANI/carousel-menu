@@ -121,27 +121,39 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     event.preventDefault();
     const from_card = this._innovation.innovationCards[this._activeCardIndex === 0 ? 1 : 0];
     const _model = model.toLowerCase();
-    const text = from_card[_model].replace(/<[^>]*>/g, '');
-    this._translationService.translate(text, this.activeInnovCard.lang).pipe(first()).subscribe((o: any) => {
-      switch (model) {
+    let _text = '';
 
-        case 'TITLE':
-        case 'SUMMARY':
-          this.activeInnovCard[_model] = o.translation;
-          break;
+    if (model === 'TITLE' || model === 'SUMMARY') {
+      _text = from_card[_model].replace(/<[^>]*>/g, '');
+    } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'OTHER') {
+      _text = (<String>from_card.sections[index].content).replace(/<[^>]*>/g, '');
+    }
 
-        case 'ISSUE':
-        case 'SOLUTION':
-        case 'OTHER':
-          this.activeInnovCard.sections[index].content = o.translation;
-          break;
+    if (_text) {
+      this._translationService.translate(_text, this.activeInnovCard.lang).pipe(first()).subscribe((o: any) => {
+        switch (model) {
 
-      }
-      this.updateInnovation();
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+          case 'TITLE':
+          case 'SUMMARY':
+            this.activeInnovCard[_model] = o.translation;
+            break;
+
+          case 'ISSUE':
+          case 'SOLUTION':
+          case 'OTHER':
+            this.activeInnovCard.sections[index].content = o.translation;
+            break;
+
+        }
+        this.updateInnovation();
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    } else {
+      this._translateNotificationsService.error('Error', 'The text is empty in another project language.');
+    }
+
   }
 
   private _initToggle() {
