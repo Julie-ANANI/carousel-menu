@@ -6,7 +6,7 @@
       <div class="column col-sm-12 col-11 p-top-1 col-mx-auto relative">
         <ul class="tab">
           <ng-container *ngFor="let tab of tabs">
-            <li class="tab-item">
+            <li *ngIf="canAccess([tab.key])" class="tab-item">
               <a
                 (click)="onClickTab($event, tab.name)"
                 [routerLink]="'/user/admin/projects/project/'+project._id+'/analysis/'+tab.route"

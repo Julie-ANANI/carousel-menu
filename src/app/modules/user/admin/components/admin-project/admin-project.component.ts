@@ -132,11 +132,22 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onClickTab(event: Event, tab: string) {
+  public onClickTab(event: Event, tab: string, route: string, key: string) {
     event.preventDefault();
     this._activatedTab = tab;
     this._campaignFrontService.setShowCampaignTabs(false);
     this._setPageTitle();
+    this._router.navigate([`/user/admin/projects/project/${this._project._id}/${this._navigateRoute(route, key)}`])
+  }
+
+  private _navigateRoute(route: string, key: string): string {
+    if (key === 'settings' || key === 'collection' || key === 'followUp') {
+      return route;
+    } else if (key === 'preparation') {
+      return this._rolesFrontService.projectPreparationDefRoute();
+    } else if (key === 'analysis') {
+      return this._rolesFrontService.projectAnalysisDefRoute();
+    }
   }
 
   public canAccess(path?: Array<string>) {

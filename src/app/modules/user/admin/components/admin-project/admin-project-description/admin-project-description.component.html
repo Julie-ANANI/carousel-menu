@@ -570,7 +570,7 @@
 </div>
 
 <!-- modal to add New section | Delete section -->
-<app-utility-modal-empty [(showModal)]="showModal">
+<app-utility-modal-empty *ngIf="isEditable" [(showModal)]="showModal">
 
   <section class="modal-body">
 

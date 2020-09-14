@@ -5,8 +5,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { DashboardService } from '../../../services/dashboard/dashboard.service';
-
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
@@ -14,37 +12,10 @@ import { AdminMonitoringModule } from './components/admin-monitoring/admin-monit
 import { AdminTagModule } from './components/admin-tags/admin-tag.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
-import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
-import { PipeModule } from '../../../pipe/pipe.module';
-import { SidebarModule } from '../../sidebars/templates/sidebar/sidebar.module';
 import { LogoutModule } from '../../common/logout/logout.module';
-import { InputListModule } from '../../utility/input-list/input-list.module';
-import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 import { HeaderModule } from '../../common/header/header.module';
 import { AdminCommunityModule } from './components/admin-community/admin-community.module';
-
-import { SearchService } from '../../../services/search/search.service';
-import { FrontendService } from '../../../services/frontend/frontend.service';
-import { TemplatesService } from '../../../services/templates/templates.service';
-import { PresetService } from '../../../services/preset/preset.service';
-import { EmailService } from '../../../services/email/email.service';
-import { CampaignResolver } from '../../../resolvers/campaign.resolver';
-import { DownloadService } from '../../../services/download/download.service';
-import { RequestResolver } from '../../../resolvers/request.resolver';
-import { ScenarioResolver } from '../../../resolvers/scenario.resolver';
-import { SignatureResolver } from '../../../resolvers/signature.resolver';
-import { QuizService } from '../../../services/quiz/quiz.service';
-import { PresetResolver } from '../../../resolvers/preset.resolver';
-import { AdvSearchService } from '../../../services/advsearch/advsearch.service';
-import { ProfessionalResolver } from '../../../resolvers/professional.resolver';
-import { SignaturesResolver } from '../../../resolvers/admin/signatures-resolver';
-import { PresetsResolver } from '../../../resolvers/admin/presets-resolver';
-import { CampaignAnswersResolver } from '../../../resolvers/admin/campaign-answers.resolver';
-import { CampaignProfessionalsResolver } from '../../../resolvers/admin/campaign-professionals-resolver';
-import { ProjectTagsPoolResolver } from '../../../resolvers/admin/project-tags-pool-resolver';
-import { ShieldService } from '../../../services/shield/shield.service';
-import { EnterpriseService } from '../../../services/enterprise/enterprise.service';
 import { AdminSettingsModule } from './components/admin-settings/admin-settings.module';
 
 @NgModule({
@@ -58,47 +29,17 @@ import { AdminSettingsModule } from './components/admin-settings/admin-settings.
     AdminProfessionalsModule,
     AdminLibrariesModule,
     AdminTagModule,
-    AdminDashboardModule,
-    AdminCampaignsModule,
     AdminProjectModule,
     TranslateModule.forChild(),
-    SidebarModule,
-    PipeModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     HeaderModule,
     LogoutModule,
-    InputListModule,
     AdminCommunityModule,
     FormsModule,
     ReactiveFormsModule,
     AdminSettingsModule
-  ],
-  providers: [
-    DashboardService,
-    SearchService,
-    FrontendService,
-    TemplatesService,
-    PresetService,
-    EmailService,
-    CampaignResolver,
-    DownloadService,
-    RequestResolver,
-    ScenarioResolver,
-    SignatureResolver,
-    RequestResolver,
-    QuizService,
-    PresetResolver,
-    AdvSearchService,
-    ProfessionalResolver,
-    SignaturesResolver,
-    PresetsResolver,
-    CampaignAnswersResolver,
-    CampaignProfessionalsResolver,
-    ProjectTagsPoolResolver,
-    ShieldService,
-    EnterpriseService
   ]
 })
 

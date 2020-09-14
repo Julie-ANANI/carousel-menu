@@ -82,9 +82,9 @@
           <!-- tabs -->
           <ul class="tab is-fullwidth">
             <ng-container *ngFor="let tab of tabs">
-              <li class="tab-item">
+              <li *ngIf="canAccess(['tabs', tab.key])" class="tab-item">
                 <a
-                  (click)="onClickTab($event, tab.name)"
+                  (click)="onClickTab($event, tab.name, tab.route, tab.key)"
                   [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
                   routerLinkActive="active">
                   <i [ngClass]="tab.icon"></i> {{ tab.name }}

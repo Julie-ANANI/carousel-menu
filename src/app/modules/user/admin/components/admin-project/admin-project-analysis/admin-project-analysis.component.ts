@@ -5,6 +5,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {RouteFrontService} from '../../../../../../services/route/route-front.service';
 import {TranslateTitleService} from '../../../../../../services/title/title.service';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 
 interface Tab {
   route: string;
@@ -34,6 +35,7 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
 
   constructor(private _innovationFrontService: InnovationFrontService,
               private _routeFrontService: RouteFrontService,
+              private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService) { }
 
   ngOnInit() {
@@ -47,6 +49,11 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
     this._activeTab = tab ? tab : this._activeTab;
     this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)} 
       | Analysis | ${this._project.name}`);
+  }
+
+  public canAccess(path?: Array<string>) {
+    const _default: Array<string> = ['projects', 'project'];
+    return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
   public onClickTab(event: Event, tab: string) {

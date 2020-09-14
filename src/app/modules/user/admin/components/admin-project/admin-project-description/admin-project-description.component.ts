@@ -11,6 +11,7 @@ import {TranslateNotificationsService} from '../../../../../../services/notifica
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {CommonService} from '../../../../../../services/common/common.service';
 import {TranslationService} from '../../../../../../services/translation/translation.service';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 
@@ -33,7 +34,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _activeCardIndex = 0;
 
-  private _isEditable = true;
+  private _isEditable = false;
 
   private _showModal = false;
 
@@ -58,9 +59,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
               private _translationService: TranslationService,
+              private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,) { }
 
   ngOnInit() {
+
+    this._isEditable = this.canAccess(['edit', 'description']);
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation || <Innovation>{};
@@ -73,6 +77,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  public canAccess(path?: Array<string>) {
+    const _default: Array<string> = ['projects', 'project', 'settings'];
+    return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
   public remaining(type: string, property: CardSectionTypes, index?: number): string {

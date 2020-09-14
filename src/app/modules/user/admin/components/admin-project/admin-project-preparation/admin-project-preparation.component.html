@@ -8,7 +8,7 @@
         <!-- tabs -->
         <ul class="tab">
           <ng-container *ngFor="let tab of showCampaignTabs ? campaignTabs : defaultTabs">
-            <li class="tab-item">
+            <li *ngIf="canAccessTab(tab)" class="tab-item">
               <a
                 (click)="navigateTo(tab)"
                 [routerLink]="routeToNavigate(tab)"
@@ -60,7 +60,7 @@
             <!-- add lang -->
             <button
               (click)="openModal($event, 'ADD_LANG')"
-              *ngIf="canAddCard && activeTab === 'description'"
+              *ngIf="canAddCard && activeTab === 'description' && canEditDescription"
               [disabled]="isAddingCard"
               class="button is-link is-sm m-right-10"
               id="btn-add-card">
@@ -81,6 +81,7 @@
                   class="menu-item flex-between">
                   {{ card.lang === 'fr' ? 'French' : 'English' }}
                   <div
+                    *ngIf="canEditDescription"
                     (click)="openModal($event, 'DELETE_LANG', card)"
                     [ngClass]="{'disabled': isDeletingCard}"
                     class="icon-container is-sm is-overlay">
@@ -93,6 +94,7 @@
 
             <!-- save -->
             <button
+              *ngIf="canEditDescription || canEditTargeting"
               (click)="onSaveProject($event)"
               [disabled]="isSaving || !toBeSaved"
               [ngStyle]="{'min-width': '110px', 'padding-top': '9px', 'padding-bottom': '9px'}"
@@ -124,8 +126,8 @@
 
 </div>
 
-<!-- modal to innovation card add lang -->
-<app-utility-modal-empty [(showModal)]="showCardModal">
+<!-- modal to innovation card add / delete lang -->
+<app-utility-modal-empty *ngIf="canEditDescription" [(showModal)]="showCardModal">
 
   <!-- body -->
   <section class="modal-body p-bottom-40">
@@ -195,4 +197,4 @@
   <!-- /footer -->
 
 </app-utility-modal-empty>
-<!-- modal to innovation card add lang -->
+<!-- modal to innovation card add / delete lang -->

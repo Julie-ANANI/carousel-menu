@@ -15,6 +15,7 @@ import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
 import {isPlatformBrowser} from '@angular/common';
 import {Response} from '../../../../../../models/response';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -61,6 +62,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _campaignFrontService: CampaignFrontService,
               private _innovationFrontService: InnovationFrontService,
+              private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {}
 
@@ -118,6 +120,24 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     } else {
       this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)} 
       | Preparation | ${this._project.name}`);
+    }
+  }
+
+  public canAccess(path?: Array<string>) {
+    const _default: Array<string> = ['projects', 'project'];
+    return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
+  }
+
+  public canAccessTab(tab: string): boolean {
+    if (this._showCampaignTabs) {
+      return this.canAccess(['campaigns', 'campaign', tab]);
+    } else {
+      if (tab === 'description') {
+        return this.canAccess(['settings', 'view', 'description']) || this.canEditDescription;
+      } else if (tab === 'targeting') {
+        return this.canAccess(['settings', 'view', 'targeting']) || this.canEditTargeting;
+      }
+      return this.canAccess([tab]);
     }
   }
 
@@ -258,6 +278,14 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   get activeCard(): InnovCard {
     return InnovationFrontService.activeCard(this._project, this._activeCardIndex);
+  }
+
+  get canEditTargeting(): boolean {
+    return this.canAccess(['settings', 'edit', 'targeting']);
+  }
+
+  get canEditDescription(): boolean {
+    return this.canAccess(['settings', 'edit', 'description']);
   }
 
   get canAddCard(): boolean {
