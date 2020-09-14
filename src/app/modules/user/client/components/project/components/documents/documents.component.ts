@@ -256,8 +256,13 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     return this._innovation.ownerConsent && this._innovation.ownerConsent.value;
   }
 
+  /**
+   * This should return true also for the collaborators
+   */
   get isOwner(): boolean {
-    return (this.user.id === (this._innovation.owner && this._innovation.owner.id)) || this._authService.isAdmin;
+    return this._authService.isAdmin ||
+      (this._innovation.owner && (this.user.id === this._innovation.owner.id ||
+        this._innovation.collaborators.findIndex(col => col.id === this.user.id) > -1));
   }
 
   get user(): User {
