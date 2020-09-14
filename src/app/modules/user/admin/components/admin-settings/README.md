@@ -1,9 +1,9 @@
 # Settings Page
 
-#### Application route: /user/admin/settings/blacklist
+Document link:
+[a link](https://docs.google.com/document/d/1P083gvT8ObRR4v5uvOoBDRMttz4MKj3qXYozsu4PNx8/edit) 
 
-All notable changes to the Settings page will be documented in this file. 
-Please always updates the roles / functionalities in this file. 
+#### Application route: /user/admin/settings/blacklist
 
 ### Functionalities
 
@@ -20,15 +20,6 @@ Please always updates the roles / functionalities in this file.
 <br><br>SEARCH BY:  Name, Parent
 <br><br>T COLUMNS:  Logo, Name, Domain, Patterns, Url, Subsidiary, Parent. 
 
-Here BLACKLIST, COUNTRIES, ENTERPRISES represent the sub tabs.
-
-### Access of the functionalities based on the roles - by default Root will access all.
-
-No definition of a Role means no access to that user.
-
-#### Hotline:
-
-1. BLACKLIST: All
 
 ### Example - Hotline role
 

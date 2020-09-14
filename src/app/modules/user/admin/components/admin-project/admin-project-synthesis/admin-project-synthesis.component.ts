@@ -1,31 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../models/innovation';
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   templateUrl: 'admin-project-synthesis.component.html',
   styleUrls: ['admin-project-synthesis.component.scss']
 })
 
-export class AdminProjectSynthesisComponent implements OnInit {
+export class AdminProjectSynthesisComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
   private _accessPath: Array<string> = ['projects', 'project', 'synthesis'];
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  constructor(private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService) { }
 
   ngOnInit(): void {
-    if (this._activatedRoute.snapshot.parent.data['innovation']
-      && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
-      this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
-    }
-  }
-
-  _updateProject(innovation: Innovation) {
-    this._innovation = innovation;
+    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._innovation = innovation || <Innovation>{};
+    });
   }
 
   public canAccess() {
@@ -38,6 +37,11 @@ export class AdminProjectSynthesisComponent implements OnInit {
 
   get accessPath(): Array<string> {
     return this._accessPath;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

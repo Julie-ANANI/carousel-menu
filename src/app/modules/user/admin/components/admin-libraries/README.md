@@ -1,9 +1,9 @@
 # Libraries Page
 
-#### Application route: /user/admin/libraries/workflows
+Document link:
+[a link](https://docs.google.com/document/d/1P083gvT8ObRR4v5uvOoBDRMttz4MKj3qXYozsu4PNx8/edit) 
 
-All notable changes to the Libraries page will be documented in this file. 
-Please always updates the roles / functionalities in this file. 
+#### Application route: /user/admin/libraries/workflows
 
 ### Functionalities
 
@@ -17,39 +17,6 @@ Please always updates the roles / functionalities in this file.
 4. SIGNATURES: Add, View, Edit, Delete, 
 <br><br>SEARCH BY:  Name, Author, Language, Email Address.
 
-Here WORKFLOWS, EMAILS, QUESTIONNAIRE, SIGNATURES represent the sub tabs.
-
-### Access of the functionalities based on the roles - by default Root will access all.
-
-No definition of a Role means no access to that user.
-
-#### Market Test Manager:
-
-1. WORKFLOWS: Add, Edit.
-
-2. QUESTIONNAIRE: Add, Edit, Delete, Clone, 
-<br><br>SEARCH BY:  Name.
-
-#### Market Test Manager UMI:
-
-1. WORKFLOWS: Add, Edit.
-
-2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
-<br><br>SEARCH BY:  Name.
-
-#### Oper Supervisor:
-
-1. WORKFLOWS: Add, Edit.
-
-2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
-<br><br>SEARCH BY:  Name.
-
-#### Tech:
-
-1. WORKFLOWS: Add, Edit.
-
-2. QUESTIONNAIRE: Add, Edit, Delete, Clone,
-<br><br>SEARCH BY:  Name.
 
 ### Example - Market Test Manager role
 

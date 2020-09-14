@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Campaign } from '../../models/campaign';
 import { environment } from '../../../environments/environment';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class QuizService {
 
   constructor() { }

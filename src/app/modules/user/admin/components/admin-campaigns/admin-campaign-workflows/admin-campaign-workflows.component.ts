@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { EmailScenario } from '../../../../../../models/email-scenario';
@@ -6,22 +6,23 @@ import { EmailSignature } from '../../../../../../models/email-signature';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { first } from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Config } from "../../../../../../models/config";
 import { isPlatformBrowser } from "@angular/common";
 import { Response } from "../../../../../../models/response";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { StatsInterface } from "../admin-campaign-stats/admin-campaign-stats.component";
+import { StatsInterface } from "../../admin-stats-banner/admin-stats-banner.component";
 import { CampaignFrontService } from "../../../../../../services/campaign/campaign-front.service";
+import {Subject} from 'rxjs';
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
   styleUrls: ['./admin-campaign-workflows.component.scss']
 })
 
-export class AdminCampaignWorkflowsComponent implements OnInit {
+export class AdminCampaignWorkflowsComponent implements OnInit, OnDestroy {
 
   private _campaign: Campaign = <Campaign>{};
 
@@ -51,24 +52,42 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _isTesting = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
+              private _campaignFrontService: CampaignFrontService,
               private _templatesService: TemplatesService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
+
       if (this._activatedRoute.snapshot.parent.data['campaign']
         && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
         this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-        this._getAllTemplates();
-        this._getAllSignatures();
-        this._generateAvailableScenario();
-        this.generateModifiedScenarios();
+        this._campaignFrontService.setActiveCampaign(this._campaign);
+        this._campaignFrontService.setActiveCampaignTab('workflows');
+        this._initCampaign();
       }
+
+      this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
+        if (!!campaign && this._campaign._id !== campaign._id) {
+          this._campaign = campaign;
+          this._initCampaign();
+        }
+      });
+
     }
+  }
+
+  private _initCampaign() {
+    this._getAllTemplates();
+    this._getAllSignatures();
+    this._generateAvailableScenario();
+    this._generateModifiedScenarios();
   }
 
   public canAccess(path?: Array<string>) {
@@ -165,7 +184,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._saveTemplates('The workflow is added.');
   }
 
-  public generateModifiedScenarios() {
+  private _generateModifiedScenarios() {
     this._modifiedScenarios = this._availableScenarios.filter((x) => {
       return x.emails.reduce((acc, current) => {
         return (acc && current.modified);
@@ -233,7 +252,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
         this._isImporting = false;
       }
       this._translateNotificationsService.success('Success', message);
-      this.generateModifiedScenarios();
+      this._generateModifiedScenarios();
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       if (this._isImporting) {
@@ -341,6 +360,11 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   get isTesting(): boolean {
     return this._isTesting;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

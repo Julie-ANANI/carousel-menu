@@ -1,22 +1,11 @@
-@import "../../../../../../style/framework/src/variables";
+@import "../../../../../../../style/framework/src/variables";
 
 #admin-project-storyboard {
-  min-height: calc(100vh - 125px);
-  background-color: $bg-white-color;
 
   .header-wrapper {
 
     .content-wrapper {
       flex: 1;
-
-      .back-to-wrapper:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-
-      .title {
-        font-size: 28px;
-      }
 
       .video-wrapper, .pdf-wrapper {
         display: flex;

@@ -9,7 +9,7 @@ import { ProfessionalsService } from '../services/professionals/professionals.se
 
 const PROFESSIONAL_KEY = makeStateKey('professional');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfessionalResolver implements Resolve<Professional> {
 
   constructor(@Inject(PLATFORM_ID) private _platformId: Object,

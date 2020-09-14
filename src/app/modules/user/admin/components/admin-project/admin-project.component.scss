@@ -2,29 +2,34 @@
 
 #admin-project {
 
-  .header-wrapper {
-    border-bottom: $border-width solid $border-default-color;
+  .objective-wrapper {
+    display: flex;
+    align-items: center;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    color: $text-white-color;
+    opacity: 0.7;
+
+    i {
+      font-size: 25px;
+      margin-right: 10px;
+    }
+
   }
 
   .tab {
     border-bottom: none;
-  }
 
-}
+    .tab-item {
+      color: $text-white-color;
+      border-bottom: none;
 
-@media (max-width: $size-md) {
-
-  #admin-project {
-
-    .header-wrapper {
-
-      .flex-between {
-        margin-bottom: 0.5rem;
-
-        .dropdown.is-right .menu {
-          left: 0;
-        }
-
+      a {
+        border-bottom: none;
+        background-color: #747d88;
+        font-weight: $font-weight-medium;
+        border-top-right-radius: $border-width-xl;
+        border-top-left-radius: $border-width-xl;
       }
 
     }

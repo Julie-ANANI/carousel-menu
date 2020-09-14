@@ -20,7 +20,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { HttpErrorResponse } from '@angular/common/http';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { StatsInterface } from "../admin-campaign-stats/admin-campaign-stats.component";
+import { StatsInterface } from "../../admin-stats-banner/admin-stats-banner.component";
 
 @Component({
   templateUrl: './admin-campaign-answers.component.html',

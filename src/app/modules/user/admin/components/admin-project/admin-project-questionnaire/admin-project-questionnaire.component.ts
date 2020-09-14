@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -7,18 +6,20 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Innovation } from '../../../../../../models/innovation';
 import { environment } from '../../../../../../../environments/environment';
 import { Preset } from '../../../../../../models/preset';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { first } from "rxjs/operators";
+import {first, takeUntil} from 'rxjs/operators';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
   styleUrls: ['./admin-project-questionnaire.component.scss']
 })
 
-export class AdminProjectQuestionnaireComponent implements OnInit {
+export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -30,20 +31,23 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   private _sectionsNames: Array<string>;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-    constructor(private _activatedRoute: ActivatedRoute,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
               private _rolesFrontService: RolesFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) { }
 
   ngOnInit(): void {
-    if (this._activatedRoute.snapshot.parent.data['innovation']
-      && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
-      this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
-      this._setQuizLink();
-      this._setSectionsNames();
+    if (isPlatformBrowser(this._platformId)) {
+      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+        this._innovation = innovation || <Innovation>{};
+        this._setQuizLink();
+        this._setSectionsNames();
+      });
     }
   }
 
@@ -55,10 +59,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     }
   }
 
-  _updateProject(innovation: Innovation) {
-    this._innovation = innovation;
-  }
-
   private _setQuizLink() {
     if (this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
       this._quizLink = `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` || '';
@@ -66,29 +66,32 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
   }
 
   private _setSectionsNames() {
-      this._sectionsNames = [];
-      let customSection = false;
-      let frenchTitles: Array<string> = [];
-      let englishTitles: Array<string> = [];
-      this._innovation.innovationCards.forEach(card => {
-        if (card.sections) {
-          if (card.sections.some(section => section.type === 'OTHER')) {
-            customSection = true;
-          }
-          const titles = card.sections.map(s => s.title);
-          if (card.lang === 'fr') {
-            frenchTitles = titles;
-          } else {
-            englishTitles = titles;
-          }
+    this._sectionsNames = [];
+    let customSection = false;
+    let frenchTitles: Array<string> = [];
+    let englishTitles: Array<string> = [];
+
+    this._innovation.innovationCards.forEach(card => {
+      if (card.sections) {
+        if (card.sections.some(section => section.type === 'OTHER')) {
+          customSection = true;
         }
-      });
-      const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
-      if (sectionsNb > 2 || customSection) {
-        for (let i = 0; i < sectionsNb; i++) {
-          this._sectionsNames.push(`${englishTitles[i] || 'No section'} || ${frenchTitles[i] || 'Pas de section'}`);
+        const titles = card.sections.map(s => s.title);
+        if (card.lang === 'fr') {
+          frenchTitles = titles;
+        } else {
+          englishTitles = titles;
         }
       }
+    });
+
+    const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
+    if (sectionsNb > 2 || customSection) {
+      for (let i = 0; i < sectionsNb; i++) {
+        this._sectionsNames.push(`${englishTitles[i] || 'No section'} || ${frenchTitles[i] || 'Pas de section'}`);
+      }
+    }
+
   }
 
   private _saveInnovation() {
@@ -187,6 +190,11 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   get sectionsNames(): Array<string> {
     return this._sectionsNames;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

@@ -1,0 +1,34 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#admin-project-preparation {
+
+  .header-btn-action-wrapper {
+    background: $bg-white-color;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+  }
+
+  .button {
+
+    &.is-saved {
+      border-color: $border-success-color;
+      color: $text-success-color;
+      position: relative;
+
+      .shape.is-circle {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: -16px;
+        right: -23px;
+        border: 2px solid $border-success-color;
+        color: $text-success-color;
+        background-color: $bg-white-color;
+      }
+
+    }
+
+  }
+
+}

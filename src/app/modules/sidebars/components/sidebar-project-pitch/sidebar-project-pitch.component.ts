@@ -3,7 +3,7 @@ import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
-import {CardComment} from '../../../../models/innov-card';
+import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -65,8 +65,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   @Input() cardContent: any = '';
 
-  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA'
-  @Input() type = '';
+  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER'
+  @Input() type: CardSectionTypes = '';
 
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
 
@@ -235,12 +235,21 @@ export class SidebarProjectPitchComponent implements OnChanges {
           break;
 
         case 'SUMMARY':
-        case 'ISSUE':
-        case 'SOLUTION':
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent.length, 500);
           } else if (type === 'CHAR') {
             return (500 - this.cardContent.length).toString(10);
+          }
+          break;
+
+
+        case 'ISSUE':
+        case 'SOLUTION':
+        case 'OTHER':
+          if (type === 'COLOR') {
+            return CommonService.getLimitColor(this.cardContent.length, 500);
+          } else if (type === 'CHAR') {
+            return (1000 - this.cardContent.length).toString(10);
           }
           break;
 
