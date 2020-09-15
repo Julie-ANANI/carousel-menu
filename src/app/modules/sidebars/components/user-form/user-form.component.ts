@@ -22,6 +22,7 @@ import { Observable} from 'rxjs';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {RolesService} from '../../../../services/roles/roles.service';
+import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
 
 @Component({
   selector: 'app-user-form',
@@ -147,7 +148,8 @@ export class UserFormComponent implements OnInit {
               private userService: UserService,
               private _authService: AuthService,
               private _professionalService: ProfessionalsService,
-              private _rolesService: RolesService) {}
+              private _rolesService: RolesService,
+              private _enterpriseService: EnterpriseService) {}
 
   ngOnInit() {
     this._user = new User();
@@ -212,13 +214,18 @@ export class UserFormComponent implements OnInit {
     this._selectedProject = null;
   }
 
-
-  private loadProfessional() {
+  private async loadProfessional() {
     if (this._pro && this._userForm) {
+      if (this._pro['enterprise']) {
+        this._enterpriseService.get(this._pro['enterprise']).pipe(first())
+          .subscribe(enterprise => {
+            this._userForm.get('company').get('name').setValue(enterprise.name);
+          }, err => {
+            console.error(err);
+          });
+      }
       this._tags = this._pro.tags;
-      this._userForm.get('company').get('name').setValue(this._pro.company);
       this._userForm.patchValue(this._pro);
-      this._company = { name: this._pro.company };
       this._proKeywords = null;
       this._professionalService.isShielded(this._pro._id)
         .subscribe(response => {
