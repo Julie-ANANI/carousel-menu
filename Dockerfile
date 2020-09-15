@@ -12,7 +12,7 @@ RUN echo build ${APP_NAME} -c=${ENV_NAME} --prod
 RUN node --max-old-space-size=5120 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME} --prod
 
 # upload source-map to sentry
-RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli@7.3.8; fi
+RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
 RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
 RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps dist/browser; fi
 RUN rm -f /var/web/.sentryclirc
