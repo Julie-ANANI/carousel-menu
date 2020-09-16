@@ -35,7 +35,7 @@ import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en
 import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/en';
 import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-filter-answers/i18n/en';
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/en';
-import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project-storyboard/i18n/en';
+import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project/admin-project-storyboard/i18n/en';
 import { ADMIN_EXECUTIVE_REPORT } from '../modules/user/admin/components/admin-executive-report/i18n/en';
 import { NEW_PROJECT } from '../modules/user/client/components/new-project/i18n/en';
 import { PROJECT_SETTINGS } from '../modules/user/client/components/project/components/settings/i18n/en';

@@ -1,9 +1,9 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Professional } from '../../../../../../models/professional';
@@ -13,8 +13,9 @@ import { ConfigService } from '../../../../../../services/config/config.service'
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
-import { StatsInterface } from "../admin-campaign-stats/admin-campaign-stats.component";
+import { StatsInterface } from "../../admin-stats-banner/admin-stats-banner.component";
 import { CampaignFrontService } from "../../../../../../services/campaign/campaign-front.service";
+import { Subject } from 'rxjs';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -26,7 +27,7 @@ export interface SelectedProfessional extends Professional {
   styleUrls: ['./admin-campaign-pros.component.scss']
 })
 
-export class AdminCampaignProsComponent implements OnInit {
+export class AdminCampaignProsComponent implements OnInit, OnDestroy {
 
   private _config: Config = {
     fields: 'language firstName lastName companyOriginalName email emailConfidence country jobTitle personId messages campaigns',
@@ -41,8 +42,6 @@ export class AdminCampaignProsComponent implements OnInit {
   private _professionals: Array<SelectedProfessional> = [];
 
   private _total = -1;
-
-  private _noResult = false;
 
   private _modalImport = false;
 
@@ -71,22 +70,37 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'pros'];
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _rolesFrontService: RolesFrontService,
+              private _campaignFrontService: CampaignFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _professionalsService: ProfessionalsService,
               private _configService: ConfigService) { }
 
   ngOnInit() {
-    if (isPlatformBrowser(this._platformId)) {
-      if (this._activatedRoute.snapshot.parent.data['campaign']
-        && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
-        this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-        this._config.campaigns = this._campaign ? this._campaign._id : '';
-        this._getProfessionals();
-      }
+    if (this._activatedRoute.snapshot.parent.data['campaign']
+      && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
+      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
+      this._campaignFrontService.setActiveCampaign(this._campaign);
+      this._campaignFrontService.setActiveCampaignTab('pros');
+      this._initCampaign();
     }
+
+    this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
+      if (!!campaign && this._campaign._id !== campaign._id) {
+        this._campaign = campaign;
+        this._initCampaign();
+      }
+    });
+
+  }
+
+  private _initCampaign() {
+    this._config.campaigns = this._campaign ? this._campaign._id : '';
+    this._getProfessionals();
   }
 
   public canAccess(path?: Array<string>) {
@@ -98,14 +112,15 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
   private _getProfessionals() {
-    this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-      this._professionals = response && response.result || [];
-      this._total = response._metadata.totalCount || response.result.length;
-      this._noResult = this._config.search.length > 2 || this._config.status ? false : this._total === 0;
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+        this._professionals = response && response.result || [];
+        this._total = response._metadata.totalCount || response.result.length;
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   public statsConfig(): Array<StatsInterface> {
@@ -311,10 +326,6 @@ export class AdminCampaignProsComponent implements OnInit {
     this._sidebarValue = value;
   }
 
-  get noResult(): boolean {
-    return this._noResult;
-  }
-
   get isImporting(): boolean {
     return this._isImporting;
   }
@@ -329,6 +340,11 @@ export class AdminCampaignProsComponent implements OnInit {
 
   get accessPath(): Array<string> {
     return this._accessPath;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

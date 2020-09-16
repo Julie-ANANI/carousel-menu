@@ -1,9 +1,9 @@
 # Professionals Page
 
-#### Application route: /user/admin/professionals
+Document link:
+[a link](https://docs.google.com/document/d/1P083gvT8ObRR4v5uvOoBDRMttz4MKj3qXYozsu4PNx8/edit) 
 
-All notable changes to the Professionals page will be documented in this file. 
-Please always updates the roles / functionalities in this file. 
+#### Application route: /user/admin/professionals
 
 ### Functionalities
 
@@ -11,39 +11,6 @@ Please always updates the roles / functionalities in this file.
 2. T COLUMNS: Member, Name, Country, Job, Company, Campaign, Contact.   
 3. USER: View, Edit, Delete. 
 
-### Access of the functionalities based on the roles - by default Root will access all.
-
-No definition of a Role means no access to that user.
-
-#### Hotline:
-
-1. SEARCH BY: All
-2. T COLUMNS: Member, Name, Country, Job, Company.
-3. USER: All
-
-#### Market Test Manager:
-
-1. SEARCH BY: All
-2. T COLUMNS: Member, Name, Country, Job, Company.
-3. USER: All
-
-#### Market Test Manager UMI:
-
-1. SEARCH BY: All
-2. T COLUMNS: Member, Name, Country, Job, Company.
-3. USER: All
-
-#### Oper Supervisor:
-
-1. SEARCH BY: All
-2. T COLUMNS: Member, Name, Country, Job, Company.
-3. USER: All
-
-#### Tech:
-
-1. SEARCH BY: All
-2. T COLUMNS: Member, Name, Country, Job, Company.
-3. USER: All
 
 ### Example - Market Test Manager role
 

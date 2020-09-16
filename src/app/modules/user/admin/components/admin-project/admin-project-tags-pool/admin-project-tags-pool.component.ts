@@ -1,5 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -7,19 +6,21 @@ import { Table } from '../../../../../table/models/table';
 import { Tag } from '../../../../../../models/tag';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Config } from '../../../../../../models/config';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { ConfigService } from '../../../../../../services/config/config.service';
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { Subject } from 'rxjs';
 
 @Component({
   templateUrl: 'admin-project-tags-pool.component.html',
   styleUrls: ['admin-project-tags-pool.component.scss']
 })
 
-export class AdminProjectTagsPoolComponent implements OnInit {
+export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
 
   private _localConfig: Config = {
     fields: '',
@@ -47,10 +48,12 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _isEditable = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _activatedRoute: ActivatedRoute,
               private _configService: ConfigService,
               private _rolesFrontService: RolesFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _tagsService: TagsService) { }
 
@@ -59,11 +62,10 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       this._isLoading = false;
       this._initializeTable();
 
-      if (this._activatedRoute.snapshot.parent.data['innovation']
-        && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
-        this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
+      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+        this._innovation = innovation || <Innovation>{};
         this._getTagsFromPool();
-      }
+      });
 
     }
   }
@@ -237,6 +239,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
 
   get isEditable(): boolean {
     return this._isEditable;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

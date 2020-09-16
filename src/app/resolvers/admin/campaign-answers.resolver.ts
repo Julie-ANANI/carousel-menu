@@ -11,7 +11,7 @@ import { Response } from '../../models/response';
 
 const CAMPAIGN_ANSWERS_KEY = makeStateKey('campaign_answers');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CampaignAnswersResolver implements Resolve<Response> {
 
   private _config: Config = {

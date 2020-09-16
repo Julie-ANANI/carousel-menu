@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {environment} from '../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class RouteFrontService {
 
-  constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService,
+							private _router: Router) { }
 
 	public adminDefaultRoute(): string {
 		const _object = this._authService.adminAccess;
@@ -39,6 +41,21 @@ export class RouteFrontService {
 
 	public redirectRoute(url: string): any {
   	return url === environment.clientUrl + '/not-authorized' ? '/user' : url;
+	}
+
+	/***
+	 * this returns the active tab.
+	 * @param urlLength total length of the array ex:
+	 * http://localhost:4200/user/admin/projects/project/5b17cc800a7f5b178e79f710/preparation = 7
+	 * @param indexOf ex: for the above url = 6 because the last route is preparation
+	 */
+	public activeTab(urlLength: number, indexOf: number): string {
+		const _url = this._router.routerState.snapshot.url.split('/');
+		if (_url.length === urlLength) {
+			const _params = _url[indexOf].indexOf('?');
+			return _params > 0 ? _url[indexOf].substring(0, _params) : _url[indexOf];
+		}
+		return '';
 	}
 
 }

@@ -1,16 +1,10 @@
-<div class="container grid-2xl fluid" id="admin-campaign-pros">
-
-  <!-- stats -->
-  <app-admin-campaign-stats [config]="statsConfig()"></app-admin-campaign-stats>
-  <!-- /stats -->
-
-  <!-- content -->
-  <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
+<div class="container grid-2xl fluid p-top-30 p-bottom-30" id="admin-campaign-pros">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- buttons -->
     <section
       *ngIf="canAccess(['import']) || canAccess(['export']) || canAccess(['user', 'add'])"
-      class="text-right p-bottom-10 flex-wrap">
+      class="text-right p-bottom-10 flex-wrap animate-fade is-7">
 
       <!-- add -->
       <button
@@ -65,16 +59,6 @@
     </section>
     <!-- /buttons -->
 
-    <!-- no professional -->
-    <section *ngIf="noResult && total === 0" class="p-top-20">
-      <message-template [widthMax]="'354px'">
-        Don't have any professionals?
-        <br>
-        Try to add some by clicking on "Import" / "Add" button.
-      </message-template>
-    </section>
-    <!-- /no professional -->
-
     <!-- professionals -->
     <section class="p-top-20">
       <app-shared-professionals-list
@@ -90,8 +74,6 @@
     <!-- /professionals -->
 
   </div>
-  <!-- /content -->
-
 </div>
 
 

@@ -1,14 +1,4 @@
 <div class="container grid-2xl fluid" id="admin-campaign-batch">
-
-  <!-- stats -->
-  <app-admin-campaign-stats
-    (updateStats)="onUpdateStats($event)"
-    [config]="statsConfig()"
-    [updateBtn]="true">
-  </app-admin-campaign-stats>
-  <!-- /stats -->
-
-  <!-- content -->
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
@@ -120,11 +110,24 @@
       </section>
       <!-- /autobatch / new batch -->
 
+      <!-- quiz links -->
+      <section
+        *ngIf="quizLinks.length && canAccess(['quiz'])"
+        class="m-bottom-30 animate-fade is-7 p-left-1 p-right-10">
+        <p class="text-md text-notify text-medium">Visit these below links to see the questionnaire:</p>
+        <ul class="m-no-bottom">
+          <li *ngFor="let url of quizLinks" class="text-sm m-top-1">
+            <a [href]="url" target="_blank" class="d-inline-block text-hover-underline text-primary-dark">{{ url }}</a>
+          </li>
+        </ul>
+      </section>
+      <!-- /quiz links -->
+
       <!-- batches -->
       <section
         *ngFor="let batch of stats['batches'];
         let batchIndex = index;"
-        [ngStyle]="{ 'animation-duration': (batchIndex * 200) + 'ms' }"
+        [ngStyle]="{ 'animation-duration': ((batchIndex + 1) * 200) + 'ms' }"
         class="card animate-slide slide-down">
 
         <div class="card-header">
@@ -175,8 +178,6 @@
     <!-- /section batches -->
 
   </div>
-  <!-- /content -->
-
 </div>
 
 

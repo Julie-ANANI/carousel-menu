@@ -10,7 +10,7 @@ import { Config } from '../../../../../../models/config';
 
 const COMMUNITY_PROJECTS_KEY = makeStateKey('community_projects');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CommunityProjectsResolver implements Resolve<Response> {
 
   private _config: Config = {

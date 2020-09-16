@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Campaign} from '../../../../../../models/campaign';
 import {CampaignService} from '../../../../../../services/campaign/campaign.service';
@@ -11,17 +11,19 @@ import {FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {isPlatformBrowser} from '@angular/common';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RolesFrontService} from "../../../../../../services/roles/roles-front.service";
-import {StatsInterface} from "../admin-campaign-stats/admin-campaign-stats.component";
+import {StatsInterface} from "../../admin-stats-banner/admin-stats-banner.component";
+import {Subject} from 'rxjs';
+import {QuizService} from '../../../../../../services/quiz/quiz.service';
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
   styleUrls: ['./admin-campaign-batch.component.scss']
 })
 
-export class AdminCampaignBatchComponent implements OnInit {
+export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _campaign: Campaign = <Campaign>{};
 
@@ -58,36 +60,62 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   private _isEditable = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _quizLinks: Array<string> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
+              private _campaignFrontService: CampaignFrontService,
               private _campaignService: CampaignService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateService: TranslateService) { }
 
   ngOnInit() {
+
     if (this._activatedRoute.snapshot.parent.data['campaign']
       && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
       this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-      this._getBatches();
-
-      const _scenariosNames: Set<string> = new Set<string>();
-
-      if (this._campaign.settings && this._campaign.settings.emails) {
-        this._campaign.settings.emails.forEach((email) => {
-          if (email.modified) {
-            _scenariosNames.add(email.nameWorkflow);
-          } else {
-            _scenariosNames.delete(email.nameWorkflow);
-          }
-        });
-      }
-
-      _scenariosNames.forEach((name) => {
-        this._campaignWorkflows.push(name);
-      });
-
+      this._campaignFrontService.setActiveCampaign(this._campaign);
+      this._campaignFrontService.setActiveCampaignTab('batch');
+      this._initCampaign();
     }
+
+    this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
+      if (!!campaign && this._campaign._id !== campaign._id) {
+        this._campaign = campaign;
+        this._initCampaign();
+      }
+    });
+
+  }
+
+  private _initCampaign() {
+    this._getBatches();
+
+    if (this._campaign.innovation && this._campaign.innovation.quizId) {
+      this._quizLinks = ['fr', 'en'].map((lang) => {
+        return QuizService.getQuizUrl(this._campaign, lang);
+      });
+    }
+
+    const _scenariosNames: Set<string> = new Set<string>();
+
+    if (this._campaign.settings && this._campaign.settings.emails) {
+      this._campaign.settings.emails.forEach((email) => {
+        if (email.modified) {
+          _scenariosNames.add(email.nameWorkflow);
+        } else {
+          _scenariosNames.delete(email.nameWorkflow);
+        }
+      });
+    }
+
+    _scenariosNames.forEach((name) => {
+      this._campaignWorkflows.push(name);
+    });
+
   }
 
   public canAccess(path?: Array<string>) {
@@ -661,6 +689,15 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   get isEditable(): boolean {
     return this._isEditable;
+  }
+
+  get quizLinks(): Array<string> {
+    return this._quizLinks
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

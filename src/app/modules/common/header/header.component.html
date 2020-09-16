@@ -80,7 +80,6 @@
             <a
               (click)="onClickLink()"
               *ngIf="hasAdminSide && canAccessRoute(route.key)"
-              [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="adminRouteLink(route.key, route.pageLink, route.subRoutes)"
               class="navbar-item"
               routerLinkActive="active">
@@ -170,7 +169,6 @@
             <a
               (click)="toggleBackOfficeState(); onClickLink();"
               *ngIf="!backOfficeValue && hasAdminSide"
-              [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="adminDefaultRoute"
               class="navbar-item"
               routerLinkActive="active">
@@ -309,7 +307,6 @@
             <a
               (click)="onClickLink()"
               *ngIf="hasAdminSide && canAccessRoute(route.key)"
-              [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="adminRouteLink(route.key, route.pageLink, route.subRoutes)"
               class="navbar-item"
               routerLinkActive="active">

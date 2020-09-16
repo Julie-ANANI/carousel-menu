@@ -1,15 +1,17 @@
 # Project Page
 
-#### Application route: /user/admin/projects/project/:projectId/settings
+Document link:
+[a link](https://docs.google.com/document/d/1P083gvT8ObRR4v5uvOoBDRMttz4MKj3qXYozsu4PNx8/edit)
 
-All notable changes to the Project page will be documented in this file. 
-Please always updates the roles / functionalities in this file. The Keys should be same in the back as well.
+#### Application route: /user/admin/projects/project/:projectId/settings
 
 ### Functionalities
 
 1. SETTINGS: 
-<br><br>VIEW: Domain, Operator, Owner, Mission, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Project Restitution, Client Satisfaction, Mission Feedback, Statistics, 
-<br><br>EDIT: Domain, Operator, Owner, Mission, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blacklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Client Satisfaction, Mission Feedback, Statistics, Validate Project, Project Revision.
+
+<br><br>VIEW: Domain, Operator, Owner, Mission, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blocklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Project Restitution, Client Satisfaction, Mission Feedback, Statistics, 
+
+<br><br>EDIT: Domain, Operator, Owner, Mission, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blocklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Client Satisfaction, Mission Feedback, Statistics, Validate Project, Project Revision.
 
 2. ANSWER TAGS: View, Edit, Add, Delete.
 
@@ -29,119 +31,11 @@ Please always updates the roles / functionalities in this file. The Keys should 
 <br><br>WORKFLOW: View, Edit, Test, Send,
 <br><br>T COLUMNS: Name, Country, Language, Job, Company, Objective.  
 
-Here SETTINGS, ANSWER TAGS, QUESTIONNAIRE, CAMPAIGNS, SYNTHESIS, STORYBOARD, FOLLOW UP represent the sub tabs.
+8. ANSWERS: Import, Export, View, Edit, Quiz, Validate, Reject,
+<br><br>FILTER BY:  Status, 
+<br><br>SEARCH BY:  Name, Job, Country, Validation Score, 
+<br><br>T Columns:  Name, Country, Job, Validation Score, Updated, Created, Status.
 
-### Access of the functionalities based on the roles - by default Root will access all.
-
-No definition of a Role means no access to that user.
-
-#### Community
-
-1. QUESTIONNAIRE: Edit,
-<br><br>QUIZ: 'VIEW'. 
-
-2. FOLLOW UP: All 
-
-#### Hotline:
-
-1. SETTINGS:
-<br><br>VIEW: 'Operator, Mission Type, Main Objective, Commercial, Blacklist, Statistics',
-<br><br>EDIT: 'Blacklist, Statistics, Description, Project Tags'.
-
-2. CAMPAIGNS: View
-
-3. FOLLOW UP: All
-
-4. QUESTIONNAIRE: Edit,
-<br><br>QUIZ: 'VIEW'.
-
-#### Marketing:
-
-1. SETTINGS:
-<br><br>VIEW: 'Operator, Mission Type, Main Objective, Commercial, Public Project, Published Project'.
-
-2. SYNTHESIS: View
-
-#### Commercial:
-
-1. SETTINGS:
-<br><br>VIEW: 'Operator, Mission Type, Main Objective, Commercial, Public Project, Published Project'.
-
-2. SYNTHESIS:
-<br><br>EDIT: 'UMI Word, Views'.
-
-3. STORYBOARD: View.
-
-#### SuperVisor:
-
-1. STORYBOARD: Generate Pdf, View.
-
-2. SYNTHESIS: View
-
-3. CAMPAIGNS: View
-
-4. SETTINGS:
-<br><br>VIEW: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Answers Anonymous, Public Project, Published Project, Statistics'
-
-#### Market Test Manager:
-
-1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
-
-2. ANSWER TAGS: Edit, Delete.
-
-3. QUESTIONNAIRE: All
-
-4. CAMPAIGNS: All
-
-5. SYNTHESIS: All
-
-6. STORYBOARD: All.
-
-#### Market Test Manager UMI:
-
-1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Owner, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
-
-2. ANSWER TAGS: Edit, Delete.
-
-3. QUESTIONNAIRE: All
-
-4. CAMPAIGNS: All
-
-5. SYNTHESIS: All
-
-6. STORYBOARD: All.
-
-#### Oper Supervisor:
-
-1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Owner, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
-
-2. ANSWER TAGS: Edit, Delete.
-
-3. QUESTIONNAIRE: All
-
-4. CAMPAIGNS: All
-
-5. SYNTHESIS: All
-
-6. STORYBOARD: All.
-
-#### Tech:
-
-1. SETTINGS:
-<br><br>EDIT: 'Domain, Operator, Roadmap, Mission Type, Main Objective, Commercial, Description, Targeting, Blacklist, Project Tags, Answers Anonymous, Public Project, Published Project, Statistics, Validate Project, Project Revision'.
-
-2. ANSWER TAGS: Edit, Delete.
-
-3. QUESTIONNAIRE: All
-
-4. CAMPAIGNS: All
-
-5. SYNTHESIS: All
-
-6. STORYBOARD: All.
 
 ### Example - Market Test Manager role
 
@@ -149,14 +43,59 @@ No definition of a Role means no access to that user.
 access: { 
     projects: { 
         project: {
-            storyboard: {
+            tabs: {
+                settings: true,
+                preparation: true,
+                collection: true,
+                analysis: true
+            },
+            settings: {
+                edit: {
+                    statistics: true,
+                    publishedProject: true,
+                    answersAnonymous: true,
+                    projectTags: true,
+                    roadmap: true,
+                    mission: true,
+                    missionType: true,
+                    mainObjective: true,
+                    description: true,
+                    targeting: true,
+                    blocklist: true,
+                    validateProject: true,
+                    projectRevision: true
+                }
+            },
+            answerTags: {
+                edit: true
+            },
+            questionnaire: {
+                quiz: {
+                    view: true
+                }
+            },
+            answers: {
+                tableColumns: {
+                    validationScore: true,
+                    status: true,
+                    created: true,
+                    job: true,
+                    name: true,
+                    country: true
+                },
+                searchBy: {
+                    name: true,
+                    country: true
+                },
+                filterBy: {
+                    status: true
+                },
                 edit: true,
-                create: true,
-                makeVisibleToClient: true,
-                changeLang: true,
-                generateVideo: true,
-                autofill: true,
-                generatePdf: true
+                import: true,
+                quiz: true,
+                validate: true,
+                reject: true,
+                export: true
             },
             synthesis: {
                 edit : {
@@ -166,44 +105,6 @@ access: {
                     views: true
                 }
             },
-            campaigns: {
-                updateStatistics: true,
-                add: true,
-                delete: true,
-                edit: true
-            }, 
-            questionnaire: {
-                quiz: {
-                    generate: true,
-                    view: true
-                },
-                import: true,
-                edit: true
-            },
-            answerTags: {
-                delete: true,
-                edit: true
-            },
-            settings: {
-                edit: {
-                    statistics: true,
-                    publishedProject: true,
-                    publicProject: true,
-                    answersAnonymous: true,
-                    projectTags: true,
-                    domain: true,
-                    operator: true,
-                    roadmap: true,
-                    missionType: true,
-                    mainObjective: true,
-                    commercial: true,
-                    description: true,
-                    targeting: true,
-                    blacklist: true,
-                    validateProject: true,
-                    projectRevision: true
-                }
-            }
         }
     } 
 }

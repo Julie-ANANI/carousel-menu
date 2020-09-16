@@ -8,16 +8,47 @@ import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-res
 import { AdminCampaignHistoryComponent } from './admin-campaign-history/admin-campaign-history.component';
 import { AdminCampaignBatchComponent } from './admin-campaign-batch/admin-campaign-batch.component';
 import { AdminCampaignWorkflowsComponent } from './admin-campaign-workflows/admin-campaign-workflows.component';
-import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
+// import { AdminCampaignAnswersComponent } from './admin-campaign-answers/admin-campaign-answers.component';
+
+import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 
 export const campaignRoutes: Routes = [
-  // { path: '', redirectTo: 'answers', pathMatch: 'full' },
-  { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full' },
-  { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full' },
-  { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full' },
-  { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full' },
-  { path: 'batch', component: AdminCampaignBatchComponent, pathMatch: 'full' },
-  { path: 'workflows', component: AdminCampaignWorkflowsComponent, pathMatch: 'full' },
+  /*{ path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full' },*/
+  {
+    path: 'pros',
+    component: AdminCampaignProsComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'campaigns', 'campaign', 'pros'] }
+  },
+  {
+    path: 'search',
+    component: AdminCampaignSearchComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'campaigns', 'campaign', 'search'] }
+  },
+  {
+    path: 'history',
+    component: AdminCampaignHistoryComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'campaigns', 'campaign', 'history'] }
+  },
+  {
+    path: 'batch',
+    component: AdminCampaignBatchComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'campaigns', 'campaign', 'batch'] }
+  },
+  {
+    path: 'workflows',
+    component: AdminCampaignWorkflowsComponent,
+    pathMatch: 'full',
+    canActivate: [AdminRoleGuard],
+    data: { accessPath: ['projects', 'project', 'campaigns', 'campaign', 'workflows'] }
+  },
   {
     path: 'results/:requestId',
     component: AdminCampaignSearchResultsComponent,

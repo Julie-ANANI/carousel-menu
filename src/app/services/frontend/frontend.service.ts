@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Innovation, InnovationMetadataValues } from '../../models/innovation';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FrontendService {
 
   private _innovationMetadataCalculatedValues: InnovationMetadataValues = {};

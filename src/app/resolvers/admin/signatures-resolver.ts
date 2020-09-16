@@ -11,7 +11,7 @@ import { TemplatesService } from '../../services/templates/templates.service';
 
 const SIGNATURES_KEY = makeStateKey('signatures');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SignaturesResolver implements Resolve<Response> {
 
   private _config: Config = {

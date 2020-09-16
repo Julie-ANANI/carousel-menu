@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { environment } from '../../../../../../../environments/environment';
@@ -13,8 +12,11 @@ import { isPlatformBrowser} from "@angular/common";
 import { Response } from "../../../../../../models/response";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
-import { first } from "rxjs/operators";
+import {first, takeUntil} from 'rxjs/operators';
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {Subject} from 'rxjs';
+import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
 
 @Component({
   templateUrl: 'admin-project-campaigns.component.html',
@@ -35,7 +37,7 @@ import { RolesFrontService } from "../../../../../../services/roles/roles-front.
   ]
 })
 
-export class AdminProjectCampaignsComponent implements OnInit {
+export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -51,22 +53,24 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   private _fetchingError = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
+              private _innovationFrontService: InnovationFrontService,
+              private _campaignFrontService: CampaignFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _campaignService: CampaignService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      if (this._activatedRoute.snapshot.parent.data['innovation']
-        && typeof this._activatedRoute.snapshot.parent.data['innovation'] !== undefined) {
-        this._innovation = this._activatedRoute.snapshot.parent.data['innovation'];
-        if (this._innovation._id) {
+      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+        this._innovation = innovation || <Innovation>{};
+        if (!this._campaigns.length && this._innovation._id) {
           this._getCampaigns();
         }
-      }
+      });
     }
   }
 
@@ -74,6 +78,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((response: Response) => {
       this._isLoading = false;
       this._campaigns = response && response.result || [];
+      this._setAllCampaigns();
     }, (err: HttpErrorResponse) => {
       this._fetchingError = true;
       this._isLoading = false;
@@ -82,16 +87,16 @@ export class AdminProjectCampaignsComponent implements OnInit {
     });
   }
 
+  private _setAllCampaigns() {
+    this._campaignFrontService.setAllCampaigns(this._campaigns);
+  }
+
   public canAccess(path?: Array<string>) {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'campaigns'].concat(path));
     } else {
       return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'campaigns']);
     }
-  }
-
-  _updateProject(innovation: Innovation) {
-    this._innovation = innovation;
   }
 
   /***
@@ -111,6 +116,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
     this._campaignService.create(_newCampaign).pipe(first()).subscribe((campaign: Campaign) => {
       this._campaigns.push(campaign);
+      this._setAllCampaigns();
       this._translateNotificationsService.success('Success', 'The new campaign is added.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -118,8 +124,13 @@ export class AdminProjectCampaignsComponent implements OnInit {
     });
   }
 
+  public onNavigation(campaign: Campaign) {
+    this._campaignFrontService.setActiveCampaign(campaign);
+    this._campaignFrontService.setShowCampaignTabs(true);
+  }
+
   public route(id: string): string {
-    return `/user/admin/campaigns/campaign/${id}/${this._rolesFrontService.campaignDefaultRoute()}`;
+    return `/user/admin/projects/project/${this._innovation._id}/preparation/campaigns/campaign/${id}/${this._rolesFrontService.campaignDefaultRoute()}`;
   }
 
   /***
@@ -132,7 +143,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._selectCampaign = campaign;
     this._sidebarValue = {
       animate_state: 'active',
-      title: this.canAccess(['edit']) ? 'Edit Campaign' : 'View Campaign',
+      title: this.canAccess(['edit']) ? 'Edit Campaign' : 'Campaign',
       type: 'EDIT_NAME'
     };
   }
@@ -145,6 +156,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._selectCampaign.title = formGroup.value['title'];
     this._campaignService.put(this._selectCampaign).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Success', 'The campaign is updated.');
+      this._setAllCampaigns();
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       this._selectCampaign = null;
@@ -186,6 +198,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe(() => {
       this._campaigns = this._campaigns.filter((c) => c._id !== this._selectCampaign._id);
       this._selectCampaign = null;
+      this._setAllCampaigns();
       this._translateNotificationsService.success('Success', 'The campaign is deleted.');
       this._activateModal = false;
     }, (err: HttpErrorResponse) => {
@@ -225,6 +238,11 @@ export class AdminProjectCampaignsComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

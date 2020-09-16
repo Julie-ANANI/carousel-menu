@@ -4,7 +4,7 @@ import { Tag } from '../../../../../models/tag';
 
 const GENERIC_FILTER_NAME = 'tags';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TagsFiltersService {
 
   private _answersTagsLists: {[questionId: string]: Array<Tag>} = {};

@@ -1,127 +1,118 @@
-<section id="admin-project" class="container fluid">
+<div [hidden]="isLoading" id="admin-project">
 
-  <!-- error -->
-  <section *ngIf="fetchingError" class="section-light-pad">
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <div class="restrict-width">
-        <div class="d-flex align-center" style="min-height: 75vh">
-          <app-utility-error-template-1 [errorMessage]="'ERROR.ERRORS.HEADING_1'" style="width: 100%">
-            <h6 class="subtitle text-background">
-              {{ 'ERROR.ERRORS.FETCHING_MESSAGE_1' | translate }} {{ 'ERROR.ERRORS.PROJECT_FETCHING_ERROR' | translate }}
-            </h6>
-          </app-utility-error-template-1>
-        </div>
-      </div>
+  <!-- error message while fetching -->
+  <section *ngIf="fetchingError" class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <app-utility-message-error></app-utility-message-error>
     </div>
   </section>
-  <!-- /error -->
+  <!-- /error message while fetching -->
 
-  <!-- no error -->
-  <section *ngIf="!fetchingError && project">
+  <!-- no fetching error -->
+  <div [hidden]="fetchingError">
 
-    <!-- header -->
-    <div class="header-wrapper bg-white p-top-25">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+    <!-- banner project message  -->
+    <app-utility-banner [(showBanner)]="showBanner" [position]="'relative'">
+      This project has been updated by someone else -
+      <span (click)="updateProject()" class="text-white c-hand text-medium text-underline">
+        Update
+      </span>
+    </app-utility-banner>
+    <!-- banner project message  -->
 
-        <!-- title, link button and action button -->
-        <div class="flex-between flex-wrap">
+    <!-- section header -->
+    <section class="bg-draft">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 p-top-25 col-mx-auto">
 
-          <!-- title and link button -->
-          <div class="d-flex flex-wrap align-center m-bottom-1">
+          <!-- heading / actions button -->
+          <div class="flex-between flex-wrap m-bottom-10">
 
-            <h4 [innerText]="title" class="text-background"></h4>
+            <!-- heading / view like client / objective -->
+            <div class="m-right-15 m-bottom-15">
 
-            <a
-              [innerText]="'COMMON.BUTTON.VIEW_LIKE_CLIENT'"
-              [routerLink]="['/user/projects/', project._id]"
-              class="button is-link is-sm"
-              target="_blank"
-              translate>
-            </a>
+              <div class="d-flex align-center flex-wrap m-bottom-1">
+                <h1 class="title is-4 text-white m-bottom-2">{{ title }}</h1>
+                <a
+                  [routerLink]="['/user/projects/', project._id]"
+                  class="button is-link text-white is-xs"
+                  target="_blank">
+                  View like client
+                </a>
+              </div>
 
-          </div>
+              <!-- mission objective -->
+              <div
+                *ngIf="mission.objective && mission.objective.principal
+              && mission.objective.principal['en'] && mission.objective.principal['en'] !== 'Other'"
+                [ngStyle]="{ 'min-height': '25px' }"
+                class="m-bottom-1">
+                <div class="objective-wrapper">
+                  <i [ngClass]="iconClass"></i>
+                  {{ mission.objective.principal[currentLang] }}
+                </div>
+              </div>
+              <!-- /mission objective -->
 
-          <!-- action button -->
-          <div class="dropdown is-right m-bottom-1">
+            </div>
+            <!-- /heading / view like client / objective -->
 
-            <a class="button is-danger is-outlined dropdown-toggle" tabindex="0">
-              Actions <i class="icon icon-caret icon-right"></i>
-            </a>
+          <!-- actions button -->
+          <div *ngIf="isTech || isCommunity" class="dropdown is-right m-bottom-15">
 
-            <ul class="menu is-md">
-              <li
-                (click)="openModal($event, 'project')"
-                [innerText]="'PROJECT.DROPDOWN_MENU.OPTION_A'"
-                class="menu-item"
-                translate>
-              </li>
-              <li
-                (click)="onClickImportFollowUp($event)"
-                [innerText]="'Import follow up emails'"
-                class="menu-item">
-              </li>
-            </ul>
-
-          </div>
-
-        </div>
-        <!-- /title, link button and action button -->
-
-        <!-- metadata -->
-        <div class="d-flex flex-wrap m-bottom-3">
-          <p class="text-sm text-medium text-notify">
-            <span *ngIf="project?.owner?.name">{{ project?.owner?.name }}</span>
-            <span *ngIf="project?.owner?.company?.name" class="m-left-1 m-right-1">-</span>
-            <span *ngIf="project?.owner?.company?.name">{{ project?.owner?.company?.name }}</span>
-            <span *ngIf="project.created" class="m-left-1 m-right-1">-</span>
-            <span>{{ 'COMMON.LABEL.CREATED_ON' | translate }} {{ project.created | date:dateFormat }}</span>
-            <span class="m-left-1 m-right-1">-</span>
-            <span>{{ project.collaborators.length }} {{ 'COMMON.LABEL.COLLABORATORS' | translate | lowercase }}</span>
-          </p>
-        </div>
-        <!-- /metadata -->
-
-        <!-- tabs -->
-        <ul class="tab">
-          <ng-container *ngFor="let tab of tabs">
-            <li *ngIf="canAccess(['projects', 'project', tab.key])" class="tab-item">
-              <a
-                [routerLinkActiveOptions]="{ exact: true }"
-                [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
-                routerLinkActive="active">
-                {{ tab.name }}
+              <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
+                Actions <i class="icon icon-caret icon-right"></i>
               </a>
-            </li>
-          </ng-container>
-        </ul>
-        <!-- /tabs -->
 
+              <ul class="menu is-md">
+                <li *ngIf="isTech" (click)="openModal($event, 'PROJECT')" class="menu-item">
+                  Export project
+                </li>
+                <li (click)="onClickImportFollowUp($event)" class="menu-item">
+                  Import follow up emails
+                </li>
+              </ul>
 
+            </div>
+            <!-- /actions button -->
+
+          </div>
+          <!-- /heading / actions button -->
+
+          <!-- tabs -->
+          <ul class="tab is-fullwidth">
+            <ng-container *ngFor="let tab of tabs">
+              <li *ngIf="canAccess(['tabs', tab.key])" class="tab-item">
+                <a
+                  (click)="onClickTab($event, tab.name, tab.route, tab.key)"
+                  [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
+                  routerLinkActive="active">
+                  <i [ngClass]="tab.icon"></i> {{ tab.name }}
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+          <!-- /tabs -->
+
+        </div>
       </div>
-    </div>
-    <!-- /header -->
-
-
-    <!-- banner project message  -->
-      <app-utility-banner [showBanner]="!!updatedProject" [position]="'relative'">
-        {{ 'PROJECT.NEW_CHANGES' | translate }} - <a (click)="updateProject()">{{ 'COMMON.UPDATE' | translate }}</a>
-      </app-utility-banner>
-    <!-- banner project message  -->
+    </section>
+    <!-- /section header -->
 
     <!-- different pages -->
     <div>
-      <router-outlet (activate)="onActivate($event)"></router-outlet>
+      <router-outlet></router-outlet>
     </div>
     <!-- /different pages -->
 
-  </section>
-  <!-- /no error -->
+  </div>
+  <!-- /no fetching error -->
 
-</section>
+</div>
 
 
 <!-- modals for different actions -->
-<app-utility-modal [(showModal)]="showModal" [enableCloseButton]="true">
+<app-utility-modal *ngIf="isTech" [(showModal)]="showModal" [enableCloseButton]="true">
   <section class="modal-body">
 
     <!-- project modal -->
@@ -139,27 +130,27 @@
         </label>
 
         <label
-          *ngFor="let status of ['SUBMITTED', 'REJECTED', 'VALIDATED', 'REJECTED_GMAIL', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT']"
+          *ngFor="let status of status"
           class="form-checkbox">
           <input
-            (change)="projectExportConfig.answers[status] = !projectExportConfig.answers[status]"
-            [checked]="projectExportConfig.answers[status]"
+            (change)="projectExportConfig['answers'][status] = !projectExportConfig['answers'][status]"
+            [checked]="projectExportConfig['answers'][status]"
             type="checkbox">
           <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
         </label>
 
         <label class="form-checkbox">
           <input
-            (change)="projectExportConfig.campaigns = !projectExportConfig.campaigns"
-            [checked]="projectExportConfig.campaigns"
+            (change)="projectExportConfig.campaigns = !projectExportConfig['campaigns']"
+            [checked]="projectExportConfig['campaigns']"
             type="checkbox">
           <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
         </label>
 
         <label class="form-checkbox">
           <input
-            (change)="projectExportConfig.anonymous = !projectExportConfig.anonymous"
-            [checked]="projectExportConfig.anonymous"
+            (change)="projectExportConfig.anonymous = !projectExportConfig['anonymous']"
+            [checked]="projectExportConfig['anonymous']"
             type="checkbox">
           <i class="form-icon"></i> {{ 'PROJECT.MODAL.ANON' | translate }}
         </label>

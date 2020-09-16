@@ -1,0 +1,30 @@
+<div id="admin-project-analysis">
+
+  <!-- section header -->
+  <section class="bg-white">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 p-top-1 col-mx-auto relative">
+        <ul class="tab">
+          <ng-container *ngFor="let tab of tabs">
+            <li *ngIf="canAccess([tab.key])" class="tab-item">
+              <a
+                (click)="onClickTab($event, tab.name)"
+                [routerLink]="'/user/admin/projects/project/'+project._id+'/analysis/'+tab.route"
+                routerLinkActive="active">
+                {{ tab.name }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <!-- /section header -->
+
+  <!-- different pages -->
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+  <!-- /different pages -->
+
+</div>
