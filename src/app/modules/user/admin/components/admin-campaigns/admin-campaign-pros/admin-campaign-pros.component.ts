@@ -232,7 +232,7 @@ export class AdminCampaignProsComponent implements OnInit {
       this._isExporting = true;
 
       const _config: any = {
-        fields: 'language firstName lastName email emailConfidence profileUrl company urlCompany keywords country ' +
+        fields: 'language firstName lastName email emailConfidence profileUrl company companyOriginalName keywords country ' +
           'jobTitle messages',
         professionals: [],
         campaignId: this._campaign._id,
