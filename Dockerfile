@@ -9,8 +9,7 @@ WORKDIR /var/web
 
 # build client
 RUN echo build ${APP_NAME} -c=${ENV_NAME} --prod
-#RUN node --max-old-space-size=5120 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME} --prod
-RUN node --max-old-space-size=5120 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME}
+RUN node --max-old-space-size=5120 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME} --prod
 
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
@@ -19,7 +18,7 @@ RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases fi
 RUN rm -f /var/web/.sentryclirc
 
 # delete source-map files
-# RUN rm dist/browser/*.js.map
+RUN rm dist/browser/*.js.map
 
 # build server
 RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
