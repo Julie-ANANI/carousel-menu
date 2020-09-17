@@ -24,15 +24,11 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     // Add universal-only providers here
-    { provide: CookieService, useClass: CookieBackendService },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CookieServerInterceptor,
-      multi: true,
-    },
-    { provide: ErrorService, useClass: ErrorBackendService },
-    { provide: LocalStorageService, useClass: LocalStorageBackendService },
-    { provide: SocketService, useClass: SocketSsrService },
+    { provide: CookieService, useClass: CookieBackendService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CookieServerInterceptor, multi: true },
+    { provide: ErrorService, useClass: ErrorBackendService, multi: true },
+    { provide: LocalStorageService, useClass: LocalStorageBackendService, multi: true },
+    { provide: SocketService, useClass: SocketSsrService, multi: true },
   ],
   bootstrap: [ AppComponent ],
 })

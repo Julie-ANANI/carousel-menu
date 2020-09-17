@@ -6,8 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminCommunityComponent } from "./admin-community.component";
 
-import { TagsSectorResolver } from '../../../../../resolvers/tags-sector-resolver';
-
 import { SharedProsListModule } from '../../../../shared/components/shared-pros-list/shared-pros-list.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminCommunityMembersModule } from "./admin-community-members/admin-community-members.module";
@@ -28,9 +26,6 @@ import { SharedAmbassadorListModule } from "../../../../shared/components/shared
     AdminCommunityMembersModule,
     AdminCommunityResponsesModule,
     AdminCommunityProjectsModule
-  ],
-  providers: [
-    TagsSectorResolver
   ],
   declarations: [
     AdminCommunityComponent

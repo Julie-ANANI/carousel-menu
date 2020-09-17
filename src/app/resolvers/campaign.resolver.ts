@@ -12,7 +12,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 const CAMPAIGN_KEY = makeStateKey('campaign');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CampaignResolver implements Resolve<Campaign> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,

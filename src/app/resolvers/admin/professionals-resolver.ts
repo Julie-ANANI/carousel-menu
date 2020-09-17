@@ -11,7 +11,7 @@ import { ProfessionalsService } from '../../services/professionals/professionals
 
 const PROFESSIONALS_KEY = makeStateKey('professionals');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfessionalsResolver implements Resolve<Response> {
 
   private _config: Config = {
