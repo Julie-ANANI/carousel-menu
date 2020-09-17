@@ -22,7 +22,7 @@
 
       <!-- section campaigns -->
       <section [@listAnimation]="campaigns.length" [ngStyle]="{'margin-bottom': '-30px'}">
-        <div *ngFor="let campaign of campaigns" class="card-wrapper">
+        <div *ngFor="let campaign of campaigns; let i = index" class="card-wrapper">
           <div class="card-content">
 
             <div class="d-flex align-center">
@@ -57,7 +57,7 @@
 
               <ng-container *ngIf="canAccess(['updateStatistics'])">
                 |
-                <span class="text-link m-left-h m-right-h" (click)="onUpdateStats($event, campaign)">
+                <span class="text-link m-left-h m-right-h" (click)="onUpdateStats($event, campaign, i)">
                   Update stats
                 </span>
               </ng-container>

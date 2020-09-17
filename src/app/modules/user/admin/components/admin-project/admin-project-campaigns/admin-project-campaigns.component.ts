@@ -169,10 +169,10 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
    * @param event
    * @param campaign
    */
-  public onUpdateStats(event: Event, campaign: Campaign) {
+  public onUpdateStats(event: Event, campaign: Campaign, index: number) {
     event.preventDefault();
     this._campaignService.updateStats(campaign._id).pipe(first()).subscribe((updatedCampaign: Campaign) => {
-      campaign = updatedCampaign;
+      this._campaigns[index] = updatedCampaign;
       this._translateNotificationsService.success('Success', 'The campaign stats is updated.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
