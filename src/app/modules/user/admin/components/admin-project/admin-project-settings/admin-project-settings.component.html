@@ -1,3 +1,82 @@
-<p>
-  admin-project-settings works! Check other routes
-</p>
+<div [hidden]="isLoading" class="animate-fade is-5" id="admin-project-settings">
+
+  <!-- stats banner -->
+  <section>
+    <app-admin-stats-banner
+      (updateStats)="onClickUpdateStats()"
+      [config]="statsConfig"
+      [updateBtn]="true">
+    </app-admin-stats-banner>
+  </section>
+  <!-- /stats banner -->
+
+  <!-- settings -->
+  <div class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <div class="settings-wrapper">
+
+        <!-- left content -->
+        <div class="content-wrapper">
+
+          <h6 class="text-notify">Setup</h6>
+
+          <div class="content-box">
+
+            <!-- mission type -->
+            <div
+              *ngIf="!!innovation.mission && (canAccess(['view', 'missionType'])
+              || canAccess(['edit', 'missionType']))"
+              class="content">
+              <label for="admin-project-type">Market Test Type</label>
+              <select
+                (ngModelChange)="onMissionTypeChange($event)"
+                [disabled]="!canAccess(['edit', 'missionType'])"
+                [ngModel]="mission && mission.type ? mission.type : null"
+                class="form-select is-sm is-shadowed mxw-300"
+                id="admin-project-type">
+                <option value="null">Not assigned</option>
+                <option *ngFor="let type of missionTypes" [value]="type">{{ type | titlecase }}</option>
+              </select>
+            </div>
+            <!-- /mission type -->
+
+            <!-- operators -->
+            <div *ngIf="canAccess(['view', 'operator']) || canAccess(['edit', 'operator'])" class="content">
+              <label for="admin-project-operator">Operator</label>
+              <select
+                (ngModelChange)="onOperatorChange($event)"
+                [disabled]="!canAccess(['edit', 'operator'])"
+                [ngModel]="innovation.operator && innovation.operator.id"
+                class="form-select is-sm is-shadowed mxw-300"
+                id="admin-project-operator">
+                <option [value]="undefined">Not assigned</option>
+                <option *ngFor="let operator of operators" [ngValue]="operator['_id']">
+                  {{ name(operator) }}
+                </option>
+              </select>
+            </div>
+            <!-- /operators -->
+
+          </div>
+
+        </div>
+        <!-- /left content -->
+
+        <!-- right content -->
+        <div class="content-wrapper">
+
+          <h6 class="text-notify">Campaign / Delivery</h6>
+
+          <div class="content-box">
+
+          </div>
+
+        </div>
+        <!-- /right content -->
+
+      </div>
+    </div>
+  </div>
+  <!-- /settings -->
+
+</div>

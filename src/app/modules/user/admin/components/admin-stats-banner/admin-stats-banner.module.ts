@@ -7,6 +7,9 @@ import {AdminStatsBannerComponent} from './admin-stats-banner.component';
   imports: [
     CommonModule
   ],
+  exports: [
+    AdminStatsBannerComponent
+  ],
   declarations: [
     AdminStatsBannerComponent
   ]

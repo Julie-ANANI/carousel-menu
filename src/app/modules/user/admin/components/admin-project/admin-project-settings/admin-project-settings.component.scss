@@ -1,0 +1,46 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#admin-project-settings {
+  padding-bottom: 30px;
+
+  .settings-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-left: -25px;
+    margin-right: -25px;
+
+    .content-wrapper {
+      flex: 1;
+      margin-top: 50px;
+      margin-left: 25px;
+      margin-right: 25px;
+
+      .content-box {
+        background-color: $bg-white-color;
+        box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+        min-height: 500px;
+        border-radius: 6px;
+        padding: 25px 25px 0 25px;
+
+        .content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 25px;
+
+          label {
+            font-size: 16px;
+            font-weight: 600;
+            color: $text-secondary-dark-color;
+            margin-right: 20px;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
