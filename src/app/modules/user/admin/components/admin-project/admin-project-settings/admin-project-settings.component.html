@@ -29,6 +29,7 @@
               class="content">
               <label for="admin-project-type">Market Test Type</label>
               <select
+                *ngIf="canAccess(['edit', 'missionType'])"
                 (ngModelChange)="onMissionTypeChange($event)"
                 [disabled]="!canAccess(['edit', 'missionType'])"
                 [ngModel]="mission && mission.type ? mission.type : null"
@@ -37,6 +38,7 @@
                 <option value="null">Not assigned</option>
                 <option *ngFor="let type of missionTypes" [value]="type">{{ type | titlecase }}</option>
               </select>
+              <span *ngIf="!canAccess(['edit', 'missionType'])">{{ mission && mission.type | titlecase }}</span>
             </div>
             <!-- /mission type -->
 
@@ -44,6 +46,7 @@
             <div *ngIf="canAccess(['view', 'operator']) || canAccess(['edit', 'operator'])" class="content">
               <label for="admin-project-operator">Operator</label>
               <select
+                *ngIf="canAccess(['edit', 'operator'])"
                 (ngModelChange)="onOperatorChange($event)"
                 [disabled]="!canAccess(['edit', 'operator'])"
                 [ngModel]="innovation.operator && innovation.operator.id"
@@ -54,6 +57,7 @@
                   {{ name(operator) }}
                 </option>
               </select>
+              <span *ngIf="!canAccess(['edit', 'operator'])">{{ name(innovation.operator) }}</span>
             </div>
             <!-- /operators -->
 

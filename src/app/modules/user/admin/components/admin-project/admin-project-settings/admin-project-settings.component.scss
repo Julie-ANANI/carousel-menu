@@ -31,8 +31,12 @@
           label {
             font-size: 16px;
             font-weight: 600;
-            color: $text-secondary-dark-color;
+            color: $text-draft-color;
             margin-right: 20px;
+          }
+
+          span {
+            font-size: 15px;
           }
 
         }
