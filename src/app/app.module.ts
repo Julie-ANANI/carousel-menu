@@ -45,9 +45,9 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     AppComponent
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
-    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor },
+    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     // { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
   ],
