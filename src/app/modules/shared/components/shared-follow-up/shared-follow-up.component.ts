@@ -152,7 +152,7 @@ export class SharedFollowUpComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'job'])
         },
         {
-          _attrs: ['professional.company'],
+          _attrs: ['professional.company.name'],
           _name: 'COMMON.LABEL.COMPANY',
           _type: 'TEXT',
           _isHidden: !this.canAccess(['tableColumns', 'company'])
