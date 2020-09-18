@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../../models/innovation';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 
 @Component({
   templateUrl: 'admin-project-follow-up.component.html',
