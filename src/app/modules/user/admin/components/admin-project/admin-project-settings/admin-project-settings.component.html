@@ -13,7 +13,7 @@
   <!-- settings -->
   <div class="container fluid grid-2xl">
     <div class="column col-sm-12 col-11 col-mx-auto">
-      <div class="settings-wrapper">
+      <section class="settings-wrapper">
 
         <!-- left content -->
         <div class="content-wrapper">
@@ -24,7 +24,7 @@
 
             <!-- mission type -->
             <div
-              *ngIf="!!innovation.mission && (canAccess(['view', 'missionType'])
+              *ngIf="mission.type && (canAccess(['view', 'missionType'])
               || canAccess(['edit', 'missionType']))"
               class="content">
               <label for="admin-project-type">Market Test Type</label>
@@ -33,7 +33,7 @@
                 (ngModelChange)="onMissionTypeChange($event)"
                 [disabled]="!canAccess(['edit', 'missionType'])"
                 [ngModel]="mission && mission.type ? mission.type : null"
-                class="form-select is-sm is-shadowed mxw-300"
+                class="form-select is-sm is-shadowed"
                 id="admin-project-type">
                 <option value="null">Not assigned</option>
                 <option *ngFor="let type of missionTypes" [value]="type">{{ type | titlecase }}</option>
@@ -50,7 +50,7 @@
                 (ngModelChange)="onOperatorChange($event)"
                 [disabled]="!canAccess(['edit', 'operator'])"
                 [ngModel]="innovation.operator && innovation.operator.id"
-                class="form-select is-sm is-shadowed mxw-300"
+                class="form-select is-sm is-shadowed"
                 id="admin-project-operator">
                 <option [value]="undefined">Not assigned</option>
                 <option *ngFor="let operator of operators" [ngValue]="operator['_id']">
@@ -60,6 +60,61 @@
               <span *ngIf="!canAccess(['edit', 'operator'])">{{ name(innovation.operator) }}</span>
             </div>
             <!-- /operators -->
+
+            <!-- mission team -->
+            <div
+              *ngIf="mission._id && (canAccess(['view', 'missionTeam'])
+              || canAccess(['edit', 'missionTeam']))"
+              class="content">
+              <label>Mission Team</label>
+              <div class="dropdown is-right">
+                <a class="button dropdown-toggle text-primary-dark is-link" tabindex="0">
+                  Members <i class="icon icon-caret"></i>
+                </a>
+                <ul *ngIf="canAccess(['edit', 'missionTeam'])" class="menu is-md">
+                  <li *ngFor="let operator of operators" class="menu-item">
+                    <label class="form-checkbox">
+                      <input
+                        (change)="onChangeMissionTeam(operator)"
+                        [checked]="isTeamMember(operator['_id'])"
+                        [id]="operator['_id']"
+                        [name]="operator['_id']"
+                        type="checkbox">
+                      <i class="form-icon"></i> {{ name(operator) }}
+                    </label>
+                  </li>
+                </ul>
+                <ul *ngIf="!canAccess(['edit', 'missionTeam'])" class="menu is-md">
+                  <ng-container *ngIf="mission.team.length > 0">
+                    <li *ngFor="let member of mission.team" class="menu-item c-default">{{ name(member) }}</li>
+                  </ng-container>
+                  <li *ngIf="mission.team.length === 0" class="menu-item c-default">No members</li>
+                </ul>
+              </div>
+            </div>
+            <!-- /mission team -->
+
+            <!-- commercial -->
+            <div
+              *ngIf="clientProject._id && (canAccess(['view', 'commercial'])
+              || canAccess(['edit', 'commercial']))"
+              class="content">
+              <label for="admin-project-commercial">Commercial</label>
+              <select
+                *ngIf="canAccess(['edit', 'commercial'])"
+                (ngModelChange)="onCommercialChange($event)"
+                [disabled]="!canAccess(['edit', 'commercial'])"
+                [ngModel]="clientProject.commercial && clientProject.commercial.id"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-commercial">
+                <option [value]="undefined">Not assigned</option>
+                <option *ngFor="let commercial of commercials" [ngValue]="commercial['_id']">
+                  {{ name(commercial) }}
+                </option>
+              </select>
+              <span *ngIf="!canAccess(['edit', 'commercial'])">{{ name(clientProject.commercial) }}</span>
+            </div>
+            <!-- /commercial -->
 
           </div>
 
@@ -78,7 +133,7 @@
         </div>
         <!-- /right content -->
 
-      </div>
+      </section>
     </div>
   </div>
   <!-- /settings -->

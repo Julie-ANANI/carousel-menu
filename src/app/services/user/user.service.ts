@@ -5,6 +5,7 @@ import { User } from '../../models/user.model';
 
 import { environment } from '../../../environments/environment';
 import { Tag } from '../../models/tag';
+import { Config } from '../../models/config';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -63,6 +64,11 @@ export class UserService {
 
   public getAll(config?: {[header: string]: string | string[]}): Observable<Array<User>> {
     return this._http.get<Array<User>>('/user', {params: config});
+  }
+
+  public getCommercials(config?: Config): Observable<Array<User>> {
+    const _config = config || { roles: 'commercial', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'};
+    return this._http.get<Array<User>>('/user', {params: _config});
   }
 
   public delete(): Observable<any> {

@@ -15,25 +15,32 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {DashboardService} from '../../../../../../services/dashboard/dashboard.service';
 import {UserFrontService} from '../../../../../../services/user/user-front.service';
 import {InnovationService} from '../../../../../../services/innovation/innovation.service';
+import {ClientProject} from '../../../../../../models/client-project';
+import {UserService} from '../../../../../../services/user/user.service';
+import {Response} from '../../../../../../models/response';
+import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
 
 @Component({
   selector: 'app-admin-project-settings',
   templateUrl: './admin-project-settings.component.html',
   styleUrls: ['./admin-project-settings.component.scss']
 })
+
 export class AdminProjectSettingsComponent implements OnInit {
 
   isLoading = true;
 
   innovation: Innovation = <Innovation>{};
 
-  mission: Mission = null;
-
-  missionTeam: string[];
+  mission: Mission = <Mission>{};
 
   missionTypes: Array<string> = ['USER', 'CLIENT', 'DEMO', 'TEST'];
 
   operators: Array<User> = [];
+
+  commercials: Array<User> = [];
+
+  clientProject: ClientProject = <ClientProject>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -42,6 +49,8 @@ export class AdminProjectSettingsComponent implements OnInit {
               private _missionService: MissionService,
               private _dashboardService: DashboardService,
               private _innovationService: InnovationService,
+              private _userService: UserService,
+              private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
 
@@ -49,17 +58,19 @@ export class AdminProjectSettingsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this.isLoading = false;
       this._getOperators();
+      this._getCommercials();
 
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         this.innovation = innovation || <Innovation>{};
 
         console.log(this.innovation);
 
-        if (this.innovation.mission) {
+        if (!!this.innovation.mission) {
           this.mission = <Mission>this.innovation.mission;
-          if (this.mission.team && this.mission.team.length) {
-            this.missionTeam = this.mission.team.map((user: User) => user.id);
-          }
+        }
+
+        if (!!this.innovation.clientProject) {
+          this.clientProject = <ClientProject>this.innovation.clientProject;
         }
 
       });
@@ -67,13 +78,22 @@ export class AdminProjectSettingsComponent implements OnInit {
     }
   }
 
+  private _getCommercials() {
+    this._userService.getCommercials().pipe(first()).subscribe((response: Response) => {
+      this.commercials = response.result;
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Commercial Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+  }
+
   private _getOperators() {
-    this._dashboardService.getOperators().pipe(first()).subscribe((response: any) => {
+    this._dashboardService.getOperators().pipe(first()).subscribe((response: Response) => {
       this.operators = response.result;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Operator Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
-    })
+    });
   }
 
   public canAccess(path?: Array<string>) {
@@ -89,21 +109,26 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public onMissionTypeChange(type: MissionType) {
-    if (this.mission && this.mission.type) {
-      this.mission.type = type
-      this._saveMission('The project market test type has been updated.');
+    this.mission.type = type
+    this._saveMission('The market test type has been updated.');
+  }
+
+  public onChangeMissionTeam(operator: User) {
+    const _index = this.mission.team.findIndex((op: any) => op._id === operator['_id']);
+    if (_index > -1) {
+      this.mission.team = this.mission.team.slice(_index, 1);
     } else {
-      this._translateNotificationsService.error('Error', 'No mission is attached with this project.');
+      this.mission.team.push(operator);
     }
+    this._saveMission('The team members have been updated.');
   }
 
   private _saveMission(notifyMessage = 'The project has been updated.', type?: string) {
     if (this.mission._id) {
-
       this._missionService.save(this.mission._id, this.mission).pipe(first()).subscribe((mission) => {
         this._translateNotificationsService.success('Success', notifyMessage);
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Mission Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
 
@@ -112,8 +137,8 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   public onOperatorChange(operatorId: string) {
     const _index = this.operators.findIndex((op: any) => op._id === operatorId);
-    this.innovation.operator = this.operators[_index];
-    this._saveProject('The project operator has been updated.')
+    this.innovation.operator = _index !== -1 ? this.operators[_index] : null;
+    this._saveProject('The operator has been updated.')
   }
 
   private _saveProject(notifyMessage = 'The project has been updated.') {
@@ -121,9 +146,30 @@ export class AdminProjectSettingsComponent implements OnInit {
       this._innovationFrontService.setInnovation(inno);
       this._translateNotificationsService.success('Success' , notifyMessage);
       }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+  }
+
+  public onCommercialChange(commercialId: string) {
+    const _index = this.commercials.findIndex((commercial: any) => commercial._id === commercialId);
+    this.clientProject.commercial = _index !== -1 ? this.commercials[_index] : null;
+    this._saveClientProject('The commercial has been updated.');
+  }
+
+  private _saveClientProject(notifyMessage = 'The project has been updated.') {
+    this._clientProjectService.save(this.clientProject._id, this.clientProject).pipe(first()).subscribe((clientProject: ClientProject) => {
+      this.clientProject = clientProject;
+      this._translateNotificationsService.success('Success' , notifyMessage);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+  }
+
+  public isTeamMember(operatorId: string): boolean {
+    const _index = this.mission.team && this.mission.team.findIndex((member: any) => member._id === operatorId);
+    return _index > -1;
   }
 
   public name(value: User): string {

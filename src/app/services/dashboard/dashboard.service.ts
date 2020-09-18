@@ -11,8 +11,9 @@ export class DashboardService {
   public getOperators(): Observable<{result: Array<User>}> {
     return this._http.get<{result: Array<User>}>('/user', {
       params: {
-        $or: JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'}]),
-        fields: 'firstName,lastName,email,domain'
+        $or: JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'},]),
+        fields: 'firstName,lastName,email,domain',
+        sort: '{"firstName": 1}'
       }
     });
   }
