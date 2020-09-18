@@ -27,7 +27,9 @@
               *ngIf="mission.type && (canAccess(['view', 'missionType'])
               || canAccess(['edit', 'missionType']))"
               class="content">
+
               <label for="admin-project-type">Market Test Type</label>
+
               <select
                 *ngIf="canAccess(['edit', 'missionType'])"
                 (ngModelChange)="onMissionTypeChange($event)"
@@ -38,13 +40,19 @@
                 <option value="null">Not assigned</option>
                 <option *ngFor="let type of missionTypes" [value]="type">{{ type | titlecase }}</option>
               </select>
-              <span *ngIf="!canAccess(['edit', 'missionType'])">{{ mission && mission.type | titlecase }}</span>
+
+              <span *ngIf="!canAccess(['edit', 'missionType'])" class="is-text">
+                {{ mission && mission.type | titlecase }}
+              </span>
+
             </div>
             <!-- /mission type -->
 
             <!-- operators -->
             <div *ngIf="canAccess(['view', 'operator']) || canAccess(['edit', 'operator'])" class="content">
+
               <label for="admin-project-operator">Operator</label>
+
               <select
                 *ngIf="canAccess(['edit', 'operator'])"
                 (ngModelChange)="onOperatorChange($event)"
@@ -57,7 +65,11 @@
                   {{ name(operator) }}
                 </option>
               </select>
-              <span *ngIf="!canAccess(['edit', 'operator'])">{{ name(innovation.operator) }}</span>
+
+              <span *ngIf="!canAccess(['edit', 'operator'])" class="is-text">
+                {{ name(innovation.operator) }}
+              </span>
+
             </div>
             <!-- /operators -->
 
@@ -66,11 +78,15 @@
               *ngIf="mission._id && (canAccess(['view', 'missionTeam'])
               || canAccess(['edit', 'missionTeam']))"
               class="content">
+
               <label>Mission Team</label>
+
               <div class="dropdown is-right">
+
                 <a class="button dropdown-toggle text-primary-dark is-link" tabindex="0">
                   Members <i class="icon icon-caret"></i>
                 </a>
+
                 <ul *ngIf="canAccess(['edit', 'missionTeam'])" class="menu is-md">
                   <li *ngFor="let operator of operators" class="menu-item">
                     <label class="form-checkbox">
@@ -84,13 +100,16 @@
                     </label>
                   </li>
                 </ul>
+
                 <ul *ngIf="!canAccess(['edit', 'missionTeam'])" class="menu is-md">
                   <ng-container *ngIf="mission.team.length > 0">
                     <li *ngFor="let member of mission.team" class="menu-item c-default">{{ name(member) }}</li>
                   </ng-container>
                   <li *ngIf="mission.team.length === 0" class="menu-item c-default">No members</li>
                 </ul>
+
               </div>
+
             </div>
             <!-- /mission team -->
 
@@ -99,7 +118,9 @@
               *ngIf="clientProject._id && (canAccess(['view', 'commercial'])
               || canAccess(['edit', 'commercial']))"
               class="content">
+
               <label for="admin-project-commercial">Commercial</label>
+
               <select
                 *ngIf="canAccess(['edit', 'commercial'])"
                 (ngModelChange)="onCommercialChange($event)"
@@ -112,9 +133,66 @@
                   {{ name(commercial) }}
                 </option>
               </select>
-              <span *ngIf="!canAccess(['edit', 'commercial'])">{{ name(clientProject.commercial) }}</span>
+
+              <span *ngIf="!canAccess(['edit', 'commercial'])" class="is-text">
+                {{ name(clientProject.commercial) }}
+              </span>
+
             </div>
             <!-- /commercial -->
+
+            <!-- owner -->
+            <div class="content">
+              <label for="admin-project-commercial">Owner</label>
+              <div class="edit-wrapper">
+
+                <span *ngIf="!isEditingOwner" class="is-text">{{ name(innovation.owner) }}</span>
+
+                <label *ngIf="isEditingOwner" class="relative m-no-right mxw-full">
+                  <input
+                    (keydown)="suggestUser(newOwner.name)"
+                    [(ngModel)]="newOwner.name"
+                    class="form-input is-sm is-shadowed"
+                    placeholder="Start typing here..."
+                    type="text">
+                  <ul
+                    *ngIf="usersSuggestion.length"
+                    [ngStyle]="{'left': '0', 'right': '0'}"
+                    class="menu absolute">
+                    <li (click)="selectOwner(user)" *ngFor="let user of usersSuggestion" class="menu-item">
+                      {{ user.name }}
+                    </li>
+                  </ul>
+                </label>
+
+                <div
+                  (click)="saveOwner($event)"
+                  *ngIf="isEditingOwner"
+                  [ngClass]="{'disabled': !newOwner}"
+                  class="icon-container m-left-10">
+                  <span class="tooltip" data-tooltip="Save">
+                    <img
+                      alt="Save"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-save.svg">
+                  </span>
+                </div>
+
+                <div
+                  (click)="onEdit('OWNER')"
+                  *ngIf="canAccess(['edit', 'owner'])"
+                  class="icon-container m-left-20">
+                  <span [attr.data-tooltip]="isEditingOwner ? 'Cancel' : 'Edit owner'" class="tooltip">
+                    <img
+                      alt="Edit"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                  </span>
+                </div>
+
+              </div>
+            </div>
+            <!-- /owner -->
 
           </div>
 

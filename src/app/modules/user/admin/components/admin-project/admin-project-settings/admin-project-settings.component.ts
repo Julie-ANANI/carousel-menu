@@ -19,6 +19,12 @@ import {ClientProject} from '../../../../../../models/client-project';
 import {UserService} from '../../../../../../services/user/user.service';
 import {Response} from '../../../../../../models/response';
 import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
+import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
+
+interface UserSuggestion {
+  name: string;
+  _id: string;
+}
 
 @Component({
   selector: 'app-admin-project-settings',
@@ -42,6 +48,12 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   clientProject: ClientProject = <ClientProject>{};
 
+  isEditingOwner = false;
+
+  newOwner: UserSuggestion = <UserSuggestion>{};
+
+  usersSuggestion: Array<UserSuggestion> = [];
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -49,6 +61,7 @@ export class AdminProjectSettingsComponent implements OnInit {
               private _missionService: MissionService,
               private _dashboardService: DashboardService,
               private _innovationService: InnovationService,
+              private _autoCompleteService: AutocompleteService,
               private _userService: UserService,
               private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -123,16 +136,19 @@ export class AdminProjectSettingsComponent implements OnInit {
     this._saveMission('The team members have been updated.');
   }
 
-  private _saveMission(notifyMessage = 'The project has been updated.', type?: string) {
-    if (this.mission._id) {
-      this._missionService.save(this.mission._id, this.mission).pipe(first()).subscribe((mission) => {
-        this._translateNotificationsService.success('Success', notifyMessage);
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Mission Error...', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
+  private _saveMission(notifyMessage = 'The project has been updated.', type?: 'OWNER') {
 
+    if (type === 'OWNER') {
+      this.mission.client = this.newOwner._id;
     }
+
+    this._missionService.save(this.mission._id, this.mission).pipe(first()).subscribe((mission) => {
+      this._translateNotificationsService.success('Success', notifyMessage);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Mission Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+
   }
 
   public onOperatorChange(operatorId: string) {
@@ -157,7 +173,12 @@ export class AdminProjectSettingsComponent implements OnInit {
     this._saveClientProject('The commercial has been updated.');
   }
 
-  private _saveClientProject(notifyMessage = 'The project has been updated.') {
+  private _saveClientProject(notifyMessage = 'The project has been updated.', type?: 'OWNER') {
+
+    if (type === 'OWNER') {
+      this.clientProject.client = this.newOwner._id;
+    }
+
     this._clientProjectService.save(this.clientProject._id, this.clientProject).pipe(first()).subscribe((clientProject: ClientProject) => {
       this.clientProject = clientProject;
       this._translateNotificationsService.success('Success' , notifyMessage);
@@ -165,11 +186,54 @@ export class AdminProjectSettingsComponent implements OnInit {
       this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+
   }
 
   public isTeamMember(operatorId: string): boolean {
     const _index = this.mission.team && this.mission.team.findIndex((member: any) => member._id === operatorId);
     return _index > -1;
+  }
+
+  public onEdit(type: string) {
+    switch (type) {
+
+      case 'OWNER':
+        this.newOwner = <UserSuggestion>{};
+        this.isEditingOwner = !this.isEditingOwner;
+        break;
+
+    }
+  }
+
+  public suggestUser(value: string) {
+    if (value) {
+      this._autoCompleteService.get({query: value, type: 'users'})
+        .pipe(takeUntil(this._ngUnsubscribe)).subscribe((res: any) => {
+        if (res.length === 0) {
+          this.usersSuggestion = [];
+        } else {
+          res.forEach((items: any) => {
+            const valueIndex = this.usersSuggestion.indexOf(items._id);
+            if (valueIndex === -1) { // if not exist then push into the array.
+              this.usersSuggestion.push({name: items.name, _id: items._id});
+            }
+          });
+        }
+      });
+    }
+  }
+
+  public selectOwner(value: UserSuggestion) {
+    this.newOwner = value;
+    this.usersSuggestion = [];
+  }
+
+  public saveOwner(event: Event) {
+    event.preventDefault();
+    this.innovation.owner = <any>this.newOwner;
+    this._saveProject('The owner has been updated.');
+    this._saveMission('The owner has been updated in the Mission.','OWNER');
+    this._saveClientProject('The owner has been updated in the Client project.', 'OWNER');
   }
 
   public name(value: User): string {

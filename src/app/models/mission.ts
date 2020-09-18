@@ -22,7 +22,7 @@ export interface Mission {
   name?: string;
   innovations?: Array<Innovation>;
   goal?: string;
-  client?: User;
+  client?: User | string;
   team?: Array<User>;
   milestoneDates?: Array<Milestone>;
   mailConf?: Array<MailConfiguration>

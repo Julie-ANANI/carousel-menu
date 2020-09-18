@@ -4,7 +4,7 @@ export interface ClientProject {
   readonly _id?: string;
 
   commercial?: User;
-  client?: User;
+  client?: User | string;
   marketTests?: Array<string>;
 
   name: string;
