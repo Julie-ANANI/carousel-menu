@@ -82,7 +82,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     {name: 'salveo'},
     {name: 'schneider'},
     {name: 'bnpparibas'}
-  ]
+  ];
+
+  private _statsConfig: Array<StatsInterface> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -107,9 +109,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         this._innovation = innovation || <Innovation>{};
+        this._setStats();
         this._setQuizLink();
-
-        console.log(this._innovation);
 
         if (!!this._innovation.mission) {
           this._mission = <Mission>this._innovation.mission;
@@ -148,6 +149,55 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _setStats() {
+    this._statsConfig = [
+      {
+        heading: 'Emails',
+        content: [
+          {
+            subHeading: 'To send',
+            value: (this._innovation.stats && (this._innovation.stats.emailsOK
+              || this._innovation.stats.emailsOK === 0) ? this._innovation.stats.emailsOK : 'NA')
+          },
+          {
+            subHeading: 'Delivered',
+            value: (this._innovation.stats && (this._innovation.stats.received
+              || this._innovation.stats.received === 0) ? this._innovation.stats.received : 'NA')
+          },
+          {
+            subHeading: 'Open rate',
+            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.opened
+              , this._innovation.stats && this._innovation.stats.received)
+          },
+          {
+            subHeading: 'Click rate',
+            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.clicked
+              , this._innovation.stats && this._innovation.stats.opened)
+          }
+        ]
+      },
+      {
+        heading: 'Answers',
+        content: [
+          {
+            subHeading: 'Questionnaire quality',
+            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.answers
+              , this._innovation.stats && this._innovation.stats.clicked)
+          },
+          {
+            subHeading: 'Validated answers',
+            value: (this._innovation.stats && (this._innovation.stats.validatedAnswers
+              || this._innovation.stats.validatedAnswers === 0) ? this._innovation.stats.validatedAnswers : 'NA')
+          },
+          {
+            subHeading: 'Answer rate',
+            value: 'NA'
+          }
+        ]
+      }
+    ];
+  }
+
   public canAccess(path?: Array<string>) {
     const _default: Array<string> = ['projects', 'project', 'settings'];
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
@@ -157,7 +207,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
    * this is to update the banner stats.
    */
   public onClickUpdateStats() {
-
+    this._innovationService.updateStats(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
+      this._innovation = innovation;
+      this._innovationFrontService.setInnovation(this._innovation);
+      this._translateNotificationsService.success('Success', 'The stats have been updated.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Stats Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   public onMissionTypeChange(type: MissionType) {
@@ -414,30 +471,16 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public name(value: User): string {
-    return UserFrontService.fullName(value);
+  private static _getRate(value1: number, value2: number, decimals?: number): string {
+    const power = decimals ? Math.pow(10, decimals) : 100;
+    if (value2 && (value1 || value1 === 0)) {
+      return (Math.round(100 * power * value1 / value2) / power).toString() + '%';
+    }
+    return 'NA';
   }
 
-  get statsConfig(): Array<StatsInterface> {
-    return [
-      {
-        heading: 'Emails',
-        content: [
-          { subHeading: 'To send', value: '9433' },
-          { subHeading: 'Delivered', value: '9361' },
-          { subHeading: 'Open rate', value: '19%' },
-          { subHeading: 'Click rate', value: '30%' }
-          ]
-      },
-      {
-        heading: 'Answers',
-        content: [
-          { subHeading: 'Questionnaire quality', value: '60%' },
-          { subHeading: 'Validated answers', value: '52' },
-          { subHeading: 'Answer rate', value: '0.8%' }
-        ]
-      }
-      ];
+  public name(value: User): string {
+    return UserFrontService.fullName(value);
   }
 
   get innovTags(): Array<Tag> {
@@ -521,6 +564,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get domains(): Array<{ name: string }> {
     return this._domains;
+  }
+
+  get statsConfig(): Array<StatsInterface> {
+    return this._statsConfig;
   }
 
   ngOnDestroy(): void {

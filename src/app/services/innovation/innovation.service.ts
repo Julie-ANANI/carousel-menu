@@ -176,8 +176,8 @@ export class InnovationService {
     return this._http.get<Array<Job>>(`/innovation/${innovationId}/deliverables`, {params: config});
   }
 
-  public updateStats(innovationId: string): Observable<any> {
-    return this._http.put(`/innovation/${innovationId}/stats`, {});
+  public updateStats(innovationId: string): Observable<Innovation> {
+    return this._http.put<Innovation>(`/innovation/${innovationId}/stats`, {});
   }
 
   public advancedSearch(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
