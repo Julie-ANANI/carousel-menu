@@ -225,7 +225,7 @@
 
               <button
                 (click)="onCopyQuizLink($event)"
-                [ngClass]="quizUrlCopied ? 'is-success' : 'is-draft'"
+                [ngClass]="quizUrlCopied ? 'is-success' : 'is-info'"
                 class="button is-outlined is-sm"
                 id="btn-quiz-link"
                 type="button">
@@ -277,6 +277,61 @@
             </div>
             <!-- /project tags -->
 
+            <!-- roadmap -->
+            <div
+              *ngIf="canAccess(['view', 'roadmap']) || canAccess(['edit', 'roadmap'])"
+              [ngStyle]="{'align-items': 'flex-start'}"
+              class="content">
+
+              <label>Roadmap</label>
+
+              <div class="edit-wrapper">
+
+                <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
+                  <li *ngIf="mission.milestoneDates.length > 1" class="active">
+                    <span class="d-flex flex-d-column align-center">
+                      <span class="shape is-circle"></span>
+                      <span class="divider-vert active"></span>
+                    </span>
+                    {{ innovation.created | date:dateFormat }} - created
+                  </li>
+                  <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
+                    <li
+                      [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
+                      <span class="d-flex flex-d-column align-center">
+                        <span class="shape is-circle"></span>
+                        <span
+                          *ngIf="i < mission.milestoneDates.length - 1"
+                          [ngClass]="{ 'active': isNextMilestoneReached(i+1) }"
+                          class="divider-vert">
+                        </span>
+                      </span>
+                      {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
+                    </li>
+                  </ng-container>
+                </ul>
+
+                <span *ngIf="!(mission.milestoneDates && mission.milestoneDates.length)" class="is-text">
+                  No milestones defined
+                </span>
+
+                <div
+                  (click)="onEdit('ROADMAP')"
+                  *ngIf="canAccess(['edit', 'roadmap'])"
+                  class="icon-container m-left-20">
+                  <span data-tooltip="Edit roadmap" class="tooltip">
+                    <img
+                      alt="Edit"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- /roadmap -->
+
           </div>
 
         </div>
@@ -296,6 +351,7 @@
   <!-- tags -->
   <app-sidebar-tags
     (newTags)="addProjectTags($event)"
+    *ngIf="sidebarValue.type === 'ADD_TAGS'"
     [isEditable]="canAccess(['edit', 'projectTags'])"
     [placeholder]="'Start typing a new tag here...'"
     [sidebarState]="sidebarValue.animate_state"
@@ -303,6 +359,13 @@
     [type]="sidebarValue.type">
   </app-sidebar-tags>
   <!-- /tags -->
+
+  <!-- roadmap -->
+  <app-mission-form
+    *ngIf="sidebarValue.type === 'ROADMAP'"
+    [(mission)]="mission">
+  </app-mission-form>
+  <!-- /roadmap -->
 
 </app-sidebar>
 <!-- /sidebar -->

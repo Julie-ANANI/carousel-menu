@@ -25,6 +25,7 @@ import {environment} from '../../../../../../../environments/environment';
 import {CommonService} from '../../../../../../services/common/common.service';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {Tag} from '../../../../../../models/tag';
+import {TranslateService} from '@ngx-translate/core';
 
 interface UserSuggestion {
   name: string;
@@ -67,6 +68,8 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   sidebarValue: SidebarInterface = <SidebarInterface>{};
 
+  dateFormat = this._translateService.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -77,6 +80,7 @@ export class AdminProjectSettingsComponent implements OnInit {
               private _autoCompleteService: AutocompleteService,
               private _userService: UserService,
               private _commonService: CommonService,
+              private _translateService: TranslateService,
               private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -224,8 +228,11 @@ export class AdminProjectSettingsComponent implements OnInit {
         break;
 
       case 'PROJECT_TAGS':
-        const _title = this.canAccess(['edit', 'projectTags']) ? 'Add Tags' : 'Project Tags';
-        this._openSidebar('ADD_TAGS', _title);
+        this._openSidebar('ADD_TAGS', this.canAccess(['edit', 'projectTags']) ? 'Add Tags' : 'Project Tags');
+        break;
+
+      case 'ROADMAP':
+        this._openSidebar('ROADMAP', this.canAccess(['edit', 'roadmap']) ? 'Edit roadmap' : 'Mission');
         break;
 
     }
@@ -306,6 +313,17 @@ export class AdminProjectSettingsComponent implements OnInit {
   public addProjectTags(tags: Array<Tag>) {
     this.innovation.tags = tags;
     this._saveProject('The project tags have been updated.');
+  }
+
+  public isMilestoneReached(date: Date): boolean {
+    return date ? new Date(date) <= new Date() : false;
+  }
+
+  public isNextMilestoneReached(index: number): boolean {
+    if (this.mission.milestoneDates[index] && this.mission.milestoneDates[index].dueDate) {
+      return new Date(this.mission.milestoneDates[index].dueDate) <= new Date();
+    }
+    return false;
   }
 
   public name(value: User): string {
