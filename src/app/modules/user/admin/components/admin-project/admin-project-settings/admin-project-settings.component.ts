@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
-import {Innovation} from '../../../../../../models/innovation';
+import {Innovation, InnovationStatus} from '../../../../../../models/innovation';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Subject} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
@@ -70,6 +70,8 @@ export class AdminProjectSettingsComponent implements OnInit {
   sidebarValue: SidebarInterface = <SidebarInterface>{};
 
   dateFormat = this._translateService.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
+
+  innovationStatus: Array<InnovationStatus> = ['EDITING', 'SUBMITTED', 'EVALUATING', 'DONE'];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -317,7 +319,7 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   public addProjectTags(tags: Array<Tag>) {
     this.innovation.tags = tags;
-    this._saveProject('The project tags have been updated.');
+    this._saveProject('The tags have been updated.');
   }
 
   public isMilestoneReached(date: Date): boolean {
@@ -357,6 +359,11 @@ export class AdminProjectSettingsComponent implements OnInit {
       this._saveProject('The blocklist have been updated.');
 
     }
+  }
+
+  public onUpdateStatus(status: InnovationStatus) {
+    this.innovation.status = status;
+    this._saveProject('The status has been updated.');
   }
 
   public name(value: User): string {

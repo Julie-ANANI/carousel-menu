@@ -363,6 +363,31 @@
             </div>
             <!-- /blocklist -->
 
+            <!-- update status -->
+            <div
+              *ngIf="canAccess(['view', 'status']) || canAccess(['edit', 'status'])"
+              class="content">
+
+              <label for="admin-project-status">Update Status</label>
+
+              <select
+                *ngIf="canAccess(['edit', 'status'])"
+                (ngModelChange)="onUpdateStatus($event)"
+                [ngModel]="innovation.status"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-status">
+                <option *ngFor="let status of innovationStatus" [ngValue]="status">
+                  {{ status | titlecase }}
+                </option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'status'])" class="is-text">
+                {{ innovation.status | titlecase }}
+              </span>
+
+            </div>
+            <!-- /update status -->
+
           </div>
 
         </div>
