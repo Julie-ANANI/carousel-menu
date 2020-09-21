@@ -8,6 +8,7 @@ import {AdminStatsBannerModule} from '../../admin-stats-banner/admin-stats-banne
 import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import {SidebarTagsModule} from '../../../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import {MissionFormModule} from '../../../../../sidebars/components/mission-form/mission-form.module';
+import {SidebarBlacklistModule} from '../../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import {MissionFormModule} from '../../../../../sidebars/components/mission-form
     SidebarModule,
     SidebarTagsModule,
     MissionFormModule,
+    SidebarBlacklistModule,
   ],
   declarations: [
     AdminProjectSettingsComponent

@@ -256,7 +256,7 @@
 
               <div class="edit-wrapper">
 
-                <span class="is-text">Total: {{ innovation.tags && innovation.tags.length }} project tags</span>
+                <span class="is-text">Total: {{ innovation.tags && innovation.tags.length }} project tag(s)</span>
 
                 <div
                   (click)="onEdit('PROJECT_TAGS')"
@@ -293,7 +293,7 @@
                       <span class="shape is-circle"></span>
                       <span class="divider-vert active"></span>
                     </span>
-                    {{ innovation.created | date:dateFormat }} - created
+                    {{ innovation.created | date:dateFormat }} - Created
                   </li>
                   <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
                     <li
@@ -332,6 +332,37 @@
             </div>
             <!-- /roadmap -->
 
+            <!-- blocklist -->
+            <div
+              *ngIf="canAccess(['view', 'blocklist']) || canAccess(['edit', 'blocklist'])"
+              class="content">
+
+              <label>Blocklist</label>
+
+              <div class="edit-wrapper">
+
+                <span class="is-text">
+                  {{ innovation.settings.blacklist.domains.length }} Domain(s) -
+                  {{ innovation.settings.blacklist.emails.length }} Email(s)
+                </span>
+
+                <div
+                  (click)="onEdit('BLOCKLIST')"
+                  *ngIf="canAccess(['edit', 'blocklist'])"
+                  class="icon-container m-left-20">
+                  <span data-tooltip="Edit blocklist" class="tooltip">
+                    <img
+                      alt="Edit"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- /blocklist -->
+
           </div>
 
         </div>
@@ -361,11 +392,19 @@
   <!-- /tags -->
 
   <!-- roadmap -->
-  <app-mission-form
-    *ngIf="sidebarValue.type === 'ROADMAP'"
-    [(mission)]="mission">
-  </app-mission-form>
+  <app-mission-form *ngIf="sidebarValue.type === 'ROADMAP'" [(mission)]="mission"></app-mission-form>
   <!-- /roadmap -->
+
+  <!-- blocklist -->
+  <app-sidebar-blacklist
+    (toBlacklists)="addBlocklist($event)"
+    *ngIf="sidebarValue.type === 'EXCLUDE_EMAILS_DOMAINS'"
+    [initialDomains]="innovation.settings.blacklist.domains"
+    [initialEmails]="innovation.settings.blacklist.emails"
+    [isEditable]="canAccess(['edit', 'blocklist'])"
+    [type]="sidebarValue.type">
+  </app-sidebar-blacklist>
+  <!-- /blocklist -->
 
 </app-sidebar>
 <!-- /sidebar -->

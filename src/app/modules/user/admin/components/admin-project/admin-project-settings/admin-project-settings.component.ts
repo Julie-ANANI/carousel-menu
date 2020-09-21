@@ -26,6 +26,7 @@ import {CommonService} from '../../../../../../services/common/common.service';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {Tag} from '../../../../../../models/tag';
 import {TranslateService} from '@ngx-translate/core';
+import {domainRegEx, emailRegEx} from '../../../../../../utils/regex';
 
 interface UserSuggestion {
   name: string;
@@ -235,6 +236,10 @@ export class AdminProjectSettingsComponent implements OnInit {
         this._openSidebar('ROADMAP', this.canAccess(['edit', 'roadmap']) ? 'Edit roadmap' : 'Mission');
         break;
 
+      case 'BLOCKLIST':
+        this._openSidebar('EXCLUDE_EMAILS_DOMAINS', 'Edit Blocklist');
+        break;
+
     }
   }
 
@@ -324,6 +329,34 @@ export class AdminProjectSettingsComponent implements OnInit {
       return new Date(this.mission.milestoneDates[index].dueDate) <= new Date();
     }
     return false;
+  }
+
+  public addBlocklist(values: {emails: Array<string>, domains: Array<string>}) {
+    if (values.emails.length || values.domains.length) {
+      const _domainExp = domainRegEx;
+      const _emailExp = emailRegEx;
+
+      if (values.domains.length) {
+        this.innovation.settings.blacklist.domains = [];
+        values.domains.forEach((value: any) => {
+          if (_domainExp.test(value.text)) {
+            this.innovation.settings.blacklist.domains.push(value.text.split('@')[1]);
+          }
+        });
+      }
+
+      if (values.emails.length) {
+        this.innovation.settings.blacklist.emails = [];
+        values.emails.forEach((value: any) => {
+          if (_emailExp.test(value.text)) {
+            this.innovation.settings.blacklist.emails.push(value.text);
+          }
+        });
+      }
+
+      this._saveProject('The blocklist have been updated.');
+
+    }
   }
 
   public name(value: User): string {
