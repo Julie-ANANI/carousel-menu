@@ -22,6 +22,31 @@
 
           <div class="content-box">
 
+            <!-- domain -->
+            <div
+              *ngIf="canAccess(['view', 'domain']) || canAccess(['edit', 'domain'])"
+              class="content">
+
+              <label for="admin-project-domain">Domain</label>
+
+              <select
+                (ngModelChange)="onChangeDomain($event)"
+                *ngIf="canAccess(['edit', 'domain'])"
+                [ngModel]="innovation.domain"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-domain">
+                <option *ngFor="let domain of domains" [ngValue]="domain.name">
+                  {{ domain.name }}
+                </option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'domain'])" class="is-text">
+                {{ innovation.domain }}
+              </span>
+
+            </div>
+            <!-- /domain -->
+
             <!-- mission type -->
             <div
               *ngIf="mission.type && (canAccess(['view', 'missionType'])
@@ -235,18 +260,6 @@
             </div>
             <!-- /questionnaire -->
 
-          </div>
-
-        </div>
-        <!-- /left content -->
-
-        <!-- right content -->
-        <div class="content-wrapper">
-
-          <h6 class="text-notify">Campaign / Delivery</h6>
-
-          <div class="content-box">
-
             <!-- project tags -->
             <div
               *ngIf="canAccess(['view', 'projectTags']) || canAccess(['edit', 'projectTags'])"
@@ -276,6 +289,18 @@
 
             </div>
             <!-- /project tags -->
+
+          </div>
+
+        </div>
+        <!-- /left content -->
+
+        <!-- right content -->
+        <div class="content-wrapper">
+
+          <h6 class="text-notify">Campaign / Delivery</h6>
+
+          <div class="content-box">
 
             <!-- roadmap -->
             <div
@@ -397,10 +422,10 @@
 
               <label *ngIf="canAccess(['edit', 'answersAnonymous'])" class="form-switch">
                 <input
-                  id="admin-project-answersAnonymous"
+                  (change)="onChangeAnonymous($event)"
                   [checked]="innovation._metadata && innovation._metadata['campaign']
                   && innovation._metadata['campaign']['anonymous_answers']"
-                  (change)="onChangeAnonymous($event)"
+                  id="admin-project-answersAnonymous"
                   type="checkbox">
                 <i class="form-icon"></i>
                 {{ innovation._metadata && innovation._metadata['campaign']
@@ -417,6 +442,29 @@
 
             </div>
             <!-- /anonymous answer -->
+
+            <!-- public project -->
+            <div
+              *ngIf="canAccess(['view', 'publicProject']) || canAccess(['edit', 'publicProject'])"
+              class="content">
+
+              <label class="mxw-full">Publish to Innovation Showroom</label>
+
+              <label *ngIf="canAccess(['edit', 'publicProject'])" class="form-switch">
+                <input
+                  (change)="onChangeIsPublic($event)"
+                  [checked]="innovation.isPublic"
+                  id="admin-project-publicProject"
+                  type="checkbox">
+                <i class="form-icon"></i> {{ innovation.isPublic ? 'Published' : 'Unpublished' }}
+              </label>
+
+              <span *ngIf="!canAccess(['edit', 'publicProject'])" class="is-text">
+                {{ innovation.isPublic ? 'Published' : 'Unpublished' }}
+              </span>
+
+            </div>
+            <!-- /public project -->
 
           </div>
 

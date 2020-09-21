@@ -73,6 +73,17 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   innovationStatus: Array<InnovationStatus> = ['EDITING', 'SUBMITTED', 'EVALUATING', 'DONE'];
 
+  domains: Array<{name: string}> = [
+    {name: 'umi'},
+    {name: 'dynergie'},
+    {name: 'novanexia'},
+    {name: 'inomer'},
+    {name: 'multivalente'},
+    {name: 'salveo'},
+    {name: 'schneider'},
+    {name: 'bnpparibas'}
+  ]
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -374,6 +385,17 @@ export class AdminProjectSettingsComponent implements OnInit {
     }
     this._saveProject((event.target as HTMLInputElement).checked
       ? 'The answers will be anonymous.' : 'The answers won\'t be anonymous.')
+  }
+
+  public onChangeDomain(domain: string) {
+    this.innovation.domain = domain;
+    this._saveProject('The domain has been updated.');
+  }
+
+  public onChangeIsPublic(event: Event) {
+    this.innovation.isPublic = (event.target as HTMLInputElement).checked;
+    this._saveProject(this.innovation.isPublic
+      ? 'The project is published to the Innovation Showroom.' : 'The project is not published to the Innovation Showroom.')
   }
 
   public name(value: User): string {
