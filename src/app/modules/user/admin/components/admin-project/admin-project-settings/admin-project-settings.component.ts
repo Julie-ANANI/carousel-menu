@@ -20,6 +20,10 @@ import {UserService} from '../../../../../../services/user/user.service';
 import {Response} from '../../../../../../models/response';
 import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
+import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../../../../../../../environments/environment';
+import {CommonService} from '../../../../../../services/common/common.service';
 
 interface UserSuggestion {
   name: string;
@@ -54,6 +58,14 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   usersSuggestion: Array<UserSuggestion> = [];
 
+  missionObjectives: Array<Objective> = ObjectivesPrincipal;
+
+  currentLang = this._translateService.currentLang || 'en';
+
+  quizLink = '';
+
+  quizUrlCopied = false;
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -63,6 +75,8 @@ export class AdminProjectSettingsComponent implements OnInit {
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
               private _userService: UserService,
+              private _translateService: TranslateService,
+              private _commonService: CommonService,
               private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) { }
@@ -75,6 +89,7 @@ export class AdminProjectSettingsComponent implements OnInit {
 
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         this.innovation = innovation || <Innovation>{};
+        this._setQuizLink();
 
         console.log(this.innovation);
 
@@ -107,6 +122,12 @@ export class AdminProjectSettingsComponent implements OnInit {
       this._translateNotificationsService.error('Operator Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+  }
+
+  private _setQuizLink() {
+    if (this.innovation.quizId && Array.isArray(this.innovation.campaigns) && this.innovation.campaigns.length > 0) {
+      this.quizLink = `${environment.quizUrl}/quiz/${this.innovation.quizId}/${this.innovation.campaigns[0]._id}` || '';
+    }
   }
 
   public canAccess(path?: Array<string>) {
@@ -213,7 +234,7 @@ export class AdminProjectSettingsComponent implements OnInit {
           this.usersSuggestion = [];
         } else {
           res.forEach((items: any) => {
-            const valueIndex = this.usersSuggestion.indexOf(items._id);
+            const valueIndex = this.usersSuggestion.findIndex((user) => user._id === items._id);
             if (valueIndex === -1) { // if not exist then push into the array.
               this.usersSuggestion.push({name: items.name, _id: items._id});
             }
@@ -234,6 +255,39 @@ export class AdminProjectSettingsComponent implements OnInit {
     this._saveProject('The owner has been updated.');
     this._saveMission('The owner has been updated in the Mission.','OWNER');
     this._saveClientProject('The owner has been updated in the Client project.', 'OWNER');
+  }
+
+  public onMainObjectiveChange(objective: string) {
+    const _index = this.missionObjectives.findIndex((value) => value['en']['label'] === objective);
+    if (_index !== -1) {
+
+      if (!this.mission.objective) {
+        this.mission.objective = {
+          principal: {},
+          secondary: [],
+          comment: ''
+        };
+      }
+
+      this.mission.objective.principal = {
+        en: this.missionObjectives[_index].en.label,
+        fr: this.missionObjectives[_index].fr.label,
+      };
+
+      this._saveMission('The main objective has been updated.')
+
+    }
+  }
+
+  public onCopyQuizLink(event: Event) {
+    event.preventDefault();
+    if (this.quizLink) {
+      this._commonService.copyToClipboard(this.quizLink);
+      this.quizUrlCopied = true;
+      setTimeout(() => {
+        this.quizUrlCopied = false;
+      }, 8000);
+    }
   }
 
   public name(value: User): string {
