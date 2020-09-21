@@ -21,9 +21,10 @@ import {Response} from '../../../../../../models/response';
 import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
 import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
-import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../../../../../../environments/environment';
 import {CommonService} from '../../../../../../services/common/common.service';
+import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
+import {Tag} from '../../../../../../models/tag';
 
 interface UserSuggestion {
   name: string;
@@ -60,11 +61,11 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   missionObjectives: Array<Objective> = ObjectivesPrincipal;
 
-  currentLang = this._translateService.currentLang || 'en';
-
   quizLink = '';
 
   quizUrlCopied = false;
+
+  sidebarValue: SidebarInterface = <SidebarInterface>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -75,7 +76,6 @@ export class AdminProjectSettingsComponent implements OnInit {
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
               private _userService: UserService,
-              private _translateService: TranslateService,
               private _commonService: CommonService,
               private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -223,6 +223,19 @@ export class AdminProjectSettingsComponent implements OnInit {
         this.isEditingOwner = !this.isEditingOwner;
         break;
 
+      case 'PROJECT_TAGS':
+        const _title = this.canAccess(['edit', 'projectTags']) ? 'Add Tags' : 'Project Tags';
+        this._openSidebar('ADD_TAGS', _title);
+        break;
+
+    }
+  }
+
+  private _openSidebar(type: string, title: string) {
+    this.sidebarValue = {
+      animate_state: 'active',
+      type: type,
+      title: title
     }
   }
 
@@ -290,6 +303,11 @@ export class AdminProjectSettingsComponent implements OnInit {
     }
   }
 
+  public addProjectTags(tags: Array<Tag>) {
+    this.innovation.tags = tags;
+    this._saveProject('The project tags have been updated.');
+  }
+
   public name(value: User): string {
     return UserFrontService.fullName(value);
   }
@@ -314,6 +332,13 @@ export class AdminProjectSettingsComponent implements OnInit {
         ]
       }
       ];
+  }
+
+  get innovTags(): Array<Tag> {
+    if (this.sidebarValue.animate_state === 'active') {
+      return this.innovation.tags;
+    }
+    return [];
   }
 
 }

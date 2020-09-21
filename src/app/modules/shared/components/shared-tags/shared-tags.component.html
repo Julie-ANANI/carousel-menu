@@ -31,11 +31,11 @@
   <!-- /input field -->
 
   <!-- displaying tags -->
-  <div *ngIf="tags.length" [ngStyle]="{'margin': '-4px'}" class="flex-wrap d-flex">
+  <div *ngIf="tags.length" [ngStyle]="{'margin': '-4px'}" class="flex-wrap d-flex p-top-10">
     <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-tag is-rounded">
       <i class="fas fa-tag icon-left"></i>
       {{ tag.label | multiling:currentLang }}
-      <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right"></i>
+      <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right c-hand"></i>
     </div>
   </div>
   <!-- /displaying tags -->
