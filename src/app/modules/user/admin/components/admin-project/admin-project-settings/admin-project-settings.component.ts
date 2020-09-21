@@ -366,6 +366,16 @@ export class AdminProjectSettingsComponent implements OnInit {
     this._saveProject('The status has been updated.');
   }
 
+  public onChangeAnonymous(event: Event) {
+    if (this.innovation._metadata && this.innovation._metadata['campaign']  && this.innovation._metadata['campaign']['anonymous_answers']) {
+      this.innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+    } else {
+      this.innovation._metadata = this.innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+    }
+    this._saveProject((event.target as HTMLInputElement).checked
+      ? 'The answers will be anonymous.' : 'The answers won\'t be anonymous.')
+  }
+
   public name(value: User): string {
     return UserFrontService.fullName(value);
   }

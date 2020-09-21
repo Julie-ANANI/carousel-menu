@@ -388,6 +388,36 @@
             </div>
             <!-- /update status -->
 
+            <!-- anonymous answer -->
+            <div
+              *ngIf="canAccess(['view', 'answersAnonymous']) || canAccess(['edit', 'answersAnonymous'])"
+              class="content">
+
+              <label>Answers Anonymous</label>
+
+              <label *ngIf="canAccess(['edit', 'answersAnonymous'])" class="form-switch">
+                <input
+                  id="admin-project-answersAnonymous"
+                  [checked]="innovation._metadata && innovation._metadata['campaign']
+                  && innovation._metadata['campaign']['anonymous_answers']"
+                  (change)="onChangeAnonymous($event)"
+                  type="checkbox">
+                <i class="form-icon"></i>
+                {{ innovation._metadata && innovation._metadata['campaign']
+              && innovation._metadata['campaign']['anonymous_answers'] ? 'Activated' : 'Deactivated' }}
+              </label>
+
+              <span *ngIf="!canAccess(['edit', 'answersAnonymous'])" class="is-text">
+                <ng-container *ngIf="innovation._metadata && innovation._metadata['campaign']
+                && innovation._metadata['campaign']['anonymous_answers']; else deactivateText">
+                  Activated
+                </ng-container>
+                <ng-template #deactivateText>Deactivated</ng-template>
+              </span>
+
+            </div>
+            <!-- /anonymous answer -->
+
           </div>
 
         </div>
