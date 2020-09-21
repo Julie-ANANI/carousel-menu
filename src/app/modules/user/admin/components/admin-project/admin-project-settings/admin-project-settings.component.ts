@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {Innovation, InnovationStatus} from '../../../../../../models/innovation';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
@@ -39,41 +39,41 @@ interface UserSuggestion {
   styleUrls: ['./admin-project-settings.component.scss']
 })
 
-export class AdminProjectSettingsComponent implements OnInit {
+export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
-  isLoading = true;
+  private _isLoading = true;
 
-  innovation: Innovation = <Innovation>{};
+  private _innovation: Innovation = <Innovation>{};
 
-  mission: Mission = <Mission>{};
+  private _mission: Mission = <Mission>{};
 
-  missionTypes: Array<string> = ['USER', 'CLIENT', 'DEMO', 'TEST'];
+  private _missionTypes: Array<string> = ['USER', 'CLIENT', 'DEMO', 'TEST'];
 
-  operators: Array<User> = [];
+  private _operators: Array<User> = [];
 
-  commercials: Array<User> = [];
+  private _commercials: Array<User> = [];
 
-  clientProject: ClientProject = <ClientProject>{};
+  private _clientProject: ClientProject = <ClientProject>{};
 
-  isEditingOwner = false;
+  private _isEditingOwner = false;
 
-  newOwner: UserSuggestion = <UserSuggestion>{};
+  private _newOwner: UserSuggestion = <UserSuggestion>{};
 
-  usersSuggestion: Array<UserSuggestion> = [];
+  private _usersSuggestion: Array<UserSuggestion> = [];
 
-  missionObjectives: Array<Objective> = ObjectivesPrincipal;
+  private _missionObjectives: Array<Objective> = ObjectivesPrincipal;
 
-  quizLink = '';
+  private _quizLink = '';
 
-  quizUrlCopied = false;
+  private _quizUrlCopied = false;
 
-  sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  dateFormat = this._translateService.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
+  private _dateFormat = this._translateService.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
 
-  innovationStatus: Array<InnovationStatus> = ['EDITING', 'SUBMITTED', 'EVALUATING', 'DONE'];
+  private _innovationStatus: Array<InnovationStatus> = ['EDITING', 'SUBMITTED', 'EVALUATING', 'DONE'];
 
-  domains: Array<{name: string}> = [
+  private _domains: Array<{name: string}> = [
     {name: 'umi'},
     {name: 'dynergie'},
     {name: 'novanexia'},
@@ -101,22 +101,22 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this.isLoading = false;
+      this._isLoading = false;
       this._getOperators();
       this._getCommercials();
 
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-        this.innovation = innovation || <Innovation>{};
+        this._innovation = innovation || <Innovation>{};
         this._setQuizLink();
 
-        console.log(this.innovation);
+        console.log(this._innovation);
 
-        if (!!this.innovation.mission) {
-          this.mission = <Mission>this.innovation.mission;
+        if (!!this._innovation.mission) {
+          this._mission = <Mission>this._innovation.mission;
         }
 
-        if (!!this.innovation.clientProject) {
-          this.clientProject = <ClientProject>this.innovation.clientProject;
+        if (!!this._innovation.clientProject) {
+          this._clientProject = <ClientProject>this._innovation.clientProject;
         }
 
       });
@@ -126,7 +126,7 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   private _getCommercials() {
     this._userService.getCommercials().pipe(first()).subscribe((response: Response) => {
-      this.commercials = response.result;
+      this._commercials = response.result;
       }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Commercial Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -135,7 +135,7 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   private _getOperators() {
     this._dashboardService.getOperators().pipe(first()).subscribe((response: Response) => {
-      this.operators = response.result;
+      this._operators = response.result;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Operator Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -143,8 +143,8 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   private _setQuizLink() {
-    if (this.innovation.quizId && Array.isArray(this.innovation.campaigns) && this.innovation.campaigns.length > 0) {
-      this.quizLink = `${environment.quizUrl}/quiz/${this.innovation.quizId}/${this.innovation.campaigns[0]._id}` || '';
+    if (this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
+      this._quizLink = `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` || '';
     }
   }
 
@@ -161,16 +161,16 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public onMissionTypeChange(type: MissionType) {
-    this.mission.type = type
+    this._mission.type = type
     this._saveMission('The market test type has been updated.');
   }
 
   public onChangeMissionTeam(operator: User) {
-    const _index = this.mission.team.findIndex((op: any) => op._id === operator['_id']);
+    const _index = this._mission.team.findIndex((op: any) => op._id === operator['_id']);
     if (_index > -1) {
-      this.mission.team = this.mission.team.slice(_index, 1);
+      this._mission.team = this._mission.team.slice(_index, 1);
     } else {
-      this.mission.team.push(operator);
+      this._mission.team.push(operator);
     }
     this._saveMission('The team members have been updated.');
   }
@@ -178,10 +178,10 @@ export class AdminProjectSettingsComponent implements OnInit {
   private _saveMission(notifyMessage = 'The project has been updated.', type?: 'OWNER') {
 
     if (type === 'OWNER') {
-      this.mission.client = this.newOwner._id;
+      this._mission.client = this._newOwner._id;
     }
 
-    this._missionService.save(this.mission._id, this.mission).pipe(first()).subscribe((mission) => {
+    this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
       this._translateNotificationsService.success('Success', notifyMessage);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Mission Error...', ErrorFrontService.getErrorMessage(err.status));
@@ -191,13 +191,13 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public onOperatorChange(operatorId: string) {
-    const _index = this.operators.findIndex((op: any) => op._id === operatorId);
-    this.innovation.operator = _index !== -1 ? this.operators[_index] : null;
+    const _index = this._operators.findIndex((op: any) => op._id === operatorId);
+    this._innovation.operator = _index !== -1 ? this._operators[_index] : null;
     this._saveProject('The operator has been updated.')
   }
 
   private _saveProject(notifyMessage = 'The project has been updated.') {
-    this._innovationService.save(this.innovation._id, this.innovation).pipe(first()).subscribe((inno: Innovation) => {
+    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((inno: Innovation) => {
       this._innovationFrontService.setInnovation(inno);
       this._translateNotificationsService.success('Success' , notifyMessage);
       }, (err: HttpErrorResponse) => {
@@ -207,19 +207,19 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public onCommercialChange(commercialId: string) {
-    const _index = this.commercials.findIndex((commercial: any) => commercial._id === commercialId);
-    this.clientProject.commercial = _index !== -1 ? this.commercials[_index] : null;
+    const _index = this._commercials.findIndex((commercial: any) => commercial._id === commercialId);
+    this._clientProject.commercial = _index !== -1 ? this._commercials[_index] : null;
     this._saveClientProject('The commercial has been updated.');
   }
 
   private _saveClientProject(notifyMessage = 'The project has been updated.', type?: 'OWNER') {
 
     if (type === 'OWNER') {
-      this.clientProject.client = this.newOwner._id;
+      this._clientProject.client = this._newOwner._id;
     }
 
-    this._clientProjectService.save(this.clientProject._id, this.clientProject).pipe(first()).subscribe((clientProject: ClientProject) => {
-      this.clientProject = clientProject;
+    this._clientProjectService.save(this._clientProject._id, this._clientProject).pipe(first()).subscribe((clientProject: ClientProject) => {
+      this._clientProject = clientProject;
       this._translateNotificationsService.success('Success' , notifyMessage);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorMessage(err.status));
@@ -229,7 +229,7 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public isTeamMember(operatorId: string): boolean {
-    const _index = this.mission.team && this.mission.team.findIndex((member: any) => member._id === operatorId);
+    const _index = this._mission.team && this._mission.team.findIndex((member: any) => member._id === operatorId);
     return _index > -1;
   }
 
@@ -237,8 +237,8 @@ export class AdminProjectSettingsComponent implements OnInit {
     switch (type) {
 
       case 'OWNER':
-        this.newOwner = <UserSuggestion>{};
-        this.isEditingOwner = !this.isEditingOwner;
+        this._newOwner = <UserSuggestion>{};
+        this._isEditingOwner = !this._isEditingOwner;
         break;
 
       case 'PROJECT_TAGS':
@@ -257,7 +257,7 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   private _openSidebar(type: string, title: string) {
-    this.sidebarValue = {
+    this._sidebarValue = {
       animate_state: 'active',
       type: type,
       title: title
@@ -269,12 +269,12 @@ export class AdminProjectSettingsComponent implements OnInit {
       this._autoCompleteService.get({query: value, type: 'users'})
         .pipe(takeUntil(this._ngUnsubscribe)).subscribe((res: any) => {
         if (res.length === 0) {
-          this.usersSuggestion = [];
+          this._usersSuggestion = [];
         } else {
           res.forEach((items: any) => {
-            const valueIndex = this.usersSuggestion.findIndex((user) => user._id === items._id);
+            const valueIndex = this._usersSuggestion.findIndex((user) => user._id === items._id);
             if (valueIndex === -1) { // if not exist then push into the array.
-              this.usersSuggestion.push({name: items.name, _id: items._id});
+              this._usersSuggestion.push({name: items.name, _id: items._id});
             }
           });
         }
@@ -283,33 +283,33 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public selectOwner(value: UserSuggestion) {
-    this.newOwner = value;
-    this.usersSuggestion = [];
+    this._newOwner = value;
+    this._usersSuggestion = [];
   }
 
   public saveOwner(event: Event) {
     event.preventDefault();
-    this.innovation.owner = <any>this.newOwner;
+    this._innovation.owner = <any>this._newOwner;
     this._saveProject('The owner has been updated.');
     this._saveMission('The owner has been updated in the Mission.','OWNER');
     this._saveClientProject('The owner has been updated in the Client project.', 'OWNER');
   }
 
   public onMainObjectiveChange(objective: string) {
-    const _index = this.missionObjectives.findIndex((value) => value['en']['label'] === objective);
+    const _index = this._missionObjectives.findIndex((value) => value['en']['label'] === objective);
     if (_index !== -1) {
 
-      if (!this.mission.objective) {
-        this.mission.objective = {
+      if (!this._mission.objective) {
+        this._mission.objective = {
           principal: {},
           secondary: [],
           comment: ''
         };
       }
 
-      this.mission.objective.principal = {
-        en: this.missionObjectives[_index].en.label,
-        fr: this.missionObjectives[_index].fr.label,
+      this._mission.objective.principal = {
+        en: this._missionObjectives[_index].en.label,
+        fr: this._missionObjectives[_index].fr.label,
       };
 
       this._saveMission('The main objective has been updated.')
@@ -319,17 +319,17 @@ export class AdminProjectSettingsComponent implements OnInit {
 
   public onCopyQuizLink(event: Event) {
     event.preventDefault();
-    if (this.quizLink) {
-      this._commonService.copyToClipboard(this.quizLink);
-      this.quizUrlCopied = true;
+    if (this._quizLink) {
+      this._commonService.copyToClipboard(this._quizLink);
+      this._quizUrlCopied = true;
       setTimeout(() => {
-        this.quizUrlCopied = false;
+        this._quizUrlCopied = false;
       }, 8000);
     }
   }
 
   public addProjectTags(tags: Array<Tag>) {
-    this.innovation.tags = tags;
+    this._innovation.tags = tags;
     this._saveProject('The tags have been updated.');
   }
 
@@ -338,8 +338,8 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public isNextMilestoneReached(index: number): boolean {
-    if (this.mission.milestoneDates[index] && this.mission.milestoneDates[index].dueDate) {
-      return new Date(this.mission.milestoneDates[index].dueDate) <= new Date();
+    if (this._mission.milestoneDates[index] && this._mission.milestoneDates[index].dueDate) {
+      return new Date(this._mission.milestoneDates[index].dueDate) <= new Date();
     }
     return false;
   }
@@ -350,19 +350,19 @@ export class AdminProjectSettingsComponent implements OnInit {
       const _emailExp = emailRegEx;
 
       if (values.domains.length) {
-        this.innovation.settings.blacklist.domains = [];
+        this._innovation.settings.blacklist.domains = [];
         values.domains.forEach((value: any) => {
           if (_domainExp.test(value.text)) {
-            this.innovation.settings.blacklist.domains.push(value.text.split('@')[1]);
+            this._innovation.settings.blacklist.domains.push(value.text.split('@')[1]);
           }
         });
       }
 
       if (values.emails.length) {
-        this.innovation.settings.blacklist.emails = [];
+        this._innovation.settings.blacklist.emails = [];
         values.emails.forEach((value: any) => {
           if (_emailExp.test(value.text)) {
-            this.innovation.settings.blacklist.emails.push(value.text);
+            this._innovation.settings.blacklist.emails.push(value.text);
           }
         });
       }
@@ -373,29 +373,45 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   public onUpdateStatus(status: InnovationStatus) {
-    this.innovation.status = status;
+    this._innovation.status = status;
     this._saveProject('The status has been updated.');
   }
 
   public onChangeAnonymous(event: Event) {
-    if (this.innovation._metadata && this.innovation._metadata['campaign']  && this.innovation._metadata['campaign']['anonymous_answers']) {
-      this.innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+    if (this._innovation._metadata && this._innovation._metadata['campaign']  && this._innovation._metadata['campaign']['anonymous_answers']) {
+      this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
     } else {
-      this.innovation._metadata = this.innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+      this._innovation._metadata = this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
     }
     this._saveProject((event.target as HTMLInputElement).checked
       ? 'The answers will be anonymous.' : 'The answers won\'t be anonymous.')
   }
 
   public onChangeDomain(domain: string) {
-    this.innovation.domain = domain;
+    this._innovation.domain = domain;
     this._saveProject('The domain has been updated.');
   }
 
   public onChangeIsPublic(event: Event) {
-    this.innovation.isPublic = (event.target as HTMLInputElement).checked;
-    this._saveProject(this.innovation.isPublic
+    this._innovation.isPublic = (event.target as HTMLInputElement).checked;
+    this._saveProject(this._innovation.isPublic
       ? 'The project is published to the Innovation Showroom.' : 'The project is not published to the Innovation Showroom.')
+  }
+
+  public onPublishCommunity(event: Event) {
+    if (this._innovation.isPublic) {
+      this._innovationService.publishToCommunity(this._innovation._id).pipe(first()).subscribe((published) => {
+        if (published) {
+          this._innovation['published'] = published;
+          this._translateNotificationsService.success('Success', 'The project has been published to the Community.');
+        } else {
+          this._innovation['published'] = null;
+        }
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   public name(value: User): string {
@@ -425,10 +441,91 @@ export class AdminProjectSettingsComponent implements OnInit {
   }
 
   get innovTags(): Array<Tag> {
-    if (this.sidebarValue.animate_state === 'active') {
-      return this.innovation.tags;
+    if (this._sidebarValue.animate_state === 'active') {
+      return this._innovation.tags;
     }
     return [];
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get mission(): Mission {
+    return this._mission;
+  }
+
+  set mission(value: Mission) {
+    this._mission = value;
+  }
+
+  get missionTypes(): Array<string> {
+    return this._missionTypes;
+  }
+
+  get operators(): Array<User> {
+    return this._operators;
+  }
+
+  get commercials(): Array<User> {
+    return this._commercials;
+  }
+
+  get clientProject(): ClientProject {
+    return this._clientProject;
+  }
+
+  get isEditingOwner(): boolean {
+    return this._isEditingOwner;
+  }
+
+  get newOwner(): UserSuggestion {
+    return this._newOwner;
+  }
+
+  get usersSuggestion(): Array<UserSuggestion> {
+    return this._usersSuggestion;
+  }
+
+  get missionObjectives(): Array<Objective> {
+    return this._missionObjectives;
+  }
+
+  get quizLink(): string {
+    return this._quizLink;
+  }
+
+  get quizUrlCopied(): boolean {
+    return this._quizUrlCopied;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get dateFormat(): string {
+    return this._dateFormat;
+  }
+
+  get innovationStatus(): Array<InnovationStatus> {
+    return this._innovationStatus;
+  }
+
+  get domains(): Array<{ name: string }> {
+    return this._domains;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

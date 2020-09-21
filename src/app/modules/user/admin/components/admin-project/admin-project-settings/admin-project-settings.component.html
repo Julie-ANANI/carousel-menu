@@ -466,6 +466,35 @@
             </div>
             <!-- /public project -->
 
+            <!-- community -->
+            <div
+              *ngIf="canAccess(['view', 'community']) || canAccess(['edit', 'community'])"
+              class="content">
+
+              <label class="mxw-full">Publish to Community</label>
+
+              <span
+                *ngIf="canAccess(['edit', 'community'])"
+                [ngClass]="{'tooltip': !innovation.isPublic}"
+                data-tooltip="Publish to Showroom">
+                <label class="form-switch">
+                  <input
+                    (change)="onPublishCommunity($event)"
+                    [checked]="!!innovation['published']"
+                    [disabled]="!innovation.isPublic || !!innovation['published']"
+                    id="admin-project-community"
+                    type="checkbox">
+                  <i class="form-icon"></i> {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+                </label>
+              </span>
+
+              <span *ngIf="!canAccess(['edit', 'community'])" class="is-text">
+                {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+              </span>
+
+            </div>
+            <!-- /community -->
+
           </div>
 
         </div>

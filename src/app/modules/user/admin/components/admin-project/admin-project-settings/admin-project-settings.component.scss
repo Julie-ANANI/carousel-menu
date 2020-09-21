@@ -142,3 +142,56 @@
   }
 
 }
+
+@media screen and (max-width: $size-lg) {
+
+  #admin-project-settings {
+
+    .settings-wrapper {
+      flex-direction: column;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+  }
+
+}
+
+@media screen and (max-width: $size-sm) {
+
+  #admin-project-settings {
+
+    .settings-wrapper {
+
+      .content-wrapper {
+
+        .content-box {
+
+          .content {
+            padding-top: 25px;
+            flex-direction: column;
+            align-items: flex-start;
+
+            label:not(.form-switch) {
+              padding-bottom: 15px;
+            }
+
+            .edit-wrapper {
+
+              .is-text {
+                width: unset;
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

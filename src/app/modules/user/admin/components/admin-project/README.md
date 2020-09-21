@@ -9,9 +9,9 @@ Document link:
 
 1. SETTINGS: 
 
-<br><br>VIEW: Domain, Operator, Owner, Mission Team, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blocklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Project Restitution, Client Satisfaction, Mission Feedback, Statistics, 
+<br><br>VIEW: Domain, Operator, Owner, Mission Team, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blocklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Community, Go To Synthesis, Ending Mail Campaign, Project Restitution, Client Satisfaction, Mission Feedback, Statistics, 
 
-<br><br>EDIT: Domain, Operator, Owner, Mission Team, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blocklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Published Project, Go To Synthesis, Ending Mail Campaign, Client Satisfaction, Mission Feedback, Statistics, Validate Project, Project Revision.
+<br><br>EDIT: Domain, Operator, Owner, Mission Team, Roadmap, Mission Type, Main Objective, Commercial, Description, Language, Targeting, Blocklist, Status, Project Tags, Answers Tags, Answers Anonymous, Professional Identified, Ab Testing, Workflow Emails, Workflow Select, Launch Auto Batch, Insights To Validate, Public Project, Community, Go To Synthesis, Ending Mail Campaign, Client Satisfaction, Mission Feedback, Statistics, Validate Project, Project Revision.
 
 2. ANSWER TAGS: View, Edit, Add, Delete.
 
@@ -52,7 +52,7 @@ access: {
             settings: {
                 edit: {
                     statistics: true,
-                    publishedProject: true,
+                    community: true,
                     answersAnonymous: true,
                     projectTags: true,
                     roadmap: true,
