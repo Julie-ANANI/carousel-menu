@@ -29,7 +29,7 @@ Document link:
 
 4. WORKFLOWS: Edit, View, Import, Test, Delete. 
 
-5. BATCH: AutoBatch, Create, Pause, Edit, View, Delete.
+5. BATCH: AutoBatch, Create, Pause, Edit, View, Delete, Quiz.
 
 
 ### Example - Market Test Manager role
@@ -43,7 +43,8 @@ access: {
                         batch: {
                             edit: true,
                             pause: true,
-                            autoBatch: true
+                            autoBatch: true,
+                            quiz: true
                         },
                         workflows: {
                             test: true,

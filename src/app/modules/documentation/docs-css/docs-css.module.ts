@@ -101,7 +101,8 @@ import { MessageTemplate2Module } from '../../utility/messages/message-template-
     MessageTemplatesComponent
   ],
   exports: [
-    ModalComponent
+    ModalComponent,
+    TableComponent
   ]
 })
 

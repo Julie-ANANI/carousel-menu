@@ -6,7 +6,7 @@ import {Subject} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {StatsInterface} from '../../admin-stats-banner/admin-stats-banner.component';
-import {Mission, MissionType} from '../../../../../../models/mission';
+import {Milestone, Mission, MissionType} from '../../../../../../models/mission';
 import {User} from '../../../../../../models/user.model';
 import {HttpErrorResponse} from '@angular/common/http';
 import {MissionService} from '../../../../../../services/mission/mission.service';
@@ -509,6 +509,17 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       return this._innovation.tags;
     }
     return [];
+  }
+
+  get milestones(): Array<Milestone> {
+    if (this._mission.milestoneDates.length > 1) {
+      return this._mission.milestoneDates.sort((a, b) => {
+        const _dateA: any = new Date(a.dueDate);
+        const _dateB: any = new Date(b.dueDate);
+        return _dateA - _dateB;
+      });
+    }
+    return this._mission.milestoneDates;
   }
 
   get isLoading(): boolean {

@@ -191,7 +191,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'validationScore']),
           _isHidden: !this.canAccess(['tableColumns', 'validationScore']),
-          _width: '180px'},
+          _width: '180px'
+        },
         {
           _attrs: ['updated'],
           _name: 'Updated',

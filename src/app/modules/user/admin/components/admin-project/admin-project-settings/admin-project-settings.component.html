@@ -353,7 +353,7 @@
                     </span>
                     {{ innovation.created | date:dateFormat }} - Created
                   </li>
-                  <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
+                  <ng-container *ngFor="let milestone of milestones; let i = index;">
                     <li
                       [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span class="d-flex flex-d-column align-center">
