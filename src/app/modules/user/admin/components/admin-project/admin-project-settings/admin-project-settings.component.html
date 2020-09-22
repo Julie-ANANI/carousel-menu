@@ -10,6 +10,39 @@
   </section>
   <!-- /stats banner -->
 
+  <!-- action buttons -->
+  <section
+    *ngIf="innovation.status === 'SUBMITTED' && (canAccess(['edit', 'validateProject'])
+    || canAccess(['edit', 'projectRevision']))"
+    class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <div class="text-right p-top-30">
+
+        <!-- revision -->
+        <button
+          (click)="onRevisionProject($event)"
+          *ngIf="innovation.status === 'SUBMITTED' && canAccess(['edit', 'validateProject'])"
+          class="button is-danger is-outlined is-sm m-right-20"
+          id="btn-revision-project">
+          Ask for project revision
+        </button>
+        <!-- /revision -->
+
+        <!-- validate -->
+        <button
+          (click)="onValidateProject($event)"
+          *ngIf="innovation.status === 'SUBMITTED' && canAccess(['edit', 'validateProject'])"
+          class="button is-primary is-sm"
+          id="btn-validate-project">
+          Validate project
+        </button>
+        <!-- /validate -->
+
+      </div>
+    </div>
+  </section>
+  <!-- /action buttons -->
+
   <!-- settings -->
   <div class="container fluid grid-2xl">
     <div class="column col-sm-12 col-11 col-mx-auto">

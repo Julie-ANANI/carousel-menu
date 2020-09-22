@@ -479,6 +479,27 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return 'NA';
   }
 
+  public onRevisionProject(event: Event) {
+    event.preventDefault();
+    if (this._innovation.status === 'SUBMITTED' && this.canAccess(['edit', 'projectRevision'])) {
+      this._innovation.status = 'EDITING';
+      this._saveProject('The project has been placed in revision status, ' +
+        'please notify the owner of the changes to be made.');
+    }
+  }
+
+  public onValidateProject(event: Event) {
+    event.preventDefault();
+    if (this.canAccess(['edit', 'validateProject']) && this._innovation.status === 'SUBMITTED') {
+      this._innovation.status = 'EVALUATING';
+      this._saveProject('The project has been validated.');
+      if (this._mission._id && this._mission.type === 'USER') {
+        this._mission.type = 'CLIENT';
+        this._saveMission('The market test type is now changed to Client.');
+      }
+    }
+  }
+
   public name(value: User): string {
     return UserFrontService.fullName(value);
   }
