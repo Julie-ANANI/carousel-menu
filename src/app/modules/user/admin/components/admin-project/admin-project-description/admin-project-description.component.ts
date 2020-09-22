@@ -56,6 +56,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _isSavingMedia = false;
 
+  private _isEditableComment = false;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
               private _translationService: TranslationService,
@@ -68,6 +70,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation || <Innovation>{};
+      this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EVALUATING');
       this._initToggle();
     });
 
@@ -172,6 +175,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._toggleSuggestion[i] = !!this.activeInnovCard.operatorComment.sections[i].suggestion;
     }
 
+  }
+
+  public zoneData(property: string, type: 'comment' | 'suggestion', index?: number) {
+    if (property !== 'sections') {
+      return this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment[property]
+        && this.activeInnovCard.operatorComment[property][type] ? this.activeInnovCard.operatorComment[property][type] : '';
+    } else {
+      return this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections
+        && this.activeInnovCard.operatorComment.sections.length && this.activeInnovCard.operatorComment.sections[index]
+        && this.activeInnovCard.operatorComment.sections[index][type] ? this.activeInnovCard.operatorComment.sections[index][type] : '';
+    }
   }
 
   public onToggleComment(event: Event, property: string) {
@@ -372,6 +386,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get isSavingMedia(): boolean {
     return this._isSavingMedia;
+  }
+
+  get isEditableComment(): boolean {
+    return this._isEditableComment;
   }
 
   ngOnDestroy(): void {

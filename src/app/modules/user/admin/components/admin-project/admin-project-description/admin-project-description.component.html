@@ -76,15 +76,15 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
                 <app-text-zone
                   (onTextChange)="onCommentChange($event, 'title', 'comment')"
-                  [data]="activeInnovCard.operatorComment.title.comment"
+                  [data]="zoneData('title', 'comment')"
                   id="title-comment">
                 </app-text-zone>
               </div>
-              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleComment.title}" class="message">
-                <p [innerHTML]="activeInnovCard.operatorComment.title.comment" class="message-body"></p>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="message">
+                <p [innerHTML]="zoneData('title', 'comment')" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -105,15 +105,15 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="box-shadow">
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="box-shadow">
                 <app-text-zone
                   (onTextChange)="onCommentChange($event, 'title', 'suggestion')"
-                  [data]="activeInnovCard.operatorComment.title.suggestion"
+                  [data]="zoneData('title', 'suggestion')"
                   id="title-suggestion">
                 </app-text-zone>
               </div>
-              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="message">
-                <p [innerHTML]="activeInnovCard.operatorComment.title.suggestion" class="message-body"></p>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="message">
+                <p [innerHTML]="zoneData('title', 'suggestion')" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -198,15 +198,15 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
                 <app-text-zone
                   (onTextChange)="onCommentChange($event, 'summary', 'comment')"
-                  [data]="activeInnovCard.operatorComment.summary.comment"
+                  [data]="zoneData('summary', 'comment')"
                   id="summary-comment">
                 </app-text-zone>
               </div>
-              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleComment.summary}" class="message">
-                <p [innerHTML]="activeInnovCard.operatorComment.summary.comment" class="message-body"></p>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="message">
+                <p [innerHTML]="zoneData('summary', 'comment')" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -227,15 +227,15 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="box-shadow">
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="box-shadow">
                 <app-text-zone
                   (onTextChange)="onCommentChange($event, 'summary', 'suggestion')"
-                  [data]="activeInnovCard.operatorComment.summary.suggestion"
+                  [data]="zoneData('summary', 'suggestion')"
                   id="summary-suggestion">
                 </app-text-zone>
               </div>
-              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="message">
-                <p [innerHTML]="activeInnovCard.operatorComment.summary.suggestion" class="message-body"></p>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="message">
+                <p [innerHTML]="zoneData('summary', 'suggestion')" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -362,15 +362,21 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditable" [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}" class="box-shadow">
+              <div
+                *ngIf="isEditableComment"
+                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
+                class="box-shadow">
                 <app-text-zone
                   (onTextChange)="onCommentChange($event, 'sections', 'comment', i)"
-                  [data]="activeInnovCard.operatorComment.sections[i]['comment']"
+                  [data]="zoneData('sections', 'comment', i)"
                   [id]="section.type.toLowerCase()+'-'+i+3+'-comment'">
                 </app-text-zone>
               </div>
-              <div *ngIf="!isEditable" [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}" class="message">
-                <p [innerHTML]="activeInnovCard.operatorComment.sections[i]['comment']" class="message-body"></p>
+              <div
+                *ngIf="!isEditableComment"
+                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
+                class="message">
+                <p [innerHTML]="zoneData('sections', 'comment', i)" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -392,20 +398,20 @@
             </div>
             <div class="m-top-20">
               <div
-                *ngIf="isEditable"
+                *ngIf="isEditableComment"
                 [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
                 class="box-shadow">
                 <app-text-zone
                   (onTextChange)="onCommentChange($event, 'sections', 'suggestion', i)"
-                  [data]="activeInnovCard.operatorComment.sections[i]['suggestion']"
+                  [data]="zoneData('sections', 'suggestion', i)"
                   [id]="section.type.toLowerCase()+'-'+i+3+'-suggestion'">
                 </app-text-zone>
               </div>
               <div
-                *ngIf="!isEditable"
+                *ngIf="!isEditableComment"
                 [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
                 class="message">
-                <p [innerHTML]="activeInnovCard.operatorComment.sections[i]['suggestion']" class="message-body"></p>
+                <p [innerHTML]="zoneData('sections', 'suggestion', i)" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -441,7 +447,9 @@
           <div class="form-group">
             <div class="title-wrapper">
               <label class="form-label">
-                <span class="shape is-rounded bg-draft">{{ activeInnovCard.sections.length + 3 }}</span>
+                <span class="shape is-rounded bg-draft">
+                  {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
+                </span>
                 Add medias
               </label>
             </div>
