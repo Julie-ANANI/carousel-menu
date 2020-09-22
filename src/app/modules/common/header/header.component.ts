@@ -1,7 +1,7 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
-import { Location } from '@angular/common';
+import {isPlatformBrowser, Location} from '@angular/common';
 import { User } from '../../../models/user.model';
 import { initTranslation, TranslateService } from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
@@ -107,6 +107,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _isMainDomain = environment.domain === 'umi';
 
+  isLoading = true;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _location: Location,
@@ -129,9 +131,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((state) => {
-      this._hide = state;
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((state) => {
+        this._hide = state;
+      });
+      this.isLoading = false;
+    }
   }
 
   @HostListener('window:resize', ['$event'])

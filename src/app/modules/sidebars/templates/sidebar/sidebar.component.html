@@ -1,6 +1,6 @@
 <div
+  *ngIf="!isLoading"
   [@animateSidebar]="template.animate_state"
-  [hidden]="isLoading"
   [ngStyle]="{ 'width': template.size }"
   class="sidebar is-right">
   <div #content class="sidebar-container">

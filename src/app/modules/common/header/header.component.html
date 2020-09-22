@@ -227,11 +227,12 @@
 <div
   (click)="closeSidebar()"
   [@animateSidebarBackdrop]="sidebarValues.animate_state"
+  *ngIf="!isLoading"
   class="sidebar-backdrop"
   id="header-sidebar">
 </div>
 
-<div class="sidebar" [@animateSidebar]="sidebarValues.animate_state">
+<div *ngIf="!isLoading" [@animateSidebar]="sidebarValues.animate_state" class="sidebar">
   <div class="sidebar-container">
     <nav class="navbar-sidebar">
       <div class="navbar-menu">
