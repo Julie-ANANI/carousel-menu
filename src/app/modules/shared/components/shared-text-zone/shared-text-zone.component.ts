@@ -129,7 +129,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
   private _setContent(content: string) {
     this.editor.setContent(content);
-    this.editor.focus();
+    // this.editor.focus();
   }
 
   _configEditor(name: string) {

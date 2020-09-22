@@ -21,7 +21,7 @@
         <!-- revision -->
         <button
           (click)="onRevisionProject($event)"
-          *ngIf="innovation.status === 'SUBMITTED' && canAccess(['edit', 'validateProject'])"
+          *ngIf="canAccess(['edit', 'validateProject'])"
           class="button is-danger is-outlined is-sm m-right-20"
           id="btn-revision-project">
           Ask for project revision
@@ -31,7 +31,7 @@
         <!-- validate -->
         <button
           (click)="onValidateProject($event)"
-          *ngIf="innovation.status === 'SUBMITTED' && canAccess(['edit', 'validateProject'])"
+          *ngIf="canAccess(['edit', 'validateProject'])"
           class="button is-primary is-sm"
           id="btn-validate-project">
           Validate project
@@ -542,7 +542,7 @@
 
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="!!canAccess() && !isLoading" [(template)]="sidebarValue">
 
   <!-- tags -->
   <app-sidebar-tags
