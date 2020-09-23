@@ -242,9 +242,9 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._project.innovationCards.push(card);
         this._setInnovation();
         this._isAddingCard = false;
-        this.closeModal();
         this._translateNotificationsService.success('Success',
           `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
+        this.closeModal();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._isAddingCard = false;
@@ -263,9 +263,9 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._project.innovationCards = this._project.innovationCards.filter((value) => value._id !== this._cardToDelete._id);
         this._setInnovation();
         this._isDeletingCard = false;
-        this.closeModal();
         this._translateNotificationsService.success('Success',
           `The project has been deleted in the ${this._cardToDelete.lang === 'fr' ? 'French' : 'English'} language.`);
+        this.closeModal();
       }, (err: HttpErrorResponse) => {
         this._cardToDelete = <InnovCard>{};
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));

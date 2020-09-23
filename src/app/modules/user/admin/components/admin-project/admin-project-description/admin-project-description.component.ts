@@ -70,7 +70,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation || <Innovation>{};
-      this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EVALUATING');
+      this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EDITING');
       this._initToggle();
     });
 
