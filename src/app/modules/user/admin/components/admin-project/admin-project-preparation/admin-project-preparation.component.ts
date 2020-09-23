@@ -56,6 +56,8 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _toBeSaved = false;
 
+  private _isLoadingCampaign = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
               private _router: Router,
@@ -108,8 +110,12 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   public setCampaign(campaign: Campaign) {
+    this._isLoadingCampaign = true;
     this._selectedCampaign = campaign;
     this._campaignFrontService.setActiveCampaign(this._selectedCampaign);
+    setTimeout(() => {
+      this._isLoadingCampaign = false;
+    }, 500);
   }
 
   public setPageTitle(tab?: string) {
@@ -354,6 +360,10 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   get toBeSaved(): boolean {
     return this._toBeSaved;
+  }
+
+  get isLoadingCampaign(): boolean {
+    return this._isLoadingCampaign;
   }
 
   ngOnDestroy(): void {
