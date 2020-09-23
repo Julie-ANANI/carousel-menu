@@ -84,18 +84,26 @@
         'flex-between': canAccess(['autoBatch']) && canAccess(['create']) }"
         class="m-bottom-30 animate-fade is-7">
 
-        <!-- autobatch -->
-        <div *ngIf="canAccess(['autoBatch'])" class="form-group m-bottom-15 m-right-25">
-          <label class="form-switch text-medium text-notify" for="result-auto-batch">
-            <input
-              (change)="onSwitchAutoBatch($event)"
-              [ngModel]="campaign.autoBatch"
-              id="result-auto-batch"
-              type="checkbox">
-            <i class="form-icon"></i> Auto-batch started
-          </label>
+        <!-- autobatch / to send -->
+        <div class="d-flex align-center m-bottom-15 m-right-25">
+
+          <div *ngIf="canAccess(['autoBatch'])" class="form-group m-right-30">
+            <label class="form-switch text-medium text-notify" for="result-auto-batch">
+              <input
+                (change)="onSwitchAutoBatch($event)"
+                [ngModel]="campaign.autoBatch"
+                id="result-auto-batch"
+                type="checkbox">
+              <i class="form-icon"></i> Auto-batch started
+            </label>
+          </div>
+
+          <div class="m-bottom-2 text-sm text-medium">
+            To send: {{ innovation.stats && innovation.stats['emailsOK'] }}
+          </div>
+
         </div>
-        <!-- /autobatch -->
+        <!-- /autobatch / to send -->
 
         <!-- new batch -->
         <button

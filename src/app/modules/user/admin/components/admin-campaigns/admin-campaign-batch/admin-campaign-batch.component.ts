@@ -17,6 +17,8 @@ import {RolesFrontService} from "../../../../../../services/roles/roles-front.se
 import {StatsInterface} from "../../admin-stats-banner/admin-stats-banner.component";
 import {Subject} from 'rxjs';
 import {QuizService} from '../../../../../../services/quiz/quiz.service';
+import {Innovation} from '../../../../../../models/innovation';
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
@@ -64,11 +66,14 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _quizLinks: Array<string> = [];
 
+  private _innovation: Innovation = <Innovation>{};
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
               private _campaignService: CampaignService,
               private _rolesFrontService: RolesFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateService: TranslateService) { }
 
@@ -87,6 +92,10 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._campaign = campaign;
         this._initCampaign();
       }
+    });
+
+    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._innovation = innovation || <Innovation>{};
     });
 
   }
@@ -693,6 +702,10 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   get quizLinks(): Array<string> {
     return this._quizLinks
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
   }
 
   ngOnDestroy(): void {

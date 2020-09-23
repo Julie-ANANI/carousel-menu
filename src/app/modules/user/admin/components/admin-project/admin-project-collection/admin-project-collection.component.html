@@ -15,16 +15,16 @@
 
         <!-- import -->
         <span
-          [ngClass]="{'tooltip': !selectedCampaign._id, 'm-right-25': canAccess(['export'])}"
+          [ngClass]="{'tooltip': !selectedCampaign, 'm-right-25': canAccess(['export'])}"
           data-tooltip="Select single campaign">
           <label
             *ngIf="canAccess(['import'])"
-            [ngClass]="{'disabled': !selectedCampaign._id}"
+            [ngClass]="{'disabled': !selectedCampaign}"
             class="button is-primary is-sm is-outlined m-bottom-15">
             <input
               #fileupload
               (change)="onImport(fileupload.files[0])"
-              *ngIf="selectedCampaign._id"
+              *ngIf="selectedCampaign"
               [hidden]="true"
               type="file"/>
             {{ isImportingAnswers ? 'importing...' : 'Import' }}
@@ -33,11 +33,11 @@
         <!-- /import -->
 
         <!-- export -->
-        <span [ngClass]="{'tooltip': !selectedCampaign._id}" data-tooltip="Select single campaign">
+        <span [ngClass]="{'tooltip': !selectedCampaign}" data-tooltip="Select single campaign">
           <button
             (click)="onExport()"
             *ngIf="canAccess(['export'])"
-            [disabled]="!selectedCampaign._id"
+            [disabled]="!selectedCampaign"
             class="button is-primary is-sm m-bottom-15"
             id="btn-export-answers">
             Export
@@ -51,7 +51,9 @@
       <!-- table -->
       <section>
         <app-shared-table
+          (customFilter)="onCustomFilter($event)"
           (editRow)="onEdit($event)"
+          (performAction)="onActions($event)"
           [(config)]="localConfig"
           [data]="tableData">
         </app-shared-table>
@@ -66,7 +68,7 @@
 
 <!-- sidebar insight preview -->
 <app-sidebar
-  *ngIf="allAnswers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
+  *ngIf="answers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
   [(template)]="sidebarValue">
   <app-sidebar-user-answer
     [adminMode]="canAccess(['edit'])"

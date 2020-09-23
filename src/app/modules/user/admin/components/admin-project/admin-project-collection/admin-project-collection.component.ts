@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Innovation} from '../../../../../../models/innovation';
 import {Subject} from 'rxjs';
 import {isPlatformBrowser} from '@angular/common';
@@ -10,15 +10,13 @@ import {ConfigService} from '../../../../../../services/config/config.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {Campaign} from '../../../../../../models/campaign';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {AnswerService} from '../../../../../../services/answer/answer.service';
 import {Table} from '../../../../../table/models/table';
 import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
-import {Answer} from '../../../../../../models/answer';
+import {Answer, AnswerStatus} from '../../../../../../models/answer';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {Question} from '../../../../../../models/question';
-import {CampaignService} from '../../../../../../services/campaign/campaign.service';
 import {Section} from '../../../../../../models/section';
 import {Company} from '../../../../../../models/company';
 
@@ -27,48 +25,39 @@ import {Company} from '../../../../../../models/company';
   styleUrls: ['./admin-project-collection.component.scss']
 })
 
-export class AdminProjectCollectionComponent implements OnInit {
+export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
-  isLoading = true;
+  private _isLoading = true;
 
-  innovation: Innovation = <Innovation>{};
+  private _innovation: Innovation = <Innovation>{};
 
-  statsConfig: Array<StatsInterface> = [];
+  private _statsConfig: Array<StatsInterface> = [];
 
-  localConfig: Config = {
+  private _localConfig: Config = {
     fields: '',
     limit: this._configService.configLimit('admin-project-collection'),
     offset: '0',
     search: '{}',
-    $or: '[{"_id": "5f03324de410e50c0171fd4b"}, {"_id": "5b17d0520a7f5bd3b779f728"}]',
     sort: '{ "created": -1 }'
   };
 
-  campaignConfig: Config = {
-    fields: '',
-    limit: '',
-    offset: '0',
-    search: '{}',
-    sort: '{ "created": -1 }'
-  }
+  private _selectedCampaign = '';
 
-  selectedCampaign: Campaign = <Campaign>{};
+  private _isImportingAnswers = false;
 
-  isImportingAnswers = false;
+  private _tableData: Table = <Table>{};
 
-  totalAnswers = -1;
+  private _answers: Array<Answer> = [];
 
-  tableData: Table = <Table>{};
+  private _sidebarAnswer: Answer = <Answer>{};
 
-  allAnswers: Array<Answer> = [];
+  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  sidebarAnswer: Answer = <Answer>{};
+  private _questions: Array<Question> = [];
 
-  sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _excludedCompanies: Array<Company> = [];
 
-  questions: Array<Question> = [];
-
-  excludedCompanies: Array<Company> = [];
+  private _campaignList: Array<{_name: '', _alias: ''}> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -76,64 +65,109 @@ export class AdminProjectCollectionComponent implements OnInit {
               private _configService: ConfigService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _answerService: AnswerService,
-              private _campaignService: CampaignService,
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this.isLoading = false;
-      this._initTable();
-      this._setStats();
+      this._isLoading = false;
+      this._initVariables(this._answers, -1);
 
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-        this.innovation = innovation || <Innovation>{};
+        this._innovation = innovation || <Innovation>{};
+        this._getAnswers();
         this._initQuestions();
-        this.excludedCompanies = this.innovation && this.innovation.settings && this.innovation.settings.companies
-          && this.innovation.settings.companies.exclude;
-
-        /*'$or': JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'}]),
-          $or: '[{"_id": "5f03324de410e50c0171fd4b"}, {"_id": "5b17d0520a7f5bd3b779f728"}]',
-        this.campaignConfig*/
-        console.log(this.innovation.campaigns);
+        this._excludedCompanies = this._innovation && this._innovation.settings && this._innovation.settings.companies
+          && this._innovation.settings.companies.exclude;
       });
 
     }
+  }
+
+  private _getAnswers() {
+    this._answerService.innovationAnswers(this._innovation._id).pipe(first()).subscribe((response) => {
+      this._answers = response.answers;
+      this._answers.forEach((answer) => {
+        if (this._campaignList.findIndex((list) => list._name === answer.campaign['_id']) === -1) {
+          this._campaignList.push({
+            _name: answer.campaign['_id'],
+            _alias: answer.campaign['title']
+          });
+        }
+      });
+      this._initAnswers();
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Answers Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+  }
+
+  private _initAnswers() {
+    if (this._selectedCampaign) {
+      const _filterAnswers = this._answers.filter((answer) => {
+        return answer.campaign['_id'] === this._selectedCampaign;
+      });
+      this._initVariables(_filterAnswers, _filterAnswers.length);
+    } else {
+      this._initVariables(this._answers, this._answers.length);
+    }
+  }
+
+  private _initVariables(answers: Array<Answer>, totalAnswers: number) {
+    this._setStats(answers);
+    this._initTable(answers, totalAnswers);
   }
 
   private _initQuestions() {
-    if (this.innovation.preset && this.innovation.preset.sections && Array.isArray(this.innovation.preset.sections)) {
-      this.innovation.preset.sections.forEach((section: Section) => {
-        this.questions = this.questions.concat(section.questions || []);
+    if (this._innovation.preset && this._innovation.preset.sections && Array.isArray(this._innovation.preset.sections)) {
+      this._innovation.preset.sections.forEach((section: Section) => {
+        this._questions = this._questions.concat(section.questions || []);
       });
     }
   }
 
-  private _campaignStat(type: string, searchKey?: any): number {
-    return CampaignFrontService.answerStat(this.allAnswers, type, searchKey);
+  private static _campaignStat(answers: Array<Answer>, type: string, searchKey?: any): number {
+    return CampaignFrontService.answerStat(answers, type, searchKey);
   }
 
-  private _setStats() {
-    this.statsConfig = [
+  private _setStats(answers: Array<Answer>) {
+    this._statsConfig = [
       {
         heading: 'Answers',
         content: [
-          { subHeading: 'Answer rate', value: this._campaignStat('answer_rate').toString(10) },
-          { subHeading: 'Validated', value: this._campaignStat('status', 'VALIDATED').toString(10) },
+          {
+            subHeading: 'Answer rate',
+            value: AdminProjectCollectionComponent._campaignStat(answers, 'answer_rate').toString(10)
+          },
+          {
+            subHeading: 'Validated',
+            value: AdminProjectCollectionComponent._campaignStat(answers,'status',
+              'VALIDATED').toString(10)
+          },
           {
             subHeading: 'Auto-validated',
-            value: this._campaignStat('status', 'VALIDATED_UMIBOT').toString(10)
+            value: AdminProjectCollectionComponent._campaignStat(answers,'status',
+              'VALIDATED_UMIBOT').toString(10)
           },
           {
             subHeading: 'Auto-rejected',
-            value: this._campaignStat('status', 'REJECTED_UMIBOT').toString(10)
+            value: AdminProjectCollectionComponent._campaignStat(answers,'status',
+              'REJECTED_UMIBOT').toString(10)
           },
-          { subHeading: 'Submitted', value: this._campaignStat('status', 'SUBMITTED').toString(10) },
+          {
+            subHeading: 'Submitted',
+            value: AdminProjectCollectionComponent._campaignStat(answers,'status',
+              'SUBMITTED').toString(10) },
           {
             subHeading: 'Rejected by email',
-            value: this._campaignStat('status', 'REJECTED_GMAIL').toString(10)
+            value: AdminProjectCollectionComponent._campaignStat(answers,'status',
+              'REJECTED_GMAIL').toString(10)
           },
-          { subHeading: 'Rejected', value: this._campaignStat('status', 'REJECTED').toString(10) }
+          {
+            subHeading: 'Rejected',
+            value: AdminProjectCollectionComponent._campaignStat(answers, 'status',
+              'REJECTED').toString(10)
+          }
         ]
       }
     ];
@@ -145,35 +179,37 @@ export class AdminProjectCollectionComponent implements OnInit {
   }
 
   public onImport(file: File) {
-    if (!this.isImportingAnswers && this.selectedCampaign._id) {
-      this.isImportingAnswers = true;
-      this._answerService.importAsCsv(this.selectedCampaign._id, file).pipe(first()).subscribe(() => {
+    if (!this._isImportingAnswers && this._selectedCampaign) {
+      this._isImportingAnswers = true;
+      this._answerService.importAsCsv(this._selectedCampaign, file).pipe(first()).subscribe(() => {
         this._translateNotificationsService.success('Success', 'The answers has been imported.');
-        this.isImportingAnswers = false;
+        this._isImportingAnswers = false;
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorMessage(err.status));
-        this.isImportingAnswers = false
+        this._isImportingAnswers = false
         console.error(err);
       });
     }
   }
 
   public onExport() {
-    if (this.selectedCampaign._id) {
-      this._answerService.exportAsCsvByCampaign(this.selectedCampaign._id, false);
+    if (this._selectedCampaign) {
+      this._answerService.exportAsCsvByCampaign(this._selectedCampaign, false);
     }
   }
 
-  private _initTable() {
-    this.tableData = {
+  private _initTable(answers: Array<Answer>, totalAnswers: number) {
+    this._tableData = {
       _selector: 'admin-project-collection',
       _title: 'answers',
-      _content: this.allAnswers,
-      _total: this.totalAnswers,
+      _content: answers,
+      _total: totalAnswers,
       _isPaginable: true,
       _isTitle: true,
       _isLocal: true,
-      _isNoMinHeight: this.totalAnswers < 11,
+      _hasCustomFilters: true,
+      _isNoMinHeight: totalAnswers < 11,
+      _clickIndex: (this.canAccess(['view']) || this.canAccess(['edit'])) ? 1 : null,
       _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isSelectable: this.canAccess(['validate']) || this.canAccess(['reject']),
       _buttons: [
@@ -244,24 +280,126 @@ export class AdminProjectCollectionComponent implements OnInit {
           ]
         },
         {
-          _attrs: ['campaign'],
+          _attrs: ['campaign._id'],
           _name: 'Campaign',
           _type: 'MULTI-CHOICES',
           _isSearchable: true,
           _isHidden: true,
-          _choices: []
+          _isCustomFilter: true,
+          _choices: this._campaignList
         }
       ]
     }
   }
 
   public onEdit(answer: Answer) {
-    this.sidebarAnswer = answer;
-    this.sidebarValue = {
+    this._sidebarAnswer = answer;
+    this._sidebarValue = {
       animate_state: 'active',
       title: 'Insight',
       size: '726px'
     };
+  }
+
+  public onCustomFilter(filter: {key: string, value: any}) {
+    this._selectedCampaign = filter.value.toString();
+    this._initAnswers();
+  }
+
+  public onActions(action: any) {
+    switch (action._label) {
+      case 'Validate':
+        this._updateStatus(action._rows, 'VALIDATED');
+        break;
+
+      case 'Reject':
+        this._updateStatus(action._rows, 'REJECTED');
+        break;
+    }
+  }
+
+  private _updateStatus(answers: Answer[], status: AnswerStatus) {
+    answers.forEach((answer: Answer, index) => {
+      answer.status = status;
+      this._answerService.save(answer._id, answer).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('Success', 'The answer has been updated.');
+        if (index === (answers.length - 1)) {
+          this._getAnswers();
+        }
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Answer Update Error...', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    });
+  }
+
+  get localConfig(): Config {
+    return this._localConfig;
+  }
+
+  set localConfig(value: Config) {
+    this._localConfig = value;
+  }
+
+  get sidebarAnswer(): Answer {
+    return this._sidebarAnswer;
+  }
+
+  set sidebarAnswer(value: Answer) {
+    this._sidebarAnswer = value;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get statsConfig(): Array<StatsInterface> {
+    return this._statsConfig;
+  }
+
+  get selectedCampaign(): string {
+    return this._selectedCampaign;
+  }
+
+  get isImportingAnswers(): boolean {
+    return this._isImportingAnswers;
+  }
+
+  get tableData(): Table {
+    return this._tableData;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
+  }
+
+  get excludedCompanies(): Array<Company> {
+    return this._excludedCompanies;
+  }
+
+  get campaignList(): Array<{ _name: ""; _alias: "" }> {
+    return this._campaignList;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

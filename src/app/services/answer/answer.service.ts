@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class AnswerService {
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) { }
 
   public create(answerObj: Answer): Observable<any> {
     return this._http.post('/answer', answerObj);
@@ -55,6 +54,13 @@ export class AnswerService {
 
   public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
     return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous : ''}`);
+  }
+
+  public innovationAnswers(innovationId: string, anonymous = false): Observable<{answers: Array<Answer>}> {
+    const _status = ['SUBMITTED', 'REJECTED', 'VALIDATED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT', 'REJECTED_GMAIL'];
+    return this._http.get<{answers: Array<Answer>}>(
+      `/innovation/${innovationId}/validAnswers?anonymous=${anonymous}&answers=${_status.join(',')}`
+    );
   }
 
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {

@@ -14,7 +14,7 @@
           </span>
           <span
             (click)="onClickSee($event, 'interview')"
-            *ngIf="canAccess(['workflow', 'view'])"
+            *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
             [ngStyle]="{ 'margin-top': '3px' }"
             class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
@@ -38,7 +38,7 @@
           </span>
           <span
             (click)="onClickSee($event, 'opening')"
-            *ngIf="canAccess(['workflow', 'view'])"
+            *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
             [ngStyle]="{ 'margin-top': '3px' }"
             class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
@@ -62,7 +62,7 @@
           </span>
           <span
             (click)="onClickSee($event, 'noFollow')"
-            *ngIf="canAccess(['workflow', 'view'])"
+            *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
             [ngStyle]="{ 'margin-top': '3px' }"
             class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}

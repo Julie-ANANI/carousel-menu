@@ -87,6 +87,11 @@ export class TableComponent {
    */
   @Output() dropdownAction: EventEmitter<{content: any, item: Choice}> = new EventEmitter<{content: any, item: Choice}>();
 
+  /***
+   * output the custom filter value when changes in the Search bar.
+   */
+  @Output() customFilter: EventEmitter<{key: string, value: any}> = new EventEmitter<{key: string, value: any}>();
+
   private _table: Table;
 
   private _isSearching: boolean;
@@ -164,7 +169,7 @@ export class TableComponent {
         parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10 :
         rows.length;
 
-      this._table._total = rows.length;
+      this._table._total = this._table._total === -1 ? this._table._total : rows.length;
 
       if (this._pagination.offset >= this._table._total) {
         this._pagination.offset = 0;
@@ -829,6 +834,16 @@ export class TableComponent {
     if (this._table._isLocal) {
       this._localStorageService.setItem('table-search', 'active');
       this._setFilteredContent();
+
+      if (this._table._hasCustomFilters) {
+        this.customFilter.emit({key: '', value: ''});
+        for (const key of Object.keys(this._config)) {
+          if (this._table._columns.find((col) => col._isCustomFilter && col._attrs[0] === key)) {
+            this.customFilter.emit({key: key, value: this._config[key]});
+          }
+        }
+      }
+
     } else {
       this._emitConfigChange();
     }
