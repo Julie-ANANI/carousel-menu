@@ -86,6 +86,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _statsConfig: Array<StatsInterface> = [];
 
+  private _missionTeam: string[];
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -114,6 +116,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
         if (!!this._innovation.mission) {
           this._mission = <Mission>this._innovation.mission;
+          this._missionTeam = this._mission.team.map((user: User) => user.id);
         }
 
         if (!!this._innovation.clientProject) {
@@ -223,11 +226,13 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onChangeMissionTeam(operator: User) {
-    const _index = this._mission.team.findIndex((op: any) => op._id === operator['_id']);
+    const _index = this._mission.team.findIndex((op) => op.id === operator['_id']);
     if (_index > -1) {
-      this._mission.team = this._mission.team.slice(_index, 1);
+      this._mission.team.splice(_index, 1);
+      this._missionTeam.splice(_index, 1);
     } else {
       this._mission.team.push(operator);
+      this._missionTeam.push(operator['_id']);
     }
     this._saveMission('The team members have been updated.');
   }
@@ -286,7 +291,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public isTeamMember(operatorId: string): boolean {
-    const _index = this._mission.team && this._mission.team.findIndex((member: any) => member._id === operatorId);
+    const _index = this._missionTeam && this._missionTeam.findIndex((id) => id === operatorId);
     return _index > -1;
   }
 
@@ -600,6 +605,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get statsConfig(): Array<StatsInterface> {
     return this._statsConfig;
+  }
+
+  get missionTeam(): string[] {
+    return this._missionTeam;
   }
 
   ngOnDestroy(): void {
