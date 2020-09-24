@@ -34,7 +34,6 @@ interface UserSuggestion {
 }
 
 @Component({
-  selector: 'app-admin-project-settings',
   templateUrl: './admin-project-settings.component.html',
   styleUrls: ['./admin-project-settings.component.scss']
 })

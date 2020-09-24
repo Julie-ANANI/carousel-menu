@@ -156,6 +156,7 @@ export const COMMON = {
     'COMMENT': 'Commentaire',
     'SUGGESTION': 'Suggestion',
     'OR': 'Ou',
+    'PREPARATION': 'Préparation'
   },
 
   'PLACEHOLDER': {
