@@ -255,7 +255,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public onOperatorChange(operatorId: string) {
     const _index = this._operators.findIndex((op: any) => op._id === operatorId);
     this._innovation.operator = _index !== -1 ? this._operators[_index] : null;
-    this._saveProject('The operator has been updated.')
+
+    if (!this.isTeamMember(operatorId) && this._operators[_index]) {
+      this._mission.team.push(this._operators[_index]);
+      this._missionTeam.push(operatorId);
+      this._saveMission('The team members have been updated.');
+    }
+
+    this._saveProject('The operator has been updated.');
   }
 
   private _saveProject(notifyMessage = 'The project has been updated.') {

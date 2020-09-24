@@ -22,6 +22,10 @@ export class RolesFrontService {
 		return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'tech');
 	}
 
+	public isOperSupervisorRole(): boolean {
+		return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'oper-supervisor');
+	}
+
 	public isCommunityRole(): boolean {
 		return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'community');
 	}

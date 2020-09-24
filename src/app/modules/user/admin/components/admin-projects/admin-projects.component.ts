@@ -308,8 +308,8 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  get isTech(): boolean {
-    return this._rolesFrontService.isTechRole();
+  get canImport(): boolean {
+    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
   }
 
   get config(): Config {

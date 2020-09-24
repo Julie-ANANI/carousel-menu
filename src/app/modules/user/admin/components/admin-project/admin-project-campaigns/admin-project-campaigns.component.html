@@ -12,10 +12,11 @@
       <section *ngIf="canAccess(['add'])" class="text-right p-bottom-50">
         <button
           (click)="onAddCampaign($event)"
+          [disabled]="isAddingCampaign"
           class="button is-primary is-shadowed is-sm"
           id="btn-add-campaign"
           type="button">
-          Add Campaign
+          {{ isAddingCampaign ? 'is adding...' : 'Add Campaign' }}
         </button>
       </section>
       <!-- /section add campaign -->

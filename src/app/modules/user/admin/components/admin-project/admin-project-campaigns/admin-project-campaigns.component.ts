@@ -53,6 +53,8 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   private _fetchingError = false;
 
+  private _isAddingCampaign = false;
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -105,23 +107,29 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
    */
   public onAddCampaign(event: Event) {
     event.preventDefault();
-    const _newTitle = this._innovation.name ? this._innovation.name : 'New campaign';
+    if (!this._isAddingCampaign) {
+      this._isAddingCampaign = true;
+      const _newTitle = this._innovation.name ? this._innovation.name : 'New campaign';
 
-    const _newCampaign: any = {
-      domain: environment.domain,
-      innovation: this._innovation._id,
-      owner: this._innovation.owner.id,
-      title: (this._campaigns.length + 1) + '. ' + _newTitle
-    };
+      const _newCampaign: any = {
+        domain: environment.domain,
+        innovation: this._innovation._id,
+        owner: this._innovation.owner.id,
+        title: (this._campaigns.length + 1) + '. ' + _newTitle
+      };
 
-    this._campaignService.create(_newCampaign).pipe(first()).subscribe((campaign: Campaign) => {
-      this._campaigns.push(campaign);
-      this._setAllCampaigns();
-      this._translateNotificationsService.success('Success', 'The new campaign is added.');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+      this._campaignService.create(_newCampaign).pipe(first()).subscribe((campaign: Campaign) => {
+        this._campaigns.push(campaign);
+        this._translateNotificationsService.success('Success', 'The new campaign is added.');
+        this._setAllCampaigns();
+        this._isAddingCampaign = false;
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isAddingCampaign = false;
+        console.error(err);
+      });
+
+    }
   }
 
   public onNavigation(campaign: Campaign) {
@@ -238,6 +246,10 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get isAddingCampaign(): boolean {
+    return this._isAddingCampaign;
   }
 
   ngOnDestroy(): void {

@@ -255,12 +255,16 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return MissionFrontService.objectiveInfo(<Mission>this.mission, 'FONT_AWESOME_ICON');
   }
 
+  get canImport(): boolean {
+    return this._rolesFrontService.isCommunityRole() || this.isTech || this.isOperSupervisor;
+  }
+
   get isTech(): boolean {
     return this._rolesFrontService.isTechRole();
   }
 
-  get isCommunity(): boolean {
-    return this._rolesFrontService.isCommunityRole();
+  get isOperSupervisor(): boolean {
+    return this._rolesFrontService.isOperSupervisorRole();
   }
 
   get fetchingError(): boolean {
