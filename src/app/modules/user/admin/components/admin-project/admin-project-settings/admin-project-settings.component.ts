@@ -236,19 +236,13 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._saveMission('The team members have been updated.');
   }
 
-  private _saveMission(notifyMessage = 'The project has been updated.', type?: 'OWNER') {
-
-    if (type === 'OWNER') {
-      this._mission.client = this._newOwner._id;
-    }
-
+  private _saveMission(notifyMessage = 'The project has been updated.') {
     this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
       this._translateNotificationsService.success('Success', notifyMessage);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Mission Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
-
   }
 
   public onOperatorChange(operatorId: string) {
@@ -258,10 +252,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     if (!this.isTeamMember(operatorId) && this._operators[_index]) {
       this._mission.team.push(this._operators[_index]);
       this._missionTeam.push(operatorId);
-      this._saveMission('The team members have been updated.');
     }
 
-    this._saveProject('The operator has been updated.');
+    this._saveProject('The operator and team members have been updated.');
+
   }
 
   private _saveProject(notifyMessage = 'The project has been updated.') {
@@ -280,12 +274,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._saveClientProject('The commercial has been updated.');
   }
 
-  private _saveClientProject(notifyMessage = 'The project has been updated.', type?: 'OWNER') {
-
-    if (type === 'OWNER') {
-      this._clientProject.client = this._newOwner._id;
-    }
-
+  private _saveClientProject(notifyMessage = 'The project has been updated.') {
     this._clientProjectService.save(this._clientProject._id, this._clientProject).pipe(first()).subscribe((clientProject: ClientProject) => {
       this._clientProject = clientProject;
       this._translateNotificationsService.success('Success' , notifyMessage);
@@ -359,8 +348,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._innovation.owner = <any>this._newOwner;
     this._saveProject('The owner has been updated.');
-    this._saveMission('The owner has been updated in the Mission.','OWNER');
-    this._saveClientProject('The owner has been updated in the Client project.', 'OWNER');
   }
 
   public onMainObjectiveChange(objective: string) {
@@ -503,11 +490,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (this.canAccess(['edit', 'validateProject']) && this._innovation.status === 'SUBMITTED') {
       this._innovation.status = 'EVALUATING';
-      this._saveProject('The project has been validated.');
       if (this._mission._id && this._mission.type === 'USER') {
         this._mission.type = 'CLIENT';
-        this._saveMission('The market test type is now changed to Client.');
       }
+      this._saveProject('The project has been validated.');
     }
   }
 

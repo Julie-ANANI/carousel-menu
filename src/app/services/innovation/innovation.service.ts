@@ -66,7 +66,11 @@ export class InnovationService {
   }*/
 
   public save(innovationId: string, innovationObj: Innovation): Observable<Innovation> {
-    return this._http.put<Innovation>('/innovation/' + innovationId, innovationObj);
+    const _fieldsToPopulate = ['tags', 'mission', 'owner', 'operator', 'collaborators', 'statusLogs', 'clientProject',
+      'principalMedia', 'innovationCards', 'campaigns'];
+    return this._http.put<Innovation>(
+      `/innovation/${innovationId}?fields=${_fieldsToPopulate.join(',')}`, innovationObj
+    );
   }
 
   public saveInnovationCardComment(innovationId: string, innovationCardId: string, commentObj: InnovCardComment): Observable<any> {
