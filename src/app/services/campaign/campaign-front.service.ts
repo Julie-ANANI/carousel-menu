@@ -126,7 +126,8 @@ export class CampaignFrontService {
           break;
 
         case 'bounces':
-          value = campaign.stats.nbProsReceived && campaign.stats.nbProsSent ? campaign.stats.nbProsSent - campaign.stats.nbProsReceived : 0;
+          value = campaign.stats.nbProsReceived && campaign.stats.nbProsSent
+            ? campaign.stats.nbProsSent - campaign.stats.nbProsReceived : 0;
           break;
 
         case 'opened':

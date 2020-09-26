@@ -14,7 +14,6 @@ import {isPlatformBrowser} from '@angular/common';
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RolesFrontService} from "../../../../../../services/roles/roles-front.service";
-import {StatsInterface} from "../../admin-stats-banner/admin-stats-banner.component";
 import {Subject} from 'rxjs';
 import {QuizService} from '../../../../../../services/quiz/quiz.service';
 import {Innovation} from '../../../../../../models/innovation';
@@ -136,38 +135,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public statsConfig(): Array<StatsInterface> {
-    return [
-      {
-        heading: 'Emails',
-        content: [
-          {subHeading: 'To send', value: this._campaignStat('good_emails').toString(10)},
-          {subHeading: 'Received', value: this._campaignStat('received').toString(10)},
-          {subHeading: 'Bounces', value: this._campaignStat('bounces').toString(10)}
-        ]
-      },
-      {
-        heading: 'Interaction',
-        content: [
-          {subHeading: 'Opened', value: this._campaignStat('opened') + '%'},
-          {subHeading: 'Clicked', value: this._campaignStat('clicked') + '%'},
-          {subHeading: 'Answer rate', value: this._campaignStat('answer_rate') + '%'},
-        ]
-      },
-      {
-        heading: 'Display',
-        content: [
-          {subHeading: 'Email', value: this._campaignStat('email').toString(10)},
-          {subHeading: 'Questionnaire', value: this._campaignStat('questionnaire').toString(10)},
-        ]
-      }
-    ];
-  }
-
-  private _campaignStat(searchKey: string): number {
-    return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
-  }
-
   private _reinitializeVariables() {
     this._stats = {};
     this._batchesTable = [];
@@ -185,7 +152,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         }
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Message Stats Error...', ErrorFrontService.getErrorMessage(err.status));
         this._isLoading = false;
         console.error(err);
       });
@@ -325,7 +292,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._getBatches();
         this._translateNotificationsService.success('Success', 'The stats have been updated.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Update Stats Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
     }
@@ -367,7 +334,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         : 'The autobatch is off for this campaign. No new batch will be created.';
       this._translateNotificationsService.success('Success', message);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Auto Batch Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -381,7 +348,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._translateNotificationsService.success('Success', 'The nuggets have been deactivated.');
       }
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Nuggets Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -416,7 +383,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       this._reinitializeVariables();
       this._getBatches();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Create Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
 
@@ -489,7 +456,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._translateNotificationsService.success('Success', 'The batch is deleted.');
       }, (err: HttpErrorResponse) => {
         this._isDeletingBatch = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Delete Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
     }
@@ -502,7 +469,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       this._translateNotificationsService.success('Success', 'The batch is frozen.');
     }, (err: HttpErrorResponse) => {
       (event.target as HTMLInputElement).checked = batch.active;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Freeze Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -589,7 +556,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       });
       this._translateNotificationsService.success('Success', 'The batch is updated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Update Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -611,7 +578,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     return this._campaign.settings && this._campaign.settings.emails && this._campaign.settings.emails.length !== 0;
   }
 
-  get innovationStatus() {
+  get innovationStatus(): boolean {
     return (this._campaign.innovation && this._campaign.innovation.status
       && (this._campaign.innovation.status === 'EVALUATING' || this._campaign.innovation.status === 'DONE'));
   }
@@ -624,8 +591,12 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     return this._campaign.settings && this._campaign.settings.defaultWorkflow ;
   }
 
-  get quiz() {
-    return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== '');
+  get quiz(): boolean {
+    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== '';
+  }
+
+  get toSend(): string {
+    return CampaignFrontService.getBatchCampaignStat(this._campaign, 'good_emails').toString(10);
   }
 
   get campaign() {
