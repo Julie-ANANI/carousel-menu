@@ -202,7 +202,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     } else {
       this.activeInnovCard.operatorComment.sections[index][type] = event.content;
     }
-    this.updateInnovation();
+    this.updateComment();
   }
 
   public onContentChange(event: { content: string }, property: string, index?: number) {
@@ -222,6 +222,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public updateInnovation() {
     this._innovationFrontService.setNotifyChanges(true);
+  }
+
+  public updateComment() {
+    this._innovationFrontService.setCardCommentNotifyChanges(true);
   }
 
   public openModal(event: Event, type: modalType, index?: number) {

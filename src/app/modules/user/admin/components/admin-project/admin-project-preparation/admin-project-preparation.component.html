@@ -95,15 +95,17 @@
             <!-- save -->
             <button
               *ngIf="canEditDescription || canEditTargeting"
-              (click)="onSaveProject($event)"
-              [disabled]="isSaving || !toBeSaved"
+              (click)="onSave($event)"
+              [disabled]="isSaving"
               [ngStyle]="{'min-width': '110px', 'padding-top': '9px', 'padding-bottom': '9px'}"
-              [ngClass]="{'is-saved': toBeSaved}"
+              [ngClass]="{'is-saved': toBeSaved || toBeSavedComment}"
               class="button is-sm is-outlined is-primary"
               id="btn-save"
               type="button">
               {{ isSaving ? 'saving the project...' : 'Save' }}
-              <span *ngIf="!isSaving && toBeSaved" class="shape is-circle"><i class="fas fa-save"></i></span>
+              <span *ngIf="!isSaving && (toBeSaved || toBeSavedComment)" class="shape is-circle">
+                <i class="fas fa-save"></i>
+              </span>
             </button>
             <!-- /save -->
 

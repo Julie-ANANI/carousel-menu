@@ -472,11 +472,11 @@ export class InnovationFrontService {
    * and we want to notify in the component that changes are to be saved.
    * @param value
    */
-  setCardCommentNotifyChanges(value: boolean) {
+  public setCardCommentNotifyChanges(value: boolean) {
     this._saveCommentSubject.next(value);
   }
 
-  getCardCommentNotifyChanges(): Subject<boolean> {
+  public getCardCommentNotifyChanges(): Subject<boolean> {
     return this._saveCommentSubject;
   }
 
