@@ -27,6 +27,7 @@ import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-inter
 import {Tag} from '../../../../../../models/tag';
 import {TranslateService} from '@ngx-translate/core';
 import {domainRegEx, emailRegEx} from '../../../../../../utils/regex';
+import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 
 interface UserSuggestion {
   name: string;
@@ -509,14 +510,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   get milestones(): Array<Milestone> {
-    if (this._mission.milestoneDates.length > 1) {
-      return this._mission.milestoneDates.sort((a, b) => {
-        const _dateA: any = new Date(a.dueDate);
-        const _dateB: any = new Date(b.dueDate);
-        return _dateA - _dateB;
-      });
-    }
-    return this._mission.milestoneDates;
+    return MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
   }
 
   get isLoading(): boolean {

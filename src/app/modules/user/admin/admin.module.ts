@@ -10,7 +10,6 @@ import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
 import { AdminMonitoringModule } from './components/admin-monitoring/admin-monitoring.module';
 import { AdminTagModule } from './components/admin-tags/admin-tag.module';
-import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
 import { LogoutModule } from '../../common/logout/logout.module';
@@ -29,7 +28,6 @@ import { AdminSettingsModule } from './components/admin-settings/admin-settings.
     AdminProfessionalsModule,
     AdminLibrariesModule,
     AdminTagModule,
-    AdminProjectModule,
     TranslateModule.forChild(),
     FormsModule,
     ReactiveFormsModule,

@@ -88,7 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       pageName: 'Settings',
       pageLink: '/user/admin/settings',
       key: 'settings',
-      subRoutes: ['blacklist', 'countries', 'enterprises'] },
+      subRoutes: ['blocklist', 'countries', 'enterprises'] },
     {
       pageName: 'Search',
       pageLink: '/user/admin/search',

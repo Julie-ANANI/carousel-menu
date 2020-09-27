@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { AdminCommunityRoutingModule } from './admin-community-routing.module';
 
 import { AdminCommunityComponent } from "./admin-community.component";
 
@@ -12,7 +13,6 @@ import { AdminCommunityMembersModule } from "./admin-community-members/admin-com
 import { AdminCommunityResponsesModule } from "./admin-community-answers/admin-community-responses.module";
 import { AdminCommunityProjectsModule } from "./admin-community-projects/admin-community-projects.module";
 import { SharedAmbassadorListModule } from "../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module";
-
 
 @NgModule({
   imports: [
@@ -25,7 +25,8 @@ import { SharedAmbassadorListModule } from "../../../../shared/components/shared
     RouterModule,
     AdminCommunityMembersModule,
     AdminCommunityResponsesModule,
-    AdminCommunityProjectsModule
+    AdminCommunityProjectsModule,
+    AdminCommunityRoutingModule
   ],
   declarations: [
     AdminCommunityComponent

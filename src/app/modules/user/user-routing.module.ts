@@ -20,7 +20,7 @@ const userRoutes: Routes = [
         loadChildren: '../.././modules/print/print-executive-report/print-executive-report.module#PrintExecutiveReportModule',
         resolve: { innovation : InnovationResolver },
         runGuardsAndResolvers: 'always',
-      },
+      }
     ]
   }
 ];

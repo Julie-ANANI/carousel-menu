@@ -10,6 +10,8 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { TableModule } from '../../../../table/table.module';
 import { AdminBatchesDisplayModule } from '../admin-batches-display/admin-batches-display.module';
 import { MessageErrorModule } from "../../../../utility/messages/message-error/message-error.module";
+import { AdminProjectsRoutingModule } from './admin-projects-routing.module';
+import { AdminProjectModule } from '../admin-project/admin-project.module';
 
 @NgModule({
   imports: [
@@ -21,7 +23,9 @@ import { MessageErrorModule } from "../../../../utility/messages/message-error/m
     PipeModule,
     RouterModule,
     AdminBatchesDisplayModule,
-    MessageErrorModule
+    MessageErrorModule,
+    AdminProjectsRoutingModule,
+    AdminProjectModule
   ],
   declarations: [
     AdminProjectsComponent

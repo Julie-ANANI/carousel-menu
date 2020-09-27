@@ -18,6 +18,7 @@ import { Collaborator } from '../../../../../../../models/collaborator';
 import { Invite } from '../../../../../../../services/invite/invite';
 import { User } from '../../../../../../../models/user.model';
 import { InnovCard } from '../../../../../../../models/innov-card';
+import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
 
 interface Section {
   name: string;
@@ -104,11 +105,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
         if (this._mission.milestoneDates.length > 1) {
-          this._mission.milestoneDates = this._mission.milestoneDates.sort((a, b) => {
-            const _dateA: any = new Date(a.dueDate);
-            const _dateB: any = new Date(b.dueDate);
-            return _dateA - _dateB;
-          });
+          this._mission.milestoneDates = MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
         }
       }
 

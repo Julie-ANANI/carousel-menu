@@ -13,6 +13,7 @@ import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/a
 import { RouterModule } from '@angular/router';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import { PaginationTemplate1Module } from '../../../../utility/paginations/pagination-template-1/pagination-template-1.module';
+import {AdminTagsRoutingModule} from './admin-tags-routing.module';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { PaginationTemplate1Module } from '../../../../utility/paginations/pagin
     PaginationTemplate1Module,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminTagsRoutingModule
   ],
   declarations: [
     AdminTagsComponent,

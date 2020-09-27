@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { AdminLibrariesRoutingModule } from './admin-libraries-routing.module';
 
 import { AdminLibrariesComponent } from './admin-libraries.component';
-import { AdminEmailBlacklistComponent } from '../admin-settings/admin-email-blacklist/admin-email-blacklist.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SharedSortModule } from '../../../../shared/components/shared-sort/shared-sort.module';
@@ -34,10 +34,10 @@ import { MessageErrorModule } from '../../../../utility/messages/message-error/m
     SidebarBlacklistModule,
     ModalModule,
     MessageErrorModule,
+    AdminLibrariesRoutingModule
   ],
   declarations: [
-    AdminLibrariesComponent,
-    AdminEmailBlacklistComponent
+    AdminLibrariesComponent
   ],
   exports: [
     AdminLibrariesComponent

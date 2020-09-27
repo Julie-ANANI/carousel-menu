@@ -400,8 +400,8 @@
               <div class="edit-wrapper">
 
                 <span class="is-text">
-                  {{ innovation.settings.blacklist.domains.length }} Domain(s) -
-                  {{ innovation.settings.blacklist.emails.length }} Email(s)
+                  {{ innovation.settings?.blacklist?.domains?.length }} Domain(s) -
+                  {{ innovation.settings?.blacklist?.emails?.length }} Email(s)
                 </span>
 
                 <div
@@ -564,8 +564,8 @@
   <app-sidebar-blacklist
     (toBlacklists)="addBlocklist($event)"
     *ngIf="sidebarValue.type === 'EXCLUDE_EMAILS_DOMAINS'"
-    [initialDomains]="innovation.settings.blacklist.domains"
-    [initialEmails]="innovation.settings.blacklist.emails"
+    [initialDomains]="innovation.settings?.blacklist?.domains"
+    [initialEmails]="innovation.settings?.blacklist?.emails"
     [isEditable]="canAccess(['edit', 'blocklist'])"
     [type]="sidebarValue.type">
   </app-sidebar-blacklist>

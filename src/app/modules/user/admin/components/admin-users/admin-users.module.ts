@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { AdminUsersRoutingModule } from './admin-users-routing.module';
 
 import { AdminUsersComponent } from './admin-users.component';
 
@@ -23,7 +24,8 @@ import { MessageErrorModule } from "../../../../utility/messages/message-error/m
     FormsModule,
     SidebarUserFormModule,
     ModalModule,
-    MessageErrorModule
+    MessageErrorModule,
+    AdminUsersRoutingModule
   ],
   declarations: [
     AdminUsersComponent
