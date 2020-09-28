@@ -107,7 +107,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _isMainDomain = environment.domain === 'umi';
 
-  isLoading = true;
+  private _isLoading = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
@@ -135,7 +135,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((state) => {
         this._hide = state;
       });
-      this.isLoading = false;
+      this._isLoading = false;
     }
   }
 
@@ -204,7 +204,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public adminRouteLink(key: string, pageLink: string, subRoutes?: Array<string>) {
-    if (subRoutes && subRoutes.length) {
+    if (key === 'projects') {
+      return pageLink + '/' + this._rolesFrontService.projectDefaultRoute();
+    } else if (subRoutes && subRoutes.length) {
       return pageLink + '/' + this._rolesFrontService.canAccessRoute(subRoutes, key.split(', '));
     }
     return pageLink;
@@ -289,6 +291,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get isMainDomain(): boolean {
     return this._isMainDomain;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   ngOnDestroy(): void {

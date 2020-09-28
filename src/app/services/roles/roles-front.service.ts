@@ -63,7 +63,7 @@ export class RolesFrontService {
 		let _route = '';
 
 		for (let i = 0; i <= _tabs.length; i++) {
-			if (_tabs[i] === 'settings' || _tabs[i] === 'collection' && this.hasAccessAdminSide(_defaultPath.concat([_tabs[i]]))) {
+			if ((_tabs[i] === 'settings' || _tabs[i] === 'collection') && this.hasAccessAdminSide(_defaultPath.concat([_tabs[i]]))) {
 				_route = _tabs[i];
 				break;
 			} else if (_tabs[i] === 'preparation' && this.hasAccessAdminSide(_defaultPath.concat([_tabs[i]]))) {

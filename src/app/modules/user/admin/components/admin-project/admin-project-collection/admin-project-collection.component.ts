@@ -264,6 +264,15 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _isHidden: !this.canAccess(['tableColumns', 'created'])
         },
         {
+          _attrs: ['campaign._id'],
+          _name: 'Campaign',
+          _type: 'MULTI-CHOICES',
+          _isSearchable: true,
+          _isHidden: true,
+          _isCustomFilter: true,
+          _choices: this._campaignList
+        },
+        {
           _attrs: ['status'],
           _name: 'Status',
           _type: 'MULTI-CHOICES',
@@ -278,15 +287,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             {_name: 'VALIDATED_UMIBOT', _alias: 'Auto validated', _class: 'label is-progress'},
             {_name: 'REJECTED_UMIBOT', _alias: 'Auto rejected', _class: 'label is-progress'}
           ]
-        },
-        {
-          _attrs: ['campaign._id'],
-          _name: 'Campaign',
-          _type: 'MULTI-CHOICES',
-          _isSearchable: true,
-          _isHidden: true,
-          _isCustomFilter: true,
-          _choices: this._campaignList
         }
       ]
     }

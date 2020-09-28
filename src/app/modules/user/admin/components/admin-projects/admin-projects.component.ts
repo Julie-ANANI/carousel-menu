@@ -166,7 +166,7 @@ export class AdminProjectsComponent implements OnInit {
       _total: this._totalProjects,
       _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isTitle: true,
-      _clickIndex: 1,
+      _clickIndex: this.canAccess(['project', 'tabs']) ? 1 : null,
       _isPaginable: true,
       _columns: [
         {
