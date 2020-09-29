@@ -768,13 +768,11 @@ export class TableComponent {
         if (this._config.search.length > 2) {
           for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
             const searchValue = JSON.parse(this._config.search)[searchKey];
-            rows = this._searchContent(rows.length > 0 ? rows : this._table._content, searchKey,
-              searchValue.toString().toLowerCase());
+            rows = this._searchContent(rows, searchKey, searchValue.toString().toLowerCase());
           }
         }
 
         if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
-          rows = (rows.length > 0 || this._config.search.length > 2) ? rows : this._table._content;
           const searchValue = this._config[configKey];
           rows = this._searchContent(rows, configKey, searchValue.toLowerCase());
         }

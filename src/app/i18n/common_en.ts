@@ -178,7 +178,9 @@ export const COMMON = {
     'CLIENT_EMAIL': 'Client email',
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Start typing to search...',
-    'PROJECT_TITLE': 'Add the project title here...'
+    'PROJECT_TITLE': 'Add the project title here...',
+    'MEDIA_URL': 'Enter the address of your Youtube or Vimeo video here',
+    'MEDIA_SLIDE': 'Drag a file here',
   },
 
   'REQUIRED': {
@@ -275,6 +277,8 @@ export const COMMON = {
     'CREATING_AN_ACCOUNT': 'is creating account...',
     'LOGIN': 'Login',
     'LOGGING': 'is logging...',
+    'UPLOAD_PICTURE': 'Upload picture',
+    'UPLOAD_VIDEO': 'Upload video',
   },
 
   'PROJECT': {

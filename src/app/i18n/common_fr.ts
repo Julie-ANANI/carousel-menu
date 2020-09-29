@@ -177,7 +177,9 @@ export const COMMON = {
     'CLIENT_EMAIL': 'Client email',
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Commencez à taper pour rechercher...',
-    'PROJECT_TITLE': 'Ajoutez le titre du projet ici...'
+    'PROJECT_TITLE': 'Ajoutez le titre du projet ici...',
+    'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
+    'MEDIA_SLIDE': 'Faites glisser les fichiers ici',
   },
 
   'REQUIRED': {
@@ -274,6 +276,8 @@ export const COMMON = {
     'CREATING_AN_ACCOUNT': 'en cours de créer...',
     'LOGIN': 'Connexion',
     'LOGGING': 'en cours de connexion...',
+    'UPLOAD_PICTURE': 'Télécharger la photo',
+    'UPLOAD_VIDEO': 'Télécharger la video',
   },
 
   'PROJECT': {
