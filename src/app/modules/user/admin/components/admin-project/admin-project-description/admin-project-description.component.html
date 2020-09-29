@@ -455,7 +455,7 @@
             </div>
             <div *ngIf="isEditable" class="bg-white box-shadow">
               <app-shared-upload-zone-photo
-                [uri]="'/innovation/'+innovation._id+'/innovationCard/'+innovation._id+'/media/image'"
+                [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"
                 (cbFn)="uploadImage($event)">
               </app-shared-upload-zone-photo>
             </div>
