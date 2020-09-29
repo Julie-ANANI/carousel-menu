@@ -9,7 +9,7 @@ import { TagsService } from '../services/tags/tags.service';
 
 const TAGS_KEY = makeStateKey('tagsSector');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TagsSectorResolver implements Resolve<Array<Tag>> {
 
   private _config = {

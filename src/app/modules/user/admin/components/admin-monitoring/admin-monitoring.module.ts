@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { AdminMonitoringRoutingModule } from './admin-monitoring-routing.module';
 
 import { AdminMonitoringComponent } from './admin-monitoring.component';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
@@ -22,7 +23,8 @@ import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-
     PipeModule,
     TableModule,
     RouterModule,
-    SidebarBlacklistModule
+    SidebarBlacklistModule,
+    AdminMonitoringRoutingModule
   ],
   declarations: [
     AdminMonitoringComponent,

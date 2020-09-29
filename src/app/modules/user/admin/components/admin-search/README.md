@@ -1,9 +1,9 @@
 # Search Page
 
-#### Application route: /user/admin/search/pros
+Document link:
+[a link](https://docs.google.com/document/d/1P083gvT8ObRR4v5uvOoBDRMttz4MKj3qXYozsu4PNx8/edit) 
 
-All notable changes to the Search page will be documented in this file. 
-Please always updates the roles / functionalities in this file. 
+#### Application route: /user/admin/search/pros
 
 ### Functionalities
 
@@ -31,63 +31,6 @@ Please always updates the roles / functionalities in this file.
 <br><br>VIEW:  Campaign, Request, Project, Results, Requests, 
 <br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield, Ambassador. 
 
-Here PROFESSIONAL, HISTORY, QUEUE represent the sub tabs.
-
-### Access of the functionalities based on the roles - by default Root will access all.
-
-No definition of a Role means no access to that user.
-
-#### Market Test Manager:
-
-1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords, Innovation, 
-<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
-<br><br>VIEW:  Campaign, Request, Results, Requests , 
-<br><br>ADD:  To Campaign , 
-<br><br>LAUNCH:  Google Requests, Emails Search , 
-<br><br>STOP:  Requests , 
-<br><br>CANCEL:  Requests .
-
-2. QUEUE: All
-
-#### Market Test Manager UMI:
-
-1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords, Innovation, 
-<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
-<br><br>VIEW:  Campaign, Request, Results, Requests , 
-<br><br>ADD:  To Campaign , 
-<br><br>LAUNCH:  Google Requests, Emails Search , 
-<br><br>STOP:  Requests , 
-<br><br>CANCEL:  Requests .
-
-2. QUEUE: All
-
-#### Oper Supervisor:
-
-1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords, Innovation , 
-<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
-<br><br>VIEW:  Campaign, Request, Results, Requests , 
-<br><br>ADD:  To Campaign , 
-<br><br>LAUNCH:  Google Requests, Emails Search , 
-<br><br>STOP:  Requests , 
-<br><br>CANCEL:  Requests .
-
-2. QUEUE: All
-
-#### Tech:
-
-1. HISTORY: Put Back In Queue
-<br><br>SEARCH BY:  Keywords, Innovation , 
-<br><br>T COLUMNS:  Keywords, Pros, Targeting, Created, Status, Email Status, Under Shield ,
-<br><br>VIEW:  Campaign, Request, Results, Requests , 
-<br><br>ADD:  To Campaign , 
-<br><br>LAUNCH:  Google Requests, Emails Search , 
-<br><br>STOP:  Requests , 
-<br><br>CANCEL:  Requests .
-
-2. QUEUE: All
 
 ### Example - Market Test Manager role
 

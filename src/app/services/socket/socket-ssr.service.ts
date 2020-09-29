@@ -5,7 +5,7 @@ import { EMPTY, Observable } from 'rxjs';
 /*
  * This class override the SocketService on server side
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SocketSsrService implements SocketService {
 
   socket: any = null;

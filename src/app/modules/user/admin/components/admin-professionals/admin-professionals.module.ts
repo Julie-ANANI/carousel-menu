@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdminProfessionalsRoutingModule } from './admin-professionals-routing.module';
 
 import { AdminProfessionalsComponent } from './admin-professionals.component';
 
@@ -16,7 +17,8 @@ import { MessageErrorModule } from "../../../../utility/messages/message-error/m
     TranslateModule.forChild(),
     PipeModule,
     SharedProfessionalsListModule,
-    MessageErrorModule
+    MessageErrorModule,
+    AdminProfessionalsRoutingModule
   ],
   declarations: [
     AdminProfessionalsComponent

@@ -50,6 +50,8 @@ export class InnovationFrontService {
 
   private _activeCardIndex: Subject<number> = new Subject<number>();
 
+  private _activeCardLang: Subject<string> = new Subject<string>();
+
   constructor(private _domSanitizer: DomSanitizer) { }
 
   /*
@@ -251,6 +253,9 @@ export class InnovationFrontService {
         case 'LANG':
           return _card.lang;
 
+        case 'INDEX':
+          return _cardIndex;
+
       }
 
     }
@@ -438,6 +443,18 @@ export class InnovationFrontService {
   }
 
   /***
+   * these function to set and get active card lang.
+   * @param value
+   */
+  setActiveCardLang(value: string) {
+    this._activeCardLang.next(value);
+  }
+
+  activeCardLang(): Subject<string>  {
+    return this._activeCardLang;
+  }
+
+  /***
    * this function is called when there are some changes and we want to notify
    * in the component that changes are to be saved or not for the innovation.
    * @param value
@@ -455,11 +472,11 @@ export class InnovationFrontService {
    * and we want to notify in the component that changes are to be saved.
    * @param value
    */
-  setCardCommentNotifyChanges(value: boolean) {
+  public setCardCommentNotifyChanges(value: boolean) {
     this._saveCommentSubject.next(value);
   }
 
-  getCardCommentNotifyChanges(): Subject<boolean> {
+  public getCardCommentNotifyChanges(): Subject<boolean> {
     return this._saveCommentSubject;
   }
 

@@ -26,7 +26,6 @@ import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workf
 import { TABLE } from '../modules/table/i18n/fr';
 import { SIDEBAR } from '../modules/sidebars/i18n/fr';
 import { SHARED_PROJECT_SETTINGS } from '../modules/shared/components/shared-project-settings-component/i18n/fr';
-import { SHARED_PROJECT_EDIT } from '../modules/shared/components/shared-project-edit-cards-component/i18n/fr';
 import { SHOWCASE } from '../modules/demo/components/showcase/i18n/fr';
 import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
 import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/fr';
@@ -35,7 +34,7 @@ import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targ
 import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/fr';
 import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-filter-answers/i18n/fr';
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/fr';
-import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project-storyboard/i18n/fr';
+import { ADMIN_STORYBOARD } from '../modules/user/admin/components/admin-project/admin-project-storyboard/i18n/fr';
 import { ADMIN_EXECUTIVE_REPORT } from '../modules/user/admin/components/admin-executive-report/i18n/fr';
 import { NEW_PROJECT } from '../modules/user/client/components/new-project/i18n/fr';
 import { PROJECT_SETTINGS } from '../modules/user/client/components/project/components/settings/i18n/fr';
@@ -73,7 +72,6 @@ export const fr = {
   'TABLE': TABLE,
   'SIDEBAR': SIDEBAR,
   'SHARED_PROJECT_SETTINGS': SHARED_PROJECT_SETTINGS,
-  'SHARED_PROJECT_EDIT': SHARED_PROJECT_EDIT,
   'SHOWCASE': SHOWCASE,
   'SEARCH_DEMO': SEARCH_DEMO,
   'COMMUNITY': COMMUNITY,

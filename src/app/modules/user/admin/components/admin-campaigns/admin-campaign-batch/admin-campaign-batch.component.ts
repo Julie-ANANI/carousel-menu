@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Campaign} from '../../../../../../models/campaign';
 import {CampaignService} from '../../../../../../services/campaign/campaign.service';
@@ -11,17 +11,20 @@ import {FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {isPlatformBrowser} from '@angular/common';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RolesFrontService} from "../../../../../../services/roles/roles-front.service";
-import {StatsInterface} from "../admin-campaign-stats/admin-campaign-stats.component";
+import {Subject} from 'rxjs';
+import {QuizService} from '../../../../../../services/quiz/quiz.service';
+import {Innovation} from '../../../../../../models/innovation';
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
   styleUrls: ['./admin-campaign-batch.component.scss']
 })
 
-export class AdminCampaignBatchComponent implements OnInit {
+export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _campaign: Campaign = <Campaign>{};
 
@@ -58,36 +61,69 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   private _isEditable = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _quizLinks: Array<string> = [];
+
+  private _innovation: Innovation = <Innovation>{};
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
+              private _campaignFrontService: CampaignFrontService,
               private _campaignService: CampaignService,
               private _rolesFrontService: RolesFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateService: TranslateService) { }
 
   ngOnInit() {
+
     if (this._activatedRoute.snapshot.parent.data['campaign']
       && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
       this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-      this._getBatches();
-
-      const _scenariosNames: Set<string> = new Set<string>();
-
-      if (this._campaign.settings && this._campaign.settings.emails) {
-        this._campaign.settings.emails.forEach((email) => {
-          if (email.modified) {
-            _scenariosNames.add(email.nameWorkflow);
-          } else {
-            _scenariosNames.delete(email.nameWorkflow);
-          }
-        });
-      }
-
-      _scenariosNames.forEach((name) => {
-        this._campaignWorkflows.push(name);
-      });
-
+      this._campaignFrontService.setActiveCampaign(this._campaign);
+      this._campaignFrontService.setActiveCampaignTab('batch');
+      this._initCampaign();
     }
+
+    this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
+      if (!!campaign && this._campaign._id !== campaign._id) {
+        this._campaign = campaign;
+        this._initCampaign();
+      }
+    });
+
+    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._innovation = innovation || <Innovation>{};
+    });
+
+  }
+
+  private _initCampaign() {
+    this._getBatches();
+
+    if (this._campaign.innovation && this._campaign.innovation.quizId) {
+      this._quizLinks = ['fr', 'en'].map((lang) => {
+        return QuizService.getQuizUrl(this._campaign, lang);
+      });
+    }
+
+    const _scenariosNames: Set<string> = new Set<string>();
+
+    if (this._campaign.settings && this._campaign.settings.emails) {
+      this._campaign.settings.emails.forEach((email) => {
+        if (email.modified) {
+          _scenariosNames.add(email.nameWorkflow);
+        } else {
+          _scenariosNames.delete(email.nameWorkflow);
+        }
+      });
+    }
+
+    _scenariosNames.forEach((name) => {
+      this._campaignWorkflows.push(name);
+    });
+
   }
 
   public canAccess(path?: Array<string>) {
@@ -97,38 +133,6 @@ export class AdminCampaignBatchComponent implements OnInit {
     } else {
       return this._rolesFrontService.hasAccessAdminSide(_default);
     }
-  }
-
-  public statsConfig(): Array<StatsInterface> {
-    return [
-      {
-        heading: 'Emails',
-        content: [
-          {subHeading: 'To send', value: this._campaignStat('good_emails').toString(10)},
-          {subHeading: 'Received', value: this._campaignStat('received').toString(10)},
-          {subHeading: 'Bounces', value: this._campaignStat('bounces').toString(10)}
-        ]
-      },
-      {
-        heading: 'Interaction',
-        content: [
-          {subHeading: 'Opened', value: this._campaignStat('opened') + '%'},
-          {subHeading: 'Clicked', value: this._campaignStat('clicked') + '%'},
-          {subHeading: 'Answer rate', value: this._campaignStat('answer_rate') + '%'},
-        ]
-      },
-      {
-        heading: 'Display',
-        content: [
-          {subHeading: 'Email', value: this._campaignStat('email').toString(10)},
-          {subHeading: 'Questionnaire', value: this._campaignStat('questionnaire').toString(10)},
-        ]
-      }
-    ];
-  }
-
-  private _campaignStat(searchKey: string): number {
-    return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
   }
 
   private _reinitializeVariables() {
@@ -148,7 +152,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         }
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Message Stats Error...', ErrorFrontService.getErrorMessage(err.status));
         this._isLoading = false;
         console.error(err);
       });
@@ -288,7 +292,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         this._getBatches();
         this._translateNotificationsService.success('Success', 'The stats have been updated.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Update Stats Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
     }
@@ -330,7 +334,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         : 'The autobatch is off for this campaign. No new batch will be created.';
       this._translateNotificationsService.success('Success', message);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Auto Batch Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -344,7 +348,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         this._translateNotificationsService.success('Success', 'The nuggets have been deactivated.');
       }
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Nuggets Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -379,7 +383,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       this._reinitializeVariables();
       this._getBatches();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Create Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
 
@@ -452,7 +456,7 @@ export class AdminCampaignBatchComponent implements OnInit {
         this._translateNotificationsService.success('Success', 'The batch is deleted.');
       }, (err: HttpErrorResponse) => {
         this._isDeletingBatch = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Delete Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
     }
@@ -465,7 +469,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       this._translateNotificationsService.success('Success', 'The batch is frozen.');
     }, (err: HttpErrorResponse) => {
       (event.target as HTMLInputElement).checked = batch.active;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Freeze Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -552,7 +556,7 @@ export class AdminCampaignBatchComponent implements OnInit {
       });
       this._translateNotificationsService.success('Success', 'The batch is updated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Update Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -574,7 +578,7 @@ export class AdminCampaignBatchComponent implements OnInit {
     return this._campaign.settings && this._campaign.settings.emails && this._campaign.settings.emails.length !== 0;
   }
 
-  get innovationStatus() {
+  get innovationStatus(): boolean {
     return (this._campaign.innovation && this._campaign.innovation.status
       && (this._campaign.innovation.status === 'EVALUATING' || this._campaign.innovation.status === 'DONE'));
   }
@@ -587,8 +591,12 @@ export class AdminCampaignBatchComponent implements OnInit {
     return this._campaign.settings && this._campaign.settings.defaultWorkflow ;
   }
 
-  get quiz() {
-    return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== '');
+  get quiz(): boolean {
+    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== '';
+  }
+
+  get toSend(): string {
+    return CampaignFrontService.getBatchCampaignStat(this._campaign, 'good_emails').toString(10);
   }
 
   get campaign() {
@@ -661,6 +669,19 @@ export class AdminCampaignBatchComponent implements OnInit {
 
   get isEditable(): boolean {
     return this._isEditable;
+  }
+
+  get quizLinks(): Array<string> {
+    return this._quizLinks
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

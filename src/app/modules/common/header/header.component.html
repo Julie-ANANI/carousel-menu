@@ -6,10 +6,10 @@
       <div class="navbar-brand">
         <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
           <img
-            [ngStyle]="{'width': '110px', 'height': '33px'}"
             [alt]="company"
+            [ngStyle]="{'width': '110px', 'height': '57.58px', 'margin-top': '-2px'}"
             [src]="logo"
-            height="33"
+            height="57.58"
             width="110">
         </a>
       </div>
@@ -80,7 +80,6 @@
             <a
               (click)="onClickLink()"
               *ngIf="hasAdminSide && canAccessRoute(route.key)"
-              [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="adminRouteLink(route.key, route.pageLink, route.subRoutes)"
               class="navbar-item"
               routerLinkActive="active">
@@ -170,7 +169,6 @@
             <a
               (click)="toggleBackOfficeState(); onClickLink();"
               *ngIf="!backOfficeValue && hasAdminSide"
-              [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="adminDefaultRoute"
               class="navbar-item"
               routerLinkActive="active">
@@ -229,11 +227,12 @@
 <div
   (click)="closeSidebar()"
   [@animateSidebarBackdrop]="sidebarValues.animate_state"
+  *ngIf="!isLoading"
   class="sidebar-backdrop"
   id="header-sidebar">
 </div>
 
-<div class="sidebar" [@animateSidebar]="sidebarValues.animate_state">
+<div *ngIf="!isLoading" [@animateSidebar]="sidebarValues.animate_state" class="sidebar">
   <div class="sidebar-container">
     <nav class="navbar-sidebar">
       <div class="navbar-menu">
@@ -309,7 +308,6 @@
             <a
               (click)="onClickLink()"
               *ngIf="hasAdminSide && canAccessRoute(route.key)"
-              [routerLinkActiveOptions]="{ exact: true }"
               [routerLink]="adminRouteLink(route.key, route.pageLink, route.subRoutes)"
               class="navbar-item"
               routerLinkActive="active">

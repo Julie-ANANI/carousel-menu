@@ -11,7 +11,7 @@ import { Response } from '../../models/response';
 
 const INNOVATIONS_KEY = makeStateKey('projects');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProjectsResolver implements Resolve<Response> {
 
   private _config: Config = {

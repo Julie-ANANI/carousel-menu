@@ -1,7 +1,7 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
-import { Location } from '@angular/common';
+import {isPlatformBrowser, Location} from '@angular/common';
 import { User } from '../../../models/user.model';
 import { initTranslation, TranslateService } from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
@@ -88,7 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       pageName: 'Settings',
       pageLink: '/user/admin/settings',
       key: 'settings',
-      subRoutes: ['blacklist', 'countries', 'enterprises'] },
+      subRoutes: ['blocklist', 'countries', 'enterprises'] },
     {
       pageName: 'Search',
       pageLink: '/user/admin/search',
@@ -106,6 +106,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private _logo = environment.logoURL;
 
   private _isMainDomain = environment.domain === 'umi';
+
+  private _isLoading = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
@@ -129,9 +131,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((state) => {
-      this._hide = state;
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((state) => {
+        this._hide = state;
+      });
+      this._isLoading = false;
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -199,7 +204,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public adminRouteLink(key: string, pageLink: string, subRoutes?: Array<string>) {
-    if (subRoutes && subRoutes.length) {
+    if (key === 'projects') {
+      return pageLink + '/' + this._rolesFrontService.projectDefaultRoute();
+    } else if (subRoutes && subRoutes.length) {
       return pageLink + '/' + this._rolesFrontService.canAccessRoute(subRoutes, key.split(', '));
     }
     return pageLink;
@@ -284,6 +291,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get isMainDomain(): boolean {
     return this._isMainDomain;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   ngOnDestroy(): void {

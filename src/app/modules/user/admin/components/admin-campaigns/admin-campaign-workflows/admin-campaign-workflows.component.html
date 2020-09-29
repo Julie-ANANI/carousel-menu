@@ -1,16 +1,10 @@
-<div class="container grid-2xl fluid" id="admin-campaign-workflows">
-
-  <!-- stats -->
-  <app-admin-campaign-stats [config]="statsConfig()"></app-admin-campaign-stats>
-  <!-- /stats -->
-
-  <!-- content -->
-  <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
+<div class="container grid-2xl fluid p-top-30 p-bottom-30" id="admin-campaign-workflows">
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- select / import / test workflow -->
     <div
       *ngIf="canAccess(['import']) || canAccess(['test'])"
-      class="p-bottom-10 form-group flex-centered flex-wrap">
+      class="p-bottom-10 form-group flex-centered flex-wrap animate-fade is-7">
 
       <label
         *ngIf="canAccess(['import'])"
@@ -66,7 +60,7 @@
     <!-- /select / import / test workflow -->
 
     <!-- no campaign -->
-    <div *ngIf="!availableScenarios.length" class="p-top-20">
+    <div *ngIf="!availableScenarios.length" class="p-top-20 animate-fade is-7">
       <message-template [widthMax]="'354px'">
         Don't have any workflow?
         <span *ngIf="canAccess(['import'])">
@@ -80,11 +74,14 @@
     <!-- campaign -->
     <div *ngIf="availableScenarios.length">
 
-      <div *ngIf="modifiedScenarios.length === 0" class="text-sm text-alert text-medium">
+      <div *ngIf="modifiedScenarios.length === 0" class="text-sm text-alert text-medium animate-fade is-7">
         You must have at least one workflow with all the modified emails.
       </div>
 
-      <div *ngFor="let scenario of availableScenarios" class="p-top-30">
+      <div
+        *ngFor="let scenario of availableScenarios; let i=index;"
+        [ngStyle]="{ 'animation-duration': ((i+1) * 200) + 'ms' }"
+        class="p-top-30 animate-slide slide-down">
         <app-admin-edit-workflow
           (defaultScenarioChange)="setDefaultScenario($event)"
           (deletedScenario)="removeScenario($event)"
@@ -101,8 +98,6 @@
     <!-- /campaign -->
 
   </div>
-  <!-- /content -->
-
 </div>
 
 

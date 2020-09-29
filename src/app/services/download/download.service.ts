@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DownloadService {
 
   constructor() { }

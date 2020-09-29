@@ -11,7 +11,7 @@ import { PresetService } from '../../services/preset/preset.service';
 
 const PRESETS_KEY = makeStateKey('presets');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PresetsResolver implements Resolve<Response> {
 
   private _config: Config = {

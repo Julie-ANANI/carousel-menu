@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 //import { Query } from "../../models/query";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AdvSearchService {
 
   private _base: string = "/advsearch";

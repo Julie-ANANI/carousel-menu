@@ -1,0 +1,575 @@
+<div [hidden]="isLoading" class="animate-fade is-5" id="admin-project-settings">
+
+  <!-- stats banner -->
+  <section>
+    <app-admin-stats-banner
+      (updateStats)="onClickUpdateStats()"
+      [config]="statsConfig"
+      [updateBtn]="true">
+    </app-admin-stats-banner>
+  </section>
+  <!-- /stats banner -->
+
+  <!-- action buttons -->
+  <section
+    *ngIf="innovation.status === 'SUBMITTED' && (canAccess(['edit', 'validateProject'])
+    || canAccess(['edit', 'projectRevision']))"
+    class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <div class="text-right p-top-30">
+
+        <!-- revision -->
+        <button
+          (click)="onRevisionProject($event)"
+          *ngIf="canAccess(['edit', 'validateProject'])"
+          class="button is-danger is-outlined is-sm m-right-20"
+          id="btn-revision-project">
+          Ask for project revision
+        </button>
+        <!-- /revision -->
+
+        <!-- validate -->
+        <button
+          (click)="onValidateProject($event)"
+          *ngIf="canAccess(['edit', 'validateProject'])"
+          class="button is-primary is-sm"
+          id="btn-validate-project">
+          Validate project
+        </button>
+        <!-- /validate -->
+
+      </div>
+    </div>
+  </section>
+  <!-- /action buttons -->
+
+  <!-- settings -->
+  <div class="container fluid grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <section class="settings-wrapper">
+
+        <!-- left content -->
+        <div class="content-wrapper">
+
+          <h6 class="text-notify">Setup</h6>
+
+          <div class="content-box">
+
+            <!-- domain -->
+            <div
+              *ngIf="canAccess(['view', 'domain']) || canAccess(['edit', 'domain'])"
+              class="content">
+
+              <label for="admin-project-domain">Domain</label>
+
+              <select
+                (ngModelChange)="onChangeDomain($event)"
+                *ngIf="canAccess(['edit', 'domain'])"
+                [ngModel]="innovation.domain"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-domain">
+                <option *ngFor="let domain of domains" [ngValue]="domain.name">
+                  {{ domain.name }}
+                </option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'domain'])" class="is-text">
+                {{ innovation.domain }}
+              </span>
+
+            </div>
+            <!-- /domain -->
+
+            <!-- mission type -->
+            <div
+              *ngIf="mission.type && (canAccess(['view', 'missionType'])
+              || canAccess(['edit', 'missionType']))"
+              class="content">
+
+              <label for="admin-project-type">Market Test Type</label>
+
+              <select
+                *ngIf="canAccess(['edit', 'missionType'])"
+                (ngModelChange)="onMissionTypeChange($event)"
+                [ngModel]="mission && mission.type ? mission.type : null"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-type">
+                <option value="null">Not assigned</option>
+                <option *ngFor="let type of missionTypes" [value]="type">{{ type | titlecase }}</option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'missionType'])" class="is-text">
+                {{ mission && mission.type | titlecase }}
+              </span>
+
+            </div>
+            <!-- /mission type -->
+
+            <!-- operators -->
+            <div *ngIf="canAccess(['view', 'operator']) || canAccess(['edit', 'operator'])" class="content">
+
+              <label for="admin-project-operator">Operator</label>
+
+              <select
+                *ngIf="canAccess(['edit', 'operator'])"
+                (ngModelChange)="onOperatorChange($event)"
+                [ngModel]="innovation.operator && innovation.operator.id"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-operator">
+                <option [value]="undefined">Not assigned</option>
+                <option *ngFor="let operator of operators" [ngValue]="operator['_id']">
+                  {{ name(operator) }}
+                </option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'operator'])" class="is-text">
+                {{ name(innovation.operator) }}
+              </span>
+
+            </div>
+            <!-- /operators -->
+
+            <!-- mission team -->
+            <div
+              *ngIf="mission._id && (canAccess(['view', 'missionTeam'])
+              || canAccess(['edit', 'missionTeam']))"
+              class="content">
+
+              <label>Mission Team</label>
+
+              <div class="dropdown is-right">
+
+                <a class="button dropdown-toggle text-primary-dark is-link" tabindex="0">
+                  Members ({{ mission.team.length }}) <i class="icon icon-caret"></i>
+                </a>
+
+                <ul *ngIf="canAccess(['edit', 'missionTeam'])" class="menu is-md">
+                  <li *ngFor="let operator of operators" class="menu-item">
+                    <label class="form-checkbox">
+                      <input
+                        (change)="onChangeMissionTeam(operator)"
+                        [checked]="isTeamMember(operator['_id'])"
+                        [id]="operator['_id']"
+                        [name]="operator['_id']"
+                        type="checkbox">
+                      <i class="form-icon"></i> {{ name(operator) }}
+                    </label>
+                  </li>
+                </ul>
+
+                <ul *ngIf="!canAccess(['edit', 'missionTeam'])" class="menu is-md">
+                  <ng-container *ngIf="mission.team.length > 0">
+                    <li *ngFor="let member of mission.team" class="menu-item c-default">{{ name(member) }}</li>
+                  </ng-container>
+                  <li *ngIf="mission.team.length === 0" class="menu-item c-default">No members</li>
+                </ul>
+
+              </div>
+
+            </div>
+            <!-- /mission team -->
+
+            <!-- commercial -->
+            <div
+              *ngIf="clientProject._id && (canAccess(['view', 'commercial'])
+              || canAccess(['edit', 'commercial']))"
+              class="content">
+
+              <label for="admin-project-commercial">Commercial</label>
+
+              <select
+                *ngIf="canAccess(['edit', 'commercial'])"
+                (ngModelChange)="onCommercialChange($event)"
+                [ngModel]="clientProject.commercial && clientProject.commercial.id"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-commercial">
+                <option [value]="undefined">Not assigned</option>
+                <option *ngFor="let commercial of commercials" [ngValue]="commercial['_id']">
+                  {{ name(commercial) }}
+                </option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'commercial'])" class="is-text">
+                {{ name(clientProject.commercial) }}
+              </span>
+
+            </div>
+            <!-- /commercial -->
+
+            <!-- owner -->
+            <div class="content">
+              <label for="admin-project-commercial">Owner</label>
+              <div class="edit-wrapper">
+
+                <span *ngIf="!isEditingOwner" class="is-text">{{ name(innovation.owner) }}</span>
+
+                <label *ngIf="isEditingOwner" class="relative m-no-right mxw-full">
+                  <input
+                    (keydown)="suggestUser(newOwner.name)"
+                    [(ngModel)]="newOwner.name"
+                    class="form-input is-sm is-shadowed"
+                    placeholder="Start typing here..."
+                    type="text">
+                  <ul
+                    *ngIf="usersSuggestion.length"
+                    [ngStyle]="{'left': '0', 'right': '0'}"
+                    class="menu absolute">
+                    <li (click)="selectOwner(user)" *ngFor="let user of usersSuggestion" class="menu-item">
+                      {{ user.name }}
+                    </li>
+                  </ul>
+                </label>
+
+                <div
+                  (click)="saveOwner($event)"
+                  *ngIf="isEditingOwner"
+                  [ngClass]="{'disabled': !newOwner.name}"
+                  class="icon-container m-left-10">
+                  <span class="tooltip" data-tooltip="Save">
+                    <img
+                      alt="Save"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-save.svg">
+                  </span>
+                </div>
+
+                <div
+                  (click)="onEdit('OWNER')"
+                  *ngIf="canAccess(['edit', 'owner'])"
+                  class="icon-container m-left-20">
+                  <span [attr.data-tooltip]="isEditingOwner ? 'Cancel' : 'Edit owner'" class="tooltip">
+                    <img
+                      alt="Edit"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                  </span>
+                </div>
+
+              </div>
+            </div>
+            <!-- /owner -->
+
+            <!-- main objective -->
+            <div
+              *ngIf="clientProject._id && (canAccess(['view', 'mainObjective'])
+              || canAccess(['edit', 'mainObjective']))"
+              class="content">
+
+              <label for="admin-project-mainObjective">Main Objective</label>
+
+              <select
+                *ngIf="canAccess(['edit', 'mainObjective'])"
+                (ngModelChange)="onMainObjectiveChange($event)"
+                [ngModel]="mission.objective && mission.objective.principal['en']"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-mainObjective">
+                <option [value]="undefined">Not assigned</option>
+                <option *ngFor="let objective of missionObjectives" [ngValue]="objective['en'].label">
+                  {{ objective['en'].label }}
+                </option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'mainObjective'])" class="is-text">
+                {{ mission.objective && mission.objective.principal['en'] }}
+              </span>
+
+            </div>
+            <!-- /main objective -->
+
+            <!-- questionnaire -->
+            <div *ngIf="quizLink" class="content">
+
+              <label>Questionnaire</label>
+
+              <button
+                (click)="onCopyQuizLink($event)"
+                [ngClass]="quizUrlCopied ? 'is-success' : 'is-info'"
+                class="button is-outlined is-sm"
+                id="btn-quiz-link"
+                type="button">
+                {{ quizUrlCopied ? 'Copied to clipboard' : 'Click to copy quiz link' }}
+              </button>
+
+            </div>
+            <!-- /questionnaire -->
+
+            <!-- project tags -->
+            <div
+              *ngIf="canAccess(['view', 'projectTags']) || canAccess(['edit', 'projectTags'])"
+              class="content">
+
+              <label>Tags</label>
+
+              <div class="edit-wrapper">
+
+                <span class="is-text">Total: {{ innovation.tags && innovation.tags.length }} project tag(s)</span>
+
+                <div
+                  (click)="onEdit('PROJECT_TAGS')"
+                  class="icon-container m-left-20">
+                  <span
+                    [attr.data-tooltip]="canAccess(['edit', 'projectTags']) ? 'Edit project tags'
+                    : 'View tags'"
+                    class="tooltip">
+                    <img
+                      alt="Edit"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- /project tags -->
+
+          </div>
+
+        </div>
+        <!-- /left content -->
+
+        <!-- right content -->
+        <div class="content-wrapper">
+
+          <h6 class="text-notify">Campaign / Delivery</h6>
+
+          <div class="content-box">
+
+            <!-- roadmap -->
+            <div
+              *ngIf="canAccess(['view', 'roadmap']) || canAccess(['edit', 'roadmap'])"
+              [ngStyle]="{'align-items': 'flex-start'}"
+              class="content">
+
+              <label>Roadmap</label>
+
+              <div class="edit-wrapper">
+
+                <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
+                  <li *ngIf="mission.milestoneDates.length > 1" class="active">
+                    <span class="d-flex flex-d-column align-center">
+                      <span class="shape is-circle"></span>
+                      <span class="divider-vert active"></span>
+                    </span>
+                    {{ innovation.created | date:dateFormat }} - Preparation
+                  </li>
+                  <ng-container *ngFor="let milestone of milestones; let i = index;">
+                    <li
+                      [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
+                      <span class="d-flex flex-d-column align-center">
+                        <span class="shape is-circle"></span>
+                        <span
+                          *ngIf="i < mission.milestoneDates.length - 1"
+                          [ngClass]="{ 'active': isNextMilestoneReached(i+1) }"
+                          class="divider-vert">
+                        </span>
+                      </span>
+                      {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
+                    </li>
+                  </ng-container>
+                </ul>
+
+                <span *ngIf="!(mission.milestoneDates && mission.milestoneDates.length)" class="is-text">
+                  No milestones defined
+                </span>
+
+                <div
+                  (click)="onEdit('ROADMAP')"
+                  *ngIf="canAccess(['edit', 'roadmap'])"
+                  class="icon-container m-left-20">
+                  <span data-tooltip="Edit roadmap" class="tooltip">
+                    <img
+                      alt="Edit"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- /roadmap -->
+
+            <!-- blocklist -->
+            <div
+              *ngIf="canAccess(['view', 'blocklist']) || canAccess(['edit', 'blocklist'])"
+              class="content">
+
+              <label>Blocklist</label>
+
+              <div class="edit-wrapper">
+
+                <span class="is-text">
+                  {{ innovation.settings?.blacklist?.domains?.length }} Domain(s) -
+                  {{ innovation.settings?.blacklist?.emails?.length }} Email(s)
+                </span>
+
+                <div
+                  (click)="onEdit('BLOCKLIST')"
+                  *ngIf="canAccess(['edit', 'blocklist'])"
+                  class="icon-container m-left-20">
+                  <span data-tooltip="Edit blocklist" class="tooltip">
+                    <img
+                      alt="Edit"
+                      class="img-responsive"
+                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- /blocklist -->
+
+            <!-- update status -->
+            <div
+              *ngIf="canAccess(['view', 'status']) || canAccess(['edit', 'status'])"
+              class="content">
+
+              <label for="admin-project-status">Update Status</label>
+
+              <select
+                *ngIf="canAccess(['edit', 'status'])"
+                (ngModelChange)="onUpdateStatus($event)"
+                [ngModel]="innovation.status"
+                class="form-select is-sm is-shadowed"
+                id="admin-project-status">
+                <option *ngFor="let status of innovationStatus" [ngValue]="status">
+                  {{ status | titlecase }}
+                </option>
+              </select>
+
+              <span *ngIf="!canAccess(['edit', 'status'])" class="is-text">
+                {{ innovation.status | titlecase }}
+              </span>
+
+            </div>
+            <!-- /update status -->
+
+            <!-- anonymous answer -->
+            <div
+              *ngIf="canAccess(['view', 'answersAnonymous']) || canAccess(['edit', 'answersAnonymous'])"
+              class="content">
+
+              <label>Answers Anonymous</label>
+
+              <label *ngIf="canAccess(['edit', 'answersAnonymous'])" class="form-switch">
+                <input
+                  (change)="onChangeAnonymous($event)"
+                  [checked]="innovation._metadata && innovation._metadata['campaign']
+                  && innovation._metadata['campaign']['anonymous_answers']"
+                  id="admin-project-answersAnonymous"
+                  type="checkbox">
+                <i class="form-icon"></i>
+                {{ innovation._metadata && innovation._metadata['campaign']
+              && innovation._metadata['campaign']['anonymous_answers'] ? 'Activated' : 'Deactivated' }}
+              </label>
+
+              <span *ngIf="!canAccess(['edit', 'answersAnonymous'])" class="is-text">
+                <ng-container *ngIf="innovation._metadata && innovation._metadata['campaign']
+                && innovation._metadata['campaign']['anonymous_answers']; else deactivateText">
+                  Activated
+                </ng-container>
+                <ng-template #deactivateText>Deactivated</ng-template>
+              </span>
+
+            </div>
+            <!-- /anonymous answer -->
+
+            <!-- public project -->
+            <div
+              *ngIf="canAccess(['view', 'publicProject']) || canAccess(['edit', 'publicProject'])"
+              class="content">
+
+              <label class="mxw-full">Publish to Innovation Showroom</label>
+
+              <label *ngIf="canAccess(['edit', 'publicProject'])" class="form-switch">
+                <input
+                  (change)="onChangeIsPublic($event)"
+                  [checked]="innovation.isPublic"
+                  id="admin-project-publicProject"
+                  type="checkbox">
+                <i class="form-icon"></i> {{ innovation.isPublic ? 'Published' : 'Unpublished' }}
+              </label>
+
+              <span *ngIf="!canAccess(['edit', 'publicProject'])" class="is-text">
+                {{ innovation.isPublic ? 'Published' : 'Unpublished' }}
+              </span>
+
+            </div>
+            <!-- /public project -->
+
+            <!-- community -->
+            <div
+              *ngIf="canAccess(['view', 'community']) || canAccess(['edit', 'community'])"
+              class="content">
+
+              <label class="mxw-full">Publish to Community</label>
+
+              <span
+                *ngIf="canAccess(['edit', 'community'])"
+                [ngClass]="{'tooltip': !innovation.isPublic}"
+                data-tooltip="Publish to Showroom">
+                <label class="form-switch">
+                  <input
+                    (change)="onPublishCommunity($event)"
+                    [checked]="!!innovation['published']"
+                    [disabled]="!innovation.isPublic || !!innovation['published']"
+                    id="admin-project-community"
+                    type="checkbox">
+                  <i class="form-icon"></i> {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+                </label>
+              </span>
+
+              <span *ngIf="!canAccess(['edit', 'community'])" class="is-text">
+                {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+              </span>
+
+            </div>
+            <!-- /community -->
+
+          </div>
+
+        </div>
+        <!-- /right content -->
+
+      </section>
+    </div>
+  </div>
+  <!-- /settings -->
+
+</div>
+
+
+<!-- sidebar -->
+<app-sidebar *ngIf="!isLoading" [(template)]="sidebarValue">
+
+  <!-- tags -->
+  <app-sidebar-tags
+    (newTags)="addProjectTags($event)"
+    *ngIf="sidebarValue.type === 'ADD_TAGS'"
+    [isEditable]="canAccess(['edit', 'projectTags'])"
+    [placeholder]="'Start typing a new tag here...'"
+    [sidebarState]="sidebarValue.animate_state"
+    [tags]="innovTags"
+    [type]="sidebarValue.type">
+  </app-sidebar-tags>
+  <!-- /tags -->
+
+  <!-- roadmap -->
+  <app-mission-form *ngIf="sidebarValue.type === 'ROADMAP'" [(mission)]="mission"></app-mission-form>
+  <!-- /roadmap -->
+
+  <!-- blocklist -->
+  <app-sidebar-blacklist
+    (toBlacklists)="addBlocklist($event)"
+    *ngIf="sidebarValue.type === 'EXCLUDE_EMAILS_DOMAINS'"
+    [initialDomains]="innovation.settings?.blacklist?.domains"
+    [initialEmails]="innovation.settings?.blacklist?.emails"
+    [isEditable]="canAccess(['edit', 'blocklist'])"
+    [type]="sidebarValue.type">
+  </app-sidebar-blacklist>
+  <!-- /blocklist -->
+
+</app-sidebar>
+<!-- /sidebar -->

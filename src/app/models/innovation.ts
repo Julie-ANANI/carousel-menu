@@ -14,6 +14,8 @@ export interface InnovationMetadataValues {
   delivery?: number;
 }
 
+export type InnovationStatus = 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
+
 // not use anymore. It's for the innovations old executive report.
 export interface OldExecutiveReport {
   totalSections: number;
@@ -36,7 +38,7 @@ export interface Innovation {
   owner?: User;
   readonly campaigns?: Array<any>;
 
-  status?: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
+  status?: InnovationStatus;
 
   statusLogs?: Array<{
     action: 'SUBMIT' | 'REJECT' | 'VALIDATE' | 'FINISH'

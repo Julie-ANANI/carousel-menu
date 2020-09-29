@@ -1,7 +1,4 @@
-<div
-  *ngIf="canAccess()"
-  class="container fluid grid-2xl animate-fade is-5"
-  id="admin-project-campaigns">
+<div [hidden]="!canAccess()" class="container fluid grid-2xl" id="admin-project-campaigns">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- error message while fetching -->
@@ -15,21 +12,25 @@
       <section *ngIf="canAccess(['add'])" class="text-right p-bottom-50">
         <button
           (click)="onAddCampaign($event)"
+          [disabled]="isAddingCampaign"
           class="button is-primary is-shadowed is-sm"
           id="btn-add-campaign"
           type="button">
-          Add Campaign
+          {{ isAddingCampaign ? 'is adding...' : 'Add Campaign' }}
         </button>
       </section>
       <!-- /section add campaign -->
 
       <!-- section campaigns -->
       <section [@listAnimation]="campaigns.length" [ngStyle]="{'margin-bottom': '-30px'}">
-        <div *ngFor="let campaign of campaigns" class="card-wrapper">
+        <div *ngFor="let campaign of campaigns; let i = index" class="card-wrapper">
           <div class="card-content">
 
             <div class="d-flex align-center">
-              <a [routerLink]="route(campaign._id)">
+              <a
+                (click)="onNavigation(campaign)"
+                [routerLink]="route(campaign._id)"
+                routerLinkActive="active">
                 {{ campaign.title }}
               </a>
               <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-sm text-bold is-success m-left-10">
@@ -53,11 +54,11 @@
               •
               {{ campaign['stats'] ? ((campaign['stats']['campaign']['nbToValidateResp'] || 0)) : 0 }} To look at
               •
-              {{ campaign.status | FormatText }} status
+              {{ campaign.status | titlecase }} status
 
               <ng-container *ngIf="canAccess(['updateStatistics'])">
                 |
-                <span class="text-link m-left-h m-right-h" (click)="onUpdateStats($event, campaign)">
+                <span class="text-link m-left-h m-right-h" (click)="onUpdateStats($event, campaign, i)">
                   Update stats
                 </span>
               </ng-container>

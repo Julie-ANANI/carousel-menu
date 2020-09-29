@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { AdminSearchRoutingModule } from './admin-search-routing.module';
 import { SharedSearchHistoryModule } from '../../../../shared/components/shared-search-history/shared-search-history.module';
 import { SharedSearchResultsModule } from '../../../../shared/components/shared-search-results/search-results.module';
 import { SharedSearchProsModule } from '../../../../shared/components/shared-search-pros/shared-search-pros.module';
@@ -16,7 +17,6 @@ import { FormsModule } from "@angular/forms";
 import { CountryFlagModule } from "../../../../utility/country-flag/country-flag.module";
 import { ModalModule } from "../../../../utility/modals/modal/modal.module";
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -28,7 +28,8 @@ import { ModalModule } from "../../../../utility/modals/modal/modal.module";
     FormsModule,
     RouterModule,
     CountryFlagModule,
-    ModalModule
+    ModalModule,
+    AdminSearchRoutingModule
   ],
   declarations: [
     AdminSearchComponent,

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Mission} from '../../models/mission';
+import {Milestone, Mission} from '../../models/mission';
 import {ObjectivesPrincipal} from '../../models/static-data/missionObjectives';
 import {Pitches} from '../../models/static-data/project-pitch';
 
@@ -43,6 +43,21 @@ export class MissionFrontService {
     }
 
     return '';
+  }
+
+  /***
+   * this will return the sorted dates
+   * @param dates
+   */
+  public static sortMilestoneDates(dates: Array<Milestone>) {
+    if (dates && dates.length) {
+      return dates.sort((a, b) => {
+        const _dateA: any = new Date(a.dueDate);
+        const _dateB: any = new Date(b.dueDate);
+        return _dateA - _dateB;
+      });
+    }
+    return [];
   }
 
   /***

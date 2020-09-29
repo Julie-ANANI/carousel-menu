@@ -6,7 +6,7 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TemplatesService } from '../services/templates/templates.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SignatureResolver implements Resolve<any> {
   constructor(
     private _templatesService: TemplatesService

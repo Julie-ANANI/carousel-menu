@@ -87,6 +87,11 @@ export class TableComponent {
    */
   @Output() dropdownAction: EventEmitter<{content: any, item: Choice}> = new EventEmitter<{content: any, item: Choice}>();
 
+  /***
+   * output the custom filter value when changes in the Search bar.
+   */
+  @Output() customFilter: EventEmitter<{key: string, value: any}> = new EventEmitter<{key: string, value: any}>();
+
   private _table: Table;
 
   private _isSearching: boolean;
@@ -164,7 +169,7 @@ export class TableComponent {
         parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10 :
         rows.length;
 
-      this._table._total = rows.length;
+      this._table._total = this._table._total === -1 ? this._table._total : rows.length;
 
       if (this._pagination.offset >= this._table._total) {
         this._pagination.offset = 0;
@@ -691,10 +696,11 @@ export class TableComponent {
 
     if (this._localStorageService.getItem('table-search') === 'active') {
       this._isSearching = true;
-
-      for (const configKey of Object.keys(this._config)) {
-        this._getFilteredContent(this._searchLocally(configKey));
-      }
+      this._isLoadingData = true;
+      this._getFilteredContent(this._searchLocally());
+      setTimeout(() => {
+        this._isLoadingData = false;
+      }, 200);
     } else {
       this._getFilteredContent(this._table._content);
     }
@@ -751,30 +757,29 @@ export class TableComponent {
 
   }
 
-  private _searchLocally(configKey: string): Array<any> {
+  private _searchLocally(): Array<any> {
 
-    let rows: Array<any> = [];
+    let rows: Array<any> = this._table._content;
+    this._localStorageService.setItem('table-search', '');
 
-    if (this._table._columns.find((column) => column._attrs[0] === configKey) || this._config.search.length > 2) {
+    for (const configKey of Object.keys(this._config)) {
+      if (this._table._columns.find((column) => column._attrs[0] === configKey) || this._config.search.length > 2) {
 
-      if (this._config.search.length > 2) {
-        for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
-          const searchValue = JSON.parse(this._config.search)[searchKey];
-          rows = this._searchContent(this._table._content, searchKey, searchValue.toString().toLowerCase());
+        if (this._config.search.length > 2) {
+          for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
+            const searchValue = JSON.parse(this._config.search)[searchKey];
+            rows = this._searchContent(rows, searchKey, searchValue.toString().toLowerCase());
+          }
         }
+
+        if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
+          const searchValue = this._config[configKey];
+          rows = this._searchContent(rows, configKey, searchValue.toLowerCase());
+        }
+
+        this._localStorageService.setItem('table-search', 'active');
+
       }
-
-      if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
-        rows = rows.length > 0 || this._config.search.length > 2 ? rows : this._table._content;
-        const searchValue = this._config[configKey];
-        rows = this._searchContent(rows, configKey, searchValue.toLowerCase());
-      }
-
-      this._localStorageService.setItem('table-search', 'active');
-
-    } else {
-      rows = this._table._content;
-      this._localStorageService.setItem('table-search', '');
     }
 
     return rows;
@@ -829,6 +834,16 @@ export class TableComponent {
     if (this._table._isLocal) {
       this._localStorageService.setItem('table-search', 'active');
       this._setFilteredContent();
+
+      if (this._table._hasCustomFilters) {
+        this.customFilter.emit({key: '', value: ''});
+        for (const key of Object.keys(this._config)) {
+          if (this._table._columns.find((col) => col._isCustomFilter && col._attrs[0] === key)) {
+            this.customFilter.emit({key: key, value: this._config[key]});
+          }
+        }
+      }
+
     } else {
       this._emitConfigChange();
     }

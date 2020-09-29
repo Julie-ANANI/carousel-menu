@@ -11,7 +11,7 @@ import { UserService } from '../../services/user/user.service';
 
 const USERS_KEY = makeStateKey('users');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UsersResolver implements Resolve<Response> {
 
   private _config: Config = {

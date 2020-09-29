@@ -11,19 +11,24 @@ import { environment } from '../../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class TranslateTitleService implements OnDestroy {
 
-  private ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private _translateService: TranslateService,
               private _titleService: Title) { }
 
-    public setTitle(title: string) {
-      this._translateService.get(title).pipe(takeUntil(this.ngUnsubscribe)).subscribe((translatedTitle: string) => {
-        return this._titleService.setTitle(translatedTitle + ' | ' + environment.companyShortName);
-      });
-    }
+  public setTitle(title: string) {
+    this._translateService.get(title).pipe(takeUntil(this._ngUnsubscribe)).subscribe((translatedTitle: string) => {
+      return this._titleService.setTitle(translatedTitle + ' | ' + environment.companyShortName);
+    });
+  }
 
-    ngOnDestroy() {
-      this.ngUnsubscribe.next();
-      this.ngUnsubscribe.complete();
-    }
+  public getTitle() {
+    return this._titleService.getTitle();
+  }
+
+  ngOnDestroy() {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
 }

@@ -41,6 +41,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   private readonly _element: any;
 
+  private _isLoading = false;
+
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _elementRef: ElementRef) {
     this._element = this._elementRef.nativeElement;
@@ -49,6 +51,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       document.body.appendChild(this._element);
+      this._isLoading = false;
     }
   }
 
@@ -82,6 +85,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   get template(): SidebarInterface {
     return this._template;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   ngOnDestroy(): void {

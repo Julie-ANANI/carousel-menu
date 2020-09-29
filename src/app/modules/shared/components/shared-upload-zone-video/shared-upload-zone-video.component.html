@@ -15,13 +15,13 @@
   <label [ngStyle]="{ 'width': '100%' }">
     <input
       [(ngModel)]="videoUrlInput"
-      [attr.placeholder]="'SHARED_PROJECT_EDIT.MEDIA.URL' | translate"
+      [attr.placeholder]="'COMMON.PLACEHOLDER.MEDIA_URL' | translate"
       class="form-input m-auto"
       type="text">
   </label>
 
   <button class="button is-primary m-top-20" (click)="videoUrlInput ? addVideo($event) : ''">
-    <i class="fas icon-left fa-upload"></i>{{ 'SHARED_PROJECT_EDIT.MEDIA.UPLOAD_VIDEO' | translate }}
+    <i class="fas icon-left fa-upload"></i>{{ 'COMMON.BUTTON.UPLOAD_VIDEO' | translate }}
   </button>
 
 </div>

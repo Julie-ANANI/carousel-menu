@@ -1,4 +1,5 @@
 <div
+  *ngIf="!isLoading"
   [@animateSidebar]="template.animate_state"
   [ngStyle]="{ 'width': template.size }"
   class="sidebar is-right">

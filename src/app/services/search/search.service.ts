@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CommonService } from '../common/common.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SearchService {
 
   constructor(private _http: HttpClient,

@@ -9,7 +9,7 @@ import { TagsService } from '../../services/tags/tags.service';
 
 const PROJECT_TAGS_POOL_KEY = makeStateKey('project_tags_pool');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProjectTagsPoolResolver implements Resolve<Response> {
 
   constructor(@Inject(PLATFORM_ID) private _platformId: Object,

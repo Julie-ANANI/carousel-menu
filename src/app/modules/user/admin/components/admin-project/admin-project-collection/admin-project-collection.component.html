@@ -1,0 +1,82 @@
+<div [hidden]="isLoading" class="animate-fade is-5" id="admin-project-collection">
+
+  <!-- stats banner -->
+  <section>
+    <app-admin-stats-banner [config]="statsConfig"></app-admin-stats-banner>
+  </section>
+  <!-- /stats banner -->
+
+  <!-- content -->
+  <div class="container grid-2xl fluid p-top-30 p-bottom-30">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+
+      <!-- action buttons -->
+      <section *ngIf="canAccess(['import']) || canAccess(['export'])" class="text-right m-bottom-15">
+
+        <!-- import -->
+        <span
+          [ngClass]="{'tooltip': !selectedCampaign, 'm-right-25': canAccess(['export'])}"
+          data-tooltip="Select single campaign">
+          <label
+            *ngIf="canAccess(['import'])"
+            [ngClass]="{'disabled': !selectedCampaign}"
+            class="button is-primary is-sm is-outlined m-bottom-15">
+            <input
+              #fileupload
+              (change)="onImport(fileupload.files[0])"
+              *ngIf="selectedCampaign"
+              [hidden]="true"
+              type="file"/>
+            {{ isImportingAnswers ? 'importing...' : 'Import' }}
+          </label>
+        </span>
+        <!-- /import -->
+
+        <!-- export -->
+        <span [ngClass]="{'tooltip': !selectedCampaign}" data-tooltip="Select single campaign">
+          <button
+            (click)="onExport()"
+            *ngIf="canAccess(['export'])"
+            [disabled]="!selectedCampaign"
+            class="button is-primary is-sm m-bottom-15"
+            id="btn-export-answers">
+            Export
+          </button>
+        </span>
+        <!-- /export -->
+
+      </section>
+      <!-- /action buttons -->
+
+      <!-- table -->
+      <section>
+        <app-shared-table
+          (customFilter)="onCustomFilter($event)"
+          (editRow)="onEdit($event)"
+          (performAction)="onActions($event)"
+          [(config)]="localConfig"
+          [data]="tableData">
+        </app-shared-table>
+      </section>
+      <!-- /table -->
+
+    </div>
+  </div>
+  <!-- /content -->
+
+</div>
+
+<!-- sidebar insight preview -->
+<app-sidebar
+  *ngIf="answers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
+  [(template)]="sidebarValue">
+  <app-sidebar-user-answer
+    [adminMode]="canAccess(['edit'])"
+    [excludedCompanies]="excludedCompanies"
+    [projectId]="innovation._id"
+    [questions]="questions"
+    [sidebarState]="sidebarValue.animate_state"
+    [userAnswer]="sidebarAnswer">
+  </app-sidebar-user-answer>
+</app-sidebar>
+<!-- /sidebar insight preview -->

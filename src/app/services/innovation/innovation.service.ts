@@ -66,7 +66,11 @@ export class InnovationService {
   }*/
 
   public save(innovationId: string, innovationObj: Innovation): Observable<Innovation> {
-    return this._http.put<Innovation>('/innovation/' + innovationId, innovationObj);
+    const _fieldsToPopulate = ['tags', 'mission', 'owner', 'operator', 'collaborators', 'statusLogs', 'clientProject',
+      'principalMedia', 'innovationCards', 'campaigns'];
+    return this._http.put<Innovation>(
+      `/innovation/${innovationId}?fields=${_fieldsToPopulate.join(',')}`, innovationObj
+    );
   }
 
   public saveInnovationCardComment(innovationId: string, innovationCardId: string, commentObj: InnovCardComment): Observable<any> {
@@ -176,8 +180,8 @@ export class InnovationService {
     return this._http.get<Array<Job>>(`/innovation/${innovationId}/deliverables`, {params: config});
   }
 
-  public updateStats(innovationId: string): Observable<any> {
-    return this._http.put(`/innovation/${innovationId}/stats`, {});
+  public updateStats(innovationId: string): Observable<Innovation> {
+    return this._http.put<Innovation>(`/innovation/${innovationId}/stats`, {});
   }
 
   public advancedSearch(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {

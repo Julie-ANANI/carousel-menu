@@ -9,7 +9,7 @@ import { Innovation } from '../models/innovation';
 
 const INNOVATIONS_KEY = makeStateKey('allInnovations');
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class InnovationsResolver implements Resolve<Array<Innovation>> {
 
   private _config = {

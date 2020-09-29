@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Enterprise } from '../../models/enterprise';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class EnterpriseService {
 
   constructor(private _http: HttpClient) {
