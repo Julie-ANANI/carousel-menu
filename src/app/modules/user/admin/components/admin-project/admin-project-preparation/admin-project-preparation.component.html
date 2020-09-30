@@ -38,7 +38,11 @@
                 [ngStyle]="{'padding-top': '9px', 'padding-bottom': '9px', 'padding-left': '10px',
                 'padding-right': '5px'}"
                 class="button is-sm is-info is-outlined dropdown-toggle" tabindex="0">
-                <span class="text-ellipsis w-120">{{ selectedCampaign.title }}</span>
+                <span
+                  [ngStyle]="{'padding-bottom': '1px'}"
+                  class="text-ellipsis w-120">
+                  {{ selectedCampaign.title }}
+                </span>
                 <i class="fas fa-caret-down"></i>
               </a>
               <ul class="menu is-lg">
