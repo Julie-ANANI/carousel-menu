@@ -166,6 +166,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   public updateProject() {
     this._project = this._updatedProject;
     this._setInnovation();
+    this._showBanner = false;
   }
 
   private _resetModals() {

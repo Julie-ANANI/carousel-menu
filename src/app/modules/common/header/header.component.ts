@@ -204,9 +204,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public adminRouteLink(key: string, pageLink: string, subRoutes?: Array<string>) {
-    if (key === 'projects') {
-      return pageLink + '/' + this._rolesFrontService.projectDefaultRoute();
-    } else if (subRoutes && subRoutes.length) {
+    if (subRoutes && subRoutes.length) {
       return pageLink + '/' + this._rolesFrontService.canAccessRoute(subRoutes, key.split(', '));
     }
     return pageLink;

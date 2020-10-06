@@ -16,6 +16,7 @@ import {CampaignFrontService} from '../../../../../../services/campaign/campaign
 import {isPlatformBrowser} from '@angular/common';
 import {Response} from '../../../../../../models/response';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {CampaignService} from '../../../../../../services/campaign/campaign.service';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -66,6 +67,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _campaignFrontService: CampaignFrontService,
               private _innovationFrontService: InnovationFrontService,
+              private _campaignService: CampaignService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {}
@@ -118,12 +120,24 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   public setCampaign(campaign: Campaign) {
-    this._isLoadingCampaign = true;
-    this._selectedCampaign = campaign;
-    this._campaignFrontService.setActiveCampaign(this._selectedCampaign);
-    setTimeout(() => {
+    if (campaign._id !== this._selectedCampaign._id) {
+      this._isLoadingCampaign = true;
+      this._getCampaign(campaign);
+    }
+  }
+
+  private _getCampaign(campaign: Campaign) {
+    this._campaignService.get(campaign && campaign._id).pipe(first()).subscribe((response) => {
+      this._selectedCampaign = response;
+      this._campaignFrontService.setActiveCampaign(this._selectedCampaign);
       this._isLoadingCampaign = false;
-    }, 500);
+    }, (err: HttpErrorResponse) => {
+      this._selectedCampaign = campaign;
+      this._campaignFrontService.setActiveCampaign(this._selectedCampaign);
+      this._isLoadingCampaign = false;
+      this._translateNotificationsService.error('Campaign Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    })
   }
 
   public setPageTitle(tab?: string) {
@@ -161,7 +175,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._allCampaigns = response && response.result || [];
         this._campaignFrontService.setAllCampaigns(this._allCampaigns);
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Campaign Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
     }
@@ -287,7 +301,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
         this.closeModal();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorMessage(err.status));
         this._isAddingCard = false;
         console.error(err);
       });
@@ -309,7 +323,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this.closeModal();
       }, (err: HttpErrorResponse) => {
         this._cardToDelete = <InnovCard>{};
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Card Deleting Error...', ErrorFrontService.getErrorMessage(err.status));
         this._isDeletingCard = false;
         console.error(err);
       });

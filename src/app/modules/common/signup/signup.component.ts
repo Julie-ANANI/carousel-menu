@@ -128,7 +128,7 @@ export class SignupComponent implements OnInit {
   }
 
   getLogoWBG(): string {
-    return environment.logoSynthURL;
+    return environment.logoURL;
   }
 
   checkIsMainDomain(): boolean {
