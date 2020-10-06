@@ -44,7 +44,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = {};
 
-  private _tableInfos: Table;
+  private _tableInfos: Table = <Table>{};
 
   private _selectedRequest: any = null;
 
@@ -90,14 +90,11 @@ export class SharedSearchHistoryComponent implements OnInit {
               private _indexService: IndexService) { }
 
   ngOnInit(): void {
+    this._initTable();
     this._initData();
   }
 
   private _initData() {
-    this._requests = [];
-    this._total = -1;
-    this._initTable();
-
     if (isPlatformBrowser(this._platformId)) {
       // On récupère le quota Google
       this._getGoogleQuota();
@@ -123,7 +120,6 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._loadHistory();
 
     }
-
   }
 
   private static _getRequestIndex(requestId: string, array: Array<any>): number {
@@ -405,7 +401,9 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._translateNotificationsService.success('Success',
         'The pros will be on the move in a few minutes.');
       if (goToCampaign) {
-        this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
+        this._router.navigate([
+          `/user/admin/projects/project/${campaign.innovation._id}/preparation/campaigns/campaign/${campaign._id}/pros`
+        ]);
       }
       this._requestsToImport = [];
     }, (err: HttpErrorResponse) => {
