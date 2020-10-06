@@ -14,6 +14,8 @@ export class CampaignFrontService {
 
   private _showCampaignTabs: Subject<boolean> = new Subject<boolean>();
 
+  private _loadingCampaign: Subject<boolean> = new Subject<boolean>();
+
   /***
    * this function is to calculate the campaign stat for the answers component in the
    * campaign component.
@@ -205,6 +207,18 @@ export class CampaignFrontService {
 
   public activeCampaignTab(): Subject<string> {
     return this._activeCampaignTab;
+  }
+
+  /***
+   * these function to set and get the campaign is loading
+   * @param value
+   */
+  public setLoadingCampaign(value: boolean) {
+    this._loadingCampaign.next(value);
+  }
+
+  public loadingCampaign(): Subject<boolean> {
+    return this._loadingCampaign;
   }
 
 }
