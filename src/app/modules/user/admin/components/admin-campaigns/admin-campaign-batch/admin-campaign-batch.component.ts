@@ -78,18 +78,13 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    if (this._activatedRoute.snapshot.parent.data['campaign']
-      && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
-      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-      this._campaignFrontService.setActiveCampaign(this._campaign);
-      this._campaignFrontService.setActiveCampaignTab('batch');
-      this._initCampaign();
-    }
-
-    this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
-      if (!!campaign && this._campaign._id !== campaign._id) {
-        this._campaign = campaign;
+    this._activatedRoute.data.subscribe((data) => {
+      if (data['campaign']) {
+        this._campaign = data['campaign'];
+        this._campaignFrontService.setActiveCampaign(this._campaign);
+        this._campaignFrontService.setActiveCampaignTab('batch');
         this._initCampaign();
+        this._campaignFrontService.setLoadingCampaign(false);
       }
     });
 
