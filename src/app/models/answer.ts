@@ -7,7 +7,7 @@ export type AnswerStatus = 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 
 
 export interface Answer {
   readonly _id?: string;
-  readonly campaign: string;
+  readonly campaign: any;
   readonly innovation: string;
   status: AnswerStatus;
   quizReference?: string;
