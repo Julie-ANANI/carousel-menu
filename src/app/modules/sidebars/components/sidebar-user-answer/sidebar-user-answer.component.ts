@@ -265,7 +265,7 @@ export class SidebarUserAnswerComponent {
       // this._newPro.country = this._userAnswer.country && this._userAnswer.country.flag;
       // this._newPro.company = this._userAnswer.company && this._userAnswer.company.name;
 
-      this._answerService.answerReassign(this._userAnswer.campaign, this._userAnswer.originalAnswerReference,
+      this._answerService.answerReassign(this._userAnswer.campaign._id, this._userAnswer.originalAnswerReference,
         this._userAnswer._id, this._newPro).pipe(first()).subscribe((_res: any) => {
         this._translateNotificationsService.success('Success' ,
           'The answer has been reassigned to the new professional.');
