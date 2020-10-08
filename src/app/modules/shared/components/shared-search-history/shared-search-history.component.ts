@@ -27,104 +27,24 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 
 export class SharedSearchHistoryComponent implements OnInit {
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _router: Router,
-              private _configService: ConfigService,
-              private _campaignService: CampaignService,
-              private _searchService: SearchService,
-              private _rolesFrontService: RolesFrontService,
-              private _professionalsService: ProfessionalsService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _indexService: IndexService) { }
-
-  get requests(): Array<any> {
-    return this._requests;
-  }
-
-  get total(): number {
-    return this._total;
-  }
-
-  get googleQuota(): number {
-    return this._googleQuota;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-    const tmp = JSON.parse(value.search);
-    this._loadHistory();
-    if ('keywords' in tmp) {
-      this._keywordsSuggestion(tmp['keywords']);
-    }
-  }
-
-  get paused(): boolean {
-    return this._paused;
-  }
-
-  get tableInfos(): Table {
-    return this._tableInfos;
-  }
-
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
-  }
-
-  set sidebarValue(value: SidebarInterface) {
-    this._sidebarValue = value;
-  }
-
-  get selectedRequest(): any {
-    return this._selectedRequest;
-  }
-
-  get chosenCampaign(): Campaign {
-    return this._chosenCampaign;
-  }
-
-  get addToCampaignModal(): boolean {
-    return this._addToCampaignModal;
-  }
-
-  set addToCampaignModal(value: boolean) {
-    this._addToCampaignModal = value;
-  }
-
-  get geography(): GeographySettings {
-    return this._geography;
-  }
-
-  set geography(value: GeographySettings) {
-    this._geography = value;
-  }
-
-  get suggestions(): Array<string> {
-    return this._suggestedKeywords;
-  }
-
-  get launchNewRequests(): boolean {
-    return this._launchNewRequests;
-  }
-
-  set launchNewRequests(value: boolean) {
-    this._launchNewRequests = value;
-  }
-
   @Input() accessPath: Array<string> = [];
-
-  @Input() campaignId = '';
 
   @Input() status = '';
 
   @Input() mails = false;
 
+  @Input() set campaignId(value: string) {
+    if (!!this._campaignId && value !== this._campaignId) {
+      this._campaignId = value;
+      this._initData();
+    } else {
+      this._campaignId = value;
+    }
+  }
+
   private _sidebarValue: SidebarInterface = {};
 
-  private _tableInfos: Table;
+  private _tableInfos: Table = <Table>{};
 
   private _selectedRequest: any = null;
 
@@ -157,23 +77,30 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _geography: GeographySettings = <GeographySettings>{};
 
-  private static _getRequestIndex(requestId: string, array: Array<any>): number {
-    for (const request of array) {
-      if (requestId === request._id) {
-        return array.indexOf(request);
-      }
-    }
-  }
+  private _campaignId = '';
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _router: Router,
+              private _configService: ConfigService,
+              private _campaignService: CampaignService,
+              private _searchService: SearchService,
+              private _rolesFrontService: RolesFrontService,
+              private _professionalsService: ProfessionalsService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _indexService: IndexService) { }
 
   ngOnInit(): void {
     this._initTable();
+    this._initData();
+  }
 
+  private _initData() {
     if (isPlatformBrowser(this._platformId)) {
       // On récupère le quota Google
       this._getGoogleQuota();
 
-      if (this.campaignId) {
-        this._config.campaign = this.campaignId;
+      if (this._campaignId) {
+        this._config.campaign = this._campaignId;
       }
 
       if (this.mails) {
@@ -193,7 +120,14 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._loadHistory();
 
     }
+  }
 
+  private static _getRequestIndex(requestId: string, array: Array<any>): number {
+    for (const request of array) {
+      if (requestId === request._id) {
+        return array.indexOf(request);
+      }
+    }
   }
 
   private _loadHistory() {
@@ -467,7 +401,9 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._translateNotificationsService.success('Success',
         'The pros will be on the move in a few minutes.');
       if (goToCampaign) {
-        this._router.navigate([`/user/admin/campaigns/campaign/${campaign._id}/pros`]);
+        this._router.navigate([
+          `/user/admin/projects/project/${campaign.innovation._id}/preparation/campaigns/campaign/${campaign._id}/pros`
+        ]);
       }
       this._requestsToImport = [];
     }, (err: HttpErrorResponse) => {
@@ -524,6 +460,87 @@ export class SharedSearchHistoryComponent implements OnInit {
       });
       this._suggestedKeywords = byCount(kw).slice(0, 4) || [];
     });
+  }
+
+  get requests(): Array<any> {
+    return this._requests;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get googleQuota(): number {
+    return this._googleQuota;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    const tmp = JSON.parse(value.search);
+    this._loadHistory();
+    if ('keywords' in tmp) {
+      this._keywordsSuggestion(tmp['keywords']);
+    }
+  }
+
+  get paused(): boolean {
+    return this._paused;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get selectedRequest(): any {
+    return this._selectedRequest;
+  }
+
+  get chosenCampaign(): Campaign {
+    return this._chosenCampaign;
+  }
+
+  get addToCampaignModal(): boolean {
+    return this._addToCampaignModal;
+  }
+
+  set addToCampaignModal(value: boolean) {
+    this._addToCampaignModal = value;
+  }
+
+  get geography(): GeographySettings {
+    return this._geography;
+  }
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
+  }
+
+  get suggestions(): Array<string> {
+    return this._suggestedKeywords;
+  }
+
+  get launchNewRequests(): boolean {
+    return this._launchNewRequests;
+  }
+
+  set launchNewRequests(value: boolean) {
+    this._launchNewRequests = value;
+  }
+
+  get campaignId(): string {
+    return this._campaignId;
   }
 
 }

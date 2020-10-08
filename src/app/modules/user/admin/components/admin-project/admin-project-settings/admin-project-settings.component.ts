@@ -221,7 +221,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onMissionTypeChange(type: MissionType) {
-    this._mission.type = type
+    this._mission.type = type;
     this._saveMission('The market test type has been updated.');
   }
 

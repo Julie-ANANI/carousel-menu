@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { EmailScenario } from '../../../../../../models/email-scenario';
@@ -6,7 +6,7 @@ import { EmailSignature } from '../../../../../../models/email-signature';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import {first, takeUntil} from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { Config } from "../../../../../../models/config";
 import { isPlatformBrowser } from "@angular/common";
 import { Response } from "../../../../../../models/response";
@@ -15,14 +15,13 @@ import { ErrorFrontService } from "../../../../../../services/error/error-front.
 import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
 import { StatsInterface } from "../../admin-stats-banner/admin-stats-banner.component";
 import { CampaignFrontService } from "../../../../../../services/campaign/campaign-front.service";
-import {Subject} from 'rxjs';
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
   styleUrls: ['./admin-campaign-workflows.component.scss']
 })
 
-export class AdminCampaignWorkflowsComponent implements OnInit, OnDestroy {
+export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _campaign: Campaign = <Campaign>{};
 
@@ -52,8 +51,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit, OnDestroy {
 
   private _isTesting = false;
 
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -64,22 +61,15 @@ export class AdminCampaignWorkflowsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-
-      if (this._activatedRoute.snapshot.parent.data['campaign']
-        && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
-        this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-        this._campaignFrontService.setActiveCampaign(this._campaign);
-        this._campaignFrontService.setActiveCampaignTab('workflows');
-        this._initCampaign();
-      }
-
-      this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
-        if (!!campaign && this._campaign._id !== campaign._id) {
-          this._campaign = campaign;
+      this._activatedRoute.data.subscribe((data) => {
+        if (data['campaign']) {
+          this._campaign = data['campaign'];
+          this._campaignFrontService.setActiveCampaign(this._campaign);
+          this._campaignFrontService.setActiveCampaignTab('workflows');
           this._initCampaign();
+          this._campaignFrontService.setLoadingCampaign(false);
         }
       });
-
     }
   }
 
@@ -360,11 +350,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit, OnDestroy {
 
   get isTesting(): boolean {
     return this._isTesting;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }
