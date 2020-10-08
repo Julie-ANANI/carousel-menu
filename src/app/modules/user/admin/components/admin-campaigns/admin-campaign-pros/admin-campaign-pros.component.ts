@@ -1,9 +1,9 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { first, takeUntil } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Professional } from '../../../../../../models/professional';
@@ -15,7 +15,6 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 import { StatsInterface } from "../../admin-stats-banner/admin-stats-banner.component";
 import { CampaignFrontService } from "../../../../../../services/campaign/campaign-front.service";
-import { Subject } from 'rxjs';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -27,7 +26,7 @@ export interface SelectedProfessional extends Professional {
   styleUrls: ['./admin-campaign-pros.component.scss']
 })
 
-export class AdminCampaignProsComponent implements OnInit, OnDestroy {
+export class AdminCampaignProsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'language firstName lastName companyOriginalName email emailConfidence country jobTitle personId messages campaigns',
@@ -70,8 +69,6 @@ export class AdminCampaignProsComponent implements OnInit, OnDestroy {
 
   private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'pros'];
 
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _rolesFrontService: RolesFrontService,
@@ -81,21 +78,15 @@ export class AdminCampaignProsComponent implements OnInit, OnDestroy {
               private _configService: ConfigService) { }
 
   ngOnInit() {
-    if (this._activatedRoute.snapshot.parent.data['campaign']
-      && typeof this._activatedRoute.snapshot.parent.data['campaign'] !== undefined) {
-      this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-      this._campaignFrontService.setActiveCampaign(this._campaign);
-      this._campaignFrontService.setActiveCampaignTab('pros');
-      this._initCampaign();
-    }
-
-    this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
-      if (!!campaign && this._campaign._id !== campaign._id) {
-        this._campaign = campaign;
+    this._activatedRoute.data.subscribe((data) => {
+      if (data['campaign']) {
+        this._campaign = data['campaign'];
+        this._campaignFrontService.setActiveCampaign(this._campaign);
+        this._campaignFrontService.setActiveCampaignTab('pros');
         this._initCampaign();
+        this._campaignFrontService.setLoadingCampaign(false);
       }
     });
-
   }
 
   private _initCampaign() {
@@ -340,11 +331,6 @@ export class AdminCampaignProsComponent implements OnInit, OnDestroy {
 
   get accessPath(): Array<string> {
     return this._accessPath;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }
