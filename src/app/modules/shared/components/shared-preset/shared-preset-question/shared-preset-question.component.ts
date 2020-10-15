@@ -126,6 +126,10 @@ export class SharedPresetQuestionComponent {
     }
   }
 
+  public setColor(color: string, index: number) {
+    this._question.options[index].color = color;
+  }
+
   get language() { return this._language; }
   set language(value: 'en' | 'fr') { this._language = value; }
   get lang() { return this.translateService.currentLang; }
