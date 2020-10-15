@@ -144,6 +144,44 @@
           margin-top: 8px;
           margin-bottom: 13px;
         }
+
+        .color-circles {
+          padding-top: 10px;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .dark-green {
+          border-color: #34AC01;
+          background-color: #34AC01;
+        }
+
+        .light-green {
+          border-color: #82CD30;
+          background-color: #82CD30;
+        }
+
+        .yellow {
+          border-color: #F2C500;
+          background-color: #F2C500;
+        }
+
+        .red {
+          border-color: #C0210F;
+          background-color: #C0210F;
+        }
+
+        .selected-circle {
+          box-shadow: 0 0 0 2px black;
+        }
+
+        .color-picker-circle {
+          border-radius: 50%;
+          height: 30px;
+          width: 30px;
+          border: none;
+          margin-right: 10px;
+        }
       }
     }
   }
