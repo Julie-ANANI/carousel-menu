@@ -250,7 +250,7 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   public saveProject() {
-    this._innovationService.save(this._project._id, this._project).subscribe((response: Innovation) => {
+    this._innovationService.save(this._project._id, {followUpEmails: this._project.followUpEmails}).subscribe((response: Innovation) => {
       this._project = response;
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {

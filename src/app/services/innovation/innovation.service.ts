@@ -65,7 +65,7 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId, innovationObj);
   }*/
 
-  public save(innovationId: string, innovationObj: Innovation): Observable<Innovation> {
+  public save(innovationId: string, innovationObj: any): Observable<Innovation> {
     const _fieldsToPopulate = ['tags', 'mission', 'owner', 'operator', 'collaborators', 'statusLogs', 'clientProject',
       'principalMedia', 'innovationCards', 'campaigns'];
     return this._http.put<Innovation>(
