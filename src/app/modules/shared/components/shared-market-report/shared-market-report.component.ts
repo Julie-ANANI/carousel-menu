@@ -21,10 +21,10 @@ import { WorldmapService } from '../../../../services/worldmap/worldmap.service'
 import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
-import { RolesFrontService } from "../../../../services/roles/roles-front.service";
-import { isPlatformBrowser } from "@angular/common";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../services/error/error-front.service";
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -138,7 +138,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * This function is to fetch the answers from the server.
    */
   private _getAnswers() {
-    if(isPlatformBrowser(this._platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first())
         .subscribe((response) => {
           this._answers = AnswerFrontService.qualitySort(response.answers);
@@ -200,7 +200,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _updateAnswersToShow(): void {
     const addAnswer = (country: string) => {
-      if(this._answersByCountries[country]) {
+      if (this._answersByCountries[country]) {
         this._answersByCountries[country] += 1;
       } else {
         this._answersByCountries[country] = 1;
@@ -216,7 +216,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         return answer.country.flag;
       }
       if (!!answer.professional && !!answer.professional.country) {
-        if (!answerIsAlreadyCounted) addAnswer(answer.professional.country);
+        if (!answerIsAlreadyCounted) { addAnswer(answer.professional.country); }
         return answer.professional.country;
       }
       return '';
@@ -236,7 +236,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   public saveInnovation(event: Event) {
     event.preventDefault();
-    this._innovationService.save(this._innovation._id, this._innovation).subscribe(() => {
+    this._innovationService.save(this._innovation._id, {marketReport: this._innovation.marketReport}).subscribe(() => {
       this._toBeSaved = false;
       this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
     }, (err: HttpErrorResponse) => {
