@@ -95,7 +95,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   private _saveInnovation() {
-   this._innovationService.save(this._innovation._id, this._innovation).subscribe((innovation: Innovation) => {
+    this._innovationService.save(this._innovation._id, {preset: this._innovation.preset}).subscribe((innovation: Innovation) => {
       this._innovation = innovation;
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The preset is updated.');
