@@ -174,7 +174,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     if (this._innovation.status === 'EDITING' && !this._isRequesting && !this._isSaving) {
       this._isRequesting = true;
       this._innovation['proofreading'] = true;
-      this._updateProject('ERROR.PROJECT.REQUEST_PROOFREADING');
+      this._updateProject('proofreading');
     }
   }
 
@@ -194,7 +194,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     if (this._innovation.status === 'EDITING' && !this._isSubmitting && !this._isSaving && !this._isRequesting && this._showModal) {
       this._isSubmitting = true;
       this._innovation.status = 'SUBMITTED';
-      this._updateProject('ERROR.PROJECT.SUBMITTED_TEXT');
+      this._updateProject('submit');
     }
   }
 
@@ -213,13 +213,13 @@ export class PitchComponent implements OnInit, OnDestroy {
           break;
 
         case 'ISSUE':
-          const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE')
+          const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
           this._innovation.innovationCards[this._activeCardIndex].sections[_indexIssue].content = event.content;
           this._updateProject();
           break;
 
         case 'SOLUTION':
-          const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION')
+          const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
           this._innovation.innovationCards[this._activeCardIndex].sections[_indexSolution].content = event.content;
           this._updateProject();
           break;
@@ -230,7 +230,7 @@ export class PitchComponent implements OnInit, OnDestroy {
             this._innovation.innovationCards[this._activeCardIndex].principalMedia = event.content;
           }
           this._cardContent = this.activeInnovCard.media;
-          this._updateProject('ERROR.PROJECT.UPDATED_TEXT');
+          this._updateProject('image');
           break;
 
         case 'VIDEO':
@@ -248,8 +248,27 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _updateProject(message = 'ERROR.PROJECT.SAVED_TEXT') {
-    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
+  private _updateProject(type?: string) {
+    let saveObject: any = {innovationCards: this._innovation.innovationCards};
+    let message = 'ERROR.PROJECT.SAVED_TEXT';
+    switch (type) {
+      case 'submit':
+        message = 'ERROR.PROJECT.SUBMITTED_TEXT';
+        saveObject = {status: this._innovation.status};
+        break;
+      case 'proofreading':
+        message = 'ERROR.PROJECT.REQUEST_PROOFREADING';
+        saveObject = {proofreading: this._innovation.proofreading};
+        break;
+      case 'sendMessage':
+        message = 'ERROR.PROJECT.SEND_MESSAGE';
+        saveObject = {questionnaireComment: this._innovation.questionnaireComment};
+        break;
+      case 'image':
+        message = 'ERROR.PROJECT.UPDATED_TEXT';
+        break;
+    }
+    this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((innovation) => {
       this._resetVariables();
       this._innovationFrontService.setInnovation(innovation);
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
@@ -322,7 +341,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
       this._isSendingMessage = true;
-      this._updateProject('ERROR.PROJECT.SEND_MESSAGE');
+      this._updateProject('sendMessage');
     }
   }
 
