@@ -19,7 +19,6 @@ import {ClientProject} from '../../../../../../models/client-project';
 import {UserService} from '../../../../../../services/user/user.service';
 import {Response} from '../../../../../../models/response';
 import {ClientProjectService} from '../../../../../../services/client-project/client-project.service';
-import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
 import {environment} from '../../../../../../../environments/environment';
 import {CommonService} from '../../../../../../services/common/common.service';
@@ -28,6 +27,7 @@ import {Tag} from '../../../../../../models/tag';
 import {TranslateService} from '@ngx-translate/core';
 import {domainRegEx, emailRegEx} from '../../../../../../utils/regex';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
+import {picto, Picto} from '../../../../../../models/static-data/picto';
 
 interface UserSuggestion {
   name: string;
@@ -59,8 +59,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _newOwner: UserSuggestion = <UserSuggestion>{};
 
-  private _usersSuggestion: Array<UserSuggestion> = [];
-
   private _missionObjectives: Array<Objective> = ObjectivesPrincipal;
 
   private _quizLink = '';
@@ -88,6 +86,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _missionTeam: string[];
 
+  private _picto: Picto = picto;
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -95,7 +95,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
               private _missionService: MissionService,
               private _dashboardService: DashboardService,
               private _innovationService: InnovationService,
-              private _autoCompleteService: AutocompleteService,
               private _userService: UserService,
               private _commonService: CommonService,
               private _translateService: TranslateService,
@@ -276,14 +275,15 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   private _saveClientProject(notifyMessage = 'The project has been updated.') {
-    this._clientProjectService.save(this._clientProject._id, this._clientProject).pipe(first()).subscribe((clientProject: ClientProject) => {
-      this._clientProject = clientProject;
-      this._translateNotificationsService.success('Success' , notifyMessage);
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-
+    this._clientProjectService.save(this._clientProject._id, this._clientProject)
+      .pipe(first())
+      .subscribe((clientProject: ClientProject) => {
+        this._clientProject = clientProject;
+        this._translateNotificationsService.success('Success' , notifyMessage);
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
   }
 
   public isTeamMember(operatorId: string): boolean {
@@ -322,27 +322,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public suggestUser(value: string) {
-    if (value) {
-      this._autoCompleteService.get({query: value, type: 'users'})
-        .pipe(takeUntil(this._ngUnsubscribe)).subscribe((res: any) => {
-        if (res.length === 0) {
-          this._usersSuggestion = [];
-        } else {
-          res.forEach((items: any) => {
-            const valueIndex = this._usersSuggestion.findIndex((user) => user._id === items._id);
-            if (valueIndex === -1) { // if not exist then push into the array.
-              this._usersSuggestion.push({name: items.name, _id: items._id});
-            }
-          });
-        }
-      });
-    }
-  }
-
   public selectOwner(value: UserSuggestion) {
     this._newOwner = value;
-    this._usersSuggestion = [];
   }
 
   public saveOwner(event: Event) {
@@ -434,10 +415,12 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onChangeAnonymous(event: Event) {
-    if (this._innovation._metadata && this._innovation._metadata['campaign']  && this._innovation._metadata['campaign']['anonymous_answers']) {
+    if (this._innovation._metadata && this._innovation._metadata['campaign']
+      && this._innovation._metadata['campaign']['anonymous_answers']) {
       this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
     } else {
-      this._innovation._metadata = this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+      this._innovation._metadata = this._innovation._metadata['campaign']['anonymous_answers']
+        = (event.target as HTMLInputElement).checked;
     }
     this._saveProject((event.target as HTMLInputElement).checked
       ? 'The answers will be anonymous.' : 'The answers won\'t be anonymous.')
@@ -553,10 +536,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._newOwner;
   }
 
-  get usersSuggestion(): Array<UserSuggestion> {
-    return this._usersSuggestion;
-  }
-
   get missionObjectives(): Array<Objective> {
     return this._missionObjectives;
   }
@@ -595,6 +574,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get missionTeam(): string[] {
     return this._missionTeam;
+  }
+
+  get picto(): Picto {
+    return this._picto;
   }
 
   ngOnDestroy(): void {

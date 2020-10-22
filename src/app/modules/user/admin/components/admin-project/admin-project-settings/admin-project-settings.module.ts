@@ -9,6 +9,7 @@ import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.m
 import {SidebarTagsModule} from '../../../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import {MissionFormModule} from '../../../../../sidebars/components/mission-form/mission-form.module';
 import {SidebarBlacklistModule} from '../../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
+import {AutoSuggestionModule} from '../../../../../utility/auto-suggestion/auto-suggestion.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {SidebarBlacklistModule} from '../../../../../sidebars/components/sidebar
     SidebarTagsModule,
     MissionFormModule,
     SidebarBlacklistModule,
+    AutoSuggestionModule,
   ],
   declarations: [
     AdminProjectSettingsComponent

@@ -204,20 +204,10 @@
                 <span *ngIf="!isEditingOwner" class="is-text">{{ name(innovation.owner) }}</span>
 
                 <label *ngIf="isEditingOwner" class="relative m-no-right mxw-full">
-                  <input
-                    (keydown)="suggestUser(newOwner.name)"
-                    [(ngModel)]="newOwner.name"
-                    class="form-input is-sm is-shadowed"
-                    placeholder="Start typing here..."
-                    type="text">
-                  <ul
-                    *ngIf="usersSuggestion.length"
-                    [ngStyle]="{'left': '0', 'right': '0'}"
-                    class="menu absolute">
-                    <li (click)="selectOwner(user)" *ngFor="let user of usersSuggestion" class="menu-item">
-                      {{ user.name }}
-                    </li>
-                  </ul>
+                  <app-utility-auto-suggestion
+                    (valueSelected)="selectOwner($event)"
+                    [isSmallInput]="true">
+                  </app-utility-auto-suggestion>
                 </label>
 
                 <div
@@ -227,9 +217,9 @@
                   class="icon-container m-left-10">
                   <span class="tooltip" data-tooltip="Save">
                     <img
+                      [src]="picto.save"
                       alt="Save"
-                      class="img-responsive"
-                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-save.svg">
+                      class="img-responsive">
                   </span>
                 </div>
 
@@ -239,9 +229,9 @@
                   class="icon-container m-left-20">
                   <span [attr.data-tooltip]="isEditingOwner ? 'Cancel' : 'Edit owner'" class="tooltip">
                     <img
+                      [src]="picto.edit"
                       alt="Edit"
-                      class="img-responsive"
-                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                      class="img-responsive">
                   </span>
                 </div>
 
@@ -312,9 +302,9 @@
                     : 'View tags'"
                     class="tooltip">
                     <img
+                      [src]="picto.edit"
                       alt="Edit"
-                      class="img-responsive"
-                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                      class="img-responsive">
                   </span>
                 </div>
 
@@ -347,16 +337,15 @@
 
                 <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
                   <li *ngIf="mission.milestoneDates.length > 1" class="active">
-                    <span class="d-flex flex-d-column align-center">
+                    <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
                       <span class="shape is-circle"></span>
                       <span class="divider-vert active"></span>
                     </span>
                     {{ innovation.created | date:dateFormat }} - Preparation
                   </li>
                   <ng-container *ngFor="let milestone of milestones; let i = index;">
-                    <li
-                      [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
-                      <span class="d-flex flex-d-column align-center">
+                    <li [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
+                      <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
                         <span class="shape is-circle"></span>
                         <span
                           *ngIf="i < mission.milestoneDates.length - 1"
@@ -379,9 +368,9 @@
                   class="icon-container m-left-20">
                   <span data-tooltip="Edit roadmap" class="tooltip">
                     <img
+                      [src]="picto.edit"
                       alt="Edit"
-                      class="img-responsive"
-                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                      class="img-responsive">
                   </span>
                 </div>
 
@@ -410,9 +399,9 @@
                   class="icon-container m-left-20">
                   <span data-tooltip="Edit blocklist" class="tooltip">
                     <img
+                      [src]="picto.edit"
                       alt="Edit"
-                      class="img-responsive"
-                      src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg">
+                      class="img-responsive">
                   </span>
                 </div>
 

@@ -18,6 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
  *   c. type: the value we are looking from in the database. Different types are: 'users'. Default: users
  *   d. identifier: when we get the suggestion form the back in that source which value should be displayed in the
  *   search field. Default: name
+ * 2. isSmallInput: ture will make the input filed small in height.
  *
  * Output:
  * 1. valueSelected: output the value selected from the suggestions.
@@ -49,6 +50,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     }
   }
 
+  @Input() isSmallInput = false;
+
   @Output() valueSelected: EventEmitter<any> = new EventEmitter<any>();
 
   private _minChars = 3;
@@ -78,27 +81,21 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   constructor(private _autoCompleteService: AutocompleteService) { }
 
   ngOnInit() {
-
     this._searchKeyword.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
       .subscribe((input: any) => {
-
         if (input) {
           this._isSearching = true;
           this._loadResult(input);
         } else {
           this.hideAutoSuggestionDropdown();
         }
-
       });
-
   }
 
   private _loadResult(value: any) {
-
-    if (value && value.length && (!this._itemSelected
-      || this._itemSelected && this._itemSelected[this._identifier] && this._itemSelected[this._identifier].length !== value.length)) {
-
+    if (value && value.length && (!this._itemSelected || this._itemSelected
+      && this._itemSelected[this._identifier] && this._itemSelected[this._identifier].length !== value.length)) {
       this._suggestionsSource = [];
       this._dropdownVisible = true;
       this._loading = true;
@@ -108,18 +105,18 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       }
 
     }
-
   }
 
   private _getSuggestions(searchKey: string) {
-    this._autoCompleteService.get({ query: searchKey, type: this._type }).pipe(takeUntil(this._ngUnsubscribe))
+    this._autoCompleteService.get({ query: searchKey, type: this._type })
+      .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data) => {
         this._suggestionsSource = data;
         this._loading = false;
         this._isSearching = data.length !== 0;
-    },(err: HttpErrorResponse) => {
-        console.log(err);
-      })
+        },(err: HttpErrorResponse) => {
+        console.error(err);
+      });
   }
 
   public showAutoSuggestionDropdown(event: Event) {
@@ -142,13 +139,11 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       this._currentFocus--;
       this._setFocus(this._currentFocus);
     } else if (event.key === 'Enter' || event.code === 'Enter') {
-
       if (this._currentFocus > -1 && this._suggestionsSource[this._currentFocus]
         && this._suggestionsSource[this._currentFocus][this._identifier]) {
         this.onValueSelect(this._suggestionsSource[this._currentFocus]);
         this._currentFocus = -1;
       }
-
     }
   }
 
