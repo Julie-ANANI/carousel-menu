@@ -33,8 +33,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _project: Innovation = <Innovation>{};
 
-  private _updatedProject: Innovation | null = null;
-
   private _fetchingError = false;
 
   private _showModal = false;
@@ -68,7 +66,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _currentLang = this._translateService.currentLang || 'en';
 
-  private _showBanner = false;
+  private _showBanner = '';
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -98,9 +96,12 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
         this._socketService.getProjectUpdates(this._project._id)
           .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((project: Innovation) => {
-            this._updatedProject = project;
-            this._showBanner = !!this._updatedProject;
+          .subscribe((update: any) => {
+            this._showBanner = update.user;
+            Object.keys(update.data).forEach((field: string) => {
+              this._project[field] = update.data[field];
+            });
+            this._setInnovation();
             }, (error) => {
             console.error(error);
           });
@@ -161,12 +162,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _setInnovation() {
     this._innovationFrontService.setInnovation(this._project);
-  }
-
-  public updateProject() {
-    this._project = this._updatedProject;
-    this._setInnovation();
-    this._showBanner = false;
   }
 
   private _resetModals() {
@@ -300,11 +295,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return this._isLoading;
   }
 
-  get showBanner(): boolean {
+  get showBanner(): string {
     return this._showBanner;
   }
 
-  set showBanner(value: boolean) {
+  set showBanner(value: string) {
     this._showBanner = value;
   }
 
