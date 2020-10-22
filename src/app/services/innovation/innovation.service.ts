@@ -61,11 +61,7 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId);
   }
 
-  /*public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
-    return this._http.put('/innovation/' + innovationId, innovationObj);
-  }*/
-
-  public save(innovationId: string, innovationObj: any): Observable<Innovation> {
+  public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
     const _fieldsToPopulate = ['tags', 'mission', 'owner', 'operator', 'collaborators', 'statusLogs', 'clientProject',
       'principalMedia', 'innovationCards', 'campaigns'];
     return this._http.put<Innovation>(
