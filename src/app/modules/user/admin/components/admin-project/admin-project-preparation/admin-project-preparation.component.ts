@@ -87,7 +87,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           this.setPageTitle();
         }, 100);
       }
-    })
+    });
 
     this._campaignFrontService.allCampaigns().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaigns) => {
       this._allCampaigns = campaigns || [];
@@ -132,10 +132,10 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   public setPageTitle(tab?: string) {
     this._activeTab = tab ? tab : this._activeTab;
     if (this._showCampaignTabs) {
-      this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)} 
+      this._translateTitleService.setTitle(`${this._activeTab.slice(0, 1).toUpperCase()}${this._activeTab.slice(1)}
       | Campaign | Campaigns | Preparation | ${this._project.name}`);
     } else {
-      this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)} 
+      this._translateTitleService.setTitle(`${this._activeTab.slice(0, 1).toUpperCase()}${this._activeTab.slice(1)}
       | Preparation | ${this._project.name}`);
     }
   }
@@ -233,7 +233,8 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   private _saveProject() {
     if (this._toBeSaved) {
       this._toBeSaved = false;
-      this._innovationService.save(this._project._id, this._project).pipe(first()).subscribe(() => {
+      const saveObject = {innovationCards: this._project.innovationCards, settings: this._project.settings};
+      this._innovationService.save(this._project._id, saveObject).pipe(first()).subscribe(() => {
         this._isSaving = false;
         this._setInnovation();
         if (!this._toBeSavedComment) {
