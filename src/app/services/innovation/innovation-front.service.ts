@@ -26,6 +26,12 @@ export interface Values {
 @Injectable({providedIn: 'root'})
 export class InnovationFrontService {
 
+  constructor(private _domSanitizer: DomSanitizer) { }
+
+  get calculatedPercentages(): Values {
+    return this._calculatedValues;
+  }
+
   totalFieldsPresent: number;
 
   totalFieldsRequired: number;
@@ -50,9 +56,261 @@ export class InnovationFrontService {
 
   private _activeCardIndex: Subject<number> = new Subject<number>();
 
-  private _activeCardLang: Subject<string> = new Subject<string>();
+  /***
+   * this function is to return the color based on the length and limit.
+   * @param length
+   * @param limit
+   */
+  // todo remove this
+  public static getColor(length: number, limit: number): string {
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < (limit / 2)) {
+      return '#F0AD4E';
+    } else {
+      return '#2ECC71';
+    }
+  }
 
-  constructor(private _domSanitizer: DomSanitizer) { }
+
+  /*** Todo to remove this function
+   * this function is to get the src with defined height and width to restrict the size of image.
+   * @param width
+   * @param height
+   * @param requestFor
+   * @param source => innovationCard || Media.
+   */
+  public static getMediaSrc(source: any, requestFor = 'default', width = '240', height = '159'): string {
+    const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
+    const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
+    const suffix = '.jpg';
+    let src = '';
+
+    if (source) {
+
+      switch (requestFor) {
+
+        case 'mediaSrc':
+          if (source && source.cloudinary && source.cloudinary.public_id) {
+            src = prefix + source.cloudinary.public_id + suffix;
+          }
+          break;
+
+        // it can be used to get the related src for an innovation.
+        case 'default':
+          if (source.principalMedia && source.principalMedia.type === 'PHOTO' && source.principalMedia.cloudinary
+            && source.principalMedia.cloudinary.public_id) {
+            src = prefix + source.principalMedia.cloudinary.public_id + suffix;
+          } else if (source.media.length > 0) {
+            const index = source.media.findIndex((media: Media) => media.type === 'PHOTO');
+            if (index !== -1 && source.media[index].cloudinary && source.media[index].cloudinary.public_id) {
+              src = prefix + source.media[index].cloudinary.public_id + suffix;
+            }
+          }
+          break;
+
+        default:
+          // Do nothing...
+
+      }
+
+    }
+
+    return src === '' ? defaultSrc : src;
+
+  }
+
+  /***
+   * this function returns the demanded field from the innovation
+   * based on the current lang provided.
+   * @param innovation
+   * @param currentLang
+   * @param required
+   */
+  public static currentLangInnovationCard(innovation: Innovation, currentLang = 'en', required: string): any {
+    if (innovation && innovation.innovationCards && required) {
+      const _cardIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
+      const _card: InnovCard = _cardIndex !== -1 ? innovation.innovationCards[_cardIndex] : innovation.innovationCards[0];
+
+      switch (required) {
+
+        case 'CARD':
+          return <InnovCard>_card;
+
+        case 'TITLE':
+          return _card.title;
+
+        case 'SUMMARY':
+          return InnovationFrontService.scrapeHtmlTags(_card.summary) || '';
+
+        case 'ISSUE':
+          return InnovationFrontService.cardDynamicSection(_card, 'ISSUE').content || '';
+
+        case 'SOLUTION':
+          return InnovationFrontService.cardDynamicSection(_card, 'SOLUTION').content || '';
+
+        case 'LANG':
+          return _card.lang;
+
+        case 'INDEX':
+          return _cardIndex;
+
+      }
+
+    }
+  }
+
+  /***
+   * returns the section info of the 'ISSUE' | 'SOLUTION'.
+   * @param innovCard
+   * @param field
+   */
+  public static cardDynamicSection(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): InnovCardSection {
+    if (innovCard && innovCard.sections && innovCard.sections.length) {
+      const _index = InnovationFrontService.cardDynamicSectionIndex(innovCard, field);
+      if (_index !== -1) {
+        return innovCard.sections[_index];
+      }
+    }
+    return <InnovCardSection>{};
+  }
+
+  /***
+   * return the index of the section 'ISSUE' | 'SOLUTION'
+   * @param innovCard
+   * @param field
+   */
+  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): number {
+    return innovCard.sections.findIndex((section) => section.type === field);
+  }
+
+  /***
+   * returns the operator comment of the card based on the required
+   * @param innovCard
+   * @param field
+   */
+  public static cardOperatorComment(innovCard: InnovCard, field: CardSectionTypes): CardComment {
+    if (innovCard && innovCard.operatorComment && field) {
+      switch (field) {
+
+        case 'TITLE':
+          return innovCard.operatorComment.title;
+
+        case 'SUMMARY':
+          return innovCard.operatorComment.summary;
+
+        case 'ISSUE':
+          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'ISSUE');
+
+        case 'SOLUTION':
+          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'SOLUTION');
+
+      }
+    }
+    return <CardComment>{};
+  }
+
+  /***
+   * returns the dynamic comment section info of the 'ISSUE' | 'SOLUTION'
+   * @param innovCard
+   * @param field
+   */
+  public static cardDynamicOperatorComment(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): CardComment {
+    if (innovCard && innovCard.operatorComment && innovCard.operatorComment.sections && innovCard.operatorComment.sections.length) {
+      const _index = innovCard.operatorComment.sections.findIndex((section) => section.type === field);
+      if (_index !== -1) {
+        return innovCard.operatorComment.sections[_index];
+      }
+    }
+    return <CardComment>{};
+  }
+
+  public static scrapeHtmlTags(text: string): string {
+    return new ScrapeHTMLTags().transform(text);
+  }
+
+  public static defaultMedia(width = '240', height = '159'): string {
+    return `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
+  }
+
+  /***
+   * first it checks the principal media at the innovation level, if not found then check at the
+   * card level based on the lang and return the url..
+   * @param innovation
+   * @param lang
+   * @param width
+   * @param height
+   */
+  public static principalMedia(innovation: Innovation, lang = 'en', width = '240', height = '159'): string {
+    if (innovation && innovation.principalMedia) {
+      return InnovationFrontService.getMedia(innovation.principalMedia, width, height);
+    } else if (innovation && innovation.innovationCards && innovation.innovationCards.length > 0) {
+      const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'CARD');
+      return InnovationFrontService.innovCardPrincipalMedia(_card, width, height);
+    }
+  }
+
+  /***
+   * this function return the principal media url at the level of the innovation card.
+   * @param innovCard
+   * @param width
+   * @param height
+   */
+  public static innovCardPrincipalMedia(innovCard: InnovCard, width = '240', height = '159'): string {
+    if (innovCard && innovCard.principalMedia) {
+      return InnovationFrontService.getMedia(innovCard.principalMedia, width, height);
+    } else if (innovCard && innovCard.media && innovCard.media.length > 0) {
+      const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
+      const _media: Media = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
+      return InnovationFrontService.getMedia(_media, width, height);
+    } else {
+      return InnovationFrontService.defaultMedia(width, height);
+    }
+  }
+
+  public static getMedia(media: Media, width = '240', height = '159'): string {
+    let _src = '';
+
+    if (media && media.type && media.type === 'PHOTO') {
+      _src = InnovationFrontService.imageSrc(media, width, height);
+    } else if (media && media.type && media.type === 'VIDEO') {
+      _src = this._videoThumbnail(media);
+    }
+
+    return _src === '' ? InnovationFrontService.defaultMedia(width, height) : _src;
+  }
+
+  private static _videoThumbnail(media: Media): string {
+    return media && media.video && media.video.thumbnail || '';
+  }
+
+  public static imageSrc(media: Media, width = '240', height = '159'): string {
+    const _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
+    const _suffix = '.jpg';
+    return media && media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
+  }
+
+  /***
+   * This function is to get and returns the questions from the innovation.
+   */
+  public static presets(innovation: Innovation): Array<Question> {
+
+    let questions: Array<Question> = [];
+
+    if (innovation && innovation.preset && innovation.preset.sections) {
+      questions = innovation.preset.sections.reduce((questionArray: Array<Question>, section: Section) => {
+        return questionArray.concat(section.questions);
+      }, []);
+    }
+
+    return questions;
+
+  }
+
+  public static activeCard(innovation: Innovation, index = 0): InnovCard {
+    return innovation && innovation.innovationCards && innovation.innovationCards.length
+      ? innovation.innovationCards[index] : <InnovCard>{};
+  }
 
   /*
     We are calculating the percentage for the project.
@@ -157,273 +415,9 @@ export class InnovationFrontService {
 
   }
 
-  /***
-   * this function is to return the color based on the length and limit.
-   * @param length
-   * @param limit
-   */
-  // todo remove this
-  public static getColor(length: number, limit: number): string {
-    if (length <= 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < (limit/2)) {
-      return '#F0AD4E';
-    } else {
-      return '#2ECC71';
-    }
-  }
-
-
-  /*** Todo to remove this function
-   * this function is to get the src with defined height and width to restrict the size of image.
-   * @param width
-   * @param height
-   * @param requestFor
-   * @param source => innovationCard || Media.
-   */
-  public static getMediaSrc(source: any, requestFor = 'default', width = '240', height = '159'): string {
-    const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
-    const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
-    const suffix = '.jpg';
-    let src = '';
-
-    if (source) {
-
-      switch (requestFor) {
-
-        case 'mediaSrc':
-          if (source && source.cloudinary && source.cloudinary.public_id) {
-            src = prefix + source.cloudinary.public_id + suffix;
-          }
-          break;
-
-        // it can be used to get the related src for an innovation.
-        case 'default':
-          if (source.principalMedia && source.principalMedia.type === 'PHOTO' && source.principalMedia.cloudinary
-            && source.principalMedia.cloudinary.public_id) {
-            src = prefix + source.principalMedia.cloudinary.public_id + suffix;
-          } else if (source.media.length > 0) {
-            const index = source.media.findIndex((media: Media) => media.type === 'PHOTO');
-            if (index !== -1 && source.media[index].cloudinary && source.media[index].cloudinary.public_id) {
-              src = prefix + source.media[index].cloudinary.public_id + suffix;
-            }
-          }
-          break;
-
-        default:
-          // Do nothing...
-
-      }
-
-    }
-
-    return src === '' ? defaultSrc : src;
-
-  }
-
-  /***
-   * this function returns the demanded field from the innovation
-   * based on the current lang provided.
-   * @param innovation
-   * @param currentLang
-   * @param required
-   */
-  public static currentLangInnovationCard(innovation: Innovation, currentLang = 'en', required: string): any {
-    if (innovation && innovation.innovationCards && required) {
-      let _cardIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === currentLang);
-      const _card: InnovCard = _cardIndex !== -1 ? innovation.innovationCards[_cardIndex] : innovation.innovationCards[0];
-
-      switch (required) {
-
-        case 'CARD':
-          return <InnovCard>_card;
-
-        case 'TITLE':
-          return _card.title;
-
-        case 'SUMMARY':
-          return InnovationFrontService.scrapeHtmlTags(_card.summary) || '';
-
-        case 'ISSUE':
-          return InnovationFrontService.cardDynamicSection(_card, 'ISSUE').content || '';
-
-        case 'SOLUTION':
-          return InnovationFrontService.cardDynamicSection(_card, 'SOLUTION').content || '';
-
-        case 'LANG':
-          return _card.lang;
-
-        case 'INDEX':
-          return _cardIndex;
-
-      }
-
-    }
-  }
-
-  /***
-   * returns the section info of the 'ISSUE' | 'SOLUTION'.
-   * @param innovCard
-   * @param field
-   */
-  public static cardDynamicSection(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): InnovCardSection {
-    if (innovCard && innovCard.sections && innovCard.sections.length) {
-      const _index = InnovationFrontService.cardDynamicSectionIndex(innovCard, field);
-      if (_index !== -1) {
-        return innovCard.sections[_index]
-      }
-    }
-    return <InnovCardSection>{};
-  }
-
-  /***
-   * return the index of the section 'ISSUE' | 'SOLUTION'
-   * @param innovCard
-   * @param field
-   */
-  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): number {
-    return innovCard.sections.findIndex((section) => section.type === field);
-  }
-
-  /***
-   * returns the operator comment of the card based on the required
-   * @param innovCard
-   * @param field
-   */
-  public static cardOperatorComment(innovCard: InnovCard, field: CardSectionTypes): CardComment {
-    if (innovCard && innovCard.operatorComment && field) {
-      switch (field) {
-
-        case 'TITLE':
-          return innovCard.operatorComment.title;
-
-        case 'SUMMARY':
-          return innovCard.operatorComment.summary;
-
-        case 'ISSUE':
-          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'ISSUE');
-
-        case 'SOLUTION':
-          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'SOLUTION');
-
-      }
-    }
-    return <CardComment>{};
-  }
-
-  /***
-   * returns the dynamic comment section info of the 'ISSUE' | 'SOLUTION'
-   * @param innovCard
-   * @param field
-   */
-  public static cardDynamicOperatorComment(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): CardComment {
-    if (innovCard && innovCard.operatorComment && innovCard.operatorComment.sections && innovCard.operatorComment.sections.length) {
-      const _index = innovCard.operatorComment.sections.findIndex((section) => section.type === field);
-      if (_index !== -1) {
-        return innovCard.operatorComment.sections[_index]
-      }
-    }
-    return <CardComment>{};
-  }
-
-  public static scrapeHtmlTags(text: string): string {
-    return new ScrapeHTMLTags().transform(text);
-  }
-
-  public static defaultMedia(width = '240', height = '159'): string {
-    return `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
-  }
-
-  /***
-   * first it checks the principal media at the innovation level, if not found then check at the
-   * card level based on the lang and return the url..
-   * @param innovation
-   * @param lang
-   * @param width
-   * @param height
-   */
-  public static principalMedia(innovation: Innovation, lang = 'en', width = '240', height = '159'): string {
-    if (innovation && innovation.principalMedia) {
-      return InnovationFrontService.getMedia(innovation.principalMedia, width, height);
-    } else if (innovation && innovation.innovationCards && innovation.innovationCards.length > 0) {
-      const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'CARD');
-      return InnovationFrontService.innovCardPrincipalMedia(_card, width, height);
-    }
-  }
-
-  /***
-   * this function return the principal media url at the level of the innovation card.
-   * @param innovCard
-   * @param width
-   * @param height
-   */
-  public static innovCardPrincipalMedia(innovCard: InnovCard, width = '240', height = '159'): string {
-    if (innovCard && innovCard.principalMedia) {
-      return InnovationFrontService.getMedia(innovCard.principalMedia, width, height);
-    } else if (innovCard && innovCard.media && innovCard.media.length > 0) {
-      const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
-      const _media: Media = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
-      return InnovationFrontService.getMedia(_media, width, height);
-    } else {
-      return InnovationFrontService.defaultMedia(width, height);
-    }
-  }
-
-  public static getMedia(media: Media, width = '240', height = '159'): string {
-    let _src = '';
-
-    if (media && media.type && media.type === 'PHOTO') {
-      _src = InnovationFrontService.imageSrc(media, width, height);
-    } else if (media && media.type && media.type === 'VIDEO') {
-      _src = this._videoThumbnail(media);
-    }
-
-    return _src === '' ? InnovationFrontService.defaultMedia(width, height) : _src;
-  }
-
-  private static _videoThumbnail(media: Media): string {
-    return media && media.video && media.video.thumbnail || '';
-  }
-
-  public static imageSrc(media: Media, width = '240', height = '159'): string {
-    const _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
-    const _suffix = '.jpg';
-    return media && media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
-  }
-
-  /***
-   * This function is to get and returns the questions from the innovation.
-   */
-  public static presets(innovation: Innovation): Array<Question> {
-
-    let questions: Array<Question> = [];
-
-    if (innovation && innovation.preset && innovation.preset.sections) {
-      questions = innovation.preset.sections.reduce((questionArray: Array<Question>, section: Section) => {
-        return questionArray.concat(section.questions);
-      }, []);
-    }
-
-    return questions;
-
-  }
-
-  public static activeCard(innovation: Innovation, index = 0): InnovCard {
-    return innovation && innovation.innovationCards && innovation.innovationCards.length
-      ? innovation.innovationCards[index] : <InnovCard>{};
-  }
-
   public videoSrc(media: Media): any {
     return media && media.video && media.video.embeddableUrl
       ? this._domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl) : '';
-  }
-
-  /*** Todo remove this
-   * these function is to set and get selected innovation index.
-   * @param value
-   */
-  setSelectedInnovationIndex(value: number) {
-    this._selectedInnovationIndex.next(value);
   }
 
   getSelectedInnovationIndex(): Subject<number> {
@@ -440,18 +434,6 @@ export class InnovationFrontService {
 
   activeCardIndex(): Subject<number> {
     return this._activeCardIndex;
-  }
-
-  /***
-   * these function to set and get active card lang.
-   * @param value
-   */
-  setActiveCardLang(value: string) {
-    this._activeCardLang.next(value);
-  }
-
-  activeCardLang(): Subject<string>  {
-    return this._activeCardLang;
   }
 
   /***
@@ -478,10 +460,6 @@ export class InnovationFrontService {
 
   public getCardCommentNotifyChanges(): Subject<boolean> {
     return this._saveCommentSubject;
-  }
-
-  get calculatedPercentages(): Values {
-    return this._calculatedValues;
   }
 
   /***
