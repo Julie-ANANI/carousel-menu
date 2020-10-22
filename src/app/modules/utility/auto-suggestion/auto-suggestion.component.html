@@ -12,6 +12,7 @@
           (keydown)="onKeyboardPress($event)"
           [attr.placeholder]="placeholder | translate"
           [formControl]="searchKeyword"
+          [ngClass]="{'is-sm': isSmallInput}"
           autocomplete="off"
           class="form-input is-shadowed"
           name="suggestion"
