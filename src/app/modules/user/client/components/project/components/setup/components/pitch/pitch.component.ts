@@ -69,7 +69,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
-      if (this._innovation.preset && !this._preset.sections) {
+      if (this._innovation.preset) {
         this._preset = this._innovation.preset;
       }
       if (this._innovation.mission) {
