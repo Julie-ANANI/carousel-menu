@@ -98,6 +98,9 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this._ngUnsubscribe))
           .subscribe((update: any) => {
             this._showBanner = update.user;
+            setTimeout(() => {
+              this._showBanner = '';
+            }, 5000);
             Object.keys(update.data).forEach((field: string) => {
               this._project[field] = update.data[field];
             });
