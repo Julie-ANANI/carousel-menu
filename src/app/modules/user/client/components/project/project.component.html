@@ -4,6 +4,12 @@
 
 <div [hidden]="fetchingError && !isLoading" id="project">
 
+  <!-- banner project message  -->
+  <app-utility-banner [(showBanner)]="showBanner" [position]="'relative'">
+    This project has been updated by {{ showBanner }}
+  </app-utility-banner>
+  <!-- banner project message  -->
+
   <!-- header -->
   <section class="bg-draft p-top-25">
     <div class="container grid-2xl fluid">

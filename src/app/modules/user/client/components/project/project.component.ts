@@ -12,6 +12,7 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { HttpErrorResponse } from '@angular/common/http';
 import { Mission } from '../../../../../models/mission';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { SocketService } from '../../../../../services/socket/socket.service';
 
 interface Tab {
   route: string;
@@ -30,6 +31,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{};
+
+  private _showBanner = '';
 
   private _currentLang = this._translateService.currentLang || 'en';
 
@@ -58,6 +61,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _router: Router,
               private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
+              private _socketService: SocketService,
               private _innovationFrontService: InnovationFrontService) {
 
     this._initPageTitle();
@@ -81,8 +85,22 @@ export class ProjectComponent implements OnInit, OnDestroy {
       } else {
         this._mission = <Mission>{};
       }
-    });
 
+      this._socketService.getProjectUpdates(this._innovation._id)
+        .pipe(takeUntil(this._ngUnsubscribe))
+        .subscribe((update: any) => {
+          this._showBanner = update.user;
+          setTimeout(() => {
+            this._showBanner = '';
+          }, 5000);
+          Object.keys(update.data).forEach((field: string) => {
+            this._innovation[field] = update.data[field];
+          });
+          this._innovationFrontService.setInnovation(this._innovation);
+        }, (error) => {
+          console.error(error);
+        });
+    });
   }
 
   /***
@@ -101,7 +119,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   private _initPageTitle() {
     if (this._innovation && this._innovation.name) {
       this._translateTitleService.setTitle(this._innovation.name + ' | '
-        + (this._currentPage.slice(0,1).toUpperCase() + this._currentPage.slice(1)));
+        + (this._currentPage.slice(0, 1).toUpperCase() + this._currentPage.slice(1)));
     } else {
       this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECT');
     }
@@ -184,6 +202,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get showBanner(): string {
+    return this._showBanner;
+  }
+
+  set showBanner(value: string) {
+    this._showBanner = value;
   }
 
   ngOnDestroy(): void {
