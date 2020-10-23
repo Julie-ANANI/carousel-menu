@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Mission } from '../../../../../models/mission';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 import { SocketService } from '../../../../../services/socket/socket.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 interface Tab {
   route: string;
@@ -62,6 +63,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
               private _socketService: SocketService,
+              private _authService: AuthService,
               private _innovationFrontService: InnovationFrontService) {
 
     this._initPageTitle();
@@ -89,10 +91,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
       this._socketService.getProjectUpdates(this._innovation._id)
         .pipe(takeUntil(this._ngUnsubscribe))
         .subscribe((update: any) => {
-          this._showBanner = update.user;
-          setTimeout(() => {
-            this._showBanner = '';
-          }, 5000);
+          if (update.userId !== this._authService.userId) {
+            this._showBanner = update.userName;
+            setTimeout(() => {
+              this._showBanner = '';
+            }, 5000);
+          }
           Object.keys(update.data).forEach((field: string) => {
             this._innovation[field] = update.data[field];
           });
