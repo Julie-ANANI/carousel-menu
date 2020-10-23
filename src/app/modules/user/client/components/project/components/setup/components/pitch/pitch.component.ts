@@ -270,7 +270,6 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
     this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((innovation) => {
       this._resetVariables();
-      this._innovationFrontService.setInnovation(innovation);
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
