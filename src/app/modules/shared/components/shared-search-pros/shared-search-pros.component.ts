@@ -42,7 +42,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  private _googleQuota = 30000;
+  private _googleQuota = 60000;
 
   private _catQuota = 100;
 
@@ -133,7 +133,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _getGoogleQuota() {
     this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
-      this._googleQuota = 30000;
+      this._googleQuota = 60000;
       if (result.hours) {
         this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
       }
