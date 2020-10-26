@@ -1,0 +1,28 @@
+@import "variables";
+
+.comment {
+  margin-bottom: 10px;
+
+  .comment-author-name {
+    font-weight: bold;
+  }
+
+  .comment-created-at {
+    font-size: .8em;
+    opacity: .7;
+    margin-left: 5px;
+  }
+
+  .comment-text {
+    margin-top: 5px;
+    padding-top: 5px;
+  }
+}
+
+.comment:not(.message) {
+  border-left: 4px solid $border-meta-color;
+  border-radius: 4px;
+  padding: 10px 15px;
+  background-color: $bg-page-color;
+}
+

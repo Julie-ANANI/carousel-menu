@@ -65,6 +65,7 @@ export const COMMON = {
   'EXCLUDE-COUNTRIES': 'Exclure des pays',
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
+  'COMMENTS': 'Commentaires',
 
   'OLD_PASSWORD': 'Ancien mot de passe',
   'NEW_PASSWORD': 'Nouveau mot de passe',
@@ -154,6 +155,7 @@ export const COMMON = {
     'HELP': 'Aide',
     'EXAMPLE': 'Exemples',
     'COMMENT': 'Commentaire',
+    'COMMENTS': 'Commentaires',
     'SUGGESTION': 'Suggestion',
     'OR': 'Ou',
     'PREPARATION': 'Préparation',
@@ -216,6 +218,7 @@ export const COMMON = {
     'SAVE': 'Sauvegarder',
     'CANCEL': 'Annuler',
     'CONFIRM': 'Confirmer',
+    'APPLY': 'Appliquer',
     'IMPORT': 'Importer',
     'EXPORT': 'Exporter',
     'SEND': 'Envoyer',

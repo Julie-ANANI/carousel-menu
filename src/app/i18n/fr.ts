@@ -41,6 +41,7 @@ import { PROJECT_SETTINGS } from '../modules/user/client/components/project/comp
 import { PROJECT_DOCUMENTS } from '../modules/user/client/components/project/components/documents/i18n/fr';
 import { PROJECT_PITCH } from '../modules/user/client/components/project/components/setup/components/pitch/i18n/fr';
 import { PROJECT_SETUP } from '../modules/user/client/components/project/components/setup/i18n/fr';
+import {COMMENT_CARD} from '../modules/sidebars/components/comment-card/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -85,5 +86,6 @@ export const fr = {
   'PROJECT_SETTINGS': PROJECT_SETTINGS,
   'PROJECT_DOCUMENTS': PROJECT_DOCUMENTS,
   'PROJECT_PITCH': PROJECT_PITCH,
-  'PROJECT_SETUP': PROJECT_SETUP
+  'PROJECT_SETUP': PROJECT_SETUP,
+  'COMMENT_CARD': COMMENT_CARD
 };

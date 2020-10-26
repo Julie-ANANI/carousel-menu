@@ -152,18 +152,17 @@
   <!-- /show media -->
 
   <!-- umi comment -->
-  <section *ngIf="comment && comment.comment" class="p-top-30">
+  <section *ngIf="collaborativesComments && collaborativesComments.length > 0" class="p-top-30">
     <div class="d-flex align-center m-bottom-10">
       <div class="d-flex align-center m-right-10">
-        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.COMMENT' | translate }}</span>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
+        <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.COMMENTS' | translate }}</span>
       </div>
       <div (click)="toggle($event, 'COMMENT')" class="icon-container is-sm is-overlay">
         <i [ngClass]="showComment ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
       </div>
     </div>
     <div *ngIf="showComment" class="message animate-fade is-2">
-      <p class="message-body" [innerHTML]="comment.comment"></p>
+      <app-comment-list [collaborativesComments]="collaborativesComments" [padId]="padId"></app-comment-list>
     </div>
   </section>
   <!-- /umi comment -->

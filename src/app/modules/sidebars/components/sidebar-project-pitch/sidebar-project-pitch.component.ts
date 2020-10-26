@@ -4,6 +4,7 @@ import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
+import {CollaborativeComment} from '../../../../models/collaborative-comment';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -63,6 +64,12 @@ export class SidebarProjectPitchComponent implements OnChanges {
     }
   }
 
+  @Input() set collaborativesComments(value: CollaborativeComment[]) {
+    this._collaborativesComments = value;
+  }
+
+  @Input() padId: string;
+
   @Input() cardContent: any = '';
 
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER'
@@ -75,6 +82,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
   @Output() tobeSavedChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private _comment: CardComment = <CardComment>{};
+
+  private _collaborativesComments: CollaborativeComment[] = [];
 
   private _isSaving = false;
 
@@ -301,6 +310,10 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   get comment(): CardComment {
     return this._comment;
+  }
+
+  get collaborativesComments(): CollaborativeComment[] {
+    return this._collaborativesComments;
   }
 
   get isSaving(): boolean {

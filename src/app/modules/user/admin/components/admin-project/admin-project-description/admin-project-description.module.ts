@@ -8,6 +8,8 @@ import {SharedEditorTinymceModule} from '../../../../../shared/components/shared
 import {ModalEmptyModule} from '../../../../../utility/modals/modal-empty/modal-empty.module';
 import {SharedUploadZonePhotoModule} from '../../../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
 import {SharedUploadZoneVideoModule} from '../../../../../shared/components/shared-upload-zone-video/shared-upload-zone-video.module';
+import {CommentListModule} from '../../../../../sidebars/components/comment-list/comment-list.module';
+import {SharedEditorsModule} from '../../../../../shared/components/shared-editors/shared-editors.module';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import {SharedUploadZoneVideoModule} from '../../../../../shared/components/shar
     SharedEditorTinymceModule,
     ModalEmptyModule,
     SharedUploadZonePhotoModule,
-    SharedUploadZoneVideoModule
+    SharedUploadZoneVideoModule,
+    SharedEditorsModule,
+    CommentListModule
   ],
   declarations: [
     AdminProjectDescriptionComponent,

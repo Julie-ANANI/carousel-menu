@@ -67,6 +67,7 @@ export const COMMON = {
   'NEVER': 'Never',
 
   'COMMENT': 'Comment',
+  'COMMENTS': 'Comments',
   'OLD_PASSWORD': 'Old Password',
   'NEW_PASSWORD': 'New Password',
   'CONFIRM_PASSWORD': 'Confirm Password',
@@ -155,6 +156,7 @@ export const COMMON = {
     'HELP': 'Help',
     'EXAMPLE': 'Examples',
     'COMMENT': 'Comment',
+    'COMMENTS': 'Comments',
     'SUGGESTION': 'Proposition',
     'OR': 'Or',
     'PREPARATION': 'Preparation',
@@ -217,6 +219,7 @@ export const COMMON = {
     'SAVE': 'Save',
     'CANCEL': 'Cancel',
     'CONFIRM': 'Confirm',
+    'APPLY': 'Apply',
     'IMPORT': 'Import',
     'EXPORT': 'Export',
     'SELECT': 'Select',

@@ -9,6 +9,8 @@ import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SharedEditorTinymceModule } from '../../../shared/components/shared-editor-tinymce/shared-editor-tinymce.module';
 import { SharedUploadZonePhotoModule } from '../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { SharedUploadZoneVideoModule } from '../../../shared/components/shared-upload-zone-video/shared-upload-zone-video.module';
+import {CommentCardModule} from '../comment-card/comment-card.module';
+import {CommentListModule} from '../comment-list/comment-list.module';
 
 @NgModule({
   imports: [
@@ -19,6 +21,8 @@ import { SharedUploadZoneVideoModule } from '../../../shared/components/shared-u
     SharedEditorTinymceModule,
     SharedUploadZonePhotoModule,
     SharedUploadZoneVideoModule,
+    CommentCardModule,
+    CommentListModule,
   ],
   declarations: [
     SidebarProjectPitchComponent

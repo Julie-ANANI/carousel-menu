@@ -83,8 +83,8 @@
               </ng-container>
               <ng-template #defTitle>{{ section.title }}</ng-template>
             </span>
-              <span *ngIf="sectionCommentLabel(section.type)" class="label is-primary is-sm text-xs p-left-3 p-right-3">
-              {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
+              <span *ngIf="currentSectionComments && currentSectionComments.length" class="label is-primary is-sm text-xs p-left-3 p-right-3">
+              {{ 'COMMON.LABEL.COMMENTS' | translate }}
             </span>
             </div>
             <span (click)="openSidebar(section.type, section.content)" class="icon-container is-overlay">
@@ -305,6 +305,8 @@
     [(isSaving)]="isSaving"
     [cardContent]="cardContent"
     [comment]="operatorComment"
+    [collaborativesComments]="currentSectionComments"
+    [padId]="getSectionEditorId(sidebarValue.type)"
     [imagePostUri]="imagePostUri"
     [isEditable]="isEditable"
     [mainMedia]="activeInnovCard.principalMedia"
