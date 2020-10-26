@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import * as io from 'socket.io-client';
+import { Innovation } from '../../models/innovation';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class SocketService {
 
   getProjectUpdates(projectId: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
-      this.socket.on(`projectUpdate_${projectId}`, (data: any) => {
+      this.socket.on(`projectUpdate_${projectId}`,
+        (data: {userName: string, userId: string, data: { [P in keyof Innovation]?: Innovation[P]; }}) => {
         subscriber.next(data);
       });
     });

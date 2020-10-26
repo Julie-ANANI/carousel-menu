@@ -344,7 +344,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._innovation.name = this._selectedValue;
     }
 
-    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
+    this._innovationService.save(this._innovation._id, {name: this._innovation.name}).pipe(first()).subscribe((innovation) => {
       this._innovationFrontService.setInnovation(innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');

@@ -229,7 +229,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public openModal(event: Event, type: modalType, index?: number) {
-    event.preventDefault()
+    event.preventDefault();
     this._modalType = type;
     switch (type) {
 

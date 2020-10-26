@@ -64,6 +64,7 @@ export interface Innovation {
   stats?: any;
   updatedStats?: Date;
   restitution?: boolean;
+  proofreading?: boolean;
 
   clientSatisfaction?: {
     satisfaction?: 'VERY_HAPPY' | 'HAPPY' | 'NORMAL' | 'BAD' | 'VERY_BAD',

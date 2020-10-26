@@ -241,7 +241,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     event.preventDefault();
     if (this.isAdminSide) {
       this._innovation.previewMode = !this._innovation.previewMode;
-      this._innovationService.save(this._innovation._id, this._innovation).pipe(first())
+      this._innovationService.save(this._innovation._id, {previewMode: this._innovation.previewMode}).pipe(first())
         .subscribe((response: Innovation) => {
           this._isModalPreview = false;
           if (response.previewMode) {

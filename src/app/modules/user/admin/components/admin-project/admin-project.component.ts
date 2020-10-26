@@ -7,7 +7,7 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { SocketService } from '../../../../../services/socket/socket.service';
-import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Mission } from '../../../../../models/mission';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
@@ -16,6 +16,7 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { CampaignFrontService } from '../../../../../services/campaign/campaign-front.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 interface Tab {
   route: string;
@@ -32,8 +33,6 @@ interface Tab {
 export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _project: Innovation = <Innovation>{};
-
-  private _updatedProject: Innovation | null = null;
 
   private _fetchingError = false;
 
@@ -68,7 +67,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _currentLang = this._translateService.currentLang || 'en';
 
-  private _showBanner = false;
+  private _showBanner = '';
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -85,6 +84,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
               private _socketService: SocketService) { }
 
   ngOnInit() {
@@ -98,9 +98,17 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
         this._socketService.getProjectUpdates(this._project._id)
           .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((project: Innovation) => {
-            this._updatedProject = project;
-            this._showBanner = !!this._updatedProject;
+          .subscribe((update: any) => {
+            if (update.userId !== this._authService.userId) {
+              this._showBanner = update.userName;
+              setTimeout(() => {
+                this._showBanner = '';
+              }, 5000);
+            }
+            Object.keys(update.data).forEach((field: string) => {
+              this._project[field] = update.data[field];
+            });
+            this._setInnovation();
             }, (error) => {
             console.error(error);
           });
@@ -161,12 +169,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _setInnovation() {
     this._innovationFrontService.setInnovation(this._project);
-  }
-
-  public updateProject() {
-    this._project = this._updatedProject;
-    this._setInnovation();
-    this._showBanner = false;
   }
 
   private _resetModals() {
@@ -300,11 +302,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return this._isLoading;
   }
 
-  get showBanner(): boolean {
+  get showBanner(): string {
     return this._showBanner;
   }
 
-  set showBanner(value: boolean) {
+  set showBanner(value: string) {
     this._showBanner = value;
   }
 

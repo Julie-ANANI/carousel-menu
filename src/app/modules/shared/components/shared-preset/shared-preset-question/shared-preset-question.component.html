@@ -144,16 +144,33 @@
 
         <ng-container *ngIf="question.controlType === 'radio'">
 
-          <label for="form-color">
-            Option color
-            <select class="form-select" id="form-color" [(ngModel)]="option.color">
-              <option [value]="'#34AC01'">Vert foncé</option>
-              <option [value]="'#82CD30'">Vert clair</option>
-              <option [value]="'#F2C500'">Jaune</option>
-              <option [value]="'#C0210F'">Rouge</option>
-            </select>
-          </label>
+          <div class="d-flex">
+            <span class="form-label">Option color:</span>
+            <input class="color-picker-circle" [(colorPicker)]="option.color" [style.background]="option.color"/>
+          </div>
 
+          <div class="color-circles">
+            <span
+              class="shape is-circle is-sm dark-green"
+              [ngClass]="{'selected-circle': option.color === '#34AC01'}"
+              (click)="setColor('#34AC01', i)"
+            ></span>
+            <span
+              class="shape is-circle is-sm light-green"
+              [ngClass]="{'selected-circle': option.color === '#82CD30'}"
+              (click)="setColor('#82CD30', i)"
+            ></span>
+            <span
+              class="shape is-circle is-sm yellow"
+              [ngClass]="{'selected-circle': option.color === '#F2C500'}"
+              (click)="setColor('#F2C500', i)"
+            ></span>
+            <span
+              class="shape is-circle is-sm red"
+              [ngClass]="{'selected-circle': option.color === '#C0210F'}"
+              (click)="setColor('#C0210F', i)"
+            ></span>
+          </div>
           <label class="form-switch">
             <input type="checkbox" [(ngModel)]="option.positive">
             <i class="form-icon"></i> Positive answer
