@@ -13,8 +13,7 @@ export class SocketService {
   socket: SocketIOClient.Socket;
 
   constructor() {
-    this.socket = io(environment.apiUrl.replace('/api', ''));
-  }
+    this.socket = io(environment.apiUrl.replace('/api', ''), {path: '/api/socket-io'});}
 
   listenToSocket(): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
