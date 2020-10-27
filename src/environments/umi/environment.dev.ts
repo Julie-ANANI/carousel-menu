@@ -3,7 +3,7 @@
 export const environment = {
   local: false,
   production: false,
-  apiUrl: 'https://dev.umi.us/api', // 'http://umiapplication:3000/api'
+  apiUrl: 'https://api-dev.umi.us/api', // 'http://umiapplication:3000/api'
   clientUrl: 'https://umicli-dev.umi.us',
   companyName: 'United Motion Ideas (dev)',
   companyShortName: 'UMI',
