@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Etherpad} from '../../../../models/etherpad';
 
-type Editor = 'ETHERPAD' | 'TINY_MCE' | '';
+type Editor = 'ETHERPAD' | 'TINY_MCE';
 
 @Component({
   selector: 'app-shared-editors',
@@ -10,17 +10,43 @@ type Editor = 'ETHERPAD' | 'TINY_MCE' | '';
 })
 export class SharedEditorsComponent implements OnInit {
 
+  @Input() set text(value: string) {
+    this._text = value;
+  }
+
   @Input() isEditable = true;
 
-  @Input() editorHeight = '400px';
+  @Input() padHeight = '400px';
 
-  editor: Editor = 'TINY_MCE';
+  @Input() tinymceHeight = '250px';
 
-  etherpad: Etherpad = <Etherpad>{};
+  @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
+
+  private _editor: Editor = 'ETHERPAD';
+
+  private _etherpad: Etherpad = <Etherpad>{};
+
+  private _text = '';
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public onTextChange(value: any) {
+    this.textChange.emit(value);
+  }
+
+  get editor(): Editor {
+    return this._editor;
+  }
+
+  get etherpad(): Etherpad {
+    return this._etherpad;
+  }
+
+  get text(): string {
+    return this._text;
   }
 
 }

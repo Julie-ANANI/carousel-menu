@@ -1,18 +1,26 @@
 <div [ngSwitch]="editor" id="shared-editors">
 
   <!-- case Etherpad -->
-  <app-shared-editor-etherpad
-    *ngSwitchCase="'ETHERPAD'"
-    [etherpad]="etherpad"
-    [isEditable]="isEditable"
-    [minHeight]="editorHeight">
-  </app-shared-editor-etherpad>
+  <ng-container *ngSwitchCase="'ETHERPAD'">
+    <app-shared-editor-etherpad
+      (textChange)="onTextChange($event)"
+      [etherpad]="etherpad"
+      [isEditable]="isEditable"
+      [minHeight]="padHeight"
+      [text]="text">
+    </app-shared-editor-etherpad>
+  </ng-container>
   <!-- /case Etherpad -->
 
   <!-- case TINY_MCE -->
-  <app-shared-editor-tinymce
-    *ngSwitchCase="'TINY_MCE'">
-  </app-shared-editor-tinymce>
+  <ng-container *ngSwitchCase="'TINY_MCE'">
+    <app-shared-editor-tinymce
+      (onTextChange)="onTextChange($event)"
+      [data]="text"
+      [height]="tinymceHeight"
+      [readonly]="isEditable">
+    </app-shared-editor-tinymce>
+  </ng-container>
   <!-- /case TINY_MCE -->
 
 </div>

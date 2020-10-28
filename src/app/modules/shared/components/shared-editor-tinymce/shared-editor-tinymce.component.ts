@@ -5,6 +5,14 @@ import { SwellrtBackend } from "../../../swellrt-client/services/swellrt-backend
 declare const tinymce: any;
 declare let swellrt: any;
 
+interface VariableMapping {
+  FIRSTNAME: string;
+  LASTNAME: string;
+  TITLE: string;
+  COMPANY_NAME: string;
+  CLIENT_NAME: string;
+}
+
 @Component({
   selector: 'app-shared-editor-tinymce',
   templateUrl: 'shared-editor-tinymce.component.html'
@@ -12,7 +20,7 @@ declare let swellrt: any;
 
 export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
 
-  @Input() set variableMapping(value: any) {
+  @Input() set variableMapping(value: VariableMapping) {
     this._variableMapping = value;
   }
 
@@ -44,7 +52,7 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
 
   private _isSaving = false;
 
-  private _editor: any;
+  private _editor: any = null;
 
   private _htmlId = Math.random().toString(36).substr(2,10);
 
@@ -54,7 +62,7 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
 
   private _sharedText = '';
 
-  private _variableMapping: any = {
+  private _variableMapping: VariableMapping = {
     FIRSTNAME: 'Prénom',
     LASTNAME: 'Nom',
     TITLE: 'Nom de l\'inno',
@@ -239,6 +247,10 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
 
   get sharedEditor(): any {
     return this._sharedEditor;
+  }
+
+  get variableMapping(): VariableMapping {
+    return this._variableMapping;
   }
 
   ngAfterViewInit() {
