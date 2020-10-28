@@ -3,18 +3,18 @@
 
 .shared-editor-etherpad, .shared-editor-tinymce {
   position: relative;
+  background: transparent;
 
   &.is-loading {
     height: 200px;
     min-height: unset !important;
-    background: $bg-white-color;
   }
 
   &.h-full {
     height: 100%;
   }
 
-  &.is-active {
+  &.is-active, &.is-loading {
     border-radius: 4px;
     background: $bg-white-color;
   }

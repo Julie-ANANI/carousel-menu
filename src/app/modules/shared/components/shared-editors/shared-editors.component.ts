@@ -5,8 +5,7 @@ type Editor = 'ETHERPAD' | 'TINY_MCE';
 
 @Component({
   selector: 'app-shared-editors',
-  templateUrl: './shared-editors.component.html',
-  styleUrls: ['./shared-editors.component.scss']
+  templateUrl: './shared-editors.component.html'
 })
 export class SharedEditorsComponent implements OnInit {
 
