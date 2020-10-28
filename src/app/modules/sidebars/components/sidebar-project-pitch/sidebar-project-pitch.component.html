@@ -69,11 +69,11 @@
     <div *ngSwitchDefault>
       <div class="form-group p-top-10">
         <div *ngIf="isEditable" class="box-shadow">
-          <app-text-zone
+          <app-shared-editor-tinymce
             (onTextChange)="onTextChange($event)"
             [data]="cardContent"
             [id]="type ? type.toLowerCase() : 'text-zone'">
-          </app-text-zone>
+          </app-shared-editor-tinymce>
         </div>
         <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>
       </div>

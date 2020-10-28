@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
 // Components
-import { SharedTextZoneComponent } from './shared-text-zone.component';
+import { SharedEditorTinymceComponent } from './shared-editor-tinymce.component';
 import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
@@ -18,11 +18,11 @@ import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
     CleanHtmlModule
   ],
   declarations: [
-    SharedTextZoneComponent
+    SharedEditorTinymceComponent
   ],
   exports: [
-    SharedTextZoneComponent
+    SharedEditorTinymceComponent
   ]
 })
 
-export class SharedTextZoneModule { }
+export class SharedEditorTinymceModule { }

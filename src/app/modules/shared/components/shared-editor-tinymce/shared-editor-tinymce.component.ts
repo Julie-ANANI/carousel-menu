@@ -6,12 +6,11 @@ declare const tinymce: any;
 declare let swellrt: any;
 
 @Component({
-  selector: 'app-text-zone',
-  templateUrl: 'shared-text-zone.component.html',
-  styleUrls: ['shared-text-zone.component.scss']
+  selector: 'app-shared-editor-tinymce',
+  templateUrl: 'shared-editor-tinymce.component.html'
 })
 
-export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
+export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
 
   @Input() readonly = false;
 
@@ -20,7 +19,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
   @Input() useVariables = false;
 
   @Input() set data(value: string) {
-    this._contentHash = SharedTextZoneComponent.hashString(value);
+    this._contentHash = SharedEditorTinymceComponent.hashString(value);
     if (this.editor && !this.useVariables && !this._isSaving) {
       this._setContent(value);
     }
@@ -98,13 +97,13 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
         skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
         setup: (editor: any) => {
           this.editor = editor;
-          this._contentHash = SharedTextZoneComponent.hashString(this._text);
+          this._contentHash = SharedEditorTinymceComponent.hashString(this._text);
           editor
             .on('MouseLeave', () => {
               //When the user leaves the tinyMCE box, we save the content
               const actualHash = this._contentHash;
               const content = this._htmlToString(editor.getContent());
-              this._contentHash = SharedTextZoneComponent.hashString(content);
+              this._contentHash = SharedEditorTinymceComponent.hashString(content);
               if (this._contentHash !== actualHash) {
                 this._isSaving = true;
                 this.onTextChange.emit({content: content});

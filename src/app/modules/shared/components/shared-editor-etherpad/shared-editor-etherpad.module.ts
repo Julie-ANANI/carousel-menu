@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import {SharedEtherpadEditorComponent} from './shared-etherpad-editor.component';
+import {SharedEditorEtherpadComponent} from './shared-editor-etherpad.component';
 import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
@@ -12,11 +12,11 @@ import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
     CleanHtmlModule,
   ],
   declarations: [
-    SharedEtherpadEditorComponent
+    SharedEditorEtherpadComponent
   ],
   exports: [
-    SharedEtherpadEditorComponent
+    SharedEditorEtherpadComponent
   ]
 })
 
-export class SharedEtherpadEditorModule { }
+export class SharedEditorEtherpadModule { }

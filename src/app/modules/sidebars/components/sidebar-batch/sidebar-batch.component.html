@@ -90,20 +90,20 @@
     <!-- content en -->
     <div *ngIf="templateType === 'EDIT_BATCH'" class="form-group">
       <label class="form-label">English Content</label>
-      <app-text-zone
+      <app-shared-editor-tinymce
         [readonly]="true"
         [data]="content['en']">
-      </app-text-zone>
+      </app-shared-editor-tinymce>
     </div>
     <!-- /content en -->
 
     <!-- content fr -->
     <div *ngIf="templateType === 'EDIT_BATCH'" class="form-group">
       <label class="form-label">French Content</label>
-      <app-text-zone
+      <app-shared-editor-tinymce
         [readonly]="true"
         [data]="content['fr']">
-      </app-text-zone>
+      </app-shared-editor-tinymce>
     </div>
     <!-- content fr -->
 

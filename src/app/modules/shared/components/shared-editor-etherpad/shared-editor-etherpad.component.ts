@@ -9,10 +9,10 @@ import {ErrorFrontService} from '../../../../services/error/error-front.service'
 import {CommonService} from '../../../../services/common/common.service';
 
 @Component({
-  selector: 'app-shared-etherpad-editor',
-  templateUrl: './shared-etherpad-editor.component.html'
+  selector: 'app-shared-editor-etherpad',
+  templateUrl: './shared-editor-etherpad.component.html'
 })
-export class SharedEtherpadEditorComponent implements OnInit, OnDestroy {
+export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   @Input() set etherpad(value: Etherpad) {
     this._initEtherpad(value);

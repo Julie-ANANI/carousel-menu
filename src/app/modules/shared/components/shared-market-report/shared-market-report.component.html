@@ -54,11 +54,11 @@
             <div class="box-style p-50">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-              <app-text-zone
+              <app-shared-editor-tinymce
                 (onTextChange)="saveOperatorComment($event, 'keyLearning')"
                 [data]="innovation.marketReport?.keyLearning?.conclusion"
                 [readonly]="!canAccess(['edit', 'umiWord'])">
-              </app-text-zone>
+              </app-shared-editor-tinymce>
             </div>
           </section>
           <!-- /key learning section -->
@@ -144,11 +144,11 @@
             <div class="box-style p-50">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-              <app-text-zone
+              <app-shared-editor-tinymce
                 (onTextChange)="saveOperatorComment($event, 'finalConclusion')"
                 [data]="innovation.marketReport?.finalConclusion?.conclusion"
                 [readonly]="!canAccess(['edit', 'umiWord'])">
-              </app-text-zone>
+              </app-shared-editor-tinymce>
             </div>
           </section>
           <!-- /conclusion -->

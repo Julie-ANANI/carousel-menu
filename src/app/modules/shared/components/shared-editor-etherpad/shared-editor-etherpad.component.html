@@ -14,7 +14,7 @@
   <!-- /isEditable && isLoading -->
 
   <!-- if not isEditable -->
-  <div *ngIf="!isEditable">
+  <div *ngIf="!isEditable" class="content-wrapper">
     <div [innerHTML]="text | cleanHtml"></div>
   </div>
   <!-- /if not isEditable -->
