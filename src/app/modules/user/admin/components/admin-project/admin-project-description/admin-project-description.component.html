@@ -158,12 +158,11 @@
             </div>
 
             <div *ngIf="isEditable" class="box-shadow">
-              <!--<app-shared-editor-tinymce
+              <app-shared-editor-tinymce
                 (onTextChange)="onContentChange($event, 'summary')"
                 [data]="activeInnovCard.summary"
                 id="project-summary">
-              </app-shared-editor-tinymce>-->
-              <app-shared-editors></app-shared-editors>
+              </app-shared-editor-tinymce>
             </div>
 
             <!-- remaining text -->
