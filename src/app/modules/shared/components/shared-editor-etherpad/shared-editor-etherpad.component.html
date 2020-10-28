@@ -1,8 +1,8 @@
 <div
   [id]="htmlId"
-  [ngClass]="isLoading && isEditable ? 'is-loading' : 'h-full'"
+  [ngClass]="{ 'is-loading': isLoading && isEditable, 'h-full': !(isLoading && isEditable), 'is-active': isEditable}"
   [ngStyle]="{'min-height': isEditable ? minHeight : '100%'}"
-  class="etherpad-editor">
+  class="shared-editor-etherpad">
 
   <!-- isEditable && isLoading -->
   <div *ngIf="isEditable && isLoading" class="loading-wrapper">

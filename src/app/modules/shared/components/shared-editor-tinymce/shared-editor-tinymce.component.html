@@ -1,14 +1,33 @@
-<div>
+<div
+  [ngClass]="{ 'is-loading': isLoading, 'is-active': !readonly}"
+  class="shared-editor-tinymce">
 
-  <!-- Il faut utiliser [hidden] avec *ngIf l'editeur tinymce n'est pas instancié -->
-  <div [hidden]="readonly">
+  <!-- isLoading -->
+  <div *ngIf="isLoading && !readonly" class="loading-wrapper">
+    <div class="text-notify text-medium text-sm m-bottom-2">
+      {{ 'COMMON.LABEL.LOADING_EDITOR' | translate }}
+    </div>
+    <div class="loading is-primary"></div>
+  </div>
+  <!-- /sLoading -->
+
+  <!-- !loading || !readonly -->
+  <div [hidden]="isLoading || readonly">
     <label>
-      <textarea id="{{ htmlId }}" rows="10" cols="70" [(ngModel)]="text"></textarea>
+      <textarea
+        [(ngModel)]="text"
+        [id]="htmlId"
+        cols="70"
+        rows="10">
+      </textarea>
     </label>
   </div>
+  <!-- /!loading || !readonly -->
 
-  <div [hidden]="!readonly">
-    <div [innerHTML]="text | cleanHtml" class="text"></div>
+  <!-- readonly -->
+  <div *ngIf="readonly" class="content-wrapper">
+    <div [innerHTML]="text | cleanHtml"></div>
   </div>
+  <!-- /readonly -->
 
 </div>

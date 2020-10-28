@@ -12,43 +12,47 @@ declare let swellrt: any;
 
 export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
 
-  @Input() readonly = false;
+  @Input() set variableMapping(value: any) {
+    this._variableMapping = value;
+  }
+
+  @Input() height = '250px';
 
   @Input() hideToolbar = false;
 
   @Input() useVariables = false;
 
+  @Input() set readonly(value: boolean) {
+    this._readonly = value;
+    this._isLoading = !this._readonly;
+  }
+
   @Input() set data(value: string) {
     this._contentHash = SharedEditorTinymceComponent.hashString(value);
-    if (this.editor && !this.useVariables && !this._isSaving) {
+    if (this._editor && !this.useVariables && !this._isSaving) {
       this._setContent(value);
     }
     this._text = value;
     this._isSaving = false;
   }
 
-  @Input() set variableMapping(value: any) {
-    this._variableMapping = value;
-  }
+  @Output() onTextChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @Input() zoneHeight: string = '250';
+  private _contentHash = 0;
 
-  @Output() onTextChange = new EventEmitter<any>();
+  private _text = '';
 
-  private _contentHash: number;
+  private _isSaving = false;
 
-  private _text: string;
+  private _editor: any;
 
-  private _isSaving: boolean = false;
-
-  private editor: any;
-
-  private _htmlId: string = Math.random().toString(36).substr(2,10);
+  private _htmlId = Math.random().toString(36).substr(2,10);
 
   private _sharedDocument: any;
+
   private _sharedEditor: any;
-  private _sharedText: any;
-  //private _name: string;
+
+  private _sharedText = '';
 
   private _variableMapping: any = {
     FIRSTNAME: 'Prénom',
@@ -58,10 +62,12 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
     CLIENT_NAME: 'Nom du client'
   };
 
+  private _isLoading = true;
+
+  private _readonly = false;
+
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private _swellRTBackend: SwellrtBackend) {
-    this._contentHash = 0;
-  }
+              private _swellRTBackend: SwellrtBackend) { }
 
   private static hashString(content: string): number {
     let hash = 0;
@@ -75,59 +81,13 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
     return hash;
   }
 
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId) && !this.readonly) {
-      tinymce.init({
-        selector: '#' + this._htmlId,
-        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'code'], // Voir .angular-cli.json
-        variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
-        variable_mapper: this._variableMapping,
-        default_link_target: '_blank',
-        width: "inherit",
-        height: this.zoneHeight,
-        statusbar: false,
-        menubar: false,
-        paste_as_text: true,
-        paste_remove_styles_if_webkit: true,
-        // paste_webkit_styles: "color font-size font-weight",
-        // paste_retain_style_properties: "color font-size font-weight",
-        paste_retain_style_properties: 'none',
-        fontsize_formats: "8pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
-        toolbar : !this.hideToolbar && 'undo redo | fontsizeselect | bold italic underline forecolor | bullist numlist | link | code',
-        skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
-        setup: (editor: any) => {
-          this.editor = editor;
-          this._contentHash = SharedEditorTinymceComponent.hashString(this._text);
-          editor
-            .on('MouseLeave', () => {
-              //When the user leaves the tinyMCE box, we save the content
-              const actualHash = this._contentHash;
-              const content = this._htmlToString(editor.getContent());
-              this._contentHash = SharedEditorTinymceComponent.hashString(content);
-              if (this._contentHash !== actualHash) {
-                this._isSaving = true;
-                this.onTextChange.emit({content: content});
-              }
-              /*if(this._sharedEditor) {
-                this._sharedEditor.set('text', this._text);
-              }
-              console.log("Goodbye motherfucker!");*/
-            });
-        },
-      });
-      if (this._text && this.editor) {
-        this._setContent(this._text);
-      }
-    }
-  }
-
-  private _htmlToString(htmlContent: string) {
+  private static _htmlToString(htmlContent: string) {
     const regex: RegExp = new RegExp(/<span style=\"[\w; :#-]*\" contenteditable=\"[\w]*\" data-original-variable=\"([A-Z_]*)\">.*<\/span>/, 'g');
     return htmlContent.replace(regex, '*|$1|*');
   }
 
   private _setContent(content: string) {
-    this.editor.setContent(content);
+    this._editor.setContent(content);
     // this.editor.focus();
   }
 
@@ -192,9 +152,6 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
         console.error(err);
       });
 
-
-
-
     // this._swellRTBackend.openDocument( this.elementId.toString() )
     //   .then(result=> {
     //     if (result) {
@@ -243,23 +200,100 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
     //   });
   }
 
-  ngOnDestroy() {
-    if (isPlatformBrowser(this.platformId)) {
-      tinymce.remove(this.editor);
-    }
-  }
-
-  public get htmlId(): string {
+  get htmlId(): string {
     return this._htmlId;
   }
 
-  public get text(): string {
+  get text(): string {
     return this._text;
   }
 
-  public set text(value: string) {
+  set text(value: string) {
     this._text = value; // This is in case tinymce fails, then we will be able to use the textarea
     this.onTextChange.emit({content: value});
+  }
+
+  get readonly(): boolean {
+    return this._readonly;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get editor(): any {
+    return this._editor;
+  }
+
+  get sharedText(): string {
+    return this._sharedText;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+
+  get sharedDocument(): any {
+    return this._sharedDocument;
+  }
+
+  get sharedEditor(): any {
+    return this._sharedEditor;
+  }
+
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId) && !this._readonly) {
+      tinymce.init({
+        selector: '#' + this._htmlId,
+        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'code'], // Voir .angular-cli.json
+        variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
+        variable_mapper: this._variableMapping,
+        default_link_target: '_blank',
+        width: "inherit",
+        height: this.height,
+        statusbar: false,
+        menubar: false,
+        paste_as_text: true,
+        paste_remove_styles_if_webkit: true,
+        // paste_webkit_styles: "color font-size font-weight",
+        // paste_retain_style_properties: "color font-size font-weight",
+        paste_retain_style_properties: 'none',
+        fontsize_formats: "8pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
+        toolbar : !this.hideToolbar && 'undo redo | fontsizeselect | bold italic underline forecolor ' +
+          '| bullist numlist | link | code',
+        skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
+        setup: (editor: any) => {
+          this._editor = editor;
+          this._contentHash = SharedEditorTinymceComponent.hashString(this._text);
+          editor.on('MouseLeave', () => {
+            //When the user leaves the tinyMCE box, we save the content
+            const actualHash = this._contentHash;
+            const content = SharedEditorTinymceComponent._htmlToString(editor.getContent());
+            this._contentHash = SharedEditorTinymceComponent.hashString(content);
+            if (this._contentHash !== actualHash) {
+              this._isSaving = true;
+              this.onTextChange.emit({content: content});
+            }
+            /*if(this._sharedEditor) {
+              this._sharedEditor.set('text', this._text);
+            }
+            console.log("Goodbye motherfucker!");*/
+          });
+        },
+      });
+      if (this._text && this._editor) {
+        this._setContent(this._text);
+      }
+      setTimeout(() => {
+        this._isLoading = false;
+      }, 800);
+    }
+  }
+
+  ngOnDestroy() {
+    if (isPlatformBrowser(this.platformId)) {
+      tinymce.remove(this._editor);
+    }
   }
 
 }
