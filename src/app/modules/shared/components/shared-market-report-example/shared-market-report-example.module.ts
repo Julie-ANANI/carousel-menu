@@ -4,13 +4,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { SharedMarketReportExampleComponent } from './shared-market-report-example.component';
 import { PipeModule } from '../../../../pipe/pipe.module';
+import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     RouterModule,
-    PipeModule
+    PipeModule,
+    CleanHtmlModule
   ],
   declarations: [
     SharedMarketReportExampleComponent

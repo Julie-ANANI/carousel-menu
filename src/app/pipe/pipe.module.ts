@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharacterCountdown } from './pipes/CharacterCountdown';
-import { DomSanitizerPipe } from './pipes/DomSanitizer';
 import { FilterPipe } from './pipes/TableFilterPipe';
 import { LimitsPipe } from './pipes/TableLimitsPipe';
 import { MultilingPipe } from './pipes/multiling.pipe';
@@ -16,7 +15,6 @@ import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
   ],
   declarations: [
     CharacterCountdown,
-    DomSanitizerPipe,
     FilterPipe,
     LimitsPipe,
     MultilingPipe,
@@ -27,7 +25,6 @@ import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
   ],
   exports: [
     CharacterCountdown,
-    DomSanitizerPipe,
     FilterPipe,
     LimitsPipe,
     MultilingPipe,

@@ -1,0 +1,23 @@
+<div
+  [id]="htmlId"
+  [ngClass]="isLoading && isEditable ? 'is-loading' : 'h-full'"
+  [ngStyle]="{'min-height': isEditable ? minHeight : '100%'}"
+  class="etherpad-editor">
+
+  <!-- isEditable && isLoading -->
+  <div *ngIf="isEditable && isLoading" class="loading-wrapper">
+    <div class="text-notify text-medium text-sm m-bottom-2">
+      {{ etherpad.lang === 'fr' ? 'chargement de l\'éditeur...' : 'loading editor...' }}
+    </div>
+    <div class="loading is-primary"></div>
+  </div>
+  <!-- /isEditable && isLoading -->
+
+  <!-- if not isEditable -->
+  <div *ngIf="!isEditable">
+    <div [innerHTML]="text | cleanHtml"></div>
+  </div>
+  <!-- /if not isEditable -->
+
+</div>
+

@@ -7,13 +7,15 @@ import { PipeModule } from '../../../../pipe/pipe.module';
 
 // Components
 import { SharedTextZoneComponent } from './shared-text-zone.component';
+import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     PipeModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    CleanHtmlModule
   ],
   declarations: [
     SharedTextZoneComponent
