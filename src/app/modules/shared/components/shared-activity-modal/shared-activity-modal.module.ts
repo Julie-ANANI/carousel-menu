@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedActivityModalComponent } from './shared-activity-modal.component';
+import {ModalModule} from '../../../utility/modals/modal/modal.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    ModalModule,
   ],
   declarations: [
     SharedActivityModalComponent

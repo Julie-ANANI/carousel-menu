@@ -1,3 +1,43 @@
-<p>
-  shared-activity-modal works!
-</p>
+<div [hidden]="isLoading" id="shared-activity-modal">
+  <div class="d-flex align-end animate-fade is-5">
+    <figure class="avatar m-right-10" data-initial="AS"></figure>
+    <figure class="avatar m-right-10" data-initial="BS"></figure>
+    <figure class="avatar m-right-10" data-initial="JD"></figure>
+    <a
+      (click)="openModal($event)"
+      class="text-link text-xs text-community"
+      id="shared-activity-modal-btn-see-more">
+      see others...
+    </a>
+  </div>
+</div>
+
+<app-utility-modal
+  [(showModal)]="showModal"
+  [headerBottomBorder]="true"
+  [isHeaderBgWhite]="true"
+  [maxWidth]="'320px'"
+  [title]="'Activity dashboard'">
+  <section class="modal-body">
+    <div class="flex-start m-bottom-10">
+      <figure class="avatar m-right-20" data-initial="AS"></figure>
+      <span class="text-bold text-sm">Abhishek Saini (you)</span>
+    </div>
+    <div class="flex-start m-bottom-10">
+      <figure class="avatar m-right-20" data-initial="BS"></figure>
+      <span class="text-bold text-sm">Bastien Scanu</span>
+    </div>
+    <div class="flex-start m-bottom-10">
+      <figure class="avatar m-right-20" data-initial="JD"></figure>
+      <span class="text-bold text-sm">Juan David Cruz Gomez</span>
+    </div>
+    <div class="flex-start m-bottom-10">
+      <figure class="avatar m-right-20" data-initial="CJ"></figure>
+      <span class="text-bold text-sm">Chloé Jehenne</span>
+    </div>
+    <div class="flex-start m-bottom-10">
+      <figure class="avatar m-right-20" data-initial="LC"></figure>
+      <span class="text-bold text-sm">Léa Chemoul</span>
+    </div>
+  </section>
+</app-utility-modal>

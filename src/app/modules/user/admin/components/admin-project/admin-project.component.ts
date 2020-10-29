@@ -272,6 +272,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return this._project.mission && (<Mission>this._project.mission)._id ? <Mission>this._project.mission : <Mission>{};
   }
 
+  get hasMissionObjective(): boolean {
+    return this.mission.objective && this.mission.objective.principal && this.mission.objective.principal['en']
+      && this.mission.objective.principal['en'] !== 'Other'
+  }
+
   get iconClass(): string {
     return MissionFrontService.objectiveInfo(<Mission>this.mission, 'FONT_AWESOME_ICON');
   }

@@ -14,6 +14,7 @@ import {AdminProjectPreparationModule} from './admin-project-preparation/admin-p
 import {AdminProjectAnalysisModule} from './admin-project-analysis/admin-project-analysis.module';
 import {AdminProjectSettingsModule} from './admin-project-settings/admin-project-settings.module';
 import {AdminProjectCollectionModule} from './admin-project-collection/admin-project-collection.module';
+import {SharedActivityModalModule} from '../../../../shared/components/shared-activity-modal/shared-activity-modal.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {AdminProjectCollectionModule} from './admin-project-collection/admin-pro
     AdminProjectAnalysisModule,
     AdminProjectSettingsModule,
     AdminProjectCollectionModule,
-    AdminProjectRoutingModule
+    AdminProjectRoutingModule,
+    SharedActivityModalModule
   ],
   declarations: [
     AdminProjectComponent
