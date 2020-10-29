@@ -6,29 +6,36 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output, PLATFORM_ID,
-  ViewEncapsulation
+  Output,
+  PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+/***
+ * example: admin-project-preparation component
+ * page: https://umicli.umi.us/user/admin/projects/project/5f9998efc2bb0653a1b26f3b/preparation/description -
+ * Add language button
+ */
+
 @Component({
   selector: 'app-utility-modal-empty',
-  templateUrl: './modal-empty.component.html',
-  styleUrls: ['./modal-empty.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './modal-empty.component.html'
 })
 
 export class ModalEmptyComponent implements OnInit, OnDestroy {
 
-  @Input() set showModal(value: boolean) {
-    this._show = value;
-  }
-
+  /***
+   * this is to increase the width of the modal container, if you provide the value it will
+   * make the modal of that width. By default the width of the modal is 640px
+   */
   @Input() maxWidth = '640px';
 
-  @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  /***
+   * this is to make modal active and inactive. This variable should have getter and setter.
+   */
+  @Input() showModal = false
 
-  private _show = false;
+  @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private readonly _element: any;
 
@@ -38,29 +45,22 @@ export class ModalEmptyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // move element to bottom of page (just before </body>) so it can be displayed above everything else
     if (isPlatformBrowser(this.platformId)) {
       document.body.appendChild(this._element);
     }
   }
 
   public toggleState(event: Event) {
-    const classesToCheck: Array<string> = ['modal-overlay', 'button modal-cancel', 'close'];
+    const _classesToCheck: Array<string> = ['modal-overlay', 'button modal-cancel', 'close'];
     const { className } = (event.target as any);
-
-    if (classesToCheck.indexOf(className) !== -1) {
+    if (_classesToCheck.indexOf(className) !== -1) {
       this.showModalChange.emit(false);
     }
-
   }
 
   public onClickCross(event: Event) {
     event.preventDefault();
     this.showModalChange.emit(false);
-  }
-
-  get showModal() {
-    return this._show;
   }
 
   ngOnDestroy(): void {
