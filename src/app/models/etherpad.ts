@@ -2,7 +2,8 @@ export interface Etherpad {
   showChat?: boolean;
   noColors?: boolean;
   lang?: string;
-  padId: string;
-  groupId: string;
+  padID: string;
+  groupID?: string;
+  innovationId: string;
   userName: string;
 }

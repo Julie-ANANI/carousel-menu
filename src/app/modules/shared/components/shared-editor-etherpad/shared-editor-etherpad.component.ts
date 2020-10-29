@@ -8,6 +8,8 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {CommonService} from '../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';
+import {UserFrontService} from '../../../../services/user/user-front.service';
+import {AuthService} from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-shared-editor-etherpad',
@@ -46,6 +48,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _translateService: TranslateService,
+              private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _elementRef: ElementRef) { }
 
@@ -59,8 +62,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         lang: value.lang || this._translateService.currentLang || 'en',
         noColors: value.noColors,
         userName: value.userName || 'user',
-        padId: value.padId || '',
-        groupId: value.groupId || ''
+        padID: value.padID || '',
+        innovationId: value.innovationId || ''
       };
       this._createEtherpad();
     }
@@ -72,14 +75,17 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
    * @private
    */
   private _createEtherpad() {
-    if (isPlatformBrowser(this._platformId) && !this._element && this._etherpad.groupId && this._etherpad.padId) {
-      this._etherpadService.createPad(this._etherpad.groupId, this._etherpad.padId).pipe(first()).subscribe(() => {
-        this._element = this._elementRef.nativeElement.querySelector(`#${this._htmlId}`);
-        this._createIframe();
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
+    if (isPlatformBrowser(this._platformId) && !this._element && this._etherpad.innovationId && this._etherpad.padID) {
+      this._etherpadService.createPad(this._etherpad.innovationId, this._etherpad.padID)
+        .pipe(first()).subscribe((response) => {
+          this._etherpad.userName = UserFrontService.fullName(this._authService.user);
+          this._etherpad.groupID = response && response.groupID;
+          this._element = this._elementRef.nativeElement.querySelector(`#${this._htmlId}`);
+          this._createIframe();
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+        });
     }
   }
 
@@ -90,7 +96,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   private _createIframe() {
     const _iframe = document.createElement('iframe');
     _iframe.setAttribute('src', CommonService.etherpadSrc(this._etherpad));
-    _iframe.setAttribute('id', this._etherpad.padId);
+    _iframe.setAttribute('id', this._etherpad.padID);
     _iframe.style.height = this.minHeight;
     this._element.appendChild(_iframe);
     this._isLoading = false;

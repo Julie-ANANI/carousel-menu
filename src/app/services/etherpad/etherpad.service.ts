@@ -3,44 +3,44 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Reply} from '../../models/collaborative-comment';
 import {User} from '../../models/user.model';
+import {Etherpad} from '../../models/etherpad';
+
+const BASE_PATH = '/etherpad';
 
 @Injectable({providedIn: 'root'})
 export class EtherpadService {
 
-  path = '/etherpad';
-
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) {}
 
   /***
    *
-   * @param groupId is the only innovationId
+   * @param innovationId is the only innovationId
    * @param padId = pad-description-sectionName || pad-workflow-workflowId || pad-synthesis-questionId
    */
-  public createPad(groupId: string, padId: string): Observable<any> {
-    const _data = {groupId: groupId, padId: padId};
-    return this._http.post<any>('/etherpad/pad', _data);
+  public createPad(innovationId: string, padId: string): Observable<Etherpad> {
+    const _data = {innovationId: innovationId, padId: padId};
+    return this._http.post<Etherpad>(`${BASE_PATH}/pad`, _data);
   }
 
   /***
    * returns the total users list subscribed with the specific group
-   * @param groupId
+   * @param innovationId
    */
-  public subscribedUsers(groupId: string): Observable<Array<User>> {
-    const _data = { groupId: groupId }
-    return this._http.get<Array<User>>(`/etherpad/users/subscribed`, {params: _data});
+  public subscribedUsers(innovationId: string): Observable<Array<User>> {
+    const _data = { innovationId: innovationId }
+    return this._http.get<Array<User>>(`/${BASE_PATH}/users/subscribed`, {params: _data});
   }
 
   getAllCommentsOfPad(padId: string): Observable<any> {
-    return this._http.get(`${this.path}/pad/${padId}/comments`);
+    return this._http.get(`${BASE_PATH}/pad/${padId}/comments`);
   }
 
   getAllRepliesOfPad(padId: string): Observable<any> {
-    return this._http.get(`${this.path}/pad/${padId}/commentReplies`);
+    return this._http.get(`${BASE_PATH}/pad/${padId}/commentReplies`);
   }
 
   addRepliesToComment(padId: string, replies: Reply[]) {
-    return this._http.post(`${this.path}/pad/${padId}/commentReplies`, replies);
+    return this._http.post(`${BASE_PATH}/pad/${padId}/commentReplies`, replies);
   }
 
 }

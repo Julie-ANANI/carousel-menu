@@ -22,7 +22,7 @@ export class SharedActivityModalComponent implements OnInit {
    * based on this id we call the etherpad service in the api
    * @param value
    */
-  @Input() set groupId(value: string) {
+  @Input() set innovationId(value: string) {
     if (value) {
       this._getSubscribedUsers(value);
     }
