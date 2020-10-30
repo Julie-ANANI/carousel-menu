@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Etherpad} from '../../../../models/etherpad';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {UserFrontService} from '../../../../services/user/user-front.service';
+import {User} from '../../../../models/user.model';
 
 type Editor = 'ETHERPAD' | 'TINY_MCE';
 
@@ -19,6 +22,8 @@ export class SharedEditorsComponent implements OnInit {
 
   @Input() tinymceHeight = '250px';
 
+  @Input() innovationId = '';
+
   @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
 
   private _editor: Editor = 'ETHERPAD';
@@ -27,9 +32,17 @@ export class SharedEditorsComponent implements OnInit {
 
   private _text = '';
 
-  constructor() { }
+  constructor(private _authService: AuthService) {
+  }
 
   ngOnInit() {
+    this._etherpad = {
+      authorID: this._authService.etherpadAccesses.authorID,
+      innovationId: this.innovationId,
+      // TODO change id
+      padID: 'test',
+      userName: UserFrontService.fullName(this.user)
+    };
   }
 
   public onTextChange(value: any) {
@@ -46,6 +59,10 @@ export class SharedEditorsComponent implements OnInit {
 
   get text(): string {
     return this._text;
+  }
+
+  get user(): User {
+    return this._authService.user;
   }
 
 }

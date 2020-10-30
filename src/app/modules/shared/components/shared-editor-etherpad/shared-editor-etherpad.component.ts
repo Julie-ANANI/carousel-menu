@@ -80,6 +80,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         .pipe(first()).subscribe((response) => {
           this._etherpad.userName = UserFrontService.fullName(this._authService.user);
           this._etherpad.groupID = response && response.groupID;
+          this._etherpad.sessionID = this._authService.etherpadAccesses.sessions.find((session) => session.groupID === response.groupID).id;
           this._element = this._elementRef.nativeElement.querySelector(`#${this._htmlId}`);
           this._createIframe();
         }, (err: HttpErrorResponse) => {

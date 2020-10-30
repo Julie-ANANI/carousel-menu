@@ -10,9 +10,8 @@ import { urlRegEx } from '../../utils/regex';
 import { environment } from '../../../environments/environment';
 import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
 
-
-
 import {Md5} from 'ts-md5/dist/md5';
+import {EtherpadAccesses} from '../../models/etherpad-accesses';
 
 const AUTH_SESSION_KEY = makeStateKey('authSession');
 
@@ -30,6 +29,8 @@ export class AuthService {
   private _isOperator = false;
 
   private _user: User = null;
+
+  private _etherpadAccesses: EtherpadAccesses = null;
 
   private _errorUrl: string | null = null;
 
@@ -95,6 +96,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
           this._user = res;
+          this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
             //this.startCookieObservator();
@@ -133,6 +135,7 @@ export class AuthService {
           this._setAuthenticatedTo(res.isAuthenticated);
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
+          this._setEtherpadAccessesTo(res.etherpad);
           this._cookieService.removeAll();
           this._redirectUrl = '';
           this._user = null;
@@ -156,6 +159,7 @@ export class AuthService {
       this._user = res.user || null;
       // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
       this._setIsOperatorTo(this._user ? this._user.isOperator : false );
+      this._setEtherpadAccessesTo(res.etherpad);
     };
     if (this._state.hasKey(AUTH_SESSION_KEY)) {
       const res = this._state.get(AUTH_SESSION_KEY, {});
@@ -203,6 +207,13 @@ export class AuthService {
     this._admin = newValue;
     if (isPlatformBrowser(this._platformId)) {
       this._cookieService.put('hasBeenAdmin', `${newValue}`, this._cookieOptions);
+    }
+  }
+
+  private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
+    this._etherpadAccesses = newValue;
+    if (isPlatformBrowser(this._platformId)) {
+      this._cookieService.put('sessionIDs', `${newValue.sessions}`, this._cookieOptions);
     }
   }
 
@@ -319,6 +330,13 @@ export class AuthService {
     if (!!url) {
       this._errorUrl = url;
     }
+  }
+
+  get etherpadAccesses(): EtherpadAccesses {
+    return this._etherpadAccesses;
+  }
+  set etherpadAccesses(value: EtherpadAccesses) {
+    this._etherpadAccesses = value;
   }
 
   /*get adminAccess(): any {

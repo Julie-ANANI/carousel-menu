@@ -69,11 +69,12 @@
     <div *ngSwitchDefault>
       <div class="form-group p-top-10">
         <div *ngIf="isEditable" class="box-shadow">
-          <app-shared-editor-tinymce
-            (onTextChange)="onTextChange($event)"
-            [data]="cardContent"
+          <app-shared-editors
+            (textChange)="onTextChange($event)"
+            [text]="cardContent"
+            [innovationId]="innovationId"
             [id]="type ? type.toLowerCase() : 'text-zone'">
-          </app-shared-editor-tinymce>
+          </app-shared-editors>
         </div>
         <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>
       </div>
@@ -162,7 +163,7 @@
       </div>
     </div>
     <div *ngIf="showComment" class="message animate-fade is-2">
-      <app-comment-list [collaborativesComments]="collaborativesComments" [padId]="padId"></app-comment-list>
+      <app-comment-list [collaborativesComments]="collaborativesComments" [padID]="padID"></app-comment-list>
     </div>
   </section>
   <!-- /umi comment -->

@@ -218,7 +218,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public getSectionEditorId(section: string) {
-    // TODO replace with correct generic padId
+    // TODO replace with correct generic padID
     // return `${this.activeInnovCard._id}_${section}`;
     return 'test';
   }

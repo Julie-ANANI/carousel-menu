@@ -9,7 +9,7 @@ import {CollaborativeComment} from '../../../../models/collaborative-comment';
 export class CommentListComponent implements OnInit {
 
   @Input() collaborativesComments: CollaborativeComment[];
-  @Input() padId: string;
+  @Input() padID: string;
 
   constructor() {
   }

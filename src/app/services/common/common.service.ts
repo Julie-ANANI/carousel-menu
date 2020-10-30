@@ -32,8 +32,8 @@ export class CommonService {
    * @param baseUrl
    * @param value
    */
-  public static etherpadSrc(value: Etherpad = <Etherpad>{}, baseUrl = 'https://etherpad-dev.umi.us/p/'): string {
-    return `${baseUrl}/${value.groupID}$${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
+  public static etherpadSrc(value: Etherpad = <Etherpad>{}, baseUrl = 'http://localhost:9001/p/'): string {
+    return `${baseUrl}auth_session?sessionID=${value.sessionID}&padName=${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
   }
 
   /*

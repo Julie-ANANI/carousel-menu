@@ -306,12 +306,13 @@
     [cardContent]="cardContent"
     [comment]="operatorComment"
     [collaborativesComments]="currentSectionComments"
-    [padId]="getSectionEditorId(sidebarValue.type)"
+    [padID]="getSectionEditorId(sidebarValue.type)"
     [imagePostUri]="imagePostUri"
     [isEditable]="isEditable"
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
-    [type]="sidebarValue.type">
+    [type]="sidebarValue.type"
+    [innovationId]="innovation._id">
   </app-sidebar-project-pitch>
 </app-sidebar>
 <!-- /sidebar to edit innovation card field -->

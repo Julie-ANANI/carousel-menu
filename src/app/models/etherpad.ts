@@ -6,4 +6,6 @@ export interface Etherpad {
   groupID?: string;
   innovationId: string;
   userName: string;
+  authorID?: string;
+  sessionID?: string;
 }

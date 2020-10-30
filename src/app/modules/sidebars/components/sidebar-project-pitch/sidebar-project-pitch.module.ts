@@ -11,19 +11,21 @@ import { SharedUploadZonePhotoModule } from '../../../shared/components/shared-u
 import { SharedUploadZoneVideoModule } from '../../../shared/components/shared-upload-zone-video/shared-upload-zone-video.module';
 import {CommentCardModule} from '../comment-card/comment-card.module';
 import {CommentListModule} from '../comment-list/comment-list.module';
+import {SharedEditorsModule} from '../../../shared/components/shared-editors/shared-editors.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    SidebarModule,
-    FormsModule,
-    SharedEditorTinymceModule,
-    SharedUploadZonePhotoModule,
-    SharedUploadZoneVideoModule,
-    CommentCardModule,
-    CommentListModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        SidebarModule,
+        FormsModule,
+        SharedEditorTinymceModule,
+        SharedUploadZonePhotoModule,
+        SharedUploadZoneVideoModule,
+        CommentCardModule,
+        CommentListModule,
+        SharedEditorsModule,
+    ],
   declarations: [
     SidebarProjectPitchComponent
   ],
