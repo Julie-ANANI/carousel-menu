@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Reply} from '../../models/collaborative-comment';
+import {CollaborativeComment, Reply} from '../../models/collaborative-comment';
 import {Etherpad} from '../../models/etherpad';
 import {Session} from '../../models/session';
 
@@ -10,7 +10,8 @@ const BASE_PATH = '/etherpad';
 @Injectable({providedIn: 'root'})
 export class EtherpadService {
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) {
+  }
 
   /***
    *
@@ -27,16 +28,16 @@ export class EtherpadService {
    * @param innovationId
    */
   public subscribedUsersSessions(innovationId: string): Observable<Array<Session>> {
-    const _data = { innovationId: innovationId };
+    const _data = {innovationId: innovationId};
     return this._http.get<Array<Session>>(`/${BASE_PATH}/group/sessions`, {params: _data});
   }
 
-  getAllCommentsOfPad(padId: string): Observable<any> {
-    return this._http.get(`${BASE_PATH}/pad/${padId}/comments`);
+  getAllCommentsOfPad(padId: string): Observable<CollaborativeComment[]> {
+    return this._http.get<CollaborativeComment[]>(`${BASE_PATH}/pad/${padId}/comments`);
   }
 
-  getAllRepliesOfPad(padId: string): Observable<any> {
-    return this._http.get(`${BASE_PATH}/pad/${padId}/commentReplies`);
+  getAllRepliesOfPad(padId: string): Observable<Reply[]> {
+    return this._http.get<Reply[]>(`${BASE_PATH}/pad/${padId}/commentReplies`);
   }
 
   addRepliesToComment(padId: string, replies: Reply[]) {

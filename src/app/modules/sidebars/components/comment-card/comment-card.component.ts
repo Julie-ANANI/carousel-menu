@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {CollaborativeComment, Reply} from '../../../../models/collaborative-comment';
-import {JsonUtils} from '../../../../utils/jsonUtils';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 
 @Component({
@@ -32,21 +31,17 @@ export class CommentCardComponent implements AfterViewInit {
     this.padId = 'test';
     this._etherpadService
       .getAllRepliesOfPad(this.padId).subscribe((result) => {
-      this.comment.replies = JsonUtils.jsonToArray(result.replies).filter((reply: Reply) => reply.commentId === this.comment.id);
+      this.comment.replies = result.filter((reply: Reply) => reply.commentId === this.comment.id);
     });
   }
 
   // API METHODS
 
-  // TODO show icon edit reply only if owner
   sendReply() {
     // TODO set author & name
-    this.newComment = {
-      author: 'a.NLE4gNB2xPCA25Cr',
-      commentId: this.comment.id,
-      name: 'Léa',
-      text: this.newComment.text
-    };
+    this.newComment.author = 'a.NLE4gNB2xPCA25Cr';
+    this.newComment.commentId = this.comment.id;
+    this.newComment.name = 'Léa';
 
     this._etherpadService.addRepliesToComment(this.padId, [this.newComment]).subscribe((res: any) => {
         this.newComment.id = res.replyId;

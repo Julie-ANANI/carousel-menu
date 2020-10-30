@@ -15,7 +15,6 @@ import {ErrorFrontService} from '../../../../../../../../../services/error/error
 import {Media, Video} from '../../../../../../../../../models/media';
 import {Preset} from '../../../../../../../../../models/preset';
 import {MissionService} from '../../../../../../../../../services/mission/mission.service';
-import {JsonUtils} from '../../../../../../../../../utils/jsonUtils';
 import {CollaborativeComment} from '../../../../../../../../../models/collaborative-comment';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 
@@ -227,7 +226,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   public async openSidebar(section: string, content: string | Array<Media>) {
     this._etherpadService.getAllCommentsOfPad(this.getSectionEditorId(section)).subscribe(
       (result) => {
-        this._currentSectionComments = JsonUtils.jsonToArray(result.comments);
+        this._currentSectionComments = result;
       });
 
     if (!this._toBeSaved) {
@@ -393,7 +392,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._sections.forEach(
       (section) => this._etherpadService.getAllCommentsOfPad(this.getSectionEditorId(section.type)).subscribe(
         (result) => {
-          section.comments = JsonUtils.jsonToArray(result.comments);
+          section.comments = result;
         }));
   }
 
