@@ -33,7 +33,7 @@ export class CommonService {
    * @param value
    */
   public static etherpadSrc(value: Etherpad = <Etherpad>{}, baseUrl = 'https://etherpad-dev.umi.us/p/'): string {
-    return `${baseUrl}/${value.groupID}/#${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
+    return `${baseUrl}/${value.groupID}$${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
   }
 
   /*

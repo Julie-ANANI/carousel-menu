@@ -2,8 +2,8 @@ import {Component, Inject, Input, OnInit, PLATFORM_ID} from '@angular/core';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
-import {User} from '../../../../models/user.model';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Session} from '../../../../models/session';
 
 /***
  * example: admin-project component.
@@ -30,7 +30,7 @@ export class SharedActivityModalComponent implements OnInit {
 
   private _showModal = false;
 
-  private _subscribedUsers: Array<User> = [];
+  private _usersSessions: Array<Session> = [];
 
   private _isLoading = true;
 
@@ -48,8 +48,8 @@ export class SharedActivityModalComponent implements OnInit {
    */
   private _getSubscribedUsers(id: string) {
     if (isPlatformBrowser(this._platformId)) {
-      this._etherpadService.subscribedUsers(id).pipe(first()).subscribe((users) => {
-        this._subscribedUsers = users;
+      this._etherpadService.subscribedUsersSessions(id).pipe(first()).subscribe((sessions) => {
+        this._usersSessions = sessions;
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.error(err);
@@ -72,8 +72,8 @@ export class SharedActivityModalComponent implements OnInit {
     this._showModal = value;
   }
 
-  get subscribedUsers(): Array<User> {
-    return this._subscribedUsers;
+  get usersSessions(): Array<Session> {
+    return this._usersSessions;
   }
 
   get isLoading(): boolean {

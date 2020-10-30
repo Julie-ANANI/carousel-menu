@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Reply} from '../../models/collaborative-comment';
-import {User} from '../../models/user.model';
 import {Etherpad} from '../../models/etherpad';
+import {Session} from '../../models/session';
 
 const BASE_PATH = '/etherpad';
 
@@ -26,9 +26,9 @@ export class EtherpadService {
    * returns the total users list subscribed with the specific group
    * @param innovationId
    */
-  public subscribedUsers(innovationId: string): Observable<Array<User>> {
-    const _data = { innovationId: innovationId }
-    return this._http.get<Array<User>>(`/${BASE_PATH}/users/subscribed`, {params: _data});
+  public subscribedUsersSessions(innovationId: string): Observable<Array<Session>> {
+    const _data = { innovationId: innovationId };
+    return this._http.get<Array<Session>>(`/${BASE_PATH}/group/sessions`, {params: _data});
   }
 
   getAllCommentsOfPad(padId: string): Observable<any> {
