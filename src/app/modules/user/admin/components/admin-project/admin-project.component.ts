@@ -74,6 +74,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   private _status: Array<string> = ['SUBMITTED', 'REJECTED', 'VALIDATED', 'REJECTED_GMAIL',
     'VALIDATED_UMIBOT', 'REJECTED_UMIBOT'];
 
+  private _updateTime: number;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -101,9 +103,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
           .subscribe((update: any) => {
             if (update.userId !== this._authService.userId) {
               this._showBanner = update.userName;
-              setTimeout(() => {
-                this._showBanner = '';
-              }, 5000);
+              this._updateTime = Date.now();
             }
             Object.keys(update.data).forEach((field: string) => {
               this._project[field] = update.data[field];
@@ -316,6 +316,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   get status(): Array<string> {
     return this._status;
+  }
+
+  get updateTime(): number {
+    return this._updateTime;
   }
 
   ngOnDestroy(): void {
