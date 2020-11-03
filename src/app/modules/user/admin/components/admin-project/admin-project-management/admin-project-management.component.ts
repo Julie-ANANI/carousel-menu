@@ -319,7 +319,7 @@ export class AdminProjectManagementComponent implements OnInit {
       this._project.owner = this.owner;
       this.save('Le propriétaire à été mis à jour avec succès !', {owner: this._project.owner});
       this._saveClientProject('OWNER');
-      this.saveMission('OWNER');
+      this.saveMission({client: this.owner._id});
     }
   }
 
@@ -349,7 +349,7 @@ export class AdminProjectManagementComponent implements OnInit {
   changeMissionType(type: MissionType) {
     if (this.canAccess(['edit', 'missionType'])) {
       this._mission.type = type;
-      this.saveMission();
+      this.saveMission({type: this._mission.type});
     }
   }
 
@@ -373,7 +373,7 @@ export class AdminProjectManagementComponent implements OnInit {
           fr: this._missionObjectives[index].fr.label,
         };
 
-        this.saveMission();
+        this.saveMission({objective: this._mission.objective});
 
       }
     }
@@ -732,15 +732,15 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  private saveMission(type?: string) {
+  public saveMissionTeam() {
     this.edit.missionTeam = false;
+    this.saveMission({team: this._mission.team});
+  }
+
+  private saveMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
     if (this._mission._id) {
 
-      if (type === 'OWNER') {
-        this._mission.client = this.owner._id;
-      }
-
-      this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
+      this._missionService.save(this._mission._id, missionObj).pipe(first()).subscribe((mission) => {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       }, (err: HttpErrorResponse) => {
         console.log(err);
@@ -816,7 +816,7 @@ export class AdminProjectManagementComponent implements OnInit {
       this.save('The project has been validated successfully', {status: this._project.status});
       if (this._mission && this._mission._id && this._mission.type === 'USER') {
         this._mission.type = 'CLIENT';
-        this.saveMission();
+        this.saveMission({type: this._mission.type});
       }
     }
   }

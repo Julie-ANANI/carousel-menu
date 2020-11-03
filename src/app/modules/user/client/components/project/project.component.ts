@@ -55,6 +55,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _fetchingError = false;
 
+  private _updateTime: number;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
@@ -93,9 +95,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         .subscribe((update: any) => {
           if (update.userId !== this._authService.userId) {
             this._showBanner = update.userName;
-            setTimeout(() => {
-              this._showBanner = '';
-            }, 5000);
+            this._updateTime = Date.now();
           }
           Object.keys(update.data).forEach((field: string) => {
             this._innovation[field] = update.data[field];
@@ -214,6 +214,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   set showBanner(value: string) {
     this._showBanner = value;
+  }
+
+  get updateTime(): number {
+    return this._updateTime;
   }
 
   ngOnDestroy(): void {

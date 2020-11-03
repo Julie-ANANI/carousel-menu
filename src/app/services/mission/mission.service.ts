@@ -25,7 +25,7 @@ export class MissionService {
     return this._http.delete<Mission>('/mission/' + missionId);
   }
 
-  public save(missionId: string, missionObj: Mission): Observable<Mission> {
+  public save(missionId: string, missionObj: { [P in keyof Mission]?: Mission[P]; }): Observable<Mission> {
     return this._http.put<Mission>('/mission/' + missionId, missionObj);
   }
 
