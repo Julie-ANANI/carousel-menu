@@ -230,7 +230,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public onMissionTypeChange(type: MissionType) {
     this._mission.type = type;
-    this._saveMission('The market test type has been updated.');
+    this._saveMission({type: this._mission.type}, 'The market test type has been updated.');
   }
 
   public onChangeMissionTeam(operator: User) {
@@ -242,11 +242,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._mission.team.push(operator);
       this._missionTeam.push(operator['_id']);
     }
-    this._saveMission('The team members have been updated.');
+    this._saveMission({team: this._mission.team}, 'The team members have been updated.');
   }
 
-  private _saveMission(notifyMessage = 'The project has been updated.') {
-    this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
+  private _saveMission(missionObj: { [P in keyof Mission]?: Mission[P]; }, notifyMessage = 'The project has been updated.') {
+    this._missionService.save(this._mission._id, missionObj).pipe(first()).subscribe((mission) => {
       this._translateNotificationsService.success('Success', notifyMessage);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Mission Error...', ErrorFrontService.getErrorMessage(err.status));
@@ -358,7 +358,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         fr: this._missionObjectives[_index].fr.label,
       };
 
-      this._saveMission('The main objective has been updated.');
+      this._saveMission({objective: this._mission.objective}, 'The main objective has been updated.');
 
     }
   }
