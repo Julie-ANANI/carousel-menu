@@ -1,8 +1,8 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
 import * as moment from 'moment';
-import { TranslateNotificationsService } from '../notifications/notifications.service';
-import { Etherpad } from '../../models/etherpad';
+import {TranslateNotificationsService} from '../notifications/notifications.service';
+import {Etherpad} from '../../models/etherpad';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
@@ -33,7 +33,7 @@ export class CommonService {
    * @param value
    */
   public static etherpadSrc(value: Etherpad = <Etherpad>{}, baseUrl = 'http://localhost:9001/p/'): string {
-    return `${baseUrl}auth_session?sessionID=${value.sessionID}&padName=${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
+    return `${baseUrl}${value.groupID}$${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
   }
 
   /*

@@ -33,30 +33,32 @@ import { SharedMarketComment2Component } from './components/professional-comment
 import { SidebarLeftModule } from "../../../sidebars/templates/sidebar-left/sidebar-left.module";
 import { SidebarInPageModule } from '../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
 import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module';
+import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    PipeModule,
-    SharedEditorTinymceModule,
-    SharedWorldmapModule,
-    TranslateModule.forChild(),
-    NgxPageScrollModule,
-    SidebarModule,
-    SidebarLeftModule,
-    RouterModule,
-    SharedLoaderModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SidebarUserAnswerModule,
-    CountryFlagModule,
-    MessageTemplateModule,
-    ModalModule,
-    SharedTagsModule,
-    PieChartModule,
-    SidebarInPageModule,
-    SidebarFilterAnswersModule
-  ],
+    imports: [
+        CommonModule,
+        PipeModule,
+        SharedEditorTinymceModule,
+        SharedWorldmapModule,
+        TranslateModule.forChild(),
+        NgxPageScrollModule,
+        SidebarModule,
+        SidebarLeftModule,
+        RouterModule,
+        SharedLoaderModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SidebarUserAnswerModule,
+        CountryFlagModule,
+        MessageTemplateModule,
+        ModalModule,
+        SharedTagsModule,
+        PieChartModule,
+        SidebarInPageModule,
+        SidebarFilterAnswersModule,
+        SharedEditorsModule
+    ],
   declarations: [
     SharedMarketReportComponent,
     QuestionConclusionComponent,

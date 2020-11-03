@@ -25,13 +25,15 @@
     <div *ngSwitchCase="'TITLE'">
       <div class="form-group p-top-10">
         <label>
-          <input
-            [disabled]="!isEditable"
-            (ngModelChange)="onChangeValue()"
-            [(ngModel)]="cardContent"
-            [placeholder]="'COMMON.PLACEHOLDER.PROJECT_TITLE' | translate"
-            class="form-input is-shadowed"
-            type="text">
+          <app-shared-editors
+            (textChange)="onChangeValue()"
+            [text]="cardContent"
+            [innovationId]="innovationId"
+            [elementId]="type"
+            [type]="'pitch'"
+            [isEditable]="isEditable"
+            [padHeight]="60">
+          </app-shared-editors>
         </label>
       </div>
     </div>
@@ -73,7 +75,8 @@
             (textChange)="onTextChange($event)"
             [text]="cardContent"
             [innovationId]="innovationId"
-            [id]="type ? type.toLowerCase() : 'text-zone'">
+            [elementId]="type"
+            [type]="'pitch'">
           </app-shared-editors>
         </div>
         <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>

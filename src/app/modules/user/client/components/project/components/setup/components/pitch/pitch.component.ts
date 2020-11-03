@@ -217,14 +217,8 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getSectionEditorId(section: string) {
-    // TODO replace with correct generic padID
-    // return `${this.activeInnovCard._id}_${section}`;
-    return 'test';
-  }
-
   public async openSidebar(section: string, content: string | Array<Media>) {
-    this._etherpadService.getAllCommentsOfPad(this.getSectionEditorId(section)).subscribe(
+    this._etherpadService.getAllCommentsOfPad(EtherpadService.buildPadID('pitch', section)).subscribe(
       (result) => {
         this._currentSectionComments = result;
       });
@@ -390,7 +384,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _fetchCommentsOfSections() {
     this._sections.forEach(
-      (section) => this._etherpadService.getAllCommentsOfPad(this.getSectionEditorId(section.type)).subscribe(
+      (section) => this._etherpadService.getAllCommentsOfPad(EtherpadService.buildPadID('pitch', section.type)).subscribe(
         (result) => {
           section.comments = result;
         }));

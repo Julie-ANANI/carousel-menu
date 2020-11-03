@@ -1,4 +1,6 @@
 export interface Etherpad {
+  type: PadType;
+  elementId: string;
   showChat?: boolean;
   noColors?: boolean;
   lang?: string;
@@ -7,5 +9,6 @@ export interface Etherpad {
   innovationId: string;
   userName: string;
   authorID?: string;
-  sessionID?: string;
 }
+
+export type PadType = 'pitch' | 'workflow' | 'synthesis' | 'suggestion' | 'orphan';

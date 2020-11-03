@@ -34,16 +34,15 @@
 
             </div>
 
-            <input
-              (change)="updateInnovation()"
-              *ngIf="isEditable"
-              [(ngModel)]="activeInnovCard.title"
-              autocomplete="off"
-              class="form-input is-shadowed"
-              id="project-title"
-              name="title"
-              placeholder="Add the project title here..."
-              type="text">
+            <app-shared-editors
+              (textChange)="updateInnovation()"
+              [text]="activeInnovCard.title"
+              [innovationId]="innovation._id"
+              [elementId]="'title'"
+              [type]="'pitch'"
+              [isEditable]="isEditable"
+              [padHeight]="60">
+            </app-shared-editors>
 
             <!-- remaining text -->
             <div
@@ -79,11 +78,13 @@
             </div>
             <div class="m-top-20">
               <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="box-shadow">
-                <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'title', 'suggestion')"
-                  [data]="zoneData('title', 'suggestion')"
-                  id="title-suggestion">
-                </app-shared-editor-tinymce>
+                <app-shared-editors
+                  (textChange)="onCommentChange($event, 'title', 'suggestion')"
+                  [text]="zoneData('title', 'suggestion')"
+                  [innovationId]="innovation._id"
+                  [elementId]="'title'"
+                  [type]="'suggestion'">
+                </app-shared-editors>
               </div>
               <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="message">
                 <p [innerHTML]="zoneData('title', 'suggestion')" class="message-body"></p>
@@ -131,11 +132,13 @@
             </div>
 
             <div *ngIf="isEditable" class="box-shadow">
-              <app-shared-editor-tinymce
-                (onTextChange)="onContentChange($event, 'summary')"
-                [data]="activeInnovCard.summary"
-                id="project-summary">
-              </app-shared-editor-tinymce>
+              <app-shared-editors
+                (textChange)="onContentChange($event, 'summary')"
+                [text]="activeInnovCard.summary"
+                [innovationId]="innovation._id"
+                [elementId]="'summary'"
+                [type]="'pitch'">
+              </app-shared-editors>
             </div>
 
             <!-- remaining text -->
@@ -172,11 +175,13 @@
             </div>
             <div class="m-top-20">
               <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="box-shadow">
-                <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'summary', 'suggestion')"
-                  [data]="zoneData('summary', 'suggestion')"
-                  id="summary-suggestion">
-                </app-shared-editor-tinymce>
+                <app-shared-editors
+                  (textChange)="onCommentChange($event, 'summary', 'suggestion')"
+                  [text]="zoneData('summary', 'suggestion')"
+                  [innovationId]="innovation._id"
+                  [elementId]="'summary'"
+                  [type]="'suggestion'">
+                </app-shared-editors>
               </div>
               <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="message">
                 <p [innerHTML]="zoneData('summary', 'suggestion')" class="message-body"></p>
@@ -266,11 +271,13 @@
             <!-- /label / actions -->
 
             <div *ngIf="isEditable" class="box-shadow">
-              <app-shared-editor-tinymce
-                (onTextChange)="onContentChange($event, 'sections', i)"
-                [data]="section.content"
-                [id]="'project-'+section.type.toLowerCase()+'-'+i+3">
-              </app-shared-editor-tinymce>
+              <app-shared-editors
+                (textChange)="onContentChange($event, 'sections', i)"
+                [text]="section.content"
+                [innovationId]="innovation._id"
+                [elementId]="section.type.toLowerCase()+'-'+i+3"
+                [type]="'pitch'">
+              </app-shared-editors>
             </div>
 
             <!-- remaining text -->
@@ -310,11 +317,13 @@
                 *ngIf="isEditableComment"
                 [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
                 class="box-shadow">
-                <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'sections', 'suggestion', i)"
-                  [data]="zoneData('sections', 'suggestion', i)"
-                  [id]="section.type.toLowerCase()+'-'+i+3+'-suggestion'">
-                </app-shared-editor-tinymce>
+                <app-shared-editors
+                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
+                  [text]="zoneData('sections', 'suggestion', i)"
+                  [innovationId]="innovation._id"
+                  [elementId]="section.type.toLowerCase()+'-'+i+3"
+                  [type]="'suggestion'">
+                </app-shared-editors>
               </div>
               <div
                 *ngIf="!isEditableComment"

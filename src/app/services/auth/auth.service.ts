@@ -1,14 +1,14 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
-import { CookieService, CookieOptions } from 'ngx-cookie';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
-import { User } from '../../models/user.model';
-import { urlRegEx } from '../../utils/regex';
-import { environment } from '../../../environments/environment';
-import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {CookieOptions, CookieService} from 'ngx-cookie';
+import {HttpClient} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
+import {User} from '../../models/user.model';
+import {urlRegEx} from '../../utils/regex';
+import {environment} from '../../../environments/environment';
+import {SwellrtBackend} from '../../modules/swellrt-client/services/swellrt-backend';
 
 import {Md5} from 'ts-md5/dist/md5';
 import {EtherpadAccesses} from '../../models/etherpad-accesses';
@@ -213,7 +213,9 @@ export class AuthService {
   private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
     this._etherpadAccesses = newValue;
     if (isPlatformBrowser(this._platformId)) {
-      this._cookieService.put('sessionIDs', `${newValue.sessions}`, this._cookieOptions);
+      this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
+        return session.id;
+      }).join(',')}`, this._cookieOptions);
     }
   }
 

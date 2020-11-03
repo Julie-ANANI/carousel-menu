@@ -54,11 +54,14 @@
             <div class="box-style p-50">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-              <app-shared-editor-tinymce
-                (onTextChange)="saveOperatorComment($event, 'keyLearning')"
-                [data]="innovation.marketReport?.keyLearning?.conclusion"
-                [readonly]="!canAccess(['edit', 'umiWord'])">
-              </app-shared-editor-tinymce>
+              <app-shared-editors
+                (textChange)="saveOperatorComment($event, 'keyLearning')"
+                [text]="innovation.marketReport?.keyLearning?.conclusion"
+                [innovationId]="innovation._id"
+                [elementId]="'key-learning'"
+                [isEditable]="canAccess(['edit', 'umiWord'])"
+                [type]="'synthesis'">
+              </app-shared-editors>
             </div>
           </section>
           <!-- /key learning section -->
@@ -144,11 +147,14 @@
             <div class="box-style p-50">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-              <app-shared-editor-tinymce
-                (onTextChange)="saveOperatorComment($event, 'finalConclusion')"
-                [data]="innovation.marketReport?.finalConclusion?.conclusion"
-                [readonly]="!canAccess(['edit', 'umiWord'])">
-              </app-shared-editor-tinymce>
+              <app-shared-editors
+                (textChange)="saveOperatorComment($event, 'finalConclusion')"
+                [text]="innovation.marketReport?.finalConclusion?.conclusion"
+                [innovationId]="innovation._id"
+                [elementId]="'conclusion'"
+                [isEditable]="canAccess(['edit', 'umiWord'])"
+                [type]="'synthesis'">
+              </app-shared-editors>
             </div>
           </section>
           <!-- /conclusion -->

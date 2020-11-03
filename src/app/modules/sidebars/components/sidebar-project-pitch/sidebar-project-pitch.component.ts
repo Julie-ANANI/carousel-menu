@@ -68,8 +68,6 @@ export class SidebarProjectPitchComponent implements OnChanges {
     this._collaborativesComments = value;
   }
 
-  @Input() padID: string;
-
   @Input() innovationId: string;
 
   @Input() cardContent: any = '';

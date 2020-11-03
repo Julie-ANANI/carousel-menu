@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Etherpad} from '../../../../models/etherpad';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Etherpad, PadType} from '../../../../models/etherpad';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {User} from '../../../../models/user.model';
+import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 
 type Editor = 'ETHERPAD' | 'TINY_MCE';
 
@@ -10,7 +11,7 @@ type Editor = 'ETHERPAD' | 'TINY_MCE';
   selector: 'app-shared-editors',
   templateUrl: './shared-editors.component.html'
 })
-export class SharedEditorsComponent implements OnInit {
+export class SharedEditorsComponent implements OnChanges {
 
   @Input() set text(value: string) {
     this._text = value;
@@ -24,6 +25,10 @@ export class SharedEditorsComponent implements OnInit {
 
   @Input() innovationId = '';
 
+  @Input() elementId = '';
+
+  @Input() type: PadType = 'orphan';
+
   @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
 
   private _editor: Editor = 'ETHERPAD';
@@ -35,14 +40,17 @@ export class SharedEditorsComponent implements OnInit {
   constructor(private _authService: AuthService) {
   }
 
-  ngOnInit() {
-    this._etherpad = {
-      authorID: this._authService.etherpadAccesses.authorID,
-      innovationId: this.innovationId,
-      // TODO change id
-      padID: 'test',
-      userName: UserFrontService.fullName(this.user)
-    };
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.elementId) {
+      this._etherpad = {
+        type: this.type,
+        elementId: this.elementId,
+        authorID: this._authService.etherpadAccesses.authorID,
+        innovationId: this.innovationId,
+        padID: EtherpadService.buildPadID(this.type, this.elementId),
+        userName: UserFrontService.fullName(this.user)
+      };
+    }
   }
 
   public onTextChange(value: any) {

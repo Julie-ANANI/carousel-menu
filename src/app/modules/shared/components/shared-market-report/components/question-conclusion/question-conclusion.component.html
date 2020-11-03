@@ -20,11 +20,14 @@
 
     <h5 *ngIf="isMainDomain" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h5>
 
-    <app-shared-editor-tinymce
-      [readonly]="readonly"
-      [data]="innovation.marketReport[question.identifier]?.conclusion || ''"
-      (onTextChange)="keyupHandlerFunction($event)">
-    </app-shared-editor-tinymce>
+    <app-shared-editors
+      (textChange)="keyupHandlerFunction($event)"
+      [text]="innovation.marketReport[question.identifier]?.conclusion || ''"
+      [innovationId]="innovation._id"
+      [elementId]="question.identifier"
+      [isEditable]="!readonly"
+      [type]="'synthesis'">
+    </app-shared-editors>
 
     <div *ngIf="originAnswers !== null" class="p-top-20">
       <h4 class="title is-5 m-bottom-15">Geographical Distribution:</h4>

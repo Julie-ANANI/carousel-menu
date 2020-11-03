@@ -37,7 +37,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   private _element: any = null;
 
-  private _htmlId = Math.random().toString(36).substr(2,10);
+  private _htmlId = '';
 
   private _isLoading = true;
 
@@ -50,7 +50,9 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
               private _translateService: TranslateService,
               private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _elementRef: ElementRef) { }
+              private _elementRef: ElementRef) {
+    this._element = this._elementRef.nativeElement;
+  }
 
   ngOnInit() {
   }
@@ -58,11 +60,13 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   private _initEtherpad(value: Etherpad) {
     if (isPlatformBrowser(this._platformId)) {
       this._etherpad = {
+        type: value.type || 'orphan',
+        elementId: value.elementId,
         showChat: value.showChat || false,
         lang: value.lang || this._translateService.currentLang || 'en',
         noColors: value.noColors,
         userName: value.userName || 'user',
-        padID: value.padID || '',
+        padID: value.padID || EtherpadService.buildPadID(value.type, value.elementId),
         innovationId: value.innovationId || ''
       };
       this._createEtherpad();
@@ -75,13 +79,13 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
    * @private
    */
   private _createEtherpad() {
-    if (isPlatformBrowser(this._platformId) && !this._element && this._etherpad.innovationId && this._etherpad.padID) {
-      this._etherpadService.createPad(this._etherpad.innovationId, this._etherpad.padID)
+    if (isPlatformBrowser(this._platformId) && this._etherpad.innovationId && this._etherpad.padID) {
+      this._etherpadService.createPad(this._etherpad.innovationId, this._etherpad.padID, this._text)
         .pipe(first()).subscribe((response) => {
           this._etherpad.userName = UserFrontService.fullName(this._authService.user);
           this._etherpad.groupID = response && response.groupID;
-          this._etherpad.sessionID = this._authService.etherpadAccesses.sessions.find((session) => session.groupID === response.groupID).id;
-          this._element = this._elementRef.nativeElement.querySelector(`#${this._htmlId}`);
+          this._htmlId = Math.random().toString(36).substr(2,10);
+          this._element = this._element.querySelector(`.shared-editor-etherpad`);
           this._createIframe();
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -128,8 +132,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      document.removeChild(this._element);
+    if (isPlatformBrowser(this._platformId) && this._element) {
+      // document.removeChild(this._element);
     }
   }
 
