@@ -18,6 +18,10 @@ export class SocketSsrService implements SocketService {
     return EMPTY;
   }
 
+  getMissionUpdates(): Observable<Notification> {
+    return EMPTY;
+  }
+
   sendDataToApi(e: any) { }
 
 }

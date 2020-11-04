@@ -90,20 +90,37 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._mission = <Mission>{};
       }
 
-      this._socketService.getProjectUpdates(this._innovation._id)
+      this._socketService.getMissionUpdates(this._mission._id)
         .pipe(takeUntil(this._ngUnsubscribe))
         .subscribe((update: any) => {
-          if (update.userId !== this._authService.userId) {
-            this._showBanner = update.userName;
-            this._updateTime = Date.now();
-          }
-          Object.keys(update.data).forEach((field: string) => {
-            this._innovation[field] = update.data[field];
-          });
-          this._innovationFrontService.setInnovation(this._innovation);
+          console.log(update);
+          this._realTimeUpdate('mission', update);
         }, (error) => {
           console.error(error);
         });
+
+      this._socketService.getProjectUpdates(this._innovation._id)
+        .pipe(takeUntil(this._ngUnsubscribe))
+        .subscribe((update: any) => {
+          this._realTimeUpdate('project', update);
+        }, (error) => {
+          console.error(error);
+        });
+    });
+  }
+
+
+  private _realTimeUpdate(object: string, update: any) {
+    if (update.userId !== this._authService.userId) {
+      this._showBanner = update.userName;
+      this._updateTime = Date.now();
+    }
+    Object.keys(update.data).forEach((field: string) => {
+      if (object === 'project') {
+        this._innovation[field] = update.data[field];
+      } else {
+        this._mission[field] = update.data[field];
+      }
     });
   }
 
