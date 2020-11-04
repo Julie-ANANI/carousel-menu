@@ -27,6 +27,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
   private _activeCardIndex = 0;
+  private _activeSectionCode = '';
   private _toBeSaved = false;
 
   constructor(private _innovationService: InnovationService,
@@ -217,13 +218,9 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async openSidebar(section: string, content: string | Array<Media>) {
-    this._etherpadService.getAllCommentsOfPad(EtherpadService.buildPadID('pitch', section)).subscribe(
-      (result) => {
-        this._currentSectionComments = result;
-      });
-
+  public openSidebar(section: string, content: string | Array<Media>) {
     if (!this._toBeSaved) {
+      this._getPadAllComments(section);
       this._activeSection = <CardSectionTypes>section;
       this._cardContent = content;
 
@@ -231,12 +228,23 @@ export class PitchComponent implements OnInit, OnDestroy {
         animate_state: 'active',
         type: section,
         size: '726px',
-        title: 'SIDEBAR.PROJECT_PITCH.' + section
+        title: 'SIDEBAR.PROJECT_PITCH.' + (this._isEditable ? 'EDIT.' : 'VIEW.') + section
       };
     } else {
       this._changesToSave();
     }
   };
+
+  private _getPadAllComments(section: string) {
+    this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', section))
+      .pipe(first())
+      .subscribe((result) => {
+        console.log(result);
+        this._currentSectionComments = result;
+        }, (err: HttpErrorResponse) => {
+        console.error(err);
+      });
+  }
 
   public mediaSrc(media: Media) {
     return InnovationFrontService.getMedia(media);
@@ -273,27 +281,34 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public onSaveProject(event: { type: string, content: any }) {
     if (event.type && this._isEditable && this._isSaving && !this._isSubmitting) {
+
+      // TODO when case 'OTHER' will be implemented : this._activeSectionCode should be unique for each other section
+
       switch (event.type) {
 
         case 'TITLE':
           this._innovation.innovationCards[this._activeCardIndex].title = event.content;
+          this._activeSectionCode = 'title';
           this._updateProject();
           break;
 
         case 'SUMMARY':
           this._innovation.innovationCards[this._activeCardIndex].summary = event.content;
+          this._activeSectionCode = 'summary';
           this._updateProject();
           break;
 
         case 'ISSUE':
           const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
           this._innovation.innovationCards[this._activeCardIndex].sections[_indexIssue].content = event.content;
+          this._activeSectionCode = 'title';
           this._updateProject();
           break;
 
         case 'SOLUTION':
           const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
           this._innovation.innovationCards[this._activeCardIndex].sections[_indexSolution].content = event.content;
+          this._activeSectionCode = 'solution';
           this._updateProject();
           break;
 
@@ -384,7 +399,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _fetchCommentsOfSections() {
     this._sections.forEach(
-      (section) => this._etherpadService.getAllCommentsOfPad(EtherpadService.buildPadID('pitch', section.type)).subscribe(
+      (section) => this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', section.type)).subscribe(
         (result) => {
           section.comments = result;
         }));
@@ -499,6 +514,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     }, (err: HttpErrorResponse) => {
       console.error(err);
     });
+  }
+
+  get activeSectionCode(): string {
+    return this._activeSectionCode;
   }
 
 }

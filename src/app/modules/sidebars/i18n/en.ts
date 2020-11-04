@@ -35,11 +35,20 @@ export const SIDEBAR = {
   },
 
   'PROJECT_PITCH': {
-    'TITLE': 'Edit Title',
-    'SUMMARY': 'Edit Summary',
-    'ISSUE': 'Edit Issue',
-    'SOLUTION': 'Edit Solution',
-    'MEDIA': 'Edit Medias',
+    'EDIT': {
+      'TITLE': 'Edit title',
+      'SUMMARY': 'Edit summary',
+      'ISSUE': 'Edit issue',
+      'SOLUTION': 'Edit solution',
+      'MEDIA': 'Edit medias',
+    },
+    'VIEW': {
+      'TITLE': 'Title',
+      'SUMMARY': 'Summary',
+      'ISSUE': 'Issue',
+      'SOLUTION': 'Solution',
+      'MEDIA': 'Medias',
+    },
     'REMAINING_TEXT': 'characters remaining',
     'SET_PRINCIPAL': 'Set as main media'
   }

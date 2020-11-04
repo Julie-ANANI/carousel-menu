@@ -2,7 +2,7 @@
 
   <div #scrollFrame class="comments-container p-20">
     <!-- Comment -->
-    <div class="comment">
+    <div class="comment-message">
       <div class="d-flex flex-between">
         <div class="comment-info">
           <span class="comment-author-name">{{comment.name}}</span>
@@ -21,7 +21,7 @@
     <!--  Replies -->
     <div class="comment-reply" #reply *ngIf="comment.replies && comment.replies.length > 0">
       <div *ngFor="let reply of comment.replies">
-        <div id="{{reply.id}}" class="sidebar-comment-reply comment">
+        <div id="{{reply.id}}" class="sidebar-comment-reply comment-message">
           <div class="comment-info">
             <span class="comment-author-name">{{reply.name}}</span>
             <span class="comment-created-at">{{reply.timestamp | date:'MM/dd/yyyy'}}</span>

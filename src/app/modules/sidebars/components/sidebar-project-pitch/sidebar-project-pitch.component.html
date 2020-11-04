@@ -7,37 +7,14 @@
       [disabled]="isSaving || !toBeSaved"
       [ngStyle]="{'min-width': '100px'}"
       class="button is-sm is-community"
-      id="btn-save">
-      <ng-container *ngIf="isSaving; else defText">
-        {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
-      </ng-container>
-      <ng-template #defText>
-        {{ 'COMMON.BUTTON.SAVE' | translate }}
-      </ng-template>
+      id="sidebarProjectPitch-btn-save">
+      {{ isSaving ? 'COMMON.BUTTON.SAVING_PROJECT' : 'COMMON.BUTTON.SAVE' | translate  }}
     </button>
   </section>
   <!-- /save button -->
 
   <!-- fields -->
   <section [ngSwitch]="type">
-
-    <!-- title -->
-    <div *ngSwitchCase="'TITLE'">
-      <div class="form-group p-top-10">
-        <label>
-          <app-shared-editors
-            (textChange)="onChangeValue()"
-            [text]="cardContent"
-            [innovationId]="innovationId"
-            [elementId]="type"
-            [type]="'pitch'"
-            [isEditable]="isEditable"
-            [padHeight]="60">
-          </app-shared-editors>
-        </label>
-      </div>
-    </div>
-    <!-- /title -->
 
     <!-- media -->
     <div *ngSwitchCase="'MEDIA'">
@@ -67,7 +44,7 @@
     </div>
     <!-- /media -->
 
-    <!-- summary | issue | solution -->
+    <!-- title | summary | issue | solution -->
     <div *ngSwitchDefault>
       <div class="form-group p-top-10">
         <div *ngIf="isEditable" class="box-shadow">
@@ -82,7 +59,7 @@
         <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>
       </div>
     </div>
-    <!-- /summary | issue | solution -->
+    <!-- /title | summary | issue | solution -->
 
     <!-- remaining text -->
     <div
@@ -125,27 +102,26 @@
 
       <!-- set principal -->
       <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
-          <span
-            (click)="onSetPrincipal(media)"
-            [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
-            class="text-primary"
-            id="btn-principal-media">
-            {{ 'SIDEBAR.PROJECT_PITCH.SET_PRINCIPAL' | translate }}
-          </span>
+        <span
+          (click)="onSetPrincipal(media)"
+          [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
+          class="text-primary"
+          id="sidebarProjectPitch-btn-principal-media">
+          {{ 'SIDEBAR.PROJECT_PITCH.SET_PRINCIPAL' | translate }}
+        </span>
       </div>
       <!-- /set principal -->
 
       <!-- delete button -->
       <div
-        *ngIf="cardContent.length > 1 && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))
-          && isEditable"
+        *ngIf="cardContent.length > 1 && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE')) && isEditable"
         [ngClass]="{'p-top-2': !isNotMainMedia(media)}"
         class="text-sm">
           <span
             (click)="onDeleteMedia(media)"
             [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
             class="text-alert"
-            id="btn-delete-media">
+            id="sidebarProjectPitch-btn-delete-media">
             {{ 'COMMON.BUTTON.DELETE' | translate }}
           </span>
       </div>
@@ -160,13 +136,14 @@
     <div class="d-flex align-center m-bottom-10">
       <div class="d-flex align-center m-right-10">
         <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.COMMENTS' | translate }}</span>
+        <img [src]="badgeUmi" alt="" class="img-fit-cover">
       </div>
       <div (click)="toggle($event, 'COMMENT')" class="icon-container is-sm is-overlay">
         <i [ngClass]="showComment ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
       </div>
     </div>
     <div *ngIf="showComment" class="message animate-fade is-2">
-      <app-comment-list [collaborativesComments]="collaborativesComments" [padID]="padID"></app-comment-list>
+      <app-comment-list [innovationId]="innovationId" [collaborativesComments]="collaborativesComments" [padID]="padID"></app-comment-list>
     </div>
   </section>
   <!-- /umi comment -->
@@ -176,7 +153,7 @@
     <div class="d-flex align-center m-bottom-10">
       <div class="d-flex align-center m-right-10">
         <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.SUGGESTION' | translate }}</span>
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg" alt="">
+        <img [src]="badgeUmi" alt="" class="img-fit-cover">
       </div>
       <div (click)="toggle($event, 'SUGGESTION')" class="icon-container is-sm is-overlay">
         <i [ngClass]="showSuggestion ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
@@ -193,8 +170,8 @@
     <div class="d-flex align-center m-bottom-10">
       <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.HELP' | translate }}</span>
       <span (click)="toggle($event, 'HELP')" class="icon-container is-sm is-overlay">
-          <i [ngClass]="showHelp ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
-        </span>
+        <i [ngClass]="showHelp ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+      </span>
     </div>
     <p *ngIf="showHelp" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('TEXT')"></p>
   </section>
@@ -205,8 +182,8 @@
     <div class="d-flex align-center m-bottom-10">
       <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.EXAMPLE' | translate }}</span>
       <span (click)="toggle($event, 'EXAMPLE')" class="icon-container is-sm is-overlay">
-          <i [ngClass]="showExample ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
-        </span>
+        <i [ngClass]="showExample ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+      </span>
     </div>
     <p *ngIf="showExample" class="animate-fade is-2 text-sm m-no-bottom" [innerHTML]="help('EXAMPLE')"></p>
   </section>

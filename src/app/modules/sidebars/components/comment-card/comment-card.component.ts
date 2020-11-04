@@ -12,6 +12,7 @@ export class CommentCardComponent implements AfterViewInit {
   @ViewChild('scrollFrame') scrollFrame: ElementRef;
   @ViewChildren('reply') replyElements: QueryList<any>;
   @Input() padID: string;
+  @Input() innovationId: string;
   @Input() comment: CollaborativeComment;
   public newComment: Reply = {commentId: '', author: '', name: '', text: '', timestamp: 0};
   public displayNewCommentSuggestion = false;
@@ -30,7 +31,7 @@ export class CommentCardComponent implements AfterViewInit {
   fetchRepliesOfComment() {
     this.padID = 'test';
     this._etherpadService
-      .getAllRepliesOfPad(this.padID).subscribe((result) => {
+      .getAllRepliesOfPad(this.innovationId, this.padID).subscribe((result) => {
       this.comment.replies = result.filter((reply: Reply) => reply.commentId === this.comment.id);
     });
   }
@@ -43,7 +44,7 @@ export class CommentCardComponent implements AfterViewInit {
     this.newComment.commentId = this.comment.id;
     this.newComment.name = 'Léa';
 
-    this._etherpadService.addRepliesToComment(this.padID, [this.newComment]).subscribe((res: any) => {
+    this._etherpadService.addRepliesToComment(this.innovationId, this.padID, [this.newComment]).subscribe((res: any) => {
         this.newComment.id = res.replyId;
         this.comment.replies.push(this.newComment);
         this.newComment = {commentId: '', author: '', name: '', text: '', timestamp: 0};

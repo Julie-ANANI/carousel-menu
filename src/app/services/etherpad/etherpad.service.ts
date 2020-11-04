@@ -34,6 +34,11 @@ export class EtherpadService {
     return this._http.post<Etherpad>(`${BASE_PATH}/pad`, _data);
   }
 
+  getPadHtml(innovationId: string, padID: string): Observable<any> {
+    const _data = {innovationId: innovationId};
+    return this._http.get(`${BASE_PATH}/pad/${padID}/html`, {params: _data});
+  }
+
   /***
    * returns the total users list subscribed with the specific group
    * @param innovationId
@@ -43,16 +48,19 @@ export class EtherpadService {
     return this._http.get<Array<Session>>(`/${BASE_PATH}/group/sessions`, {params: _data});
   }
 
-  getAllCommentsOfPad(padID: string): Observable<CollaborativeComment[]> {
-    return this._http.get<CollaborativeComment[]>(`${BASE_PATH}/pad/${padID}/comments`);
+  getAllCommentsOfPad(innovationId: string, padID: string): Observable<CollaborativeComment[]> {
+    const _data = {innovationId: innovationId};
+    return this._http.get<CollaborativeComment[]>(`${BASE_PATH}/pad/${padID}/comments`, {params: _data});
   }
 
-  getAllRepliesOfPad(padID: string): Observable<Reply[]> {
-    return this._http.get<Reply[]>(`${BASE_PATH}/pad/${padID}/commentReplies`);
+  getAllRepliesOfPad(innovationId: string, padID: string): Observable<Reply[]> {
+    const _data = {innovationId: innovationId};
+    return this._http.get<Reply[]>(`${BASE_PATH}/pad/${padID}/commentReplies`, {params: _data});
   }
 
-  addRepliesToComment(padID: string, replies: Reply[]) {
-    return this._http.post(`${BASE_PATH}/pad/${padID}/commentReplies`, replies);
+  addRepliesToComment(innovationId: string, padID: string, replies: Reply[]) {
+    const _data = {innovationId: innovationId, replies: replies};
+    return this._http.post(`${BASE_PATH}/pad/${padID}/commentReplies`, _data);
   }
 
 }

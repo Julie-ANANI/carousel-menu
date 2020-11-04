@@ -5,6 +5,8 @@ import {Media, Video} from '../../../../models/media';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
 import {CollaborativeComment} from '../../../../models/collaborative-comment';
+import {picto} from '../../../../models/static-data/picto';
+import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -69,6 +71,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
   }
 
   @Input() innovationId: string;
+  @Input() sectionId: string;
 
   @Input() cardContent: any = '';
 
@@ -97,6 +100,10 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   private _toBeSaved = false;
 
+  private _badgeUmi = picto.badgeUmi;
+
+  private _padID: string;
+
   constructor(private _innovationFrontService: InnovationFrontService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -104,6 +111,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
       this.cardContent = changes.cardContent && changes.cardContent.currentValue || '';
       this._isSaving = false;
       this._toBeSaved = false;
+      this._padID = EtherpadService.buildPadID('pitch', this.sectionId);
     }
   }
 
@@ -340,4 +348,11 @@ export class SidebarProjectPitchComponent implements OnChanges {
     return this._toBeSaved;
   }
 
+  get badgeUmi(): string {
+    return this._badgeUmi;
+  }
+
+  get padID(): string {
+    return this._padID;
+  }
 }

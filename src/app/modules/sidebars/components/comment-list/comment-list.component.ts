@@ -10,6 +10,7 @@ export class CommentListComponent implements OnInit {
 
   @Input() collaborativesComments: CollaborativeComment[];
   @Input() padID: string;
+  @Input() innovationId: string;
 
   constructor() {
   }
