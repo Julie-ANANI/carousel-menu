@@ -19,10 +19,13 @@ export class CommentListComponent implements OnInit {
   }
 
   displayCommentThread(id: string) {
-    document.getElementById(id).style.display = 'block';
-    this.collaborativesComments
-      .filter((comment) => comment.id !== id)
-      .forEach((comment) => this.hideCommentThread(comment.id));
+    const element = document.getElementById(id);
+    if (!!element) {
+      element.style.display = 'block';
+      this.collaborativesComments
+        .filter((comment) => comment.id !== id)
+        .forEach((comment) => this.hideCommentThread(comment.id));
+    }
   }
 
   hideCommentThread(id: string) {

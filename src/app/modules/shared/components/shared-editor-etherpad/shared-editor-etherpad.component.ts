@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, PLATFORM_ID} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, PLATFORM_ID, ViewChild} from '@angular/core';
 import {Etherpad} from '../../../../models/etherpad';
 import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
@@ -10,6 +10,8 @@ import {CommonService} from '../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {AuthService} from '../../../../services/auth/auth.service';
+import {EtherpadSocketService} from '../../../../services/socket/etherpad.socket.service';
+import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
 
 @Component({
   selector: 'app-shared-editor-etherpad',
@@ -33,6 +35,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChild('sharedEditorEtherpad', { read: ElementRef }) sharedEditorEtherpad: ElementRef;
+
   private _etherpad: Etherpad = <Etherpad>{};
 
   private _element: any = null;
@@ -47,11 +51,10 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
+              private _etherpadSocketService: EtherpadSocketService,
               private _translateService: TranslateService,
               private _authService: AuthService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _elementRef: ElementRef) {
-    this._element = this._elementRef.nativeElement;
+              private _translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
@@ -64,7 +67,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         elementId: value.elementId,
         showChat: value.showChat || false,
         lang: value.lang || this._translateService.currentLang || 'en',
-        noColors: value.noColors,
+        noColors: value.noColors || false,
         userName: value.userName || 'user',
         padID: value.padID || EtherpadService.buildPadID(value.type, value.elementId),
         innovationId: value.innovationId || ''
@@ -79,15 +82,15 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
    * @private
    */
   private _createEtherpad() {
-    if (isPlatformBrowser(this._platformId) && this._etherpad.innovationId && this._etherpad.padID) {
+    if (this._isEditable && isPlatformBrowser(this._platformId) && this._etherpad.innovationId && this._etherpad.padID) {
       this._etherpadService.createPad(this._etherpad.innovationId, this._etherpad.padID, this._text)
         .pipe(first()).subscribe((response) => {
           this._etherpad.userName = UserFrontService.fullName(this._authService.user);
           this._etherpad.groupID = response && response.groupID;
           this._htmlId = Math.random().toString(36).substr(2,10);
-          this._element = this._element.querySelector(`.shared-editor-etherpad`);
           this._createIframe();
-        }, (err: HttpErrorResponse) => {
+          this._detectPadTextChange();
+      }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });
@@ -99,12 +102,35 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
    * @private
    */
   private _createIframe() {
+    this._removeIframe();
     const _iframe = document.createElement('iframe');
     _iframe.setAttribute('src', CommonService.etherpadSrc(this._etherpad));
     _iframe.setAttribute('id', this._etherpad.padID);
     _iframe.style.height = this.minHeight;
-    this._element.appendChild(_iframe);
+    this.sharedEditorEtherpad.nativeElement.appendChild(_iframe);
     this._isLoading = false;
+  }
+
+  /***
+   * this os to delete iframe and remove it from the element.
+   * @private
+   */
+  private _removeIframe() {
+    const iframeElement = this.sharedEditorEtherpad.nativeElement.getElementsByTagName('iframe')[0];
+    if (iframeElement) {
+      this.sharedEditorEtherpad.nativeElement.removeChild(iframeElement);
+    }
+  }
+
+  private _detectPadTextChange() {
+    const groupPadId = EtherpadFrontService.getGroupPadId(this._etherpad.groupID, this._etherpad.padID);
+    this._etherpadSocketService
+      .getAuthorPadUpdates(groupPadId, this._authService.etherpadAccesses.authorID)
+      .subscribe((data: { text: string }) => {
+        if (data.text && data.text.length !== this.text.length) {
+          this.textChange.emit({content: data.text});
+        }
+      });
   }
 
   get etherpad(): Etherpad {
@@ -133,7 +159,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this._platformId) && this._element) {
-      // document.removeChild(this._element);
+      this._removeIframe();
     }
   }
 

@@ -2,6 +2,7 @@ export const environment = {
   local: false,
   production: true,
   apiUrl: 'https://appv3.umi.us/api',
+  etherpadUrl: 'https://etherpad.umi.us',
   clientUrl: 'https://multivalente.umi.us',
   companyName: 'Multivalente',
   companyShortName: 'Multivalente',

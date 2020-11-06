@@ -30,7 +30,7 @@ export class AuthService {
 
   private _user: User = null;
 
-  private _etherpadAccesses: EtherpadAccesses = null;
+  private _etherpadAccesses: EtherpadAccesses = {authorID: '', sessions: []};
 
   private _errorUrl: string | null = null;
 

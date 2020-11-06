@@ -215,6 +215,8 @@ export class PitchComponent implements OnInit, OnDestroy {
         return (!!comments && comments.length > 0)
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion;
 
+      default:
+        return false;
     }
   }
 
@@ -239,7 +241,6 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', section))
       .pipe(first())
       .subscribe((result) => {
-        console.log(result);
         this._currentSectionComments = result;
         }, (err: HttpErrorResponse) => {
         console.error(err);

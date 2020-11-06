@@ -3,6 +3,7 @@ import {isPlatformBrowser} from '@angular/common';
 import * as moment from 'moment';
 import {TranslateNotificationsService} from '../notifications/notifications.service';
 import {Etherpad} from '../../models/etherpad';
+import {environment} from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
@@ -32,7 +33,7 @@ export class CommonService {
    * @param baseUrl
    * @param value
    */
-  public static etherpadSrc(value: Etherpad = <Etherpad>{}, baseUrl = 'http://localhost:9001/p/'): string {
+  public static etherpadSrc(value: Etherpad = <Etherpad>{}, baseUrl = `${environment.etherpadUrl}/p/`): string {
     return `${baseUrl}${value.groupID}$${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
   }
 

@@ -41,7 +41,7 @@ export class SharedEditorsComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.elementId) {
+    if (changes.elementId) {
       this._etherpad = {
         type: this.type,
         elementId: this.elementId,

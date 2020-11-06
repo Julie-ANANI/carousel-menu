@@ -4,6 +4,7 @@ export const environment = {
   local: false,
   production: false,
   apiUrl: 'https://dev.umi.us/api', // 'http://umiapplication:3000/api'
+  etherpadUrl: 'https://etherpad-dev.umi.us',
   clientUrl: 'https://umicli-dev.umi.us',
   companyName: 'United Motion Ideas (dev)',
   companyShortName: 'UMI',
