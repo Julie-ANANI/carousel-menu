@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { ErrorFrontService} from '../../../../../../services/error/error-front.service';
@@ -7,7 +7,7 @@ import { ExecutiveReport, ExecutiveSection } from '../../../../../../models/exec
 import { Innovation } from '../../../../../../models/innovation';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { ExecutiveReportService } from '../../../../../../services/executive-report/executive-report.service';
-import { first } from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Question } from '../../../../../../models/question';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
@@ -22,15 +22,18 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import FileSaver from 'file-saver';
 import { DeliverableService } from '../../../../../../services/deliverable/deliverable.service';
 import { Job, JobType } from '../../../../../../models/job';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { ActivatedRoute } from '@angular/router';
+import { SocketService } from '../../../../../../services/socket/socket.service';
+import { Subject } from 'rxjs';
+import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
   templateUrl: './admin-project-storyboard.component.html',
   styleUrls: ['./admin-project-storyboard.component.scss']
 })
 
-export class AdminProjectStoryboardComponent implements OnInit {
+export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   private _executiveReport: ExecutiveReport = <ExecutiveReport>{};
 
@@ -68,6 +71,14 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   private _isChargingReport = true;
 
+  private _showBannerUpdate = '';
+
+  private _updateTime: number;
+
+  private _updatedReportObj: { [P in keyof ExecutiveReport]?: ExecutiveReport[P]; } = {};
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -79,6 +90,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
               private _multilingPipe: MultilingPipe,
               private _innovationService: InnovationService,
               private _responseService: ResponseService,
+              private _socketService: SocketService,
+              private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _deliverableService: DeliverableService) { }
 
@@ -104,6 +117,30 @@ export class AdminProjectStoryboardComponent implements OnInit {
     }
   }
 
+  private _realtimeUpdate(executiveReportId: string) {
+    this._socketService.getReportUpdates(executiveReportId)
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((update: any) => {
+        const executiveReport = this._executiveReport;
+        if (update.userId !== this._authService.userId) {
+          this._showBanner = update.userName;
+          this._updateTime = Date.now();
+        }
+
+        Object.keys(update.data).forEach(key => {
+          if (key.slice(0, 8) === 'section_') {
+            const index = parseInt(key[8], 10);
+            executiveReport.sections[index] = update.data[key];
+          } else {
+            executiveReport[key] = update.data[key];
+          }
+        });
+        this._executiveReport = executiveReport;
+      }, (error) => {
+        console.error(error);
+      });
+  }
+
   private _getExecutiveReport() {
     this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((response) => {
       this._executiveReport = response;
@@ -114,6 +151,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+    this._realtimeUpdate(this._innovation.executiveReportId);
   }
 
   private _getVideoJob() {
@@ -230,6 +268,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     });
 
     this._executiveReport.sections = sections;
+    this._updatedReportObj.sections = sections;
     this._isChargingReport = false;
     this._toBeSaved = true;
 
@@ -239,6 +278,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
     event.preventDefault();
     this._executiveReport.externalDiffusion = (event.target as HTMLInputElement).checked;
     this._toBeSaved = true;
+    this._updatedReportObj.externalDiffusion = this._executiveReport.externalDiffusion;
   }
 
   public openLangModal(event: Event, type: string) {
@@ -277,6 +317,7 @@ export class AdminProjectStoryboardComponent implements OnInit {
         this._executiveReport = response;
         this._isLoading = false;
         this._isChargingReport = false;
+        this._realtimeUpdate(response._id);
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -376,7 +417,8 @@ export class AdminProjectStoryboardComponent implements OnInit {
         ex_report.client.company = this._executiveReport.client.company.id;
       }
       // TODO is this a good solution?
-      this._executiveReportService.save(this._executiveReport).pipe(first()).subscribe((response) => {
+      this._executiveReportService.save(this._executiveReport._id, this._updatedReportObj).pipe(first()).subscribe((response) => {
+        this._updatedReportObj = {};
         this._executiveReport = response;
         this._toBeSaved = false;
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
@@ -384,6 +426,21 @@ export class AdminProjectStoryboardComponent implements OnInit {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
+    }
+  }
+
+  public updateReport(value: any) {
+    Object.keys(value).forEach(key => {
+      if (key.slice(0, 8) === 'section_') {
+        const index = parseInt(key[8], 10);
+        this._executiveReport.sections[index] = value[key];
+      } else {
+        this._executiveReport[key] = value[key];
+      }
+      this._updatedReportObj[key] = value[key];
+    });
+    if (this.canAccess(['edit'])) {
+      this._toBeSaved = true;
     }
   }
 
@@ -410,13 +467,6 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get executiveReport(): ExecutiveReport {
     return this._executiveReport;
-  }
-
-  set executiveReport(value: ExecutiveReport) {
-    this._executiveReport = value;
-    if (this.canAccess(['edit'])) {
-      this._toBeSaved = true;
-    }
   }
 
   get isLoading(): boolean {
@@ -481,6 +531,23 @@ export class AdminProjectStoryboardComponent implements OnInit {
 
   get isChargingReport(): boolean {
     return this._isChargingReport;
+  }
+
+  get showBannerUpdate(): string {
+    return this._showBannerUpdate;
+  }
+
+  set showBannerUpdate(value: string) {
+    this._showBannerUpdate = value;
+  }
+
+  get updateTime(): number {
+    return this._updateTime;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

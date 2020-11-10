@@ -22,6 +22,10 @@ export class SocketSsrService implements SocketService {
     return EMPTY;
   }
 
+  getReportUpdates(): Observable<Notification> {
+    return EMPTY;
+  }
+
   sendDataToApi(e: any) { }
 
 }

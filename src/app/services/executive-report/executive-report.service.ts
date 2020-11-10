@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient }  from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ExecutiveReport } from '../../models/executive-report';
 
@@ -16,8 +16,8 @@ export class ExecutiveReportService {
     return this._http.get<ExecutiveReport>(`/exereport/${executiveReportId}`);
   }
 
-  public save(executiveReportObj: ExecutiveReport): Observable<ExecutiveReport> {
-    return this._http.put<ExecutiveReport>(`/exereport/${executiveReportObj._id}`, executiveReportObj);
+  public save(executiveReportId: string, executiveReportObj: any): Observable<ExecutiveReport> {
+    return this._http.put<ExecutiveReport>(`/exereport/${executiveReportId}`, executiveReportObj);
   }
 
   public delete(executiveReportId: string): Observable<ExecutiveReport> {

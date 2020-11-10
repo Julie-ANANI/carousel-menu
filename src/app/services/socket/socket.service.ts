@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import * as io from 'socket.io-client';
 import { Innovation } from '../../models/innovation';
 import { Mission } from '../../models/mission';
+import {ExecutiveReport} from '../../models/executive-report';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,15 @@ export class SocketService {
     return new Observable((subscriber: Subscriber<any>) => {
       this.socket.on(`missionUpdate_${missionId}`,
         (data: {userName: string, userId: string, data: { [P in keyof Mission]?: Mission[P]; }}) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
+  getReportUpdates(executiveReportId: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`erUpdate_${executiveReportId}`,
+        (data: {userName: string, userId: string, data: { [P in keyof ExecutiveReport]?: ExecutiveReport[P]; }}) => {
         subscriber.next(data);
       });
     });
