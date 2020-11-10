@@ -47,16 +47,18 @@
     <!-- title | summary | issue | solution -->
     <div *ngSwitchDefault>
       <div class="form-group p-top-10">
-        <div *ngIf="isEditable" class="box-shadow">
+        <div *ngIf="isEditable">
           <app-shared-editors
+            class="text-sm"
             (textChange)="onTextChange($event)"
             [text]="cardContent"
             [innovationId]="innovationId"
-            [elementId]="type"
+            [elementId]="sectionId"
+            [isEditable]="isEditable"
             [type]="'pitch'">
           </app-shared-editors>
         </div>
-        <div *ngIf="!isEditable" [innerHTML]="cardContent" class="text-sm"></div>
+        <div *ngIf="!isEditable" [innerHTML]="cardContent | cleanHtml" class="text-sm"></div>
       </div>
     </div>
     <!-- /title | summary | issue | solution -->
@@ -160,7 +162,7 @@
       </div>
     </div>
     <div *ngIf="showSuggestion" class="message animate-fade is-2">
-      <p class="message-body" [innerHTML]="comment.suggestion"></p>
+      <p class="message-body" [innerHTML]="comment.suggestion | cleanHtml"></p>
     </div>
   </section>
   <!-- /umi suggestion -->

@@ -29,7 +29,6 @@ export class CommentCardComponent implements AfterViewInit {
   }
 
   fetchRepliesOfComment() {
-    this.padID = 'test';
     this._etherpadService
       .getAllRepliesOfPad(this.innovationId, this.padID).subscribe((result) => {
       this.comment.replies = result.filter((reply: Reply) => reply.commentId === this.comment.id);

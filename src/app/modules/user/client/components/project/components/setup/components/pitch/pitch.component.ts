@@ -183,6 +183,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       }
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
+      this._fetchCommentsOfSections();
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((cardIndex) => {
@@ -222,6 +223,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public openSidebar(section: string, content: string | Array<Media>) {
     if (!this._toBeSaved) {
+      this._activeSectionCode = this._computeSectionCode(section);
       this._getPadAllComments(section);
       this._activeSection = <CardSectionTypes>section;
       this._cardContent = content;
@@ -235,10 +237,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     } else {
       this._changesToSave();
     }
-  };
+  }
 
   private _getPadAllComments(section: string) {
-    this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', section))
+    this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', this.activeSectionCode))
       .pipe(first())
       .subscribe((result) => {
         this._currentSectionComments = result;
@@ -280,6 +282,25 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _computeSectionCode(section: string): string {
+    let sectionCode = section.toLowerCase();
+
+    switch (section) {
+      case 'ISSUE':
+        const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
+        sectionCode = section.toLowerCase() + '-' + _indexIssue + 3;
+        break;
+
+      case 'SOLUTION':
+        const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
+        sectionCode = section.toLowerCase() + '-' + _indexSolution + 3;
+        break;
+
+    }
+
+    return sectionCode;
+  }
+
   public onSaveProject(event: { type: string, content: any }) {
     if (event.type && this._isEditable && this._isSaving && !this._isSubmitting) {
 
@@ -289,27 +310,23 @@ export class PitchComponent implements OnInit, OnDestroy {
 
         case 'TITLE':
           this._innovation.innovationCards[this._activeCardIndex].title = event.content;
-          this._activeSectionCode = 'title';
           this._updateProject();
           break;
 
         case 'SUMMARY':
           this._innovation.innovationCards[this._activeCardIndex].summary = event.content;
-          this._activeSectionCode = 'summary';
           this._updateProject();
           break;
 
         case 'ISSUE':
           const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
           this._innovation.innovationCards[this._activeCardIndex].sections[_indexIssue].content = event.content;
-          this._activeSectionCode = 'title';
           this._updateProject();
           break;
 
         case 'SOLUTION':
           const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
           this._innovation.innovationCards[this._activeCardIndex].sections[_indexSolution].content = event.content;
-          this._activeSectionCode = 'solution';
           this._updateProject();
           break;
 
@@ -394,13 +411,11 @@ export class PitchComponent implements OnInit, OnDestroy {
 
     this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
       ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
-
-    this._fetchCommentsOfSections();
   }
 
   private _fetchCommentsOfSections() {
     this._sections.forEach(
-      (section) => this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', section.type)).subscribe(
+      (section) => this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', this._computeSectionCode(section.type))).subscribe(
         (result) => {
           section.comments = result;
         }));

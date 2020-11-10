@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, O
 import {Etherpad} from '../../../../models/etherpad';
 import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
@@ -12,10 +12,12 @@ import {UserFrontService} from '../../../../services/user/user-front.service';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {EtherpadSocketService} from '../../../../services/socket/etherpad.socket.service';
 import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-shared-editor-etherpad',
-  templateUrl: './shared-editor-etherpad.component.html'
+  templateUrl: './shared-editor-etherpad.component.html',
+  styleUrls: ['./shared-editor-etherpad.component.scss']
 })
 export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
@@ -49,6 +51,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   private _text = '';
 
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _etherpadSocketService: EtherpadSocketService,
@@ -58,6 +62,22 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this._detectEtherpadServerDown();
+    this._etherpadService.pingServer().pipe(first())
+      .subscribe(() => {
+        if (!this.isEtherpadUp()) {
+          // Reload session to refresh etherpad cookies and accesses after server working again
+          this._authService.initializeSession().subscribe(() => {
+            this._createEtherpad();
+          });
+        }
+      }, () => {
+        this.disableEtherpad();
+      });
+  }
+
+  isEtherpadUp(): boolean {
+    return this._authService.etherpadAccesses.active;
   }
 
   private _initEtherpad(value: Etherpad) {
@@ -82,7 +102,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
    * @private
    */
   private _createEtherpad() {
-    if (this._isEditable && isPlatformBrowser(this._platformId) && this._etherpad.innovationId && this._etherpad.padID) {
+    if (this.isEtherpadUp() && this._isEditable && isPlatformBrowser(this._platformId) && this._etherpad.innovationId && this._etherpad.padID) {
       this._etherpadService.createPad(this._etherpad.innovationId, this._etherpad.padID, this._text)
         .pipe(first()).subscribe((response) => {
           this._etherpad.userName = UserFrontService.fullName(this._authService.user);
@@ -91,7 +111,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
           this._createIframe();
           this._detectPadTextChange();
       }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this.disableEtherpad();
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });
     }
@@ -126,11 +147,27 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
     const groupPadId = EtherpadFrontService.getGroupPadId(this._etherpad.groupID, this._etherpad.padID);
     this._etherpadSocketService
       .getAuthorPadUpdates(groupPadId, this._authService.etherpadAccesses.authorID)
+      .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data: { text: string }) => {
         if (data.text && data.text.length !== this.text.length) {
           this.textChange.emit({content: data.text});
         }
       });
+  }
+
+  private _detectEtherpadServerDown() {
+    this._etherpadSocketService.getServerStatusMessages()
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((status: { serverUp: boolean }) => {
+        if (this.isEtherpadUp() && !status.serverUp) {
+          this.disableEtherpad();
+        }
+      });
+  }
+
+  private disableEtherpad() {
+    this._authService.etherpadAccesses.active = false;
+    this._removeIframe();
   }
 
   get etherpad(): Etherpad {
@@ -161,6 +198,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId) && this._element) {
       this._removeIframe();
     }
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

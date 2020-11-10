@@ -268,15 +268,16 @@
 
           <label class="form-label">Message</label>
 
-          <app-shared-editor-tinymce
-            (onTextChange)="updateContent($event)"
-            *ngIf="isEditableMode"
-            [data]="email.content || ''"
-            [readonly]="!isEditableMode">
-          </app-shared-editor-tinymce>
-
-          <p *ngIf="!isEditableMode && email && email.content" [innerHTML]="email.content" class="text-md"></p>
-
+          <div class="text-md">
+            <app-shared-editors
+              (textChange)="updateContent($event)"
+              [text]="email.content || ''"
+              [innovationId]="innovationId"
+              [elementId]="email._id"
+              [type]="'workflow'"
+              [isEditable]="isEditableMode">
+            </app-shared-editors>
+          </div>
         </div>
         <!-- /message -->
 

@@ -30,7 +30,7 @@ export class AuthService {
 
   private _user: User = null;
 
-  private _etherpadAccesses: EtherpadAccesses = {authorID: '', sessions: []};
+  private _etherpadAccesses: EtherpadAccesses = {active: false, authorID: '', sessions: []};
 
   private _errorUrl: string | null = null;
 
@@ -211,11 +211,13 @@ export class AuthService {
   }
 
   private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
-    this._etherpadAccesses = newValue;
-    if (isPlatformBrowser(this._platformId)) {
-      this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
-        return session.id;
-      }).join(',')}`, this._cookieOptions);
+    if (this.isAcceptingCookies) {
+      this._etherpadAccesses = newValue;
+      if (isPlatformBrowser(this._platformId)) {
+        this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
+          return session.id;
+        }).join(',')}`, this._cookieOptions);
+      }
     }
   }
 

@@ -23,7 +23,7 @@ export class EtherpadSocketService extends SocketService {
 
   getServerStatusMessages(): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
-      this.socket.on(`etherpad/status/`,
+      this.socket.on(`etherpad/status`,
         (data: {serverUp: boolean}) => {
           subscriber.next(data);
         });

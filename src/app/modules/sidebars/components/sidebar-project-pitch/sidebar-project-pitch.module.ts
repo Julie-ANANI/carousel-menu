@@ -12,6 +12,7 @@ import { SharedUploadZoneVideoModule } from '../../../shared/components/shared-u
 import {CommentCardModule} from '../comment-card/comment-card.module';
 import {CommentListModule} from '../comment-list/comment-list.module';
 import {SharedEditorsModule} from '../../../shared/components/shared-editors/shared-editors.module';
+import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {SharedEditorsModule} from '../../../shared/components/shared-editors/sha
         CommentCardModule,
         CommentListModule,
         SharedEditorsModule,
+        CleanHtmlModule,
     ],
   declarations: [
     SidebarProjectPitchComponent

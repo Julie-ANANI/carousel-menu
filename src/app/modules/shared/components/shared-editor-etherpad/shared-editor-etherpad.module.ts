@@ -4,13 +4,15 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {SharedEditorEtherpadComponent} from './shared-editor-etherpad.component';
 import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
+import {MessageErrorModule} from '../../../utility/messages/message-error/message-error.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    CleanHtmlModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        CleanHtmlModule,
+        MessageErrorModule,
+    ],
   declarations: [
     SharedEditorEtherpadComponent
   ],

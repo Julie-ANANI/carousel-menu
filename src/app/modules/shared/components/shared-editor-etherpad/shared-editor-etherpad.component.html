@@ -6,13 +6,21 @@
   class="shared-editor-etherpad">
 
   <!-- isEditable && isLoading -->
-  <div *ngIf="isLoading" class="loading-wrapper">
+  <div *ngIf="isLoading && isEtherpadUp()" class="loading-wrapper">
     <div class="text-notify text-medium text-sm m-bottom-2">
       {{ etherpad.lang === 'fr' ? 'chargement de l\'éditeur...' : 'loading editor...' }}
     </div>
     <div class="loading is-primary"></div>
   </div>
   <!-- /isEditable && isLoading -->
+
+  <!-- error message while fetching -->
+  <section *ngIf="!isEtherpadUp()"  class="container fluid grid-2xl">
+    <app-utility-message-error [ngStyle]="{ 'width': '100%', 'min-height': '400px' }" [reloadPage]="false"
+                               [errorMessage]="'SHARED_TEXT_ZONE.COLLABORATIVE_EDITING_ERROR' | translate">
+    </app-utility-message-error>
+  </section>
+  <!-- /error message while fetching -->
 
   <!-- if not isEditable -->
   <div *ngIf="!isEditable" class="content-wrapper">

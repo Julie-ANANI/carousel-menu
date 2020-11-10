@@ -1,5 +1,11 @@
 @import "variables";
 
+.comment {
+  sup {
+    display: none;
+  }
+}
+
 .comment-message {
   margin-bottom: 10px;
 
