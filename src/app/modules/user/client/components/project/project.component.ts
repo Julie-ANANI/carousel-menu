@@ -122,6 +122,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._mission[field] = update.data[field];
       }
     });
+    this._innovationFrontService.setInnovation(this._innovation);
   }
 
   /***
