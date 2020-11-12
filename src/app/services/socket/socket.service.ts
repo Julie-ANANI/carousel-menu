@@ -28,7 +28,7 @@ export class SocketService {
 
   getProjectUpdates(projectId: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
-      this.socket.on(`projectUpdate_${projectId}`,
+      this.socket.on(`innovationUpdate_${projectId}`,
         (data: {userName: string, userId: string, data: { [P in keyof Innovation]?: Innovation[P]; }}) => {
         subscriber.next(data);
       });
