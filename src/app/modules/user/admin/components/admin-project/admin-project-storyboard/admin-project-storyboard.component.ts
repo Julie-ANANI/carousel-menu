@@ -121,7 +121,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
     this._socketService.getReportUpdates(executiveReportId)
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((update: any) => {
-        const executiveReport = this._executiveReport;
+        const executiveReport = JSON.parse(JSON.stringify(this._executiveReport));
         if (update.userId !== this._authService.userId) {
           this._showBanner = update.userName;
           this._updateTime = Date.now();
