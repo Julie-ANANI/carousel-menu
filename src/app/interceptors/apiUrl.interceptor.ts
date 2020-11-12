@@ -10,7 +10,8 @@ export class ApiUrlInterceptor implements HttpInterceptor {
     if (req.url.indexOf('http') === -1) { // Si ce n'est pas une URL
       return next.handle(
         req.clone({
-          url: environment.apiUrl + req.url
+          url: environment.apiUrl + req.url,
+          withCredentials: true
         })
       );
     } else {

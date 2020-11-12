@@ -28,7 +28,7 @@ import {ClientProjectService} from '../../../../../../services/client-project/cl
 import {HttpErrorResponse} from '@angular/common/http';
 import {MissionService} from '../../../../../../services/mission/mission.service';
 import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
-import {RolesFrontService} from "../../../../../../services/roles/roles-front.service";
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -212,7 +212,7 @@ export class AdminProjectManagementComponent implements OnInit {
     if (this._project._metadata && this._project._metadata[level][name] !== undefined) {
       this._project._metadata[level][name] = event.currentTarget.checked;
       this._frontendService.calculateInnovationMetadataPercentages(this._project, level);
-      this.save('Successfully saved.');
+      this.save('Successfully saved.', {_metadata: this._project._metadata});
     }
   }
 
@@ -317,9 +317,9 @@ export class AdminProjectManagementComponent implements OnInit {
   ownerEditionFinished() {
     if (this.canAccess(['edit', 'owner'])) {
       this._project.owner = this.owner;
-      this.save('Le propriétaire à été mis à jour avec succès !');
+      this.save('Le propriétaire à été mis à jour avec succès !', {owner: this._project.owner});
       this._saveClientProject('OWNER');
-      this.saveMission('OWNER');
+      this.saveMission({client: this.owner._id});
     }
   }
 
@@ -330,7 +330,7 @@ export class AdminProjectManagementComponent implements OnInit {
   changeProjectDomain(value: string) {
     if (this.canAccess(['edit', 'domain'])) {
       this._project.domain = value;
-      this.save('le domaine a été mis à jour avec succès !');
+      this.save('le domaine a été mis à jour avec succès !', {domain: this._project.domain});
     }
   }
 
@@ -342,14 +342,14 @@ export class AdminProjectManagementComponent implements OnInit {
     if (this.canAccess(['edit', 'operator'])) {
       this._project.operator = value || null;
       this.operatorId = value || undefined;
-      this.save('L\'opérateur à été mis à jour avec succès');
+      this.save('L\'opérateur à été mis à jour avec succès', {operator: this._project.operator});
     }
   }
 
   changeMissionType(type: MissionType) {
     if (this.canAccess(['edit', 'missionType'])) {
       this._mission.type = type;
-      this.saveMission();
+      this.saveMission({type: this._mission.type});
     }
   }
 
@@ -373,7 +373,7 @@ export class AdminProjectManagementComponent implements OnInit {
           fr: this._missionObjectives[index].fr.label,
         };
 
-        this.saveMission();
+        this.saveMission({objective: this._mission.objective});
 
       }
     }
@@ -430,9 +430,9 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param {Innovation} value
    */
   changeProject(value: Innovation) {
-    this._project = value;
+    this._project.innovationCards = value.innovationCards;
     this._more = {animate_state: 'inactive', title: this._more.title, type: this._more.type};
-    this.save('Le projet a bien été mise à jour !');
+    this.save('Le projet a bien été mise à jour !', {innovationCards: this._project.innovationCards});
     // window.location.reload();
   }
 
@@ -485,7 +485,7 @@ export class AdminProjectManagementComponent implements OnInit {
         });
       }
 
-      this.save('Les emails / domaines ont bien été blacklistés');
+      this.save('Les emails / domaines ont bien été blacklistés', {settings: this._project.settings});
       this._more = {animate_state: 'inactive', title: this._more.title};
     }
   }
@@ -551,7 +551,7 @@ export class AdminProjectManagementComponent implements OnInit {
         this._project.tags.push(tag);
       }
     });
-    this.save('Les tags ont bien été mis à jour ');
+    this.save('Les tags ont bien été mis à jour ', {tags: this._project.tags});
     this._more = {animate_state: 'inactive', title: this._more.title};
   }
 
@@ -647,7 +647,7 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   changeExternalDiffusion() {
     this._project.isPublic = !this._project.isPublic;
-    this.save('La visibilité du projet a été mise à jour !');
+    this.save('La visibilité du projet a été mise à jour !', {isPublic: this._project.isPublic});
   }
 
   /***
@@ -702,9 +702,9 @@ export class AdminProjectManagementComponent implements OnInit {
    * This function is call when the user wants to save the project
    * @param {string} notification
    */
-  public save(notification: string): void {
+  public save(notification: string, saveObject: any): void {
     this._innovationService
-      .save(this._project._id, this._project)
+      .save(this._project._id, saveObject)
       .subscribe((data: any) => {
         this._project = data;
         this.resetData();
@@ -732,15 +732,15 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
-  private saveMission(type?: string) {
+  public saveMissionTeam() {
     this.edit.missionTeam = false;
+    this.saveMission({team: this._mission.team});
+  }
+
+  private saveMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
     if (this._mission._id) {
 
-      if (type === 'OWNER') {
-        this._mission.client = this.owner._id;
-      }
-
-      this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
+      this._missionService.save(this._mission._id, missionObj).pipe(first()).subscribe((mission) => {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       }, (err: HttpErrorResponse) => {
         console.log(err);
@@ -813,10 +813,10 @@ export class AdminProjectManagementComponent implements OnInit {
     event.preventDefault();
     if (this.canAccess(['edit', 'validateProject']) && this._project.status === 'SUBMITTED') {
       this._project.status = 'EVALUATING';
-      this.save('The project has been validated successfully');
+      this.save('The project has been validated successfully', {status: this._project.status});
       if (this._mission && this._mission._id && this._mission.type === 'USER') {
         this._mission.type = 'CLIENT';
-        this.saveMission();
+        this.saveMission({type: this._mission.type});
       }
     }
   }
@@ -825,7 +825,8 @@ export class AdminProjectManagementComponent implements OnInit {
     event.preventDefault();
     if (this._project.status === 'SUBMITTED' && this.canAccess(['edit', 'projectRevision'])) {
       this._project.status = 'EDITING';
-      this.save('The project has been placed in revision status, please notify the owner of the changes to be made.');
+      this.save('The project has been placed in revision status, please notify the owner of the changes to be made.',
+        {status: this._project.status});
     }
   }
 

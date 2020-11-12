@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Mission } from '../../models/mission';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
+import { Multiling } from '../../models/multiling';
 
 @Injectable({providedIn: 'root'})
 export class MissionService {
@@ -25,12 +26,14 @@ export class MissionService {
     return this._http.delete<Mission>('/mission/' + missionId);
   }
 
-  public save(missionId: string, missionObj: Mission): Observable<Mission> {
+  public save(missionId: string, missionObj: { [P in keyof Mission]?: Mission[P]; }): Observable<Mission> {
     return this._http.put<Mission>('/mission/' + missionId, missionObj);
   }
 
-  public updateMainObjective(missionId: string, missionObj: Mission): Observable<Innovation> {
-    return this._http.put<Innovation>(`/mission/${missionId}/updateMainObjective`, missionObj);
+  public updateMainObjective(
+    missionId: string,
+    objective: { principal: Multiling; secondary: Array<Multiling>; comment: string }): Observable<Innovation> {
+    return this._http.put<Innovation>(`/mission/${missionId}/updateMainObjective`, {objective: objective});
   }
 
 }

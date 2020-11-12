@@ -32,7 +32,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._setData();
   }
 
-  @Output() executiveReportChange: EventEmitter<ExecutiveReport> = new EventEmitter<ExecutiveReport>();
+  @Output() executiveReportUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   private _executiveReport: ExecutiveReport = <ExecutiveReport>{};
 
@@ -84,7 +84,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
-      })
+      });
     }
   }
 
@@ -125,17 +125,17 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
         this._executiveReport.sections[i] = <ExecutiveSection>{};
       }
     }
-
-
   }
 
-  public emitChanges() {
-    this.executiveReportChange.emit(this._executiveReport);
+  public emitChanges(change: any) {
+    this.executiveReportUpdate.emit(change);
   }
 
   public onSectionChange(value: ExecutiveSection, index: number) {
     this._executiveReport.sections[index] = value;
-    this.emitChanges();
+    const update: any = {};
+    update[`section_${index}`] = value;
+    this.emitChanges(update);
   }
 
   private _resetModalVariables() {
@@ -151,7 +151,9 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _resetSection() {
     this._executiveReport.sections[this._activeIndex] = <ExecutiveSection>{};
-    this.emitChanges();
+    const update: any = {};
+    update[`section_${this._activeIndex}`] = {};
+    this.emitChanges(update);
   }
 
   public onClickConfirm(event: Event) {
@@ -178,7 +180,11 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._executiveReport.sale = this._objectiveConfig.sale;
     this._executiveReport.client = this._objectiveConfig.client;
     this._executiveReport.objective = this._objectiveConfig.objective;
-    this.emitChanges();
+    this.emitChanges({
+      sale: this._executiveReport.sale,
+      client: this._executiveReport.client,
+      objective: this._executiveReport.objective
+    });
   }
 
   get summary(): string {
@@ -188,7 +194,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
   set summary(value: string) {
     this._summary = value;
     this._executiveReport.summary = this._summary;
-    this.emitChanges();
+    this.emitChanges({summary: value});
   }
 
   get targetingConfig(): ExecutiveTargeting {
@@ -199,7 +205,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._targetingConfig = value;
     this._executiveReport.targeting.abstract = this._targetingConfig.abstract;
     this._executiveReport.targeting.countries = this._targetingConfig.countries;
-    this.emitChanges();
+    this.emitChanges({targeting: value});
   }
 
   get professionalConfig(): ExecutiveProfessional {
@@ -210,7 +216,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._professionalConfig = value;
     this._executiveReport.professionals.abstract = this._professionalConfig.abstract;
     this._executiveReport.professionals.list = this._professionalConfig.list;
-    this.emitChanges();
+    this.emitChanges({professionals: value});
   }
 
   get conclusionConfig(): ExecutiveConclusion {
@@ -221,7 +227,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     this._conclusionConfig = value;
     this._executiveReport.conclusion = this._conclusionConfig.conclusion;
     this._executiveReport.operator = this._conclusionConfig.operator;
-    this.emitChanges();
+    this.emitChanges({conclusion: this._executiveReport.conclusion, operator: this._executiveReport.operator});
   }
 
   get answers(): Array<Answer> {

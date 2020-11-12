@@ -7,7 +7,7 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { SocketService } from '../../../../../services/socket/socket.service';
-import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Mission } from '../../../../../models/mission';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
@@ -16,6 +16,7 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { CampaignFrontService } from '../../../../../services/campaign/campaign-front.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 interface Tab {
   route: string;
@@ -32,8 +33,6 @@ interface Tab {
 export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _project: Innovation = <Innovation>{};
-
-  private _updatedProject: Innovation | null = null;
 
   private _fetchingError = false;
 
@@ -68,12 +67,14 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _currentLang = this._translateService.currentLang || 'en';
 
-  private _showBanner = false;
+  private _showBanner = '';
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _status: Array<string> = ['SUBMITTED', 'REJECTED', 'VALIDATED', 'REJECTED_GMAIL',
     'VALIDATED_UMIBOT', 'REJECTED_UMIBOT'];
+
+  private _updateTime: number;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -85,6 +86,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
               private _socketService: SocketService) { }
 
   ngOnInit() {
@@ -98,18 +100,42 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
         this._socketService.getProjectUpdates(this._project._id)
           .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((project: Innovation) => {
-            this._updatedProject = project;
-            this._showBanner = !!this._updatedProject;
-            }, (error) => {
+          .subscribe((update: any) => {
+            this._realTimeUpdate('project', update);
+          }, (error) => {
             console.error(error);
           });
 
+        if (this._project.mission && typeof this._project.mission !== 'string' && this._project.mission._id) {
+          this._socketService.getMissionUpdates(this._project.mission._id)
+            .pipe(takeUntil(this._ngUnsubscribe))
+            .subscribe((update: any) => {
+              this._realTimeUpdate('mission', update);
+            }, (error) => {
+              console.error(error);
+            });
+        }
       } else {
         this._isLoading = false;
-        this._fetchingError = true
+        this._fetchingError = true;
       }
     }
+  }
+
+
+  private _realTimeUpdate(object: string, update: any) {
+      if (update.userId !== this._authService.userId) {
+        this._showBanner = update.userName;
+        this._updateTime = Date.now();
+      }
+      Object.keys(update.data).forEach((field: string) => {
+        if (object === 'project') {
+          this._project[field] = update.data[field];
+        } else {
+          this._project.mission[field] = update.data[field];
+        }
+      });
+      this._setInnovation();
   }
 
   private _initPageTitle() {
@@ -125,7 +151,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _setPageTitle() {
     if (this._activatedTab && this._project.name) {
-      this._translateTitleService.setTitle(this._activatedTab.slice(0,1).toUpperCase()
+      this._translateTitleService.setTitle(this._activatedTab.slice(0, 1).toUpperCase()
         + this._activatedTab.slice(1) + ' | ' + this._project.name);
     } else {
       this._translateTitleService.setTitle('Project');
@@ -137,7 +163,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this._activatedTab = tab;
     this._campaignFrontService.setShowCampaignTabs(false);
     this._setPageTitle();
-    this._router.navigate([`/user/admin/projects/project/${this._project._id}/${this._navigateRoute(route, key)}`])
+    this._router.navigate([`/user/admin/projects/project/${this._project._id}/${this._navigateRoute(route, key)}`]);
   }
 
   private _navigateRoute(route: string, key: string): string {
@@ -161,12 +187,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _setInnovation() {
     this._innovationFrontService.setInnovation(this._project);
-  }
-
-  public updateProject() {
-    this._project = this._updatedProject;
-    this._setInnovation();
-    this._showBanner = false;
   }
 
   private _resetModals() {
@@ -300,11 +320,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return this._isLoading;
   }
 
-  get showBanner(): boolean {
+  get showBanner(): string {
     return this._showBanner;
   }
 
-  set showBanner(value: boolean) {
+  set showBanner(value: string) {
     this._showBanner = value;
   }
 
@@ -314,6 +334,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   get status(): Array<string> {
     return this._status;
+  }
+
+  get updateTime(): number {
+    return this._updateTime;
   }
 
   ngOnDestroy(): void {

@@ -135,15 +135,15 @@ export class ExecutiveObjectiveComponent implements OnInit {
     switch (field) {
 
       case 'objective':
-        this._objectiveColor = CommonService.getLimitColor(this._config.objective.length, 120);
+        this._objectiveColor = CommonService.getLimitColor(this._config.objective, 120);
         break;
 
       case 'clientName':
-        this._clientNameColor = CommonService.getLimitColor(this._config.client.name.length, 58);
+        this._clientNameColor = CommonService.getLimitColor(this._config.client.name, 58);
         break;
 
       case 'clientEmail':
-        this._clientEmailColor = CommonService.getLimitColor(this._config.client.email.length, 58);
+        this._clientEmailColor = CommonService.getLimitColor(this._config.client.email, 58);
         break;
 
     }

@@ -72,36 +72,30 @@ export class TypeBarComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title, 26);
         break;
 
       case 'abstract':
-        this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
+        this._abstractColor = CommonService.getLimitColor(this._section.abstract, 175);
         break;
 
       case 'name':
         if (index === 1) {
-          this._name1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].name
-            && this._content.values[0].name.length, 32);
+          this._name1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].name, 32);
         } else if (index === 2) {
-          this._name2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].name
-            && this._content.values[1].name.length, 32);
+          this._name2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].name, 32);
         } else if (index === 3) {
-          this._name3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].name
-            && this._content.values[2].name.length, 32);
+          this._name3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].name, 32);
         }
         break;
 
       case 'legend':
         if (index === 1) {
-          this._example1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].legend
-            && this._content.values[0].legend.length, 40);
+          this._example1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].legend, 40);
         } else if (index === 2) {
-          this._example2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].legend
-            && this._content.values[1].legend.length, 40);
+          this._example2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].legend, 40);
         } else if (index === 3) {
-          this._example3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].legend
-            && this._content.values[2].legend.length, 40);
+          this._example3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].legend, 40);
         }
         break;
 

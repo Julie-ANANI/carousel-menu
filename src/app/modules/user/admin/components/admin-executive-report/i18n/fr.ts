@@ -20,7 +20,7 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'PROFESSIONAL': {
     'ABSTRACT': 'Résumé professionnel',
-    'SOME_PROFILES': 'Quelques profils"',
+    'SOME_PROFILES': 'Quelques profils',
     'CHOOSE_PRO': 'Choisissez un pro',
   },
 

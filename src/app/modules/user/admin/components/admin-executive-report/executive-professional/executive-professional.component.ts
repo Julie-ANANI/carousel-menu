@@ -129,7 +129,7 @@ export class ExecutiveProfessionalComponent implements OnInit {
   }
 
   public textColor() {
-    this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract.length, 258);
+    this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract, 258);
   }
 
   public onClickPlay(event: Event) {

@@ -171,7 +171,7 @@ export class AdminCampaignProsComponent implements OnInit {
           this._getProfessionals();
           this._modalImport = false;
           this._isImporting = false;
-          this._translateNotificationsService.success('Success', 'The CSV is imported.');
+          this._translateNotificationsService.success('Success', res.message);
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this._isImporting = false;

@@ -17,6 +17,12 @@
     </app-utility-banner>
     <!-- /banner to show last requested video status -->
 
+    <!-- banner project message  -->
+    <app-utility-banner [(showBanner)]="showBannerUpdate" [position]="'relative'">
+      This project has been updated by {{ showBannerUpdate }} at {{ updateTime | date: 'H:mm' }}
+    </app-utility-banner>
+    <!-- banner project message  -->
+
     <div class="container fluid grid-2xl p-top-30 p-bottom-40">
       <div class="column col-sm-12 col-11 col-mx-auto">
 
@@ -157,7 +163,8 @@
         <!-- executive report section -->
         <section *ngIf="executiveReport.lang && !isChargingReport" class="p-top-50">
           <app-admin-executive-report
-            [(executiveReport)]="executiveReport"
+            [executiveReport]="executiveReport"
+            (executiveReportUpdate)="updateReport($event)"
             [isEditable]="canAccess(['edit'])">
           </app-admin-executive-report>
         </section>

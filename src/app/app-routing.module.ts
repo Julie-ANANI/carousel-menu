@@ -21,6 +21,7 @@ const appRoutes: Routes = [
   { path: 'demo', canActivate: [AuthGuard, AdHocAuthGuard], children: [ ...demoRoutes ] },
   { path: 'logout', canActivate: [AuthGuard], loadChildren: './modules/common/logout/logout.module#LogoutModule' },
   { path: 'documentation', loadChildren: './modules/documentation/documentation.module#DocumentationModule' },
+  { path: 'monitoring', loadChildren: './modules/monitoring/monitoring.module#MonitoringModule' },
   {
     path: 'not-authorized',
     canActivate: [AuthGuard],

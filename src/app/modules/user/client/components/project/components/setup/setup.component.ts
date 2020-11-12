@@ -99,7 +99,7 @@ export class SetupComponent implements OnInit, OnDestroy {
   private _getCurrentPage() {
     const _url = this._router.routerState.snapshot.url.split('/');
     if (_url.length > 0) {
-      const _value = _url[_url.length-1];
+      const _value = _url[_url.length - 1];
       const _params = _value.indexOf('?');
       this._currentPage = (_params > 0 ? _value.substring(0, _params) : _value).toUpperCase();
     } else {
@@ -205,11 +205,9 @@ export class SetupComponent implements OnInit, OnDestroy {
    */
   public onSaveProject(event: Event) {
     event.preventDefault();
-
     if (this._saveChanges && !this._isSavingProject) {
       this._isSavingProject = true;
-      this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe(() => {
-        this._innovationFrontService.setNotifyChanges(false);
+      this._innovationService.save(this._innovation._id, {settings: this._innovation.settings}).pipe(first()).subscribe(() => {
         this._isSavingProject = false;
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
         }, (err: HttpErrorResponse) => {

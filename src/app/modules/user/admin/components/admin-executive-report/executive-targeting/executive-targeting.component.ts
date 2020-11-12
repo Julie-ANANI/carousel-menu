@@ -36,7 +36,7 @@ export class ExecutiveTargetingComponent {
   }
 
   public textColor() {
-    this._targetingColor = CommonService.getLimitColor(this._config.abstract.length, 148);
+    this._targetingColor = CommonService.getLimitColor(this._config.abstract, 148);
   }
 
   public onClickPlay(event: Event) {

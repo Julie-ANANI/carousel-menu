@@ -12,6 +12,8 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { HttpErrorResponse } from '@angular/common/http';
 import { Mission } from '../../../../../models/mission';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { SocketService } from '../../../../../services/socket/socket.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 interface Tab {
   route: string;
@@ -30,6 +32,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{};
+
+  private _showBanner = '';
 
   private _currentLang = this._translateService.currentLang || 'en';
 
@@ -51,6 +55,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _fetchingError = false;
 
+  private _updateTime: number;
+
+  private _socketListening = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
@@ -58,6 +66,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _router: Router,
               private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
+              private _socketService: SocketService,
+              private _authService: AuthService,
               private _innovationFrontService: InnovationFrontService) {
 
     this._initPageTitle();
@@ -81,8 +91,44 @@ export class ProjectComponent implements OnInit, OnDestroy {
       } else {
         this._mission = <Mission>{};
       }
-    });
 
+      // Listen to the updates only the first time we retrieve the innovation
+      if (!this._socketListening) {
+        this._socketService.getMissionUpdates(this._mission._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((update: any) => {
+            console.log(update);
+            this._realTimeUpdate('mission', update);
+          }, (error) => {
+            console.error(error);
+          });
+
+        this._socketService.getProjectUpdates(this._innovation._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((update: any) => {
+            this._realTimeUpdate('project', update);
+          }, (error) => {
+            console.error(error);
+          });
+        this._socketListening = true;
+      }
+    });
+  }
+
+
+  private _realTimeUpdate(object: string, update: any) {
+    if (update.userId !== this._authService.userId) {
+      this._showBanner = update.userName;
+      this._updateTime = Date.now();
+    }
+    Object.keys(update.data).forEach((field: string) => {
+      if (object === 'project') {
+        this._innovation[field] = update.data[field];
+      } else {
+        this._mission[field] = update.data[field];
+      }
+    });
+    this._innovationFrontService.setInnovation(this._innovation);
   }
 
   /***
@@ -101,7 +147,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   private _initPageTitle() {
     if (this._innovation && this._innovation.name) {
       this._translateTitleService.setTitle(this._innovation.name + ' | '
-        + (this._currentPage.slice(0,1).toUpperCase() + this._currentPage.slice(1)));
+        + (this._currentPage.slice(0, 1).toUpperCase() + this._currentPage.slice(1)));
     } else {
       this._translateTitleService.setTitle('COMMON.PAGE_TITLE.PROJECT');
     }
@@ -184,6 +230,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get showBanner(): string {
+    return this._showBanner;
+  }
+
+  set showBanner(value: string) {
+    this._showBanner = value;
+  }
+
+  get updateTime(): number {
+    return this._updateTime;
   }
 
   ngOnDestroy(): void {

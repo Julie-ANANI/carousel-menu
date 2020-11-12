@@ -19,6 +19,7 @@ import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-inter
 import {Question} from '../../../../../../models/question';
 import {Section} from '../../../../../../models/section';
 import {Company} from '../../../../../../models/company';
+import {SocketService} from '../../../../../../services/socket/socket.service';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -61,11 +62,14 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _socketListening = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
+              private _socketService: SocketService,
               private _innovationFrontService: InnovationFrontService) { }
 
   ngOnInit() {
@@ -79,6 +83,22 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
         this._initQuestions();
         this._excludedCompanies = this._innovation && this._innovation.settings && this._innovation.settings.companies
           && this._innovation.settings.companies.exclude;
+
+        // Listen to the updates only the first time we retrieve the innovation
+        if (!this._socketListening) {
+          this._socketService.getAnswersUpdates(this._innovation._id)
+            .pipe(takeUntil(this._ngUnsubscribe))
+            .subscribe((update: any) => {
+              const answer = update.data;
+              answer._id = answer.id;
+              const index = this._answers.findIndex(a => a._id.toString() === answer._id.toString());
+              this._answers[index] = answer;
+              this._initAnswers();
+            }, (error) => {
+              console.error(error);
+            });
+          this._socketListening = true;
+        }
       });
 
     }

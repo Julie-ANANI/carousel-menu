@@ -159,7 +159,7 @@
           [disabled]="!canAccess(['edit', 'mission'])"
           class="btn btn-xs ghost-edit"
           *ngIf="edit.missionTeam && canAccess(['edit', 'mission'])"
-          (click)="saveMission()">
+          (click)="saveMissionTeam()">
           {{ 'COMMON.SAVE' | translate}}
         </button>
 

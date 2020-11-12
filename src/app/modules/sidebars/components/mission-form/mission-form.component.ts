@@ -101,7 +101,11 @@ export class MissionFormComponent {
       const value = `${_config.service}_${_config.domain}`;
       return !!this._selectedServiceMeta[value];
     });
-    this.missionService.save(mission._id, mission).subscribe((savedMission) => {
+    const missionObject = {
+      mailConf: mission.mailConf,
+      milestoneDates: mission.milestoneDates
+    };
+    this.missionService.save(mission._id, missionObject).subscribe((savedMission) => {
       this.missionChange.emit(savedMission);
       this.translateNotificationsService.success('ERROR.SUCCESS', 'SUCCESS');
     }, (err) => {

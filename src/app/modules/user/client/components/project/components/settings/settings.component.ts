@@ -25,6 +25,7 @@ interface Section {
   isVisible: boolean;
   isEditable: boolean;
   level: 'CLIENT_PROJECT' | 'MISSION' | 'INNOVATION' | 'COLLABORATOR' | 'ALL';
+  field?: string;
 }
 
 @Component({
@@ -68,7 +69,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     { name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION' },
     { name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT' },
     { name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION' },
-    { name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION' },
+    { name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION'},
   ];
 
   private _showModal = false;
@@ -321,7 +322,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (this._activeModalSection.name === 'PRINCIPAL_OBJECTIVE') {
           this._updateMainObjective();
         } else {
-          this._updateMission();
+          this._updateMission({milestoneDates: this._mission.milestoneDates});
         }
         break;
 
@@ -344,7 +345,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._innovation.name = this._selectedValue;
     }
 
-    this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe((innovation) => {
+    this._innovationService.save(this._innovation._id, {name: this._innovation.name}).pipe(first()).subscribe((innovation) => {
       this._innovationFrontService.setInnovation(innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
@@ -361,8 +362,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * that user wants to update and call the service.
    * @private
    */
-  private _updateMission() {
-    this._missionService.save(this._mission._id, this._mission).pipe(first()).subscribe((mission) => {
+  private _updateMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
+    this._missionService.save(this._mission._id, missionObj).pipe(first()).subscribe((mission) => {
       this._innovation.mission = mission;
       this._innovationFrontService.setInnovation(this._innovation);
       this.closeModal();
@@ -380,7 +381,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._mission.objective.secondary = [];
     }
 
-    this._missionService.updateMainObjective(this._mission._id, this._mission).pipe(first()).subscribe((innovation) => {
+    this._missionService.updateMainObjective(this._mission._id, this._mission.objective).pipe(first()).subscribe((innovation) => {
       this._innovationFrontService.setInnovation(innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
@@ -433,7 +434,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public onChangeSecondaryObjective(objectives: Array<any>, section: Section) {
     if (this.enableSecondaryObjectives(section)) {
       this._mission.objective.secondary = objectives;
-      this._updateMission();
+      this._updateMission({objective: this._mission.objective});
     }
   }
 
@@ -445,7 +446,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public onChangeComment(comment: string, section: Section) {
     if (section.isEditable) {
       this._mission.objective.comment = comment;
-      this._updateMission();
+      this._updateMission({objective: this._mission.objective});
     }
   }
 
@@ -485,7 +486,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         comment: this._mission.milestoneDates[index].comment
       };
 
-      this._updateMission();
+      this._updateMission({milestoneDates: this._mission.milestoneDates});
 
     }
   }
@@ -499,7 +500,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public onChangeMilestoneComment(Event: Event, index: number, section: Section) {
     if (section.isEditable) {
       this._mission.milestoneDates[index].comment = ((event.target) as HTMLInputElement).value || '';
-      this._updateMission();
+      this._updateMission({milestoneDates: this._mission.milestoneDates});
     }
   }
 
@@ -549,7 +550,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   public onChangeAuthorisation(event: Event, type: string) {
     this._mission.externalDiffusion[type] = ((event.target) as HTMLInputElement).checked;
-    this._updateMission();
+    this._updateMission({externalDiffusion: this._mission.externalDiffusion});
   }
 
   /***

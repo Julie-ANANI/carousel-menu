@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../models/answer';
 import { Table } from '../../../table/models/table';
-import { AnswerService } from "../../../../services/answer/answer.service";
+import { AnswerService } from '../../../../services/answer/answer.service';
 
 @Component({
   selector: 'app-shared-answers-list',
@@ -62,7 +62,7 @@ export class SharedAnswersListComponent {
             ]},
         ]
       };
-    }, err=>{
+    }, err => {
       console.error(err);
     });
   }
