@@ -57,6 +57,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _updateTime: number;
 
+  private _socketListening = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
@@ -90,22 +92,26 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._mission = <Mission>{};
       }
 
-      this._socketService.getMissionUpdates(this._mission._id)
-        .pipe(takeUntil(this._ngUnsubscribe))
-        .subscribe((update: any) => {
-          console.log(update);
-          this._realTimeUpdate('mission', update);
-        }, (error) => {
-          console.error(error);
-        });
+      // Listen to the updates only the first time we retrieve the innovation
+      if (!this._socketListening) {
+        this._socketService.getMissionUpdates(this._mission._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((update: any) => {
+            console.log(update);
+            this._realTimeUpdate('mission', update);
+          }, (error) => {
+            console.error(error);
+          });
 
-      this._socketService.getProjectUpdates(this._innovation._id)
-        .pipe(takeUntil(this._ngUnsubscribe))
-        .subscribe((update: any) => {
-          this._realTimeUpdate('project', update);
-        }, (error) => {
-          console.error(error);
-        });
+        this._socketService.getProjectUpdates(this._innovation._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((update: any) => {
+            this._realTimeUpdate('project', update);
+          }, (error) => {
+            console.error(error);
+          });
+        this._socketListening = true;
+      }
     });
   }
 
