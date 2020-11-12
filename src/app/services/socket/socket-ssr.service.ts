@@ -30,6 +30,10 @@ export class SocketSsrService implements SocketService {
     return EMPTY;
   }
 
+  getAnswersUpdates(): Observable<Notification> {
+    return EMPTY;
+  }
+
   sendDataToApi(e: any) { }
 
 }
