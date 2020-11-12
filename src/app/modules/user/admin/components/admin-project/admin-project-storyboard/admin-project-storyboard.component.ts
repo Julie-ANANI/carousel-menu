@@ -114,6 +114,17 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
       this._getVideoJob();
 
+      this._socketService.getNewReport(this._innovation._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+          if (update.userId !== this._authService.userId) {
+            this._showBanner = update.userName;
+            this._updateTime = Date.now();
+          }
+          this._executiveReport = update.data;
+          this._realtimeUpdate(this._executiveReport._id);
+        }, (error) => {
+          console.error(error);
+        });
+
     }
   }
 

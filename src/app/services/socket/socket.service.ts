@@ -53,6 +53,15 @@ export class SocketService {
     });
   }
 
+  getNewReport(innovationId: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`erCreation_${innovationId}`,
+        (data: {userName: string, userId: string, data: ExecutiveReport}) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
   sendDataToApi(name: string, data: any) {
     this.socket.emit(name, data);
   }
