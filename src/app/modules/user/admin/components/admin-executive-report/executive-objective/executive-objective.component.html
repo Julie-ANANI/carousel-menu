@@ -20,7 +20,7 @@
         </textarea>
 
         <span [ngStyle]="{ 'color': objectiveColor }" class="text-limit-wrapper">
-          {{ 120 - config.objective.length }}
+          {{ 120 - (config.objective && config.objective.length || 0) }}
         </span>
 
         <div (click)="onClickPlay($event)" class="btn-play">

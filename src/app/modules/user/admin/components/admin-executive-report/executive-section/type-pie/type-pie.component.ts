@@ -87,31 +87,27 @@ export class TypePieComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title, 26);
         break;
 
       case 'abstract':
-        this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
+        this._abstractColor = CommonService.getLimitColor(this._section.abstract, 175);
         break;
 
       case 'legend1':
-        this._legend1Color = CommonService.getLimitColor(this._content.values[0]
-          && this._content.values[0].legend && this._content.values[0].legend.length, 13);
+        this._legend1Color = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].legend, 13);
         break;
 
       case 'legend2':
-        this._legend2Color = CommonService.getLimitColor(this._content.values[1]
-          && this._content.values[1].legend && this._content.values[1].legend.length, 13);
+        this._legend2Color = CommonService.getLimitColor(this._content.values[1] && this._content.values[1].legend, 13);
         break;
 
       case 'legend3':
-        this._legend3Color = CommonService.getLimitColor(this._content.values[2]
-          && this._content.values[2].legend && this._content.values[2].legend.length, 13);
+        this._legend3Color = CommonService.getLimitColor(this._content.values[2] && this._content.values[2].legend, 13);
         break;
 
       case 'legend4':
-        this._legend4Color = CommonService.getLimitColor(this._content.values[3]
-          && this._content.values[3].legend && this._content.values[3].legend.length, 13);
+        this._legend4Color = CommonService.getLimitColor(this._content.values[3] && this._content.values[3].legend, 13);
         break;
 
     }

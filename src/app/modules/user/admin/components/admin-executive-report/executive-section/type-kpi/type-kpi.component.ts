@@ -57,23 +57,23 @@ export class TypeKpiComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title, 26);
         break;
 
       case 'abstract':
-        this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
+        this._abstractColor = CommonService.getLimitColor(this._section.abstract, 175);
         break;
 
       case 'kpi':
-        this._kpiColor = CommonService.getLimitColor(this._content.kpi.length, 4);
+        this._kpiColor = CommonService.getLimitColor(this._content.kpi, 4);
         break;
 
       case 'legend':
-        this._legendColor = CommonService.getLimitColor(this._content.legend.length, 82);
+        this._legendColor = CommonService.getLimitColor(this._content.legend, 82);
         break;
 
       case 'examples':
-        this._examplesColor = CommonService.getLimitColor(this._content.examples.length, 175);
+        this._examplesColor = CommonService.getLimitColor(this._content.examples, 175);
         break;
 
     }

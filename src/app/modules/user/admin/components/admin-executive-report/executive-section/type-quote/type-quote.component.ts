@@ -58,23 +58,23 @@ export class TypeQuoteComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.title.length, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title, 26);
         break;
 
       case 'abstract':
-        this._abstractColor = CommonService.getLimitColor(this._section.abstract.length, 175);
+        this._abstractColor = CommonService.getLimitColor(this._section.abstract, 175);
         break;
 
       case 'quotation':
-        this._quoteColor = CommonService.getLimitColor(this._content.quotation.length, 100);
+        this._quoteColor = CommonService.getLimitColor(this._content.quotation, 100);
         break;
 
       case 'name':
-        this._nameColor = CommonService.getLimitColor(this._content.name.length, 62);
+        this._nameColor = CommonService.getLimitColor(this._content.name, 62);
         break;
 
       case 'job':
-        this._jobColor = CommonService.getLimitColor(this._content.job.length, 62);
+        this._jobColor = CommonService.getLimitColor(this._content.job, 62);
         break;
 
     }

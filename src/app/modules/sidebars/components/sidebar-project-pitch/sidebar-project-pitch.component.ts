@@ -228,7 +228,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
         case 'TITLE':
           if (type === 'COLOR') {
-            return CommonService.getLimitColor(this.cardContent.length, 100);
+            return CommonService.getLimitColor(this.cardContent, 100);
           } else if (type === 'CHAR') {
             return (100 - this.cardContent.length).toString(10);
           }
@@ -236,7 +236,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
         case 'SUMMARY':
           if (type === 'COLOR') {
-            return CommonService.getLimitColor(this.cardContent.length, 500);
+            return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
             return (500 - this.cardContent.length).toString(10);
           }
@@ -247,7 +247,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
         case 'SOLUTION':
         case 'OTHER':
           if (type === 'COLOR') {
-            return CommonService.getLimitColor(this.cardContent.length, 500);
+            return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
             return (1000 - this.cardContent.length).toString(10);
           }

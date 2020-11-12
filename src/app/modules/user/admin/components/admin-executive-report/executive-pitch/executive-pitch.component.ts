@@ -42,7 +42,7 @@ export class ExecutivePitchComponent {
   }
 
   public textColor() {
-    this._pitchColor = CommonService.getLimitColor(this._pitch.length, 216);
+    this._pitchColor = CommonService.getLimitColor(this._pitch, 216);
   }
 
   public onClickPlay(event: Event) {
