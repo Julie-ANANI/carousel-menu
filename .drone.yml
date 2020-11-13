@@ -27,7 +27,6 @@ steps:
   depends_on: [baseimage]
   settings:
     target: buildinstance
-    auto_tag: true
     build_args:
       - APP_NAME=umi
       - ENV_NAME=dev
