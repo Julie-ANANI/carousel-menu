@@ -1,11 +1,18 @@
-<div [hidden]="isLoading || !usersSessions.length" id="shared-activity-modal">
-  <div class="d-flex align-end animate-fade is-5">
-    <figure *ngFor="let session of usersSessions" class="avatar m-right-10"
-            [attr.data-initial]="session.author.initials"></figure>
+<div [hidden]="isLoading" id="shared-activity-modal">
+  <div *ngIf="usersSessions.length" class="d-flex align-end">
+    <figure
+      (click)="openModal($event)"
+      *ngFor="let session of usersSessions; let i = index;"
+      [attr.data-initial]="session.author.initials"
+      [ngStyle]="{'animation-duration': ((i+1) * 250) + 'ms'}"
+      [title]="session.author.name"
+      class="avatar m-right-10 c-hand animate-fade">
+    </figure>
     <a
       (click)="openModal($event)"
+      *ngIf="usersSessions.length > 3"
       class="text-link text-xs text-community"
-      id="shared-activity-modal-btn-see-more">
+      id="sharedActivityModal-btn-see-more">
       see others...
     </a>
   </div>
@@ -18,9 +25,12 @@
   [maxWidth]="'320px'"
   [title]="'Activity dashboard'">
   <section class="modal-body">
-    <div class="flex-start m-bottom-10" *ngFor="let session of usersSessions">
-      <figure class="avatar m-right-20" [attr.data-initial]="session.author.initials"></figure>
-      <span class="text-bold text-sm">{{session.author.name}}</span>
+    <div *ngFor="let session of usersSessions" class="flex-start m-bottom-10">
+      <figure [attr.data-initial]="session.author.initials" class="avatar m-right-20"></figure>
+      <span class="text-bold text-sm">
+        {{session.author.name}}
+        <span *ngIf="session.author.id === authorId"> (you) </span>
+      </span>
     </div>
   </section>
 </app-utility-modal>

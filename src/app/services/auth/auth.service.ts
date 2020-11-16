@@ -217,7 +217,7 @@ export class AuthService {
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;
-        }).join(',')}`, {...this._cookieOptions, domain: environment.etherpadUrl});
+        }).join(',')}`, {...this._cookieOptions, domain: this.domain });
       }
     }
   }
@@ -346,7 +346,7 @@ export class AuthService {
 
   get domain(): string {
     const hostName = window.location.hostname;
-    return hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
+    return '.' + hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
   }
 
   /*get adminAccess(): any {
