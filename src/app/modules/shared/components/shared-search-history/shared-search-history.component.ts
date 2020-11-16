@@ -58,6 +58,8 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _total = -1;
 
+  private _totalPros = 0;
+
   private _googleQuota = 100000;
 
   private _config: Config = {
@@ -369,6 +371,10 @@ export class SharedSearchHistoryComponent implements OnInit {
       });
     } else {
       this._requestsToImport = requestsIds;
+      this._totalPros = value._rows.reduce((acc: number, curr: any) => {
+        const nbPros = curr.totalResults || curr.results.person.length || 0;
+        return acc + nbPros;
+      }, 0);
       this._addToCampaignModal = true;
     }
   }
@@ -397,6 +403,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       launchNewRequests: this._launchNewRequests,
       newTargetCountries: this._geography.include.map((country) => country.code)
     };
+    this._totalPros = 0;
     this._professionalsService.addFromHistory(params).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Success',
         'The pros will be on the move in a few minutes.');
@@ -468,6 +475,10 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   get total(): number {
     return this._total;
+  }
+
+  get totalPros(): number {
+    return this._totalPros;
   }
 
   get googleQuota(): number {
