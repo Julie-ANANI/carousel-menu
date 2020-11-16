@@ -211,7 +211,7 @@ export class AuthService {
   }
 
   private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
-    if (this.isAcceptingCookies) {
+    if (this.isAcceptingCookies && newValue) {
       this._etherpadAccesses = newValue;
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
