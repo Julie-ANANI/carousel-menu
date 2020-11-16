@@ -36,8 +36,7 @@ export class AuthService {
 
   private _cookieOptions: CookieOptions = {
     expires: new Date(Date.now() + environment.cookieTime ),
-    secure: environment.secureCookie,
-    domain: this.domain
+    secure: environment.secureCookie
   };
 
   private _cookieObserver: any = null;
@@ -217,7 +216,7 @@ export class AuthService {
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;
-        }).join(',')}`, {...this._cookieOptions, domain: this.domain });
+        }).join(',')}`, {...this._cookieOptions, domain: this.domain, path: '/'});
       }
     }
   }
@@ -345,7 +344,7 @@ export class AuthService {
   }
 
   get domain(): string {
-    const hostName = window.location.hostname;
+    const hostName = environment.etherpadUrl;
     return '.' + hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
   }
 
