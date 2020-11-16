@@ -26,6 +26,10 @@ export class SocketSsrService implements SocketService {
     return EMPTY;
   }
 
+  getNewCampaign(): Observable<Notification> {
+    return EMPTY;
+  }
+
   getReportUpdates(): Observable<Notification> {
     return EMPTY;
   }
