@@ -216,7 +216,7 @@ export class AuthService {
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;
-        }).join(',')}`, this._cookieOptions);
+        }).join(',')}`, {...this._cookieOptions, domain: environment.etherpadUrl});
       }
     }
   }
