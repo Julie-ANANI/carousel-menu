@@ -78,7 +78,7 @@
                 [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
                 [readonly]="!canAccess(['edit', 'umiWord'])"
-                [stats]="{ nbAnswers: answers.length, percentage: 0 }">
+                [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
               </app-question-conclusion>
             </div>
           </section>
@@ -134,7 +134,8 @@
               [innovation]="innovation"
               [questionReceived]="question"
               [readonly]="!canAccess(['edit', 'umiWord'])"
-              [toggleAnswers]="toggleAnswers">
+              [toggleAnswers]="toggleAnswers"
+              [hideAnswers]="showAnonymousAnswers && question.sensitiveAnswerData">
             </app-question-section>
           </section>
           <!-- /other question sections -->

@@ -163,6 +163,7 @@ export class PresetFrontService {
         identifier: this.generateId(),
         controlType: 'radio',
         canComment: true,
+        sensitiveAnswerData: false,
         options: []
       };
       section.questions.push(newQuestion);
