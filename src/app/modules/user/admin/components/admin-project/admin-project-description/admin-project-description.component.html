@@ -35,14 +35,13 @@
             </div>
 
             <app-shared-editors
-              class="text-15"
+              *ngIf="isEditable"
               (textChange)="updateInnovation()"
               [text]="activeInnovCard.title"
               [innovationId]="innovation._id"
               [elementId]="'title'"
               [type]="'pitch'"
-              [isEditable]="isEditable"
-              [padHeight]="60">
+              [isEditable]="isEditable">
             </app-shared-editors>
 
             <!-- remaining text -->
@@ -53,6 +52,8 @@
               {{ remaining('CHAR', 'TITLE') }} characters remaining
             </div>
             <!-- /remaining text -->
+
+            <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.title" class="text-15"></p>
 
           </div>
         </div>
@@ -76,17 +77,17 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div [ngClass]="{'is-hidden': !toggleSuggestion.title, 'message': !isEditableComment}">
-                <div [ngClass]="{'message-body': !isEditableComment}">
-                  <app-shared-editors
-                    (textChange)="onCommentChange($event, 'title', 'suggestion')"
-                    [text]="zoneData('title', 'suggestion')"
-                    [innovationId]="innovation._id"
-                    [elementId]="'title'"
-                    [isEditable]="isEditableComment"
-                    [type]="'suggestion'">
-                  </app-shared-editors>
-                </div>
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}">
+                <app-shared-editors
+                  (textChange)="onCommentChange($event, 'title', 'suggestion')"
+                  [text]="zoneData('title', 'suggestion')"
+                  [innovationId]="innovation._id"
+                  [elementId]="'title'"
+                  [type]="'suggestion'">
+                </app-shared-editors>
+              </div>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="message">
+                <p [innerHTML]="zoneData('title', 'suggestion')" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -172,17 +173,17 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div [ngClass]="{'is-hidden': !toggleSuggestion.summary, 'message': !isEditableComment}">
-                <div [ngClass]="{'message-body': !isEditableComment}">
-                  <app-shared-editors
-                    (textChange)="onCommentChange($event, 'summary', 'suggestion')"
-                    [text]="zoneData('summary', 'suggestion')"
-                    [innovationId]="innovation._id"
-                    [elementId]="'summary'"
-                    [isEditable]="isEditableComment"
-                    [type]="'suggestion'">
-                  </app-shared-editors>
-                </div>
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}">
+                <app-shared-editors
+                  (textChange)="onCommentChange($event, 'summary', 'suggestion')"
+                  [text]="zoneData('summary', 'suggestion')"
+                  [innovationId]="innovation._id"
+                  [elementId]="'summary'"
+                  [type]="'suggestion'">
+                </app-shared-editors>
+              </div>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="message">
+                <p [innerHTML]="zoneData('summary', 'suggestion')" class="message-body"></p>
               </div>
             </div>
           </div>
@@ -268,15 +269,15 @@
             </div>
             <!-- /label / actions -->
 
-            <app-shared-editors
-              class="text-15"
-              (textChange)="onContentChange($event, 'sections', i)"
-              [text]="section.content"
-              [innovationId]="innovation._id"
-              [elementId]="section.type.toLowerCase()+'-'+i+3"
-              [isEditable]="isEditable"
-              [type]="'pitch'">
-            </app-shared-editors>
+            <div *ngIf="isEditable">
+              <app-shared-editors
+                (textChange)="onContentChange($event, 'sections', i)"
+                [text]="section.content"
+                [innovationId]="innovation._id"
+                [elementId]="section.type.toLowerCase()+'-'+i+3"
+                [type]="'pitch'">
+              </app-shared-editors>
+            </div>
 
             <!-- remaining text -->
             <div
@@ -286,6 +287,8 @@
               {{ remaining('CHAR', section.type, i) }} characters remaining
             </div>
             <!-- /remaining text -->
+
+            <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
 
           </div>
         </div>
@@ -309,17 +312,22 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)], 'message': !isEditableComment}">
-                <div [ngClass]="{'message-body': !isEditableComment}">
-                  <app-shared-editors
-                    (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
-                    [text]="zoneData('sections', 'suggestion', i)"
-                    [innovationId]="innovation._id"
-                    [elementId]="section.type.toLowerCase()+'-'+i+3"
-                    [isEditable]="isEditableComment"
-                    [type]="'suggestion'">
-                  </app-shared-editors>
-                </div>
+              <div
+                *ngIf="isEditableComment"
+                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}">
+                <app-shared-editors
+                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
+                  [text]="zoneData('sections', 'suggestion', i)"
+                  [innovationId]="innovation._id"
+                  [elementId]="section.type.toLowerCase()+'-'+i+3"
+                  [type]="'suggestion'">
+                </app-shared-editors>
+              </div>
+              <div
+                *ngIf="!isEditableComment"
+                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
+                class="message">
+                <p [innerHTML]="zoneData('sections', 'suggestion', i)" class="message-body"></p>
               </div>
             </div>
           </div>
