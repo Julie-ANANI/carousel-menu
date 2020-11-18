@@ -26,7 +26,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   }
 
   @Input() set text(value: string) {
-    this._text = value;
+    this._text = value || '';
   }
 
   @Input() set etherpad(value: Etherpad) {
@@ -107,7 +107,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         .pipe(first()).subscribe((response) => {
           this._etherpad.userName = UserFrontService.fullName(this._authService.user);
           this._etherpad.groupID = response && response.groupID;
-          this._htmlId = Math.random().toString(36).substr(2,10);
+          this._htmlId = Math.random().toString(36).substr(2, 10);
           this._createIframe();
           this._detectPadTextChange();
       }, (err: HttpErrorResponse) => {

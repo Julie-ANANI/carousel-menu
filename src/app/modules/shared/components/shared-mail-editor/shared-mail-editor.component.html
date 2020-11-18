@@ -268,16 +268,31 @@
 
           <label class="form-label">Message</label>
 
-          <div class="text-md">
-            <app-shared-editors
-              (textChange)="updateContent($event)"
-              [text]="email.content || ''"
-              [innovationId]="innovationId"
-              [elementId]="email._id"
-              [type]="'workflow'"
-              [isEditable]="isEditableMode">
-            </app-shared-editors>
+          <div *ngIf="isEditableMode" class="text-md">
+
+            <div *ngIf="innovationId">
+              <app-shared-editors
+                (textChange)="updateContent($event)"
+                [text]="email.content || ''"
+                [innovationId]="innovationId"
+                [elementId]="email._id"
+                [type]="'workflow'"
+                [isEditable]="isEditableMode">
+              </app-shared-editors>
+            </div>
+
+            <div *ngIf="!innovationId">
+              <app-shared-editor-tinymce
+                (onTextChange)="updateContent($event)"
+                *ngIf="isEditableMode"
+                [data]="email.content || ''"
+                [readonly]="!isEditableMode">
+              </app-shared-editor-tinymce>
+            </div>
+
           </div>
+
+          <p *ngIf="!isEditableMode && email && email.content" [innerHTML]="email.content" class="text-md"></p>
         </div>
         <!-- /message -->
 

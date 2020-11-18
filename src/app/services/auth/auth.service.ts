@@ -211,12 +211,12 @@ export class AuthService {
   }
 
   private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
-    if (this.isAcceptingCookies) {
+    if (this.isAcceptingCookies && newValue) {
       this._etherpadAccesses = newValue;
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;
-        }).join(',')}`, this._cookieOptions);
+        }).join(',')}`, this._etherpadCookiesOptions());
       }
     }
   }
@@ -247,6 +247,21 @@ export class AuthService {
 
   public getMHash(): any {
     return this._cookieService.get('mhash') || null;
+  }
+
+  private _etherpadCookiesOptions(): any {
+    const hostName = environment.etherpadUrl;
+    if (hostName.includes('localhost')) {
+      return this._cookieOptions;
+    } else {
+      const domain = '.' + hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
+
+      return {
+        ...this._cookieOptions,
+        domain: domain,
+        path: '/'
+      };
+    }
   }
 
   /***

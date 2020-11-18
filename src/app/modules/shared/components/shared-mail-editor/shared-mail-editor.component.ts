@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { EmailSignature } from '../../../../models/email-signature';
-import { EmailTemplate } from '../../../../models/email-template';
-import { TranslateService } from '@ngx-translate/core';
-import { Professional } from '../../../../models/professional';
-import { FormatText } from '../../../../pipe/pipes/FormatText';
+import {Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {EmailSignature} from '../../../../models/email-signature';
+import {EmailTemplate} from '../../../../models/email-template';
+import {TranslateService} from '@ngx-translate/core';
+import {Professional} from '../../../../models/professional';
+import {FormatText} from '../../../../pipe/pipes/FormatText';
+import {RouteFrontService} from '../../../../services/route/route-front.service';
+
 const capitalize = new FormatText();
 
 type editorTypes = 'FOLLOW-UP' | '';
@@ -114,7 +116,11 @@ export class SharedMailEditorComponent {
 
   private _professionalPreview = '';
 
-  constructor(private _translateService: TranslateService) { }
+  private readonly _innovationId: string;
+
+  constructor(private _translateService: TranslateService, private _routeFrontService: RouteFrontService) {
+    this._innovationId = this._routeFrontService.activeInnovationId();
+  }
 
   public changeLanguage(value: string) {
     this._language = value;
@@ -210,4 +216,7 @@ export class SharedMailEditorComponent {
     return this._display;
   }
 
+  get innovationId(): string {
+    return this._innovationId;
+  }
 }

@@ -45,7 +45,7 @@ export class EtherpadService {
    */
   public subscribedUsersSessions(innovationId: string): Observable<Array<Session>> {
     const _data = {innovationId: innovationId};
-    return this._http.get<Array<Session>>(`/${BASE_PATH}/group/sessions`, {params: _data});
+    return this._http.get<Array<Session>>(`${BASE_PATH}/group/sessions`, {params: _data});
   }
 
   public getAllCommentsOfPad(innovationId: string, padID: string): Observable<CollaborativeComment[]> {
