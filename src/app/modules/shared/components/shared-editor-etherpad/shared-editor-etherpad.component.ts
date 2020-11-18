@@ -53,8 +53,6 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
-  private _listenToTextUpdate = false;
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _etherpadSocketService: EtherpadSocketService,
@@ -109,12 +107,9 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         .pipe(first()).subscribe((response) => {
           this._etherpad.userName = UserFrontService.fullName(this._authService.user);
           this._etherpad.groupID = response && response.groupID;
-          this._htmlId = Math.random().toString(36).substr(2,10);
+          this._htmlId = Math.random().toString(36).substr(2, 10);
           this._createIframe();
-
-        if (!this._listenToTextUpdate) {
           this._detectPadTextChange();
-        }
       }, (err: HttpErrorResponse) => {
         this.disableEtherpad();
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -149,7 +144,6 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   }
 
   private _detectPadTextChange() {
-    this._listenToTextUpdate = true;
     const groupPadId = EtherpadFrontService.getGroupPadId(this._etherpad.groupID, this._etherpad.padID);
     this._etherpadSocketService
       .getAuthorPadUpdates(groupPadId, this._authService.etherpadAccesses.authorID)

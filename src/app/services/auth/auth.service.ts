@@ -216,7 +216,7 @@ export class AuthService {
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;
-        }).join(',')}`, {...this._cookieOptions, domain: this.domain, path: '/'});
+        }).join(',')}`, this._etherpadCookiesOptions());
       }
     }
   }
@@ -247,6 +247,21 @@ export class AuthService {
 
   public getMHash(): any {
     return this._cookieService.get('mhash') || null;
+  }
+
+  private _etherpadCookiesOptions(): any {
+    const hostName = environment.etherpadUrl;
+    if (hostName.includes('localhost')) {
+      return this._cookieOptions;
+    } else {
+      const domain = '.' + hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
+
+      return {
+        ...this._cookieOptions,
+        domain: domain,
+        path: '/'
+      };
+    }
   }
 
   /***
@@ -341,11 +356,6 @@ export class AuthService {
   }
   set etherpadAccesses(value: EtherpadAccesses) {
     this._etherpadAccesses = value;
-  }
-
-  get domain(): string {
-    const hostName = environment.etherpadUrl;
-    return '.' + hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
   }
 
   /*get adminAccess(): any {
