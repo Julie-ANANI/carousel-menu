@@ -1,3 +1,5 @@
-<router-outlet></router-outlet>
+<div [hidden]="spinnerState">
+  <router-outlet></router-outlet>
+</div>
 <simple-notifications [options]="notificationsOptions"></simple-notifications>
 <app-utility-spinner-loader></app-utility-spinner-loader>

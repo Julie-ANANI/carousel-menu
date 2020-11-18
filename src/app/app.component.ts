@@ -7,9 +7,11 @@ import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
-import { takeUntil } from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
+import {NavigationCancel, NavigationEnd, NavigationError, Router} from '@angular/router';
+import {SpinnerService} from './services/spinner/spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +22,13 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class AppComponent implements OnInit, OnDestroy {
 
   private _notificationsOptions: Options = {
-    position: ['bottom', 'right'],
-    timeOut: 4000,
+    position: ['top', 'right'],
+    timeOut: 3000,
     lastOnBottom: true,
-    maxStack: 4,
-    animate: NotificationAnimationType.FromRight,
+    maxStack: 1,
+    animate: NotificationAnimationType.FromTop,
     pauseOnHover: true,
-    showProgressBar: false,
+    showProgressBar: true,
     clickToClose: true
   };
 
@@ -34,17 +36,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+  private _spinnerState = true;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _authService: AuthService,
               private _mouseService: MouseService,
+              private _spinnerService: SpinnerService,
+              private _router: Router,
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
-
+    this._initSpinner(true);
     this._setFavicon();
-
     initTranslation(this._translateService);
-
     if (this._authService.isAcceptingCookies) {
       this._authService.initializeSession().subscribe(() => {
         console.log('The application has been started.');
@@ -52,27 +56,13 @@ export class AppComponent implements OnInit, OnDestroy {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', { timeOut: 0 });
       });
     }
-
   }
 
   ngOnInit(): void {
+    this._spinner();
     this._socketEvent();
     this._mouseEvent();
     //this._setSwellRTScript();
-  }
-
-  private _socketEvent() {
-    this._socketService.listenToSocket().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-      this._socketService.sendDataToApi('helloBack', { 'hello': 'back' });
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
-  }
-
-  private _mouseEvent() {
-    this._mouseService.getStartEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value: boolean) => {
-      this._startMouseEvent = value;
-    });
   }
 
   @HostListener('mouseup', ['$event'])
@@ -82,9 +72,48 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  /***
+   * configuring the full page spinner when the browser is reloaded or application restart.
+   * @private
+   */
+  private _spinner() {
+    this._router.events.subscribe((events) => {
+      if (events instanceof NavigationEnd) {
+        if (environment.local && this._spinnerState) {
+          this._initSpinner(false);
+        } else if (this._spinnerState && this._router.navigated && isPlatformBrowser(this._platformId)) {
+          this._initSpinner(false, 4500);
+        }
+      } else if (events instanceof NavigationCancel || events instanceof NavigationError) {
+        this._initSpinner(false);
+      }
+    });
+  }
+
+  private _initSpinner(state: boolean, time: number = 0) {
+    setTimeout(() => {
+      this._spinnerState = state;
+      this._spinnerService.state(this._spinnerState);
+    }, time);
+  }
+
+  private _socketEvent() {
+    this._socketService.listenToSocket().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+      this._socketService.sendDataToApi('helloBack', { 'hello': 'back' });
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+    });
+  }
+
+  private _mouseEvent() {
+    this._mouseService.getStartEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value: boolean) => {
+      this._startMouseEvent = value;
+    });
+  }
+
   // Favicon
   private _setFavicon() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       const linkElement = document.createElement('link');
       linkElement.setAttribute('id', 'theicon');
       linkElement.setAttribute('rel', 'icon');
@@ -140,6 +169,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   get notificationsOptions(): Options {
     return this._notificationsOptions;
+  }
+
+  get spinnerState(): boolean {
+    return this._spinnerState;
   }
 
   ngOnDestroy(): void {
