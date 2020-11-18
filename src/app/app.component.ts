@@ -29,7 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
     animate: NotificationAnimationType.FromTop,
     pauseOnHover: true,
     showProgressBar: true,
-    clickToClose: true
+    clickToClose: true,
+    clickIconToClose: true
   };
 
   private _startMouseEvent = false;
@@ -53,7 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this._authService.initializeSession().subscribe(() => {
         console.log('The application has been started.');
       }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', { timeOut: 0 });
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
       });
     }
   }
