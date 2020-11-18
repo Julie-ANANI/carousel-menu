@@ -15,8 +15,7 @@ interface VariableMapping {
 
 @Component({
   selector: 'app-shared-editor-tinymce',
-  templateUrl: 'shared-editor-tinymce.component.html',
-  styleUrls: ['./shared-editor-tinymce.component.scss']
+  templateUrl: 'shared-editor-tinymce.component.html'
 })
 
 export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
