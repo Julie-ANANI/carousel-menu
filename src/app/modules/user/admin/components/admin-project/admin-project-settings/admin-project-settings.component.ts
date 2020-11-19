@@ -254,6 +254,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
+  /***
+   * when we update the operator we add him in the mission team also that's why we send the mission object also to
+   * update the mission team.
+   */
   public onOperatorChange(operatorId: string) {
     const _index = this._operators.findIndex((op: any) => op._id === operatorId);
     this._innovation.operator = _index !== -1 ? this._operators[_index] : null;
@@ -263,13 +267,23 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._missionTeam.push(operatorId);
     }
 
-    this._saveProject('The operator and team members have been updated.', {mission: this._mission});
-
+    this._saveProject('The operator and team members have been updated.', {
+      operator: this._innovation.operator,
+      mission: this._mission
+    });
   }
 
+  /***
+   * no need to initialize the back object we get to the innovation because we already have the
+   * updated object and will only fetch the object when we reload the page.
+   * We just notify the updated object using service so that other component using that also have the updated one.
+   * @param notifyMessage
+   * @param saveObject
+   * @private
+   */
   private _saveProject(notifyMessage = 'The project has been updated.', saveObject: any) {
-    this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((inno: Innovation) => {
-      this._innovationFrontService.setInnovation(inno);
+    this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe(() => {
+      this._innovationFrontService.setInnovation(this._innovation);
       this._translateNotificationsService.success('Success' , notifyMessage);
       }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorMessage(err.status));
