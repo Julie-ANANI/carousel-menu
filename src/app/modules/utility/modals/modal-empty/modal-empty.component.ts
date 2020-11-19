@@ -33,7 +33,7 @@ export class ModalEmptyComponent implements OnInit, OnDestroy {
   /***
    * this is to make modal active and inactive. This variable should have getter and setter.
    */
-  @Input() showModal = false
+  @Input() showModal = false;
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

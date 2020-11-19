@@ -57,6 +57,58 @@
 
     }
 
+    .search-tips {
+      @include control-transition();
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+
+      .fa-question {
+        color: $meta-color;
+        font-size: $font-icon-md;
+      }
+
+    }
+
+  }
+
+  .search-tooltip {
+    position: relative;
+    display: inline-block;
+    // border-bottom: 1px dotted black;
+  }
+
+  /* Tooltip text */
+  .search-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -90px;
+    font-size: $font-size-xs;
+  }
+
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .search-tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .search-tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
   }
 
   .form-input:not(:disabled):focus, .form-select:not(:disabled):focus {

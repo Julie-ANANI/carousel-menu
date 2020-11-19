@@ -126,7 +126,7 @@ export class TableComponent {
       _clickIndex: 1,
       _columns: [],
       _content: [],
-    }
+    };
   }
 
   /***
