@@ -8,6 +8,7 @@ import { OrderByPipe } from './pipes/orderBy.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { FormatText } from './pipes/FormatText';
 import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
+import { FormatBytes } from './pipes/FormatBytes';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
     OrderByPipe,
     EllipsisPipe,
     FormatText,
-    ScrapeHTMLTags
+    ScrapeHTMLTags,
+    FormatBytes
   ],
   exports: [
     CharacterCountdown,
@@ -31,7 +33,8 @@ import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
     OrderByPipe,
     EllipsisPipe,
     FormatText,
-    ScrapeHTMLTags
+    ScrapeHTMLTags,
+    FormatBytes
   ]
 })
 

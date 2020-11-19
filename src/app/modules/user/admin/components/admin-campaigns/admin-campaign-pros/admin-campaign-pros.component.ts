@@ -10,22 +10,24 @@ import { Professional } from '../../../../../../models/professional';
 import { Config } from '../../../../../../models/config';
 import { Response } from '../../../../../../models/response';
 import { ConfigService } from '../../../../../../services/config/config.service';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
-import { StatsInterface } from "../../admin-stats-banner/admin-stats-banner.component";
-import { CampaignFrontService } from "../../../../../../services/campaign/campaign-front.service";
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import {Bytes2Human} from '../../../../../../utils/bytes2human';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
 }
+
+const SIZE_LIMIT = 10 * 1024 * 1024; // 10 mb
 
 @Component({
   selector: 'app-admin-campaign-pros',
   templateUrl: './admin-campaign-pros.component.html',
   styleUrls: ['./admin-campaign-pros.component.scss']
 })
-
 export class AdminCampaignProsComponent implements OnInit {
 
   private _config: Config = {
@@ -68,6 +70,8 @@ export class AdminCampaignProsComponent implements OnInit {
   private _isCreating = false;
 
   private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'pros'];
+
+  private _csvImportError = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -166,17 +170,26 @@ export class AdminCampaignProsComponent implements OnInit {
   public onClickImportCsv(file: File) {
     if (!this._isImporting) {
       this._isImporting = true;
-      this._professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file).pipe(first())
-        .subscribe((res: any) => {
-          this._getProfessionals();
-          this._modalImport = false;
+      this._csvImportError = '';
+      // Verify the size here...
+      if (file) {
+        if (file.size <= SIZE_LIMIT) {
+          this._professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file).pipe(first())
+            .subscribe((res: any) => {
+              this._getProfessionals();
+              this._modalImport = false;
+              this._isImporting = false;
+              this._translateNotificationsService.success('Success', res.message);
+            }, (err: HttpErrorResponse) => {
+              this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+              this._isImporting = false;
+              this._csvImportError = err.error.message;
+            });
+        } else {
           this._isImporting = false;
-          this._translateNotificationsService.success('Success', res.message);
-        }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          this._isImporting = false;
-          console.error(err);
-        });
+          this._csvImportError = `Le fichier est trop grand (${Bytes2Human.convert(file.size)} mb). Max : ${Bytes2Human.convert(SIZE_LIMIT)} mb`;
+        }
+      }
     }
   }
 
@@ -331,6 +344,10 @@ export class AdminCampaignProsComponent implements OnInit {
 
   get accessPath(): Array<string> {
     return this._accessPath;
+  }
+
+  get csvImportError(): string {
+    return this._csvImportError;
   }
 
 }
