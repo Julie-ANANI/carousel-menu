@@ -1,7 +1,8 @@
 import { User } from '../../../../../models/user.model';
 
 export interface SharedFilter {
-  readonly name: string;
+  readonly _id?: string;
+  name: string;
   readonly owner: User;
   readonly answers: Array<string>;
 }
