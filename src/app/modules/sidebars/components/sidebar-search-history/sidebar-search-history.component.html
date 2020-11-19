@@ -33,10 +33,10 @@
         </a>
       </li>
       <li
-        *ngIf="request['campaign'] && canAccess(['view', 'campaign'])"
+        *ngIf="request['campaign'] && request['innovation'] && canAccess(['view', 'campaign'])"
         class="text-link text-primary-dark text-sm text-normal m-top-1">
         <a
-          [href]="'/user/admin/campaigns/campaign/' + request['campaign']"
+          [href]="campaignLink"
           target="_blank">
           Campaign
         </a>
