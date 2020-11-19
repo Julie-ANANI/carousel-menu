@@ -1,15 +1,10 @@
 <div *ngIf="displayLoader" class="loading-bar"></div>
-
 <div id="user">
-
   <app-header></app-header>
-
   <main [ngClass]="{'admin-side': adminSide}" id="main-wrapper">
     <router-outlet></router-outlet>
   </main>
-
   <app-footer></app-footer>
-
 </div>
 
 

@@ -20,14 +20,13 @@ steps:
     event:
       - push
     branch:
-      - development
+      - christmas-is-coming
 
 - name: dockerDev
   image: plugins/docker
   depends_on: [baseimage]
   settings:
     target: buildinstance
-    auto_tag: true
     build_args:
       - APP_NAME=umi
       - ENV_NAME=dev
@@ -40,7 +39,7 @@ steps:
     event:
       - push
     branch:
-      - development
+      - christmas-is-coming
 
 - name: rancherDev
   image: peloton/drone-rancher
@@ -58,7 +57,7 @@ steps:
     event:
       - push
     branch:
-      - development
+      - christmas-is-coming
 
 ## UMI production steps
 ## This will build the base image. The base image for the front is the same for all instances

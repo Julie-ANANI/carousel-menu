@@ -4,6 +4,8 @@ import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Session} from '../../../../models/session';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
 
 /***
  * example: admin-project component.
@@ -34,22 +36,26 @@ export class SharedActivityModalComponent implements OnInit {
 
   private _isLoading = true;
 
+  private _authorId: string;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _etherpadService: EtherpadService) { }
+              private _etherpadService: EtherpadService,
+              private _authService: AuthService) {
+    this._authorId = this._authService.etherpadAccesses.authorID;
+  }
 
   ngOnInit() {
-    this._isLoading = false;
   }
 
   /***
-   * getting the subscribed users for the provided group.
+   * getting the subscribed users for the provided groupID.
    * @param id
    * @private
    */
   private _getSubscribedUsers(id: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._etherpadService.subscribedUsersSessions(id).pipe(first()).subscribe((sessions) => {
-        this._usersSessions = sessions;
+        this._usersSessions = EtherpadFrontService.sortSessions(sessions);
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.error(err);
@@ -78,6 +84,10 @@ export class SharedActivityModalComponent implements OnInit {
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+  get authorId(): string {
+    return this._authorId;
   }
 
 }
