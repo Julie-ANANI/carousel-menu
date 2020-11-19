@@ -63,6 +63,15 @@ export class SocketService {
     });
   }
 
+  getNewCampaign(innovationId: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`campaignCreation_${innovationId}`,
+        (data: {userName: string, userId: string, data: ExecutiveReport}) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
   getAnswersUpdates(innovationId: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
       this.socket.on(`answerUpdate_${innovationId}`,
