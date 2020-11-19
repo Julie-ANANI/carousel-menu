@@ -1,11 +1,10 @@
 <div>
   <!-- Collaborative editor toggle -->
-  <div *ngIf="isEditable">
+  <div *ngIf="isEditable && !isEtherpadUp()">
     <label class="form-switch">
       <input
         (change)="onChangeEditor()"
         [checked]="editor === 'ETHERPAD'"
-        [disabled]="isEtherpadUp()"
         type="checkbox">
       <i class="form-icon"></i> {{ 'SHARED_TEXT_ZONE.COLLABORATIVE_EDITING' | translate }}
     </label>

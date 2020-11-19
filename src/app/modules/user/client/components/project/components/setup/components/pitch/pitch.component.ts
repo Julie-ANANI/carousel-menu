@@ -424,7 +424,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _changesToSave() {
     if (this._toBeSaved) {
       const _msg = this.activeInnovCard.lang === 'fr'
-        ? 'Souhaitez vous vraiment quitter sans savegarder? Tous vos changements seront perdus.'
+        ? 'Souhaitez vous vraiment quitter sans sauvegarder? Tous vos changements seront perdus.'
         : 'Do you really want to leave without saving? All the changes will be lost.';
       if (window.confirm(_msg)) {
         this._toBeSaved = false;
@@ -456,6 +456,8 @@ export class PitchComponent implements OnInit, OnDestroy {
         break;
     }
     this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((innovation) => {
+      this._innovation.innovationCards = innovation.innovationCards;
+      this._innovationFrontService.setInnovation(this._innovation);
       this._resetVariables();
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {

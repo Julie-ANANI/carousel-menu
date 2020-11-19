@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {CollaborativeComment, Reply} from '../../../../models/collaborative-comment';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {UserFrontService} from '../../../../services/user/user-front.service';
 
 @Component({
   selector: 'app-comment-card',
@@ -19,7 +21,8 @@ export class CommentCardComponent implements AfterViewInit {
   public editingNewComment = false;
   private scrollContainer: any;
 
-  constructor(private _etherpadService: EtherpadService) {
+  constructor(private _etherpadService: EtherpadService,
+              private _authService: AuthService) {
   }
 
   ngAfterViewInit() {
@@ -38,10 +41,9 @@ export class CommentCardComponent implements AfterViewInit {
   // API METHODS
 
   sendReply() {
-    // TODO set author & name
-    this.newComment.author = 'a.NLE4gNB2xPCA25Cr';
+    this.newComment.author = this._authService.etherpadAccesses.authorID;
     this.newComment.commentId = this.comment.id;
-    this.newComment.name = 'Léa';
+    this.newComment.name = UserFrontService.fullName(this._authService.user);
 
     this._etherpadService.addRepliesToComment(this.innovationId, this.padID, [this.newComment]).subscribe((res: any) => {
         this.newComment.id = res.replyId;
