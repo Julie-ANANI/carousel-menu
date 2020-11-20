@@ -208,6 +208,12 @@ export class SidebarSearchHistoryComponent {
     window.open(`user/admin/search/results/${request._id}`, '_blank')
   }
 
+  get campaignLink(): string {
+    return this._request['campaign'] && this._request['innovation']
+      ? `/user/admin/projects/project/${this._request['innovation']}/preparation/campaigns/campaign/${this._request['campaign']}/batch`
+      : '';
+  }
+
   get showChildren(): boolean {
     return this._showChildren;
   }

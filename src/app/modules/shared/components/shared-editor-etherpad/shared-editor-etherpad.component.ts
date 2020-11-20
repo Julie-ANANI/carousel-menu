@@ -16,8 +16,7 @@ import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-shared-editor-etherpad',
-  templateUrl: './shared-editor-etherpad.component.html',
-  styleUrls: ['./shared-editor-etherpad.component.scss']
+  templateUrl: './shared-editor-etherpad.component.html'
 })
 export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 

@@ -14,6 +14,7 @@ import { CountryFlagModule } from '../utility/country-flag/country-flag.module';
 import { PipeModule } from '../../pipe/pipe.module';
 import { MessageTemplateModule } from '../utility/messages/message-template/message-template.module';
 import { PaginationTemplate2Module } from '../utility/paginations/pagination-template-2/pagination-template-2.module';
+import {ModalEmptyModule} from '../utility/modals/modal-empty/modal-empty.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { PaginationTemplate2Module } from '../utility/paginations/pagination-tem
     SharedLoaderModule,
     CountryFlagModule,
     MessageTemplateModule,
-    PaginationTemplate2Module
+    PaginationTemplate2Module,
+    ModalEmptyModule
   ],
   declarations: [
     TableComponent

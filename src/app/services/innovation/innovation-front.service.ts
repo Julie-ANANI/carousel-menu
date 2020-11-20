@@ -135,10 +135,11 @@ export class InnovationFrontService {
       switch (required) {
 
         case 'CARD':
+          _card.title = InnovationFrontService.scrapeHtmlTags(_card.title);
           return <InnovCard>_card;
 
         case 'TITLE':
-          return _card.title;
+          return InnovationFrontService.scrapeHtmlTags(_card.title);
 
         case 'SUMMARY':
           return InnovationFrontService.scrapeHtmlTags(_card.summary) || '';

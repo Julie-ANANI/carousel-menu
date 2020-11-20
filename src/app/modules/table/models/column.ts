@@ -5,6 +5,7 @@ export interface Column {
   _isSelected?: boolean;
   _isSearchable?: boolean;
   _isHidden?: boolean;
+  _searchTooltip?: string;
   readonly _attrs: string[];
   readonly _type: types;
   readonly _name?: string;

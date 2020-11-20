@@ -44,9 +44,6 @@ export class ErrorService {
       });
 
     }
-
-    console.error(error);
-
   }
 
 }

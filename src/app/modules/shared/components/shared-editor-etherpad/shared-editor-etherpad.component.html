@@ -3,7 +3,7 @@
   [id]="htmlId"
   [ngClass]="{ 'is-loading': isLoading, 'h-full': !isLoading, 'is-active': isEditable}"
   [ngStyle]="{'min-height': isEditable ? minHeight : '100%'}"
-  class="shared-editor-etherpad">
+  class="shared-editor-etherpad box-shadow">
 
   <!-- isEditable && isLoading -->
   <div *ngIf="isLoading && isEtherpadUp()" class="loading-wrapper">

@@ -110,7 +110,8 @@ export class AdminUsersComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'name']),
           _isHidden: !this.canAccess(['tableColumns', 'name']),
-          _isSortable: true
+          _isSortable: true,
+          _searchTooltip: 'Utilisez \"prénom,nom\" pour faire des recherches de personnes'
         },
         {
           _attrs: ['email'],
