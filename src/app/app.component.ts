@@ -53,8 +53,12 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this._authService.isAcceptingCookies) {
       this._authService.initializeSession().subscribe(() => {
         console.log('The application has been started.');
+        if (environment.local) {
+          this._initSpinner(false);
+        }
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+        this._initSpinner(false);
       });
     }
   }
@@ -80,9 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private _spinner() {
     this._router.events.subscribe((events) => {
       if (events instanceof NavigationEnd) {
-        if (environment.local && this._spinnerState) {
-          this._initSpinner(false);
-        } else if (this._spinnerState && this._router.navigated && isPlatformBrowser(this._platformId)) {
+        if (this._spinnerState && this._router.navigated && isPlatformBrowser(this._platformId)) {
           this._initSpinner(false, 4500);
         }
       } else if (events instanceof NavigationCancel || events instanceof NavigationError) {
