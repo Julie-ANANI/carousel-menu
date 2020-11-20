@@ -141,6 +141,7 @@ export class SharedProfessionalsListComponent {
           _isSearchable: this.canAccess(['searchBy', 'name']),
           _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'name']),
+          _searchTooltip: 'Utilisez \"prénom,nom\" pour faire des recherches de personnes'
         },
         {
           _attrs: ['email'],
