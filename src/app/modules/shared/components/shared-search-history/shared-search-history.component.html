@@ -76,7 +76,9 @@
         <i class="form-icon"></i>Launch new queries to complete targeting
       </label>
       <p class="text-error" *ngIf="launchNewRequests">
-        The requests will be launched in  {{ geography.include.length }} countries in the new campaign.
+        <span *ngIf="geography && geography.include && geography.include.length">
+          The requests will be launched in {{ geography.include.length }} countries in the new campaign.
+        </span>
         Check the request on google to be sure not to find too many professionals
       </p>
     </div>
