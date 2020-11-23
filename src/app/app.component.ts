@@ -23,10 +23,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _notificationsOptions: Options = {
     position: ['top', 'right'],
-    timeOut: 3000,
+    timeOut: 5000,
     lastOnBottom: true,
     maxStack: 1,
-    animate: NotificationAnimationType.FromTop,
+    animate: NotificationAnimationType.FromRight,
     pauseOnHover: true,
     showProgressBar: true,
     clickToClose: true,

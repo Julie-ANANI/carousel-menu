@@ -7,17 +7,21 @@
   width: 100% !important;
 }
 
+.simple-notification-wrapper.top {
+  top: 77px !important;
+}
+
 .simple-notification .sn-progress-loader {
   height: 2px !important;
-  left: 5px !important;
-  width: 96% !important;
+  left: 3px !important;
+  width: 98% !important;
 }
 
 .simple-notification {
-  box-shadow: 0 0 25px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(20,23,28,0.25);
   border: none !important;
-  border-radius: 8px !important;
-  padding: 8px !important;
+  border-radius: 4px !important;
+  padding: 10px !important;
   word-wrap: break-word !important;
   min-height: unset !important;
 }
@@ -39,7 +43,7 @@
 
 .simple-notification.success {
   background: $bg-white-color !important;
-  color: $text-dark-color !important;
+  color: #000000 !important;
 
   .sn-title {
     color: $text-success-color !important;
@@ -53,7 +57,7 @@
 
 .simple-notification.error {
   background: $bg-white-color !important;
-  color: $text-dark-color !important;
+  color: #000000 !important;
 
   .sn-title {
     color: $text-alert-color !important;
