@@ -42,8 +42,9 @@
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
       <app-shared-preset
         (save)="updatePreset($event)"
-        [sectionsNames]="sectionsNames"
-        [preset]="innovation.preset">
+        [isEditable]="canAccess(['edit'])"
+        [preset]="innovation.preset"
+        [sectionsNames]="sectionsNames">
       </app-shared-preset>
     </section>
     <!-- /section to add preset -->

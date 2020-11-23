@@ -225,17 +225,20 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isSaving) {
       this._isSaving = true;
-      this._saveProject();
-      this._saveComment();
+      if (this._activeTab === 'questionnaire') {
+        this._saveProject({preset: this._project.preset});
+      } else {
+        this._saveProject({innovationCards: this._project.innovationCards, settings: this._project.settings});
+        this._saveComment();
+      }
     }
   }
 
-  private _saveProject() {
+  private _saveProject(objToSave: any) {
     if (this._toBeSaved) {
-      this._toBeSaved = false;
-      const saveObject = {innovationCards: this._project.innovationCards, settings: this._project.settings};
-      this._innovationService.save(this._project._id, saveObject).pipe(first()).subscribe(() => {
+      this._innovationService.save(this._project._id, objToSave).pipe(first()).subscribe(() => {
         this._isSaving = false;
+        this._toBeSaved = false;
         this._setInnovation();
         if (!this._toBeSavedComment) {
           this._translateNotificationsService.success('Success', 'The project has been updated.');

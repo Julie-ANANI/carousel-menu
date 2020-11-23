@@ -56,9 +56,9 @@
           </div>
           <!-- /list of campaigns  -->
 
-          <!-- Description || Targeting -->
+          <!-- Description || Targeting || Questionnaire -->
           <div
-            *ngIf="activeTab === 'description' || activeTab === 'targeting'"
+            *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
             class="d-flex align-center animate-fade is-3">
 
             <!-- add lang -->
@@ -98,9 +98,9 @@
 
             <!-- save -->
             <button
-              *ngIf="canEditDescription || canEditTargeting"
+              *ngIf="canEditDescription || canEditTargeting || activeTab === 'questionnaire'"
               (click)="onSave($event)"
-              [disabled]="isSaving"
+              [disabled]="isSaving || !toBeSaved"
               [ngStyle]="{'min-width': '110px', 'padding-top': '9px', 'padding-bottom': '9px'}"
               [ngClass]="{'is-saved': toBeSaved || toBeSavedComment}"
               class="button is-sm is-outlined is-primary"
@@ -114,7 +114,7 @@
             <!-- /save -->
 
           </div>
-          <!-- /Description || Targeting -->
+          <!-- /Description || Targeting || Questionnaire -->
 
         </div>
         <!-- /actions buttons -->

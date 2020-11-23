@@ -6,7 +6,7 @@
     <!-- move button / description -->
     <div class="d-flex align-center m-bottom-10">
 
-      <div data-tooltip="Move section" class="move-arrows tooltip">
+      <div *ngIf="isEditable" data-tooltip="Move section" class="move-arrows tooltip">
         <i (click)="up($event)" class="icon icon-arrow-up"></i>
         <i (click)="down($event)" class="icon icon-arrow-down"></i>
       </div>
@@ -83,7 +83,7 @@
       <!-- delete -->
       <div
         (click)="removeSection($event)"
-        *ngIf="editSection"
+        *ngIf="editSection && isEditable"
         [id]="'sharedPresetSection-btn-delete-section'"
         class="icon-container is-overlay m-bottom-10 m-right-15">
         <span data-tooltip="Delete" class="tooltip">
@@ -95,6 +95,7 @@
       <!-- edit -->
       <div
         (click)="editSection = !editSection"
+        *ngIf="isEditable"
         [id]="'sharedPresetSection-btn-edit-section'"
         class="icon-container is-overlay m-bottom-10 m-right-15">
         <span [attr.data-tooltip]="editSection ? 'Stop editing' : 'Edit'" class="tooltip">
@@ -126,6 +127,7 @@
       [ngStyle]="{'width': '95%', 'display': isCollapsed ? 'none' : 'block'}"
       class="m-top-20 m-left-auto">
       <app-shared-preset-question
+        [isEditable]="isEditable"
         [questionIndex]="i"
         [question]="question"
         [sectionIndex]="sectionIndex">
@@ -135,18 +137,20 @@
   <!-- /questions -->
 
   <!-- add question -->
-  <div *ngIf="!isCollapsed" class="text-center m-top-25 m-bottom-50">
-    <button
-      (click)="addNewQuestion($event)"
-      [id]="'sharedPresetSection-btn-add-question'"
-      class="button is-link is-draft text-bold is-sm text-md"
-      type="button">
-      <span class="icon-container is-overlay active m-right-10">
-        <i class="icon icon-plus"></i>
-      </span>
-      Add question
-    </button>
-  </div>
+  <ng-container *ngIf="isEditable">
+    <div *ngIf="!isCollapsed " class="text-center m-top-25 m-bottom-50">
+      <button
+        (click)="addNewQuestion($event)"
+        [id]="'sharedPresetSection-btn-add-question'"
+        class="button is-link is-draft text-bold is-sm text-md"
+        type="button">
+        <span class="icon-container is-overlay active m-right-10">
+          <i class="icon icon-plus"></i>
+        </span>
+        Add question
+      </button>
+    </div>
+  </ng-container>
   <!-- /add question -->
 
 </div>

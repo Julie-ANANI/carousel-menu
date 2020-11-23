@@ -13,7 +13,6 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import {isPlatformBrowser} from '@angular/common';
-import {PresetFrontService} from '../../../../../../services/preset/preset-front.service';
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -37,7 +36,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
-              private _presetFrontService: PresetFrontService,
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -100,7 +98,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._innovationService.save(this._innovation._id, {preset: this._innovation.preset}).subscribe((innovation: Innovation) => {
       this._innovation = innovation;
       this._setQuizLink();
-      this._presetFrontService.setNotifyChanges(false);
       this._translateNotificationsService.success('Success', 'The preset is updated.');
     }, (err: HttpErrorResponse) => {
      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -165,9 +162,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    */
   public updatePreset(preset: Preset): void {
     if (this.canAccess(['edit'])) {
-      this._saveInnovation();
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
+      this._innovation.preset = preset;
+      this._innovationFrontService.setInnovation(this._innovation);
     }
   }
 

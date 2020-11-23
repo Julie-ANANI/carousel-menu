@@ -11,6 +11,11 @@ import {Picto, picto} from '../../../../../models/static-data/picto';
 })
 export class SharedPresetSectionComponent {
 
+  /***
+   * the preset is editable or not.
+   */
+  @Input() isEditable = false;
+
   @Input() set section(value: Section) {
     this._section = value;
   }
@@ -27,24 +32,24 @@ export class SharedPresetSectionComponent {
 
   private _isCollapsed = false;
 
-  constructor(private presetService: PresetFrontService,
+  constructor(private presetFrontService: PresetFrontService,
               private translateService: TranslateService) {}
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
-    this.presetService.addQuestion(this._sectionIndex);
+    this.presetFrontService.addQuestion(this._sectionIndex);
     this.notifyChanges();
   }
 
   public up(event: Event): void {
     event.preventDefault();
-    this.presetService.moveSection(this._sectionIndex, -1);
+    this.presetFrontService.moveSection(this._sectionIndex, -1);
     this.notifyChanges();
   }
 
   public down(event: Event): void {
     event.preventDefault();
-    this.presetService.moveSection(this._sectionIndex, 1);
+    this.presetFrontService.moveSection(this._sectionIndex, 1);
     this.notifyChanges();
   }
 
@@ -52,7 +57,7 @@ export class SharedPresetSectionComponent {
     event.preventDefault();
     const res = confirm('Are you sure you want to delete this section ?');
     if (res) {
-      this.presetService.removeSection(this._sectionIndex);
+      this.presetFrontService.removeSection(this._sectionIndex);
       this.notifyChanges();
     }
   }
@@ -62,12 +67,14 @@ export class SharedPresetSectionComponent {
   }
 
   public notifyChanges() {
-    this.presetService.setNotifyChanges(true);
+    if (this.isEditable) {
+      this.presetFrontService.setNotifyChanges(true);
+    }
   }
 
   get sectionIndex(): number { return this._sectionIndex; }
   get section(): Section { return this._section; }
-  get sectionsNames(): Array< string> { return this.presetService.sectionsNames; }
+  get sectionsNames(): Array< string> { return this.presetFrontService.sectionsNames; }
   get lang() { return this.translateService.currentLang; }
 
   get picto(): Picto {

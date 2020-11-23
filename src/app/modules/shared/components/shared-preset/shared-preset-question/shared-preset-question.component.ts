@@ -5,6 +5,7 @@ import { PresetFrontService } from '../../../../../services/preset/preset-front.
 import { Innovation } from '../../../../../models/innovation';
 import { Question } from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-shared-preset-question',
@@ -12,6 +13,11 @@ import {picto, Picto} from '../../../../../models/static-data/picto';
   styleUrls: ['./shared-preset-question.component.scss']
 })
 export class SharedPresetQuestionComponent {
+
+  /***
+   * the preset is editable or not.
+   */
+  @Input() isEditable = false;
 
   @Input() set question(value: Question) {
     this._question = value;
@@ -46,6 +52,7 @@ export class SharedPresetQuestionComponent {
   private _optionColors: Array<string> = ['#34AC01', '#82CD30', '#F2C500', '#C0210F'];
 
   constructor(private presetService: PresetFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private activatedRoute: ActivatedRoute,
               private translateService: TranslateService) { }
 
@@ -145,7 +152,26 @@ export class SharedPresetQuestionComponent {
   }
 
   public notifyChanges() {
-    this.presetService.setNotifyChanges(true);
+    if (this.isEditable) {
+      this._innovationFrontService.setNotifyChanges(true);
+    }
+  }
+
+  public updateValue(value: any, attr: string, index?: number) {
+    if (this.isEditable) {
+      switch (attr) {
+        case 'COMMENT':
+          this._question.canComment = !this._question.canComment;
+          break;
+        case 'FAV_ANSWERS':
+          this._question.visibility = !this._question.visibility;
+          break;
+        case 'OPTION_POSITIVE':
+          this._question.options[index].positive = !this._question.options[index].positive;
+          break;
+      }
+      this.notifyChanges();
+    }
   }
 
   get language() { return this._language; }

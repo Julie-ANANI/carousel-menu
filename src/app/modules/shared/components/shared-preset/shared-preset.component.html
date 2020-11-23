@@ -1,22 +1,8 @@
-<div *ngIf="!!preset">
+<div [hidden]="!preset && !preset._id">
 
   <!-- title and save button -->
-  <section class="flex-between flex-wrap m-bottom-10">
-    <h2 class="title text-20 m-right-20">{{ preset.name }}</h2>
-    <button
-      (click)="savePreset($event)"
-      [id]="'sharedPreset-btn-save'"
-      [ngClass]="toBeSaved ? 'is-success' : 'is-primary'"
-      class="button is-outlined is-sm m-bottom-25 relative"
-      type="button">
-      Save preset
-      <span
-        *ngIf="toBeSaved"
-        [ngStyle]="{'border': '2px solid #2ECC71', 'height': '30px', 'top': '-17px', 'right': '-23px'}"
-        class="shape is-circle w-30 text-success bg-page text-15 absolute">
-        <i class="fas fa-save"></i>
-      </span>
-    </button>
+  <section>
+    <h2 class="title text-20">{{ preset.name }}</h2>
   </section>
   <!-- /title and save button -->
 
@@ -25,13 +11,17 @@
     <section
       *ngFor="let section of preset.sections; let i = index;"
       [ngClass]="{'m-bottom-30': (i + 1) < preset.sections.length}">
-      <app-shared-preset-section [section]="section" [sectionIndex]="i"></app-shared-preset-section>
+      <app-shared-preset-section
+        [isEditable]="isEditable"
+        [sectionIndex]="i"
+        [section]="section">
+      </app-shared-preset-section>
     </section>
   </ng-container>
   <!-- /sections -->
 
   <!-- add section -->
-  <section class="p-bottom-30 text-center">
+  <section *ngIf="isEditable" class="p-bottom-30 text-center">
     <div class="divider m-bottom-50"></div>
     <button
       (click)="addSection($event)"
