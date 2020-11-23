@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { DataService } from '../../services/data.service';
-import { Innovation } from '../../../../../../models/innovation';
-import { Question } from '../../../../../../models/question';
-import { Tag } from '../../../../../../models/tag';
-import { environment } from '../../../../../../../environments/environment';
-import { PieChart } from '../../../../../../models/pie-chart';
-import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {DataService} from '../../services/data.service';
+import {Innovation} from '../../../../../../models/innovation';
+import {Question} from '../../../../../../models/question';
+import {Tag} from '../../../../../../models/tag';
+import {environment} from '../../../../../../../environments/environment';
+import {PieChart} from '../../../../../../models/pie-chart';
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -16,7 +16,7 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 
 export class QuestionConclusionComponent implements OnInit {
 
-  @Input() originAnswers: {[c: string]: number} = null
+  @Input() originAnswers: {[continent: string]: {count: any, countries: {[country: string]: {count: number}}}} = null;
 
   @Input() readonly = true;
 
@@ -45,6 +45,15 @@ export class QuestionConclusionComponent implements OnInit {
   public keyupHandlerFunction(event: {content: string}) {
     this.innovation.marketReport[this.question.identifier] = { conclusion: event['content'] };
     this._innovationFrontService.setNotifyChanges(true);
+  }
+
+  public displayCountries(id: string) {
+    const continentCountries = document.getElementById(id);
+    if (!!continentCountries) {
+      const visible = continentCountries.classList.contains('expanded');
+      continentCountries.classList.remove((visible ? 'expanded' : 'collapsed'));
+      continentCountries.classList.add((visible ? 'collapsed' : 'expanded'));
+    }
   }
 
   get tags(): Array<Tag> {

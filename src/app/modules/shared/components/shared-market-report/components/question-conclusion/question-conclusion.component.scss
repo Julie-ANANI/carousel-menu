@@ -1,0 +1,22 @@
+.continent-wrapper {
+
+  .continent {
+    cursor: pointer;
+  }
+
+  &.expanded {
+    .countries {
+      display: block;
+    }
+
+    .icon-arrow-down {
+      display: none;
+    }
+  }
+
+  &.collapsed {
+    .countries, .icon-arrow-up {
+      display: none;
+    }
+  }
+}

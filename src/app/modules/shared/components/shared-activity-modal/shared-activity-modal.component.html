@@ -1,4 +1,4 @@
-<div [hidden]="isLoading" id="shared-activity-modal">
+<div [hidden]="isLoading || !isEtherpadUp" id="shared-activity-modal">
   <div *ngIf="usersSessions.length" class="d-flex align-end">
     <figure
       (click)="openModal($event)"
