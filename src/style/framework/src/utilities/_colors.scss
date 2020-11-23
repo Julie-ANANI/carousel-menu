@@ -94,6 +94,10 @@
   background-color: $bg-page-color !important;
 }
 
+.bg-transparent {
+  background-color: transparent !important;
+}
+
 .bg-gradient-primary {
   background: $primary-gradient-color;
   color: $text-white-color;

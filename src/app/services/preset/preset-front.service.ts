@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Preset } from '../../../../../models/preset';
-import { Question, QuestionType } from '../../../../../models/question';
-import { Section } from '../../../../../models/section';
+import { Preset } from '../../models/preset';
+import { Question, QuestionType } from '../../models/question';
+import { Section } from '../../models/section';
+import {Subject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
-export class PresetService {
+export class PresetFrontService {
+
+  private _savePresetSubject: Subject<boolean> = new Subject<boolean>();
 
   private taggedQuestionsTypes: {[identifier: string]: QuestionType} = {
     optim_context: 'radio',
@@ -84,6 +87,19 @@ export class PresetService {
 
   constructor() {}
 
+  /***
+   * this function is called when there are some changes and we want to notify
+   * in the component that changes are to be saved or not for the preset.
+   * @param value
+   */
+  public setNotifyChanges(value: boolean) {
+    this._savePresetSubject.next(value);
+  }
+
+  public getNotifyChanges(): Subject<boolean> {
+    return this._savePresetSubject;
+  }
+
   public generateId(): string {
     // Generate a random id for custom questions
     return Math.random().toString(36).substring(2);
@@ -120,6 +136,7 @@ export class PresetService {
         }
       };
       this._preset.sections.push(section);
+      this.setNotifyChanges(true);
     }
   }
 
@@ -189,7 +206,7 @@ export class PresetService {
     /* mutate question to avoid getting 2 questions with the same id */
     delete question._id;
     question.identifier = this.generateId();
-    questions.push(question);
+    questions.push(JSON.parse(JSON.stringify(question)));
   }
 
   public removeQuestion(questionIndex: number,  sectionIndex: number) {

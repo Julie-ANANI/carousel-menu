@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PresetService } from './services/preset.service';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { PresetFrontService } from '../../../../services/preset/preset-front.service';
 import { Preset } from '../../../../models/preset';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-shared-preset',
-  templateUrl: './shared-preset.component.html',
-  styleUrls: ['./shared-preset.component.scss']
+  templateUrl: './shared-preset.component.html'
 })
-export class SharedPresetComponent {
+export class SharedPresetComponent implements OnInit, OnDestroy {
 
   @Input() set preset(value: Preset) {
     this.presetService.preset = value;
@@ -19,9 +20,20 @@ export class SharedPresetComponent {
 
   @Output() save = new EventEmitter<Preset>();
 
-  constructor(private presetService: PresetService) {}
+  private _toBeSaved = false;
 
-  public addSection() {
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  constructor(private presetService: PresetFrontService) {}
+
+  ngOnInit(): void {
+    this.presetService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((changes) => {
+      this._toBeSaved = changes;
+    });
+  }
+
+  public addSection(event: Event) {
+    event.preventDefault();
     this.presetService.addSection();
   }
 
@@ -31,5 +43,14 @@ export class SharedPresetComponent {
   }
 
   get preset() { return this.presetService.preset; }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
 
 }

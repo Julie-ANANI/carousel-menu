@@ -1,24 +1,47 @@
-<app-shared-loader *ngIf="!preset"></app-shared-loader>
+<div *ngIf="!!preset">
 
-<ng-container *ngIf="preset">
-
-  <h1>{{preset.name}}</h1>
-
-  <div class="text-right">
-    <button type="button" class="btn btn-primary" (click)="savePreset($event)">
-      Save
+  <!-- title and save button -->
+  <section class="flex-between flex-wrap m-bottom-10">
+    <h2 class="title text-20 m-right-20">{{ preset.name }}</h2>
+    <button
+      (click)="savePreset($event)"
+      [id]="'sharedPreset-btn-save'"
+      [ngClass]="toBeSaved ? 'is-success' : 'is-primary'"
+      class="button is-outlined is-sm m-bottom-25 relative"
+      type="button">
+      Save preset
+      <span
+        *ngIf="toBeSaved"
+        [ngStyle]="{'border': '2px solid #2ECC71', 'height': '30px', 'top': '-17px', 'right': '-23px'}"
+        class="shape is-circle w-30 text-success bg-page text-15 absolute">
+        <i class="fas fa-save"></i>
+      </span>
     </button>
-  </div>
+  </section>
+  <!-- /title and save button -->
 
-  <div class="body">
-    <div *ngFor="let section of preset.sections; let i=index">
+  <!-- sections -->
+  <ng-container *ngIf="preset.sections && preset.sections.length > 0">
+    <section
+      *ngFor="let section of preset.sections; let i = index;"
+      [ngClass]="{'m-bottom-30': (i + 1) < preset.sections.length}">
       <app-shared-preset-section [section]="section" [sectionIndex]="i"></app-shared-preset-section>
-    </div>
+    </section>
+  </ng-container>
+  <!-- /sections -->
 
-    <div class="add-section" (click)="addSection()">
-      <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
-      <div>Add section</div>
-    </div>
-  </div>
+  <!-- add section -->
+  <section class="p-bottom-30 text-center">
+    <div class="divider m-bottom-50"></div>
+    <button
+      (click)="addSection($event)"
+      [id]="'sharedPreset-btn-add-section'"
+      class="button is-xl is-primary"
+      type="button">
+      Add new section
+    </button>
+    <div class="divider m-top-50"></div>
+  </section>
+  <!-- /add section -->
 
-</ng-container>
+</div>

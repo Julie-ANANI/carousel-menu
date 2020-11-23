@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { PresetService } from '../services/preset.service';
+import { PresetFrontService } from '../../../../../services/preset/preset-front.service';
 import { Section } from '../../../../../models/section';
+import {Picto, picto} from '../../../../../models/static-data/picto';
 
 @Component({
   selector: 'app-shared-preset-section',
@@ -19,25 +20,32 @@ export class SharedPresetSectionComponent {
   }
 
   private _section: Section;
-  private _sectionIndex: number;
+  private _sectionIndex = 0;
   public editSection = false;
 
-  constructor(private presetService: PresetService,
+  private _picto: Picto = picto;
+
+  private _isCollapsed = false;
+
+  constructor(private presetService: PresetFrontService,
               private translateService: TranslateService) {}
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
     this.presetService.addQuestion(this._sectionIndex);
+    this.notifyChanges();
   }
 
   public up(event: Event): void {
     event.preventDefault();
     this.presetService.moveSection(this._sectionIndex, -1);
+    this.notifyChanges();
   }
 
   public down(event: Event): void {
     event.preventDefault();
     this.presetService.moveSection(this._sectionIndex, 1);
+    this.notifyChanges();
   }
 
   public removeSection(event: Event): void {
@@ -45,6 +53,7 @@ export class SharedPresetSectionComponent {
     const res = confirm('Are you sure you want to delete this section ?');
     if (res) {
       this.presetService.removeSection(this._sectionIndex);
+      this.notifyChanges();
     }
   }
 
@@ -52,8 +61,25 @@ export class SharedPresetSectionComponent {
     return /^\d+$/.test(value);
   }
 
+  public notifyChanges() {
+    this.presetService.setNotifyChanges(true);
+  }
+
   get sectionIndex(): number { return this._sectionIndex; }
   get section(): Section { return this._section; }
   get sectionsNames(): Array< string> { return this.presetService.sectionsNames; }
   get lang() { return this.translateService.currentLang; }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get isCollapsed(): boolean {
+    return this._isCollapsed;
+  }
+
+  set isCollapsed(value: boolean) {
+    this._isCollapsed = value;
+  }
+
 }

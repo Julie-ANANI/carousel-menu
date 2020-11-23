@@ -39,7 +39,7 @@
     <!-- /section quiz link -->
 
     <!-- section to add preset -->
-    <section *ngIf="canAccess(['view']) || canAccess(['edit'])">
+    <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
       <app-shared-preset
         (save)="updatePreset($event)"
         [sectionsNames]="sectionsNames"
