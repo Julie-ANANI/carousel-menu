@@ -159,7 +159,8 @@ export const COMMON = {
     'SUGGESTION': 'Suggestion',
     'OR': 'Ou',
     'PREPARATION': 'Préparation',
-    'LOADING_EDITOR': 'chargement de l\'éditeur...'
+    'LOADING_EDITOR': 'chargement de l\'éditeur...',
+    'TRY_AGAIN': 'Essayez encore'
   },
 
   'PLACEHOLDER': {
@@ -182,7 +183,7 @@ export const COMMON = {
     'AUTO_SUGGESTION': 'Commencez à taper pour rechercher...',
     'PROJECT_TITLE': 'Ajoutez le titre du projet ici...',
     'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
-    'MEDIA_SLIDE': 'Faites glisser les fichiers ici',
+    'MEDIA_SLIDE': 'Faites glisser votre photo ici',
   },
 
   'REQUIRED': {
@@ -455,7 +456,10 @@ export const COMMON = {
 
   'MEDIA': {
     'FORMAT': 'Format : jpeg',
-    'SIZE': 'Max size : 1Mb'
+    'SIZE': 'Max size : 1Mb',
+    'WRONG_FORMAT': 'Impossible de télécharger l\'image, le format n\'est pas valide.',
+    'WRONG_SIZE': 'Impossible de télécharger l\'image, la taille n\'est pas valide.',
+    'UPLOADING': 'Téléchargement de l\'image, veuillez patienter.'
   }
 
 };

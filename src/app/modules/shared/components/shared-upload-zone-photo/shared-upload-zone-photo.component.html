@@ -1,33 +1,58 @@
-<file-drop class="drop-container text-center" customstyle="upload-zone" (onFileDrop)="dropped($event)">
+<file-drop
+  (onFileDrop)="dropped($event)"
+  [attr.customstyle]="'upload-zone'"
+  [id]="'shared-upload-zone-photo'"
+  [ngClass]="{'is-error': isWrongFormat || isWrongSize}"
+  class="drop-container text-center">
 
-  <ng-container *ngIf="!loading">
+  <!-- uploading -->
+  <div *ngIf="isUploading">
+    <p class="text-sm text-medium text-background">{{ 'COMMON.MEDIA.UPLOADING' | translate }}</p>
+    <div class="loading is-lg"></div>
+  </div>
+  <!-- /uploading -->
+
+  <!-- not uploading -->
+  <ng-container *ngIf="!isUploading">
+
     <input (change)="dropped($event)" type="file" #fileInput>
 
-    <p class="text-sm text-primary-dark m-no-bottom">
-      {{ 'COMMON.PLACEHOLDER.MEDIA_SLIDE' | translate }}
+    <ng-container *ngIf="!isWrongFormat && !isWrongSize">
+      <i [ngStyle]="{'font-size': '70px'}" class="fas text-primary fa-cloud-upload-alt"></i>
+      <p class="text-13 text-background m-top-1 m-no-bottom">{{ 'COMMON.PLACEHOLDER.MEDIA_SLIDE' | translate }}</p>
+    </ng-container>
+
+    <ng-container *ngIf="isWrongFormat || isWrongSize">
+      <i [ngStyle]="{'font-size': '50px'}" class="fas text-alert fa-exclamation-triangle"></i>
+      <p class="text-13 text-alert m-top-2 m-no-bottom text-medium">
+        {{ isWrongFormat ? ('COMMON.MEDIA.WRONG_FORMAT' | translate) : ('COMMON.MEDIA.WRONG_SIZE' | translate) }}
+      </p>
+    </ng-container>
+
+    <!-- or || Try -->
+    <p class="text-sm text-primary-dark m-top-10 m-bottom-15">
+      {{!isWrongFormat && !isWrongSize ? ('COMMON.OR' | translate | lowercase) : ('COMMON.LABEL.TRY_AGAIN' | translate)}}
     </p>
+    <!-- /or || try -->
 
-    <div
-      class="divider m-30"
-      [attr.data-content]="'COMMON.OR' | translate | lowercase"
-      [ngStyle]="{ 'width': '120px' }">
-    </div>
-
-    <button (click)="fileInput.click()" class="button is-primary">
+    <!-- upload button -->
+    <button
+      (click)="fileInput.click()"
+      [id]="'sharedUploadZonePhoto-btn-upload'"
+      class="button is-outlined is-info is-sm">
       <i class="fas fa-upload icon-left"></i>
       {{ 'COMMON.BUTTON.UPLOAD_PICTURE' | translate }}
     </button>
+    <!-- /upload button -->
 
-    <p class="text-notify text-xs text-medium m-top-2">
+    <!-- info text -->
+    <p class="text-xs text-primary-dark m-top-2">
       {{ 'COMMON.MEDIA.FORMAT' | translate }}, {{ 'COMMON.MEDIA.SIZE' | translate }}
     </p>
+    <!-- /info text -->
 
   </ng-container>
-
-
-  <ng-container *ngIf="loading">
-    <div class="loading is-lg"></div>
-  </ng-container>
+  <!-- not uploading -->
 
 </file-drop>
 

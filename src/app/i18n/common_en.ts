@@ -160,7 +160,8 @@ export const COMMON = {
     'SUGGESTION': 'Proposition',
     'OR': 'Or',
     'PREPARATION': 'Preparation',
-    'LOADING_EDITOR': 'loading editor...'
+    'LOADING_EDITOR': 'loading editor...',
+    'TRY_AGAIN': 'Try again'
   },
 
   'PLACEHOLDER': {
@@ -183,7 +184,7 @@ export const COMMON = {
     'AUTO_SUGGESTION': 'Start typing to search...',
     'PROJECT_TITLE': 'Add the project title here...',
     'MEDIA_URL': 'Enter the address of your Youtube or Vimeo video here',
-    'MEDIA_SLIDE': 'Drag a file here',
+    'MEDIA_SLIDE': 'Drag and drop your picture here',
   },
 
   'REQUIRED': {
@@ -281,8 +282,8 @@ export const COMMON = {
     'CREATING_AN_ACCOUNT': 'is creating account...',
     'LOGIN': 'Login',
     'LOGGING': 'is logging...',
-    'UPLOAD_PICTURE': 'Upload picture',
-    'UPLOAD_VIDEO': 'Upload video',
+    'UPLOAD_PICTURE': 'Upload a picture',
+    'UPLOAD_VIDEO': 'Upload a video',
   },
 
   'PROJECT': {
@@ -459,7 +460,10 @@ export const COMMON = {
 
   'MEDIA': {
     'FORMAT': 'Format: jpeg',
-    'SIZE': 'Max size: 1Mb'
+    'SIZE': 'Max size: 1Mb',
+    'WRONG_FORMAT': 'Could not upload image, the format is invalid.',
+    'WRONG_SIZE': 'Could not upload image, the size is invalid.',
+    'UPLOADING': 'Uploading picture, please be patient.'
   }
 
 };
