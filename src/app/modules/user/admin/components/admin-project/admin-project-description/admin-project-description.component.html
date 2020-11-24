@@ -422,6 +422,18 @@
 
           <span class="text-sm p-top-1">Main media</span>
 
+          <!-- delete button -->
+          <div *ngIf="isEditable" class="text-sm p-top-1">
+            <span
+              (click)="onDeleteMedia(activeInnovCard.principalMedia)"
+              [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+              class="text-alert"
+              [id]="'btn-delete-principal-media'">
+              Delete media
+            </span>
+          </div>
+          <!-- /delete button -->
+
         </div>
         <!-- /principal media -->
 
@@ -466,8 +478,7 @@
 
               <!-- delete button -->
               <div
-                *ngIf="activeInnovCard.media.length > 1 && (mediaSrc(media, 'VIDEO')
-                || mediaSrc(media, 'IMAGE')) && isEditable"
+                *ngIf="isEditable && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))"
                 class="text-sm p-top-1">
                   <span
                     (click)="onDeleteMedia(media)"

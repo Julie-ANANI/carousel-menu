@@ -116,7 +116,7 @@
 
       <!-- delete button -->
       <div
-        *ngIf="cardContent.length > 1 && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE')) && isEditable"
+        *ngIf="(mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE')) && isEditable"
         [ngClass]="{'p-top-2': !isNotMainMedia(media)}"
         class="text-sm">
           <span

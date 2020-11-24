@@ -201,7 +201,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
    * @param media
    */
   public onDeleteMedia(media: any) {
-    if (media && this.cardContent.length > 1 && !this._isSaving && this.isEditable) {
+    if (media && !this._isSaving && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'DELETE_MEDIA', content: <Media>media});
     }

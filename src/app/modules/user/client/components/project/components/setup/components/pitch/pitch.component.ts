@@ -509,16 +509,33 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _deleteMedia(media: Media) {
     this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
-      .pipe(first()).subscribe(() => {
-      this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
-      this._cardContent = this.activeInnovCard.media;
-      this._resetVariables();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      this._resetVariables();
-      console.error(err);
-    });
+      .pipe(first())
+      .subscribe(() => {
+        this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
+        this._cardContent = this.activeInnovCard.media;
+        this._verifyPrincipal(media);
+        this._resetVariables();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._resetVariables();
+        console.error(err);
+      });
+  }
+
+  /***
+   * if we already set the deleted media as principal media then we set the next media as principal media and if no media
+   * available then set principal media null
+   * @private
+   */
+  private _verifyPrincipal(deleteMedia: Media) {
+    if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
+      this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
+      this._innovationFrontService.setInnovation(this._innovation);
+    } else if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id === deleteMedia._id
+      && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
+      this._setMainMedia(this.activeInnovCard.media[0]);
+    }
   }
 
   /***
