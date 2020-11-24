@@ -75,24 +75,29 @@
     <!-- show views -->
     <div *ngFor="let filter of sharedFiltersList" class="d-flex align-center m-top-1 m-bottom-1">
 
-      <div
-        (click)="deleteCustomFilter($event, filter.name)"
-        *ngIf="isViewsEditable || !isAdminSide"
-        [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
-        class="c-hand m-right-1 tooltip is-right">
-        <img
-          [ngStyle]="{ 'height': '13px', 'width': '12px'}"
-          alt=" "
-          src="https://res.cloudinary.com/umi/image/upload/pictos/delete/picto-delete-danger.svg">
-      </div>
+      <div class="edit-wrapper">
 
-      <a
-        (click)="loadFilter(filter.name)"
-        [attr.data-tooltip]="'SIDEBAR_MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate"
-        [ngStyle]="{ 'margin-top': '1px' }"
-        class="c-hand tooltip text-medium text-xs text-background">
-        {{ filter.name }}
-      </a>
+        <a
+          (click)="loadFilter(filter.name)"
+          [attr.data-tooltip]="'SIDEBAR_MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate"
+          [ngStyle]="{ 'margin-top': '1px' }"
+          class="c-hand tooltip text-medium text-xs text-background">
+          {{ filter.name }}
+        </a>
+
+        <div
+          *ngIf="isViewsEditable || !isAdminSide"
+          (click)="openModalEditView($event, filter)"
+          class="icon-container">
+          <span [attr.data-tooltip]="'SIDEBAR_MARKET_REPORT.TOOLTIP_EDIT_VIEW' | translate" class="tooltip">
+          <img
+            [src]="picto.edit"
+            alt="Edit"
+            class="icon-img img-responsive">
+        </span>
+        </div>
+
+      </div>
 
     </div>
     <!-- /show views -->
@@ -201,27 +206,14 @@
     <!-- /type 'FOLLOW_UP' -->
 
     <div [hidden]="!showSection.map" class="filter-wrapper animate-fade is-3">
-
-      <label class="form-checkbox">
-        <input
-          type="checkbox"
-          id="select-all-continent"
-          (change)="filterEverything($event.target['checked'], continentsList, 'CONTINENT')"
-          [checked]="!(filters['worldmap'])">
-        <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
-      </label>
-
-      <div *ngFor="let continent of continentsList" class="form-group">
-        <label class="form-checkbox">
-          <input
-            type="checkbox"
-            [name]="continent"
-            (change)="checkCountry($event)"
-            [id]="'continent-'+continent"
-            [checked]="filteredContinents ? filteredContinents[continent] : true">
-          <i class="form-icon"></i> {{ ('CONTINENTS.' + continent) | translate }}
-        </label>
-      </div>
+      <app-shared-world-list
+        (checkContinent)="checkContinent($event)"
+        (checkCountry)="checkCountry($event)"
+        (filterAllContinents)="filterEverything($event.isChecked, $event.filterArray, 'CONTINENT')"
+        [filteredContinents]="filteredContinents"
+        [filteredCountries]="filteredCountries"
+        [filters]="filters">
+      </app-shared-world-list>
     </div>
 
   </div>
@@ -526,3 +518,23 @@
 
 </app-utility-modal>
 <!-- /Modal to ask operator to sure about ending the project -->
+
+<!-- modal to edit view -->
+<app-utility-modal *ngIf="editedFilter && (isViewsEditable || !isAdminSide)" [(showModal)]="isModalEditView" [title]="'MARKET_REPORT.EDIT_VIEW' | translate">
+
+  <section class="modal-body">
+    <label class="form-label" for="change-name">{{ 'MARKET_REPORT.CHANGE_NAME' | translate }}</label>
+    <input id="change-name" class="form-input" [(ngModel)]="editedFilter.name">
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel" type="button">{{'COMMON.BUTTON.CANCEL' | translate}}</button>
+    <button class="button is-danger" type="button"
+            *ngIf="isViewsEditable || !isAdminSide"
+            (click)="deleteCustomFilter($event, editedFilter.name)">{{'COMMON.BUTTON.DELETE' | translate}}
+    </button>
+    <button (click)="updateFilter()" class="button is-primary" type="button">{{'COMMON.BUTTON.CONFIRM' | translate}}</button>
+  </footer>
+
+</app-utility-modal>
+<!-- /modal to edit view -->

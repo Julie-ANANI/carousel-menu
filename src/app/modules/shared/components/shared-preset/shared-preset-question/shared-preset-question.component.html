@@ -147,6 +147,17 @@
         </label>
         <!-- /add comment -->
 
+        <!-- is sensitive data -->
+        <label class="form-switch">
+          <input
+            (ngModelChange)="updateValue($event, 'SENSITIVE_DATA')"
+            [ngModel]="question.sensitiveAnswerData"
+            [disabled]="!isEditable"
+            type="checkbox">
+          <i class="form-icon"></i> Add comment
+        </label>
+        <!-- /add comment -->
+
         <!-- show favourable answers -->
         <label *ngIf="question.controlType === 'radio'" class="form-switch m-left-50">
           <input

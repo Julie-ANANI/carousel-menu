@@ -172,9 +172,15 @@ export const MARKET_REPORT = {
 
   'VIEWS': 'Mes vues',
 
+  'EDIT_VIEW': 'Modifier la vue',
+
+  'CHANGE_NAME': 'Changer le nom',
+
   'TOOLTIP_DELETE_VIEW': 'Effacer la vue',
 
   'TOOLTIP_LOAD_VIEW': 'Charger la vue',
+
+  'TOOLTIP_EDIT_VIEW': 'Editer la vue',
 
   'TOOLTIP_UNHIDE_PROFESSIONAL': 'Afficher le professionnel',
 

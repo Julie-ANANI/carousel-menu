@@ -10,6 +10,11 @@
     margin-bottom: 10px;
   }
 
+  .icon-img {
+    width: 40%;
+    height: 40%;
+  }
+
   .form-checkbox {
     font-size: 14px;
     font-weight: 600;
@@ -80,6 +85,13 @@
 
     }
 
+  }
+
+  .edit-wrapper {
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+    width: 100%;
   }
 
   .filter-wrapper {

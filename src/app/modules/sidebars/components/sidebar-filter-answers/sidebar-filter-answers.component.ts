@@ -1,24 +1,25 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PLATFORM_ID } from '@angular/core';
-import { Innovation } from '../../../../models/innovation';
-import { SharedFilter } from '../../../shared/components/shared-market-report/models/shared-filter';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { FilterService } from '../../../shared/components/shared-market-report/services/filters.service';
-import { Answer } from '../../../../models/answer';
-import { first, takeUntil } from 'rxjs/operators';
-import { Question } from '../../../../models/question';
-import { WorldmapService } from "../../../../services/worldmap/worldmap.service";
-import { Tag } from "../../../../models/tag";
-import { TagsFiltersService } from "../../../shared/components/shared-market-report/services/tags-filter.service";
-import { WorldmapFiltersService } from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { Subject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
-import { isPlatformBrowser } from "@angular/common";
-import { Professional } from "../../../../models/professional";
-import { UserFrontService } from "../../../../services/user/user-front.service";
+import {Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PLATFORM_ID} from '@angular/core';
+import {Innovation} from '../../../../models/innovation';
+import {SharedFilter} from '../../../shared/components/shared-market-report/models/shared-filter';
+import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {FilterService} from '../../../shared/components/shared-market-report/services/filters.service';
+import {Answer} from '../../../../models/answer';
+import {first, takeUntil} from 'rxjs/operators';
+import {Question} from '../../../../models/question';
+import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
+import {Tag} from '../../../../models/tag';
+import {TagsFiltersService} from '../../../shared/components/shared-market-report/services/tags-filter.service';
+import {WorldmapFiltersService} from '../../../shared/components/shared-market-report/services/worldmap-filter.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import {Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {AnswerFrontService} from '../../../../services/answer/answer-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {Professional} from '../../../../models/professional';
+import {UserFrontService} from '../../../../services/user/user-front.service';
+import {picto, Picto} from '../../../../models/static-data/picto';
 
 type Template = 'MARKET_REPORT' | 'FOLLOW_UP';
 
@@ -66,6 +67,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _isModalPreview = false;
 
+  private _isModalEditView = false;
+
   private _filterNumber = 0;
 
   private _innovation: Innovation = <Innovation>{};
@@ -96,6 +99,10 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   private _isFinalConclusion = true;
 
   private _professionalsTags: Array<Tag> = [];
+
+  private _picto: Picto = picto;
+
+  private _editedFilter: SharedFilter;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
@@ -176,6 +183,12 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._isModalEnd = true;
   }
 
+  public openModalEditView(event: Event, value: SharedFilter) {
+    event.preventDefault();
+    this._editedFilter = {...value};
+    this._isModalEditView = true;
+  }
+
   public deleteProfessionalFilter(event: Event, id: string) {
     event.preventDefault();
     const filterValue = this._filterService.filters['professionals'].value;
@@ -212,6 +225,22 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
       this._translateNotificationsService.error('ERROR.ERROR',
         'SIDEBAR_MARKET_REPORT.ERRORS.VIEW_ALREADY_EXIST');
     }
+  }
+
+  public updateFilter() {
+    console.log(this._sharedFiltersList);
+    const index = this._sharedFiltersList.findIndex((filter) =>
+      filter._id === this._editedFilter._id
+    );
+
+    this._innovationService.updateFilter(this._innovation._id, this._editedFilter, this._sharedFiltersList[index].name).pipe(first()).subscribe((res) => {
+      this._sharedFiltersList[index] = res;
+      this._filterName = '';
+      this._isModalEditView = false;
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   public checkOption(event: Event, question: Question) {
@@ -282,13 +311,14 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     event.preventDefault();
     this._innovationService.deleteFilter(this._innovation._id, encodeURIComponent(name))
       .pipe(first()).subscribe((result) => {
-        if (result['ok'] === 1) {
-          this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
-        }
-        }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
+      if (result['ok'] === 1) {
+        this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
+      }
+      this._isModalEditView = false;
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   public loadFilter(name: string) {
@@ -320,9 +350,15 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._filterService.deleteFilter(name);
   }
 
-  public checkCountry(event: Event) {
+  public checkContinent(event: Event) {
     event.preventDefault();
     this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name,
+      (event.target as HTMLInputElement).checked);
+  }
+
+  public checkCountry(event: Event) {
+    event.preventDefault();
+    this._worldmapFilterService.selectCountry((event.target as HTMLInputElement).name,
       (event.target as HTMLInputElement).checked);
   }
 
@@ -420,7 +456,11 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   }
 
   get filteredContinents() {
-    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value : null;
+    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value.continents : null;
+  }
+
+  get filteredCountries() {
+    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value.countries : null;
   }
 
   get selectedTags(): {[t: string]: boolean} {
@@ -473,6 +513,22 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   get professionalsTags(): Array<Tag> {
     return this._professionalsTags;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get isModalEditView(): boolean {
+    return this._isModalEditView;
+  }
+
+  set isModalEditView(value: boolean) {
+    this._isModalEditView = value;
+  }
+
+  get editedFilter(): SharedFilter {
+    return this._editedFilter;
   }
 
   ngOnDestroy(): void {

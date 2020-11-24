@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { PresetFrontService } from '../../../../../services/preset/preset-front.service';
-import { Innovation } from '../../../../../models/innovation';
-import { Question } from '../../../../../models/question';
+import {Component, Input} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {PresetFrontService} from '../../../../../services/preset/preset-front.service';
+import {Innovation} from '../../../../../models/innovation';
+import {Question} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
@@ -22,10 +22,15 @@ export class SharedPresetQuestionComponent {
   @Input() set question(value: Question) {
     this._question = value;
     this._isTaggedQuestion = this.presetService.isTaggedQuestion(value.identifier);
+    this._isContactQuestion = this.presetService.isContactQuestion(value.identifier);
     if (this._question.identifier && this._isTaggedQuestion) {
       this._customId = this.presetService.generateId();
     } else {
       this._customId = this._question.identifier;
+    }
+
+    if (this._isContactQuestion) {
+      this.question.sensitiveAnswerData = true;
     }
   }
 
@@ -43,6 +48,7 @@ export class SharedPresetQuestionComponent {
 
   private _customId: string;
   private _isTaggedQuestion: boolean;
+  private _isContactQuestion: boolean;
   public editMode = false;
 
   private _language: 'en' | 'fr' = 'en';
@@ -162,6 +168,9 @@ export class SharedPresetQuestionComponent {
       switch (attr) {
         case 'COMMENT':
           this._question.canComment = !this._question.canComment;
+          break;
+        case 'SENSITIVE_DATA':
+          this._question.sensitiveAnswerData = !this._question.sensitiveAnswerData;
           break;
         case 'FAV_ANSWERS':
           this._question.visibility = !this._question.visibility;

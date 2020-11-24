@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Answer } from '../../../../../../models/answer';
-import { Question } from '../../../../../../models/question';
-import { Innovation } from '../../../../../../models/innovation';
-import { Tag } from '../../../../../../models/tag';
-import { ResponseService } from '../../services/response.service';
-import { DataService } from '../../services/data.service';
-import { Observable } from 'rxjs';
-import { AnswersStats } from "../../models/stats";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Answer} from '../../../../../../models/answer';
+import {Question} from '../../../../../../models/question';
+import {Innovation} from '../../../../../../models/innovation';
+import {Tag} from '../../../../../../models/tag';
+import {ResponseService} from '../../services/response.service';
+import {DataService} from '../../services/data.service';
+import {Observable} from 'rxjs';
+import {AnswersStats} from '../../models/stats';
 
 @Component({
   selector: 'app-question-section',
@@ -19,6 +19,8 @@ export class QuestionSectionComponent implements OnInit {
   @Input() innovation: Innovation = <Innovation>{};
 
   @Input() readonly = true;
+
+  @Input() hideAnswers = true;
 
   @Input() canEditQuestionTags = false;
 

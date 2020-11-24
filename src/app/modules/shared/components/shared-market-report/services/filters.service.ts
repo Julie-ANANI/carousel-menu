@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Answer } from '../../../../../models/answer';
-import { Filter } from '../models/filter';
-import { Tag } from '../../../../../models/tag';
-import { Subject } from 'rxjs';
-import { WorldmapService } from '../../../../../services/worldmap/worldmap.service';
+import {Injectable} from '@angular/core';
+import {Answer} from '../../../../../models/answer';
+import {Filter} from '../models/filter';
+import {Tag} from '../../../../../models/tag';
+import {Subject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class FilterService {
@@ -11,7 +10,7 @@ export class FilterService {
   private _filters: {[questionId: string]: Filter} = {};
   private _filtersUpdate = new Subject<null>();
 
-  constructor(private _sharedWorld: WorldmapService) {
+  constructor() {
     this.reset();
   }
 
@@ -65,7 +64,8 @@ export class FilterService {
         case 'COUNTRIES':
           filteredAnswers = filteredAnswers.filter((answer) => {
             const country = answer.country.flag || answer.professional.country;
-            return this._sharedWorld.isCountryInSelectedContinents(country,  filter.value);
+            const selectedCountries = Object.keys(filter.value.countries).filter((key) => filter.value.countries[key]);
+            return selectedCountries.includes(country);
           });
           break;
         case 'CUSTOM':

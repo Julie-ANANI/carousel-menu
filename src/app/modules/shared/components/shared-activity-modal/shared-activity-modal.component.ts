@@ -90,4 +90,7 @@ export class SharedActivityModalComponent implements OnInit {
     return this._authorId;
   }
 
+  get isEtherpadUp(): boolean {
+    return this._authService.etherpadAccesses.active;
+  }
 }

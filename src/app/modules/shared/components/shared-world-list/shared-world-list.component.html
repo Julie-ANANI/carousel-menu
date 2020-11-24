@@ -1,0 +1,42 @@
+<div class="filter-wrapper animate-fade is-3">
+
+  <label class="form-checkbox">
+    <input
+      type="checkbox"
+      id="select-all-continent"
+      (change)="selectAllContinents($event.target['checked'], continents)"
+      [indeterminate]="partiallySelectedContinents()"
+      [checked]="!(filters['worldmap'])">
+    <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+  </label>
+
+  <div [id]="continent" *ngFor="let continent of continents">
+    <app-shared-toggle-list>
+      <div slot="header">
+        <label class="form-checkbox">
+          <input
+            type="checkbox"
+            [name]="continent"
+            (change)="checkContinent.emit($event)"
+            [id]="'continent-'+continent"
+            [indeterminate]="partiallySelectedCountries(continent)"
+            [checked]="filteredContinents ? filteredContinents[continent] : true">
+          <i class="form-icon"></i> {{ ('CONTINENTS.' + continent) | translate }}
+        </label>
+      </div>
+      <div slot="body">
+        <div *ngFor="let country of continentCountries[continent]" class="m-left-15">
+          <label class="form-checkbox">
+            <input
+              type="checkbox"
+              [name]="country.code"
+              [id]="'country-'+country.code"
+              (change)="checkCountry.emit($event)"
+              [checked]="filteredCountries ? filteredCountries[country.code] : true">
+            <i class="form-icon"></i> {{ country.name }}
+          </label>
+        </div>
+      </div>
+    </app-shared-toggle-list>
+  </div>
+</div>

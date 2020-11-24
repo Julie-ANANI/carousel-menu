@@ -6,6 +6,8 @@ export const SIDEBAR_MARKET_REPORT = {
 
   'TOOLTIP_LOAD_VIEW': 'Activer la vue',
 
+  'TOOLTIP_EDIT_VIEW': 'Editer la vue',
+
   'ACTIVATED_VIEW': 'Vue activée',
 
   'ERROR': {
