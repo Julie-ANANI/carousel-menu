@@ -47,15 +47,6 @@ export class QuestionConclusionComponent implements OnInit {
     this._innovationFrontService.setNotifyChanges(true);
   }
 
-  public displayCountries(id: string) {
-    const continentCountries = document.getElementById(id);
-    if (!!continentCountries) {
-      const visible = continentCountries.classList.contains('expanded');
-      continentCountries.classList.remove((visible ? 'expanded' : 'collapsed'));
-      continentCountries.classList.add((visible ? 'collapsed' : 'expanded'));
-    }
-  }
-
   get tags(): Array<Tag> {
     return this._dataService.answersTagsLists[this.question._id];
   }

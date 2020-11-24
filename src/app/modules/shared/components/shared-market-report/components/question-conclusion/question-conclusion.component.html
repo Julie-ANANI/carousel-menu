@@ -32,24 +32,19 @@
     <div *ngIf="originAnswers !== null" class="p-top-20">
       <h4 class="title is-5 m-bottom-15">Geographical Distribution:</h4>
       <div class="m-no-bottom">
-        <div *ngFor="let continent of originAnswers | keyvalue | orderBy:'value'"
-             [id]="continent.key"
-             class="m-top-1 continent-wrapper collapsed">
-          <div class="flex d-inline-flex text-bold continent">
-            <!-- icon to toggle countries display -->
-            <span class="text-center" (click)="displayCountries(continent.key)">
-              {{ ('CONTINENTS.' + continent.key) | translate }}: {{ continent.value.count }}
-              <i class="icon text-secondary m-left-10 icon-arrow-down "></i>
-              <i class="icon text-secondary m-left-10 icon-arrow-up "></i>
-            </span>
-            <!-- /button to toggle countries display -->
-          </div>
-
-          <ul class="m-no-bottom countries">
-            <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value'" class="m-top-1">
-              {{ country.key }}: {{ country.value }}
-            </li>
-          </ul>
+        <div *ngFor="let continent of originAnswers | keyvalue | orderBy:'value'" [id]="continent.key" class="m-top-1">
+          <app-shared-toggle-list>
+            <div slot="header">
+              <span class="text-bold"> {{ ('CONTINENTS.' + continent.key) | translate }}: {{ continent.value.count }} </span>
+            </div>
+            <div slot="body" >
+              <ul class="m-no-bottom">
+                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value'" class="m-top-1">
+                  {{ country.key }}: {{ country.value }}
+                </li>
+              </ul>
+            </div>
+          </app-shared-toggle-list>
         </div>
       </div>
     </div>

@@ -61,6 +61,18 @@ export class WorldmapService {
     }, {} as { [continent: string]: { count: number, countries: { [country: string]: number } } });
   }
 
+  public async getCountriesByContinent(): Promise<{ [continent: string]: Array<Country> }> {
+    const countriesList = await this.getCountriesList();
+    return countriesList.reduce((acc, country) => {
+      const continent = this._countries[country.code];
+      if (continent) {
+        acc[continent] = acc[continent] || [];
+        acc[continent].push(country);
+      }
+      return acc;
+    }, {} as { [continent: string]: Array<Country> });
+  }
+
   public async getCountriesList(): Promise<Array<Country>> {
     return new Promise(resolve => {
       if (this._countriesList.length === 0) {

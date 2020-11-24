@@ -350,9 +350,15 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._filterService.deleteFilter(name);
   }
 
-  public checkCountry(event: Event) {
+  public checkContinent(event: Event) {
     event.preventDefault();
     this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name,
+      (event.target as HTMLInputElement).checked);
+  }
+
+  public checkCountry(event: Event) {
+    event.preventDefault();
+    this._worldmapFilterService.selectCountry((event.target as HTMLInputElement).name,
       (event.target as HTMLInputElement).checked);
   }
 
@@ -450,7 +456,11 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   }
 
   get filteredContinents() {
-    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value : null;
+    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value.continents : null;
+  }
+
+  get filteredCountries() {
+    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value.countries : null;
   }
 
   get selectedTags(): {[t: string]: boolean} {

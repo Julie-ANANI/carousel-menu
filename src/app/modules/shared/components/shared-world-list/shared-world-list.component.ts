@@ -1,0 +1,78 @@
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Country} from '../../../../models/country';
+import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
+import {Filter} from '../shared-market-report/models/filter';
+
+@Component({
+  selector: 'app-shared-world-list',
+  templateUrl: './shared-world-list.component.html',
+  styleUrls: ['./shared-world-list.component.scss']
+})
+export class SharedWorldListComponent implements OnInit {
+
+  @Input() filters: { [questionId: string]: Filter } = {};
+  @Input() filteredContinents: any;
+  @Input() filteredCountries: any;
+
+  @Output() filterAllContinents = new EventEmitter<{ isChecked: boolean, filterArray: Array<any> }>();
+  @Output() checkContinent: EventEmitter<Event> = new EventEmitter();
+  @Output() checkCountry: EventEmitter<Event> = new EventEmitter();
+
+  constructor(private _worldmapService: WorldmapService) {
+  }
+
+  private _continentCountries: { [continent: string]: Array<Country> } = {};
+
+  get continentCountries(): { [continent: string]: Array<Country> } {
+    return this._continentCountries;
+  }
+
+  get continents(): Array<string> {
+    return WorldmapService.continentsList;
+  }
+
+  ngOnInit(): void {
+    this._fetchAllCountries();
+  }
+
+  selectAllContinents(isChecked: boolean, filterArray: Array<any>) {
+    this.filterAllContinents.emit({
+      isChecked: isChecked,
+      filterArray: filterArray
+    });
+  }
+
+  /**
+   * Check if countries of a continent are partially selected
+   * For indeterminate checkbox
+   * @param continent
+   */
+  partiallySelectedCountries(continent: string): boolean {
+    if (this.filteredCountries) {
+      const continentCountriesCodes = this.continentCountries[continent].map(c => c.code);
+      const selectedCountries = Object.keys(this.filteredCountries)
+        .filter((country: string) => continentCountriesCodes.includes(country) && this.filteredCountries[country]).length;
+      return selectedCountries > 0 && selectedCountries < this.continentCountries[continent].length;
+    }
+    return false;
+  }
+
+  /**
+   * Check if only some continents are selected
+   * For indeterminate checkbox
+   */
+  partiallySelectedContinents(): boolean {
+    if (this.filteredContinents) {
+      const selectedContinents = Object.keys(this.filteredContinents)
+        .filter((c: string) => this.filteredContinents[c]).length;
+      return selectedContinents > 0 && selectedContinents < this.continents.length;
+    }
+    return false;
+  }
+
+  private _fetchAllCountries() {
+    this._worldmapService.getCountriesByContinent().then((countries: { [continent: string]: Array<Country> }) => {
+      this._continentCountries = countries;
+    });
+  }
+}

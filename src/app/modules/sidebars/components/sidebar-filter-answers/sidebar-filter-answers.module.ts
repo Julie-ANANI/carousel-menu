@@ -7,6 +7,7 @@ import { SidebarFilterAnswersComponent } from './sidebar-filter-answers.componen
 import {PipeModule} from "../../../../pipe/pipe.module";
 import {NgxPageScrollModule} from "ngx-page-scroll";
 import {ModalModule} from "../../../utility/modals/modal/modal.module";
+import {SharedWorldListModule} from '../../../shared/components/shared-world-list/shared-world-list.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {ModalModule} from "../../../utility/modals/modal/modal.module";
     FormsModule,
     PipeModule,
     NgxPageScrollModule,
-    ModalModule
+    ModalModule,
+    SharedWorldListModule
   ],
   declarations: [
     SidebarFilterAnswersComponent
