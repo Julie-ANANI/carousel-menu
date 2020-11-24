@@ -361,6 +361,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isMainDomain;
   }
 
+  hideQuestionAnswers(question: Question) {
+    return this.showAnonymousAnswers && (question.sensitiveAnswerData || question.identifier.includes('contact'));
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();

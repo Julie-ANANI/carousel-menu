@@ -135,7 +135,7 @@
               [questionReceived]="question"
               [readonly]="!canAccess(['edit', 'umiWord'])"
               [toggleAnswers]="toggleAnswers"
-              [hideAnswers]="showAnonymousAnswers && question.sensitiveAnswerData">
+              [hideAnswers]="hideQuestionAnswers(question)">
             </app-question-section>
           </section>
           <!-- /other question sections -->

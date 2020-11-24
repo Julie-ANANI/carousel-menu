@@ -113,6 +113,10 @@ export class PresetFrontService {
     return Object.keys(this.taggedQuestionsTypes).indexOf(identifier) !== -1;
   }
 
+  public isContactQuestion(identifier: string): boolean {
+    return this.isTaggedQuestion(identifier) && identifier.includes('contact');
+  }
+
   public getNonUsedQuestions(): Array<string> {
     const identifiersMap = this._preset.sections.reduce((accS, section) => {
       const subIdentifiersMap = section.questions.reduce((accQ, question) => Object.assign(accQ, {[question.identifier]: 1}), {});
