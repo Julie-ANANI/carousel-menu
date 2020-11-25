@@ -58,6 +58,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _isEditableComment = false;
 
+  private _isUploadingVideo = false;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
               private _translationService: TranslationService,
@@ -289,13 +291,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public uploadVideo(video: Video): void {
+    this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id,
       this._innovation.innovationCards[this._activeCardIndex]._id, video)
       .pipe(first())
       .subscribe((res) => {
+        this._isUploadingVideo = false;
         this.activeInnovCard.media.push(res);
         this._setInnovation();
       }, (err: HttpErrorResponse) => {
+        this._isUploadingVideo = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
@@ -416,6 +421,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get isEditableComment(): boolean {
     return this._isEditableComment;
+  }
+
+  get isUploadingVideo(): boolean {
+    return this._isUploadingVideo;
   }
 
   ngOnDestroy(): void {

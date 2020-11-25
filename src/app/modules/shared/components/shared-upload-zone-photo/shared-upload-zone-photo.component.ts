@@ -27,7 +27,7 @@ export class SharedUploadZonePhotoComponent {
               private _httpClient: HttpClient) { }
 
   public dropped(event: any) {
-    if (this._isUploading === false) {
+    if (!this._isUploading) {
       this._isWrongFormat = false;
       this._isWrongSize = false;
 

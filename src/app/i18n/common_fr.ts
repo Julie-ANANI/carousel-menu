@@ -458,8 +458,10 @@ export const COMMON = {
     'FORMAT': 'Format : jpeg',
     'SIZE': 'Max size : 1Mb',
     'WRONG_FORMAT': 'Impossible de télécharger l\'image, le format n\'est pas valide.',
+    'WRONG_FORMAT_VIDEO': 'Impossible de télécharger de la vidéo, le format n\'est pas valide.',
     'WRONG_SIZE': 'Impossible de télécharger l\'image, la taille n\'est pas valide.',
-    'UPLOADING': 'Téléchargement de l\'image, veuillez patienter.'
+    'UPLOADING': 'Téléchargement de l\'image, veuillez patienter.',
+    'UPLOADING_VIDEO': 'Téléchargement de la vidéo, veuillez patienter.'
   }
 
 };

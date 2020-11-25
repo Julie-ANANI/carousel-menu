@@ -304,15 +304,16 @@
     (tobeSavedChanges)="onChangesToBeSaved($event)"
     [(isSaving)]="isSaving"
     [cardContent]="cardContent"
-    [comment]="operatorComment"
     [collaborativesComments]="currentSectionComments"
+    [comment]="operatorComment"
     [imagePostUri]="imagePostUri"
+    [innovationId]="innovation._id"
     [isEditable]="isEditable"
+    [isUploadingVideo]="isUploadingVideo"
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
-    [type]="sidebarValue.type"
     [sectionId]="activeSectionCode"
-    [innovationId]="innovation._id">
+    [type]="sidebarValue.type">
   </app-sidebar-project-pitch>
 </app-sidebar>
 <!-- /sidebar to edit innovation card field -->

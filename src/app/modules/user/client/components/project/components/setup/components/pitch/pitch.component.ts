@@ -29,6 +29,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _activeCardIndex = 0;
   private _activeSectionCode = '';
   private _toBeSaved = false;
+  private _isUploadingVideo = false;
 
   constructor(private _innovationService: InnovationService,
               private _missionService: MissionService,
@@ -481,17 +482,22 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   private _uploadVideo(video: Video) {
+    this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
-      .pipe(first()).subscribe((video) => {
-      this.activeInnovCard.media.push(video);
-      this._cardContent = this.activeInnovCard.media;
-      this._resetVariables();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      this._resetVariables();
-      console.error(err);
-    });
+      .pipe(first())
+      .subscribe((video) => {
+        this._isUploadingVideo = false;
+        this._innovation.innovationCards[this._activeCardIndex].media.push(video);
+        this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media
+        this._innovationFrontService.setInnovation(this._innovation);
+        this._resetVariables();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        this._isUploadingVideo = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._resetVariables();
+        console.error(err);
+      });
   }
 
   private _setMainMedia(media: Media) {
@@ -553,6 +559,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get activeSectionCode(): string {
     return this._activeSectionCode;
+  }
+
+  get isUploadingVideo(): boolean {
+    return this._isUploadingVideo;
   }
 
 }

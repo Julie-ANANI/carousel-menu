@@ -183,7 +183,7 @@ export const COMMON = {
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Start typing to search...',
     'PROJECT_TITLE': 'Add the project title here...',
-    'MEDIA_URL': 'Enter the address of your Youtube or Vimeo video here',
+    'MEDIA_URL': 'Place the address of your Youtube or Vimeo video here',
     'MEDIA_SLIDE': 'Drag and drop your picture here',
   },
 
@@ -462,8 +462,10 @@ export const COMMON = {
     'FORMAT': 'Format: jpeg',
     'SIZE': 'Max size: 1Mb',
     'WRONG_FORMAT': 'Could not upload image, the format is invalid.',
+    'WRONG_FORMAT_VIDEO': 'Could not upload video, the format is invalid.',
     'WRONG_SIZE': 'Could not upload image, the size is invalid.',
-    'UPLOADING': 'Uploading picture, please be patient.'
+    'UPLOADING': 'Uploading picture, please be patient.',
+    'UPLOADING_VIDEO': 'Uploading video, please be patient.'
   }
 
 };

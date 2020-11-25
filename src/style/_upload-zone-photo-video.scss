@@ -1,13 +1,29 @@
 @import "framework/src/variables";
 @import "framework/src/mixins";
 
-// styles that are related to the upload zone photo.
+// styles that are related to the upload zone photo/video.
 
-file-drop.drop-container {
+.upload-video-zone, file-drop.drop-container {
   border: $border-width-lg dashed $border-default-color;
   position: relative;
   border-radius: $border-radius;
   min-height: 250px;
+  flex-direction: column;
+  padding: $unit-2;
+
+  &:hover {
+    border-color: $border-primary-color;
+    background-color: #FFF9EB;
+  }
+
+  &.is-error {
+    border-color: $border-alert-color;
+  }
+
+}
+
+file-drop.drop-container {
+  flex-direction: row;
   display: flex;
   padding: 6px $unit-2;
 
@@ -35,15 +51,6 @@ file-drop.drop-container {
   color: transparent !important;
   height: 100% !important;
   flex-direction: column;
-}
-
-file-drop.drop-container:hover {
-  border-color: $border-primary-color;
-  background-color: #FFF9EB;
-}
-
-file-drop.drop-container.is-error {
-  border-color: $border-alert-color;
 }
 
 .nv-file-over {

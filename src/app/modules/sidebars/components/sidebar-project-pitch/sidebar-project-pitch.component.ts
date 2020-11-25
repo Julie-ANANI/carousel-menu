@@ -48,6 +48,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
     }
   }
 
+  @Input() isUploadingVideo = false;
+
   @Input() isEditable = false;
 
   @Input() imagePostUri = '';
