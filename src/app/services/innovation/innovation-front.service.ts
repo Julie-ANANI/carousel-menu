@@ -81,8 +81,8 @@ export class InnovationFrontService {
    * @param source => innovationCard || Media.
    */
   public static getMediaSrc(source: any, requestFor = 'default', width = '240', height = '159'): string {
-    const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
-    const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
+    const defaultSrc = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_auto,h_${height},q_auto,w_${width}/v1542811700/app/default-images/icons/no-image.png`;
+    const prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/`;
     const suffix = '.jpg';
     let src = '';
 
@@ -231,7 +231,7 @@ export class InnovationFrontService {
   }
 
   public static defaultMedia(width = '240', height = '159'): string {
-    return `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/v1542811700/app/default-images/icons/no-image.png`;
+    return `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/v1542811700/app/default-images/icons/no-image.png`;
   }
 
   /***
@@ -285,8 +285,20 @@ export class InnovationFrontService {
     return media && media.video && media.video.thumbnail || '';
   }
 
-  public static imageSrc(media: Media, width = '240', height = '159'): string {
-    const _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,h_${height},w_${width}/`;
+  /***
+   * options are the cloudinary params.
+   * https://cloudinary.com/documentation/image_transformations
+   * @param media
+   * @param width
+   * @param height
+   * @param options ex: ['c_fill', 'f_auto']
+   */
+  public static imageSrc(media: Media, width = '240', height = '159', options?: Array<string>): string {
+    let _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/`;
+    if (options && options.length > 0) {
+      _prefix = `https://res.cloudinary.com/umi/image/upload/`
+      _prefix += options.join(',') + `,h_${height},w_${width}/`
+    }
     const _suffix = '.jpg';
     return media && media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
   }

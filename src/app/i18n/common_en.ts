@@ -459,8 +459,8 @@ export const COMMON = {
   },
 
   'MEDIA': {
-    'FORMAT': 'Format: jpeg',
-    'SIZE': 'Max size: 1Mb',
+    'FORMAT': 'Format: jpeg.',
+    'SIZE': 'Max size: 5Mb.',
     'WRONG_FORMAT': 'Could not upload image, the format is invalid.',
     'WRONG_FORMAT_VIDEO': 'Could not upload video, the format is invalid.',
     'WRONG_SIZE': 'Could not upload image, the size is invalid.',
