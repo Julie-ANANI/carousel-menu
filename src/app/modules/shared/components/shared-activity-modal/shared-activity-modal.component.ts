@@ -1,11 +1,13 @@
-import {Component, Inject, Input, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 import {isPlatformBrowser} from '@angular/common';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Session} from '../../../../models/session';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
+import {EtherpadSocketService} from '../../../../services/socket/etherpad.socket.service';
+import {Subject} from 'rxjs';
 
 /***
  * example: admin-project component.
@@ -18,7 +20,7 @@ import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front
   templateUrl: './shared-activity-modal.component.html',
   styleUrls: ['./shared-activity-modal.component.scss']
 })
-export class SharedActivityModalComponent implements OnInit {
+export class SharedActivityModalComponent implements OnInit, OnDestroy {
 
   /***
    * based on this id we call the etherpad service in the api
@@ -27,6 +29,7 @@ export class SharedActivityModalComponent implements OnInit {
   @Input() set innovationId(value: string) {
     if (value) {
       this._getSubscribedUsers(value);
+      this._innovationId = value;
     }
   }
 
@@ -36,10 +39,19 @@ export class SharedActivityModalComponent implements OnInit {
 
   private _isLoading = true;
 
+  private _listenSessionChange = false;
+
   private _authorId: string;
+
+  private _innovationId: string;
+
+  private _groupId: string;
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
+              private _etherpadSocketService: EtherpadSocketService,
               private _authService: AuthService) {
     this._authorId = this._authService.etherpadAccesses.authorID;
   }
@@ -56,11 +68,25 @@ export class SharedActivityModalComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._etherpadService.subscribedUsersSessions(id).pipe(first()).subscribe((sessions) => {
         this._usersSessions = EtherpadFrontService.sortSessions(sessions);
+        if (sessions.length && !this._listenSessionChange) {
+          this._groupId = sessions[0].groupID;
+          this._detectSessionsChange();
+        }
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.error(err);
       });
     }
+  }
+
+  private _detectSessionsChange() {
+    this._listenSessionChange = true;
+    this._etherpadSocketService
+      .getGroupSessionUpdate(this._groupId)
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(() => {
+        this._getSubscribedUsers(this._innovationId);
+      });
   }
 
   public openModal(event: Event) {
@@ -92,5 +118,10 @@ export class SharedActivityModalComponent implements OnInit {
 
   get isEtherpadUp(): boolean {
     return this._authService.etherpadAccesses.active;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 }

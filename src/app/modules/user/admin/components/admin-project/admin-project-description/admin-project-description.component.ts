@@ -64,7 +64,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _translationService: TranslationService,
               private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService,) { }
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
 
@@ -425,6 +425,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get isUploadingVideo(): boolean {
     return this._isUploadingVideo;
+  }
+
+  get currentLang(): string {
+    return this.activeInnovCard.lang;
   }
 
   ngOnDestroy(): void {

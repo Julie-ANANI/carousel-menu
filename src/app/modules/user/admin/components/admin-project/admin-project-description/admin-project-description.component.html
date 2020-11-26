@@ -35,11 +35,12 @@
             </div>
 
             <app-shared-editors
+              id="project-title"
               *ngIf="isEditable"
-              (textChange)="updateInnovation()"
+              (textChange)="onContentChange($event, 'title')"
               [text]="activeInnovCard.title"
               [innovationId]="innovation._id"
-              [elementId]="'title'"
+              [elementId]="'title-' + currentLang"
               [type]="'pitch'"
               [isEditable]="isEditable">
             </app-shared-editors>
@@ -133,6 +134,7 @@
 
             <div class="text-15">
               <app-shared-editors
+                id="project-summary"
                 (textChange)="onContentChange($event, 'summary')"
                 [text]="activeInnovCard.summary"
                 [innovationId]="innovation._id"
@@ -178,7 +180,7 @@
                   (textChange)="onCommentChange($event, 'summary', 'suggestion')"
                   [text]="zoneData('summary', 'suggestion')"
                   [innovationId]="innovation._id"
-                  [elementId]="'summary'"
+                  [elementId]="'summary-' + currentLang"
                   [type]="'suggestion'">
                 </app-shared-editors>
               </div>
@@ -274,7 +276,7 @@
                 (textChange)="onContentChange($event, 'sections', i)"
                 [text]="section.content"
                 [innovationId]="innovation._id"
-                [elementId]="section.type.toLowerCase()+'-'+i+3"
+                [elementId]="section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
                 [type]="'pitch'">
               </app-shared-editors>
             </div>
@@ -319,7 +321,7 @@
                   (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
                   [text]="zoneData('sections', 'suggestion', i)"
                   [innovationId]="innovation._id"
-                  [elementId]="section.type.toLowerCase()+'-'+i+3"
+                  [elementId]="section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
                   [type]="'suggestion'">
                 </app-shared-editors>
               </div>

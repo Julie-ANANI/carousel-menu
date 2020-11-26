@@ -10,10 +10,10 @@ export class ScrapeHTMLTags implements PipeTransform {
 
     const regex = /<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gi;
     const tagRegex = /<[^>]*>?/gm;
-    const nbspRegex = /&nbsp;/gi;
+    const symbolsUnicodeRegex = /&[#0-9a-zA-Z]\w+;/gi;
 
     if (value) {
-      return value.replace(regex, '').replace(tagRegex, '').replace(nbspRegex, '');
+      return value.replace(regex, '').replace(tagRegex, '').replace(symbolsUnicodeRegex, '');
     } else {
       return value;
     }

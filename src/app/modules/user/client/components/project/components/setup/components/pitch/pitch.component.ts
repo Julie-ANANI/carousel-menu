@@ -284,17 +284,17 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   private _computeSectionCode(section: string): string {
-    let sectionCode = section.toLowerCase();
+    let sectionCode = section.toLowerCase() + '-' + this.activeInnovCard.lang;
 
     switch (section) {
       case 'ISSUE':
         const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
-        sectionCode = section.toLowerCase() + '-' + _indexIssue + 3;
+        sectionCode = section.toLowerCase() + '-' + _indexIssue + 3 + '-' + this.activeInnovCard.lang;
         break;
 
       case 'SOLUTION':
         const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
-        sectionCode = section.toLowerCase() + '-' + _indexSolution + 3;
+        sectionCode = section.toLowerCase() + '-' + _indexSolution + 3 + '-' + this.activeInnovCard.lang;
         break;
 
     }

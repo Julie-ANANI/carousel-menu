@@ -70,6 +70,10 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   @Input() set collaborativesComments(value: CollaborativeComment[]) {
     this._collaborativesComments = value;
+    this._showComment = true;
+    this._showSuggestion = !!this._comment.suggestion;
+    this._showExample = false;
+    this._showHelp = false;
   }
 
   @Input() innovationId: string;

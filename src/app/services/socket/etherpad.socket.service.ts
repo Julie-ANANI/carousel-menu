@@ -30,4 +30,13 @@ export class EtherpadSocketService extends SocketService {
     });
   }
 
+  getGroupSessionUpdate(groupID: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`etherpad/${groupID}/sessions`,
+        () => {
+          subscriber.next();
+        });
+    });
+  }
+
 }
