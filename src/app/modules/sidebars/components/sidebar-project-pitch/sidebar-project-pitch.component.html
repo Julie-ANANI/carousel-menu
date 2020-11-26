@@ -36,7 +36,10 @@
 
         <!-- video -->
         <div class="form-group">
-          <app-shared-upload-zone-video (cbFn)="onUploadMedia($event, 'VIDEO')"></app-shared-upload-zone-video>
+          <app-shared-upload-zone-video
+            (cbFn)="onUploadMedia($event, 'VIDEO')"
+            [isUploading]="isUploadingVideo">
+          </app-shared-upload-zone-video>
         </div>
         <!-- /video -->
 
