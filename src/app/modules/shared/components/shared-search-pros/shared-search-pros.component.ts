@@ -5,11 +5,11 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import { GeographySettings } from "../../../../models/innov-settings";
-import { RolesFrontService } from "../../../../services/roles/roles-front.service";
-import { isPlatformBrowser } from "@angular/common";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../services/error/error-front.service";
+import { GeographySettings } from '../../../../models/innov-settings';
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -21,7 +21,10 @@ export class SharedSearchProsComponent implements OnInit {
 
   @Input() accessPath: Array<string> = [];
 
-  @Input() campaign: Campaign = <Campaign>{};
+  @Input() set campaign(value: Campaign) {
+    this._campaign = value;
+    this._initParams();
+  }
 
   private _suggestions: Array<{ expected_result: number, search_keywords: string; keywords: string }> = [];
 
@@ -39,6 +42,8 @@ export class SharedSearchProsComponent implements OnInit {
     exclude: [],
     include: []
   };
+
+  private _campaign: Campaign = <Campaign>{};
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
@@ -396,6 +401,10 @@ export class SharedSearchProsComponent implements OnInit {
 
   get geography(): GeographySettings {
     return this._geography;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
   }
 
 }
