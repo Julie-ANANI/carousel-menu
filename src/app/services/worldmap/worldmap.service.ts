@@ -61,13 +61,16 @@ export class WorldmapService {
     }, {} as { [continent: string]: { count: number, countries: { [country: string]: number } } });
   }
 
-  public async getCountriesByContinent(): Promise<{ [continent: string]: Array<Country> }> {
+  public async getCountriesByContinent(countryCodesToInclude: string[]= []): Promise<{ [continent: string]: Array<Country> }> {
     const countriesList = await this.getCountriesList();
     return countriesList.reduce((acc, country) => {
       const continent = this._countries[country.code];
       if (continent) {
         acc[continent] = acc[continent] || [];
-        acc[continent].push(country);
+
+        if (countryCodesToInclude.length === 0 || countryCodesToInclude.includes(country.code)) {
+          acc[continent].push(country);
+        }
       }
       return acc;
     }, {} as { [continent: string]: Array<Country> });

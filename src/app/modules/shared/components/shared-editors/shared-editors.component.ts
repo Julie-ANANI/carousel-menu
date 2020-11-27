@@ -18,7 +18,12 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
     this._text = value;
   }
 
-  @Input() isEditable = true;
+  private _isEditable: boolean;
+
+  @Input() set isEditable(value: boolean) {
+    this._isEditable = value;
+    this._editor = (this.isEditable && this._authService.etherpadAccesses.active) ? 'ETHERPAD' : 'TINY_MCE';
+  }
 
   @Input() padHeight = '400px';
 
@@ -32,7 +37,7 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
   @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
 
-  private _editor: Editor = 'ETHERPAD';
+  private _editor: Editor = 'TINY_MCE';
 
   private _etherpad: Etherpad = <Etherpad>{};
 
@@ -41,7 +46,6 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private _authService: AuthService) {
-    this._editor = (_authService.etherpadAccesses.active) ? 'ETHERPAD' : 'TINY_MCE';
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -87,7 +91,11 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
     return this._authService.user;
   }
 
-  isEtherpadUp(): boolean {
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
+
+  get isEtherpadUp(): boolean {
     return this._authService.etherpadAccesses.active;
   }
 

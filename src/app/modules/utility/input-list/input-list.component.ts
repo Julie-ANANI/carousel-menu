@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
-import { domainRegEx, emailRegEx } from '../../../utils/regex';
-import { ErrorFrontService } from '../../../services/error/error-front.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {TranslateNotificationsService} from '../../../services/notifications/notifications.service';
+import {domainRegEx, emailRegEx} from '../../../utils/regex';
+import {ErrorFrontService} from '../../../services/error/error-front.service';
 
 interface InputListConfig {
   placeholder: string;
@@ -21,6 +21,10 @@ export class InputListComponent {
 
   @Input() isEditable = true; // false: will not allow to edit the fields and perform actions.
 
+  @Input() isAddable = true; // false: will not allow to add new element.
+
+  @Input() isClickable = false; // true: will allow to click on element text.
+
   @Input() isAdminMode = false; // true: to show the admin options.
 
   @Input() isEmail = false; // true: if the answerList is of email. ex: app-sidebar-blacklist component
@@ -35,6 +39,9 @@ export class InputListComponent {
   }
 
   @Output() update: EventEmitter<any> = new EventEmitter<any>(); // sends the updated list.
+  @Output() remove: EventEmitter<any> = new EventEmitter<any>(); // sends the to-remove item.
+  @Output() edit: EventEmitter<any> = new EventEmitter<any>(); // sends the edited item.
+  @Output() clickItem: EventEmitter<any> = new EventEmitter<any>(); // sends the clicked item.
 
   private _answer = '';
 
@@ -50,7 +57,12 @@ export class InputListComponent {
 
   public addProposition(val: string) {
     if (this.isEditable) {
-      if (this._answerList.findIndex(t => { return t.text === val }) === -1) {
+      if (!val) {
+        return;
+      }
+      if (this._answerList.findIndex(t => {
+        return t.text === val;
+      }) === -1) {
         let _testValue: any;
 
         // if we want to test if it's an email
@@ -102,7 +114,11 @@ export class InputListComponent {
 
   public updateProposition(event: Event, index: number, value: string) {
     event.preventDefault();
+    // item element to edit can be name or text depending on input list
+    const oldValue = this._answerList[index].text || this._answerList[index].name;
     this._answerList[index].text = value;
+    this._answerList[index].name = value;
+    this.edit.emit({ oldTextValue: oldValue, value: this._answerList[index] });
     this.update.emit({ value: this._answerList });
     this._enableUpdate = false;
     this._indexNumber = null;
@@ -110,6 +126,7 @@ export class InputListComponent {
 
   public removeProposition(index: number): void {
     if (this.isEditable) {
+      this.remove.emit({ value: this._answerList[index] });
       this._answerList.splice(index, 1);
       this.update.emit({ value: this._answerList });
     }

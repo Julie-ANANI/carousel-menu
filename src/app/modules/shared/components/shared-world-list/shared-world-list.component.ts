@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Country} from '../../../../models/country';
 import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
 import {Filter} from '../shared-market-report/models/filter';
@@ -8,11 +8,19 @@ import {Filter} from '../shared-market-report/models/filter';
   templateUrl: './shared-world-list.component.html',
   styleUrls: ['./shared-world-list.component.scss']
 })
-export class SharedWorldListComponent implements OnInit {
+export class SharedWorldListComponent {
 
   @Input() filters: { [questionId: string]: Filter } = {};
   @Input() filteredContinents: any;
   @Input() filteredCountries: any;
+
+  @Input() set answersCountries(value: string[]) {
+    if (!!value) {
+      this._answersCountries = value;
+      this._fetchAllCountries();
+    }
+  }
+  private _answersCountries: string[] = [];
 
   @Output() filterAllContinents = new EventEmitter<{ isChecked: boolean, filterArray: Array<any> }>();
   @Output() checkContinent: EventEmitter<Event> = new EventEmitter();
@@ -29,10 +37,6 @@ export class SharedWorldListComponent implements OnInit {
 
   get continents(): Array<string> {
     return WorldmapService.continentsList;
-  }
-
-  ngOnInit(): void {
-    this._fetchAllCountries();
   }
 
   selectAllContinents(isChecked: boolean, filterArray: Array<any>) {
@@ -71,7 +75,7 @@ export class SharedWorldListComponent implements OnInit {
   }
 
   private _fetchAllCountries() {
-    this._worldmapService.getCountriesByContinent().then((countries: { [continent: string]: Array<Country> }) => {
+    this._worldmapService.getCountriesByContinent(this._answersCountries).then((countries: { [continent: string]: Array<Country> }) => {
       this._continentCountries = countries;
     });
   }

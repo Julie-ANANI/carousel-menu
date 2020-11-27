@@ -39,7 +39,10 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   @Input() questions: Array<Question> = [];
 
-  @Input() answers: Array<Answer> = [];
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this._answersCountries = value.map(answer => answer.country.flag || answer.professional.country);
+  }
 
   @Input() templateType: Template = 'MARKET_REPORT';
 
@@ -67,11 +70,13 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _isModalPreview = false;
 
-  private _isModalEditView = false;
-
   private _filterNumber = 0;
 
   private _innovation: Innovation = <Innovation>{};
+
+  private _answers: Array<Answer> = [];
+
+  private _answersCountries: string[] = [];
 
   private _sharedFiltersList: Array<SharedFilter> = [];
 
@@ -101,8 +106,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   private _professionalsTags: Array<Tag> = [];
 
   private _picto: Picto = picto;
-
-  private _editedFilter: SharedFilter;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
@@ -183,12 +186,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._isModalEnd = true;
   }
 
-  public openModalEditView(event: Event, value: SharedFilter) {
-    event.preventDefault();
-    this._editedFilter = {...value};
-    this._isModalEditView = true;
-  }
-
   public deleteProfessionalFilter(event: Event, id: string) {
     event.preventDefault();
     const filterValue = this._filterService.filters['professionals'].value;
@@ -227,20 +224,17 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     }
   }
 
-  public updateFilter() {
-    console.log(this._sharedFiltersList);
-    const index = this._sharedFiltersList.findIndex((filter) =>
-      filter._id === this._editedFilter._id
-    );
-
-    this._innovationService.updateFilter(this._innovation._id, this._editedFilter, this._sharedFiltersList[index].name).pipe(first()).subscribe((res) => {
-      this._sharedFiltersList[index] = res;
-      this._filterName = '';
-      this._isModalEditView = false;
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+  public updateFilter(filter: any, oldFilterName: string) {
+    const index = this._sharedFiltersList.findIndex((f) => f._id === filter._id);
+    if (index) {
+      this._innovationService.updateFilter(this._innovation._id, filter, oldFilterName)
+          .pipe(first()).subscribe((res) => {
+        this._sharedFiltersList[index] = res;
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   public checkOption(event: Event, question: Question) {
@@ -250,8 +244,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     if (this._filterService.filters[question.identifier]) {
       filterValue = this._filterService.filters[question.identifier].value;
     } else {
-      filterValue = question.options.reduce((acc, opt) =>
-      { acc[opt.identifier] = true; return acc; }, {} as any);
+      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
     }
     filterValue[(event.target as HTMLInputElement).name] = checked;
     const removeFilter = checked && Object.keys(filterValue).every((k) => filterValue[k] === true);
@@ -307,14 +300,12 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     }
   }
 
-  public deleteCustomFilter(event: Event, name: string) {
-    event.preventDefault();
+  public deleteCustomFilter(name: string) {
     this._innovationService.deleteFilter(this._innovation._id, encodeURIComponent(name))
       .pipe(first()).subscribe((result) => {
       if (result['ok'] === 1) {
         this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
       }
-      this._isModalEditView = false;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -399,8 +390,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         if (isChecked) {
           this._filterService.deleteFilter(question.identifier);
         } else {
-          const filterValue = question.options.reduce((acc, opt) =>
-          { acc[opt.identifier] = isChecked; return acc; }, {} as any );
+          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = isChecked; return acc; }, {} as any );
           this._filterService.addFilter({
             status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
             questionId: question.identifier,
@@ -519,16 +509,12 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     return this._picto;
   }
 
-  get isModalEditView(): boolean {
-    return this._isModalEditView;
+  get answers(): Array<Answer> {
+    return this._answers;
   }
 
-  set isModalEditView(value: boolean) {
-    this._isModalEditView = value;
-  }
-
-  get editedFilter(): SharedFilter {
-    return this._editedFilter;
+  get answersCountries(): string[] {
+    return this._answersCountries;
   }
 
   ngOnDestroy(): void {

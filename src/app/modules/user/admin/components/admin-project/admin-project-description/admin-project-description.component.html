@@ -273,6 +273,7 @@
 
             <div *ngIf="isEditable">
               <app-shared-editors
+                [isEditable]="isEditable"
                 (textChange)="onContentChange($event, 'sections', i)"
                 [text]="section.content"
                 [innovationId]="innovation._id"

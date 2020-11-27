@@ -2,7 +2,7 @@
   <form #f="ngForm" (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)" novalidate>
 
     <!-- input area -->
-    <div class="input-wrapper">
+    <div *ngIf="isAddable" class="input-wrapper">
 
       <label class="m-right-2">
         <input
@@ -34,13 +34,14 @@
 
         <!-- text -->
         <div class="answer-wrapper text-sm text-primary-dark m-right-2">
-          <span *ngIf="!(enableUpdate && i === indexNumber)">{{ answer.text }}</span>
+          <span (click)="clickItem.emit(answer)" *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer.text || answer.name}}</span>
+          <a class="c-hand" *ngIf="isClickable && !(enableUpdate && i === indexNumber)" (click)="clickItem.emit(answer)">{{ answer.text  || answer.name }}</a>
           <label *ngIf="enableUpdate && i === indexNumber">
             <input
                 #updateAnswer
                 (keyup.enter)="updateProposition($event, i, updateAnswer.value)"
                 [name]="'text' + [i]"
-                [ngModel]="answerList[i].text"
+                [ngModel]="answerList[i].text || answerList[i].name"
                 autocomplete="off"
                 class="form-input is-sm"
                 type="text">
