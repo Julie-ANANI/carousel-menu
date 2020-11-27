@@ -1,7 +1,7 @@
 export const environment = {
   local: true,
   production: false,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'http://localhost:3010/api',
   etherpadUrl: 'http://localhost:9001',
   clientUrl: 'http://localhost:4200',
   companyName: 'United Motion Ideas (local)',
