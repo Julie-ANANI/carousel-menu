@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subscriber} from 'rxjs';
-import {SocketService} from './socket.service';
+import {AbstractSocketService} from './abstract.socket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class EtherpadSocketService extends SocketService {
+export class EtherpadSocketService extends AbstractSocketService {
 
   constructor() {
     super();
