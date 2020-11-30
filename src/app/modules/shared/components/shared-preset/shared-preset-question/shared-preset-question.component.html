@@ -137,7 +137,7 @@
         <!-- /french -->
 
         <!-- add comment -->
-        <label class="form-switch">
+        <label class="form-switch m-right-50">
           <input
             (ngModelChange)="updateValue($event, 'COMMENT')"
             [ngModel]="question.canComment"
@@ -148,18 +148,18 @@
         <!-- /add comment -->
 
         <!-- is sensitive data -->
-        <label class="form-switch">
+        <label class="form-switch m-right-50">
           <input
             (ngModelChange)="updateValue($event, 'SENSITIVE_DATA')"
             [ngModel]="question.sensitiveAnswerData"
             [disabled]="!isEditable"
             type="checkbox">
-          <i class="form-icon"></i> Add comment
+          <i class="form-icon"></i> Sensitive answer
         </label>
-        <!-- /add comment -->
+        <!-- /is sensitive data -->
 
         <!-- show favourable answers -->
-        <label *ngIf="question.controlType === 'radio'" class="form-switch m-left-50">
+        <label *ngIf="question.controlType === 'radio'" class="form-switch">
           <input
             (ngModelChange)="updateValue($event, 'FAV_ANSWERS')"
             [ngModel]="question.visibility"
