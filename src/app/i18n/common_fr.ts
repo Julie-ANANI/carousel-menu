@@ -432,6 +432,7 @@ export const COMMON = {
     'TITLE_SELECT': 'Sélection',
     'TITLE_CREATE': 'Création',
     'TITLE_VIDEO_STORYBOARD': 'Sélectionnez le type de vidéo à générer',
+    'ARE_YOU_SURE': 'Êtes-vous sûr de vouloir supprimer cet élément ?',
     'LOGIN': 'Bienvenue !'
   },
 

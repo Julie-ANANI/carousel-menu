@@ -34,34 +34,36 @@ import { SidebarProjectPitchModule } from '../../../../sidebars/components/sideb
 import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/innovCardTitlePipe.module';
 import { SynthesisComponent } from './components/synthesis/synthesis.component';
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
+import {CleanHtmlModule} from '../../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ProjectRoutingModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    SidebarModule,
-    SharedProjectSettingsModule,
-    TableModule,
-    SharedWorldmapModule,
-    SidebarUserAnswerModule,
-    SharedMarketReportModule,
-    MessageTemplateModule,
-    ModalModule,
-    FormsModule,
-    SharedEditorTinymceModule,
-    ObjectivesSecondaryModule,
-    ModalEmptyModule,
-    ObjectivesPrimaryModule,
-    AngularMyDatePickerModule,
-    AutoSuggestionModule,
-    NgxPageScrollModule,
-    BannerModule,
-    SidebarProjectPitchModule,
-    InnovCardTitlePipeModule,
-    MessageErrorModule
-  ],
+    imports: [
+        CommonModule,
+        ProjectRoutingModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        SidebarModule,
+        SharedProjectSettingsModule,
+        TableModule,
+        SharedWorldmapModule,
+        SidebarUserAnswerModule,
+        SharedMarketReportModule,
+        MessageTemplateModule,
+        ModalModule,
+        FormsModule,
+        SharedEditorTinymceModule,
+        ObjectivesSecondaryModule,
+        ModalEmptyModule,
+        ObjectivesPrimaryModule,
+        AngularMyDatePickerModule,
+        AutoSuggestionModule,
+        NgxPageScrollModule,
+        BannerModule,
+        SidebarProjectPitchModule,
+        InnovCardTitlePipeModule,
+        MessageErrorModule,
+        CleanHtmlModule
+    ],
   declarations: [
     ProjectComponent,
     SetupComponent,

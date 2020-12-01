@@ -51,7 +51,9 @@ export class InputListComponent {
 
   private _enableUpdate = false;
 
+  public isModalDelete = false;
   private _indexNumber: number = null;
+  private _indexToDelete: number = null;
 
   constructor(private _translateNotificationsService: TranslateNotificationsService) { }
 
@@ -124,11 +126,20 @@ export class InputListComponent {
     this._indexNumber = null;
   }
 
-  public removeProposition(index: number): void {
+  public removeProposition(): void {
     if (this.isEditable) {
-      this.remove.emit({ value: this._answerList[index] });
-      this._answerList.splice(index, 1);
+      this.remove.emit({ value: this._answerList[this._indexToDelete] });
+      this._answerList.splice(this._indexToDelete, 1);
       this.update.emit({ value: this._answerList });
+      this._indexToDelete = null;
+      this.isModalDelete = false;
+    }
+  }
+
+  public modalConfirmRemove(index: number) {
+    if (this.isEditable) {
+      this.isModalDelete = true;
+      this._indexToDelete = index;
     }
   }
 

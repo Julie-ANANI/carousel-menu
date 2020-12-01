@@ -97,7 +97,7 @@
           <div
             *ngIf="section.type !== 'MEDIA'"
             [ngStyle]="{'margin-bottom': section.type === 'SUMMARY' ? '-8px' : '0'}"
-            [innerHTML]="section.content"
+            [innerHTML]="section.content | cleanHtml"
             class="text-sm p-top-h">
           </div>
           <!-- /content -->
