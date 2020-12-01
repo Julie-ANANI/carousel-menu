@@ -7,10 +7,10 @@ import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
-import {takeUntil} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {NavigationCancel, NavigationEnd, NavigationError, Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {SpinnerService} from './services/spinner/spinner.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _notificationsOptions: Options = {
     position: ['top', 'right'],
-    timeOut: 5000,
+    timeOut: 3000,
     lastOnBottom: true,
     maxStack: 1,
     animate: NotificationAnimationType.FromRight,
@@ -37,7 +37,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _spinnerState = true;
+  private _spinnerState = false;
+
+  private _isTimeoutStarted = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
@@ -50,21 +52,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this._initSpinner(true);
     this._setFavicon();
     initTranslation(this._translateService);
-    if (this._authService.isAcceptingCookies) {
-      this._authService.initializeSession().subscribe(() => {
-        console.log('The application has been started.');
-        if (environment.local) {
-          this._initSpinner(false);
-        }
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-        this._initSpinner(false);
-      });
-    }
+    this._initializeSession();
+    this._spinner();
   }
 
   ngOnInit(): void {
-    this._spinner();
     this._socketEvent();
     this._mouseEvent();
     //this._setSwellRTScript();
@@ -77,27 +69,44 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _initializeSession() {
+    if (this._authService.isAcceptingCookies) {
+      this._authService.initializeSession().pipe(first()).subscribe(() => {
+        console.log('The application has been started.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+        this._initSpinner(false);
+        console.error(err);
+      });
+    }
+  }
+
   /***
    * configuring the full page spinner when the browser is reloaded or application restart.
    * @private
    */
   private _spinner() {
     this._router.events.subscribe((events) => {
-      if (events instanceof NavigationEnd) {
-        if (this._spinnerState && this._router.navigated && isPlatformBrowser(this._platformId)) {
-          this._initSpinner(false, 4500);
+      if (events instanceof NavigationEnd && this._spinnerState && !this._isTimeoutStarted) {
+        if (this._router.url.includes('/login') || this._router.url.includes('/register')
+          || this._router.url.includes('/login/forgetpassword')) {
+          this._initSpinner(false);
+          this._isTimeoutStarted = true;
+        } else if (this._router.navigated && isPlatformBrowser(this._platformId)) {
+          this._initSpinner(false, 300);
+          this._isTimeoutStarted = true;
         }
-      } else if (events instanceof NavigationCancel || events instanceof NavigationError) {
-        this._initSpinner(false);
       }
     });
   }
 
   private _initSpinner(state: boolean, time: number = 0) {
-    setTimeout(() => {
-      this._spinnerState = state;
-      this._spinnerService.state(this._spinnerState);
-    }, time);
+    if (!this._isTimeoutStarted) {
+      setTimeout(() => {
+        this._spinnerState = state;
+        this._spinnerService.state(this._spinnerState);
+      }, time);
+    }
   }
 
   private _socketEvent() {
@@ -176,6 +185,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   get spinnerState(): boolean {
     return this._spinnerState;
+  }
+
+  get isTimeoutStarted(): boolean {
+    return this._isTimeoutStarted;
   }
 
   ngOnDestroy(): void {
