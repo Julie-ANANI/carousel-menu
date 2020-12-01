@@ -436,6 +436,7 @@ export const COMMON = {
     'TITLE_SELECT': 'Selection Board',
     'TITLE_CREATE': 'Creation Board',
     'TITLE_VIDEO_STORYBOARD': 'Select the video type to generate',
+    'ARE_YOU_SURE': 'Are you sure you want to delete this element ?',
     'LOGIN': 'Welcome back!'
   },
 

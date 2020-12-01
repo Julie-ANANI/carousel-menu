@@ -225,7 +225,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   public openSidebar(section: string, content: string | Array<Media>) {
     if (!this._toBeSaved) {
       this._activeSectionCode = this._computeSectionCode(section);
-      this._getPadAllComments(section);
+      this._getPadAllComments();
       this._activeSection = <CardSectionTypes>section;
       this._cardContent = content;
 
@@ -240,7 +240,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _getPadAllComments(section: string) {
+  private _getPadAllComments() {
     this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', this.activeSectionCode))
       .pipe(first())
       .subscribe((result) => {

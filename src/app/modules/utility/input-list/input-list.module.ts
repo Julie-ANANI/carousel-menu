@@ -7,16 +7,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputListComponent } from './input-list.component';
 
 import { PipeModule } from '../../../pipe/pipe.module';
+import {ModalModule} from '../modals/modal/modal.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    PipeModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        ReactiveFormsModule,
+        FormsModule,
+        RouterModule,
+        PipeModule,
+        ModalModule
+    ],
   declarations: [
     InputListComponent
   ],

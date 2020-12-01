@@ -247,13 +247,14 @@ export class SidebarProjectPitchComponent implements OnChanges {
    */
   public remaining(type: string): string {
     if (this.type && type) {
+      const text = this.cardContent.replace(/<img .*?>/g, '');
       switch (this.type) {
 
         case 'TITLE':
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 100);
           } else if (type === 'CHAR') {
-            return (100 - this.cardContent.length).toString(10);
+            return (100 - text.length).toString(10);
           }
           break;
 
@@ -261,7 +262,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
-            return (500 - this.cardContent.length).toString(10);
+            return (500 - text.length).toString(10);
           }
           break;
 
@@ -272,7 +273,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
-            return (1000 - this.cardContent.length).toString(10);
+            return (1000 - text.length).toString(10);
           }
           break;
 

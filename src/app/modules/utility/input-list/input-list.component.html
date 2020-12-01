@@ -93,7 +93,7 @@
 
           <!-- delete icon -->
           <div
-            (click)="removeProposition(i)"
+            (click)="modalConfirmRemove(i)"
             *ngIf="isEditable || isAdminMode"
             [ngClass]="{ 'disabled': !isEditable }"
             class="icon-container m-no-right is-overlay">
@@ -113,3 +113,19 @@
   </form>
 </div>
 
+
+
+<!-- modal -->
+<app-utility-modal [(showModal)]="isModalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+
+  <section class="modal-body">
+    <div class="text-background text-medium">{{ 'COMMON.MODAL.ARE_YOU_SURE' | translate }}</div>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button (click)="removeProposition()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+  </footer>
+
+</app-utility-modal>
+<!-- /modal -->

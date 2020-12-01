@@ -49,7 +49,7 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.elementId) {
+    if (!!changes.elementId) {
       this._etherpad = {
         type: this.type,
         elementId: this.elementId,
