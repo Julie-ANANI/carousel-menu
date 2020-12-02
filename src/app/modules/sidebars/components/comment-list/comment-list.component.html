@@ -14,6 +14,6 @@
     </div>
     <span class="comment-author-name">{{comment.name}}</span>
     <span class="comment-created-at">{{comment.timestamp | date:'MM/dd/yyyy'}}</span>
-    <p class="message-body">{{comment.text}}</p>
+    <p class="message-body" [innerHTML]="comment.text | cleanHtml"></p>
   </div>
 </div>
