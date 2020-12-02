@@ -9,7 +9,7 @@
           <span class="comment-created-at">{{comment.timestamp | date:'MM/dd/yyyy'}}</span>
         </div>
       </div>
-      <span class="comment-text">{{comment.text}}</span>
+      <span class="comment-text" [innerHTML]="comment.text | cleanHtml"></span>
       <form class="suggestion-display" *ngIf="comment.changeTo && comment.changeFrom">
         <span class="from-label">{{ 'COMMENT_CARD.PROPOSE_REPLACE' | translate }} </span>
         <span class="from-value">{{comment.changeFrom}}</span>
@@ -26,7 +26,7 @@
             <span class="comment-author-name">{{reply.name}}</span>
             <span class="comment-created-at">{{reply.timestamp | date:'MM/dd/yyyy'}}</span>
           </div>
-          <span class="comment-text">{{reply.text}}</span>
+          <span class="comment-text" [innerHTML]="reply.text | cleanHtml"></span>
           <form class=" suggestion-display" *ngIf="reply.changeTo && reply.changeFrom">
             <span class="from-label">{{ 'COMMENT_CARD.PROPOSE_REPLACE' | translate }} </span>
             <span class="from-value">{{reply.changeFrom}}</span>

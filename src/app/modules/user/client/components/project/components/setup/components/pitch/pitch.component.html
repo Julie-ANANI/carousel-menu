@@ -298,7 +298,7 @@
 
 
 <!-- sidebar to edit innovation card field -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="activeSectionCode" [(template)]="sidebarValue">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
     (tobeSavedChanges)="onChangesToBeSaved($event)"
