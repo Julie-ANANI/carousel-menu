@@ -21,7 +21,13 @@ export class SidebarSearchHistoryComponent {
   @Input() set request(value: any) {
     this._request = value;
     this._requests = [];
-    this._showChildren = false
+    this._showChildren = false;
+    if (value) {
+      this._searchService.getRecycleData(value._id).pipe(first()).subscribe((result: any) => {
+        console.log(result);
+        this._lastTimeUsed = result.date;
+      });
+    }
   }
 
   @Output() paramsChange = new EventEmitter <any>();
@@ -29,6 +35,8 @@ export class SidebarSearchHistoryComponent {
   @Output() close = new EventEmitter <any>();
 
   private _request: any = null;
+
+  private _lastTimeUsed = 'N/A';
 
   private _requests: Array<any> = [];
 
@@ -226,6 +234,10 @@ export class SidebarSearchHistoryComponent {
 
   get request(): any {
     return this._request;
+  }
+
+  get lastTimeUsed(): string {
+    return this._lastTimeUsed;
   }
 
 }

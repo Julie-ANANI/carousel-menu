@@ -187,4 +187,10 @@ export class SearchService {
     formData.append('file', file, fileName);
     return this._http.post('/search/mailsList/', formData);
   }
+
+  public getRecycleData(requestId: string): Observable<any> {
+    const query = {
+      path: `/request/${requestId}/recycled`,
+    };
+    return this._http.get('/search/get', {params: query});  }
 }

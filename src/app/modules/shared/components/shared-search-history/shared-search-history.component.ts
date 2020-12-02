@@ -58,6 +58,8 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _total = -1;
 
+  private _waitingTime = 0; // in minutes
+
   private _googleQuota = 60000;
 
   private _config: Config = {
@@ -66,7 +68,8 @@ export class SharedSearchHistoryComponent implements OnInit {
     limit: this._configService.configLimit('admin-search-history-limit'),
     offset: '0',
     search: '{}',
-    sort: '{ "created": -1 }'
+    sort: '{ "created": -1 }',
+    recycled: 'false',
   };
 
   private _chosenCampaign: Campaign = null;
@@ -137,6 +140,9 @@ export class SharedSearchHistoryComponent implements OnInit {
       if (result.requests) {
         this._requests = result.requests.map((request: any) => {
           request.pros = (request.results.person.length || request.totalResults || 0) + ' pros';
+          if (request.status === 'QUEUED' || request.status === 'PROCESSING') {
+            this._waitingTime ++;
+          }
           if (request.region) {
             request.targetting = request.region;
             request.keywords = request.keywords.replace(`"${request.region}"`, '');
@@ -160,7 +166,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           return request;
         });
       }
-
+        this._waitingTime = (610 * this._waitingTime) / 60000;  // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
         if (result._metadata) {
           this._total = result._metadata.totalCount;
           this._paused = result._metadata.paused;
@@ -188,7 +194,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       _buttons: [
         {
           _icon: 'fas fa-times',
-          _label: 'Stop the requests',
+          _label: 'Pause the requests',
           _colorClass: 'text-alert',
           _isHidden: !this.canAccess(['stop', 'requests'])
         },
@@ -258,6 +264,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           _name: 'Email status',
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'emailStatus']),
+          _enableTooltip: true,
           _choices: [
             {_name: 'PROS_ADDED', _alias: 'Pros added', _class: 'label is-success'},
             {_name: 'EMAILS_FOUND', _alias: 'Found', _class: 'label is-success'},
@@ -341,7 +348,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
           request.status = 'DONE';
         });
-        this._translateNotificationsService.success('Success', 'The requests have been stopped.');
+        this._translateNotificationsService.success('Success', 'The requests have been paused.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -541,6 +548,10 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   get campaignId(): string {
     return this._campaignId;
+  }
+
+  get waitingTime(): number {
+    return this._waitingTime;
   }
 
 }

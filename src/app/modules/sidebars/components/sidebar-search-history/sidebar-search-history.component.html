@@ -17,6 +17,10 @@
     </ng-container>
   </h6>
 
+  <h6>
+    Last time used: {{lastTimeUsed}}
+  </h6>
+
   <h6 *ngIf="request.elapsedTime" class="text-normal">Time: {{ request.elapsedTime  | date:'mm:ss' }}</h6>
 
   <div
