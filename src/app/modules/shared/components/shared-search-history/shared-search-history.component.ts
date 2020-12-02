@@ -61,9 +61,9 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _totalPros = 0;
 
   private _googleQuota = 100000;
+
   private _waitingTime = 0; // in minutes
 
-  private _googleQuota = 60000;
 
   private _config: Config = {
     fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
