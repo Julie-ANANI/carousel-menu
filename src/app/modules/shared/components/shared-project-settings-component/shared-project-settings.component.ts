@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../models/innovation';
 import { Subject } from 'rxjs';
-import {GeographySettings} from "../../../../models/innov-settings";
+import {GeographySettings} from '../../../../models/innov-settings';
 import {takeUntil} from 'rxjs/operators';
 
 @Component({
@@ -208,7 +208,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   updateSettings() {
     if (this._canEdit) {
-      this.innovationFrontService.setNotifyChanges(true);
+      this.innovationFrontService.setNotifyChanges('settings');
     }
   }
 

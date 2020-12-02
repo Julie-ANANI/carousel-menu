@@ -221,7 +221,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public updateInnovation() {
-    this._innovationFrontService.setNotifyChanges(true);
+    this._innovationFrontService.setNotifyChanges('innovationCards');
   }
 
   public updateComment() {
