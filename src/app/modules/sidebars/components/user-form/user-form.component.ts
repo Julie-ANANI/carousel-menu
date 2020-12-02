@@ -23,6 +23,7 @@ import { ProfessionalsService } from '../../../../services/professionals/profess
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {RolesService} from '../../../../services/roles/roles.service';
 import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
+import {Enterprise} from '../../../../models/enterprise';
 
 @Component({
   selector: 'app-user-form',
@@ -94,6 +95,8 @@ export class UserFormComponent implements OnInit {
   private _userForm: FormGroup;
 
   private _company: Clearbit;
+
+  private _newCompany: Clearbit | Enterprise;
 
   private _countriesSuggestion: Array<string> = [];
 
@@ -267,8 +270,9 @@ export class UserFormComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
   }
 
-  public selectCompany(c: string | Clearbit) {
+  public selectCompany(c: string | Clearbit | Enterprise) {
     this._userForm.get('company').reset((typeof c === 'string') ? {name: c} : c);
+    this._newCompany = typeof c === 'string' ? {name: c} : c;
   }
 
   public setRole(event: Event) {
@@ -290,7 +294,7 @@ export class UserFormComponent implements OnInit {
       } else if (this._isProfessional && this._type === 'professional') {
         const pro = this._userForm.value;
         pro._id = this._pro._id;
-        pro.company = this._userForm.get('company.name').value;
+        pro.company = this._newCompany || pro.company;
         pro.tags = this._tags;
         this.finalProfessionalData.emit(pro);
       } else if (this._isProfessional && this._type === 'addPro') {
@@ -438,10 +442,6 @@ export class UserFormComponent implements OnInit {
 
   get isSuperAdmin(): boolean {
     return this._user.roles === 'super-admin';
-  }
-
-  get isDomainAdmin(): boolean {
-    return this._user.roles === 'admin' || this._user.roles === 'super-admin';
   }
 
 

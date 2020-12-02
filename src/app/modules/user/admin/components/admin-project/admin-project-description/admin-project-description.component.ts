@@ -92,7 +92,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
       case 'TITLE':
         if (type === 'COLOR') {
-          return CommonService.getLimitColor(this.activeInnovCard.title.length, 100);
+          return CommonService.getLimitColor(this.activeInnovCard.title, 100);
         } else if (type === 'CHAR') {
           return (100 - this.activeInnovCard.title.length).toString(10);
         }
@@ -100,7 +100,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
       case 'SUMMARY':
         if (type === 'COLOR') {
-          return CommonService.getLimitColor(this.activeInnovCard.summary.length, 500);
+          return CommonService.getLimitColor(this.activeInnovCard.summary, 500);
         } else if (type === 'CHAR') {
           return (500 - this.activeInnovCard.summary.length).toString(10);
         }
@@ -110,7 +110,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       case 'SOLUTION':
       case 'OTHER':
         if (type === 'COLOR') {
-          return CommonService.getLimitColor(this.activeInnovCard.sections[index].content.length, 1000);
+          return CommonService.getLimitColor(<string> this.activeInnovCard.sections[index].content, 1000);
         } else if (type === 'CHAR') {
           return (1000 - this.activeInnovCard.sections[index].content.length).toString(10);
         }

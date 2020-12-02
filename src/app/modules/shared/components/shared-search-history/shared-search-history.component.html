@@ -79,9 +79,13 @@ Email reconstruction: The module is testing email pattern to (in)validate them">
           (change)="launchNewRequests = !launchNewRequests">
         <i class="form-icon"></i>Launch new queries to complete targeting
       </label>
+      <p class="text-error" *ngIf="launchNewRequests">
+        The requests will be launched in  {{ geography.include.length }} countries in the new campaign.
+        Check the request on google to be sure not to find too many professionals
+      </p>
     </div>
 
-    <p class="form-label">{{ total }} Professional(s) selected</p>
+    <p class="form-label">{{ totalPros }} Professional(s) selected</p>
 
     <div [ngStyle]="{'min-height': chosenCampaign && chosenCampaign._id ? 'auto': '300px'}">
       <app-utility-auto-complete-input

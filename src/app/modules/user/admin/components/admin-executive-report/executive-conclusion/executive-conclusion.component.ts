@@ -94,7 +94,7 @@ export class ExecutiveConclusionComponent implements OnInit {
   }
 
   public textColor() {
-    this._conclusionColor = CommonService.getLimitColor(this._config.conclusion.length, 270);
+    this._conclusionColor = CommonService.getLimitColor(this._config.conclusion, 270);
   }
 
   public onClickPlay(event: Event) {

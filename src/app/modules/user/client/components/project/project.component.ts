@@ -57,6 +57,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _updateTime: number;
 
+  private _socketListening = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
@@ -90,21 +92,43 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._mission = <Mission>{};
       }
 
-      this._socketService.getProjectUpdates(this._innovation._id)
-        .pipe(takeUntil(this._ngUnsubscribe))
-        .subscribe((update: any) => {
-          if (update.userId !== this._authService.userId) {
-            this._showBanner = update.userName;
-            this._updateTime = Date.now();
-          }
-          Object.keys(update.data).forEach((field: string) => {
-            this._innovation[field] = update.data[field];
+      // Listen to the updates only the first time we retrieve the innovation
+      if (!this._socketListening) {
+        this._socketService.getMissionUpdates(this._mission._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((update: any) => {
+            console.log(update);
+            this._realTimeUpdate('mission', update);
+          }, (error) => {
+            console.error(error);
           });
-          this._innovationFrontService.setInnovation(this._innovation);
-        }, (error) => {
-          console.error(error);
-        });
+
+        this._socketService.getProjectUpdates(this._innovation._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((update: any) => {
+            this._realTimeUpdate('project', update);
+          }, (error) => {
+            console.error(error);
+          });
+        this._socketListening = true;
+      }
     });
+  }
+
+
+  private _realTimeUpdate(object: string, update: any) {
+    if (update.userId !== this._authService.userId) {
+      this._showBanner = update.userName;
+      this._updateTime = Date.now();
+    }
+    Object.keys(update.data).forEach((field: string) => {
+      if (object === 'project') {
+        this._innovation[field] = update.data[field];
+      } else {
+        this._mission[field] = update.data[field];
+      }
+    });
+    this._innovationFrontService.setInnovation(this._innovation);
   }
 
   /***

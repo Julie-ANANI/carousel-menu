@@ -381,7 +381,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._mission.objective.secondary = [];
     }
 
-    this._missionService.updateMainObjective(this._mission._id, this._mission).pipe(first()).subscribe((innovation) => {
+    this._missionService.updateMainObjective(this._mission._id, this._mission.objective).pipe(first()).subscribe((innovation) => {
       this._innovationFrontService.setInnovation(innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
