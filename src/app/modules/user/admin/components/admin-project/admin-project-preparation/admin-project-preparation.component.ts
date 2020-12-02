@@ -54,7 +54,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _toBeSaved = false;
+  private _toBeSaved = '';
 
   private _isLoadingCampaign = false;
 
@@ -102,7 +102,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     });
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((save) => {
-      this._toBeSaved = save;
+      this._toBeSaved = this._toBeSaved ? this._toBeSaved + ',' + save : save;
     });
 
     this._innovationFrontService.getCardCommentNotifyChanges()
@@ -223,33 +223,35 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   public onSave(event: Event) {
     event.preventDefault();
-    if (!this._isSaving) {
+    if (!this._isSaving && this._toBeSaved) {
       this._isSaving = true;
       if (this._activeTab === 'questionnaire') {
         this._saveProject({preset: this._project.preset});
       } else {
-        this._saveProject({innovationCards: this._project.innovationCards, settings: this._project.settings});
+        const fields = this._toBeSaved.split(',');
+        const saveObject = {};
+        fields.forEach(field => {
+          saveObject[field] = this._project[field];
+        });
+        this._saveProject(saveObject);
         this._saveComment();
       }
     }
   }
 
   private _saveProject(objToSave: any) {
-    if (this._toBeSaved) {
       this._innovationService.save(this._project._id, objToSave).pipe(first()).subscribe(() => {
         this._isSaving = false;
-        this._toBeSaved = false;
+        this._toBeSaved = '';
         this._setInnovation();
         if (!this._toBeSavedComment) {
           this._translateNotificationsService.success('Success', 'The project has been updated.');
         }
       }, (err: HttpErrorResponse) => {
         this._isSaving = false;
-        this._toBeSaved = true;
         this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
-    }
   }
 
   private _saveComment() {
@@ -266,7 +268,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           this._toBeSavedComment = true;
           this._translateNotificationsService.error('Comment Saving Error...', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
-        })
+        });
     }
   }
 
@@ -400,7 +402,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     return this._allCampaigns;
   }
 
-  get toBeSaved(): boolean {
+  get toBeSaved(): string {
     return this._toBeSaved;
   }
 

@@ -93,7 +93,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
       }
 
       // Listen to the updates only the first time we retrieve the innovation
-      if (!this._socketListening) {
+      if (!this._socketListening && this._innovation._id) {
         this._socketService.getMissionUpdates(this._mission._id)
           .pipe(takeUntil(this._ngUnsubscribe))
           .subscribe((update: any) => {

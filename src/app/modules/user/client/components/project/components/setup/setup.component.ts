@@ -37,7 +37,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _currentPage = '';
 
-  private _saveChanges = false;
+  private _saveChanges = '';
 
   private _banner: Banner = <Banner>{};
 
@@ -259,7 +259,7 @@ export class SetupComponent implements OnInit, OnDestroy {
   get isSavingProject(): boolean {
     return this._isSavingProject;
   }
-  get saveChanges(): boolean {
+  get saveChanges(): string {
     return this._saveChanges;
   }
 
