@@ -10,8 +10,6 @@ import { SocketService } from './services/socket/socket.service';
 import {first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {NavigationEnd, Router} from '@angular/router';
-import {SpinnerService} from './services/spinner/spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +20,8 @@ import {SpinnerService} from './services/spinner/spinner.service';
 export class AppComponent implements OnInit, OnDestroy {
 
   private _notificationsOptions: Options = {
-    position: ['top', 'right'],
-    timeOut: 3000,
+    position: ['bottom', 'right'],
+    timeOut: 1500,
     lastOnBottom: true,
     maxStack: 1,
     animate: NotificationAnimationType.FromRight,
@@ -37,23 +35,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _spinnerState = false;
-
-  private _isTimeoutStarted = false;
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _authService: AuthService,
               private _mouseService: MouseService,
-              private _spinnerService: SpinnerService,
-              private _router: Router,
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
-    this._initSpinner(true);
     this._setFavicon();
     initTranslation(this._translateService);
     this._initializeSession();
-    this._spinner();
   }
 
   ngOnInit(): void {
@@ -75,37 +65,8 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('The application has been started.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-        this._initSpinner(false);
         console.error(err);
       });
-    }
-  }
-
-  /***
-   * configuring the full page spinner when the browser is reloaded or application restart.
-   * @private
-   */
-  private _spinner() {
-    this._router.events.subscribe((events) => {
-      if (events instanceof NavigationEnd && this._spinnerState && !this._isTimeoutStarted) {
-        if (this._router.url.includes('/login') || this._router.url.includes('/register')
-          || this._router.url.includes('/login/forgetpassword')) {
-          this._initSpinner(false);
-          this._isTimeoutStarted = true;
-        } else if (this._router.navigated && isPlatformBrowser(this._platformId)) {
-          this._initSpinner(false, 300);
-          this._isTimeoutStarted = true;
-        }
-      }
-    });
-  }
-
-  private _initSpinner(state: boolean, time: number = 0) {
-    if (!this._isTimeoutStarted) {
-      setTimeout(() => {
-        this._spinnerState = state;
-        this._spinnerService.state(this._spinnerState);
-      }, time);
     }
   }
 
@@ -181,14 +142,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   get notificationsOptions(): Options {
     return this._notificationsOptions;
-  }
-
-  get spinnerState(): boolean {
-    return this._spinnerState;
-  }
-
-  get isTimeoutStarted(): boolean {
-    return this._isTimeoutStarted;
   }
 
   ngOnDestroy(): void {
