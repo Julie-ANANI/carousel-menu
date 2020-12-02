@@ -159,7 +159,7 @@ export class SharedPresetQuestionComponent {
 
   public notifyChanges() {
     if (this.isEditable) {
-      this._innovationFrontService.setNotifyChanges(true);
+      this._innovationFrontService.setNotifyChanges('preset');
     }
   }
 
