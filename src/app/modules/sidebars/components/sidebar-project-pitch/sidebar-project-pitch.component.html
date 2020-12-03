@@ -137,7 +137,8 @@
   <!-- /show media -->
 
   <!-- umi comment -->
-  <section *ngIf="collaborativesComments && collaborativesComments.length > 0" class="p-top-30">
+  <!-- TODO : remove comment.comment when etherpad-->
+  <section *ngIf="(collaborativesComments && collaborativesComments.length > 0) || (comment && comment.comment)" class="p-top-30">
     <div class="d-flex align-center m-bottom-10">
       <div class="d-flex align-center m-right-10">
         <span class="text-lg text-bold m-right-10">{{ 'COMMON.LABEL.COMMENTS' | translate }}</span>
@@ -148,6 +149,7 @@
       </div>
     </div>
     <div *ngIf="showComment" class="message animate-fade is-2">
+      <p *ngIf="comment && comment.comment" class="message-body" [innerHTML]="comment.comment"></p>
       <app-comment-list [innovationId]="innovationId" [collaborativesComments]="collaborativesComments" [padID]="padID"></app-comment-list>
     </div>
   </section>

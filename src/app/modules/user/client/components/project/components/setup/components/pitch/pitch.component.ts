@@ -197,24 +197,29 @@ export class PitchComponent implements OnInit, OnDestroy {
     let comments;
     switch (section) {
 
+      // TODO : remove comment.comment when etherpad
       case 'TITLE':
         comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'TITLE').comments;
         return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').comment
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').suggestion;
 
       case 'SUMMARY':
         comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'SUMMARY').comments;
         return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').comment
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').suggestion;
 
       case 'ISSUE':
         comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'ISSUE').comments;
         return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'ISSUE').comment
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'ISSUE').suggestion;
 
       case 'SOLUTION':
         comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'SOLUTION').comments;
         return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').comment
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion;
 
       default:

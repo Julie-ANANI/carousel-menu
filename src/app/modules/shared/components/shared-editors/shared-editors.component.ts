@@ -5,6 +5,7 @@ import {UserFrontService} from '../../../../services/user/user-front.service';
 import {User} from '../../../../models/user.model';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 import {Subject} from 'rxjs';
+import {environment} from '../../../../../environments/environment';
 
 type Editor = 'ETHERPAD' | 'TINY_MCE';
 
@@ -14,6 +15,14 @@ type Editor = 'ETHERPAD' | 'TINY_MCE';
 })
 export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
+  public limitEtherpadAccess = !environment.local;
+  private _authorizedEtherpadProjects = [
+    // Production projects
+    '5fc8ac5bdf99326414b0151b', '5f918025d9a0f39747fff6b8', '5f3ce42711bce90bd1dfdb24',
+    // Dev projects
+    '5fc8a23881d1c71068ee3716', '5fbbb492d67f795c1be29e91', '5f7d75250fd29613ef69d99b'
+  ];
+
   @Input() set text(value: string) {
     this._text = value;
   }
@@ -22,14 +31,18 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
   @Input() set isEditable(value: boolean) {
     this._isEditable = value;
-    this._editor = (this.isEditable && this._authService.etherpadAccesses.active) ? 'ETHERPAD' : 'TINY_MCE';
+    this.setEditor();
   }
 
   @Input() padHeight = '400px';
 
   @Input() tinymceHeight = '250px';
 
-  @Input() innovationId = '';
+  @Input() set innovationId(value: string) {
+    this._innovationId = value;
+    this.setEditor();
+  }
+  private _innovationId = '';
 
   @Input() elementId = '';
 
@@ -54,11 +67,21 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
         type: this.type,
         elementId: this.elementId,
         authorID: this._authService.etherpadAccesses.authorID,
-        innovationId: this.innovationId,
+        innovationId: this._innovationId,
         padID: EtherpadService.buildPadID(this.type, this.elementId),
         userName: UserFrontService.fullName(this.user)
       };
     }
+  }
+
+  private setEditor() {
+    if (!this.limitEtherpadAccess || this.isEtherpadAuthorizedForInnovation()) {
+      this._editor = (this.isEditable && this._authService.etherpadAccesses.active) ? 'ETHERPAD' : 'TINY_MCE';
+    }
+  }
+
+  private isEtherpadAuthorizedForInnovation() {
+    return this._authorizedEtherpadProjects.includes(this._innovationId);
   }
 
   public onChangeEditor() {
@@ -97,6 +120,10 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
   get isEtherpadUp(): boolean {
     return this._authService.etherpadAccesses.active;
+  }
+
+  get showToggle(): boolean {
+    return this._isEditable && !this.isEtherpadUp && (!this.limitEtherpadAccess || this.isEtherpadAuthorizedForInnovation());
   }
 
   ngOnDestroy(): void {

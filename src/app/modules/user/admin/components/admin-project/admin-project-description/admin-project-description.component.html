@@ -63,6 +63,33 @@
         <!-- suggestion / comments -->
         <div class="section-suggestion">
 
+          <!-- comment -->
+          <div class="m-bottom-25">
+            <div class="d-flex align-center">
+              <div (click)="onToggleComment($event, 'title')" class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleComment.title ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleComment($event, 'title')" class="spec-text-op">Comment</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
+                <app-shared-editor-tinymce
+                  (onTextChange)="onCommentChange($event, 'title', 'comment')"
+                  [data]="zoneData('title', 'comment')"
+                  id="title-comment">
+                </app-shared-editor-tinymce>
+              </div>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="message">
+                <p [innerHTML]="zoneData('title', 'comment')" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /comment -->
+
           <!-- suggestion -->
           <div>
             <div class="d-flex align-center">
@@ -80,6 +107,7 @@
             <div class="m-top-20">
               <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}">
                 <app-shared-editors
+                  [isEditable]="isEditableComment"
                   (textChange)="onCommentChange($event, 'title', 'suggestion')"
                   [text]="zoneData('title', 'suggestion')"
                   [innovationId]="innovation._id"
@@ -132,7 +160,7 @@
 
             </div>
 
-            <div class="text-15">
+            <div *ngIf="isEditable" class="text-15">
               <app-shared-editors
                 id="project-summary"
                 (textChange)="onContentChange($event, 'summary')"
@@ -153,12 +181,43 @@
             </div>
             <!-- /remaining text -->
 
+            <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
+
           </div>
         </div>
         <!-- /content -->
 
         <!-- suggestion / comments -->
         <div class="section-suggestion">
+
+          <!-- comment -->
+          <div class="m-bottom-25">
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleComment($event, 'summary')"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleComment.summary ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleComment($event, 'summary')" class="spec-text-op">Comment</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
+                <app-shared-editor-tinymce
+                  (onTextChange)="onCommentChange($event, 'summary', 'comment')"
+                  [data]="zoneData('summary', 'comment')"
+                  id="summary-comment">
+                </app-shared-editor-tinymce>
+              </div>
+              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="message">
+                <p [innerHTML]="zoneData('summary', 'comment')" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /comment -->
 
           <!-- suggestion -->
           <div>
@@ -177,6 +236,7 @@
             <div class="m-top-20">
               <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}">
                 <app-shared-editors
+                  [isEditable]="isEditableComment"
                   (textChange)="onCommentChange($event, 'summary', 'suggestion')"
                   [text]="zoneData('summary', 'suggestion')"
                   [innovationId]="innovation._id"
@@ -300,6 +360,41 @@
         <!-- suggestion / comments -->
         <div class="section-suggestion">
 
+          <!-- comment -->
+          <div class="m-bottom-25">
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleComment($event, i.toString(10))"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleComment[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleComment($event, i.toString(10))" class="spec-text-op">Comment</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div
+                [hidden]="!isEditableComment"
+                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
+                class="box-shadow">
+                <app-shared-editor-tinymce
+                  (onTextChange)="onCommentChange($event, 'sections', 'comment', i)"
+                  [data]="zoneData('sections', 'comment', i)"
+                  [id]="section.type.toLowerCase()+'-'+i+3+'-comment'">
+                </app-shared-editor-tinymce>
+              </div>
+              <div
+                *ngIf="!isEditableComment"
+                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
+                class="message">
+                <p [innerHTML]="zoneData('sections', 'comment', i)" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /comment -->
+
           <!-- suggestion -->
           <div>
             <div class="d-flex align-center">
@@ -319,6 +414,7 @@
                 *ngIf="isEditableComment"
                 [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}">
                 <app-shared-editors
+                  [isEditable]="isEditableComment"
                   (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
                   [text]="zoneData('sections', 'suggestion', i)"
                   [innovationId]="innovation._id"
