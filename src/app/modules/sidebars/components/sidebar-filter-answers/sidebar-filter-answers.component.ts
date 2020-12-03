@@ -350,7 +350,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   public checkCountry(event: Event) {
     event.preventDefault();
     this._worldmapFilterService.selectCountry((event.target as HTMLInputElement).name,
-      (event.target as HTMLInputElement).checked);
+      (event.target as HTMLInputElement).checked, this.answersCountries);
   }
 
   public checkTag(event: Event, tagId: string) {

@@ -35,15 +35,16 @@ export class WorldmapFiltersService {
     }
   }
 
-  public selectCountry(country: string, value: boolean) {
+  public selectCountry(country: string, value: boolean, answersCountries: string[]) {
     if (!this._selectedCountries) {
       this.initSelectedCountries(this._continentCountries);
     }
 
     this._selectedCountries[country] = value;
-    const continent = Object.keys(this._continentCountries).find(c => this._continentCountries[c].some(p => p.code === country));
-    this._selectedContinents[continent] = this.areAllCountriesOfContinentChecked(this._continentCountries, continent);
-    const remove = this.areAllCountriesChecked(this._continentCountries);
+    const continentCountries = this.getOnlyCountriesInAnswers(answersCountries);
+    const continent = Object.keys(this._continentCountries).find(c => continentCountries[c].some(p => p.code === country));
+    this._selectedContinents[continent] = this.areAllCountriesOfContinentChecked(continentCountries, continent);
+    const remove = this.areAllCountriesChecked(continentCountries);
 
     if (!remove) {
       this.addFilter();
@@ -97,6 +98,15 @@ export class WorldmapFiltersService {
       acc[country.code] = true;
       return acc;
     }, {} as { [c: string]: boolean });
+  }
+
+  // Limit countries with only those in answers
+  getOnlyCountriesInAnswers(answersCountries: string[]): { [p: string]: Country[] } {
+    const continentCountries = {};
+    Object.keys(this._continentCountries).forEach((key: string) => {
+      continentCountries[key] = this._continentCountries[key].filter(c => answersCountries.includes(c.code));
+    });
+    return continentCountries;
   }
 
   areAllCountriesOfContinentChecked(continents: { [p: string]: Country[] }, continent: string): boolean {
