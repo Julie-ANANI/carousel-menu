@@ -75,6 +75,15 @@ export class SharedSearchHistoryComponent implements OnInit {
     recycled: 'false',
   };
 
+  private _configQueue: Config = {
+    fields: 'keywords innovation',
+    search: '{}',
+    status: '{"$or": ["QUEUED", "PROCESSING"]}',
+    sort: '{ "created": -1 }',
+    limit: '0',
+    offset: '0',
+  };
+
   private _chosenCampaign: Campaign = null;
 
   private _launchNewRequests = false;
@@ -124,7 +133,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       }
 
       this._loadHistory();
-
+      this._loadWaitingTime();
     }
   }
 
@@ -136,6 +145,12 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
+  private _loadWaitingTime() {
+    this._searchService.getRequests(this._configQueue).pipe(first()).subscribe((result: any) => {
+      this._waitingTime = (610 * result.requests.length) / 60000;  // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
+    });
+  }
+
   private _loadHistory() {
     this._suggestedKeywords = [];
     this._searchService.getRequests(this._config).pipe(first()).subscribe((result: any) => {
@@ -143,9 +158,6 @@ export class SharedSearchHistoryComponent implements OnInit {
       if (result.requests) {
         this._requests = result.requests.map((request: any) => {
           request.pros = (request.results.person.length || request.totalResults || 0) + ' pros';
-          if (request.status === 'QUEUED' || request.status === 'PROCESSING') {
-            this._waitingTime ++;
-          }
           if (request.region) {
             request.targetting = request.region;
             request.keywords = request.keywords.replace(`"${request.region}"`, '');
@@ -169,7 +181,6 @@ export class SharedSearchHistoryComponent implements OnInit {
           return request;
         });
       }
-        this._waitingTime = (610 * this._waitingTime) / 60000;  // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
         if (result._metadata) {
           this._total = result._metadata.totalCount;
           this._paused = result._metadata.paused;
