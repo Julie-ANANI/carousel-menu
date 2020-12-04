@@ -1,6 +1,6 @@
 <div>
   <!-- Collaborative editor toggle -->
-  <div *ngIf="isEditable && !isEtherpadUp">
+  <div *ngIf="showToggle">
     <label class="form-switch">
       <input
         (change)="onChangeEditor()"

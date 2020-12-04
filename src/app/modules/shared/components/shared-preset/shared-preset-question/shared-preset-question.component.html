@@ -148,14 +148,16 @@
         <!-- /add comment -->
 
         <!-- is sensitive data -->
-        <label class="form-switch m-right-50">
+        <span class="tooltip" [attr.data-tooltip]="'For anonymous shared link. To \n hide answers that may contain \n phone numbers, mails...'">
+          <label class="form-switch m-right-50">
           <input
             (ngModelChange)="updateValue($event, 'SENSITIVE_DATA')"
             [ngModel]="question.sensitiveAnswerData"
             [disabled]="!isEditable"
             type="checkbox">
-          <i class="form-icon"></i> Sensitive answer
-        </label>
+            <i class="form-icon"></i> Sensitive answer
+          </label>
+        </span>
         <!-- /is sensitive data -->
 
         <!-- show favourable answers -->
