@@ -14,7 +14,7 @@ export class EtherpadSocketService extends AbstractSocketService {
 
   getAuthorPadUpdates(groupPadID: string, authorID: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
-      this.socket.on(`etherpad/${groupPadID}/${authorID}/update`,
+      this.socket.on(`etherpad/${groupPadID}/update`,
         (data: {text: string}) => {
           subscriber.next(data);
         });
