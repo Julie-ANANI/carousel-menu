@@ -253,7 +253,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         },
         {
           _attrs: ['status'],
-          _name: 'Status',
+          _name: 'Pro identification',
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'status']),
           _choices: [
@@ -264,7 +264,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           ]},
         {
           _attrs: ['flag'],
-          _name: 'Email status',
+          _name: 'Email reconstruction',
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'emailStatus']),
           _enableTooltip: true,
