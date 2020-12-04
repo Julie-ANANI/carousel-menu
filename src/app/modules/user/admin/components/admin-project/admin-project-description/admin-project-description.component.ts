@@ -12,6 +12,7 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {CommonService} from '../../../../../../services/common/common.service';
 import {TranslationService} from '../../../../../../services/translation/translation.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {ScrapeHTMLTags} from '../../../../../../pipe/pipes/ScrapeHTMLTags';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 
@@ -123,15 +124,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public importTranslation(event: Event, model: CardSectionTypes, index?: number) {
+    const htmlScraper = new ScrapeHTMLTags();
     event.preventDefault();
     const from_card = this._innovation.innovationCards[this._activeCardIndex === 0 ? 1 : 0];
     const _model = model.toLowerCase();
     let _text = '';
 
     if (model === 'TITLE' || model === 'SUMMARY') {
-      _text = from_card[_model].replace(/<[^>]*>/g, '');
+      _text = htmlScraper.transform(from_card[_model]);
     } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'OTHER') {
-      _text = (<String>from_card.sections[index].content).replace(/<[^>]*>/g, '');
+      _text = htmlScraper.transform(<String>from_card.sections[index].content);
     }
 
     if (_text) {
