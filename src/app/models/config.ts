@@ -7,5 +7,6 @@ export interface Config {
   status?: string;
   isPublic?: string;
   campaigns?: string;
+  isDiscover?: string;
   [property: string]: string;
 }
