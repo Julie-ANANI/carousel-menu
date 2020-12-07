@@ -20,7 +20,7 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
     // Production projects
     '5fc8ac5bdf99326414b0151b', '5f918025d9a0f39747fff6b8', '5f3ce42711bce90bd1dfdb24',
     // Dev projects
-    '5fc8a23881d1c71068ee3716', '5fbbb492d67f795c1be29e91', '5f7d75250fd29613ef69d99b'
+    '5fbbb492d67f795c1be29e91', '5f7d75250fd29613ef69d99b'
   ];
 
   @Input() set text(value: string) {
@@ -46,6 +46,8 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
   @Input() elementId = '';
 
+  @Input() isClient = false;
+
   @Input() type: PadType = 'orphan';
 
   @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
@@ -69,7 +71,8 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
         authorID: this._authService.etherpadAccesses.authorID,
         innovationId: this._innovationId,
         padID: EtherpadService.buildPadID(this.type, this.elementId),
-        userName: UserFrontService.fullName(this.user)
+        userName: UserFrontService.fullName(this.user),
+        noColors: this.isClient
       };
     }
   }
