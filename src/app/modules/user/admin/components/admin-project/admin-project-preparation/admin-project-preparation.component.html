@@ -100,7 +100,7 @@
             <button
               *ngIf="canEditDescription || canEditTargeting || activeTab === 'questionnaire'"
               (click)="onSave($event)"
-              [disabled]="isSaving || !toBeSaved"
+              [disabled]="isSaving || !toBeSaved && !toBeSavedComment"
               [ngStyle]="{'min-width': '110px', 'padding-top': '9px', 'padding-bottom': '9px'}"
               [ngClass]="{'is-saved': toBeSaved || toBeSavedComment}"
               class="button is-sm is-outlined is-primary"
