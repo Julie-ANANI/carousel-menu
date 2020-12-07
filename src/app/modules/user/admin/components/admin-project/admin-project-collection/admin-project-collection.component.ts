@@ -242,7 +242,8 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _name: 'Name',
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'name']),
-          _isHidden: !this.canAccess(['tableColumns', 'name'])
+          _isHidden: !this.canAccess(['tableColumns', 'name']),
+          _searchTooltip: 'Utilisez \"prénom,nom\" pour faire des recherches de personnes'
         },
         {
           _attrs: ['country'],

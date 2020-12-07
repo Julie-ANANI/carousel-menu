@@ -58,8 +58,16 @@
   font-size: $font-size-sm !important;
 }
 
+.text-13 {
+  font-size: 13px !important;
+}
+
 .text-15 {
   font-size: 15px !important;
+}
+
+.text-20 {
+  font-size: 20px !important;
 }
 
 .text-md {
@@ -113,17 +121,12 @@
 
 
 // todo remove all these below
-.title-hero, .title-primary, .title-secondary, .title-header {
+.title-primary, .title-secondary {
   font-weight: 600;
   line-height: $line-height;
   word-break: break-word;
   color: inherit;
   margin-bottom: 0.75rem;
-}
-
-// Title for the hero container of the page
-.title-hero {
-  font-size: 2.3rem;
 }
 
 // Section title.
@@ -135,12 +138,6 @@
 .title-secondary {
   font-size: 1.3rem;
   font-weight: normal;
-}
-
-// Modal, sidebar etc.
-.title-header {
-  font-size: $unit-5;
-  color: $white-color;
 }
 
 // Different types of text

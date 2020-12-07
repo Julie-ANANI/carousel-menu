@@ -1,24 +1,37 @@
-<app-shared-loader *ngIf="!preset"></app-shared-loader>
+<div [hidden]="!preset && !preset._id">
 
-<ng-container *ngIf="preset">
+  <!-- title and save button -->
+  <section>
+    <h2 class="title text-20">{{ preset.name }}</h2>
+  </section>
+  <!-- /title and save button -->
 
-  <h1>{{preset.name}}</h1>
+  <!-- sections -->
+  <ng-container *ngIf="preset.sections && preset.sections.length > 0">
+    <section
+      *ngFor="let section of preset.sections; let i = index;"
+      [ngClass]="{'m-bottom-30': (i + 1) < preset.sections.length}">
+      <app-shared-preset-section
+        [isEditable]="isEditable"
+        [sectionIndex]="i"
+        [section]="section">
+      </app-shared-preset-section>
+    </section>
+  </ng-container>
+  <!-- /sections -->
 
-  <div class="text-right">
-    <button type="button" class="btn btn-primary" (click)="savePreset($event)">
-      Save
+  <!-- add section -->
+  <section *ngIf="isEditable" class="p-bottom-30 text-center">
+    <div class="divider m-bottom-50"></div>
+    <button
+      (click)="addSection($event)"
+      [id]="'sharedPreset-btn-add-section'"
+      class="button is-xl is-primary"
+      type="button">
+      Add new section
     </button>
-  </div>
+    <div class="divider m-top-50"></div>
+  </section>
+  <!-- /add section -->
 
-  <div class="body">
-    <div *ngFor="let section of preset.sections; let i=index">
-      <app-shared-preset-section [section]="section" [sectionIndex]="i"></app-shared-preset-section>
-    </div>
-
-    <div class="add-section" (click)="addSection()">
-      <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
-      <div>Add section</div>
-    </div>
-  </div>
-
-</ng-container>
+</div>

@@ -31,7 +31,7 @@
   <div *ngIf="questionReceived.controlType === 'list' || questionReceived.controlType === 'clearbit'">
 
     <!-- answer toggle button -->
-    <div class="p-top-25 text-center">
+    <div *ngIf="!hideAnswers" class="p-top-25 text-center">
       <button
         (click)="toggleAnswers = !toggleAnswers"
         class="button is-community is-sm"
@@ -83,7 +83,7 @@
   && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
 
     <!-- answer toggle button -->
-    <div class="p-top-25 text-center">
+    <div *ngIf="!hideAnswers" class="p-top-25 text-center">
       <button
         (click)="toggleAnswers = !toggleAnswers"
         class="button is-community is-sm"

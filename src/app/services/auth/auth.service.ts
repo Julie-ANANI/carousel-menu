@@ -1,18 +1,17 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
-import { CookieService, CookieOptions } from 'ngx-cookie';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
-import { User } from '../../models/user.model';
-import { urlRegEx } from '../../utils/regex';
-import { environment } from '../../../environments/environment';
-import { SwellrtBackend } from "../../modules/swellrt-client/services/swellrt-backend";
-
-
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {CookieOptions, CookieService} from 'ngx-cookie';
+import {HttpClient} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
+import {User} from '../../models/user.model';
+import {urlRegEx} from '../../utils/regex';
+import {environment} from '../../../environments/environment';
+import {SwellrtBackend} from '../../modules/swellrt-client/services/swellrt-backend';
 
 import {Md5} from 'ts-md5/dist/md5';
+import {EtherpadAccesses} from '../../models/etherpad-accesses';
 
 const AUTH_SESSION_KEY = makeStateKey('authSession');
 
@@ -30,6 +29,8 @@ export class AuthService {
   private _isOperator = false;
 
   private _user: User = null;
+
+  private _etherpadAccesses: EtherpadAccesses = {active: false, authorID: '', sessions: []};
 
   private _errorUrl: string | null = null;
 
@@ -95,6 +96,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
           this._user = res;
+          this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
             //this.startCookieObservator();
@@ -133,6 +135,7 @@ export class AuthService {
           this._setAuthenticatedTo(res.isAuthenticated);
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
+          this._setEtherpadAccessesTo(res.etherpad);
           this._cookieService.removeAll();
           this._redirectUrl = '';
           this._user = null;
@@ -156,6 +159,7 @@ export class AuthService {
       this._user = res.user || null;
       // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
       this._setIsOperatorTo(this._user ? this._user.isOperator : false );
+      this._setEtherpadAccessesTo(res.etherpad);
     };
     if (this._state.hasKey(AUTH_SESSION_KEY)) {
       const res = this._state.get(AUTH_SESSION_KEY, {});
@@ -206,6 +210,17 @@ export class AuthService {
     }
   }
 
+  private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
+    if (this.isAcceptingCookies && newValue) {
+      this._etherpadAccesses = newValue;
+      if (isPlatformBrowser(this._platformId)) {
+        this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
+          return session.id;
+        }).join(',')}`, this._etherpadCookiesOptions());
+      }
+    }
+  }
+
   private _setMHash(newValue: string): void {
     const md5 = new Md5();
     const mhash = md5.appendStr(newValue).end();
@@ -232,6 +247,21 @@ export class AuthService {
 
   public getMHash(): any {
     return this._cookieService.get('mhash') || null;
+  }
+
+  private _etherpadCookiesOptions(): any {
+    const hostName = environment.etherpadUrl;
+    if (hostName.includes('localhost')) {
+      return this._cookieOptions;
+    } else {
+      const domain = '.' + hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);
+
+      return {
+        ...this._cookieOptions,
+        domain: domain,
+        path: '/'
+      };
+    }
   }
 
   /***
@@ -319,6 +349,13 @@ export class AuthService {
     if (!!url) {
       this._errorUrl = url;
     }
+  }
+
+  get etherpadAccesses(): EtherpadAccesses {
+    return this._etherpadAccesses;
+  }
+  set etherpadAccesses(value: EtherpadAccesses) {
+    this._etherpadAccesses = value;
   }
 
   /*get adminAccess(): any {

@@ -9,7 +9,6 @@ import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -65,16 +64,12 @@ export class ProjectsListComponent implements OnInit {
   private _removeInnovationId = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
               private _userService: UserService,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationService: TranslateNotificationsService,
               private _innovationService: InnovationService) {
-
-    this._setSpinner(true);
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.MY_PROJECTS');
-
   }
 
   ngOnInit() {
@@ -85,27 +80,16 @@ export class ProjectsListComponent implements OnInit {
   }
 
   /***
-   * this is to start/stop the full page spinner.
-   * @param value
-   * @private
-   */
-  private _setSpinner(value: boolean) {
-    this._spinnerService.state(value);
-  }
-
-  /***
    * this is to get the innovations from the api.
    * @private
    */
   private _getProjects() {
     this._userService.getMyInnovations(this._config).pipe(first()).subscribe((response) => {
-      this._setSpinner(false);
       this._innovations = response.result;
       this._total = Math.max(response._metadata.totalCount, response.result.length);
     }, (err: HttpErrorResponse) => {
       console.log(err);
       this._isError = true;
-      this._setSpinner(false);
       this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
   }

@@ -1,191 +1,357 @@
-<div class="question">
+<div [id]="'question-' + questionIndex" class="shared-preset-question">
 
-  <!-- Question header -->
-  <div class="question-header">
-    <div class="move-element">
-      <i class="fa fa-caret-up" (click)="up($event)"></i>
-      <i class="fa fa-caret-down" (click)="down($event)"></i>
-    </div>
+  <!-- header -->
+  <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">
 
-    <select *ngIf="editMode && !isTaggedQuestion" class="form-select" [(ngModel)]="question.controlType">
-      <option value="radio">{{ "PRESETS.QUESTION.TYPE.radio" | translate }}</option>
-      <option value="checkbox">{{ "PRESETS.QUESTION.TYPE.checkbox" | translate }}</option>
-      <option value="textarea">{{ "PRESETS.QUESTION.TYPE.textarea" | translate }}</option>
-      <option value="list">{{ "PRESETS.QUESTION.TYPE.list" | translate }}</option>
-      <option value="clearbit">{{ "PRESETS.QUESTION.TYPE.clearbit" | translate }}</option>
-      <option value="scale">{{ "PRESETS.QUESTION.TYPE.scale" | translate }}</option>
-      <option value="stars">{{ "PRESETS.QUESTION.TYPE.stars" | translate }}</option>
-      <option value="toggle">{{ "PRESETS.QUESTION.TYPE.toggle" | translate }}</option>
-    </select>
+    <!-- move / select / type / label-->
+    <div class="d-flex align-center">
 
-    <select *ngIf="!editMode || isTaggedQuestion" class="form-select" disabled>
-      <option [innerHtml]="'PRESETS.QUESTION.TYPE.' + question.controlType" translate></option>
-    </select>
+      <div *ngIf="isEditable" data-tooltip="Move question" class="move-arrows tooltip">
+        <i (click)="up($event)" class="icon icon-arrow-up"></i>
+        <i (click)="down($event)" class="icon icon-arrow-down"></i>
+      </div>
 
-    <ng-container [ngSwitch]="editMode">
-      <select *ngSwitchCase="true" class="form-select" (ngModelChange)="changeIdentifier($event)" [(ngModel)]="question.identifier">
-        <option *ngIf="isTaggedQuestion" [value]="question.identifier">#{{question.identifier}}</option>
-        <option *ngFor="let question of getNonUsedQuestions()" [value]="question">#{{question}}</option>
-        <option [value]="customId">custom</option>
-      </select>
-      <ng-container *ngSwitchDefault>
-        <div *ngIf="isTaggedQuestion" class="tag-wrapper" >
+      <ng-container *ngIf="!editMode || isTaggedQuestion">
+        <label class="m-right-20">
+          <select class="form-select is-sm" disabled>
+            <option>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType | translate }}</option>
+          </select>
+        </label>
+        <span *ngIf="!editMode || !isEditable" class="m-right-20">{{ question.label | multiling:lang }}</span>
+      </ng-container>
+
+      <ng-container *ngIf="isEditable && editMode && !isTaggedQuestion">
+        <label class="m-right-20">
+          <select
+            (ngModelChange)="notifyChanges()"
+            [(ngModel)]="question.controlType"
+            class="form-select is-sm">
+            <option value="radio">Unique choice question</option>
+            <option value="checkbox">Multiple choice question</option>
+            <option value="textarea">Text</option>
+            <option value="list">List of items</option>
+            <option value="clearbit">List of companies</option>
+            <option value="scale">Rating</option>
+            <option value="stars">Star rating</option>
+            <option value="toggle">Toggle</option>
+          </select>
+        </label>
+      </ng-container>
+
+      <ng-container *ngIf="editMode && isEditable">
+        <label class="m-right-20">
+          <select
+            (ngModelChange)="changeIdentifier($event)"
+            [(ngModel)]="question.identifier"
+            class="form-select is-sm">
+            <option *ngIf="isTaggedQuestion" [value]="question.identifier">#{{question.identifier}}</option>
+            <option *ngFor="let question of getNonUsedQuestions()" [value]="question">#{{question}}</option>
+            <option [value]="customId">custom</option>
+          </select>
+        </label>
+      </ng-container>
+
+      <ng-container *ngIf="isTaggedQuestion && (!editMode || !isEditable)">
+        <div class="label is-rounded is-tag m-no m-right-20 text-sm">
           #{{question.identifier}}
         </div>
       </ng-container>
-    </ng-container>
 
-    <p>{{question.label | multiling:lang}}</p>
-
-    <div class="button-actions">
-      <button type="button" class="btn btn-xs ghost-edit"
-              *ngIf="!editMode"
-              (click)="cloneQuestion($event)">
-        Clone
-      </button>
-      <button type="button" class="btn btn-xs btn-error"
-              *ngIf="editMode"
-              (click)="removeQuestion($event)">
-        Delete
-      </button>
-      <button type="button" class="btn btn-xs ghost-edit"
-              (click)="editMode = !editMode">
-        Edit
-      </button>
     </div>
+    <!-- /move / select / type / label -->
+
+    <!-- buttons -->
+    <div class="buttons-wrapper">
+
+      <!-- delete -->
+      <div
+        (click)="removeQuestion($event)"
+        *ngIf="editMode && isEditable"
+        [id]="'sharedPresetQuestion-btn-delete-question'"
+        class="icon-container is-overlay m-right-15">
+        <span data-tooltip="Delete" class="tooltip">
+          <i class="icon icon-delete text-white"></i>
+        </span>
+      </div>
+      <!-- /delete -->
+
+      <!-- clone -->
+      <div
+        (click)="cloneQuestion($event)"
+        *ngIf="editMode && isEditable"
+        [id]="'sharedPresetQuestion-btn-clone-question'"
+        class="icon-container is-overlay m-right-15">
+        <span data-tooltip="Clone" class="tooltip">
+          <i class="icon icon-copy text-white"></i>
+        </span>
+      </div>
+      <!-- /clone -->
+
+      <!-- edit -->
+      <div
+        (click)="editMode = !editMode"
+        [id]="'sharedPresetSection-btn-edit-section'"
+        class="icon-container is-overlay">
+        <span [attr.data-tooltip]="isEditable ? editMode ? 'Stop editing' : 'Edit' : 'View'" class="tooltip">
+          <img [src]="picto.edit.white" alt=" " class="img-responsive">
+        </span>
+      </div>
+      <!-- /edit -->
+
+    </div>
+    <!-- /buttons -->
+
   </div>
+  <!-- /header -->
 
+  <!-- question edition -->
+  <div *ngIf="editMode" class="question-body">
 
-  <!-- Question edition -->
-  <div class="question-body" *ngIf="editMode">
-    <div class="question-toolbar">
-      <button (click)="language = 'en'" class="btn btn-link" [ngClass]="{'active': language === 'en'}">
-        English
-        <span class ="alert-badge" *ngIf="countErrors('en') !== 0" [innerHtml]="countErrors('en')"></span>
+    <!-- toolbar -->
+    <div class="question-toolbar m-bottom-25">
+
+      <div class="d-flex align-center">
+
+        <!-- english -->
+        <button
+          (click)="language = 'en'"
+          [ngClass]="{'active': language === 'en'}"
+          class="button is-outlined is-sm text-primary-dark m-right-20">
+          English
+          <span *ngIf="countErrors('en') !== 0" class="label is-danger is-sm is-rounded">
+          {{ countErrors('en') }}
+        </span>
+        </button>
+        <!-- /english -->
+
+        <!-- french -->
+        <button
+          (click)="language = 'fr'"
+          [ngClass]="{'active': language === 'fr'}"
+          class="button is-outlined is-sm text-primary-dark m-right-50">
+          French
+          <span *ngIf="countErrors('fr') !== 0" class="label is-danger is-sm is-rounded">
+          {{ countErrors('fr') }}
+        </span>
+        </button>
+        <!-- /french -->
+
+        <!-- add comment -->
+        <label class="form-switch m-right-50">
+          <input
+            (ngModelChange)="updateValue($event, 'COMMENT')"
+            [ngModel]="question.canComment"
+            [disabled]="!isEditable"
+            type="checkbox">
+          <i class="form-icon"></i> Add comment
+        </label>
+        <!-- /add comment -->
+
+        <!-- is sensitive data -->
+        <span class="tooltip" [attr.data-tooltip]="'For anonymous shared link. To \n hide answers that may contain \n phone numbers, mails...'">
+          <label class="form-switch m-right-50">
+          <input
+            (ngModelChange)="updateValue($event, 'SENSITIVE_DATA')"
+            [ngModel]="question.sensitiveAnswerData"
+            [disabled]="!isEditable"
+            type="checkbox">
+            <i class="form-icon"></i> Sensitive answer
+          </label>
+        </span>
+        <!-- /is sensitive data -->
+
+        <!-- show favourable answers -->
+        <label *ngIf="question.controlType === 'radio'" class="form-switch">
+          <input
+            (ngModelChange)="updateValue($event, 'FAV_ANSWERS')"
+            [ngModel]="question.visibility"
+            [disabled]="!isEditable"
+            type="checkbox">
+          <i class="form-icon"></i> Show favorable answers
+        </label>
+        <!-- /show favourable answers -->
+
+      </div>
+
+      <!-- import benefits -->
+      <button
+        (click)="fillWithBenefits($event)"
+        *ngIf="question.controlType === 'stars' && isEditable"
+        class="button is-outlined is-info is-sm m-left-50">
+        Import benefits
       </button>
-      <button (click)="language = 'fr'" class="btn btn-link" [ngClass]="{'active': language === 'fr'}">
-        French
-        <span class ="alert-badge" *ngIf="countErrors('fr') !== 0" [innerHtml]="countErrors('fr')"></span>
-      </button>
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="question.canComment">
-        <i class="form-icon"></i> Add comment
-      </label>
-      <label *ngIf="question.controlType === 'radio'" class="form-switch m-left-20">
-        <input type="checkbox" [(ngModel)]="question.visibility">
-        <i class="form-icon"></i> Show favorable answers
-      </label>
-      <button *ngIf="question.controlType === 'stars' && innovation" (click)="fillWithBenefits($event)" class="btn btn-primary ghost-primary">
-        Import Benefits
-      </button>
+      <!-- /import benefits -->
+
     </div>
+    <!-- /toolbar -->
 
-    <ng-container *ngFor="let lang of ['en', 'fr']">
-      <div class="labelling" *ngIf="lang === language">
+    <!-- label / title / subtitle -->
+    <div *ngFor="let lang of ['en', 'fr']">
+      <div *ngIf="lang === language" class="question-labelling-options flex-between">
         <div class="form-group">
-          <label class="form-label" for="form-label" translate>PRESETS.QUESTION.EDIT.LABEL</label>
+          <label class="form-label" for="question-label">Question Label</label>
+          <span *ngIf="!isEditable" class="text-sm">{{ question.label[lang] }}</span>
           <input
-            type="text"
-            class="form-input"
-            id="form-label"
-            placeholder="label"
-            [(ngModel)]="question.label[lang]">
+            (ngModelChange)="notifyChanges()"
+            *ngIf="isEditable"
+            [(ngModel)]="question.label[lang]"
+            [placeholder]="'Label in ' + (lang === 'fr' ? 'French' : 'English')"
+            class="form-input is-sm is-shadowed"
+            id="question-label"
+            type="text">
         </div>
-
         <div class="form-group">
-          <label class="form-label" for="form-title" translate>PRESETS.QUESTION.EDIT.TITLE</label>
+          <label class="form-label" for="question-title">Infographics Title</label>
+          <span *ngIf="!isEditable" class="text-sm">{{ question.title[lang] }}</span>
           <input
-            type="text"
-            class="form-input"
-            id="form-title"
-            placeholder="title"
-            [(ngModel)]="question.title[lang]">
+            (ngModelChange)="notifyChanges()"
+            *ngIf="isEditable"
+            [(ngModel)]="question.title[lang]"
+            [placeholder]="'Title in ' + (lang === 'fr' ? 'French' : 'English')"
+            class="form-input is-sm is-shadowed"
+            id="question-title"
+            type="text">
         </div>
-
         <div class="form-group">
-          <label class="form-label" for="form-subtitle" translate>PRESETS.QUESTION.EDIT.SUBTITLE</label>
+          <label class="form-label" for="question-subtitle">Infographics Subtitle</label>
+          <span *ngIf="!isEditable" class="text-sm">{{ question.subtitle[lang] }}</span>
           <input
-            type="text"
-            class="form-input"
-            id="form-subtitle"
-            placeholder="subtitle"
-            [(ngModel)]="question.subtitle[lang]">
+            (ngModelChange)="notifyChanges()"
+            *ngIf="isEditable"
+            [(ngModel)]="question.subtitle[lang]"
+            [placeholder]="'Subtitle in ' + (lang === 'fr' ? 'French' : 'English')"
+            class="form-input is-sm is-shadowed"
+            id="question-subtitle"
+            type="text">
         </div>
       </div>
-    </ng-container>
+    </div>
+    <!-- /label / title / subtitle -->
 
-    <div class="option-list" id="optionsWrap"
-         *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox' || question.controlType === 'stars'">
+    <!-- question types -->
+    <ng-container
+      *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
+      || question.controlType === 'stars'">
 
-      <div *ngFor="let option of question.options; let i = index;" class="option">
-        <div (click)="deleteOption($event, i)" class="delete-option">
-          <i class="icon icon-cross"></i>
-        </div>
+      <!-- options -->
+      <div class="options-wrapper">
+        <div *ngFor="let option of question.options; let i = index;" class="card">
 
-        <div class="add-item-language">
-          <div class="form-group">
-            <label class="form-label" for="label-fr">French</label>
-            <input
-              type="text"
-              class="form-input"
-              [(ngModel)]="option.label.fr"
-              id="label-fr">
+          <!-- cross icon -->
+          <div class="text-center m-bottom-10">
+            <button
+              (click)="deleteOption($event, i)"
+              *ngIf="isEditable"
+              [id]="'sharedPresetQuestion-btn-delete-option'"
+              class="close text-center text-primary-dark is-sm">
+            </button>
           </div>
+          <!-- /cross icon -->
 
+          <!-- positive answer -->
+          <ng-container *ngIf="question.controlType === 'radio' && question.visibility">
+            <div class="text-center m-bottom-20">
+              <label class="form-switch">
+                <input
+                  (ngModelChange)="updateValue($event, 'OPTION_POSITIVE', i)"
+                  [ngModel]="option.positive"
+                  [disabled]="!isEditable"
+                  type="checkbox">
+                <i class="form-icon"></i> Positive answer
+              </label>
+            </div>
+          </ng-container>
+          <!-- /positive answer -->
+
+          <!-- label English -->
           <div class="form-group">
             <label class="form-label" for="label-en">English</label>
+            <span *ngIf="!isEditable" class="text-sm">{{ option.label.en }}</span>
             <input
-              type="text"
-              class="form-input"
+              (ngModelChange)="notifyChanges()"
+              *ngIf="isEditable"
               [(ngModel)]="option.label.en"
-              id="label-en">
+              class="form-input is-sm is-shadowed"
+              id="label-en"
+              type="text">
           </div>
+          <!-- /label English -->
+
+          <!-- label French -->
+          <div class="form-group">
+            <label class="form-label" for="label-fr">French</label>
+            <span *ngIf="!isEditable" class="text-sm">{{ option.label.fr }}</span>
+            <input
+              (ngModelChange)="notifyChanges()"
+              *ngIf="isEditable"
+              [(ngModel)]="option.label.fr"
+              class="form-input is-sm is-shadowed"
+              id="label-fr"
+              type="text">
+          </div>
+          <!-- /label French -->
+
+          <!-- if type Radio -->
+          <ng-container *ngIf="question.controlType === 'radio'">
+
+            <!-- option color -->
+            <div class="p-top-25 text-sm text-medium flex-centered m-bottom-30">
+              <span class="m-right-2">Selected option color:</span>
+              <span
+                *ngIf="!isEditable"
+                [ngStyle]="{'background-color': option.color}"
+                class="shape is-circle is-sm">
+              </span>
+              <div *ngIf="isEditable" data-tooltip="Click to set custom color" class="tooltip is-left d-flex">
+                <span
+                  (colorPickerChange)="notifyChanges()"
+                  [(colorPicker)]="option.color"
+                  [ngStyle]="{'background-color': option.color}"
+                  class="shape is-circle is-sm c-hand">
+                </span>
+              </div>
+            </div>
+            <!-- /option color -->
+
+            <!-- color options -->
+            <div *ngIf="isEditable" class="d-flex align-center text-sm text-medium m-bottom-20">
+              <span class="m-right-2">Pre-defined colors:</span>
+              <span
+                *ngFor="let color of optionColors"
+                (click)="setColor(color, i)"
+                [ngStyle]="{'background-color': color}"
+                class="shape c-hand is-circle is-sm m-right-1">
+              </span>
+            </div>
+            <!-- /color options -->
+
+          </ng-container>
+          <!-- /if type Radio -->
+
         </div>
-
-        <ng-container *ngIf="question.controlType === 'radio'">
-
-          <div class="d-flex">
-            <span class="form-label">Option color:</span>
-            <input class="color-picker-circle" [(colorPicker)]="option.color" [style.background]="option.color"/>
-          </div>
-
-          <div class="color-circles">
-            <span
-              class="shape is-circle is-sm dark-green"
-              [ngClass]="{'selected-circle': option.color === '#34AC01'}"
-              (click)="setColor('#34AC01', i)"
-            ></span>
-            <span
-              class="shape is-circle is-sm light-green"
-              [ngClass]="{'selected-circle': option.color === '#82CD30'}"
-              (click)="setColor('#82CD30', i)"
-            ></span>
-            <span
-              class="shape is-circle is-sm yellow"
-              [ngClass]="{'selected-circle': option.color === '#F2C500'}"
-              (click)="setColor('#F2C500', i)"
-            ></span>
-            <span
-              class="shape is-circle is-sm red"
-              [ngClass]="{'selected-circle': option.color === '#C0210F'}"
-              (click)="setColor('#C0210F', i)"
-            ></span>
-          </div>
-          <label class="form-switch">
-            <input type="checkbox" [(ngModel)]="option.positive">
-            <i class="form-icon"></i> Positive answer
-          </label>
-
-        </ng-container>
-
       </div>
+      <!-- /options -->
 
-      <button (click)="addNewOption($event)" class="btn btn-primary ghost-primary" type="button">
-        Add item
-      </button>
+      <!-- add item -->
+      <div *ngIf="isEditable" class="text-center p-top-10 m-bottom-15">
+        <button
+          (click)="addNewOption($event)"
+          [id]="'sharedPresetQuestion-btn-add-item'"
+          class="button is-link is-info text-bold is-sm"
+          type="button">
+          <span class="icon-container is-overlay is-sm active m-right-10">
+            <i class="icon icon-plus text-xs"></i>
+          </span>
+          Add item
+        </button>
+      </div>
+      <!-- /add item -->
 
-    </div>
+    </ng-container>
+    <!-- /question types -->
+
   </div>
+  <!-- /question edition -->
 
 </div>
 

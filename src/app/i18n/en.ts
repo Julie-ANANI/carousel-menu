@@ -41,6 +41,8 @@ import { PROJECT_SETTINGS } from '../modules/user/client/components/project/comp
 import { PROJECT_DOCUMENTS } from '../modules/user/client/components/project/components/documents/i18n/en';
 import { PROJECT_PITCH } from '../modules/user/client/components/project/components/setup/components/pitch/i18n/en';
 import { PROJECT_SETUP } from '../modules/user/client/components/project/components/setup/i18n/en';
+import {COMMENT_CARD} from '../modules/sidebars/components/comment-card/i18n/en';
+import {SHARED_TEXT_ZONE} from '../modules/shared/components/shared-editors/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -85,5 +87,7 @@ export const en = {
   'PROJECT_SETTINGS': PROJECT_SETTINGS,
   'PROJECT_DOCUMENTS': PROJECT_DOCUMENTS,
   'PROJECT_PITCH': PROJECT_PITCH,
-  'PROJECT_SETUP': PROJECT_SETUP
+  'PROJECT_SETUP': PROJECT_SETUP,
+  'COMMENT_CARD': COMMENT_CARD,
+  'SHARED_TEXT_ZONE': SHARED_TEXT_ZONE
 };

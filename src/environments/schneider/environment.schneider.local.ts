@@ -2,6 +2,7 @@ export const environment = {
   local: true,
   production: false,
   apiUrl: 'http://localhost:3000/api',
+  etherpadUrl: 'http://localhost:9001',
   clientUrl: 'http://localhost:4200',
   companyName: 'Schneider Electric (local)',
   companyShortName: 'Schneider (local)',

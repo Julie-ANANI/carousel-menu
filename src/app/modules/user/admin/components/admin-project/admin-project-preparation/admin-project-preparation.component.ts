@@ -223,21 +223,24 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   public onSave(event: Event) {
     event.preventDefault();
-    if (!this._isSaving) {
+    if (!this._isSaving && this._toBeSaved) {
       this._isSaving = true;
-      this._saveProject();
-      this._saveComment();
+      if (this._activeTab === 'questionnaire') {
+        this._saveProject({preset: this._project.preset});
+      } else {
+        const fields = this._toBeSaved.split(',');
+        const saveObject = {};
+        fields.forEach(field => {
+          saveObject[field] = this._project[field];
+        });
+        this._saveProject(saveObject);
+        this._saveComment();
+      }
     }
   }
 
-  private _saveProject() {
-    if (this._toBeSaved) {
-      const fields = this._toBeSaved.split(',');
-      const saveObject = {};
-      fields.forEach(field => {
-        saveObject[field] = this._project[field];
-      });
-      this._innovationService.save(this._project._id, saveObject).pipe(first()).subscribe(() => {
+  private _saveProject(objToSave: any) {
+      this._innovationService.save(this._project._id, objToSave).pipe(first()).subscribe(() => {
         this._isSaving = false;
         this._toBeSaved = '';
         this._setInnovation();
@@ -249,7 +252,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
-    }
   }
 
   private _saveComment() {

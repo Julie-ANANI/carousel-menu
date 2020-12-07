@@ -1,0 +1,12 @@
+<div>
+  <div class="flex d-inline-flex align-center w-fit-content justify-between">
+    <ng-content select="[slot=header]"></ng-content>
+    <span class="text-center c-hand" (click)="toggle()">
+        <i *ngIf="isToggled" class="icon text-secondary m-left-10 icon-arrow-down "></i>
+        <i *ngIf="!isToggled" class="icon text-secondary m-left-10 icon-arrow-up "></i>
+    </span>
+  </div>
+  <div *ngIf="isToggled">
+    <ng-content select="[slot=body]"></ng-content>
+  </div>
+</div>

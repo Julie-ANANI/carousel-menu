@@ -1,28 +1,61 @@
-<div class="videos-upload flex-centered text-center">
+<div
+  [ngClass]="{'is-error': isWrongFormat}"
+  class="flex-centered text-center upload-video-zone"
+  id="shared-upload-zone-video">
 
-  <div class="logo-wrapper">
-    <img
-      src="https://res.cloudinary.com/umi/image/upload/c_scale,h_22/app/logo-vimeo.png"
-      height="22px"
-      alt=" ">
-
-    <img
-      src="https://res.cloudinary.com/umi/image/upload/c_scale,h_22/app/logo-youtube.png"
-      height="22px"
-      alt=" ">
+  <!-- uploading -->
+  <div *ngIf="isUploading">
+    <p class="text-sm text-medium text-background">{{ 'COMMON.MEDIA.UPLOADING_VIDEO' | translate }}</p>
+    <div class="loading is-lg"></div>
   </div>
+  <!-- /uploading -->
 
-  <label [ngStyle]="{ 'width': '100%' }">
-    <input
-      [(ngModel)]="videoUrlInput"
-      [attr.placeholder]="'COMMON.PLACEHOLDER.MEDIA_URL' | translate"
-      class="form-input m-auto"
-      type="text">
-  </label>
+  <!-- not uploading -->
+  <ng-container *ngIf="!isUploading">
 
-  <button class="button is-primary m-top-20" (click)="videoUrlInput ? addVideo($event) : ''">
-    <i class="fas icon-left fa-upload"></i>{{ 'COMMON.BUTTON.UPLOAD_VIDEO' | translate }}
-  </button>
+    <div *ngIf="!isWrongFormat" class="d-flex align-center m-bottom-25">
+      <img
+        alt=" "
+        class="img-responsive m-right-25"
+        height="20px"
+        src="https://res.cloudinary.com/umi/image/upload/c_scale,h_20/app/logo-vimeo.png">
+      <img
+        alt=" "
+        class="img-responsive m-right-25"
+        height="22px"
+        src="https://res.cloudinary.com/umi/image/upload/c_scale,h_22/app/logo-youtube.png">
+    </div>
+
+    <div *ngIf="isWrongFormat" class="m-bottom-25">
+      <i [ngStyle]="{'font-size': '50px'}" class="fas text-alert fa-exclamation-triangle"></i>
+      <p class="text-13 text-alert m-top-2 m-no-bottom text-medium">
+        {{ 'COMMON.MEDIA.WRONG_FORMAT_VIDEO' | translate }}
+      </p>
+    </div>
+
+    <!-- input field -->
+    <label class="w-full m-bottom-25">
+      <input
+        [(ngModel)]="videoUrlInput"
+        [attr.placeholder]="'COMMON.PLACEHOLDER.MEDIA_URL' | translate"
+        class="form-input m-auto mxw-450 is-sm is-shadowed"
+        type="text">
+    </label>
+    <!-- /input field -->
+
+    <!-- upload button -->
+    <button
+      (click)="addVideo($event)"
+      [disabled]="!videoUrlInput"
+      [id]="'sharedUploadZoneVideo-btn-upload'"
+      class="button is-outlined is-info is-sm">
+      <i class="fas fa-upload icon-left"></i>
+      {{ 'COMMON.BUTTON.UPLOAD_VIDEO' | translate }}
+    </button>
+    <!-- /upload button -->
+
+  </ng-container>
+  <!-- /not uploading -->
 
 </div>
 

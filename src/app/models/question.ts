@@ -17,6 +17,7 @@ export interface Question {
   title: Multiling;
   subtitle: Multiling;
   canComment: boolean;
+  sensitiveAnswerData: boolean;
   parameters?: {
     type: 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
     addon: string;

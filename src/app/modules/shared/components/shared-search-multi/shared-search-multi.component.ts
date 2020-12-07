@@ -37,6 +37,8 @@ export class SharedSearchMultiComponent {
 
   private _searchString: string = '';
 
+  private _openTooltip = false;
+
   constructor() {}
 
   private _loadProps(value: Column[]) {
@@ -144,6 +146,10 @@ export class SharedSearchMultiComponent {
     return choice._alias || choice._name;
   }
 
+  getTooltip(): string {
+    return this.currentTextProp._searchTooltip || '';
+  }
+
   get currentTextProp(): Column {
     return this._currentTextProp;
   }
@@ -170,6 +176,14 @@ export class SharedSearchMultiComponent {
 
   set searchString(value: string) {
     this._searchString = value;
+  }
+
+  get openTooltip(): boolean {
+    return this._openTooltip;
+  }
+
+  set openTooltip(value: boolean) {
+    this._openTooltip = value;
   }
 
 }

@@ -12,6 +12,7 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {CommonService} from '../../../../../../services/common/common.service';
 import {TranslationService} from '../../../../../../services/translation/translation.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {ScrapeHTMLTags} from '../../../../../../pipe/pipes/ScrapeHTMLTags';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 
@@ -58,11 +59,13 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _isEditableComment = false;
 
+  private _isUploadingVideo = false;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
               private _translationService: TranslationService,
               private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService,) { }
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
 
@@ -121,15 +124,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public importTranslation(event: Event, model: CardSectionTypes, index?: number) {
+    const htmlScraper = new ScrapeHTMLTags();
     event.preventDefault();
     const from_card = this._innovation.innovationCards[this._activeCardIndex === 0 ? 1 : 0];
     const _model = model.toLowerCase();
     let _text = '';
 
     if (model === 'TITLE' || model === 'SUMMARY') {
-      _text = from_card[_model].replace(/<[^>]*>/g, '');
+      _text = htmlScraper.transform(from_card[_model]);
     } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'OTHER') {
-      _text = (<String>from_card.sections[index].content).replace(/<[^>]*>/g, '');
+      _text = htmlScraper.transform(<String>from_card.sections[index].content);
     }
 
     if (_text) {
@@ -283,19 +287,22 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this.activeInnovCard.media.push(media);
     if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
+      this.onSetPrincipal(media);
     }
-    this.updateInnovation();
+    this._setInnovation();
   }
 
   public uploadVideo(video: Video): void {
+    this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id,
       this._innovation.innovationCards[this._activeCardIndex]._id, video)
       .pipe(first())
       .subscribe((res) => {
+        this._isUploadingVideo = false;
         this.activeInnovCard.media.push(res);
-        this._innovation.innovationCards[this._activeCardIndex].principalMedia = res;
-        this.updateInnovation();
+        this._setInnovation();
       }, (err: HttpErrorResponse) => {
+        this._isUploadingVideo = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
@@ -310,6 +317,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._isSavingMedia = false;
           this.activeInnovCard.principalMedia = media;
           this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
+          this._setInnovation();
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
           }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -317,6 +325,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           console.error(err);
         });
     }
+  }
+
+  private _setInnovation() {
+    this._innovationFrontService.setInnovation(this._innovation);
   }
 
   public onDeleteMedia(media: Media) {
@@ -327,13 +339,30 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
           this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
+          this._setInnovation();
           this._isSavingMedia = false;
+          this._verifyPrincipal(media);
           this._translateNotificationsService.success('Success', 'The media has been deleted.');
           }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this._isSavingMedia = false;
           console.error(err);
       });
+    }
+  }
+
+  /***
+   * if we already set the deleted media as principal media then we set the next media as principal media and if no media
+   * available then set principal media null
+   * @private
+   */
+  private _verifyPrincipal(deleteMedia: Media) {
+    if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
+      this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
+      this._setInnovation();
+    } else if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id === deleteMedia._id
+      && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
+      this.onSetPrincipal(this.activeInnovCard.media[0]);
     }
   }
 
@@ -394,6 +423,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get isEditableComment(): boolean {
     return this._isEditableComment;
+  }
+
+  get isUploadingVideo(): boolean {
+    return this._isUploadingVideo;
+  }
+
+  get currentLang(): string {
+    return this.activeInnovCard.lang;
   }
 
   ngOnDestroy(): void {

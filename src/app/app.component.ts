@@ -7,7 +7,7 @@ import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
-import { takeUntil } from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -21,58 +21,35 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _notificationsOptions: Options = {
     position: ['bottom', 'right'],
-    timeOut: 4000,
+    timeOut: 1500,
     lastOnBottom: true,
-    maxStack: 4,
+    maxStack: 1,
     animate: NotificationAnimationType.FromRight,
     pauseOnHover: true,
-    showProgressBar: false,
-    clickToClose: true
+    showProgressBar: true,
+    clickToClose: true,
+    clickIconToClose: true
   };
 
   private _startMouseEvent = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _authService: AuthService,
               private _mouseService: MouseService,
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
-
     this._setFavicon();
-
     initTranslation(this._translateService);
-
-    if (this._authService.isAcceptingCookies) {
-      this._authService.initializeSession().subscribe(() => {
-        console.log('The application has been started.');
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', { timeOut: 0 });
-      });
-    }
-
+    this._initializeSession();
   }
 
   ngOnInit(): void {
     this._socketEvent();
     this._mouseEvent();
     //this._setSwellRTScript();
-  }
-
-  private _socketEvent() {
-    this._socketService.listenToSocket().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-      this._socketService.sendDataToApi('helloBack', { 'hello': 'back' });
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
-  }
-
-  private _mouseEvent() {
-    this._mouseService.getStartEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value: boolean) => {
-      this._startMouseEvent = value;
-    });
   }
 
   @HostListener('mouseup', ['$event'])
@@ -82,9 +59,34 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _initializeSession() {
+    if (this._authService.isAcceptingCookies) {
+      this._authService.initializeSession().pipe(first()).subscribe(() => {
+        console.log('The application has been started.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+        console.error(err);
+      });
+    }
+  }
+
+  private _socketEvent() {
+    this._socketService.listenToSocket().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+      this._socketService.sendDataToApi('helloBack', { 'hello': 'back' });
+    }, (err: HttpErrorResponse) => {
+      console.error(err);
+    });
+  }
+
+  private _mouseEvent() {
+    this._mouseService.getStartEvent().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value: boolean) => {
+      this._startMouseEvent = value;
+    });
+  }
+
   // Favicon
   private _setFavicon() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       const linkElement = document.createElement('link');
       linkElement.setAttribute('id', 'theicon');
       linkElement.setAttribute('rel', 'icon');

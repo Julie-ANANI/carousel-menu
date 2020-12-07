@@ -1,0 +1,75 @@
+<div class="full-display-content">
+
+  <div #scrollFrame class="comments-container p-20">
+    <!-- Comment -->
+    <div class="comment-message">
+      <div class="d-flex flex-between">
+        <div class="comment-info">
+          <span class="comment-author-name">{{comment.name}}</span>
+          <span class="comment-created-at">{{comment.timestamp | date:'MM/dd/yyyy'}}</span>
+        </div>
+      </div>
+      <span class="comment-text" [innerHTML]="comment.text | cleanHtml"></span>
+      <form class="suggestion-display" *ngIf="comment.changeTo && comment.changeFrom">
+        <span class="from-label">{{ 'COMMENT_CARD.PROPOSE_REPLACE' | translate }} </span>
+        <span class="from-value">{{comment.changeFrom}}</span>
+        <span class="to-label"> {{ 'COMMENT_CARD.REPLACE_TO' | translate }}</span>
+        <span class="to-value">{{comment.changeTo}}</span>
+      </form>
+    </div>
+
+    <!--  Replies -->
+    <div class="comment-reply" #reply *ngIf="comment.replies && comment.replies.length > 0">
+      <div *ngFor="let reply of comment.replies">
+        <div id="{{reply.id}}" class="sidebar-comment-reply comment-message">
+          <div class="comment-info">
+            <span class="comment-author-name">{{reply.name}}</span>
+            <span class="comment-created-at">{{reply.timestamp | date:'MM/dd/yyyy'}}</span>
+          </div>
+          <span class="comment-text" [innerHTML]="reply.text | cleanHtml"></span>
+          <form class=" suggestion-display" *ngIf="reply.changeTo && reply.changeFrom">
+            <span class="from-label">{{ 'COMMENT_CARD.PROPOSE_REPLACE' | translate }} </span>
+            <span class="from-value">{{reply.changeFrom}}</span>
+            <span class="to-label"> {{ 'COMMENT_CARD.REPLACE_TO' | translate }}</span>
+            <span class="to-value">{{reply.changeTo}}</span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  New reply -->
+  <form class="new-comment p-20">
+    <label>
+      <textarea name="text" type="text" (focus)="editingNewComment = true" class="form-input is-sm"
+                placeholder="{{ 'COMMON.COMMENT' | translate }}" [(ngModel)]="newComment.text"></textarea>
+    </label>
+    <div class="form-more" *ngIf="editingNewComment">
+      <div class="comment-suggest">
+        <label class="form-switch text-sm">
+          <input type="checkbox" (change)="displayNewCommentSuggestion = !displayNewCommentSuggestion"
+                 [checked]="displayNewCommentSuggestion">
+          <i class="form-icon"></i>
+          <span class="label-suggestion-checkbox">{{ 'COMMENT_CARD.PROPOSE_MODIFY' | translate }}</span>
+        </label>
+        <div *ngIf="displayNewCommentSuggestion" class="suggestion suggestion-create">
+          <label>
+            <span class="from-label">{{ 'COMMENT_CARD.REPLACE_FROM' | translate }}</span>
+            <textarea class="from-value form-input is-sm" name="from-value"
+                      [(ngModel)]="newComment.changeFrom"></textarea>
+          </label>
+          <label>
+            <span class="to-label"> {{ 'COMMENT_CARD.REPLACE_TO' | translate }}</span>
+            <textarea class="to-value form-input is-sm" name="to-value" [(ngModel)]="newComment.changeTo"></textarea>
+          </label>
+        </div>
+      </div>
+      <div class="flex-between m-top-10">
+        <button class="btn btn-primary btn-sm" [disabled]="!canSubmitNewComment()"
+                (click)="sendReply()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+        <button class="btn btn-default btn-sm"
+                (click)="editingNewComment = false">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+      </div>
+    </div>
+  </form>
+</div>

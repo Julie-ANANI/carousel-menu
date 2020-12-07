@@ -1,0 +1,33 @@
+<div
+  [ngClass]="{ 'is-loading': isLoading, 'is-active': !readonly}"
+  class="shared-editor-tinymce">
+
+  <!-- isLoading -->
+  <div *ngIf="isLoading && !readonly" class="loading-wrapper">
+    <div class="text-notify text-medium text-sm m-bottom-2">
+      {{ 'COMMON.LABEL.LOADING_EDITOR' | translate }}
+    </div>
+    <div class="loading is-primary"></div>
+  </div>
+  <!-- /sLoading -->
+
+  <!-- !loading || !readonly -->
+  <div [hidden]="isLoading || readonly">
+    <label>
+      <textarea
+        [(ngModel)]="text"
+        [id]="htmlId"
+        cols="70"
+        rows="10">
+      </textarea>
+    </label>
+  </div>
+  <!-- /!loading || !readonly -->
+
+  <!-- readonly -->
+  <div *ngIf="readonly" class="content-wrapper">
+    <div [innerHTML]="text | cleanHtml"></div>
+  </div>
+  <!-- /readonly -->
+
+</div>

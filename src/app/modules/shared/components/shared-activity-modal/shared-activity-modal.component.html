@@ -1,0 +1,38 @@
+<div [hidden]="isLoading || !isEtherpadUp" id="shared-activity-modal">
+  <div *ngIf="usersSessions.length" class="d-flex align-end">
+    <ng-container *ngFor="let session of usersSessions; let i = index;">
+      <figure
+        *ngIf="i < 3"
+        (click)="openModal($event)"
+        [attr.data-initial]="session.author.initials"
+        [ngStyle]="{'animation-duration': ((i+1) * 250) + 'ms'}"
+        [title]="session.author.name"
+        class="avatar m-right-10 c-hand animate-fade">
+      </figure>
+    </ng-container>
+    <a
+      (click)="openModal($event)"
+      *ngIf="usersSessions.length > 3"
+      class="text-link text-xs text-community"
+      id="sharedActivityModal-btn-see-more">
+      see others...
+    </a>
+  </div>
+</div>
+
+<app-utility-modal
+  [(showModal)]="showModal"
+  [headerBottomBorder]="true"
+  [isHeaderBgWhite]="true"
+  [maxWidth]="'320px'"
+  [title]="'Activity dashboard'">
+  <section class="modal-body">
+    <div *ngFor="let session of usersSessions" class="flex-start m-bottom-10">
+      <figure [attr.data-initial]="session.author.initials" class="avatar m-right-20"></figure>
+      <span class="text-bold text-sm">
+        {{session.author.name}}
+        <span *ngIf="session.author.id === authorId"> (you) </span>
+      </span>
+    </div>
+  </section>
+</app-utility-modal>

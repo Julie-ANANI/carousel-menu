@@ -4,6 +4,9 @@ import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
+import {CollaborativeComment} from '../../../../models/collaborative-comment';
+import {picto} from '../../../../models/static-data/picto';
+import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -45,6 +48,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
     }
   }
 
+  @Input() isUploadingVideo = false;
+
   @Input() isEditable = false;
 
   @Input() imagePostUri = '';
@@ -63,6 +68,17 @@ export class SidebarProjectPitchComponent implements OnChanges {
     }
   }
 
+  @Input() set collaborativesComments(value: CollaborativeComment[]) {
+    this._collaborativesComments = value;
+    this._showComment = true;
+    this._showSuggestion = !!this._comment.suggestion;
+    this._showExample = false;
+    this._showHelp = false;
+  }
+
+  @Input() innovationId: string;
+  @Input() sectionId: string;
+
   @Input() cardContent: any = '';
 
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER'
@@ -76,6 +92,8 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   private _comment: CardComment = <CardComment>{};
 
+  private _collaborativesComments: CollaborativeComment[] = [];
+
   private _isSaving = false;
 
   private _showHelp = true;
@@ -88,6 +106,10 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   private _toBeSaved = false;
 
+  private _badgeUmi = picto.badgeUmi;
+
+  private _padID: string;
+
   constructor(private _innovationFrontService: InnovationFrontService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -95,6 +117,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
       this.cardContent = changes.cardContent && changes.cardContent.currentValue || '';
       this._isSaving = false;
       this._toBeSaved = false;
+      this._padID = EtherpadService.buildPadID('pitch', this.sectionId);
     }
   }
 
@@ -184,7 +207,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
    * @param media
    */
   public onDeleteMedia(media: any) {
-    if (media && this.cardContent.length > 1 && !this._isSaving && this.isEditable) {
+    if (media && !this._isSaving && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'DELETE_MEDIA', content: <Media>media});
     }
@@ -224,13 +247,14 @@ export class SidebarProjectPitchComponent implements OnChanges {
    */
   public remaining(type: string): string {
     if (this.type && type) {
+      const text = this.cardContent.replace(/<img .*?>/g, '');
       switch (this.type) {
 
         case 'TITLE':
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 100);
           } else if (type === 'CHAR') {
-            return (100 - this.cardContent.length).toString(10);
+            return (100 - text.length).toString(10);
           }
           break;
 
@@ -238,7 +262,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
-            return (500 - this.cardContent.length).toString(10);
+            return (500 - text.length).toString(10);
           }
           break;
 
@@ -249,7 +273,7 @@ export class SidebarProjectPitchComponent implements OnChanges {
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
-            return (1000 - this.cardContent.length).toString(10);
+            return (1000 - text.length).toString(10);
           }
           break;
 
@@ -303,6 +327,10 @@ export class SidebarProjectPitchComponent implements OnChanges {
     return this._comment;
   }
 
+  get collaborativesComments(): CollaborativeComment[] {
+    return this._collaborativesComments;
+  }
+
   get isSaving(): boolean {
     return this._isSaving;
   }
@@ -327,4 +355,11 @@ export class SidebarProjectPitchComponent implements OnChanges {
     return this._toBeSaved;
   }
 
+  get badgeUmi(): string {
+    return this._badgeUmi;
+  }
+
+  get padID(): string {
+    return this._padID;
+  }
 }

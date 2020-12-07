@@ -58,7 +58,12 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _total = -1;
 
-  private _googleQuota = 60000;
+  private _totalPros = 0;
+
+  private _googleQuota = 100000;
+
+  private _waitingTime = 0; // in minutes
+
 
   private _config: Config = {
     fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
@@ -66,7 +71,17 @@ export class SharedSearchHistoryComponent implements OnInit {
     limit: this._configService.configLimit('admin-search-history-limit'),
     offset: '0',
     search: '{}',
-    sort: '{ "created": -1 }'
+    sort: '{ "created": -1 }',
+    recycled: 'false',
+  };
+
+  private _configQueue: Config = {
+    fields: 'keywords innovation',
+    search: '{}',
+    status: '{"$or": ["QUEUED", "PROCESSING"]}',
+    sort: '{ "created": -1 }',
+    limit: '0',
+    offset: '0',
   };
 
   private _chosenCampaign: Campaign = null;
@@ -118,7 +133,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       }
 
       this._loadHistory();
-
+      this._loadWaitingTime();
     }
   }
 
@@ -128,6 +143,12 @@ export class SharedSearchHistoryComponent implements OnInit {
         return array.indexOf(request);
       }
     }
+  }
+
+  private _loadWaitingTime() {
+    this._searchService.getRequests(this._configQueue).pipe(first()).subscribe((result: any) => {
+      this._waitingTime = (610 * result.requests.length) / 60000;  // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
+    });
   }
 
   private _loadHistory() {
@@ -160,7 +181,6 @@ export class SharedSearchHistoryComponent implements OnInit {
           return request;
         });
       }
-
         if (result._metadata) {
           this._total = result._metadata.totalCount;
           this._paused = result._metadata.paused;
@@ -183,12 +203,12 @@ export class SharedSearchHistoryComponent implements OnInit {
       _isSearchable: this.canAccess(['searchBy', 'keywords']),
       _isPaginable: true,
       _isSelectable: true,
-      _isTitle: true,
+      _isTitle: this._total !== 10000,
       _isNoMinHeight: this._total < 11,
       _buttons: [
         {
           _icon: 'fas fa-times',
-          _label: 'Stop the requests',
+          _label: 'Pause the requests',
           _colorClass: 'text-alert',
           _isHidden: !this.canAccess(['stop', 'requests'])
         },
@@ -244,7 +264,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         },
         {
           _attrs: ['status'],
-          _name: 'Status',
+          _name: 'Pro identification',
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'status']),
           _choices: [
@@ -255,9 +275,10 @@ export class SharedSearchHistoryComponent implements OnInit {
           ]},
         {
           _attrs: ['flag'],
-          _name: 'Email status',
+          _name: 'Email reconstruction',
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'emailStatus']),
+          _enableTooltip: true,
           _choices: [
             {_name: 'PROS_ADDED', _alias: 'Pros added', _class: 'label is-success'},
             {_name: 'EMAILS_FOUND', _alias: 'Found', _class: 'label is-success'},
@@ -334,14 +355,14 @@ export class SharedSearchHistoryComponent implements OnInit {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
-    } else if (value._action === 'Stop the requests') {
+    } else if (value._action === 'Pause the requests') {
 
       this._searchService.stopManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId: string) => {
           const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
           request.status = 'DONE';
         });
-        this._translateNotificationsService.success('Success', 'The requests have been stopped.');
+        this._translateNotificationsService.success('Success', 'The requests have been paused.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -369,6 +390,10 @@ export class SharedSearchHistoryComponent implements OnInit {
       });
     } else {
       this._requestsToImport = requestsIds;
+      this._totalPros = value._rows.reduce((acc: number, curr: any) => {
+        const nbPros = curr.totalResults || curr.results.person.length || 0;
+        return acc + nbPros;
+      }, 0);
       this._addToCampaignModal = true;
     }
   }
@@ -397,6 +422,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       launchNewRequests: this._launchNewRequests,
       newTargetCountries: this._geography.include.map((country) => country.code)
     };
+    this._totalPros = 0;
     this._professionalsService.addFromHistory(params).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Success',
         'The pros will be on the move in a few minutes.');
@@ -423,7 +449,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _getGoogleQuota() {
     this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
-      this._googleQuota = 60000;
+      this._googleQuota = 100000;
       if (result.hours) {
         this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
       }
@@ -468,6 +494,10 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   get total(): number {
     return this._total;
+  }
+
+  get totalPros(): number {
+    return this._totalPros;
   }
 
   get googleQuota(): number {
@@ -541,6 +571,10 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   get campaignId(): string {
     return this._campaignId;
+  }
+
+  get waitingTime(): number {
+    return this._waitingTime;
   }
 
 }

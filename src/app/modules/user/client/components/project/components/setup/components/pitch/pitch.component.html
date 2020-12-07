@@ -83,8 +83,9 @@
               </ng-container>
               <ng-template #defTitle>{{ section.title }}</ng-template>
             </span>
-              <span *ngIf="sectionCommentLabel(section.type)" class="label is-primary is-sm text-xs p-left-3 p-right-3">
-              {{ 'COMMON.LABEL.COMMENT' | translate }} UMI
+              <!-- TODO : remove comment.comment when etherpad-->
+              <span *ngIf="sectionCommentLabel(section.type) " class="label is-primary is-sm text-xs p-left-3 p-right-3">
+              {{ 'COMMON.LABEL.COMMENTS' | translate }}
             </span>
             </div>
             <span (click)="openSidebar(section.type, section.content)" class="icon-container is-overlay">
@@ -97,7 +98,7 @@
           <div
             *ngIf="section.type !== 'MEDIA'"
             [ngStyle]="{'margin-bottom': section.type === 'SUMMARY' ? '-8px' : '0'}"
-            [innerHTML]="section.content"
+            [innerHTML]="section.content | cleanHtml"
             class="text-sm p-top-h">
           </div>
           <!-- /content -->
@@ -298,17 +299,21 @@
 
 
 <!-- sidebar to edit innovation card field -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="activeSectionCode" [(template)]="sidebarValue">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
     (tobeSavedChanges)="onChangesToBeSaved($event)"
     [(isSaving)]="isSaving"
     [cardContent]="cardContent"
+    [collaborativesComments]="currentSectionComments"
     [comment]="operatorComment"
     [imagePostUri]="imagePostUri"
+    [innovationId]="innovation._id"
     [isEditable]="isEditable"
+    [isUploadingVideo]="isUploadingVideo"
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
+    [sectionId]="activeSectionCode"
     [type]="sidebarValue.type">
   </app-sidebar-project-pitch>
 </app-sidebar>

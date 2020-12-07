@@ -65,6 +65,7 @@ export const COMMON = {
   'EXCLUDE-COUNTRIES': 'Exclure des pays',
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
+  'COMMENTS': 'Commentaires',
 
   'OLD_PASSWORD': 'Ancien mot de passe',
   'NEW_PASSWORD': 'Nouveau mot de passe',
@@ -154,9 +155,12 @@ export const COMMON = {
     'HELP': 'Aide',
     'EXAMPLE': 'Exemples',
     'COMMENT': 'Commentaire',
+    'COMMENTS': 'Commentaires',
     'SUGGESTION': 'Suggestion',
     'OR': 'Ou',
-    'PREPARATION': 'Préparation'
+    'PREPARATION': 'Préparation',
+    'LOADING_EDITOR': 'chargement de l\'éditeur...',
+    'TRY_AGAIN': 'Essayez encore'
   },
 
   'PLACEHOLDER': {
@@ -179,7 +183,7 @@ export const COMMON = {
     'AUTO_SUGGESTION': 'Commencez à taper pour rechercher...',
     'PROJECT_TITLE': 'Ajoutez le titre du projet ici...',
     'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
-    'MEDIA_SLIDE': 'Faites glisser les fichiers ici',
+    'MEDIA_SLIDE': 'Faites glisser votre photo ici',
   },
 
   'REQUIRED': {
@@ -215,6 +219,7 @@ export const COMMON = {
     'SAVE': 'Sauvegarder',
     'CANCEL': 'Annuler',
     'CONFIRM': 'Confirmer',
+    'APPLY': 'Appliquer',
     'IMPORT': 'Importer',
     'EXPORT': 'Exporter',
     'SEND': 'Envoyer',
@@ -427,6 +432,7 @@ export const COMMON = {
     'TITLE_SELECT': 'Sélection',
     'TITLE_CREATE': 'Création',
     'TITLE_VIDEO_STORYBOARD': 'Sélectionnez le type de vidéo à générer',
+    'ARE_YOU_SURE': 'Êtes-vous sûr de vouloir supprimer cet élément ?',
     'LOGIN': 'Bienvenue !'
   },
 
@@ -450,8 +456,13 @@ export const COMMON = {
   },
 
   'MEDIA': {
-    'FORMAT': 'Format : jpeg',
-    'SIZE': 'Max size : 1Mb'
+    'FORMAT': 'Format : jpeg.',
+    'SIZE': 'Max size : 5Mb.',
+    'WRONG_FORMAT': 'Impossible de télécharger l\'image, le format n\'est pas valide.',
+    'WRONG_FORMAT_VIDEO': 'Impossible de télécharger de la vidéo, le format n\'est pas valide.',
+    'WRONG_SIZE': 'Impossible de télécharger l\'image, la taille n\'est pas valide.',
+    'UPLOADING': 'Téléchargement de l\'image, veuillez patienter.',
+    'UPLOADING_VIDEO': 'Téléchargement de la vidéo, veuillez patienter.'
   }
 
 };

@@ -28,9 +28,7 @@ export class UserComponent implements OnInit, OnDestroy {
               // private _swellRTBackend: SwellrtBackend,
               private _loaderService: LoaderService,
               private _router: Router) {
-
     this._initRoutes();
-
   }
 
   ngOnInit() {

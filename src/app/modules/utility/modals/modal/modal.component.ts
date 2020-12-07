@@ -6,47 +6,60 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output, PLATFORM_ID,
+  Output,
+  PLATFORM_ID,
   ViewEncapsulation
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+/***
+ * example: client projects-list component.
+ * page: https://umicli.umi.us/user/projects - Delete button
+ */
+
 @Component({
   selector: 'app-utility-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
 export class ModalComponent implements OnInit, OnDestroy {
 
-  @Input() set showModal(value: boolean) {
-    this._show = value;
-  }
+  /***
+   * this is to increase the width of the modal container, if you provide the value it will
+   * make the modal of that width. By default the width of the modal is 640px
+   */
+  @Input() maxWidth = '640px';
 
-  @Input() set maxWidth(value: string) {
-    this._maxWidth = value;
-  }
+  /***
+   * this is to add the title to the modal. If you provide this value
+   * it will add header class to the modal with the title and the close button.
+   */
+  @Input() title = '';
 
-  @Input() set title(value: string) {
-    this._title = value;
-  }
+  /***
+   * make it true to show the title header background in the white color.
+   */
+  @Input() isHeaderBgWhite = false;
 
-  @Input() set enableCloseButton(value: boolean) {
-    this._enableCloseButton = value;
-  }
+  /***
+   * make it true to show the close button on the top right corner of the modal.
+   */
+  @Input() enableCloseButton = false;
+
+  /***
+   * make it true to show the bottom border on the title header.
+   */
+  @Input() headerBottomBorder = false;
+
+  /***
+   * this is to make modal active and inactive. This variable should have getter and setter.
+   */
+  @Input() showModal = false;
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private _show: boolean = false;
-
-  private _maxWidth: string = '640px';
-
-  private _title: string = '';
-
-  private _enableCloseButton: boolean = false;
-
-  private readonly _element: any;
+  private readonly _element: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _elementRef: ElementRef) {
@@ -54,9 +67,16 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // move element to bottom of page (just before </body>) so it can be displayed above everything else
     if (isPlatformBrowser(this.platformId)) {
       document.body.appendChild(this._element);
+    }
+  }
+
+  public toggleState(event: Event) {
+    const _classesToCheck: Array<string> = ['modal-overlay', 'modal-close is-sm', 'button modal-cancel', 'close'];
+    const { className } = (event.target as any);
+    if (_classesToCheck.indexOf(className) !== -1) {
+      this.showModalChange.emit(false);
     }
   }
 
@@ -64,32 +84,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       document.body.removeChild(this._element);
     }
-  }
-
-  public toggleState(event: Event) {
-    const classesToCheck: Array<string> = ['modal-overlay', 'modal-close is-sm', 'button modal-cancel', 'close'];
-    const { className } = (event.target as any);
-
-    if (classesToCheck.indexOf(className) !== -1) {
-      this.showModalChange.emit(false);
-    }
-
-  }
-
-  get showModal() {
-    return this._show;
-  }
-
-  get maxWidth(): string {
-    return this._maxWidth;
-  }
-
-  get title(): string {
-    return this._title;
-  }
-
-  get enableCloseButton(): boolean {
-    return this._enableCloseButton;
   }
 
 }

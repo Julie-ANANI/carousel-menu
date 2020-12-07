@@ -6,6 +6,7 @@
   <h1 class="title is-4 m-bottom-10">Whoops!</h1>
   <p class="m-bottom-30 text-md mxw-550 m-left-auto m-right-auto">{{ errorMessage }}</p>
   <button
+    *ngIf="reloadPage"
     (click)="onReloadPage($event)"
     class="button is-primary is-xl"
     id="'btn-reload'"

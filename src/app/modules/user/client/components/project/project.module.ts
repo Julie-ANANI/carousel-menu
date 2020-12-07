@@ -22,7 +22,7 @@ import { SidebarUserAnswerModule } from '../../../../sidebars/components/sidebar
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
 import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
-import { SharedTextZoneModule } from '../../../../shared/components/shared-text-zone/shared-text-zone.module';
+import { SharedEditorTinymceModule } from '../../../../shared/components/shared-editor-tinymce/shared-editor-tinymce.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
 import { ModalEmptyModule } from '../../../../utility/modals/modal-empty/modal-empty.module';
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
@@ -34,34 +34,36 @@ import { SidebarProjectPitchModule } from '../../../../sidebars/components/sideb
 import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/innovCardTitlePipe.module';
 import { SynthesisComponent } from './components/synthesis/synthesis.component';
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
+import {CleanHtmlModule} from '../../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ProjectRoutingModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    SidebarModule,
-    SharedProjectSettingsModule,
-    TableModule,
-    SharedWorldmapModule,
-    SidebarUserAnswerModule,
-    SharedMarketReportModule,
-    MessageTemplateModule,
-    ModalModule,
-    FormsModule,
-    SharedTextZoneModule,
-    ObjectivesSecondaryModule,
-    ModalEmptyModule,
-    ObjectivesPrimaryModule,
-    AngularMyDatePickerModule,
-    AutoSuggestionModule,
-    NgxPageScrollModule,
-    BannerModule,
-    SidebarProjectPitchModule,
-    InnovCardTitlePipeModule,
-    MessageErrorModule
-  ],
+    imports: [
+        CommonModule,
+        ProjectRoutingModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        SidebarModule,
+        SharedProjectSettingsModule,
+        TableModule,
+        SharedWorldmapModule,
+        SidebarUserAnswerModule,
+        SharedMarketReportModule,
+        MessageTemplateModule,
+        ModalModule,
+        FormsModule,
+        SharedEditorTinymceModule,
+        ObjectivesSecondaryModule,
+        ModalEmptyModule,
+        ObjectivesPrimaryModule,
+        AngularMyDatePickerModule,
+        AutoSuggestionModule,
+        NgxPageScrollModule,
+        BannerModule,
+        SidebarProjectPitchModule,
+        InnovCardTitlePipeModule,
+        MessageErrorModule,
+        CleanHtmlModule
+    ],
   declarations: [
     ProjectComponent,
     SetupComponent,

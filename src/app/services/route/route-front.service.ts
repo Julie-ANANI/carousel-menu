@@ -58,4 +58,17 @@ export class RouteFrontService {
 		return '';
 	}
 
+  /***
+   * this returns the active innovation id in route.
+   * http://localhost:4200/user/admin/projects/project/5b17cc800a7f5b178e79f710/preparation
+   */
+  public activeInnovationId(): string {
+    const _url = this._router.routerState.snapshot.url.split('/');
+    const indexProject = _url.indexOf('project');
+    if (indexProject > 0) {
+      return _url[indexProject + 1];
+    }
+    return null;
+  }
+
 }

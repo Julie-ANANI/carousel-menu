@@ -1,68 +1,50 @@
-.section-header {
-  display: flex;
-  min-height: 70px;
-  padding: 5px 15px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  color: #FFFFFF;
-  background-color: #4F5D6B;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,0.13);
-  border-radius: 4px;
-  margin-bottom: 15px;
+@import "../../../../../../style/framework/src/variables";
 
-  .move-element {
-    display: flex;
-    flex-direction: column;
-    margin-right: 15px;
+.shared-preset-section {
 
-    i {
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: #d1dee9;
+  .header-wrapper {
+    background-color: $bg-draft-color;
+    min-height: 40px;
+    border-radius: 10px;
+    padding: 20px 25px 10px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-white-color;
+    box-shadow: 0 4px 16px rgba(20,23,28,0.25);
+
+    .form-input {
+      min-width: 200px;
     }
 
-    i:hover {
-      color: #FFB300;
+    .move-arrows {
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      margin-right: 15px;
+
+      i {
+        cursor: pointer;
+
+        &:hover {
+          color: $text-primary-color;
+        }
+
+      }
+
     }
+
   }
 
-  .form-group {
-    display: flex;
-    align-items: center;
-  }
+  #sharedPresetSection-btn-add-question {
 
-  .button-actions {
-    flex: 1;
-    text-align: right;
-    display: none;
-  }
+    .icon-container {
+      color: $text-white-color;
 
-  .save-button {
-    flex: 1;
-    text-align: right;
-  }
+      &::before {
+        background-color: $bg-primary-color;
+      }
 
-  .form-select,
-  .form-input {
-    color: #333333;
-    width: inherit;
-    margin-right: 15px;
-    margin-top: 0;
-  }
-}
+    }
 
-.section-header:hover .button-actions {
-  display: block;
-}
-
-.add-question {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 30px;
-
-  .btn-round {
-    margin-right: 15px;
   }
 }

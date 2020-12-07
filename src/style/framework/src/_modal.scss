@@ -54,6 +54,25 @@
         line-height: $line-height-sm;
         font-weight: $font-weight-medium;
         margin: 0;
+        font-size: 22px;
+      }
+
+      &.is-white {
+        background: $bg-white-color;
+
+        .modal-title {
+          color: $text-dark-color;
+          font-weight: 400;
+        }
+
+        .close {
+          color: $text-dark-color !important;
+        }
+
+      }
+
+      &.has-bottom-border {
+        border-bottom: $border-width solid $border-default-color;
       }
 
     }
@@ -101,6 +120,31 @@
         background-color: rgba(10,10,10,.3);
       }
 
+    }
+
+    &.is-dark {
+      color: $text-dark-color;
+
+      &:hover {
+
+        &::before {
+          background-color: rgba(58, 66, 77, 0.10);
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+
+  .modal {
+
+    .modal-container {
+      max-width: 90% !important;
     }
 
   }

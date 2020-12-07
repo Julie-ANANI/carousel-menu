@@ -2,6 +2,7 @@ export const environment = {
   local: false,
   production: false,
   apiUrl: 'https://dev.umi.us/api',
+  etherpadUrl: 'https://etherpad-dev.umi.us',
   clientUrl: 'https://dynergiecli-dev.umi.us',
   companyName: 'Dynergie',
   companyShortName: 'Dynergie',

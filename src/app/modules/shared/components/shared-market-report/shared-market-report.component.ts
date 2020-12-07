@@ -1,30 +1,30 @@
-import { Component, OnInit, Input, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { AnswerService } from '../../../../services/answer/answer.service';
-import { FilterService } from './services/filters.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { Answer } from '../../../../models/answer';
-import { Filter } from './models/filter';
-import { Question } from '../../../../models/question';
-import { Tag } from '../../../../models/tag';
-import { Innovation } from '../../../../models/innovation';
-import { environment } from '../../../../../environments/environment';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
-import { Clearbit } from '../../../../models/clearbit';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { ResponseService } from './services/response.service';
-import { TagsFiltersService } from './services/tags-filter.service';
-import { WorldmapFiltersService } from './services/worldmap-filter.service';
-import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
-import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
-import { Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
-import { RolesFrontService } from '../../../../services/roles/roles-front.service';
-import { isPlatformBrowser } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {TranslateService} from '@ngx-translate/core';
+import {AnswerService} from '../../../../services/answer/answer.service';
+import {FilterService} from './services/filters.service';
+import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {Answer} from '../../../../models/answer';
+import {Filter} from './models/filter';
+import {Question} from '../../../../models/question';
+import {Tag} from '../../../../models/tag';
+import {Innovation} from '../../../../models/innovation';
+import {environment} from '../../../../../environments/environment';
+import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
+import {Clearbit} from '../../../../models/clearbit';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {ResponseService} from './services/response.service';
+import {TagsFiltersService} from './services/tags-filter.service';
+import {WorldmapFiltersService} from './services/worldmap-filter.service';
+import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
+import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
+import {AnswerFrontService} from '../../../../services/answer/answer-front.service';
+import {Subject} from 'rxjs';
+import {first, takeUntil} from 'rxjs/operators';
+import {RolesFrontService} from '../../../../services/roles/roles-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -61,7 +61,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _filteredAnswers: Array<Answer> = [];
 
-  private _answersOrigins: {[c: string]: number} = {};
+  private _answersOrigins: {[continent: string]: {count: number, countries: {[country: string]: number}}} = {};
 
   private _countries: Array<string> = [];
 
@@ -221,7 +221,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       }
       return '';
     });
-    this._answersOrigins = this._sharedWorldMapService.getCountriesRepartition(countriesList);
+
+    this._sharedWorldMapService.getCountriesRepartitionByContinent(countriesList).then(r => this._answersOrigins = r);
   }
 
   /***
@@ -336,7 +337,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isOwner;
   }
 
-  get answersOrigins(): {[c: string]: number} {
+  get answersOrigins(): {[continent: string]: {count: number, countries: {[country: string]: number}}} {
     return this._answersOrigins;
   }
 
@@ -358,6 +359,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get isMainDomain(): boolean {
     return this._isMainDomain;
+  }
+
+  hideQuestionAnswers(question: Question) {
+    return this.showAnonymousAnswers && (question.sensitiveAnswerData || question.identifier.includes('contact'));
   }
 
   ngOnDestroy(): void {

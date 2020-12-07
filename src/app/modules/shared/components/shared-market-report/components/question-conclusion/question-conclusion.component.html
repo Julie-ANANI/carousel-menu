@@ -20,19 +20,33 @@
 
     <h5 *ngIf="isMainDomain" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h5>
 
-    <app-text-zone
-      [readonly]="readonly"
-      [data]="innovation.marketReport[question.identifier]?.conclusion || ''"
-      (onTextChange)="keyupHandlerFunction($event)">
-    </app-text-zone>
+    <app-shared-editors
+      (textChange)="keyupHandlerFunction($event)"
+      [text]="innovation.marketReport[question.identifier]?.conclusion || ''"
+      [innovationId]="innovation._id"
+      [elementId]="question.identifier"
+      [isEditable]="!readonly"
+      [type]="'synthesis'">
+    </app-shared-editors>
 
     <div *ngIf="originAnswers !== null" class="p-top-20">
       <h4 class="title is-5 m-bottom-15">Geographical Distribution:</h4>
-      <ul class="m-no-bottom">
-        <li *ngFor="let item of originAnswers | keyvalue | orderBy:'value'" class="m-top-1">
-          {{ ('CONTINENTS.' + item.key) | translate }}: {{ item.value }}
-        </li>
-      </ul>
+      <div class="m-no-bottom">
+        <div *ngFor="let continent of originAnswers | keyvalue | orderBy:'value'" [id]="continent.key" class="m-top-1">
+          <app-shared-toggle-list>
+            <div slot="header">
+              <span class="text-bold"> {{ ('CONTINENTS.' + continent.key) | translate }}: {{ continent.value.count }} </span>
+            </div>
+            <div slot="body" >
+              <ul class="m-no-bottom">
+                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value'" class="m-top-1">
+                  {{ country.key }}: {{ country.value }}
+                </li>
+              </ul>
+            </div>
+          </app-shared-toggle-list>
+        </div>
+      </div>
     </div>
 
   </div>

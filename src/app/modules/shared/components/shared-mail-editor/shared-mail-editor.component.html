@@ -115,14 +115,14 @@
           <!-- /cc -->
 
           <!-- message -->
-          <app-text-zone
+          <app-shared-editor-tinymce
               #textZone
               [useVariables]="true"
               (onTextChange)="updateContent($event, 'en')"
               [data]="emailsObject['en'].content || ''"
               [readonly]="!isEditableMode"
               [variableMapping]="variableMapping['en']">
-          </app-text-zone>
+          </app-shared-editor-tinymce>
           <!-- /message -->
 
         </div>
@@ -178,7 +178,7 @@
           <!-- /cc -->
 
           <!-- message -->
-          <app-text-zone
+          <app-shared-editor-tinymce
             *ngIf="display"
             #textZone
             [useVariables]="true"
@@ -186,7 +186,7 @@
             [data]="emailsObject['fr'].content || ''"
             [readonly]="!isEditableMode"
             [variableMapping]="variableMapping['fr']">
-          </app-text-zone>
+          </app-shared-editor-tinymce>
           <!-- /message -->
 
         </div>
@@ -268,15 +268,31 @@
 
           <label class="form-label">Message</label>
 
-          <app-text-zone
-            (onTextChange)="updateContent($event)"
-            *ngIf="isEditableMode"
-            [data]="email.content || ''"
-            [readonly]="!isEditableMode">
-          </app-text-zone>
+          <div *ngIf="isEditableMode" class="text-md">
+
+            <div *ngIf="innovationId">
+              <app-shared-editors
+                (textChange)="updateContent($event)"
+                [text]="email.content || ''"
+                [innovationId]="innovationId"
+                [elementId]="email._id"
+                [type]="'workflow'"
+                [isEditable]="isEditableMode">
+              </app-shared-editors>
+            </div>
+
+            <div *ngIf="!innovationId">
+              <app-shared-editor-tinymce
+                (onTextChange)="updateContent($event)"
+                *ngIf="isEditableMode"
+                [data]="email.content || ''"
+                [readonly]="!isEditableMode">
+              </app-shared-editor-tinymce>
+            </div>
+
+          </div>
 
           <p *ngIf="!isEditableMode && email && email.content" [innerHTML]="email.content" class="text-md"></p>
-
         </div>
         <!-- /message -->
 

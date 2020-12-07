@@ -17,6 +17,7 @@ import { RolesFrontService } from "../../../../../../services/roles/roles-front.
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
+import {SocketService} from '../../../../../../services/socket/socket.service';
 
 @Component({
   templateUrl: 'admin-project-campaigns.component.html',
@@ -57,18 +58,32 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _socketListening = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
               private _innovationFrontService: InnovationFrontService,
               private _campaignFrontService: CampaignFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _socketService: SocketService,
               private _campaignService: CampaignService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         this._innovation = innovation || <Innovation>{};
+
+        if (!this._socketListening) {
+          this._socketService.getNewCampaign(this._innovation._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+            this._campaigns.push(update.data);
+            this._setAllCampaigns();
+          }, (error) => {
+            console.error(error);
+          });
+          this._socketListening = true;
+        }
+
         if (!this._campaigns.length && this._innovation._id) {
           this._getCampaigns();
         }

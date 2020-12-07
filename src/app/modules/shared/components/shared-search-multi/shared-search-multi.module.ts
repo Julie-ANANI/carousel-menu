@@ -6,16 +6,18 @@ import { FormsModule } from '@angular/forms';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
 import { SharedSearchMultiComponent } from './shared-search-multi.component';
+import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    TranslateModule.forChild(),
-    PipeModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        ModalEmptyModule
+    ],
   declarations: [
     SharedSearchMultiComponent
   ],

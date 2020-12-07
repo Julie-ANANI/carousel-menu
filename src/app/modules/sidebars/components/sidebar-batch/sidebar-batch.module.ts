@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarBatchComponent } from './sidebar-batch.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
+import { SharedEditorTinymceModule } from '../../../shared/components/shared-editor-tinymce/shared-editor-tinymce.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { SharedTextZoneModule } from '../../../shared/components/shared-text-zon
     ReactiveFormsModule,
     TranslateModule.forChild(),
     SidebarModule,
-    SharedTextZoneModule
+    SharedEditorTinymceModule
   ],
   declarations: [
     SidebarBatchComponent

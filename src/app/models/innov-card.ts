@@ -1,6 +1,7 @@
 import {Media} from './media';
 import {Model} from './model';
 import {User} from './user.model';
+import {CollaborativeComment} from './collaborative-comment';
 
 export interface CardComment {
   type?: string;
@@ -13,6 +14,7 @@ export interface InnovCardSection {
   title: string;
   content: string | Array<Media>;
   visibility: boolean;
+  comments?: CollaborativeComment[];
 }
 
 export interface InnovCardComment {

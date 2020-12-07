@@ -34,16 +34,16 @@
 
             </div>
 
-            <input
-              (change)="updateInnovation()"
-              *ngIf="isEditable"
-              [(ngModel)]="activeInnovCard.title"
-              autocomplete="off"
-              class="form-input is-shadowed"
+            <app-shared-editors
               id="project-title"
-              name="title"
-              placeholder="Add the project title here..."
-              type="text">
+              *ngIf="isEditable"
+              (textChange)="onContentChange($event, 'title')"
+              [text]="activeInnovCard.title"
+              [innovationId]="innovation._id"
+              [elementId]="'title-' + currentLang"
+              [type]="'pitch'"
+              [isEditable]="isEditable">
+            </app-shared-editors>
 
             <!-- remaining text -->
             <div
@@ -76,12 +76,12 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
-                <app-text-zone
+              <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
+                <app-shared-editor-tinymce
                   (onTextChange)="onCommentChange($event, 'title', 'comment')"
                   [data]="zoneData('title', 'comment')"
                   id="title-comment">
-                </app-text-zone>
+                </app-shared-editor-tinymce>
               </div>
               <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="message">
                 <p [innerHTML]="zoneData('title', 'comment')" class="message-body"></p>
@@ -105,12 +105,15 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="box-shadow">
-                <app-text-zone
-                  (onTextChange)="onCommentChange($event, 'title', 'suggestion')"
-                  [data]="zoneData('title', 'suggestion')"
-                  id="title-suggestion">
-                </app-text-zone>
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}">
+                <app-shared-editors
+                  [isEditable]="isEditableComment"
+                  (textChange)="onCommentChange($event, 'title', 'suggestion')"
+                  [text]="zoneData('title', 'suggestion')"
+                  [innovationId]="innovation._id"
+                  [elementId]="'title'"
+                  [type]="'suggestion'">
+                </app-shared-editors>
               </div>
               <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="message">
                 <p [innerHTML]="zoneData('title', 'suggestion')" class="message-body"></p>
@@ -157,12 +160,16 @@
 
             </div>
 
-            <div *ngIf="isEditable" class="box-shadow">
-              <app-text-zone
-                (onTextChange)="onContentChange($event, 'summary')"
-                [data]="activeInnovCard.summary"
-                id="project-summary">
-              </app-text-zone>
+            <div *ngIf="isEditable" class="text-15">
+              <app-shared-editors
+                id="project-summary"
+                (textChange)="onContentChange($event, 'summary')"
+                [text]="activeInnovCard.summary"
+                [innovationId]="innovation._id"
+                [elementId]="'summary'"
+                [isEditable]="isEditable"
+                [type]="'pitch'">
+              </app-shared-editors>
             </div>
 
             <!-- remaining text -->
@@ -198,12 +205,12 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
-                <app-text-zone
+              <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
+                <app-shared-editor-tinymce
                   (onTextChange)="onCommentChange($event, 'summary', 'comment')"
                   [data]="zoneData('summary', 'comment')"
                   id="summary-comment">
-                </app-text-zone>
+                </app-shared-editor-tinymce>
               </div>
               <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="message">
                 <p [innerHTML]="zoneData('summary', 'comment')" class="message-body"></p>
@@ -227,12 +234,15 @@
               <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
-              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="box-shadow">
-                <app-text-zone
-                  (onTextChange)="onCommentChange($event, 'summary', 'suggestion')"
-                  [data]="zoneData('summary', 'suggestion')"
-                  id="summary-suggestion">
-                </app-text-zone>
+              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}">
+                <app-shared-editors
+                  [isEditable]="isEditableComment"
+                  (textChange)="onCommentChange($event, 'summary', 'suggestion')"
+                  [text]="zoneData('summary', 'suggestion')"
+                  [innovationId]="innovation._id"
+                  [elementId]="'summary-' + currentLang"
+                  [type]="'suggestion'">
+                </app-shared-editors>
               </div>
               <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="message">
                 <p [innerHTML]="zoneData('summary', 'suggestion')" class="message-body"></p>
@@ -321,12 +331,15 @@
             </div>
             <!-- /label / actions -->
 
-            <div *ngIf="isEditable" class="box-shadow">
-              <app-text-zone
-                (onTextChange)="onContentChange($event, 'sections', i)"
-                [data]="section.content"
-                [id]="'project-'+section.type.toLowerCase()+'-'+i+3">
-              </app-text-zone>
+            <div *ngIf="isEditable">
+              <app-shared-editors
+                [isEditable]="isEditable"
+                (textChange)="onContentChange($event, 'sections', i)"
+                [text]="section.content"
+                [innovationId]="innovation._id"
+                [elementId]="section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
+                [type]="'pitch'">
+              </app-shared-editors>
             </div>
 
             <!-- remaining text -->
@@ -363,14 +376,14 @@
             </div>
             <div class="m-top-20">
               <div
-                *ngIf="isEditableComment"
+                [hidden]="!isEditableComment"
                 [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
                 class="box-shadow">
-                <app-text-zone
+                <app-shared-editor-tinymce
                   (onTextChange)="onCommentChange($event, 'sections', 'comment', i)"
                   [data]="zoneData('sections', 'comment', i)"
                   [id]="section.type.toLowerCase()+'-'+i+3+'-comment'">
-                </app-text-zone>
+                </app-shared-editor-tinymce>
               </div>
               <div
                 *ngIf="!isEditableComment"
@@ -399,13 +412,15 @@
             <div class="m-top-20">
               <div
                 *ngIf="isEditableComment"
-                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
-                class="box-shadow">
-                <app-text-zone
-                  (onTextChange)="onCommentChange($event, 'sections', 'suggestion', i)"
-                  [data]="zoneData('sections', 'suggestion', i)"
-                  [id]="section.type.toLowerCase()+'-'+i+3+'-suggestion'">
-                </app-text-zone>
+                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}">
+                <app-shared-editors
+                  [isEditable]="isEditableComment"
+                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
+                  [text]="zoneData('sections', 'suggestion', i)"
+                  [innovationId]="innovation._id"
+                  [elementId]="section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
+                  [type]="'suggestion'">
+                </app-shared-editors>
               </div>
               <div
                 *ngIf="!isEditableComment"
@@ -466,7 +481,10 @@
         <!-- video -->
         <div [ngStyle]="{'padding-top': '45px'}" class="section-suggestion">
           <div *ngIf="isEditable" class="bg-white box-shadow">
-            <app-shared-upload-zone-video (cbFn)="uploadVideo($event)"></app-shared-upload-zone-video>
+            <app-shared-upload-zone-video
+              (cbFn)="uploadVideo($event)"
+              [isUploading]="isUploadingVideo">
+            </app-shared-upload-zone-video>
           </div>
         </div>
         <!-- /video -->
@@ -505,6 +523,18 @@
           <!-- /if type === 'VIDEO' -->
 
           <span class="text-sm p-top-1">Main media</span>
+
+          <!-- delete button -->
+          <div *ngIf="isEditable" class="text-sm p-top-1">
+            <span
+              (click)="onDeleteMedia(activeInnovCard.principalMedia)"
+              [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+              class="text-alert"
+              [id]="'btn-delete-principal-media'">
+              Delete media
+            </span>
+          </div>
+          <!-- /delete button -->
 
         </div>
         <!-- /principal media -->
@@ -550,8 +580,7 @@
 
               <!-- delete button -->
               <div
-                *ngIf="activeInnovCard.media.length > 1 && (mediaSrc(media, 'VIDEO')
-                || mediaSrc(media, 'IMAGE')) && isEditable"
+                *ngIf="isEditable && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))"
                 class="text-sm p-top-1">
                   <span
                     (click)="onDeleteMedia(media)"

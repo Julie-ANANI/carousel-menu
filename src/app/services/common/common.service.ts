@@ -1,7 +1,9 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
 import * as moment from 'moment';
-import { TranslateNotificationsService } from '../notifications/notifications.service';
+import {TranslateNotificationsService} from '../notifications/notifications.service';
+import {Etherpad} from '../../models/etherpad';
+import {environment} from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
@@ -24,6 +26,15 @@ export class CommonService {
     } else {
       return '#2ECC71';
     }
+  }
+
+  /***
+   * returns the src for the iframe of the etherpad.
+   * @param baseUrl
+   * @param value
+   */
+  public static etherpadSrc(value: Etherpad = <Etherpad>{}, baseUrl = `${environment.etherpadUrl}/p/`): string {
+    return `${baseUrl}${value.groupID}$${value.padID}?showChat=${value.showChat}&noColors=${value.noColors}&lang=${value.lang}&userName=${value.userName}`;
   }
 
   /*

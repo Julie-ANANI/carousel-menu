@@ -2,6 +2,7 @@ export const environment = {
   local: false,
   production: false,
   apiUrl: 'https://dev.umi.us/api',
+  etherpadUrl: 'https://etherpad-dev.umi.us',
   clientUrl: 'https://dev-inomer.umi.us',
   companyName: 'INOMER',
   companyShortName: 'INOMER',

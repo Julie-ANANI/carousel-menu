@@ -2,6 +2,7 @@ export const environment = {
   local: false,
   production: true,
   apiUrl: 'https://appv3.umi.us/api',
+  etherpadUrl: 'https://etherpad.umi.us',
   clientUrl: 'https://bnpparibas.umi.us',
   companyName: 'BNP Paribas (demo)',
   companyShortName: 'BNP (demo)',

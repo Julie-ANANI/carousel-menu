@@ -30,14 +30,11 @@ export class SpinnerLoaderComponent implements OnInit, OnDestroy {
   constructor(private _spinner: SpinnerService) { }
 
   ngOnInit() {
-
     this._logoSrc = this.getLogo();
     this._isUmiDomain = this.getDomain() === 'umi';
-
     this._spinner.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       this._spinnerState = response;
     });
-
   }
 
   getLogo(): string {

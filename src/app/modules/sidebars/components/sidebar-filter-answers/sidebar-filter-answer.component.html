@@ -73,28 +73,16 @@
     <h6>{{ 'SIDEBAR_MARKET_REPORT.MY_VIEWS' | translate }}</h6>
 
     <!-- show views -->
-    <div *ngFor="let filter of sharedFiltersList" class="d-flex align-center m-top-1 m-bottom-1">
-
-      <div
-        (click)="deleteCustomFilter($event, filter.name)"
-        *ngIf="isViewsEditable || !isAdminSide"
-        [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate"
-        class="c-hand m-right-1 tooltip is-right">
-        <img
-          [ngStyle]="{ 'height': '13px', 'width': '12px'}"
-          alt=" "
-          src="https://res.cloudinary.com/umi/image/upload/pictos/delete/picto-delete-danger.svg">
-      </div>
-
-      <a
-        (click)="loadFilter(filter.name)"
-        [attr.data-tooltip]="'SIDEBAR_MARKET_REPORT.TOOLTIP_LOAD_VIEW' | translate"
-        [ngStyle]="{ 'margin-top': '1px' }"
-        class="c-hand tooltip text-medium text-xs text-background">
-        {{ filter.name }}
-      </a>
-
-    </div>
+    <app-utility-input-list
+      [isEditable]="isViewsEditable || !isAdminSide"
+      [isAddable]="false"
+      [isSmall]="false"
+      [isClickable]="true"
+      (clickItem)="loadFilter($event.name)"
+      (remove)="deleteCustomFilter($event.value.name)"
+      (edit)="updateFilter($event.value, $event.oldTextValue)"
+      [config]="{initialData: sharedFiltersList, placeholder: 'View name'}">
+    </app-utility-input-list>
     <!-- /show views -->
 
     <!-- form to register view -->
@@ -201,27 +189,15 @@
     <!-- /type 'FOLLOW_UP' -->
 
     <div [hidden]="!showSection.map" class="filter-wrapper animate-fade is-3">
-
-      <label class="form-checkbox">
-        <input
-          type="checkbox"
-          id="select-all-continent"
-          (change)="filterEverything($event.target['checked'], continentsList, 'CONTINENT')"
-          [checked]="!(filters['worldmap'])">
-        <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
-      </label>
-
-      <div *ngFor="let continent of continentsList" class="form-group">
-        <label class="form-checkbox">
-          <input
-            type="checkbox"
-            [name]="continent"
-            (change)="checkCountry($event)"
-            [id]="'continent-'+continent"
-            [checked]="filteredContinents ? filteredContinents[continent] : true">
-          <i class="form-icon"></i> {{ ('CONTINENTS.' + continent) | translate }}
-        </label>
-      </div>
+      <app-shared-world-list
+        (checkContinent)="checkContinent($event)"
+        (checkCountry)="checkCountry($event)"
+        (filterAllContinents)="filterEverything($event.isChecked, $event.filterArray, 'CONTINENT')"
+        [filteredContinents]="filteredContinents"
+        [filteredCountries]="filteredCountries"
+        [answersCountries]="answersCountries"
+        [filters]="filters">
+      </app-shared-world-list>
     </div>
 
   </div>

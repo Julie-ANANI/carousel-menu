@@ -162,9 +162,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    */
   public updatePreset(preset: Preset): void {
     if (this.canAccess(['edit'])) {
-      this._saveInnovation();
-    } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
+      this._innovation.preset = preset;
+      this._innovationFrontService.setInnovation(this._innovation);
     }
   }
 

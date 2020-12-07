@@ -54,11 +54,14 @@
             <div class="box-style p-50">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-              <app-text-zone
-                (onTextChange)="saveOperatorComment($event, 'keyLearning')"
-                [data]="innovation.marketReport?.keyLearning?.conclusion"
-                [readonly]="!canAccess(['edit', 'umiWord'])">
-              </app-text-zone>
+              <app-shared-editors
+                (textChange)="saveOperatorComment($event, 'keyLearning')"
+                [text]="innovation.marketReport?.keyLearning?.conclusion"
+                [innovationId]="innovation._id"
+                [elementId]="'key-learning'"
+                [isEditable]="canAccess(['edit', 'umiWord'])"
+                [type]="'synthesis'">
+              </app-shared-editors>
             </div>
           </section>
           <!-- /key learning section -->
@@ -75,7 +78,7 @@
                 [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
                 [readonly]="!canAccess(['edit', 'umiWord'])"
-                [stats]="{ nbAnswers: answers.length, percentage: 0 }">
+                [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
               </app-question-conclusion>
             </div>
           </section>
@@ -131,7 +134,8 @@
               [innovation]="innovation"
               [questionReceived]="question"
               [readonly]="!canAccess(['edit', 'umiWord'])"
-              [toggleAnswers]="toggleAnswers">
+              [toggleAnswers]="toggleAnswers"
+              [hideAnswers]="hideQuestionAnswers(question)">
             </app-question-section>
           </section>
           <!-- /other question sections -->
@@ -144,11 +148,14 @@
             <div class="box-style p-50">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
-              <app-text-zone
-                (onTextChange)="saveOperatorComment($event, 'finalConclusion')"
-                [data]="innovation.marketReport?.finalConclusion?.conclusion"
-                [readonly]="!canAccess(['edit', 'umiWord'])">
-              </app-text-zone>
+              <app-shared-editors
+                (textChange)="saveOperatorComment($event, 'finalConclusion')"
+                [text]="innovation.marketReport?.finalConclusion?.conclusion"
+                [innovationId]="innovation._id"
+                [elementId]="'conclusion'"
+                [isEditable]="canAccess(['edit', 'umiWord'])"
+                [type]="'synthesis'">
+              </app-shared-editors>
             </div>
           </section>
           <!-- /conclusion -->

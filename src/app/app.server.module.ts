@@ -14,6 +14,8 @@ import { SocketSsrService } from './services/socket/socket-ssr.service';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
+import {EtherpadSocketService} from './services/socket/etherpad.socket.service';
+import {EtherpadSocketSsrService} from './services/socket/etherpad.socket-ssr.service';
 
 @NgModule({
   imports: [
@@ -29,6 +31,7 @@ import { AppComponent } from './app.component';
     { provide: ErrorService, useClass: ErrorBackendService },
     { provide: LocalStorageService, useClass: LocalStorageBackendService },
     { provide: SocketService, useClass: SocketSsrService },
+    { provide: EtherpadSocketService, useClass: EtherpadSocketSsrService },
   ],
   bootstrap: [ AppComponent ],
 })

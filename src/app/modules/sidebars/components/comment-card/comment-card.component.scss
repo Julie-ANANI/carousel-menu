@@ -1,0 +1,44 @@
+@import "../../../../../style/framework/src/variables";
+
+.comments-container {
+  max-height: 300px;
+  overflow-y: scroll;
+  background-color: $bg-draft-color;
+}
+
+.suggestion-display {
+  margin-top: 5px;
+  white-space: normal;
+
+  .from-label,
+  .to-label {
+    margin-right: 2px;
+  }
+
+  .from-value,
+  .to-value {
+    opacity: .8;
+    font-style: italic;
+    font-weight: bold;
+    color: $primary-color;
+
+    &:before {
+      content: '«';
+    }
+
+    &:after {
+      content: '»';
+    }
+  }
+
+}
+
+.suggestion-create {
+
+  .from-label,
+  .to-label {
+    font-weight: bold;
+    margin: 5px 0;
+  }
+
+}

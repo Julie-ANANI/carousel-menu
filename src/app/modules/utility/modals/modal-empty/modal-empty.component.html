@@ -8,10 +8,11 @@
 
     <!-- close button -->
     <button
-        (click)="onClickCross($event)"
-        aria-label="close"
-        class="modal-close is-sm"
-        type="button">
+      (click)="onClickCross($event)"
+      [id]="'modal-empty-btn-close'"
+      aria-label="close"
+      class="modal-close is-sm is-dark"
+      type="button">
     </button>
     <!-- /close button -->
 

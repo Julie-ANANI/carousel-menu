@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
-import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
+import { SharedEditorTinymceModule } from '../shared-editor-tinymce/shared-editor-tinymce.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
@@ -33,12 +33,14 @@ import { SharedMarketComment2Component } from './components/professional-comment
 import { SidebarLeftModule } from "../../../sidebars/templates/sidebar-left/sidebar-left.module";
 import { SidebarInPageModule } from '../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
 import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module';
+import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
+import {SharedToggleListModule} from '../shared-toggle-list/shared-toggle-list.module';
 
 @NgModule({
   imports: [
     CommonModule,
     PipeModule,
-    SharedTextZoneModule,
+    SharedEditorTinymceModule,
     SharedWorldmapModule,
     TranslateModule.forChild(),
     NgxPageScrollModule,
@@ -55,7 +57,9 @@ import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar
     SharedTagsModule,
     PieChartModule,
     SidebarInPageModule,
-    SidebarFilterAnswersModule
+    SidebarFilterAnswersModule,
+    SharedEditorsModule,
+    SharedToggleListModule
   ],
   declarations: [
     SharedMarketReportComponent,

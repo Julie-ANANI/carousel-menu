@@ -67,6 +67,7 @@ export const COMMON = {
   'NEVER': 'Never',
 
   'COMMENT': 'Comment',
+  'COMMENTS': 'Comments',
   'OLD_PASSWORD': 'Old Password',
   'NEW_PASSWORD': 'New Password',
   'CONFIRM_PASSWORD': 'Confirm Password',
@@ -155,9 +156,12 @@ export const COMMON = {
     'HELP': 'Help',
     'EXAMPLE': 'Examples',
     'COMMENT': 'Comment',
+    'COMMENTS': 'Comments',
     'SUGGESTION': 'Proposition',
     'OR': 'Or',
-    'PREPARATION': 'Preparation'
+    'PREPARATION': 'Preparation',
+    'LOADING_EDITOR': 'loading editor...',
+    'TRY_AGAIN': 'Try again'
   },
 
   'PLACEHOLDER': {
@@ -179,8 +183,8 @@ export const COMMON = {
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Start typing to search...',
     'PROJECT_TITLE': 'Add the project title here...',
-    'MEDIA_URL': 'Enter the address of your Youtube or Vimeo video here',
-    'MEDIA_SLIDE': 'Drag a file here',
+    'MEDIA_URL': 'Place the address of your Youtube or Vimeo video here',
+    'MEDIA_SLIDE': 'Drag and drop your picture here',
   },
 
   'REQUIRED': {
@@ -216,6 +220,7 @@ export const COMMON = {
     'SAVE': 'Save',
     'CANCEL': 'Cancel',
     'CONFIRM': 'Confirm',
+    'APPLY': 'Apply',
     'IMPORT': 'Import',
     'EXPORT': 'Export',
     'SELECT': 'Select',
@@ -277,8 +282,8 @@ export const COMMON = {
     'CREATING_AN_ACCOUNT': 'is creating account...',
     'LOGIN': 'Login',
     'LOGGING': 'is logging...',
-    'UPLOAD_PICTURE': 'Upload picture',
-    'UPLOAD_VIDEO': 'Upload video',
+    'UPLOAD_PICTURE': 'Upload a picture',
+    'UPLOAD_VIDEO': 'Upload a video',
   },
 
   'PROJECT': {
@@ -431,6 +436,7 @@ export const COMMON = {
     'TITLE_SELECT': 'Selection Board',
     'TITLE_CREATE': 'Creation Board',
     'TITLE_VIDEO_STORYBOARD': 'Select the video type to generate',
+    'ARE_YOU_SURE': 'Are you sure you want to delete this element ?',
     'LOGIN': 'Welcome back!'
   },
 
@@ -454,8 +460,13 @@ export const COMMON = {
   },
 
   'MEDIA': {
-    'FORMAT': 'Format: jpeg',
-    'SIZE': 'Max size: 1Mb'
+    'FORMAT': 'Format: jpeg.',
+    'SIZE': 'Max size: 5Mb.',
+    'WRONG_FORMAT': 'Could not upload image, the format is invalid.',
+    'WRONG_FORMAT_VIDEO': 'Could not upload video, the format is invalid.',
+    'WRONG_SIZE': 'Could not upload image, the size is invalid.',
+    'UPLOADING': 'Uploading picture, please be patient.',
+    'UPLOADING_VIDEO': 'Uploading video, please be patient.'
   }
 
 };

@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Campaign } from '../../models/campaign';
-import { Innovation } from '../../models/innovation';
-import { InnovCard, InnovCardComment } from '../../models/innov-card';
-import { Professional } from '../../models/professional';
-import { User } from '../../models/user.model';
-import { Video } from '../../models/media';
-import { Config } from '../../models/config';
-import { Collaborator } from '../../models/collaborator';
-import { Job, JobType } from '../../models/job';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
+import {Campaign} from '../../models/campaign';
+import {Innovation} from '../../models/innovation';
+import {InnovCard, InnovCardComment} from '../../models/innov-card';
+import {Professional} from '../../models/professional';
+import {User} from '../../models/user.model';
+import {Video} from '../../models/media';
+import {Config} from '../../models/config';
+import {Collaborator} from '../../models/collaborator';
+import {Job, JobType} from '../../models/job';
+import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -79,6 +80,10 @@ export class InnovationService {
 
   public saveFilter(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/filter', data);
+  }
+
+  public updateFilter(innovationId: string, data: SharedFilter, filterName: string): Observable<any> {
+    return this._http.put('/filter/innovation/' + innovationId + '/' + filterName, data);
   }
 
   public getFiltersList(innovationId: string): Observable<any> {

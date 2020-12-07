@@ -1,24 +1,25 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PLATFORM_ID } from '@angular/core';
-import { Innovation } from '../../../../models/innovation';
-import { SharedFilter } from '../../../shared/components/shared-market-report/models/shared-filter';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { FilterService } from '../../../shared/components/shared-market-report/services/filters.service';
-import { Answer } from '../../../../models/answer';
-import { first, takeUntil } from 'rxjs/operators';
-import { Question } from '../../../../models/question';
-import { WorldmapService } from "../../../../services/worldmap/worldmap.service";
-import { Tag } from "../../../../models/tag";
-import { TagsFiltersService } from "../../../shared/components/shared-market-report/services/tags-filter.service";
-import { WorldmapFiltersService } from "../../../shared/components/shared-market-report/services/worldmap-filter.service";
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { Subject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
-import { isPlatformBrowser } from "@angular/common";
-import { Professional } from "../../../../models/professional";
-import { UserFrontService } from "../../../../services/user/user-front.service";
+import {Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PLATFORM_ID} from '@angular/core';
+import {Innovation} from '../../../../models/innovation';
+import {SharedFilter} from '../../../shared/components/shared-market-report/models/shared-filter';
+import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {FilterService} from '../../../shared/components/shared-market-report/services/filters.service';
+import {Answer} from '../../../../models/answer';
+import {first, takeUntil} from 'rxjs/operators';
+import {Question} from '../../../../models/question';
+import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
+import {Tag} from '../../../../models/tag';
+import {TagsFiltersService} from '../../../shared/components/shared-market-report/services/tags-filter.service';
+import {WorldmapFiltersService} from '../../../shared/components/shared-market-report/services/worldmap-filter.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import {Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {AnswerFrontService} from '../../../../services/answer/answer-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {Professional} from '../../../../models/professional';
+import {UserFrontService} from '../../../../services/user/user-front.service';
+import {picto, Picto} from '../../../../models/static-data/picto';
 
 type Template = 'MARKET_REPORT' | 'FOLLOW_UP';
 
@@ -38,7 +39,10 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   @Input() questions: Array<Question> = [];
 
-  @Input() answers: Array<Answer> = [];
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this._answersCountries = value.map(answer => answer.country.flag || answer.professional.country);
+  }
 
   @Input() templateType: Template = 'MARKET_REPORT';
 
@@ -70,6 +74,10 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
+  private _answers: Array<Answer> = [];
+
+  private _answersCountries: string[] = [];
+
   private _sharedFiltersList: Array<SharedFilter> = [];
 
   private _filterName = '';
@@ -96,6 +104,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   private _isFinalConclusion = true;
 
   private _professionalsTags: Array<Tag> = [];
+
+  private _picto: Picto = picto;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
@@ -214,6 +224,19 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     }
   }
 
+  public updateFilter(filter: any, oldFilterName: string) {
+    const index = this._sharedFiltersList.findIndex((f) => f._id === filter._id);
+    if (index) {
+      this._innovationService.updateFilter(this._innovation._id, filter, oldFilterName)
+          .pipe(first()).subscribe((res) => {
+        this._sharedFiltersList[index] = res;
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
+  }
+
   public checkOption(event: Event, question: Question) {
     event.preventDefault();
     const checked = (event.target as HTMLInputElement).checked;
@@ -221,8 +244,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     if (this._filterService.filters[question.identifier]) {
       filterValue = this._filterService.filters[question.identifier].value;
     } else {
-      filterValue = question.options.reduce((acc, opt) =>
-      { acc[opt.identifier] = true; return acc; }, {} as any);
+      filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = true; return acc; }, {} as any);
     }
     filterValue[(event.target as HTMLInputElement).name] = checked;
     const removeFilter = checked && Object.keys(filterValue).every((k) => filterValue[k] === true);
@@ -278,17 +300,16 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     }
   }
 
-  public deleteCustomFilter(event: Event, name: string) {
-    event.preventDefault();
+  public deleteCustomFilter(name: string) {
     this._innovationService.deleteFilter(this._innovation._id, encodeURIComponent(name))
       .pipe(first()).subscribe((result) => {
-        if (result['ok'] === 1) {
-          this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
-        }
-        }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
+      if (result['ok'] === 1) {
+        this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
+      }
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   public loadFilter(name: string) {
@@ -320,10 +341,16 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._filterService.deleteFilter(name);
   }
 
-  public checkCountry(event: Event) {
+  public checkContinent(event: Event) {
     event.preventDefault();
     this._worldmapFilterService.selectContinent((event.target as HTMLInputElement).name,
       (event.target as HTMLInputElement).checked);
+  }
+
+  public checkCountry(event: Event) {
+    event.preventDefault();
+    this._worldmapFilterService.selectCountry((event.target as HTMLInputElement).name,
+      (event.target as HTMLInputElement).checked, this.answersCountries);
   }
 
   public checkTag(event: Event, tagId: string) {
@@ -363,8 +390,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         if (isChecked) {
           this._filterService.deleteFilter(question.identifier);
         } else {
-          const filterValue = question.options.reduce((acc, opt) =>
-          { acc[opt.identifier] = isChecked; return acc; }, {} as any );
+          const filterValue = question.options.reduce((acc, opt) => { acc[opt.identifier] = isChecked; return acc; }, {} as any );
           this._filterService.addFilter({
             status: <'CHECKBOX'|'RADIO'> question.controlType.toUpperCase(),
             questionId: question.identifier,
@@ -420,7 +446,11 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   }
 
   get filteredContinents() {
-    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value : null;
+    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value.continents : null;
+  }
+
+  get filteredCountries() {
+    return this._filterService.filters['worldmap'] ? this._filterService.filters['worldmap'].value.countries : null;
   }
 
   get selectedTags(): {[t: string]: boolean} {
@@ -473,6 +503,18 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   get professionalsTags(): Array<Tag> {
     return this._professionalsTags;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get answersCountries(): string[] {
+    return this._answersCountries;
   }
 
   ngOnDestroy(): void {

@@ -15,6 +15,8 @@ import {ErrorFrontService} from '../../../../../../../../../services/error/error
 import {Media, Video} from '../../../../../../../../../models/media';
 import {Preset} from '../../../../../../../../../models/preset';
 import {MissionService} from '../../../../../../../../../services/mission/mission.service';
+import {CollaborativeComment} from '../../../../../../../../../models/collaborative-comment';
+import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -23,48 +25,153 @@ import {MissionService} from '../../../../../../../../../services/mission/missio
 
 export class PitchComponent implements OnInit, OnDestroy {
 
+  private _ngUnsubscribe: Subject<any> = new Subject();
+  private _activeCardIndex = 0;
+  private _activeSectionCode = '';
+  private _toBeSaved = false;
+  private _isUploadingVideo = false;
+
+  constructor(private _innovationService: InnovationService,
+              private _missionService: MissionService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _innovationFrontService: InnovationFrontService,
+              private _etherpadService: EtherpadService) {
+  }
+
   private _innovation: Innovation = <Innovation>{};
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
-
-  private _activeCardIndex = 0;
+  get innovation(): Innovation {
+    return this._innovation;
+  }
 
   private _sidebarValue: SidebarInterface = {
     animate_state: 'inactive'
   };
 
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    if (!this._toBeSaved) {
+      this._sidebarValue = value;
+      if (this._sidebarValue.animate_state === 'inactive') {
+        this._activeSection = '';
+      }
+    } else if (this._toBeSaved) {
+      this._changesToSave();
+    }
+  }
+
   private _isSaving = false;
+
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+
+  set isSaving(value: boolean) {
+    this._isSaving = value;
+  }
 
   private _cardContent: any = '';
 
+  get cardContent(): any {
+    return this._cardContent;
+  }
+
   private _isEditable = false;
+
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
 
   private _activeSection: CardSectionTypes = '';
 
-  private _sections: Array<InnovCardSection> = []
+  get activeSection(): CardSectionTypes {
+    return this._activeSection;
+  }
+
+  private _sections: Array<InnovCardSection> = [];
+
+  get sections(): Array<InnovCardSection> {
+    return this._sections;
+  }
 
   private _isRequesting = false;
 
+  get isRequesting(): boolean {
+    return this._isRequesting;
+  }
+
   private _isSubmitting = false;
+
+  get isSubmitting(): boolean {
+    return this._isSubmitting;
+  }
 
   private _showModal = false;
 
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
   private _isSendingMessage = false;
+
+  get isSendingMessage(): boolean {
+    return this._isSendingMessage;
+  }
 
   private _preset: Preset = <Preset>{};
 
+  get preset(): Preset {
+    return this._preset;
+  }
+
   private _newMessage = false;
+
+  get newMessage(): boolean {
+    return this._newMessage;
+  }
 
   private _mission: Mission = <Mission>{};
 
+  get mission(): Mission {
+    return this._mission;
+  }
+
   private _authorisation: Array<string> = ['SOCIAL', 'UMI', 'COMMUNITY'];
 
-  private _toBeSaved = false;
+  get authorisation(): Array<string> {
+    return this._authorisation;
+  }
 
-  constructor(private _innovationService: InnovationService,
-              private _missionService: MissionService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService) { }
+  private _currentSectionComments: CollaborativeComment[] = [];
+
+  get currentSectionComments(): any[] {
+    return this._currentSectionComments;
+  }
+
+  get activeInnovCard(): InnovCard {
+    return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
+  }
+
+  get operatorComment(): CardComment {
+    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection);
+  }
+
+  get imagePostUri(): string {
+    return this._innovation._id && this.activeInnovCard._id
+      ? `/innovation/${this._innovation._id}/innovationCard/${this.activeInnovCard._id}/media/image` : '';
+  }
+
+  get pitchHelp(): PitchHelpFields {
+    return MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
+      'PITCH_HELP', this.activeInnovCard.lang);
+  }
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
@@ -77,6 +184,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       }
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
+      this._fetchCommentsOfSections();
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((cardIndex) => {
@@ -85,58 +193,44 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _initDefaultSections() {
-    const _defaultSections: Array<InnovCardSection> = [
-      {
-        title: this.activeInnovCard.title ? this.activeInnovCard.lang === 'fr' ? 'Titre' : 'Title'
-          : this.activeInnovCard.lang === 'fr' ? 'Remplir le titre' : 'Fill in the title',
-        content: this.activeInnovCard.title,
-        visibility: true,
-        type: 'TITLE'
-      },
-      {
-        title: this.activeInnovCard.summary ? this.activeInnovCard.lang === 'fr' ? 'Résumé' : 'Summary'
-          : this.activeInnovCard.lang === 'fr' ? 'Remplir le résumé' : 'Fill in the summary',
-        content: this.activeInnovCard.summary,
-        visibility: true,
-        type: 'SUMMARY'
-      },
-      {
-        title: this.activeInnovCard.lang === 'fr' ? 'Ajouter des médias' : 'Add medias',
-        content: this.activeInnovCard.media,
-        visibility: true,
-        type: 'MEDIA'
-      }
-    ];
-
-    this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
-      ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
-  }
-
   public sectionCommentLabel(section: string): boolean {
+    let comments;
     switch (section) {
 
+      // TODO : remove comment.comment when etherpad
       case 'TITLE':
-        return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').comment
-          || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').suggestion);
+        comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'TITLE').comments;
+        return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').comment
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'TITLE').suggestion;
 
       case 'SUMMARY':
-        return !!(InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').comment
-          || InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').suggestion);
+        comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'SUMMARY').comments;
+        return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').comment
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SUMMARY').suggestion;
 
       case 'ISSUE':
-        return !!(InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'ISSUE').comment
-          || InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'ISSUE').suggestion);
+        comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'ISSUE').comments;
+        return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'ISSUE').comment
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'ISSUE').suggestion;
 
       case 'SOLUTION':
-        return !!(InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'SOLUTION').comment
-          || InnovationFrontService.cardDynamicOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion);
+        comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'SOLUTION').comments;
+        return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').comment
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion;
 
+      default:
+        return false;
     }
   }
 
   public openSidebar(section: string, content: string | Array<Media>) {
     if (!this._toBeSaved) {
+      this._activeSectionCode = this._computeSectionCode(section);
+      this._getPadAllComments();
       this._activeSection = <CardSectionTypes>section;
       this._cardContent = content;
 
@@ -144,25 +238,21 @@ export class PitchComponent implements OnInit, OnDestroy {
         animate_state: 'active',
         type: section,
         size: '726px',
-        title: 'SIDEBAR.PROJECT_PITCH.' + section
+        title: 'SIDEBAR.PROJECT_PITCH.' + (this._isEditable ? 'EDIT.' : 'VIEW.') + section
       };
     } else {
       this._changesToSave();
     }
-  };
+  }
 
-  private _changesToSave() {
-    if (this._toBeSaved) {
-      const _msg = this.activeInnovCard.lang === 'fr'
-        ? 'Souhaitez vous vraiment quitter sans savegarder? Tous vos changements seront perdus.'
-        : 'Do you really want to leave without saving? All the changes will be lost.';
-      if (window.confirm(_msg)) {
-        this._toBeSaved = false;
-        this._sidebarValue = {
-          animate_state: 'inactive'
-        };
-      }
-    }
+  private _getPadAllComments() {
+    this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', this.activeSectionCode))
+      .pipe(first())
+      .subscribe((result) => {
+        this._currentSectionComments = result;
+        }, (err: HttpErrorResponse) => {
+        console.error(err);
+      });
   }
 
   public mediaSrc(media: Media) {
@@ -198,8 +288,30 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onSaveProject(event: {type: string, content: any}) {
+  private _computeSectionCode(section: string): string {
+    let sectionCode = section.toLowerCase() + '-' + this.activeInnovCard.lang;
+
+    switch (section) {
+      case 'ISSUE':
+        const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
+        sectionCode = section.toLowerCase() + '-' + _indexIssue + 3 + '-' + this.activeInnovCard.lang;
+        break;
+
+      case 'SOLUTION':
+        const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
+        sectionCode = section.toLowerCase() + '-' + _indexSolution + 3 + '-' + this.activeInnovCard.lang;
+        break;
+
+    }
+
+    return sectionCode;
+  }
+
+  public onSaveProject(event: { type: string, content: any }) {
     if (event.type && this._isEditable && this._isSaving && !this._isSubmitting) {
+
+      // TODO when case 'OTHER' will be implemented : this._activeSectionCode should be unique for each other section
+
       switch (event.type) {
 
         case 'TITLE':
@@ -248,6 +360,87 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
+  public onChangeMessage(event: Event) {
+    this._newMessage = ((event.target) as HTMLInputElement).value === this._innovation.questionnaireComment;
+  }
+
+  public onSendMessage(event: Event) {
+    event.preventDefault();
+    if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
+      this._isSendingMessage = true;
+      this._updateProject('sendMessage');
+    }
+  }
+
+  /***
+   * when the user toggles the authorisation value.
+   * @param event
+   * @param type
+   */
+  public onChangeAuthorisation(event: Event, type: string) {
+    this._mission.externalDiffusion[type] = ((event.target) as HTMLInputElement).checked;
+    this._updateMission();
+  }
+
+  public onChangesToBeSaved(value: boolean) {
+    this._toBeSaved = value;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
+  private _initDefaultSections() {
+    const _defaultSections: Array<InnovCardSection> = [
+      {
+        title: this.activeInnovCard.title ? this.activeInnovCard.lang === 'fr' ? 'Titre' : 'Title'
+          : this.activeInnovCard.lang === 'fr' ? 'Remplir le titre' : 'Fill in the title',
+        content: this.activeInnovCard.title,
+        visibility: true,
+        type: 'TITLE'
+      },
+      {
+        title: this.activeInnovCard.summary ? this.activeInnovCard.lang === 'fr' ? 'Résumé' : 'Summary'
+          : this.activeInnovCard.lang === 'fr' ? 'Remplir le résumé' : 'Fill in the summary',
+        content: this.activeInnovCard.summary,
+        visibility: true,
+        type: 'SUMMARY'
+      },
+      {
+        title: this.activeInnovCard.lang === 'fr' ? 'Ajouter des médias' : 'Add medias',
+        content: this.activeInnovCard.media,
+        visibility: true,
+        type: 'MEDIA'
+      }
+    ];
+
+    this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
+      ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
+  }
+
+  private _fetchCommentsOfSections() {
+    this._sections.forEach(
+      (section) => this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', this._computeSectionCode(section.type))).subscribe(
+        (result) => {
+          section.comments = result;
+        }));
+  }
+
+  private _changesToSave() {
+    if (this._toBeSaved) {
+      const _msg = this.activeInnovCard.lang === 'fr'
+        ? 'Souhaitez vous vraiment quitter sans sauvegarder? Tous vos changements seront perdus.'
+        : 'Do you really want to leave without saving? All the changes will be lost.';
+      if (window.confirm(_msg)) {
+        this._toBeSaved = false;
+        this._sidebarValue = {
+          animate_state: 'inactive'
+        };
+      }
+    }
+  }
+
   private _updateProject(type?: string) {
     let saveObject: any = {innovationCards: this._innovation.innovationCards};
     let message = 'ERROR.PROJECT.SAVED_TEXT';
@@ -269,6 +462,8 @@ export class PitchComponent implements OnInit, OnDestroy {
         break;
     }
     this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((innovation) => {
+      this._innovation.innovationCards = innovation.innovationCards;
+      this._innovationFrontService.setInnovation(this._innovation);
       this._resetVariables();
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
@@ -292,66 +487,66 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   private _uploadVideo(video: Video) {
+    this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
-      .pipe(first()).subscribe((video) => {
-        this.activeInnovCard.media.push(video);
-        this._cardContent = this.activeInnovCard.media;
+      .pipe(first())
+      .subscribe((video) => {
+        this._isUploadingVideo = false;
+        this._innovation.innovationCards[this._activeCardIndex].media.push(video);
+        this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media
+        this._innovationFrontService.setInnovation(this._innovation);
         this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
-    }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
+        this._isUploadingVideo = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._resetVariables();
         console.error(err);
-    });
+      });
   }
 
   private _setMainMedia(media: Media) {
     this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
       .pipe(first()).subscribe(() => {
-        this.activeInnovCard.principalMedia = media;
-        this._resetVariables();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
+      this.activeInnovCard.principalMedia = media;
+      this._resetVariables();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
     }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._resetVariables();
-        console.error(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._resetVariables();
+      console.error(err);
     });
   }
 
   private _deleteMedia(media: Media) {
     this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
-      .pipe(first()).subscribe(() => {
+      .pipe(first())
+      .subscribe(() => {
         this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
         this._cardContent = this.activeInnovCard.media;
+        this._verifyPrincipal(media);
         this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
-    }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._resetVariables();
         console.error(err);
-    });
-  }
-
-  public onChangeMessage(event: Event) {
-    this._newMessage = ((event.target) as HTMLInputElement).value === this._innovation.questionnaireComment;
-  }
-
-  public onSendMessage(event: Event) {
-    event.preventDefault();
-    if (!this._isSendingMessage && this._innovation.status !== 'DONE') {
-      this._isSendingMessage = true;
-      this._updateProject('sendMessage');
-    }
+      });
   }
 
   /***
-   * when the user toggles the authorisation value.
-   * @param event
-   * @param type
+   * if we already set the deleted media as principal media then we set the next media as principal media and if no media
+   * available then set principal media null
+   * @private
    */
-  public onChangeAuthorisation(event: Event, type: string) {
-    this._mission.externalDiffusion[type] = ((event.target) as HTMLInputElement).checked;
-    this._updateMission();
+  private _verifyPrincipal(deleteMedia: Media) {
+    if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
+      this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
+      this._innovationFrontService.setInnovation(this._innovation);
+    } else if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id === deleteMedia._id
+      && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
+      this._setMainMedia(this.activeInnovCard.media[0]);
+    }
   }
 
   /***
@@ -367,110 +562,12 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
-  public onChangesToBeSaved(value: boolean) {
-    this._toBeSaved = value;
+  get activeSectionCode(): string {
+    return this._activeSectionCode;
   }
 
-  get activeInnovCard(): InnovCard {
-    return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
-  }
-
-  get operatorComment(): CardComment {
-    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection);
-  }
-
-  get imagePostUri(): string {
-    return this._innovation._id && this.activeInnovCard._id
-      ? `/innovation/${this._innovation._id}/innovationCard/${this.activeInnovCard._id}/media/image` : '';
-  }
-
-  get pitchHelp(): PitchHelpFields {
-    return MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
-      'PITCH_HELP', this.activeInnovCard.lang);
-  }
-
-  get innovation(): Innovation {
-    return this._innovation;
-  }
-
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
-  }
-
-  set sidebarValue(value: SidebarInterface) {
-    if (!this._toBeSaved) {
-      this._sidebarValue = value;
-      if (this._sidebarValue.animate_state === 'inactive') {
-        this._activeSection = '';
-      }
-    } else if (this._toBeSaved) {
-      this._changesToSave();
-    }
-  }
-
-  get isSaving(): boolean {
-    return this._isSaving;
-  }
-
-  set isSaving(value: boolean) {
-    this._isSaving = value;
-  }
-
-  get cardContent(): any {
-    return this._cardContent;
-  }
-
-  get isEditable(): boolean {
-    return this._isEditable;
-  }
-
-  get activeSection(): CardSectionTypes {
-    return this._activeSection;
-  }
-
-  get sections(): Array<InnovCardSection> {
-    return this._sections;
-  }
-
-  get isRequesting(): boolean {
-    return this._isRequesting;
-  }
-
-  get isSubmitting(): boolean {
-    return this._isSubmitting;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get isSendingMessage(): boolean {
-    return this._isSendingMessage;
-  }
-
-  get preset(): Preset {
-    return this._preset;
-  }
-
-  get newMessage(): boolean {
-    return this._newMessage;
-  }
-
-  get mission(): Mission {
-    return this._mission;
-  }
-
-  get authorisation(): Array<string> {
-    return this._authorisation;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
+  get isUploadingVideo(): boolean {
+    return this._isUploadingVideo;
   }
 
 }

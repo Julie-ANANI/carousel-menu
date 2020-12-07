@@ -1,0 +1,19 @@
+<div *ngFor="let comment of collaborativesComments" class="m-bottom-10">
+  <div class="flex-d-column comment-message message">
+    <div class="column float-right">
+      <div class="popover is-left">
+        <span *ngIf="comment.replies" class="text-link"
+              (click)="displayCommentThread(comment.id)">{{comment.replies.length}}
+          {{('COMMENT_CARD.' + ((comment.replies.length > 1) ? 'REPLIES' : 'REPLY')) | translate }}
+          <i class="fas fa-comment"></i>
+        </span>
+        <div class="popover-container">
+          <app-comment-card [innovationId]="innovationId" [comment]="comment" [padID]="padID"></app-comment-card>
+        </div>
+      </div>
+    </div>
+    <span class="comment-author-name">{{comment.name}}</span>
+    <span class="comment-created-at">{{comment.timestamp | date:'MM/dd/yyyy'}}</span>
+    <p class="message-body" [innerHTML]="comment.text | cleanHtml"></p>
+  </div>
+</div>

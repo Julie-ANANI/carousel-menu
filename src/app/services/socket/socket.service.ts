@@ -1,22 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import * as io from 'socket.io-client';
-import { Innovation } from '../../models/innovation';
-import { Mission } from '../../models/mission';
-import { ExecutiveReport } from '../../models/executive-report';
-import { Answer } from '../../models/answer';
+import {Injectable} from '@angular/core';
+import {Observable, Subscriber} from 'rxjs';
+import {Innovation} from '../../models/innovation';
+import {Mission} from '../../models/mission';
+import {ExecutiveReport} from '../../models/executive-report';
+import {Answer} from '../../models/answer';
+import {AbstractSocketService} from './abstract.socket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class SocketService {
-
-  socket: SocketIOClient.Socket;
+export class SocketService extends AbstractSocketService {
 
   constructor() {
-    this.socket = io(environment.apiUrl.slice(0, -4), {path: '/api/socket-io'});
+    super();
   }
 
   listenToSocket(): Observable<any> {
@@ -63,6 +60,15 @@ export class SocketService {
     });
   }
 
+  getNewCampaign(innovationId: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`campaignCreation_${innovationId}`,
+        (data: {userName: string, userId: string, data: ExecutiveReport}) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
   getAnswersUpdates(innovationId: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
       this.socket.on(`answerUpdate_${innovationId}`,
@@ -70,9 +76,5 @@ export class SocketService {
         subscriber.next(data);
       });
     });
-  }
-
-  sendDataToApi(name: string, data: any) {
-    this.socket.emit(name, data);
   }
 }
