@@ -355,7 +355,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
       });
-    } else if (value._action === 'Stop the requests') {
+    } else if (value._action === 'Pause the requests') {
 
       this._searchService.stopManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId: string) => {

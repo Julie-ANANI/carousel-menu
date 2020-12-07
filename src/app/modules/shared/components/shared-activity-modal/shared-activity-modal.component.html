@@ -1,13 +1,15 @@
 <div [hidden]="isLoading || !isEtherpadUp" id="shared-activity-modal">
   <div *ngIf="usersSessions.length" class="d-flex align-end">
-    <figure
-      (click)="openModal($event)"
-      *ngFor="let session of usersSessions; let i = index;"
-      [attr.data-initial]="session.author.initials"
-      [ngStyle]="{'animation-duration': ((i+1) * 250) + 'ms'}"
-      [title]="session.author.name"
-      class="avatar m-right-10 c-hand animate-fade">
-    </figure>
+    <ng-container *ngFor="let session of usersSessions; let i = index;">
+      <figure
+        *ngIf="i < 3"
+        (click)="openModal($event)"
+        [attr.data-initial]="session.author.initials"
+        [ngStyle]="{'animation-duration': ((i+1) * 250) + 'ms'}"
+        [title]="session.author.name"
+        class="avatar m-right-10 c-hand animate-fade">
+      </figure>
+    </ng-container>
     <a
       (click)="openModal($event)"
       *ngIf="usersSessions.length > 3"
