@@ -61,6 +61,18 @@
         </div>
       </ng-container>
 
+      <!-- operator -->
+      <ng-container *ngIf="isEditUser">
+        <div class="operator-wrapper">
+          <label class="form-label">
+            <span>{{getLoginAttempts()}}</span>
+            <a *ngIf="!!user['attempts']" (click)="resetLoginAttempts($event)">
+              <ng-container *ngIf="!isSelf && adminLevel()"><i class="fas fa-redo"></i></ng-container>
+            </a>
+          </label>
+        </div>
+      </ng-container>
+
       <!-- domain management -->
       <ng-container *ngIf="isEditUser">
         <div  class="domain-wrapper">

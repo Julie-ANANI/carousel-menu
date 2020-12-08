@@ -40,6 +40,10 @@ export class UserService {
     return this._http.post('/user/updatePassword', data);
   }
 
+  public resetLoginAttempts(userId: string): Observable<any> {
+    return this._http.put(`/user/${userId}/resetLoginAttempts`, {});
+  }
+
   public update(user: User): Observable<any> {
     return this._http.put('/user/me', user.toJSON());
   }
