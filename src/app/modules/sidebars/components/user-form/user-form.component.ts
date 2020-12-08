@@ -440,6 +440,20 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+  public resetLoginAttempts(event: Event) {
+    event.preventDefault();
+    this.userService.resetLoginAttempts(this.user.id)
+      .subscribe(result => {
+        this.user = result;
+      }, err => {
+        this.translateNotificationsService.error('ERROR.ERROR', err.message);
+      });
+  }
+
+  public getLoginAttempts(): string {
+    return `${!!this.user['attempts'] ? this.user['attempts'] : '0'} failed login attempt${!!this.user['attempts'] && this.user['attempts'] === 1 ? '' : 's'}`;
+  }
+
   get isSuperAdmin(): boolean {
     return this._user.roles === 'super-admin';
   }
