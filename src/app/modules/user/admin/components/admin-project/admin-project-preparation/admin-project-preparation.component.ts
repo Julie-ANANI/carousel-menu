@@ -223,7 +223,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   public onSave(event: Event) {
     event.preventDefault();
-    if (!this._isSaving && this._toBeSaved) {
+    if (!this._isSaving && (this._toBeSaved || this._toBeSavedComment)) {
       this._isSaving = true;
       if (this._activeTab === 'questionnaire') {
         this._saveProject({preset: this._project.preset});
