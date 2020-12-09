@@ -125,7 +125,7 @@ steps:
 ## Group 3: [schneider, bnp]
 ## Dynergie production steps
 - name: dockerProdDynergie
-  depends_on: [baseimageProd]
+  depends_on: [baseimageProd, dockerProd]
   image: plugins/docker
   settings:
     target: buildinstance
@@ -163,7 +163,7 @@ steps:
   ## Multivalente production steps
 
 - name: dockerProdMultivalente
-  depends_on: [baseimageProd]
+  depends_on: [baseimageProd, dockerProdDynergie]
   image: plugins/docker
   settings:
     target: buildinstance
