@@ -20,7 +20,7 @@ steps:
     event:
       - push
     branch:
-      - christmas-is-coming
+      - development
 
 - name: dockerDev
   image: plugins/docker
@@ -39,7 +39,7 @@ steps:
     event:
       - push
     branch:
-      - christmas-is-coming
+      - development
 
 - name: rancherDev
   image: peloton/drone-rancher
@@ -57,7 +57,7 @@ steps:
     event:
       - push
     branch:
-      - christmas-is-coming
+      - development
 
 ## UMI production steps
 ## This will build the base image. The base image for the front is the same for all instances
@@ -125,7 +125,7 @@ steps:
 ## Group 3: [schneider, bnp]
 ## Dynergie production steps
 - name: dockerProdDynergie
-  depends_on: [baseimageProd]
+  depends_on: [baseimageProd, dockerProd]
   image: plugins/docker
   settings:
     target: buildinstance
@@ -163,7 +163,7 @@ steps:
   ## Multivalente production steps
 
 - name: dockerProdMultivalente
-  depends_on: [baseimageProd]
+  depends_on: [baseimageProd, dockerProdDynergie]
   image: plugins/docker
   settings:
     target: buildinstance

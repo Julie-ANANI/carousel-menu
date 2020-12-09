@@ -111,7 +111,7 @@
                   (textChange)="onCommentChange($event, 'title', 'suggestion')"
                   [text]="zoneData('title', 'suggestion')"
                   [innovationId]="innovation._id"
-                  [elementId]="'title'"
+                  [elementId]="'title-' + currentLang"
                   [type]="'suggestion'">
                 </app-shared-editors>
               </div>
@@ -166,7 +166,7 @@
                 (textChange)="onContentChange($event, 'summary')"
                 [text]="activeInnovCard.summary"
                 [innovationId]="innovation._id"
-                [elementId]="'summary'"
+                [elementId]="'summary-' + currentLang"
                 [isEditable]="isEditable"
                 [type]="'pitch'">
               </app-shared-editors>
