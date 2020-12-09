@@ -62,7 +62,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _googleQuota = 100000;
 
-  private _waitingTime = 0; // in minutes
+  private _waitingTime = '0'; // in minutes
 
 
   private _config: Config = {
@@ -78,8 +78,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _configQueue: Config = {
     fields: 'keywords innovation',
     search: '{}',
-    status: '{"$or": ["QUEUED", "PROCESSING"]}',
-    sort: '{ "created": -1 }',
+    status: '{"$in": ["QUEUED", "PROCESSING"]}',
+    sort: '',
     limit: '0',
     offset: '0',
   };
@@ -131,7 +131,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       if (this.status) {
         this._config.status = this.status;
       }
-
+      console.log(JSON.stringify(this._config));
       this._loadHistory();
       this._loadWaitingTime();
     }
@@ -147,7 +147,9 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _loadWaitingTime() {
     this._searchService.getRequests(this._configQueue).pipe(first()).subscribe((result: any) => {
-      this._waitingTime = (610 * result.requests.length) / 60000;  // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
+      console.log(result);
+      // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
+      this._waitingTime =  ((610 * result.requests.length) / 60000).toFixed(3);
     });
   }
 
@@ -240,7 +242,9 @@ export class SharedSearchHistoryComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'keywords']),
           _isHidden: !this.canAccess(['tableColumns', 'keywords']),
-          _isSortable: false
+          _isSortable: false,
+          _searchTooltip: 'Pro identification: The module is identifying pros thanks to google scraping\n' +
+            ' Email reconstruction: The module is testing email pattern to (in)validate them'
         },
         {
           _attrs: ['pros'],
@@ -272,7 +276,8 @@ export class SharedSearchHistoryComponent implements OnInit {
             {_name: 'PROCESSING', _alias: 'Processing', _class: 'label is-progress'},
             {_name: 'QUEUED', _alias: 'Queued', _class: 'label is-danger'},
             {_name: 'CANCELED', _alias: 'Canceled', _class: 'label is-danger'}
-          ]},
+          ],
+        },
         {
           _attrs: ['flag'],
           _name: 'Email reconstruction',
@@ -573,7 +578,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     return this._campaignId;
   }
 
-  get waitingTime(): number {
+  get waitingTime(): string {
     return this._waitingTime;
   }
 
