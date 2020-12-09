@@ -480,8 +480,7 @@ export class InnovationFrontService {
    * @param value
    */
   public setInnovation(value: Innovation) {
-    const deepCopy = JSON.parse(JSON.stringify(value));
-    this._innovationObj.next(deepCopy);
+    this._innovationObj.next(value);
   }
 
   /***

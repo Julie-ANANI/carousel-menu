@@ -1,22 +1,22 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { Innovation } from '../../../../../models/innovation';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { first, takeUntil } from 'rxjs/operators';
-import { SocketService } from '../../../../../services/socket/socket.service';
-import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
-import { isPlatformBrowser } from '@angular/common';
-import { Mission } from '../../../../../models/mission';
-import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../services/error/error-front.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { CampaignFrontService } from '../../../../../services/campaign/campaign-front.service';
-import { AuthService } from '../../../../../services/auth/auth.service';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {TranslateTitleService} from '../../../../../services/title/title.service';
+import {Innovation} from '../../../../../models/innovation';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
+import {first, takeUntil} from 'rxjs/operators';
+import {SocketService} from '../../../../../services/socket/socket.service';
+import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {Mission} from '../../../../../models/mission';
+import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Subject} from 'rxjs';
+import {CampaignFrontService} from '../../../../../services/campaign/campaign-front.service';
+import {AuthService} from '../../../../../services/auth/auth.service';
 
 interface Tab {
   route: string;
@@ -76,6 +76,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _updateTime: number;
 
+  private _innovTitle: string;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -94,6 +96,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
       if (this._activatedRoute.snapshot.data['innovation']
         && typeof this._activatedRoute.snapshot.data['innovation'] !== undefined) {
         this._project = this._activatedRoute.snapshot.data['innovation'];
+        this._setInnoTitle();
         this._setInnovation();
         this._isLoading = false;
         this._initPageTitle();
@@ -128,6 +131,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
         this._showBanner = update.userName;
         this._updateTime = Date.now();
       }
+      this._setInnoTitle();
       Object.keys(update.data).forEach((field: string) => {
         if (object === 'project') {
           this._project[field] = update.data[field];
@@ -262,10 +266,12 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   }
 
+  private _setInnoTitle() {
+    this._innovTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._currentLang, 'TITLE');
+  }
+
   get title(): string {
-    const _innovTitle = InnovationFrontService.currentLangInnovationCard(this._project,
-      this._currentLang, 'TITLE');
-    return  _innovTitle ? _innovTitle : this._project.name;
+    return  this._innovTitle ? this._innovTitle : this._project.name;
   }
 
   get mission(): Mission {
