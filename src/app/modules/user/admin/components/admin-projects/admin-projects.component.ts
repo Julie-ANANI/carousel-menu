@@ -133,7 +133,11 @@ export class AdminProjectsComponent implements OnInit {
    */
   private _searchMissionsByOther(config: Config) {
     // Change here the fields. This will hit an aggregate on the back
-    this._innovationService.advancedSearch(config).pipe(first()).subscribe(innovations => {
+    /* Warning: Juan is experimenting with this encoding. The idea is to encode the query params (not a crypto thing)
+     * to avoid send thing in clear text. The endpoint in the back is prepared to parse this*/
+    this._innovationService.advancedSearch({
+      config: encodeURI(Buffer.from(JSON.stringify(config)).toString('base64'))
+    }).pipe(first()).subscribe(innovations => {
       this._projects = innovations.result;
       this._initProjects();
       this._totalProjects = innovations._metadata.totalCount;
