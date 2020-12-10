@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AnswerService } from "../../../../services/answer/answer.service";
+import { AnswerService } from '../../../../services/answer/answer.service';
 
 @Component({
   selector: 'app-shared-advanced-search',
