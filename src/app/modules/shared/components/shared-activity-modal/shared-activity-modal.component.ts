@@ -41,6 +41,8 @@ export class SharedActivityModalComponent implements OnInit, OnDestroy {
 
   private _listenSessionChange = false;
 
+  private _listenUserActivity = false;
+
   private _authorId: string;
 
   private _innovationId: string;
@@ -48,6 +50,8 @@ export class SharedActivityModalComponent implements OnInit, OnDestroy {
   private _groupId: string;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private SESSION_EXPIRATION_TIMEOUT = 10; // minutes
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
@@ -68,9 +72,15 @@ export class SharedActivityModalComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._etherpadService.subscribedUsersSessions(id).pipe(first()).subscribe((sessions) => {
         this._usersSessions = EtherpadFrontService.sortSessions(sessions);
-        if (sessions.length && !this._listenSessionChange) {
+        if (sessions.length) {
           this._groupId = sessions[0].groupID;
-          this._detectSessionsChange();
+          if (!this._listenSessionChange) {
+            this._detectSessionsChange();
+          }
+          if (!this._listenUserActivity) {
+            this._setUserActive({author: this._authorId, lastActivity: (new Date()).getTime()});
+            this._detectUserActivity();
+          }
         }
         this._isLoading = false;
       }, (err: HttpErrorResponse) => {
@@ -79,6 +89,10 @@ export class SharedActivityModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Detect if a new user enter innovation or a user leave
+   * @private
+   */
   private _detectSessionsChange() {
     this._listenSessionChange = true;
     this._etherpadSocketService
@@ -87,6 +101,44 @@ export class SharedActivityModalComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this._getSubscribedUsers(this._innovationId);
       });
+  }
+
+  /**
+   * Detect all users recent activities
+   * @private
+   */
+  private _detectUserActivity() {
+    this._listenUserActivity = true;
+    this._etherpadSocketService.getGroupUserActivityUpdate(this._groupId)
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((data: { author: string, lastActivity: number }) => {
+        this._setUserActive(data);
+      });
+  }
+
+  /**
+   * Set last activity timestamp to specified user
+   * @param activity of author
+   * @private
+   */
+  private _setUserActive(activity: { author: string, lastActivity: number }) {
+    const index = this._usersSessions.findIndex(s => s.authorID === activity.author);
+    if (index >= 0) {
+      this._usersSessions[index].lastActivity = activity.lastActivity;
+    }
+  }
+
+  /**
+   * Check if session has expired based on last activity and expiration timeout
+   * @param session
+   */
+  public isExpired(session: Session) {
+    if (session.lastActivity) {
+      const lastActivityDate = new Date(session.lastActivity);
+      lastActivityDate.setMinutes(lastActivityDate.getMinutes() + this.SESSION_EXPIRATION_TIMEOUT);
+      return lastActivityDate.getTime() < Date.now();
+    }
+    return true;
   }
 
   public openModal(event: Event) {

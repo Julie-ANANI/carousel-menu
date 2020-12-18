@@ -10,7 +10,7 @@ export class EtherpadSocketSsrService implements EtherpadSocketService {
 
   socket: any = null;
 
-  getAuthorPadUpdates(groupPadID: string, authorID: string): Observable<any> {
+  getPadUpdated(groupPadID: string, authorID: string): Observable<any> {
     return EMPTY;
   }
 
@@ -19,6 +19,10 @@ export class EtherpadSocketSsrService implements EtherpadSocketService {
   }
 
   getServerStatusMessages(): Observable<any> {
+    return EMPTY;
+  }
+
+  getGroupUserActivityUpdate(groupID: string): Observable<any> {
     return EMPTY;
   }
 

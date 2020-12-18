@@ -16,6 +16,9 @@ export class CommentListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.collaborativesComments.sort((c1, c2) => {
+      return c2.timestamp - c1.timestamp;
+    });
   }
 
   displayCommentThread(id: string) {

@@ -41,6 +41,8 @@ export class AuthService {
 
   private _cookieObserver: any = null;
 
+  private _forceCookiesReload = true;
+
   // private _adminAccess: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -59,6 +61,17 @@ export class AuthService {
     this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
     this._setIsOperatorTo(this._cookieService.get('isOperator') === 'true' );
     // this._setAdminAccess(this._cookieService.get('adminAccess'));
+  }
+
+  // To delete all browser cookies (before login, forceLogin and session)
+  private deleteCookies() {
+    if (!this._forceCookiesReload) {
+      return;
+    }
+    const allCookies = document.cookie.split(';');
+    for (let i = 0; i < allCookies.length; i++) {
+      document.cookie = `${allCookies[i]}=;path=/;expires=${new Date(0).toUTCString()}`;
+    }
   }
 
   public startCookieObservator() {
@@ -88,6 +101,7 @@ export class AuthService {
   }
 
   public login(user: User): Observable<User> {
+    this.deleteCookies();
     return this._http.post('/auth/login', user.toJSON())
       .pipe(
         map((res: any) => {
@@ -109,6 +123,7 @@ export class AuthService {
   }
 
   public forceLogin(userId: string): Observable<User> {
+    this.deleteCookies();
     return this._http.post('/auth/forceLogin', {userId: userId})
       .pipe(
         map((res: any) => {
@@ -117,6 +132,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
           this._user = res;
+          this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
             //this.startCookieObservator();
@@ -218,6 +234,7 @@ export class AuthService {
           return session.id;
         }).join(',')}`, this._etherpadCookiesOptions());
       }
+      this._setEtherpadPrefsCookie();
     }
   }
 
@@ -233,6 +250,11 @@ export class AuthService {
       this._cookieService.put('adminAccess', JSON.stringify(newValue), this._cookieOptions);
     }
   }*/
+
+  private _setEtherpadPrefsCookie() {
+    const cookieName = window.location.protocol === 'https:' ? 'prefs' : 'prefsHttp';
+    this._cookieService.put(cookieName, '{}' , this._etherpadCookiesOptions());
+  }
 
   public getUserInfo(): any {
     if (this._user) {

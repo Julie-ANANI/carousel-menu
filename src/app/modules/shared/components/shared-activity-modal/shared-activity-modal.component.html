@@ -2,7 +2,7 @@
   <div *ngIf="usersSessions.length" class="d-flex align-end">
     <ng-container *ngFor="let session of usersSessions; let i = index;">
       <figure
-        *ngIf="i < 3"
+        *ngIf="i < 3 && !isExpired(session)"
         (click)="openModal($event)"
         [attr.data-initial]="session.author.initials"
         [ngStyle]="{'animation-duration': ((i+1) * 250) + 'ms'}"
@@ -26,12 +26,13 @@
   [isHeaderBgWhite]="true"
   [maxWidth]="'320px'"
   [title]="'Activity dashboard'">
-  <section class="modal-body">
-    <div *ngFor="let session of usersSessions" class="flex-start m-bottom-10">
+  <section class="modal-body activity">
+    <div [ngClass]="{inactive: isExpired(session)}" *ngFor="let session of usersSessions" class="flex-start m-bottom-10">
       <figure [attr.data-initial]="session.author.initials" class="avatar m-right-20"></figure>
-      <span class="text-bold text-sm">
-        {{session.author.name}}
-        <span *ngIf="session.author.id === authorId"> (you) </span>
+      <span class="text-bold text-sm d-flex">
+        <span class="m-right-1"> {{session.author.name}} </span>
+        <span class="m-right-1" *ngIf="session.author.id === authorId">(you)</span>
+        <span id="inactive_label">- Inactive</span>
       </span>
     </div>
   </section>

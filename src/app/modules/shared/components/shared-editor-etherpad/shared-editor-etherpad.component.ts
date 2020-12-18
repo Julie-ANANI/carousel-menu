@@ -52,6 +52,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
+  public height = 400;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _etherpadSocketService: EtherpadSocketService,
@@ -101,7 +103,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
    * @private
    */
   private _createEtherpad() {
-    if (this.isEtherpadUp() && this._isEditable && isPlatformBrowser(this._platformId) && this._etherpad.innovationId && this._etherpad.padID) {
+    if (this.isEtherpadUp() && this._isEditable && isPlatformBrowser(this._platformId)
+      && this._etherpad.innovationId && this._etherpad.padID) {
       this._etherpadService.createPad(this._etherpad.innovationId, this._etherpad.padID, this._text)
         .pipe(first()).subscribe((response) => {
           this._etherpad.userName = UserFrontService.fullName(this._authService.user);
@@ -127,6 +130,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
     _iframe.setAttribute('src', CommonService.etherpadSrc(this._etherpad));
     _iframe.setAttribute('id', this._etherpad.padID);
     _iframe.style.height = this.minHeight;
+    _iframe.style.resize = 'vertical';
     this.sharedEditorEtherpad.nativeElement.appendChild(_iframe);
     this._isLoading = false;
   }
@@ -145,7 +149,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
   private _detectPadTextChange() {
     const groupPadId = EtherpadFrontService.getGroupPadId(this._etherpad.groupID, this._etherpad.padID);
     this._etherpadSocketService
-      .getAuthorPadUpdates(groupPadId, this._authService.etherpadAccesses.authorID)
+      .getPadUpdated(groupPadId, this._authService.etherpadAccesses.authorID)
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data: { text: string }) => {
         if (data.text && data.text.length !== this.text.length) {
