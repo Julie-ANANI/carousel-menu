@@ -41,8 +41,6 @@ export class AuthService {
 
   private _cookieObserver: any = null;
 
-  private _forceCookiesReload = true;
-
   // private _adminAccess: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
