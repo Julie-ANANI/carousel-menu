@@ -219,7 +219,6 @@ export class AuthService {
           return session.id;
         }).join(',')}`, this._etherpadCookiesOptions());
       }
-      this._setEtherpadPrefsCookie();
     }
   }
 
@@ -235,11 +234,6 @@ export class AuthService {
       this._cookieService.put('adminAccess', JSON.stringify(newValue), this._cookieOptions);
     }
   }*/
-
-  private _setEtherpadPrefsCookie() {
-    const cookieName = window.location.protocol === 'https:' ? 'prefs' : 'prefsHttp';
-    this._cookieService.put(cookieName, '{}' , this._etherpadCookiesOptions());
-  }
 
   public getUserInfo(): any {
     if (this._user) {
