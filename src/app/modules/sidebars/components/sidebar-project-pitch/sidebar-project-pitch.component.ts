@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
@@ -42,7 +42,7 @@ import {SocketService} from '../../../../services/socket/socket.service';
   styleUrls: ['./sidebar-project-pitch.component.scss']
 })
 
-export class SidebarProjectPitchComponent implements OnInit, OnChanges {
+export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() set isSaving(value: boolean) {
     this._isSaving = value;
@@ -378,5 +378,10 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges {
 
   get padID(): string {
     return this._padID;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 }
