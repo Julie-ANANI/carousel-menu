@@ -63,17 +63,6 @@ export class AuthService {
     // this._setAdminAccess(this._cookieService.get('adminAccess'));
   }
 
-  // To delete all browser cookies (before login, forceLogin and session)
-  private deleteCookies() {
-    if (!this._forceCookiesReload) {
-      return;
-    }
-    const allCookies = document.cookie.split(';');
-    for (let i = 0; i < allCookies.length; i++) {
-      document.cookie = `${allCookies[i]}=;path=/;expires=${new Date(0).toUTCString()}`;
-    }
-  }
-
   public startCookieObservator() {
     if (this._cookieObserver === null) {
       console.time('cookieObs');
@@ -101,7 +90,6 @@ export class AuthService {
   }
 
   public login(user: User): Observable<User> {
-    this.deleteCookies();
     return this._http.post('/auth/login', user.toJSON())
       .pipe(
         map((res: any) => {
@@ -123,7 +111,6 @@ export class AuthService {
   }
 
   public forceLogin(userId: string): Observable<User> {
-    this.deleteCookies();
     return this._http.post('/auth/forceLogin', {userId: userId})
       .pipe(
         map((res: any) => {
