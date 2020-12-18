@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
 import {CommonService} from '../../../../services/common/common.service';
 import {Media, Video} from '../../../../models/media';
@@ -7,6 +7,9 @@ import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
 import {CollaborativeComment} from '../../../../models/collaborative-comment';
 import {picto} from '../../../../models/static-data/picto';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {SocketService} from '../../../../services/socket/socket.service';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -39,7 +42,7 @@ import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
   styleUrls: ['./sidebar-project-pitch.component.scss']
 })
 
-export class SidebarProjectPitchComponent implements OnChanges {
+export class SidebarProjectPitchComponent implements OnInit, OnChanges {
 
   @Input() set isSaving(value: boolean) {
     this._isSaving = value;
@@ -110,7 +113,21 @@ export class SidebarProjectPitchComponent implements OnChanges {
 
   private _padID: string;
 
-  constructor(private _innovationFrontService: InnovationFrontService) { }
+  private _ngUnsubscribe: Subject<any> = new Subject();
+
+  constructor(private _innovationFrontService: InnovationFrontService,
+              private _socketService: SocketService) { }
+
+  ngOnInit(): void {
+    // Listen on save from another user
+    this._socketService.getProjectFieldUpdates(this.innovationId, 'innovationCards')
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(() => {
+        this._toBeSaved = false;
+      }, (error) => {
+        console.error(error);
+      });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.type && changes.type.currentValue !== changes.type.previousValue) {

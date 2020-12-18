@@ -18,6 +18,10 @@ export class SocketSsrService implements SocketService {
     return EMPTY;
   }
 
+  getProjectFieldUpdates(): Observable<Notification> {
+    return EMPTY;
+  }
+
   getMissionUpdates(): Observable<Notification> {
     return EMPTY;
   }
