@@ -33,6 +33,15 @@ export class SocketService extends AbstractSocketService {
     });
   }
 
+  getProjectFieldUpdates(projectId: string, field: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`innovationUpdate_${projectId}/${field}`,
+        (data: {userName: string, userId: string, data: { [P in keyof Innovation]?: Innovation[P]; }}) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
   getMissionUpdates(missionId: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
       this.socket.on(`missionUpdate_${missionId}`,

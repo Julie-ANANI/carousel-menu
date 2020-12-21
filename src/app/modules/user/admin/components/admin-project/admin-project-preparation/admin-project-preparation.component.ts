@@ -16,6 +16,7 @@ import {CampaignFrontService} from '../../../../../../services/campaign/campaign
 import {isPlatformBrowser} from '@angular/common';
 import {Response} from '../../../../../../models/response';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {SocketService} from '../../../../../../services/socket/socket.service';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -68,7 +69,8 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService) {}
+              private _translateTitleService: TranslateTitleService,
+              private _socketService: SocketService) {}
 
   ngOnInit() {
 
@@ -77,6 +79,16 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this.setPageTitle();
       this._setActiveCardIndex();
     });
+
+    // Cards text has already been saved by another user
+    this._socketService.getProjectFieldUpdates(this._project._id, 'innovationCards')
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((update: any) => {
+        // We keep our changes to be saved except innovationCards
+        this._toBeSaved = this._toBeSaved.replace(/(innovationCards[,]?)/g, '');
+      }, (error) => {
+        console.error(error);
+      });
 
     this._campaignFrontService.activeCampaignTab().pipe(takeUntil(this._ngUnsubscribe)).subscribe((tab) => {
       if (tab && this._activeTab !== tab) {

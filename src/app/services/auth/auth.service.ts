@@ -117,6 +117,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
           this._user = res;
+          this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
             //this.startCookieObservator();

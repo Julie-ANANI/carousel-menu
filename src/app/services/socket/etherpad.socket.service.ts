@@ -12,7 +12,7 @@ export class EtherpadSocketService extends AbstractSocketService {
     super();
   }
 
-  getAuthorPadUpdates(groupPadID: string, authorID: string): Observable<any> {
+  getPadUpdated(groupPadID: string, authorID: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
       this.socket.on(`etherpad/${groupPadID}/update`,
         (data: {text: string}) => {
@@ -35,6 +35,15 @@ export class EtherpadSocketService extends AbstractSocketService {
       this.socket.on(`etherpad/${groupID}/sessions`,
         () => {
           subscriber.next();
+        });
+    });
+  }
+
+  getGroupUserActivityUpdate(groupID: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`etherpad/${groupID}/activity`,
+        (data: any) => {
+          subscriber.next(data);
         });
     });
   }
