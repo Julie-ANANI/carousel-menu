@@ -131,7 +131,6 @@ export class SharedSearchHistoryComponent implements OnInit {
       if (this.status) {
         this._config.status = this.status;
       }
-      console.log(JSON.stringify(this._config));
       this._loadHistory();
       this._loadWaitingTime();
     }
@@ -147,9 +146,8 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _loadWaitingTime() {
     this._searchService.getRequests(this._configQueue).pipe(first()).subscribe((result: any) => {
-      console.log(result);
       // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
-      this._waitingTime =  ((610 * result.requests.length) / 60000).toFixed(3);
+      this._waitingTime =  ((610 * result._metadata.totalCount) / 60000).toFixed(3);
     });
   }
 
