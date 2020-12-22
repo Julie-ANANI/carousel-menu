@@ -73,12 +73,12 @@ export class SharedActivityModalComponent implements OnInit, OnDestroy {
       this._etherpadService.subscribedUsersSessions(id).pipe(first()).subscribe((sessions) => {
         this._usersSessions = EtherpadFrontService.sortSessions(sessions);
         if (sessions.length) {
+          this._setUserActive({author: this._authorId, lastActivity: (new Date()).getTime()});
           this._groupId = sessions[0].groupID;
           if (!this._listenSessionChange) {
             this._detectSessionsChange();
           }
           if (!this._listenUserActivity) {
-            this._setUserActive({author: this._authorId, lastActivity: (new Date()).getTime()});
             this._detectUserActivity();
           }
         }
@@ -158,6 +158,10 @@ export class SharedActivityModalComponent implements OnInit, OnDestroy {
 
   get usersSessions(): Array<Session> {
     return this._usersSessions;
+  }
+
+  get usersActiveSessions(): Array<Session> {
+    return this._usersSessions.filter(s => !this.isExpired(s));
   }
 
   get isLoading(): boolean {

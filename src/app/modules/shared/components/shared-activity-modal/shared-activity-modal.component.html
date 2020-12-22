@@ -1,8 +1,8 @@
 <div [hidden]="isLoading || !isEtherpadUp" id="shared-activity-modal">
   <div *ngIf="usersSessions.length" class="d-flex align-end">
-    <ng-container *ngFor="let session of usersSessions; let i = index;">
+    <ng-container *ngFor="let session of usersActiveSessions; let i = index;">
       <figure
-        *ngIf="i < 3 && !isExpired(session)"
+        *ngIf="i < 3"
         (click)="openModal($event)"
         [attr.data-initial]="session.author.initials"
         [ngStyle]="{'animation-duration': ((i+1) * 250) + 'ms'}"
@@ -12,7 +12,7 @@
     </ng-container>
     <a
       (click)="openModal($event)"
-      *ngIf="usersSessions.length > 3"
+      *ngIf="usersActiveSessions.length > 3"
       class="text-link text-xs text-community"
       id="sharedActivityModal-btn-see-more">
       see others...
