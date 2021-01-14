@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { saveAs } from 'file-saver';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -45,6 +46,12 @@ export class AdminCampaignProsComponent implements OnInit {
   private _total = -1;
 
   private _modalImport = false;
+
+  private _modalExport = false;
+
+  private _exportConfidence = 80;
+
+  private _exportCountries = '';
 
   private _originCampaign: Array<Campaign> = [];
 
@@ -247,6 +254,10 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
   public onClickExport() {
+    this._modalExport = true;
+  }
+
+  public onConfirmExport() {
     if (!this._isExporting) {
       this._isExporting = true;
 
@@ -257,6 +268,8 @@ export class AdminCampaignProsComponent implements OnInit {
         campaignId: this._campaign._id,
         query: {
           campaignId: this._campaign._id,
+          emailConfidence: this._exportConfidence,
+          countries: this._exportCountries,
           search: ''
         }
       };
@@ -270,13 +283,9 @@ export class AdminCampaignProsComponent implements OnInit {
       }
 
       this._professionalsService.export(_config).pipe(first()).subscribe((answer: any) => {
-        const _blob = new Blob([answer.csv], { type: 'text/csv' });
-        const _url = window.URL.createObjectURL(_blob);
+        saveAs(answer, 'pros.csv');
         this._isExporting = false;
         this._translateNotificationsService.error('Success', 'The professionals are exported.');
-        if (isPlatformBrowser(this._platformId)) {
-          window.open(_url);
-        }
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._isExporting = false;
@@ -316,6 +325,30 @@ export class AdminCampaignProsComponent implements OnInit {
 
   set modalImport(value: boolean) {
     this._modalImport = value;
+  }
+
+  get modalExport(): boolean {
+    return this._modalExport;
+  }
+
+  set modalExport(value: boolean) {
+    this._modalExport = value;
+  }
+
+  get exportConfidence(): number {
+    return this._exportConfidence;
+  }
+
+  set exportConfidence(value: number) {
+    this._exportConfidence = value;
+  }
+
+  get exportCountries(): string {
+    return this._exportCountries;
+  }
+
+  set exportCountries(value: string) {
+    this._exportCountries = value;
   }
 
   get originCampaign(): Array<Campaign> {

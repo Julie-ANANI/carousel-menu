@@ -7,6 +7,7 @@ import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.m
 import {SidebarUserFormModule} from '../../../../../sidebars/components/user-form/sidebar-user-form.module';
 import {ModalModule} from '../../../../../utility/modals/modal/modal.module';
 import {AutoCompleteInputModule} from '../../../../../utility/auto-complete-input/auto-complete-input.module';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {AutoCompleteInputModule} from '../../../../../utility/auto-complete-inpu
     SidebarUserFormModule,
     ModalModule,
     AutoCompleteInputModule,
+    FormsModule,
   ],
   declarations: [
     AdminCampaignProsComponent
