@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { saveAs } from 'file-saver';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -282,10 +281,11 @@ export class AdminCampaignProsComponent implements OnInit {
         _config.professionals = 'all';
       }
 
-      this._professionalsService.export(_config).pipe(first()).subscribe((answer: any) => {
-        saveAs(answer, 'pros.csv');
+      this._professionalsService.export(_config).pipe(first()).subscribe(() => {
         this._isExporting = false;
-        this._translateNotificationsService.error('Success', 'The professionals are exported.');
+        this._translateNotificationsService.success(
+          'Export processing',
+          'Export is processing. You will receive an email with the file soon.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._isExporting = false;
