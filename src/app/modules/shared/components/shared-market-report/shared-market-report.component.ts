@@ -92,6 +92,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _isMainDomain = environment.domain === 'umi';
 
+  public areAnswersLoading = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _answerService: AnswerService,
@@ -139,6 +141,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    */
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
+      this.areAnswersLoading = true;
       this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first())
         .subscribe((response) => {
           this._answers = AnswerFrontService.qualitySort(response.answers);
@@ -149,6 +152,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
           this._filteredAnswers = this._answers;
           this._updateAnswersToShow();
+
+          this.areAnswersLoading = false;
 
           this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() =>
             this._updateAnswersToShow()
@@ -192,6 +197,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
           });
 
         }, (err: HttpErrorResponse) => {
+          this.areAnswersLoading = false;
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });
