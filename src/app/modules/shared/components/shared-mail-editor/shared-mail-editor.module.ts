@@ -7,6 +7,7 @@ import { SharedMailEditorComponent } from './shared-mail-editor.component';
 
 import { SharedEditorTinymceModule}  from '../shared-editor-tinymce/shared-editor-tinymce.module';
 import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
+import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
         FormsModule,
         SharedEditorTinymceModule,
         SharedEditorsModule,
+        CleanHtmlModule,
     ],
   declarations: [
    SharedMailEditorComponent

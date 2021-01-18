@@ -13,6 +13,8 @@ type editorTypes = 'FOLLOW-UP' | '';
 interface EmailsObject {
   fr: EmailTemplate;
   en: EmailTemplate;
+  campaignId: string;
+  step: string;
 }
 
 interface Mapping {
@@ -96,7 +98,9 @@ export class SharedMailEditorComponent {
 
   private _emailsObject: EmailsObject = {
     en: { language: 'en', subject: '', content: '' },
-    fr: { language: 'fr', subject: '', content: '' }
+    fr: { language: 'fr', subject: '', content: '' },
+    campaignId: '',
+    step: ''
   };
 
   private _language = 'en';

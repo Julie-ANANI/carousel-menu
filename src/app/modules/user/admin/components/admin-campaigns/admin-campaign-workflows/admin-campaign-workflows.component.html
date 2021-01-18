@@ -90,6 +90,7 @@
           [isDeletable]="canDelete(scenario)"
           [isEditable]="canAccess(['edit'])"
           [scenario]="scenario"
+          [campaignId]="campaign._id"
           [signatures]="signatures">
         </app-admin-edit-workflow>
       </div>

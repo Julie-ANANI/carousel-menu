@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { EmailScenario } from '../../../../../models/email-scenario';
-import { EmailTemplate } from '../../../../../models/email-template';
-import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
-import { EmailSignature } from '../../../../../models/email-signature';
-import { Config } from '../../../../../models/config';
-import { Column } from '../../../../table/models/column';
-import {Table} from "../../../../table/models/table";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {EmailScenario} from '../../../../../models/email-scenario';
+import {EmailTemplate} from '../../../../../models/email-template';
+import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
+import {EmailSignature} from '../../../../../models/email-signature';
+import {Config} from '../../../../../models/config';
+import {Column} from '../../../../table/models/column';
+import {Table} from '../../../../table/models/table';
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -27,6 +27,8 @@ export class AdminEditWorkflowComponent {
   };
 
   @Input() defaultScenario = '';
+
+  @Input() campaignId = '';
 
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
@@ -115,6 +117,8 @@ export class AdminEditWorkflowComponent {
 
   public editEmail(email: any) {
     this._emailToEdit = email;
+    this._emailToEdit.campaignId = this.campaignId;
+    console.log(this._emailToEdit);
     this._sidebar = {
       size: '726px',
       animate_state: 'active',
@@ -146,7 +150,7 @@ export class AdminEditWorkflowComponent {
     this.defaultScenario = this._campaignScenario.name;
     this.defaultScenarioChange.emit(this.defaultScenario);
   }
-  
+
   public changeLanguage(value: string) {
     this._language = value;
     this._initTable();
@@ -156,13 +160,13 @@ export class AdminEditWorkflowComponent {
     this._isModifiedEn = this._isModified('en');
     this._isModifiedFr = this._isModified('fr');
   }
-  
+
   private _isModified(language: string) {
     return this._campaignScenario.emails.reduce((acc, current) => {
       return (acc && (current.language != language || current.modified));
     }, true);
   }
-  
+
   public onClickDelete() {
     this._modalDelete = true;
   }
