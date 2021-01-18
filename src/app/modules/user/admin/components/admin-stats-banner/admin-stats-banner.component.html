@@ -3,7 +3,15 @@
     <h5 class="stat-heading">{{ stat.heading }}</h5>
     <div *ngFor="let content of stat.content" class="stat-body">
       <h5 class="stat-sub-heading">{{ content.subHeading }}</h5>
-      <span class="stat-value">{{ content.value }}</span>
+      <div *ngIf="i !== config.length - 1 && content.gauge" class="popover is-bottom">
+        <span class="stat-value">{{ content.value }}</span>
+        <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'" [average]="content.gauge.average"
+                         [standardDeviation]="content.gauge.standardDeviation"
+                         [delimitersLabels]="content.gauge.delimitersLabels"
+                         [needleValue]="stringToNumber(content.value)">
+        </app-gauge-chart>
+      </div>
+      <span *ngIf="!content.gauge" class="stat-value">{{ content.value }}</span>
     </div>
     <a
       *ngIf="i === config.length - 1 && updateBtn"

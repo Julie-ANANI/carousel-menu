@@ -178,12 +178,24 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           {
             subHeading: 'Open rate',
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.opened
-              , this._innovation.stats && this._innovation.stats.received)
+              , this._innovation.stats && this._innovation.stats.received),
+            gauge: {
+              // Average and standard deviation of open rate were computed based on database projects
+              average: 17,
+              standardDeviation: 4,
+              delimitersLabels: ['Titre pas attractif, à ajuster', 'Titre peu attractif, à checker', 'Titre attractif', 'Titre très attractif']
+            }
           },
           {
-            subHeading: 'Click rate',
+            subHeading: 'Click to open rate',
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.clicked
-              , this._innovation.stats && this._innovation.stats.opened)
+              , this._innovation.stats && this._innovation.stats.opened),
+            gauge: {
+              // Average and standard deviation of click to open rate were computed based on database projects
+              average: 31,
+              standardDeviation: 10,
+              delimitersLabels: ['Pitch pas attractif, à ajuster', 'Pitch peu attractif, à checker', 'Pitch attractif', 'Pitch très attractif']
+            }
           }
         ]
       },
