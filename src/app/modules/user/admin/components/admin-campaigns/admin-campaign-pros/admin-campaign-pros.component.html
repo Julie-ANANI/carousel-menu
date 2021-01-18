@@ -89,6 +89,48 @@
 <!-- /sidebar -->
 
 
+<!-- modal to export -->
+<app-utility-modal *ngIf="canAccess(['export'])" [(showModal)]="modalExport" [title]="'Export Board'">
+
+  <section class="modal-body">
+
+    <div class="text-center p-top-25">
+        <div class="form-group">
+          <label class="form-label" for="exportConfidence">Indice de confiance minimum</label>
+          <input
+            [(ngModel)]="exportConfidence"
+            class="form-input"
+            id="exportConfidence"
+            type="number"
+            placeholder="80">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="exportCountries">Pays (codes ISO séparés par des virgules)</label>
+          <input
+            [(ngModel)]="exportCountries"
+            class="form-input"
+            id="exportCountries"
+            type="text"
+            placeholder="FR,US,IN">
+        </div>
+    </div>
+
+  </section>
+
+  <footer class="modal-footer">
+      <button class="button modal-cancel" type="button">Cancel</button>
+      <button
+        (click)="onConfirmExport()"
+        class="button is-primary"
+        type="button">
+          Confirm
+      </button>
+  </footer>
+
+</app-utility-modal>
+<!-- /modal to export -->
+
+
 <!-- modal to import -->
 <app-utility-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
 

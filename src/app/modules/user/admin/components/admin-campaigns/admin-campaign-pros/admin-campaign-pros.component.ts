@@ -46,6 +46,12 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _modalImport = false;
 
+  private _modalExport = false;
+
+  private _exportConfidence = 80;
+
+  private _exportCountries = '';
+
   private _originCampaign: Array<Campaign> = [];
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
@@ -247,6 +253,10 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
   public onClickExport() {
+    this._modalExport = true;
+  }
+
+  public onConfirmExport() {
     if (!this._isExporting) {
       this._isExporting = true;
 
@@ -257,6 +267,8 @@ export class AdminCampaignProsComponent implements OnInit {
         campaignId: this._campaign._id,
         query: {
           campaignId: this._campaign._id,
+          emailConfidence: this._exportConfidence,
+          countries: this._exportCountries,
           search: ''
         }
       };
@@ -269,14 +281,11 @@ export class AdminCampaignProsComponent implements OnInit {
         _config.professionals = 'all';
       }
 
-      this._professionalsService.export(_config).pipe(first()).subscribe((answer: any) => {
-        const _blob = new Blob([answer.csv], { type: 'text/csv' });
-        const _url = window.URL.createObjectURL(_blob);
+      this._professionalsService.export(_config).pipe(first()).subscribe(() => {
         this._isExporting = false;
-        this._translateNotificationsService.error('Success', 'The professionals are exported.');
-        if (isPlatformBrowser(this._platformId)) {
-          window.open(_url);
-        }
+        this._translateNotificationsService.success(
+          'Export processing',
+          'Export is processing. You will receive an email with the file soon.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._isExporting = false;
@@ -316,6 +325,30 @@ export class AdminCampaignProsComponent implements OnInit {
 
   set modalImport(value: boolean) {
     this._modalImport = value;
+  }
+
+  get modalExport(): boolean {
+    return this._modalExport;
+  }
+
+  set modalExport(value: boolean) {
+    this._modalExport = value;
+  }
+
+  get exportConfidence(): number {
+    return this._exportConfidence;
+  }
+
+  set exportConfidence(value: number) {
+    this._exportConfidence = value;
+  }
+
+  get exportCountries(): string {
+    return this._exportCountries;
+  }
+
+  set exportCountries(value: string) {
+    this._exportCountries = value;
   }
 
   get originCampaign(): Array<Campaign> {

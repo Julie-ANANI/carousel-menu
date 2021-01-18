@@ -5,6 +5,11 @@ export interface StatsInterface {
   content: Array<{
     subHeading: string;
     value: string;
+    gauge?: {
+      average?: number,
+      standardDeviation?: number,
+      delimitersLabels?: string[]
+    };
   }>;
 }
 
@@ -29,4 +34,7 @@ export class AdminStatsBannerComponent {
     this.updateStats.emit(true);
   }
 
+  public stringToNumber(string: string) {
+    return parseFloat(string.replace('%', ''));
+  }
 }
