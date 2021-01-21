@@ -20,22 +20,6 @@ import { ErrorFrontService } from '../../../services/error/error-front.service';
 
 export class AutoCompleteInputComponent implements OnInit {
 
-  @Input() isSmall = false; // true: to make input field and button small.
-
-  @Input() isEditable = true; // false: will not allow to edit the fields and perform actions.
-
-  @Input() isShowable = true; // false: to hide the form field and add button.
-
-  @Input() isShowButton = true; // false: to hide the button.
-
-  @Input() isAdmin = false; // true: to show the admin options.
-
-  @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
-
-  @Input() multiLangObjects = false;
-
-  @Input() isHideAnswerList = false; // true: to hide the answer list.
-
   @Input() set config(config: AutoCompleteInputConfigInterface) {
     if (config) {
 
@@ -43,6 +27,7 @@ export class AutoCompleteInputComponent implements OnInit {
       this._canOrder = config.canOrder || false;
       this._placeholder = config.placeholder || 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
       this._autocompleteType = config.type || '';
+      this._domain = !!config.showDomain;
 
       if (config.initialData && Array.isArray(config.initialData)) {
         this._answerList = [];
@@ -59,6 +44,61 @@ export class AutoCompleteInputComponent implements OnInit {
 
     }
   }
+
+  constructor(private _formBuilder: FormBuilder,
+              private _domSanitizer: DomSanitizer,
+              private _autocompleteService: AutocompleteService,
+              private _multilingPipe: MultilingPipe,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateService: TranslateService) { }
+
+  get canAdd(): boolean {
+    return this._autoCompleteInputForm.get('answer').value && (!this.onlyOne || this._answerList.length === 0);
+  }
+
+  get placeholder(): string {
+    return this._placeholder;
+  }
+
+  get identifier(): string {
+    return this._identifier;
+  }
+
+  get canOrder(): boolean {
+    return this._canOrder;
+  }
+
+  get autoCompleteInputForm(): FormGroup {
+    return this._autoCompleteInputForm;
+  }
+
+  get answerList(): Array<AnswerList> {
+    return this._answerList;
+  }
+
+  get answer(): string {
+    return this._answer;
+  }
+
+  set answer(value: string) {
+    this._answer = value;
+  }
+
+  @Input() isSmall = false; // true: to make input field and button small.
+
+  @Input() isEditable = true; // false: will not allow to edit the fields and perform actions.
+
+  @Input() isShowable = true; // false: to hide the form field and add button.
+
+  @Input() isShowButton = true; // false: to hide the button.
+
+  @Input() isAdmin = false; // true: to show the admin options.
+
+  @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
+
+  @Input() multiLangObjects = false;
+
+  @Input() isHideAnswerList = false; // true: to hide the answer list.
 
   @Output() update: EventEmitter<any> = new EventEmitter<any>(); // sends the updated list.
 
@@ -80,12 +120,11 @@ export class AutoCompleteInputComponent implements OnInit {
 
   private _canOrder = false;
 
-  constructor(private _formBuilder: FormBuilder,
-              private _domSanitizer: DomSanitizer,
-              private _autocompleteService: AutocompleteService,
-              private _multilingPipe: MultilingPipe,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService) { }
+  private _domain = false;
+
+  public answerFormatter = (answer: any): string => {
+    return `${answer[this.identifier]} ${!!this._domain && !!answer.domain ?  '(' + answer.domain + ')' : '' }`;
+  }
 
   ngOnInit(): void {
     this._autoCompleteInputForm = this._formBuilder.group({
@@ -103,7 +142,8 @@ export class AutoCompleteInputComponent implements OnInit {
 
   public autocompleteListFormatter(data: any): SafeHtml {
     const text = this._autocompleteValueFormatter(data);
-    return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
+    const domain = this._domain && !!data.domain ? data.domain : undefined;
+    return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text} ${!!domain ? '(' + domain + ')' : '' }</span>`);
   }
 
   private _autocompleteValueFormatter(data: any): string {
@@ -215,38 +255,6 @@ export class AutoCompleteInputComponent implements OnInit {
   public updateItem(event: Event): void {
     event.preventDefault();
     this.update.emit({ value: this._answerList });
-  }
-
-  get canAdd(): boolean {
-    return this._autoCompleteInputForm.get('answer').value && (!this.onlyOne || this._answerList.length === 0);
-  }
-
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
-  get identifier(): string {
-    return this._identifier;
-  }
-
-  get canOrder(): boolean {
-    return this._canOrder;
-  }
-
-  get autoCompleteInputForm(): FormGroup {
-    return this._autoCompleteInputForm;
-  }
-
-  get answerList(): Array<AnswerList> {
-    return this._answerList;
-  }
-
-  get answer(): string {
-    return this._answer;
-  }
-
-  set answer(value: string) {
-    this._answer = value;
   }
 
 }

@@ -87,19 +87,23 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
       case 'excludedPeople':
         return {
           placeholder: 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-          initialData: this._innovation.settings && this._innovation.settings.professionals ? this._innovation.settings.professionals.exclude || [] : []
+          initialData: this._innovation.settings && this._innovation.settings.professionals ?
+            this._innovation.settings.professionals.exclude || [] : []
         };
       case 'excludedCompanies':
         return {
           placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-          initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.exclude || [] : [],
-          type: 'company'
+          initialData: this._innovation.settings && this._innovation.settings.companies ?
+            this._innovation.settings.companies.exclude || [] : [],
+          type: 'company',
+          showDomain: true
         };
       case 'includedCompanies':
         return {
           placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
           initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.include || [] : [],
-          type: 'company'
+          type: 'company',
+          showDomain: true
         };
       case 'keywords':
         return {

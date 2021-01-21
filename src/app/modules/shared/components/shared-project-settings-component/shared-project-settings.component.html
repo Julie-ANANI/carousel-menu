@@ -121,7 +121,7 @@
                 </span>
               <div class="pd-input">
                 <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="label label-answer">
-                  {{  companyExclude.name }}
+                  {{  companyExclude.name (companyExclude.domain)}}
                 </div>
               </div>
             </div>
