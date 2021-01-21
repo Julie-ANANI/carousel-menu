@@ -96,14 +96,15 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
           initialData: this._innovation.settings && this._innovation.settings.companies ?
             this._innovation.settings.companies.exclude || [] : [],
           type: 'company',
-          showDomain: true
+          showDomain: this._adminMode
         };
       case 'includedCompanies':
         return {
           placeholder: 'SHARED_PROJECT_SETTINGS.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
-          initialData: this._innovation.settings && this._innovation.settings.companies ? this._innovation.settings.companies.include || [] : [],
+          initialData: this._innovation.settings && this._innovation.settings.companies ?
+            this._innovation.settings.companies.include || [] : [],
           type: 'company',
-          showDomain: true
+          showDomain: this._adminMode
         };
       case 'keywords':
         return {
