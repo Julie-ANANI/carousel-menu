@@ -94,6 +94,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   public areAnswersLoading = false;
 
+  public displayFilters = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _answerService: AnswerService,
@@ -153,8 +155,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
           this._filteredAnswers = this._answers;
           this._updateAnswersToShow();
 
-          this.areAnswersLoading = false;
-
           this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() =>
             this._updateAnswersToShow()
           );
@@ -196,8 +196,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
             this._tagFiltersService.setAnswerTags(identifier, tags);
           });
 
+          this.areAnswersLoading = false;
+          setTimeout(() => this.displayFilters = true, 500);
+
         }, (err: HttpErrorResponse) => {
           this.areAnswersLoading = false;
+          this.displayFilters = true;
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });

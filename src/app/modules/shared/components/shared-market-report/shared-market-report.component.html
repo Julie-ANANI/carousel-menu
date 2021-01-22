@@ -29,7 +29,7 @@
         <!-- sidebar -->
         <aside [ngStyle]="{'max-width': '297px'}" class="sidebar-wrapper">
           <app-sidebar-in-page [(sidebarTemplate)]="leftSidebarTemplateValue">
-            <app-sidebar-filter-answers *ngIf="!areAnswersLoading"
+            <app-sidebar-filter-answers *ngIf="displayFilters"
               [innovation]="innovation"
               [templateType]="leftSidebarTemplateValue.type"
               [isViewsEditable]="canAccess(['edit', 'views'])"
@@ -38,7 +38,7 @@
               [isAdminSide]="adminSide"
               [isOwner]="isOwner">
             </app-sidebar-filter-answers>
-            <div *ngIf="areAnswersLoading" class="m-top-30 loading is-lg"></div>
+            <div *ngIf="!displayFilters" class="m-top-30 loading is-lg"></div>
           </app-sidebar-in-page>
         </aside>
         <!-- /sidebar -->
@@ -46,13 +46,15 @@
         <!-- answers section -->
         <div class="content-wrapper">
 
+          <div *ngIf="areAnswersLoading" class="m-top-50 loading is-lg"></div>
+
           <!-- key learning section -->
           <section
             *ngIf="innovation.marketReport?.keyLearning?.conclusion?.length > 0 || adminSide"
             [ngClass]="{ 'p-top-50': !reportShared }"
             class="p-bottom-50"
             id="key-learnings">
-            <div class="box-style p-50">
+            <div class="box-style p-50" *ngIf="!areAnswersLoading">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
               <app-shared-editors
@@ -72,7 +74,7 @@
             [ngClass]="{ 'p-top-50': !innovation.marketReport?.keyLearning?.conclusion?.length }"
             class="p-bottom-30"
             id="origin-responses">
-            <div class="box-style">
+            <div class="box-style" *ngIf="!areAnswersLoading">
               <app-question-conclusion
                 [innovation]="innovation"
                 [originAnswers]="answersOrigins"
@@ -86,13 +88,13 @@
           <!-- /origin comment and professional responses -->
 
           <!-- map -->
-          <section class="p-top-15" id="map">
+          <section class="p-top-15" id="map" [hidden]="areAnswersLoading"> <!-- do not replace hidden with ngIf -->
             <app-shared-worldmap [countriesData]="answersByCountries"></app-shared-worldmap>
           </section>
           <!-- /map -->
 
           <!-- professionals -->
-          <section class="p-bottom-50" id="professionals">
+          <section class="p-bottom-50" id="professionals" *ngIf="!areAnswersLoading">
 
             <div class="text-center p-top-25">
               <button
@@ -129,6 +131,7 @@
           <!-- other question sections -->
           <section *ngFor="let question of questions" class="p-bottom-50" id="questions">
             <app-question-section
+              *ngIf="!areAnswersLoading"
               (modalAnswerChange)="seeAnswer($event)"
               [answers]="filteredAnswers"
               [canEditQuestionTags]="canAccess(['edit', 'questionTags'])"
@@ -146,7 +149,7 @@
             *ngIf="innovation.marketReport?.finalConclusion?.conclusion?.length > 0 || adminSide"
             class="p-bottom-50"
             id="conclusion">
-            <div class="box-style p-50">
+            <div class="box-style p-50" *ngIf="!areAnswersLoading">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
               <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
               <app-shared-editors
