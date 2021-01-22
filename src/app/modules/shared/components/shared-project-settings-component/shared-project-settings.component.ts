@@ -71,7 +71,8 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   private getCommentSections() {
     this._displayCompanyCommentSection = this._innovation.settings.companies.description.length > 0;
-    this._displayPersonsToExcludeSection = this._innovation.settings.professionals && this._innovation.settings.professionals.exclude && this._innovation.settings.professionals.exclude.length > 0;
+    this._displayPersonsToExcludeSection = this._innovation.settings.professionals &&
+      this._innovation.settings.professionals.exclude && this._innovation.settings.professionals.exclude.length > 0;
     this._displayKeywordsSection = this._innovation.settings.keywords.length > 0;
   }
 
@@ -96,7 +97,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
           initialData: this._innovation.settings && this._innovation.settings.companies ?
             this._innovation.settings.companies.exclude || [] : [],
           type: 'company',
-          showDomain: this._adminMode
+          showDomain: !!this._adminMode
         };
       case 'includedCompanies':
         return {
@@ -104,7 +105,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
           initialData: this._innovation.settings && this._innovation.settings.companies ?
             this._innovation.settings.companies.include || [] : [],
           type: 'company',
-          showDomain: this._adminMode
+          showDomain: !!this._adminMode
         };
       case 'keywords':
         return {
@@ -114,17 +115,20 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
       case 'domainBL':
         return {
           placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.DOMAINS_PLACEHOLDER',
-          initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.domains, (val: string) => {return {text: val}; }) : []
+          initialData: this._innovation.settings && this._innovation.settings.blacklist ?
+            _.map(this._innovation.settings.blacklist.domains, (val: string) => ({text: val})) : []
         };
       case 'emailBL':
         return {
           placeholder: 'SHARED_PROJECT_SETTINGS.BLACKLIST.EMAILS_PLACEHOLDER',
-          initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.emails, (val: string) => {return {text: val}; }) : []
+          initialData: this._innovation.settings && this._innovation.settings.blacklist ?
+            _.map(this._innovation.settings.blacklist.emails, (val: string) => ({text: val})) : []
         };
       case 'peopleBL':
         return {
           placeholder: 'Ex. sjobs@apple.com',
-          initialData: this._innovation.settings && this._innovation.settings.blacklist ? _.map(this._innovation.settings.blacklist.people, (val: string) => {return {text: val}; }) : []
+          initialData: this._innovation.settings && this._innovation.settings.blacklist ?
+            _.map(this._innovation.settings.blacklist.people, (val: string) => ({text: val})) : []
         };
       default:
         return {
@@ -132,6 +136,10 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
           initialData: ''
         };
     }
+  }
+
+  public formatCompanyList(company: any): string {
+    return `${company.name} ${this._adminMode && company.domain ? '(' + company.domain + ')' : ''}`;
   }
 
   public onChangeContact() {
