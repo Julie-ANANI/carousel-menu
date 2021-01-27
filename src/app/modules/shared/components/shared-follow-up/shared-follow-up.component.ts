@@ -183,7 +183,7 @@ export class SharedFollowUpComponent implements OnInit {
               _disabledClass: 'text-alert'
             },
             {
-              _name: '',
+              _name: 'WITHOUT_OBJECTIVE',
               _alias: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE',
               _class: ''
             }
