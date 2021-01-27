@@ -127,7 +127,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    */
   private _initializeReport() {
     this._anonymousAnswers = !!(this._innovation._metadata && this._innovation._metadata.campaign
-      && this._innovation._metadata.campaign.anonymous_answers) && this.showAnonymousAnswers;
+      && this._innovation._metadata.campaign.anonymous_answers);
 
     this._getAnswers();
 
