@@ -19,7 +19,7 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
   private _authorizedEtherpadProjects = [
     // Production projects
     '5fc8ac5bdf99326414b0151b', '5f918025d9a0f39747fff6b8', '5f3ce42711bce90bd1dfdb24', '5ffedfcc4f932cf73f01f995',
-    '6020f5229f3836de355f3b8a', '6020f5449f3836d0845f3bdb',
+    '6020f5229f3836de355f3b8a', '6020f5449f3836d0845f3bdb', '6008099af5588b7d341fcfe3',
     // Dev projects
     '5fbbb492d67f795c1be29e91', '5f7d75250fd29613ef69d99b'
   ];
