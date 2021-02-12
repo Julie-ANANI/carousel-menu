@@ -292,7 +292,7 @@ export class AdminProjectManagementComponent implements OnInit {
           res.forEach((items: any) => {
             const valueIndex = this.usersSuggestion.indexOf(items._id);
             if (valueIndex === -1) { // if not exist then push into the array.
-              this.usersSuggestion.push({name: items.name, _id: items._id});
+              this.usersSuggestion.push({name: items.name, _id: items._id, email: items.email});
             }
           });
         }
