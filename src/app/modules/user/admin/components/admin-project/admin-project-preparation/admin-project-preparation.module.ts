@@ -9,6 +9,7 @@ import {AdminProjectQuestionnaireModule} from '../admin-project-questionnaire/ad
 import {AdminProjectTargetingModule} from '../admin-project-targeting/admin-project-targeting.module';
 import {AdminProjectDescriptionModule} from '../admin-project-description/admin-project-description.module';
 import {AdminCampaignsModule} from '../../admin-campaigns/admin-campaigns.module';
+import {AdminProjectStatisticsModule} from '../admin-project-statistics/admin-project-statistics.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {AdminCampaignsModule} from '../../admin-campaigns/admin-campaigns.module
     AdminProjectQuestionnaireModule,
     AdminProjectTargetingModule,
     AdminProjectDescriptionModule,
+    AdminProjectStatisticsModule,
     AdminCampaignsModule
   ],
   declarations: [
