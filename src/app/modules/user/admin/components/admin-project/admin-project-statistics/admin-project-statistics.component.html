@@ -39,8 +39,9 @@
       <!-- section statistics -->
       <section>
         <div class="m-25">
-          <div *ngIf="stats && stats.byCountries && stats.byCountries.length" class="table-responsive">
-            <table class="table">
+          <div *ngIf="stats && stats.byCountries && stats.byCountries.length"
+               class="table-responsive p-top-25 d-flex justify-center">
+            <table class="table" style="width: fit-content; max-width: 100%">
               <thead>
               <tr>
                 <th *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
@@ -56,7 +57,7 @@
               </thead>
               <tbody>
               <tr>
-                <td *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
+                <td class="whitespace-normal" *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
                   {{ country.flag }}
                 </td>
               </tr>
@@ -86,7 +87,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let company of stats.byCompanies">
-                  <td [ngStyle]="{'min-width': '40px'}">
+                  <td class="whitespace-normal" [ngStyle]="{'min-width': '40px'}">
                     {{ company.name }}
                   </td>
                   <td [ngStyle]="{'min-width': '40px'}">
@@ -112,7 +113,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let job of stats.byJobTitle">
-                  <td [ngStyle]="{'min-width': '40px'}">
+                  <td class="whitespace-normal" [ngStyle]="{'min-width': '40px'}">
                     {{ job.name }}
                   </td>
                   <td [ngStyle]="{'min-width': '40px'}">
