@@ -155,6 +155,8 @@ export class CampaignFrontService {
           value = campaign.stats.nbProsClicked || 0;
           break;
 
+        default:
+          console.log('Defaulting at campaign-front.service.ts')
       }
     }
 
