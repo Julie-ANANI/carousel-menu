@@ -115,8 +115,10 @@ export class CampaignFrontService {
    */
   static getBatchCampaignStat(campaign: Campaign, searchKey: string): number {
     let value = 0;
+    console.log(searchKey);
 
     if (campaign && campaign.stats) {
+      console.log(campaign.stats);
       switch (searchKey) {
 
         case 'good_emails':

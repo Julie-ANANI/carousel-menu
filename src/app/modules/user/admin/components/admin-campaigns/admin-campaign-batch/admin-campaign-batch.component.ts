@@ -69,7 +69,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== '';
   }
 
-  get toSend(): string {
+  public toSend(): string {
     const toSend = CampaignFrontService.getBatchCampaignStat(this._campaign, 'good_emails').toString(10);
     console.log(`toSend: ${toSend}`);
     return toSend;
