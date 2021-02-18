@@ -70,9 +70,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   public toSend(): string {
-    const toSend = CampaignFrontService.getBatchCampaignStat(this._campaign, 'good_emails').toString(10);
-    console.log(`toSend: ${toSend}`);
-    return toSend;
+    return CampaignFrontService.getBatchCampaignStat(this._campaign, 'good_emails').toString(10);
   }
 
   get campaign() {
