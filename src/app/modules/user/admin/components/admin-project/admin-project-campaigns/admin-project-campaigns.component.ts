@@ -134,9 +134,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
       };
 
       this._campaignService.create(_newCampaign).pipe(first()).subscribe((campaign: Campaign) => {
-        this._campaigns.push(campaign);
         this._translateNotificationsService.success('Success', 'The new campaign is added.');
-        this._setAllCampaigns();
         this._isAddingCampaign = false;
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
