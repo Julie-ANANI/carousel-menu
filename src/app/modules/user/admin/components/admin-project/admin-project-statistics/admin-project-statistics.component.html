@@ -38,10 +38,9 @@
 
       <!-- section statistics -->
       <section>
-        <div class="m-25">
-          <div *ngIf="stats && stats.byCountries && stats.byCountries.length"
-               class="table-responsive p-top-25 d-flex justify-center">
-            <table class="table" style="width: fit-content; max-width: 100%">
+        <div class="d-flex justify-evenly m-25">
+          <div class="table-responsive p-top-25 d-flex">
+            <table *ngIf="stats && stats.byCountries && stats.byCountries.length" class="table" style="width: fit-content;margin: auto; max-width: 100%">
               <thead>
               <tr>
                 <th *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
@@ -70,8 +69,7 @@
             </table>
           </div>
         </div>
-
-        <div class="d-flex justify-evenly m-25">
+        <div class="repartition d-flex justify-evenly m-25">
           <div class="card-body">
             <div *ngIf="stats && stats.byCompanies && stats.byCompanies.length" class="table-responsive">
               <table class="table">

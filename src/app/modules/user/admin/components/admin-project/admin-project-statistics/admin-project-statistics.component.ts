@@ -9,7 +9,8 @@ import {InnovationService} from '../../../../../../services/innovation/innovatio
 
 @Component({
   selector: 'app-admin-project-statistics',
-  templateUrl: './admin-project-statistics.component.html'
+  templateUrl: './admin-project-statistics.component.html',
+  styleUrls: ['./admin-project-statistics.component.scss']
 })
 export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
   public isFetchingPros = false;

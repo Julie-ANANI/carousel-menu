@@ -1,0 +1,13 @@
+@import "../../../../../../../style/framework/src/variables";
+
+@media (max-width: $size-sm) {
+
+  .repartition {
+    flex-direction: column;
+
+    .card-body {
+      margin-bottom: 25px;
+    }
+  }
+
+}
