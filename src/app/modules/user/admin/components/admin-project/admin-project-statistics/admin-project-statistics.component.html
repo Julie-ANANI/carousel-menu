@@ -1,0 +1,134 @@
+<div *ngIf="isFetchingPros || (stats && stats.byCountries)" class="container fluid grid-2xl">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- when fetching -->
+    <ng-container *ngIf="isFetchingPros">
+      <div class="section-light-pad">
+        <message-template
+          [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
+          <div class="flex-centered">
+            <div class="loading is-white" style="margin-right: 0.8rem"></div>
+            <span>Fetching professionals statistics...</span>
+          </div>
+        </message-template>
+      </div>
+    </ng-container>
+    <!-- /when fetching -->
+
+    <!-- when no result -->
+    <ng-container *ngIf="!isFetchingPros && stats && !stats.byJobTitle.length
+                                                  && !stats.byCompanies.length
+                                                  && !stats.byCountries.length">
+      <div class="section-light-pad">
+        <message-template
+          [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
+          [widthMax]="'362px'">
+          <span>No professionals found</span>
+        </message-template>
+      </div>
+    </ng-container>
+    <!-- /when no result -->
+
+    <!-- error message while fetching -->
+    <app-utility-message-error *ngIf="!isFetchingPros && fetchingError"></app-utility-message-error>
+    <!-- /error message while fetching -->
+
+    <!-- no fetching error -->
+    <div [hidden]="fetchingError && !isFetchingPros" class="p-top-30 p-bottom-30">
+
+      <!-- section statistics -->
+      <section>
+        <div class="d-flex justify-evenly m-25">
+          <div class="table-responsive p-top-25 d-flex">
+            <table *ngIf="stats && stats.byCountries && stats.byCountries.length" class="table" style="width: fit-content;margin: auto; max-width: 100%">
+              <thead>
+              <tr>
+                <th *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
+                  <div [ngStyle]="{'width': '40px'}">
+                    <app-utility-country-flag
+                      [country]="country"
+                      [width]="40"
+                      [height]="25">
+                    </app-utility-country-flag>
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td class="whitespace-normal" *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
+                  {{ country.flag }}
+                </td>
+              </tr>
+              <tr>
+                <td *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
+                  {{ country.count }}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="repartition d-flex justify-evenly m-25">
+          <div class="card-body">
+            <div *ngIf="stats && stats.byCompanies && stats.byCompanies.length" class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th [ngStyle]="{'min-width': '40px'}">
+                    Enterprises
+                  </th>
+                  <th [ngStyle]="{'min-width': '40px'}">
+                    Good emails
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let company of stats.byCompanies">
+                  <td class="whitespace-normal" [ngStyle]="{'min-width': '40px'}">
+                    {{ company.name }}
+                  </td>
+                  <td [ngStyle]="{'min-width': '40px'}">
+                    {{ company.count }}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-body">
+            <div *ngIf="stats && stats.byJobTitle && stats.byJobTitle.length" class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th [ngStyle]="{'min-width': '40px'}">
+                    Job
+                  </th>
+                  <th [ngStyle]="{'min-width': '40px'}">
+                    Good emails
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let job of stats.byJobTitle">
+                  <td class="whitespace-normal" [ngStyle]="{'min-width': '40px'}">
+                    {{ job.name }}
+                  </td>
+                  <td [ngStyle]="{'min-width': '40px'}">
+                    {{ job.count }}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /section statistics -->
+
+    </div>
+    <!-- /no fetching error -->
+
+  </div>
+</div>
+

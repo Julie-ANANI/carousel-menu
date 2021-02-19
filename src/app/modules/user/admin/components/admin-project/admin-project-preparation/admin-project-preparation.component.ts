@@ -25,7 +25,7 @@ import {SocketService} from '../../../../../../services/socket/socket.service';
 
 export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
-  private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns'];
+  private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 

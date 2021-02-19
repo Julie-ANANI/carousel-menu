@@ -20,6 +20,7 @@ import { campaignRoutes } from '../admin-campaigns/admin-campaigns-routing.modul
 import { CampaignResolver } from '../../../../../resolvers/campaign.resolver';
 
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
+import {AdminProjectStatisticsComponent} from './admin-project-statistics/admin-project-statistics.component';
 
 export const routes: Routes = [
   {
@@ -66,6 +67,13 @@ export const routes: Routes = [
             pathMatch: 'full',
             canActivate: [AdminRoleGuard],
             data: { accessPath: ['projects', 'project', 'campaigns'] }
+          },
+          {
+            path: 'statistics',
+            component: AdminProjectStatisticsComponent,
+            pathMatch: 'full',
+            canActivate: [AdminRoleGuard],
+            data: { accessPath: ['projects', 'project', 'statistics'] }
           },
           {
             path: 'campaigns/campaign/:campaignId',

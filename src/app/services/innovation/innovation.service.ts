@@ -64,7 +64,7 @@ export class InnovationService {
 
   public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
     const _fieldsToPopulate = ['tags', 'mission', 'owner', 'operator', 'collaborators', 'statusLogs', 'clientProject',
-      'principalMedia', 'innovationCards', 'campaigns'];
+      'principalMedia', 'innovationCards', 'campaigns', 'settings'];
     return this._http.put<Innovation>(
       `/innovation/${innovationId}?fields=${_fieldsToPopulate.join(',')}`, innovationObj
     );
@@ -187,6 +187,10 @@ export class InnovationService {
 
   public advancedSearch(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/advancedSearch', {params: params});
+  }
+
+  public repartition(innovationId: string, config: any): Observable<any> {
+    return this._http.get(`/innovation/${innovationId}/prosRepartition`, {params: config});
   }
 
 }

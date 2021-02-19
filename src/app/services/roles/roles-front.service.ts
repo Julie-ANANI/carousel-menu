@@ -96,10 +96,12 @@ export class RolesFrontService {
 			_route = 'preparation/questionnaire';
 		} else if (this.hasAccessAdminSide(['projects', 'project', 'settings', 'view', 'targeting'])
 			|| this.hasAccessAdminSide(['projects', 'project', 'settings', 'edit', 'targeting'])) {
-			_route = 'preparation/targeting'
+			_route = 'preparation/targeting';
 		} else if (this.hasAccessAdminSide(['projects', 'project', 'campaigns'])) {
 			_route = 'preparation/campaigns';
-		}
+		} else if (this.hasAccessAdminSide(['projects', 'project', 'statistics'])) {
+      _route = 'preparation/statistics';
+    }
 
 		return _route;
 

@@ -32,6 +32,7 @@ import {picto, Picto} from '../../../../../../models/static-data/picto';
 interface UserSuggestion {
   name: string;
   _id: string;
+  email: string;
 }
 
 @Component({
