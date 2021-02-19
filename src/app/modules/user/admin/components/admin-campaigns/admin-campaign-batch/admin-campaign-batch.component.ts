@@ -304,65 +304,45 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
     const digit = 1; // number of decimals stats/pred
 
+    const generateBatchLine = (i: number) => {
+      const data = [
+        {title:  '01 - Hello World', date: batch.firstMail, time: firstTime, status: AdminCampaignBatchComponent._getStatus(0, batch.status)},
+        {title:  '02 - 2nd try', date: batch.secondMail, time: secondTime, status: AdminCampaignBatchComponent._getStatus(1, batch.status)},
+        {title:  '03 - 3rd try', date: batch.thirdMail, time: thirdTime, status: AdminCampaignBatchComponent._getStatus(2, batch.status)},
+        {title:  '04 - Thanks', date: '', status: '', time: ''}
+      ];
+      return {
+        Step: data[i].title,
+        Sent: batch.stats[i].delivered + batch.stats[i].bounced,
+        OpenedPred: i < 3 ? ((batch.predictions[i].opened * 100).toFixed(digit) + '%' || '') : 0,
+        OpenedReel: ((batch.stats[i].opened / batch.size) * 100).toFixed(digit) + '%',
+        ClickedPred: i < 3 ? ((batch.predictions[i].clicked * 100).toFixed(digit) + '%' || '') : 0,
+        ClickedReel: ((batch.stats[i].clicked / batch.size) * 100).toFixed(digit) + '%',
+        InsightsPred: i < 3 ? batch.predictions[i].insights : 0,
+        InsightsReel: i < 3 ? batch.stats[i].insights : 0,
+        Date: data[i].date,
+        Time: data[i].time,
+        Status: data[i].status
+      };
+    };
+
     if (!batch.predictions || batch.predictions.length === 0) {
       const reset = {opened: 0, clicked: 0, insights: 0};
       batch.predictions = [reset, reset, reset];
+    }
+
+    let content: any[];
+    if (this._campaign && this._campaign.type === 'COMMUNITY') {
+      content = [generateBatchLine(0), generateBatchLine(3)];
+    } else {
+      content = [generateBatchLine(0), generateBatchLine(1), generateBatchLine(2), generateBatchLine(3)];
     }
 
     return {
       _selector: batch._id,
       _clickIndex: (this.canAccess(['view']) || this.canAccess(['edit'])) ? 1 : null,
       _isNoMinHeight: true,
-      _content: [
-        {
-          Step: '01 - Hello World',
-          Sent: batch.stats[0].delivered + batch.stats[0].bounced,
-          OpenedPred: ((batch.predictions[0].opened * 100).toFixed(digit) + '%' || ''),
-          OpenedReel: ((batch.stats[0].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: ((batch.predictions[0].clicked * 100).toFixed(digit) + '%' || ''),
-          ClickedReel: ((batch.stats[0].clicked / batch.size) * 100).toFixed(digit) + '%',
-          InsightsPred: batch.predictions[0].insights,
-          InsightsReel: batch.stats[0].insights,
-          Date: batch.firstMail,
-          Time: firstTime,
-          Status: AdminCampaignBatchComponent._getStatus(0, batch.status)
-        }, {
-          Step: '02 - 2nd try',
-          Sent: batch.stats[1].delivered + batch.stats[1].bounced,
-          OpenedPred: ((batch.predictions[1].opened * 100).toFixed(digit) + '%' || ''),
-          OpenedReel: ((batch.stats[1].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: ((batch.predictions[1].clicked * 100).toFixed(digit) + '%' || ''),
-          ClickedReel: ((batch.stats[1].clicked / batch.size) * 100).toFixed(digit) + '%',
-          InsightsPred: batch.predictions[1].insights,
-          InsightsReel: batch.stats[1].insights,
-          Date: batch.secondMail,
-          Time: secondTime,
-          Status: AdminCampaignBatchComponent._getStatus(1, batch.status)
-        }, {
-          Step: '03 - 3rd try',
-          Sent: batch.stats[2].delivered + batch.stats[2].bounced,
-          OpenedPred: ((batch.predictions[2].opened * 100).toFixed(digit) + '%' || ''),
-          OpenedReel: ((batch.stats[2].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: ((batch.predictions[2].clicked * 100).toFixed(digit) + '%' || ''),
-          ClickedReel: ((batch.stats[2].clicked / batch.size) * 100).toFixed(digit) + '%',
-          InsightsPred: batch.predictions[2].insights,
-          InsightsReel: batch.stats[2].insights,
-          Date: batch.thirdMail,
-          Time: thirdTime,
-          Status: AdminCampaignBatchComponent._getStatus(2, batch.status)
-        }, {
-          Step: '04 - Thanks',
-          Sent: batch.stats[3].delivered + batch.stats[3].bounced,
-          OpenedPred: '',
-          OpenedReel: ((batch.stats[3].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: '',
-          ClickedReel: ((batch.stats[3].clicked / batch.size) * 100).toFixed(digit) + '%',
-          InsightsPred: '',
-          InsightsReel: '',
-          Date: '',
-          Time: '',
-          Status: ''
-        }],
+      _content: content,
       _total: 1,
       _columns: [{
         _attrs: ['Step'],
