@@ -86,4 +86,13 @@ export class SocketService extends AbstractSocketService {
       });
     });
   }
+
+  getProsRepartition(innovationId: string): Observable<any> {
+    return new Observable((subscriber: Subscriber<any>) => {
+      this.socket.on(`prosRepartition_${innovationId}`,
+        (data: any) => {
+        subscriber.next(data);
+      });
+    });
+  }
 }

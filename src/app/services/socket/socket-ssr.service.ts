@@ -42,6 +42,10 @@ export class SocketSsrService implements SocketService {
     return EMPTY;
   }
 
+  getProsRepartition(): Observable<any> {
+    return EMPTY;
+  }
+
   sendDataToApi(e: any) { }
 
 }

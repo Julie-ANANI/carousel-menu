@@ -4,8 +4,8 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Subject} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
 import {InnovationService} from '../../../../../../services/innovation/innovation.service';
+import {SocketService} from '../../../../../../services/socket/socket.service';
 
 @Component({
   selector: 'app-admin-project-statistics',
@@ -19,7 +19,8 @@ export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
 
   constructor(private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
-              private _innovationService: InnovationService) {
+              private _innovationService: InnovationService,
+              private _socketService: SocketService) {
   }
 
   private _stats: {
@@ -28,10 +29,15 @@ export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
     byJobTitle: [{ name: string, count: number }]
   };
 
-  get stats(): { byCountries: [{ flag: string; count: number }]; byCompanies: [{ name: string; count: number }]; byJobTitle: [{ name: string; count: number }] } {
+  get stats(): {
+    byCountries: [{ flag: string; count: number }];
+    byCompanies: [{ name: string; count: number }];
+    byJobTitle: [{ name: string; count: number }]
+  } {
     return this._stats;
   }
 
+  private _socketListening = false;
   private _innovation: Innovation = <Innovation>{};
 
   get innovation(): Innovation {
@@ -71,17 +77,25 @@ export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
 
       const _config: any = {
         fields: 'firstName lastName company email country jobTitle innovations',
-        search: '{"emailConfidence":90}',
-        sort: '{"created":-1}'
+        search: '{"emailConfidence":90}'
       };
 
-      this._innovationService.repartition(this._innovation._id, _config).pipe(first()).subscribe((res) => {
+      if (!this._socketListening) {
+        this._socketService.getProsRepartition(this._innovation._id)
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((res: any) => {
+            this.isFetchingPros = false;
+            this._stats = res;
+          }, (error) => {
+            this.isFetchingPros = false;
+          });
+        this._socketListening = true;
+      }
+
+      this._innovationService.repartition(this._innovation._id, _config)
+        .pipe(first()).subscribe((res) => {
         this.isFetchingPros = false;
         this._stats = res;
-      }, (err: HttpErrorResponse) => {
-        this.isFetchingPros = false;
-        this.fetchingError = true;
-        console.error(err);
       });
     }
   }
