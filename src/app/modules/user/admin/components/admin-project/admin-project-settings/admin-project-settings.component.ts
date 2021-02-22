@@ -28,6 +28,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {domainRegEx, emailRegEx} from '../../../../../../utils/regex';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {picto, Picto} from '../../../../../../models/static-data/picto';
+import {StatsReferentsService} from '../../../../../../services/stats-referents/stats-referents.service';
 
 interface UserSuggestion {
   name: string;
@@ -52,7 +53,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
               private _translateService: TranslateService,
               private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService) { }
+              private _innovationFrontService: InnovationFrontService,
+              private _statsReferentsService: StatsReferentsService) { }
 
   private _isLoading = true;
 
@@ -120,7 +122,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         this._innovation = innovation || <Innovation>{};
-        this._setStats();
+        this._statsReferentsService.get().subscribe(
+          (referents) => this._setStats(referents.innovations));
         this._setQuizLink();
 
         if (!!this._innovation.mission) {
@@ -161,7 +164,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _setStats() {
+  private _setStats(referents: { openRate: number; clickToOpenRate: number; quizAttractiveness: number; answerRate: number }) {
     this._statsConfig = [
       {
         heading: 'Emails',
@@ -174,17 +177,24 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           {
             subHeading: 'Delivered',
             value: (this._innovation.stats && (this._innovation.stats.received
-              || this._innovation.stats.received === 0) ? this._innovation.stats.received : 'NA')
+              || this._innovation.stats.received === 0) ? this._innovation.stats.received : 'NA'),
+            stats: {
+              title: 'Number of emails sent, \n all shots combined',
+              values: [
+                {name: 'Shot 1', value: this._innovation.stats.nbFirstMail},
+                {name: 'Shot 2', value: this._innovation.stats.nbSecondMail},
+                {name: 'Shot 3', value: this._innovation.stats.nbThirdMail}
+              ]
+            }
           },
           {
             subHeading: 'Open rate',
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.opened
               , this._innovation.stats && this._innovation.stats.received),
             gauge: {
-              // Average and standard deviation of open rate were computed based on database projects
-              average: 17,
-              standardDeviation: 4,
-              delimitersLabels: ['Titre pas attractif, à ajuster', 'Titre peu attractif, à checker', 'Titre attractif', 'Titre très attractif']
+              title: 'Opened / Delivered',
+              referent: referents.openRate,
+              delimitersLabels: ['Unattractive title, to be adjusted', 'Title partly attractive, to be checked', 'Attractive title', 'Very attractive title']
             }
           },
           {
@@ -192,10 +202,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.clicked
               , this._innovation.stats && this._innovation.stats.opened),
             gauge: {
-              // Average and standard deviation of click to open rate were computed based on database projects
-              average: 31,
-              standardDeviation: 10,
-              delimitersLabels: ['Pitch pas attractif, à ajuster', 'Pitch peu attractif, à checker', 'Pitch attractif', 'Pitch très attractif']
+              title: 'Clicked / Opened',
+              referent: referents.clickToOpenRate,
+              delimitersLabels: ['Unattractive pitch, to be adjusted', 'Pitch partly attractive, to be checked', 'Attractive pitch', 'Very attractive pitch']
             }
           }
         ]
@@ -204,9 +213,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         heading: 'Answers',
         content: [
           {
-            subHeading: 'Questionnaire quality',
+            subHeading: 'Quiz attractiveness',
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.answers
-              , this._innovation.stats && this._innovation.stats.clicked)
+              , this._innovation.stats && this._innovation.stats.clicked),
+            gauge: {
+              title: 'Received answers / quiz views',
+              referent: referents.quizAttractiveness,
+              delimitersLabels: ['Unattractive quiz, to be adjusted', 'Quiz partly attractive, to be checked', 'Attractive quiz', 'Very attractive quiz']
+            }
           },
           {
             subHeading: 'Validated answers',
@@ -215,7 +229,13 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           },
           {
             subHeading: 'Answer rate',
-            value: 'NA'
+            value: ((this._innovation.stats.pros === 0) ? 'NA' : AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
+              , this._innovation.stats && this._innovation.stats.pros)),
+            gauge: {
+              title: 'Validated answers / Pros contacted',
+              referent: referents.answerRate,
+              delimitersLabels: ['Unattractive project', 'Project partly attractive', 'Attractive project', 'Very attractive project']
+            }
           }
         ]
       }

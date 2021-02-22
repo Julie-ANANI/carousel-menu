@@ -1,8 +1,10 @@
 <div class="popover m-left-4" *ngIf="options">
-  <div class="d-flex align-center" [ngStyle]="{ 'background-color': needleColor, 'width': '10px', 'height': '20px'}"></div>
+  <div class="d-flex align-center"
+       [ngStyle]="{ 'background-color': needleColor, 'width': '10px', 'height': '20px'}"></div>
   <div class="popover-container">
     <div class="card align-center">
-      <div class="chart" [ngStyle]="{'height': height + 'px'}">
+      <span class="text-bold">{{ title }}</span>
+      <div class="chart m-top-40" [ngStyle]="{'height': (height) + 'px'}">
         <rg-gauge-chart [canvasWidth]="width"
                         [needleValue]="needleValue"
                         [centralLabel]="''"
@@ -14,7 +16,8 @@
           <li>
             <div [ngStyle]="{ 'background-color': veryLow }" class="square"></div>
             <span class="m-left-15">{{ delimitersLabels[0] }}</span>
-          </li><li>
+          </li>
+          <li>
             <div [ngStyle]="{ 'background-color': low }" class="square"></div>
             <span class="m-left-15">{{ delimitersLabels[1] }}</span>
           </li>

@@ -3,15 +3,27 @@
     <h5 class="stat-heading">{{ stat.heading }}</h5>
     <div *ngFor="let content of stat.content" class="stat-body">
       <h5 class="stat-sub-heading">{{ content.subHeading }}</h5>
-      <div *ngIf="i !== config.length - 1 && content.gauge" class="popover is-bottom">
+      <div *ngIf="content.stats" class="popover is-bottom m-left-4">
+        <div class="d-flex align-center">
+          <span class="stat-value">{{ content.value }}</span>
+        </div>
+        <div class="popover-container">
+          <div class="card align-center">
+            <h6>{{content.stats.title}}</h6>
+            <p *ngFor="let stat of content.stats.values">{{ stat.name }} = {{stat.value}}</p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="content.gauge" class="popover is-bottom">
         <span class="stat-value">{{ content.value }}</span>
-        <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'" [average]="content.gauge.average"
-                         [standardDeviation]="content.gauge.standardDeviation"
+        <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'" [average]="content.gauge.referent"
+                         [title]="content.gauge.title"
+                         [inverted]="content.gauge.inverted"
                          [delimitersLabels]="content.gauge.delimitersLabels"
                          [needleValue]="stringToNumber(content.value)">
         </app-gauge-chart>
       </div>
-      <span *ngIf="!content.gauge" class="stat-value">{{ content.value }}</span>
+      <span *ngIf="!content.gauge && !content.stats" class="stat-value">{{ content.value }}</span>
     </div>
     <a
       *ngIf="i === config.length - 1 && updateBtn"

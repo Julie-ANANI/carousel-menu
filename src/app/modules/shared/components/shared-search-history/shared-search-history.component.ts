@@ -1,23 +1,32 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
-import { SearchService } from '../../../../services/search/search.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { first } from 'rxjs/operators';
-import { Config } from '../../../../models/config';
-import { Table } from '../../../table/models/table';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
-import { COUNTRIES } from '../shared-search-pros/COUNTRIES';
-import { countries } from '../../../../models/static-data/country';
-import { Campaign } from '../../../../models/campaign';
-import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
-import { Router } from '@angular/router';
-import { ConfigService } from '../../../../services/config/config.service';
-import { CampaignService } from '../../../../services/campaign/campaign.service';
-import { GeographySettings } from '../../../../models/innov-settings';
-import { IndexService } from '../../../../services/index/index.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
-import { RolesFrontService } from '../../../../services/roles/roles-front.service';
-import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID} from '@angular/core';
+import {SearchService} from '../../../../services/search/search.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {first} from 'rxjs/operators';
+import {Config} from '../../../../models/config';
+import {Table} from '../../../table/models/table';
+import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
+import {COUNTRIES} from '../shared-search-pros/COUNTRIES';
+import {countries} from '../../../../models/static-data/country';
+import {Campaign} from '../../../../models/campaign';
+import {ProfessionalsService} from '../../../../services/professionals/professionals.service';
+import {Router} from '@angular/router';
+import {ConfigService} from '../../../../services/config/config.service';
+import {CampaignService} from '../../../../services/campaign/campaign.service';
+import {GeographySettings} from '../../../../models/innov-settings';
+import {IndexService} from '../../../../services/index/index.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {isPlatformBrowser} from '@angular/common';
+import {RolesFrontService} from '../../../../services/roles/roles-front.service';
+import {ErrorFrontService} from '../../../../services/error/error-front.service';
+
+export interface ProMailsStats {
+  uniqueGoodEmails: number;
+  uniqueBadEmails: number;
+  uniqueUncertain: number;
+  uniqueShielded: number;
+  uniqueIdentified: number;
+  identified: number;
+}
 
 @Component({
   selector: 'app-shared-search-history',
@@ -41,6 +50,8 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._campaignId = value;
     }
   }
+
+  @Output() statsLoaded: EventEmitter<ProMailsStats> = new EventEmitter<ProMailsStats>();
 
   private _sidebarValue: SidebarInterface = {};
 
@@ -72,7 +83,14 @@ export class SharedSearchHistoryComponent implements OnInit {
     offset: '0',
     search: '{}',
     sort: '{ "created": -1 }',
-    recycled: 'false',
+  };
+
+  private _configStats: Config = {
+    fields: 'created status campaign innovation motherRequest totalResults metadata results',
+    limit: '0',
+    offset: '0',
+    search: '{}',
+    sort: '',
   };
 
   private _configQueue: Config = {
@@ -116,6 +134,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
       if (this._campaignId) {
         this._config.campaign = this._campaignId;
+        this._configStats.campaign = this._campaignId;
       }
 
       if (this.mails) {
@@ -180,6 +199,8 @@ export class SharedSearchHistoryComponent implements OnInit {
           }
           return request;
         });
+
+        this.statsLoaded.emit(result.stats);
       }
         if (result._metadata) {
           this._total = result._metadata.totalCount;
@@ -187,6 +208,15 @@ export class SharedSearchHistoryComponent implements OnInit {
         }
         this._initTable();
 
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+
+    this._searchService.getRequestsStats(this._configStats).pipe(first()).subscribe((result: any) => {
+        if (result.stats) {
+          this.statsLoaded.emit(result.stats);
+        }
       }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
