@@ -20,7 +20,7 @@ steps:
     event:
       - push
     branch:
-      - development
+      - widget-desk
 
 - name: dockerDev
   image: plugins/docker
@@ -39,7 +39,7 @@ steps:
     event:
       - push
     branch:
-      - development
+      - widget-desk
 
 - name: rancherDev
   image: peloton/drone-rancher

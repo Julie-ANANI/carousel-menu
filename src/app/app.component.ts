@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._socketEvent();
     this._mouseEvent();
-    //this._setSwellRTScript();
+    // this._setSwellRTScript();
   }
 
   @HostListener('mouseup', ['$event'])
