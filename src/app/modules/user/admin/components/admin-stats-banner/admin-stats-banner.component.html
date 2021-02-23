@@ -1,7 +1,7 @@
 <ul class="stat">
-  <li *ngFor="let stat of config; let i = index;" class="stat-container fluid">
+  <li *ngFor="let stat of config; let i = index;" class="stat-container fluid p-right-40">
     <h5 class="stat-heading">{{ stat.heading }}</h5>
-    <div *ngFor="let content of stat.content" class="stat-body">
+    <div *ngFor="let content of stat.content; let i = index;" class="stat-body">
       <h5 class="stat-sub-heading">{{ content.subHeading }}</h5>
       <div *ngIf="content.stats" class="popover is-bottom m-left-4">
         <div class="d-flex align-center">
@@ -14,15 +14,39 @@
           </div>
         </div>
       </div>
-      <div *ngIf="content.gauge" class="popover is-bottom">
-        <span class="stat-value">{{ content.value }}</span>
-        <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'" [average]="content.gauge.referent"
-                         [title]="content.gauge.title"
-                         [inverted]="content.gauge.inverted"
-                         [delimitersLabels]="content.gauge.delimitersLabels"
-                         [needleValue]="stringToNumber(content.value)">
-        </app-gauge-chart>
+
+      <div class="d-hide">
+        <ng-template #gaugeChartComponent>
+          <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'" [average]="content.gauge.referent"
+                           [title]="content.gauge.title"
+                           [inverted]="content.gauge.inverted"
+                           [delimitersLabels]="content.gauge.delimitersLabels"
+                           [needleValue]="stringToNumber(content.value)">
+          </app-gauge-chart>
+        </ng-template>
       </div>
+
+      <ng-container *ngIf="i < stat.content.length - 1; else lastGauge">
+        <div  *ngIf="content.gauge" class="popover is-bottom">
+          <span class="stat-value">{{ content.value }}</span>
+          <ng-template [ngTemplateOutlet]="gaugeChartComponent"></ng-template>
+        </div>
+      </ng-container>
+
+      <ng-template #lastGauge>
+        <div class="medium-screen">
+          <div  *ngIf="content.gauge" class="popover is-bottom">
+            <span class="stat-value">{{ content.value }}</span>
+            <ng-template [ngTemplateOutlet]="gaugeChartComponent"></ng-template>
+          </div>
+        </div>
+        <div class="large-screen">
+          <div  *ngIf="content.gauge" class="popover is-left">
+            <span class="stat-value">{{ content.value }}</span>
+            <ng-template [ngTemplateOutlet]="gaugeChartComponent"></ng-template>
+          </div>
+        </div>
+      </ng-template>
       <span *ngIf="!content.gauge && !content.stats" class="stat-value">{{ content.value }}</span>
     </div>
     <a

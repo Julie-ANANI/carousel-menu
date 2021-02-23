@@ -11,23 +11,23 @@
                         [options]="options">
         </rg-gauge-chart>
       </div>
-      <div class="legend text-sm w-full" [ngStyle]="{'margin-top': (height / 2 + 20) + 'px'}">
+      <div class="legend text-sm w-full" [ngStyle]="{'margin-top': (height / 2 + 30) + 'px'}">
         <ul>
           <li>
             <div [ngStyle]="{ 'background-color': veryLow }" class="square"></div>
-            <span class="m-left-15">{{ delimitersLabels[0] }}</span>
+            <span class="m-left-20">{{ delimitersLabels[0] }}</span>
           </li>
           <li>
             <div [ngStyle]="{ 'background-color': low }" class="square"></div>
-            <span class="m-left-15">{{ delimitersLabels[1] }}</span>
+            <span class="m-left-20">{{ delimitersLabels[1] }}</span>
           </li>
           <li>
             <div [ngStyle]="{ 'background-color': mean }" class="square"></div>
-            <span class="m-left-15">{{ delimitersLabels[2] }}</span>
+            <span class="m-left-20">{{ delimitersLabels[2] }}</span>
           </li>
           <li>
             <div [ngStyle]="{ 'background-color': high }" class="square"></div>
-            <span class="m-left-15">{{ delimitersLabels[3] }}</span>
+            <span class="m-left-20">{{ delimitersLabels[3] }}</span>
           </li>
         </ul>
       </div>

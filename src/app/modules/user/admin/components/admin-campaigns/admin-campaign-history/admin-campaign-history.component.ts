@@ -104,7 +104,6 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
     this._statsReferentsService.get().subscribe((referents) => {
       this._referents = referents.campaigns;
-      console.log(this._referents);
       this._statsConfig = [{
         heading: 'Emails',
         content: [
