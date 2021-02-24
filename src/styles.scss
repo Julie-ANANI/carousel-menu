@@ -1,3 +1,9 @@
+// this is for the help disk widget.
+// todo find better solution.
+#jsd-widget {
+  visibility: hidden;
+}
+
 @import "style/shared-editors";
 @import "style/admin-executive-report";
 @import "style/admin-campaign-stat";

@@ -22,7 +22,9 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _scriptElement: any = null;
+  private static _toggleVisibilityHelp(value: string) {
+    document.getElementById('jsd-widget').style.visibility = value;
+  }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _location: Location,
@@ -52,34 +54,23 @@ export class UserComponent implements OnInit, OnDestroy {
       } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
         this._displayLoader = false;
         this._adminSide = this._location.path().slice(5, 11) === '/admin';
-        this._helpDesk();
+        this._initHelpDesk();
       }
     });
   }
 
-  private _helpDesk() {
+  /***
+   * this is hack and I don't like this .
+   * ToDo find a better solution execute script dynamically.
+   * @private
+   */
+  private _initHelpDesk() {
     if (isPlatformBrowser(this._platformId)) {
-      if (this._adminSide && !this._scriptElement) {
-        this._scriptElement = document.createElement('script');
-        this._scriptElement.setAttribute('data-jsd-embedded', '');
-        this._scriptElement.setAttribute('data-key', '8a56c65a-3b63-41f3-81e8-4a03c0c2822b');
-        this._scriptElement.setAttribute('data-base-url', 'https://jsd-widget.atlassian.com');
-        this._scriptElement.src = 'https://jsd-widget.atlassian.com/assets/embed.js';
-        this._scriptElement.async = true;
-        this._scriptElement.onload = () => {
-          console.log('loaded');
-        };
-        document.head.appendChild(this._scriptElement);
-      } else if (!!this._scriptElement) {
-        this._removeScript();
+      if (this._adminSide) {
+        UserComponent._toggleVisibilityHelp('visible');
+      } else {
+        UserComponent._toggleVisibilityHelp('hidden');
       }
-    }
-  }
-
-  private _removeScript() {
-    if (isPlatformBrowser(this._platformId) && !!this._scriptElement) {
-      document.body.removeChild(this._scriptElement);
-      this._scriptElement = null;
     }
   }
 
@@ -131,7 +122,6 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
-    this._removeScript();
   }
 
 }
