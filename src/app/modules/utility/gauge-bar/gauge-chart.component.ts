@@ -58,6 +58,10 @@ export class GaugeChartComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // We force display of needle when value is 0
+    if (!this.needleValue) {
+      this.needleValue = 0.0001;
+    }
     // We change needle value to fit standard delimiters
     this.needleValue = this.needleValue * 50 / this.average;
     if (this.inverted) {

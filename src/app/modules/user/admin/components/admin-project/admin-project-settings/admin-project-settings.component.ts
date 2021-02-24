@@ -172,18 +172,30 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           {
             subHeading: 'To send',
             value: (this._innovation.stats && (this._innovation.stats.emailsOK
-              || this._innovation.stats.emailsOK === 0) ? this._innovation.stats.emailsOK : 'NA')
+              || this._innovation.stats.emailsOK === 0)) ? this._innovation.stats.emailsOK : 'NA'
           },
           {
             subHeading: 'Delivered',
             value: (this._innovation.stats && (this._innovation.stats.received
-              || this._innovation.stats.received === 0) ? this._innovation.stats.received : 'NA'),
+              || this._innovation.stats.received === 0)) ? this._innovation.stats.received : 'NA',
             stats: {
               title: 'Number of emails sent, \n all shots combined',
               values: [
-                {name: 'Shot 1', value: this._innovation.stats.nbFirstMail},
-                {name: 'Shot 2', value: this._innovation.stats.nbSecondMail},
-                {name: 'Shot 3', value: this._innovation.stats.nbThirdMail}
+                {
+                  name: 'Shot 1',
+                  value: (this._innovation.stats && (this._innovation.stats.nbFirstMail
+                    || this._innovation.stats.nbFirstMail === 0)) ? this._innovation.stats.nbFirstMail : 'NA'
+                },
+                {
+                  name: 'Shot 2',
+                  value: (this._innovation.stats && (this._innovation.stats.nbSecondMail
+                    || this._innovation.stats.nbSecondMail === 0)) ? this._innovation.stats.nbSecondMail : 'NA'
+                },
+                {
+                  name: 'Shot 3',
+                  value: (this._innovation.stats && (this._innovation.stats.nbThirdMail
+                    || this._innovation.stats.nbThirdMail === 0)) ? this._innovation.stats.nbThirdMail : 'NA'
+                }
               ]
             }
           },
@@ -193,7 +205,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
               , this._innovation.stats && this._innovation.stats.received),
             gauge: {
               title: 'Opened / Delivered',
-              referent: referents.openRate,
+              referent: referents.openRate || 50,
               delimitersLabels: ['Unattractive title, to be adjusted', 'Title partly attractive, to be checked', 'Attractive title', 'Very attractive title']
             }
           },
@@ -203,13 +215,13 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
               , this._innovation.stats && this._innovation.stats.opened),
             gauge: {
               title: 'Clicked / Opened',
-              referent: referents.clickToOpenRate,
+              referent: referents.clickToOpenRate || 50,
               delimitersLabels: ['Unattractive pitch, to be adjusted', 'Pitch partly attractive, to be checked', 'Attractive pitch', 'Very attractive pitch']
             }
           }
         ]
       },
-      {
+     {
         heading: 'Answers',
         content: [
           {
@@ -218,7 +230,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
               , this._innovation.stats && this._innovation.stats.clicked),
             gauge: {
               title: 'Received answers / quiz views',
-              referent: referents.quizAttractiveness,
+              referent: referents.quizAttractiveness || 50,
               delimitersLabels: ['Unattractive quiz, to be adjusted', 'Quiz partly attractive, to be checked', 'Attractive quiz', 'Very attractive quiz']
             }
           },
@@ -229,11 +241,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           },
           {
             subHeading: 'Answer rate',
-            value: ((this._innovation.stats.pros === 0) ? 'NA' : AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
-              , this._innovation.stats && this._innovation.stats.pros)),
+            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
+                , this._innovation.stats && this._innovation.stats.pros),
             gauge: {
               title: 'Validated answers / Pros contacted',
-              referent: referents.answerRate,
+              referent: referents.answerRate || 50,
               delimitersLabels: ['Unattractive project', 'Project partly attractive', 'Attractive project', 'Very attractive project']
             }
           }
