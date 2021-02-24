@@ -150,6 +150,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       if (this.status) {
         this._config.status = this.status;
       }
+      this._loadStats();
       this._loadHistory();
       this._loadWaitingTime();
     }
@@ -199,8 +200,6 @@ export class SharedSearchHistoryComponent implements OnInit {
           }
           return request;
         });
-
-        this.statsLoaded.emit(result.stats);
       }
         if (result._metadata) {
           this._total = result._metadata.totalCount;
@@ -212,12 +211,14 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+  }
 
+  private _loadStats() {
     this._searchService.getRequestsStats(this._configStats).pipe(first()).subscribe((result: any) => {
-        if (result.stats) {
-          this.statsLoaded.emit(result.stats);
-        }
-      }, (err: HttpErrorResponse) => {
+      if (result.stats) {
+        this.statsLoaded.emit(result.stats);
+      }
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
