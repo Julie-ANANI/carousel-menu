@@ -1,8 +1,9 @@
-<app-admin-stats-banner *ngIf="stats && referents" [config]="statsConfig"></app-admin-stats-banner>
+<app-admin-stats-banner (updateStats)="loadStats()"
+                        [updateBtn]="true"
+                        [config]="statsConfig"></app-admin-stats-banner>
 <div class="container fluid grid-2xl p-top-30 p-bottom-30">
   <div class="column col-sm-12 col-11 col-mx-auto">
     <app-shared-search-history
-      (statsLoaded)="setIndicators($event)"
       [campaignId]="campaign._id"
       [accessPath]="accessPath">
     </app-shared-search-history>
