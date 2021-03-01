@@ -71,6 +71,11 @@ export class SearchService {
     return this._http.get('/search/queryRessourceAPI/request', {params: config});
   }
 
+  public getRequestsStats(config: {[header: string]: string | string[]}): Observable<any> {
+    config = this._commonService.configToString(config);
+    return this._http.get('/search/queryRessourceAPI/request/stats', {params: config});
+  }
+
   public getMetadataRequests(config: any): Observable<any> {
     config = this._commonService.configToString(config);
     return this._http.get('/search/queryRessourceAPI/metadatarequest', {params: config});

@@ -4,10 +4,10 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 import {LoaderService} from '../../services/loader/loader.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-//import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
-//import {UserService} from "../../services/user/user.service";
+// import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
+// import {UserService} from "../../services/user/user.service";
 
-//declare let swellrt;
+// declare let swellrt;
 
 @Component({
   templateUrl: './user.component.html',
@@ -21,6 +21,10 @@ export class UserComponent implements OnInit, OnDestroy {
   private _adminSide = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private static _toggleVisibilityHelp(value: string) {
+    document.getElementById('jsd-widget').style.visibility = value;
+  }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _location: Location,
@@ -36,7 +40,7 @@ export class UserComponent implements OnInit, OnDestroy {
       this._loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading: boolean) => {
         setTimeout(() => {
           this._displayLoader = loading;
-        })
+        });
       });
     }
     /*this.startSwellRTClient();
@@ -50,8 +54,24 @@ export class UserComponent implements OnInit, OnDestroy {
       } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
         this._displayLoader = false;
         this._adminSide = this._location.path().slice(5, 11) === '/admin';
+        this._initHelpDesk();
       }
     });
+  }
+
+  /***
+   * this is hack and I don't like this .
+   * ToDo find a better solution execute script dynamically.
+   * @private
+   */
+  private _initHelpDesk() {
+    if (isPlatformBrowser(this._platformId)) {
+      if (this._adminSide) {
+        UserComponent._toggleVisibilityHelp('visible');
+      } else {
+        UserComponent._toggleVisibilityHelp('hidden');
+      }
+    }
   }
 
   /*private startSwellRTSession() {

@@ -12,19 +12,22 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 })
 export class GaugeChartComponent implements OnChanges {
 
+  @Input() title = '';
+  @Input() inverted = false;
+
   /**
    * We can give whatever distribution parameters we want,
    * the chart will always be computed and adapted to display a standard distribution
    */
   @Input() average = 50;
-  @Input() standardDeviation = 10; // fr: ecart type
   @Input() needleValue = 50;
 
   @Input() delimitersLabels = [
-    'Ne capte pas l\'attention',
-    'Capte très peu l\'attention',
-    'Capte l\'attention',
-    'Capte beaucoup l\'attention'];
+    'Very low',
+    'Low',
+    'Strong',
+    'Moderate'
+  ];
 
   // Style
   @Input() width = 200;
@@ -55,8 +58,15 @@ export class GaugeChartComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // We force display of needle when value is 0
+    if (!this.needleValue) {
+      this.needleValue = 0.0001;
+    }
     // We change needle value to fit standard delimiters
     this.needleValue = this.needleValue * 50 / this.average;
+    if (this.inverted) {
+      this.needleValue = 100 - this.needleValue;
+    }
     this._changeIndicatorColor();
     this._options = {
       hasNeedle: true,

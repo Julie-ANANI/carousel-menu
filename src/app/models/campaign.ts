@@ -10,6 +10,14 @@ export interface CampaignStats {
     nbValidatedResp: number,
     nbToValidateResp: number
   },
+  pro: {
+    uniqueGoodEmails: number;
+    uniqueBadEmails: number;
+    uniqueUncertain: number;
+    uniqueShielded: number;
+    uniqueIdentified: number;
+    identified: number;
+  },
   nbPros90: number,
   mail: any,
   nbProsSent: number,

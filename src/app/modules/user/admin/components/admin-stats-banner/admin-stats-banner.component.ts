@@ -5,9 +5,14 @@ export interface StatsInterface {
   content: Array<{
     subHeading: string;
     value: string;
+    stats?: {
+      title: string,
+      values: any
+    },
     gauge?: {
-      average?: number,
-      standardDeviation?: number,
+      title: string,
+      inverted?: boolean;
+      referent: number,
       delimitersLabels?: string[]
     };
   }>;
