@@ -242,7 +242,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           {
             subHeading: 'Answer rate',
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
-                , this._innovation.stats && this._innovation.stats.pros),
+                , this._innovation.stats && this._innovation.stats.nbFirstMail),
             gauge: {
               title: 'Validated answers / Pros contacted',
               referent: referents.answerRate || 50,
