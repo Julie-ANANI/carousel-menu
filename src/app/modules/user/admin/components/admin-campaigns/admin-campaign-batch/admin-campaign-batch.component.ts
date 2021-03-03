@@ -235,7 +235,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       this._quizLinks = ['fr', 'en'].map((lang) => {
         return QuizService.getQuizUrl(this._campaign, lang);
       });
-      console.log(JSON.stringify(this._quizLinks));
     }
 
     const _scenariosNames: Set<string> = new Set<string>();
