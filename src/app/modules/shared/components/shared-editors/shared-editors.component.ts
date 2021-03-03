@@ -5,7 +5,6 @@ import {UserFrontService} from '../../../../services/user/user-front.service';
 import {User} from '../../../../models/user.model';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 import {Subject} from 'rxjs';
-import {environment} from '../../../../../environments/environment';
 
 type Editor = 'ETHERPAD' | 'TINY_MCE';
 
@@ -15,7 +14,9 @@ type Editor = 'ETHERPAD' | 'TINY_MCE';
 })
 export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
-  public limitEtherpadAccess = !environment.local;
+  public limitEtherpadAccess = false;
+
+  // Useful when limitEtherpadAccess is set to true
   private _authorizedEtherpadProjects = [
     // Production projects
     '5fc8ac5bdf99326414b0151b', '5f918025d9a0f39747fff6b8', '5f3ce42711bce90bd1dfdb24', '5ffedfcc4f932cf73f01f995',
