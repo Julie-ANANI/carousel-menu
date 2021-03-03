@@ -232,6 +232,10 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
     });
   }
 
+  public stats(campaign: Campaign, type: string): number {
+    return campaign && campaign.stats && campaign.stats.campaign && campaign.stats.campaign[type] || 0;
+  }
+
   public quizURL(lang: string, campaign: Campaign) {
     return QuizService.quizUrl(campaign._id, this._innovation.quizId, lang);
   }
