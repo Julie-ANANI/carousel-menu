@@ -72,6 +72,23 @@
 
             </div>
 
+            <!-- quiz links -->
+            <div *ngIf="canAccess(['campaign', 'batch', 'quiz'])" class="d-flex flex-wrap">
+              <button
+                (click)="copyQuizLink('fr', campaign)"
+                *ngIf="!!quizURL('fr', campaign)"
+                class="button is-outlined is-secondary is-xs m-top-20 m-right-20">
+                Copy FR quiz link
+              </button>
+              <button
+                (click)="copyQuizLink('en', campaign)"
+                *ngIf="!!quizURL('en', campaign)"
+                class="button is-outlined is-secondary is-xs m-top-20">
+                Copy EN quiz link
+              </button>
+            </div>
+            <!-- /quiz links -->
+
           </div>
         </div>
       </section>
