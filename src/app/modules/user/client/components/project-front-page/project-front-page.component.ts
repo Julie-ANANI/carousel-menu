@@ -6,6 +6,7 @@ import { InnovCard } from '../../../../../models/innov-card';
 import { ExecutiveReport } from '../../../../../models/executive-report';
 import { UserFrontService } from '../../../../../services/user/user-front.service';
 import { environment } from '../../../../../../environments/environment';
+import {Logo} from '../../../../../models/static-data/logo';
 
 /***
  * this component is to show the first page of the Executive report.
@@ -43,6 +44,8 @@ export class ProjectFrontPageComponent implements OnChanges {
   private _userLang = this._translateService.currentLang;
 
   private _project: ProjectFront = <ProjectFront>{};
+
+  private _marketTestLogo = Logo.UMI.marketTest;
 
   constructor(private _translateService: TranslateService) { }
 
@@ -103,6 +106,10 @@ export class ProjectFrontPageComponent implements OnChanges {
 
   get userLang(): string {
     return this._userLang;
+  }
+
+  get marketTestLogo(): string {
+    return this._marketTestLogo;
   }
 
 }

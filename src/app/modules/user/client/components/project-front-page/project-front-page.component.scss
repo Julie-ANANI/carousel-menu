@@ -76,33 +76,6 @@
 
   .front-footer {
     height: 50px;
-
-    .logo-test {
-      height: 50px;
-      padding-left: 12px;
-      font-size: 20px;
-      border: 2px solid $border-primary-color;
-      border-radius: 3px;
-      font-family: $font-family-oswald;
-      color: $text-draft-color;
-      background-color: $bg-white-color;
-
-      .umi-image {
-        font-size: 26px;
-        background-color: $bg-primary-color;
-        color: $text-white-color;
-        height: 49.98px;
-        width: 114px;
-        margin-left: 12px;
-
-        img {
-          height: 28px;
-        }
-
-      }
-
-    }
-
   }
 
 }
