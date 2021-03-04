@@ -383,7 +383,7 @@ export class TableComponent {
 
         newColumnAttr = newColumnAttr.splice(1);
 
-        for (const i of newColumnAttr){
+        for (const i of newColumnAttr) {
           tmpContent = tmpContent ? tmpContent[i] : '-';
         }
 

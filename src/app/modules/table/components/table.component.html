@@ -485,6 +485,16 @@
                   </ng-container>
                   <!-- type DROPDOWN -->
 
+                  <!-- type NUMBER -->
+                  <ng-container *ngSwitchCase="'NUMBER'">
+                    <div class="text-ellipsis" [title]="getTitle(row, column)">
+                      <ng-container *ngFor="let attr of getAttrs(column)">
+                        {{ (getContentValue(row, attr)|| " - ") }}
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                  <!-- /type NUMBER -->
+
 
                   <!-- type TEXT / DEFAULT -->
                   <ng-container *ngSwitchDefault>

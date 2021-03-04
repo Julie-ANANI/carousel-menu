@@ -191,14 +191,14 @@ export class AdminProjectsComponent implements OnInit {
         {
           _attrs: ['stats.emailsOK'],
           _name: 'Good Emails',
-          _type: 'TEXT',
+          _type: 'NUMBER',
           _width: '150px',
           _isHidden: !this.canAccess(['tableColumns', 'goodEmails'])
         },
         {
           _attrs: ['stats.validatedAnswers'],
           _name: 'Validated Answers',
-          _type: 'TEXT',
+          _type: 'NUMBER',
           _width: '200px',
           _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
         },
