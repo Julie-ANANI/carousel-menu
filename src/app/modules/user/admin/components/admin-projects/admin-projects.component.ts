@@ -203,6 +203,14 @@ export class AdminProjectsComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
         },
         {
+          _attrs: ['updated'],
+          _name: 'Last Updated',
+          _type: 'DATE_TIME',
+          _isSortable: true,
+          _width: '200px',
+          _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
+        },
+        {
           _attrs: ['owner.firstName', 'owner.lastName'],
           _name: 'Owner',
           _type: 'TEXT',
@@ -226,7 +234,7 @@ export class AdminProjectsComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'type']),
           _width: '100px',
           _searchConfig: {_collection: 'mission', _searchKey: 'type' }
-          }, // Using _searchConfig for advanced search
+        }, // Using _searchConfig for advanced search
         {
           _attrs: [this._mainObjective],
           _name: 'Objective',
@@ -236,14 +244,6 @@ export class AdminProjectsComponent implements OnInit {
           _width: '200px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
-        {
-          _attrs: ['updated'],
-          _name: 'Last Updated',
-          _type: 'DATE_TIME',
-          _isSortable: true,
-          _width: '200px',
-          _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
-        },
         {
           _attrs: ['created'],
           _name: 'Created',
