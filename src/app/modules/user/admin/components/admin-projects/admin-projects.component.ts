@@ -154,7 +154,6 @@ export class AdminProjectsComponent implements OnInit {
       }
       return project;
     });
-    console.log(this._projects);
   }
 
   /***
@@ -188,6 +187,27 @@ export class AdminProjectsComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
+        {
+          _attrs: ['mission.externalDiffusion.community'],
+          _name: 'Community',
+          _width: '150px',
+          _type: 'CHECK',
+          _isHidden: !this.canAccess(['tableColumns', 'community']),
+        },
+        {
+          _attrs: ['mission.externalDiffusion.social'],
+          _name: 'Social Networks',
+          _width: '180px',
+          _type: 'CHECK',
+          _isHidden: !this.canAccess(['tableColumns', 'social']),
+        },
+        {
+          _attrs: ['mission.externalDiffusion.umi'],
+          _name: 'Website',
+          _width: '100px',
+          _type: 'CHECK',
+          _isHidden: !this.canAccess(['tableColumns', 'website']),
+        },
         {
           _attrs: ['stats.emailsOK'],
           _name: 'Good Emails',

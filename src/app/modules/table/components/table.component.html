@@ -313,10 +313,14 @@
                   <!-- type CHECK -->
                   <ng-container *ngSwitchCase="'CHECK'">
                     <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]) == 0">
-                      <i class="icon icon-cross text-alert"></i>
+                      <div class="icon-container is-xs c-default bg-alert br-circle">
+                        <i class="icon icon-cross"></i>
+                      </div>
                     </ng-container>
                     <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]) == 1">
-                      <i class="icon icon-check text-success"></i>
+                      <div class="icon-container is-xs c-default bg-success br-circle">
+                        <i class="icon icon-check"></i>
+                      </div>
                     </ng-container>
                   </ng-container>
                   <!-- /type CHECK -->

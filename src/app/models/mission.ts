@@ -33,7 +33,7 @@ export interface Mission {
     comment: string
   };
 
-  externalDiffusion? : {
+  externalDiffusion?: {
     umi: boolean; // website
     community: boolean;
     social: boolean;
