@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
-import { TranslateTitleService}  from '../../../../../services/title/title.service';
+import { TranslateTitleService} from '../../../../../services/title/title.service';
 import { ClientProject } from '../../../../../models/client-project';
 import { Mission } from '../../../../../models/mission';
 import { TranslateService } from '@ngx-translate/core';

@@ -16,7 +16,7 @@ import { UserService } from '../../../../../services/user/user.service';
 import { environment } from '../../../../../../environments/environment';
 import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -32,7 +32,7 @@ export class AdminProjectsComponent implements OnInit {
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator',
+    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
@@ -61,9 +61,7 @@ export class AdminProjectsComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService,
               private _userService: UserService) {
-
     this._translateTitleService.setTitle('Market Tests');
-
   }
 
   ngOnInit(): void {
@@ -156,6 +154,7 @@ export class AdminProjectsComponent implements OnInit {
       }
       return project;
     });
+    console.log(this._projects);
   }
 
   /***
@@ -189,6 +188,20 @@ export class AdminProjectsComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
+        {
+          _attrs: ['stats.emailsOK'],
+          _name: 'Good Emails',
+          _type: 'TEXT',
+          _width: '150px',
+          _isHidden: !this.canAccess(['tableColumns', 'goodEmails'])
+        },
+        {
+          _attrs: ['stats.validatedAnswers'],
+          _name: 'Validated Answers',
+          _type: 'TEXT',
+          _width: '200px',
+          _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
+        },
         {
           _attrs: ['owner.firstName', 'owner.lastName'],
           _name: 'Owner',
