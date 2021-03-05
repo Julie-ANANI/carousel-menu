@@ -93,19 +93,19 @@ export class AdminCampaignHistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._statsReferentsService.get().subscribe((referents) => {
-      this._referents = referents.campaigns;
-      this._stats = this.campaign.stats.pro;
-      this.setIndicators();
-      this._setStats();
-    });
-
     this._activatedRoute.data.subscribe((data) => {
       if (data['campaign']) {
         this._campaign = data['campaign'];
         this._campaignFrontService.setActiveCampaign(this._campaign);
         this._campaignFrontService.setActiveCampaignTab('history');
         this._campaignFrontService.setLoadingCampaign(false);
+
+        this._statsReferentsService.get().subscribe((referents) => {
+          this._referents = referents.campaigns;
+          this._stats = this.campaign.stats.pro;
+          this.setIndicators();
+          this._setStats();
+        });
       }
     });
   }
