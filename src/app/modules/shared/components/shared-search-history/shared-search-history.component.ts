@@ -72,6 +72,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     offset: '0',
     search: '{}',
     sort: '{ "created": -1 }',
+    recycled: 'false'
   };
 
   private _configQueue: Config = {
