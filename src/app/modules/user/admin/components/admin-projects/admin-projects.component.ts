@@ -17,6 +17,7 @@ import { environment } from '../../../../../../environments/environment';
 import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import {AuthService} from '../../../../../services/auth/auth.service';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -59,6 +60,7 @@ export class AdminProjectsComponent implements OnInit {
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
               private _translateTitleService: TranslateTitleService,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
@@ -70,6 +72,7 @@ export class AdminProjectsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
       this._getOperators().then( _ => {
+        this._configOperator();
         this._getProjects();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -79,6 +82,13 @@ export class AdminProjectsComponent implements OnInit {
       });
     }
 
+  }
+
+  private _configOperator() {
+    const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
+    if (!!operator) {
+      this._config.operator = operator['_id'];
+    }
   }
 
   /***
@@ -110,7 +120,7 @@ export class AdminProjectsComponent implements OnInit {
         limit: '20',
         offset: '0',
         search: '{}',
-        sort: '{"created":-1}',
+        sort: '{"firstName":1}',
         domain: environment.domain,
         $or: JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'}])
       };
@@ -295,7 +305,7 @@ export class AdminProjectsComponent implements OnInit {
           _choices: this._operators && this._operators.length ? this._operators.map(oper => {
             return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
           }) : []
-        },
+        }
       ]
     };
   }
@@ -367,6 +377,10 @@ export class AdminProjectsComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get authUserId() {
+    return this._authService.userId;
   }
 
 }

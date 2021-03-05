@@ -57,7 +57,7 @@ export class RolesFrontService {
   /***
    * this will return the sub-route of single project.
    */
-  public projectDefaultRoute() : string {
+  public projectDefaultRoute(): string {
     const _tabs = ['settings', 'preparation', 'collection', 'analysis', 'followUp'];
     const _defaultPath = ['projects', 'project', 'tabs'];
     let _route = '';
@@ -119,7 +119,7 @@ export class RolesFrontService {
     } else if (this.hasAccessAdminSide(['projects', 'project', 'answerTags'])) {
       _route = 'analysis/answer-tags';
     } else if (this.hasAccessAdminSide(['projects', 'project', 'storyboard'])) {
-      _route = 'analysis/storyboard'
+      _route = 'analysis/storyboard';
     }
 
     return _route;
