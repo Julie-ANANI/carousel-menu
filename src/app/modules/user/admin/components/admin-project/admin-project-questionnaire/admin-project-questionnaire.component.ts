@@ -164,7 +164,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     if (this.canAccess(['edit'])) {
       this._innovation.preset = preset;
       this._innovationFrontService.setInnovation(this._innovation);
-      this._innovationFrontService.setNotifyChanges('preset');
+      this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
     }
   }
 

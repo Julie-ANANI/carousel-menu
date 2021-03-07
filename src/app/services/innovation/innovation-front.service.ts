@@ -48,7 +48,7 @@ export class InnovationFrontService {
 
   private _selectedInnovationIndex: Subject<number> = new Subject<number>();
 
-  private _saveNotifySubject: Subject<string> = new Subject<string>();
+  private _saveNotifySubject: Subject<{key: string, state: boolean}> = new Subject<{key: string, state: boolean}>();
 
   private _saveCommentSubject: Subject<boolean> = new Subject<boolean>();
 
@@ -454,11 +454,11 @@ export class InnovationFrontService {
    * in the component that changes are to be saved or not for the innovation.
    * @param value
    */
-  public setNotifyChanges(value: string) {
+  public setNotifyChanges(value: {key: string, state: boolean}) {
     this._saveNotifySubject.next(value);
   }
 
-  public getNotifyChanges(): Subject<string> {
+  public getNotifyChanges(): Subject<{key: string, state: boolean}> {
     return this._saveNotifySubject;
   }
 

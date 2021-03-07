@@ -44,7 +44,7 @@ export class QuestionConclusionComponent implements OnInit {
 
   public keyupHandlerFunction(event: {content: string}) {
     this.innovation.marketReport[this.question.identifier] = { conclusion: event['content'] };
-    this._innovationFrontService.setNotifyChanges('marketReport');
+    this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
   }
 
   get tags(): Array<Tag> {

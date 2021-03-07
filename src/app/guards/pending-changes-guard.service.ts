@@ -1,4 +1,4 @@
-import { CanDeactivate } from '@angular/router';
+import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot} from '@angular/router';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
@@ -7,24 +7,25 @@ export interface ComponentCanDeactivate {
   canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate> {
 
   constructor (private _translateService: TranslateService) {}
 
-  private _getMessage (): string {
+  private _getMessage(): string {
     switch (this._translateService.currentLang) {
       case 'fr':
-        return 'ATTENTION : Certaines de vos modifications n\'ont pas été sauvegardées.' +
-          'Si vous quittez cette page, ces modifications seront perdues. Êtes-vous sûr(e) de vouloir quitter ?';
+        return 'Souhaitez vous vraiment quitter sans savegarder? Tous vos changements seront perdus.';
       case 'en':
       default:
-        return 'WARNING: Some of your modifications are not saved. If you leave this page, these ' +
-          'changes will be lost. Are you sure you want to leave?';
+        return 'Do you really want to leave this page without saving? All your changes will be lost.';
     }
   }
 
-  canDeactivate(component: ComponentCanDeactivate): Observable<boolean> | Promise<boolean> | boolean {
+  canDeactivate(component: ComponentCanDeactivate,
+                currentRoute: ActivatedRouteSnapshot,
+                currentState: RouterStateSnapshot,
+                nextState?: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     // if there are no pending changes, just allow deactivation; else confirm first
     return component.canDeactivate() ?
       true :

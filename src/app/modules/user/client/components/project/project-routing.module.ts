@@ -11,6 +11,7 @@ import { ExplorationComponent } from './components/exploration/exploration.compo
 import { SynthesisComponent } from './components/synthesis/synthesis.component';
 
 import { AuthGuard } from '../../../../../guards/auth-guard.service';
+import {PendingChangesGuard} from '../../../../../guards/pending-changes-guard.service';
 
 const projectRoutes: Routes = [
   {
@@ -30,7 +31,12 @@ const projectRoutes: Routes = [
         children: [
           { path: '', redirectTo: 'pitch', pathMatch: 'full' },
           { path: 'pitch', component: PitchComponent, pathMatch: 'full' },
-          { path: 'targeting', component: TargetingComponent, pathMatch: 'full' },
+          {
+            path: 'targeting',
+            component: TargetingComponent,
+            pathMatch: 'full',
+            canDeactivate: [PendingChangesGuard]
+          },
         ]
       }
     ]

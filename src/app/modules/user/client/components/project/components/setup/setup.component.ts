@@ -24,6 +24,11 @@ interface Tab {
   tracking: string;
 }
 
+interface Save {
+  key: string;
+  state: boolean;
+}
+
 @Component({
   templateUrl: 'setup.component.html',
   styleUrls: ['setup.component.scss']
@@ -37,7 +42,7 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   private _currentPage = '';
 
-  private _saveChanges = '';
+  private _saveChanges: Save = <Save>{};
 
   private _banner: Banner = <Banner>{};
 
@@ -205,10 +210,12 @@ export class SetupComponent implements OnInit, OnDestroy {
    */
   public onSaveProject(event: Event) {
     event.preventDefault();
-    if (this._saveChanges && !this._isSavingProject) {
+    if (this._saveChanges.state && !this._isSavingProject) {
       this._isSavingProject = true;
       this._innovationService.save(this._innovation._id, {settings: this._innovation.settings}).pipe(first()).subscribe(() => {
         this._isSavingProject = false;
+        this._saveChanges.state = false;
+        this._innovationFrontService.setNotifyChanges(this._saveChanges);
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
         }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -259,7 +266,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   get isSavingProject(): boolean {
     return this._isSavingProject;
   }
-  get saveChanges(): string {
+
+  get saveChanges(): Save {
     return this._saveChanges;
   }
 
