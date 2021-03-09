@@ -96,9 +96,9 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   private _getNextData() {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
-      console.log(batches);
       this._weekBatches = batches;
       this._sortBatches();
+      console.log(this._weekBatches);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -106,9 +106,11 @@ export class AdminBatchesDisplayComponent implements OnInit {
   }
 
   private _sortBatches() {
-    this._weekBatches.forEach((days) => {
+    this._weekBatches = this._weekBatches.map((days) => {
       const _days = days.slice(1).sort((a: any, b: any) => {
-        return a['innovation']['name'].localeCompare(b['innovation']['name']);
+        const nameA = a['innovation']['name'] && a['innovation']['name'].toLowerCase();
+        const nameB = b['innovation']['name'] && b['innovation']['name'].toLowerCase();
+        return nameA.localeCompare(nameB);
       });
       return days.slice(0, 1).concat(_days);
     });
