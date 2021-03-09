@@ -81,18 +81,21 @@
 
                         <ng-container *ngIf="getState(batchesOver) === 0">
                           <div (click)="showPreview($event, batches)" class="label is-success is-rounded c-hand">
+                            <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                             {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="getState(batchesOver) === 1">
                           <div (click)="showPreview($event, batches)" class="label is-draft is-rounded c-hand">
+                            <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                             {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                           </div>
                         </ng-container>
 
                         <ng-container *ngIf="getState(batchesOver) === 2">
                           <div (click)="showPreview($event, batches)" class="label is-info is-rounded c-hand">
+                            <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                             {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                           </div>
                         </ng-container>

@@ -180,6 +180,7 @@ export class AdminProjectsComponent implements OnInit {
       _isTitle: true,
       _clickIndex: this.canAccess(['project', 'tabs']) ? 1 : null,
       _isPaginable: true,
+      _isNoMinHeight: true,
       _columns: [
         {
           _attrs: ['name'],
