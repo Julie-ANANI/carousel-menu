@@ -161,16 +161,16 @@ export class AdminBatchesDisplayComponent implements OnInit {
     const SM = new Date(b.secondMail);
     const TM = new Date(b.thirdMail);
 
-    if ((beginWeek < FM) && (FM < endWeek)) {
-      return 0;
+    if ((beginWeek < TM) && (TM < endWeek)) {
+      return 2;
     }
 
     if ((beginWeek < SM) && (SM < endWeek)) {
       return 1;
     }
 
-    if ((beginWeek < TM) && (TM < endWeek)) {
-      return 2;
+    if ((beginWeek < FM) && (FM < endWeek)) {
+      return 0;
     }
 
   }
