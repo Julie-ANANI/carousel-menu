@@ -1,0 +1,59 @@
+<div [id]="'table-search-filter'" class="d-flex flex-wrap">
+
+  <!-- text properties -->
+  <ng-container *ngIf="textProperties.length > 0">
+
+    <!-- select by dropdown -->
+    <div class="search-dropdown-wrapper">
+      <span class="text-xs text-secondary-dark text-label text-normal m-right-10">
+        {{ 'COMMON.LABEL.SEARCH_BY' | translate | uppercase }}
+      </span>
+      <label>
+        <select class="form-select is-sm text-medium text-ellipsis" (change)="onChangeTextProp($event)">
+          <option
+            *ngFor="let property of textProperties"
+            [selected]="isTextSelected(property)"
+            [value]="attrs(property)">
+            {{ name(property) | translate | titlecase }}
+          </option>
+        </select>
+      </label>
+    </div>
+    <!-- /select by dropdown  -->
+
+    <!-- search field -->
+    <div class="search-field-wrapper relative">
+
+      <!-- input field -->
+      <label>
+        <input
+          #search
+          (keyup.enter)="searchString = $event.target.value; onSearchText();"
+          [attr.placeholder]="'COMMON.SEARCH_INPUT_PLACEHOLDER' | translate"
+          class="form-input is-sm"
+          type="search">
+      </label>
+      <!-- /input field -->
+
+      <!-- search icon -->
+      <span (click)="searchString = search.value; onSearchText();" class="search-icon absolute c-hand">
+        <img [src]="searchPicto" alt=" ">
+      </span>
+      <!-- /search icon -->
+
+      <!-- search cross -->
+      <div
+        *ngIf="!!search.value"
+        (click)="searchString = search.value = ''; onSearchText();"
+        class="search-cross absolute c-hand">
+        <i class="fas fa-times text-notify text-md"></i>
+      </div>
+      <!-- /search cross -->
+
+    </div>
+    <!-- /search field -->
+
+  </ng-container>
+  <!-- /text properties -->
+
+</div>

@@ -6,7 +6,7 @@
 
       <!-- number of results and title -->
       <ng-container *ngIf="table._isTitle">
-        <div class="text-notify text-sm m-right-20 m-bottom-20">
+        <div class="text-notify text-medium text-sm m-right-20 m-bottom-20">
           <span>{{ table._total === -1 ? 0 : table._total }} {{ table._title | translate }}</span>
         </div>
       </ng-container>
@@ -15,11 +15,15 @@
 
       <!-- want to search by columns -->
       <ng-container *ngIf="table._isSearchable">
-        <app-shared-search-filter
+        <app-table-search-filter
+          [(searchConfig)]="searchConfig"
+          [properties]="table._columns">
+        </app-table-search-filter>
+        <!--<app-shared-search-filter
           [(searchConfig)]="searchConfig"
           [props]="table._columns"
           [tableView]="true">
-        </app-shared-search-filter>
+        </app-shared-search-filter>-->
       </ng-container>
       <!-- /want to search by columns -->
 

@@ -11,6 +11,9 @@ export interface Picto {
     primary: string;
   };
   badgeUmi: string;
+  search: {
+    meta: string;
+  };
 }
 
 export const picto: Picto = {
@@ -21,5 +24,8 @@ export const picto: Picto = {
   save: {
     primary: 'https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-save.svg'
   },
-  badgeUmi: 'https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg'
-}
+  badgeUmi: 'https://res.cloudinary.com/umi/image/upload/app/default-images/badges/badge-umi.svg',
+  search: {
+    meta: 'https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-search-meta.svg'
+  }
+};

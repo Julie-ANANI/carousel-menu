@@ -264,13 +264,13 @@ export class AdminProjectsComponent implements OnInit {
           _isSearchable: this.canAccess(['searchBy', 'type']),
           _isHidden: !this.canAccess(['tableColumns', 'type']),
           _width: '100px',
-          _searchConfig: {_collection: 'mission', _searchKey: 'type' }
+          // _searchConfig: {_collection: 'mission', _searchKey: 'type' }
         }, // Using _searchConfig for advanced search
         {
           _attrs: [this._mainObjective],
           _name: 'Objective',
           _type: 'TEXT',
-          _isSearchable: this.canAccess(['searchBy', 'objective']),
+          _isSearchable: this.canAccess(['filterBy', 'objective']),
           _isHidden: !this.canAccess(['tableColumns', 'objective']),
           _width: '200px',
           _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
@@ -296,7 +296,22 @@ export class AdminProjectsComponent implements OnInit {
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
             {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label is-progress'},
             {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-          ]},
+          ]
+        },
+        {
+          _attrs: ['mission.type'],
+          _name: 'Type',
+          _type: 'MULTI-CHOICES',
+          _isSortable: true,
+          _isSearchable: true,
+          _searchConfig: {_collection: 'mission', _searchKey: 'type' },
+          _choices: [
+            {_name: 'CLIENT', _alias: 'Client'},
+            {_name: 'DEMO', _alias: 'Demo'},
+            {_name: 'USER', _alias: 'User'},
+            {_name: 'TEST', _alias: 'Test'},
+          ]
+        },
         {
           _attrs: ['operator'],
           _name: 'Operator',
@@ -342,6 +357,7 @@ export class AdminProjectsComponent implements OnInit {
 
   set config(value: Config) {
     this._config = value; // TODO how to change the config when searching things like the operator?
+    console.log(this._config);
     try {
       // Parse the config.search field to see if there's something
       if (this._config['fromCollection']) {
