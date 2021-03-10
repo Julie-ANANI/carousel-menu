@@ -98,6 +98,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
       this._sortBatches();
+      console.log(this._weekBatches);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -147,6 +148,10 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   }
 
+  /**
+   * instead of using this to show shot colors we are using batch.status.
+   * @param b
+   */
   public getState(b: any) {
     const day = this._dateNow.getDay();
 
