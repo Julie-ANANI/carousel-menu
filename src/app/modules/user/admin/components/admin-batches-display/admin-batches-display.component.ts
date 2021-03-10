@@ -54,6 +54,8 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   private _sidebarTemplate: SidebarInterface = <SidebarInterface>{};
 
+  private _isLoading = true;
+
   private static _sortByName(batches: Array<Batch>) {
     return batches.sort((a: Batch, b: Batch) => {
       const nameA = a.innovation.name && a.innovation.name.toLowerCase();
@@ -107,6 +109,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
       this._sortBatches();
+      this._isLoading = false;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
@@ -130,11 +133,13 @@ export class AdminBatchesDisplayComponent implements OnInit {
   }
 
   public onClickLast() {
+    this._isLoading = true;
     this._dateNow.setDate(this._dateNow.getDate() - 7);
     this._getNextData();
   }
 
   public onClickNext() {
+    this._isLoading = true;
     this._dateNow.setDate(this._dateNow.getDate() + 7);
     this._getNextData();
   }
@@ -239,6 +244,10 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   set sidebarTemplate(value: SidebarInterface) {
     this._sidebarTemplate = value;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
 }
