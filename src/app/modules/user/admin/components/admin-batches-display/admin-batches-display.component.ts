@@ -10,6 +10,7 @@ import { InnovCard } from '../../../../../models/innov-card';
 import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { SearchService } from '../../../../../services/search/search.service';
+import {Batch} from '../../../../../models/batch';
 
 /***
  * this is to display the batches.
@@ -52,6 +53,14 @@ export class AdminBatchesDisplayComponent implements OnInit {
   private _selectedInnovation: InnovCard = <InnovCard>{};
 
   private _sidebarTemplate: SidebarInterface = <SidebarInterface>{};
+
+  private static _sortByName(batches: Array<Batch>) {
+    return batches.sort((a: Batch, b: Batch) => {
+      const nameA = a.innovation.name && a.innovation.name.toLowerCase();
+      const nameB = b.innovation.name && b.innovation.name.toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _dashboardService: DashboardService,
@@ -98,21 +107,25 @@ export class AdminBatchesDisplayComponent implements OnInit {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
       this._sortBatches();
-      console.log(this._weekBatches);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
 
+  /**
+   * first sort by shot then by innovation name.
+   * @private
+   */
   private _sortBatches() {
     this._weekBatches = this._weekBatches.map((batches) => {
-      const _batches = batches.slice(1).sort((a: any, b: any) => {
-        const nameA = a['innovation']['name'] && a['innovation']['name'].toLowerCase();
-        const nameB = b['innovation']['name'] && b['innovation']['name'].toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-      return batches.slice(0, 1).concat(_batches);
+      let _fm = batches.slice(1).filter((batch: Batch) => batch.status === 0);
+      let _sm = batches.slice(1).filter((batch: Batch) => batch.status === 1);
+      let _tm = batches.slice(1).filter((batch: Batch) => batch.status === 2);
+      _fm = AdminBatchesDisplayComponent._sortByName(_fm);
+      _sm = AdminBatchesDisplayComponent._sortByName(_sm);
+      _tm = AdminBatchesDisplayComponent._sortByName(_tm);
+      return batches.slice(0, 1).concat(_fm, _sm, _tm);
     });
   }
 
