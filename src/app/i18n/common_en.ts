@@ -284,6 +284,7 @@ export const COMMON = {
     'LOGGING': 'is logging...',
     'UPLOAD_PICTURE': 'Upload a picture',
     'UPLOAD_VIDEO': 'Upload a video',
+    'CLEAR_FILTERS': 'Clear filters'
   },
 
   'PROJECT': {

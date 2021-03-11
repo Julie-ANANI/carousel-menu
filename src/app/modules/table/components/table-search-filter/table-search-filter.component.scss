@@ -2,8 +2,13 @@
 @import "../../../../../style/framework/src/mixins";
 
 #table-search-filter {
+  margin-right: -20px;
 
-  .search-dropdown-wrapper, .search-field-wrapper {
+  .button {
+    border: none;
+  }
+
+  .search-dropdown-wrapper, .search-field-wrapper, .filter-dropdown-wrapper {
     display: flex;
     flex: 0 1 auto;
     align-items: center;
@@ -34,10 +39,43 @@
 
     }
 
+    .search-tooltip {
+      right: 23px;
+      top: -2px;
+    }
+
     .search-cross {
       @include control-transition();
       right: 10px;
       top: 5px;
+    }
+
+  }
+
+}
+
+@media screen {
+
+  @media (max-width: $size-sm) {
+
+    #table-search-filter {
+
+      .search-field-wrapper {
+        order: 2;
+        width: 100%;
+        margin-right: 0;
+
+        label {
+          width: 100%;
+        }
+
+        .form-input {
+          max-width: 100%;
+          min-width: auto;
+        }
+
+      }
+
     }
 
   }

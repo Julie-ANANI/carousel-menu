@@ -1,11 +1,11 @@
 <div [id]="'table-search-filter'" class="d-flex flex-wrap">
 
   <!-- text properties -->
-  <ng-container *ngIf="textProperties.length > 0">
+  <ng-container *ngIf="textProperties.length">
 
     <!-- select by dropdown -->
     <div class="search-dropdown-wrapper">
-      <span class="text-xs text-secondary-dark text-label text-normal m-right-10">
+      <span class="text-xs text-secondary-dark m-right-10">
         {{ 'COMMON.LABEL.SEARCH_BY' | translate | uppercase }}
       </span>
       <label>
@@ -30,6 +30,7 @@
           #search
           (keyup.enter)="searchString = $event.target.value; onSearchText();"
           [attr.placeholder]="'COMMON.SEARCH_INPUT_PLACEHOLDER' | translate"
+          [title]="tooltip"
           class="form-input is-sm"
           type="search">
       </label>
@@ -41,13 +42,22 @@
       </span>
       <!-- /search icon -->
 
+      <!-- tooltip icon -->
+      <span
+        *ngIf="search.value === '' && !!tooltip"
+        [attr.data-tooltip]="tooltip"
+        class="search-tooltip tooltip is-multiline">
+        <i class="fas fa-question text-notify text-sm"></i>
+      </span>
+      <!-- /tooltip icon -->
+
       <!-- search cross -->
-      <div
+      <span
         *ngIf="!!search.value"
         (click)="searchString = search.value = ''; onSearchText();"
         class="search-cross absolute c-hand">
         <i class="fas fa-times text-notify text-md"></i>
-      </div>
+      </span>
       <!-- /search cross -->
 
     </div>
@@ -55,5 +65,62 @@
 
   </ng-container>
   <!-- /text properties -->
+
+  <!-- other properties -->
+  <ng-container *ngIf="otherProperties.length">
+    <div *ngFor="let property of otherProperties" class="filter-dropdown-wrapper">
+
+      <span class="text-xs text-secondary-dark m-right-10">
+        {{ name(property) | translate | uppercase }}
+      </span>
+
+      <ng-container [ngSwitch]="type(property)">
+
+        <!-- case CHECK -->
+        <ng-container *ngSwitchCase="'CHECK'">
+          <label>
+            <select
+              (change)="onSearchOther(property)"
+              [(ngModel)]="searchConfig[attrs(property)]"
+              class="form-select is-sm text-medium text-ellipsis">
+              <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
+              <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
+              <option [ngValue]="false">{{ 'COMMON.NO' | translate }}</option>
+            </select>
+          </label>
+        </ng-container>
+        <!-- /case CHECK -->
+
+        <!-- case MULTI-CHOICES -->
+        <ng-container *ngSwitchCase="'MULTI-CHOICES'">
+          <label>
+            <select
+              (change)="onSearchOther(property)"
+              [(ngModel)]="searchConfig[attrs(property)]"
+              class="form-select is-sm text-medium text-ellipsis">
+              <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
+              <option *ngFor="let choice of choices(property)" [ngValue]="choiceName(choice)">
+                {{ choiceAlias(choice) | translate | titlecase }}
+              </option>
+            </select>
+          </label>
+        </ng-container>
+        <!-- /case MULTI-CHOICES -->
+
+      </ng-container>
+
+    </div>
+  </ng-container>
+  <!-- /other properties -->
+
+  <!-- clear button -->
+  <button
+    *ngIf="isFilterActive"
+    (click)="resetFilters($event)"
+    type="button"
+    class="button is-outlined is-info is-sm has-variable-width m-bottom-20">
+    {{ 'COMMON.BUTTON.CLEAR_FILTERS' | translate }}
+  </button>
+  <!-- /clear button -->
 
 </div>

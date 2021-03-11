@@ -283,6 +283,7 @@ export const COMMON = {
     'LOGGING': 'en cours de connexion...',
     'UPLOAD_PICTURE': 'Télécharger la photo',
     'UPLOAD_VIDEO': 'Télécharger la video',
+    'CLEAR_FILTERS': 'Effacer les filtres',
   },
 
   'PROJECT': {

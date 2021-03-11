@@ -345,6 +345,10 @@
 
   }
 
+  &.has-variable-width {
+    min-width: auto;
+  }
+
   &.is-link {
     @include button-link-variant($bg-primary-color);
 

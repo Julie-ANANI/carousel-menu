@@ -31,8 +31,9 @@
   }
 
   &.is-multiline::before {
-    width: 100%;
+    width: 180px;
     white-space: normal;
+    height: auto;
   }
 
   &::after {
