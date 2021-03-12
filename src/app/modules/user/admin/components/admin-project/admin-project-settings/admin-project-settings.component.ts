@@ -244,7 +244,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
                 , this._innovation.stats && this._innovation.stats.nbFirstMail),
             gauge: {
-              title: `${this._innovation.stats && this._innovation.stats.nbValidatedAnswers || 0} validated answers / ${this._innovation.stats && this._innovation.stats.nbFirstMail || 0} pros contacted`,
+              title: `${this._innovation.stats && this._innovation.stats.validatedAnswers || 0} validated answers / ${this._innovation.stats && this._innovation.stats.nbFirstMail || 0} pros contacted`,
               referent: referents.answerRate || 50,
               delimitersLabels: ['Unattractive project', 'Project partly attractive', 'Attractive project', 'Very attractive project']
             }
