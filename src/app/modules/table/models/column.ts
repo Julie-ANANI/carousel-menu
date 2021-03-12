@@ -19,7 +19,12 @@ export interface Column {
   /**
    * This is the expected configuration when we want to search using a collection other than the one which is active
    */
+  // Todo remove
   readonly _searchConfig?: {
+    _collection: string,
+    _searchKey: string
+  };
+  readonly _searchAdvance?: {
     _collection: string,
     _searchKey: string
   };

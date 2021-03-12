@@ -80,8 +80,8 @@
         <ng-container *ngSwitchCase="'CHECK'">
           <label>
             <select
-              (change)="onSearchOther(property)"
-              [(ngModel)]="searchConfig[attrs(property)]"
+              (ngModelChange)="onSearchOther($event, property)"
+              [ngModel]="dropdownOtherPropValue(property)"
               class="form-select is-sm text-medium text-ellipsis">
               <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
               <option [ngValue]="true">{{ 'COMMON.YES' | translate }}</option>
@@ -95,8 +95,8 @@
         <ng-container *ngSwitchCase="'MULTI-CHOICES'">
           <label>
             <select
-              (change)="onSearchOther(property)"
-              [(ngModel)]="searchConfig[attrs(property)]"
+              (ngModelChange)="onSearchOther($event, property)"
+              [ngModel]="dropdownOtherPropValue(property)"
               class="form-select is-sm text-medium text-ellipsis">
               <option [ngValue]="undefined" selected>{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let choice of choices(property)" [ngValue]="choiceName(choice)">
