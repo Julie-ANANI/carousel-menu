@@ -204,7 +204,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.opened
               , this._innovation.stats && this._innovation.stats.received),
             gauge: {
-              title: 'Opened / Delivered',
+              title: `${this._innovation.stats && this._innovation.stats.opened || 0} opened / ${this._innovation.stats && this._innovation.stats.received || 0} delivered`,
               referent: referents.openRate || 50,
               delimitersLabels: ['Unattractive title, to be adjusted', 'Title partly attractive, to be checked', 'Attractive title', 'Very attractive title']
             }
@@ -214,7 +214,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.clicked
               , this._innovation.stats && this._innovation.stats.opened),
             gauge: {
-              title: 'Clicked / Opened',
+              title: `${this._innovation.stats && this._innovation.stats.clicked || 0} clicked / ${this._innovation.stats && this._innovation.stats.opened || 0} opened`,
               referent: referents.clickToOpenRate || 50,
               delimitersLabels: ['Unattractive pitch, to be adjusted', 'Pitch partly attractive, to be checked', 'Attractive pitch', 'Very attractive pitch']
             }
@@ -229,7 +229,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.answers
               , this._innovation.stats && this._innovation.stats.clicked),
             gauge: {
-              title: 'Received answers / quiz views',
+              title: `${this._innovation.stats && this._innovation.stats.answers || 0} received answers / ${this._innovation.stats && this._innovation.stats.clicked || 0} quiz views`,
               referent: referents.quizAttractiveness || 50,
               delimitersLabels: ['Unattractive quiz, to be adjusted', 'Quiz partly attractive, to be checked', 'Attractive quiz', 'Very attractive quiz']
             }
@@ -244,7 +244,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
                 , this._innovation.stats && this._innovation.stats.nbFirstMail),
             gauge: {
-              title: 'Validated answers / Pros contacted',
+              title: `${this._innovation.stats && this._innovation.stats.nbValidatedAnswers || 0} validated answers / ${this._innovation.stats && this._innovation.stats.nbFirstMail || 0} pros contacted`,
               referent: referents.answerRate || 50,
               delimitersLabels: ['Unattractive project', 'Project partly attractive', 'Attractive project', 'Very attractive project']
             }
