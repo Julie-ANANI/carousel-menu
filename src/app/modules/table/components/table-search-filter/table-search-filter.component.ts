@@ -319,6 +319,11 @@ export class TableSearchFilterComponent {
     this.searchConfigChange.emit(this._searchConfig);
   }
 
+  /**
+   * getting the value for the dropdown based on the column._searchAdvance._searchKey
+   * from this._advanceSearchObject
+   * @param column
+   */
   public dropdownOtherPropValue(column: Column): string {
     if (column._searchAdvance && column._searchAdvance._collection) {
       if (TableSearchFilterComponent._iterateObject(this._advanceSearchObject)) {
