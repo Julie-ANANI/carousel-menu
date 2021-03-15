@@ -18,6 +18,7 @@ import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import {AuthService} from '../../../../../services/auth/auth.service';
+import {Objective, ObjectivesPrincipal} from '../../../../../models/static-data/missionObjectives';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -46,13 +47,13 @@ export class AdminProjectsComponent implements OnInit {
 
   private _currentLang = this._translateService.currentLang;
 
-  private _mainObjective = this._currentLang === 'en' ?
-    'mission.objective.principal.en' : 'mission.objective.principal.fr';
+  private _mainObjective = 'mission.objective.principal.en';
 
-  private _objectiveSearchKey = this._currentLang === 'en' ?
-    'objective.principal.en' : 'objective.principal.fr';
+  private _objectiveSearchKey = 'objective.principal.en';
 
   private _fetchingError = false;
+
+  objectives: Array<Objective> = ObjectivesPrincipal;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
@@ -196,7 +197,7 @@ export class AdminProjectsComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
           _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
-          _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
+          _searchAdvance: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
         {
           _attrs: ['mission.externalDiffusion.community'],
@@ -254,26 +255,25 @@ export class AdminProjectsComponent implements OnInit {
           _width: '180px',
           _isSearchable: this.canAccess(['searchBy', 'company']),
           _isHidden: !this.canAccess(['tableColumns', 'company']),
-          _searchConfig: {_collection: 'user', _searchKey: 'company.name' }
+          _searchAdvance: {_collection: 'user', _searchKey: 'company.name' }
         },
         {
           _attrs: ['mission.type'],
           _name: 'Type',
           _type: 'TEXT',
           _isSortable: true,
-          _isSearchable: this.canAccess(['searchBy', 'type']),
           _isHidden: !this.canAccess(['tableColumns', 'type']),
-          _width: '100px',
-          // _searchConfig: {_collection: 'mission', _searchKey: 'type' }
-        }, // Using _searchConfig for advanced search
+          _width: '100px'
+        },
         {
           _attrs: [this._mainObjective],
           _name: 'Objective',
           _type: 'TEXT',
-          _isSearchable: this.canAccess(['filterBy', 'objective']),
+          // _isSearchable: this.canAccess(['filterBy', 'objective']),
+          _isSearchable: true,
           _isHidden: !this.canAccess(['tableColumns', 'objective']),
           _width: '200px',
-          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
+          _searchAdvance: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
           }, // Using _searchConfig for advanced search
         {
           _attrs: ['created'],
@@ -282,6 +282,21 @@ export class AdminProjectsComponent implements OnInit {
           _isSortable: true,
           _width: '130px',
           _isHidden: !this.canAccess(['tableColumns', 'created'])
+        },
+        {
+          _attrs: ['mission.type'],
+          _name: 'Type',
+          _type: 'MULTI-CHOICES',
+          // _isSearchable: this.canAccess(['filterBy', 'type']),
+          _isSearchable: true,
+          _searchAdvance: {_collection: 'mission', _searchKey: 'type' },
+          _isHidden: true,
+          _choices: [
+            {_name: 'CLIENT', _alias: 'Client'},
+            {_name: 'DEMO', _alias: 'Demo'},
+            {_name: 'USER', _alias: 'User'},
+            {_name: 'TEST', _alias: 'Test'},
+          ]
         },
         {
           _attrs: ['status'],
@@ -296,20 +311,6 @@ export class AdminProjectsComponent implements OnInit {
             {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
             {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label is-progress'},
             {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-          ]
-        },
-        {
-          _attrs: ['mission.type'],
-          _name: 'Type',
-          _type: 'MULTI-CHOICES',
-          _isSortable: true,
-          _isSearchable: true,
-          _searchConfig: {_collection: 'mission', _searchKey: 'type' },
-          _choices: [
-            {_name: 'CLIENT', _alias: 'Client'},
-            {_name: 'DEMO', _alias: 'Demo'},
-            {_name: 'USER', _alias: 'User'},
-            {_name: 'TEST', _alias: 'Test'},
           ]
         },
         {
