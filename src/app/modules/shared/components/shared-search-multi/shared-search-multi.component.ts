@@ -35,7 +35,7 @@ export class SharedSearchMultiComponent {
 
   private _searchConfig: Config;
 
-  private _searchString: string = '';
+  private _searchString = '';
 
   private _openTooltip = false;
 
@@ -82,13 +82,10 @@ export class SharedSearchMultiComponent {
   public onSearch() {
 
     this._searchConfig.offset = '0';
+    this._deleteAdvanceConfig(this._currentTextProp);
 
     if (this._searchString === '') {
       this._searchConfig.search = '{}';
-      if (this._currentTextProp._searchConfig) {
-        delete this._searchConfig['fromCollection'];
-        delete this._searchConfig[this._currentTextProp._searchConfig._searchKey];
-      }
     } else {
       const _search: any = {};
 
@@ -96,8 +93,8 @@ export class SharedSearchMultiComponent {
 
       // See if we have some information for a complicated search
       if (this._currentTextProp._searchConfig) {
-        this._searchConfig['fromCollection'] = this._currentTextProp._searchConfig._collection;
-        this._searchConfig[this._currentTextProp._searchConfig._searchKey] = encodeURIComponent(input.join(' '));
+        // refactor the code.
+        this._initAdvanceConfig(this._currentTextProp, 'TEXT', input);
       } else {
         input.forEach((queryStr: string, index: number) => {
           _search[this._currentTextProp._attrs[index]] = encodeURIComponent(queryStr.trim());
@@ -110,16 +107,70 @@ export class SharedSearchMultiComponent {
 
   }
 
+  /**
+   *
+   * @param value
+   * @param type
+   * @param searchString
+   * @private
+   */
+  private _initAdvanceConfig(value: Column, type: 'TEXT' | 'CHOICE', searchString: any) {
+    if (value._searchConfig) {
+      this._searchConfig['fromCollection'] = value._searchConfig._collection;
+      switch (type) {
+        case 'TEXT':
+          this._searchConfig[value._searchConfig._searchKey] = encodeURIComponent(searchString.join(' '));
+          break;
+        case 'CHOICE':
+          this._searchConfig[value._searchConfig._searchKey] = searchString;
+          break;
+      }
+    }
+  }
+
+  private _deleteAdvanceConfig(value: Column) {
+    if (value._searchConfig) {
+      delete this._searchConfig['fromCollection'];
+      delete this._searchConfig[value._searchConfig._searchKey];
+    }
+  }
+
+  /**
+   *
+   * @param prop
+   */
   public onOtherSearch(prop: Column) {
 
     this._searchConfig.offset = '0';
 
     if (this._searchConfig[prop._attrs[0]] === null || this._searchConfig[prop._attrs[0]] === undefined ) {
       delete this._searchConfig[prop._attrs[0]];
+      this._deleteAdvanceConfig(prop);
+    }
+
+    if (prop._searchConfig && prop._searchConfig._collection && this._isExistsSearchKey()) {
+      this._searchConfig['fromCollection'] = prop._searchConfig._collection;
+    } else if (this._searchString) {
+      this.onSearch();
     }
 
     this.searchConfigChange.emit(this._searchConfig);
 
+  }
+
+  private _isExistsSearchKey(): boolean {
+    if (this._otherProps.length) {
+      for (let i = 0; i < this._otherProps.length; i++) {
+        for (const property in this._searchConfig) {
+          if (this._searchConfig.hasOwnProperty(property) && this._otherProps[i]._searchConfig) {
+            if (this._otherProps[i]._searchConfig._searchKey === property) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
   }
 
   getType(column: Column): types {

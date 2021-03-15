@@ -18,6 +18,7 @@ import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import {AuthService} from '../../../../../services/auth/auth.service';
+import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObjectives';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -143,6 +144,7 @@ export class AdminProjectsComponent implements OnInit {
     // Change here the fields. This will hit an aggregate on the back
     /* Warning: Juan is experimenting with this encoding. The idea is to encode the query params (not a crypto thing)
      * to avoid send thing in clear text. The endpoint in the back is prepared to parse this*/
+    console.log(config);
     this._innovationService.advancedSearch({
       config: encodeURI(Buffer.from(JSON.stringify(config)).toString('base64'))
     }).pipe(first()).subscribe(innovations => {
@@ -201,14 +203,14 @@ export class AdminProjectsComponent implements OnInit {
         {
           _attrs: ['mission.externalDiffusion.community'],
           _name: 'Community',
-          _width: '150px',
+          _width: '120px',
           _type: 'CHECK',
           _isHidden: !this.canAccess(['tableColumns', 'community']),
         },
         {
           _attrs: ['mission.externalDiffusion.social'],
-          _name: 'Social Networks',
-          _width: '180px',
+          _name: 'Social',
+          _width: '100px',
           _type: 'CHECK',
           _isHidden: !this.canAccess(['tableColumns', 'social']),
         },
@@ -223,14 +225,14 @@ export class AdminProjectsComponent implements OnInit {
           _attrs: ['stats.emailsOK'],
           _name: 'Good Emails',
           _type: 'NUMBER',
-          _width: '150px',
+          _width: '130px',
           _isHidden: !this.canAccess(['tableColumns', 'goodEmails'])
         },
         {
           _attrs: ['stats.validatedAnswers'],
           _name: 'Validated Answers',
           _type: 'NUMBER',
-          _width: '200px',
+          _width: '170px',
           _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
         },
         {
@@ -261,20 +263,16 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Type',
           _type: 'TEXT',
           _isSortable: true,
-          _isSearchable: this.canAccess(['searchBy', 'type']),
           _isHidden: !this.canAccess(['tableColumns', 'type']),
-          _width: '100px',
-          _searchConfig: {_collection: 'mission', _searchKey: 'type' }
-        }, // Using _searchConfig for advanced search
+          _width: '100px'
+        },
         {
           _attrs: [this._mainObjective],
           _name: 'Objective',
           _type: 'TEXT',
-          _isSearchable: this.canAccess(['searchBy', 'objective']),
           _isHidden: !this.canAccess(['tableColumns', 'objective']),
-          _width: '200px',
-          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
-          }, // Using _searchConfig for advanced search
+          _width: '200px'
+        },
         {
           _attrs: ['created'],
           _name: 'Created',
@@ -282,6 +280,31 @@ export class AdminProjectsComponent implements OnInit {
           _isSortable: true,
           _width: '130px',
           _isHidden: !this.canAccess(['tableColumns', 'created'])
+        },
+        {
+          _attrs: ['type'],
+          _name: 'Type',
+          _type: 'MULTI-CHOICES',
+          _isHidden: true,
+          _searchConfig: {_collection: 'mission', _searchKey: 'type' },
+          _isSearchable: this.canAccess(['filterBy', 'type']),
+          _choices: [
+            {_name: 'USER', _alias: 'User'},
+            {_name: 'CLIENT', _alias: 'Client'},
+            {_name: 'DEMO', _alias: 'Demo'},
+            {_name: 'TEST', _alias: 'Test'},
+          ]
+        }, // Using _searchConfig for advanced search
+        {
+          _attrs: [this._objectiveSearchKey],
+          _name: 'Objective',
+          _type: 'MULTI-CHOICES',
+          _isSearchable: this.canAccess(['filterBy', 'objective']),
+          _isHidden: true,
+          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey },
+          _choices: ObjectivesPrincipal.map((objective) => {
+            return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
+          })
         },
         {
           _attrs: ['status'],
