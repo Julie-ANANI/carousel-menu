@@ -11,4 +11,7 @@ export interface Etherpad {
   authorID?: string;
 }
 
+/**
+ * while adding new padType try to make it's length <= 5
+ */
 export type PadType = 'pitch' | 'workflow' | 'synthesis' | 'suggestion' | 'orphan';

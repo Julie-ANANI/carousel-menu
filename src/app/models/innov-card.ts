@@ -15,6 +15,7 @@ export interface InnovCardSection {
   content: string | Array<Media>;
   visibility: boolean;
   comments?: CollaborativeComment[];
+  etherpadElementId?: string;
 }
 
 export interface InnovCardComment {
