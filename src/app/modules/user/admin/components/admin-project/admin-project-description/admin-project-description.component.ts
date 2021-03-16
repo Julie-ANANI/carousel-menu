@@ -13,6 +13,7 @@ import {CommonService} from '../../../../../../services/common/common.service';
 import {TranslationService} from '../../../../../../services/translation/translation.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {ScrapeHTMLTags} from '../../../../../../pipe/pipes/ScrapeHTMLTags';
+import {EtherpadFrontService} from '../../../../../../services/etherpad/etherpad-front.service';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 
@@ -63,6 +64,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
+              private _etherpadFrontService: EtherpadFrontService,
               private _translationService: TranslationService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -209,11 +211,21 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this.updateComment();
   }
 
+  /**
+   * now for the new custom section we use etherpadElementId property.
+   * If it doesn't exists with use the old one.
+   *
+   * @param event
+   * @param property
+   * @param index
+   */
   public onContentChange(event: { content: string }, property: string, index?: number) {
     if (property !== 'sections') {
       this.activeInnovCard[property] = event.content;
     } else {
       this.activeInnovCard.sections[index].content = event.content;
+      this.activeInnovCard.sections[index].etherpadElementId = this.activeInnovCard.sections[index].etherpadElementId
+        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
     }
     this.updateInnovation();
   }
@@ -242,7 +254,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           title: 'New section',
           content: '',
           visibility: true,
-          type: 'OTHER'
+          type: 'OTHER',
+          etherpadElementId: this._etherpadFrontService.generateElementId('OTHER', this.currentLang)
         };
         this._showModal = true;
         break;
