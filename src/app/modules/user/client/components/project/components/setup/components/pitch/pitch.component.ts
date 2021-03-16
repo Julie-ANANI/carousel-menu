@@ -16,7 +16,7 @@ import {Media, Video} from '../../../../../../../../../models/media';
 import {Preset} from '../../../../../../../../../models/preset';
 import {MissionService} from '../../../../../../../../../services/mission/mission.service';
 import {CollaborativeComment} from '../../../../../../../../../models/collaborative-comment';
-import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
+import {EtherpadFrontService} from '../../../../../../../../../services/etherpad/etherpad-front.service';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -31,11 +31,13 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _toBeSaved = false;
   private _isUploadingVideo = false;
 
+  activeSectionIndex = 0;
+
   constructor(private _innovationService: InnovationService,
               private _missionService: MissionService,
+              private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService,
-              private _etherpadService: EtherpadService) {
+              private _innovationFrontService: InnovationFrontService) {
   }
 
   private _innovation: Innovation = <Innovation>{};
@@ -56,7 +58,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     if (!this._toBeSaved) {
       this._sidebarValue = value;
       if (this._sidebarValue.animate_state === 'inactive') {
-        this._activeSection = '';
+        this._activeSection = <InnovCardSection>{};
       }
     } else if (this._toBeSaved) {
       this._changesToSave();
@@ -85,9 +87,9 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._isEditable;
   }
 
-  private _activeSection: CardSectionTypes = '';
+  private _activeSection: InnovCardSection = <InnovCardSection>{};
 
-  get activeSection(): CardSectionTypes {
+  get activeSection(): InnovCardSection {
     return this._activeSection;
   }
 
@@ -160,7 +162,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   get operatorComment(): CardComment {
-    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection);
+    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection.type);
   }
 
   get imagePostUri(): string {
@@ -184,7 +186,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       }
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
-      this._fetchCommentsOfSections();
+      // this._fetchCommentsOfSections();
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((cardIndex) => {
@@ -227,33 +229,43 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openSidebar(section: string, content: string | Array<Media>) {
+  public openSidebar(section: InnovCardSection, index: number) {
     if (!this._toBeSaved) {
-      this._activeSectionCode = this._computeSectionCode(section);
-      this._getPadAllComments();
-      this._activeSection = <CardSectionTypes>section;
-      this._cardContent = content;
+      this._activeSection = section;
+      this._cardContent = section.content;
+      const _title = section.type === 'OTHER'
+        ? section.title
+        : 'SIDEBAR.PROJECT_PITCH.' + (this._isEditable ? 'EDIT.' : 'VIEW.') + section.type;
+
+      if (!this._activeSection.etherpadElementId) {
+        this._activeSection.etherpadElementId = this._computeSectionCode(section.type, index);
+      }
+
+      // this._getPadAllComments();
+
+      console.log(this._activeSection);
 
       this._sidebarValue = {
         animate_state: 'active',
-        type: section,
+        type: section.type,
         size: '726px',
-        title: 'SIDEBAR.PROJECT_PITCH.' + (this._isEditable ? 'EDIT.' : 'VIEW.') + section
+        title: _title
       };
     } else {
       this._changesToSave();
     }
   }
 
-  private _getPadAllComments() {
-    this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', this.activeSectionCode))
+  /*private _getPadAllComments() {
+    this._etherpadService.getAllCommentsOfPad(
+      this.innovation._id, this._etherpadFrontService.buildPadID('pitch', this._activeSection.etherpadElementId))
       .pipe(first())
       .subscribe((result) => {
         this._currentSectionComments = result;
         }, (err: HttpErrorResponse) => {
         console.error(err);
       });
-  }
+  }*/
 
   public mediaSrc(media: Media) {
     return InnovationFrontService.getMedia(media);
@@ -288,23 +300,23 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _computeSectionCode(section: string): string {
-    let sectionCode = section.toLowerCase() + '-' + this.activeInnovCard.lang;
+  private _computeSectionCode(sectionType: CardSectionTypes, sectionIndex: number): string {
+    let _sectionIndex = sectionIndex;
 
-    switch (section) {
+    switch (sectionType) {
       case 'ISSUE':
-        const _indexIssue = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
-        sectionCode = section.toLowerCase() + '-' + _indexIssue + 3 + '-' + this.activeInnovCard.lang;
+        _sectionIndex = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
         break;
 
       case 'SOLUTION':
-        const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
-        sectionCode = section.toLowerCase() + '-' + _indexSolution + 3 + '-' + this.activeInnovCard.lang;
+        _sectionIndex = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
         break;
-
     }
 
-    return sectionCode;
+    console.log(sectionType);
+    console.log(_sectionIndex);
+
+    return this._etherpadFrontService.buildPadIdOldInnovation(sectionType, _sectionIndex, this.activeInnovCard.lang);
   }
 
   public onSaveProject(event: { type: string, content: any }) {
@@ -417,15 +429,17 @@ export class PitchComponent implements OnInit, OnDestroy {
 
     this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
       ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
+    console.log(this._sections);
   }
 
-  private _fetchCommentsOfSections() {
+  /*private _fetchCommentsOfSections() {
     this._sections.forEach(
-      (section) => this._etherpadService.getAllCommentsOfPad(this.innovation._id, EtherpadService.buildPadID('pitch', this._computeSectionCode(section.type))).subscribe(
+      (section) => this._etherpadService.getAllCommentsOfPad(this.innovation._id,
+      this._etherpadFrontService.buildPadID('pitch', this._computeSectionCode(section.type))).subscribe(
         (result) => {
           section.comments = result;
         }));
-  }
+  }*/
 
   private _changesToSave() {
     if (this._toBeSaved) {
@@ -490,10 +504,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
       .pipe(first())
-      .subscribe((video) => {
+      .subscribe((_video) => {
         this._isUploadingVideo = false;
-        this._innovation.innovationCards[this._activeCardIndex].media.push(video);
-        this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media
+        this._innovation.innovationCards[this._activeCardIndex].media.push(_video);
+        this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media;
         this._innovationFrontService.setInnovation(this._innovation);
         this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');

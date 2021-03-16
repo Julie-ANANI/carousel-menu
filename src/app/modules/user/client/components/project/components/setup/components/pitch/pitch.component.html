@@ -71,7 +71,8 @@
           *ngIf="section.visibility"
           [ngClass]="{ 'is-filled': (section.content && section.content.length),
           'is-not-filled': !(section.content && section.content.length > 0),
-          'is-active': activeSection === section.type, 'm-no-bottom': i === (sections.length-1) }"
+          'is-active': activeSection.type === section.type && activeSectionIndex === i,
+          'm-no-bottom': i === (sections.length-1) }"
           class="field-wrapper">
 
           <!-- header -->
@@ -88,7 +89,7 @@
               {{ 'COMMON.LABEL.COMMENTS' | translate }}
             </span>
             </div>
-            <span (click)="openSidebar(section.type, section.content)" class="icon-container is-overlay">
+            <span (click)="openSidebar(section, i)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
           </div>
@@ -299,7 +300,7 @@
 
 
 <!-- sidebar to edit innovation card field -->
-<app-sidebar *ngIf="activeSectionCode" [(template)]="sidebarValue">
+<app-sidebar *ngIf="activeSection.etherpadElementId" [(template)]="sidebarValue">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
     (tobeSavedChanges)="onChangesToBeSaved($event)"
@@ -313,7 +314,7 @@
     [isUploadingVideo]="isUploadingVideo"
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
-    [sectionId]="activeSectionCode"
+    [sectionId]="activeSection.etherpadElementId"
     [type]="sidebarValue.type">
   </app-sidebar-project-pitch>
 </app-sidebar>
