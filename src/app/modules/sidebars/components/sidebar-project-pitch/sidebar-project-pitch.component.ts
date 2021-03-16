@@ -6,10 +6,10 @@ import {InnovationFrontService} from '../../../../services/innovation/innovation
 import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
 import {CollaborativeComment} from '../../../../models/collaborative-comment';
 import {picto} from '../../../../models/static-data/picto';
-import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {SocketService} from '../../../../services/socket/socket.service';
+import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -116,6 +116,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   private _ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private _innovationFrontService: InnovationFrontService,
+              private _etherpadFrontService: EtherpadFrontService,
               private _socketService: SocketService) { }
 
   ngOnInit(): void {
@@ -134,7 +135,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       this.cardContent = changes.cardContent && changes.cardContent.currentValue || '';
       this._isSaving = false;
       this._toBeSaved = false;
-      this._padID = EtherpadService.buildPadID('pitch', this.sectionId);
+      this._padID = this._etherpadFrontService.buildPadID('pitch', this.sectionId);
     }
   }
 

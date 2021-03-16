@@ -3,8 +3,8 @@ import {Etherpad, PadType} from '../../../../models/etherpad';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {User} from '../../../../models/user.model';
-import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 import {Subject} from 'rxjs';
+import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
 
 type Editor = 'ETHERPAD' | 'TINY_MCE';
 
@@ -63,7 +63,8 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private _authService: AuthService) {
+  constructor(private _authService: AuthService,
+              private _etherpadFrontService: EtherpadFrontService) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -73,7 +74,7 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
         elementId: this.elementId,
         authorID: this._authService.etherpadAccesses.authorID,
         innovationId: this._innovationId,
-        padID: EtherpadService.buildPadID(this.type, this.elementId),
+        padID: this._etherpadFrontService.buildPadID(this.type, this.elementId),
         userName: UserFrontService.fullName(this.user),
         noColors: this.isClient
       };
