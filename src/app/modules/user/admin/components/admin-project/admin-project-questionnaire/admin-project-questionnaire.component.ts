@@ -113,6 +113,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
       this._innovation = innovation;
+      this._innovationFrontService.setInnovation(innovation);
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
