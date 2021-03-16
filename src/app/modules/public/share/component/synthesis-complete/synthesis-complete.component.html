@@ -32,7 +32,13 @@
 
           <!-- main page -->
           <div class="section-pad">
-            <app-project-front-page [data]="innovation"></app-project-front-page>
+            <ng-container *ngIf="report._id">
+              <app-project-front-page
+                [data]="report"
+                [media]="reportMedia"
+                [title]="reportTitle">
+              </app-project-front-page>
+            </ng-container>
           </div>
 
           <!-- description -->
