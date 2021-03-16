@@ -1,9 +1,9 @@
 export interface ExecutiveReport {
   readonly _id: string;
-  readonly completion: number
+  readonly completion: number;
   lang: 'en' | 'fr';
   summary: string;
-  sale: string
+  sale: string;
   client: ExecutiveClient;
   objective: string;
   targeting: ExecutiveTargeting;
@@ -49,7 +49,7 @@ export interface ExecutiveTargeting {
 
 export interface ExecutiveConclusion {
   operator: string;
-  conclusion: string
+  conclusion: string;
 }
 
 export interface ExecutiveSection {
