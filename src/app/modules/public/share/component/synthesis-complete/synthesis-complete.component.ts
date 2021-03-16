@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Inject, PLATFORM_ID} from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
@@ -6,6 +6,12 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovCard } from '../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
+import {isPlatformBrowser} from '@angular/common';
+import {ExecutiveReportService} from '../../../../../services/executive-report/executive-report.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ExecutiveReport} from '../../../../../models/executive-report';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
 @Component({
   selector: 'app-synthesis-complete',
@@ -27,7 +33,15 @@ export class SynthesisCompleteComponent {
 
   private _pageTitle = 'COMMON.PAGE_TITLE.REPORT';
 
-  constructor(private _translateTitleService: TranslateTitleService,
+  private _report: Innovation | ExecutiveReport = <Innovation | ExecutiveReport>{};
+
+  private _reportTitle = '';
+
+  private _reportMedia = '';
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _executiveReportService: ExecutiveReportService,
+              private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
@@ -50,6 +64,7 @@ export class SynthesisCompleteComponent {
 
     this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).subscribe((response: any) => {
       this._innovation = response;
+      this._getExecutiveReport();
 
       if (this._innovation) {
         const userLangIndex = this._innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.userLang);
@@ -74,6 +89,28 @@ export class SynthesisCompleteComponent {
       }
     });
 
+  }
+
+  /**
+   * if the innovation has this._innovation.executiveReportId then we get that object from the back for the
+   * front page because it has updated value for the client and objective.
+   * @private
+   */
+  private _getExecutiveReport() {
+    if (isPlatformBrowser(this._platformId)) {
+      if (this._innovation && this._innovation.executiveReportId) {
+        this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((report) => {
+          this._report = report;
+          this._reportMedia = InnovationFrontService.principalMedia(this._innovation, this.userLang);
+          this._reportTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
+        }, (err: HttpErrorResponse) => {
+          this._report = this._innovation;
+          console.error(err);
+        });
+      } else {
+        this._report = this._innovation;
+      }
+    }
   }
 
 
@@ -104,6 +141,18 @@ export class SynthesisCompleteComponent {
 
   get userLang(): string {
     return this._translateService.currentLang;
+  }
+
+  get report(): Innovation | ExecutiveReport {
+    return this._report;
+  }
+
+  get reportTitle(): string {
+    return this._reportTitle;
+  }
+
+  get reportMedia(): string {
+    return this._reportMedia;
   }
 
 }
