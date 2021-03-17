@@ -7,6 +7,7 @@ export interface CardComment {
   type?: string;
   comment?: string;
   suggestion?: string;
+  sectionId?: string;
 }
 
 export interface InnovCardSection {

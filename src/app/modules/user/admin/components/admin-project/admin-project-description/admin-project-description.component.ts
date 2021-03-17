@@ -202,11 +202,21 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._toggleSuggestion[property] = !this._toggleSuggestion[property];
   }
 
+  /**
+   *
+   * @param event
+   * @param property
+   * @param type
+   * @param index
+   */
   public onCommentChange(event: { content: string }, property: string, type: 'comment' | 'suggestion', index?: number) {
     if (property !== 'sections') {
       this.activeInnovCard.operatorComment[property][type] = event.content;
     } else {
       this.activeInnovCard.operatorComment.sections[index][type] = event.content;
+      this.activeInnovCard.operatorComment.sections[index].sectionId =
+        this.activeInnovCard.operatorComment.sections[index].sectionId
+        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
     }
     this.updateComment();
   }
@@ -241,6 +251,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public updateComment() {
+    console.log('Comment update');
     this._innovationFrontService.setCardCommentNotifyChanges(true);
   }
 
@@ -275,14 +286,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   public createNewSection(event: Event) {
     event.preventDefault();
     this.activeInnovCard.sections.push(this._newSection);
-    this.activeInnovCard.operatorComment.sections.push({
+    const _comment = {
       comment: '',
       suggestion: '',
-      type: this._newSection.type
-    });
+      type: this._newSection.type,
+      sectionId: this._newSection.etherpadElementId
+    };
+    this.activeInnovCard.operatorComment.sections.push(_comment);
     this._newSection = <InnovCardSection>{};
     this._initToggle();
     this.closeModal();
+    this.updateComment();
     this.updateInnovation();
   }
 
@@ -293,6 +307,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._deleteSectionIndex = null;
     this._initToggle();
     this.closeModal();
+    this.updateComment();
     this.updateInnovation();
   }
 
