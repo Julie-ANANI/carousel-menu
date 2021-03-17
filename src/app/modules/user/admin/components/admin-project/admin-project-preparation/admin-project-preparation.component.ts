@@ -78,7 +78,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._project = innovation || <Innovation>{};
       this.setPageTitle();
       this._setActiveCardIndex();
-      console.log(this._project.innovationCards[this._activeCardIndex]);
     });
 
     // Cards text has already been saved by another user
