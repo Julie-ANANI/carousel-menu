@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Innovation} from '../../../../../../../../../models/innovation';
 import {PitchHelpFields} from '../../../../../../../../../models/static-data/project-pitch';
 import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
@@ -17,6 +17,8 @@ import {Preset} from '../../../../../../../../../models/preset';
 import {MissionService} from '../../../../../../../../../services/mission/mission.service';
 import {CollaborativeComment} from '../../../../../../../../../models/collaborative-comment';
 import {EtherpadFrontService} from '../../../../../../../../../services/etherpad/etherpad-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -31,9 +33,15 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _toBeSaved = false;
   private _isUploadingVideo = false;
 
-  activeSectionIndex = 0;
+  private _activeSectionIndex = 0;
 
-  constructor(private _innovationService: InnovationService,
+  get activeSectionIndex(): number {
+    return this._activeSectionIndex;
+  }
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _etherpadService: EtherpadService,
+              private _innovationService: InnovationService,
               private _missionService: MissionService,
               private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -186,7 +194,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       }
       this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
-      // this._fetchCommentsOfSections();
+      this._fetchCommentsOfSections();
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((cardIndex) => {
@@ -229,7 +237,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openSidebar(section: InnovCardSection, index: number) {
+  public openSidebar(section: InnovCardSection) {
     if (!this._toBeSaved) {
       this._activeSection = section;
       this._cardContent = section.content;
@@ -237,13 +245,7 @@ export class PitchComponent implements OnInit, OnDestroy {
         ? section.title
         : 'SIDEBAR.PROJECT_PITCH.' + (this._isEditable ? 'EDIT.' : 'VIEW.') + section.type;
 
-      if (!this._activeSection.etherpadElementId) {
-        this._activeSection.etherpadElementId = this._computeSectionCode(section.type, index);
-      }
-
-      // this._getPadAllComments();
-
-      console.log(this._activeSection);
+      this._getPadAllComments();
 
       this._sidebarValue = {
         animate_state: 'active',
@@ -256,16 +258,17 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  /*private _getPadAllComments() {
+  private _getPadAllComments() {
     this._etherpadService.getAllCommentsOfPad(
-      this.innovation._id, this._etherpadFrontService.buildPadID('pitch', this._activeSection.etherpadElementId))
+      this.innovation._id,
+      this._etherpadFrontService.buildPadID('pitch', this._activeSection.etherpadElementId))
       .pipe(first())
       .subscribe((result) => {
         this._currentSectionComments = result;
         }, (err: HttpErrorResponse) => {
         console.error(err);
       });
-  }*/
+  }
 
   public mediaSrc(media: Media) {
     return InnovationFrontService.getMedia(media);
@@ -313,18 +316,21 @@ export class PitchComponent implements OnInit, OnDestroy {
         break;
     }
 
-    console.log(sectionType);
-    console.log(_sectionIndex);
-
     return this._etherpadFrontService.buildPadIdOldInnovation(sectionType, _sectionIndex, this.activeInnovCard.lang);
   }
 
   public onSaveProject(event: { type: string, content: any }) {
     if (event.type && this._isEditable && this._isSaving && !this._isSubmitting) {
 
-      // TODO when case 'OTHER' will be implemented : this._activeSectionCode should be unique for each other section
-
       switch (event.type) {
+
+        case 'OTHER':
+          const _indexOther = InnovationFrontService.cardDynamicSectionIndex(
+            this.activeInnovCard, 'OTHER', this._activeSection.etherpadElementId
+          );
+          this._innovation.innovationCards[this._activeCardIndex].sections[_indexOther].content = event.content;
+          this._updateProject();
+          break;
 
         case 'TITLE':
           this._innovation.innovationCards[this._activeCardIndex].title = event.content;
@@ -429,17 +435,28 @@ export class PitchComponent implements OnInit, OnDestroy {
 
     this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
       ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
-    console.log(this._sections);
+    this._initEtherpadElementId();
   }
 
-  /*private _fetchCommentsOfSections() {
-    this._sections.forEach(
-      (section) => this._etherpadService.getAllCommentsOfPad(this.innovation._id,
-      this._etherpadFrontService.buildPadID('pitch', this._computeSectionCode(section.type))).subscribe(
-        (result) => {
-          section.comments = result;
-        }));
-  }*/
+  private _initEtherpadElementId() {
+    this._sections.forEach((section, index) => {
+      if (!section.etherpadElementId) {
+        section.etherpadElementId = this._computeSectionCode(section.type, index);
+      }
+    });
+  }
+
+  private _fetchCommentsOfSections() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._sections.forEach((section) => {
+        this._etherpadService.getAllCommentsOfPad(this.innovation._id,
+          this._etherpadFrontService.buildPadID('pitch', section.etherpadElementId)).pipe(first()).subscribe(
+          (result: Array<CollaborativeComment>) => {
+            section.comments = result;
+          });
+      });
+    }
+  }
 
   private _changesToSave() {
     if (this._toBeSaved) {

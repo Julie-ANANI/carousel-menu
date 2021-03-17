@@ -177,11 +177,18 @@ export class InnovationFrontService {
   }
 
   /***
-   * return the index of the section 'ISSUE' | 'SOLUTION'
+   * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER'
+   * if we have searchKey then we search bby it otherwise with the type.
+   * Please note that case won't work if we have more then one section of same type.
+   *
    * @param innovCard
    * @param field
+   * @param searchKey - in case of OTHER send the etherpadElementId
    */
-  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): number {
+  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'OTHER', searchKey = ''): number {
+    if (searchKey) {
+      return innovCard.sections.findIndex((section) => section.type === field && section.etherpadElementId === searchKey);
+    }
     return innovCard.sections.findIndex((section) => section.type === field);
   }
 

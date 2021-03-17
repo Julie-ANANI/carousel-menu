@@ -86,10 +86,10 @@
             </span>
               <!-- TODO : remove comment.comment when etherpad-->
               <span *ngIf="sectionCommentLabel(section.type) " class="label is-primary is-sm text-xs p-left-3 p-right-3">
-              {{ 'COMMON.LABEL.COMMENTS' | translate }}
-            </span>
+                {{ 'COMMON.LABEL.COMMENTS' | translate }}
+              </span>
             </div>
-            <span (click)="openSidebar(section, i)" class="icon-container is-overlay">
+            <span (click)="openSidebar(section)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
           </div>
