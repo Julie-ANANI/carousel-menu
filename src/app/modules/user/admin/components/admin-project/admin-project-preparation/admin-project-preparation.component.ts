@@ -122,7 +122,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((save) => {
         this._toBeSavedComment = save;
-        console.log(save);
       });
 
     this._campaignFrontService.loadingCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading) => {
@@ -248,7 +247,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           saveObject[field] = this._project[field];
         });
         this._saveProject(saveObject);
-        console.log(this._toBeSavedComment);
         this._saveComment();
       }
     }
@@ -270,18 +268,15 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   private _saveComment() {
-    console.log(this.activeCard.operatorComment);
     if (this._toBeSavedComment) {
       this._toBeSavedComment = false;
-      console.log(this.activeCard.operatorComment);
 
       this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id,
-        this.activeCard.operatorComment).pipe(first()).subscribe((comment) => {
+        this.activeCard.operatorComment).pipe(first()).subscribe((_) => {
           this._isSaving = false;
           if (!this._toBeSaved) {
             this._translateNotificationsService.success('Success', 'The comment has been updated.');
           }
-          console.log(comment);
         }, (err: HttpErrorResponse) => {
           this._isSaving = false;
           this._toBeSavedComment = true;

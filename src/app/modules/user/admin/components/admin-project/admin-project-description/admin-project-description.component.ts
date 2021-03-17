@@ -296,7 +296,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._newSection = <InnovCardSection>{};
     this._initToggle();
     this.closeModal();
-    this.updateComment();
     this.updateInnovation();
   }
 
@@ -307,7 +306,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._deleteSectionIndex = null;
     this._initToggle();
     this.closeModal();
-    this.updateComment();
     this.updateInnovation();
   }
 
