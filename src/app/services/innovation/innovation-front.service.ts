@@ -296,8 +296,8 @@ export class InnovationFrontService {
   public static imageSrc(media: Media, width = '240', height = '159', options?: Array<string>): string {
     let _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/`;
     if (options && options.length > 0) {
-      _prefix = `https://res.cloudinary.com/umi/image/upload/`
-      _prefix += options.join(',') + `,h_${height},w_${width}/`
+      _prefix = `https://res.cloudinary.com/umi/image/upload/`;
+      _prefix += options.join(',') + `,h_${height},w_${width}/`;
     }
     const _suffix = '.jpg';
     return media && media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';

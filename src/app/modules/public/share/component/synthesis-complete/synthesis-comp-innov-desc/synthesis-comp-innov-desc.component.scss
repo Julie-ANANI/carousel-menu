@@ -1,0 +1,60 @@
+@import '../../../../../../../style/framework/src/variables';
+
+#synthesis-comp-innov-desc {
+  background-color: $bg-white-color;
+  border-right: $border-radius;
+  font-size: 15px;
+
+  .title {
+    font-size: 27px;
+  }
+
+  .title.is-secondary {
+    font-size: 20px;
+    color: $text-secondary-color;
+    font-weight: normal;
+  }
+
+  .desc-summary-wrapper, .desc-issue-wrapper, .desc-solution-wrapper {
+    padding-right: 15px;
+    flex: 1;
+  }
+
+  .desc-summary-wrapper {
+
+    .desc-img-wrapper {
+      margin-top: 25px;
+      margin-bottom: 20px;
+      height: 146px;
+      width: 220px;
+    }
+
+  }
+
+  .desc-issue-wrapper {
+    padding-left: 15px;
+  }
+
+}
+
+
+@media screen and (max-width: $size-md) {
+
+  #synthesis-comp-innov-desc {
+
+    .desc-main-wrapper {
+      flex-direction: column;
+    }
+
+    .desc-summary-wrapper, .desc-issue-wrapper, .desc-solution-wrapper {
+      padding-right: 0 !important;
+      padding-top: 20px;
+    }
+
+    .desc-issue-wrapper {
+      padding-left: 0 !important;
+    }
+
+  }
+
+}

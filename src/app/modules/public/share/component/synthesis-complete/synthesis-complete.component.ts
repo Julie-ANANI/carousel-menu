@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
-import { InnovCard } from '../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import {isPlatformBrowser} from '@angular/common';
 import {ExecutiveReportService} from '../../../../../services/executive-report/executive-report.service';
@@ -65,19 +64,8 @@ export class SynthesisCompleteComponent {
     this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).subscribe((response: any) => {
       this._innovation = response;
       this._getExecutiveReport();
-
-      if (this._innovation) {
-        const userLangIndex = this._innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.userLang);
-
-        if (userLangIndex !== -1) {
-          this._pageTitle = this._innovation.innovationCards[userLangIndex].title;
-        } else {
-          this._pageTitle = this._innovation.innovationCards[0].title;
-        }
-
-        this._setPageTitle();
-      }
-
+      this._pageTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
+      this._setPageTitle();
       }, () => {
       this._displayReport = false;
       this._notFound = true;

@@ -1,0 +1,43 @@
+<div class="p-50" id="synthesis-comp-innov-desc">
+  <div class="d-flex justify-between desc-main-wrapper">
+
+    <!-- column 1 -->
+    <div class="desc-summary-wrapper">
+      <h2 class="title m-bottom-15">{{ innovCard.title }}</h2>
+      <div [innerHtml]="innovCard.summary"></div>
+      <div class="desc-img-wrapper">
+        <img
+          [ngStyle]="{'height': '146px', 'width': '220px'}"
+          [src]="principalMedia"
+          alt=" "
+          class="img-responsive img-fit-cover">
+      </div>
+      <ng-container *ngIf="!!(innovCard.advantages && innovCard.advantages.length)">
+        <h2 class="title is-secondary m-bottom-15">{{ 'COMMON.HEADINGS.BENEFITS' | translate }}</h2>
+        <ul class="m-no-bottom">
+          <li *ngFor="let advantage of innovCard.advantages">{{ advantage.text | titlecase }}</li>
+        </ul>
+      </ng-container>
+    </div>
+    <!-- /column 1 -->
+
+    <!-- column 2 -->
+    <ng-container *ngIf="!!sectionInfo('ISSUE')">
+      <div class="desc-issue-wrapper">
+        <h2 class="title is-secondary m-bottom-15">{{ 'COMMON.HEADINGS.ISSUE' | translate }}</h2>
+        <div [innerHtml]="sectionInfo('ISSUE')"></div>
+      </div>
+    </ng-container>
+    <!-- /column 2 -->
+
+    <!-- column 3 -->
+    <ng-container *ngIf="!!sectionInfo('SOLUTION')">
+      <div class="desc-solution-wrapper">
+        <h2 class="title is-secondary m-bottom-15">{{ 'COMMON.HEADINGS.SOLUTION' | translate }}</h2>
+        <div [innerHtml]="sectionInfo('SOLUTION')"></div>
+      </div>
+    </ng-container>
+    <!-- /column 3 -->
+
+  </div>
+</div>
