@@ -15,7 +15,7 @@
       <ng-container *ngIf="!!(innovCard.advantages && innovCard.advantages.length)">
         <h2 class="title is-secondary m-bottom-15">{{ 'COMMON.HEADINGS.BENEFITS' | translate }}</h2>
         <ul class="m-no-bottom">
-          <li *ngFor="let advantage of innovCard.advantages">{{ advantage.text | titlecase }}</li>
+          <li *ngFor="let advantage of innovCard.advantages">{{ advantage.text | FormatText }}</li>
         </ul>
       </ng-container>
     </div>
