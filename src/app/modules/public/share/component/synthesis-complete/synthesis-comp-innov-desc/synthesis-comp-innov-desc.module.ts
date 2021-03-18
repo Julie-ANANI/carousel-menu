@@ -4,10 +4,13 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SynthesisCompInnovDescComponent } from './synthesis-comp-innov-desc.component';
 
+import {PipeModule} from '../../../../../../pipe/pipe.module';
+
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
+    PipeModule
   ],
   declarations: [
     SynthesisCompInnovDescComponent
