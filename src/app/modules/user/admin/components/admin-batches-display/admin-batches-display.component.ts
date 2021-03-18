@@ -5,24 +5,24 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovCard } from '../../../../../models/innov-card';
 import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
-import { SearchService } from '../../../../../services/search/search.service';
+// import { SearchService } from '../../../../../services/search/search.service';
 import {Batch} from '../../../../../models/batch';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
 /***
  * this is to display the batches.
  * Example: Under the Market Tests tab.
  */
 
-interface Statistics {
+/*interface Statistics {
   percentFoundPros: number | string;
   percentFoundEmails: number | string;
   percentOkEmails: number | string;
   percentReceivedEmails: number | string;
-}
+}*/
 
 @Component({
   selector: 'app-admin-batches-display',
@@ -35,22 +35,22 @@ export class AdminBatchesDisplayComponent implements OnInit {
   private _weekBatches: Array<any> = [[], [], [], [], []];
   // => [['DATE', batch, batch,..]...]
 
-  private _nbDaysOfStats = 1;
+  // private _nbDaysOfStats = 1;
 
   private _selectedBatch: any;
 
-  private _statistics: Statistics = {
+  /*private _statistics: Statistics = {
     percentFoundPros: null,
     percentFoundEmails: null,
     percentOkEmails: null,
     percentReceivedEmails: null
-  };
+  };*/
 
   private _dateNow = new Date();
 
   private _currentLang = this._translateService.currentLang || 'en';
 
-  private _selectedInnovation: InnovCard = <InnovCard>{};
+  private _selectedInnovCard: InnovCard = <InnovCard>{};
 
   private _sidebarTemplate: SidebarInterface = <SidebarInterface>{};
 
@@ -66,19 +66,23 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _dashboardService: DashboardService,
-              private _searchService: SearchService,
+              // private _searchService: SearchService,
               private _translateService: TranslateService,
-              private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._getPeriodStats();
+      // this._getPeriodStats();
       this._getWeek();
     }
   }
 
-  private _getPeriodStats() {
+
+  /**
+   * commented on 18th Mar,2021 because no idea where we are using this.
+   * @private
+   */
+  /*private _getPeriodStats() {
     this._searchService.getEmailStats(this._nbDaysOfStats).pipe(first()).subscribe((stats: any) => {
 
       const totalMails = stats.total && stats.total.domainNotFound && stats.total.found && stats.total.timeOut
@@ -97,7 +101,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
       console.error(err);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
     });
-  }
+  }*/
 
   private _getWeek() {
     const now = Date.now();
@@ -108,6 +112,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
   private _getNextData() {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
+      console.log(batches);
       this._sortBatches();
       this._isLoading = false;
     }, (err: HttpErrorResponse) => {
@@ -168,7 +173,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   /**
    * instead of using this to show shot colors we are using batch.status.
-   * @param b
+   * @param
    */
   public getState(b: any) {
     const day = this._dateNow.getDay();
@@ -200,22 +205,19 @@ export class AdminBatchesDisplayComponent implements OnInit {
   public showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;
+    this._selectedInnovCard = InnovationFrontService.currentLangInnovationCard(
+      this._selectedBatch.innovation, this._currentLang, 'CARD'
+    );
 
-    if (this._selectedBatch !== null) {
-      this._innovationService.getInnovationCard(this._selectedBatch.innovation.innovationCards[0].id)
-        .pipe(first()).subscribe((card) => {
-        this._selectedInnovation = card;
-        this._sidebarTemplate = {
-          animate_state: 'active',
-          title: 'Innovation Preview',
-          size: '726px'
-        };
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
+    if (this._selectedInnovCard && this._selectedInnovCard._id) {
+      this._sidebarTemplate = {
+        animate_state: 'active',
+        title: 'Innovation Preview',
+        size: '726px'
+      };
+    } else {
+      this._translateNotificationsService.error('Error', 'We could not find the innovation card.');
     }
-
   }
 
   get weekBatches(): Array<any> {
@@ -234,8 +236,8 @@ export class AdminBatchesDisplayComponent implements OnInit {
     return this._currentLang;
   }
 
-  get selectedInnovation(): InnovCard {
-    return this._selectedInnovation;
+  get selectedInnovCard(): InnovCard {
+    return this._selectedInnovCard;
   }
 
   get sidebarTemplate(): SidebarInterface {
