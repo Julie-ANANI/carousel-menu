@@ -177,8 +177,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     };
 
     for (let i = 0; i < this.activeInnovCard.sections.length; i++) {
-      this._toggleComment[i] = !!this.activeInnovCard.operatorComment.sections[i].comment;
-      this._toggleSuggestion[i] = !!this.activeInnovCard.operatorComment.sections[i].suggestion;
+      const etherpadElementId = this.activeInnovCard.sections[i].etherpadElementId;
+      const operatorComment = this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId);
+      this._toggleComment[i] = (etherpadElementId && operatorComment && !!operatorComment.comment);
+      this._toggleSuggestion[i] = (etherpadElementId && operatorComment && !!operatorComment.suggestion);
     }
 
   }

@@ -170,7 +170,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   get operatorComment(): CardComment {
-    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection.type);
+    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection.type, this._activeSection.etherpadElementId);
   }
 
   get imagePostUri(): string {
@@ -203,11 +203,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
-  public sectionCommentLabel(section: string): boolean {
+  public sectionCommentLabel(section: string, etherpadElementId = ''): boolean {
     let comments;
     switch (section) {
 
-      // TODO : remove comment.comment when etherpad
       case 'TITLE':
         comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'TITLE').comments;
         return (!!comments && comments.length > 0)
@@ -231,6 +230,13 @@ export class PitchComponent implements OnInit, OnDestroy {
         return (!!comments && comments.length > 0)
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').comment
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion;
+
+      case 'OTHER':
+        comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'OTHER' &&
+          cardSection.etherpadElementId === etherpadElementId).comments;
+        return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'OTHER', etherpadElementId).comment
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'OTHER', etherpadElementId).suggestion;
 
       default:
         return false;

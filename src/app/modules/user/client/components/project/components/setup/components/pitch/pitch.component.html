@@ -84,8 +84,7 @@
               </ng-container>
               <ng-template #defTitle>{{ section.title }}</ng-template>
             </span>
-              <!-- TODO : remove comment.comment when etherpad-->
-              <span *ngIf="sectionCommentLabel(section.type) " class="label is-primary is-sm text-xs p-left-3 p-right-3">
+              <span *ngIf="sectionCommentLabel(section.type, section.etherpadElementId) " class="label is-primary is-sm text-xs p-left-3 p-right-3">
                 {{ 'COMMON.LABEL.COMMENTS' | translate }}
               </span>
             </div>
