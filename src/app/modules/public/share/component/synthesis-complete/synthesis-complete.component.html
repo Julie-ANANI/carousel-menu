@@ -31,7 +31,7 @@
         <div class="column col-xs-12 col-11 col-mx-auto">
 
           <!-- main page -->
-          <div class="section-pad">
+          <div class="p-top-50 p-bottom-50">
             <ng-container *ngIf="report._id">
               <app-project-front-page
                 [data]="report"
@@ -40,25 +40,30 @@
               </app-project-front-page>
             </ng-container>
           </div>
+          <!-- /main page -->
 
           <!-- description -->
-          <div class="section-pad">
-            <app-shared-innovation-detail [project]="innovation"></app-shared-innovation-detail>
+          <div class="p-top-50 p-bottom-50">
+            <app-synthesis-comp-innov-desc [innovation]="innovation"></app-synthesis-comp-innov-desc>
           </div>
+          <!-- /description -->
 
           <!-- targeting -->
-          <div class="section-pad">
+          <div class="p-top-50 p-bottom-50">
             <app-shared-targeting-detail [project]="innovation"></app-shared-targeting-detail>
           </div>
+          <!-- /targeting -->
 
         </div>
-
 
         <!-- synthesis -->
         <div class="section-pad">
-          <app-shared-market-report [project]="innovation" [reportShared]="true" [showAnonymousAnswers]="true"></app-shared-market-report>
+          <app-shared-market-report
+            [project]="innovation"
+            [reportShared]="true"
+            [showAnonymousAnswers]="true">
+          </app-shared-market-report>
         </div>
-
 
       </div>
     </div>

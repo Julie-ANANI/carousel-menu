@@ -86,8 +86,13 @@ export const COMMON = {
     'B': 'terms and conditions of use.',
   },
 
-
   'TOP_PROFILE': 'Top profile',
+
+  'HEADINGS': {
+    'BENEFITS': 'Benefits',
+    'ISSUE': 'Issue',
+    'SOLUTION': 'Solution'
+  },
 
   'PAGE_TITLE': {
     'LOG_IN': 'Login',
