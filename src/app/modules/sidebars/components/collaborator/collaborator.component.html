@@ -31,9 +31,9 @@
     <!-- bot -->
     <ng-container *ngIf="innovationCollaborators.length === 0 && collaboratorsInvited.length === 0">
       <div class="section-pad rm-pad-bottom">
-        <message-template [widthMax]="'321px'">
+        <app-message-template [widthMax]="'321px'">
           {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
-        </message-template>
+        </app-message-template>
       </div>
     </ng-container>
     <!-- bot -->

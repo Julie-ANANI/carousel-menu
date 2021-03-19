@@ -128,10 +128,10 @@
 
 
 <!-- innovation preview sidebar-->
-<app-sidebar *ngIf="weekBatches.length > 0" [(template)]="sidebarTemplate">
-  <app-sidebar-innovCard-preview
-    [innovCard]="selectedInnovCard"
-    [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }">
-  </app-sidebar-innovCard-preview>
+<app-sidebar *ngIf="weekBatches.length" [(template)]="sidebarTemplate">
+  <app-sidebar-innov-card-preview
+    [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }"
+    [innovCard]="selectedInnovCard">
+  </app-sidebar-innov-card-preview>
 </app-sidebar>
 <!-- /innovation preview sidebar-->

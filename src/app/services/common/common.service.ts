@@ -13,7 +13,7 @@ export class CommonService {
 
   /***
    * this function is to return the color based on the length and limit.
-   * @param textLength
+   * @param text
    * @param limit
    */
   public static getLimitColor(text: string, limit: number): string {
@@ -26,6 +26,14 @@ export class CommonService {
     } else {
       return '#2ECC71';
     }
+  }
+
+  /**
+   *
+   * @param lang - en | fr
+   */
+  public static dateFormat(lang: string): string {
+    return lang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
   }
 
   /***

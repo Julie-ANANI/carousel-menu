@@ -4,18 +4,18 @@
   <section
     *ngIf="innovation.status !== 'DONE' && !adminSide && !previewMode"
     class="p-top-100 p-bottom-30 p-left-15 p-right-15">
-    <message-template [widthMax]="'337px'">
+    <app-message-template [widthMax]="'337px'">
       {{ 'MARKET_REPORT.MESSAGE.EDITING' | translate }}
-    </message-template>
+    </app-message-template>
   </section>
   <!-- /project status not done at client side -->
 
   <!-- project status not submitted admin side -->
   <section *ngIf="innovation.status === 'EDITING' && adminSide" class="p-top-50 p-bottom-30 p-left-15 p-right-15">
-    <message-template [widthMax]="'337px'">
+    <app-message-template [widthMax]="'337px'">
       The client hasn't submitted the project yet. You will be able to edit the market report after
       he submits his project.
-    </message-template>
+    </app-message-template>
   </section>
   <!-- /project status not submitted admin side -->
 

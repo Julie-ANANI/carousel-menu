@@ -48,9 +48,9 @@
     <!-- /search bar -->
 
     <!-- searching finished and no result -->
-    <message-template *ngIf="!isSearching && nothingFound" [widthMax]="'450px'">
+    <app-message-template *ngIf="!isSearching && nothingFound" [widthMax]="'450px'">
       I tried hard, but couldn't find anything. Try harder and refine your search (or create a new enterprise).
-    </message-template>
+    </app-message-template>
     <!-- /searching finished and no result -->
 
     <!-- searching finished and result -->

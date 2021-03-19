@@ -3,7 +3,7 @@
 
     <!-- loading -->
     <section *ngIf="isLoading && !fetchingError" class="p-top-50 p-bottom-30">
-      <message-template [widthMax]="'320px'" [isFetching]="true"></message-template>
+      <app-message-template [widthMax]="'320px'" [isFetching]="true"></app-message-template>
     </section>
     <!-- /loading -->
 
@@ -35,13 +35,13 @@
 
       <!-- no workflows -->
       <section *ngIf="scenarios.length === 0" class="p-top-50">
-        <message-template [widthMax]="'354px'">
+        <app-message-template [widthMax]="'354px'">
           Don't have any workflows?
           <span *ngIf="canAccess(['add'])">
             <br>
             Try to add a one by clicking on "Add" button.
           </span>
-        </message-template>
+        </app-message-template>
       </section>
       <!-- no workflows -->
 

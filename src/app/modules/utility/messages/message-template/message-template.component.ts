@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'message-template',
+  selector: 'app-message-template',
   templateUrl: './message-template.component.html',
   styleUrls: ['./message-template.component.scss']
 })

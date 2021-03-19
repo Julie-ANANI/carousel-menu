@@ -3,9 +3,9 @@
 
     <!-- status EDITING || SUBMITTED -->
     <section *ngIf="innovation.status && (innovation.status === 'EDITING' || innovation.status === 'SUBMITTED')">
-      <message-template [widthMax]="'292px'">
+      <app-message-template [widthMax]="'292px'">
         {{ 'PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}
-      </message-template>
+      </app-message-template>
     </section>
     <!-- /status EDITING || SUBMITTED -->
 

@@ -56,14 +56,6 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   private _isLoading = true;
 
-  private static _sortByName(batches: Array<Batch>) {
-    return batches.sort((a: Batch, b: Batch) => {
-      const nameA = a.innovation.name && a.innovation.name.toLowerCase();
-      const nameB = b.innovation.name && b.innovation.name.toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
-  }
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _dashboardService: DashboardService,
               // private _searchService: SearchService,
@@ -112,7 +104,6 @@ export class AdminBatchesDisplayComponent implements OnInit {
   private _getNextData() {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
-      console.log(batches);
       this._sortBatches();
       this._isLoading = false;
     }, (err: HttpErrorResponse) => {
@@ -127,12 +118,9 @@ export class AdminBatchesDisplayComponent implements OnInit {
    */
   private _sortBatches() {
     this._weekBatches = this._weekBatches.map((batches) => {
-      let _fm = batches.slice(1).filter((batch: Batch) => batch.status === 0);
-      let _sm = batches.slice(1).filter((batch: Batch) => batch.status === 1);
-      let _tm = batches.slice(1).filter((batch: Batch) => batch.status === 2);
-      _fm = AdminBatchesDisplayComponent._sortByName(_fm);
-      _sm = AdminBatchesDisplayComponent._sortByName(_sm);
-      _tm = AdminBatchesDisplayComponent._sortByName(_tm);
+      const _fm = batches.slice(1).filter((batch: Batch) => batch.status === 0);
+      const _sm = batches.slice(1).filter((batch: Batch) => batch.status === 1);
+      const _tm = batches.slice(1).filter((batch: Batch) => batch.status === 2);
       return batches.slice(0, 1).concat(_fm, _sm, _tm);
     });
   }
