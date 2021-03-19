@@ -4,15 +4,15 @@
  * are used more than once for the innovation in the app.
  */
 
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { Innovation } from '../../models/innovation';
-import { Media } from '../../models/media';
-import { CardComment, CardSectionTypes, InnovCard, InnovCardSection } from '../../models/innov-card';
-import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
-import { Question } from '../../models/question';
-import { Section } from '../../models/section';
-import { DomSanitizer } from '@angular/platform-browser';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {Innovation} from '../../models/innovation';
+import {Media} from '../../models/media';
+import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../models/innov-card';
+import {ScrapeHTMLTags} from '../../pipe/pipes/ScrapeHTMLTags';
+import {Question} from '../../models/question';
+import {Section} from '../../models/section';
+import {DomSanitizer} from '@angular/platform-browser';
 
 export interface Values {
   settingPercentage?: number;
@@ -177,11 +177,18 @@ export class InnovationFrontService {
   }
 
   /***
-   * return the index of the section 'ISSUE' | 'SOLUTION'
+   * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER'
+   * if we have searchKey then we search bby it otherwise with the type.
+   * Please note that case won't work if we have more then one section of same type.
+   *
    * @param innovCard
    * @param field
+   * @param searchKey - in case of OTHER send the etherpadElementId
    */
-  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): number {
+  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'OTHER', searchKey = ''): number {
+    if (searchKey) {
+      return innovCard.sections.findIndex((section) => section.type === field && section.etherpadElementId === searchKey);
+    }
     return innovCard.sections.findIndex((section) => section.type === field);
   }
 
@@ -189,8 +196,9 @@ export class InnovationFrontService {
    * returns the operator comment of the card based on the required
    * @param innovCard
    * @param field
+   * @param etherpadElementId
    */
-  public static cardOperatorComment(innovCard: InnovCard, field: CardSectionTypes): CardComment {
+  public static cardOperatorComment(innovCard: InnovCard, field: CardSectionTypes, etherpadElementId = ''): CardComment {
     if (innovCard && innovCard.operatorComment && field) {
       switch (field) {
 
@@ -206,6 +214,12 @@ export class InnovationFrontService {
         case 'SOLUTION':
           return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'SOLUTION');
 
+        case 'OTHER':
+          if (etherpadElementId) {
+            return innovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId) || <CardComment>{};
+          } else {
+            return <CardComment>{};
+          }
       }
     }
     return <CardComment>{};

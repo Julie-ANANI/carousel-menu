@@ -7,6 +7,7 @@ export interface CardComment {
   type?: string;
   comment?: string;
   suggestion?: string;
+  sectionId?: string;
 }
 
 export interface InnovCardSection {
@@ -15,6 +16,7 @@ export interface InnovCardSection {
   content: string | Array<Media>;
   visibility: boolean;
   comments?: CollaborativeComment[];
+  etherpadElementId?: string;
 }
 
 export interface InnovCardComment {

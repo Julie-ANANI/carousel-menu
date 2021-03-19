@@ -56,6 +56,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
+              private _etherpadFrontService: EtherpadFrontService,
               private _etherpadSocketService: EtherpadSocketService,
               private _translateService: TranslateService,
               private _authService: AuthService,
@@ -90,7 +91,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         lang: value.lang || this._translateService.currentLang || 'en',
         noColors: value.noColors || false,
         userName: value.userName || 'user',
-        padID: value.padID || EtherpadService.buildPadID(value.type, value.elementId),
+        padID: value.padID || this._etherpadFrontService.buildPadID(value.type, value.elementId),
         innovationId: value.innovationId || ''
       };
       this._createEtherpad();

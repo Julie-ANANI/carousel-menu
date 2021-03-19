@@ -269,8 +269,9 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   private _saveComment() {
     if (this._toBeSavedComment) {
       this._toBeSavedComment = false;
+
       this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id,
-        this.activeCard.operatorComment).pipe(first()).subscribe((comment) => {
+        this.activeCard.operatorComment).pipe(first()).subscribe((_) => {
           this._isSaving = false;
           if (!this._toBeSaved) {
             this._translateNotificationsService.success('Success', 'The comment has been updated.');

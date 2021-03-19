@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CollaborativeComment, Reply} from '../../models/collaborative-comment';
-import {Etherpad, PadType} from '../../models/etherpad';
+import {Etherpad} from '../../models/etherpad';
 import {Session} from '../../models/session';
 
 const BASE_PATH = '/etherpad';
@@ -10,18 +10,7 @@ const BASE_PATH = '/etherpad';
 @Injectable({providedIn: 'root'})
 export class EtherpadService {
 
-  constructor(private _http: HttpClient) {
-  }
-
-
-  /**
-   * returns the pad id for the specific element. ex: pad-pitch-issue-03
-   * @param type : editor type, ex : synthesis, workflow, pitch...
-   * @param elementId : editor element id, ex : title, issue, conclusion ...
-   */
-  static buildPadID(type: PadType, elementId: string): string {
-    return `pad-${type && type.toLowerCase()}-${elementId && elementId.toLowerCase()}`;
-  }
+  constructor(private _http: HttpClient) {}
 
   /***
    *
