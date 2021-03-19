@@ -253,7 +253,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public updateComment() {
-    console.log('Comment update');
     this._innovationFrontService.setCardCommentNotifyChanges(true);
   }
 
@@ -299,6 +298,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._initToggle();
     this.closeModal();
     this.updateInnovation();
+    this.updateComment();
   }
 
   public deleteSection(event: Event) {
@@ -309,6 +309,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._initToggle();
     this.closeModal();
     this.updateInnovation();
+    this.updateComment();
   }
 
   public uploadImage(media: Media): void {

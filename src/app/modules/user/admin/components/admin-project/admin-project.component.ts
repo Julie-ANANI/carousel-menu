@@ -130,16 +130,18 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
       if (update.userId !== this._authService.userId) {
         this._showBanner = update.userName;
         this._updateTime = Date.now();
+
+        this._setInnoTitle();
+        Object.keys(update.data).forEach((field: string) => {
+          if (object === 'project') {
+            this._project[field] = update.data[field];
+          } else {
+            this._project.mission[field] = update.data[field];
+          }
+        });
+        this._setInnovation();
       }
-      this._setInnoTitle();
-      Object.keys(update.data).forEach((field: string) => {
-        if (object === 'project') {
-          this._project[field] = update.data[field];
-        } else {
-          this._project.mission[field] = update.data[field];
-        }
-      });
-      this._setInnovation();
+
   }
 
   private _initPageTitle() {
