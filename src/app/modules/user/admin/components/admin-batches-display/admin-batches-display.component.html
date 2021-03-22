@@ -50,21 +50,21 @@
               <!-- index2 < 4 -->
               <div *ngIf="index2 < 4" class="batch-body">
 
-                <ng-container *ngIf="batches['status'] === 0">
+                <ng-container *ngIf="getState(batches) === 0">
                   <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-success">
                     <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                     {{ batches['innovation']['name']  | ellipsis:20 }}  {{ batches.size }}
                   </div>
                 </ng-container>
 
-                <ng-container *ngIf="batches['status'] === 1">
+                <ng-container *ngIf="getState(batches) === 1">
                   <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-draft">
                     <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                     {{ batches['innovation']['name'] | ellipsis:20 }}  {{ batches.size }}
                   </div>
                 </ng-container>
 
-                <ng-container *ngIf="batches['status'] === 2">
+                <ng-container *ngIf="getState(batches) === 2">
                   <div (click)="showPreview($event, batches)" class="label is-rounded c-hand  is-info">
                     <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                     {{ batches['innovation']['name'] | ellipsis:20 }}  {{ batches.size }}
@@ -83,21 +83,21 @@
                       <ng-container *ngFor="let batchesOver of days; let index3 = index">
                         <div *ngIf="index3 > 0" class="batch-body">
 
-                          <ng-container *ngIf="batchesOver['status'] === 0">
+                          <ng-container *ngIf="getState(batchesOver) === 0">
                             <div (click)="showPreview($event, batches)" class="label p-2 is-success is-rounded c-hand">
                               <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                               {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                             </div>
                           </ng-container>
 
-                          <ng-container *ngIf="batchesOver['status'] === 1">
+                          <ng-container *ngIf="getState(batchesOver) === 1">
                             <div (click)="showPreview($event, batches)" class="label p-2 is-draft is-rounded c-hand">
                               <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                               {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
                             </div>
                           </ng-container>
 
-                          <ng-container *ngIf="batchesOver['status'] === 2">
+                          <ng-container *ngIf="getState(batchesOver) === 2">
                             <div (click)="showPreview($event, batches)" class="label p-2 is-info is-rounded c-hand">
                               <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
                               {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}

@@ -9,7 +9,6 @@ import { InnovCard } from '../../../../../models/innov-card';
 import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 // import { SearchService } from '../../../../../services/search/search.service';
-import {Batch} from '../../../../../models/batch';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
 /***
@@ -104,24 +103,10 @@ export class AdminBatchesDisplayComponent implements OnInit {
   private _getNextData() {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
-      this._sortBatches();
       this._isLoading = false;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
-    });
-  }
-
-  /**
-   * first sort by shot then by innovation name.
-   * @private
-   */
-  private _sortBatches() {
-    this._weekBatches = this._weekBatches.map((batches) => {
-      const _fm = batches.slice(1).filter((batch: Batch) => batch.status === 0);
-      const _sm = batches.slice(1).filter((batch: Batch) => batch.status === 1);
-      const _tm = batches.slice(1).filter((batch: Batch) => batch.status === 2);
-      return batches.slice(0, 1).concat(_fm, _sm, _tm);
     });
   }
 
