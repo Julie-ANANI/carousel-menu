@@ -337,7 +337,7 @@
                 (textChange)="onContentChange($event, 'sections', i)"
                 [text]="section.content"
                 [innovationId]="innovation._id"
-                [elementId]="section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
+                [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
                 [type]="'pitch'">
               </app-shared-editors>
             </div>
@@ -418,7 +418,7 @@
                   (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
                   [text]="zoneData('sections', 'suggestion', i)"
                   [innovationId]="innovation._id"
-                  [elementId]="section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
+                  [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
                   [type]="'suggestion'">
                 </app-shared-editors>
               </div>

@@ -17,6 +17,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../services/campaign/campaign-front.service';
 import {AuthService} from '../../../../../services/auth/auth.service';
+import {InnovCard} from '../../../../../models/innov-card';
 
 interface Tab {
   route: string;
@@ -131,15 +132,29 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
         this._showBanner = update.userName;
         this._updateTime = Date.now();
       }
-      this._setInnoTitle();
-      Object.keys(update.data).forEach((field: string) => {
-        if (object === 'project') {
-          this._project[field] = update.data[field];
-        } else {
-          this._project.mission[field] = update.data[field];
-        }
+
+    this._setInnoTitle();
+    this._operatorComments(update);
+    Object.keys(update.data).forEach((field: string) => {
+      if (object === 'project') {
+        this._project[field] = update.data[field];
+      } else {
+        this._project.mission[field] = update.data[field];
+      }
+    });
+    this._setInnovation();
+  }
+
+  /**
+   * todo this is temporary solution. Abhishek is looking into better solution.
+   * @private
+   */
+  private _operatorComments(update: any) {
+    if (update && update.data && update.data['innovationCards'] && update.data['innovationCards'].length) {
+      update.data['innovationCards'].forEach((card: InnovCard, index: number) => {
+        card.operatorComment = this._project.innovationCards[index].operatorComment;
       });
-      this._setInnovation();
+    }
   }
 
   private _initPageTitle() {

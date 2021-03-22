@@ -13,6 +13,7 @@ import {CommonService} from '../../../../../../services/common/common.service';
 import {TranslationService} from '../../../../../../services/translation/translation.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {ScrapeHTMLTags} from '../../../../../../pipe/pipes/ScrapeHTMLTags';
+import {EtherpadFrontService} from '../../../../../../services/etherpad/etherpad-front.service';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 
@@ -63,6 +64,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
+              private _etherpadFrontService: EtherpadFrontService,
               private _translationService: TranslationService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -175,8 +177,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     };
 
     for (let i = 0; i < this.activeInnovCard.sections.length; i++) {
-      this._toggleComment[i] = !!this.activeInnovCard.operatorComment.sections[i].comment;
-      this._toggleSuggestion[i] = !!this.activeInnovCard.operatorComment.sections[i].suggestion;
+      const etherpadElementId = this.activeInnovCard.sections[i].etherpadElementId;
+      const operatorComment = this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId);
+      this._toggleComment[i] = (etherpadElementId && operatorComment && !!operatorComment.comment);
+      this._toggleSuggestion[i] = (etherpadElementId && operatorComment && !!operatorComment.suggestion);
     }
 
   }
@@ -200,20 +204,40 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._toggleSuggestion[property] = !this._toggleSuggestion[property];
   }
 
+  /**
+   *
+   * @param event
+   * @param property
+   * @param type
+   * @param index
+   */
   public onCommentChange(event: { content: string }, property: string, type: 'comment' | 'suggestion', index?: number) {
     if (property !== 'sections') {
       this.activeInnovCard.operatorComment[property][type] = event.content;
     } else {
       this.activeInnovCard.operatorComment.sections[index][type] = event.content;
+      this.activeInnovCard.operatorComment.sections[index].sectionId =
+        this.activeInnovCard.operatorComment.sections[index].sectionId
+        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
     }
     this.updateComment();
   }
 
+  /**
+   * now for the new custom section we use etherpadElementId property.
+   * If it doesn't exists with use the old one.
+   *
+   * @param event
+   * @param property
+   * @param index
+   */
   public onContentChange(event: { content: string }, property: string, index?: number) {
     if (property !== 'sections') {
       this.activeInnovCard[property] = event.content;
     } else {
       this.activeInnovCard.sections[index].content = event.content;
+      this.activeInnovCard.sections[index].etherpadElementId = this.activeInnovCard.sections[index].etherpadElementId
+        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
     }
     this.updateInnovation();
   }
@@ -242,7 +266,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           title: 'New section',
           content: '',
           visibility: true,
-          type: 'OTHER'
+          type: 'OTHER',
+          etherpadElementId: this._etherpadFrontService.generateElementId('OTHER', this.currentLang)
         };
         this._showModal = true;
         break;
@@ -262,15 +287,18 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   public createNewSection(event: Event) {
     event.preventDefault();
     this.activeInnovCard.sections.push(this._newSection);
-    this.activeInnovCard.operatorComment.sections.push({
+    const _comment = {
       comment: '',
       suggestion: '',
-      type: this._newSection.type
-    });
+      type: this._newSection.type,
+      sectionId: this._newSection.etherpadElementId
+    };
+    this.activeInnovCard.operatorComment.sections.push(_comment);
     this._newSection = <InnovCardSection>{};
     this._initToggle();
     this.closeModal();
     this.updateInnovation();
+    this.updateComment();
   }
 
   public deleteSection(event: Event) {
@@ -281,6 +309,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._initToggle();
     this.closeModal();
     this.updateInnovation();
+    this.updateComment();
   }
 
   public uploadImage(media: Media): void {
