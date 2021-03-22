@@ -64,13 +64,12 @@ export class SharedSearchMultiComponent {
   }
 
   public onChangeTextProp(prop: Event) {
-
+    this._searchConfig.search = '{}';
+    this._deleteAdvanceConfig(this._currentTextProp);
     this._currentTextProp = this._textProps.find(value => value._attrs[0] === (prop.target as HTMLSelectElement).value);
-
     if (this._searchString) {
-      this.onSearch();
+      this.onSearch(false);
     }
-
   }
 
   /**
@@ -79,10 +78,12 @@ export class SharedSearchMultiComponent {
    * New: if in the configuration of the column the property _searchConfig exists, the configuration
    * object changes to perform an advanced search in the back.
    */
-  public onSearch() {
-
+  public onSearch(toDelete = true) {
     this._searchConfig.offset = '0';
-    this._deleteAdvanceConfig(this._currentTextProp);
+
+    if (toDelete) {
+      this._deleteAdvanceConfig(this._currentTextProp);
+    }
 
     if (this._searchString === '') {
       this._searchConfig.search = '{}';

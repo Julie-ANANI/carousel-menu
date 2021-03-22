@@ -148,7 +148,6 @@ export class AdminProjectsComponent implements OnInit {
     // Change here the fields. This will hit an aggregate on the back
     /* Warning: Juan is experimenting with this encoding. The idea is to encode the query params (not a crypto thing)
      * to avoid send thing in clear text. The endpoint in the back is prepared to parse this*/
-    console.log(config);
     this._innovationService.advancedSearch({
       config: encodeURI(Buffer.from(JSON.stringify(config)).toString('base64'))
     }).pipe(first()).subscribe(innovations => {
