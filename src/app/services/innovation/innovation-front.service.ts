@@ -161,6 +161,38 @@ export class InnovationFrontService {
     }
   }
 
+  /**
+   * first we search by demanded lang if not found then find the card in lang 'en' if not found
+   * then the card at index 0.
+   *
+   * @param innovCards
+   * @param lang
+   */
+  public static currentLangCard(innovCards: Array<InnovCard>, lang = 'en'): InnovCard {
+    let card = <InnovCard>{};
+
+    if (innovCards.length) {
+      const _cardIndex = InnovationFrontService.cardIndexByLang(innovCards, lang);
+      if (_cardIndex !== -1) {
+        card = innovCards[_cardIndex];
+      }
+
+      const _cardIndexEn = InnovationFrontService.cardIndexByLang(innovCards);
+      if (_cardIndexEn !== -1) {
+        card = innovCards[_cardIndex];
+      }
+
+      card = innovCards[0];
+
+    }
+
+    return card;
+  }
+
+  private static cardIndexByLang(innovCards: Array<InnovCard>, lang = 'en'): number {
+    return innovCards.findIndex((card: InnovCard) => card.lang === lang);
+  }
+
   /***
    * returns the section info of the 'ISSUE' | 'SOLUTION'.
    * @param innovCard

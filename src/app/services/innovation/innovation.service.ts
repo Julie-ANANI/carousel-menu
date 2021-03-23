@@ -54,8 +54,24 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId);
   }
 
+  /**
+   *
+   * @param innovationCardId - get the card form the route '/innovation/card/:innovationCardId'
+   */
   public getInnovationCard(innovationCardId: string): Observable<InnovCard> {
     return this._http.get<InnovCard>('/innovation/card/' + innovationCardId);
+  }
+
+  /**
+   * getting the innovation cards by the innovation reference.
+   *
+   * @param innovationId
+   */
+  public getInnovCardsByReference(innovationId: string): Observable<Array<InnovCard>> {
+    const params = {
+      innovationId: innovationId
+    };
+    return this._http.get<Array<InnovCard>>('/innovation/innovationCard/', {params: params});
   }
 
   public remove(innovationId: string): Observable<any> {

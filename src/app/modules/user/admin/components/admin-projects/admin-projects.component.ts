@@ -133,6 +133,7 @@ export class AdminProjectsComponent implements OnInit {
         this._operators = operators && operators['result'] ? operators['result'] : [];
         resolve(true);
         }, (err: HttpErrorResponse) => {
+        console.error(err);
         reject(err);
       });
     });

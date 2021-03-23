@@ -9,6 +9,7 @@ import { InnovCard } from '../../../../../models/innov-card';
 import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 // import { SearchService } from '../../../../../services/search/search.service';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
 /***
@@ -59,6 +60,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
               private _dashboardService: DashboardService,
               // private _searchService: SearchService,
               private _translateService: TranslateService,
+              private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -145,7 +147,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
   }
 
   /**
-   * instead of using this to show shot colors we are using batch.status.
+   *
    * @param
    */
   public getState(b: any) {
@@ -178,16 +180,24 @@ export class AdminBatchesDisplayComponent implements OnInit {
   public showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;
-    this._selectedInnovCard = InnovationFrontService.currentLangInnovationCard(
-      this._selectedBatch.innovation, this._currentLang, 'CARD'
-    );
+    const innovationId = this._selectedBatch && this._selectedBatch.innovation
+      && this._selectedBatch.innovation._id  || '';
 
-    if (this._selectedInnovCard && this._selectedInnovCard._id) {
-      this._sidebarTemplate = {
-        animate_state: 'active',
-        title: 'Innovation Preview',
-        size: '726px'
-      };
+    if (innovationId) {
+      this._innovationService.getInnovCardsByReference(innovationId)
+        .pipe(first())
+        .subscribe((cards) => {
+          this._selectedInnovCard = InnovationFrontService.currentLangCard(cards, this._currentLang);
+          this._sidebarTemplate = {
+            animate_state: 'active',
+            title: 'Innovation Preview',
+            size: '726px'
+          };
+        }, (err: HttpErrorResponse) => {
+          console.error(err);
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        });
+
     } else {
       this._translateNotificationsService.error('Error', 'We could not find the innovation card.');
     }
