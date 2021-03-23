@@ -12,6 +12,6 @@ export interface ClientProject {
     name: string;
     code: string;
     date: Date;
-  }>
+  }>;
 
 }

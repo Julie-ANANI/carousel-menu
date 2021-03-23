@@ -35,7 +35,7 @@
 
       <!-- bot -->
       <div *ngIf="canAccess(['autoBatch']) || canAccess(['create'])" class="p-top-20">
-        <message-template [widthMax]="'473px'">
+        <app-message-template [widthMax]="'473px'">
 
           <div class="toggle-wrapper p-bottom-15">
             <div class="form-group">
@@ -64,7 +64,7 @@
               </label>
             </div>
           </div>
-        </message-template>
+        </app-message-template>
       </div>
       <!-- /bot -->
 

@@ -32,6 +32,21 @@ export interface OldExecutiveReport {
   }];
 }
 
+export interface InnovationStats {
+  [p: string]: number;
+  pros?: number;
+  emailsOK?: number;
+  received?: number;
+  opened?: number;
+  clicked?: number;
+  validatedAnswers?: number;
+  toValidateAnswers?: number;
+  answers?: number;
+  nbFirstMail?: number;
+  nbSecondMail?: number;
+  nbThirdMail?: number;
+}
+
 export interface Innovation {
 
   readonly _id?: string;
@@ -61,7 +76,7 @@ export interface Innovation {
 
   collaborators?: Array<User>;
   settings?: InnovationSettings;
-  stats?: any;
+  readonly stats?: InnovationStats;
   updatedStats?: Date;
   restitution?: boolean;
   proofreading?: boolean;

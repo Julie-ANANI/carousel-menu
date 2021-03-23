@@ -172,12 +172,12 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           {
             subHeading: 'To send',
             value: (this._innovation.stats && (this._innovation.stats.emailsOK
-              || this._innovation.stats.emailsOK === 0)) ? this._innovation.stats.emailsOK : 'NA'
+              || this._innovation.stats.emailsOK === 0)) ? this._innovation.stats.emailsOK.toString(10) : 'NA'
           },
           {
             subHeading: 'Delivered',
             value: (this._innovation.stats && (this._innovation.stats.received
-              || this._innovation.stats.received === 0)) ? this._innovation.stats.received : 'NA',
+              || this._innovation.stats.received === 0)) ? this._innovation.stats.received.toString(10) : 'NA',
             stats: {
               title: 'Number of emails sent, \n all shots combined',
               values: [
@@ -237,7 +237,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           {
             subHeading: 'Validated answers',
             value: (this._innovation.stats && (this._innovation.stats.validatedAnswers
-              || this._innovation.stats.validatedAnswers === 0) ? this._innovation.stats.validatedAnswers : 'NA')
+              || this._innovation.stats.validatedAnswers === 0) ? this._innovation.stats.validatedAnswers.toString(10) : 'NA')
           },
           {
             subHeading: 'Answer rate',

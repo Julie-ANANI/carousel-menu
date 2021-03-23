@@ -25,7 +25,7 @@ export interface Mission {
   client?: User | string;
   team?: Array<User>;
   milestoneDates?: Array<Milestone>;
-  mailConf?: Array<MailConfiguration>
+  mailConf?: Array<MailConfiguration>;
 
   objective?: {
     principal: Multiling;
@@ -33,7 +33,7 @@ export interface Mission {
     comment: string
   };
 
-  externalDiffusion? : {
+  externalDiffusion?: {
     umi: boolean; // website
     community: boolean;
     social: boolean;

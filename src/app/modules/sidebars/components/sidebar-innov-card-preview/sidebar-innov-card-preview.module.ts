@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { SidebarInnovCardPreviewComponent } from './sidebar-innovCard-preview.component';
+import { SidebarInnovCardPreviewComponent } from './sidebar-innov-card-preview.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';

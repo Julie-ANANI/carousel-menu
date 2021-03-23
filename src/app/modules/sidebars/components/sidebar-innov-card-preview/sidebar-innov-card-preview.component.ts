@@ -4,11 +4,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../models/innov-card';
 import { Media } from '../../../../models/media';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import {CommonService} from '../../../../services/common/common.service';
 
 @Component({
-  selector: 'app-sidebar-innovCard-preview',
-  templateUrl: './sidebar-innovCard-preview.component.html',
-  styleUrls: ['./sidebar-innovCard-preview.component.scss']
+  selector: 'app-sidebar-innov-card-preview',
+  templateUrl: './sidebar-innov-card-preview.component.html',
+  styleUrls: ['./sidebar-innov-card-preview.component.scss']
 })
 
 export class SidebarInnovCardPreviewComponent {
@@ -37,9 +38,11 @@ export class SidebarInnovCardPreviewComponent {
         }
       }
     }
-  };
+  }
 
   private _date: Date;
+
+  private _dateFormat = CommonService.dateFormat(this._translateService.currentLang);
 
   constructor(private _domSanitizer1: DomSanitizer,
               private _translateService: TranslateService) { }
@@ -65,7 +68,7 @@ export class SidebarInnovCardPreviewComponent {
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
+    return this._dateFormat;
   }
 
 }

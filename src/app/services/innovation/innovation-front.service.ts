@@ -48,7 +48,7 @@ export class InnovationFrontService {
 
   private _selectedInnovationIndex: Subject<number> = new Subject<number>();
 
-  private _saveNotifySubject: Subject<string> = new Subject<string>();
+  private _saveNotifySubject: Subject<{key: string, state: boolean}> = new Subject<{key: string, state: boolean}>();
 
   private _saveCommentSubject: Subject<boolean> = new Subject<boolean>();
 
@@ -159,6 +159,38 @@ export class InnovationFrontService {
       }
 
     }
+  }
+
+  /**
+   * first we search by demanded lang if not found then find the card in lang 'en' if not found
+   * then the card at index 0.
+   *
+   * @param innovCards
+   * @param lang
+   */
+  public static currentLangCard(innovCards: Array<InnovCard>, lang = 'en'): InnovCard {
+    let card = <InnovCard>{};
+
+    if (innovCards.length) {
+      const _cardIndex = InnovationFrontService.cardIndexByLang(innovCards, lang);
+      if (_cardIndex !== -1) {
+        card = innovCards[_cardIndex];
+      }
+
+      const _cardIndexEn = InnovationFrontService.cardIndexByLang(innovCards);
+      if (_cardIndexEn !== -1) {
+        card = innovCards[_cardIndex];
+      }
+
+      card = innovCards[0];
+
+    }
+
+    return card;
+  }
+
+  private static cardIndexByLang(innovCards: Array<InnovCard>, lang = 'en'): number {
+    return innovCards.findIndex((card: InnovCard) => card.lang === lang);
   }
 
   /***
@@ -468,11 +500,11 @@ export class InnovationFrontService {
    * in the component that changes are to be saved or not for the innovation.
    * @param value
    */
-  public setNotifyChanges(value: string) {
+  public setNotifyChanges(value: {key: string, state: boolean}) {
     this._saveNotifySubject.next(value);
   }
 
-  public getNotifyChanges(): Subject<string> {
+  public getNotifyChanges(): Subject<{key: string, state: boolean}> {
     return this._saveNotifySubject;
   }
 

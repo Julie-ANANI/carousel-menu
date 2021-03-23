@@ -46,19 +46,26 @@
 
             <div class="d-flex text-notify text-medium text-sm m-top-2 align-center">
 
-              {{ campaign['stats'] ? campaign['stats']['campaign']['nbProfessionals'] || 0 : 0 }} Professional(s)
-              •
-              {{ campaign['stats'] ? campaign['stats']['campaign']['nbFirstTierMails'] || 0 : 0 }} Good email(s)
-              •
-              {{ campaign['stats'] ? ((campaign['stats']['campaign']['nbValidatedResp'] || 0)) : 0 }} Validated answer(s)
-              •
-              {{ campaign['stats'] ? ((campaign['stats']['campaign']['nbToValidateResp'] || 0)) : 0 }} To look at
-              •
-              {{ campaign.status | titlecase }} status
+              <span>{{ stats(campaign, 'nbFirstTierMails') }} Good email(s)</span>
+
+              <ng-container *ngIf="canAccess(['campaign', 'batch', 'quiz'])">
+                <ng-container *ngIf="!!quizURL('fr', campaign)">
+                  |
+                  <span (click)="copyQuizLink('fr', campaign)" class="text-link text-secondary m-left-h m-right-h">
+                  Copy FR quiz link
+                </span>
+                </ng-container>
+                <ng-container *ngIf="!!quizURL('en', campaign)">
+                  |
+                  <span (click)="copyQuizLink('en', campaign)" class="text-link text-secondary m-left-h m-right-h">
+                  Copy EN quiz link
+                </span>
+                </ng-container>
+              </ng-container>
 
               <ng-container *ngIf="canAccess(['updateStatistics'])">
                 |
-                <span class="text-link m-left-h m-right-h" (click)="onUpdateStats($event, campaign, i)">
+                <span class="text-link m-left-h text-secondary m-right-h" (click)="onUpdateStats($event, campaign, i)">
                   Update stats
                 </span>
               </ng-container>

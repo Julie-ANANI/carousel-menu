@@ -33,84 +33,93 @@
 
     <!-- batches -->
     <div class="batch-wrapper">
-      <div *ngFor="let days of weekBatches" class="batch">
-        <div *ngFor="let batches of days; let index2 = index">
 
-          <p *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
+      <!-- is loading -->
+      <div *ngIf="isLoading" class="loading is-primary m-auto"></div>
+      <!-- /is loading -->
 
-          <!-- index2 !== 0 -->
-          <ng-container *ngIf="index2 !== 0">
+      <!-- loading finished -->
+      <ng-container *ngIf="!isLoading">
+        <div *ngFor="let days of weekBatches" class="batch">
+          <div *ngFor="let batches of days; let index2 = index">
+            <p *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
 
-            <!-- index2 < 4 -->
-            <div *ngIf="index2 < 4" class="batch-body">
+            <!-- index2 !== 0 -->
+            <ng-container *ngIf="index2 !== 0">
 
-              <ng-container *ngIf="getState(batches) === 0">
-                <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-success">
-                  <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
-                  {{ batches['innovation']['name']  | ellipsis:10 }}  {{ batches.size }}
-                </div>
-              </ng-container>
+              <!-- index2 < 4 -->
+              <div *ngIf="index2 < 4" class="batch-body">
 
-              <ng-container *ngIf="getState(batches) === 1">
-                <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-draft">
-                  <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
-                  {{ batches['innovation']['name'] | ellipsis:10 }}  {{ batches.size }}
-                </div>
-              </ng-container>
+                <ng-container *ngIf="getState(batches) === 0">
+                  <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-success">
+                    <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                    {{ batches['innovation']['name']  | ellipsis:20 }}  {{ batches.size }}
+                  </div>
+                </ng-container>
 
-              <ng-container *ngIf="getState(batches) === 2">
-                <div (click)="showPreview($event, batches)" class="label is-rounded c-hand  is-info">
-                  <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
-                  {{ batches['innovation']['name'] | ellipsis:10 }}  {{ batches.size }}
-                </div>
-              </ng-container>
+                <ng-container *ngIf="getState(batches) === 1">
+                  <div (click)="showPreview($event, batches)" class="label is-rounded c-hand is-draft">
+                    <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                    {{ batches['innovation']['name'] | ellipsis:20 }}  {{ batches.size }}
+                  </div>
+                </ng-container>
 
-            </div>
-            <!-- index2 < 4 -->
+                <ng-container *ngIf="getState(batches) === 2">
+                  <div (click)="showPreview($event, batches)" class="label is-rounded c-hand  is-info">
+                    <i *ngIf="batches.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                    {{ batches['innovation']['name'] | ellipsis:20 }}  {{ batches.size }}
+                  </div>
+                </ng-container>
 
-            <!-- index2 === 4 -->
-            <div *ngIf="index2 === 4" class="popover justify-center">
+              </div>
+              <!-- index2 < 4 -->
 
-              <div class="text-link">see more...</div>
+              <!-- index2 === 4 -->
+              <div *ngIf="index2 === 4" class="popover justify-center">
+                <div class="text-link text-xs">see more...</div>
+                <div class="popover-container w-200">
+                  <div class="card p-10">
+                    <div class="card-body p-no">
+                      <ng-container *ngFor="let batchesOver of days; let index3 = index">
+                        <div *ngIf="index3 > 0" class="batch-body">
 
-              <div class="popover-container w-250">
-                <div class="card p-10">
-                  <div class="card-body p-no">
-                    <ng-container *ngFor="let batchesOver of days; let index3 = index">
-                      <div *ngIf="index3 > 0" class="batch-body">
+                          <ng-container *ngIf="getState(batchesOver) === 0">
+                            <div (click)="showPreview($event, batches)" class="label p-2 is-success is-rounded c-hand">
+                              <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                              {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                            </div>
+                          </ng-container>
 
-                        <ng-container *ngIf="getState(batchesOver) === 0">
-                          <div (click)="showPreview($event, batches)" class="label is-success is-rounded c-hand">
-                            {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
-                          </div>
-                        </ng-container>
+                          <ng-container *ngIf="getState(batchesOver) === 1">
+                            <div (click)="showPreview($event, batches)" class="label p-2 is-draft is-rounded c-hand">
+                              <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                              {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                            </div>
+                          </ng-container>
 
-                        <ng-container *ngIf="getState(batchesOver) === 1">
-                          <div (click)="showPreview($event, batches)" class="label is-draft is-rounded c-hand">
-                            {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
-                          </div>
-                        </ng-container>
+                          <ng-container *ngIf="getState(batchesOver) === 2">
+                            <div (click)="showPreview($event, batches)" class="label p-2 is-info is-rounded c-hand">
+                              <i *ngIf="batchesOver.error" class="fa fa-exclamation-circle text-error m-right-2"></i>
+                              {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
+                            </div>
+                          </ng-container>
 
-                        <ng-container *ngIf="getState(batchesOver) === 2">
-                          <div (click)="showPreview($event, batches)" class="label is-info is-rounded c-hand">
-                            {{ batchesOver['innovation']['name'] | ellipsis:15 }}  {{ batchesOver.size }}
-                          </div>
-                        </ng-container>
-
-                      </div>
-                    </ng-container>
+                        </div>
+                      </ng-container>
+                    </div>
                   </div>
                 </div>
               </div>
+              <!-- /index2 === 4 -->
 
-            </div>
-            <!-- /index2 === 4 -->
+            </ng-container>
+            <!-- /index2 !== 0 -->
 
-          </ng-container>
-          <!-- /index2 !== 0 -->
-
+          </div>
         </div>
-      </div>
+      </ng-container>
+      <!-- /loading finished -->
+
     </div>
     <!-- /batches -->
 
@@ -119,10 +128,10 @@
 
 
 <!-- innovation preview sidebar-->
-<app-sidebar *ngIf="weekBatches.length > 0" [(template)]="sidebarTemplate">
-  <app-sidebar-innovCard-preview
-    [innovCard]="selectedInnovation"
-    [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }">
-  </app-sidebar-innovCard-preview>
+<app-sidebar *ngIf="weekBatches.length" [(template)]="sidebarTemplate">
+  <app-sidebar-innov-card-preview
+    [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }"
+    [innovCard]="selectedInnovCard">
+  </app-sidebar-innov-card-preview>
 </app-sidebar>
 <!-- /innovation preview sidebar-->

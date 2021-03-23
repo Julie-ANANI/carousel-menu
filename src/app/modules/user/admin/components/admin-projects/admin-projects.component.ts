@@ -16,7 +16,9 @@ import { UserService } from '../../../../../services/user/user.service';
 import { environment } from '../../../../../../environments/environment';
 import { User } from '../../../../../models/user.model';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import {AuthService} from '../../../../../services/auth/auth.service';
+import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObjectives';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -32,7 +34,7 @@ export class AdminProjectsComponent implements OnInit {
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator',
+    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
@@ -59,11 +61,10 @@ export class AdminProjectsComponent implements OnInit {
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
               private _translateTitleService: TranslateTitleService,
               private _userService: UserService) {
-
     this._translateTitleService.setTitle('Market Tests');
-
   }
 
   ngOnInit(): void {
@@ -72,6 +73,7 @@ export class AdminProjectsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
       this._getOperators().then( _ => {
+        // this._configOperator();
         this._getProjects();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -82,6 +84,17 @@ export class AdminProjectsComponent implements OnInit {
     }
 
   }
+
+  /**
+   * Todo will be activated later when we have the functionality to search in mission team also.
+   * @private
+   */
+  /*private _configOperator() {
+    const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
+    if (!!operator) {
+      this._config.operator = operator['_id'];
+    }
+  }*/
 
   /***
    * this is to get the projects from the server.
@@ -112,7 +125,7 @@ export class AdminProjectsComponent implements OnInit {
         limit: '20',
         offset: '0',
         search: '{}',
-        sort: '{"created":-1}',
+        sort: '{"firstName":1}',
         domain: environment.domain,
         $or: JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'}])
       };
@@ -120,6 +133,7 @@ export class AdminProjectsComponent implements OnInit {
         this._operators = operators && operators['result'] ? operators['result'] : [];
         resolve(true);
         }, (err: HttpErrorResponse) => {
+        console.error(err);
         reject(err);
       });
     });
@@ -172,6 +186,7 @@ export class AdminProjectsComponent implements OnInit {
       _isTitle: true,
       _clickIndex: this.canAccess(['project', 'tabs']) ? 1 : null,
       _isPaginable: true,
+      _isNoMinHeight: true,
       _columns: [
         {
           _attrs: ['name'],
@@ -189,6 +204,49 @@ export class AdminProjectsComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
           _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
         }, // Using _searchConfig for advanced search
+        {
+          _attrs: ['mission.externalDiffusion.community'],
+          _name: 'Community',
+          _width: '120px',
+          _type: 'CHECK',
+          _isHidden: !this.canAccess(['tableColumns', 'community']),
+        },
+        {
+          _attrs: ['mission.externalDiffusion.social'],
+          _name: 'Social',
+          _width: '100px',
+          _type: 'CHECK',
+          _isHidden: !this.canAccess(['tableColumns', 'social']),
+        },
+        {
+          _attrs: ['mission.externalDiffusion.umi'],
+          _name: 'Website',
+          _width: '100px',
+          _type: 'CHECK',
+          _isHidden: !this.canAccess(['tableColumns', 'website']),
+        },
+        {
+          _attrs: ['stats.emailsOK'],
+          _name: 'Good Emails',
+          _type: 'NUMBER',
+          _width: '130px',
+          _isHidden: !this.canAccess(['tableColumns', 'goodEmails'])
+        },
+        {
+          _attrs: ['stats.validatedAnswers'],
+          _name: 'Validated Answers',
+          _type: 'NUMBER',
+          _width: '170px',
+          _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
+        },
+        {
+          _attrs: ['updated'],
+          _name: 'Last Updated',
+          _type: 'DATE_TIME',
+          _isSortable: true,
+          _width: '200px',
+          _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
+        },
         {
           _attrs: ['owner.firstName', 'owner.lastName'],
           _name: 'Owner',
@@ -209,27 +267,15 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Type',
           _type: 'TEXT',
           _isSortable: true,
-          _isSearchable: this.canAccess(['searchBy', 'type']),
           _isHidden: !this.canAccess(['tableColumns', 'type']),
-          _width: '100px',
-          _searchConfig: {_collection: 'mission', _searchKey: 'type' }
-          }, // Using _searchConfig for advanced search
+          _width: '100px'
+        },
         {
           _attrs: [this._mainObjective],
           _name: 'Objective',
           _type: 'TEXT',
-          _isSearchable: this.canAccess(['searchBy', 'objective']),
           _isHidden: !this.canAccess(['tableColumns', 'objective']),
-          _width: '200px',
-          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey }
-          }, // Using _searchConfig for advanced search
-        {
-          _attrs: ['updated'],
-          _name: 'Last Updated',
-          _type: 'DATE_TIME',
-          _isSortable: true,
-          _width: '200px',
-          _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
+          _width: '200px'
         },
         {
           _attrs: ['created'],
@@ -238,6 +284,31 @@ export class AdminProjectsComponent implements OnInit {
           _isSortable: true,
           _width: '130px',
           _isHidden: !this.canAccess(['tableColumns', 'created'])
+        },
+        {
+          _attrs: ['type'],
+          _name: 'Type',
+          _type: 'MULTI-CHOICES',
+          _isHidden: true,
+          _searchConfig: {_collection: 'mission', _searchKey: 'type' },
+          _isSearchable: this.canAccess(['filterBy', 'type']),
+          _choices: [
+            {_name: 'USER', _alias: 'User'},
+            {_name: 'CLIENT', _alias: 'Client'},
+            {_name: 'DEMO', _alias: 'Demo'},
+            {_name: 'TEST', _alias: 'Test'},
+          ]
+        }, // Using _searchConfig for advanced search
+        {
+          _attrs: [this._objectiveSearchKey],
+          _name: 'Objective',
+          _type: 'MULTI-CHOICES',
+          _isSearchable: this.canAccess(['filterBy', 'objective']),
+          _isHidden: true,
+          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey },
+          _choices: ObjectivesPrincipal.map((objective) => {
+            return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
+          })
         },
         {
           _attrs: ['status'],
@@ -262,7 +333,7 @@ export class AdminProjectsComponent implements OnInit {
           _choices: this._operators && this._operators.length ? this._operators.map(oper => {
             return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
           }) : []
-        },
+        }
       ]
     };
   }
@@ -334,6 +405,10 @@ export class AdminProjectsComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get authUserId() {
+    return this._authService.userId;
   }
 
 }

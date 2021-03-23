@@ -61,13 +61,13 @@
 
     <!-- no campaign -->
     <div *ngIf="!availableScenarios.length" class="p-top-20 animate-fade is-7">
-      <message-template [widthMax]="'354px'">
+      <app-message-template [widthMax]="'354px'">
         Don't have any workflow?
         <span *ngIf="canAccess(['import'])">
           <br>
           Try to add a one by clicking on "Import" button.
         </span>
-      </message-template>
+      </app-message-template>
     </div>
     <!-- /no campaign -->
 

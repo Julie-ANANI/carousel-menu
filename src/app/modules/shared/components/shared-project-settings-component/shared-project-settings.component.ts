@@ -221,7 +221,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   updateSettings() {
     if (this._canEdit) {
-      this.innovationFrontService.setNotifyChanges('settings');
+      this.innovationFrontService.setNotifyChanges({key: 'settings', state: true});
     }
   }
 

@@ -23,13 +23,13 @@
 
       <!-- no questionnaire -->
       <section *ngIf="noResult && total === 0" class="p-top-20">
-        <message-template [widthMax]="'354px'">
+        <app-message-template [widthMax]="'354px'">
           Don't have any questionnaires?
           <span *ngIf="canAccess(['add'])">
             <br>
             Try to add a one by clicking on "Add" button.
           </span>
-        </message-template>
+        </app-message-template>
       </section>
       <!-- /no questionnaire -->
 

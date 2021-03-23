@@ -8,5 +8,8 @@ export interface Config {
   isPublic?: string;
   campaigns?: string;
   isDiscover?: string;
+  operator?: string;
+  fromCollection?: string;
+  missionMember?: string;
   [property: string]: string;
 }

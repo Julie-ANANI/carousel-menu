@@ -18,6 +18,8 @@ import {InnovationFrontService} from '../../../../../../services/innovation/inno
 import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
 import {SocketService} from '../../../../../../services/socket/socket.service';
+import {QuizService} from '../../../../../../services/quiz/quiz.service';
+import {CommonService} from '../../../../../../services/common/common.service';
 
 @Component({
   templateUrl: 'admin-project-campaigns.component.html',
@@ -65,6 +67,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _campaignFrontService: CampaignFrontService,
               private _rolesFrontService: RolesFrontService,
+              private _commonService: CommonService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _socketService: SocketService,
               private _campaignService: CampaignService) { }
@@ -227,6 +230,19 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
       this._selectCampaign = null;
       console.error(err);
     });
+  }
+
+  public stats(campaign: Campaign, type: string): number {
+    return campaign && campaign.stats && campaign.stats.campaign && campaign.stats.campaign[type] || 0;
+  }
+
+  public quizURL(lang: string, campaign: Campaign) {
+    return QuizService.quizUrl(campaign._id, this._innovation.quizId, lang);
+  }
+
+  public copyQuizLink(lang: string, campaign: Campaign) {
+    this._commonService.copyToClipboard(this.quizURL(lang, campaign));
+    this._translateNotificationsService.success('Success', 'The quiz url has been copied to clipboard.');
   }
 
   get campaigns(): Array<Campaign> {

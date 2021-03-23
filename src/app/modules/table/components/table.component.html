@@ -31,12 +31,13 @@
   <!-- when fetching or initializing -->
   <ng-container *ngIf="table._total === -1">
     <div class="section-light-pad">
-      <message-template [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
+      <app-message-template
+        [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
         <div class="flex-centered">
           <div class="loading is-white" style="margin-right: 0.8rem"></div>
           <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
         </div>
-      </message-template>
+      </app-message-template>
     </div>
   </ng-container>
   <!-- /when fetching or initializing -->
@@ -45,11 +46,11 @@
   <!-- when no result -->
   <ng-container *ngIf="table._total === 0 || isSearching">
     <div class="section-light-pad">
-      <message-template
+      <app-message-template
         [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
         [widthMax]="isSearching ? '362px' : '273px'">
         <span [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'" translate></span>
-      </message-template>
+      </app-message-template>
     </div>
   </ng-container>
   <!-- /when no result -->
@@ -313,10 +314,14 @@
                   <!-- type CHECK -->
                   <ng-container *ngSwitchCase="'CHECK'">
                     <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]) == 0">
-                      <i class="icon icon-cross text-alert"></i>
+                      <div class="icon-container is-xs c-default bg-alert br-circle">
+                        <i class="icon icon-cross"></i>
+                      </div>
                     </ng-container>
                     <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]) == 1">
-                      <i class="icon icon-check text-success"></i>
+                      <div class="icon-container is-xs c-default bg-success br-circle">
+                        <i class="icon icon-check"></i>
+                      </div>
                     </ng-container>
                   </ng-container>
                   <!-- /type CHECK -->
@@ -484,6 +489,16 @@
 
                   </ng-container>
                   <!-- type DROPDOWN -->
+
+                  <!-- type NUMBER -->
+                  <ng-container *ngSwitchCase="'NUMBER'">
+                    <div class="text-ellipsis" [title]="getTitle(row, column)">
+                      <ng-container *ngFor="let attr of getAttrs(column)">
+                        {{ (getContentValue(row, attr)|| " - ") }}
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                  <!-- /type NUMBER -->
 
 
                   <!-- type TEXT / DEFAULT -->

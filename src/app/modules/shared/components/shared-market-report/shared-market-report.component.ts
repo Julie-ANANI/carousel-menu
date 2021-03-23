@@ -114,7 +114,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((value) => {
-        this._toBeSaved = !!value;
+        this._toBeSaved = !!(value && value.state);
       });
   }
 
@@ -242,7 +242,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    */
   public saveOperatorComment(event: {content: string}, ob: string) {
     this._innovation.marketReport[ob] = { conclusion: event.content };
-    this._innovationFrontService.setNotifyChanges('marketReport');
+    this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
   }
 
   public saveInnovation(event: Event) {
