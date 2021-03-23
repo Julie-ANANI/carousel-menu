@@ -143,7 +143,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isTitle: true,
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: this.canAccess(['delete']),
-      _isPaginable: content.length > 10,
+      _isPaginable: total > 10,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
       _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
@@ -200,6 +200,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         }
       ]
     };
+    console.log(this._resultTableConfiguration);
   }
 
   public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
@@ -475,12 +476,23 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
+    console.log(value);
+    this.doSearch();
     this._resultTableConfiguration._content = this._originalTableData;
     this.filterCompanies(this._queryConfig.search);
+    // this.getCompaniesOnCurrentPage();
   }
 
   get nothingFound(): boolean {
     return this._nothingFound;
+  }
+
+  getCompaniesOnCurrentPage() {
+    this._resultTableConfiguration._content =
+      this._resultTableConfiguration._content.slice(Number(this._queryConfig.offset),
+        Number(this._queryConfig.limit));
+    console.log(this._resultTableConfiguration._content);
+    console.log(this._originalTableData);
   }
 
   /*get activePatterns(): Array<Pattern> {
