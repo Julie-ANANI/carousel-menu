@@ -103,7 +103,6 @@ export class SharedSearchMultiComponent {
         this._searchConfig.search = JSON.stringify(_search);
       }
     }
-
     this.searchConfigChange.emit(this._searchConfig);
 
   }

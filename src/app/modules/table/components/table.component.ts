@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Table } from '../models/table';
-import { Row } from '../models/row';
-import { Column, types } from '../models/column';
-import { Choice } from '../models/choice';
-import { TranslateService } from '@ngx-translate/core';
-import { countries } from '../../../models/static-data/country';
-import { Config } from '../../../models/config';
-import { Pagination } from '../../utility/paginations/interfaces/pagination';
-import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
-import { ConfigService } from '../../../services/config/config.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Table} from '../models/table';
+import {Row} from '../models/row';
+import {Column, types} from '../models/column';
+import {Choice} from '../models/choice';
+import {TranslateService} from '@ngx-translate/core';
+import {countries} from '../../../models/static-data/country';
+import {Config} from '../../../models/config';
+import {Pagination} from '../../utility/paginations/interfaces/pagination';
+import {LocalStorageService} from '../../../services/localStorage/localStorage.service';
+import {ConfigService} from '../../../services/config/config.service';
 
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
@@ -85,12 +85,12 @@ export class TableComponent {
    * dropdown list.
    * @type {EventEmitter<{content: any, item: Choice}>}
    */
-  @Output() dropdownAction: EventEmitter<{content: any, item: Choice}> = new EventEmitter<{content: any, item: Choice}>();
+  @Output() dropdownAction: EventEmitter<{ content: any, item: Choice }> = new EventEmitter<{ content: any, item: Choice }>();
 
   /***
    * output the custom filter value when changes in the Search bar.
    */
-  @Output() customFilter: EventEmitter<{key: string, value: any}> = new EventEmitter<{key: string, value: any}>();
+  @Output() customFilter: EventEmitter<{ key: string, value: any }> = new EventEmitter<{ key: string, value: any }>();
 
   private _table: Table;
 
@@ -133,7 +133,7 @@ export class TableComponent {
    * This function load and initialise the data send by the user
    * @param {Table} data
    */
-  private _loadData(data: Table): void  {
+  private _loadData(data: Table): void {
 
     if (data) {
       this._table = data;
@@ -165,23 +165,23 @@ export class TableComponent {
    * @private
    */
   private _getFilteredContent(rows: Array<any>) {
-      this._pagination.parPage = this._table._isPaginable ?
-        parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10 :
-        rows.length;
+    this._pagination.parPage = this._table._isPaginable ?
+      parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10 :
+      rows.length;
 
-      this._table._total = this._table._total === -1 ? this._table._total : rows.length;
+    this._table._total = this._table._total === -1 ? this._table._total : rows.length;
 
-      if (this._pagination.offset >= this._table._total) {
-        this._pagination.offset = 0;
-        this._pagination.currentPage = 1;
-      }
+    if (this._pagination.offset >= this._table._total) {
+      this._pagination.offset = 0;
+      this._pagination.currentPage = 1;
+    }
 
-      const startIndex = this._pagination.offset;
-      const endIndex = this._pagination.offset + this._pagination.parPage;
+    const startIndex = this._pagination.offset;
+    const endIndex = this._pagination.offset + this._pagination.parPage;
 
-      this._isSearching = this._isSearching && this._table._total === 0;
+    this._isSearching = this._isSearching && this._table._total === 0;
 
-      this._filteredContent = rows.slice(startIndex, endIndex);
+    this._filteredContent = rows.slice(startIndex, endIndex);
   }
 
   /***
@@ -194,11 +194,11 @@ export class TableComponent {
       currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
       previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
       nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
-    }
+    };
   }
 
   private _checkSearching() {
-    if (this._config.search.length > 2  && this._table._total === 0) {
+    if (this._config.search.length > 2 && this._table._total === 0) {
       this._isSearching = true;
     }
   }
@@ -266,7 +266,7 @@ export class TableComponent {
    * This function allows to select all the rows
    * @param event
    */
-  public selectAll(event: Event): void  {
+  public selectAll(event: Event): void {
     event.preventDefault();
 
     if (this._table._isLocal) {
@@ -291,9 +291,9 @@ export class TableComponent {
    */
   private _onSelectRow() {
     if (this._massSelection) {
-      this.selectRows.emit({ _rows: this._getAllContent()});
+      this.selectRows.emit({_rows: this._getAllContent()});
     } else {
-      this.selectRows.emit({ _rows: this._getSelectedRowsContent()});
+      this.selectRows.emit({_rows: this._getSelectedRowsContent()});
     }
   }
 
@@ -329,7 +329,7 @@ export class TableComponent {
     } else {
       this.removeRows.emit(this._getSelectedRowsContent());
     }
-}
+  }
 
   /***
    * This function is call when the user click on one of the actions button
@@ -340,7 +340,7 @@ export class TableComponent {
     if (this._massSelection) {
       this.performAction.emit({_action: action, _rows: this._getAllContent()});
     } else {
-      this.performAction.emit({_action: action, _rows: this._getSelectedRowsContent()})
+      this.performAction.emit({_action: action, _rows: this._getSelectedRowsContent()});
     }
   }
 
@@ -363,7 +363,7 @@ export class TableComponent {
    * @param {string} columnAttr
    * @returns {string}
    */
-  public getContentValue(rowKey: string, columnAttr: string): any  {
+  public getContentValue(rowKey: string, columnAttr: string): any {
 
     const row: number = TableComponent._getRowKey(rowKey);
     let contents: Array<any> = [];
@@ -379,7 +379,7 @@ export class TableComponent {
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
 
-        let tmpContent = contents[row] ? contents[row][newColumnAttr[0]] : '' ;
+        let tmpContent = contents[row] ? contents[row][newColumnAttr[0]] : '';
 
         newColumnAttr = newColumnAttr.splice(1);
 
@@ -483,7 +483,7 @@ export class TableComponent {
    * @returns {Choice}
    */
   public getChoice(column: Column, name: string): Choice {
-    return this.getChoices(column).find(value => value._name === name) || { _name: '', _class: '' };
+    return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
   }
 
   /***
@@ -557,12 +557,11 @@ export class TableComponent {
    */
   public getSelectedRows(): Row[] {
     if (this._table._isLocal) {
-      return this._filteredContent.filter((content) => content._isSelected === true );
+      return this._filteredContent.filter((content) => content._isSelected === true);
     } else {
-      return this._table._content.filter((content) => content._isSelected === true );
+      return this._table._content.filter((content) => content._isSelected === true);
     }
   }
-
 
 
   /***
@@ -660,10 +659,10 @@ export class TableComponent {
   }
 
   public getCountryName(isoCode: string): string {
-    if(isoCode) {
-      return countries[isoCode] || "NA";
+    if (isoCode) {
+      return countries[isoCode] || 'NA';
     } else {
-      return "NA";
+      return 'NA';
     }
   }
 
@@ -798,11 +797,11 @@ export class TableComponent {
         if (searchKey.split('.').length > 1) {
           let newAttr = searchKey.split('.');
 
-          if (contentKey === newAttr[0] ) {
+          if (contentKey === newAttr[0]) {
             let tmpContent = content[newAttr[0]];
             newAttr = newAttr.splice(1);
 
-            for (const i of newAttr){
+            for (const i of newAttr) {
               tmpContent = tmpContent ? tmpContent[i] : '-';
             }
 
@@ -881,7 +880,7 @@ export class TableComponent {
   get visibleColumns(): Array<Column> {
     return this._table._columns.filter(col => {
       return !col._isHidden;
-    })
+    });
   }
 
   get selectedIndex(): number {

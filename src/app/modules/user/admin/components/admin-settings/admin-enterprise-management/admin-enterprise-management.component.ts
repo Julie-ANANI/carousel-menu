@@ -25,7 +25,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   // private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
 
-  private _searchForm: FormGroup = this._formBuilder.group( {
+  private _searchForm: FormGroup = this._formBuilder.group({
     searchString: [''],
   });
 
@@ -46,6 +46,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private _results = false;
 
   private _nothingFound = false;
+
+  private _originalTableData: Array<any> = [];
 
   // private _editEnterpriseId: string = null;
 
@@ -73,7 +75,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               /*private _autoCompleteService: AutocompleteService,*/
-              /*private _sanitizer: DomSanitizer*/) {}
+              /*private _sanitizer: DomSanitizer*/) {
+  }
 
   private _buildForm() {
     // New company form
@@ -114,25 +117,24 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
     this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
     // This is a search because the fucking indexes are not working
-
-    this._enterpriseService.get(null, this._queryConfig).pipe(first()).subscribe( (enterprises: any) => {
+    this._enterpriseService.get(null, this._queryConfig).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
-        this._initTable(enterprises.result, enterprises._metadata.totalCount)
+        this._initTable(enterprises.result, enterprises._metadata.totalCount);
       } else {
         this._results = false;
         this._nothingFound = true;
       }
       this._isSearching = false;
-      }, (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       this._isSearching = false;
       console.error(err);
     });
-
   }
 
   private _initTable(content: Array<any> = [], total: number = -1) {
+    this._originalTableData = content;
     this._resultTableConfiguration = {
       _selector: 'admin-enterprises-table',
       _title: 'Enterprises',
@@ -165,6 +167,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Domain',
           _type: 'TEXT',
           _isSortable: true,
+          _isSearchable: true,
           _isHidden: !this.canAccess(['tableColumns', 'domain'])
         },
         {
@@ -196,7 +199,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
-    }
+    };
   }
 
   public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
@@ -277,7 +280,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       });
   }*/
 
-  public updateEnterprise(event: {enterprise: Enterprise, opType: string}) {
+  public updateEnterprise(event: { enterprise: Enterprise, opType: string }) {
     switch (event.opType) {
 
       case 'CREATE':
@@ -310,6 +313,18 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         break;
 
     }
+  }
+
+  filterCompanies(filter: any) {
+    this._isSearching = true;
+    const jsonForm = JSON.parse(filter);
+    this._resultTableConfiguration._content =
+      this._resultTableConfiguration._content.filter(item => item[Object.keys(jsonForm)[0]] === jsonForm[Object.keys(jsonForm)[0]]);
+    this._results = true;
+    this._nothingFound = false;
+    setTimeout(() => {
+      this._isSearching = false;
+    }, 0);
   }
 
   /*public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
@@ -353,7 +368,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   }*/
 
   public removeCompanies(event: any) {
-    const requests = event.map( (evt: any) => {
+    const requests = event.map((evt: any) => {
       return this._enterpriseService.remove(evt._id).pipe(first());
     });
     const combined = combineLatest(requests);
@@ -403,6 +418,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._uploadLogoModal = false;
   }
 */
+
   /*get logoUploadUri(): string {
     return `/media/companyLogo`;
   }*/
@@ -459,7 +475,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
-    this.doSearch();
+    this._resultTableConfiguration._content = this._originalTableData;
+    this.filterCompanies(this._queryConfig.search);
   }
 
   get nothingFound(): boolean {
