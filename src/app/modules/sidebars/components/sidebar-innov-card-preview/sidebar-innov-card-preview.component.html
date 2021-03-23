@@ -16,7 +16,7 @@
     || (innovCard.advantages && innovCard.advantages.length !== 0)">
 
     <!-- title -->
-    <h1 class="title m-no-top m-bottom-10">{{ innovCard.title }}</h1>
+    <h1 class="title m-no-top m-bottom-10">{{ innovCard.title | ScrapeHTMLTags }}</h1>
     <!-- /title -->
 
     <!-- batch date -->
