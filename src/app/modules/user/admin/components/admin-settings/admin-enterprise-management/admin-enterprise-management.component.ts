@@ -15,6 +15,8 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {ShieldService} from '../../../../../../services/shield/shield.service';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -67,11 +69,15 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _isSaving = false;
 
+  private _shieldSortedList: Array<any> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _enterpriseService: EnterpriseService,
               private _formBuilder: FormBuilder,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _shieldService: ShieldService,
+              private _notificationsService: NotificationsService
               /*private _autoCompleteService: AutocompleteService,*/
               /*private _sanitizer: DomSanitizer*/) {
   }
@@ -97,6 +103,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
+      this._getShieldedPros();
     }
     this._buildForm();
   }
@@ -121,7 +128,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._enterpriseService.get(null, config).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
-        this._initTable(enterprises.result, enterprises._metadata.totalCount);
+        this._initTable(this.addShieldEmailsInTable(enterprises.result), enterprises._metadata.totalCount);
       } else {
         this._results = false;
         this._nothingFound = true;
@@ -132,6 +139,18 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       this._isSearching = false;
       console.error(err);
     });
+  }
+
+  private addShieldEmailsInTable(content: Array<any> = []) {
+    this._shieldSortedList.map(item => {
+      const element = content.find(el => el._id === item.company);
+      if (element) {
+        element.shieldEmails = item.shieldEmails;
+      } else {
+        element.shieldEmails = null;
+      }
+    });
+    return content;
   }
 
   private _initTable(content: Array<any> = [], total: number = -1) {
@@ -217,6 +236,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
+          _attrs: ['shieldEmails'],
+          _name: 'Shield emails',
+          _type: 'NUMBER',
+          _isSearchable: true,
+          _isSortable: false,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
           _attrs: ['industries.label'],
           _name: 'Industry',
           _type: 'TEXT',
@@ -250,7 +277,31 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         }
       ]
     };
-    console.log(this._resultTableConfiguration);
+  }
+
+  private _getShieldedPros() {
+    this._shieldService.get(null, null)
+      .pipe(first())
+      .subscribe(response => {
+        this.sortShieldList(response.result);
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      });
+  }
+
+  private sortShieldList(shieldList: any[]) {
+    shieldList.map((item) => {
+      const element = this._shieldSortedList.find(el => el.company === item.professional.company);
+      if (element) {
+        element.shieldEmails += 1;
+      } else {
+        const newElement = {
+          company: item.professional.company,
+          shieldEmails: 1
+        };
+        this._shieldSortedList.push(newElement);
+      }
+    });
   }
 
   public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
