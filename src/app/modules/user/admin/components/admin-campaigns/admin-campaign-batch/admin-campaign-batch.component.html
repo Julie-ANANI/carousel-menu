@@ -139,6 +139,7 @@
 
           <div class="card-title">
             <span class="m-right-2">Batch for {{ batch.size }} pros</span>
+            <span *ngIf="batch?.childBatch.length > 0" class="m-right-2"> ({{batch?.childBatch.length}} sub-batch(es), {{batch?.childBatch.length*5 - 5}} minute(s) of total delay)</span>
             <span *ngIf="batch.error" class="text-error m-right-2 m-top-1 text-xs text-normal">
               There has been an error while sending this batch!
             </span>
