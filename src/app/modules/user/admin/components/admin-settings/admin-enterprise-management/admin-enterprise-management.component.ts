@@ -199,6 +199,54 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isSearchable: true,
           _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['emailSettings.goodEmails'],
+          _name: 'Good emails',
+          _type: 'NUMBER',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['emailSettings.bouncedEmails'],
+          _name: 'Deduced emails',
+          _type: 'NUMBER',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['industries.label'],
+          _name: 'Industry',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['brands.label'],
+          _name: 'Brand',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['enterpriseType'],
+          _name: 'Type',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['geographicalZone.name'],
+          _name: 'Geographical Zone',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
     };
