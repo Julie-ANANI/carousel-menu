@@ -180,27 +180,36 @@ export class AdminBatchesDisplayComponent implements OnInit {
   public showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;
+    let lastInnovationId = '';
     const innovationId = this._selectedBatch && this._selectedBatch.innovation
       && this._selectedBatch.innovation._id  || '';
 
     if (innovationId) {
-      this._innovationService.getInnovCardsByReference(innovationId)
-        .pipe(first())
-        .subscribe((cards) => {
-          this._selectedInnovCard = InnovationFrontService.currentLangCard(cards, this._currentLang);
-          this._sidebarTemplate = {
-            animate_state: 'active',
-            title: 'Innovation Preview',
-            size: '726px'
-          };
-        }, (err: HttpErrorResponse) => {
-          console.error(err);
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        });
-
+      if (lastInnovationId !== innovationId) {
+        this._innovationService.getInnovCardsByReference(innovationId)
+          .pipe(first())
+          .subscribe((cards) => {
+            this._selectedInnovCard = InnovationFrontService.currentLangCard(cards, this._currentLang);
+            this._openSidebar();
+            lastInnovationId = innovationId;
+          }, (err: HttpErrorResponse) => {
+            console.error(err);
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          });
+      } else {
+        this._openSidebar();
+      }
     } else {
       this._translateNotificationsService.error('Error', 'We could not find the innovation card.');
     }
+  }
+
+  private _openSidebar() {
+    this._sidebarTemplate = {
+      animate_state: 'active',
+      title: 'Innovation Preview',
+      size: '726px'
+    };
   }
 
   get weekBatches(): Array<any> {
