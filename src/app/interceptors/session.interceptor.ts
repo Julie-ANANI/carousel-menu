@@ -4,11 +4,13 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ErrorService } from '../services/error/error.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Injectable()
 export class SessionInterceptor implements HttpInterceptor {
 
-  constructor(private errorService: ErrorService) {}
+  constructor(private errorService: ErrorService,
+              private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(this.setAuthorizationHeader(req))
@@ -22,11 +24,15 @@ export class SessionInterceptor implements HttpInterceptor {
 
   // Request Interceptor to append Authorization Header
   private setAuthorizationHeader(req: HttpRequest<any>): HttpRequest<any> {
+    let headers = req.headers
+      .set('instance-domain', environment.domain)
+      .set('api-token', 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ');
+    if (this.authService.jwt) {
+      headers = headers.set('jwtoken', this.authService.jwt);
+    }
     // Make a clone of the request then append the Authorization Header
     return req.clone({
-      headers: req.headers
-        .set('instance-domain', environment.domain)
-        .set('api-token', 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ'),
+      headers: headers,
       withCredentials: true
     });
   }

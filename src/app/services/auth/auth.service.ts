@@ -26,6 +26,8 @@ export class AuthService {
 
   private _redirectUrl = '';
 
+  private _jwt = '';
+
   private _isOperator = false;
 
   private _user: User = null;
@@ -68,11 +70,7 @@ export class AuthService {
         if (!this._cookieService.get('hasBeenAuthenticated')) {
           // this._cookieService.get('user')
           console.timeEnd('cookieObs');
-          this.logout().subscribe(() => {
-            // this._router.navigate(['/logout']);
-          }, (err: any) => {
-            console.error(err);
-          });
+          this.logout();
         }
       }, 30000);
     }
@@ -96,6 +94,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
           this._user = res;
+          this._jwt = res.jwt;
           this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
@@ -129,24 +128,19 @@ export class AuthService {
       );
   }
 
-  public logout(): Observable<any> {
-    return this._http.get('/auth/logout')
-      .pipe(
-        map((res: any) => {
-          this._setAuthenticatedTo(res.isAuthenticated);
-          this._setAdminTo(res.adminLevel);
-          this._setConfirmedTo(res.isConfirmed);
-          this._setEtherpadAccessesTo(res.etherpad);
-          this._cookieService.removeAll();
-          this._redirectUrl = '';
-          this._user = null;
-          // this._setAdminAccess(null);
-          //this.stopSwellRTSession();
-          clearInterval(this._cookieObserver);
-          return res;
-        }),
-        catchError((error: Response) => throwError(error.json()))
-      );
+  public logout(): boolean {
+        this._setAuthenticatedTo(false);
+        this._setAdminTo(0);
+        this._setConfirmedTo(false);
+        this._setEtherpadAccessesTo(null);
+        this._cookieService.removeAll();
+        this._redirectUrl = '';
+        this._user = null;
+        this._jwt = '';
+        // this._setAdminAccess(null);
+        //this.stopSwellRTSession();
+        clearInterval(this._cookieObserver);
+        return true;
   }
 
   /**
@@ -344,6 +338,10 @@ export class AuthService {
 
   get errorUrl(): string {
     return this._errorUrl;
+  }
+
+  get jwt(): string {
+    return this._jwt;
   }
 
   set errorUrl (url: string) {

@@ -187,12 +187,9 @@ export class AccountComponent implements OnInit {
 
   onClickSubmit(event: Event) {
     this.userService.delete().pipe(first()).subscribe((_: any) => {
-      this.authService.logout().pipe(first()).subscribe(() => {
-        this.translateNotificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
-        this.router.navigate(['/login']);
-      });
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      this.authService.logout();
+      this.translateNotificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
+      this.router.navigate(['/login']);
     });
   }
 

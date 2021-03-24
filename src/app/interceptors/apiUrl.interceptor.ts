@@ -8,9 +8,11 @@ export class ApiUrlInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('http') === -1) { // Si ce n'est pas une URL
+      const url = (environment.apiUrl + req.url).replace('/api/auth', '/auth');
+      console.log(url);
       return next.handle(
         req.clone({
-          url: environment.apiUrl + req.url,
+          url: url,
           withCredentials: true
         })
       );

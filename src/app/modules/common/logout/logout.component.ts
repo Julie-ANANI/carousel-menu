@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../services/title/title.service';
 import { AuthService } from '../../../services/auth/auth.service';
-import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,17 +23,11 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.logout().pipe(first()).subscribe(() => {
-      this.translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
-      setTimeout(() => {
-        this.router.navigate(['/login']);
-        }, 2000);
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 2000);
-    });
+    this.authService.logout();
+    this.translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 2000);
   }
 
 }
