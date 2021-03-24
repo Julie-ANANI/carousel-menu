@@ -38,6 +38,8 @@ export class TableComponent {
     this._loadData(value);
   }
 
+  @Output() sendSearchSignal = new EventEmitter();
+
   /**
    * Try to stop loading :(
    * @param value
@@ -179,7 +181,6 @@ export class TableComponent {
     const startIndex = this._pagination.offset;
     const endIndex = this._pagination.offset + this._pagination.parPage;
 
-    console.log(this._pagination);
     this._isSearching = this._isSearching && this._table._total === 0;
 
     this._filteredContent = rows.slice(startIndex, endIndex);
@@ -746,7 +747,6 @@ export class TableComponent {
 
   set pagination(value: Pagination) {
     this._pagination = value;
-    console.log(value);
     this._config.limit = this._pagination.parPage.toString(10);
     this._config.offset = this._pagination.offset.toString(10);
 
@@ -889,4 +889,7 @@ export class TableComponent {
     return this._selectedIndex;
   }
 
+  sendSearch($event: any) {
+    this.sendSearchSignal.emit($event);
+  }
 }

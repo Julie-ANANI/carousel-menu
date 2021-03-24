@@ -47,8 +47,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _nothingFound = false;
 
-  private _originalTableData: Array<any> = [];
-
   // private _editEnterpriseId: string = null;
 
   private _queryConfig: Config = {
@@ -56,7 +54,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{"name":-1}'
   };
 
   private _resultTableConfiguration: Table = <Table>{};
@@ -116,8 +114,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._nothingFound = false;
 
     this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
-    // This is a search because the fucking indexes are not working
-    this._enterpriseService.get(null, this._queryConfig).pipe(first()).subscribe((enterprises: any) => {
+    this._getCompanies(this._queryConfig);
+  }
+
+  private _getCompanies(config: Config) {
+    this._enterpriseService.get(null, config).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
         this._initTable(enterprises.result, enterprises._metadata.totalCount);
@@ -134,7 +135,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   }
 
   private _initTable(content: Array<any> = [], total: number = -1) {
-    this._originalTableData = content;
     this._resultTableConfiguration = {
       _selector: 'admin-enterprises-table',
       _title: 'Enterprises',
@@ -159,6 +159,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _attrs: ['name'],
           _name: 'Name',
           _type: 'TEXT',
+          _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'name']),
           _isHidden: !this.canAccess(['tableColumns', 'name'])
         },
@@ -196,6 +197,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Parent Enterprise',
           _type: 'TEXT',
           _isSearchable: true,
+          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
@@ -314,18 +316,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         break;
 
     }
-  }
-
-  filterCompanies(filter: any) {
-    this._isSearching = true;
-    const jsonForm = JSON.parse(filter);
-    this._resultTableConfiguration._content =
-      this._resultTableConfiguration._content.filter(item => item[Object.keys(jsonForm)[0]] === jsonForm[Object.keys(jsonForm)[0]]);
-    this._results = true;
-    this._nothingFound = false;
-    setTimeout(() => {
-      this._isSearching = false;
-    }, 0);
   }
 
   /*public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
@@ -476,23 +466,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
-    console.log(value);
-    this.doSearch();
-    this._resultTableConfiguration._content = this._originalTableData;
-    this.filterCompanies(this._queryConfig.search);
-    // this.getCompaniesOnCurrentPage();
+    this._getCompanies(this._queryConfig);
   }
 
   get nothingFound(): boolean {
     return this._nothingFound;
-  }
-
-  getCompaniesOnCurrentPage() {
-    this._resultTableConfiguration._content =
-      this._resultTableConfiguration._content.slice(Number(this._queryConfig.offset),
-        Number(this._queryConfig.limit));
-    console.log(this._resultTableConfiguration._content);
-    console.log(this._originalTableData);
   }
 
   /*get activePatterns(): Array<Pattern> {
@@ -518,5 +496,4 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   get isSaving(): boolean {
     return this._isSaving;
   }
-
 }
