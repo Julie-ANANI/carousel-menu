@@ -1,0 +1,14 @@
+<div [hidden]="!canAccess()" class="container fluid grid-2xl p-top-30" id="admin-enterprise-bulk-edit-management">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- companies selected table -->
+    <section class="p-bottom-30 p-top-20">
+      <app-shared-table
+        [(config)]="config"
+        [data]="companiesTable">
+      </app-shared-table>
+    </section>
+    <!-- /companies selected table -->
+
+  </div>
+</div>

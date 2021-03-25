@@ -20,6 +20,7 @@ import * as momentTimeZone from 'moment-timezone';
 })
 
 export class TableComponent {
+  @Output() sendAddParentNavigator = new EventEmitter();
 
   /***
    * Input use to set the config for the tables linked with the back office
@@ -893,5 +894,10 @@ export class TableComponent {
   navigateToBulkEdit() {
     this._localStorageService.setItem('companiesSelected', JSON.stringify(this._getSelectedRowsContent()));
     this.sendEditNavigator.emit(true);
+  }
+
+  navigateToAddParent() {
+    this._localStorageService.setItem('companiesSelected', JSON.stringify(this._getSelectedRowsContent()));
+    this.sendAddParentNavigator.emit(true);
   }
 }

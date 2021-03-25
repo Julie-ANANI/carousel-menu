@@ -169,6 +169,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: this.canAccess(['delete']),
       _isPaginable: total > 10,
+      _isAddParent: true,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
       _isEditable: this.canAccess(['edit']),
@@ -624,6 +625,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   navigateToEdit($event: any) {
     if ($event) {
       this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+    }
+  }
+
+  navigateToAddParent($event: any) {
+    if ($event) {
+      this._route.navigate(['/user/admin/settings/enterprises/addparent']);
     }
   }
 }

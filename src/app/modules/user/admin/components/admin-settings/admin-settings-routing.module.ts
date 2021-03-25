@@ -8,6 +8,7 @@ import { AdminSettingsComponent } from './admin-settings.component';
 
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
+import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,13 @@ export const routes: Routes = [
       {
         path: 'enterprises/bulkedit',
         component: AdminEntrepriseBulkEditComponent,
+        canActivate: [AdminRoleGuard],
+        pathMatch: 'full',
+        data: { accessPath: ['settings', 'enterprises'] }
+      },
+      {
+        path: 'enterprises/addparent',
+        component: AdminEntrepriseAddParentComponent,
         canActivate: [AdminRoleGuard],
         pathMatch: 'full',
         data: { accessPath: ['settings', 'enterprises'] }

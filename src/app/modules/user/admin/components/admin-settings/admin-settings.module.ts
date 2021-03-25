@@ -19,6 +19,7 @@ import {SidebarEnterprisesModule} from '../../../../sidebars/components/sidebar-
 import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
 import {PipeModule} from '../../../../../pipe/pipe.module';
+import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {PipeModule} from '../../../../../pipe/pipe.module';
     AdminEnterpriseManagementComponent,
     AdminCountryManagementComponent,
     AdminEmailBlacklistComponent,
-    AdminEntrepriseBulkEditComponent
+    AdminEntrepriseBulkEditComponent,
+    AdminEntrepriseAddParentComponent
   ],
   exports: [
     AdminSettingsComponent
