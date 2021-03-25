@@ -142,29 +142,28 @@ export class SidebarUserAnswerComponent {
     }
   }
 
+  /**
+   * can also update the anonymous professional details or the answer of the same.
+   *
+   * @private
+   */
   private _updateAnswer() {
-    if (this._userAnswer.professional && this._userAnswer.professional.email) {
-      // Hack : les réponses anciennes n'ont pas de champ quizReference,
-      // mais il faut forcément une valeur pour sauvegarder la réponse
-      // TODO: remove this hack
-      this._userAnswer.originalAnswerReference = this._userAnswer.originalAnswerReference || 'oldQuiz';
-      this._userAnswer.quizReference = this._userAnswer.quizReference || 'oldQuiz';
+    // Hack : les réponses anciennes n'ont pas de champ quizReference,
+    // mais il faut forcément une valeur pour sauvegarder la réponse
+    // TODO: remove this hack
+    this._userAnswer.originalAnswerReference = this._userAnswer.originalAnswerReference || 'oldQuiz';
+    this._userAnswer.quizReference = this._userAnswer.quizReference || 'oldQuiz';
 
-      this._answerService.save(this._userAnswer._id, this._userAnswer).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('Success', 'The answer is updated.');
-        this._resetEdit();
-        this._resetSaveVariables();
-        this.answerUpdated.emit(true);
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._resetSaveVariables();
-        console.error(err);
-      });
-    } else {
-      this._translateNotificationsService.error('Error',
-        'The email of the professional associated with this answer is not exist.');
+    this._answerService.save(this._userAnswer._id, this._userAnswer).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Success', 'The answer is updated.');
+      this._resetEdit();
       this._resetSaveVariables();
-    }
+      this.answerUpdated.emit(true);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._resetSaveVariables();
+      console.error(err);
+    });
   }
 
   private _resetSaveVariables() {
