@@ -166,7 +166,8 @@ export const COMMON = {
     'OR': 'Or',
     'PREPARATION': 'Preparation',
     'LOADING_EDITOR': 'loading editor...',
-    'TRY_AGAIN': 'Try again'
+    'TRY_AGAIN': 'Try again',
+    'SELECT_COLUMN_TO_EDIT': 'Select a column',
   },
 
   'PLACEHOLDER': {

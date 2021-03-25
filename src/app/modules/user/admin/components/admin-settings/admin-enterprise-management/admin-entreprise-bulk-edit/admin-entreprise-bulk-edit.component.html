@@ -1,6 +1,55 @@
 <div [hidden]="!canAccess()" class="container fluid grid-2xl p-top-30" id="admin-enterprise-bulk-edit-management">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
+    <!-- select column to edit -->
+    <section class="main-form-wrapper">
+      <ng-container>
+        <div class="selector-wrapper">
+          <span
+            class="text-sm text-secondary-dark text-label text-normal">{{ 'COMMON.LABEL.SELECT_COLUMN_TO_EDIT' | translate }}
+            :</span>
+          <!-- selector column-->
+          <label>
+            <select class="form-select" [(ngModel)]="columnAttrsSelected">
+              <option *ngFor="let column of companiesTable._columns.slice(3, companiesTable._columns.length)"
+                      [value]="column._attrs">
+                {{ column._name | translate | FormatText }}
+              </option>
+            </select>
+          </label>
+          <!-- /selector column -->
+        </div>
+
+        <div class="input-wrapper">
+          <span
+            class="text-sm text-secondary-dark text-label text-normal">
+            Input to update :
+            </span>
+
+          <!-- input value for the column -->
+          <label>
+            <input
+              class="form-input is-shadowed"
+              [(ngModel)]="inputValue"
+              id="input-form-inputValue"
+              placeholder="Start typing..."
+              type="text">
+          </label>
+          <!-- /input value for the column -->
+
+          <!-- update button -->
+          <button class="form-button is-primary is-outlined is-sm"
+                  (click)="update()" [hidden]="inputValue===''">
+            {{'COMMON.BUTTON.UPDATE' | translate }}
+          </button>
+          <!-- /update button -->
+
+        </div>
+
+      </ng-container>
+    </section>
+    <!-- /select column to edit -->
+
     <!-- companies selected table -->
     <section class="p-bottom-30 p-top-20">
       <app-shared-table

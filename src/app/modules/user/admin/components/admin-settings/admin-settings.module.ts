@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AdminSettingsRoutingModule} from './admin-settings-routing.module';
 
 import {AdminSettingsComponent} from './admin-settings.component';
@@ -18,6 +18,7 @@ import {MessageTemplateModule} from '../../../../utility/messages/message-templa
 import {SidebarEnterprisesModule} from '../../../../sidebars/components/sidebar-enterprises/sidebar-enterprises.module';
 import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
+import {PipeModule} from '../../../../../pipe/pipe.module';
 
 @NgModule({
   imports: [
@@ -32,7 +33,9 @@ import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/ad
     SidebarEnterprisesModule,
     ReactiveFormsModule,
     ModalModule,
-    AdminSettingsRoutingModule
+    AdminSettingsRoutingModule,
+    PipeModule,
+    FormsModule
   ],
   declarations: [
     AdminSettingsComponent,

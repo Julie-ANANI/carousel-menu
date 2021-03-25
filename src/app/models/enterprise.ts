@@ -1,6 +1,6 @@
 export interface Pattern {
   pattern: {expression: string};
-  avg?: number
+  avg?: number;
 }
 
 interface LogoMedia {

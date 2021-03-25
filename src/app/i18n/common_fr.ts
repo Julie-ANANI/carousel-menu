@@ -118,6 +118,7 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'SELECT_COLUMN_TO_EDIT': 'Sélectionnez une colonne',
     'ACTIVITY_FIELDS': 'Champs d\'activité',
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
