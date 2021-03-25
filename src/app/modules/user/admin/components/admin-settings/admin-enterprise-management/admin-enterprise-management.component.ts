@@ -71,6 +71,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _shieldSortedList: Array<any> = [];
 
+  get shieldSortedList(): Array<any> {
+    return this._shieldSortedList;
+  }
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _enterpriseService: EnterpriseService,
               private _formBuilder: FormBuilder,
@@ -232,6 +236,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Deduced emails',
           _type: 'NUMBER',
           _isSearchable: true,
+          _width: '170px',
           _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
@@ -273,6 +278,23 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: true,
           _isSortable: true,
+          _width: '190px',
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['enterpriseSize'],
+          _name: 'Company size',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['valueChain'],
+          _name: 'Value chain',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
@@ -291,7 +313,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private sortShieldList(shieldList: any[]) {
     shieldList.map((item) => {
-      const element = this._shieldSortedList.find(el => el.company === item.professional.company);
+      const element = this.shieldSortedList.find(el => el.company === item.professional.company);
       if (element) {
         element.shieldEmails += 1;
       } else {

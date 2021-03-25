@@ -161,14 +161,38 @@
     <!-- /brand -->
 
     <!-- geographical zone -->
-    <label class="form-label" for="form-geographicalZone">Geographical Zone</label>
+    <div class="form-group">
+      <label class="form-label" for="form-geographicalZone">Geographical Zone</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="geographicalZone"
+        id="form-geographicalZone"
+        placeholder="Enter the enterprise geographical zone"
+        type="text">
+    </div>
+    <!-- /geographical zone -->
+
+    <!-- company size -->
+    <div class="form-group">
+      <label class="form-label" for="form-companySize">Company size</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="companySize"
+        id="form-companySize"
+        placeholder="Enter the company size"
+        type="text">
+    </div>
+    <!-- /company size -->
+
+    <!-- value chain -->
+    <label class="form-label" for="form-valueChain">Value chain</label>
     <input
       class="form-input is-shadowed"
-      formControlName="geographicalZone"
-      id="form-geographicalZone"
-      placeholder="Enter the enterprise geographical zone"
+      formControlName="valueChain"
+      id="form-valueChain"
+      placeholder="Enter the value chain"
       type="text">
-    <!-- /geographical zone -->
+    <!-- /company size -->
 
   </form>
 </div>

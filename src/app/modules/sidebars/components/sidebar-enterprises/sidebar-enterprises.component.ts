@@ -92,7 +92,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       enterpriseType: [null],
       industries: [null],
       brands: [null],
-      geographicalZone: [null]
+      geographicalZone: [null],
+      companySize: [null],
+      valueChain: [null]
     });
   }
 
