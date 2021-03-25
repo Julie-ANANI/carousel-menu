@@ -17,6 +17,7 @@ import {MessageErrorModule} from '../../../../utility/messages/message-error/mes
 import {MessageTemplateModule} from '../../../../utility/messages/message-template/message-template.module';
 import {SidebarEnterprisesModule} from '../../../../sidebars/components/sidebar-enterprises/sidebar-enterprises.module';
 import {ModalModule} from '../../../../utility/modals/modal/modal.module';
+import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import {ModalModule} from '../../../../utility/modals/modal/modal.module';
     AdminSettingsComponent,
     AdminEnterpriseManagementComponent,
     AdminCountryManagementComponent,
-    AdminEmailBlacklistComponent
+    AdminEmailBlacklistComponent,
+    AdminEntrepriseBulkEditComponent
   ],
   exports: [
     AdminSettingsComponent

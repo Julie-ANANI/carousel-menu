@@ -17,6 +17,7 @@ import {TranslateNotificationsService} from '../../../../../../services/notifica
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {ShieldService} from '../../../../../../services/shield/shield.service';
 import {NotificationsService} from 'angular2-notifications';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -81,7 +82,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _shieldService: ShieldService,
-              private _notificationsService: NotificationsService
+              private _notificationsService: NotificationsService,
+              private _route: Router
               /*private _autoCompleteService: AutocompleteService,*/
               /*private _sanitizer: DomSanitizer*/) {
   }
@@ -169,6 +171,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isPaginable: total > 10,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
+      _isEditable: this.canAccess(['edit']),
       _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
       _columns: [
         {
@@ -616,5 +619,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   get isSaving(): boolean {
     return this._isSaving;
+  }
+
+  navigateToEdit($event: any) {
+    if ($event) {
+      this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+    }
   }
 }

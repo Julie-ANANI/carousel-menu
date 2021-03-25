@@ -183,6 +183,18 @@
                   </ng-container>
                   <!-- /delete button -->
 
+                  <!-- bulk edit button -->
+                  <ng-container *ngIf="table._isEditable">
+                    <button
+                      (click)="navigateToBulkEdit()"
+                      class="button p-no text-sm is-link is-sm"
+                      type="button">
+                      <i class="icon-left text-sm icon icon-edit"></i>
+                      {{ 'Bulk edit' }}
+                    </button>
+                  </ng-container>
+                  <!-- /bulk edit button -->
+
                 </div>
               </th>
             </ng-container>

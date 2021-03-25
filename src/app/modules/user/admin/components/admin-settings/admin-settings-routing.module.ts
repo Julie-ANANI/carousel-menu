@@ -3,10 +3,11 @@ import {RouterModule, Routes} from '@angular/router';
 
 import { AdminEmailBlacklistComponent } from './admin-email-blacklist/admin-email-blacklist.component';
 import { AdminCountryManagementComponent } from './admin-country-management/admin-country-management.component';
-import { AdminEnterpriseManagementComponent } from "./admin-enterprise-management/admin-enterprise-management.component";
+import { AdminEnterpriseManagementComponent } from './admin-enterprise-management/admin-enterprise-management.component';
 import { AdminSettingsComponent } from './admin-settings.component';
 
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
+import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,13 @@ export const routes: Routes = [
         component: AdminEnterpriseManagementComponent,
         pathMatch: 'full',
         canActivate: [AdminRoleGuard],
+        data: { accessPath: ['settings', 'enterprises'] }
+      },
+      {
+        path: 'enterprises/bulkedit',
+        component: AdminEntrepriseBulkEditComponent,
+        canActivate: [AdminRoleGuard],
+        pathMatch: 'full',
         data: { accessPath: ['settings', 'enterprises'] }
       }
     ]

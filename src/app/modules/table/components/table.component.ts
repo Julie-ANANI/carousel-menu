@@ -38,8 +38,6 @@ export class TableComponent {
     this._loadData(value);
   }
 
-  @Output() sendSearchSignal = new EventEmitter();
-
   /**
    * Try to stop loading :(
    * @param value
@@ -93,6 +91,8 @@ export class TableComponent {
    * output the custom filter value when changes in the Search bar.
    */
   @Output() customFilter: EventEmitter<{ key: string, value: any }> = new EventEmitter<{ key: string, value: any }>();
+
+  @Output() sendEditNavigator = new EventEmitter();
 
   private _table: Table;
 
@@ -889,7 +889,9 @@ export class TableComponent {
     return this._selectedIndex;
   }
 
-  sendSearch($event: any) {
-    this.sendSearchSignal.emit($event);
+
+  navigateToBulkEdit() {
+    this._localStorageService.setItem('companiesSelected', JSON.stringify(this._getSelectedRowsContent()));
+    this.sendEditNavigator.emit(true);
   }
 }
