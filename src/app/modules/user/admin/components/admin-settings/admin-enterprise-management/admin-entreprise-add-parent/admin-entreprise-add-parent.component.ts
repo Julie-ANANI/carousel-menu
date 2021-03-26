@@ -115,17 +115,17 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'url'])
         },
         {
-          _attrs: ['industries.label'],
+          _attrs: ['industries'],
           _name: 'Industry',
-          _type: 'TEXT',
+          _type: 'LABEL-OBJECT-LIST',
           _isSearchable: true,
           _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
-          _attrs: ['brands.label'],
+          _attrs: ['brands'],
           _name: 'Brand',
-          _type: 'TEXT',
+          _type: 'LABEL-OBJECT-LIST',
           _isSearchable: true,
           _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])

@@ -413,6 +413,26 @@
                 </ng-container>
                 <!-- /type TAGS -->
 
+                <!-- type TAGS -->
+                <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
+
+                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
+                    <div class="text-ellipsis">
+                      <span style="padding-left: 3px">{{tag.label}}</span>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
+                    <span [ngStyle]="{ 'color': '#2295C6' }">...</span>
+                  </ng-container>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
+                    <span>-</span>
+                  </ng-container>
+
+                </ng-container>
+                <!-- /type TAGS -->
+
 
                 <!-- type LENGTH -->
                 <ng-container *ngSwitchCase="'LENGTH'">

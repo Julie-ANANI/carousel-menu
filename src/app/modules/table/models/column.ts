@@ -1,5 +1,5 @@
-import { Choice } from './choice';
-import { MultiLabel } from './multi-label';
+import {Choice} from './choice';
+import {MultiLabel} from './multi-label';
 
 export interface Column {
   _isSelected?: boolean;
@@ -11,7 +11,7 @@ export interface Column {
   readonly _name?: string;
   readonly _isSortable?: boolean;
   readonly _choices?: Choice[];
-  readonly _disabledState?: {_attrs: string, _type: types};
+  readonly _disabledState?: { _attrs: string, _type: types };
   readonly _multiLabels?: MultiLabel[];
   readonly _width?: string;
   readonly _enableTooltip?: boolean;
@@ -25,5 +25,23 @@ export interface Column {
   };
 }
 
-export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'MULTI-IMAGE-CHOICES' | 'DATE' | 'ARRAY'
-  | 'MULTI-LABEL' | 'MULTILING' | 'TAG-LIST' | 'COUNTRY-NAME' | 'LENGTH' | 'DAYS-TO' | 'DROPDOWN' | 'DATE_TIME' | 'NUMBER';
+export type types =
+  'TEXT'
+  | 'COUNTRY'
+  | 'PICTURE'
+  | 'PROGRESS'
+  | 'CHECK'
+  | 'MULTI-CHOICES'
+  | 'MULTI-IMAGE-CHOICES'
+  | 'DATE'
+  | 'ARRAY'
+  | 'MULTI-LABEL'
+  | 'MULTILING'
+  | 'TAG-LIST'
+  | 'COUNTRY-NAME'
+  | 'LENGTH'
+  | 'DAYS-TO'
+  | 'DROPDOWN'
+  | 'DATE_TIME'
+  | 'NUMBER'
+  | 'LABEL-OBJECT-LIST';
