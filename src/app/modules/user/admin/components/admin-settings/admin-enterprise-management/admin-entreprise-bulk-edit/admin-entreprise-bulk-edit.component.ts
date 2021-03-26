@@ -93,6 +93,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._success = value;
   }
 
+  get newObjectList(): any[] {
+    return this._newObjectList;
+  }
+
   get failed(): number {
     return this._failed;
   }
@@ -251,7 +255,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   update() {
-    if (this.inputValue && this.columnAttrsSelected) {
+    if ((this.inputValue || this.newObjectList.length > 1) && this.columnAttrsSelected) {
       this.inputValue = encodeURIComponent(this.inputValue);
       this.updateColumnWithInputValue(this.columnAttrsSelected, this.inputValue);
     }
@@ -280,12 +284,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     console.log(this.companiesTable._content);
     console.log(column);
     this.companiesTable._content.map(item => {
-      if (column.includes('.')) {
-        const keyArr = column.split('.');
-        const form = this.getFormOfItem(keyArr[0], value);
-        item[keyArr[0]].push(form);
-      } else {
+      if (this.inputType === 'text') {
         item[column] = value;
+      } else {
+        item[column] = this.newObjectList;
       }
       this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
         (result) => {
@@ -303,11 +305,9 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           console.error(err);
         });
     });
-    this.inputValue = '';
   }
 
   getNotification() {
-    console.log(this.success, this.failed, this.companiesTable._content.length);
     if (this._success === this.companiesTable._content.length) {
       this._notificationService.success('Success', 'Update all succeed');
     } else if (this._failed === this.companiesTable._content.length) {
@@ -315,9 +315,16 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     } else {
       this._notificationService.error('Warning', this.success + 'update succeed, ' + this.failed + 'update failed.');
     }
+    this.initState();
+  }
+
+  initState() {
     this._localStorageService.setItem('companiesSelected', JSON.stringify(this.companiesTable._content));
     this.success = 0;
     this.failed = 0;
+    this.isShowModal = false;
+    this._newObjectList = [];
+    this.inputValue = '';
   }
 
   getInputType() {

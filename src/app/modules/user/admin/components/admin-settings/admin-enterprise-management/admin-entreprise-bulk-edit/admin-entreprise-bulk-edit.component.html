@@ -64,11 +64,16 @@
   </div>
 </div>
 
-<app-utility-modal [title]="'Update'" [(showModal)]="isShowModal" [maxWidth]="'300px'">
+<app-utility-modal
+  [title]="'Update'"
+  [(showModal)]="isShowModal"
+  [maxWidth]="'300px'">
   <section class="modal-body">
     <form novalidate [formGroup]="form">
       <div class="input-wrapper">
         <form novalidate [formGroup]="form">
+
+          <!-- input form -->
           <div class="form-group" *ngIf="inputType === 'objectArray'">
             <label class="form-label" for="form-object-array">Industry</label>
             <app-utility-input-list
@@ -79,6 +84,14 @@
             </app-utility-input-list>
             <input class="form-input" formControlName="formObjectArray" type="hidden" id="form-object-array">
           </div>
+          <!-- /input form -->
+
+          <!-- update button -->
+          <button class="form-button is-primary is-outlined is-sm"
+                  (click)="update()" [hidden]="this.newObjectList.length===0">
+            {{'COMMON.BUTTON.UPDATE' | translate }}
+          </button>
+          <!-- /update button -->
         </form>
       </div>
     </form>
