@@ -55,7 +55,8 @@ export class InputListComponent {
   private _indexNumber: number = null;
   private _indexToDelete: number = null;
 
-  constructor(private _translateNotificationsService: TranslateNotificationsService) { }
+  constructor(private _translateNotificationsService: TranslateNotificationsService) {
+  }
 
   public addProposition(val: string) {
     if (this.isEditable) {
@@ -74,7 +75,7 @@ export class InputListComponent {
           if (_testValue.test(val)) {
             this._answerList.push({text: val});
             this._answer = '';
-            this.update.emit({ value: this._answerList });
+            this.update.emit({value: this._answerList});
           } else {
             this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
           }
@@ -85,7 +86,7 @@ export class InputListComponent {
           if (_testValue.test(val)) {
             this._answerList.push({text: val});
             this._answer = '';
-            this.update.emit({ value: this._answerList });
+            this.update.emit({value: this._answerList});
           } else {
             this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.DOMAIN');
           }
@@ -94,7 +95,7 @@ export class InputListComponent {
           this._answerList.push({text: val});
           this._answer = '';
           console.log(this._answerList);
-          this.update.emit({ value: this._answerList });
+          this.update.emit({value: this._answerList});
         }
 
       }
@@ -121,17 +122,17 @@ export class InputListComponent {
     const oldValue = this._answerList[index].text || this._answerList[index].name;
     this._answerList[index].text = value;
     this._answerList[index].name = value;
-    this.edit.emit({ oldTextValue: oldValue, value: this._answerList[index] });
-    this.update.emit({ value: this._answerList });
+    this.edit.emit({oldTextValue: oldValue, value: this._answerList[index]});
+    this.update.emit({value: this._answerList});
     this._enableUpdate = false;
     this._indexNumber = null;
   }
 
   public removeProposition(): void {
     if (this.isEditable) {
-      this.remove.emit({ value: this._answerList[this._indexToDelete] });
+      this.remove.emit({value: this._answerList[this._indexToDelete]});
       this._answerList.splice(this._indexToDelete, 1);
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
       this._indexToDelete = null;
       this.isModalDelete = false;
     }
@@ -152,7 +153,7 @@ export class InputListComponent {
       } else {
         this._answerList[index].rating = 2;
       }
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
     }
   }
 
@@ -164,7 +165,7 @@ export class InputListComponent {
       } else {
         this._answerList[index].rating = 0;
       }
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
     }
   }
 

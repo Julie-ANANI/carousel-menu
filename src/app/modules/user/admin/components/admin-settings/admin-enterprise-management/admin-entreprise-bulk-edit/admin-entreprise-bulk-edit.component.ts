@@ -41,6 +41,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _newObjectList: any[] = [];
   private _isShowModal = false;
   private _form: FormGroup;
+  private _scope = 'country';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
@@ -49,6 +50,11 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
               private _notificationService: NotificationsService,
               private _entrepriseService: EnterpriseService,
               private _localStorageService: LocalStorageService) {
+  }
+
+
+  get scope(): string {
+    return this._scope;
   }
 
   private _buildForm() {
@@ -148,8 +154,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       _content: this.companiesToEdit,
       _total: this.companiesToEdit.length,
       _isTitle: true,
-      _isSearchable: !!this.canAccess(['searchBy']),
-      _isSelectable: this.canAccess(['delete']),
+      // _isSearchable: !!this.canAccess(['searchBy']),
+      // _isSelectable: this.canAccess(['delete']),
       _isPaginable: this.companiesToEdit.length > 10,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: this.companiesToEdit.length < 11,
@@ -179,39 +185,39 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
-          _isSortable: true,
+          // _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'url'])
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
+          // _isSearchable: true,
+          // _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
+          // _isSearchable: true,
+          // _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['enterpriseType'],
           _name: 'Type',
           _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
+          // _isSearchable: true,
+          // _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
           _type: 'GEO-ZONE-LIST',
-          _isSearchable: true,
-          _isSortable: true,
+          // _isSearchable: true,
+          // _isSortable: true,
           _width: '190px',
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
@@ -219,16 +225,16 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           _attrs: ['enterpriseSize'],
           _name: 'Company size',
           _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
+          // _isSearchable: true,
+          // _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
+          // _isSearchable: true,
+          // _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
@@ -284,8 +290,13 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     console.log(this.companiesTable._content);
     console.log(column);
     this.companiesTable._content.map(item => {
-      if (this.inputType === 'text') {
+      if (this.inputType === 'text' && this.columnAttrsSelected !== 'geographicalZone') {
         item[column] = value;
+      } else if (this.columnAttrsSelected !== 'geographicalZone') {
+        item[column] = {
+          scope: this.scope,
+          name: value
+        };
       } else {
         item[column] = this.newObjectList;
       }
@@ -336,6 +347,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       case 'enterpriseURL':
       case 'enterpriseSize':
       case 'valueChain':
+      case 'geographicalZone':
         this.inputType = 'text';
         break;
       case 'patterns':

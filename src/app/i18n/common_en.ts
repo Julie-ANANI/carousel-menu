@@ -168,6 +168,7 @@ export const COMMON = {
     'LOADING_EDITOR': 'loading editor...',
     'TRY_AGAIN': 'Try again',
     'SELECT_COLUMN_TO_EDIT': 'Select a column',
+    'SELECT_A_SCOPE': 'Select a scope',
   },
 
   'PLACEHOLDER': {

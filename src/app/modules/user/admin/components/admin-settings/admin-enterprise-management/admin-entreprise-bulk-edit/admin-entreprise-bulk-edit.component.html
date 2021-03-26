@@ -4,12 +4,12 @@
     <!-- select column to edit -->
     <section class="main-form-wrapper">
 
+      <!-- selector column-->
       <ng-container>
         <div class="selector-wrapper">
           <span
             class="text-sm text-secondary-dark text-label text-normal">{{ 'COMMON.LABEL.SELECT_COLUMN_TO_EDIT' | translate }}
             :</span>
-          <!-- selector column-->
           <label>
             <select class="form-select" [(ngModel)]="columnAttrsSelected" (ngModelChange)="getInputType()">
               <option *ngFor="let column of companiesTable._columns.slice(2, companiesTable._columns.length)"
@@ -18,14 +18,14 @@
               </option>
             </select>
           </label>
-          <!-- /selector column -->
         </div>
+        <!-- /selector column -->
 
         <!-- input value for the column - text type -->
         <div class="input-text-wrapper" *ngIf="inputType === 'text'">
             <span
               class="text-sm text-secondary-dark text-label text-normal">
-            Input to update :
+            {{columnAttrsSelected | translate | FormatText}}
             </span>
 
           <label>
@@ -43,7 +43,6 @@
             {{'COMMON.BUTTON.UPDATE' | translate }}
           </button>
           <!-- /update button -->
-
         </div>
         <!-- /input value for the column - text type  -->
 
@@ -70,25 +69,25 @@
   [(showModal)]="isShowModal"
   [maxWidth]="'380px'">
   <section class="modal-body">
-    <form novalidate [formGroup]="form" class="form-wrapper">
-      <div class="input-wrapper">
-        <form novalidate [formGroup]="form">
 
-          <!-- input form -->
-          <div class="form-group" *ngIf="inputType === 'objectArray'">
-            <label class="form-label" for="form-object-array">{{columnAttrsSelected | translate | FormatText }}</label>
-            <app-utility-input-list
-              [isSmall]="true"
-              (update)="objectListUpdate($event)"
-              [config]="objectConfig"
-              [isEditable]="isEditable">
-            </app-utility-input-list>
-            <input class="form-input" formControlName="formObjectArray" type="hidden" id="form-object-array">
-          </div>
-          <!-- /input form -->
-        </form>
+    <!-- input form -->
+    <form novalidate [formGroup]="form"
+          *ngIf="inputType === 'objectArray' && columnAttrsSelected!== 'geographicalZone'"
+          class="form-wrapper">
+      <div class="input-wrapper">
+        <div class="form-group">
+          <label class="form-label" for="form-object-array">{{columnAttrsSelected | translate | FormatText }}</label>
+          <app-utility-input-list
+            [isSmall]="true"
+            (update)="objectListUpdate($event)"
+            [config]="objectConfig"
+            [isEditable]="isEditable">
+          </app-utility-input-list>
+          <input class="form-input" formControlName="formObjectArray" type="hidden" id="form-object-array">
+        </div>
       </div>
     </form>
+    <!-- /input form -->
 
     <!-- update button -->
     <button class="form-button button is-primary is-outlined is-sm"

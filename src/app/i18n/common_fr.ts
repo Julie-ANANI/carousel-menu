@@ -190,6 +190,7 @@ export const COMMON = {
     'PROJECT_TITLE': 'Ajoutez le titre du projet ici...',
     'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
     'MEDIA_SLIDE': 'Faites glisser votre photo ici',
+    'SELECT_A_SCOPE': 'Choisir un scope',
   },
 
   'REQUIRED': {
