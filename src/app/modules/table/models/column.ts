@@ -44,4 +44,5 @@ export type types =
   | 'DROPDOWN'
   | 'DATE_TIME'
   | 'NUMBER'
+  | 'PATTERNS-OBJECT-LIST'
   | 'LABEL-OBJECT-LIST';

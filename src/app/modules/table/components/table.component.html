@@ -413,7 +413,7 @@
                 </ng-container>
                 <!-- /type TAGS -->
 
-                <!-- type TAGS -->
+                <!-- type LABEL-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
 
                   <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
@@ -431,8 +431,27 @@
                   </ng-container>
 
                 </ng-container>
-                <!-- /type TAGS -->
+                <!-- /type LABEL-OBJECT-LIST -->
 
+                <!-- type PATTERNS-OBJECT-LIST -->
+                <ng-container *ngSwitchCase="'PATTERNS-OBJECT-LIST'">
+
+                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
+                    <div class="text-ellipsis">
+                      <span style="padding-left: 3px">{{tag.expression}}</span>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
+                    <span [ngStyle]="{ 'color': '#2295C6' }">...</span>
+                  </ng-container>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
+                    <span>-</span>
+                  </ng-container>
+
+                </ng-container>
+                <!-- /type PATTERNS-OBJECT-LIST-->
 
                 <!-- type LENGTH -->
                 <ng-container *ngSwitchCase="'LENGTH'">

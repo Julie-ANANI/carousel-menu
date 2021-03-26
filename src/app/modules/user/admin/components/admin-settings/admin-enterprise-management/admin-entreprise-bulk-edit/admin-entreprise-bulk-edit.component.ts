@@ -169,9 +169,9 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'patterns'])
         },
         {
-          _attrs: ['patterns.expression'],
+          _attrs: ['patterns'],
           _name: 'Patterns',
-          _type: 'TEXT',
+          _type: 'PATTERNS-OBJECT-LIST',
           _width: '120px',
           _isHidden: !this.canAccess(['tableColumns', 'patterns'])
         },
@@ -338,6 +338,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       case 'valueChain':
         this.inputType = 'text';
         break;
+      case 'patterns':
       case 'brands':
       case 'industries':
         this.inputType = 'objectArray';
@@ -355,16 +356,25 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     if (this.isEditable) {
       this._newObjectList = event.value.map((text) => {
         let newObject = {};
-        if (this.columnAttrsSelected === 'brands') {
-          newObject = {
-            label: text.text,
-            url: ''
-          };
-        } else {
-          newObject = {
-            label: text.text,
-            code: text.text
-          };
+        switch (this.columnAttrsSelected) {
+          case 'brands':
+            newObject = {
+              label: text.text,
+              url: ''
+            };
+            break;
+          case 'industries':
+            newObject = {
+              label: text.text,
+              url: ''
+            };
+            break;
+          case 'patterns':
+            newObject = {
+              expression: text.text,
+              avgScore: 0
+            };
+            break;
         }
         return newObject;
       });

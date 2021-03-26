@@ -12,7 +12,7 @@
           <!-- selector column-->
           <label>
             <select class="form-select" [(ngModel)]="columnAttrsSelected" (ngModelChange)="getInputType()">
-              <option *ngFor="let column of companiesTable._columns.slice(3, companiesTable._columns.length)"
+              <option *ngFor="let column of companiesTable._columns.slice(2, companiesTable._columns.length)"
                       [value]="column._attrs">
                 {{ column._name | translate | FormatText }}
               </option>
