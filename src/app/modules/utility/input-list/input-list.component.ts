@@ -93,6 +93,7 @@ export class InputListComponent {
         } else {
           this._answerList.push({text: val});
           this._answer = '';
+          console.log(this._answerList);
           this.update.emit({ value: this._answerList });
         }
 

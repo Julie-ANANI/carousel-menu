@@ -3,6 +3,7 @@
 
     <!-- select column to edit -->
     <section class="main-form-wrapper">
+
       <ng-container>
         <div class="selector-wrapper">
           <span
@@ -10,7 +11,7 @@
             :</span>
           <!-- selector column-->
           <label>
-            <select class="form-select" [(ngModel)]="columnAttrsSelected">
+            <select class="form-select" [(ngModel)]="columnAttrsSelected" (ngModelChange)="getInputType()">
               <option *ngFor="let column of companiesTable._columns.slice(3, companiesTable._columns.length)"
                       [value]="column._attrs">
                 {{ column._name | translate | FormatText }}
@@ -20,13 +21,13 @@
           <!-- /selector column -->
         </div>
 
-        <div class="input-wrapper">
-          <span
-            class="text-sm text-secondary-dark text-label text-normal">
+        <!-- input value for the column - text type -->
+        <div class="input-text-wrapper" *ngIf="inputType === 'text'">
+            <span
+              class="text-sm text-secondary-dark text-label text-normal">
             Input to update :
             </span>
 
-          <!-- input value for the column -->
           <label>
             <input
               class="form-input is-shadowed"
@@ -35,7 +36,6 @@
               placeholder="Start typing..."
               type="text">
           </label>
-          <!-- /input value for the column -->
 
           <!-- update button -->
           <button class="form-button is-primary is-outlined is-sm"
@@ -45,10 +45,12 @@
           <!-- /update button -->
 
         </div>
+        <!-- /input value for the column - text type  -->
 
       </ng-container>
     </section>
     <!-- /select column to edit -->
+
 
     <!-- companies selected table -->
     <section class="p-bottom-30 p-top-20">
@@ -61,3 +63,24 @@
 
   </div>
 </div>
+
+<app-utility-modal [title]="'Update'" [(showModal)]="isShowModal" [maxWidth]="'300px'">
+  <section class="modal-body">
+    <form novalidate [formGroup]="form">
+      <div class="input-wrapper">
+        <form novalidate [formGroup]="form">
+          <div class="form-group" *ngIf="inputType === 'objectArray'">
+            <label class="form-label" for="form-object-array">Industry</label>
+            <app-utility-input-list
+              [isSmall]="true"
+              (update)="objectListUpdate($event)"
+              [config]="objectConfig"
+              [isEditable]="isEditable">
+            </app-utility-input-list>
+            <input class="form-input" formControlName="formObjectArray" type="hidden" id="form-object-array">
+          </div>
+        </form>
+      </div>
+    </form>
+  </section>
+</app-utility-modal>

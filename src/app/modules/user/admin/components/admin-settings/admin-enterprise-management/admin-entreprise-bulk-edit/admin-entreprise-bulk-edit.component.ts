@@ -8,6 +8,7 @@ import {EnterpriseService} from '../../../../../../../services/enterprise/enterp
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationsService} from 'angular2-notifications';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
 
@@ -34,18 +35,58 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   private _success = 0;
   private _failed = 0;
+  private _inputType = '';
+  private _isEditable = true;
+  private _objectInputList: any = [];
+  private _newObjectList: any[] = [];
+  private _isShowModal = false;
+  private _form: FormGroup;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
               private _router: Router,
+              private _formBuilder: FormBuilder,
               private _notificationService: NotificationsService,
               private _entrepriseService: EnterpriseService,
               private _localStorageService: LocalStorageService) {
   }
 
+  private _buildForm() {
+    this._form = this._formBuilder.group({
+      formObjectArray: [null],
+    });
+  }
 
   get success(): number {
     return this._success;
+  }
+
+
+  get isShowModal(): boolean {
+    return this._isShowModal;
+  }
+
+  set isShowModal(value: boolean) {
+    this._isShowModal = value;
+  }
+
+  get objectConfig(): any {
+    return {
+      placeholder: 'Add new value',
+      initialData: this._objectInputList
+    };
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
+
+  get inputType(): string {
+    return this._inputType;
+  }
+
+  set inputType(value: string) {
+    this._inputType = value;
   }
 
   set success(value: number) {
@@ -192,6 +233,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._buildForm();
     this.companiesToEdit = JSON.parse(this._localStorageService.getItem('companiesSelected'));
     if (this.companiesToEdit) {
       this._initTable();
@@ -276,5 +318,48 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._localStorageService.setItem('companiesSelected', JSON.stringify(this.companiesTable._content));
     this.success = 0;
     this.failed = 0;
+  }
+
+  getInputType() {
+    switch (this.columnAttrsSelected) {
+      case 'logo.uri':
+      case 'name':
+      case 'enterpriseType':
+      case 'enterpriseURL':
+      case 'enterpriseSize':
+      case 'valueChain':
+        this.inputType = 'text';
+        break;
+      case 'brands':
+      case 'industries':
+        this.inputType = 'objectArray';
+        this.isShowModal = true;
+        break;
+    }
+  }
+
+
+  get form(): FormGroup {
+    return this._form;
+  }
+
+  public objectListUpdate(event: { value: Array<any> }) {
+    if (this.isEditable) {
+      this._newObjectList = event.value.map((text) => {
+        let newObject = {};
+        if (this.columnAttrsSelected === 'brands') {
+          newObject = {
+            label: text.text,
+            url: ''
+          };
+        } else {
+          newObject = {
+            label: text.text,
+            code: text.text
+          };
+        }
+        return newObject;
+      });
+    }
   }
 }

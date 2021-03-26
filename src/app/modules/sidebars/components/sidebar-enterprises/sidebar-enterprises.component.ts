@@ -114,21 +114,21 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._domSanitizer.bypassSecurityTrustHtml(
       `<img src="${data._logo}" height="22" alt=" "/><span>${data.name}</span>`
     );
-  };
+  }
 
   public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
     return this._domSanitizer.bypassSecurityTrustHtml(
       `<img src="${data.logo.uri}" height="22" alt=" "/><span>${data.name}</span>`
     );
-  };
+  }
 
   public companiesSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
     return this._autoCompleteService.get({query: searchString, type: 'company'});
-  };
+  }
 
   public enterpriseSuggestions = (searchString: string): Observable<Array<{ name: string, logo: any, domain: string, _id: string }>> => {
     return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
-  };
+  }
 
   public selectCompany(c: string | Clearbit | any) {
     if (typeof c === 'object' && this.isEditable) {

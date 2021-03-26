@@ -21,25 +21,27 @@ import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/ad
 import {PipeModule} from '../../../../../pipe/pipe.module';
 import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
 import {AutoCompleteInputModule} from '../../../../utility/auto-complete-input/auto-complete-input.module';
+import {InputListModule} from '../../../../utility/input-list/input-list.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    SidebarBlacklistModule,
-    RouterModule,
-    SidebarModule,
-    TableModule,
-    MessageErrorModule,
-    MessageTemplateModule,
-    SidebarEnterprisesModule,
-    ReactiveFormsModule,
-    ModalModule,
-    AdminSettingsRoutingModule,
-    PipeModule,
-    FormsModule,
-    AutoCompleteInputModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        SidebarBlacklistModule,
+        RouterModule,
+        SidebarModule,
+        TableModule,
+        MessageErrorModule,
+        MessageTemplateModule,
+        SidebarEnterprisesModule,
+        ReactiveFormsModule,
+        ModalModule,
+        AdminSettingsRoutingModule,
+        PipeModule,
+        FormsModule,
+        AutoCompleteInputModule,
+        InputListModule
+    ],
   declarations: [
     AdminSettingsComponent,
     AdminEnterpriseManagementComponent,
