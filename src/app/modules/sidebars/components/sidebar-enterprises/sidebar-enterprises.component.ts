@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Enterprise, Pattern} from '../../../../models/enterprise';
+import {Enterprise, Industry, Pattern} from '../../../../models/enterprise';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -20,7 +20,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this._patternsInputList = [];
+      this._industryInputList = [];
       this._newPatterns = [];
+      this._newIndustry = [];
       this._buildForm();
       this._form.reset();
     }
@@ -45,8 +47,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   @Input() isSaving = false;
 
-  @Output() finalOutput: EventEmitter<{enterprise: Enterprise, opType: string}> =
-    new EventEmitter<{enterprise: Enterprise, opType: string}>();
+  @Output() finalOutput: EventEmitter<{ enterprise: Enterprise, opType: string }> =
+    new EventEmitter<{ enterprise: Enterprise, opType: string }>();
 
   private _enterprise: Enterprise = <Enterprise>{};
 
@@ -64,11 +66,16 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _patternsInputList: Array<any> = [];
 
+  private _industryInputList: Array<any> = [];
+
   private _newPatterns: Array<Pattern> = [];
+
+  private _newIndustry: Array<Industry> = [];
 
   constructor(private _formBuilder: FormBuilder,
               private _autoCompleteService: AutocompleteService,
-              private _domSanitizer: DomSanitizer) { }
+              private _domSanitizer: DomSanitizer) {
+  }
 
   ngOnInit() {
     this._form.valueChanges.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
@@ -78,6 +85,11 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _saveChanges() {
     this.isSaving = true;
+  }
+
+
+  get newIndustry(): Array<any> {
+    return this._newIndustry;
   }
 
   private _buildForm() {
@@ -102,21 +114,21 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._domSanitizer.bypassSecurityTrustHtml(
       `<img src="${data._logo}" height="22" alt=" "/><span>${data.name}</span>`
     );
-  }
+  };
 
   public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
     return this._domSanitizer.bypassSecurityTrustHtml(
       `<img src="${data.logo.uri}" height="22" alt=" "/><span>${data.name}</span>`
     );
-  }
+  };
 
-  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+  public companiesSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
     return this._autoCompleteService.get({query: searchString, type: 'company'});
-  }
+  };
 
-  public enterpriseSuggestions = (searchString: string): Observable<Array<{name: string, logo: any, domain: string, _id: string}>> => {
+  public enterpriseSuggestions = (searchString: string): Observable<Array<{ name: string, logo: any, domain: string, _id: string }>> => {
     return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
-  }
+  };
 
   public selectCompany(c: string | Clearbit | any) {
     if (typeof c === 'object' && this.isEditable) {
@@ -146,26 +158,27 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable && this.isSaving && this._form.valid) {
       this.isSaving = false;
 
-      let _newEnterprise: Enterprise = {
+      const _newEnterprise: Enterprise = {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
         patterns: this._enterprise.patterns && this._enterprise.patterns.length ?
-        this._enterprise.patterns.concat(this._newPatterns) : this._newPatterns,
-        parentEnterprise: this._parentEnterprise ? this._parentEnterprise._id || null : null
+          this._enterprise.patterns.concat(this._newPatterns) : this._newPatterns,
+        parentEnterprise: this._parentEnterprise ? this._parentEnterprise._id || null : null,
+        industries: this._enterprise.industries && this._enterprise.industries.length ?
+          this._enterprise.industries.concat(this._newIndustry) : this.newIndustry,
       };
 
       Object.keys(this._form.controls).forEach(key => {
         if (this._form.get(key).value) {
           switch (key) {
-
             case 'patterns':
             case 'name':
             case 'topLevelDomain':
             case 'parentEnterprise':
+            case 'industries':
               // NOOP
               break;
-
-              case 'logo':
+            case 'logo':
               _newEnterprise[key] = {
                 'uri': this._logo || this._defaultLogoURI,
                 'alt': this._form.get('name').value
@@ -177,9 +190,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           }
         }
       });
-
       this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
-
     }
   }
 
@@ -191,19 +202,44 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._showModal = false;
   }
 
-  public patternsUpdate(event: {value: Array<any>}) {
+  public patternsUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
       this._newPatterns = event.value.map((text) => {
-        return {pattern: {expression: text.text}, avg: 0};
+        return {expression: text.text, avg: 0};
       });
       this._saveChanges();
     }
+  }
+
+  public industryUpdate(event: { value: Array<any> }) {
+    if (this.isEditable) {
+      this._newIndustry = event.value.map((text) => {
+        return {label: text.text, code: text.text};
+      });
+      this._saveChanges();
+    }
+  }
+
+
+  get industryInputList(): Array<any> {
+    return this._industryInputList;
+  }
+
+  set industryInputList(value: Array<any>) {
+    this._industryInputList = value;
   }
 
   get patternConfig(): any {
     return {
       placeholder: 'Enter the enterprise pattern',
       initialData: this._patternsInputList
+    };
+  }
+
+  get industryConfig(): any {
+    return {
+      placeholder: 'Enter the enterprise industry',
+      initialData: this._industryInputList
     };
   }
 

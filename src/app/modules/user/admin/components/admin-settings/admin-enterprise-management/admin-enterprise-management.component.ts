@@ -424,6 +424,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         break;
 
       case 'EDIT':
+        console.log(event.enterprise);
         this._enterpriseService.save(this._selectedEnterprise._id, event.enterprise).pipe(first()).subscribe((result) => {
           this._isSaving = false;
           this._translateNotificationsService.success('Success', 'The enterprise is updated.');

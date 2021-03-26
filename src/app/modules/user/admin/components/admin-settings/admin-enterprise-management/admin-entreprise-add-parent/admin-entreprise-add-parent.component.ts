@@ -24,6 +24,13 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     search: '{}',
     sort: '{"created":-1}'
   };
+  private _data: any = [];
+  configCompany = {
+    placeholder: 'test',
+    initialData: this._data,
+    type: 'company',
+    showDomain: true
+  };
 
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -170,4 +177,10 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
 
+  addCompanyToInclude(event: { value: Array<string> }): void {
+    // this._innovation.settings.companies.include = event.value;
+    // this.updateSettings();
+    console.log(event);
+
+  }
 }

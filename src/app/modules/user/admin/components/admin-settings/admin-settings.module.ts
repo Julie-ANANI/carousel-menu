@@ -20,6 +20,7 @@ import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
 import {PipeModule} from '../../../../../pipe/pipe.module';
 import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
+import {AutoCompleteInputModule} from '../../../../utility/auto-complete-input/auto-complete-input.module';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/a
     ModalModule,
     AdminSettingsRoutingModule,
     PipeModule,
-    FormsModule
+    FormsModule,
+    AutoCompleteInputModule
   ],
   declarations: [
     AdminSettingsComponent,
