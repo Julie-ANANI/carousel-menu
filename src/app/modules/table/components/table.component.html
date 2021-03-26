@@ -453,6 +453,26 @@
                 </ng-container>
                 <!-- /type PATTERNS-OBJECT-LIST-->
 
+                <!-- type GEO-ZONE-LIST -->
+                <ng-container *ngSwitchCase="'GEO-ZONE-LIST'">
+
+                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
+                    <div class="text-ellipsis">
+                      <span style="padding-left: 3px">{{tag.name}}</span>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
+                    <span [ngStyle]="{ 'color': '#2295C6' }">...</span>
+                  </ng-container>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
+                    <span>-</span>
+                  </ng-container>
+
+                </ng-container>
+                <!-- /type GEO-ZONE-LIST-->
+
                 <!-- type LENGTH -->
                 <ng-container *ngSwitchCase="'LENGTH'">
                   <div class="text-ellipsis">

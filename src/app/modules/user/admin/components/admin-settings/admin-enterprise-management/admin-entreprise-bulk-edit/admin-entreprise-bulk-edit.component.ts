@@ -8,7 +8,7 @@ import {EnterpriseService} from '../../../../../../../services/enterprise/enterp
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationsService} from 'angular2-notifications';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
 
@@ -207,9 +207,9 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
-          _attrs: ['geographicalZone.name'],
+          _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'TEXT',
+          _type: 'GEO-ZONE-LIST',
           _isSearchable: true,
           _isSortable: true,
           _width: '190px',

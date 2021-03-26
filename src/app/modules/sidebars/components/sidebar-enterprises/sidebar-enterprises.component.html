@@ -151,12 +151,12 @@
     <!-- brand -->
     <div class="form-group">
       <label class="form-label" for="form-brands">Brand</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="brands"
-        id="form-brands"
-        placeholder="Enter the enterprise brand"
-        type="text">
+      <app-utility-input-list
+        (update)="brandUpdate($event)"
+        [config]="brandConfig"
+        [isEditable]="isEditable">
+      </app-utility-input-list>
+      <input class="form-input" formControlName="brands" type="hidden" id="form-brands">
     </div>
     <!-- /brand -->
 

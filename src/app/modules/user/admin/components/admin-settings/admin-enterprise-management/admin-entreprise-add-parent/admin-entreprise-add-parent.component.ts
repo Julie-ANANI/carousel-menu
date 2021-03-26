@@ -101,9 +101,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'domain'])
         },
         {
-          _attrs: ['patterns.expression'],
+          _attrs: ['patterns'],
           _name: 'Patterns',
-          _type: 'TEXT',
+          _type: 'PATTERNS-OBJECT-LIST',
           _width: '120px',
           _isHidden: !this.canAccess(['tableColumns', 'patterns'])
         },
@@ -139,9 +139,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
-          _attrs: ['geographicalZone.name'],
+          _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'TEXT',
+          _type: 'GEO-ZONE-LIST',
           _isSearchable: true,
           _isSortable: true,
           _width: '190px',

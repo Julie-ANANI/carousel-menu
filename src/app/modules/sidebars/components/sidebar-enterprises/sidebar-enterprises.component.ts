@@ -16,11 +16,15 @@ type Template = 'CREATE' | 'EDIT';
 })
 
 export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
+  private _brandInputList: any = [];
+  private _newBrands: any = [];
 
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this._patternsInputList = [];
       this._industryInputList = [];
+      this._brandInputList = [];
+      this._newBrands = [];
       this._newPatterns = [];
       this._newIndustry = [];
       this._buildForm();
@@ -110,25 +114,34 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  get brandInputList(): any {
+    return this._brandInputList;
+  }
+
+  get newBrands(): any {
+    return this._newBrands;
+  }
+
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this._domSanitizer.bypassSecurityTrustHtml(
       `<img src="${data._logo}" height="22" alt=" "/><span>${data.name}</span>`
     );
-  }
+  };
 
   public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
     return this._domSanitizer.bypassSecurityTrustHtml(
       `<img src="${data.logo.uri}" height="22" alt=" "/><span>${data.name}</span>`
     );
-  }
+  };
 
   public companiesSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
     return this._autoCompleteService.get({query: searchString, type: 'company'});
-  }
+  };
 
   public enterpriseSuggestions = (searchString: string): Observable<Array<{ name: string, logo: any, domain: string, _id: string }>> => {
     return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
-  }
+  };
 
   public selectCompany(c: string | Clearbit | any) {
     if (typeof c === 'object' && this.isEditable) {
@@ -166,6 +179,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
         parentEnterprise: this._parentEnterprise ? this._parentEnterprise._id || null : null,
         industries: this._enterprise.industries && this._enterprise.industries.length ?
           this._enterprise.industries.concat(this._newIndustry) : this.newIndustry,
+        brands: this._enterprise.brands && this._enterprise.brands.length ?
+          this._enterprise.brands.concat(this.newBrands) : this.newBrands,
       };
 
       Object.keys(this._form.controls).forEach(key => {
@@ -176,6 +191,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             case 'topLevelDomain':
             case 'parentEnterprise':
             case 'industries':
+            case 'brands':
               // NOOP
               break;
             case 'logo':
@@ -220,6 +236,15 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
+  public brandUpdate(event: { value: Array<any> }) {
+    if (this.isEditable) {
+      this._newBrands = event.value.map((text) => {
+        return {label: text.text, url: ''};
+      });
+      this._saveChanges();
+    }
+  }
+
 
   get industryInputList(): Array<any> {
     return this._industryInputList;
@@ -240,6 +265,13 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return {
       placeholder: 'Enter the enterprise industry',
       initialData: this._industryInputList
+    };
+  }
+
+  get brandConfig(): any {
+    return {
+      placeholder: 'Enter the enterprise brand',
+      initialData: this._brandInputList
     };
   }
 
