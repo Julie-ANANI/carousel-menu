@@ -66,16 +66,17 @@
 
 <app-utility-modal
   [title]="'Update'"
+  [footer]="true"
   [(showModal)]="isShowModal"
-  [maxWidth]="'300px'">
+  [maxWidth]="'380px'">
   <section class="modal-body">
-    <form novalidate [formGroup]="form">
+    <form novalidate [formGroup]="form" class="form-wrapper">
       <div class="input-wrapper">
         <form novalidate [formGroup]="form">
 
           <!-- input form -->
           <div class="form-group" *ngIf="inputType === 'objectArray'">
-            <label class="form-label" for="form-object-array">Industry</label>
+            <label class="form-label" for="form-object-array">{{columnAttrsSelected | translate | FormatText }}</label>
             <app-utility-input-list
               [isSmall]="true"
               (update)="objectListUpdate($event)"
@@ -85,15 +86,17 @@
             <input class="form-input" formControlName="formObjectArray" type="hidden" id="form-object-array">
           </div>
           <!-- /input form -->
-
-          <!-- update button -->
-          <button class="form-button is-primary is-outlined is-sm"
-                  (click)="update()" [hidden]="this.newObjectList.length===0">
-            {{'COMMON.BUTTON.UPDATE' | translate }}
-          </button>
-          <!-- /update button -->
         </form>
       </div>
     </form>
+
+    <!-- update button -->
+    <button class="form-button button is-primary is-outlined is-sm"
+            style="position: absolute; right: 10px; bottom: 5px"
+            (click)="update()" [hidden]="this.newObjectList.length===0">
+      {{'COMMON.BUTTON.UPDATE' | translate }}
+    </button>
+    <!-- /update button -->
+
   </section>
 </app-utility-modal>

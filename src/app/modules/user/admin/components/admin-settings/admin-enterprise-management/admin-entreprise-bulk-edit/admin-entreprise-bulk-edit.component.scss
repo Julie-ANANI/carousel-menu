@@ -13,19 +13,12 @@
   background-color: $bg-white-color;
   flex-grow: 1;
   flex-shrink: 1;
-  padding: $unit-5;
   font-size: $font-size-md;
   position: relative;
-  overflow-y: auto;
-  min-height: 150px;
-  max-height: 350px;
+  height: 280px;
 }
 
-.input-wrapper {
-  min-height: 20px;
-}
-
-.selector-wrapper, .input-wrapper, .input-text-wrapper{
+.selector-wrapper, .input-wrapper, .input-text-wrapper {
   display: flex;
   flex: 0 1 auto;
   align-items: center;
@@ -104,4 +97,13 @@
     height: auto;
   }
 
+}
+
+.form-wrapper {
+  overflow-y: auto;
+  width: 350px;
+  position: relative;
+  padding: 0;
+  max-height: 350px;
+  min-height: 200px;
 }

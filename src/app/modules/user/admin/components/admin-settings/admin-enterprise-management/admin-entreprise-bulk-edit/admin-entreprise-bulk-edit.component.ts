@@ -328,6 +328,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   getInputType() {
+    this._newObjectList = [];
     switch (this.columnAttrsSelected) {
       case 'logo.uri':
       case 'name':
