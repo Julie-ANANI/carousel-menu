@@ -30,6 +30,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._isIndustryConfig = false;
       this._isGeoConfig = false;
       this._isBrandConfig = false;
+      this._isSubConfig = false;
       this._form.get('name').setValue(this._enterprise.name);
       this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
       this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
@@ -38,6 +39,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._brandInputList = this._enterprise.brands;
       this._industryInputList = this._enterprise.industries;
       this._patternsInputList = this._enterprise.patterns;
+      this._newSubsidiary = this._enterprise.subsidiaries;
     } else {
       this._enterprise = <Enterprise>{};
     }
@@ -66,6 +68,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
+  private _isSubConfig = false;
+
   private _parentEnterprise: Enterprise = <Enterprise>{};
 
   private _patternsInputList: Array<any> = [];
@@ -79,6 +83,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   private _newGeoZone: Array<any> = [];
 
   private _geoZoneInputList: Array<any> = [];
+
+  private _subsidiaryInputList: Array<any> = [];
+
+  private _newSubsidiary: Array<any> = [];
 
   private _newPatterns: Array<Pattern> = [];
 
@@ -144,6 +152,11 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._newBrands;
   }
 
+
+  get newSubsidiary(): Array<any> {
+    return this._newSubsidiary;
+  }
+
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this._domSanitizer.bypassSecurityTrustHtml(
       `<img src="${data._logo}" height="22" alt=" "/><span>${data.name}</span>`
@@ -178,9 +191,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   public selectEnterprise(c: string | Enterprise | any) {
     if (typeof c === 'object' && this.isEditable) {
       this._parentEnterprise = c;
+      this._form.get('parentEnterprise').setValue(this._parentEnterprise.name);
       this._saveChanges();
     }
-    this._form.get('parentEnterprise').reset('');
   }
 
   public changeLogo(event: Event) {
@@ -195,15 +208,12 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       const _newEnterprise: Enterprise = {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
-        patterns: this._enterprise.patterns && this._enterprise.patterns.length ?
-          this._enterprise.patterns.concat(this._newPatterns) : this._newPatterns,
+        patterns: this.newPatterns,
         parentEnterprise: this._parentEnterprise ? this._parentEnterprise._id || null : null,
-        industries: this._enterprise.industries && this._enterprise.industries.length ?
-          this._enterprise.industries.concat(this._newIndustry) : this.newIndustry,
-        brands: this._enterprise.brands && this._enterprise.brands.length ?
-          this._enterprise.brands.concat(this.newBrands) : this.newBrands,
-        geographicalZone: this._enterprise.geographicalZone && this._enterprise.geographicalZone.length ?
-          this._enterprise.geographicalZone.concat(this.newGeoZone) : this.newGeoZone,
+        industries: this.newIndustry,
+        brands: this.newBrands,
+        geographicalZone: this.newGeoZone,
+        subsidiaries: this.newSubsidiary
       };
 
       Object.keys(this._form.controls).forEach(key => {
@@ -216,6 +226,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             case 'industries':
             case 'brands':
             case 'geographicalZone':
+            case 'subsidiaries':
               // NOOP
               break;
             case 'logo':
@@ -244,8 +255,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   public patternsUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
+      this._newPatterns = [];
       this._newPatterns = event.value.map((text) => {
-        return {expression: text.text, avg: 0};
+        return {expression: text.expression || text.text, avg: 0};
       });
       this._saveChanges();
     }
@@ -253,8 +265,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   public industryUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
+      this._newIndustry = [];
       this._newIndustry = event.value.map((text) => {
-        return {label: text.text, code: text.text};
+        return {label: text.label || text.text, code: text.label || text.text};
       });
       this._saveChanges();
     }
@@ -263,7 +276,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   public brandUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
       this._newBrands = event.value.map((text) => {
-        return {label: text.text, url: ''};
+        return {label: text.text || text.label, url: ''};
       });
       this._saveChanges();
     }
@@ -271,8 +284,19 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   public geoZoneUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
+      this._newGeoZone = [];
       this._newGeoZone = event.value.map((text) => {
-        return {scope: 'country', name: text.text};
+        return {scope: 'country', name: text.text || text.name};
+      });
+      this._saveChanges();
+    }
+  }
+
+  public subsidiaryUpdate(event: { value: Array<any> }) {
+    if (this.isEditable) {
+      this._newSubsidiary = [];
+      this._newSubsidiary = event.value.map((text) => {
+        return text['id'];
       });
       this._saveChanges();
     }
@@ -292,6 +316,16 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       return {
         placeholder: 'Enter the enterprise pattern',
         initialData: this._patternsInputList
+      };
+    }
+  }
+
+  get subConfig(): any {
+    if (JSON.stringify(this.enterprise) !== '{}' && !this._isSubConfig) {
+      this._isSubConfig = true;
+      return {
+        placeholder: 'Enter the enterprise subsidiary',
+        initialData: this._subsidiaryInputList
       };
     }
   }

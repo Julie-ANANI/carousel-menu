@@ -4,7 +4,7 @@
     <!-- input area -->
     <div *ngIf="isAddable" class="input-wrapper">
 
-      <label class="m-right-2">
+      <label class="m-right-2" *ngIf="!isSelectCompany">
         <input
           [(ngModel)]="answer"
           [attr.placeholder]="placeholder | translate"
@@ -17,10 +17,24 @@
           type="text">
       </label>
 
+      <label style="width: 100%" *ngIf="isSelectCompany">
+        <input
+          (valueChanged)="selectEnterprise($event)"
+          [list-formatter]="autocompleteEnterpriseListFormatter"
+          [min-chars]="2"
+          [(ngModel)]="answer"
+          [source]="enterpriseSuggestions"
+          auto-complete
+          class="form-input is-shadowed"
+          placeholder="Enter the enterprise"
+          type="text">
+      </label>
+
       <button
         [disabled]="f.form.invalid || !isEditable"
         [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
         class="button is-circled is-primary"
+        *ngIf="!isSelectCompany"
         type="submit">
         <i class="icon icon-plus"></i>
       </button>

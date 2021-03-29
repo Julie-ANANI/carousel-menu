@@ -86,12 +86,13 @@
     <!-- subsidiaries -->
     <div class="form-group">
       <label class="form-label" for="form-subsidiaries">Subsidiaries</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="subsidiaries"
-        id="form-subsidiaries"
-        placeholder="Enter the enterprise subsidiaries"
-        type="text">
+      <app-utility-input-list
+        (update)="subsidiaryUpdate($event)"
+        [config]="subConfig"
+        [isSelectCompany]="true"
+        [isEditable]="isEditable">
+      </app-utility-input-list>
+      <input class="form-input" formControlName="subsidiaries" type="hidden" id="form-subsidiaries">
     </div>
     <!-- /subsidiaries -->
 
