@@ -261,29 +261,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   update() {
-    if ((this.inputValue || this.newObjectList.length > 1) && this.columnAttrsSelected) {
+    if ((this.inputValue || this.newObjectList.length > 0) && this.columnAttrsSelected) {
       this.inputValue = encodeURIComponent(this.inputValue);
       this.updateColumnWithInputValue(this.columnAttrsSelected, this.inputValue);
     }
-  }
-
-  getFormOfItem(attribute: string, value: string) {
-    let form = {};
-    switch (attribute) {
-      case 'industries':
-        form = {
-          label: value,
-          code: ''
-        };
-        break;
-      case 'brands':
-        form = {
-          label: value,
-          url: ''
-        };
-        break;
-    }
-    return form;
   }
 
   updateColumnWithInputValue(column: string, value: string) {
@@ -349,6 +330,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       case 'brands':
       case 'industries':
         this.inputType = 'objectArray';
+        this._objectInputList = [];
         this.isShowModal = true;
         break;
     }
