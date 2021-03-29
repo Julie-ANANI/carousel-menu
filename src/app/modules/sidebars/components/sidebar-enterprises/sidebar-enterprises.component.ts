@@ -16,36 +16,36 @@ type Template = 'CREATE' | 'EDIT';
 })
 
 export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
-  private _brandInputList: any = [];
-  private _newBrands: any = [];
-
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
-      this._patternsInputList = [];
-      this._industryInputList = [];
-      this._brandInputList = [];
-      this._newBrands = [];
-      this._newPatterns = [];
-      this._newIndustry = [];
       this._buildForm();
-      this._form.reset();
     }
   }
 
-  @Input() isEditable = false;
-
   // provide this value when you want to update the existing enterprise, not while creating new one.
   @Input() set enterprise(value: Enterprise) {
-    if (!!value) {
+    if (JSON.stringify(value) !== '{}') {
       this._enterprise = value;
-      this._form.patchValue(this._enterprise);
-      this._form.get('patterns').reset('');
+      this._isPatternConfig = false;
+      this._isIndustryConfig = false;
+      this._isGeoConfig = false;
+      this._isBrandConfig = false;
+      this._form.get('name').setValue(this._enterprise.name);
+      this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
+      this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
+      this._form.get('enterpriseType').setValue(this._enterprise.enterpriseType);
+      this._geoZoneInputList = this._enterprise.geographicalZone;
+      this._brandInputList = this._enterprise.brands;
+      this._industryInputList = this._enterprise.industries;
+      this._patternsInputList = this._enterprise.patterns;
     } else {
       this._enterprise = <Enterprise>{};
     }
 
     this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
   }
+
+  @Input() isEditable = false;
 
   @Input() type: Template = 'EDIT';
 
@@ -72,9 +72,22 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _industryInputList: Array<any> = [];
 
+  private _brandInputList: Array<any> = [];
+
+  private _newBrands: Array<any> = [];
+
+  private _newGeoZone: Array<any> = [];
+
+  private _geoZoneInputList: Array<any> = [];
+
   private _newPatterns: Array<Pattern> = [];
 
   private _newIndustry: Array<Industry> = [];
+
+  private _isBrandConfig = false;
+  private _isGeoConfig = false;
+  private _isIndustryConfig = false;
+  private _isPatternConfig = false;
 
   constructor(private _formBuilder: FormBuilder,
               private _autoCompleteService: AutocompleteService,
@@ -91,6 +104,14 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this.isSaving = true;
   }
 
+
+  get newGeoZone(): any {
+    return this._newGeoZone;
+  }
+
+  get geoZoneInputList(): any {
+    return this._geoZoneInputList;
+  }
 
   get newIndustry(): Array<any> {
     return this._newIndustry;
@@ -181,6 +202,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           this._enterprise.industries.concat(this._newIndustry) : this.newIndustry,
         brands: this._enterprise.brands && this._enterprise.brands.length ?
           this._enterprise.brands.concat(this.newBrands) : this.newBrands,
+        geographicalZone: this._enterprise.geographicalZone && this._enterprise.geographicalZone.length ?
+          this._enterprise.geographicalZone.concat(this.newGeoZone) : this.newGeoZone,
       };
 
       Object.keys(this._form.controls).forEach(key => {
@@ -192,6 +215,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             case 'parentEnterprise':
             case 'industries':
             case 'brands':
+            case 'geographicalZone':
               // NOOP
               break;
             case 'logo':
@@ -245,6 +269,14 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
+  public geoZoneUpdate(event: { value: Array<any> }) {
+    if (this.isEditable) {
+      this._newGeoZone = event.value.map((text) => {
+        return {scope: 'country', name: text.text};
+      });
+      this._saveChanges();
+    }
+  }
 
   get industryInputList(): Array<any> {
     return this._industryInputList;
@@ -255,24 +287,43 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   get patternConfig(): any {
-    return {
-      placeholder: 'Enter the enterprise pattern',
-      initialData: this._patternsInputList
-    };
+    if (JSON.stringify(this.enterprise) !== '{}' && !this._isPatternConfig) {
+      this._isPatternConfig = true;
+      return {
+        placeholder: 'Enter the enterprise pattern',
+        initialData: this._patternsInputList
+      };
+    }
   }
 
   get industryConfig(): any {
-    return {
-      placeholder: 'Enter the enterprise industry',
-      initialData: this._industryInputList
-    };
+    if (JSON.stringify(this.enterprise) !== '{}' && !this._isIndustryConfig) {
+      this._isIndustryConfig = true;
+      return {
+        placeholder: 'Enter the enterprise industry',
+        initialData: this._industryInputList
+      };
+    }
   }
 
   get brandConfig(): any {
-    return {
-      placeholder: 'Enter the enterprise brand',
-      initialData: this._brandInputList
-    };
+    if (JSON.stringify(this.enterprise) !== '{}' && !this._isBrandConfig) {
+      this._isBrandConfig = true;
+      return {
+        placeholder: 'Enter the enterprise brand',
+        initialData: this._brandInputList
+      };
+    }
+  }
+
+  get geoConfig(): any {
+    if (JSON.stringify(this.enterprise) !== '{}' && !this._isGeoConfig) {
+      this._isGeoConfig = true;
+      return {
+        placeholder: 'Enter the geographical zone',
+        initialData: this._geoZoneInputList
+      };
+    }
   }
 
   get enterprise(): Enterprise {

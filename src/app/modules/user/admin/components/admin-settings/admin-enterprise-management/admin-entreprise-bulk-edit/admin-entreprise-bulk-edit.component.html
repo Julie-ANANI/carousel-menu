@@ -25,8 +25,8 @@
         <div class="input-text-wrapper" *ngIf="inputType === 'text'">
             <span
               class="text-sm text-secondary-dark text-label text-normal">
-            {{columnAttrsSelected | translate | FormatText}}
-            </span>
+            {{'COMMON.LABEL.INPUT_VALUE' | translate}}
+              :</span>
 
           <label>
             <input
@@ -38,7 +38,7 @@
           </label>
 
           <!-- update button -->
-          <button class="form-button is-primary is-outlined is-sm"
+          <button class="form-button button is-primary is-outlined is-sm"
                   (click)="update()" [hidden]="inputValue===''">
             {{'COMMON.BUTTON.UPDATE' | translate }}
           </button>
@@ -72,11 +72,14 @@
 
     <!-- input form -->
     <form novalidate [formGroup]="form"
-          *ngIf="inputType === 'objectArray' && columnAttrsSelected!== 'geographicalZone'"
+          *ngIf="inputType === 'objectArray'"
           class="form-wrapper">
       <div class="input-wrapper">
         <div class="form-group">
-          <label class="form-label" for="form-object-array">{{columnAttrsSelected | translate | FormatText }}</label>
+          <label class="form-label" for="form-object-array"
+                 *ngIf="columnAttrsSelected!=='geographicalZone'">{{columnAttrsSelected | translate | FormatText }}</label>
+          <label class="form-label" for="form-object-array"
+                 *ngIf="columnAttrsSelected==='geographicalZone'">{{'COMMON.LABEL.COUNTRY'| translate | FormatText }}</label>
           <app-utility-input-list
             [isSmall]="true"
             (update)="objectListUpdate($event)"

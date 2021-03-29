@@ -191,6 +191,7 @@ export const COMMON = {
     'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
     'MEDIA_SLIDE': 'Faites glisser votre photo ici',
     'SELECT_A_SCOPE': 'Choisir un scope',
+    'INPUT_VALUE': 'Entrez la valeur'
   },
 
   'REQUIRED': {

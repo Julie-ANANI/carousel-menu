@@ -169,6 +169,7 @@ export const COMMON = {
     'TRY_AGAIN': 'Try again',
     'SELECT_COLUMN_TO_EDIT': 'Select a column',
     'SELECT_A_SCOPE': 'Select a scope',
+    'INPUT_VALUE': 'Input the value'
   },
 
   'PLACEHOLDER': {

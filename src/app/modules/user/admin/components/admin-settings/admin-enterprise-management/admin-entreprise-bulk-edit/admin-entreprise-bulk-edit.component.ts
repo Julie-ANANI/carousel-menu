@@ -290,13 +290,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     console.log(this.companiesTable._content);
     console.log(column);
     this.companiesTable._content.map(item => {
-      if (this.inputType === 'text' && this.columnAttrsSelected !== 'geographicalZone') {
+      if (this.inputType === 'text') {
         item[column] = value;
-      } else if (this.columnAttrsSelected !== 'geographicalZone') {
-        item[column] = {
-          scope: this.scope,
-          name: value
-        };
       } else {
         item[column] = this.newObjectList;
       }
@@ -347,10 +342,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       case 'enterpriseURL':
       case 'enterpriseSize':
       case 'valueChain':
-      case 'geographicalZone':
         this.inputType = 'text';
         break;
       case 'patterns':
+      case 'geographicalZone':
       case 'brands':
       case 'industries':
         this.inputType = 'objectArray';
@@ -385,6 +380,12 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
             newObject = {
               expression: text.text,
               avgScore: 0
+            };
+            break;
+          case 'geographicalZone':
+            newObject = {
+              scope: this.scope,
+              name: text.text
             };
             break;
         }

@@ -150,10 +150,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private addShieldEmailsInTable(content: Array<any> = []) {
     this._shieldSortedList.map(item => {
       const element = content.find(el => el._id === item.company);
-      if (element) {
-        element.shieldEmails = item.shieldEmails;
+      if (element !== undefined) {
+        element['shieldEmails'] = item.shieldEmails;
       } else {
-        element.shieldEmails = null;
+        content.map(v => {
+          v['shieldEmails'] = null;
+        });
       }
     });
     return content;
@@ -277,9 +279,9 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
-          _attrs: ['geographicalZone.name'],
+          _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'TEXT',
+          _type: 'GEO-ZONE-LIST',
           _isSearchable: true,
           _isSortable: true,
           _width: '190px',
