@@ -103,6 +103,8 @@ export class TableComponent {
 
   private _config: Config;
 
+  private _textColor = '';
+
   private _pagination: Pagination;
 
   private _isLoadingData: boolean;
@@ -137,9 +139,10 @@ export class TableComponent {
    * @param {Table} data
    */
   private _loadData(data: Table): void {
-
+    console.log(data);
     if (data) {
       this._table = data;
+      console.log(this._table);
       this._initializeVariables();
       this._setPagination(Number(this._config.offset));
       this._checkSearching();
@@ -438,6 +441,22 @@ export class TableComponent {
    */
   public getAttrs(column: Column) {
     return column._attrs;
+  }
+
+  /**
+   * This function returns the attribute(s) of the column
+   * @param column
+   */
+  public getIsReplace(column: Column) {
+    return column._isReplaced;
+  }
+
+  /**
+   * This function returns the attribute(s) of the column
+   * @param column
+   */
+  public getIsFilled(column: Column) {
+    return column._isFilled;
   }
 
   /***
@@ -899,5 +918,21 @@ export class TableComponent {
   navigateToAddParent() {
     this._localStorageService.setItem('companiesSelected', JSON.stringify(this._getSelectedRowsContent()));
     this.sendAddParentNavigator.emit(true);
+  }
+
+  getNgStyle(column: Column) {
+    if (column._isReplaced || column._isFilled) {
+      if (column._isReplaced) {
+        this._textColor = '#00B0FF';
+      }
+      if (column._isFilled) {
+        this._textColor = '#EA5858';
+      }
+    }
+  }
+
+
+  get textColor(): string {
+    return this._textColor;
   }
 }

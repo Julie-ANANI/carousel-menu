@@ -4,6 +4,10 @@ import {Table} from '../../../../../../table/models/table';
 import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
 import {Config} from '../../../../../../../models/config';
 import {LocalStorageService} from '../../../../../../../services/localStorage/localStorage.service';
+import {EnterpriseService} from '../../../../../../../services/enterprise/enterprise.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Enterprise} from '../../../../../../../models/enterprise';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
 
@@ -16,7 +20,9 @@ import {LocalStorageService} from '../../../../../../../services/localStorage/lo
 
 export class AdminEntrepriseAddParentComponent implements OnInit {
   private _companiesToAddParent: Array<any> = [];
+  private _parentCompany: Enterprise = <Enterprise>{};
   private _companiesTable: Table = <Table>{};
+  private _companiesOriginalTable: Table = <Table>{};
   private _config: Config = {
     fields: '',
     limit: '10',
@@ -24,9 +30,10 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     search: '{}',
     sort: '{"created":-1}'
   };
+
   private _data: any = [];
   configCompany = {
-    placeholder: 'test',
+    placeholder: 'Enter the parent company',
     initialData: this._data,
     type: 'company',
     showDomain: true
@@ -35,6 +42,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
+              private _entrepriseService: EnterpriseService,
               private _rolesFrontService: RolesFrontService,
               private _localStorageService: LocalStorageService) {
   }
@@ -165,7 +173,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         }
       ]
     };
-
+    this._companiesOriginalTable = this._companiesTable;
   }
 
   public canAccess(path?: Array<string>) {
@@ -177,10 +185,52 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
 
-  addCompanyToInclude(event: { value: Array<string> }): void {
-    // this._innovation.settings.companies.include = event.value;
-    // this.updateSettings();
-    console.log(event);
+  get parentCompany(): Enterprise {
+    return this._parentCompany;
+  }
 
+  addCompanyToInclude(event: { value: Array<string> }): void {
+    this._entrepriseService.get(event.value[0]['id'], null).pipe(first()).subscribe(res => {
+        console.log(res);
+        this._parentCompany = res;
+        this.replaceChildrenWithParentValue();
+        console.log(this._companiesTable._content);
+        console.log(this._companiesOriginalTable._content);
+      },
+      (err: HttpErrorResponse) => {
+        console.error(err);
+      });
+  }
+
+  replaceChildrenWithParentValue() {
+    this._companiesTable._content.map(item => {
+      this._companiesTable._columns.slice(2, this._companiesTable._columns.length).map(c => {
+        switch (c._attrs.toString()) {
+          case 'topLevelDomain':
+          case 'enterpriseType':
+          case 'enterpriseSize':
+          case 'valueChain':
+          case 'enterpriseURL':
+            if (!item[c._attrs.toString()] && item[c._attrs.toString()] === '') {
+              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
+              item._color = '#00B0FF';
+            } else {
+              item._color = '#EA5858';
+            }
+            break;
+          case 'industries':
+          case 'patterns':
+          case 'brands':
+          case 'geographicalZone':
+            if (item[c._attrs.toString()].length === 0) {
+              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
+              item._color = '#00B0FF';
+            } else {
+              item._color = '#EA5858';
+            }
+            break;
+        }
+      });
+    });
   }
 }
