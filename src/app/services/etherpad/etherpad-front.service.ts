@@ -66,7 +66,11 @@ export class EtherpadFrontService {
    */
   public buildPadIdOldInnovation(sectionType: CardSectionTypes, index: number, lang: string): string {
     if (sectionType && lang && index >= 0) {
-      return `${sectionType.toLowerCase()}-${index}3-${lang}`;
+      if (index) {
+        return `${sectionType.toLowerCase()}-${index}3-${lang}`;
+      } else {
+        return `${sectionType.toLowerCase()}-${lang}`;
+      }
     }
     return '';
   }
