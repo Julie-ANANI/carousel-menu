@@ -2,9 +2,7 @@
 
   <!-- section title and search -->
   <ng-container *ngIf="table._isTitle || table._isSearchable">
-
     <div class="flex-wrap p-bottom-10 flex-start">
-
       <!-- number of results and title -->
       <ng-container *ngIf="table._isTitle">
         <div class="text-notify text-sm m-right-20 m-bottom-20">
@@ -24,7 +22,7 @@
       <!-- /want to search by columns -->
 
       <!-- Add parent: legend -->
-      <div class="legend-table" *ngIf="table._isAddParent">
+      <div class="legend-table" *ngIf="table._isLegend">
         <ng-container>
           <div style="display: flex; align-items: center">
             <div style="width: 15px; height: 15px; background: #00B0FF"></div>
@@ -445,6 +443,10 @@
                     <span>-</span>
                   </ng-container>
 
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
+                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    </ng-container>
+                  </ng-container>
                 </ng-container>
                 <!-- /type LABEL-OBJECT-LIST -->
 
@@ -463,6 +465,11 @@
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
                     <span>-</span>
+                  </ng-container>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
+                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    </ng-container>
                   </ng-container>
 
                 </ng-container>
@@ -484,6 +491,10 @@
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
                     <span>-</span>
                   </ng-container>
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
+                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    </ng-container>
+                  </ng-container>
 
                 </ng-container>
                 <!-- /type GEO-ZONE-LIST-->
@@ -493,6 +504,11 @@
                   <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
                     <span>{{ getLength(getContentValue(row, getAttrs(column)[0])) }}</span>
                   </div>
+
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
+                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    </ng-container>
+                  </ng-container>
                 </ng-container>
                 <!-- /type LENGTH -->
 
@@ -598,6 +614,8 @@
                       {{ (getContentValue(row, attr) || " - ") }}
                     </ng-container>
                   </div>
+                  <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                  </ng-container>
                 </ng-container>
                 <!-- /type NUMBER -->
 
@@ -610,9 +628,10 @@
                     <div class="text-ellipsis" [title]="getTitle(row, column)" [ngStyle]="{'color': column._color}">
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
-                        <span></span>
                       </ng-container>
                     </div>
+                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    </ng-container>
                   </ng-container>
                   <!-- /not clickable -->
 
@@ -628,6 +647,8 @@
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                       </ng-container>
+                      <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                      </ng-container>
                     </div>
                   </ng-container>
                   <!-- /clickable -->
@@ -635,6 +656,15 @@
                 </ng-container>
                 <!-- /type TEXT / DEFAULT -->
 
+                <ng-template #replaceOrFill let-attrs="_attrs" let-filled="_isFilled" let-replaceable="_isReplaceable"
+                             let-color="_color">
+                  <span *ngIf="filled" class="fill-replace-icon" (click)="test(attrs)">
+                          <i class="fas fa-redo" [ngStyle]="{'color': color}"></i>
+                        </span>
+                  <span *ngIf="replaceable" class="fill-replace-icon">
+                      <i class="fas fa-exchange-alt" [ngStyle]="{'color': color}"></i>
+                    </span>
+                </ng-template>
               </div>
             </ng-container>
           </td>

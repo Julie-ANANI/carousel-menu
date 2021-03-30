@@ -917,4 +917,8 @@ export class TableComponent {
     this._localStorageService.setItem('companiesSelected', JSON.stringify(this._getSelectedRowsContent()));
     this.sendAddParentNavigator.emit(true);
   }
+
+  test(attrs: any) {
+    console.log(attrs);
+  }
 }

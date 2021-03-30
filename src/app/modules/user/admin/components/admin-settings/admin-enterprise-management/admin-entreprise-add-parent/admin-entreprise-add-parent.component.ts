@@ -81,7 +81,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       _content: this.companiesToAddParent,
       _total: this.companiesToAddParent.length,
       _isTitle: true,
-      _isAddParent: true,
+      _isLegend: true,
       _isSelectable: this.canAccess(['delete']),
       _isPaginable: this.companiesToAddParent.length > 10,
       _isDeletable: this.canAccess(['delete']),
