@@ -204,12 +204,13 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   public onSubmit() {
     if (this.isEditable && this.isSaving && this._form.valid) {
       this.isSaving = false;
+      console.log(this._parentEnterprise);
 
       const _newEnterprise: Enterprise = {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
         patterns: this.newPatterns,
-        parentEnterprise: this._parentEnterprise ? this._parentEnterprise._id || null : null,
+        parentEnterprise: this._parentEnterprise ? this._parentEnterprise['id'] : null,
         industries: this.newIndustry,
         brands: this.newBrands,
         geographicalZone: this.newGeoZone,
