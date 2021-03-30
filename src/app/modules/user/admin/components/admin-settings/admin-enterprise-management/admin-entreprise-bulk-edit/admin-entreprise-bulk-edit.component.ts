@@ -371,7 +371,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this.companiesTable._content.map(item => {
       this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
         (result) => {
-          console.log(result);
           this._success += 1;
           if (this._success + this.failed === this.companiesTable._content.length) {
             this.getNotification();

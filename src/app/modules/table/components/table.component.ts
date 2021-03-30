@@ -147,10 +147,8 @@ export class TableComponent {
    * @param {Table} data
    */
   private _loadData(data: Table): void {
-    console.log(data);
     if (data) {
       this._table = data;
-      console.log(this._table);
       this._initializeVariables();
       this._setPagination(Number(this._config.offset));
       this._checkSearching();

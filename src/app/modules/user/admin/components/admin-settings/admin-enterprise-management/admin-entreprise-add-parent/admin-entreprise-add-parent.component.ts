@@ -198,11 +198,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
 
   addCompanyToInclude(event: { value: Array<string> }): void {
     this._entrepriseService.get(event.value[0]['id'], null).pipe(first()).subscribe(res => {
-        console.log(res);
         this._parentCompany = res;
         this.replaceChildrenWithParentValue();
-        console.log(this._companiesTable);
-        console.log(this._companiesOriginalTable);
       },
       (err: HttpErrorResponse) => {
         console.error(err);
@@ -267,7 +264,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     this.companiesTable._content.map(item => {
       this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
         (result) => {
-          console.log(result);
           this._success += 1;
           if (this._success + this._failed === this.companiesTable._content.length) {
             this.getNotification();

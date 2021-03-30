@@ -427,7 +427,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         break;
 
       case 'EDIT':
-        console.log(event.enterprise);
         this._enterpriseService.save(this._selectedEnterprise._id, event.enterprise).pipe(first()).subscribe((result) => {
           this._isSaving = false;
           this._translateNotificationsService.success('Success', 'The enterprise is updated.');
@@ -494,7 +493,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     const combined = combineLatest(requests);
     combined.subscribe(latestValues => {
       latestValues.forEach(result => {
-        console.log(result);
         // TODO see how I can update the table after deletion
         /*if (result && result['n'] > 0) {
           const idx = this.resultTableConfiguration._content.findIndex((value) => {
