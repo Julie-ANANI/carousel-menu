@@ -444,9 +444,9 @@
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -470,9 +470,9 @@
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                   </ng-container>
 
@@ -496,9 +496,9 @@
                     <span>-</span>
                   </ng-container>
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                   </ng-container>
 
@@ -512,9 +512,9 @@
                   </div>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -622,9 +622,9 @@
                       {{ (getContentValue(row, attr) || " - ") }}
                     </ng-container>
                   </div>
-                  <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                  <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                   </ng-container>
-                  <ng-container *ngTemplateOutlet="undoTemplate; context:column">
+                  <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                   </ng-container>
                 </ng-container>
                 <!-- /type NUMBER -->
@@ -640,9 +640,10 @@
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                       </ng-container>
                     </div>
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    <ng-container
+                      *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
+                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                   </ng-container>
                   <!-- /not clickable -->
@@ -659,9 +660,9 @@
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                       </ng-container>
-                      <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                      <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                       </ng-container>
-                      <ng-container *ngTemplateOutlet="undoTemplate; context:column">
+                      <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                       </ng-container>
                     </div>
                   </ng-container>
@@ -670,17 +671,17 @@
                 </ng-container>
                 <!-- /type TEXT / DEFAULT -->
 
-                <ng-template #replaceTemplate let-attrs="_attrs" let-replaceable="_isReplaceable"
-                             let-color="_color">
-                  <span *ngIf="replaceable" class="fill-replace-icon" (click)="exchangeValue(attrs)">
-                      <i class="fas fa-exchange-alt" [ngStyle]="{'color': color}"></i>
+                <ng-template #replaceTemplate let-context>
+                  <span class="fill-replace-icon"
+                        *ngIf="context.column._isReplaceable"
+                        (click)="exchangeValue(context)">
+                      <i class="fas fa-exchange-alt" [ngStyle]="{'color': context.column._color}"></i>
                     </span>
                 </ng-template>
 
-                <ng-template #undoTemplate let-attrs="_attrs" let-filled="_isFilled"
-                             let-color="_color">
-                  <span *ngIf="filled" class="fill-replace-icon" (click)="undoFilled(attrs)">
-                    <i class="fas fa-redo" [ngStyle]="{'color': color}"></i>
+                <ng-template #undoTemplate let-context>
+                  <span *ngIf="context.column._isFilled" class="fill-replace-icon" (click)="undoFilled(context)">
+                    <i class="fas fa-redo" [ngStyle]="{'color': context.column._color}"></i>
                   </span>
                 </ng-template>
               </div>

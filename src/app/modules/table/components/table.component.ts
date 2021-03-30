@@ -928,15 +928,19 @@ export class TableComponent {
     this.sendAddParentNavigator.emit(true);
   }
 
-  exchangeValue(attrs: any) {
-    if (attrs.length > 0) {
-      this.sendExchangeValue.emit(attrs);
-    }
+  exchangeValue(context: any) {
+    this.sendExchangeValue.emit(context);
   }
 
-  undoFilled(attrs: any) {
-    if (attrs.length > 0) {
-      this.sendUndoFilled.emit(attrs);
-    }
+  undoFilled(context: any) {
+    this.sendUndoFilled.emit(context);
+  }
+
+
+  public getContext(row: any, column: any) {
+    return {
+      row: row,
+      column: column
+    };
   }
 }

@@ -22,6 +22,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _companiesToEdit: Array<any> = [];
   private _companiesTable: Table = <Table>{};
+  private _companiesOriginalTable: Table = <Table>{};
   private _config: Config = {
     fields: '',
     limit: '10',
@@ -239,7 +240,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         }
       ]
     };
-
+    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
 
   ngOnInit(): void {
@@ -268,8 +269,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   updateColumnWithInputValue(column: string, value: string) {
-    console.log(this.companiesTable._content);
-    console.log(column);
     this.companiesTable._content.map(item => {
       const columnToAddStyle = this.companiesTable._columns.find(data => data._attrs.toString() === this.columnAttrsSelected);
       if (columnToAddStyle) {
@@ -281,22 +280,9 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       } else {
         item[column] = this.newObjectList;
       }
-      this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
-        (result) => {
-          console.log(result);
-          this._success += 1;
-          if (this._success + this.failed === this.companiesTable._content.length) {
-            this.getNotification();
-          }
-        },
-        (err: HttpErrorResponse) => {
-          this._failed += 1;
-          if (this._success + this.failed === this.companiesTable._content.length) {
-            this.getNotification();
-          }
-          console.error(err);
-        });
     });
+    this._isShowModal = false;
+    this._columnAttrsSelected = '';
   }
 
   getNotification() {
@@ -307,6 +293,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     } else {
       this._notificationService.error('Warning', this.success + 'update succeed, ' + this.failed + 'update failed.');
     }
+    this.removeFillTemplate();
     this.initState();
   }
 
@@ -340,11 +327,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         break;
     }
   }
-
-  getColumnStyle() {
-
-  }
-
 
   get form(): FormGroup {
     return this._form;
@@ -382,6 +364,52 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         }
         return newObject;
       });
+    }
+  }
+
+  updateChange() {
+    this.companiesTable._content.map(item => {
+      this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
+        (result) => {
+          console.log(result);
+          this._success += 1;
+          if (this._success + this.failed === this.companiesTable._content.length) {
+            this.getNotification();
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this._failed += 1;
+          if (this._success + this.failed === this.companiesTable._content.length) {
+            this.getNotification();
+          }
+          console.error(err);
+        });
+    });
+  }
+
+  undoFilled($event: any) {
+    if ($event) {
+      const rowIndex = $event.row;
+      const column = $event.column;
+      const tempValue = this.companiesTable._content[rowIndex][column._attrs.toString()];
+      this.companiesTable._content[rowIndex][column._attrs.toString()]
+        = this._companiesOriginalTable._content[rowIndex][column._attrs.toString()];
+      this._companiesOriginalTable._content[rowIndex][column._attrs.toString()] = tempValue;
+    }
+  }
+
+  removeFillTemplate() {
+    this.companiesTable._columns.map(c => {
+      c._color = '';
+      c._isFilled = undefined;
+    });
+    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
+  }
+
+  clearForm($event: boolean) {
+    if (!$event) {
+      this._columnAttrsSelected = '';
+      this._inputValue = '';
     }
   }
 }

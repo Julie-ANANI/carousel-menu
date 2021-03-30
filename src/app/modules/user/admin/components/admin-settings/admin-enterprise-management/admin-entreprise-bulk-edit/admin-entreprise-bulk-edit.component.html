@@ -55,6 +55,7 @@
     <section class="p-bottom-15 p-top-20">
       <app-shared-table
         [(config)]="config"
+        (sendUndoFilled)="undoFilled($event)"
         [data]="companiesTable">
       </app-shared-table>
     </section>
@@ -62,7 +63,9 @@
 
     <!-- update button -->
     <section class="p-bottom-30 p-top-4" style="display: flex">
-      <button class="button is-primary is-lg" style="margin-left: auto">
+      <button class="button is-primary is-lg"
+              style="margin-left: auto"
+      (click)="updateChange()">
         Update
       </button>
     </section>
@@ -76,6 +79,7 @@
   [title]="'Update'"
   [footer]="true"
   [(showModal)]="isShowModal"
+  (showModalChange)="clearForm($event)"
   [maxWidth]="'380px'">
   <section class="modal-body">
 

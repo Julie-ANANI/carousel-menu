@@ -8,6 +8,7 @@ import {EnterpriseService} from '../../../../../../../services/enterprise/enterp
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Enterprise} from '../../../../../../../models/enterprise';
+import {NotificationsService} from 'angular2-notifications';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
 
@@ -31,6 +32,10 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
+  private _success = 0;
+
+  private _failed = 0;
+
   private _data: any = [];
   configCompany = {
     placeholder: 'Enter the parent company',
@@ -42,6 +47,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
+              private _notificationService: NotificationsService,
               private _entrepriseService: EnterpriseService,
               private _rolesFrontService: RolesFrontService,
               private _localStorageService: LocalStorageService) {
@@ -174,7 +180,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         }
       ]
     };
-    this._companiesOriginalTable = this._companiesTable;
+    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
 
   public canAccess(path?: Array<string>) {
@@ -217,34 +223,84 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'enterpriseSize':
           case 'valueChain':
           case 'enterpriseURL':
-            if (!item[c._attrs.toString()] && item[c._attrs.toString()] === '') {
+            if ((!item[c._attrs.toString()] && item[c._attrs.toString()] === '')
+              && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
               c._color = '#EA5858';
-            } else {
+              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
+            } else if ((!item[c._attrs.toString()] && item[c._attrs.toString()] !== '')
+              && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
               c._color = '#00B0FF';
               c._isReplaceable = true;
+              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             }
             break;
           case 'industries':
           case 'patterns':
           case 'brands':
           case 'geographicalZone':
-            if (item[c._attrs.toString()].length === 0) {
+            if (item[c._attrs.toString()].length === 0 && this._parentCompany[c._attrs.toString()].length > 0) {
               c._color = '#EA5858';
-            } else {
+              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
+            } else if (item[c._attrs.toString()].length > 0 && this._parentCompany[c._attrs.toString()].length > 0) {
               c._color = '#00B0FF';
               c._isReplaceable = true;
+              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             }
             break;
         }
-        item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
       });
     });
   }
 
-  undoFilled($event: any) {
+  exchangeValue($event: any) {
+    if ($event) {
+      const rowIndex = $event.row;
+      const column = $event.column;
+      const temp = this.companiesTable._content[rowIndex][column._attrs.toString()];
+      this.companiesTable._content[rowIndex][column._attrs.toString()]
+        = this._companiesOriginalTable._content[rowIndex][column._attrs.toString()];
+      this._companiesOriginalTable._content[rowIndex][column._attrs.toString()] = temp;
+    }
   }
 
-  exchangeValue($event: any) {
+  updateChange() {
+    this.companiesTable._content.map(item => {
+      this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
+        (result) => {
+          console.log(result);
+          this._success += 1;
+          if (this._success + this._failed === this.companiesTable._content.length) {
+            this.getNotification();
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this._failed += 1;
+          if (this._success + this._failed === this.companiesTable._content.length) {
+            this.getNotification();
+          }
+          console.error(err);
+        });
+    });
+  }
 
+  private getNotification() {
+    if (this._success === this.companiesTable._content.length) {
+      this._notificationService.success('Success', 'Update all succeed');
+    } else if (this._failed === this.companiesTable._content.length) {
+      this._notificationService.error('Error', 'Update all failed');
+    } else {
+      this._notificationService.error('Warning', this._success + 'update succeed, ' + this._failed + 'update failed.');
+    }
+    this.removeFillTemplate();
+    this._success = 0;
+    this._failed = 0;
+  }
+
+  removeFillTemplate() {
+    this.companiesTable._columns.map(c => {
+      c._color = '';
+      c._isReplaceable = undefined;
+    });
+    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
 }
