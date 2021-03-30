@@ -218,10 +218,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'valueChain':
           case 'enterpriseURL':
             if (!item[c._attrs.toString()] && item[c._attrs.toString()] === '') {
-              c._color = '#00B0FF';
-              c._isFilled = true;
-            } else {
               c._color = '#EA5858';
+            } else {
+              c._color = '#00B0FF';
               c._isReplaceable = true;
             }
             break;
@@ -230,10 +229,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'brands':
           case 'geographicalZone':
             if (item[c._attrs.toString()].length === 0) {
-              c._color = '#00B0FF';
-              c._isFilled = true;
-            } else {
               c._color = '#EA5858';
+            } else {
+              c._color = '#00B0FF';
               c._isReplaceable = true;
             }
             break;
@@ -241,5 +239,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
       });
     });
+  }
+
+  undoFilled($event: any) {
+  }
+
+  exchangeValue($event: any) {
+
   }
 }

@@ -95,6 +95,16 @@ export class TableComponent {
 
   @Output() sendEditNavigator = new EventEmitter();
 
+  /**
+   * abandon parent value
+   */
+  @Output() sendUndoFilled = new EventEmitter();
+
+  /**
+   * replace value
+   */
+  @Output() sendExchangeValue = new EventEmitter();
+
   private _table: Table;
 
   private _isSearching: boolean;
@@ -918,7 +928,15 @@ export class TableComponent {
     this.sendAddParentNavigator.emit(true);
   }
 
-  test(attrs: any) {
-    console.log(attrs);
+  exchangeValue(attrs: any) {
+    if (attrs.length > 0) {
+      this.sendExchangeValue.emit(attrs);
+    }
+  }
+
+  undoFilled(attrs: any) {
+    if (attrs.length > 0) {
+      this.sendUndoFilled.emit(attrs);
+    }
   }
 }

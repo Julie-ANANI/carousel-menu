@@ -271,6 +271,11 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     console.log(this.companiesTable._content);
     console.log(column);
     this.companiesTable._content.map(item => {
+      const columnToAddStyle = this.companiesTable._columns.find(data => data._attrs.toString() === this.columnAttrsSelected);
+      if (columnToAddStyle) {
+        columnToAddStyle._color = '#EA5858';
+        columnToAddStyle._isFilled = true;
+      }
       if (this.inputType === 'text') {
         item[column] = value;
       } else {
@@ -334,6 +339,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         this.isShowModal = true;
         break;
     }
+  }
+
+  getColumnStyle() {
+
   }
 
 

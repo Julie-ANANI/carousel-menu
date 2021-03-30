@@ -25,11 +25,11 @@
       <div class="legend-table" *ngIf="table._isLegend">
         <ng-container>
           <div style="display: flex; align-items: center">
-            <div style="width: 15px; height: 15px; background: #00B0FF"></div>
+            <div style="width: 15px; height: 15px; background: #EA5858"></div>
             <span class="text text-sm m-left-1">Filled with parent's value</span>
           </div>
           <div style="display: flex; align-items: center">
-            <div style="width: 15px; height: 15px; background: #EA5858"></div>
+            <div style="width: 15px; height: 15px; background: #00B0FF"></div>
             <span class="text text-sm m-left-1">Replaced with parent's value</span>
           </div>
         </ng-container>
@@ -210,7 +210,7 @@
                 <!-- /add parent button -->
 
                 <!-- bulk edit button -->
-                <ng-container *ngIf="table._isEditable">
+                <ng-container *ngIf="table._isBulkEdit">
                   <button
                     (click)="navigateToBulkEdit()"
                     class="button p-no text-sm is-link is-sm"
@@ -444,7 +444,9 @@
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -468,7 +470,9 @@
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
                     </ng-container>
                   </ng-container>
 
@@ -492,7 +496,9 @@
                     <span>-</span>
                   </ng-container>
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
                     </ng-container>
                   </ng-container>
 
@@ -506,7 +512,9 @@
                   </div>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
-                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
                     </ng-container>
                   </ng-container>
                 </ng-container>
@@ -614,7 +622,9 @@
                       {{ (getContentValue(row, attr) || " - ") }}
                     </ng-container>
                   </div>
-                  <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                  <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                  </ng-container>
+                  <ng-container *ngTemplateOutlet="undoTemplate; context:column">
                   </ng-container>
                 </ng-container>
                 <!-- /type NUMBER -->
@@ -630,7 +640,9 @@
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                       </ng-container>
                     </div>
-                    <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                    <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="undoTemplate; context:column">
                     </ng-container>
                   </ng-container>
                   <!-- /not clickable -->
@@ -647,7 +659,9 @@
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                       </ng-container>
-                      <ng-container *ngTemplateOutlet="replaceOrFill; context:column">
+                      <ng-container *ngTemplateOutlet="replaceTemplate; context:column">
+                      </ng-container>
+                      <ng-container *ngTemplateOutlet="undoTemplate; context:column">
                       </ng-container>
                     </div>
                   </ng-container>
@@ -656,14 +670,18 @@
                 </ng-container>
                 <!-- /type TEXT / DEFAULT -->
 
-                <ng-template #replaceOrFill let-attrs="_attrs" let-filled="_isFilled" let-replaceable="_isReplaceable"
+                <ng-template #replaceTemplate let-attrs="_attrs" let-replaceable="_isReplaceable"
                              let-color="_color">
-                  <span *ngIf="filled" class="fill-replace-icon" (click)="test(attrs)">
-                          <i class="fas fa-redo" [ngStyle]="{'color': color}"></i>
-                        </span>
-                  <span *ngIf="replaceable" class="fill-replace-icon">
+                  <span *ngIf="replaceable" class="fill-replace-icon" (click)="exchangeValue(attrs)">
                       <i class="fas fa-exchange-alt" [ngStyle]="{'color': color}"></i>
                     </span>
+                </ng-template>
+
+                <ng-template #undoTemplate let-attrs="_attrs" let-filled="_isFilled"
+                             let-color="_color">
+                  <span *ngIf="filled" class="fill-replace-icon" (click)="undoFilled(attrs)">
+                    <i class="fas fa-redo" [ngStyle]="{'color': color}"></i>
+                  </span>
                 </ng-template>
               </div>
             </ng-container>

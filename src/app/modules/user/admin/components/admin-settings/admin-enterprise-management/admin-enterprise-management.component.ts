@@ -172,6 +172,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isSelectable: this.canAccess(['delete']),
       _isPaginable: total > 10,
       _isAddParent: true,
+      _isBulkEdit: true,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
       _isEditable: this.canAccess(['edit']),

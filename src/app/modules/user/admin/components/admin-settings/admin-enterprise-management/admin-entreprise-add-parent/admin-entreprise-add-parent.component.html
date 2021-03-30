@@ -14,13 +14,23 @@
     <!-- /search parent company -->
 
     <!-- companies selected table -->
-    <section class="p-bottom-30 p-top-20">
+    <section class="p-bottom-15 p-top-20">
       <app-shared-table
         [(config)]="config"
+        (sendExchangeValue)="exchangeValue($event)"
         [data]="companiesTable">
       </app-shared-table>
     </section>
     <!-- /companies selected table -->
+
+
+    <!-- update button -->
+    <section class="p-bottom-30 p-top-4" style="display: flex">
+      <button class="button is-primary is-lg" style="margin-left: auto">
+        Update
+      </button>
+    </section>
+    <!-- /update button -->
 
   </div>
 </div>

@@ -11,6 +11,7 @@ export interface Table {
   readonly _isDeletable?: boolean;
   readonly _isRowDisabled?: any;
   readonly _isSearchable?: boolean;
+  readonly _isBulkEdit?: boolean;
   readonly _columns: Array<Column>;
   readonly _clickIndex?: number;
   readonly _isPaginable?: boolean;
