@@ -592,9 +592,10 @@
 
                   <!-- not clickable -->
                   <ng-container *ngIf="i !== table._clickIndex - 1">
-                    <div class="text-ellipsis" [title]="getTitle(row, column)" [ngStyle]="{'color': '#888888'}">
+                    <div class="text-ellipsis" [title]="getTitle(row, column)" [ngStyle]="{'color': column._color}">
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                        <span></span>
                       </ng-container>
                     </div>
                   </ng-container>

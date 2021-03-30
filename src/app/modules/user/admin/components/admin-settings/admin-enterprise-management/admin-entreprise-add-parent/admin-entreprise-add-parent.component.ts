@@ -194,14 +194,19 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         console.log(res);
         this._parentCompany = res;
         this.replaceChildrenWithParentValue();
-        console.log(this._companiesTable._content);
-        console.log(this._companiesOriginalTable._content);
+        console.log(this._companiesTable);
+        console.log(this._companiesOriginalTable);
       },
       (err: HttpErrorResponse) => {
         console.error(err);
       });
   }
 
+  /**
+   * replace with parent values
+   * blue: empty value in children, filled with parent value
+   * red: children have value, can be replaced with parent value
+   */
   replaceChildrenWithParentValue() {
     this._companiesTable._content.map(item => {
       this._companiesTable._columns.slice(2, this._companiesTable._columns.length).map(c => {
@@ -212,10 +217,11 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'valueChain':
           case 'enterpriseURL':
             if (!item[c._attrs.toString()] && item[c._attrs.toString()] === '') {
-              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
-              item._color = '#00B0FF';
+              c._color = '#00B0FF';
+              c._isFilled = true;
             } else {
-              item._color = '#EA5858';
+              c._color = '#EA5858';
+              c._isReplaceable = true;
             }
             break;
           case 'industries':
@@ -223,13 +229,15 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'brands':
           case 'geographicalZone':
             if (item[c._attrs.toString()].length === 0) {
-              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
-              item._color = '#00B0FF';
+              c._color = '#00B0FF';
+              c._isFilled = true;
             } else {
-              item._color = '#EA5858';
+              c._color = '#EA5858';
+              c._isReplaceable = true;
             }
             break;
         }
+        item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
       });
     });
   }
