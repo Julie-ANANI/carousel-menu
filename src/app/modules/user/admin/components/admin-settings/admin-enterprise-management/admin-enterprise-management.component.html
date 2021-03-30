@@ -59,6 +59,8 @@
         (editRow)="openSidebar($event, 'EDIT')"
         (removeRows)="removeCompanies($event)"
         [(config)]="queryConfig"
+        (sendAddParentNavigator)="navigateToAddParent($event)"
+        (sendEditNavigator)="navigateToEdit($event)"
         [data]="resultTableConfiguration"
         [loading]="isSearching">
       </app-shared-table>

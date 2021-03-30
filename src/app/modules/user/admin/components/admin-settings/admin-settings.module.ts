@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AdminSettingsRoutingModule} from './admin-settings-routing.module';
 
 import {AdminSettingsComponent} from './admin-settings.component';
@@ -17,27 +17,38 @@ import {MessageErrorModule} from '../../../../utility/messages/message-error/mes
 import {MessageTemplateModule} from '../../../../utility/messages/message-template/message-template.module';
 import {SidebarEnterprisesModule} from '../../../../sidebars/components/sidebar-enterprises/sidebar-enterprises.module';
 import {ModalModule} from '../../../../utility/modals/modal/modal.module';
+import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
+import {PipeModule} from '../../../../../pipe/pipe.module';
+import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
+import {AutoCompleteInputModule} from '../../../../utility/auto-complete-input/auto-complete-input.module';
+import {InputListModule} from '../../../../utility/input-list/input-list.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    SidebarBlacklistModule,
-    RouterModule,
-    SidebarModule,
-    TableModule,
-    MessageErrorModule,
-    MessageTemplateModule,
-    SidebarEnterprisesModule,
-    ReactiveFormsModule,
-    ModalModule,
-    AdminSettingsRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        SidebarBlacklistModule,
+        RouterModule,
+        SidebarModule,
+        TableModule,
+        MessageErrorModule,
+        MessageTemplateModule,
+        SidebarEnterprisesModule,
+        ReactiveFormsModule,
+        ModalModule,
+        AdminSettingsRoutingModule,
+        PipeModule,
+        FormsModule,
+        AutoCompleteInputModule,
+        InputListModule
+    ],
   declarations: [
     AdminSettingsComponent,
     AdminEnterpriseManagementComponent,
     AdminCountryManagementComponent,
-    AdminEmailBlacklistComponent
+    AdminEmailBlacklistComponent,
+    AdminEntrepriseBulkEditComponent,
+    AdminEntrepriseAddParentComponent
   ],
   exports: [
     AdminSettingsComponent

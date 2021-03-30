@@ -1,15 +1,16 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
-import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
-import { AutoCompleteInputConfigInterface } from './interfaces/auto-complete-input-config-interface';
-import { AnswerList } from './interfaces/auto-complete-input-answerlist-interface';
-import { AutoCompleteInputSuggestionInterface } from './interfaces/auto-complete-input-suggestion-interface';
-import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../services/error/error-front.service';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder} from '@angular/forms';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {TranslateService} from '@ngx-translate/core';
+import {Observable} from 'rxjs';
+import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
+import {MultilingPipe} from '../../../pipe/pipes/multiling.pipe';
+import {AutoCompleteInputConfigInterface} from './interfaces/auto-complete-input-config-interface';
+import {AnswerList} from './interfaces/auto-complete-input-answerlist-interface';
+import {AutoCompleteInputSuggestionInterface} from './interfaces/auto-complete-input-suggestion-interface';
+import {TranslateNotificationsService} from '../../../services/notifications/notifications.service';
+import {ErrorFrontService} from '../../../services/error/error-front.service';
+import {Enterprise} from '../../../models/enterprise';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +20,6 @@ import { ErrorFrontService } from '../../../services/error/error-front.service';
 })
 
 export class AutoCompleteInputComponent implements OnInit {
-
   @Input() set config(config: AutoCompleteInputConfigInterface) {
     if (config) {
 
@@ -50,7 +50,8 @@ export class AutoCompleteInputComponent implements OnInit {
               private _autocompleteService: AutocompleteService,
               private _multilingPipe: MultilingPipe,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService) { }
+              private _translateService: TranslateService) {
+  }
 
   get canAdd(): boolean {
     return this._autoCompleteInputForm.get('answer').value && (!this.onlyOne || this._answerList.length === 0);
@@ -123,8 +124,8 @@ export class AutoCompleteInputComponent implements OnInit {
   private _domain = false;
 
   public answerFormatter = (answer: any): string => {
-    return `${answer[this.identifier]} ${!!this._domain && !!answer.domain ?  '(' + answer.domain + ')' : '' }`;
-  }
+    return `${answer[this.identifier]} ${!!this._domain && !!answer.domain ? '(' + answer.domain + ')' : ''}`;
+  };
 
   ngOnInit(): void {
     this._autoCompleteInputForm = this._formBuilder.group({
@@ -143,7 +144,7 @@ export class AutoCompleteInputComponent implements OnInit {
   public autocompleteListFormatter(data: any): SafeHtml {
     const text = this._autocompleteValueFormatter(data);
     const domain = this._domain && !!data.domain ? data.domain : undefined;
-    return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text} ${!!domain ? '(' + domain + ')' : '' }</span>`);
+    return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text} ${!!domain ? '(' + domain + ')' : ''}</span>`);
   }
 
   private _autocompleteValueFormatter(data: any): string {
@@ -162,7 +163,7 @@ export class AutoCompleteInputComponent implements OnInit {
 
         // Verify here if the value has the expected fields (name, logo and domain)
         if (typeof val === 'string') {
-          val = { [this._identifier]: val };
+          val = {[this._identifier]: val};
         }
 
         if (val && this._answerList.findIndex((t: any) => t[this._identifier] === val[this._identifier]) === -1) {
@@ -173,14 +174,14 @@ export class AutoCompleteInputComponent implements OnInit {
           }
 
           this._autoCompleteInputForm.get('answer').setValue('');
-          this.update.emit({ value: this._answerList });
+          this.update.emit({value: this._answerList});
         }
 
       }
 
       // Verify here if the value has the expected fields (name, logo and domain)
       if (typeof val === 'string') {
-        val = { [this._identifier]: val };
+        val = {[this._identifier]: val};
       } else if (this.multiLangObjects) {
         val.name = this._multilingPipe.transform(val.name, this._translateService.currentLang);
       }
@@ -193,8 +194,8 @@ export class AutoCompleteInputComponent implements OnInit {
         }
 
         this._autoCompleteInputForm.get('answer').setValue('');
-        this.update.emit({ value: this._answerList });
-        this.add.emit({ value: val });
+        this.update.emit({value: this._answerList});
+        this.add.emit({value: val});
       }
     } else {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
@@ -206,7 +207,7 @@ export class AutoCompleteInputComponent implements OnInit {
     if (i !== 0 && this.isEditable) {
       const elem = this._answerList.splice(i, 1);
       this._answerList.splice(i - 1, 0, elem[0]);
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
     }
   }
 
@@ -215,15 +216,15 @@ export class AutoCompleteInputComponent implements OnInit {
     if (i !== this._answerList.length - 1 && this.isEditable) {
       const elem = this._answerList.splice(i, 1);
       this._answerList.splice(i + 1, 0, elem[0]);
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
     }
   }
 
   public removeProposition(index: number) {
     if (this.isEditable) {
       const val = this._answerList.splice(index, 1).pop();
-      this.update.emit({ value: this._answerList });
-      this.remove.emit({ value: val });
+      this.update.emit({value: this._answerList});
+      this.remove.emit({value: val});
     }
   }
 
@@ -254,7 +255,18 @@ export class AutoCompleteInputComponent implements OnInit {
 
   public updateItem(event: Event): void {
     event.preventDefault();
-    this.update.emit({ value: this._answerList });
+    this.update.emit({value: this._answerList});
   }
 
+  selectedCompany(c: string | Enterprise | any) {
+    if (typeof c === 'object' && this.isEditable) {
+      if (this.onlyOne) {
+        this._answerList = [c];
+      } else {
+        this._answerList.push(c);
+      }
+      this.update.emit({value: this._answerList});
+      this._autoCompleteInputForm.get('answer').setValue('');
+    }
+  }
 }

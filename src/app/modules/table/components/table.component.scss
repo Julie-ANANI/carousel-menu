@@ -1,6 +1,20 @@
 @import "../../../../style/framework/src/variables";
 
 #table-wrapper {
+  .legend-table {
+    top: 6px;
+    left: 6px;
+    bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: auto;
+  }
+
+  .fill-replace-icon{
+    margin-left: auto;
+    cursor: pointer;
+  }
 
   .table-loading-wrapper {
     top: 0;
@@ -8,7 +22,7 @@
     right: 0;
     bottom: 0;
     z-index: $zindex-1;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255, 255, 255, 0.8);
   }
 
   .table {

@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Column, types } from '../../../table/models/column';
-import { Choice } from '../../../table/models/choice';
-import { Config } from '../../../../models/config';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Column, types} from '../../../table/models/column';
+import {Choice} from '../../../table/models/choice';
+import {Config} from '../../../../models/config';
 
 @Component({
   selector: 'app-shared-search-filter',
@@ -39,7 +39,8 @@ export class SharedSearchMultiComponent {
 
   private _openTooltip = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   private _loadProps(value: Column[]) {
     if (value) {
@@ -103,9 +104,7 @@ export class SharedSearchMultiComponent {
         this._searchConfig.search = JSON.stringify(_search);
       }
     }
-
     this.searchConfigChange.emit(this._searchConfig);
-
   }
 
   /**
@@ -144,7 +143,7 @@ export class SharedSearchMultiComponent {
 
     this._searchConfig.offset = '0';
 
-    if (this._searchConfig[prop._attrs[0]] === null || this._searchConfig[prop._attrs[0]] === undefined ) {
+    if (this._searchConfig[prop._attrs[0]] === null || this._searchConfig[prop._attrs[0]] === undefined) {
       delete this._searchConfig[prop._attrs[0]];
       this._deleteAdvanceConfig(prop);
     }

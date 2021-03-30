@@ -2,6 +2,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TranslateNotificationsService} from '../../../services/notifications/notifications.service';
 import {domainRegEx, emailRegEx} from '../../../utils/regex';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Observable} from 'rxjs';
+import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
+import {Enterprise} from '../../../models/enterprise';
 
 interface InputListConfig {
   placeholder: string;
@@ -31,6 +35,7 @@ export class InputListComponent {
 
   @Input() isDomain = false; // true: if the answerList is of domain. ex: app-sidebar-blacklist component
 
+
   @Input() set config(config: InputListConfig) {
     if (config) {
       this._placeholder = config.placeholder;
@@ -54,8 +59,12 @@ export class InputListComponent {
   public isModalDelete = false;
   private _indexNumber: number = null;
   private _indexToDelete: number = null;
+  @Input() isSelectCompany = false;
 
-  constructor(private _translateNotificationsService: TranslateNotificationsService) { }
+  constructor(private _translateNotificationsService: TranslateNotificationsService,
+              private _autoCompleteService: AutocompleteService,
+              private _domSanitizer: DomSanitizer) {
+  }
 
   public addProposition(val: string) {
     if (this.isEditable) {
@@ -74,7 +83,7 @@ export class InputListComponent {
           if (_testValue.test(val)) {
             this._answerList.push({text: val});
             this._answer = '';
-            this.update.emit({ value: this._answerList });
+            this.update.emit({value: this._answerList});
           } else {
             this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
           }
@@ -85,7 +94,7 @@ export class InputListComponent {
           if (_testValue.test(val)) {
             this._answerList.push({text: val});
             this._answer = '';
-            this.update.emit({ value: this._answerList });
+            this.update.emit({value: this._answerList});
           } else {
             this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.DOMAIN');
           }
@@ -93,7 +102,8 @@ export class InputListComponent {
         } else {
           this._answerList.push({text: val});
           this._answer = '';
-          this.update.emit({ value: this._answerList });
+          console.log(this._answerList);
+          this.update.emit({value: this._answerList});
         }
 
       }
@@ -120,17 +130,17 @@ export class InputListComponent {
     const oldValue = this._answerList[index].text || this._answerList[index].name;
     this._answerList[index].text = value;
     this._answerList[index].name = value;
-    this.edit.emit({ oldTextValue: oldValue, value: this._answerList[index] });
-    this.update.emit({ value: this._answerList });
+    this.edit.emit({oldTextValue: oldValue, value: this._answerList[index]});
+    this.update.emit({value: this._answerList});
     this._enableUpdate = false;
     this._indexNumber = null;
   }
 
   public removeProposition(): void {
     if (this.isEditable) {
-      this.remove.emit({ value: this._answerList[this._indexToDelete] });
+      this.remove.emit({value: this._answerList[this._indexToDelete]});
       this._answerList.splice(this._indexToDelete, 1);
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
       this._indexToDelete = null;
       this.isModalDelete = false;
     }
@@ -151,7 +161,7 @@ export class InputListComponent {
       } else {
         this._answerList[index].rating = 2;
       }
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
     }
   }
 
@@ -163,7 +173,7 @@ export class InputListComponent {
       } else {
         this._answerList[index].rating = 0;
       }
-      this.update.emit({ value: this._answerList });
+      this.update.emit({value: this._answerList});
     }
   }
 
@@ -190,5 +200,36 @@ export class InputListComponent {
   set answer(value: string) {
     this._answer = value;
   }
+
+  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
+    return this._domSanitizer.bypassSecurityTrustHtml(
+      `<img src="${data._logo}" height="22" alt=" "/><span>${data.name}</span>`
+    );
+  };
+
+  public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
+    return this._domSanitizer.bypassSecurityTrustHtml(
+      `<img src="${data.logo.uri}" height="22" alt=" "/><span>${data.name}</span>`
+    );
+  };
+
+  public companiesSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
+    return this._autoCompleteService.get({query: searchString, type: 'company'});
+  };
+
+  public enterpriseSuggestions = (searchString: string): Observable<Array<{ name: string, logo: any, domain: string, _id: string }>> => {
+    return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
+  };
+
+  public selectEnterprise(c: string | Enterprise | any) {
+    if (typeof c === 'object' && this.isEditable) {
+      console.log(c);
+      this._answerList.push(c);
+      this._answer = c.name;
+      this.update.emit({value: this._answerList});
+    }
+    this._answer = this._answer ? this._answer : '';
+  }
+
 
 }

@@ -86,12 +86,13 @@
     <!-- subsidiaries -->
     <div class="form-group">
       <label class="form-label" for="form-subsidiaries">Subsidiaries</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="subsidiaries"
-        id="form-subsidiaries"
-        placeholder="Enter the enterprise subsidiaries"
-        type="text">
+      <app-utility-input-list
+        (update)="subsidiaryUpdate($event)"
+        [config]="subConfig"
+        [isSelectCompany]="true"
+        [isEditable]="isEditable">
+      </app-utility-input-list>
+      <input class="form-input" formControlName="subsidiaries" type="hidden" id="form-subsidiaries">
     </div>
     <!-- /subsidiaries -->
 
@@ -139,36 +140,60 @@
     <!-- industry -->
     <div class="form-group">
       <label class="form-label" for="form-industry">Industry</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="industries"
-        id="form-industry"
-        placeholder="Enter the enterprise industry"
-        type="text">
+      <app-utility-input-list
+        (update)="industryUpdate($event)"
+        [config]="industryConfig"
+        [isEditable]="isEditable">
+      </app-utility-input-list>
+      <input class="form-input" formControlName="industries" type="hidden" id="form-industry">
     </div>
     <!-- industry -->
 
     <!-- brand -->
     <div class="form-group">
       <label class="form-label" for="form-brands">Brand</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="brands"
-        id="form-brands"
-        placeholder="Enter the enterprise brand"
-        type="text">
+      <app-utility-input-list
+        (update)="brandUpdate($event)"
+        [config]="brandConfig"
+        [isEditable]="isEditable">
+      </app-utility-input-list>
+      <input class="form-input" formControlName="brands" type="hidden" id="form-brands">
     </div>
     <!-- /brand -->
 
     <!-- geographical zone -->
-    <label class="form-label" for="form-geographicalZone">Geographical Zone</label>
+    <div class="form-group">
+      <label class="form-label" for="form-geographicalZone">Geographical Zone</label>
+      <app-utility-input-list
+        (update)="geoZoneUpdate($event)"
+        [config]="geoConfig"
+        [isEditable]="isEditable">
+      </app-utility-input-list>
+      <input class="form-input" formControlName="geographicalZone" type="hidden" id="form-geographicalZone">
+    </div>
+    <!-- /geographical zone -->
+
+    <!-- company size -->
+    <div class="form-group">
+      <label class="form-label" for="form-companySize">Company size</label>
+      <input
+        class="form-input is-shadowed"
+        formControlName="companySize"
+        id="form-companySize"
+        placeholder="Enter the company size"
+        type="text">
+    </div>
+    <!-- /company size -->
+
+    <!-- value chain -->
+    <label class="form-label" for="form-valueChain">Value chain</label>
     <input
       class="form-input is-shadowed"
-      formControlName="geographicalZone"
-      id="form-geographicalZone"
-      placeholder="Enter the enterprise geographical zone"
+      formControlName="valueChain"
+      id="form-valueChain"
+      placeholder="Enter the value chain"
       type="text">
-    <!-- /geographical zone -->
+    <!-- /company size -->
 
   </form>
 </div>

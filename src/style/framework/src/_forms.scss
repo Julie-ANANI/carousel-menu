@@ -2,7 +2,8 @@
 @import "mixins";
 
 .form-group {
-  margin-bottom: $layout-spacing;
+  margin-bottom: 20px;
+  min-height: 100%;
 }
 
 fieldset {

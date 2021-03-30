@@ -15,6 +15,9 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {ShieldService} from '../../../../../../services/shield/shield.service';
+import {NotificationsService} from 'angular2-notifications';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -25,7 +28,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   // private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
 
-  private _searchForm: FormGroup = this._formBuilder.group( {
+  private _searchForm: FormGroup = this._formBuilder.group({
     searchString: [''],
   });
 
@@ -54,7 +57,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{"name":-1}'
   };
 
   private _resultTableConfiguration: Table = <Table>{};
@@ -67,13 +70,23 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _isSaving = false;
 
+  private _shieldSortedList: Array<any> = [];
+
+  get shieldSortedList(): Array<any> {
+    return this._shieldSortedList;
+  }
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _enterpriseService: EnterpriseService,
               private _formBuilder: FormBuilder,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _shieldService: ShieldService,
+              private _notificationsService: NotificationsService,
+              private _route: Router
               /*private _autoCompleteService: AutocompleteService,*/
-              /*private _sanitizer: DomSanitizer*/) {}
+              /*private _sanitizer: DomSanitizer*/) {
+  }
 
   private _buildForm() {
     // New company form
@@ -96,6 +109,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
+      this._getShieldedPros();
     }
     this._buildForm();
   }
@@ -113,23 +127,38 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._nothingFound = false;
 
     this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
-    // This is a search because the fucking indexes are not working
+    this._getCompanies(this._queryConfig);
+  }
 
-    this._enterpriseService.get(null, this._queryConfig).pipe(first()).subscribe( (enterprises: any) => {
+  private _getCompanies(config: Config) {
+    this._enterpriseService.get(null, config).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
-        this._initTable(enterprises.result, enterprises._metadata.totalCount)
+        this._initTable(this.addShieldEmailsInTable(enterprises.result), enterprises._metadata.totalCount);
       } else {
         this._results = false;
         this._nothingFound = true;
       }
       this._isSearching = false;
-      }, (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       this._isSearching = false;
       console.error(err);
     });
+  }
 
+  private addShieldEmailsInTable(content: Array<any> = []) {
+    this._shieldSortedList.map(item => {
+      const element = content.find(el => el._id === item.company);
+      if (element !== undefined) {
+        element['shieldEmails'] = item.shieldEmails;
+      } else {
+        content.map(v => {
+          v['shieldEmails'] = null;
+        });
+      }
+    });
+    return content;
   }
 
   private _initTable(content: Array<any> = [], total: number = -1) {
@@ -141,9 +170,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isTitle: true,
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: this.canAccess(['delete']),
-      _isPaginable: content.length > 10,
+      _isPaginable: total > 10,
+      _isAddParent: true,
+      _isBulkEdit: true,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
+      _isEditable: this.canAccess(['edit']),
       _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
       _columns: [
         {
@@ -157,6 +189,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _attrs: ['name'],
           _name: 'Name',
           _type: 'TEXT',
+          _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'name']),
           _isHidden: !this.canAccess(['tableColumns', 'name'])
         },
@@ -165,6 +198,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Domain',
           _type: 'TEXT',
           _isSortable: true,
+          _isSearchable: true,
           _isHidden: !this.canAccess(['tableColumns', 'domain'])
         },
         {
@@ -193,10 +227,110 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Parent Enterprise',
           _type: 'TEXT',
           _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['emailSettings.goodEmails'],
+          _name: 'Good emails',
+          _type: 'NUMBER',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['emailSettings.bouncedEmails'],
+          _name: 'Deduced emails',
+          _type: 'NUMBER',
+          _isSearchable: true,
+          _width: '170px',
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['shieldEmails'],
+          _name: 'Shield emails',
+          _type: 'NUMBER',
+          _isSearchable: true,
+          _isSortable: false,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['industries'],
+          _name: 'Industry',
+          _type: 'LABEL-OBJECT-LIST',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['brands'],
+          _name: 'Brand',
+          _type: 'LABEL-OBJECT-LIST',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['enterpriseType'],
+          _name: 'Type',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['geographicalZone'],
+          _name: 'Geographical Zone',
+          _type: 'GEO-ZONE-LIST',
+          _isSearchable: true,
+          _isSortable: true,
+          _width: '190px',
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['enterpriseSize'],
+          _name: 'Company size',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+        },
+        {
+          _attrs: ['valueChain'],
+          _name: 'Value chain',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
-    }
+    };
+  }
+
+  private _getShieldedPros() {
+    this._shieldService.get(null, null)
+      .pipe(first())
+      .subscribe(response => {
+        this.sortShieldList(response.result);
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      });
+  }
+
+  private sortShieldList(shieldList: any[]) {
+    shieldList.map((item) => {
+      const element = this.shieldSortedList.find(el => el.company === item.professional.company);
+      if (element) {
+        element.shieldEmails += 1;
+      } else {
+        const newElement = {
+          company: item.professional.company,
+          shieldEmails: 1
+        };
+        this._shieldSortedList.push(newElement);
+      }
+    });
   }
 
   public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
@@ -277,7 +411,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       });
   }*/
 
-  public updateEnterprise(event: {enterprise: Enterprise, opType: string}) {
+  public updateEnterprise(event: { enterprise: Enterprise, opType: string }) {
     switch (event.opType) {
 
       case 'CREATE':
@@ -353,13 +487,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   }*/
 
   public removeCompanies(event: any) {
-    const requests = event.map( (evt: any) => {
+    const requests = event.map((evt: any) => {
       return this._enterpriseService.remove(evt._id).pipe(first());
     });
     const combined = combineLatest(requests);
     combined.subscribe(latestValues => {
       latestValues.forEach(result => {
-        console.log(result);
         // TODO see how I can update the table after deletion
         /*if (result && result['n'] > 0) {
           const idx = this.resultTableConfiguration._content.findIndex((value) => {
@@ -403,6 +536,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._uploadLogoModal = false;
   }
 */
+
   /*get logoUploadUri(): string {
     return `/media/companyLogo`;
   }*/
@@ -459,7 +593,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
-    this.doSearch();
+    this._getCompanies(this._queryConfig);
   }
 
   get nothingFound(): boolean {
@@ -490,4 +624,15 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return this._isSaving;
   }
 
+  navigateToEdit($event: any) {
+    if ($event) {
+      this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+    }
+  }
+
+  navigateToAddParent($event: any) {
+    if ($event) {
+      this._route.navigate(['/user/admin/settings/enterprises/addparent']);
+    }
+  }
 }

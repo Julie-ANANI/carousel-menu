@@ -1,0 +1,38 @@
+<div [hidden]="!canAccess()" class="container fluid grid-2xl p-top-30" id="admin-enterprise-bulk-edit-management"
+     xmlns="http://www.w3.org/1999/html">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- search parent company -->
+    <section class="width-75">
+      <app-utility-auto-complete-input
+        (update)="addCompanyToInclude($event)"
+        [onlyOne]="true"
+        [isShowButton]="false"
+        [config]="configCompany">
+      </app-utility-auto-complete-input>
+    </section>
+    <!-- /search parent company -->
+
+    <!-- companies selected table -->
+    <section class="p-bottom-15 p-top-20">
+      <app-shared-table
+        [(config)]="config"
+        (sendExchangeValue)="exchangeValue($event)"
+        [data]="companiesTable">
+      </app-shared-table>
+    </section>
+    <!-- /companies selected table -->
+
+
+    <!-- update button -->
+    <section class="p-bottom-30 p-top-4" style="display: flex">
+      <button class="button is-primary is-lg"
+              style="margin-left: auto"
+      (click)="updateChange()">
+        Update
+      </button>
+    </section>
+    <!-- /update button -->
+
+  </div>
+</div>

@@ -1,12 +1,31 @@
 export interface Pattern {
-  pattern: {expression: string};
-  avg?: number
+  expression: string;
+  avg?: number;
 }
 
 interface LogoMedia {
   uri: string;
   alt?: string;
   id?: string;
+}
+
+export interface Industry {
+  label: string;
+  code: '';
+}
+
+export interface Brand {
+  label: string;
+  url: '';
+}
+
+export interface GeographicalZone {
+  scope: ScopeEnum;
+  name: string;
+}
+
+export enum ScopeEnum {
+  country = 'country', continent = 'continent', world = 'world'
 }
 
 export interface Enterprise {
@@ -19,7 +38,9 @@ export interface Enterprise {
   parentEnterprise?: string;
   patterns?: Array<Pattern>;
   enterpriseType?: string;
-  industries?: Array<string>;
-  brands?: Array<string>;
-  geographicalZone?: Array<string>;
+  industries?: Array<Industry>;
+  brands?: Array<Brand>;
+  geographicalZone?: Array<GeographicalZone>;
+  companySize?: string;
+  valueChain?: string;
 }

@@ -1,0 +1,109 @@
+@import "../../../../../../../../style/framework/src/variables";
+@import "../../../../../../../../style/framework/src/mixins";
+
+.main-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 60px;
+}
+
+.modal-body {
+  display: block;
+  background-color: $bg-white-color;
+  flex-grow: 1;
+  flex-shrink: 1;
+  font-size: $font-size-md;
+  position: relative;
+  height: 280px;
+}
+
+.selector-wrapper, .input-wrapper, .input-text-wrapper {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  margin-right: $unit-5;
+  margin-bottom: $unit-5;
+
+  .form-select {
+    max-width: 200px;
+  }
+
+  .form-select, .form-input, .form-button {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    margin-left: 10px;
+    height: 40px;
+  }
+
+  .form-input {
+    max-width: 200px;
+  }
+
+  .form-label {
+    display: block;
+    line-height: $line-height-sm;
+    color: $form-label-color;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    padding: $layout-spacing 0;
+  }
+
+  .form-group {
+    height: 40px;
+  }
+}
+
+// Form element: Input
+.form-input {
+  @include control-transition();
+  appearance: none;
+  border: $border-width solid $form-border-color;
+  font-size: $font-size-md;
+  color: $form-input-color;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: none;
+  padding: 14.5px;
+  position: relative;
+  background: $bg-white-color none;
+  max-width: 100%;
+  line-height: $line-height-sm;
+
+  &:focus {
+    border-color: $form-primary-color;
+  }
+
+  &::placeholder {
+    color: $form-placeholder-color;
+  }
+
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  // Firefox
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  // Input types
+  &[type="file"] {
+    height: auto;
+  }
+
+}
+
+.form-wrapper {
+  overflow-y: auto;
+  width: 350px;
+  position: relative;
+  padding: 0;
+  max-height: 350px;
+  min-height: 200px;
+}

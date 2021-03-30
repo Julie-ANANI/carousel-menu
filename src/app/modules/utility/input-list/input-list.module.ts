@@ -8,6 +8,7 @@ import { InputListComponent } from './input-list.component';
 
 import { PipeModule } from '../../../pipe/pipe.module';
 import {ModalModule} from '../modals/modal/modal.module';
+import {NguiAutoCompleteModule} from '../auto-complete/auto-complete.module';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {ModalModule} from '../modals/modal/modal.module';
         FormsModule,
         RouterModule,
         PipeModule,
-        ModalModule
+        ModalModule,
+        NguiAutoCompleteModule
     ],
   declarations: [
     InputListComponent
