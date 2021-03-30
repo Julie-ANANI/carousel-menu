@@ -2,6 +2,7 @@
 
   <!-- section title and search -->
   <ng-container *ngIf="table._isTitle || table._isSearchable">
+
     <div class="flex-wrap p-bottom-10 flex-start">
 
       <!-- number of results and title -->
@@ -12,7 +13,6 @@
       </ng-container>
       <!-- /number of results and title -->
 
-
       <!-- want to search by columns -->
       <ng-container *ngIf="table._isSearchable">
         <app-shared-search-filter
@@ -22,6 +22,21 @@
         </app-shared-search-filter>
       </ng-container>
       <!-- /want to search by columns -->
+
+      <!-- Add parent: legend -->
+      <div class="legend-table" *ngIf="table._isAddParent">
+        <ng-container>
+          <div style="display: flex; align-items: center">
+            <div style="width: 15px; height: 15px; background: #00B0FF"></div>
+            <span class="text text-sm m-left-1">Filled with parent's value</span>
+          </div>
+          <div style="display: flex; align-items: center">
+            <div style="width: 15px; height: 15px; background: #EA5858"></div>
+            <span class="text text-sm m-left-1">Replaced with parent's value</span>
+          </div>
+        </ng-container>
+      </div>
+      <!-- /Add parent: legend -->
 
     </div>
   </ng-container>
@@ -417,13 +432,13 @@
                 <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
 
                   <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis">
+                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
                       <span style="padding-left: 3px">{{tag.label}}</span>
                     </div>
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{ 'color': '#2295C6' }">...</span>
+                    <span [ngStyle]="{'color': column._color}">...</span>
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
@@ -437,13 +452,13 @@
                 <ng-container *ngSwitchCase="'PATTERNS-OBJECT-LIST'">
 
                   <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis">
+                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
                       <span style="padding-left: 3px">{{tag.expression}}</span>
                     </div>
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{ 'color': '#2295C6' }">...</span>
+                    <span [ngStyle]="{'color': column._color}">...</span>
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
@@ -457,13 +472,13 @@
                 <ng-container *ngSwitchCase="'GEO-ZONE-LIST'">
 
                   <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis">
+                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
                       <span style="padding-left: 3px">{{tag.name}}</span>
                     </div>
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{ 'color': '#2295C6' }">...</span>
+                    <span [ngStyle]="{'color': column._color}">...</span>
                   </ng-container>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
@@ -475,7 +490,7 @@
 
                 <!-- type LENGTH -->
                 <ng-container *ngSwitchCase="'LENGTH'">
-                  <div class="text-ellipsis">
+                  <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
                     <span>{{ getLength(getContentValue(row, getAttrs(column)[0])) }}</span>
                   </div>
                 </ng-container>
@@ -578,7 +593,7 @@
 
                 <!-- type NUMBER -->
                 <ng-container *ngSwitchCase="'NUMBER'">
-                  <div class="text-ellipsis" [title]="getTitle(row, column)">
+                  <div class="text-ellipsis" [ngStyle]="{'color': column._color}" [title]="getTitle(row, column)">
                     <ng-container *ngFor="let attr of getAttrs(column)">
                       {{ (getContentValue(row, attr) || " - ") }}
                     </ng-container>
@@ -608,6 +623,7 @@
                       (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
                       [ngClass]="{ 'active': rowIndex === selectedIndex }"
                       class="clickable-text text-ellipsis"
+                      [ngStyle]="{'color': column._color}"
                       [title]="getTitle(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
