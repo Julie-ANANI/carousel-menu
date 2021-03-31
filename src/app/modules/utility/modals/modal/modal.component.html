@@ -3,28 +3,31 @@
   <div [ngStyle]="{ 'max-width': maxWidth }" class="modal-container">
 
     <!-- header -->
-    <header
-      *ngIf="title"
-      [ngClass]="{'is-white': isHeaderBgWhite, 'has-bottom-border': headerBottomBorder}"
-      class="modal-header">
-      <p class="modal-title">{{ title | translate }}</p>
-      <button [id]="'modal-btn-close'" aria-label="close" class="close" type="button"></button>
-    </header>
+    <ng-container *ngIf="!!title && showModal">
+      <header
+        [ngClass]="{'is-white': isHeaderBgWhite, 'has-bottom-border': headerBottomBorder}"
+        class="modal-header">
+        <p class="modal-title">{{ title | translate }}</p>
+        <button [id]="'modal-btn-close'" aria-label="close" class="close" type="button"></button>
+      </header>
+    </ng-container>
     <!-- /header -->
 
     <!-- content -->
-    <ng-content></ng-content>
+    <ng-container *ngIf="showModal">
+      <ng-content></ng-content>
+    </ng-container>
     <!-- /content -->
 
     <!-- close button -->
-    <div *ngIf="enableCloseButton">
+    <ng-container *ngIf="enableCloseButton && showModal">
       <button
         [id]="'modal-btn-close'"
         aria-label="close"
         class="modal-close is-sm"
         type="button">
       </button>
-    </div>
+    </ng-container>
     <!-- /close button -->
 
   </div>

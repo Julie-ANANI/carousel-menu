@@ -42,7 +42,7 @@
       @include flex-start();
       border-top-left-radius: 6px;
       border-top-right-radius: 6px;
-      background: $primary-gradient-color;
+      background: linear-gradient(90deg, #23303C 0%, #4F5D6B 100%);
       padding: $unit-5;
       position: relative;
       flex-shrink: 0;

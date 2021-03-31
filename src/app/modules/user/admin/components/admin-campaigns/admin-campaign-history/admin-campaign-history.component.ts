@@ -11,6 +11,7 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {Config} from '../../../../../../models/config';
 import {SearchService} from '../../../../../../services/search/search.service';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {CommonService} from '../../../../../../services/common/common.service';
 
 export interface ProMailsStats {
   uniqueGoodEmails: number;
@@ -56,10 +57,6 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
   private _referents: { identificationEfficiency: any; shieldImpact?: number; inabilityToValidate?: number; redundancy?: number; deductionEfficiency?: number; };
 
-  get referents(): { identificationEfficiency: any; shieldImpact?: number; inabilityToValidate?: number; redundancy?: number; deductionEfficiency?: number } {
-    return this._referents;
-  }
-
   private _stats: ProMailsStats;
 
   get stats(): ProMailsStats {
@@ -82,14 +79,6 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
   get accessPath(): Array<string> {
     return this._accessPath;
-  }
-
-  private static _getRate(value1: number, value2: number, decimals?: number): string {
-    const power = decimals ? Math.pow(10, decimals) : 100;
-    if (value2 && (value1 || value1 === 0)) {
-      return (Math.round(100 * power * value1 / value2) / power).toString() + '%';
-    }
-    return 'NA';
   }
 
   ngOnInit(): void {
@@ -140,19 +129,19 @@ export class AdminCampaignHistoryComponent implements OnInit {
     } else {
       this._indicators = {
         identificationEfficiency:
-          (this._stats.uniqueIdentified === 0) ? 'NA' : AdminCampaignHistoryComponent._getRate(this._stats && this._stats.uniqueGoodEmails
+          (this._stats.uniqueIdentified === 0) ? 'NA' : CommonService.getRate(this._stats && this._stats.uniqueGoodEmails
             , this._stats && this._stats.uniqueIdentified),
         shieldImpact:
-          (this._stats.uniqueGoodEmails === 0) ? 'NA' : AdminCampaignHistoryComponent._getRate(this._stats && this._stats.uniqueShielded
+          (this._stats.uniqueGoodEmails === 0) ? 'NA' : CommonService.getRate(this._stats && this._stats.uniqueShielded
             , this._stats && this._stats.uniqueGoodEmails),
         inabilityToValidate:
-          (this._stats.uniqueIdentified === 0) ? 'NA' : AdminCampaignHistoryComponent._getRate(this._stats && this._stats.uniqueBadEmails
+          (this._stats.uniqueIdentified === 0) ? 'NA' : CommonService.getRate(this._stats && this._stats.uniqueBadEmails
             , this._stats && this._stats.uniqueIdentified),
         redundancy:
-          (this._stats.identified === 0) ? 'NA' : AdminCampaignHistoryComponent._getRate(this._stats && this._stats.uniqueIdentified
+          (this._stats.identified === 0) ? 'NA' : CommonService.getRate(this._stats && this._stats.uniqueIdentified
             , this._stats && this._stats.identified),
         deductionEfficiency:
-          (this._stats.uniqueIdentified === 0) ? 'NA' : AdminCampaignHistoryComponent._getRate(this._stats && this._stats.uniqueUncertain
+          (this._stats.uniqueIdentified === 0) ? 'NA' : CommonService.getRate(this._stats && this._stats.uniqueUncertain
             , this._stats && this._stats.uniqueIdentified)
       };
     }

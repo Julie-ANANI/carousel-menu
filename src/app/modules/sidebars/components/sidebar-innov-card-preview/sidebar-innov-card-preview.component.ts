@@ -5,6 +5,7 @@ import { InnovCard } from '../../../../models/innov-card';
 import { Media } from '../../../../models/media';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import {CommonService} from '../../../../services/common/common.service';
+import {MediaFrontService} from '../../../../services/media/media-front.service';
 
 @Component({
   selector: 'app-sidebar-innov-card-preview',
@@ -48,7 +49,7 @@ export class SidebarInnovCardPreviewComponent {
               private _translateService: TranslateService) { }
 
   public imageSrc(media: Media): string {
-    return InnovationFrontService.imageSrc(media, '180', '119');
+    return MediaFrontService.imageSrc(media, '180', '119');
   }
 
   public sectionInfo(field: 'ISSUE' | 'SOLUTION'): string {
