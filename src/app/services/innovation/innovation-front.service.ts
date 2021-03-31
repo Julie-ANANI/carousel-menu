@@ -122,6 +122,23 @@ export class InnovationFrontService {
 
   }
 
+  public static publicationType(objective: string): PublicationType {
+    if (objective) {
+      switch (objective) {
+
+        case 'Detecting needs / trends':
+        case 'Validating market needs':
+          return 'pain_point';
+
+        case 'Sourcing innovative solutions / partners':
+          return 'innovation';
+
+        default:
+          return 'sourcing';
+      }
+    }
+  }
+
   /***
    * this function returns the demanded field from the innovation
    * based on the current lang provided.

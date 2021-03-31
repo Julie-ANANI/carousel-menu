@@ -497,22 +497,33 @@
 
               <span
                 *ngIf="canAccess(['edit', 'community'])"
-                [ngClass]="{'tooltip': !innovation.isPublic}"
-                data-tooltip="Publish to Showroom">
+                [ngClass]="{'tooltip is-multiline': !innovation.isPublic}"
+                data-tooltip="The project needs to be published to Showroom before publishing to Community.">
                 <label class="form-switch">
                   <input
-                    (change)="onPublishCommunity($event)"
                     [checked]="!!innovation['published']"
-                    [disabled]="!innovation.isPublic || !!innovation['published']"
+                    [disabled]="true"
                     id="admin-project-community"
                     type="checkbox">
-                  <i class="form-icon"></i> {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+                  <i class="form-icon"></i> {{ innovation.published ? 'Published' : 'Unpublished' }}
                 </label>
               </span>
 
               <span *ngIf="!canAccess(['edit', 'community'])" class="is-text">
-                {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+                {{ innovation.published ? 'Published' : 'Unpublished' }}
               </span>
+
+              <span
+                (click)="onEdit('PUBLISH_COMMUNITY')"
+                *ngIf="!innovation.published && canAccess(['edit', 'community']) && innovation.isPublic"
+                class="icon-container m-left-20">
+                  <span data-tooltip="Community publish settings" class="tooltip">
+                    <img
+                      [src]="picto.edit.blue"
+                      alt="Edit"
+                      class="img-responsive">
+                  </span>
+                </span>
 
             </div>
             <!-- /community -->
@@ -528,6 +539,19 @@
   <!-- /settings -->
 
 </div>
+
+
+<!-- modal -->
+<ng-container *ngIf="canAccess(['edit', 'community']) && !isLoading">
+  <app-admin-project-settings-modal
+    (communityChange)="publishCommunity($event)"
+    [(isPublishingCommunity)]="isPublishingCommunity"
+    [(showModal)]="showModal"
+    [innovation]="innovation"
+    [mission]="mission">
+  </app-admin-project-settings-modal>
+</ng-container>
+<!-- /modal -->
 
 
 <!-- sidebar -->
