@@ -43,19 +43,6 @@ interface UserSuggestion {
 
 export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _rolesFrontService: RolesFrontService,
-              private _missionService: MissionService,
-              private _dashboardService: DashboardService,
-              private _innovationService: InnovationService,
-              private _userService: UserService,
-              private _commonService: CommonService,
-              private _translateService: TranslateService,
-              private _clientProjectService: ClientProjectService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService,
-              private _statsReferentsService: StatsReferentsService) { }
-
   private _isLoading = true;
 
   private _innovation: Innovation = <Innovation>{};
@@ -105,14 +92,22 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private static _getRate(value1: number, value2: number, decimals?: number): string {
-    const power = decimals ? Math.pow(10, decimals) : 100;
-    if (value2 && (value1 || value1 === 0)) {
-      return (Math.round(100 * power * value1 / value2) / power).toString() + '%';
-    }
-    return 'NA';
-  }
+  private _showModal = false;
 
+  private _isPublishingCommunity = false;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _rolesFrontService: RolesFrontService,
+              private _missionService: MissionService,
+              private _dashboardService: DashboardService,
+              private _innovationService: InnovationService,
+              private _userService: UserService,
+              private _commonService: CommonService,
+              private _translateService: TranslateService,
+              private _clientProjectService: ClientProjectService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _innovationFrontService: InnovationFrontService,
+              private _statsReferentsService: StatsReferentsService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -201,7 +196,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           },
           {
             subHeading: 'Open rate',
-            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.opened
+            value: CommonService.getRate(this._innovation.stats && this._innovation.stats.opened
               , this._innovation.stats && this._innovation.stats.received),
             gauge: {
               title: `${this._innovation.stats && this._innovation.stats.opened || 0} opened / ${this._innovation.stats && this._innovation.stats.received || 0} delivered`,
@@ -211,7 +206,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           },
           {
             subHeading: 'Click to open rate',
-            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.clicked
+            value: CommonService.getRate(this._innovation.stats && this._innovation.stats.clicked
               , this._innovation.stats && this._innovation.stats.opened),
             gauge: {
               title: `${this._innovation.stats && this._innovation.stats.clicked || 0} clicked / ${this._innovation.stats && this._innovation.stats.opened || 0} opened`,
@@ -226,7 +221,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         content: [
           {
             subHeading: 'Quiz attractiveness',
-            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.answers
+            value: CommonService.getRate(this._innovation.stats && this._innovation.stats.answers
               , this._innovation.stats && this._innovation.stats.clicked),
             gauge: {
               title: `${this._innovation.stats && this._innovation.stats.answers || 0} received answers / ${this._innovation.stats && this._innovation.stats.clicked || 0} quiz views`,
@@ -241,7 +236,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           },
           {
             subHeading: 'Answer rate',
-            value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
+            value: CommonService.getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
                 , this._innovation.stats && this._innovation.stats.nbFirstMail),
             gauge: {
               title: `${this._innovation.stats && this._innovation.stats.validatedAnswers || 0} validated answers / ${this._innovation.stats && this._innovation.stats.nbFirstMail || 0} pros contacted`,
@@ -379,6 +374,47 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         this._openSidebar('EXCLUDE_EMAILS_DOMAINS', 'Edit Blocklist');
         break;
 
+      case 'PUBLISH_COMMUNITY':
+        if (this._innovation.isPublic && !this._innovation.published) {
+          this._openModal();
+        }
+        break;
+
+    }
+  }
+
+  private _openModal() {
+    this._showModal = true;
+  }
+
+  /**
+   *
+   * @param value
+   */
+  public publishCommunity(value: any) {
+    event.preventDefault();
+
+    if (!this._isPublishingCommunity) {
+      this._isPublishingCommunity = true;
+
+      this._innovationService.publishToCommunity(this._innovation._id, value)
+        .pipe(first())
+        .subscribe((published) => {
+          this._isPublishingCommunity = false;
+          this._showModal = false;
+
+          if (published) {
+            this._innovation.published = published;
+            this._innovationFrontService.setInnovation(this._innovation);
+            this._translateNotificationsService.success('Success', 'The project has been published to the Community.');
+          } else {
+            this._innovation.published = null;
+          }
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('Publish Error...', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+          this._isPublishingCommunity = false;
+        });
     }
   }
 
@@ -506,22 +542,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       {isPublic: this._innovation.isPublic});
   }
 
-  public onPublishCommunity(event: Event) {
-    if (this._innovation.isPublic) {
-      this._innovationService.publishToCommunity(this._innovation._id).pipe(first()).subscribe((published) => {
-        if (published) {
-          this._innovation['published'] = published;
-          this._translateNotificationsService.success('Success', 'The project has been published to the Community.');
-        } else {
-          this._innovation['published'] = null;
-        }
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
-    }
-  }
-
   public onRevisionProject(event: Event) {
     event.preventDefault();
     if (this._innovation.status === 'SUBMITTED' && this.canAccess(['edit', 'projectRevision'])) {
@@ -547,6 +567,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public name(value: User): string {
     return UserFrontService.fullName(value);
   }
+
   get innovTags(): Array<Tag> {
     if (this._sidebarValue.animate_state === 'active') {
       return this._innovation.tags;
@@ -636,6 +657,22 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get picto(): Picto {
     return this._picto;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isPublishingCommunity(): boolean {
+    return this._isPublishingCommunity;
+  }
+
+  set isPublishingCommunity(value: boolean) {
+    this._isPublishingCommunity = value;
   }
 
   ngOnDestroy(): void {

@@ -11,6 +11,13 @@ import {ErrorFrontService} from '../../../../services/error/error-front.service'
 
 export class SharedUploadZonePhotoComponent {
 
+  /**
+   * make it false to not upload to the cloudinary
+   * and cbFn will emit the actual file.
+   * No need to provide uri.
+   */
+  @Input() uploadCloudinary = true;
+
   @Input() uri = '';
 
   @Output() cbFn: EventEmitter<any> = new EventEmitter<any>();
@@ -62,17 +69,24 @@ export class SharedUploadZonePhotoComponent {
         this._isUploading = false;
         this._isWrongSize = true;
       } else {
-        const _formData = new FormData();
-        _formData.append('file', file, file.name);
-        this._httpClient.post(this.uri, _formData).subscribe((data: any) => {
-          // Sanitized image returned from backend.
-          this.cbFn.emit(data);
+
+        if (this.uploadCloudinary) {
+          const _formData = new FormData();
+          _formData.append('file', file, file.name);
+          this._httpClient.post(this.uri, _formData).subscribe((data: any) => {
+            // Sanitized image returned from backend.
+            this.cbFn.emit(data);
+            this._isUploading = false;
+          }, (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            this._isUploading = false;
+            console.error(err);
+          });
+        } else {
+          this.cbFn.emit(file);
           this._isUploading = false;
-        }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          this._isUploading = false;
-          console.error(err);
-        });
+        }
+
       }
     } else {
       this._isUploading = false;
