@@ -263,7 +263,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   update() {
     if ((this.inputValue || this.newObjectList.length > 0) && this.columnAttrsSelected) {
-      this.inputValue = encodeURIComponent(this.inputValue);
       this.updateColumnWithInputValue(this.columnAttrsSelected, this.inputValue);
     }
   }
@@ -283,6 +282,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     });
     this._isShowModal = false;
     this._columnAttrsSelected = '';
+    this._inputValue = '';
   }
 
   getNotification() {

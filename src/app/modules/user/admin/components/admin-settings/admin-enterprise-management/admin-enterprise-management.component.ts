@@ -135,6 +135,16 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
         this._initTable(this.addShieldEmailsInTable(enterprises.result), enterprises._metadata.totalCount);
+        this.resultTableConfiguration._content.map(item => {
+          if (item['parentEnterprise']) {
+            this._enterpriseService.get(item['parentEnterprise'], null).pipe(first()).subscribe((parent) => {
+                item['parentEnterpriseName'] = parent['name'];
+              },
+              (err: HttpErrorResponse) => {
+                console.log(err);
+              });
+          }
+        });
       } else {
         this._results = false;
         this._nothingFound = true;
@@ -183,7 +193,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Logo',
           _type: 'PICTURE',
           _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'logo'])
         },
         {
           _attrs: ['name'],
@@ -191,7 +200,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'name']),
-          _isHidden: !this.canAccess(['tableColumns', 'name'])
         },
         {
           _attrs: ['topLevelDomain'],
@@ -199,36 +207,36 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSortable: true,
           _isSearchable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'domain'])
         },
         {
           _attrs: ['patterns'],
           _name: 'Patterns',
           _type: 'LENGTH',
           _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'patterns'])
         },
         {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'url'])
         },
         {
           _attrs: ['subsidiaries'],
           _name: 'Subsidiaries',
           _type: 'LENGTH',
           _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'subsidiary'])
         },
         {
           _attrs: ['parentEnterprise'],
           _name: 'Parent Enterprise',
           _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
+          _isHidden: true
+        },
+        {
+          _attrs: ['parentEnterpriseName'],
+          _name: 'Parent Enterprise',
+          _type: 'TEXT',
+          _width: '170px',
         },
         {
           _attrs: ['emailSettings.goodEmails'],
@@ -236,7 +244,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'NUMBER',
           _isSearchable: true,
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['emailSettings.bouncedEmails'],
@@ -245,7 +252,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isSearchable: true,
           _width: '170px',
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['shieldEmails'],
@@ -253,7 +259,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'NUMBER',
           _isSearchable: true,
           _isSortable: false,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['industries'],
@@ -261,7 +266,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'LABEL-OBJECT-LIST',
           _isSearchable: true,
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['brands'],
@@ -269,7 +273,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'LABEL-OBJECT-LIST',
           _isSearchable: true,
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['enterpriseType'],
@@ -277,7 +280,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: true,
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['geographicalZone'],
@@ -286,7 +288,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isSearchable: true,
           _isSortable: true,
           _width: '190px',
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['enterpriseSize'],
@@ -294,7 +295,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: true,
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['valueChain'],
@@ -302,7 +302,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: true,
           _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
     };
@@ -436,6 +435,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           if (idx > -1) {
             this._resultTableConfiguration._content[idx] = result;
           }
+          this._enterpriseService.get(result['parentEnterprise'], null).pipe(first()).subscribe((parent) => {
+              this._resultTableConfiguration._content[idx]['parentEnterpriseName'] = parent['name'];
+            },
+            (err: HttpErrorResponse) => {
+              console.log(err);
+            });
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this._isSaving = false;

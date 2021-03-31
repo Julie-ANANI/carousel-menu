@@ -209,7 +209,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
         patterns: this.newPatterns,
-        parentEnterprise: this._parentEnterprise ? this._parentEnterprise._id || null : null,
+        parentEnterprise: this._parentEnterprise ? this._parentEnterprise['id'] : null,
         industries: this.newIndustry,
         brands: this.newBrands,
         geographicalZone: this.newGeoZone,
@@ -217,28 +217,28 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       };
 
       Object.keys(this._form.controls).forEach(key => {
-        if (this._form.get(key).value) {
-          switch (key) {
-            case 'patterns':
-            case 'name':
-            case 'topLevelDomain':
-            case 'parentEnterprise':
-            case 'industries':
-            case 'brands':
-            case 'geographicalZone':
-            case 'subsidiaries':
-              // NOOP
-              break;
-            case 'logo':
-              _newEnterprise[key] = {
-                'uri': this._logo || this._defaultLogoURI,
-                'alt': this._form.get('name').value
-              };
-              break;
+        switch (key) {
+          case 'patterns':
+          case 'name':
+          case 'topLevelDomain':
+          case 'parentEnterprise':
+          case 'industries':
+          case 'brands':
+          case 'geographicalZone':
+          case 'subsidiaries':
+            // NOOP
+            break;
+          case 'logo':
+            _newEnterprise[key] = {
+              'uri': this._logo === '' ? this.defaultLogoURI : this._logo,
+              'alt': this._form.get('name').value
+            };
+            break;
 
-            default:
+          default:
+            if (this._form.get(key).value) {
               _newEnterprise[key] = this._form.get(key).value;
-          }
+            }
         }
       });
       this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
