@@ -217,30 +217,32 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       };
 
       Object.keys(this._form.controls).forEach(key => {
-        if (this._form.get(key).value) {
-          switch (key) {
-            case 'patterns':
-            case 'name':
-            case 'topLevelDomain':
-            case 'parentEnterprise':
-            case 'industries':
-            case 'brands':
-            case 'geographicalZone':
-            case 'subsidiaries':
-              // NOOP
-              break;
-            case 'logo':
-              _newEnterprise[key] = {
-                'uri': this._logo || this._defaultLogoURI,
-                'alt': this._form.get('name').value
-              };
-              break;
+        switch (key) {
+          case 'patterns':
+          case 'name':
+          case 'topLevelDomain':
+          case 'parentEnterprise':
+          case 'industries':
+          case 'brands':
+          case 'geographicalZone':
+          case 'subsidiaries':
+            // NOOP
+            break;
+          case 'logo':
+            _newEnterprise[key] = {
+              'uri': this._logo === '' ? this.defaultLogoURI : this._logo,
+              'alt': this._form.get('name').value
+            };
+            console.log(_newEnterprise['logo']);
+            break;
 
-            default:
+          default:
+            if (this._form.get(key).value) {
               _newEnterprise[key] = this._form.get(key).value;
-          }
+            }
         }
       });
+      console.log(_newEnterprise);
       this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
     }
   }
