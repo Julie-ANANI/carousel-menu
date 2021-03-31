@@ -233,7 +233,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
               'uri': this._logo === '' ? this.defaultLogoURI : this._logo,
               'alt': this._form.get('name').value
             };
-            console.log(_newEnterprise['logo']);
             break;
 
           default:
@@ -242,7 +241,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             }
         }
       });
-      console.log(_newEnterprise);
       this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
     }
   }
