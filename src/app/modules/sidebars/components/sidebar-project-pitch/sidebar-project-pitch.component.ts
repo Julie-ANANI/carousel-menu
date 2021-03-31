@@ -10,6 +10,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {SocketService} from '../../../../services/socket/socket.service';
 import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
+import {MediaFrontService} from '../../../../services/media/media-front.service';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -192,7 +193,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
    */
   public mediaSrc(media: any, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
-      return InnovationFrontService.imageSrc(media);
+      return MediaFrontService.imageSrc(media);
     } else if (media && type === 'VIDEO') {
       return this._innovationFrontService.videoSrc(media);
     }

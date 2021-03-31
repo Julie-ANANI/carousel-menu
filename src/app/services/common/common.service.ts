@@ -9,7 +9,17 @@ import {environment} from '../../../environments/environment';
 export class CommonService {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService) {
+
+  }
+
+  public static getRate(value1: number, value2: number, decimals?: number): string {
+    const power = decimals ? Math.pow(10, decimals) : 100;
+    if (value2 && (value1 || value1 === 0)) {
+      return (Math.round(100 * power * value1 / value2) / power).toString() + '%';
+    }
+    return 'NA';
+  }
 
   /***
    * this function is to return the color based on the length and limit.

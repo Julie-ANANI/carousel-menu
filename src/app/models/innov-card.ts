@@ -11,6 +11,7 @@ export interface CardComment {
 }
 
 export interface InnovCardSection {
+  readonly _id?: string;
   type: CardSectionTypes;
   title: string;
   content: string | Array<Media>;
