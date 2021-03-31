@@ -25,6 +25,7 @@ import {RolesFrontService} from '../../../../services/roles/roles-front.service'
 import {isPlatformBrowser} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import {emptyHtmlRegex} from '../../../../utils/regex';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -373,6 +374,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   hideQuestionAnswers(question: Question) {
     return this.showAnonymousAnswers && (question.sensitiveAnswerData || question.identifier.includes('contact'));
+  }
+
+  showSection(sectionText: string) {
+    return (sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide;
   }
 
   ngOnDestroy(): void {
