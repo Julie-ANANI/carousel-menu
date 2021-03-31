@@ -272,6 +272,15 @@
               <label>Questionnaire</label>
 
               <button
+                (click)="openQuiz($event)"
+                [ngClass]="'is-info'"
+                class="button is-outlined is-sm"
+                id="btn-quiz-link-open"
+                type="button">
+                {{ 'Open quiz' }}
+              </button>
+
+              <button
                 (click)="onCopyQuizLink($event)"
                 [ngClass]="quizUrlCopied ? 'is-success' : 'is-info'"
                 class="button is-outlined is-sm"

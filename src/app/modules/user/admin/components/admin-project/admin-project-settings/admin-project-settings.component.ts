@@ -54,7 +54,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
               private _clientProjectService: ClientProjectService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService,
-              private _statsReferentsService: StatsReferentsService) { }
+              private _statsReferentsService: StatsReferentsService) {
+  }
 
   private _isLoading = true;
 
@@ -86,7 +87,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _innovationStatus: Array<InnovationStatus> = ['EDITING', 'SUBMITTED', 'EVALUATING', 'DONE'];
 
-  private _domains: Array<{name: string}> = [
+  private _domains: Array<{ name: string }> = [
     {name: 'umi'},
     {name: 'dynergie'},
     {name: 'novanexia'},
@@ -143,7 +144,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _getCommercials() {
     this._userService.getCommercials().pipe(first()).subscribe((response: Response) => {
       this._commercials = response.result;
-      }, (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Commercial Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
@@ -221,7 +222,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           }
         ]
       },
-     {
+      {
         heading: 'Answers',
         content: [
           {
@@ -242,7 +243,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           {
             subHeading: 'Answer rate',
             value: AdminProjectSettingsComponent._getRate(this._innovation.stats && this._innovation.stats.validatedAnswers
-                , this._innovation.stats && this._innovation.stats.nbFirstMail),
+              , this._innovation.stats && this._innovation.stats.nbFirstMail),
             gauge: {
               title: `${this._innovation.stats && this._innovation.stats.validatedAnswers || 0} validated answers / ${this._innovation.stats && this._innovation.stats.nbFirstMail || 0} pros contacted`,
               referent: referents.answerRate || 50,
@@ -329,8 +330,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _saveProject(notifyMessage = 'The project has been updated.', saveObject: any) {
     this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe(() => {
       this._innovationFrontService.setInnovation(this._innovation);
-      this._translateNotificationsService.success('Success' , notifyMessage);
-      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.success('Success', notifyMessage);
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
@@ -347,7 +348,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((clientProject: ClientProject) => {
         this._clientProject = clientProject;
-        this._translateNotificationsService.success('Success' , notifyMessage);
+        this._translateNotificationsService.success('Success', notifyMessage);
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -449,7 +450,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  public addBlocklist(values: {emails: Array<string>, domains: Array<string>}) {
+  public addBlocklist(values: { emails: Array<string>, domains: Array<string> }) {
     if (values.emails.length || values.domains.length) {
       const _domainExp = domainRegEx;
       const _emailExp = emailRegEx;
@@ -547,6 +548,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public name(value: User): string {
     return UserFrontService.fullName(value);
   }
+
   get innovTags(): Array<Tag> {
     if (this._sidebarValue.animate_state === 'active') {
       return this._innovation.tags;
@@ -643,4 +645,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  openQuiz($event: Event) {
+    $event.preventDefault();
+    if (this.quizLink) {
+      window.open(this.quizLink, '_blank');
+    }
+  }
 }
