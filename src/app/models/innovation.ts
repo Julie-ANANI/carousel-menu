@@ -7,6 +7,7 @@ import { User } from './user.model';
 import { Mission } from './mission';
 import { ClientProject } from './client-project';
 import { Question } from './question';
+import {Community} from './community';
 
 export interface InnovationMetadataValues {
   preparation?: number;
@@ -48,6 +49,16 @@ export interface InnovationStats {
 }
 
 export interface Innovation {
+
+  /**
+   * innovation data push to the community api.
+   */
+  community?: Community;
+
+  /**
+   * published date of the innovation to the community.
+   */
+  published?: Date | null;
 
   readonly _id?: string;
   owner?: User;
@@ -156,6 +167,6 @@ export interface Innovation {
       }
     }
 
-  }
+  };
 
 }
