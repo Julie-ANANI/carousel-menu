@@ -429,15 +429,9 @@
                 <!-- type LABEL-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
 
-                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
-                      <span style="padding-left: 3px">{{tag.label}}</span>
-                    </div>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{'color': column._color}">...</span>
-                  </ng-container>
+                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'label')">
+                    {{getStringForColumn(row, column, 'label')| titlecase }}
+                  </div>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
                     <span>-</span>
@@ -455,15 +449,9 @@
                 <!-- type PATTERNS-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'PATTERNS-OBJECT-LIST'">
 
-                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
-                      <span style="padding-left: 3px">{{tag.expression}}</span>
-                    </div>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{'color': column._color}">...</span>
-                  </ng-container>
+                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'expression')">
+                    {{getStringForColumn(row, column, 'expression').toString() | titlecase }}
+                  </div>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
                     <span>-</span>
@@ -481,20 +469,14 @@
 
                 <!-- type GEO-ZONE-LIST -->
                 <ng-container *ngSwitchCase="'GEO-ZONE-LIST'">
-
-                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
-                      <span style="padding-left: 3px">{{tag.name}}</span>
-                    </div>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{'color': column._color}">...</span>
-                  </ng-container>
+                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'name')">
+                    {{getStringForColumn(row, column, 'name').toString() | titlecase }}
+                  </div>
 
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
                     <span>-</span>
                   </ng-container>
+
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
                     <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>

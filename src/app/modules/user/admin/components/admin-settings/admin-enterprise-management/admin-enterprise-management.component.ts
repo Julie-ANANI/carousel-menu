@@ -205,6 +205,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _attrs: ['topLevelDomain'],
           _name: 'Domain',
           _type: 'TEXT',
+          _enableTooltip: true,
           _isSortable: true,
           _isSearchable: true,
         },
@@ -213,12 +214,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Patterns',
           _type: 'LENGTH',
           _width: '120px',
+          _enableTooltip: true,
         },
         {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
           _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['subsidiaries'],
@@ -237,6 +240,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Parent Enterprise',
           _type: 'TEXT',
           _width: '170px',
+          _enableTooltip: true,
         },
         {
           _attrs: ['emailSettings.goodEmails'],
@@ -266,6 +270,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'LABEL-OBJECT-LIST',
           _isSearchable: true,
           _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['brands'],
@@ -273,6 +278,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'LABEL-OBJECT-LIST',
           _isSearchable: true,
           _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['enterpriseType'],
@@ -280,6 +286,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: true,
           _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['geographicalZone'],
@@ -288,6 +295,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isSearchable: true,
           _isSortable: true,
           _width: '190px',
+          _enableTooltip: true,
         },
         {
           _attrs: ['enterpriseSize'],
@@ -302,6 +310,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: true,
           _isSortable: true,
+          _enableTooltip: true,
         }
       ]
     };

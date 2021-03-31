@@ -121,6 +121,8 @@ export class TableComponent {
 
   private _selectedIndex: number = null;
 
+  private _stringInComplexeColumn: string = '';
+
   constructor(private _translateService: TranslateService,
               private _configService: ConfigService,
               private _localStorageService: LocalStorageService) {
@@ -940,5 +942,13 @@ export class TableComponent {
       row: row,
       column: column
     };
+  }
+
+  public getStringForColumn(row: any, column: any, label: string) {
+    this._stringInComplexeColumn = '';
+    this.getContentValue(row, this.getAttrs(column)[0]).map((item: any) => {
+      this._stringInComplexeColumn = this._stringInComplexeColumn.concat(item[label] + ', ');
+    });
+    return this._stringInComplexeColumn;
   }
 }
