@@ -110,8 +110,50 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
       this._getShieldedPros();
+      this._buildForm();
+      this.getResult();
     }
-    this._buildForm();
+  }
+
+  getResult() {
+    this._resultTableConfiguration = {
+      _total: 0,
+      _selector: 'admin-enterprises-table',
+      _title: 'Enterprises',
+      _content: [],
+      _isSearchable: !!this.canAccess(['searchBy']),
+      _columns: [
+        {
+          _attrs: ['name'],
+          _name: 'Name',
+          _type: 'TEXT',
+          _isSearchable: true,
+        },
+        {
+          _attrs: ['topLevelDomain'],
+          _name: 'Domain',
+          _type: 'TEXT',
+          _enableTooltip: true,
+          _isSortable: true,
+          _isSearchable: true,
+        },
+        {
+          _attrs: ['enterpriseType'],
+          _name: 'Type',
+          _type: 'TEXT',
+          _isSearchable: true,
+          _isSortable: true,
+          _enableTooltip: true,
+        },
+        {
+          _attrs: ['enterpriseURL'],
+          _name: 'Enterprise Url',
+          _type: 'TEXT',
+          _isSortable: true,
+          _enableTooltip: true,
+        },
+      ]
+    };
   }
 
   public canAccess(path?: Array<string>) {
@@ -131,6 +173,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   }
 
   private _getCompanies(config: Config) {
+    this._isSearching = true;
     this._enterpriseService.get(null, config).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
@@ -146,8 +189,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           }
         });
       } else {
-        this._results = false;
-        this._nothingFound = true;
+        this._resultTableConfiguration._total = 0;
       }
       this._isSearching = false;
     }, (err: HttpErrorResponse) => {
@@ -246,38 +288,28 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _attrs: ['emailSettings.goodEmails'],
           _name: 'Good emails',
           _type: 'NUMBER',
-          _isSearchable: true,
-          _isSortable: true,
         },
         {
           _attrs: ['emailSettings.bouncedEmails'],
           _name: 'Deduced emails',
           _type: 'NUMBER',
-          _isSearchable: true,
           _width: '170px',
-          _isSortable: true,
         },
         {
           _attrs: ['shieldEmails'],
           _name: 'Shield emails',
           _type: 'NUMBER',
-          _isSearchable: true,
-          _isSortable: false,
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
           _enableTooltip: true,
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
           _enableTooltip: true,
         },
         {
@@ -292,8 +324,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
           _type: 'GEO-ZONE-LIST',
-          _isSearchable: true,
-          _isSortable: true,
           _width: '190px',
           _enableTooltip: true,
         },
@@ -301,14 +331,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _attrs: ['enterpriseSize'],
           _name: 'Company size',
           _type: 'TEXT',
-          _isSearchable: true,
           _isSortable: true,
         },
         {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
-          _isSearchable: true,
           _isSortable: true,
           _enableTooltip: true,
         }
@@ -607,7 +635,19 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
-    this._getCompanies(this._queryConfig);
+    console.log(this._queryConfig);
+    if (this._queryConfig.search === '{}') {
+      this.getResult();
+      this._queryConfig = {
+        fields: '',
+        limit: '10',
+        offset: '0',
+        search: '{}',
+        sort: '{"name":-1}'
+      };
+    } else {
+      this._getCompanies(this._queryConfig);
+    }
   }
 
   get nothingFound(): boolean {

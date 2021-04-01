@@ -13,40 +13,6 @@
     </section>
     <!-- /button create -->
 
-    <!-- search bar -->
-    <section *ngIf="canAccess(['searchBy', 'name'])" class="m-bottom-30">
-      <form novalidate [formGroup]="searchForm" (ngSubmit)="doSearch()" autocomplete="off" class="text-center">
-
-        <!-- input field -->
-        <div class="m-bottom-30 w-full mxw-600 m-left-auto m-right-auto">
-          <label>
-            <input
-              class="form-input is-shadowed"
-              formControlName="searchString"
-              id="search-form-searchString"
-              placeholder="Start typing here to search..."
-              type="text">
-          </label>
-        </div>
-        <!-- /input field -->
-
-        <!-- button -->
-        <button
-          [disabled]="searchForm.get('searchString').value === ''"
-          class="button is-primary is-lg"
-          id="btn-search"
-          type="submit">
-          <ng-container *ngIf="isSearching; else searchText">
-            <span class="loading is-white"></span>
-          </ng-container>
-          <ng-template #searchText>Search</ng-template>
-        </button>
-        <!-- /button -->
-
-      </form>
-    </section>
-    <!-- /search bar -->
-
     <!-- searching finished and no result -->
     <app-message-template *ngIf="!isSearching && nothingFound" [widthMax]="'450px'">
       I tried hard, but couldn't find anything. Try harder and refine your search (or create a new enterprise).
@@ -54,7 +20,7 @@
     <!-- /searching finished and no result -->
 
     <!-- searching finished and result -->
-    <section *ngIf="results && !nothingFound" class="p-bottom-30 p-top-20">
+    <section class="p-bottom-30 p-top-20">
       <app-shared-table
         (editRow)="openSidebar($event, 'EDIT')"
         (removeRows)="removeCompanies($event)"

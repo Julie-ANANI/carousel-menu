@@ -4,7 +4,7 @@
     <!-- button -->
     <div *ngIf="isEditable" class="text-right p-bottom-30">
       <button
-        [disabled]="!isSaving || form.invalid"
+        [disabled]="form.invalid"
         class="button is-community is-sm"
         id="btn-save"
         type="submit">
