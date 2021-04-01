@@ -8,7 +8,7 @@ import {/*Observable,*/ combineLatest} from 'rxjs';
 // import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 /*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
 import {Table} from '../../../../../table/models/table';
-import {first} from 'rxjs/operators';
+import {filter, first} from 'rxjs/operators';
 import {Config} from '../../../../../../models/config';
 import {isPlatformBrowser} from '@angular/common';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
@@ -17,7 +17,8 @@ import {TranslateNotificationsService} from '../../../../../../services/notifica
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {ShieldService} from '../../../../../../services/shield/shield.service';
 import {NotificationsService} from 'angular2-notifications';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
+import {LocalStorageService} from '../../../../../../services/localStorage/localStorage.service';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -72,6 +73,9 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _shieldSortedList: Array<any> = [];
 
+  private _preUrl = '';
+  private _curUrl = '';
+
   get shieldSortedList(): Array<any> {
     return this._shieldSortedList;
   }
@@ -83,7 +87,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _shieldService: ShieldService,
               private _notificationsService: NotificationsService,
-              private _route: Router
+              private _route: Router,
+              private _localStorageService: LocalStorageService
               /*private _autoCompleteService: AutocompleteService,*/
               /*private _sanitizer: DomSanitizer*/) {
   }
@@ -112,7 +117,41 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       this._getShieldedPros();
       this._buildForm();
       this.getResult();
+      // this._route.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      //   console.log(event.url);
+      //   this._preUrl = this._curUrl;
+      //   this._curUrl = event.urlAfterRedirects;
+      //   if (this._preUrl.includes('bulkedit') || this._preUrl.includes('addparent')) {
+      //     if (this._localStorageService.getItem('configCompany')) {
+      //       this._queryConfig = JSON.parse(this._localStorageService.getItem('configCompany'));
+      //       this._getCompanies(this._queryConfig);
+      //       console.log(this._resultTableConfiguration);
+      //     }
+      //     // this._localStorageService.setItem('configCompany', null);
+      //     // this._localStorageService.setItem('companiesSelected', null);
+      //   } else {
+      //     this.getResult();
+      //   }
+      // });
+      // if (this._preUrl === '') {
+      //   this.getResult();
+      // }
     }
+  }
+
+  initializerSelectedRows() {
+    const companiesSelected = JSON.parse(this._localStorageService.getItem('companiesSelected'));
+    console.log(companiesSelected);
+    if (companiesSelected && companiesSelected.length > 0) {
+      this._resultTableConfiguration._content.map(item => {
+        for (const company of companiesSelected) {
+          if (item._id === company._id) {
+            item._isSelected = true;
+          }
+        }
+      });
+    }
+    console.log(this.resultTableConfiguration);
   }
 
   getResult() {
@@ -174,6 +213,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _getCompanies(config: Config) {
     this._isSearching = true;
+    this._resultTableConfiguration._total = -1;
     this._enterpriseService.get(null, config).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
@@ -221,7 +261,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _total: total,
       _isTitle: true,
       _isSearchable: !!this.canAccess(['searchBy']),
-      _isSelectable: this.canAccess(['delete']),
+      _isSelectable: true,
       _isPaginable: total > 10,
       _isAddParent: true,
       _isBulkEdit: true,
@@ -342,6 +382,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         }
       ]
     };
+    //
+    // if (this._resultTableConfiguration._isSelectable) {
+    //   this.initializerSelectedRows();
+    // }
   }
 
   private _getShieldedPros() {
@@ -635,7 +679,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
-    console.log(this._queryConfig);
     if (this._queryConfig.search === '{}') {
       this.getResult();
       this._queryConfig = {
@@ -680,13 +723,19 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   navigateToEdit($event: any) {
     if ($event) {
+      this.saveConfig();
       this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
     }
   }
 
   navigateToAddParent($event: any) {
     if ($event) {
+      this.saveConfig();
       this._route.navigate(['/user/admin/settings/enterprises/addparent']);
     }
+  }
+
+  saveConfig() {
+    this._localStorageService.setItem('configCompany', JSON.stringify(this._queryConfig));
   }
 }

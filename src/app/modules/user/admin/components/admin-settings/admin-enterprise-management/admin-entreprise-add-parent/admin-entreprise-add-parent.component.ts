@@ -299,4 +299,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     });
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
+
+  returnTo() {
+    this._router.navigate(['/user/admin/settings/enterprises']);
+  }
 }

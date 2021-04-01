@@ -411,4 +411,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       this._inputValue = '';
     }
   }
+
+  return() {
+    this._router.navigate(['/user/admin/settings/enterprises']);
+  }
 }
