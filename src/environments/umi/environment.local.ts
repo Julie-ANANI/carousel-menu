@@ -8,7 +8,6 @@ export const environment = {
   companyShortName: 'UMI',
   domain: 'umi',
   quizUrl: 'http://localhost:3080',
-  communityApiUrl: 'http://localhost:3010/api',
   companyURL: 'https://www.umi.us',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-animated-2020.gif',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-trans-2020.png',
