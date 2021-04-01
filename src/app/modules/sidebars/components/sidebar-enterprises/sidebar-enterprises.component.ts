@@ -16,6 +16,23 @@ type Template = 'CREATE' | 'EDIT';
 })
 
 export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
+  private _companySize: Array<any> = [
+    {
+      label: 'TPE : 0-19 employés',
+      value: 'TPE'
+    },
+    {
+      label: 'PME : 20-249 employés',
+      value: 'PME'
+    }, {
+      label: 'ETI : 250-5000 employés',
+      value: 'ETI'
+    }, {
+      label: 'GE : >5000 employés',
+      value: 'GE'
+    }
+  ];
+
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this._buildForm();
@@ -35,6 +52,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
       this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
       this._form.get('enterpriseType').setValue(this._enterprise.enterpriseType);
+      this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
       this._geoZoneInputList = this._enterprise.geographicalZone;
       this._brandInputList = this._enterprise.brands;
       this._industryInputList = this._enterprise.industries;
@@ -138,7 +156,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       industries: [null],
       brands: [null],
       geographicalZone: [null],
-      companySize: [null],
+      enterpriseSize: [null],
       valueChain: [null]
     });
   }
@@ -202,7 +220,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
-    if (this.isEditable && this.isSaving && this._form.valid) {
+    if (this.isEditable && this._form.valid) {
       this.isSaving = false;
 
       const _newEnterprise: Enterprise = {
@@ -318,6 +336,11 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
         initialData: this._patternsInputList
       };
     }
+  }
+
+
+  get companySize(): Array<any> {
+    return this._companySize;
   }
 
   get subConfig(): any {

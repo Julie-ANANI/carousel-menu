@@ -175,13 +175,14 @@
 
     <!-- company size -->
     <div class="form-group">
-      <label class="form-label" for="form-companySize">Company size</label>
-      <input
+      <label class="form-label" for="form-enterpriseSize">Company size</label>
+      <select
         class="form-input is-shadowed"
-        formControlName="companySize"
-        id="form-companySize"
-        placeholder="Enter the company size"
-        type="text">
+        formControlName="enterpriseSize"
+        id="form-enterpriseSize">
+        <option disabled>Select a size</option>
+        <option *ngFor="let item of companySize" [value]="item.value">{{item.label}}</option>
+      </select>
     </div>
     <!-- /company size -->
 
