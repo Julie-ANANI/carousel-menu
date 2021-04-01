@@ -258,6 +258,7 @@ export class InputListComponent {
       if (item === undefined || item === 'empty') {
         this._answerList.push({text: $event.target.value});
         this.update.emit({value: this._answerList});
+        $event.target.value = '';
       }
     }
   }

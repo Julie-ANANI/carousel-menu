@@ -35,9 +35,10 @@
           class="form-input is-shadowed"
           (mousedown)="setHeight()"
           (blur)="initHeight()"
+          [(ngModel)]="answer"
           [size]="size"
           (change)="initSelectHeight($event)">
-          <option disabled selected>Select industries</option>
+          <option selected style="display: none"></option>
           <ng-container *ngFor="let industry of industriesSelect">
             <optgroup [label]="industry.menuTitle"></optgroup>
             <ng-container *ngFor="let item of industry['items']">
