@@ -9,7 +9,7 @@ export class CommunityService {
   constructor(private _http: HttpClient) { }
 
   public getAllCircles(): Observable<Array<CommunityCircle>> {
-    return this._http.get<Array<CommunityCircle>>(`/community/circle`);
+    return this._http.get<Array<CommunityCircle>>(`/community/circles`);
   }
 
 }
