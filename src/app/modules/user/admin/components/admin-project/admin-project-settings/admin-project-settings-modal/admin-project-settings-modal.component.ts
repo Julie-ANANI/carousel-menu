@@ -82,6 +82,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   ngOnInit() {
     this._innovCard = InnovationFrontService.currentLangInnovationCard(this.innovation, 'en', 'CARD');
     this._initPublicationType();
+    this._community.owner = 'community@umi.us';
     this._community.sectors = this._community.sectors || this.innovation.tags;
     this._initDefaultMedias();
     this._setCommunityMedias();
