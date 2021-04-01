@@ -946,8 +946,13 @@ export class TableComponent {
 
   public getStringForColumn(row: any, column: any, label: string) {
     this._stringInComplexeColumn = '';
-    this.getContentValue(row, this.getAttrs(column)[0]).map((item: any) => {
-      this._stringInComplexeColumn = this._stringInComplexeColumn.concat(item[label] + ', ');
+    const temList = this.getContentValue(row, this.getAttrs(column)[0]);
+    temList.map((item: any, index: any) => {
+      if (index === temList.length - 1) {
+        this._stringInComplexeColumn = this._stringInComplexeColumn.concat(item[label]);
+      } else {
+        this._stringInComplexeColumn = this._stringInComplexeColumn.concat(item[label] + ', ');
+      }
     });
     return this._stringInComplexeColumn;
   }
