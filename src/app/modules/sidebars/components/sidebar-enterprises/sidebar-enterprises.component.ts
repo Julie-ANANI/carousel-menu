@@ -6,6 +6,7 @@ import {takeUntil} from 'rxjs/operators';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
 import {Clearbit} from '../../../../models/clearbit';
+import {Industries} from '../../../../models/static-data/industries';
 
 type Template = 'CREATE' | 'EDIT';
 
@@ -16,6 +17,12 @@ type Template = 'CREATE' | 'EDIT';
 })
 
 export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
+  private _industries: Array<any> = Industries;
+
+  get industries(): Array<any> {
+    return this._industries;
+  }
+
   private _companySize: Array<any> = [
     {
       label: 'TPE : 0-19 employés',

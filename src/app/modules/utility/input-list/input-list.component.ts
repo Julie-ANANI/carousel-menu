@@ -6,6 +6,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {Enterprise} from '../../../models/enterprise';
+import {Industries} from '../../../models/static-data/industries';
 
 interface InputListConfig {
   placeholder: string;
@@ -35,6 +36,21 @@ export class InputListComponent {
 
   @Input() isDomain = false; // true: if the answerList is of domain. ex: app-sidebar-blacklist component
 
+  @Input() isAddIndustry = false;
+
+  private _size = 0;
+
+
+  get size(): number {
+    return this._size;
+  }
+
+  private _industriesSelect: Array<any> = Industries;
+
+
+  get industriesSelect(): Array<any> {
+    return this._industriesSelect;
+  }
 
   @Input() set config(config: InputListConfig) {
     if (config) {
@@ -223,7 +239,6 @@ export class InputListComponent {
 
   public selectEnterprise(c: string | Enterprise | any) {
     if (typeof c === 'object' && this.isEditable) {
-      console.log(c);
       this._answerList.push(c);
       this._answer = c.name;
       this.update.emit({value: this._answerList});
@@ -232,4 +247,22 @@ export class InputListComponent {
   }
 
 
+  setHeight() {
+    this._size = 7;
+  }
+
+  initSelectHeight($event: any) {
+    this._size = 0;
+    if ($event) {
+      const item = this._answerList.length !== 0 ? this._answerList.find(data => data['text'] === $event.target.value) : 'empty';
+      if (item === undefined || item === 'empty') {
+        this._answerList.push({text: $event.target.value});
+        this.update.emit({value: this._answerList});
+      }
+    }
+  }
+
+  initHeight() {
+    this._size = 0;
+  }
 }

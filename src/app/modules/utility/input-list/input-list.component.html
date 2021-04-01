@@ -4,7 +4,7 @@
     <!-- input area -->
     <div *ngIf="isAddable" class="input-wrapper">
 
-      <label class="m-right-2" *ngIf="!isSelectCompany">
+      <label class="m-right-2" *ngIf="!isSelectCompany && !isAddIndustry">
         <input
           [(ngModel)]="answer"
           [attr.placeholder]="placeholder | translate"
@@ -30,11 +30,30 @@
           type="text">
       </label>
 
+      <label  style="width: 100%" *ngIf="isAddIndustry">
+        <select
+          class="form-input is-shadowed"
+          (mousedown)="setHeight()"
+          (blur)="initHeight()"
+          [size]="size"
+          (change)="initSelectHeight($event)">
+          <option disabled selected>Select industries</option>
+          <ng-container *ngFor="let industry of industriesSelect">
+            <optgroup [label]="industry.menuTitle"></optgroup>
+            <ng-container *ngFor="let item of industry['items']">
+              <option [value]="item">{{item}}
+              </option>
+            </ng-container>
+          </ng-container>
+        </select>
+      </label>
+
+
       <button
         [disabled]="f.form.invalid || !isEditable"
         [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
         class="button is-circled is-primary"
-        *ngIf="!isSelectCompany"
+        *ngIf="!isSelectCompany && !isAddIndustry"
         type="submit">
         <i class="icon icon-plus"></i>
       </button>

@@ -143,6 +143,7 @@
       <app-utility-input-list
         (update)="industryUpdate($event)"
         [config]="industryConfig"
+        [isAddIndustry]="true"
         [isEditable]="isEditable">
       </app-utility-input-list>
       <input class="form-input" formControlName="industries" type="hidden" id="form-industry">
@@ -181,7 +182,9 @@
         formControlName="enterpriseSize"
         id="form-enterpriseSize">
         <option disabled>Select a size</option>
-        <option *ngFor="let item of companySize" [value]="item.value">{{item.label}}</option>
+        <option *ngFor="let item of companySize"
+                [value]="item.value">{{item.label}}
+        </option>
       </select>
     </div>
     <!-- /company size -->
