@@ -1,10 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID} from '@angular/core';
 import {InnovCard} from '../../../../../../../models/innov-card';
 import {Community, CommunityCircle, CommunityUser, PublicationType} from '../../../../../../../models/community';
 import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
 import {Innovation} from '../../../../../../../models/innovation';
 import {Mission} from '../../../../../../../models/mission';
 import {Tag} from '../../../../../../../models/tag';
+import {isPlatformBrowser} from '@angular/common';
+import {CommunityService} from '../../../../../../../services/community/community.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
+import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 
 interface PubType {
   key: string;
@@ -31,6 +37,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   @Input() set showModal(value: boolean) {
     this._showModal = value;
     this._emitModal();
+    this._getCircles();
   }
 
   @Input() set isPublishingCommunity(value: boolean) {
@@ -68,7 +75,9 @@ export class AdminProjectSettingsModalComponent implements OnInit {
 
   private _isPublishingCommunity = false;
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _communityService: CommunityService) { }
 
   ngOnInit() {
     this._innovCard = InnovationFrontService.currentLangInnovationCard(this.innovation, 'en', 'CARD');
@@ -103,6 +112,17 @@ export class AdminProjectSettingsModalComponent implements OnInit {
         break;
     }
 
+  }
+
+  private _getCircles() {
+    if (isPlatformBrowser(this._platformId) && this._showModal) {
+      this._communityService.getAllCircles().pipe(first()).subscribe((response) => {
+        this._circles = response;
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Circles Error...', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   private _initDefaultMedias() {
