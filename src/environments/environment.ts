@@ -16,6 +16,7 @@ export const environment = {
   logoURL: '',
   domain: '',
   quizUrl: '',
+  communityApiUrl: '',
   logoSynthURL: '',
   background: '',
   secureCookie: false,

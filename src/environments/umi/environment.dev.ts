@@ -10,6 +10,7 @@ export const environment = {
   companyShortName: 'UMI',
   domain: 'umi',
   quizUrl: 'https://quizdev.umi.us',
+  communityApiUrl: 'https://community-api-dev.umi.us/api',
   companyURL: 'https://www.umi.us',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-animated-2020.gif',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-trans-2020.png',
