@@ -10,18 +10,8 @@ export class SessionInterceptor implements HttpInterceptor {
 
   constructor(private errorService: ErrorService) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(this.setAuthorizationHeader(req))
-      .pipe(catchError((error) => {
-        if (error.status !== 401) { // login error
-          this.errorService.handleError(error);
-        }
-        return throwError(error);
-      }));
-  }
-
   // Request Interceptor to append Authorization Header
-  private setAuthorizationHeader(req: HttpRequest<any>): HttpRequest<any> {
+  private static setAuthorizationHeader(req: HttpRequest<any>): HttpRequest<any> {
     // Make a clone of the request then append the Authorization Header
     return req.clone({
       headers: req.headers
@@ -29,6 +19,16 @@ export class SessionInterceptor implements HttpInterceptor {
         .set('api-token', 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ'),
       withCredentials: true
     });
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(SessionInterceptor.setAuthorizationHeader(req))
+      .pipe(catchError((error) => {
+        if (error.status !== 401) { // login error
+          this.errorService.handleError(error);
+        }
+        return throwError(error);
+      }));
   }
 
 }
