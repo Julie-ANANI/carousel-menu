@@ -118,7 +118,7 @@
       </label>
       <select
         (ngModelChange)="onChangeOwner($event)"
-        [ngModel]="community.owner || 'community@umi.us'"
+        [ngModel]="community.owner || ''"
         class="form-select is-sm is-shadowed mxw-350"
         id="admin-project-modal-owner">
         <option [ngValue]="''">Select owner</option>
