@@ -19,6 +19,11 @@ export interface CommunityUser {
 export interface Community {
   publicationType: PublicationType;
   visibility: string;
+
+  /**
+   * we do not storing this value in the back.
+   * It's for the front only.
+   */
   owner: string;
 
   /**
