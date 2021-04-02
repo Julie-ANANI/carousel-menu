@@ -1,6 +1,6 @@
 export interface AutoSuggestionConfig {
   minChars?: number;
   placeholder?: string;
-  type?: 'users';
+  type?: string;
   identifier?: string;
 }

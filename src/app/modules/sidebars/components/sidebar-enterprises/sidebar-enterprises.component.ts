@@ -6,7 +6,8 @@ import {takeUntil} from 'rxjs/operators';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
 import {Clearbit} from '../../../../models/clearbit';
-import {Industries} from '../../../../models/static-data/industries';
+import {EnterpriseTypes, Industries} from '../../../../models/static-data/industries';
+import {AutoSuggestionConfig} from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
 
 type Template = 'CREATE' | 'EDIT';
 
@@ -18,6 +19,12 @@ type Template = 'CREATE' | 'EDIT';
 
 export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   private _industries: Array<any> = Industries;
+  private _enterpriseTypeList = EnterpriseTypes;
+
+
+  get enterpriseTypeList(): string[] {
+    return this._enterpriseTypeList;
+  }
 
   get industries(): Array<any> {
     return this._industries;
@@ -121,6 +128,17 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   private _isGeoConfig = false;
   private _isIndustryConfig = false;
   private _isPatternConfig = false;
+  private _industrySelectConfig: AutoSuggestionConfig = {
+    minChars: 3,
+    placeholder: 'Enter the industry',
+    type: 'industry',
+    identifier: ''
+  };
+
+
+  get industrySelectConfig() {
+    return this._industrySelectConfig;
+  }
 
   constructor(private _formBuilder: FormBuilder,
               private _autoCompleteService: AutocompleteService,
@@ -288,12 +306,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
-  public industryUpdate(event: { value: Array<any> }) {
+  public industryUpdate(event: any) {
     if (this.isEditable) {
-      this._newIndustry = [];
-      this._newIndustry = event.value.map((text) => {
-        return {label: text.label || text.text, code: text.label || text.text};
-      });
+      this._newIndustry.push({label: event, code: event});
       this._saveChanges();
     }
   }
@@ -431,4 +446,14 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  test() {
+    console.log(444);
+  }
+
+  getIndustrySelected($event: any) {
+    if ($event && !this.industryInputList.toString().includes($event)) {
+      this.industryUpdate($event);
+    }
+    console.log(this.newIndustry);
+  }
 }

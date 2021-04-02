@@ -30,7 +30,13 @@
         *ngFor="let suggestion of suggestionsSource; let i = index;"
         [ngClass]="{ 'active': i === currentFocus }"
         class="menu-item">
-        {{ suggestion[identifier] }}
+        {{ type === 'industry' ? suggestion : suggestion[identifier] }}
+      </li>
+      <li *ngIf="type === 'industry'" class="add-industry">
+        <label>
+          <input>
+        </label>
+        <button>test</button>
       </li>
       <!-- /when suggestions -->
 

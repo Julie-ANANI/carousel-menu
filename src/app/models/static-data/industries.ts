@@ -60,3 +60,13 @@ export const Industries = [
     items: ['Automotive', 'Aeronautics', 'Railway', 'Maritime', 'Freight / Package Delivery']
   }
 ];
+export const IndustriesList = [
+  'Automotive', 'Aeronautics', 'Railway', 'Maritime', 'Freight / Package Delivery',
+  'Mobile', 'Internet', 'Cloud', 'Mining', 'IT networks', 'IT security', 'IT Hardware',
+  'Cosmetics', 'Pharmaceutical', 'Medical devices', 'Accounting', 'Banking', 'Insurance',
+  'Éolien', 'Hydraulique', 'Oil / Gas', 'Renewable energies', 'Electrical / Electronic Manufacturing',
+  'Architecture', 'Civil engineering', 'Service', 'Chemicals', 'Social', 'Environment',
+  'Agriculture', 'Agrichemicals', 'Food processing', 'Food distribution', 'Grocery'
+];
+
+export const EnterpriseTypes = ['Publique', 'Privée', 'Association'];

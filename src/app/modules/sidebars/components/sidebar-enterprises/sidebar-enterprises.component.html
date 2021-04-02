@@ -127,25 +127,30 @@
 
     <!-- type -->
     <div class="form-group">
-      <label class="form-label" for="form-type">Type</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="enterpriseType"
-        id="form-type"
-        placeholder="Enter the enterprise type"
-        type="text">
+      <label class="form-label" for="form-type">Type
+        <i class="far fa-plus-square"></i>
+      </label>
+      <select id="form-type" formControlName="enterpriseType" class="form-input is-shadowed">
+        <option *ngFor="let type of enterpriseTypeList" [value]="type">
+          {{type}}
+        </option>
+      </select>
     </div>
     <!-- /type -->
 
     <!-- industry -->
     <div class="form-group">
       <label class="form-label" for="form-industry">Industry</label>
-      <app-utility-input-list
-        (update)="industryUpdate($event)"
-        [config]="industryConfig"
-        [isAddIndustry]="true"
-        [isEditable]="isEditable">
-      </app-utility-input-list>
+<!--      <app-utility-input-list-->
+<!--        (update)="industryUpdate($event)"-->
+<!--        [config]="industryConfig"-->
+<!--        [isAddIndustry]="true"-->
+<!--        [isEditable]="isEditable">-->
+<!--      </app-utility-input-list>-->
+      <app-utility-auto-suggestion
+        [config]="industrySelectConfig"
+        (valueSelected)="getIndustrySelected($event)">
+      </app-utility-auto-suggestion>
       <input class="form-input" formControlName="industries" type="hidden" id="form-industry">
     </div>
     <!-- industry -->

@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AutoSuggestionConfig } from './interface/auto-suggestion-config';
-import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AutoSuggestionConfig} from './interface/auto-suggestion-config';
+import {FormControl} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {IndustriesList} from '../../../models/static-data/industries';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -72,25 +73,44 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   private _suggestionsSource: Array<any> = [];
 
+  private _industriesList: Array<any> = IndustriesList;
+
   private _itemSelected: any;
 
   private _isSearching = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  constructor(private _autoCompleteService: AutocompleteService) { }
+  constructor(private _autoCompleteService: AutocompleteService) {
+  }
 
   ngOnInit() {
     this._searchKeyword.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
       .subscribe((input: any) => {
         if (input) {
+          console.log(input);
           this._isSearching = true;
-          this._loadResult(input);
+          if (this.type === 'industry') {
+            this._loadIndustries(input);
+          } else {
+            this._loadResult(input);
+          }
         } else {
           this.hideAutoSuggestionDropdown();
         }
       });
+  }
+
+  private _loadIndustries(value: string) {
+    if (value) {
+      this._suggestionsSource = [];
+      this._dropdownVisible = true;
+      this._loading = true;
+      if (value.length >= this._minChars) {
+        this._getIndustriesSuggestions(value);
+      }
+    }
   }
 
   private _loadResult(value: any) {
@@ -107,14 +127,22 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _getIndustriesSuggestions(industryKeyword: string) {
+    this._suggestionsSource =
+      this._industriesList.filter(item => item.toLowerCase().includes(industryKeyword.toLowerCase()) ||
+        industryKeyword.toLowerCase().includes(item.toLowerCase()));
+    this._loading = false;
+    this._isSearching = this._suggestionsSource.length !== 0;
+  }
+
   private _getSuggestions(searchKey: string) {
-    this._autoCompleteService.get({ query: searchKey, type: this._type })
+    this._autoCompleteService.get({query: searchKey, type: this._type})
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data) => {
         this._suggestionsSource = data;
         this._loading = false;
         this._isSearching = data.length !== 0;
-        },(err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         console.error(err);
       });
   }
@@ -164,6 +192,7 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     this._searchKeyword.setValue(value[this._identifier]);
     this._emitValue(value);
     this.hideAutoSuggestionDropdown();
+    this._industriesList = IndustriesList;
   }
 
 
@@ -197,6 +226,10 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   get isSearching(): boolean {
     return this._isSearching;
+  }
+
+  get type(): string {
+    return this._type;
   }
 
   ngOnDestroy(): void {

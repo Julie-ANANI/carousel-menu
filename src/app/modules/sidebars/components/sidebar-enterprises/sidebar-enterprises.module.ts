@@ -9,6 +9,7 @@ import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-comp
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { SharedUploadZonePhotoModule } from '../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
+import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-suggestion.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { InputListModule } from '../../../utility/input-list/input-list.module';
     ModalModule,
     SharedUploadZonePhotoModule,
     InputListModule,
+    AutoSuggestionModule,
   ],
   declarations: [
     SidebarEnterprisesComponent
