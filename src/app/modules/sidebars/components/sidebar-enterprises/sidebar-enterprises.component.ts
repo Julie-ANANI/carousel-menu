@@ -456,4 +456,19 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
     console.log(this.newIndustry);
   }
+
+  deleteItem(type: any, answer: any) {
+    switch (type) {
+      case 'industry':
+        this._newIndustry = this._newIndustry.filter(item => item.code !== answer.code);
+        break;
+    }
+  }
+
+  getContext(type: string, list: any[]) {
+    return {
+      type: type,
+      answerList: list
+    };
+  }
 }

@@ -140,18 +140,12 @@
 
     <!-- industry -->
     <div class="form-group">
-      <label class="form-label" for="form-industry">Industry</label>
-<!--      <app-utility-input-list-->
-<!--        (update)="industryUpdate($event)"-->
-<!--        [config]="industryConfig"-->
-<!--        [isAddIndustry]="true"-->
-<!--        [isEditable]="isEditable">-->
-<!--      </app-utility-input-list>-->
+      <label class="form-label">Industry</label>
       <app-utility-auto-suggestion
         [config]="industrySelectConfig"
         (valueSelected)="getIndustrySelected($event)">
       </app-utility-auto-suggestion>
-      <input class="form-input" formControlName="industries" type="hidden" id="form-industry">
+      <ng-container *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry)}"></ng-container>
     </div>
     <!-- industry -->
 
@@ -218,3 +212,34 @@
   </section>
 </app-utility-modal>
 <!-- /to upload logo -->
+
+
+<ng-template #answerArea let-context>
+  <ul class="answers-wrapper">
+    <li *ngFor="let answer of context.answerList; let i = index">
+
+      <!-- text -->
+      <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+          <span>{{answer.text || answer.name || answer.label || answer.expression}}</span>
+      </div>
+      <!-- /text -->
+      <!-- icons -->
+      <div class="icons-wrapper">
+        <!-- delete icon -->
+        <div
+          *ngIf="isEditable"
+          (click)="deleteItem(context.type, answer)"
+          [ngClass]="{ 'disabled': !isEditable }"
+          class="icon-container m-no-right is-overlay">
+            <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
+              <i class="icon icon-delete text-alert"></i>
+            </span>
+        </div>
+        <!-- /delete icon -->
+
+      </div>
+      <!-- /icons -->
+
+    </li>
+  </ul>
+</ng-template>

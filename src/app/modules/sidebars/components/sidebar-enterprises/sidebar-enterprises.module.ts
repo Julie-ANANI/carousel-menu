@@ -10,6 +10,7 @@ import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { SharedUploadZonePhotoModule } from '../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
 import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-suggestion.module';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-sugges
     SharedUploadZonePhotoModule,
     InputListModule,
     AutoSuggestionModule,
+    TranslateModule,
   ],
   declarations: [
     SidebarEnterprisesComponent
