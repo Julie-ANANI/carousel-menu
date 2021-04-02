@@ -130,10 +130,13 @@
       <label class="form-label">Type
       </label>
       <app-utility-auto-suggestion
-        [config]="industrySelectConfig"
+        [config]="enterpriseTypeSelectConfig"
         (valueAdded)="getValueSelected($event)"
         (valueSelected)="getValueSelected($event)">
       </app-utility-auto-suggestion>
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', newEnterpriseType)}">
+      </ng-container>
     </div>
     <!-- /type -->
 
@@ -178,15 +181,6 @@
     <!-- company size -->
     <div class="form-group">
       <label class="form-label">Company size</label>
-<!--      <select-->
-<!--        class="form-input is-shadowed"-->
-<!--        formControlName="enterpriseSize"-->
-<!--        id="form-enterpriseSize">-->
-<!--        <option disabled>Select a size</option>-->
-<!--        <option *ngFor="let item of companySize"-->
-<!--                [value]="item.value">{{item.label}}-->
-<!--        </option>-->
-<!--      </select>-->
       <app-utility-auto-suggestion
         [config]="enterpriseSizeSelectConfig"
         (valueAdded)="getValueSelected($event)"
@@ -231,12 +225,13 @@
 
       <!-- text -->
       <div class="answer-wrapper text-sm text-primary-dark m-right-2">
-        <span *ngIf="context.type === 'industry'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
-        <span *ngIf="context.type === 'valueChain'">{{answer}}</span>
+        <span
+          *ngIf="context.type === 'industry'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
+        <span *ngIf="context.type === 'valueChain' || context.type === 'enterpriseType'">{{answer}}</span>
       </div>
       <!-- /text -->
       <!-- icons -->
-      <div class="icons-wrapper">
+      <div class="icons-wrapper" *ngIf="context.type !== 'enterpriseType'">
         <!-- delete icon -->
         <div
           *ngIf="isEditable"

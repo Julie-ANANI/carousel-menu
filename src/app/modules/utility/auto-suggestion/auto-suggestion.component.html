@@ -18,7 +18,7 @@
           class="form-input is-shadowed"
           name="suggestion"
           type="search">
-        <button *ngIf="(type === 'industry'|| type === 'valueChain') && inputNewValue"
+        <button *ngIf="(type === 'industry'|| type === 'valueChain'|| type === 'enterpriseType') && inputNewValue!== ''"
                 style="margin-left: auto"
                 [disabled]="!this.inputNewValue"
                 class="button is-circled is-primary is-sm"
@@ -38,7 +38,7 @@
         *ngFor="let suggestion of suggestionsSource; let i = index;"
         [ngClass]="{ 'active': i === currentFocus }"
         class="menu-item">
-        {{ (type === 'industry' || type === 'valueChain') ? suggestion : suggestion[identifier] }}
+        {{ (type === 'industry' || type === 'valueChain' || type === 'enterpriseType') ? suggestion : suggestion[identifier] }}
       </li>
       <!-- /when suggestions -->
 

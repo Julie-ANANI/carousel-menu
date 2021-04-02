@@ -30,23 +30,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._industries;
   }
 
-  private _companySize: Array<any> = [
-    {
-      label: 'TPE : 0-19 employés',
-      value: 'TPE'
-    },
-    {
-      label: 'PME : 20-249 employés',
-      value: 'PME'
-    }, {
-      label: 'ETI : 250-5000 employés',
-      value: 'ETI'
-    }, {
-      label: 'GE : >5000 employés',
-      value: 'GE'
-    }
-  ];
-
   @Input() set sidebarState(value: string) {
     if (value === undefined || value === 'active') {
       this._buildForm();
@@ -119,6 +102,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _newIndustry: Array<Industry> = [];
 
+  private _newEnterpriseType: Array<Industry> = [];
+
   private _industrySelectConfig: AutoSuggestionConfig = {
     minChars: 1,
     placeholder: 'Enter the industry',
@@ -140,6 +125,17 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     identifier: 'label'
   };
 
+  private _enterpriseTypeSelectConfig: AutoSuggestionConfig = {
+    minChars: 0,
+    placeholder: 'Enter the enterprise type',
+    type: 'enterpriseType',
+    identifier: ''
+  };
+
+
+  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
+    return this._enterpriseTypeSelectConfig;
+  }
 
   private initLists() {
     this._geoZoneInputList = this._enterprise.geographicalZone;
@@ -378,11 +374,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     };
   }
 
-
-  get companySize(): Array<any> {
-    return this._companySize;
-  }
-
   get subConfig(): any {
     return {
       placeholder: 'Enter the enterprise subsidiary',
@@ -462,8 +453,12 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             this.valueChainUpdate($event.value);
           }
           break;
+        case 'enterpriseSize':
+          this._form.get('enterpriseSize').setValue($event.value);
+          break;
         case 'enterpriseType':
-          this._form.get('enterpriseType').setValue($event);
+          this._form.get('enterpriseType').setValue($event.value);
+          this._newEnterpriseType[0] = $event.value;
           break;
       }
     }
@@ -490,5 +485,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   get newValueChains(): Array<any> {
     return this._newValueChains;
+  }
+
+
+  get newEnterpriseType(): Array<Industry> {
+    return this._newEnterpriseType;
   }
 }

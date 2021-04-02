@@ -5,7 +5,7 @@ import {Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {EnterpriseSizeList, EnterpriseValueChains, IndustriesList} from '../../../models/static-data/industries';
+import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, IndustriesList} from '../../../models/static-data/industries';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -83,7 +83,9 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   private _enterpriseSizeList: Array<any> = EnterpriseSizeList;
 
-  private _itemSelected: any;
+  private _enterpriseTypeList: Array<any> = EnterpriseTypes;
+
+  private _itemSelected: any = '';
 
   private _isSearching = false;
 
@@ -119,7 +121,7 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
           this._inputNewValue = input;
           this._isSearching = true;
           if (this.type === 'industry' || this._type === 'valueChain'
-            || this._type === 'enterpriseSize') {
+            || this._type === 'enterpriseSize' || this._type === 'enterpriseType') {
             this._loadListResults(input);
           } else {
             this._loadResult(input);
@@ -166,7 +168,11 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         this._getValueChains(keyword);
         break;
       case 'enterpriseSize':
-        this._getEnterpriseSize(keyword);
+        this._getEnterpriseSize();
+        break;
+      case 'enterpriseType':
+        this._width = '80%';
+        this._getEnterpriseType(keyword);
         break;
     }
     this._loading = false;
@@ -185,8 +191,18 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         keyword.toLowerCase().includes(item.toLowerCase()));
   }
 
-  private _getEnterpriseSize(keyword: any) {
+  private _getEnterpriseSize() {
     this._suggestionsSource = this._enterpriseSizeList;
+  }
+
+  private _getEnterpriseType(keyword: string) {
+    this._suggestionsSource =
+      this._enterpriseTypeList.filter(item => item.toLowerCase().includes(keyword.toLowerCase()) ||
+        keyword.toLowerCase().includes(item.toLowerCase()));
+    if (this._suggestionsSource.length === 0) {
+      this._loading = false;
+      this._isSearching = false;
+    }
   }
 
   private _getSuggestions(searchKey: string) {
@@ -204,12 +220,21 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   public showAutoSuggestionDropdown(event: Event) {
     event.preventDefault();
     const value = ((event.target) as HTMLInputElement).value;
-    if (this._type === 'enterpriseSize') {
-      this._dropdownVisible = true;
-      this._isSearching = true;
-      this._getEnterpriseSize('');
-    } else {
-      this._loadResult(value);
+    switch (this._type) {
+      case 'enterpriseSize':
+        this._dropdownVisible = true;
+        this._isSearching = true;
+        this._getEnterpriseSize();
+        break;
+      case 'enterpriseType':
+        if (this._itemSelected === '') {
+          this._dropdownVisible = true;
+          this._isSearching = true;
+          this._suggestionsSource = this._enterpriseTypeList;
+        }
+        break;
+      default:
+        this._loadResult(value);
     }
   }
 
@@ -257,14 +282,27 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         };
         this._emitValue(valueToSend);
         this._searchKeyword.setValue('');
-        this._industriesList = IndustriesList;
-        this._valueChainList = EnterpriseValueChains;
         this._inputNewValue = '';
         this._width = '100%';
         break;
       case 'enterpriseSize':
+        const valueSize = {
+          type: this._type,
+          value: value.value
+        };
+        this._emitValue(valueSize);
         this._searchKeyword.setValue(value.label);
-        this._emitValue(value.value);
+        break;
+      case 'enterpriseType':
+        const valueType = {
+          type: this._type,
+          value: value
+        };
+        this._itemSelected = value;
+        this._emitValue(valueType);
+        this._searchKeyword.setValue('');
+        this._inputNewValue = '';
+        this._width = '100%';
         break;
       default:
         this._itemSelected = value;
@@ -320,12 +358,14 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     if (this.inputNewValue) {
       const valueToSend = {
         type: this.type,
-        value: this.inputNewValue
+        value: this.searchKeyword.value
       };
+      this._itemSelected = this.inputNewValue;
+      this._searchKeyword.setValue('');
       this.valueAdded.emit(valueToSend);
       this._inputNewValue = '';
-      this._searchKeyword.reset('');
       this._width = '100%';
+      this.hideAutoSuggestionDropdown();
     }
   }
 }
