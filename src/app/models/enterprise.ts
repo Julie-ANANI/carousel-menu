@@ -42,5 +42,5 @@ export interface Enterprise {
   brands?: Array<Brand>;
   geographicalZone?: Array<GeographicalZone>;
   enterpriseSize?: string;
-  valueChain?: string;
+  valueChain?: Array<string>;
 }

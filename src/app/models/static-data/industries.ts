@@ -60,6 +60,7 @@ export const Industries = [
     items: ['Automotive', 'Aeronautics', 'Railway', 'Maritime', 'Freight / Package Delivery']
   }
 ];
+
 export const IndustriesList = [
   'Automotive', 'Aeronautics', 'Railway', 'Maritime', 'Freight / Package Delivery',
   'Mobile', 'Internet', 'Cloud', 'Mining', 'IT networks', 'IT security', 'IT Hardware',
@@ -70,3 +71,9 @@ export const IndustriesList = [
 ];
 
 export const EnterpriseTypes = ['Publique', 'Privée', 'Association'];
+
+export const EnterpriseValueChains = [
+  'Producteur matière première', 'Extraction matière première',
+  'Designer', 'Équipementier', 'Manufacturier', 'Distributeur', 'Intégrateur'
+  , 'Installateur', 'Réglementaire', 'Bureau d\'étude', 'Conseil'
+];

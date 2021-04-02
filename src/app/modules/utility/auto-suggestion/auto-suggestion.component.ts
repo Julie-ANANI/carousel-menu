@@ -5,7 +5,7 @@ import {Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {IndustriesList} from '../../../models/static-data/industries';
+import {EnterpriseValueChains, IndustriesList} from '../../../models/static-data/industries';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -55,7 +55,11 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   @Output() valueSelected: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() valueAdded = new EventEmitter();
+
   private _minChars = 3;
+
+  private _inputNewValue = '';
 
   private _placeholder = 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';
 
@@ -75,13 +79,30 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   private _industriesList: Array<any> = IndustriesList;
 
+  private _valueChainList: Array<any> = EnterpriseValueChains;
+
   private _itemSelected: any;
 
   private _isSearching = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+  private _width = '100%';
 
   constructor(private _autoCompleteService: AutocompleteService) {
+  }
+
+
+  get width(): any {
+    return this._width;
+  }
+
+  get inputNewValue(): string {
+    return this._inputNewValue;
+  }
+
+
+  set inputNewValue(value: string) {
+    this._inputNewValue = value;
   }
 
   ngOnInit() {
@@ -89,10 +110,11 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
       .subscribe((input: any) => {
         if (input) {
-          console.log(input);
+          this._inputNewValue = input;
           this._isSearching = true;
-          if (this.type === 'industry') {
-            this._loadIndustries(input);
+          if (this.type === 'industry' || this._type === 'valueChain') {
+            this._width = '80%';
+            this._loadListResults(input);
           } else {
             this._loadResult(input);
           }
@@ -102,13 +124,13 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _loadIndustries(value: string) {
+  private _loadListResults(value: string) {
     if (value) {
       this._suggestionsSource = [];
       this._dropdownVisible = true;
       this._loading = true;
       if (value.length >= this._minChars) {
-        this._getIndustriesSuggestions(value);
+        this._getSuggestionsList(value);
       }
     }
   }
@@ -127,12 +149,29 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _getIndustriesSuggestions(industryKeyword: string) {
+  private _getSuggestionsList(keyword: string) {
+    switch (this.type) {
+      case 'industry':
+        this._getIndustries(keyword);
+        break;
+      case 'valueChain':
+        this._getValueChains(keyword);
+        break;
+    }
+    this._loading = false;
+    this._isSearching = this._suggestionsSource.length !== 0;
+  }
+
+  private _getIndustries(industryKeyword: any) {
     this._suggestionsSource =
       this._industriesList.filter(item => item.toLowerCase().includes(industryKeyword.toLowerCase()) ||
         industryKeyword.toLowerCase().includes(item.toLowerCase()));
-    this._loading = false;
-    this._isSearching = this._suggestionsSource.length !== 0;
+  }
+
+  private _getValueChains(keyword: any) {
+    this._suggestionsSource =
+      this._valueChainList.filter(item => item.toLowerCase().includes(keyword.toLowerCase()) ||
+        keyword.toLowerCase().includes(item.toLowerCase()));
   }
 
   private _getSuggestions(searchKey: string) {
@@ -188,11 +227,23 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
   public onValueSelect(value: any) {
-    this._itemSelected = value;
-    this._searchKeyword.setValue(value[this._identifier]);
-    this._emitValue(value);
+    if (this._type === 'valueChain' || this._type === 'industry') {
+      const valueToSend = {
+        type: this._type,
+        value: value
+      };
+      this._emitValue(valueToSend);
+      this._searchKeyword.setValue('');
+      this._industriesList = IndustriesList;
+      this._valueChainList = EnterpriseValueChains;
+      this._inputNewValue = '';
+      this._width = '100%';
+    } else {
+      this._itemSelected = value;
+      this._searchKeyword.setValue(value[this._identifier]);
+      this._emitValue(value);
+    }
     this.hideAutoSuggestionDropdown();
-    this._industriesList = IndustriesList;
   }
 
 
@@ -237,4 +288,16 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  addNewValue() {
+    if (this.inputNewValue) {
+      const valueToSend = {
+        type: this.type,
+        value: this.inputNewValue
+      };
+      this.valueAdded.emit(valueToSend);
+      this._inputNewValue = '';
+      this._searchKeyword.reset('');
+      this._width = '100%';
+    }
+  }
 }

@@ -143,9 +143,12 @@
       <label class="form-label">Industry</label>
       <app-utility-auto-suggestion
         [config]="industrySelectConfig"
-        (valueSelected)="getIndustrySelected($event)">
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
       </app-utility-auto-suggestion>
-      <ng-container *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry)}">
+      </ng-container>
     </div>
     <!-- industry -->
 
@@ -189,14 +192,18 @@
     <!-- /company size -->
 
     <!-- value chain -->
-    <label class="form-label" for="form-valueChain">Value chain</label>
-    <input
-      class="form-input is-shadowed"
-      formControlName="valueChain"
-      id="form-valueChain"
-      placeholder="Enter the value chain"
-      type="text">
-    <!-- /company size -->
+    <div class="form-group">
+      <label class="form-label">Value chain</label>
+      <app-utility-auto-suggestion
+        [config]="valueChainSelectConfig"
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
+      </app-utility-auto-suggestion>
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', newValueChains)}">
+      </ng-container>
+    </div>
+    <!-- /value chain -->
 
   </form>
 </div>
@@ -220,7 +227,8 @@
 
       <!-- text -->
       <div class="answer-wrapper text-sm text-primary-dark m-right-2">
-          <span>{{answer.text || answer.name || answer.label || answer.expression}}</span>
+        <span *ngIf="context.type === 'industry'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
+        <span *ngIf="context.type === 'valueChain'">{{answer}}</span>
       </div>
       <!-- /text -->
       <!-- icons -->

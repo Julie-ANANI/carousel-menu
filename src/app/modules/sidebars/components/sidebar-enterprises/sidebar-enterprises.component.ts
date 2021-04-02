@@ -63,6 +63,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._form.get('enterpriseType').setValue(this._enterprise.enterpriseType);
       this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
       this._newIndustry = this._enterprise.industries;
+      this._newValueChains = this._enterprise.valueChain;
     } else {
       this._enterprise = <Enterprise>{};
       this._newGeoZone = [];
@@ -70,11 +71,13 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._newIndustry = [];
       this._newSubsidiary = [];
       this._newBrands = [];
+      this._newValueChains = [];
     }
     this.initLists();
     this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
   }
 
+  private _newValueChains: Array<any> = [];
   @Input() isEditable = false;
 
   @Input() type: Template = 'EDIT';
@@ -117,9 +120,16 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   private _newIndustry: Array<Industry> = [];
 
   private _industrySelectConfig: AutoSuggestionConfig = {
-    minChars: 3,
+    minChars: 1,
     placeholder: 'Enter the industry',
     type: 'industry',
+    identifier: ''
+  };
+
+  private _valueChainSelectConfig: AutoSuggestionConfig = {
+    minChars: 1,
+    placeholder: 'Enter the value chain',
+    type: 'valueChain',
     identifier: ''
   };
 
@@ -133,6 +143,11 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   get industrySelectConfig() {
     return this._industrySelectConfig;
+  }
+
+
+  get valueChainSelectConfig(): AutoSuggestionConfig {
+    return this._valueChainSelectConfig;
   }
 
   constructor(private _formBuilder: FormBuilder,
@@ -308,6 +323,13 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
+  public valueChainUpdate(event: any) {
+    if (this.isEditable) {
+      this._newValueChains.push(event);
+      this._saveChanges();
+    }
+  }
+
   public brandUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
       this._newBrands = event.value.map((text) => {
@@ -338,10 +360,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   get patternConfig(): any {
-      return {
-        placeholder: 'Enter the enterprise pattern',
-        initialData: this._patternsInputList
-      };
+    return {
+      placeholder: 'Enter the enterprise pattern',
+      initialData: this._patternsInputList
+    };
   }
 
 
@@ -350,24 +372,24 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   get subConfig(): any {
-      return {
-        placeholder: 'Enter the enterprise subsidiary',
-        initialData: this._subsidiaryInputList
-      };
+    return {
+      placeholder: 'Enter the enterprise subsidiary',
+      initialData: this._subsidiaryInputList
+    };
   }
 
   get brandConfig(): any {
-      return {
-        placeholder: 'Enter the enterprise brand',
-        initialData: this._brandInputList
-      };
+    return {
+      placeholder: 'Enter the enterprise brand',
+      initialData: this._brandInputList
+    };
   }
 
   get geoConfig(): any {
-      return {
-        placeholder: 'Enter the geographical zone',
-        initialData: this._geoZoneInputList
-      };
+    return {
+      placeholder: 'Enter the geographical zone',
+      initialData: this._geoZoneInputList
+    };
   }
 
   get enterprise(): Enterprise {
@@ -415,9 +437,20 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     console.log(444);
   }
 
-  getIndustrySelected($event: any) {
-    if ($event && !this.newIndustry.toString().includes($event)) {
-      this.industryUpdate($event);
+  getValueSelected($event: any) {
+    if ($event) {
+      switch ($event.type) {
+        case 'industry':
+          if (!this.newIndustry.toString().includes($event)) {
+            this.industryUpdate($event.value);
+          }
+          break;
+        case 'valueChain':
+          if (!this._newValueChains.toString().includes($event)) {
+            this.valueChainUpdate($event.value);
+          }
+          break;
+      }
     }
   }
 
@@ -425,6 +458,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     switch (type) {
       case 'industry':
         this._newIndustry = this._newIndustry.filter(item => item.code !== answer.code);
+        break;
+      case 'valueChain':
+        this._newValueChains = this._newValueChains.filter(item => item !== answer);
         break;
     }
   }
@@ -434,5 +470,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       type: type,
       answerList: list
     };
+  }
+
+
+  get newValueChains(): Array<any> {
+    return this._newValueChains;
   }
 }

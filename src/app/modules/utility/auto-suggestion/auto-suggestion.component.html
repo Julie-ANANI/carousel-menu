@@ -5,18 +5,26 @@
 
     <!-- input area -->
     <div class="input-wrapper">
-      <label class="d-block">
+      <label style="display: flex">
         <input
           (focus)="showAutoSuggestionDropdown($event)"
           (focusout)="hideAutoSuggestionDropdown()"
           (keydown)="onKeyboardPress($event)"
           [attr.placeholder]="placeholder | translate"
           [formControl]="searchKeyword"
+          [ngStyle]="{'width': width}"
           [ngClass]="{'is-sm': isSmallInput}"
           autocomplete="off"
           class="form-input is-shadowed"
           name="suggestion"
           type="search">
+        <button *ngIf="(type === 'industry'|| type === 'valueChain') && inputNewValue"
+                style="margin-left: auto"
+                [disabled]="!this.inputNewValue"
+                class="button is-circled is-primary is-sm"
+                (click)="addNewValue()">
+          <i class="icon icon-plus"></i>
+        </button>
       </label>
     </div>
     <!-- /input area -->
@@ -30,13 +38,7 @@
         *ngFor="let suggestion of suggestionsSource; let i = index;"
         [ngClass]="{ 'active': i === currentFocus }"
         class="menu-item">
-        {{ type === 'industry' ? suggestion : suggestion[identifier] }}
-      </li>
-      <li *ngIf="type === 'industry'" class="add-industry">
-        <label>
-          <input>
-        </label>
-        <button>test</button>
+        {{ (type === 'industry' || type === 'valueChain') ? suggestion : suggestion[identifier] }}
       </li>
       <!-- /when suggestions -->
 
