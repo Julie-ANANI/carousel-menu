@@ -57,25 +57,21 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   @Input() set enterprise(value: Enterprise) {
     if (JSON.stringify(value) !== '{}') {
       this._enterprise = value;
-      this._isPatternConfig = false;
-      this._isIndustryConfig = false;
-      this._isGeoConfig = false;
-      this._isBrandConfig = false;
-      this._isSubConfig = false;
       this._form.get('name').setValue(this._enterprise.name);
       this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
       this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
       this._form.get('enterpriseType').setValue(this._enterprise.enterpriseType);
       this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
-      this._geoZoneInputList = this._enterprise.geographicalZone;
-      this._brandInputList = this._enterprise.brands;
-      this._industryInputList = this._enterprise.industries;
-      this._patternsInputList = this._enterprise.patterns;
-      this._newSubsidiary = this._enterprise.subsidiaries;
+      this._newIndustry = this._enterprise.industries;
     } else {
       this._enterprise = <Enterprise>{};
+      this._newGeoZone = [];
+      this._newPatterns = [];
+      this._newIndustry = [];
+      this._newSubsidiary = [];
+      this._newBrands = [];
     }
-
+    this.initLists();
     this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
   }
 
@@ -100,13 +96,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
-  private _isSubConfig = false;
-
   private _parentEnterprise: Enterprise = <Enterprise>{};
 
   private _patternsInputList: Array<any> = [];
-
-  private _industryInputList: Array<any> = [];
 
   private _brandInputList: Array<any> = [];
 
@@ -124,16 +116,19 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _newIndustry: Array<Industry> = [];
 
-  private _isBrandConfig = false;
-  private _isGeoConfig = false;
-  private _isIndustryConfig = false;
-  private _isPatternConfig = false;
   private _industrySelectConfig: AutoSuggestionConfig = {
     minChars: 3,
     placeholder: 'Enter the industry',
     type: 'industry',
     identifier: ''
   };
+
+  private initLists() {
+    this._geoZoneInputList = this._enterprise.geographicalZone;
+    this._brandInputList = this._enterprise.brands;
+    this._patternsInputList = this._enterprise.patterns;
+    this._subsidiaryInputList = this._enterprise.subsidiaries;
+  }
 
 
   get industrySelectConfig() {
@@ -342,22 +337,11 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
-  get industryInputList(): Array<any> {
-    return this._industryInputList;
-  }
-
-  set industryInputList(value: Array<any>) {
-    this._industryInputList = value;
-  }
-
   get patternConfig(): any {
-    if (JSON.stringify(this.enterprise) !== '{}' && !this._isPatternConfig) {
-      this._isPatternConfig = true;
       return {
         placeholder: 'Enter the enterprise pattern',
         initialData: this._patternsInputList
       };
-    }
   }
 
 
@@ -366,43 +350,24 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   get subConfig(): any {
-    if (JSON.stringify(this.enterprise) !== '{}' && !this._isSubConfig) {
-      this._isSubConfig = true;
       return {
         placeholder: 'Enter the enterprise subsidiary',
         initialData: this._subsidiaryInputList
       };
-    }
-  }
-
-  get industryConfig(): any {
-    if (JSON.stringify(this.enterprise) !== '{}' && !this._isIndustryConfig) {
-      this._isIndustryConfig = true;
-      return {
-        placeholder: 'Enter the enterprise industry',
-        initialData: this._industryInputList
-      };
-    }
   }
 
   get brandConfig(): any {
-    if (JSON.stringify(this.enterprise) !== '{}' && !this._isBrandConfig) {
-      this._isBrandConfig = true;
       return {
         placeholder: 'Enter the enterprise brand',
         initialData: this._brandInputList
       };
-    }
   }
 
   get geoConfig(): any {
-    if (JSON.stringify(this.enterprise) !== '{}' && !this._isGeoConfig) {
-      this._isGeoConfig = true;
       return {
         placeholder: 'Enter the geographical zone',
         initialData: this._geoZoneInputList
       };
-    }
   }
 
   get enterprise(): Enterprise {
@@ -451,10 +416,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   getIndustrySelected($event: any) {
-    if ($event && !this.industryInputList.toString().includes($event)) {
+    if ($event && !this.newIndustry.toString().includes($event)) {
       this.industryUpdate($event);
     }
-    console.log(this.newIndustry);
   }
 
   deleteItem(type: any, answer: any) {
