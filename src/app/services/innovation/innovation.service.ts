@@ -12,6 +12,7 @@ import {Config} from '../../models/config';
 import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
+import {Community} from '../../models/community';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -169,8 +170,8 @@ export class InnovationService {
     return this._http.post('/innovation/import/', formData);
   }
 
-  public publishToCommunity(innovationId: string, data: any): Observable<any> {
-    return this._http.post('/innovation/' + innovationId + '/communityPublish', data);
+  public publishToCommunity(innovationId: string, data: any): Observable<{community: Community, published: Date}> {
+    return this._http.post<{community: Community, published: Date}>('/innovation/' + innovationId + '/communityPublish', data);
   }
 
   public updateFollowUpEmails(innovationId: string): Observable<any> {

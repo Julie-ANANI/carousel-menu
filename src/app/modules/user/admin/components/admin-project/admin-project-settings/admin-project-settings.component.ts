@@ -29,6 +29,7 @@ import {domainRegEx, emailRegEx} from '../../../../../../utils/regex';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {picto, Picto} from '../../../../../../models/static-data/picto';
 import {StatsReferentsService} from '../../../../../../services/stats-referents/stats-referents.service';
+import {Community} from '../../../../../../models/community';
 
 interface UserSuggestion {
   name: string;
@@ -399,16 +400,18 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
       this._innovationService.publishToCommunity(this._innovation._id, value)
         .pipe(first())
-        .subscribe((published) => {
+        .subscribe((response) => {
           this._isPublishingCommunity = false;
           this._showModal = false;
 
-          if (published) {
-            this._innovation.published = published;
+          if (!!response) {
+            this._innovation.published = response.published;
+            this._innovation.community = response.community;
             this._innovationFrontService.setInnovation(this._innovation);
             this._translateNotificationsService.success('Success', 'The project has been published to the Community.');
           } else {
             this._innovation.published = null;
+            this._innovation.community = <Community>{};
           }
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('Publish Error...', ErrorFrontService.getErrorMessage(err.status));
