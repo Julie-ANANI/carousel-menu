@@ -5,7 +5,7 @@ import {Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {EnterpriseValueChains, IndustriesList} from '../../../models/static-data/industries';
+import {EnterpriseSizeList, EnterpriseValueChains, IndustriesList} from '../../../models/static-data/industries';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -81,6 +81,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   private _valueChainList: Array<any> = EnterpriseValueChains;
 
+  private _enterpriseSizeList: Array<any> = EnterpriseSizeList;
+
   private _itemSelected: any;
 
   private _isSearching = false;
@@ -101,6 +103,10 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
 
+  get enterpriseTypeList(): Array<any> {
+    return this._enterpriseSizeList;
+  }
+
   set inputNewValue(value: string) {
     this._inputNewValue = value;
   }
@@ -112,8 +118,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         if (input) {
           this._inputNewValue = input;
           this._isSearching = true;
-          if (this.type === 'industry' || this._type === 'valueChain') {
-            this._width = '80%';
+          if (this.type === 'industry' || this._type === 'valueChain'
+            || this._type === 'enterpriseSize') {
             this._loadListResults(input);
           } else {
             this._loadResult(input);
@@ -124,7 +130,7 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _loadListResults(value: string) {
+  _loadListResults(value: string) {
     if (value) {
       this._suggestionsSource = [];
       this._dropdownVisible = true;
@@ -152,10 +158,15 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   private _getSuggestionsList(keyword: string) {
     switch (this.type) {
       case 'industry':
+        this._width = '80%';
         this._getIndustries(keyword);
         break;
       case 'valueChain':
+        this._width = '80%';
         this._getValueChains(keyword);
+        break;
+      case 'enterpriseSize':
+        this._getEnterpriseSize(keyword);
         break;
     }
     this._loading = false;
@@ -174,6 +185,10 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         keyword.toLowerCase().includes(item.toLowerCase()));
   }
 
+  private _getEnterpriseSize(keyword: any) {
+    this._suggestionsSource = this._enterpriseSizeList;
+  }
+
   private _getSuggestions(searchKey: string) {
     this._autoCompleteService.get({query: searchKey, type: this._type})
       .pipe(takeUntil(this._ngUnsubscribe))
@@ -189,7 +204,13 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   public showAutoSuggestionDropdown(event: Event) {
     event.preventDefault();
     const value = ((event.target) as HTMLInputElement).value;
-    this._loadResult(value);
+    if (this._type === 'enterpriseSize') {
+      this._dropdownVisible = true;
+      this._isSearching = true;
+      this._getEnterpriseSize('');
+    } else {
+      this._loadResult(value);
+    }
   }
 
   public hideAutoSuggestionDropdown() {
@@ -227,21 +248,28 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
   public onValueSelect(value: any) {
-    if (this._type === 'valueChain' || this._type === 'industry') {
-      const valueToSend = {
-        type: this._type,
-        value: value
-      };
-      this._emitValue(valueToSend);
-      this._searchKeyword.setValue('');
-      this._industriesList = IndustriesList;
-      this._valueChainList = EnterpriseValueChains;
-      this._inputNewValue = '';
-      this._width = '100%';
-    } else {
-      this._itemSelected = value;
-      this._searchKeyword.setValue(value[this._identifier]);
-      this._emitValue(value);
+    switch (this._type) {
+      case 'valueChain':
+      case 'industry':
+        const valueToSend = {
+          type: this._type,
+          value: value
+        };
+        this._emitValue(valueToSend);
+        this._searchKeyword.setValue('');
+        this._industriesList = IndustriesList;
+        this._valueChainList = EnterpriseValueChains;
+        this._inputNewValue = '';
+        this._width = '100%';
+        break;
+      case 'enterpriseSize':
+        this._searchKeyword.setValue(value.label);
+        this._emitValue(value.value);
+        break;
+      default:
+        this._itemSelected = value;
+        this._searchKeyword.setValue(value[this._identifier]);
+        this._emitValue(value);
     }
     this.hideAutoSuggestionDropdown();
   }

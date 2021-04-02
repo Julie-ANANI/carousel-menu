@@ -127,14 +127,13 @@
 
     <!-- type -->
     <div class="form-group">
-      <label class="form-label" for="form-type">Type
-        <i class="far fa-plus-square"></i>
+      <label class="form-label">Type
       </label>
-      <select id="form-type" formControlName="enterpriseType" class="form-input is-shadowed">
-        <option *ngFor="let type of enterpriseTypeList" [value]="type">
-          {{type}}
-        </option>
-      </select>
+      <app-utility-auto-suggestion
+        [config]="industrySelectConfig"
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
+      </app-utility-auto-suggestion>
     </div>
     <!-- /type -->
 
@@ -178,16 +177,21 @@
 
     <!-- company size -->
     <div class="form-group">
-      <label class="form-label" for="form-enterpriseSize">Company size</label>
-      <select
-        class="form-input is-shadowed"
-        formControlName="enterpriseSize"
-        id="form-enterpriseSize">
-        <option disabled>Select a size</option>
-        <option *ngFor="let item of companySize"
-                [value]="item.value">{{item.label}}
-        </option>
-      </select>
+      <label class="form-label">Company size</label>
+<!--      <select-->
+<!--        class="form-input is-shadowed"-->
+<!--        formControlName="enterpriseSize"-->
+<!--        id="form-enterpriseSize">-->
+<!--        <option disabled>Select a size</option>-->
+<!--        <option *ngFor="let item of companySize"-->
+<!--                [value]="item.value">{{item.label}}-->
+<!--        </option>-->
+<!--      </select>-->
+      <app-utility-auto-suggestion
+        [config]="enterpriseSizeSelectConfig"
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
+      </app-utility-auto-suggestion>
     </div>
     <!-- /company size -->
 

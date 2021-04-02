@@ -77,3 +77,20 @@ export const EnterpriseValueChains = [
   'Designer', 'Équipementier', 'Manufacturier', 'Distributeur', 'Intégrateur'
   , 'Installateur', 'Réglementaire', 'Bureau d\'étude', 'Conseil'
 ];
+
+export const EnterpriseSizeList = [
+  {
+    label: 'TPE : 0-19 employés',
+    value: 'TPE'
+  },
+  {
+    label: 'PME : 20-249 employés',
+    value: 'PME'
+  }, {
+    label: 'ETI : 250-5000 employés',
+    value: 'ETI'
+  }, {
+    label: 'GE : >5000 employés',
+    value: 'GE'
+  }
+];

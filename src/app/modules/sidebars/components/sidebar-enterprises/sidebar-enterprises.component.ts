@@ -133,6 +133,14 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     identifier: ''
   };
 
+  private _enterpriseSizeSelectConfig: AutoSuggestionConfig = {
+    minChars: 0,
+    placeholder: 'Enter the enterprise size',
+    type: 'enterpriseSize',
+    identifier: 'label'
+  };
+
+
   private initLists() {
     this._geoZoneInputList = this._enterprise.geographicalZone;
     this._brandInputList = this._enterprise.brands;
@@ -145,6 +153,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._industrySelectConfig;
   }
 
+
+  get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
+    return this._enterpriseSizeSelectConfig;
+  }
 
   get valueChainSelectConfig(): AutoSuggestionConfig {
     return this._valueChainSelectConfig;
@@ -449,6 +461,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           if (!this._newValueChains.toString().includes($event)) {
             this.valueChainUpdate($event.value);
           }
+          break;
+        case 'enterpriseType':
+          this._form.get('enterpriseType').setValue($event);
           break;
       }
     }
