@@ -21,7 +21,7 @@ export interface Community {
   visibility: string;
 
   /**
-   * we do not storing this value in the back.
+   * we do not store this value in the back.
    * It's for the front only.
    */
   owner: string;
