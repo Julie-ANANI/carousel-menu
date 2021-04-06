@@ -48,6 +48,9 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       this._placeholder = config.placeholder || 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';
       this._type = config.type || 'users';
       this._identifier = config.identifier || 'name';
+      this._default = config.default || '';
+      console.log(this._default);
+      this.setDefaultValue();
     }
   }
 
@@ -60,6 +63,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   private _minChars = 3;
 
   private _inputNewValue = '';
+
+  private _default = '';
 
   private _placeholder = 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';
 
@@ -96,6 +101,10 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
 
+  get default(): string {
+    return this._default;
+  }
+
   get width(): any {
     return this._width;
   }
@@ -130,6 +139,25 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
           this.hideAutoSuggestionDropdown();
         }
       });
+  }
+
+  setDefaultValue() {
+    if (this._default !== '') {
+      switch (this._type) {
+        case 'enterpriseSize':
+          console.log(this._default,
+            this._enterpriseSizeList,
+            this._enterpriseSizeList.find(item => item.value === this._default)[0]);
+          this._searchKeyword.setValue(this._enterpriseSizeList.find(item => item.value === this._default)[0].label);
+          break;
+        case 'enterpriseType':
+          this._searchKeyword.setValue(this._default);
+          break;
+        default:
+          break;
+      }
+
+    }
   }
 
   _loadListResults(value: string) {
@@ -192,7 +220,12 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
   private _getEnterpriseSize() {
-    this._suggestionsSource = this._enterpriseSizeList;
+    const valueFound = this._enterpriseSizeList.find(item => item.label === this._searchKeyword.value);
+    if (valueFound === undefined) {
+      this._suggestionsSource = this._enterpriseSizeList;
+    } else {
+      this._suggestionsSource = [];
+    }
   }
 
   private _getEnterpriseType(keyword: string) {

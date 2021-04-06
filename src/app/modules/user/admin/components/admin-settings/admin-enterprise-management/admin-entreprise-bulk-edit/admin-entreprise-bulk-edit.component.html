@@ -1,55 +1,88 @@
 <div [hidden]="!canAccess()" class="container fluid grid-2xl p-top-30" id="admin-enterprise-bulk-edit-management">
   <div class="column col-sm-12 col-11 col-mx-auto">
-
     <!-- select column to edit -->
     <section class="main-form-wrapper">
-
-      <!-- selector column-->
-      <ng-container>
-        <div class="selector-wrapper">
-          <span
-            class="text-sm text-secondary-dark text-label text-normal">{{ 'COMMON.LABEL.SELECT_COLUMN_TO_EDIT' | translate }}
-            :</span>
-          <label>
-            <select class="form-select" [(ngModel)]="columnAttrsSelected" (ngModelChange)="getInputType()">
-              <option *ngFor="let column of companiesTable._columns.slice(2, companiesTable._columns.length)"
-                      [value]="column._attrs">
-                {{ column._name | translate | FormatText }}
-              </option>
-            </select>
-          </label>
-        </div>
-        <!-- /selector column -->
-
-        <!-- input value for the column - text type -->
-        <div class="input-text-wrapper" *ngIf="inputType === 'text'">
-            <span
-              class="text-sm text-secondary-dark text-label text-normal">
-            {{'COMMON.LABEL.INPUT_VALUE' | translate}}
-              :</span>
-
-          <label>
-            <input
-              class="form-input is-shadowed"
-              [(ngModel)]="inputValue"
-              id="input-form-inputValue"
-              placeholder="Start typing..."
-              type="text">
-          </label>
-
-          <!-- update button -->
-          <button class="form-button button is-primary is-outlined is-sm"
-                  (click)="update()" [hidden]="inputValue===''">
-            {{'COMMON.BUTTON.UPDATE' | translate }}
-          </button>
-          <!-- /update button -->
-        </div>
-        <!-- /input value for the column - text type  -->
-
-      </ng-container>
+      <div class="input-column">
+        <span class="text is-sm">Patterns</span>
+        <input class="form-input is-shadowed">
+      </div>
+      <div class="input-column">
+        <span class="text is-sm">Enterprise url</span>
+        <input class="form-input is-shadowed" [(ngModel)]="enterpriseUrlModel">
+      </div>
+      <div class="input-column">
+        <span class="text is-sm">Industry</span>
+        <app-utility-auto-suggestion
+          [config]="industrySelectConfig"
+          [isSmallInput]="true"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', industries)}">
+        </ng-container>
+      </div>
+      <div class="input-column">
+        <span class="text is-sm">Brand</span>
+        <app-utility-input-list
+          style="height: 40px"
+          (update)="brandUpdate($event)"
+          [isSmall]="true"
+          [config]="brandConfig"
+          [isEditable]="true">
+        </app-utility-input-list>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('brand', brands)}">
+        </ng-container>
+      </div>
+      <div class="input-column">
+        <span class="text is-sm">Enterprise Type</span>
+        <app-utility-auto-suggestion
+          [isSmallInput]="true"
+          [config]="enterpriseTypeSelectConfig"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', enterpriseTypes)}">
+        </ng-container>
+      </div>
+      <div class="input-column">
+        <span class="text is-sm">Geographical Zone</span>
+        <app-utility-input-list
+          style="height: 40px"
+          (update)="geoZoneUpdate($event)"
+          [config]="geoConfig"
+          [isSmall]="true"
+          [isEditable]="true">
+        </app-utility-input-list>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('geoZone', geoZones)}">
+        </ng-container>
+      </div>
+      <div class="input-column">
+        <span class="text is-sm">Enterprise size</span>
+        <app-utility-auto-suggestion
+          [isSmallInput]="true"
+          [config]="enterpriseSizeSelectConfig"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+      </div>
+      <div class="input-column">
+        <span class="text is-sm">Value chain</span>
+        <app-utility-auto-suggestion
+          [config]="valueChainSelectConfig"
+          [isSmallInput]="true"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', valueChains)}">
+        </ng-container>
+      </div>
     </section>
     <!-- /select column to edit -->
-
 
     <!-- companies selected table -->
     <section class="p-bottom-15 p-top-20">
@@ -64,13 +97,13 @@
     <!-- button -->
     <section class="p-bottom-30 p-top-4" style="display: flex">
       <button class="button is-primary is-lg is-outlined"
-      (click)="return()">
+              (click)="return()">
         Cancel
       </button>
 
       <button class="button is-primary is-lg"
               style="margin-left: auto"
-      (click)="updateChange()">
+              (click)="updateChange()">
         Update
       </button>
     </section>
@@ -80,43 +113,32 @@
   </div>
 </div>
 
-<app-utility-modal
-  [title]="'Update'"
-  [footer]="true"
-  [(showModal)]="isShowModal"
-  (showModalChange)="clearForm($event)"
-  [maxWidth]="'380px'">
-  <section class="modal-body">
+<ng-template #answerArea let-context>
+  <ul class="answers-wrapper">
+    <li *ngFor="let answer of context.answerList; let i = index">
 
-    <!-- input form -->
-    <form novalidate [formGroup]="form"
-          *ngIf="inputType === 'objectArray'"
-          class="form-wrapper">
-      <div class="input-wrapper">
-        <div class="form-group">
-          <label class="form-label" for="form-object-array"
-                 *ngIf="columnAttrsSelected!=='geographicalZone'">{{columnAttrsSelected | translate | FormatText }}</label>
-          <label class="form-label" for="form-object-array"
-                 *ngIf="columnAttrsSelected==='geographicalZone'">{{'COMMON.LABEL.COUNTRY'| translate | FormatText }}</label>
-          <app-utility-input-list
-            [isSmall]="true"
-            (update)="objectListUpdate($event)"
-            [config]="objectConfig"
-            [isEditable]="isEditable">
-          </app-utility-input-list>
-          <input class="form-input" formControlName="formObjectArray" type="hidden" id="form-object-array">
-        </div>
+      <!-- text -->
+      <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+        <span
+          *ngIf="context.type !== 'valueChain' && context.type !== 'enterpriseType'">{{answer.text || answer.name || answer.label || answer.expression }}</span>
+        <span *ngIf="context.type === 'valueChain' || context.type === 'enterpriseType'">{{answer}}</span>
       </div>
-    </form>
-    <!-- /input form -->
+      <!-- /text -->
+      <!-- icons -->
+      <div class="icons-wrapper">
+        <!-- delete icon -->
+        <div
+          (click)="deleteItem(context.type, answer)"
+          class="icon-container m-no-right is-overlay">
+            <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
+              <i class="icon icon-delete text-alert"></i>
+            </span>
+        </div>
+        <!-- /delete icon -->
 
-    <!-- update button -->
-    <button class="form-button button is-primary is-outlined is-sm"
-            style="position: absolute; right: 10px; bottom: 5px"
-            (click)="update()" [hidden]="this.newObjectList.length===0">
-      {{'COMMON.BUTTON.UPDATE' | translate }}
-    </button>
-    <!-- /update button -->
+      </div>
+      <!-- /icons -->
 
-  </section>
-</app-utility-modal>
+    </li>
+  </ul>
+</ng-template>

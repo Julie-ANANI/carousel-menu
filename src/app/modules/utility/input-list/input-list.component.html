@@ -4,7 +4,7 @@
     <!-- input area -->
     <div *ngIf="isAddable" class="input-wrapper">
 
-      <label class="m-right-2" *ngIf="!isSelectCompany && !isAddIndustry">
+      <label class="m-right-2">
         <input
           [(ngModel)]="answer"
           [attr.placeholder]="placeholder | translate"
@@ -17,51 +17,16 @@
           type="text">
       </label>
 
-      <label style="width: 100%" *ngIf="isSelectCompany">
-        <input
-          (valueChanged)="selectEnterprise($event)"
-          [list-formatter]="autocompleteEnterpriseListFormatter"
-          [min-chars]="2"
-          [(ngModel)]="answer"
-          [source]="enterpriseSuggestions"
-          auto-complete
-          class="form-input is-shadowed"
-          placeholder="Enter the enterprise"
-          type="text">
-      </label>
-
-      <label  style="width: 100%" *ngIf="isAddIndustry">
-        <select
-          class="form-input is-shadowed"
-          (mousedown)="setHeight()"
-          (blur)="initHeight()"
-          [(ngModel)]="answer"
-          [size]="size"
-          (change)="initSelectHeight($event)">
-          <option selected style="display: none"></option>
-          <ng-container *ngFor="let industry of industriesSelect">
-            <optgroup [label]="industry.menuTitle"></optgroup>
-            <ng-container *ngFor="let item of industry['items']">
-              <option [value]="item">{{item}}
-              </option>
-            </ng-container>
-          </ng-container>
-        </select>
-      </label>
-
-
       <button
         [disabled]="f.form.invalid || !isEditable"
         [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
         class="button is-circled is-primary"
-        *ngIf="!isSelectCompany && !isAddIndustry"
         type="submit">
         <i class="icon icon-plus"></i>
       </button>
 
     </div>
     <!-- /input area -->
-
     <!-- answers area -->
     <ul class="answers-wrapper">
       <li *ngFor="let answer of answerList; let i = index">

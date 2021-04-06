@@ -3,4 +3,5 @@ export interface AutoSuggestionConfig {
   placeholder?: string;
   type?: string;
   identifier?: string;
+  default?: string;
 }

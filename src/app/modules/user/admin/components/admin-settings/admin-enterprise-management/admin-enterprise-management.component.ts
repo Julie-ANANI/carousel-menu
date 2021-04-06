@@ -8,7 +8,7 @@ import {/*Observable,*/ combineLatest} from 'rxjs';
 // import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 /*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
 import {Table} from '../../../../../table/models/table';
-import {filter, first} from 'rxjs/operators';
+import {first} from 'rxjs/operators';
 import {Config} from '../../../../../../models/config';
 import {isPlatformBrowser} from '@angular/common';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
@@ -17,7 +17,7 @@ import {TranslateNotificationsService} from '../../../../../../services/notifica
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {ShieldService} from '../../../../../../services/shield/shield.service';
 import {NotificationsService} from 'angular2-notifications';
-import {NavigationEnd, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {LocalStorageService} from '../../../../../../services/localStorage/localStorage.service';
 
 @Component({
@@ -72,9 +72,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private _isSaving = false;
 
   private _shieldSortedList: Array<any> = [];
-
-  private _preUrl = '';
-  private _curUrl = '';
 
   get shieldSortedList(): Array<any> {
     return this._shieldSortedList;
@@ -226,6 +223,16 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               (err: HttpErrorResponse) => {
                 console.log(err);
               });
+          }
+          if (item['subsidiaries'].length > 0) {
+            item['subsidiaries'].map((idSub: any) => {
+              this._enterpriseService.get(idSub, null).pipe(first()).subscribe((sub) => {
+                  item['subsidiariesName'].push({id: idSub, name: sub['name']});
+                },
+                (err: HttpErrorResponse) => {
+                  console.log(err);
+                });
+            });
           }
         });
       } else {

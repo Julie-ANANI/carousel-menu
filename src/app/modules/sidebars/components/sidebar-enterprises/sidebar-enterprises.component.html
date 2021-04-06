@@ -86,13 +86,20 @@
     <!-- subsidiaries -->
     <div class="form-group">
       <label class="form-label" for="form-subsidiaries">Subsidiaries</label>
-      <app-utility-input-list
-        (update)="subsidiaryUpdate($event)"
-        [config]="subConfig"
-        [isSelectCompany]="true"
-        [isEditable]="isEditable">
-      </app-utility-input-list>
-      <input class="form-input" formControlName="subsidiaries" type="hidden" id="form-subsidiaries">
+      <input
+        (valueChanged)="selectEnterprise('subsidiary', $event)"
+        [list-formatter]="autocompleteEnterpriseListFormatter"
+        [min-chars]="2"
+        [source]="enterpriseSuggestions"
+        auto-complete
+        class="form-input is-shadowed"
+        formControlName="subsidiaries"
+        id="form-subsidiaries"
+        placeholder="Enter the subsidiaries"
+        type="text">
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('subsidiaries', newSubsidiary)}">
+      </ng-container>
     </div>
     <!-- /subsidiaries -->
 
@@ -100,7 +107,7 @@
     <div class="form-group">
       <label class="form-label" for="form-parent">Parent Enterprise</label>
       <input
-        (valueChanged)="selectEnterprise($event)"
+        (valueChanged)="selectEnterprise('parent',$event)"
         [list-formatter]="autocompleteEnterpriseListFormatter"
         [min-chars]="2"
         [source]="enterpriseSuggestions"
@@ -226,12 +233,12 @@
       <!-- text -->
       <div class="answer-wrapper text-sm text-primary-dark m-right-2">
         <span
-          *ngIf="context.type === 'industry'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
+          *ngIf="context.type === 'industry' || context.type === 'subsidiaries'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
         <span *ngIf="context.type === 'valueChain' || context.type === 'enterpriseType'">{{answer}}</span>
       </div>
       <!-- /text -->
       <!-- icons -->
-      <div class="icons-wrapper" *ngIf="context.type !== 'enterpriseType'">
+      <div class="icons-wrapper">
         <!-- delete icon -->
         <div
           *ngIf="isEditable"

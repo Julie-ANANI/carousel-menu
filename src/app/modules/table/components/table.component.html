@@ -429,7 +429,8 @@
                 <!-- type LABEL-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
 
-                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'label')">
+                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'label')"
+                       [ngStyle]="{'color': column._color}">
                     {{getStringForColumn(row, column, 'label')| titlecase }}
                   </div>
 
@@ -449,7 +450,9 @@
                 <!-- type PATTERNS-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'PATTERNS-OBJECT-LIST'">
 
-                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'expression')">
+                  <div class="text-ellipsis"
+                       [ngStyle]="{'color': column._color}"
+                       [title]="getStringForColumn(row, column, 'expression')">
                     {{getStringForColumn(row, column, 'expression').toString() | titlecase }}
                   </div>
 
@@ -469,7 +472,9 @@
 
                 <!-- type GEO-ZONE-LIST -->
                 <ng-container *ngSwitchCase="'GEO-ZONE-LIST'">
-                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'name')">
+                  <div class="text-ellipsis"
+                       [ngStyle]="{'color': column._color}"
+                       [title]="getStringForColumn(row, column, 'name')">
                     {{getStringForColumn(row, column, 'name').toString() | titlecase }}
                   </div>
 
@@ -657,13 +662,13 @@
                   <span class="fill-replace-icon"
                         *ngIf="context.column._isReplaceable"
                         (click)="exchangeValue(context)">
-                      <i class="fas fa-exchange-alt" [ngStyle]="{'color': context.column._color}"></i>
+                      <i class="fas fa-exchange-alt" style="color: #00B0FF"></i>
                     </span>
                 </ng-template>
 
                 <ng-template #undoTemplate let-context>
                   <span *ngIf="context.column._isFilled" class="fill-replace-icon" (click)="undoFilled(context)">
-                    <i class="fas fa-redo" [ngStyle]="{'color': context.column._color}"></i>
+                    <i class="fas fa-redo" style="color: #EA5858"></i>
                   </span>
                 </ng-template>
               </div>

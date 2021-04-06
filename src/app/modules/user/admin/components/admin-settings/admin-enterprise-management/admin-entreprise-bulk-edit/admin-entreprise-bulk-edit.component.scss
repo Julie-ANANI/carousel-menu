@@ -3,9 +3,67 @@
 
 .main-form-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: 60px;
+  justify-content: space-between;
+  align-items: center;
+
+  .input-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 200px;
+    overflow-y: auto;
+    min-height: 200px;
+
+    input{
+      max-width: 180px;
+      height: 40px;
+    }
+  }
+}
+
+.answers-wrapper {
+  list-style: none;
+  max-height: 200px;
+  max-width: 150px;
+  overflow-y: scroll;
+  overflow-x: auto;
+
+  li {
+    @include control-transition();
+    @include flex-between();
+    margin-top: 4px;
+    border-radius: $border-radius;
+    background-color: #F8F4F4;
+    padding: 1px 1px 1px 1px;
+    font-weight: $font-weight-medium;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    .answer-wrapper, .icons-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .answer-wrapper {
+      width: 100%;
+
+      label {
+        width: 90%;
+      }
+
+    }
+
+    .icons-wrapper {
+
+      .icon-container {
+        margin-right: $unit-1;
+      }
+
+    }
+  }
+
 }
 
 .modal-body {
@@ -34,7 +92,7 @@
     padding-bottom: 6px;
     padding-left: 6px;
     margin-left: 10px;
-    height: 40px;
+    height: 39px;
   }
 
   .form-input {

@@ -6,7 +6,6 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {Enterprise} from '../../../models/enterprise';
-import {Industries} from '../../../models/static-data/industries';
 
 interface InputListConfig {
   placeholder: string;
@@ -36,21 +35,11 @@ export class InputListComponent {
 
   @Input() isDomain = false; // true: if the answerList is of domain. ex: app-sidebar-blacklist component
 
-  @Input() isAddIndustry = false;
+  private _answer = '';
 
-  private _size = 0;
+  private _answerList: Array<any> = [];
 
-
-  get size(): number {
-    return this._size;
-  }
-
-  private _industriesSelect: Array<any> = Industries;
-
-
-  get industriesSelect(): Array<any> {
-    return this._industriesSelect;
-  }
+  private _placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
   @Input() set config(config: InputListConfig) {
     if (config) {
@@ -63,12 +52,6 @@ export class InputListComponent {
   @Output() remove: EventEmitter<any> = new EventEmitter<any>(); // sends the to-remove item.
   @Output() edit: EventEmitter<any> = new EventEmitter<any>(); // sends the edited item.
   @Output() clickItem: EventEmitter<any> = new EventEmitter<any>(); // sends the clicked item.
-
-  private _answer = '';
-
-  private _answerList: Array<any> = [];
-
-  private _placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
   private _enableUpdate = false;
 
@@ -244,26 +227,5 @@ export class InputListComponent {
       this.update.emit({value: this._answerList});
     }
     this._answer = this._answer ? this._answer : '';
-  }
-
-
-  setHeight() {
-    this._size = 7;
-  }
-
-  initSelectHeight($event: any) {
-    this._size = 0;
-    if ($event) {
-      const item = this._answerList.length !== 0 ? this._answerList.find(data => data['text'] === $event.target.value) : 'empty';
-      if (item === undefined || item === 'empty') {
-        this._answerList.push({text: $event.target.value});
-        this.update.emit({value: this._answerList});
-        $event.target.value = '';
-      }
-    }
-  }
-
-  initHeight() {
-    this._size = 0;
   }
 }

@@ -35,7 +35,9 @@ export interface Enterprise {
   enterpriseURL?: string;
   logo?: LogoMedia;
   subsidiaries?: Array<string>;
+  subsidiariesName?: Array<any>;
   parentEnterprise?: string;
+  parentEnterpriseName?: string;
   patterns?: Array<Pattern>;
   enterpriseType?: string;
   industries?: Array<Industry>;
