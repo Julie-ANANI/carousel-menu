@@ -31,7 +31,7 @@ export interface Community {
    * the File before uploading to the cloudinary to the back.
    * Admin project settings modal.
    */
-  medias: Array<any>;
+  media: Array<any>;
 
   /**
    * in the community they represents the domains.
