@@ -61,6 +61,11 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
+
+  get companiesOriginalTable(): Table {
+    return this._companiesOriginalTable;
+  }
+
   private _success = 0;
   private _failed = 0;
   private _inputType = '';
@@ -343,16 +348,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     if ($event) {
       const rowIndex = $event.row;
       const column = $event.column;
-      const tempValue = this.companiesTable._content[rowIndex][column._attrs.toString()];
-      this.companiesTable._content[rowIndex][column._attrs.toString()]
-        = this._companiesTableToSwap._content[rowIndex][column._attrs.toString()];
-      this._companiesTableToSwap._content[rowIndex][column._attrs.toString()] = tempValue;
-      if (!column._isOldValue) {
-        column._color = '';
-      } else {
-        column._color = '#EA5858';
-      }
-      column._isOldValue = !column._isOldValue;
+      const tempValue = this.companiesTable._content[rowIndex][column._attrs[0]];
+      this.companiesTable._content[rowIndex][column._attrs[0]]
+        = this._companiesTableToSwap._content[rowIndex][column._attrs[0]];
+      this._companiesTableToSwap._content[rowIndex][column._attrs[0]] = tempValue;
     }
   }
 

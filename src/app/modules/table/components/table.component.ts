@@ -12,6 +12,8 @@ import {ConfigService} from '../../../services/config/config.service';
 
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
+import * as lodash from 'lodash';
+
 
 @Component({
   selector: 'app-shared-table',
@@ -29,6 +31,8 @@ export class TableComponent {
   @Input() set config(value: Config) {
     this._config = value;
   }
+
+  private _originalTable: Table = <Table>{};
 
   /***
    * Input use to set the data
@@ -123,6 +127,8 @@ export class TableComponent {
 
   private _stringInComplexeColumn: string = '';
 
+  private _isOrginal = false;
+
   constructor(private _translateService: TranslateService,
               private _configService: ConfigService,
               private _localStorageService: LocalStorageService) {
@@ -157,6 +163,12 @@ export class TableComponent {
 
       if (this._table._isLocal) {
         this._setFilteredContent();
+      }
+
+      if (!this._isOrginal) {
+        this._originalTable = JSON.parse(JSON.stringify(this._table));
+        this._isOrginal = true;
+        console.log(44444);
       }
 
       this._initializeColumns();
@@ -955,5 +967,19 @@ export class TableComponent {
       }
     });
     return this._stringInComplexeColumn;
+  }
+
+  public getTextColor(index: any, column: Column) {
+    if (column.hasOwnProperty('_isFilled') || column.hasOwnProperty('_isReplaceable')) {
+      if (column['_isFilled'] === true || column._isReplaceable === true) {
+        if (lodash.isEqual(this._table._content[index][column._attrs[0]], this._originalTable._content[index][column._attrs[0]])) {
+          return null;
+        } else {
+          return {
+            color: column._color
+          };
+        }
+      }
+    }
   }
 }

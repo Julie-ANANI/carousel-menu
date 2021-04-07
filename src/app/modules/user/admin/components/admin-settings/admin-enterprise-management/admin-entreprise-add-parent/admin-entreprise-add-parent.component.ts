@@ -257,12 +257,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       this.companiesTable._content[rowIndex][column._attrs.toString()]
         = this._companiesOriginalTable._content[rowIndex][column._attrs.toString()];
       this._companiesOriginalTable._content[rowIndex][column._attrs.toString()] = temp;
-      if (!column._isOldValue) {
-        column._color = '';
-      } else {
-        column._color = '#00B0FF';
-      }
-      column._isOldValue = !column._isOldValue;
     }
   }
 
