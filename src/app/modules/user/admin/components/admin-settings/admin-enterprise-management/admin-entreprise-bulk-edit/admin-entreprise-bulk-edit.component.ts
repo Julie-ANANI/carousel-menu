@@ -37,14 +37,14 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   private _enterpriseSizeSelectConfig: AutoSuggestionConfig = {
     minChars: 0,
-    placeholder: 'Enter the enterprise size',
+    placeholder: 'Enter the size',
     type: 'enterpriseSize',
     identifier: 'label',
   };
 
   private _enterpriseTypeSelectConfig: AutoSuggestionConfig = {
     minChars: 0,
-    placeholder: 'Enter the enterprise type',
+    placeholder: 'Enter the type',
     type: 'enterpriseType',
     identifier: '',
   };
@@ -461,21 +461,21 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   get patternConfig(): any {
     return {
-      placeholder: 'Enter the enterprise pattern',
+      placeholder: 'Enter the pattern',
       initialData: []
     };
   }
 
   get brandConfig(): any {
     return {
-      placeholder: 'Enter the enterprise brand',
+      placeholder: 'Enter the brand',
       initialData: []
     };
   }
 
   get geoConfig(): any {
     return {
-      placeholder: 'Enter the geographical zone',
+      placeholder: '',
       initialData: []
     };
   }
@@ -521,6 +521,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         this._geoZones = this._geoZones.filter(item => item.name !== answer.name);
         this.removeEnterpriseValue('geographicalZone', this._geoZones, 'Geographical Zone');
         break;
+      case 'patterns':
+        this._patterns = this._patterns.filter(item => item.expression !== answer.expression);
+        this.removeEnterpriseValue('patterns', this._patterns, 'Patterns');
+        break;
     }
   }
 
@@ -532,6 +536,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._brands = [];
     this._geoZones = [];
     this._valueChains = [];
+    this._patterns = [];
   }
 
   updateUrl() {
@@ -544,5 +549,14 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   cancel() {
     this._companiesTable = this._companiesOriginalTable;
+  }
+
+  patternsUpdate($event: any) {
+    $event.value.map((text: any) => {
+      if (this._patterns.length === 0 || this._patterns.find(item => item.name === text.text) === undefined) {
+        this._patterns.push({expression: text.text, avgScore: 0});
+        this.updateEnterpriseValues('patterns', this._patterns, 'Patterns');
+      }
+    });
   }
 }

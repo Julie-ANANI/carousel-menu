@@ -3,8 +3,19 @@
     <!-- select column to edit -->
     <section class="main-form-wrapper p-top-15">
       <div class="input-column">
-        <span class="text is-sm">Patterns</span>
-        <input class="form-input is-shadowed">
+        <span class="text is-sm">Patterns
+        <i class="fas fa-info-circle is-primary" id="syntax-hover"
+           [title]="'first_name, last_name, first_initial, last_initial'"></i>
+        </span>
+        <app-utility-input-list
+          (update)="patternsUpdate($event)"
+          [config]="patternConfig"
+          [isSmall]="true"
+          [isEditable]="true">
+        </app-utility-input-list>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('patterns', patterns)}">
+        </ng-container>
       </div>
       <div class="input-column">
         <span class="text is-sm">Enterprise url</span>

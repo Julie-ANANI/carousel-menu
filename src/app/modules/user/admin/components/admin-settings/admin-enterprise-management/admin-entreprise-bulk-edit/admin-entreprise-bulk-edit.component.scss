@@ -1,6 +1,19 @@
 @import "../../../../../../../../style/framework/src/variables";
 @import "../../../../../../../../style/framework/src/mixins";
 
+.syntax-info{
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  z-index: 1;
+}
+
+#syntax-hover:hover, .syntax-info{
+  visibility: visible;
+}
+
 .main-form-wrapper {
   display: flex;
   justify-content: space-between;
