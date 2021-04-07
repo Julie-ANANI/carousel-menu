@@ -303,4 +303,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   returnTo() {
     this._router.navigate(['/user/admin/settings/enterprises']);
   }
+
+  cancel() {
+    this._companiesTable = this._companiesOriginalTable;
+  }
 }

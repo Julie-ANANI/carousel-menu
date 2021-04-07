@@ -364,7 +364,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   return() {
-    // this._router.navigate(['/user/admin/settings/enterprises']);
+    this._router.navigate(['/user/admin/settings/enterprises']);
   }
 
   getValueSelected($event: any) {
