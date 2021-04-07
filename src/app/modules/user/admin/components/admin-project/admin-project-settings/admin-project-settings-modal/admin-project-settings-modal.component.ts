@@ -132,7 +132,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
         if (this._innovCard.media[i] && this._innovCard.media[i].type === 'PHOTO') {
           this._allMedias[i] = {
             url: this._innovCard.media[i].url,
-            actualContent: this._innovCard.media[i].url,
+            actualContent: this._innovCard.media[i],
             type: this._innovCard.media[i].type
           };
         }
@@ -145,12 +145,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
       this._community.medias = [];
     }
 
-    this._community.medias = this._allMedias.filter((value) => !!value.url).map((value) => {
-      if (value.type === 'FILE') {
-        return value.actualContent;
-      }
-      return value.url;
-    });
+    this._community.medias = this._allMedias.filter((value) => !!value.url).map((value) => value.actualContent);
   }
 
   public onChangePubType(value: PublicationType) {
