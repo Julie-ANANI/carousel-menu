@@ -127,7 +127,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   }
 
   private _initDefaultMedias() {
-    if (!this._community.medias) {
+    if (!this._community.media) {
       for (let i = 0; i < this._totalMedias; i++) {
         if (this._innovCard.media[i] && this._innovCard.media[i].type === 'PHOTO') {
           this._allMedias[i] = {
@@ -141,11 +141,11 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   }
 
   private _setCommunityMedias() {
-    if (!this._community.medias) {
-      this._community.medias = [];
+    if (!this._community.media) {
+      this._community.media = [];
     }
 
-    this._community.medias = this._allMedias.filter((value) => !!value.url).map((value) => value.actualContent);
+    this._community.media = this._allMedias.filter((value) => !!value.url).map((value) => value.actualContent);
   }
 
   public onChangePubType(value: PublicationType) {
@@ -228,17 +228,17 @@ export class AdminProjectSettingsModalComponent implements OnInit {
    */
   public publishCommunity(event: Event) {
     event.preventDefault();
-    const mediaFiles = this._community.medias.filter((value) => value instanceof File).length;
+    const mediaFiles = this._community.media.filter((value) => value instanceof File).length;
 
     if (mediaFiles) {
       const communityData = new FormData();
 
-      for (let i = 0; i < this._community.medias.length; i++) {
-        const value = this._community.medias[i];
+      for (let i = 0; i < this._community.media.length; i++) {
+        const value = this._community.media[i];
         if (value && value instanceof File) {
           communityData.append('medias', value, value.name);
-          if (this._community.medias && this._community.medias.length > i) {
-            delete this._community.medias[i];
+          if (this._community.media && this._community.media.length > i) {
+            delete this._community.media[i];
           }
         }
       }
@@ -270,7 +270,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   get canBePublished(): boolean {
 
     if (!(this._community.sectors && this._community.sectors.length) || !(this._community.visibility)
-      || !(this._community.owner) || !(this._community.medias && this._community.medias.length)) {
+      || !(this._community.owner) || !(this._community.media && this._community.media.length)) {
       return false;
     }
 
