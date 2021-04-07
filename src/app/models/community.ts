@@ -27,7 +27,7 @@ export interface Community {
   owner: string;
 
   /**
-   * it will always store the media url type string but as we send
+   * it will always store the media reference but as we send
    * the File before uploading to the cloudinary to the back.
    * Admin project settings modal.
    */
