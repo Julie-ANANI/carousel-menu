@@ -78,6 +78,10 @@ export const EnterpriseValueChains = [
   , 'Installateur', 'Réglementaire', 'Bureau d\'étude', 'Conseil'
 ];
 
+export const EnterprisePatterns = [{
+
+}];
+
 export const EnterpriseSizeList = [
   {
     label: 'TPE : 0-19 employés',

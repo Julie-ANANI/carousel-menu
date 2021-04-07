@@ -5,7 +5,7 @@ import {Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, IndustriesList} from '../../../models/static-data/industries';
+import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, IndustriesList} from '../../../models/static-data/enterprise';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select

@@ -5,6 +5,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  flex-grow: 1;
+  overflow-x: scroll;
+  transform: rotateX(180deg);
+  padding-bottom: 25px;
 
   .input-column {
     display: flex;
@@ -13,8 +18,11 @@
     max-height: 200px;
     overflow-y: auto;
     min-height: 200px;
+    min-width: 250px;
+    flex: 1;
+    transform: rotateX(180deg);
 
-    input{
+    input {
       max-width: 180px;
       height: 40px;
     }
@@ -24,7 +32,7 @@
 .answers-wrapper {
   list-style: none;
   max-height: 200px;
-  max-width: 150px;
+  min-width: 220px;
   overflow-y: scroll;
   overflow-x: auto;
 

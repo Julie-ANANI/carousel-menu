@@ -52,6 +52,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _companiesToEdit: Array<any> = [];
   private _companiesTable: Table = <Table>{};
   private _companiesOriginalTable: Table = <Table>{};
+  private _companiesTableToSwap: Table = <Table>{};
   private _config: Config = {
     fields: '',
     limit: '10',
@@ -75,7 +76,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _geoZones: Array<any> = [];
   private _valueChains: Array<any> = [];
   private _enterpriseTypes: Array<any> = [];
-  private _isOldValue = false;
 
   get enterpriseTypes(): Array<any> {
     return this._enterpriseTypes;
@@ -281,6 +281,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       ]
     };
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
+    this._companiesTableToSwap = JSON.parse(JSON.stringify(this._companiesTable));
   }
 
   ngOnInit(): void {
@@ -344,14 +345,14 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       const column = $event.column;
       const tempValue = this.companiesTable._content[rowIndex][column._attrs.toString()];
       this.companiesTable._content[rowIndex][column._attrs.toString()]
-        = this._companiesOriginalTable._content[rowIndex][column._attrs.toString()];
-      this._companiesOriginalTable._content[rowIndex][column._attrs.toString()] = tempValue;
-      if (!this._isOldValue) {
+        = this._companiesTableToSwap._content[rowIndex][column._attrs.toString()];
+      this._companiesTableToSwap._content[rowIndex][column._attrs.toString()] = tempValue;
+      if (!column._isOldValue) {
         column._color = '';
       } else {
         column._color = '#EA5858';
       }
-      this._isOldValue = !this._isOldValue;
+      column._isOldValue = !column._isOldValue;
     }
   }
 
@@ -364,7 +365,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   return() {
-    this._router.navigate(['/user/admin/settings/enterprises']);
+    // this._router.navigate(['/user/admin/settings/enterprises']);
   }
 
   getValueSelected($event: any) {
@@ -384,10 +385,11 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           break;
         case 'enterpriseSize':
           this._enterpriseSizeModel = $event.value;
-          this.updateEnterpriseValues('enterpriseSize', this._enterpriseSizeModel, 'Enterprise Size');
+          this.updateEnterpriseValues('enterpriseSize', this._enterpriseSizeModel, 'Enterprise size');
           break;
         case 'enterpriseType':
           this._enterpriseTypeModel = $event.value;
+          console.log($event.value);
           this._enterpriseTypes[0] = $event.value;
           this.updateEnterpriseValues('enterpriseType', this._enterpriseTypeModel, 'Type');
           break;
@@ -406,11 +408,17 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   removeEnterpriseValue(attr: string, value: any, name: string) {
-    this._companiesTable._content.map(item => {
-      item[attr] = value;
-    });
-    const columnToUpdate = this._companiesTable._columns.find(c => c._name === name);
-    this.removeStyleToColumn(columnToUpdate);
+    if (typeof value === 'object' && value.length === 0) {
+      for (let i = 0; i < this._companiesTable._content.length - 1; i++) {
+        this._companiesTable._content[i][attr] = this._companiesOriginalTable._content[i][attr];
+      }
+      const columnToUpdate = this._companiesTable._columns.find(c => c._name === name);
+      this.removeStyleToColumn(columnToUpdate);
+    } else {
+      this._companiesTable._content.map(item => {
+        item[attr] = value;
+      });
+    }
   }
 
   removeStyleToColumn(c: Column) {
@@ -524,6 +532,17 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._brands = [];
     this._geoZones = [];
     this._valueChains = [];
-    this._isOldValue = false;
+  }
+
+  updateUrl() {
+    if (this._enterpriseUrlModel !== '') {
+      this.updateEnterpriseValues('enterpriseURL', this._enterpriseUrlModel, 'Enterprise Url');
+    } else {
+      this.removeEnterpriseValue('enterpriseURL', this._enterpriseUrlModel, 'Enterprise Url');
+    }
+  }
+
+  cancel() {
+    this._companiesTable = this._companiesOriginalTable;
   }
 }

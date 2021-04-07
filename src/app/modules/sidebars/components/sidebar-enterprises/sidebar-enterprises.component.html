@@ -122,13 +122,22 @@
 
     <!-- patterns -->
     <div class="form-group">
-      <label class="form-label" for="form-patterns">Patterns</label>
+      <label class="form-label" style="display: flex; align-items: center">Patterns
+        <i class="icon icon-arrow-down is-md is-primary"
+          style="margin-left: auto; cursor: pointer"
+          (click)="changeShowSyntax()">
+        </i>
+      </label>
+      <p class="syntax-info" *ngIf="isShowSyntax">
+        <span class="text-xs is-info">Keywords : first_name, last_name, first_initial, last_initial</span>
+        <span class="text-xs is-info">Separators : . or -</span>
+        <span class="text-xs is-info">Example :  first_initial - last_name</span>
+      </p>
       <app-utility-input-list
         (update)="patternsUpdate($event)"
         [config]="patternConfig"
         [isEditable]="isEditable">
       </app-utility-input-list>
-      <input class="form-input" formControlName="patterns" type="hidden" id="form-patterns">
     </div>
     <!-- /patterns -->
 
@@ -233,7 +242,7 @@
       <!-- text -->
       <div class="answer-wrapper text-sm text-primary-dark m-right-2">
         <span
-          *ngIf="context.type === 'industry' || context.type === 'subsidiaries'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
+          *ngIf="context.type !== 'valueChain' && context.type !== 'enterpriseType'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
         <span *ngIf="context.type === 'valueChain' || context.type === 'enterpriseType'">{{answer}}</span>
       </div>
       <!-- /text -->

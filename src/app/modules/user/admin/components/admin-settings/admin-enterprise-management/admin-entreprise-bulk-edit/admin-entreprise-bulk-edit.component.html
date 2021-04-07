@@ -1,14 +1,14 @@
 <div [hidden]="!canAccess()" class="container fluid grid-2xl p-top-30" id="admin-enterprise-bulk-edit-management">
   <div class="column col-sm-12 col-11 col-mx-auto">
     <!-- select column to edit -->
-    <section class="main-form-wrapper">
+    <section class="main-form-wrapper p-top-15">
       <div class="input-column">
         <span class="text is-sm">Patterns</span>
         <input class="form-input is-shadowed">
       </div>
       <div class="input-column">
         <span class="text is-sm">Enterprise url</span>
-        <input class="form-input is-shadowed" [(ngModel)]="enterpriseUrlModel">
+        <input class="form-input is-shadowed" [(ngModel)]="enterpriseUrlModel" (keyup.enter)="updateUrl()">
       </div>
       <div class="input-column">
         <span class="text is-sm">Industry</span>
@@ -97,7 +97,7 @@
     <!-- button -->
     <section class="p-bottom-30 p-top-4" style="display: flex">
       <button class="button is-primary is-lg is-outlined"
-              (click)="return()">
+              (click)="cancel()">
         Cancel
       </button>
 

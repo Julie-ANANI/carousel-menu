@@ -8,6 +8,7 @@ export interface Column {
   _searchTooltip?: string;
   _isReplaceable?: boolean;
   _isFilled?: boolean;
+  _isOldValue?: boolean;
   _color?: string;
   readonly _attrs: string[];
   readonly _type: types;

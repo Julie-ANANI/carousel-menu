@@ -44,7 +44,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     showDomain: true
   };
 
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
               private _notificationService: NotificationsService,
@@ -108,11 +107,25 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'patterns'])
         },
         {
+          _attrs: ['emailSettings.goodEmails'],
+          _name: 'Good emails',
+          _type: 'NUMBER',
+        },
+        {
+          _attrs: ['emailSettings.bouncedEmails'],
+          _name: 'Deduced emails',
+          _type: 'NUMBER',
+          _width: '170px',
+        },
+        {
+          _attrs: ['shieldEmails'],
+          _name: 'Shield emails',
+          _type: 'NUMBER',
+        },
+        {
           _attrs: ['topLevelDomain'],
           _name: 'Domain',
           _type: 'TEXT',
-          _isSortable: true,
-          _isSearchable: true,
           _isHidden: !this.canAccess(['tableColumns', 'domain'])
         },
         {
@@ -126,39 +139,30 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
-          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'url'])
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['enterpriseType'],
           _name: 'Type',
           _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
           _type: 'GEO-ZONE-LIST',
-          _isSearchable: true,
-          _isSortable: true,
           _width: '190px',
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
@@ -166,16 +170,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _attrs: ['enterpriseSize'],
           _name: 'Company size',
           _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
           _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
@@ -257,6 +257,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       this.companiesTable._content[rowIndex][column._attrs.toString()]
         = this._companiesOriginalTable._content[rowIndex][column._attrs.toString()];
       this._companiesOriginalTable._content[rowIndex][column._attrs.toString()] = temp;
+      if (!column._isOldValue) {
+        column._color = '';
+      } else {
+        column._color = '#00B0FF';
+      }
+      column._isOldValue = !column._isOldValue;
     }
   }
 
