@@ -112,15 +112,6 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     return this._inputNewValue;
   }
 
-
-  get enterpriseTypeList(): Array<any> {
-    return this._enterpriseSizeList;
-  }
-
-  set inputNewValue(value: string) {
-    this._inputNewValue = value;
-  }
-
   ngOnInit() {
     this._searchKeyword.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
@@ -302,10 +293,11 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
   public onValueSelect(value: any) {
+    let valueToSend;
     switch (this._type) {
       case 'valueChain':
       case 'industry':
-        const valueToSend = {
+        valueToSend = {
           type: this._type,
           value: value
         };
@@ -315,20 +307,20 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         this._width = '100%';
         break;
       case 'enterpriseSize':
-        const valueSize = {
+        valueToSend = {
           type: this._type,
           value: value.value
         };
-        this._emitValue(valueSize);
+        this._emitValue(valueToSend);
         this._searchKeyword.setValue(value.label);
         break;
       case 'enterpriseType':
-        const valueType = {
+        valueToSend = {
           type: this._type,
           value: value
         };
         this._itemSelected = value;
-        this._emitValue(valueType);
+        this._emitValue(valueToSend);
         this._searchKeyword.setValue('');
         this._inputNewValue = '';
         this._width = '100%';
@@ -383,6 +375,9 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  /**
+   * add new value => reset state
+   */
   addNewValue() {
     if (this.inputNewValue) {
       const valueToSend = {

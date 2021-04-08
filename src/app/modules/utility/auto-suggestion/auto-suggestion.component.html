@@ -18,6 +18,8 @@
           class="form-input is-shadowed"
           name="suggestion"
           type="search">
+
+        <!-- add new value button -->
         <button *ngIf="(type === 'industry'|| type === 'valueChain'|| type === 'enterpriseType') && inputNewValue!== ''"
                 style="margin-left: auto"
                 [disabled]="!this.inputNewValue"
@@ -25,6 +27,8 @@
                 (click)="addNewValue()">
           <i class="icon icon-plus"></i>
         </button>
+        <!-- /add new value button -->
+
       </label>
     </div>
     <!-- /input area -->
