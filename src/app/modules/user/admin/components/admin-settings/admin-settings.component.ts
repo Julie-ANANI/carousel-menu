@@ -31,7 +31,7 @@ export class AdminSettingsComponent {
 
   public setPageTitle(title?: string) {
     if (title) {
-      this._translateTitleService.setTitle(title.slice(0,1).toUpperCase() + title.slice(1) + ' | Settings');
+      this._translateTitleService.setTitle(title.slice(0, 1).toUpperCase() + title.slice(1) + ' | Settings');
     } else {
       this._translateTitleService.setTitle('Settings');
     }

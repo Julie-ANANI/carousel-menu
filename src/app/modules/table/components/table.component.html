@@ -429,21 +429,11 @@
                 <!-- type LABEL-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
 
-                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
-                      <span style="padding-left: 3px">{{tag.label}}</span>
-                    </div>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{'color': column._color}">...</span>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
-                    <span>-</span>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
+                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'label')"
+                       [ngStyle]="getTextColor(row, column)">
+                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'label')| titlecase) }}
+                  </div>
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
                     <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                     <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
@@ -455,21 +445,12 @@
                 <!-- type PATTERNS-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'PATTERNS-OBJECT-LIST'">
 
-                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
-                      <span style="padding-left: 3px">{{tag.expression}}</span>
-                    </div>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{'color': column._color}">...</span>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
-                    <span>-</span>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
+                  <div class="text-ellipsis"
+                       [ngStyle]="getTextColor(row, column)"
+                       [title]="getStringForColumn(row, column, 'expression')">
+                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'expression').toString() | titlecase) }}
+                  </div>
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
                     <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                     <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
@@ -481,21 +462,13 @@
 
                 <!-- type GEO-ZONE-LIST -->
                 <ng-container *ngSwitchCase="'GEO-ZONE-LIST'">
+                  <div class="text-ellipsis"
+                       [ngStyle]="getTextColor(row, column)"
+                       [title]="getStringForColumn(row, column, 'name')">
+                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'name').toString() | titlecase) }}
+                  </div>
 
-                  <ng-container *ngFor="let tag of getContentValue(row, getAttrs(column)[0])">
-                    <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
-                      <span style="padding-left: 3px">{{tag.name}}</span>
-                    </div>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 2">
-                    <span [ngStyle]="{'color': column._color}">...</span>
-                  </ng-container>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length === 0">
-                    <span>-</span>
-                  </ng-container>
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length > 0">
+                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
                     <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                     <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
@@ -507,7 +480,7 @@
 
                 <!-- type LENGTH -->
                 <ng-container *ngSwitchCase="'LENGTH'">
-                  <div class="text-ellipsis" [ngStyle]="{'color': column._color}">
+                  <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)">
                     <span>{{ getLength(getContentValue(row, getAttrs(column)[0])) }}</span>
                   </div>
 
@@ -617,7 +590,7 @@
 
                 <!-- type NUMBER -->
                 <ng-container *ngSwitchCase="'NUMBER'">
-                  <div class="text-ellipsis" [ngStyle]="{'color': column._color}" [title]="getTitle(row, column)">
+                  <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)" [title]="getTitle(row, column)">
                     <ng-container *ngFor="let attr of getAttrs(column)">
                       {{ (getContentValue(row, attr) || " - ") }}
                     </ng-container>
@@ -635,7 +608,8 @@
 
                   <!-- not clickable -->
                   <ng-container *ngIf="i !== table._clickIndex - 1">
-                    <div class="text-ellipsis" [title]="getTitle(row, column)" [ngStyle]="{'color': column._color}">
+                    <div class="text-ellipsis" [title]="getTitle(row, column)"
+                         [ngStyle]="getTextColor(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                       </ng-container>
@@ -655,7 +629,7 @@
                       (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
                       [ngClass]="{ 'active': rowIndex === selectedIndex }"
                       class="clickable-text text-ellipsis"
-                      [ngStyle]="{'color': column._color}"
+                      [ngStyle]="getTextColor(row, column)"
                       [title]="getTitle(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
@@ -673,15 +647,15 @@
 
                 <ng-template #replaceTemplate let-context>
                   <span class="fill-replace-icon"
-                        *ngIf="context.column._isReplaceable"
+                        *ngIf="context.column['_isReplaceable'] && !context.column['_isFilled']"
                         (click)="exchangeValue(context)">
-                      <i class="fas fa-exchange-alt" [ngStyle]="{'color': context.column._color}"></i>
+                      <i class="fas fa-exchange-alt" style="color: #00B0FF"></i>
                     </span>
                 </ng-template>
 
                 <ng-template #undoTemplate let-context>
-                  <span *ngIf="context.column._isFilled" class="fill-replace-icon" (click)="undoFilled(context)">
-                    <i class="fas fa-redo" [ngStyle]="{'color': context.column._color}"></i>
+                  <span *ngIf="context.column['_isFilled'] && !context.column['_isReplaceable']" class="fill-replace-icon" (click)="undoFilled(context)">
+                    <i class="fas fa-redo" style="color: #EA5858"></i>
                   </span>
                 </ng-template>
               </div>

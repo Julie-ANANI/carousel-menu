@@ -37,6 +37,12 @@
       height: 100%;
     }
 
+    .object-list{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
     .truncate-text {
       display: flex;
       flex-direction: row;

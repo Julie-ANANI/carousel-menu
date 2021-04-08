@@ -12,6 +12,8 @@ import {ConfigService} from '../../../services/config/config.service';
 
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
+import * as lodash from 'lodash';
+
 
 @Component({
   selector: 'app-shared-table',
@@ -29,6 +31,8 @@ export class TableComponent {
   @Input() set config(value: Config) {
     this._config = value;
   }
+
+  private _originalTable: Table = <Table>{};
 
   /***
    * Input use to set the data
@@ -121,6 +125,10 @@ export class TableComponent {
 
   private _selectedIndex: number = null;
 
+  private _stringInArrayColumn = '';
+
+  private _isOrginal = false;
+
   constructor(private _translateService: TranslateService,
               private _configService: ConfigService,
               private _localStorageService: LocalStorageService) {
@@ -157,9 +165,13 @@ export class TableComponent {
         this._setFilteredContent();
       }
 
+      if (!this._isOrginal) {
+        this._originalTable = JSON.parse(JSON.stringify(this._table));
+        this._isOrginal = true;
+      }
+
       this._initializeColumns();
       this._initializeContents();
-
     }
 
   }
@@ -231,12 +243,14 @@ export class TableComponent {
    */
   private _initializeContents() {
     if (this._table._isLocal) {
-      this._filteredContent.forEach((value, index) => {
+      this._filteredContent.map((value, index) => {
         this._filteredContent[index]._isSelected = false;
       });
     } else {
-      this._table._content.forEach((value, index) => {
-        this._table._content[index]._isSelected = false;
+      this._table._content.map((value, index) => {
+        if (!value.hasOwnProperty('_isSelected')) {
+          value._isSelected = false;
+        }
       });
     }
   }
@@ -940,5 +954,47 @@ export class TableComponent {
       row: row,
       column: column
     };
+  }
+
+  /**
+   * array in colimn
+   * @param row
+   * @param column
+   * @param label
+   */
+  public getStringForColumn(row: any, column: any, label: string) {
+    this._stringInArrayColumn = '';
+    const temList = this.getContentValue(row, this.getAttrs(column)[0]);
+    temList.map((item: any, index: any) => {
+      if (index === temList.length - 1) {
+        this._stringInArrayColumn = this._stringInArrayColumn.concat(item[label]);
+      } else {
+        this._stringInArrayColumn = this._stringInArrayColumn.concat(item[label] + ', ');
+      }
+    });
+    return this._stringInArrayColumn;
+  }
+
+  /**
+   * when table in addParent/bulkEdit
+   * for each value: verify if we should add the color or not
+   * @param index
+   * @param column
+   */
+  public getTextColor(index: any, column: Column) {
+    if (this.isToAddColor(column)) {
+      if (lodash.isEqual(this._table._content[index][column._attrs[0]], this._originalTable._content[index][column._attrs[0]])) {
+        return null;
+      } else {
+        return {
+          color: column._color
+        };
+      }
+    }
+  }
+
+  isToAddColor(column: Column) {
+    return (column.hasOwnProperty('_isFilled') || column.hasOwnProperty('_isReplaceable')) &&
+      (column['_isFilled'] === true || column._isReplaceable === true);
   }
 }

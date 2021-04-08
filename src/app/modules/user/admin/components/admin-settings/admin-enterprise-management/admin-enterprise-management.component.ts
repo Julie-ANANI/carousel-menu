@@ -50,6 +50,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _nothingFound = false;
 
+  private _companiesSelected: Array<any> = [];
+
   // private _editEnterpriseId: string = null;
 
   private _queryConfig: Config = {
@@ -107,11 +109,17 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log('init enterprise');
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
       this._getShieldedPros();
+      this._buildForm();
+      this._companiesSelected = this._enterpriseService._enterprisesSelected;
+      this._initTable([], 0);
+      if (this._companiesSelected.length > 0) {
+        this.queryConfig = this._enterpriseService._queryConfig;
+      }
     }
-    this._buildForm();
   }
 
   public canAccess(path?: Array<string>) {
@@ -122,15 +130,9 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
-  public doSearch() {
-    this._isSearching = true;
-    this._nothingFound = false;
-
-    this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
-    this._getCompanies(this._queryConfig);
-  }
-
   private _getCompanies(config: Config) {
+    this._isSearching = true;
+    this._resultTableConfiguration._total = -1;
     this._enterpriseService.get(null, config).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
@@ -144,10 +146,20 @@ export class AdminEnterpriseManagementComponent implements OnInit {
                 console.log(err);
               });
           }
+          if (item['subsidiaries'].length > 0) {
+            item.subsidiariesName = [];
+            item['subsidiaries'].map((idSub: any) => {
+              this._enterpriseService.get(idSub, null).pipe(first()).subscribe((sub) => {
+                  item.subsidiariesName.push({id: idSub, name: sub['name']});
+                },
+                (err: HttpErrorResponse) => {
+                  console.log(err);
+                });
+            });
+          }
         });
       } else {
-        this._results = false;
-        this._nothingFound = true;
+        this._resultTableConfiguration._total = 0;
       }
       this._isSearching = false;
     }, (err: HttpErrorResponse) => {
@@ -179,7 +191,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _total: total,
       _isTitle: true,
       _isSearchable: !!this.canAccess(['searchBy']),
-      _isSelectable: this.canAccess(['delete']),
+      _isSelectable: true,
       _isPaginable: total > 10,
       _isAddParent: true,
       _isBulkEdit: true,
@@ -205,6 +217,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _attrs: ['topLevelDomain'],
           _name: 'Domain',
           _type: 'TEXT',
+          _enableTooltip: true,
           _isSortable: true,
           _isSearchable: true,
         },
@@ -213,12 +226,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Patterns',
           _type: 'LENGTH',
           _width: '120px',
+          _enableTooltip: true,
         },
         {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
           _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['subsidiaries'],
@@ -237,42 +252,35 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Parent Enterprise',
           _type: 'TEXT',
           _width: '170px',
+          _enableTooltip: true,
         },
         {
           _attrs: ['emailSettings.goodEmails'],
           _name: 'Good emails',
           _type: 'NUMBER',
-          _isSearchable: true,
-          _isSortable: true,
         },
         {
           _attrs: ['emailSettings.bouncedEmails'],
           _name: 'Deduced emails',
           _type: 'NUMBER',
-          _isSearchable: true,
           _width: '170px',
-          _isSortable: true,
         },
         {
           _attrs: ['shieldEmails'],
           _name: 'Shield emails',
           _type: 'NUMBER',
-          _isSearchable: true,
-          _isSortable: false,
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
-          _isSearchable: true,
-          _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['enterpriseType'],
@@ -280,31 +288,39 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: true,
           _isSortable: true,
+          _enableTooltip: true,
         },
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
           _type: 'GEO-ZONE-LIST',
-          _isSearchable: true,
-          _isSortable: true,
           _width: '190px',
+          _enableTooltip: true,
         },
         {
           _attrs: ['enterpriseSize'],
           _name: 'Company size',
           _type: 'TEXT',
-          _isSearchable: true,
           _isSortable: true,
         },
         {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
-          _isSearchable: true,
           _isSortable: true,
+          _enableTooltip: true,
         }
       ]
     };
+    if (total > 0 && this._companiesSelected.length > 0) {
+      this._resultTableConfiguration._total = -1;
+      this._resultTableConfiguration._content.map(item => {
+        item._isSelected = !!this._companiesSelected.find(data => data._id === item._id);
+      });
+      setTimeout(() => {
+      this._resultTableConfiguration._total = total;
+      }, 800);
+    }
   }
 
   private _getShieldedPros() {
@@ -598,7 +614,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   set queryConfig(value: any) {
     this._queryConfig = value;
-    this._getCompanies(this._queryConfig);
+    if (this._queryConfig.search === '{}') {
+      this._initTable([], 0);
+    } else {
+      this._getCompanies(this._queryConfig);
+    }
   }
 
   get nothingFound(): boolean {
@@ -631,13 +651,25 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   navigateToEdit($event: any) {
     if ($event) {
-      this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
+      this._enterpriseService.setQueryConfig(this._queryConfig);
+      this._route.navigateByUrl('/user/admin/settings/enterprises/bulkedit');
     }
   }
 
-  navigateToAddParent($event: any) {
-    if ($event) {
+  navigateToAddParent(event: any) {
+    if (event) {
+      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
+      this._enterpriseService.setQueryConfig(this._queryConfig);
       this._route.navigate(['/user/admin/settings/enterprises/addparent']);
+    }
+  }
+
+  getSelectedCompanies($event: any) {
+    if ($event) {
+      this._companiesSelected = $event._rows;
+      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
+      this._enterpriseService.setQueryConfig(this._queryConfig);
     }
   }
 }

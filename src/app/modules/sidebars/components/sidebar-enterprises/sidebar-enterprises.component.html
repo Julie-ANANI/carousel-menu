@@ -4,7 +4,7 @@
     <!-- button -->
     <div *ngIf="isEditable" class="text-right p-bottom-30">
       <button
-        [disabled]="!isSaving || form.invalid"
+        [disabled]="form.invalid"
         class="button is-community is-sm"
         id="btn-save"
         type="submit">
@@ -86,13 +86,20 @@
     <!-- subsidiaries -->
     <div class="form-group">
       <label class="form-label" for="form-subsidiaries">Subsidiaries</label>
-      <app-utility-input-list
-        (update)="subsidiaryUpdate($event)"
-        [config]="subConfig"
-        [isSelectCompany]="true"
-        [isEditable]="isEditable">
-      </app-utility-input-list>
-      <input class="form-input" formControlName="subsidiaries" type="hidden" id="form-subsidiaries">
+      <input
+        (valueChanged)="selectEnterprise('subsidiary', $event)"
+        [list-formatter]="autocompleteEnterpriseListFormatter"
+        [min-chars]="2"
+        [source]="enterpriseSuggestions"
+        auto-complete
+        class="form-input is-shadowed"
+        formControlName="subsidiaries"
+        id="form-subsidiaries"
+        placeholder="Enter the subsidiaries"
+        type="text">
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('subsidiaries', newSubsidiary)}">
+      </ng-container>
     </div>
     <!-- /subsidiaries -->
 
@@ -100,7 +107,7 @@
     <div class="form-group">
       <label class="form-label" for="form-parent">Parent Enterprise</label>
       <input
-        (valueChanged)="selectEnterprise($event)"
+        (valueChanged)="selectEnterprise('parent',$event)"
         [list-formatter]="autocompleteEnterpriseListFormatter"
         [min-chars]="2"
         [source]="enterpriseSuggestions"
@@ -115,85 +122,100 @@
 
     <!-- patterns -->
     <div class="form-group">
-      <label class="form-label" for="form-patterns">Patterns</label>
+      <label class="form-label" style="display: flex; align-items: center">Patterns
+        <i class="icon icon-arrow-down is-md is-primary"
+          style="margin-left: auto; cursor: pointer"
+          (click)="changeShowSyntax()">
+        </i>
+      </label>
+      <p class="syntax-info" *ngIf="isShowSyntax">
+        <span class="text-xs is-info">Keywords : first_name, last_name, first_initial, last_initial</span>
+        <span class="text-xs is-info">Separators : . or -</span>
+        <span class="text-xs is-info">Example :  first_initial - last_name</span>
+      </p>
       <app-utility-input-list
         (update)="patternsUpdate($event)"
         [config]="patternConfig"
-        [isEditable]="isEditable">
+        [isEditable]="true">
       </app-utility-input-list>
-      <input class="form-input" formControlName="patterns" type="hidden" id="form-patterns">
     </div>
     <!-- /patterns -->
 
     <!-- type -->
     <div class="form-group">
-      <label class="form-label" for="form-type">Type</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="enterpriseType"
-        id="form-type"
-        placeholder="Enter the enterprise type"
-        type="text">
+      <label class="form-label">Type
+      </label>
+      <app-utility-auto-suggestion
+        [config]="enterpriseTypeSelectConfig"
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
+      </app-utility-auto-suggestion>
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', newEnterpriseType)}">
+      </ng-container>
     </div>
     <!-- /type -->
 
     <!-- industry -->
     <div class="form-group">
-      <label class="form-label" for="form-industry">Industry</label>
-      <app-utility-input-list
-        (update)="industryUpdate($event)"
-        [config]="industryConfig"
-        [isEditable]="isEditable">
-      </app-utility-input-list>
-      <input class="form-input" formControlName="industries" type="hidden" id="form-industry">
+      <label class="form-label">Industry</label>
+      <app-utility-auto-suggestion
+        [config]="industrySelectConfig"
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
+      </app-utility-auto-suggestion>
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry)}">
+      </ng-container>
     </div>
     <!-- industry -->
 
     <!-- brand -->
     <div class="form-group">
-      <label class="form-label" for="form-brands">Brand</label>
+      <label class="form-label">Brand</label>
       <app-utility-input-list
         (update)="brandUpdate($event)"
         [config]="brandConfig"
-        [isEditable]="isEditable">
+        [isEditable]="true">
       </app-utility-input-list>
-      <input class="form-input" formControlName="brands" type="hidden" id="form-brands">
     </div>
     <!-- /brand -->
 
     <!-- geographical zone -->
     <div class="form-group">
-      <label class="form-label" for="form-geographicalZone">Geographical Zone</label>
+      <label class="form-label">Geographical Zone</label>
       <app-utility-input-list
         (update)="geoZoneUpdate($event)"
         [config]="geoConfig"
-        [isEditable]="isEditable">
+        [isEditable]="true">
       </app-utility-input-list>
-      <input class="form-input" formControlName="geographicalZone" type="hidden" id="form-geographicalZone">
     </div>
     <!-- /geographical zone -->
 
     <!-- company size -->
     <div class="form-group">
-      <label class="form-label" for="form-companySize">Company size</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="companySize"
-        id="form-companySize"
-        placeholder="Enter the company size"
-        type="text">
+      <label class="form-label">Company size</label>
+      <app-utility-auto-suggestion
+        [config]="enterpriseSizeSelectConfig"
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
+      </app-utility-auto-suggestion>
     </div>
     <!-- /company size -->
 
     <!-- value chain -->
-    <label class="form-label" for="form-valueChain">Value chain</label>
-    <input
-      class="form-input is-shadowed"
-      formControlName="valueChain"
-      id="form-valueChain"
-      placeholder="Enter the value chain"
-      type="text">
-    <!-- /company size -->
+    <div class="form-group">
+      <label class="form-label">Value chain</label>
+      <app-utility-auto-suggestion
+        [config]="valueChainSelectConfig"
+        (valueAdded)="getValueSelected($event)"
+        (valueSelected)="getValueSelected($event)">
+      </app-utility-auto-suggestion>
+      <ng-container
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', newValueChains)}">
+      </ng-container>
+    </div>
+    <!-- /value chain -->
 
   </form>
 </div>
@@ -209,3 +231,36 @@
   </section>
 </app-utility-modal>
 <!-- /to upload logo -->
+
+
+<ng-template #answerArea let-context>
+  <ul class="answers-wrapper">
+    <li *ngFor="let answer of context.answerList; let i = index">
+
+      <!-- text -->
+      <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+        <span
+          *ngIf="context.type !== 'valueChain' && context.type !== 'enterpriseType'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
+        <span *ngIf="context.type === 'valueChain' || context.type === 'enterpriseType'">{{answer}}</span>
+      </div>
+      <!-- /text -->
+      <!-- icons -->
+      <div class="icons-wrapper">
+        <!-- delete icon -->
+        <div
+          *ngIf="isEditable"
+          (click)="deleteItem(context.type, answer)"
+          [ngClass]="{ 'disabled': !isEditable }"
+          class="icon-container m-no-right is-overlay">
+            <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
+              <i class="icon icon-delete text-alert"></i>
+            </span>
+        </div>
+        <!-- /delete icon -->
+
+      </div>
+      <!-- /icons -->
+
+    </li>
+  </ul>
+</ng-template>

@@ -24,15 +24,24 @@
     <!-- /companies selected table -->
 
 
-    <!-- update button -->
+    <!-- buttons -->
     <section class="p-bottom-30 p-top-4" style="display: flex">
+      <button class="button is-primary is-lg is-outlined"
+              (click)="returnTo($event)">
+        Back
+      </button>
+
+      <button class="button is-primary is-lg is-outlined"
+              (click)="cancel()">
+        Discard
+      </button>
       <button class="button is-primary is-lg"
               style="margin-left: auto"
       (click)="updateChange()">
         Update
       </button>
     </section>
-    <!-- /update button -->
+    <!-- /buttons -->
 
   </div>
 </div>

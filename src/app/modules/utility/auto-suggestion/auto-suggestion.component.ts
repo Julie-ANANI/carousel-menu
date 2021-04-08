@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AutoSuggestionConfig } from './interface/auto-suggestion-config';
-import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AutoSuggestionConfig} from './interface/auto-suggestion-config';
+import {FormControl} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, IndustriesList} from '../../../models/static-data/enterprise';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -47,6 +48,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       this._placeholder = config.placeholder || 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';
       this._type = config.type || 'users';
       this._identifier = config.identifier || 'name';
+      this._default = config.default || '';
+      this.setDefaultValue();
     }
   }
 
@@ -54,7 +57,13 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   @Output() valueSelected: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() valueAdded = new EventEmitter();
+
   private _minChars = 3;
+
+  private _inputNewValue = '';
+
+  private _default = '';
 
   private _placeholder = 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';
 
@@ -72,25 +81,81 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   private _suggestionsSource: Array<any> = [];
 
-  private _itemSelected: any;
+  private _industriesList: Array<any> = IndustriesList;
+
+  private _valueChainList: Array<any> = EnterpriseValueChains;
+
+  private _enterpriseSizeList: Array<any> = EnterpriseSizeList;
+
+  private _enterpriseTypeList: Array<any> = EnterpriseTypes;
+
+  private _itemSelected: any = '';
 
   private _isSearching = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+  private _width = '100%';
 
-  constructor(private _autoCompleteService: AutocompleteService) { }
+  constructor(private _autoCompleteService: AutocompleteService) {
+  }
+
+
+  get default(): string {
+    return this._default;
+  }
+
+  get width(): any {
+    return this._width;
+  }
+
+  get inputNewValue(): string {
+    return this._inputNewValue;
+  }
 
   ngOnInit() {
     this._searchKeyword.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
       .subscribe((input: any) => {
         if (input) {
+          this._inputNewValue = input;
           this._isSearching = true;
-          this._loadResult(input);
+          if (this.type === 'industry' || this._type === 'valueChain'
+            || this._type === 'enterpriseSize' || this._type === 'enterpriseType') {
+            this._loadListResults(input);
+          } else {
+            this._loadResult(input);
+          }
         } else {
           this.hideAutoSuggestionDropdown();
         }
       });
+  }
+
+  setDefaultValue() {
+    if (this._default !== '') {
+      switch (this._type) {
+        case 'enterpriseSize':
+          this._searchKeyword.setValue(this._enterpriseSizeList.find(item => item.value === this._default)[0].label);
+          break;
+        case 'enterpriseType':
+          this._searchKeyword.setValue(this._default);
+          break;
+        default:
+          break;
+      }
+
+    }
+  }
+
+  _loadListResults(value: string) {
+    if (value) {
+      this._suggestionsSource = [];
+      this._dropdownVisible = true;
+      this._loading = true;
+      if (value.length >= this._minChars) {
+        this._getSuggestionsList(value);
+      }
+    }
   }
 
   private _loadResult(value: any) {
@@ -107,14 +172,67 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _getSuggestionsList(keyword: string) {
+    switch (this.type) {
+      case 'industry':
+        this._width = '80%';
+        this._getIndustries(keyword);
+        break;
+      case 'valueChain':
+        this._width = '80%';
+        this._getValueChains(keyword);
+        break;
+      case 'enterpriseSize':
+        this._getEnterpriseSize();
+        break;
+      case 'enterpriseType':
+        this._width = '80%';
+        this._getEnterpriseType(keyword);
+        break;
+    }
+    this._loading = false;
+    this._isSearching = this._suggestionsSource.length !== 0;
+  }
+
+  private _getIndustries(industryKeyword: any) {
+    this._suggestionsSource =
+      this._industriesList.filter(item => item.toLowerCase().includes(industryKeyword.toLowerCase()) ||
+        industryKeyword.toLowerCase().includes(item.toLowerCase()));
+  }
+
+  private _getValueChains(keyword: any) {
+    this._suggestionsSource =
+      this._valueChainList.filter(item => item.toLowerCase().includes(keyword.toLowerCase()) ||
+        keyword.toLowerCase().includes(item.toLowerCase()));
+  }
+
+  private _getEnterpriseSize() {
+    const valueFound = this._enterpriseSizeList.find(item => item.label === this._searchKeyword.value);
+    if (valueFound === undefined) {
+      this._suggestionsSource = this._enterpriseSizeList;
+    } else {
+      this._suggestionsSource = [];
+    }
+  }
+
+  private _getEnterpriseType(keyword: string) {
+    this._suggestionsSource =
+      this._enterpriseTypeList.filter(item => item.toLowerCase().includes(keyword.toLowerCase()) ||
+        keyword.toLowerCase().includes(item.toLowerCase()));
+    if (this._suggestionsSource.length === 0) {
+      this._loading = false;
+      this._isSearching = false;
+    }
+  }
+
   private _getSuggestions(searchKey: string) {
-    this._autoCompleteService.get({ query: searchKey, type: this._type })
+    this._autoCompleteService.get({query: searchKey, type: this._type})
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data) => {
         this._suggestionsSource = data;
         this._loading = false;
         this._isSearching = data.length !== 0;
-        },(err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         console.error(err);
       });
   }
@@ -122,7 +240,22 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   public showAutoSuggestionDropdown(event: Event) {
     event.preventDefault();
     const value = ((event.target) as HTMLInputElement).value;
-    this._loadResult(value);
+    switch (this._type) {
+      case 'enterpriseSize':
+        this._dropdownVisible = true;
+        this._isSearching = true;
+        this._getEnterpriseSize();
+        break;
+      case 'enterpriseType':
+        if (this._itemSelected === '') {
+          this._dropdownVisible = true;
+          this._isSearching = true;
+          this._suggestionsSource = this._enterpriseTypeList;
+        }
+        break;
+      default:
+        this._loadResult(value);
+    }
   }
 
   public hideAutoSuggestionDropdown() {
@@ -160,9 +293,43 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
   public onValueSelect(value: any) {
-    this._itemSelected = value;
-    this._searchKeyword.setValue(value[this._identifier]);
-    this._emitValue(value);
+    let valueToSend;
+    switch (this._type) {
+      case 'valueChain':
+      case 'industry':
+        valueToSend = {
+          type: this._type,
+          value: value
+        };
+        this._emitValue(valueToSend);
+        this._searchKeyword.setValue('');
+        this._inputNewValue = '';
+        this._width = '100%';
+        break;
+      case 'enterpriseSize':
+        valueToSend = {
+          type: this._type,
+          value: value.value
+        };
+        this._emitValue(valueToSend);
+        this._searchKeyword.setValue(value.label);
+        break;
+      case 'enterpriseType':
+        valueToSend = {
+          type: this._type,
+          value: value
+        };
+        this._itemSelected = value;
+        this._emitValue(valueToSend);
+        this._searchKeyword.setValue('');
+        this._inputNewValue = '';
+        this._width = '100%';
+        break;
+      default:
+        this._itemSelected = value;
+        this._searchKeyword.setValue(value[this._identifier]);
+        this._emitValue(value);
+    }
     this.hideAutoSuggestionDropdown();
   }
 
@@ -199,9 +366,30 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     return this._isSearching;
   }
 
+  get type(): string {
+    return this._type;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
+  /**
+   * add new value => reset state
+   */
+  addNewValue() {
+    if (this.inputNewValue) {
+      const valueToSend = {
+        type: this.type,
+        value: this.searchKeyword.value
+      };
+      this._itemSelected = this.inputNewValue;
+      this._searchKeyword.setValue('');
+      this.valueAdded.emit(valueToSend);
+      this._inputNewValue = '';
+      this._width = '100%';
+      this.hideAutoSuggestionDropdown();
+    }
+  }
 }

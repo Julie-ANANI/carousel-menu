@@ -35,12 +35,14 @@ export interface Enterprise {
   enterpriseURL?: string;
   logo?: LogoMedia;
   subsidiaries?: Array<string>;
+  subsidiariesName?: Array<any>;
   parentEnterprise?: string;
+  parentEnterpriseName?: string;
   patterns?: Array<Pattern>;
   enterpriseType?: string;
   industries?: Array<Industry>;
   brands?: Array<Brand>;
   geographicalZone?: Array<GeographicalZone>;
-  companySize?: string;
-  valueChain?: string;
+  enterpriseSize?: string;
+  valueChain?: Array<string>;
 }

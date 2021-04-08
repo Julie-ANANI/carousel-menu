@@ -35,11 +35,17 @@ export class InputListComponent {
 
   @Input() isDomain = false; // true: if the answerList is of domain. ex: app-sidebar-blacklist component
 
+  private _answer = '';
+
+  private _answerList: Array<any> = [];
+
+  private _placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
   @Input() set config(config: InputListConfig) {
     if (config) {
       this._placeholder = config.placeholder;
       this._answerList = config.initialData || [];
+      this._answer = '';
     }
   }
 
@@ -47,12 +53,6 @@ export class InputListComponent {
   @Output() remove: EventEmitter<any> = new EventEmitter<any>(); // sends the to-remove item.
   @Output() edit: EventEmitter<any> = new EventEmitter<any>(); // sends the edited item.
   @Output() clickItem: EventEmitter<any> = new EventEmitter<any>(); // sends the clicked item.
-
-  private _answer = '';
-
-  private _answerList: Array<any> = [];
-
-  private _placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
   private _enableUpdate = false;
 
@@ -127,9 +127,12 @@ export class InputListComponent {
   public updateProposition(event: Event, index: number, value: string) {
     event.preventDefault();
     // item element to edit can be name or text depending on input list
-    const oldValue = this._answerList[index].text || this._answerList[index].name;
+    const oldValue = this._answerList[index].text || this._answerList[index].name
+      || this._answerList[index].expression || this._answerList[index].label;
     this._answerList[index].text = value;
     this._answerList[index].name = value;
+    this._answerList[index].expression = value;
+    this._answerList[index].label = value;
     this.edit.emit({oldTextValue: oldValue, value: this._answerList[index]});
     this.update.emit({value: this._answerList});
     this._enableUpdate = false;
@@ -223,13 +226,10 @@ export class InputListComponent {
 
   public selectEnterprise(c: string | Enterprise | any) {
     if (typeof c === 'object' && this.isEditable) {
-      console.log(c);
       this._answerList.push(c);
       this._answer = c.name;
       this.update.emit({value: this._answerList});
     }
     this._answer = this._answer ? this._answer : '';
   }
-
-
 }
