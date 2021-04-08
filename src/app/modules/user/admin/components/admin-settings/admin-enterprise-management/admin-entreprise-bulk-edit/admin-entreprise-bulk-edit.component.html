@@ -125,7 +125,7 @@
     <section class="p-bottom-15 p-top-20">
       <app-shared-table
         [(config)]="config"
-        (sendUndoFilled)="undoFilled($event)"
+        (performAction)="getPerformAction($event)"
         [data]="companiesTable">
       </app-shared-table>
     </section>

@@ -15,7 +15,6 @@ import { PipeModule } from '../../pipe/pipe.module';
 import { MessageTemplateModule } from '../utility/messages/message-template/message-template.module';
 import { PaginationTemplate2Module } from '../utility/paginations/pagination-template-2/pagination-template-2.module';
 import {ModalEmptyModule} from '../utility/modals/modal-empty/modal-empty.module';
-import {RouterModule} from '@angular/router';
 
 @NgModule({
     imports: [
@@ -32,7 +31,6 @@ import {RouterModule} from '@angular/router';
         MessageTemplateModule,
         PaginationTemplate2Module,
         ModalEmptyModule,
-        RouterModule
     ],
   declarations: [
     TableComponent

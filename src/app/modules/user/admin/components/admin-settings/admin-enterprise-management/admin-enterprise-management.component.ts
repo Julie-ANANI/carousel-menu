@@ -80,7 +80,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     {
       _label: 'add parent',
       _icon: 'icon-left text-sm icon icon-plus',
-
+    },
+    {
+      _label: 'bulk edit',
+      _icon: 'icon-left text-sm icon icon-edit',
     }
   ];
 
@@ -204,8 +207,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: true,
       _isPaginable: total > 10,
-      _isAddParent: true,
-      _isBulkEdit: true,
+      _buttons: this._customButtons,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
       _isEditable: this.canAccess(['edit']),
@@ -660,27 +662,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return this._isSaving;
   }
 
-  navigateToEdit($event: any) {
-    if ($event) {
-      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
-      this._enterpriseService.setQueryConfig(this._queryConfig);
-      this._route.navigateByUrl('/user/admin/settings/enterprises/bulkedit');
-    }
-  }
-
-  navigateToAddParent(event: any) {
-    if (event) {
-      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
-      this._enterpriseService.setQueryConfig(this._queryConfig);
+  performAction($event: any) {
+    this._enterpriseService.setQueryConfig(this._queryConfig);
+    this._enterpriseService.setEnterprisesSelected($event._rows);
+    if ($event._action === 'add parent') {
       this._route.navigate(['/user/admin/settings/enterprises/addparent']);
     }
-  }
-
-  getSelectedCompanies($event: any) {
-    if ($event) {
-      this._companiesSelected = $event._rows;
-      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
-      this._enterpriseService.setQueryConfig(this._queryConfig);
+    if ($event._action === 'bulk edit') {
+      this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
     }
   }
 }

@@ -6,12 +6,10 @@ export interface Table {
   readonly _isSelectable?: boolean;
   readonly _isEditable?: boolean;
   readonly _isTitle?: boolean;
-  readonly _isAddParent?: boolean;
   readonly _isLegend?: boolean;
   readonly _isDeletable?: boolean;
   readonly _isRowDisabled?: any;
   readonly _isSearchable?: boolean;
-  readonly _isBulkEdit?: boolean;
   readonly _columns: Array<Column>;
   readonly _clickIndex?: number;
   readonly _isPaginable?: boolean;

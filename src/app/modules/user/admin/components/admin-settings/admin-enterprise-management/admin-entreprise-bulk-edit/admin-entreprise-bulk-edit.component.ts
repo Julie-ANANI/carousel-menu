@@ -339,12 +339,12 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   /**
    * click on button undo => cancel the change on one value
-   * @param $event
+   * @param context
    */
-  undoFilled($event: any) {
-    if ($event) {
-      const rowIndex = $event.row;
-      const column = $event.column;
+  undoFilled(context: any) {
+    if (context) {
+      const rowIndex = context.row;
+      const column = context.column;
       const tempValue = this.companiesTable._content[rowIndex][column._attrs[0]];
       this.companiesTable._content[rowIndex][column._attrs[0]]
         = this._companiesTableToSwap._content[rowIndex][column._attrs[0]];
@@ -575,5 +575,11 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         this.updateEnterpriseValues('patterns', this._patterns, 'Patterns');
       }
     });
+  }
+
+  getPerformAction($event: any) {
+    if ($event.action === 'fill') {
+      this.undoFilled($event._context);
+    }
   }
 }

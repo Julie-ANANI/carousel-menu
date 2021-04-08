@@ -279,12 +279,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
 
   /**
    * click button on exchange
-   * @param $event
+   * @param context
    */
-  exchangeValue($event: any) {
-    if ($event) {
-      const rowIndex = $event.row;
-      const column = $event.column;
+  exchangeValue(context: any) {
+    if (context) {
+      const rowIndex = context.row;
+      const column = context.column;
       const temp = this.companiesTable._content[rowIndex][column._attrs.toString()];
       this.companiesTable._content[rowIndex][column._attrs.toString()]
         = this._companiesOriginalTable._content[rowIndex][column._attrs.toString()];
@@ -367,5 +367,11 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
 
   cancel() {
     this._companiesTable = this._companiesOriginalTable;
+  }
+
+  getPerformAction($event: any) {
+    if ($event.action === 'replace') {
+      this.exchangeValue($event._context);
+    }
   }
 }
