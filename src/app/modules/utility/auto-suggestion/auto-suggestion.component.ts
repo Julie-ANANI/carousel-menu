@@ -251,6 +251,9 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         value: value
       });
       this._searchKeyword.setValue('');
+      if (!this.isShowAddButton) {
+        this._searchKeyword.setValue(value);
+      }
       this._inputNewValue = '';
       this._width = '100%';
       this._itemSelected = value;

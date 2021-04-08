@@ -63,11 +63,6 @@
       <!-- Enterprise Type input -->
       <div class="input-column">
         <span class="text is-sm">Enterprise Type
-        <i class="fas fa-info-circle is-primary" id="enterprise-type-hover"
-           [title]="' TPE : 0-19 employés\n'+
-'PME : 20-249 employés\n'+
-'ETI : 250-5000 employés\n'+
-'GE : >5000 employés'"></i>
           </span>
         <app-utility-auto-suggestion
           [isSmallInput]="true"
@@ -99,7 +94,12 @@
 
       <!-- Enterprise size input -->
       <div class="input-column">
-        <span class="text is-sm">Enterprise size</span>
+        <span class="text is-sm">Enterprise size
+        <i class="fas fa-info-circle is-primary" id="enterprise-type-hover"
+           [title]="'TPE : 0-19 employés\n'+
+'PME : 20-249 employés\n'+
+'ETI : 250-5000 employés\n'+
+'GE : >5000 employés'"></i></span>
         <app-utility-auto-suggestion
           [isSmallInput]="true"
           [config]="enterpriseSizeSelectConfig"
