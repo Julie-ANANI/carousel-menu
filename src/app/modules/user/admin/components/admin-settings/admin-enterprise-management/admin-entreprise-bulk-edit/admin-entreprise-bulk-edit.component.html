@@ -1,7 +1,10 @@
 <div [hidden]="!canAccess()" class="container fluid grid-2xl p-top-30" id="admin-enterprise-bulk-edit-management">
   <div class="column col-sm-12 col-11 col-mx-auto">
+
     <!-- select column to edit -->
     <section class="main-form-wrapper p-top-15">
+
+      <!-- patterns input -->
       <div class="input-column">
         <span class="text is-sm">Patterns
         <i class="fas fa-info-circle is-primary" id="syntax-hover"
@@ -17,10 +20,16 @@
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('patterns', patterns)}">
         </ng-container>
       </div>
+      <!-- /pattern input -->
+
+      <!-- Enterprise url input -->
       <div class="input-column">
         <span class="text is-sm">Enterprise url</span>
         <input class="form-input is-shadowed" [(ngModel)]="enterpriseUrlModel" (keyup.enter)="updateUrl()">
       </div>
+      <!-- /Enterprise url input -->
+
+      <!-- Industry input -->
       <div class="input-column">
         <span class="text is-sm">Industry</span>
         <app-utility-auto-suggestion
@@ -33,6 +42,9 @@
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', industries)}">
         </ng-container>
       </div>
+      <!-- /Industry input -->
+
+      <!-- Brand input -->
       <div class="input-column">
         <span class="text is-sm">Brand</span>
         <app-utility-input-list
@@ -46,6 +58,9 @@
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('brand', brands)}">
         </ng-container>
       </div>
+      <!-- /Brand input -->
+
+      <!-- Enterprise Type input -->
       <div class="input-column">
         <span class="text is-sm">Enterprise Type</span>
         <app-utility-auto-suggestion
@@ -58,6 +73,9 @@
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', enterpriseTypes)}">
         </ng-container>
       </div>
+      <!-- /Enterprise Type input -->
+
+      <!-- Geographical Zone input -->
       <div class="input-column">
         <span class="text is-sm">Geographical Zone</span>
         <app-utility-input-list
@@ -71,6 +89,9 @@
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('geoZone', geoZones)}">
         </ng-container>
       </div>
+      <!-- /Geographical Zone input -->
+
+      <!-- Enterprise size input -->
       <div class="input-column">
         <span class="text is-sm">Enterprise size</span>
         <app-utility-auto-suggestion
@@ -80,6 +101,9 @@
           (valueSelected)="getValueSelected($event)">
         </app-utility-auto-suggestion>
       </div>
+      <!-- /Enterprise size input -->
+
+      <!-- Value chain input -->
       <div class="input-column">
         <span class="text is-sm">Value chain</span>
         <app-utility-auto-suggestion
@@ -92,6 +116,8 @@
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', valueChains)}">
         </ng-container>
       </div>
+      <!-- /Value chain input -->
+
     </section>
     <!-- /select column to edit -->
 
@@ -124,8 +150,6 @@
       </button>
     </section>
     <!-- /button -->
-
-
   </div>
 </div>
 

@@ -287,7 +287,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(4);
     this.companiesToEdit = this._enterpriseService._enterprisesSelected;
     if (this.companiesToEdit.length > 0) {
       this._initTable();
@@ -304,6 +303,9 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     }
   }
 
+  /**
+   * notification for users
+   */
   getNotification() {
     if (this._success === this.companiesTable._content.length) {
       this._notificationService.success('Success', 'Update all succeed');
@@ -317,11 +319,17 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this.resetFormValues();
   }
 
+  /**
+   *
+   */
   initState() {
     this.success = 0;
     this.failed = 0;
   }
 
+  /**
+   * update the changes
+   */
   updateChange() {
     this.companiesTable._content.map(item => {
       this._enterpriseService.save(item._id, item).pipe(first()).subscribe(
@@ -341,6 +349,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     });
   }
 
+  /**
+   * click on button undo => cancel the change on one value
+   * @param $event
+   */
   undoFilled($event: any) {
     if ($event) {
       const rowIndex = $event.row;
@@ -352,6 +364,9 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     }
   }
 
+  /**
+   * initialize table states after updated
+   */
   removeFillTemplate() {
     this.companiesTable._columns.map(c => {
       c._color = '';
@@ -365,6 +380,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._router.navigate(['/user/admin/settings/enterprises']);
   }
 
+  /**
+   * auto-suggestion => value selected
+   * @param $event
+   */
   getValueSelected($event: any) {
     if ($event) {
       switch ($event.type) {
@@ -386,7 +405,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           break;
         case 'enterpriseType':
           this._enterpriseTypeModel = $event.value;
-          console.log($event.value);
           this._enterpriseTypes[0] = $event.value;
           this.updateEnterpriseValues('enterpriseType', this._enterpriseTypeModel, 'Type');
           break;
@@ -394,6 +412,12 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @param attr
+   * @param value
+   * @param name
+   */
   updateEnterpriseValues(attr: string, value: any, name: string) {
     if (value !== '' || value.length > 0) {
       this._companiesTable._content.map(item => {
@@ -404,6 +428,12 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @param attr
+   * @param value
+   * @param name
+   */
   removeEnterpriseValue(attr: string, value: any, name: string) {
     if (typeof value === 'object' && value.length === 0) {
       for (let i = 0; i < this._companiesTable._content.length - 1; i++) {
