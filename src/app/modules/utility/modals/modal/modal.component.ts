@@ -60,7 +60,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private readonly _element: any = null;
-  @Input() footer: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _elementRef: ElementRef) {

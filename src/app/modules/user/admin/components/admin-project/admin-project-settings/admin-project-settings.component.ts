@@ -392,7 +392,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
    *
    * @param value
    */
-  public publishCommunity(value: any) {
+  public publishCommunity(value: Community) {
     event.preventDefault();
 
     if (!this._isPublishingCommunity) {
