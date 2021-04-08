@@ -2,14 +2,12 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {Enterprise, Industry, Pattern} from '../../../../models/enterprise';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subject} from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
 import {Clearbit} from '../../../../models/clearbit';
-import {EnterpriseTypes, Industries} from '../../../../models/static-data/enterprise';
 import {AutoSuggestionConfig} from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
-import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
-import {HttpErrorResponse} from '@angular/common/http';
+
 
 type Template = 'CREATE' | 'EDIT';
 
@@ -20,26 +18,23 @@ type Template = 'CREATE' | 'EDIT';
 })
 
 export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
-  private _industries: Array<any> = Industries;
-  private _enterpriseTypeList = EnterpriseTypes;
-
-  get enterpriseTypeList(): string[] {
-    return this._enterpriseTypeList;
-  }
-
-  get industries(): Array<any> {
-    return this._industries;
-  }
-
+  /**
+   *
+   * @param value
+   */
   @Input() set enterprise(value: Enterprise) {
     if (JSON.stringify(value) !== '{}') {
       this._enterprise = value;
     } else {
       this._enterprise = <Enterprise>{};
     }
-    this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
   }
 
+  /**
+   * undefined: build form
+   * active: get value => fill the form
+   * @param value
+   */
   @Input() set sidebarState(value: string) {
     if (value === undefined) {
       this._buildForm();
@@ -81,8 +76,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   private _newGeoZone: Array<any> = [];
 
   private _newSubsidiary: Array<any> = [];
-
-  private _subsidiaryNames: Array<any> = [];
 
   private _inputPatterns: Array<any> = [];
 
@@ -138,6 +131,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._isGeoConfig = false;
     this._isBrandConfig = false;
     this._isPatternConfig = false;
+    this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
   }
 
   private initAutoSuggestionConfig() {
@@ -171,11 +165,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   }
 
-
-  get subsidiaryNames(): Array<any> {
-    return this._subsidiaryNames;
-  }
-
   get industrySelectConfig() {
     return this._industrySelectConfig;
   }
@@ -190,7 +179,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   constructor(private _formBuilder: FormBuilder,
-              private _enterpriseService: EnterpriseService,
               private _autoCompleteService: AutocompleteService,
               private _domSanitizer: DomSanitizer) {
   }
@@ -286,16 +274,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       }
       this._saveChanges();
     }
-  }
-
-  getSubsidiariesName(id: any) {
-    this._enterpriseService.get(id, null).pipe(first()).subscribe(
-      (enterprise: any) => {
-        this._newSubsidiary.push({id: id, name: enterprise['name']});
-      },
-      (err: HttpErrorResponse) => {
-        console.log(err);
-      });
   }
 
   public changeLogo(event: Event) {
