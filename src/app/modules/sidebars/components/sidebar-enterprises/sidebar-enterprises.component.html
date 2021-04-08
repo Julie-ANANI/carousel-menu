@@ -136,7 +136,7 @@
       <app-utility-input-list
         (update)="patternsUpdate($event)"
         [config]="patternConfig"
-        [isEditable]="isEditable">
+        [isEditable]="true">
       </app-utility-input-list>
     </div>
     <!-- /patterns -->
@@ -172,25 +172,23 @@
 
     <!-- brand -->
     <div class="form-group">
-      <label class="form-label" for="form-brands">Brand</label>
+      <label class="form-label">Brand</label>
       <app-utility-input-list
         (update)="brandUpdate($event)"
         [config]="brandConfig"
-        [isEditable]="isEditable">
+        [isEditable]="true">
       </app-utility-input-list>
-      <input class="form-input" formControlName="brands" type="hidden" id="form-brands">
     </div>
     <!-- /brand -->
 
     <!-- geographical zone -->
     <div class="form-group">
-      <label class="form-label" for="form-geographicalZone">Geographical Zone</label>
+      <label class="form-label">Geographical Zone</label>
       <app-utility-input-list
         (update)="geoZoneUpdate($event)"
         [config]="geoConfig"
-        [isEditable]="isEditable">
+        [isEditable]="true">
       </app-utility-input-list>
-      <input class="form-input" formControlName="geographicalZone" type="hidden" id="form-geographicalZone">
     </div>
     <!-- /geographical zone -->
 

@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {Table} from '../../../../../../table/models/table';
 import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
 import {Config} from '../../../../../../../models/config';
-import {LocalStorageService} from '../../../../../../../services/localStorage/localStorage.service';
 import {EnterpriseService} from '../../../../../../../services/enterprise/enterprise.service';
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -48,8 +47,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
               private _router: Router,
               private _notificationService: NotificationsService,
               private _entrepriseService: EnterpriseService,
-              private _rolesFrontService: RolesFrontService,
-              private _localStorageService: LocalStorageService) {
+              private _rolesFrontService: RolesFrontService) {
   }
 
 
@@ -71,8 +69,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._companiesToAddParent = JSON.parse(this._localStorageService.getItem('companiesSelected'));
-    if (this.companiesToAddParent) {
+    this._companiesToAddParent = this._entrepriseService._enterprisesSelected;
+    if (this.companiesToAddParent.length > 0) {
       this._initTable();
     } else {
       this._router.navigate(['/user/admin/settings/enterprises']);
@@ -87,9 +85,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       _total: this.companiesToAddParent.length,
       _isTitle: true,
       _isLegend: true,
-      _isSelectable: this.canAccess(['delete']),
       _isPaginable: this.companiesToAddParent.length > 10,
-      _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: this.companiesToAddParent.length < 11,
       _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
       _columns: [
@@ -218,24 +214,23 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'topLevelDomain':
           case 'enterpriseType':
           case 'enterpriseSize':
-          case 'valueChain':
           case 'enterpriseURL':
             if ((!item[c._attrs.toString()] && item[c._attrs.toString()] === '')
               && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
-              c._color = '#EA5858';
               item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             } else if ((!item[c._attrs.toString()] && item[c._attrs.toString()] !== '')
               && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
-              c._color = '#00B0FF';
               c._isReplaceable = true;
               item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             }
             break;
+          case 'valueChain':
           case 'industries':
           case 'patterns':
           case 'brands':
           case 'geographicalZone':
             if (item[c._attrs.toString()].length === 0 && this._parentCompany[c._attrs.toString()].length > 0) {
+              c._isReplaceable = true;
               c._color = '#EA5858';
               item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             } else if (item[c._attrs.toString()].length > 0 && this._parentCompany[c._attrs.toString()].length > 0) {

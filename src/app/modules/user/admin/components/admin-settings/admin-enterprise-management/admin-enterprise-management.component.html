@@ -25,6 +25,7 @@
         (editRow)="openSidebar($event, 'EDIT')"
         (removeRows)="removeCompanies($event)"
         [(config)]="queryConfig"
+        (selectRows)="getSelectedCompanies($event)"
         (sendAddParentNavigator)="navigateToAddParent($event)"
         (sendEditNavigator)="navigateToEdit($event)"
         [data]="resultTableConfiguration"

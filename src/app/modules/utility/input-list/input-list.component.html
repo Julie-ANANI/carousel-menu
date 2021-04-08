@@ -16,9 +16,8 @@
           required
           type="text">
       </label>
-
       <button
-        [disabled]="f.form.invalid || !isEditable"
+        [disabled]="answer==='' || !isEditable"
         [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
         class="button is-circled is-primary"
         type="submit">

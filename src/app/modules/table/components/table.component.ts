@@ -168,12 +168,12 @@ export class TableComponent {
       if (!this._isOrginal) {
         this._originalTable = JSON.parse(JSON.stringify(this._table));
         this._isOrginal = true;
-        console.log(44444);
       }
 
       this._initializeColumns();
       this._initializeContents();
 
+      this._onSelectRow();
     }
 
   }
@@ -245,12 +245,12 @@ export class TableComponent {
    */
   private _initializeContents() {
     if (this._table._isLocal) {
-      this._filteredContent.forEach((value, index) => {
+      this._filteredContent.map((value, index) => {
         this._filteredContent[index]._isSelected = false;
       });
     } else {
-      this._table._content.forEach((value, index) => {
-        this._table._content[index]._isSelected = false;
+      this._table._content.map((value, index) => {
+        value._isSelected = false;
       });
     }
   }
@@ -982,4 +982,13 @@ export class TableComponent {
       }
     }
   }
+
+  colorOfReplace(index: any, column: Column) {
+
+  }
+
+  colorOfFilled() {
+
+  }
+
 }

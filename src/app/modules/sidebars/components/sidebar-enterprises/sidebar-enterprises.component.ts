@@ -31,34 +31,27 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._industries;
   }
 
+  @Input() set enterprise(value: Enterprise) {
+    console.log(value);
+    if (JSON.stringify(value) !== '{}') {
+      this._enterprise = value;
+    } else {
+      this._enterprise = <Enterprise>{};
+    }
+    this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
+  }
+
   @Input() set sidebarState(value: string) {
-    if (value === undefined || value === 'active') {
+    if (value === undefined) {
       this._buildForm();
+    }
+    if (value === 'active') {
+      this.fillTheForm();
+      this.initAutoSuggestionConfig();
     }
   }
 
 // provide this value when you want to update the existing enterprise, not while creating new one.
-  @Input() set enterprise(value: Enterprise) {
-    if (JSON.stringify(value) !== '{}') {
-      this._enterprise = value;
-      this._form.get('name').setValue(this._enterprise.name);
-      this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
-      this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
-      this._form.get('enterpriseType').setValue(this._enterprise.enterpriseType);
-      this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
-      this._newIndustry = this._enterprise.industries;
-      this._newValueChains = this._enterprise.valueChain;
-    } else {
-      this._enterprise = <Enterprise>{};
-      this._newGeoZone = [];
-      this._newPatterns = [];
-      this._newIndustry = [];
-      this._newSubsidiary = [];
-      this._newBrands = [];
-      this._newValueChains = [];
-    }
-    this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
-  }
 
   private _newValueChains: Array<any> = [];
   @Input() isEditable = false;
@@ -90,6 +83,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _newSubsidiary: Array<any> = [];
 
+  private _subsidiaryNames: Array<any> = [];
+
   private _inputPatterns: Array<any> = [];
 
   private _inputBrands: Array<any> = [];
@@ -110,67 +105,75 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _isShowSyntax = false;
 
-  private _industrySelectConfig: AutoSuggestionConfig = {
-    minChars: 1,
-    placeholder: 'Enter the industry',
-    type: 'industry',
-    identifier: ''
-  };
+  private _industrySelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
 
-  private _valueChainSelectConfig: AutoSuggestionConfig = {
-    minChars: 1,
-    placeholder: 'Enter the value chain',
-    type: 'valueChain',
-    identifier: ''
-  };
+  private _valueChainSelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
 
-  private _patternsSelectConfig: AutoSuggestionConfig = {
-    minChars: 1,
-    placeholder: 'Enter the enterprise pattern',
-    type: 'patterns',
-    identifier: 'expression'
-  };
+  private _enterpriseSizeSelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
 
-
-  get patternsSelectConfig(): AutoSuggestionConfig {
-    return this._patternsSelectConfig;
-  }
-
-  private _enterpriseSizeSelectConfig: AutoSuggestionConfig = {
-    minChars: 0,
-    placeholder: 'Enter the enterprise size',
-    type: 'enterpriseSize',
-    identifier: 'label',
-    default: this._enterprise.enterpriseSize
-  };
-
-  private _enterpriseTypeSelectConfig: AutoSuggestionConfig = {
-    minChars: 0,
-    placeholder: 'Enter the enterprise type',
-    type: 'enterpriseType',
-    identifier: '',
-    default: this._enterprise.enterpriseType
-  };
+  private _enterpriseTypeSelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
 
   get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
     return this._enterpriseTypeSelectConfig;
   }
 
-
-  private initLists(enterprise: Enterprise) {
-    this._inputPatterns = enterprise.patterns;
-    this._inputGeoZone = enterprise.geographicalZone;
-    this._inputBrands = enterprise.brands;
-    this._newGeoZone = enterprise.geographicalZone;
-    this._newBrands = enterprise.brands;
-    this._newPatterns = enterprise.patterns;
-    this._newValueChains = enterprise.valueChain;
-    this._newIndustry = enterprise.industries;
-    this._newSubsidiary = enterprise['subsidiariesName'];
+  private fillTheForm() {
+    this._form.get('name').setValue(this._enterprise.name);
+    this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
+    this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
+    this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
+    this._form.get('parentEnterprise').setValue(this._enterprise.parentEnterpriseName || '');
     this._newEnterpriseType = [];
-    this._newEnterpriseType.push(enterprise.enterpriseType);
+    this._newEnterpriseType.push(this._enterprise.enterpriseType);
+    this._newIndustry = this._enterprise.industries || [];
+    this._newValueChains = this._enterprise.valueChain || [];
+    this._newBrands = this._enterprise.brands || [];
+    this._newPatterns = this._enterprise.patterns || [];
+    this._newGeoZone = this._enterprise.geographicalZone || [];
+    this._newSubsidiary = this._enterprise.subsidiariesName || [];
+    this._inputPatterns = this._enterprise.patterns || [];
+    this._inputGeoZone = this._enterprise.geographicalZone || [];
+    this._inputBrands = this._enterprise.brands || [];
+    this._isGeoConfig = false;
+    this._isBrandConfig = false;
+    this._isPatternConfig = false;
   }
 
+  private initAutoSuggestionConfig() {
+    this._industrySelectConfig = {
+      minChars: 1,
+      placeholder: 'Enter the industry',
+      type: 'industry',
+      identifier: ''
+    };
+
+    this._valueChainSelectConfig = {
+      minChars: 1,
+      placeholder: 'Enter the value chain',
+      type: 'valueChain',
+      identifier: ''
+    };
+
+    this._enterpriseSizeSelectConfig = {
+      minChars: 0,
+      placeholder: 'Enter the enterprise size',
+      type: 'enterpriseSize',
+      identifier: 'label',
+    };
+
+    this._enterpriseTypeSelectConfig = {
+      minChars: 0,
+      placeholder: 'Enter the enterprise type',
+      type: 'enterpriseType',
+      identifier: '',
+    };
+
+  }
+
+
+  get subsidiaryNames(): Array<any> {
+    return this._subsidiaryNames;
+  }
 
   get industrySelectConfig() {
     return this._industrySelectConfig;
@@ -408,7 +411,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   get patternConfig(): any {
     if (!this._isPatternConfig) {
       this._isPatternConfig = true;
-      console.log(this._inputPatterns);
       return {
         placeholder: 'Enter the enterprise pattern',
         initialData: this._inputPatterns
@@ -421,7 +423,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._isBrandConfig = true;
       return {
         placeholder: 'Enter the enterprise brand',
-        initialData: this._newBrands
+        initialData: this._inputBrands
       };
     }
   }
@@ -435,10 +437,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       };
     }
   }
-
-  // get enterprise(): Enterprise {
-  //   return this._enterprise;
-  // }
 
   get form(): FormGroup {
     return this._form;

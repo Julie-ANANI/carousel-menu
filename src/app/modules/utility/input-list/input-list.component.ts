@@ -45,6 +45,7 @@ export class InputListComponent {
     if (config) {
       this._placeholder = config.placeholder;
       this._answerList = config.initialData || [];
+      this._answer = '';
     }
   }
 

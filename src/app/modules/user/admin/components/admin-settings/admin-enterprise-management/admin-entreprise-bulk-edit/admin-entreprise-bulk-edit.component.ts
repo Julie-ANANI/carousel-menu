@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {Table} from '../../../../../../table/models/table';
 import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
 import {Config} from '../../../../../../../models/config';
-import {LocalStorageService} from '../../../../../../../services/localStorage/localStorage.service';
 import {EnterpriseService} from '../../../../../../../services/enterprise/enterprise.service';
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -90,8 +89,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _router: Router,
               private _notificationService: NotificationsService,
-              private _enterpriseService: EnterpriseService,
-              private _localStorageService: LocalStorageService) {
+              private _enterpriseService: EnterpriseService) {
   }
 
 
@@ -195,7 +193,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       _total: this.companiesToEdit.length,
       _isTitle: true,
       _isPaginable: this.companiesToEdit.length > 10,
-      _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: this.companiesToEdit.length < 11,
       _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
       _columns: [
@@ -290,8 +287,9 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.companiesToEdit = JSON.parse(this._localStorageService.getItem('companiesSelected'));
-    if (this.companiesToEdit) {
+    console.log(4);
+    this.companiesToEdit = this._enterpriseService._enterprisesSelected;
+    if (this.companiesToEdit.length > 0) {
       this._initTable();
     } else {
       this._router.navigate(['/user/admin/settings/enterprises']);
@@ -320,7 +318,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   initState() {
-    this._localStorageService.setItem('companiesSelected', JSON.stringify(this.companiesTable._content));
     this.success = 0;
     this.failed = 0;
   }

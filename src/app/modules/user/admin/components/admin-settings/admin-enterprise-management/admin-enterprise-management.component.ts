@@ -18,7 +18,6 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {ShieldService} from '../../../../../../services/shield/shield.service';
 import {NotificationsService} from 'angular2-notifications';
 import {Router} from '@angular/router';
-import {LocalStorageService} from '../../../../../../services/localStorage/localStorage.service';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -50,6 +49,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private _results = false;
 
   private _nothingFound = false;
+
+  private _companiesSelected: Array<any> = [];
 
   // private _editEnterpriseId: string = null;
 
@@ -84,8 +85,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService,
               private _shieldService: ShieldService,
               private _notificationsService: NotificationsService,
-              private _route: Router,
-              private _localStorageService: LocalStorageService
+              private _route: Router
               /*private _autoCompleteService: AutocompleteService,*/
               /*private _sanitizer: DomSanitizer*/) {
   }
@@ -113,42 +113,15 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       this._isLoading = false;
       this._getShieldedPros();
       this._buildForm();
-      this.getResult();
-      // this._route.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      //   console.log(event.url);
-      //   this._preUrl = this._curUrl;
-      //   this._curUrl = event.urlAfterRedirects;
-      //   if (this._preUrl.includes('bulkedit') || this._preUrl.includes('addparent')) {
-      //     if (this._localStorageService.getItem('configCompany')) {
-      //       this._queryConfig = JSON.parse(this._localStorageService.getItem('configCompany'));
-      //       this._getCompanies(this._queryConfig);
-      //       console.log(this._resultTableConfiguration);
-      //     }
-      //     // this._localStorageService.setItem('configCompany', null);
-      //     // this._localStorageService.setItem('companiesSelected', null);
-      //   } else {
-      //     this.getResult();
-      //   }
-      // });
-      // if (this._preUrl === '') {
-      //   this.getResult();
-      // }
+      this._companiesSelected = this._enterpriseService._enterprisesSelected;
+      if (this._companiesSelected.length > 0) {
+        this._queryConfig = this._enterpriseService._queryConfig;
+        this._getCompanies(this._queryConfig);
+      } else {
+        this.getResult();
+      }
+      console.log(this._route.url);
     }
-  }
-
-  initializerSelectedRows() {
-    const companiesSelected = JSON.parse(this._localStorageService.getItem('companiesSelected'));
-    console.log(companiesSelected);
-    if (companiesSelected && companiesSelected.length > 0) {
-      this._resultTableConfiguration._content.map(item => {
-        for (const company of companiesSelected) {
-          if (item._id === company._id) {
-            item._isSelected = true;
-          }
-        }
-      });
-    }
-    console.log(this.resultTableConfiguration);
   }
 
   getResult() {
@@ -200,14 +173,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
-  public doSearch() {
-    this._isSearching = true;
-    this._nothingFound = false;
-
-    this._queryConfig['search'] = JSON.stringify({name: encodeURIComponent(this._searchForm.get('searchString').value)});
-    this._getCompanies(this._queryConfig);
-  }
-
   private _getCompanies(config: Config) {
     this._isSearching = true;
     this._resultTableConfiguration._total = -1;
@@ -225,9 +190,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               });
           }
           if (item['subsidiaries'].length > 0) {
+            item.subsidiariesName = [];
             item['subsidiaries'].map((idSub: any) => {
               this._enterpriseService.get(idSub, null).pipe(first()).subscribe((sub) => {
-                  item['subsidiariesName'].push({id: idSub, name: sub['name']});
+                console.log(sub);
+                  item.subsidiariesName.push({id: idSub, name: sub['name']});
                 },
                 (err: HttpErrorResponse) => {
                   console.log(err);
@@ -389,10 +356,16 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         }
       ]
     };
-    //
-    // if (this._resultTableConfiguration._isSelectable) {
-    //   this.initializerSelectedRows();
-    // }
+    if (this._companiesSelected.length > 0) {
+      this._resultTableConfiguration._total = -1;
+      console.log(this._companiesSelected);
+      this._resultTableConfiguration._content.map(item => {
+        item._isSelected = !!this._companiesSelected.find(data => data._id === item._id);
+      });
+      setTimeout(() => {
+        this._resultTableConfiguration._total = total;
+      }, 800);
+    }
   }
 
   private _getShieldedPros() {
@@ -730,19 +703,25 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   navigateToEdit($event: any) {
     if ($event) {
-      this.saveConfig();
-      this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
+      this._enterpriseService.setQueryConfig(this._queryConfig);
+      this._route.navigateByUrl('/user/admin/settings/enterprises/bulkedit');
     }
   }
 
   navigateToAddParent($event: any) {
     if ($event) {
-      this.saveConfig();
-      this._route.navigate(['/user/admin/settings/enterprises/addparent']);
+      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
+      this._enterpriseService.setQueryConfig(this._queryConfig);
+      this._route.navigateByUrl('/user/admin/settings/enterprises/addparent');
     }
   }
 
-  saveConfig() {
-    this._localStorageService.setItem('configCompany', JSON.stringify(this._queryConfig));
+  getSelectedCompanies($event: any) {
+    if ($event) {
+      this._companiesSelected = $event._rows;
+      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
+      this._enterpriseService.setQueryConfig(this._queryConfig);
+    }
   }
 }
