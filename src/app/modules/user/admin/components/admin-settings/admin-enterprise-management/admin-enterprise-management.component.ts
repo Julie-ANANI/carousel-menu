@@ -123,7 +123,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log('init enterprise');
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
       this._getShieldedPros();

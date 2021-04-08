@@ -20,7 +20,7 @@
           type="search">
 
         <!-- add new value button -->
-        <button *ngIf="(type === 'industry'|| type === 'valueChain'|| type === 'enterpriseType') && inputNewValue!== ''"
+        <button *ngIf="isShowAddButton && inputNewValue!== ''"
                 style="margin-left: auto"
                 [disabled]="!this.inputNewValue"
                 class="button is-circled is-primary is-sm"
@@ -42,7 +42,7 @@
         *ngFor="let suggestion of suggestionsSource; let i = index;"
         [ngClass]="{ 'active': i === currentFocus }"
         class="menu-item">
-        {{ (type === 'industry' || type === 'valueChain' || type === 'enterpriseType') ? suggestion : suggestion[identifier] }}
+        {{ requestType === 'remote' ? suggestion[identifier] : suggestion }}
       </li>
       <!-- /when suggestions -->
 

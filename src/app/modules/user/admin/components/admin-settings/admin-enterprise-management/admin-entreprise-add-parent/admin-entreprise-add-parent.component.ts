@@ -20,6 +20,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   private _parentCompany: Enterprise = <Enterprise>{};
   private _companiesTable: Table = <Table>{};
   private _companiesOriginalTable: Table = <Table>{};
+  private _companiesToSwapTable: Table = <Table>{};
   private _config: Config = {
     fields: '',
     limit: '10',
@@ -160,10 +161,11 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         }
       ]
     };
-    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
     this._companiesTable._content.map(item => {
       item._isSelected = false;
     });
+    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
+    this._companiesToSwapTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
 
   public canAccess(path?: Array<string>) {
@@ -287,8 +289,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       const column = context.column;
       const temp = this.companiesTable._content[rowIndex][column._attrs.toString()];
       this.companiesTable._content[rowIndex][column._attrs.toString()]
-        = this._companiesOriginalTable._content[rowIndex][column._attrs.toString()];
-      this._companiesOriginalTable._content[rowIndex][column._attrs.toString()] = temp;
+        = this._companiesToSwapTable._content[rowIndex][column._attrs.toString()];
+      this._companiesToSwapTable._content[rowIndex][column._attrs.toString()] = temp;
     }
   }
 
@@ -370,7 +372,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
   getPerformAction($event: any) {
-    if ($event.action === 'replace') {
+    if ($event._action === 'replace') {
       this.exchangeValue($event._context);
     }
   }

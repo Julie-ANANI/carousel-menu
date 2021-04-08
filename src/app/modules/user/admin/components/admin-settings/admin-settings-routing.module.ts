@@ -40,11 +40,13 @@ export const routes: Routes = [
         path: 'enterprises/bulkedit',
         component: AdminEntrepriseBulkEditComponent,
         pathMatch: 'full',
+        data: {accessPath: ['settings', 'enterprises']}
       },
       {
         path: 'enterprises/addparent',
         component: AdminEntrepriseAddParentComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: {accessPath: ['settings', 'enterprises']}
       }
     ]
   }

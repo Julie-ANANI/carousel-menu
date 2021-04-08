@@ -4,4 +4,8 @@ export interface AutoSuggestionConfig {
   type?: string;
   identifier?: string;
   default?: string;
+  suggestionList?: Array<any>;
+  requestType?: string;
+  isShowAddButton?: boolean;
+  showSuggestionFirst?: boolean;
 }

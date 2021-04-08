@@ -9,6 +9,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationsService} from 'angular2-notifications';
 import {AutoSuggestionConfig} from '../../../../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import {Column} from '../../../../../../table/models/column';
+import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries} from '../../../../../../../models/static-data/enterprise';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
 
@@ -24,21 +25,31 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     minChars: 1,
     placeholder: 'Enter the industry',
     type: 'industry',
-    identifier: ''
+    identifier: '',
+    isShowAddButton: true,
+    suggestionList: Industries,
+    requestType: 'local'
   };
 
   private _valueChainSelectConfig: AutoSuggestionConfig = {
     minChars: 1,
     placeholder: 'Enter the value chain',
     type: 'valueChain',
-    identifier: ''
+    identifier: '',
+    isShowAddButton: true,
+    suggestionList: EnterpriseValueChains,
+    requestType: 'local'
   };
 
   private _enterpriseSizeSelectConfig: AutoSuggestionConfig = {
     minChars: 0,
     placeholder: 'Enter the size',
     type: 'enterpriseSize',
-    identifier: 'label',
+    identifier: '',
+    isShowAddButton: false,
+    suggestionList: EnterpriseSizeList,
+    requestType: 'local',
+    showSuggestionFirst: true
   };
 
   private _enterpriseTypeSelectConfig: AutoSuggestionConfig = {
@@ -46,6 +57,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     placeholder: 'Enter the type',
     type: 'enterpriseType',
     identifier: '',
+    isShowAddButton: true,
+    suggestionList: EnterpriseTypes,
+    requestType: 'local',
+    showSuggestionFirst: true
   };
 
   private _companiesToEdit: Array<any> = [];
@@ -276,7 +291,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.companiesToEdit = this._enterpriseService._enterprisesSelected;
-    if (this.companiesToEdit.length > 0) {
+    console.log(this.companiesToEdit);
+    if (this._companiesToEdit.length > 0) {
       this._initTable();
     } else {
       this._router.navigate(['/user/admin/settings/enterprises']);
@@ -469,9 +485,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     return this._valueChains;
   }
 
-  getContext(type: string, list: any[]) {
+  getContext(type: string, list: any[], isString: boolean) {
     return {
       type: type,
+      isString: isString,
       answerList: list
     };
   }
@@ -578,7 +595,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   getPerformAction($event: any) {
-    if ($event.action === 'fill') {
+    if ($event._action === 'fill') {
       this.undoFilled($event._context);
     }
   }
