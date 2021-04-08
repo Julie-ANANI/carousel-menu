@@ -8,10 +8,7 @@ import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Enterprise} from '../../../../../../../models/enterprise';
 import {NotificationsService} from 'angular2-notifications';
-// import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
-// import {UserService} from "../../services/user/user.service";
-
-// declare let swellrt;
+import {Column} from '../../../../../../table/models/column';
 
 @Component({
   templateUrl: './admin-entreprise-add-parent.component.html',
@@ -62,7 +59,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   get config(): Config {
     return this._config;
   }
-
 
   set config(value: Config) {
     this._config = value;
@@ -192,6 +188,10 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     return this._parentCompany;
   }
 
+  /**
+   * get parent enterprise => replace values
+   * @param event
+   */
   addCompanyToInclude(event: { value: Array<string> }): void {
     this._entrepriseService.get(event.value[0]['id'], null).pipe(first()).subscribe(res => {
         this._parentCompany = res;
@@ -215,19 +215,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'enterpriseType':
           case 'enterpriseSize':
           case 'enterpriseURL':
-            if ((!item[c._attrs.toString()] && item[c._attrs.toString()] === '')
-              && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
-              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
-              c._isFilled = true;
-              c._isReplaceable = true;
-              c._color = '#EA5858';
-            } else if ((!item[c._attrs.toString()] && item[c._attrs.toString()] !== '')
-              && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
-              c._isReplaceable = true;
-              c._color = '#00B0FF';
-              c._isFilled = false;
-              console.log(4444);
-              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
+            if (item.hasOwnProperty(c._attrs[0])) {
+              this.compareChildValueToFillReplace(item, c);
             }
             break;
           case 'valueChain':
@@ -235,16 +224,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'patterns':
           case 'brands':
           case 'geographicalZone':
-            if (item[c._attrs.toString()].length === 0 && this._parentCompany[c._attrs.toString()].length > 0) {
-              c._isFilled = true;
-              c._isReplaceable = true;
-              c._color = '#EA5858';
-              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
-            } else if (item[c._attrs.toString()].length > 0 && this._parentCompany[c._attrs.toString()].length > 0) {
-              c._color = '#00B0FF';
-              c._isReplaceable = true;
-              c._isFilled = false;
-              item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
+            if (item.hasOwnProperty(c._attrs[0])) {
+              this.compareChildValueToFillReplace(item, c);
             }
             break;
         }
@@ -252,6 +233,63 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     });
   }
 
+  /**
+   * compare child/parent's values: replace or fill values
+   * @param item
+   * @param c
+   */
+  compareChildValueToFillReplace(item: any, c: Column) {
+    const isFilled = this.toBeFilled(item, c._attrs[0]);
+    const isReplaced = this.toBeReplaced(item, c._attrs[0]);
+    if (isFilled) {
+      this.addFilledStyle(c);
+      this.replaceChildValues(c._attrs[0], item);
+    }
+    if (isReplaced) {
+      this.addReplaceStyle(c);
+      this.replaceChildValues(c._attrs[0], item);
+    }
+  }
+
+  /**
+   * filled: child empty + parent has values
+   * @param child
+   * @param attr
+   */
+  toBeFilled(child: any, attr: string) {
+    if (typeof child[attr] === 'string') {
+      return child[attr] === '' && this.parentCompany[attr] !== '';
+    } else {
+      return child[attr].length === 0 && this.parentCompany[attr].length > 0;
+    }
+  }
+
+  /**
+   * child + parent both have values
+   * @param child
+   * @param attr
+   */
+  toBeReplaced(child: any, attr: string) {
+    if (typeof child[attr] === 'string') {
+      return child[attr] !== '' && this.parentCompany[attr] !== '';
+    } else {
+      return child[attr].length > 0 && this.parentCompany[attr].length > 0;
+    }
+  }
+
+  /**
+   * replace child value with parent's
+   * @param attr
+   * @param child
+   */
+  replaceChildValues(attr: any, child: any) {
+    child[attr] = this._parentCompany[attr];
+  }
+
+  /**
+   * click button on exchange
+   * @param $event
+   */
   exchangeValue($event: any) {
     if ($event) {
       const rowIndex = $event.row;
@@ -263,6 +301,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     }
   }
 
+  /**
+   * Update enterprises
+   */
   updateChange() {
     this.companiesTable._content.map(item => {
       this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
@@ -282,6 +323,10 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     });
   }
 
+  /**
+   * get notification for users
+   * @private
+   */
   private getNotification() {
     if (this._success === this.companiesTable._content.length) {
       this._notificationService.success('Success', 'Update all succeed');
@@ -295,14 +340,34 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     this._failed = 0;
   }
 
+  /**
+   * remove styles / initialize states in tables
+   */
   removeFillTemplate() {
     this.companiesTable._columns.map(c => {
-      c._color = '';
-      c._isReplaceable = undefined;
-      c._isFilled = undefined;
+      this.removeStyle(c);
     });
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
+
+  addReplaceStyle(c: Column) {
+    c._color = '#00B0FF';
+    c._isReplaceable = true;
+    c._isFilled = false;
+  }
+
+  addFilledStyle(c: Column) {
+    c._isFilled = true;
+    c._isReplaceable = true;
+    c._color = '#EA5858';
+  }
+
+  removeStyle(c: Column) {
+    c._color = '';
+    c._isReplaceable = undefined;
+    c._isFilled = undefined;
+  }
+
 
   returnTo() {
     this._router.navigate(['/user/admin/settings/enterprises']);
