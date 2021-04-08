@@ -49,7 +49,6 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       this._type = config.type || 'users';
       this._identifier = config.identifier || 'name';
       this._default = config.default || '';
-      console.log(this._default);
       this.setDefaultValue();
     }
   }
@@ -145,9 +144,6 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     if (this._default !== '') {
       switch (this._type) {
         case 'enterpriseSize':
-          console.log(this._default,
-            this._enterpriseSizeList,
-            this._enterpriseSizeList.find(item => item.value === this._default)[0]);
           this._searchKeyword.setValue(this._enterpriseSizeList.find(item => item.value === this._default)[0].label);
           break;
         case 'enterpriseType':

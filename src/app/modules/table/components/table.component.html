@@ -647,14 +647,14 @@
 
                 <ng-template #replaceTemplate let-context>
                   <span class="fill-replace-icon"
-                        *ngIf="context.column['_isReplaceable']"
+                        *ngIf="context.column['_isReplaceable'] && !context.column['_isFilled']"
                         (click)="exchangeValue(context)">
                       <i class="fas fa-exchange-alt" style="color: #00B0FF"></i>
                     </span>
                 </ng-template>
 
                 <ng-template #undoTemplate let-context>
-                  <span *ngIf="context.column['_isFilled']" class="fill-replace-icon" (click)="undoFilled(context)">
+                  <span *ngIf="context.column['_isFilled'] && !context.column['_isReplaceable']" class="fill-replace-icon" (click)="undoFilled(context)">
                     <i class="fas fa-redo" style="color: #EA5858"></i>
                   </span>
                 </ng-template>

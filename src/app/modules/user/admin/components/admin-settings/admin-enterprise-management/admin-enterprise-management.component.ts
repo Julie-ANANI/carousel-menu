@@ -120,7 +120,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       } else {
         this.getResult();
       }
-      console.log(this._route.url);
     }
   }
 
@@ -193,7 +192,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             item.subsidiariesName = [];
             item['subsidiaries'].map((idSub: any) => {
               this._enterpriseService.get(idSub, null).pipe(first()).subscribe((sub) => {
-                console.log(sub);
                   item.subsidiariesName.push({id: idSub, name: sub['name']});
                 },
                 (err: HttpErrorResponse) => {
@@ -358,7 +356,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     };
     if (this._companiesSelected.length > 0) {
       this._resultTableConfiguration._total = -1;
-      console.log(this._companiesSelected);
       this._resultTableConfiguration._content.map(item => {
         item._isSelected = !!this._companiesSelected.find(data => data._id === item._id);
       });

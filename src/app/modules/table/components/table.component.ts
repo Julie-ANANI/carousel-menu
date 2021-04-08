@@ -250,7 +250,9 @@ export class TableComponent {
       });
     } else {
       this._table._content.map((value, index) => {
-        value._isSelected = false;
+        if (!value.hasOwnProperty('_isSelected')) {
+          value._isSelected = false;
+        }
       });
     }
   }

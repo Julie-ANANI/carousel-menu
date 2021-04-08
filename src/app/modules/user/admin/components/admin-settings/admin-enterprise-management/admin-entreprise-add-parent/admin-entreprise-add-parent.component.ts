@@ -218,9 +218,15 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
             if ((!item[c._attrs.toString()] && item[c._attrs.toString()] === '')
               && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
               item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
+              c._isFilled = true;
+              c._isReplaceable = true;
+              c._color = '#EA5858';
             } else if ((!item[c._attrs.toString()] && item[c._attrs.toString()] !== '')
               && (!this._parentCompany[c._attrs.toString()] && this._parentCompany[c._attrs.toString()] !== '')) {
               c._isReplaceable = true;
+              c._color = '#00B0FF';
+              c._isFilled = false;
+              console.log(4444);
               item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             }
             break;
@@ -230,12 +236,14 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           case 'brands':
           case 'geographicalZone':
             if (item[c._attrs.toString()].length === 0 && this._parentCompany[c._attrs.toString()].length > 0) {
+              c._isFilled = true;
               c._isReplaceable = true;
               c._color = '#EA5858';
               item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             } else if (item[c._attrs.toString()].length > 0 && this._parentCompany[c._attrs.toString()].length > 0) {
               c._color = '#00B0FF';
               c._isReplaceable = true;
+              c._isFilled = false;
               item[c._attrs.toString()] = this._parentCompany[c._attrs.toString()];
             }
             break;
@@ -291,6 +299,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     this.companiesTable._columns.map(c => {
       c._color = '';
       c._isReplaceable = undefined;
+      c._isFilled = undefined;
     });
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }

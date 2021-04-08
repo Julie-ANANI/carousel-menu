@@ -32,7 +32,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   @Input() set enterprise(value: Enterprise) {
-    console.log(value);
     if (JSON.stringify(value) !== '{}') {
       this._enterprise = value;
     } else {
@@ -124,7 +123,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
     this._form.get('parentEnterprise').setValue(this._enterprise.parentEnterpriseName || '');
     this._newEnterpriseType = [];
-    this._newEnterpriseType.push(this._enterprise.enterpriseType);
+    if (this._enterprise.enterpriseType && this._enterprise.enterpriseType !== '') {
+      this._newEnterpriseType.push(this._enterprise.enterpriseType);
+    }
     this._newIndustry = this._enterprise.industries || [];
     this._newValueChains = this._enterprise.valueChain || [];
     this._newBrands = this._enterprise.brands || [];
@@ -352,7 +353,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             }
         }
       });
-      console.log(_newEnterprise);
       this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
     }
   }
