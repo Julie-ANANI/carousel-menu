@@ -109,59 +109,17 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log('init enterprise');
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
       this._getShieldedPros();
       this._buildForm();
       this._companiesSelected = this._enterpriseService._enterprisesSelected;
+      this._initTable([], 0);
       if (this._companiesSelected.length > 0) {
-        this._queryConfig = this._enterpriseService._queryConfig;
-        this._getCompanies(this._queryConfig);
-      } else {
-        this.getResult();
+        this.queryConfig = this._enterpriseService._queryConfig;
       }
     }
-  }
-
-  getResult() {
-    this._resultTableConfiguration = {
-      _total: 0,
-      _selector: 'admin-enterprises-table',
-      _title: 'Enterprises',
-      _content: [],
-      _isSearchable: !!this.canAccess(['searchBy']),
-      _columns: [
-        {
-          _attrs: ['name'],
-          _name: 'Name',
-          _type: 'TEXT',
-          _isSearchable: true,
-        },
-        {
-          _attrs: ['topLevelDomain'],
-          _name: 'Domain',
-          _type: 'TEXT',
-          _enableTooltip: true,
-          _isSortable: true,
-          _isSearchable: true,
-        },
-        {
-          _attrs: ['enterpriseType'],
-          _name: 'Type',
-          _type: 'TEXT',
-          _isSearchable: true,
-          _isSortable: true,
-          _enableTooltip: true,
-        },
-        {
-          _attrs: ['enterpriseURL'],
-          _name: 'Enterprise Url',
-          _type: 'TEXT',
-          _isSortable: true,
-          _enableTooltip: true,
-        },
-      ]
-    };
   }
 
   public canAccess(path?: Array<string>) {
@@ -354,13 +312,13 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         }
       ]
     };
-    if (this._companiesSelected.length > 0) {
+    if (total > 0 && this._companiesSelected.length > 0) {
       this._resultTableConfiguration._total = -1;
       this._resultTableConfiguration._content.map(item => {
         item._isSelected = !!this._companiesSelected.find(data => data._id === item._id);
       });
       setTimeout(() => {
-        this._resultTableConfiguration._total = total;
+      this._resultTableConfiguration._total = total;
       }, 800);
     }
   }
@@ -657,14 +615,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   set queryConfig(value: any) {
     this._queryConfig = value;
     if (this._queryConfig.search === '{}') {
-      this.getResult();
-      this._queryConfig = {
-        fields: '',
-        limit: '10',
-        offset: '0',
-        search: '{}',
-        sort: '{"name":-1}'
-      };
+      this._initTable([], 0);
     } else {
       this._getCompanies(this._queryConfig);
     }
@@ -706,11 +657,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
-  navigateToAddParent($event: any) {
-    if ($event) {
+  navigateToAddParent(event: any) {
+    if (event) {
       this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
       this._enterpriseService.setQueryConfig(this._queryConfig);
-      this._route.navigateByUrl('/user/admin/settings/enterprises/addparent');
+      this._route.navigate(['/user/admin/settings/enterprises/addparent']);
     }
   }
 

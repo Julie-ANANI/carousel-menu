@@ -125,7 +125,7 @@ export class TableComponent {
 
   private _selectedIndex: number = null;
 
-  private _stringInComplexeColumn: string = '';
+  private _stringInArrayColumn = '';
 
   private _isOrginal = false;
 
@@ -172,8 +172,6 @@ export class TableComponent {
 
       this._initializeColumns();
       this._initializeContents();
-
-      this._onSelectRow();
     }
 
   }
@@ -958,39 +956,45 @@ export class TableComponent {
     };
   }
 
+  /**
+   * array in colimn
+   * @param row
+   * @param column
+   * @param label
+   */
   public getStringForColumn(row: any, column: any, label: string) {
-    this._stringInComplexeColumn = '';
+    this._stringInArrayColumn = '';
     const temList = this.getContentValue(row, this.getAttrs(column)[0]);
     temList.map((item: any, index: any) => {
       if (index === temList.length - 1) {
-        this._stringInComplexeColumn = this._stringInComplexeColumn.concat(item[label]);
+        this._stringInArrayColumn = this._stringInArrayColumn.concat(item[label]);
       } else {
-        this._stringInComplexeColumn = this._stringInComplexeColumn.concat(item[label] + ', ');
+        this._stringInArrayColumn = this._stringInArrayColumn.concat(item[label] + ', ');
       }
     });
-    return this._stringInComplexeColumn;
+    return this._stringInArrayColumn;
   }
 
+  /**
+   * when table in addParent/bulkEdit
+   * for each value: verify if we should add the color or not
+   * @param index
+   * @param column
+   */
   public getTextColor(index: any, column: Column) {
-    if (column.hasOwnProperty('_isFilled') || column.hasOwnProperty('_isReplaceable')) {
-      if (column['_isFilled'] === true || column._isReplaceable === true) {
-        if (lodash.isEqual(this._table._content[index][column._attrs[0]], this._originalTable._content[index][column._attrs[0]])) {
-          return null;
-        } else {
-          return {
-            color: column._color
-          };
-        }
+    if (this.isToAddColor(column)) {
+      if (lodash.isEqual(this._table._content[index][column._attrs[0]], this._originalTable._content[index][column._attrs[0]])) {
+        return null;
+      } else {
+        return {
+          color: column._color
+        };
       }
     }
   }
 
-  colorOfReplace(index: any, column: Column) {
-
+  isToAddColor(column: Column) {
+    return (column.hasOwnProperty('_isFilled') || column.hasOwnProperty('_isReplaceable')) &&
+      (column['_isFilled'] === true || column._isReplaceable === true);
   }
-
-  colorOfFilled() {
-
-  }
-
 }

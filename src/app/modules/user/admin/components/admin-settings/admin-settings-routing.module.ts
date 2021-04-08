@@ -9,7 +9,6 @@ import {AdminSettingsComponent} from './admin-settings.component';
 import {AdminRoleGuard} from '../../../../../guards/admin-role-guard.service';
 import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
 import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
-import {PresetResolver} from '../../../../../resolvers/preset.resolver';
 
 export const routes: Routes = [
   {
@@ -45,7 +44,7 @@ export const routes: Routes = [
       {
         path: 'enterprises/addparent',
         component: AdminEntrepriseAddParentComponent,
-        pathMatch: 'full',
+        pathMatch: 'full'
       }
     ]
   }

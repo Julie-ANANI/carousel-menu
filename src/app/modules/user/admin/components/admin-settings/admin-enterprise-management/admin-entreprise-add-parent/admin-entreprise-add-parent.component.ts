@@ -83,20 +83,17 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       _isLegend: true,
       _isPaginable: this.companiesToAddParent.length > 10,
       _isNoMinHeight: this.companiesToAddParent.length < 11,
-      _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
       _columns: [
         {
           _attrs: ['logo.uri'],
           _name: 'Logo',
           _type: 'PICTURE',
           _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'logo'])
         },
         {
           _attrs: ['name'],
           _name: 'Name',
           _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'patterns'])
         },
         {
           _attrs: ['emailSettings.goodEmails'],
@@ -118,61 +115,55 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _attrs: ['topLevelDomain'],
           _name: 'Domain',
           _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'domain'])
         },
         {
           _attrs: ['patterns'],
           _name: 'Patterns',
           _type: 'PATTERNS-OBJECT-LIST',
           _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'patterns'])
         },
         {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'url'])
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['enterpriseType'],
           _name: 'Type',
           _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
           _type: 'GEO-ZONE-LIST',
           _width: '190px',
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['enterpriseSize'],
           _name: 'Company size',
           _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         },
         {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'parent'])
         }
       ]
     };
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
+    this._companiesTable._content.map(item => {
+      item._isSelected = false;
+    });
   }
 
   public canAccess(path?: Array<string>) {
@@ -369,7 +360,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
 
-  returnTo() {
+  returnTo(event: Event) {
+    event.preventDefault();
     this._router.navigate(['/user/admin/settings/enterprises']);
   }
 
