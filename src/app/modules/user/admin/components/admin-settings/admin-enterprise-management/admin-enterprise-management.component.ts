@@ -73,6 +73,17 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private _isSaving = false;
 
   private _shieldSortedList: Array<any> = [];
+  // Array<{ _label: string, _icon?: string, _colorClass?: string, _iconSize?: string, _isHidden?: boolean }>
+
+  private _customButtons: Array<{ _label: string, _icon?: string, _colorClass?: string, _iconSize?: string, _isHidden?: boolean }>
+    = [
+    {
+      _label: 'add parent',
+      _icon: 'icon-left text-sm icon icon-plus',
+
+    }
+  ];
+
 
   get shieldSortedList(): Array<any> {
     return this._shieldSortedList;
@@ -318,7 +329,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         item._isSelected = !!this._companiesSelected.find(data => data._id === item._id);
       });
       setTimeout(() => {
-      this._resultTableConfiguration._total = total;
+        this._resultTableConfiguration._total = total;
       }, 800);
     }
   }
