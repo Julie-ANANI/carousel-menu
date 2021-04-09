@@ -95,6 +95,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _geoZones: Array<any> = [];
   private _valueChains: Array<any> = [];
   private _enterpriseTypes: Array<any> = [];
+  private _isSizeInfo = false;
+  private _isShowSyntax = false;
 
   get enterpriseTypes(): Array<any> {
     return this._enterpriseTypes;
@@ -291,12 +293,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.companiesToEdit = this._enterpriseService._enterprisesSelected;
-    console.log(this.companiesToEdit);
-    if (this._companiesToEdit.length > 0) {
-      this._initTable();
-    } else {
-      this._router.navigate(['/user/admin/settings/enterprises']);
-    }
+    this._initTable();
   }
 
   public canAccess(path?: Array<string>) {
@@ -598,5 +595,31 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     if ($event._action === 'fill') {
       this.undoFilled($event._context);
     }
+  }
+
+
+  get isSizeInfo(): boolean {
+    return this._isSizeInfo;
+  }
+
+  hideSizeInfo() {
+    this._isSizeInfo = false;
+  }
+
+  showSizeInfo() {
+    this._isSizeInfo = true;
+  }
+
+  hideSyntaxInfo() {
+    this._isShowSyntax = false;
+  }
+
+  showSyntaxInfo() {
+    this._isShowSyntax = true;
+  }
+
+
+  get isShowSyntax(): boolean {
+    return this._isShowSyntax;
   }
 }

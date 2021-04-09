@@ -62,6 +62,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _form: FormGroup;
 
+  private _isSizeInfo = false;
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
@@ -539,5 +541,18 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   changeShowSyntax() {
     this._isShowSyntax = !this.isShowSyntax;
+  }
+
+  showEnterpriseSizeInfo() {
+    this._isSizeInfo = true;
+  }
+
+
+  get isSizeInfo(): boolean {
+    return this._isSizeInfo;
+  }
+
+  hideEnterpriseSizeInfo() {
+    this._isSizeInfo = false;
   }
 }

@@ -67,11 +67,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
 
   ngOnInit(): void {
     this._companiesToAddParent = this._entrepriseService._enterprisesSelected;
-    if (this.companiesToAddParent.length > 0) {
-      this._initTable();
-    } else {
-      this._router.navigate(['/user/admin/settings/enterprises']);
-    }
+    this._initTable();
   }
 
   _initTable() {

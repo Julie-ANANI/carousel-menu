@@ -40,14 +40,16 @@ export const routes: Routes = [
         path: 'enterprises/bulkedit',
         component: AdminEntrepriseBulkEditComponent,
         pathMatch: 'full',
+        canActivate: [AdminRoleGuard],
         data: {accessPath: ['settings', 'enterprises']}
       },
       {
         path: 'enterprises/addparent',
         component: AdminEntrepriseAddParentComponent,
         pathMatch: 'full',
+        canActivate: [AdminRoleGuard],
         data: {accessPath: ['settings', 'enterprises']}
-      }
+      },
     ]
   }
 ];

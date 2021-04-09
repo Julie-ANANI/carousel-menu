@@ -196,10 +196,14 @@
     <div class="form-group">
       <label class="form-label">Company size
         <i class="fas fa-info-circle is-primary" id="enterprise-type-hover"
-           [title]="' TPE : 0-19 employés\n'+
-'PME : 20-249 employés\n'+
-'ETI : 250-5000 employés\n'+
-'GE : >5000 employés'"></i>
+           (mouseenter)="showEnterpriseSizeInfo()"
+           (mouseleave)="hideEnterpriseSizeInfo()"></i>
+        <span *ngIf="isSizeInfo" class="tooltip-info">
+          <span>TPE : 0-19 employés</span>
+          <span>PME : 20-249 employés</span>
+          <span>ETI : 250-5000 employés</span>
+          <span>GE : >5000 employés</span>
+        </span>
       </label>
       <app-utility-auto-suggestion
         [config]="enterpriseSizeSelectConfig"
