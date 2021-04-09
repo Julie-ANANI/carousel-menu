@@ -15,11 +15,6 @@
 
       <!-- want to search by columns -->
       <ng-container *ngIf="table._isSearchable">
-        <app-shared-search-filter
-          [(searchConfig)]="searchConfig"
-          [props]="table._columns"
-          [tableView]="true">
-        </app-shared-search-filter>
         <app-table-search-filter
           [(searchConfig)]="searchConfig"
           [properties]="table._columns">

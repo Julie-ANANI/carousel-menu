@@ -73,7 +73,7 @@ export class AdminProjectsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
       this._getOperators().then( _ => {
-        this._configOperator();
+        // this._configOperator();
         this._getProjects();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -85,12 +85,12 @@ export class AdminProjectsComponent implements OnInit {
 
   }
 
-  private _configOperator() {
+  /*private _configOperator() {
     const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
     if (!!operator) {
       this._config.operator = operator['_id'];
     }
-  }
+  }*/
 
   /***
    * this is to get the projects from the server.
