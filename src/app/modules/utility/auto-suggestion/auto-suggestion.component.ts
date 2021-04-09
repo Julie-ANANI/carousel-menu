@@ -5,7 +5,6 @@ import {Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, IndustriesList} from '../../../models/static-data/enterprise';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -41,6 +40,9 @@ import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, IndustriesLi
 })
 
 export class AutoSuggestionComponent implements OnInit, OnDestroy {
+  private _suggestionDefaultList: Array<any> = [];
+  private _requestType = '';
+  private _showSuggestionFirst = false;
 
   @Input() set config(config: AutoSuggestionConfig) {
     if (config) {
@@ -49,6 +51,11 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       this._type = config.type || 'users';
       this._identifier = config.identifier || 'name';
       this._default = config.default || '';
+      this._suggestionDefaultList = config.suggestionList || [];
+      this._requestType = config.requestType || 'remote';
+      this._isShowAddButton = config.isShowAddButton || false;
+      this._showSuggestionFirst = config.showSuggestionFirst || false;
+
       this.setDefaultValue();
     }
   }
@@ -59,9 +66,20 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   @Output() valueAdded = new EventEmitter();
 
+
+  get requestType(): string {
+    return this._requestType;
+  }
+
+  get isShowAddButton(): boolean {
+    return this._isShowAddButton;
+  }
+
   private _minChars = 3;
 
   private _inputNewValue = '';
+
+  private _isShowAddButton = false;
 
   private _default = '';
 
@@ -80,14 +98,6 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   private _currentFocus = -1;
 
   private _suggestionsSource: Array<any> = [];
-
-  private _industriesList: Array<any> = IndustriesList;
-
-  private _valueChainList: Array<any> = EnterpriseValueChains;
-
-  private _enterpriseSizeList: Array<any> = EnterpriseSizeList;
-
-  private _enterpriseTypeList: Array<any> = EnterpriseTypes;
 
   private _itemSelected: any = '';
 
@@ -119,11 +129,10 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
         if (input) {
           this._inputNewValue = input;
           this._isSearching = true;
-          if (this.type === 'industry' || this._type === 'valueChain'
-            || this._type === 'enterpriseSize' || this._type === 'enterpriseType') {
-            this._loadListResults(input);
-          } else {
+          if (this._requestType === 'remote') {
             this._loadResult(input);
+          } else {
+            this._loadListResults(input);
           }
         } else {
           this.hideAutoSuggestionDropdown();
@@ -133,17 +142,9 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   setDefaultValue() {
     if (this._default !== '') {
-      switch (this._type) {
-        case 'enterpriseSize':
-          this._searchKeyword.setValue(this._enterpriseSizeList.find(item => item.value === this._default)[0].label);
-          break;
-        case 'enterpriseType':
-          this._searchKeyword.setValue(this._default);
-          break;
-        default:
-          break;
-      }
-
+      this._searchKeyword.setValue(this._default);
+    } else {
+      this._searchKeyword.setValue('');
     }
   }
 
@@ -173,56 +174,13 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
   private _getSuggestionsList(keyword: string) {
-    switch (this.type) {
-      case 'industry':
-        this._width = '80%';
-        this._getIndustries(keyword);
-        break;
-      case 'valueChain':
-        this._width = '80%';
-        this._getValueChains(keyword);
-        break;
-      case 'enterpriseSize':
-        this._getEnterpriseSize();
-        break;
-      case 'enterpriseType':
-        this._width = '80%';
-        this._getEnterpriseType(keyword);
-        break;
+    if (this._isShowAddButton) {
+      this._width = '80%';
     }
+    this._suggestionsSource = this._suggestionDefaultList.filter(item => item.toString().toLowerCase().includes(keyword.toLowerCase()) ||
+      keyword.toLowerCase().includes(item.toString().toLowerCase()));
     this._loading = false;
     this._isSearching = this._suggestionsSource.length !== 0;
-  }
-
-  private _getIndustries(industryKeyword: any) {
-    this._suggestionsSource =
-      this._industriesList.filter(item => item.toLowerCase().includes(industryKeyword.toLowerCase()) ||
-        industryKeyword.toLowerCase().includes(item.toLowerCase()));
-  }
-
-  private _getValueChains(keyword: any) {
-    this._suggestionsSource =
-      this._valueChainList.filter(item => item.toLowerCase().includes(keyword.toLowerCase()) ||
-        keyword.toLowerCase().includes(item.toLowerCase()));
-  }
-
-  private _getEnterpriseSize() {
-    const valueFound = this._enterpriseSizeList.find(item => item.label === this._searchKeyword.value);
-    if (valueFound === undefined) {
-      this._suggestionsSource = this._enterpriseSizeList;
-    } else {
-      this._suggestionsSource = [];
-    }
-  }
-
-  private _getEnterpriseType(keyword: string) {
-    this._suggestionsSource =
-      this._enterpriseTypeList.filter(item => item.toLowerCase().includes(keyword.toLowerCase()) ||
-        keyword.toLowerCase().includes(item.toLowerCase()));
-    if (this._suggestionsSource.length === 0) {
-      this._loading = false;
-      this._isSearching = false;
-    }
   }
 
   private _getSuggestions(searchKey: string) {
@@ -240,21 +198,12 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   public showAutoSuggestionDropdown(event: Event) {
     event.preventDefault();
     const value = ((event.target) as HTMLInputElement).value;
-    switch (this._type) {
-      case 'enterpriseSize':
-        this._dropdownVisible = true;
-        this._isSearching = true;
-        this._getEnterpriseSize();
-        break;
-      case 'enterpriseType':
-        if (this._itemSelected === '') {
-          this._dropdownVisible = true;
-          this._isSearching = true;
-          this._suggestionsSource = this._enterpriseTypeList;
-        }
-        break;
-      default:
-        this._loadResult(value);
+    if (this._requestType === 'remote') {
+      this._loadResult(value);
+    } else if (this._showSuggestionFirst) {
+      this._dropdownVisible = true;
+      this._isSearching = true;
+      this._suggestionsSource = this._suggestionDefaultList;
     }
   }
 
@@ -293,42 +242,22 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   }
 
   public onValueSelect(value: any) {
-    let valueToSend;
-    switch (this._type) {
-      case 'valueChain':
-      case 'industry':
-        valueToSend = {
-          type: this._type,
-          value: value
-        };
-        this._emitValue(valueToSend);
-        this._searchKeyword.setValue('');
-        this._inputNewValue = '';
-        this._width = '100%';
-        break;
-      case 'enterpriseSize':
-        valueToSend = {
-          type: this._type,
-          value: value.value
-        };
-        this._emitValue(valueToSend);
-        this._searchKeyword.setValue(value.label);
-        break;
-      case 'enterpriseType':
-        valueToSend = {
-          type: this._type,
-          value: value
-        };
-        this._itemSelected = value;
-        this._emitValue(valueToSend);
-        this._searchKeyword.setValue('');
-        this._inputNewValue = '';
-        this._width = '100%';
-        break;
-      default:
-        this._itemSelected = value;
-        this._searchKeyword.setValue(value[this._identifier]);
-        this._emitValue(value);
+    this._itemSelected = value;
+    if (this._requestType === 'remote') {
+      this._searchKeyword.setValue(value[this._identifier]);
+      this._emitValue(value);
+    } else {
+      this._emitValue({
+        type: this._type,
+        value: value
+      });
+      this._searchKeyword.setValue('');
+      if (!this.isShowAddButton) {
+        this._searchKeyword.setValue(value);
+      }
+      this._inputNewValue = '';
+      this._width = '100%';
+      this._itemSelected = value;
     }
     this.hideAutoSuggestionDropdown();
   }
@@ -380,13 +309,12 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
    */
   addNewValue() {
     if (this.inputNewValue) {
-      const valueToSend = {
-        type: this.type,
-        value: this.searchKeyword.value
-      };
       this._itemSelected = this.inputNewValue;
       this._searchKeyword.setValue('');
-      this.valueAdded.emit(valueToSend);
+      this.valueAdded.emit({
+        type: this.type,
+        value: this.searchKeyword.value
+      });
       this._inputNewValue = '';
       this._width = '100%';
       this.hideAutoSuggestionDropdown();

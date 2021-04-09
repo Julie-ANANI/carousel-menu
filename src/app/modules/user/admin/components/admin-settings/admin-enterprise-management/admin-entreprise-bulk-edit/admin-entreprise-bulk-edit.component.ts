@@ -9,6 +9,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationsService} from 'angular2-notifications';
 import {AutoSuggestionConfig} from '../../../../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import {Column} from '../../../../../../table/models/column';
+import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries} from '../../../../../../../models/static-data/enterprise';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
 
@@ -24,21 +25,31 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     minChars: 1,
     placeholder: 'Enter the industry',
     type: 'industry',
-    identifier: ''
+    identifier: '',
+    isShowAddButton: true,
+    suggestionList: Industries,
+    requestType: 'local'
   };
 
   private _valueChainSelectConfig: AutoSuggestionConfig = {
     minChars: 1,
     placeholder: 'Enter the value chain',
     type: 'valueChain',
-    identifier: ''
+    identifier: '',
+    isShowAddButton: true,
+    suggestionList: EnterpriseValueChains,
+    requestType: 'local'
   };
 
   private _enterpriseSizeSelectConfig: AutoSuggestionConfig = {
     minChars: 0,
     placeholder: 'Enter the size',
     type: 'enterpriseSize',
-    identifier: 'label',
+    identifier: '',
+    isShowAddButton: false,
+    suggestionList: EnterpriseSizeList,
+    requestType: 'local',
+    showSuggestionFirst: true,
   };
 
   private _enterpriseTypeSelectConfig: AutoSuggestionConfig = {
@@ -46,6 +57,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     placeholder: 'Enter the type',
     type: 'enterpriseType',
     identifier: '',
+    isShowAddButton: true,
+    suggestionList: EnterpriseTypes,
+    requestType: 'local',
+    showSuggestionFirst: true
   };
 
   private _companiesToEdit: Array<any> = [];
@@ -80,6 +95,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _geoZones: Array<any> = [];
   private _valueChains: Array<any> = [];
   private _enterpriseTypes: Array<any> = [];
+  private _isSizeInfo = false;
+  private _isShowSyntax = false;
 
   get enterpriseTypes(): Array<any> {
     return this._enterpriseTypes;
@@ -276,11 +293,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.companiesToEdit = this._enterpriseService._enterprisesSelected;
-    if (this._companiesToEdit.length > 0) {
-      this._initTable();
-    } else {
-      this._router.navigate(['/user/admin/settings/enterprises']);
-    }
+    this._initTable();
   }
 
   public canAccess(path?: Array<string>) {
@@ -339,12 +352,12 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   /**
    * click on button undo => cancel the change on one value
-   * @param $event
+   * @param context
    */
-  undoFilled($event: any) {
-    if ($event) {
-      const rowIndex = $event.row;
-      const column = $event.column;
+  undoFilled(context: any) {
+    if (context) {
+      const rowIndex = context.row;
+      const column = context.column;
       const tempValue = this.companiesTable._content[rowIndex][column._attrs[0]];
       this.companiesTable._content[rowIndex][column._attrs[0]]
         = this._companiesTableToSwap._content[rowIndex][column._attrs[0]];
@@ -469,9 +482,10 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     return this._valueChains;
   }
 
-  getContext(type: string, list: any[]) {
+  getContext(type: string, list: any[], isString: boolean) {
     return {
       type: type,
+      isString: isString,
       answerList: list
     };
   }
@@ -575,5 +589,37 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         this.updateEnterpriseValues('patterns', this._patterns, 'Patterns');
       }
     });
+  }
+
+  getPerformAction($event: any) {
+    if ($event._action === 'fill') {
+      this.undoFilled($event._context);
+    }
+  }
+
+
+  get isSizeInfo(): boolean {
+    return this._isSizeInfo;
+  }
+
+  hideSizeInfo() {
+    this._isSizeInfo = false;
+  }
+
+  showSizeInfo() {
+    this._isSizeInfo = true;
+  }
+
+  hideSyntaxInfo() {
+    this._isShowSyntax = false;
+  }
+
+  showSyntaxInfo() {
+    this._isShowSyntax = true;
+  }
+
+
+  get isShowSyntax(): boolean {
+    return this._isShowSyntax;
   }
 }

@@ -73,6 +73,20 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   private _isSaving = false;
 
   private _shieldSortedList: Array<any> = [];
+  // Array<{ _label: string, _icon?: string, _colorClass?: string, _iconSize?: string, _isHidden?: boolean }>
+
+  private _customButtons: Array<{ _label: string, _icon?: string, _colorClass?: string, _iconSize?: string, _isHidden?: boolean }>
+    = [
+    {
+      _label: 'Add parent',
+      _icon: 'icon-left text-sm icon icon-plus',
+    },
+    {
+      _label: 'Bulk edit',
+      _icon: 'icon-left text-sm icon icon-edit',
+    }
+  ];
+
 
   get shieldSortedList(): Array<any> {
     return this._shieldSortedList;
@@ -192,8 +206,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: true,
       _isPaginable: total > 10,
-      _isAddParent: true,
-      _isBulkEdit: true,
+      _buttons: this._customButtons,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
       _isEditable: this.canAccess(['edit']),
@@ -317,7 +330,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         item._isSelected = !!this._companiesSelected.find(data => data._id === item._id);
       });
       setTimeout(() => {
-      this._resultTableConfiguration._total = total;
+        this._resultTableConfiguration._total = total;
       }, 800);
     }
   }
@@ -648,27 +661,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return this._isSaving;
   }
 
-  navigateToEdit($event: any) {
-    if ($event) {
-      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
-      this._enterpriseService.setQueryConfig(this._queryConfig);
-      this._route.navigateByUrl('/user/admin/settings/enterprises/bulkedit');
-    }
-  }
-
-  navigateToAddParent(event: any) {
-    if (event) {
-      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
-      this._enterpriseService.setQueryConfig(this._queryConfig);
+  performAction($event: any) {
+    this._enterpriseService.setQueryConfig(this._queryConfig);
+    this._enterpriseService.setEnterprisesSelected($event._rows);
+    if ($event._action === 'Add parent') {
       this._route.navigate(['/user/admin/settings/enterprises/addparent']);
     }
-  }
-
-  getSelectedCompanies($event: any) {
-    if ($event) {
-      this._companiesSelected = $event._rows;
-      this._enterpriseService.setEnterprisesSelected(this._companiesSelected);
-      this._enterpriseService.setQueryConfig(this._queryConfig);
+    if ($event._action === 'Bulk edit') {
+      this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
     }
   }
 }

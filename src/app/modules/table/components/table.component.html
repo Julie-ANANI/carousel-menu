@@ -197,30 +197,6 @@
                 </ng-container>
                 <!-- /delete button -->
 
-                <!-- add parent button -->
-                <ng-container *ngIf="table._isAddParent">
-                  <button
-                    (click)="navigateToAddParent()"
-                    class="button p-no text-sm is-link is-sm"
-                    type="button">
-                    <i class="icon-left text-sm icon icon-plus"></i>
-                    {{ 'Add parent' }}
-                  </button>
-                </ng-container>
-                <!-- /add parent button -->
-
-                <!-- bulk edit button -->
-                <ng-container *ngIf="table._isBulkEdit">
-                  <button
-                    (click)="navigateToBulkEdit()"
-                    class="button p-no text-sm is-link is-sm"
-                    type="button">
-                    <i class="icon-left text-sm icon icon-edit"></i>
-                    {{ 'Bulk edit' }}
-                  </button>
-                </ng-container>
-                <!-- /bulk edit button -->
-
               </div>
             </th>
           </ng-container>
@@ -648,13 +624,15 @@
                 <ng-template #replaceTemplate let-context>
                   <span class="fill-replace-icon"
                         *ngIf="context.column['_isReplaceable'] && !context.column['_isFilled']"
-                        (click)="exchangeValue(context)">
+                        (click)="getPerformedAction('replace', context)">
                       <i class="fas fa-exchange-alt" style="color: #00B0FF"></i>
                     </span>
                 </ng-template>
 
                 <ng-template #undoTemplate let-context>
-                  <span *ngIf="context.column['_isFilled'] && !context.column['_isReplaceable']" class="fill-replace-icon" (click)="undoFilled(context)">
+                  <span *ngIf="context.column['_isFilled'] && !context.column['_isReplaceable']"
+                        class="fill-replace-icon"
+                        (click)="getPerformedAction('fill', context)">
                     <i class="fas fa-redo" style="color: #EA5858"></i>
                   </span>
                 </ng-template>

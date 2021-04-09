@@ -125,8 +125,10 @@ export class TableComponent {
 
   private _selectedIndex: number = null;
 
+  // get the string formed when column value is Array
   private _stringInArrayColumn = '';
 
+  // copy an original table
   private _isOrginal = false;
 
   constructor(private _translateService: TranslateService,
@@ -929,17 +931,6 @@ export class TableComponent {
     return this._selectedIndex;
   }
 
-
-  navigateToBulkEdit() {
-    this._localStorageService.setItem('companiesSelected', JSON.stringify(this._getSelectedRowsContent()));
-    this.sendEditNavigator.emit(true);
-  }
-
-  navigateToAddParent() {
-    this._localStorageService.setItem('companiesSelected', JSON.stringify(this._getSelectedRowsContent()));
-    this.sendAddParentNavigator.emit(true);
-  }
-
   exchangeValue(context: any) {
     this.sendExchangeValue.emit(context);
   }
@@ -996,5 +987,9 @@ export class TableComponent {
   isToAddColor(column: Column) {
     return (column.hasOwnProperty('_isFilled') || column.hasOwnProperty('_isReplaceable')) &&
       (column['_isFilled'] === true || column._isReplaceable === true);
+  }
+
+  getPerformedAction(action: string, context: any) {
+    this.performAction.emit({_action: action, _context: context});
   }
 }

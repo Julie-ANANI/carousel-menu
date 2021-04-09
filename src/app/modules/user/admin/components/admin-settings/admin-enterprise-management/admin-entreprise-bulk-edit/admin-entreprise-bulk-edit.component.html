@@ -8,8 +8,14 @@
       <div class="input-column">
         <span class="text is-sm">Patterns
         <i class="fas fa-info-circle is-primary" id="syntax-hover"
-           [title]="'first_name, last_name, first_initial, last_initial'"></i>
+           (mouseenter)="showSyntaxInfo()"
+           (mouseleave)="hideSyntaxInfo()"></i>
         </span>
+        <span class="tooltip-info" *ngIf="isShowSyntax">
+              <span>first_name, last_name</span>
+              <span>first_initial, last_initial</span>
+              <span> . or -</span>
+            </span>
         <app-utility-input-list
           (update)="patternsUpdate($event)"
           [config]="patternConfig"
@@ -17,7 +23,7 @@
           [isEditable]="true">
         </app-utility-input-list>
         <ng-container
-          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('patterns', patterns)}">
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('patterns', patterns, false)}">
         </ng-container>
       </div>
       <!-- /pattern input -->
@@ -39,7 +45,7 @@
           (valueSelected)="getValueSelected($event)">
         </app-utility-auto-suggestion>
         <ng-container
-          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', industries)}">
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', industries, false)}">
         </ng-container>
       </div>
       <!-- /Industry input -->
@@ -55,14 +61,15 @@
           [isEditable]="true">
         </app-utility-input-list>
         <ng-container
-          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('brand', brands)}">
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('brand', brands, false)}">
         </ng-container>
       </div>
       <!-- /Brand input -->
 
       <!-- Enterprise Type input -->
       <div class="input-column">
-        <span class="text is-sm">Enterprise Type</span>
+        <span class="text is-sm">Enterprise Type
+          </span>
         <app-utility-auto-suggestion
           [isSmallInput]="true"
           [config]="enterpriseTypeSelectConfig"
@@ -70,7 +77,7 @@
           (valueSelected)="getValueSelected($event)">
         </app-utility-auto-suggestion>
         <ng-container
-          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', enterpriseTypes)}">
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', enterpriseTypes, true)}">
         </ng-container>
       </div>
       <!-- /Enterprise Type input -->
@@ -86,14 +93,26 @@
           [isEditable]="true">
         </app-utility-input-list>
         <ng-container
-          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('geoZone', geoZones)}">
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('geoZone', geoZones, false)}">
         </ng-container>
       </div>
       <!-- /Geographical Zone input -->
 
       <!-- Enterprise size input -->
       <div class="input-column">
-        <span class="text is-sm">Enterprise size</span>
+        <span class="text is-sm">Enterprise size
+        <i class="fas fa-info-circle is-primary"
+           (mouseenter)="showSizeInfo()"
+           (mouseleave)="hideSizeInfo()"
+           id="enterprise-type-hover">
+        </i>
+        </span>
+        <span *ngIf="isSizeInfo" class="tooltip-info">
+          <span>TPE : 0-19 employés</span>
+          <span>PME : 20-249 employés</span>
+          <span>ETI : 250-5000 employés</span>
+          <span>GE : >5000 employés</span>
+        </span>
         <app-utility-auto-suggestion
           [isSmallInput]="true"
           [config]="enterpriseSizeSelectConfig"
@@ -113,7 +132,7 @@
           (valueSelected)="getValueSelected($event)">
         </app-utility-auto-suggestion>
         <ng-container
-          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', valueChains)}">
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', valueChains, true)}">
         </ng-container>
       </div>
       <!-- /Value chain input -->
@@ -125,14 +144,14 @@
     <section class="p-bottom-15 p-top-20">
       <app-shared-table
         [(config)]="config"
-        (sendUndoFilled)="undoFilled($event)"
+        (performAction)="getPerformAction($event)"
         [data]="companiesTable">
       </app-shared-table>
     </section>
     <!-- /companies selected table -->
 
     <!-- button -->
-    <section class="p-bottom-30 p-top-4" style="display: flex">
+    <section class="p-bottom-30 p-top-4" style="display: flex" *ngIf="companiesToEdit.length > 0">
       <button class="button is-primary is-lg is-outlined"
               (click)="return()">
         Back
@@ -160,8 +179,8 @@
       <!-- text -->
       <div class="answer-wrapper text-sm text-primary-dark m-right-2">
         <span
-          *ngIf="context.type !== 'valueChain' && context.type !== 'enterpriseType'">{{answer.text || answer.name || answer.label || answer.expression }}</span>
-        <span *ngIf="context.type === 'valueChain' || context.type === 'enterpriseType'">{{answer}}</span>
+          *ngIf="!context.isString">{{answer.text || answer.name || answer.label || answer.expression }}</span>
+        <span *ngIf="context.isString">{{answer}}</span>
       </div>
       <!-- /text -->
       <!-- icons -->

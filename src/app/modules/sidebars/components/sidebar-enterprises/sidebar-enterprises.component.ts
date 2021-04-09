@@ -7,6 +7,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
 import {Clearbit} from '../../../../models/clearbit';
 import {AutoSuggestionConfig} from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries} from '../../../../models/static-data/enterprise';
 
 
 type Template = 'CREATE' | 'EDIT';
@@ -60,6 +61,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   private _enterprise: Enterprise = <Enterprise>{};
 
   private _form: FormGroup;
+
+  private _isSizeInfo = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -139,21 +142,32 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       minChars: 1,
       placeholder: 'Enter the industry',
       type: 'industry',
-      identifier: ''
+      identifier: '',
+      suggestionList: Industries,
+      isShowAddButton: true,
+      requestType: 'local'
     };
 
     this._valueChainSelectConfig = {
       minChars: 1,
       placeholder: 'Enter the value chain',
       type: 'valueChain',
-      identifier: ''
+      identifier: '',
+      suggestionList: EnterpriseValueChains,
+      isShowAddButton: true,
+      requestType: 'local'
     };
 
     this._enterpriseSizeSelectConfig = {
       minChars: 0,
       placeholder: 'Enter the enterprise size',
       type: 'enterpriseSize',
-      identifier: 'label',
+      identifier: '',
+      suggestionList: EnterpriseSizeList,
+      isShowAddButton: false,
+      requestType: 'local',
+      showSuggestionFirst: true,
+      default: this._enterprise.enterpriseSize || ''
     };
 
     this._enterpriseTypeSelectConfig = {
@@ -161,6 +175,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       placeholder: 'Enter the enterprise type',
       type: 'enterpriseType',
       identifier: '',
+      suggestionList: EnterpriseTypes,
+      isShowAddButton: true,
+      requestType: 'local',
+      showSuggestionFirst: true,
     };
 
   }
@@ -500,9 +518,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
-  getContext(type: string, list: any[]) {
+  getContext(type: string, list: any[], isString: boolean) {
     return {
       type: type,
+      isString: isString,
       answerList: list
     };
   }
@@ -522,5 +541,18 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   changeShowSyntax() {
     this._isShowSyntax = !this.isShowSyntax;
+  }
+
+  showEnterpriseSizeInfo() {
+    this._isSizeInfo = true;
+  }
+
+
+  get isSizeInfo(): boolean {
+    return this._isSizeInfo;
+  }
+
+  hideEnterpriseSizeInfo() {
+    this._isSizeInfo = false;
   }
 }

@@ -98,7 +98,7 @@
         placeholder="Enter the subsidiaries"
         type="text">
       <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('subsidiaries', newSubsidiary)}">
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('subsidiaries', newSubsidiary, false)}">
       </ng-container>
     </div>
     <!-- /subsidiaries -->
@@ -124,8 +124,8 @@
     <div class="form-group">
       <label class="form-label" style="display: flex; align-items: center">Patterns
         <i class="icon icon-arrow-down is-md is-primary"
-          style="margin-left: auto; cursor: pointer"
-          (click)="changeShowSyntax()">
+           style="margin-left: auto; cursor: pointer"
+           (click)="changeShowSyntax()">
         </i>
       </label>
       <p class="syntax-info" *ngIf="isShowSyntax">
@@ -151,7 +151,7 @@
         (valueSelected)="getValueSelected($event)">
       </app-utility-auto-suggestion>
       <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', newEnterpriseType)}">
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', newEnterpriseType, true)}">
       </ng-container>
     </div>
     <!-- /type -->
@@ -165,7 +165,7 @@
         (valueSelected)="getValueSelected($event)">
       </app-utility-auto-suggestion>
       <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry)}">
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry, false)}">
       </ng-container>
     </div>
     <!-- industry -->
@@ -194,7 +194,17 @@
 
     <!-- company size -->
     <div class="form-group">
-      <label class="form-label">Company size</label>
+      <label class="form-label">Company size
+        <i class="fas fa-info-circle is-primary" id="enterprise-type-hover"
+           (mouseenter)="showEnterpriseSizeInfo()"
+           (mouseleave)="hideEnterpriseSizeInfo()"></i>
+        <span *ngIf="isSizeInfo" class="tooltip-info">
+          <span>TPE : 0-19 employés</span>
+          <span>PME : 20-249 employés</span>
+          <span>ETI : 250-5000 employés</span>
+          <span>GE : >5000 employés</span>
+        </span>
+      </label>
       <app-utility-auto-suggestion
         [config]="enterpriseSizeSelectConfig"
         (valueAdded)="getValueSelected($event)"
@@ -212,7 +222,7 @@
         (valueSelected)="getValueSelected($event)">
       </app-utility-auto-suggestion>
       <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', newValueChains)}">
+        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', newValueChains, true)}">
       </ng-container>
     </div>
     <!-- /value chain -->
@@ -240,8 +250,8 @@
       <!-- text -->
       <div class="answer-wrapper text-sm text-primary-dark m-right-2">
         <span
-          *ngIf="context.type !== 'valueChain' && context.type !== 'enterpriseType'">{{answer.text || answer.name || answer.label || answer.expression}}</span>
-        <span *ngIf="context.type === 'valueChain' || context.type === 'enterpriseType'">{{answer}}</span>
+          *ngIf="!context.isString">{{answer.text || answer.name || answer.label || answer.expression}}</span>
+        <span *ngIf="context.isString">{{answer}}</span>
       </div>
       <!-- /text -->
       <!-- icons -->
