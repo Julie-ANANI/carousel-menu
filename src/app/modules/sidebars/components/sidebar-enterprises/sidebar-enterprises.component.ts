@@ -555,4 +555,12 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   hideEnterpriseSizeInfo() {
     this._isSizeInfo = false;
   }
+
+  hideSyntaxInfo() {
+    this._isShowSyntax = false;
+  }
+
+  showSyntaxInfo() {
+    this._isShowSyntax = true;
+  }
 }
