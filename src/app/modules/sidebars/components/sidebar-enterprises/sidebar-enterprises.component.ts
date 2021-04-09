@@ -165,7 +165,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       isShowAddButton: false,
       requestType: 'local',
       showSuggestionFirst: true,
-      default: this._enterprise.enterpriseSize
+      default: this._enterprise.enterpriseSize || ''
     };
 
     this._enterpriseTypeSelectConfig = {

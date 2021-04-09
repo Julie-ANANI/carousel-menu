@@ -143,6 +143,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   setDefaultValue() {
     if (this._default !== '') {
       this._searchKeyword.setValue(this._default);
+    } else {
+      this._searchKeyword.setValue('');
     }
   }
 
@@ -175,9 +177,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     if (this._isShowAddButton) {
       this._width = '80%';
     }
-    this._suggestionsSource =
-      this._suggestionDefaultList.filter(item => item.toString().toLowerCase().includes(keyword.toLowerCase()) ||
-        keyword.toLowerCase().includes(item.toString().toLowerCase()));
+    this._suggestionDefaultList.filter(item => item.toString().toLowerCase().includes(keyword.toLowerCase()) ||
+      keyword.toLowerCase().includes(item.toString().toLowerCase()));
     this._loading = false;
     this._isSearching = this._suggestionsSource.length !== 0;
   }

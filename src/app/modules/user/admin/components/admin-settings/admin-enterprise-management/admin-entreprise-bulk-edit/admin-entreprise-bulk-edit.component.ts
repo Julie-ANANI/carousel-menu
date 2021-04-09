@@ -49,7 +49,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     isShowAddButton: false,
     suggestionList: EnterpriseSizeList,
     requestType: 'local',
-    showSuggestionFirst: true
+    showSuggestionFirst: true,
   };
 
   private _enterpriseTypeSelectConfig: AutoSuggestionConfig = {
