@@ -59,6 +59,21 @@
   @media (max-width: $size-sm) {
 
     #table-search-filter {
+      margin-right: 0;
+
+      .search-dropdown-wrapper, .filter-dropdown-wrapper {
+        flex: auto;
+        width: 100%;
+
+        span, label {
+          flex: 1;
+        }
+
+        .form-select {
+          max-width: 100%;
+        }
+
+      }
 
       .search-field-wrapper {
         order: 2;

@@ -112,7 +112,7 @@ export class TableSearchFilterComponent {
    * @private
    */
   private _checkFilterActive() {
-    this._isFilterActive = (!!this._searchString) || !!(TableSearchFilterComponent._iterateObject(this._searchObject))
+    this._isFilterActive = !!(TableSearchFilterComponent._iterateObject(this._searchObject))
       || !!(TableSearchFilterComponent._iterateObject(this._advanceSearchObject));
   }
 
