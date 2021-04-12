@@ -117,7 +117,12 @@ export class NewProjectComponent implements OnInit {
   public onDateChanged(event: IMyDateModel) {
     if (event && event.singleDate && event.singleDate.jsDate) {
       this._mission.milestoneDates[0] = {
-        name: this._currentLang === 'en' ? 'Restitution Date' : 'Date de restitution',
+        name: 'Feedback collection',
+        code: 'FC0',
+        dueDate: null
+      };
+      this._mission.milestoneDates[1] = {
+        name: 'Restitution date',
         code: 'RDO',
         dueDate: event.singleDate.jsDate
       };
