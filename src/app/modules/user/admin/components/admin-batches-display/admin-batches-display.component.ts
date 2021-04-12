@@ -107,7 +107,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
       this._weekBatches = batches;
       this._isLoading = false;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Batch Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -150,7 +150,8 @@ export class AdminBatchesDisplayComponent implements OnInit {
    *
    * @param
    */
-  public getState(b: any) {
+  public getState(b: any, index: number) {
+    const batchDay = this._weekBatches.length && this._weekBatches[index] && this._weekBatches[index][0] || '';
     const day = this._dateNow.getDay();
 
     let Now = new Date(this._dateNow);
@@ -163,16 +164,16 @@ export class AdminBatchesDisplayComponent implements OnInit {
     const SM = new Date(b.secondMail);
     const TM = new Date(b.thirdMail);
 
-    if ((beginWeek < FM) && (FM < endWeek)) {
-      return 0;
+    if ((beginWeek < TM) && (TM < endWeek) && batchDay === TM.getDate() + '/' + TM.getMonth()) {
+      return 2;
     }
 
-    if ((beginWeek < SM) && (SM < endWeek)) {
+    if ((beginWeek < SM) && (SM < endWeek) && batchDay === SM.getDate() + '/' + SM.getMonth()) {
       return 1;
     }
 
-    if ((beginWeek < TM) && (TM < endWeek)) {
-      return 2;
+    if ((beginWeek < FM) && (FM < endWeek) && batchDay === FM.getDate() + '/' + FM.getMonth()) {
+      return 0;
     }
 
   }
