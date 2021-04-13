@@ -119,7 +119,7 @@ export class NewProjectComponent implements OnInit {
       this._mission.milestoneDates[0] = {
         name: 'Feedback collection',
         code: 'FC0',
-        dueDate: event.singleDate.jsDate
+        dueDate: null
       };
       this._mission.milestoneDates[1] = {
         name: 'Restitution date',

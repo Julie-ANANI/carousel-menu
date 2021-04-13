@@ -18,6 +18,8 @@ import {Subject} from 'rxjs';
 import {QuizService} from '../../../../../../services/quiz/quiz.service';
 import {Innovation} from '../../../../../../models/innovation';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {MissionService} from '../../../../../../services/mission/mission.service';
+import {Mission} from '../../../../../../models/mission';
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
@@ -30,10 +32,12 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
               private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
               private _campaignService: CampaignService,
+              private _missionService: MissionService,
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService) { }
+              private _translateService: TranslateService) {
+  }
 
   // DEBUG AUTOBATCH => Creation de pro a la volée
   /*createPro() {
@@ -45,7 +49,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   get autoBatchStatus() {
-    return ( this.quiz && this.innovationStatus && this.templatesStatus && (this.statusAB !== '1'));
+    return (this.quiz && this.innovationStatus && this.templatesStatus && (this.statusAB !== '1'));
   }
 
   get templatesStatus(): boolean {
@@ -62,7 +66,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   get defaultWorkflow() {
-    return this._campaign.settings && this._campaign.settings.defaultWorkflow ;
+    return this._campaign.settings && this._campaign.settings.defaultWorkflow;
   }
 
   get quiz(): boolean {
@@ -211,8 +215,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this._activatedRoute.data.subscribe((data) => {
+      console.log(data);
       if (data['campaign']) {
         this._campaign = data['campaign'];
         this._campaignFrontService.setActiveCampaign(this._campaign);
@@ -275,6 +279,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._stats = stats;
         this._batchesTable = [];
         if (this._stats.batches) {
+          this._getMissionToUpdate(this._stats.batches);
           this._stats.batches.forEach((batch: Batch) => {
             this._batchesTable.push(this._initBatchTable(batch));
           });
@@ -285,6 +290,42 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._isLoading = false;
         console.error(err);
       });
+    }
+  }
+
+  private _getMissionToUpdate(batches: any) {
+    if (batches.length > 0 && this.innovation.mission) {
+      const fcDate = new Date(batches[0].firstMail);
+      let missionId;
+      if (typeof this.innovation.mission === 'string') {
+        missionId = this.innovation.mission;
+      } else {
+        missionId = this.innovation.mission._id;
+      }
+      this._missionService.get(missionId).subscribe((m => {
+          this._updateFeedbackDate(m, fcDate);
+        }),
+        (error => {
+          console.log(error);
+        })
+      );
+    }
+  }
+
+  private _updateFeedbackDate(mission: Mission, fcDate: Date) {
+    if (mission.milestoneDates.length > 0) {
+      const fcdObject = mission.milestoneDates.find(item => item.name === 'Feedback collection');
+      if (fcdObject) {
+        fcdObject.dueDate = fcDate;
+        const missionObject = {
+          milestoneDates: mission.milestoneDates
+        };
+        this._missionService.save(mission._id, missionObject).subscribe((savedMission) => {
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'SUCCESS');
+        }, (err) => {
+          this._translateNotificationsService.error('ERROR.SUCCESS', err.message);
+        });
+      }
     }
   }
 
@@ -305,10 +346,15 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
     const generateBatchLine = (i: number) => {
       const data = [
-        {title:  '01 - Hello World', date: batch.firstMail, time: firstTime, status: AdminCampaignBatchComponent._getStatus(0, batch.status)},
-        {title:  '02 - 2nd try', date: batch.secondMail, time: secondTime, status: AdminCampaignBatchComponent._getStatus(1, batch.status)},
-        {title:  '03 - 3rd try', date: batch.thirdMail, time: thirdTime, status: AdminCampaignBatchComponent._getStatus(2, batch.status)},
-        {title:  '04 - Thanks', date: '', status: '', time: ''}
+        {
+          title: '01 - Hello World',
+          date: batch.firstMail,
+          time: firstTime,
+          status: AdminCampaignBatchComponent._getStatus(0, batch.status)
+        },
+        {title: '02 - 2nd try', date: batch.secondMail, time: secondTime, status: AdminCampaignBatchComponent._getStatus(1, batch.status)},
+        {title: '03 - 3rd try', date: batch.thirdMail, time: thirdTime, status: AdminCampaignBatchComponent._getStatus(2, batch.status)},
+        {title: '04 - Thanks', date: '', status: '', time: ''}
       ];
       return {
         Step: data[i].title,
@@ -595,7 +641,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     this._content = this._contentWorkflowStep(batch, step);
     this._currentRow = row;
     this._currentBatch = batch;
-    this.activateSidebar( 'EDIT_BATCH');
+    this.activateSidebar('EDIT_BATCH');
   }
 
   private _contentWorkflowStep(batch: Batch, step: any): any {
@@ -603,7 +649,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     const content = {en: '', fr: '', _id: batch._id};
 
     if (this._campaign.settings && this._campaign.settings.emails) {
-      this._campaign.settings.emails.forEach( (mail) => {
+      this._campaign.settings.emails.forEach((mail) => {
         if (mail.step === step && workflowName === mail.nameWorkflow) {
           if (mail.language === 'en') {
             content.en = mail.content;

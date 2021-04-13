@@ -93,6 +93,7 @@
                     </li>
                     <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
                       <li
+                        *ngIf="milestone.dueDate"
                         [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span class="d-flex flex-d-column align-center">
                         <span class="shape is-circle is-sm"></span>
