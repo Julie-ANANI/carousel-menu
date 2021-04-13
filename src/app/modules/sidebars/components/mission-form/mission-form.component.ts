@@ -22,7 +22,8 @@ export class MissionFormComponent {
         value.milestoneDates.map((milestone) => {
           return new FormGroup({
             name: new FormControl(milestone.name),
-            dueDate: new FormControl(new Date(milestone.dueDate).toISOString().slice(0, 10))
+            dueDate: new FormControl(new Date(milestone.dueDate).toISOString().slice(0, 10)),
+            code: new FormControl(milestone.code)
           });
         })
       );
