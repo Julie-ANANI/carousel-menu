@@ -1,24 +1,24 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
-import { Innovation } from '../../../../../../../models/innovation';
-import { Mission } from '../../../../../../../models/mission';
-import { first, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { AuthService } from '../../../../../../../services/auth/auth.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ClientProject } from '../../../../../../../models/client-project';
-import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
-import { MissionService } from '../../../../../../../services/mission/mission.service';
-import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
-import { emailRegEx } from '../../../../../../../utils/regex';
-import { Collaborator } from '../../../../../../../models/collaborator';
-import { Invite } from '../../../../../../../services/invite/invite';
-import { User } from '../../../../../../../models/user.model';
-import { InnovCard } from '../../../../../../../models/innov-card';
-import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
+import {Innovation} from '../../../../../../../models/innovation';
+import {Mission} from '../../../../../../../models/mission';
+import {first, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {AuthService} from '../../../../../../../services/auth/auth.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ClientProject} from '../../../../../../../models/client-project';
+import {InnovationService} from '../../../../../../../services/innovation/innovation.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
+import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
+import {MissionService} from '../../../../../../../services/mission/mission.service';
+import {CalAnimation, IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
+import {emailRegEx} from '../../../../../../../utils/regex';
+import {Collaborator} from '../../../../../../../models/collaborator';
+import {Invite} from '../../../../../../../services/invite/invite';
+import {User} from '../../../../../../../models/user.model';
+import {InnovCard} from '../../../../../../../models/innov-card';
+import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
 
 interface Section {
   name: string;
@@ -39,7 +39,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _mission: Mission = <Mission>{
     objective: {
-      principal: { en: '', fr: '' },
+      principal: {en: '', fr: ''},
       secondary: [],
       comment: ''
     },
@@ -59,17 +59,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _collaboratorConsent = false;
 
   private _sections: Array<Section> = [
-    { name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION' },
-    { name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
-    { name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION' },
-    { name: 'ROADMAP', isVisible: false, isEditable: false , level: 'MISSION' },
-    { name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION' },
-    { name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL' },
-    { name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR' },
-    { name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION' },
-    { name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT' },
-    { name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION' },
-    { name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION'},
+    {name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION'},
+    {name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
+    {name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
+    {name: 'ROADMAP', isVisible: false, isEditable: false, level: 'MISSION'},
+    {name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION'},
+    {name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL'},
+    {name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},
+    {name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION'},
+    {name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT'},
+    {name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION'},
+    {name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION'},
   ];
 
   private _showModal = false;
@@ -97,7 +97,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _missionService: MissionService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService) { }
+              private _innovationFrontService: InnovationFrontService) {
+  }
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
@@ -385,7 +386,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._innovationFrontService.setInnovation(innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-      }, (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
       this._isSaving = false;
@@ -460,7 +461,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._datePickerOptions = {
         dateRange: false,
         dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
-        calendarAnimation: { in: CalAnimation.Fade, out: CalAnimation.Fade},
+        calendarAnimation: {in: CalAnimation.Fade, out: CalAnimation.Fade},
         disableUntil: {
           year: Number(date.slice(0, 4)),
           month: Number(date.slice(5, 7)),
@@ -659,6 +660,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   set consent(value: boolean) {
     this._collaboratorConsent = value;
+  }
+
+  isNotTypeRD0(code: string) {
+    return code !== 'RDO' && !code.includes('RDO');
+  }
+
+  isNotTypeFC0(code: string) {
+    return code !== 'FCO' && !code.includes('FCO');
   }
 
   ngOnDestroy(): void {

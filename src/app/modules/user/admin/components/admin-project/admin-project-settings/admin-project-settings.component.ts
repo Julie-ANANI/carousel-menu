@@ -74,7 +74,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _innovationStatus: Array<InnovationStatus> = ['EDITING', 'SUBMITTED', 'EVALUATING', 'DONE'];
 
-  private _domains: Array<{name: string}> = [
+  private _domains: Array<{ name: string }> = [
     {name: 'umi'},
     {name: 'dynergie'},
     {name: 'novanexia'},
@@ -139,7 +139,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _getCommercials() {
     this._userService.getCommercials().pipe(first()).subscribe((response: Response) => {
       this._commercials = response.result;
-      }, (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Commercial Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
@@ -217,7 +217,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           }
         ]
       },
-     {
+      {
         heading: 'Answers',
         content: [
           {
@@ -325,8 +325,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _saveProject(notifyMessage = 'The project has been updated.', saveObject: any) {
     this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe(() => {
       this._innovationFrontService.setInnovation(this._innovation);
-      this._translateNotificationsService.success('Success' , notifyMessage);
-      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.success('Success', notifyMessage);
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
@@ -343,7 +343,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((clientProject: ClientProject) => {
         this._clientProject = clientProject;
-        this._translateNotificationsService.success('Success' , notifyMessage);
+        this._translateNotificationsService.success('Success', notifyMessage);
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -427,6 +427,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       type: type,
       title: title
     };
+    console.log(this._isLoading);
+    console.log(this._sidebarValue);
   }
 
   public selectOwner(value: UserSuggestion) {
@@ -488,7 +490,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  public addBlocklist(values: {emails: Array<string>, domains: Array<string>}) {
+  public addBlocklist(values: { emails: Array<string>, domains: Array<string> }) {
     if (values.emails.length || values.domains.length) {
       const _domainExp = domainRegEx;
       const _emailExp = emailRegEx;
@@ -683,4 +685,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  openQuiz($event: Event) {
+    $event.preventDefault();
+    if (this.quizLink) {
+      window.open(this.quizLink, '_blank');
+    }
+  }
 }

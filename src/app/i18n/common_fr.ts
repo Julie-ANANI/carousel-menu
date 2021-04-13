@@ -118,6 +118,8 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'FEEDBACK_COLLECTION': 'Collecte de feedback',
+    'RSETITUTION': 'Restitution',
     'SELECT_COLUMN_TO_EDIT': 'Sélectionnez une colonne',
     'ACTIVITY_FIELDS': 'Champs d\'activité',
     'FIRSTNAME': 'Prénom',

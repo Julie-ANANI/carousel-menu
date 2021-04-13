@@ -119,6 +119,8 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'FEEDBACK_COLLECTION': 'Feedback collection',
+    'RSETITUTION': 'Restitution',
     'ACTIVITY_FIELDS': 'Activity Fields',
     'FIRSTNAME': 'First Name',
     'LASTNAME': 'Last Name',
