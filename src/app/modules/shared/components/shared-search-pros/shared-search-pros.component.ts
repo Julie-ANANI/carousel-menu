@@ -40,7 +40,7 @@ export class SharedSearchProsComponent implements OnInit {
       americaSud: false
     },
     exclude: [],
-    include: []
+    include: [],
   };
 
   private _campaign: Campaign = <Campaign>{};

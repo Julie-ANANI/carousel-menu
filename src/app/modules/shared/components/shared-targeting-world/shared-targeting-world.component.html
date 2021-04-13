@@ -67,12 +67,17 @@
               type="checkbox">
             <i class="form-icon"></i>{{ ('CONTINENTS.' + continent) | translate }}
           </label>
+          <div *ngIf="isShowSearch">
+            <app-utility-search-input-2
+              (searchFieldOutput)="onChangeCountrySearch($event, continent)">
+            </app-utility-search-input-2>
+          </div>
         </div>
         <!-- /continents -->
 
         <!-- countries -->
         <div class="country-list-wrapper">
-          <div *ngFor="let country of getCountriesByContinent(continent)" class="card is-responsive">
+          <div *ngFor="let country of continentCountriesAfterSearch[continent]" class="card is-responsive">
             <div class="d-flex align-center" style="min-height: 40px">
 
               <label class="form-checkbox p-no-right">
