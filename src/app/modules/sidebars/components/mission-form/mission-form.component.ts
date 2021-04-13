@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MissionService } from '../../../../services/mission/mission.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {MissionService} from '../../../../services/mission/mission.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {MailConfiguration, Mission} from '../../../../models/mission';
-import {EmailService} from "../../../../services/email/email.service";
+import {EmailService} from '../../../../services/email/email.service';
 
 @Component({
   selector: 'app-mission-form',
@@ -30,7 +30,7 @@ export class MissionFormComponent {
       value.mailConf.forEach(_config => {
         const key = _config.service + '_' + _config.domain;
         this._selectedServiceMeta[key] = true;
-      })
+      });
     }
   }
 
@@ -45,9 +45,9 @@ export class MissionFormComponent {
   constructor(private formBuilder: FormBuilder,
               private missionService: MissionService,
               private translateNotificationsService: TranslateNotificationsService,
-              private _emailService: EmailService ) {
+              private _emailService: EmailService) {
 
-    this._missionForm = this.formBuilder.group( {
+    this._missionForm = this.formBuilder.group({
       _id: new FormControl(''),
       name: new FormControl(''),
       goal: new FormControl(''),
@@ -56,20 +56,22 @@ export class MissionFormComponent {
     });
 
     this._emailService.getMailServiceConfigurations()
-      .subscribe( config => {
+      .subscribe(config => {
         // this._mailServicesConfigurations = config.filter( (_config: any) => {return _config.service !== 'gmail';}) || [];
 
         this._missionForm.controls.mailConf = this.formBuilder.array(
-          config.filter( (_config: any) => {return _config.service !== 'gmail';})
+          config.filter((_config: any) => {
+            return _config.service !== 'gmail';
+          })
             .map((_config: MailConfiguration) => {
               return new FormGroup({
                 domain: new FormControl(_config.domain),
                 service: new FormControl(_config.service),
                 region: new FormControl(_config.region)
               });
-          })
+            })
         );
-      }, err =>{
+      }, err => {
         this.translateNotificationsService.error('ERROR.SUCCESS', err.message);
       });
 
@@ -78,7 +80,7 @@ export class MissionFormComponent {
 
   newMilestone(event: Event) {
     event.preventDefault();
-    this.milestoneDates.push(new FormGroup({ name: new FormControl(''), dueDate: new FormControl('') }));
+    this.milestoneDates.push(new FormGroup({name: new FormControl(''), dueDate: new FormControl('')}));
   }
 
   removeMilestone(event: Event, index: number) {
@@ -115,7 +117,7 @@ export class MissionFormComponent {
   }
 
   public getServiceDomainLabel(index: number) {
-    if  (index >= 0 && index < this._missionForm.get('mailConf').value.length) {
+    if (index >= 0 && index < this._missionForm.get('mailConf').value.length) {
       const value = this._missionForm.get('mailConf').value[index];
       return `${value.service} - ${value.domain.length > 20 ? value.domain.substring(0, 8) + '...' + value.domain.substring(value.domain.length - 8) : value.domain}`;
     }
