@@ -314,7 +314,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _updateFeedbackDate(mission: Mission, fcDate: Date) {
     if (mission.milestoneDates.length > 0) {
-      const fcdObject = mission.milestoneDates.find(item => item.name === 'Feedback collection');
+      const fcdObject = mission.milestoneDates.find(item => item.code === 'FC0');
       if (fcdObject) {
         fcdObject.dueDate = fcDate;
         const missionObject = {
