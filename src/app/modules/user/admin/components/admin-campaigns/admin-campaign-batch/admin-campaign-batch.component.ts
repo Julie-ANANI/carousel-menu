@@ -73,6 +73,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
+
   /***
    * Calcule d'une date d'envoi à partir des inputs de la date et heure
    * @param date
@@ -384,6 +385,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   private _initBatchTable(batch: Batch): Table {
+    console.log(batch);
     const firstJSdate = new Date(batch.firstMail);
     const firstTime =
       ('0' + firstJSdate.getHours()).slice(-2) +
