@@ -12,25 +12,25 @@
   </div>
   <!-- /save button -->
 
-  <!-- number of pros -->
-  <div class="form-group align-center m-bottom-30">
-    <label class="title is-6 m-no-bottom m-right-20" for="sidebar-pros-number">Search</label>
-    <select
-      [(ngModel)]="params && params.count"
-      [disabled]="!isEditable"
-      class="form-select is-sm mxw-250"
-      id="sidebar-pros-number"
-      name="sidebar-pros-count">
-      <option value="''">Select</option>
-      <option *ngFor="let count of prosCount" [value]="count">
-        {{ count }} pros
-      </option>
-    </select>
-  </div>
-  <!-- /number of pros -->
-
   <!-- toggle advanced search -->
   <div class="stw-toggle-list-wrapper">
+
+    <!-- number of pros -->
+    <div class="form-group align-center m-bottom-30">
+      <label class="title is-6 m-no-bottom m-right-20" for="sidebar-pros-number">Search</label>
+      <select
+        [(ngModel)]="params && params.count"
+        [disabled]="!isEditable"
+        class="form-select is-sm mxw-250"
+        id="sidebar-pros-number"
+        name="sidebar-pros-count">
+        <option value="''">Select</option>
+        <option *ngFor="let count of prosCount" [value]="count">
+          {{ count }} pros
+        </option>
+      </select>
+    </div>
+    <!-- /number of pros -->
 
     <!-- toggle button -->
     <button (click)="onClickToggle()" class="button is-link p-no" type="button">
