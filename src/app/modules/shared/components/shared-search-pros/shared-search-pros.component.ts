@@ -10,15 +10,14 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-shared-search-pros',
   templateUrl: './shared-search-pros.component.html',
-  styleUrls: ['./shared-search-pros.component.scss']
+  styleUrls: ['./shared-search-pros.component.scss'],
 })
-
 export class SharedSearchProsComponent implements OnInit {
-
   @Input() accessPath: Array<string> = [];
 
   @Input() set campaign(value: Campaign) {
@@ -26,7 +25,11 @@ export class SharedSearchProsComponent implements OnInit {
     this._initParams();
   }
 
-  private _suggestions: Array<{ expected_result: number, search_keywords: string; keywords: string }> = [];
+  private _suggestions: Array<{
+    expected_result: number;
+    search_keywords: string;
+    keywords: string;
+  }> = [];
 
   private _params: any = null;
 
@@ -37,7 +40,7 @@ export class SharedSearchProsComponent implements OnInit {
       asia: false,
       europe: false,
       americaNord: false,
-      americaSud: false
+      americaSud: false,
     },
     exclude: [],
     include: [],
@@ -63,11 +66,14 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _importRequestKeywords = '';
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _searchService: SearchService,
-              private _rolesFrontService: RolesFrontService,
-              private _authService: AuthService) { }
+  constructor(
+    @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _translateNotificationsService: TranslateNotificationsService,
+    private _searchService: SearchService,
+    private _rolesFrontService: RolesFrontService,
+    private _authService: AuthService,
+    private _localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -77,16 +83,27 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   private _getCountries() {
-    this._searchService.getCountriesSettings().pipe(first()).subscribe((countriesSettings: any) => {
-      this._countriesSettings = countriesSettings.countries;
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._searchService
+      .getCountriesSettings()
+      .pipe(first())
+      .subscribe(
+        (countriesSettings: any) => {
+          this._countriesSettings = countriesSettings.countries;
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   public canAccess(path: Array<string>) {
-    return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
+    return this._rolesFrontService.hasAccessAdminSide(
+      this.accessPath.concat(path)
+    );
   }
 
   private _initParams() {
@@ -100,7 +117,7 @@ export class SharedSearchProsComponent implements OnInit {
         linkedin: true,
         viadeo: false,
         kompass: false,
-        xing: false
+        xing: false,
       },
       count: 10,
       starProfiles: 5,
@@ -110,8 +127,8 @@ export class SharedSearchProsComponent implements OnInit {
         automated: false,
         smart: false,
         regions: false,
-        indexSearch: false
-      }
+        indexSearch: false,
+      },
     };
 
     if (this.campaign && this.campaign._id) {
@@ -121,11 +138,17 @@ export class SharedSearchProsComponent implements OnInit {
       this._params.count = 100;
       this._params.campaign = this.campaign._id;
       this._params.innovation = this.campaign.innovation._id;
-      if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings
-        && this.campaign.innovation.settings.geography) {
+      if (
+        this.campaign.innovation &&
+        this.campaign.innovation.settings &&
+        this.campaign.innovation.settings &&
+        this.campaign.innovation.settings.geography
+      ) {
         this._geography = this.campaign.innovation.settings.geography;
         if (this.campaign.innovation.settings.geography.include) {
-          this._params.countries = this.campaign.innovation.settings.geography.include.map(c => c.code);
+          this._params.countries = this.campaign.innovation.settings.geography.include.map(
+            (c) => c.code
+          );
         }
       }
     }
@@ -133,30 +156,49 @@ export class SharedSearchProsComponent implements OnInit {
     this._catResult = { duplicate_status: 'ok' };
     this.estimateNumberOfGoogleRequests();
     this._suggestions = [];
-
   }
 
   private _getGoogleQuota() {
-    this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
-      this._googleQuota = 100000;
-      if (result.hours) {
-        this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
-      }
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._searchService
+      .dailyStats()
+      .pipe(first())
+      .subscribe(
+        (result: any) => {
+          this._googleQuota = 100000;
+          if (result.hours) {
+            this._googleQuota -= result.hours
+              .slice(7)
+              .reduce((sum: number, hour: any) => sum + hour.googleQueries, 0);
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   public estimateNumberOfGoogleRequests(totalResultsArray?: Array<number>) {
-    totalResultsArray = totalResultsArray || this._params.keywords.split('\n').filter((k: string) => k)
-      .fill(1000000);
-    this._estimatedNumberOfGoogleRequests = totalResultsArray.reduce((acc: number, curr: number) => {
-      return acc + this._estimateNumberOfGoogleRequestsForOneSearch(curr);
-    }, 0);
+    totalResultsArray =
+      totalResultsArray ||
+      this._params.keywords
+        .split('\n')
+        .filter((k: string) => k)
+        .fill(1000000);
+    this._estimatedNumberOfGoogleRequests = totalResultsArray.reduce(
+      (acc: number, curr: number) => {
+        return acc + this._estimateNumberOfGoogleRequestsForOneSearch(curr);
+      },
+      0
+    );
   }
 
-  private _estimateNumberOfGoogleRequestsForOneSearch(totalResults: number): number {
+  private _estimateNumberOfGoogleRequestsForOneSearch(
+    totalResults: number
+  ): number {
     let numberOfRequests = 0;
     const selectedCountries = this._params.countries;
     let smartCountries = 0;
@@ -177,11 +219,10 @@ export class SharedSearchProsComponent implements OnInit {
     }
 
     if (!this._params.options.smart) {
-      numberOfRequests += ((selectedCountries.length || 1) - smartCountries);
+      numberOfRequests += (selectedCountries.length || 1) - smartCountries;
     }
 
-    return (numberOfRequests || 1) * this._params.count / 10;
-
+    return ((numberOfRequests || 1) * this._params.count) / 10;
   }
 
   /***
@@ -197,7 +238,7 @@ export class SharedSearchProsComponent implements OnInit {
     this._sidebarValue = {
       animate_state: 'active',
       title: 'Advanced Search',
-      size: '726px'
+      size: '726px',
     };
   }
 
@@ -212,69 +253,106 @@ export class SharedSearchProsComponent implements OnInit {
     event.preventDefault();
     this._displayLoader = true;
 
-    this._searchService.updateCatStats(this._params.catKeywords.split('\n').length)
-      .pipe(first()).subscribe((response: any) => {});
+    this._searchService
+      .updateCatStats(this._params.catKeywords.split('\n').length)
+      .pipe(first())
+      .subscribe((response: any) => {});
 
-    this._searchService.computerAidedTargeting(this._params.catKeywords.split('\n'))
-      .pipe(first()).subscribe((response: any) => {
+    this._searchService
+      .computerAidedTargeting(this._params.catKeywords.split('\n'))
+      .pipe(first())
+      .subscribe(
+        (response: any) => {
+          this._displayLoader = false;
+          this.onReset();
+          this._catResult.total_result = [];
 
-        this._displayLoader = false;
-        this.onReset();
-        this._catResult.total_result = [];
-
-        Object.entries(response.total_result).forEach(([key, value]) => {
-          this._catResult.total_result.push(value);
-        });
-
-        this.estimateNumberOfGoogleRequests(this._catResult.total_result);
-        this._catResult.keywords_analysis = response.keywords_analysis.kw;
-        let expected_result;
-        let keywords;
-
-        this._params.catKeywords.split('\n').forEach((request: string) => {
-          expected_result = response.total_result[request];
-          keywords = request;
-          Object.entries(response.keywords_analysis.kw).forEach(([key, value]) => {
-            if (value < 0.5) {
-              request = request.replace(`${key}`, `<span class="text-error">${key}</span>`);
-            } else if (value < 0.8) {
-              request = request.replace(`${key}`, `<span class="text-warning">${key}</span>`);
-            } else {
-              request = request.replace(`${key}`, `<span class="text-success">${key}</span>`);
-            }
-
+          Object.entries(response.total_result).forEach(([key, value]) => {
+            this._catResult.total_result.push(value);
           });
-          this._suggestions.push({expected_result: expected_result, search_keywords: request, keywords: keywords});
-        });
 
-        this._catResult.new_keywords = [];
+          this.estimateNumberOfGoogleRequests(this._catResult.total_result);
+          this._catResult.keywords_analysis = response.keywords_analysis.kw;
+          let expected_result;
+          let keywords;
 
-        Object.entries(response.keywords_analysis.new).forEach(([key, value]) => {
-          this._catResult.new_keywords.push(key);
-        });
+          this._params.catKeywords.split('\n').forEach((request: string) => {
+            expected_result = response.total_result[request];
+            keywords = request;
+            Object.entries(response.keywords_analysis.kw).forEach(
+              ([key, value]) => {
+                if (value < 0.5) {
+                  request = request.replace(
+                    `${key}`,
+                    `<span class="text-error">${key}</span>`
+                  );
+                } else if (value < 0.8) {
+                  request = request.replace(
+                    `${key}`,
+                    `<span class="text-warning">${key}</span>`
+                  );
+                } else {
+                  request = request.replace(
+                    `${key}`,
+                    `<span class="text-success">${key}</span>`
+                  );
+                }
+              }
+            );
+            this._suggestions.push({
+              expected_result: expected_result,
+              search_keywords: request,
+              keywords: keywords,
+            });
+          });
 
-        this._catResult.duplicate_status = response.duplicate_status;
-        this._catResult.profile = response.stars;
-        this._getCatQuota();
+          this._catResult.new_keywords = [];
 
-      }, (err: HttpErrorResponse) => {
-        this._displayLoader = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
+          Object.entries(response.keywords_analysis.new).forEach(
+            ([key, value]) => {
+              this._catResult.new_keywords.push(key);
+            }
+          );
 
+          this._catResult.duplicate_status = response.duplicate_status;
+          this._catResult.profile = response.stars;
+          this._getCatQuota();
+        },
+        (err: HttpErrorResponse) => {
+          this._displayLoader = false;
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   private _getCatQuota() {
-    this._searchService.dailyStats().pipe(first()).subscribe((result: any) => {
-      this._catQuota = 100;
-      if (result.hours) {
-        this._catQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueriesCat, 0);
-      }
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._searchService
+      .dailyStats()
+      .pipe(first())
+      .subscribe(
+        (result: any) => {
+          this._catQuota = 100;
+          if (result.hours) {
+            this._catQuota -= result.hours
+              .slice(7)
+              .reduce(
+                (sum: number, hour: any) => sum + hour.googleQueriesCat,
+                0
+              );
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   public onClickPlus(search_keywords: string) {
@@ -282,7 +360,9 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   public checkKeywords(keywords: string): string {
-    return this._params.keywords.indexOf(keywords) !== -1 ? 'hidden' : 'visible';
+    return this._params.keywords.indexOf(keywords) !== -1
+      ? 'hidden'
+      : 'visible';
   }
 
   public onClickSearch(event: Event): void {
@@ -290,35 +370,58 @@ export class SharedSearchProsComponent implements OnInit {
 
     const searchParams = this._params;
 
-    searchParams.metadata = {user: this._authService.getUserInfo()};
+    searchParams.metadata = { user: this._authService.getUserInfo() };
 
-    searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
+    searchParams.websites = Object.keys(searchParams.websites)
+      .filter((key) => searchParams.websites[key])
+      .join(' ');
 
-    this._searchService.search(searchParams).pipe(first()).subscribe((_: any) => {
-      this._initParams();
-      this._translateNotificationsService.success('Success',
-        'The request has been added to the queue.');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-
+    this._searchService
+      .search(searchParams)
+      .pipe(first())
+      .subscribe(
+        (_: any) => {
+          this._initParams();
+          this._translateNotificationsService.success(
+            'Success',
+            'The request has been added to the queue.'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   public getCatCircleClass(): string {
-    return this._catQuota > 50 ? 'bg-success' : (this._catQuota > 10 && this._catQuota <= 50)
-      ? 'bg-progress' : 'bg-alert';
+    return this._catQuota > 50
+      ? 'bg-success'
+      : this._catQuota > 10 && this._catQuota <= 50
+      ? 'bg-progress'
+      : 'bg-alert';
   }
 
   public getCircleClass(): string {
-    return this._googleQuota > 10000 ? 'bg-success' : (this._googleQuota < 10000 && this._googleQuota > 5000)
-      ? 'bg-progress' : 'bg-alert';
+    return this._googleQuota > 10000
+      ? 'bg-success'
+      : this._googleQuota < 10000 && this._googleQuota > 5000
+      ? 'bg-progress'
+      : 'bg-alert';
   }
 
   public updateSettings(value: any) {
     this._params = value;
-    this.estimateNumberOfGoogleRequests();
-    this._translateNotificationsService.success('Success', 'The settings has been updated.');
+    console.log(this._params);
+    this._localStorageService.setItem('searchSettings', JSON.stringify(value));
+    // this.estimateNumberOfGoogleRequests();
+    this._translateNotificationsService.success(
+      'Success',
+      'The settings has been updated.'
+    );
   }
 
   public onClickImport(file: File) {
@@ -326,20 +429,36 @@ export class SharedSearchProsComponent implements OnInit {
     if (this.campaign) {
       fileName += `,${this.campaign._id},${this.campaign.innovation._id}`;
     }
-    this._searchService.importList(file, fileName).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The file is imported.');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._searchService
+      .importList(file, fileName)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this._translateNotificationsService.success(
+            'Success',
+            'The file is imported.'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   public onGeographyChange(value: GeographySettings) {
     this._geography = value;
-    this._params.countries = value.include.map(c => c.code);
+    this._params.countries = value.include.map((c) => c.code);
   }
 
-  get suggestions(): Array<{ expected_result: number; search_keywords: string; keywords: string }> {
+  get suggestions(): Array<{
+    expected_result: number;
+    search_keywords: string;
+    keywords: string;
+  }> {
     return this._suggestions;
   }
 
@@ -406,5 +525,4 @@ export class SharedSearchProsComponent implements OnInit {
   get campaign(): Campaign {
     return this._campaign;
   }
-
 }
