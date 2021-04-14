@@ -1,4 +1,4 @@
-import { Country } from './country';
+import {Country} from './country';
 
 export interface GeographySettings {
   continentTarget: {
@@ -25,7 +25,7 @@ export interface InnovationSettings {
 
   contact?: {
     internal: boolean;
-  }
+  };
 
   readonly companies: {
     include: Array<any>;

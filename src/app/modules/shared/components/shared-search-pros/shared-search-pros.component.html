@@ -228,6 +228,11 @@
         </div>
       </div>
 
+      <div class="form-group m-top-10"
+           (click)="onClickSearch($event)">
+        <button class="button is-primary is-md" [disabled]="!params['keywords']">Launch</button>
+      </div>
+
     </div>
     <!-- /input -->
 
@@ -281,15 +286,13 @@
     </div>
     <!-- /import button -->
 
-    <p class="text-center text-sm">
-      The file must use these <b>exact names</b> for the columns: <b>First Name UMI</b>,
-      <b>Last Name UMI</b>, <b>Company UMI</b>, Language, Email UMI, emailConfidence, Linkedin, Company Site,
-      Country UMI, Job UMI.
-    </p>
+    <p class="text-center text-sm">The file must use these <b>exact names</b> for the columns:
+      <b>First Name UMI, Last Name UMI, Company UMI, Country UMI</b>
+      , Language, Email UMI, emailConfidence, Linkedin,
+      Company Site, Job UMI</p>
 
-    <p class="text-center text-sm">
-      Bold columns are mandatory, other columns are optional. The order of the columns does not matter.
-    </p>
+    <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
+      not matter</p>
 
   </section>
 

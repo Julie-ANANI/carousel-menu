@@ -30,6 +30,8 @@
   padding-bottom: 2.5rem;
 
   .form-group {
+    display: flex;
+    align-items: center;
 
     &.is-continent {
       border-bottom: $border-width solid $border-default-color;

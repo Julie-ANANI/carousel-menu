@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IndexService } from '../../../../services/index/index.service';
-import { Country } from '../../../../models/country';
-import { Response } from '../../../../models/response';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
-import { GeographySettings } from '../../../../models/innov-settings';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {IndexService} from '../../../../services/index/index.service';
+import {Country} from '../../../../models/country';
+import {Response} from '../../../../models/response';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {TranslateService} from '@ngx-translate/core';
+import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
+import {GeographySettings} from '../../../../models/innov-settings';
 
 @Component({
   selector: 'app-shared-targeting-world',
@@ -14,6 +14,7 @@ import { GeographySettings } from '../../../../models/innov-settings';
 })
 
 export class SharedTargetingWorldComponent implements OnInit {
+  @Input() isShowSearch = false;
 
   @Input() set geography(value: GeographySettings) {
     this._geography = value;
@@ -21,26 +22,30 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   @Output() geographyChange: EventEmitter<GeographySettings> = new EventEmitter<GeographySettings>();
 
-  @Input() isEditable: boolean = true;
+  @Input() isEditable = true;
 
-  @Input() isAdmin: boolean = false;
+  @Input() isAdmin = false;
 
   private _geography: GeographySettings;
 
   private _allCountries: Array<Country> = [];
 
-  private _continentCountries: {[continent: string]: Array<Country>} = {};
+  private _continentCountries: { [continent: string]: Array<Country> } = {};
 
-  private _showToggleList: boolean = false;
+  private _continentCountriesAfterSearch: { [continent: string]: Array<Country> } = {};
+
+  private _showToggleList = false;
+
+  private _searchCountryString = '';
 
   constructor(private _indexService: IndexService,
               private _translateService: TranslateService,
-              private _translateNotificationService: TranslateNotificationsService) { }
+              private _translateNotificationService: TranslateNotificationsService) {
+  }
 
   ngOnInit(): void {
     this._getAllCountries();
   }
-
 
   /***
    * here we are calling the api to get the all countries into this._allCountries and
@@ -50,7 +55,7 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @private
    */
   private _getAllCountries() {
-    this._indexService.getWholeSet({ type: 'countries' }).subscribe((response: Response) => {
+    this._indexService.getWholeSet({type: 'countries'}).subscribe((response: Response) => {
       this._allCountries = response.result;
       this._allContinentsCountries();
 
@@ -99,8 +104,8 @@ export class SharedTargetingWorldComponent implements OnInit {
 
       return acc;
 
-      }, { 'africa': [], 'americaNord': [], 'americaSud': [], 'antarctic': [], 'asia': [], 'europe': [], 'oceania': [] } );
-
+    }, {'africa': [], 'americaNord': [], 'americaSud': [], 'antarctic': [], 'asia': [], 'europe': [], 'oceania': []});
+    this._continentCountriesAfterSearch = JSON.parse(JSON.stringify(this._continentCountries));
   }
 
   private getIncludedContinents(): Array<string> {
@@ -253,8 +258,7 @@ export class SharedTargetingWorldComponent implements OnInit {
         this._geography.include = [...this._geography.include, country];
         this._filterExcludedCountries(country);
       } else {
-        const event = { value: country };
-        this.removeIncludedCountry(event);
+        this.removeIncludedCountry({value: country});
       }
 
       this._emitChanges();
@@ -290,4 +294,23 @@ export class SharedTargetingWorldComponent implements OnInit {
     return this._showToggleList;
   }
 
+  onChangeCountrySearch(value: string, continent: string) {
+    this._searchCountryString = value;
+    if (this._searchCountryString === '') {
+      this.continentCountriesAfterSearch[continent] = this._continentCountries[continent];
+    } else {
+      this.continentCountriesAfterSearch[continent] = [];
+      this._continentCountries[continent].map(country => {
+        if (country.name.toLowerCase().includes(this._searchCountryString.toLowerCase()) ||
+          this._searchCountryString.toLowerCase().includes(country.name.toLowerCase())) {
+          this.continentCountriesAfterSearch[continent].push(country);
+        }
+      });
+    }
+  }
+
+
+  get continentCountriesAfterSearch(): { [p: string]: Array<Country> } {
+    return this._continentCountriesAfterSearch;
+  }
 }

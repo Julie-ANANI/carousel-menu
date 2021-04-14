@@ -29,91 +29,111 @@
   </div>
   <!-- /number of pros -->
 
-  <!-- smart search -->
-  <div class="form-group">
-    <label class="form-switch">
-      <input
-        [(ngModel)]="params && params.options && params.options['smart']"
-        [disabled]="!isEditable"
-        name="sidebar-smart"
-        type="checkbox">
-      <i class="form-icon"></i> Smart search
-    </label>
-  </div>
-  <!-- /smart search -->
+  <!-- toggle advanced search -->
+  <div class="stw-toggle-list-wrapper">
 
-  <!-- regions -->
-  <div class="form-group">
-    <label class="form-switch">
-      <input
-        [(ngModel)]="params && params.options && params.options['regions']"
-        [disabled]="!isEditable"
-        name="sidebar-regions"
-        type="checkbox">
-      <i class="form-icon"></i> Regions
-    </label>
-  </div>
-  <!-- /regions -->
+    <!-- toggle button -->
+    <button (click)="onClickToggle()" class="button is-link p-no" type="button">
+      {{ 'Advanced Settings' }}
+      <i class="icon icon-right" [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-right' "></i>
+    </button>
+    <!-- /toggle button -->
 
-  <!-- automated -->
-  <div class="form-group m-bottom-25">
-    <label class="form-switch">
-      <input
-        [(ngModel)]="params && params.options && params.options['automated']"
-        [disabled]="!isEditable"
-        name="sidebar-automated"
-        type="checkbox">
-      <i class="form-icon"></i> Search emails
-    </label>
-  </div>
-  <!-- /automated -->
+    <!-- toggle options -->
+    <div *ngIf="showToggleSearch" [ngClass]="showToggleSearch ? 'd-block' : 'd-none'" class="m-top-25">
 
-  <!-- use -->
-  <h6 class="title is-6 m-bottom-15">Select the options</h6>
-  <div class="form-group m-bottom-30">
-    <label class="form-checkbox is-inline">
-      <input
-        [(ngModel)]="params && params.options && params.options['indexSearch']"
-        [disabled]="!isEditable"
-        name="sidebar-use-indexSearch"
-        type="checkbox"
-        value="indexSearch">
-      <i class="form-icon"></i> Index
-    </label>
-    <label class="form-checkbox is-inline">
-      <input
-        [(ngModel)]="params && params['websites'] && params['websites']['linkedin']"
-        [disabled]="!isEditable"
-        name="sidebar-use-linkedin"
-        type="checkbox"
-        value="linkedin">
-      <i class="form-icon"></i> LinkedIn
-    </label>
-    <label class="form-checkbox is-inline">
-      <input
-        [(ngModel)]="params && params['websites'] && params['websites']['viadeo']"
-        [disabled]="!isEditable"
-        name="sidebar-use-viadeo"
-        type="checkbox"
-        value="viadeo">
-      <i class="form-icon"></i> Viadeo
-    </label>
-    <label class="form-checkbox is-inline">
-      <input
-        [(ngModel)]="params && params['websites'] && params['websites']['xing']"
-        [disabled]="!isEditable"
-        name="sidebar-use-xing"
-        type="checkbox"
-        value="xing">
-      <i class="form-icon"></i> Xing
-    </label>
+      <!-- smart search -->
+      <div class="form-group">
+        <label class="form-switch">
+          <input
+            [(ngModel)]="params && params.options && params.options['smart']"
+            [disabled]="!isEditable"
+            name="sidebar-smart"
+            type="checkbox">
+          <i class="form-icon"></i> Smart search
+        </label>
+      </div>
+      <!-- /smart search -->
+
+      <!-- regions -->
+      <div class="form-group">
+        <label class="form-switch">
+          <input
+            [(ngModel)]="params && params.options && params.options['regions']"
+            [disabled]="!isEditable"
+            name="sidebar-regions"
+            type="checkbox">
+          <i class="form-icon"></i> Regions
+        </label>
+      </div>
+      <!-- /regions -->
+
+      <!-- automated -->
+      <div class="form-group m-bottom-25">
+        <label class="form-switch">
+          <input
+            [(ngModel)]="params && params.options && params.options['automated']"
+            [disabled]="!isEditable"
+            name="sidebar-automated"
+            type="checkbox">
+          <i class="form-icon"></i> Search emails
+        </label>
+      </div>
+      <!-- /automated -->
+
+      <!-- use -->
+      <h6 class="title is-6 m-bottom-15">Select the options</h6>
+      <div class="form-group m-bottom-30">
+        <!--    <label class="form-checkbox is-inline">-->
+        <!--      <input-->
+        <!--        [(ngModel)]="params && params.options && params.options['indexSearch']"-->
+        <!--        [disabled]="!isEditable"-->
+        <!--        name="sidebar-use-indexSearch"-->
+        <!--        type="checkbox"-->
+        <!--        value="indexSearch">-->
+        <!--      <i class="form-icon"></i> Index-->
+        <!--    </label>-->
+        <label class="form-checkbox is-inline">
+          <input
+            [(ngModel)]="params && params['websites'] && params['websites']['linkedin']"
+            [disabled]="!isEditable"
+            name="sidebar-use-linkedin"
+            type="checkbox"
+            value="linkedin">
+          <i class="form-icon"></i> LinkedIn
+        </label>
+        <!--    <label class="form-checkbox is-inline">-->
+        <!--      <input-->
+        <!--        [(ngModel)]="params && params['websites'] && params['websites']['viadeo']"-->
+        <!--        [disabled]="!isEditable"-->
+        <!--        name="sidebar-use-viadeo"-->
+        <!--        type="checkbox"-->
+        <!--        value="viadeo">-->
+        <!--      <i class="form-icon"></i> Viadeo-->
+        <!--    </label>-->
+        <label class="form-checkbox is-inline">
+          <input
+            [(ngModel)]="params && params['websites'] && params['websites']['xing']"
+            [disabled]="!isEditable"
+            name="sidebar-use-xing"
+            type="checkbox"
+            value="xing">
+          <i class="form-icon"></i> Xing
+        </label>
+      </div>
+      <!-- /use -->
+
+    </div>
+    <!-- toggle options -->
+
   </div>
-  <!-- /use -->
+  <!-- /toggle advanced search -->
 
   <!-- targeting -->
-  <div>
+  <div class="m-top-10">
     <app-shared-targeting-world
       [(geography)]="geography"
+      [isShowSearch]="true"
       [isEditable]="isEditable">
     </app-shared-targeting-world>
   </div>
