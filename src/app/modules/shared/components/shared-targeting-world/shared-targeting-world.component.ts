@@ -1,18 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IndexService} from '../../../../services/index/index.service';
-import {Country} from '../../../../models/country';
-import {Response} from '../../../../models/response';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
-import {GeographySettings} from '../../../../models/innov-settings';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IndexService } from '../../../../services/index/index.service';
+import { Country } from '../../../../models/country';
+import { Response } from '../../../../models/response';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
+import { GeographySettings } from '../../../../models/innov-settings';
 
 @Component({
   selector: 'app-shared-targeting-world',
   templateUrl: './shared-targeting-world.component.html',
-  styleUrls: ['./shared-targeting-world.component.scss']
+  styleUrls: ['./shared-targeting-world.component.scss'],
 })
-
 export class SharedTargetingWorldComponent implements OnInit {
   @Input() isShowSearch = false;
 
@@ -20,7 +19,8 @@ export class SharedTargetingWorldComponent implements OnInit {
     this._geography = value;
   }
 
-  @Output() geographyChange: EventEmitter<GeographySettings> = new EventEmitter<GeographySettings>();
+  @Output()
+  geographyChange: EventEmitter<GeographySettings> = new EventEmitter<GeographySettings>();
 
   @Input() isEditable = true;
 
@@ -32,16 +32,17 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _continentCountries: { [continent: string]: Array<Country> } = {};
 
-  private _continentCountriesAfterSearch: { [continent: string]: Array<Country> } = {};
-
   private _showToggleList = false;
 
   private _searchCountryString = '';
 
-  constructor(private _indexService: IndexService,
-              private _translateService: TranslateService,
-              private _translateNotificationService: TranslateNotificationsService) {
-  }
+  private _searchCountries: Array<Country> = [];
+
+  constructor(
+    private _indexService: IndexService,
+    private _translateService: TranslateService,
+    private _translateNotificationService: TranslateNotificationsService
+  ) {}
 
   ngOnInit(): void {
     this._getAllCountries();
@@ -55,29 +56,34 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @private
    */
   private _getAllCountries() {
-    this._indexService.getWholeSet({type: 'countries'}).subscribe((response: Response) => {
-      this._allCountries = response.result;
-      this._allContinentsCountries();
+    this._indexService.getWholeSet({ type: 'countries' }).subscribe(
+      (response: Response) => {
+        this._allCountries = response.result;
+        this._allContinentsCountries();
 
-      if (this._geography.include.length === 0) {
-        this._includeCountries();
+        if (this._geography.include.length === 0) {
+          this._includeCountries();
+        }
+
+        if (this._geography.exclude.length > 0) {
+          this._filterExCountriesFromIncluded();
+        }
+
+        /***
+         * we are emitting here because of the old innovations.
+         * so that we can have the calculated values for them.
+         */
+        if (!this.isEditable || this.isAdmin) {
+          this._emitChanges();
+        }
+      },
+      () => {
+        this._translateNotificationService.error(
+          'ERROR.ERROR',
+          'ERROR.FETCHING_ERROR'
+        );
       }
-
-      if (this._geography.exclude.length > 0) {
-        this._filterExCountriesFromIncluded();
-      }
-
-      /***
-       * we are emitting here because of the old innovations.
-       * so that we can have the calculated values for them.
-       */
-      if (!this.isEditable || this.isAdmin) {
-        this._emitChanges();
-      }
-
-    }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
+    );
   }
 
   /***
@@ -86,35 +92,46 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @private
    */
   private _allContinentsCountries() {
-    this._continentCountries = this._allCountries.reduce((acc, country) => {
-      const continent_name = country.continent.toLowerCase();
+    this._continentCountries = this._allCountries.reduce(
+      (acc, country) => {
+        const continent_name = country.continent.toLowerCase();
 
-      if (continent_name === 'americas') {
-        const subcontinent_name = country.subcontinent.toLowerCase();
+        if (continent_name === 'americas') {
+          const subcontinent_name = country.subcontinent.toLowerCase();
 
-        if (subcontinent_name === 'northern america') {
-          acc['americaNord'].push(country);
+          if (subcontinent_name === 'northern america') {
+            acc['americaNord'].push(country);
+          } else {
+            acc['americaSud'].push(country);
+          }
         } else {
-          acc['americaSud'].push(country);
+          acc[continent_name].push(country);
         }
 
-      } else {
-        acc[continent_name].push(country);
+        return acc;
+      },
+      {
+        africa: [],
+        americaNord: [],
+        americaSud: [],
+        antarctic: [],
+        asia: [],
+        europe: [],
+        oceania: [],
       }
-
-      return acc;
-
-    }, {'africa': [], 'americaNord': [], 'americaSud': [], 'antarctic': [], 'asia': [], 'europe': [], 'oceania': []});
-    this._continentCountriesAfterSearch = JSON.parse(JSON.stringify(this._continentCountries));
+    );
   }
 
   private getIncludedContinents(): Array<string> {
-    return Object.keys(this._geography.continentTarget).reduce((acc, continent) => {
-      if (this._geography.continentTarget[continent]) {
-        acc.push(continent);
-      }
-      return acc;
-    }, [] as Array<string>);
+    return Object.keys(this._geography.continentTarget).reduce(
+      (acc, continent) => {
+        if (this._geography.continentTarget[continent]) {
+          acc.push(continent);
+        }
+        return acc;
+      },
+      [] as Array<string>
+    );
   }
 
   private _includeCountries() {
@@ -123,7 +140,9 @@ export class SharedTargetingWorldComponent implements OnInit {
       const countries = this.getCountriesByContinent(continent);
       if (Array.isArray(countries)) {
         countries.forEach((country: Country) => {
-          const index = this._geography.include.findIndex((value) => value.code === country.code);
+          const index = this._geography.include.findIndex(
+            (value) => value.code === country.code
+          );
           if (index === -1) {
             this._geography.include.push(country);
           }
@@ -138,18 +157,22 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _filterExCountriesFromIncluded() {
     this._geography.include = this._geography.include.filter((value) => {
-      return this._geography.exclude.some((value2) => value2.code !== value.code);
+      return this._geography.exclude.some(
+        (value2) => value2.code !== value.code
+      );
     });
   }
 
   public checkSelectAll(): boolean {
     const selectedContinents = this.getIncludedContinents();
-    return selectedContinents.length === 7 || selectedContinents.length === WorldmapService.continentsList.length;
+    return (
+      selectedContinents.length === 7 ||
+      selectedContinents.length === WorldmapService.continentsList.length
+    );
   }
 
   public onChangeSelectAll(event: Event) {
     if (this.isEditable || this.isAdmin) {
-
       this._geography.include = [];
       this._geography.exclude = [];
 
@@ -170,7 +193,6 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   public onChangeContinent(event: Event, continent: string) {
     if (this.isEditable || this.isAdmin) {
-
       if ((event.target as HTMLInputElement).checked) {
         this._geography.continentTarget[continent] = true;
         this._includeCountries();
@@ -181,24 +203,33 @@ export class SharedTargetingWorldComponent implements OnInit {
 
       this._filterExCountriesOfContinent(continent);
       this._emitChanges();
-
     }
   }
 
   private _filterInCountriesOfContinent(continent: string) {
     this._geography.include = this._geography.include.filter((value) => {
-      return this.getCountriesByContinent(continent).findIndex((value2) => value2.code === value.code) === -1;
+      return (
+        this.getCountriesByContinent(continent).findIndex(
+          (value2) => value2.code === value.code
+        ) === -1
+      );
     });
   }
 
   private _filterExCountriesOfContinent(continent: string) {
     this._geography.exclude = this._geography.exclude.filter((value) => {
-      return this.getCountriesByContinent(continent).findIndex((value2) => value2.code === value.code) === -1;
+      return (
+        this.getCountriesByContinent(continent).findIndex(
+          (value2) => value2.code === value.code
+        ) === -1
+      );
     });
   }
 
   private _filterExcludedCountries(country: Country) {
-    this._geography.exclude = this._geography.exclude.filter((value) => value.code !== country.code);
+    this._geography.exclude = this._geography.exclude.filter(
+      (value) => value.code !== country.code
+    );
   }
 
   /***
@@ -221,30 +252,45 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @private
    */
   private _countryToExclude(value: Country) {
-    const index = this._allCountries.findIndex((existCountry) => existCountry.code === value.code);
+    const index = this._allCountries.findIndex(
+      (existCountry) => existCountry.code === value.code
+    );
 
     if (index !== -1) {
       const findCountry = this._allCountries[index];
 
-      if (this._geography.include.some((existCountry) => existCountry.code === value.code)) {
+      if (
+        this._geography.include.some(
+          (existCountry) => existCountry.code === value.code
+        )
+      ) {
         this._filterIncludedCountries(findCountry);
 
-        if (!this._geography.exclude.some((existCountry) => existCountry.code === findCountry.code)) {
+        if (
+          !this._geography.exclude.some(
+            (existCountry) => existCountry.code === findCountry.code
+          )
+        ) {
           this._geography.exclude.push(findCountry);
         }
 
-        this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.EXCLUDED');
-
+        this._translateNotificationService.success(
+          'ERROR.SUCCESS',
+          'ERROR.COUNTRY.EXCLUDED'
+        );
       } else {
-        this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.COUNTRY.ALREADY_EXCLUDED');
+        this._translateNotificationService.success(
+          'ERROR.SUCCESS',
+          'ERROR.COUNTRY.ALREADY_EXCLUDED'
+        );
       }
-
     }
-
   }
 
   private _filterIncludedCountries(country: Country) {
-    this._geography.include = this._geography.include.filter((value) => value.code !== country.code);
+    this._geography.include = this._geography.include.filter(
+      (value) => value.code !== country.code
+    );
   }
 
   public checkCountry(country: Country): boolean {
@@ -253,12 +299,11 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   public onChangeCountry(event: Event, country: Country) {
     if (this.isEditable || this.isAdmin) {
-
       if ((event.target as HTMLInputElement).checked) {
         this._geography.include = [...this._geography.include, country];
         this._filterExcludedCountries(country);
       } else {
-        this.removeIncludedCountry({value: country});
+        this.removeIncludedCountry({ value: country });
       }
 
       this._emitChanges();
@@ -279,7 +324,9 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   public getContinents(): Array<string> {
-    return this._translateService.currentLang === 'en' ? ['africa', 'asia', 'europe', 'americaNord', 'oceania', 'americaSud'] : this.continents;
+    return this._translateService.currentLang === 'en'
+      ? ['africa', 'asia', 'europe', 'americaNord', 'oceania', 'americaSud']
+      : this.continents;
   }
 
   get continents(): Array<string> {
@@ -290,27 +337,28 @@ export class SharedTargetingWorldComponent implements OnInit {
     return this._geography;
   }
 
+  get searchCountryString(): string {
+    return this._searchCountryString;
+  }
+
   get showToggleList(): boolean {
     return this._showToggleList;
   }
 
-  onChangeCountrySearch(value: string, continent: string) {
+  onChangeCountrySearch(value: string) {
     this._searchCountryString = value;
     if (this._searchCountryString === '') {
-      this.continentCountriesAfterSearch[continent] = this._continentCountries[continent];
-    } else {
-      this.continentCountriesAfterSearch[continent] = [];
-      this._continentCountries[continent].map(country => {
-        if (country.name.toLowerCase().includes(this._searchCountryString.toLowerCase()) ||
-          this._searchCountryString.toLowerCase().includes(country.name.toLowerCase())) {
-          this.continentCountriesAfterSearch[continent].push(country);
-        }
-      });
+      this._searchCountries = [];
+    } else if (this._searchCountryString.length > 2) {
+      this._searchCountries = this._allCountries.filter(
+        (item) =>
+          item.name.toLowerCase().includes(value) ||
+          value.toLowerCase().includes(item.name)
+      );
     }
   }
 
-
-  get continentCountriesAfterSearch(): { [p: string]: Array<Country> } {
-    return this._continentCountriesAfterSearch;
+  get searchCountries(): Array<Country> {
+    return this._searchCountries;
   }
 }
