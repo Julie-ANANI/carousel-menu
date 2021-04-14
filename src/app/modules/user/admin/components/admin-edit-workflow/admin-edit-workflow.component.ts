@@ -1,36 +1,36 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {EmailScenario} from '../../../../../models/email-scenario';
-import {EmailTemplate} from '../../../../../models/email-template';
-import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
-import {EmailSignature} from '../../../../../models/email-signature';
-import {Config} from '../../../../../models/config';
-import {Column} from '../../../../table/models/column';
-import {Table} from '../../../../table/models/table';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { EmailScenario } from '../../../../../models/email-scenario';
+import { EmailTemplate } from '../../../../../models/email-template';
+import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
+import { EmailSignature } from '../../../../../models/email-signature';
+import { Config } from '../../../../../models/config';
+import { Column } from '../../../../table/models/column';
+import { Table } from '../../../../table/models/table';
 
 @Component({
   selector: 'app-admin-edit-workflow',
   templateUrl: 'admin-edit-workflow.component.html',
-  styleUrls: ['admin-edit-workflow.component.scss']
+  styleUrls: ['admin-edit-workflow.component.scss'],
 })
-
 export class AdminEditWorkflowComponent {
-
   @Input() isEditable = false;
 
   @Input() isDeletable = false;
 
   @Input() set scenario(value: EmailScenario) {
     this._campaignScenario = value;
-    this._inCampaign = this._campaignScenario.emails[0] && this._campaignScenario.emails[0].modified != undefined;
+    this._inCampaign =
+      this._campaignScenario.emails[0] &&
+      this._campaignScenario.emails[0].modified != undefined;
     this._setModified();
     this._initTable();
-  };
+  }
 
   @Input() defaultScenario = '';
 
   @Input() campaignId = '';
 
-  @Input() set signatures(value: Array<EmailSignature> ){
+  @Input() set signatures(value: Array<EmailSignature>) {
     this._signatures = value;
     this._initTable();
   }
@@ -70,22 +70,24 @@ export class AdminEditWorkflowComponent {
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{"created":-1}',
   };
 
-  constructor() { }
+  constructor() {}
 
   private _initTable() {
     const steps: any = {
-      FIRST: {step: "FIRST", num: "01 - "},
-      SECOND: {step: "SECOND", num: "02 - "},
-      THIRD: {step: "THIRD", num: "03 - "},
-      THANKS: {step: "THANKS", num: "04 - "}
+      FIRST: { step: 'FIRST', num: '01 - ' },
+      SECOND: { step: 'SECOND', num: '02 - ' },
+      THIRD: { step: 'THIRD', num: '03 - ' },
+      THANKS: { step: 'THANKS', num: '04 - ' },
     };
 
     this._campaignScenario.emails.forEach((email: EmailTemplate) => {
       steps[email.step][email.language] = email;
-      email.defaultSignatureName = email.signature ? email.signature.name : 'Karine Caulfield'; //TODO why a workflow wouldn't have a signature??
+      email.defaultSignatureName = email.signature
+        ? email.signature.name
+        : 'Karine Caulfield'; //TODO why a workflow wouldn't have a signature??
       email.status = email.modified ? email.modified.toString() : 'false';
     });
 
@@ -94,14 +96,30 @@ export class AdminEditWorkflowComponent {
     this._total = this._campaignScenario.emails.length;
 
     const columns: Array<Column> = [
-      {_attrs: ['num', `${this._language}.subject`], _name: 'Emails', _type: 'TEXT', _choices: null},
-      {_attrs: [`${this._language}.defaultSignatureName`], _name: 'Signatures', _type: 'TEXT', _choices: null}];
+      {
+        _attrs: ['num', `${this._language}.subject`],
+        _name: 'Emails',
+        _type: 'TEXT',
+        _choices: null,
+      },
+      {
+        _attrs: [`${this._language}.defaultSignatureName`],
+        _name: 'Signatures',
+        _type: 'TEXT',
+        _choices: null,
+      },
+    ];
 
     if (this._inCampaign) {
-      columns.push({_attrs: [`${this._language}.status`], _name: 'Status', _type: 'MULTI-CHOICES', _choices: [
-          {_name: 'false', _alias: 'To modify', _class: 'label is-draft'},
-          {_name: 'true', _alias: 'Modified', _class: 'label is-success'},
-        ]});
+      columns.push({
+        _attrs: [`${this._language}.status`],
+        _name: 'Status',
+        _type: 'MULTI-CHOICES',
+        _choices: [
+          { _name: 'false', _alias: 'To modify', _class: 'label is-draft' },
+          { _name: 'true', _alias: 'Modified', _class: 'label is-success' },
+        ],
+      });
     }
 
     this._tableInfos = {
@@ -110,33 +128,33 @@ export class AdminEditWorkflowComponent {
       _total: this._total,
       _clickIndex: 1,
       _isNoMinHeight: true,
-      _columns: columns
+      _columns: columns,
     };
-
   }
 
   public editEmail(email: any) {
     this._emailToEdit = email;
     this._emailToEdit.campaignId = this.campaignId;
-    console.log(this._emailToEdit);
     this._sidebar = {
       size: '726px',
       animate_state: 'active',
-      title: this.isEditable ? 'Edit Workflow' : 'Workflow'
+      title: this.isEditable ? 'Edit Workflow' : 'Workflow',
     };
   }
 
   public updateEmail(emailsObject: any) {
     this._setModified();
 
-    this._campaignScenario.emails = this._campaignScenario.emails.map((email: EmailTemplate) => {
-      if(emailsObject.step === email.step) {
-        email = emailsObject[email.language];
-        email.status = email.modified ? email.modified.toString() : 'false';
-        email.defaultSignatureName = 'Karine Caulfield';
+    this._campaignScenario.emails = this._campaignScenario.emails.map(
+      (email: EmailTemplate) => {
+        if (emailsObject.step === email.step) {
+          email = emailsObject[email.language];
+          email.status = email.modified ? email.modified.toString() : 'false';
+          email.defaultSignatureName = 'Karine Caulfield';
+        }
+        return email;
       }
-      return email;
-    });
+    );
 
     this.scenarioChange.emit(this._campaignScenario);
   }
@@ -163,7 +181,7 @@ export class AdminEditWorkflowComponent {
 
   private _isModified(language: string) {
     return this._campaignScenario.emails.reduce((acc, current) => {
-      return (acc && (current.language != language || current.modified));
+      return acc && (current.language != language || current.modified);
     }, true);
   }
 
@@ -172,7 +190,9 @@ export class AdminEditWorkflowComponent {
   }
 
   public getId(): string {
-    return `${this._language}_${this._campaignScenario.name.replace(/\s/ig, '_').toLowerCase()}`;
+    return `${this._language}_${this._campaignScenario.name
+      .replace(/\s/gi, '_')
+      .toLowerCase()}`;
   }
 
   get tableInfos(): any {
@@ -230,5 +250,4 @@ export class AdminEditWorkflowComponent {
   set localConfig(value: Config) {
     this._localConfig = value;
   }
-
 }
