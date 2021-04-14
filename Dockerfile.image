@@ -1,4 +1,4 @@
-FROM node:10.16.3 AS baseimage
+FROM node:12.22 AS baseimage
 
 ARG APP_NAME
 ARG ENV_NAME
@@ -9,7 +9,7 @@ RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_N
 RUN apt-get clean
 RUN apt-get update
 
-RUN npm install -g @angular/cli@7.3.8
+RUN npm install -g @angular/cli@8.3.29
 RUN npm install -g typings
 
 WORKDIR /var/web
