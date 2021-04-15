@@ -484,30 +484,33 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           _type: 'TEXT',
         },
         {
-          _attrs: ['OpenedPred', 'OpenedReel'],
+          // _attrs: ['OpenedPred', 'OpenedReel'],
+          _attrs: ['OpenedReel'],
           _name: 'Opened',
           _type: 'MULTI-LABEL',
           _multiLabels: [
             { _attr: 'OpenedReel', _class: 'label is-success' },
-            { _attr: 'OpenedPred', _class: 'label is-info' },
+            // { _attr: 'OpenedPred', _class: 'label is-info' },
           ],
         },
         {
-          _attrs: ['ClickedPred', 'ClickedReel'],
+          // _attrs: ['ClickedPred', 'ClickedReel'],
+          _attrs: ['ClickedReel'],
           _name: 'Clicked',
           _type: 'MULTI-LABEL',
           _multiLabels: [
             { _attr: 'ClickedReel', _class: 'label is-success' },
-            { _attr: 'ClickedPred', _class: 'label is-info' },
+            // { _attr: 'ClickedPred', _class: 'label is-info' },
           ],
         },
         {
-          _attrs: ['InsightsPred', 'InsightsReel'],
+          // _attrs: ['InsightsPred', 'InsightsReel'],
+          _attrs: ['InsightsReel'],
           _name: 'Insights',
           _type: 'MULTI-LABEL',
           _multiLabels: [
             { _attr: 'InsightsReel', _class: 'label is-success' },
-            { _attr: 'InsightsPred', _class: 'label is-info' },
+            // { _attr: 'InsightsPred', _class: 'label is-info' },
           ],
         },
         {
