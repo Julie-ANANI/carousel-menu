@@ -37,18 +37,18 @@
       <div *ngIf="canAccess(['autoBatch']) || canAccess(['create'])" class="p-top-20">
         <app-message-template [widthMax]="'473px'">
 
-          <div class="toggle-wrapper p-bottom-15">
-            <div class="form-group">
-              <label class="form-switch" for="result-nuggets">
-                <input
-                  (change)="setNuggets()"
-                  [ngModel]="campaign.nuggets"
-                  id="result-nuggets"
-                  type="checkbox">
-                <i class="form-icon"></i>Nuggets
-              </label>
-            </div>
-          </div>
+          <!--          <div class="toggle-wrapper p-bottom-15">-->
+          <!--            <div class="form-group">-->
+          <!--              <label class="form-switch" for="result-nuggets">-->
+          <!--                <input-->
+          <!--                  (change)="setNuggets()"-->
+          <!--                  [ngModel]="campaign.nuggets"-->
+          <!--                  id="result-nuggets"-->
+          <!--                  type="checkbox">-->
+          <!--                <i class="form-icon"></i>Nuggets-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--          </div>-->
 
           <div class="toggle-wrapper p-bottom-10">
             <div class="form-group relative">
@@ -60,7 +60,7 @@
                   [value]="campaign.autoBatch"
                   id="auto-batch"
                   type="checkbox">
-                <i class="form-icon"></i> Launch auto-batch and take a holiday :)
+                <i class="form-icon"></i> Schedule emails automatically and take a holiday :)
               </label>
             </div>
           </div>
@@ -91,7 +91,8 @@
                 [ngModel]="campaign.autoBatch"
                 id="result-auto-batch"
                 type="checkbox">
-              <i class="form-icon"></i> Auto-batch started
+              <i class="form-icon"></i>{{campaign.autoBatch ? 'Auto-batch activated' :
+              'Auto-batch deactivated'}}
             </label>
           </div>
 
@@ -139,7 +140,7 @@
 
           <div class="card-title">
             <span class="m-right-2">Batch for {{ batch.size }} pros</span>
-            <span *ngIf="batch?.childBatch.length > 1" class="m-right-2"> ({{batch?.childBatch.length*5 - 5}} minutes to send)</span>
+            <span *ngIf="batch?.childBatch.length > 1" class="m-right-2"> ({{batch?.childBatch.length * 5 - 5}} minutes to send)</span>
             <span *ngIf="batch.error" class="text-error m-right-2 m-top-1 text-xs text-normal">
               There has been an error while sending this batch!
             </span>
@@ -164,7 +165,9 @@
               [id]="batch['_id']"
               [ngModel]="batch.active"
               type="checkbox">
-            <i class="form-icon"></i>Started
+            <i class="form-icon"></i>
+            <span *ngIf="batch.active" class="tooltip" data-tooltip="Le batch is activated">Activated</span>
+            <span *ngIf="!batch.active" class="tooltip" data-tooltip="Le batch is paused">Paused</span>
           </label>
 
         </div>
@@ -236,19 +239,6 @@
   </app-sidebar-batch>
 </app-sidebar>
 <!-- /sidebars to perform batch operations  -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- commented 20feb
