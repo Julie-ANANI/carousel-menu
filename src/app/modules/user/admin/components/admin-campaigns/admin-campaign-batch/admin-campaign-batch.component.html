@@ -165,7 +165,9 @@
               [id]="batch['_id']"
               [ngModel]="batch.active"
               type="checkbox">
-            <i class="form-icon"></i>{{batch.active ? 'Started' : 'Paused'}}
+            <i class="form-icon"></i>
+            <span *ngIf="batch.active" class="tooltip" data-tooltip="Le batch is activated">Activated</span>
+            <span *ngIf="!batch.active" class="tooltip" data-tooltip="Le batch is paused">Paused</span>
           </label>
 
         </div>
