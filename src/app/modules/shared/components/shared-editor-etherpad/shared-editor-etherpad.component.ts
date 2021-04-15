@@ -36,7 +36,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('sharedEditorEtherpad', { read: ElementRef }) sharedEditorEtherpad: ElementRef;
+  @ViewChild('sharedEditorEtherpad', { read: ElementRef, static: true }) sharedEditorEtherpad: ElementRef;
 
   private _etherpad: Etherpad = <Etherpad>{};
 

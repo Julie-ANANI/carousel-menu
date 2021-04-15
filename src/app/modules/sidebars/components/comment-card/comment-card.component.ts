@@ -11,7 +11,7 @@ import {UserFrontService} from '../../../../services/user/user-front.service';
 })
 export class CommentCardComponent implements AfterViewInit {
 
-  @ViewChild('scrollFrame') scrollFrame: ElementRef;
+  @ViewChild('scrollFrame', {read: ElementRef, static: true}) scrollFrame: ElementRef;
   @ViewChildren('reply') replyElements: QueryList<any>;
   @Input() padID: string;
   @Input() innovationId: string;
