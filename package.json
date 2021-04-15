@@ -1,0 +1,19 @@
+{
+  "name": "umi-style-framework",
+  "version": "1.0.0",
+  "description": "Contains the applications styles.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unitedmotionideas/umi-style-framework.git"
+  },
+  "author": "United Motion Ideas",
+  "private": true,
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unitedmotionideas/umi-style-framework/issues"
+  },
+  "homepage": "https://github.com/unitedmotionideas/umi-style-framework#readme"
+}
