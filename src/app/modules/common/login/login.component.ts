@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
 
   private _backgroundImage = '';
 
+  private _nbTentatives = 5;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -112,6 +114,7 @@ export class LoginComponent implements OnInit {
 
         }
       }, () => {
+        this._nbTentatives -= 1;
         this._displayLoading = false;
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         this._formData.get('password').reset();
@@ -151,4 +154,8 @@ export class LoginComponent implements OnInit {
     return this._backgroundImage;
   }
 
+
+  get nbTentatives(): number {
+    return this._nbTentatives;
+  }
 }

@@ -118,6 +118,7 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'TENTATIVE_LEFT': 'tentative(s) restante(s)',
     'FEEDBACK_COLLECTION': 'Collecte de feedback',
     'RSETITUTION': 'Restitution',
     'SELECT_COLUMN_TO_EDIT': 'Sélectionnez une colonne',
