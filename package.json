@@ -12,8 +12,9 @@
   "author": "United Motion Ideas",
   "private": true,
   "license": "MIT",
+  "title": "UMI Style Framework",
   "bugs": {
     "url": "https://github.com/unitedmotionideas/umi-style-framework/issues"
   },
-  "homepage": "https://github.com/unitedmotionideas/umi-style-framework#readme"
+  "homepage": "https://github.com/unitedmotionideas/umi-style-framework#readme",
 }
