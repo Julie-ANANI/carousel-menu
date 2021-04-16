@@ -10,7 +10,9 @@ applications:
 
 ###To add this repository to another repository as a clone run the following commands from the root path
 - git remote add style-framework git@github.com:unitedmotionideas/umi-style-framework.git
-- git subtree add --prefix style-framework style-framework main
+- git subtree add --prefix style-framework style-framework main --squash
 
 ### To pull the changes
 - git subtree pull --prefix style-framework style-framework main
+
+To use it now add it as **@import "style-framework/scss/umi"** in the style.scss file.
