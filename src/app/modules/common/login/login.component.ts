@@ -7,22 +7,25 @@ import { User } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
-import { RandomUtil } from "../../../utils/randomUtil";
+import { RandomUtil } from '../../../utils/randomUtil';
 import { isPlatformBrowser } from '@angular/common';
-import { HttpErrorResponse } from "@angular/common/http";
+import { HttpErrorResponse } from '@angular/common/http';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-
 export class LoginComponent implements OnInit {
-
   private _formData: FormGroup = this._formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
+    password: ['', [Validators.required]],
+  });
+
+  private _helpMessageForm: FormGroup = this._formBuilder.group({
+    contactEmail: ['', [Validators.required, Validators.email]],
+    message: ['', [Validators.required]],
   });
 
   private _linkedInLink = '';
@@ -39,17 +42,17 @@ export class LoginComponent implements OnInit {
 
   private _isShowModal = false;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateTitleService: TranslateTitleService,
-              private _formBuilder: FormBuilder,
-              private _authService: AuthService,
-              private _routeFrontService: RouteFrontService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _router: Router) {
-
+  constructor(
+    @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _translateTitleService: TranslateTitleService,
+    private _formBuilder: FormBuilder,
+    private _authService: AuthService,
+    private _routeFrontService: RouteFrontService,
+    private _translateNotificationsService: TranslateNotificationsService,
+    private _router: Router
+  ) {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
   }
-
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -63,12 +66,17 @@ export class LoginComponent implements OnInit {
       url: 'https://www.linkedin.com/oauth/v2/authorization',
       clientID: '77283cf7nmchg3',
       callbackURL: `${environment.apiUrl}/auth/linkedin/callback`,
-      scope: 'r_emailaddress r_liteprofile w_member_social'
+      scope: 'r_emailaddress r_liteprofile w_member_social',
     };
 
     this._linkedInState = RandomUtil.generateUUID();
-    this._linkedInLink = `${linkedinConfig.url}?response_type=code&redirect_uri=${encodeURIComponent(linkedinConfig.callbackURL)}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${this._linkedInState}&client_id=${linkedinConfig.clientID}`;
-
+    this._linkedInLink = `${
+      linkedinConfig.url
+    }?response_type=code&redirect_uri=${encodeURIComponent(
+      linkedinConfig.callbackURL
+    )}&scope=${encodeURIComponent(linkedinConfig.scope)}&state=${
+      this._linkedInState
+    }&client_id=${linkedinConfig.clientID}`;
   }
 
   public onClickLinkedIn() {
@@ -76,18 +84,24 @@ export class LoginComponent implements OnInit {
 
     const data = {
       domain: environment.domain,
-      state: this._linkedInState
+      state: this._linkedInState,
     };
 
-    this._authService.preRegisterDataOAuth2('linkedin', data).pipe(first()).subscribe(_ => {
-      console.log(_);
-      }, (err: HttpErrorResponse) => {
-      this._displayLoadingLinkedIn = false;
-      console.error(err);
-      }, () => {
-        window.open(this._linkedInLink, '_self');
-    });
-
+    this._authService
+      .preRegisterDataOAuth2('linkedin', data)
+      .pipe(first())
+      .subscribe(
+        (_) => {
+          console.log(_);
+        },
+        (err: HttpErrorResponse) => {
+          this._displayLoadingLinkedIn = false;
+          console.error(err);
+        },
+        () => {
+          window.open(this._linkedInLink, '_self');
+        }
+      );
   }
 
   public onClickLogin() {
@@ -96,34 +110,47 @@ export class LoginComponent implements OnInit {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this._authService.login(user).pipe(first()).subscribe(() => {
-        if (this._authService.isAuthenticated) {
+      this._authService
+        .login(user)
+        .pipe(first())
+        .subscribe(
+          () => {
+            if (this._authService.isAuthenticated) {
+              // Get the redirect URL from our auth service. If no redirect has been set, use the default.
+              const redirect = this._authService.redirectUrl
+                ? this._authService.redirectUrl
+                : this._authService.isAdmin
+                ? this._routeFrontService.adminDefaultRoute()
+                : '/';
 
-          // Get the redirect URL from our auth service. If no redirect has been set, use the default.
-          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : this._authService.isAdmin
-            ? this._routeFrontService.adminDefaultRoute() : '/';
+              this._authService.redirectUrl = '';
 
-          this._authService.redirectUrl = '';
+              // Set our navigation extras object that passes on our global query params and fragment
+              const navigationExtras: NavigationExtras = {
+                queryParamsHandling: 'merge',
+                preserveFragment: true,
+              };
 
-          // Set our navigation extras object that passes on our global query params and fragment
-          const navigationExtras: NavigationExtras = {
-            queryParamsHandling: 'merge',
-            preserveFragment: true
-          };
-
-          // Redirect the user
-          this._router.navigate([redirect], navigationExtras);
-
-        }
-      }, () => {
-        this._nbTentatives -= 1;
-        this._displayLoading = false;
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
-        this._formData.get('password').reset();
-      });
+              // Redirect the user
+              this._router.navigate([redirect], navigationExtras);
+            }
+          },
+          () => {
+            this._nbTentatives -= 1;
+            this._displayLoading = false;
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              'ERROR.INVALID_FORM_DATA'
+            );
+            this._formData.get('password').reset();
+          }
+        );
     } else {
       if (this._formData.untouched && this._formData.pristine) {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          'ERROR.INVALID_FORM_DATA'
+        );
       }
     }
   }
@@ -156,7 +183,6 @@ export class LoginComponent implements OnInit {
     return this._backgroundImage;
   }
 
-
   get nbTentatives(): number {
     return this._nbTentatives;
   }
@@ -165,12 +191,25 @@ export class LoginComponent implements OnInit {
     this._isShowModal = true;
   }
 
-
   get isShowModal(): boolean {
     return this._isShowModal;
   }
 
   set isShowModal(value: boolean) {
     this._isShowModal = value;
+  }
+
+
+  get helpMessageForm(): FormGroup {
+    return this._helpMessageForm;
+  }
+
+  cancelMessage() {
+    this._isShowModal = false;
+    this._helpMessageForm.reset();
+  }
+
+  sendMessageToUMISupport() {
+
   }
 }
