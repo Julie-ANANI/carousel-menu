@@ -67,11 +67,14 @@
               </span>
             </div>
 
-            <!-- tentatives/help -->
-            <p class="text text-sm m-top-10 m-bottom-10 is-info">
+            <!-- tentatives + contact UMI -->
+            <p class="text text-sm m-top-10 m-bottom-10 is-info" style="display: flex">
               {{nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate)}}
+              <span class="text-link" style="margin-left: auto"
+                    (click)="showContactUMIModal()"
+                    *ngIf="nbTentatives ===0">Contact UMI support</span>
             </p>
-            <!-- /tentatives/help -->
+            <!-- /tentatives + contact UMI-->
 
             <!-- login button and forget password -->
             <div class="submit-wrapper text-center">
@@ -130,3 +133,21 @@
 
   </section>
 </main>
+
+<app-utility-modal [title]="'Contact UMI support'" [(showModal)]="isShowModal">
+  <section class="modal-body p-top-10 p-bottom-10 p-left-20 p-right-20">
+    <!-- info -->
+    <div class="text text-center">
+      <p class="title m-top-10">We are here to help</p>
+      <p class="text text-sm m-bottom-10">Having trouble logging into the platform?
+        Let us know what happened and we'll do out best to help!</p>
+    </div>
+    <!-- /info -->
+
+    <!-- send message -->
+    <div>
+
+    </div>
+    <!-- /send message -->
+  </section>
+</app-utility-modal>

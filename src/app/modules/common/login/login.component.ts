@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
 
   private _nbTentatives = 5;
 
+  private _isShowModal = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _formBuilder: FormBuilder,
@@ -157,5 +159,18 @@ export class LoginComponent implements OnInit {
 
   get nbTentatives(): number {
     return this._nbTentatives;
+  }
+
+  showContactUMIModal() {
+    this._isShowModal = true;
+  }
+
+
+  get isShowModal(): boolean {
+    return this._isShowModal;
+  }
+
+  set isShowModal(value: boolean) {
+    this._isShowModal = value;
   }
 }
