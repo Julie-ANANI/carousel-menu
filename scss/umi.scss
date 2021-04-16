@@ -4,13 +4,20 @@
 
 // All the scss files are listed here. Order of importing is important.
 
+// Icons
+
 // Variables
 @import "variables";
-@import "mixins";
-
-// Layout
-@import "layout";
 
 // Reset and dependencies
 @import "normalize";
 @import "base";
+
+// Elements
+@import "typography";
+
+// Layout
+
+// Components
+
+// Utilities

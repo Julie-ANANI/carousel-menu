@@ -29,3 +29,16 @@ body {
   -webkit-tap-highlight-color: transparent;
   -moz-osx-font-smoothing: grayscale;
 }
+
+a {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+
+  &:focus, &:hover, &:active, &.active {
+    color: $link-color;
+    text-decoration: none;
+  }
+
+}
+

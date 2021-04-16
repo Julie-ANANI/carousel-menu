@@ -13,6 +13,9 @@ applications:
 - git subtree add --prefix style-framework style-framework main --squash
 
 ### To pull the changes
-- git subtree pull --prefix style-framework style-framework main
+- git subtree pull --prefix style-framework style-framework main --squash
 
 To use it now add it as **@import "style-framework/scss/umi"** in the style.scss file.
+
+### For debugging purpose and testing
+sass --watch scss/umi.scss:css/umi.css

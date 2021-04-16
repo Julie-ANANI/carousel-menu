@@ -6,7 +6,7 @@
   padding-left: $layout-spacing;
   padding-right: $layout-spacing;
   width: 100%;
-  @extend .clearfix;
+  @extend .clearfix !optional;
 
   $grid-spacing: ($layout-spacing / ($layout-spacing * 0 + 1)) * $font-size;
 
