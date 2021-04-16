@@ -166,8 +166,9 @@
               [ngModel]="batch.active"
               type="checkbox">
             <i class="form-icon"></i>
-            <span *ngIf="batch.active" class="tooltip" data-tooltip="Sending is activated, email will be sent">Activated</span>
-            <span *ngIf="!batch.active" class="tooltip" data-tooltip="Sending is paused, no email will be sent">Paused</span>
+            <span *ngIf="!batch.active" class="tooltip"
+                  [attr.data-tooltip]="'Sending is paused,\n'+'no email will be sent.'">Paused</span>
+            <span *ngIf="batch.active" class="tooltip" [attr.data-tooltip]="'Sending is activated,\n'+'email will be sent.'">Activated</span>
           </label>
 
         </div>
