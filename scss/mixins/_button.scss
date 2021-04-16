@@ -1,0 +1,160 @@
+@import "../variables";
+
+@mixin button-disabled-variant($color: $primary-color) {
+  background-color: $color;
+  border-color: $color;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.5;
+
+  i {
+    cursor: not-allowed;
+  }
+
+}
+
+@mixin button-default-variant($bg-color: $primary-color) {
+  color: $white-color;
+  background-color: $bg-color;
+  border-color: $bg-color;
+
+  &:hover {
+    background-color: lighten($bg-color, 10%);
+    border-color: lighten($bg-color, 10%);
+
+    @if $bg-color == $primary-color {
+      background-color: lighten($bg-color, 15%);
+      border-color: lighten($bg-color, 15%);
+    }
+
+  }
+
+  &:focus, &.active, &:active  {
+    color: $white-color;
+    background-color: $bg-color;
+    border-color: $bg-color;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    @include button-disabled-variant($bg-color);
+  }
+
+}
+
+@mixin button-outline-variant($color: $primary-color) {
+  color: $color;
+  border-color: $color;
+  border-width: 2px;
+  background-color: transparent;
+
+  &:focus, &.active, &:active  {
+    color: $color;
+    border-color: $color;
+  }
+
+  &:hover, &:focus, &.active, &:active {
+
+    @if $color == $primary-color {
+      background-color: lighten($color, 45%);
+    }
+
+    @if $color == $white-color {
+      background-color: darken($color, 5%);
+    }
+
+    @if $color == $dark-color {
+      background-color: lighten($color, 70%);
+    }
+
+    @if $color == $warning-color {
+      background-color: lighten($color, 42%);
+    }
+
+    @if $color == $draft-color {
+      background-color: lighten($color, 57%);
+    }
+
+    @if $color == $meta-color {
+      background-color: lighten($color, 30%);
+    }
+
+    @if $color == $alert-color {
+      background-color: lighten($color, 32%);
+    }
+
+    @if $color == $success-color {
+      background-color: lighten($color, 46%);
+    }
+
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    @include button-disabled-variant($color);
+    background-color: transparent;
+  }
+
+}
+
+@mixin button-link-variant($color: $primary-color) {
+  color: $color;
+  border: none;
+  background-color: transparent;
+
+  &:focus, &:hover {
+    color: $color;
+    border: none;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+
+  &.active, &:active  {
+    color: $color;
+    border: none;
+    background-color: transparent;
+  }
+
+  &[disabled], &:disabled, &.disabled {
+    @include button-disabled-variant($color);
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+}
+
+@mixin button-loading-variant($color: $primary-color) {
+  background-color: $color;
+  min-height: 46px;
+
+  &:focus, &.active, &:active  {
+    background-color: $color;
+  }
+
+}
+
+@mixin button-circled-variant($size: normal) {
+  border-radius: 50%;
+  min-width: unset;
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  font-size: 17px;
+
+  @if $size == 'xs' {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+  }
+
+  @if $size == 'sm' {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  i {
+    margin: 0;
+  }
+
+}
+
+
