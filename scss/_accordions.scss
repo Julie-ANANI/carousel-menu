@@ -1,0 +1,40 @@
+@import "variables";
+
+.accordion {
+
+  input:checked ~, &[open] {
+
+    & .accordion-header {
+
+      .accordion-icon {
+        transform: rotate(90deg);
+      }
+
+    }
+
+    & .accordion-body {
+      max-height: 50rem;
+    }
+
+  }
+
+  .accordion-header {
+    display: block;
+    font-size: $font-size-md;
+    padding: $unit-1 $unit-2;
+
+    .accordion-icon {
+      margin-right: $unit-2;
+      transition: transform .25s;
+    }
+
+  }
+
+  .accordion-body {
+    margin-bottom: $unit-2;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .25s;
+  }
+
+}
