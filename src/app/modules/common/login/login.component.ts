@@ -11,6 +11,7 @@ import { RandomUtil } from '../../../utils/randomUtil';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouteFrontService } from '../../../services/route/route-front.service';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +50,8 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService,
     private _routeFrontService: RouteFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
-    private _router: Router
+    private _router: Router,
+    private _userService: UserService
   ) {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
   }
@@ -199,7 +201,6 @@ export class LoginComponent implements OnInit {
     this._isShowModal = value;
   }
 
-
   get helpMessageForm(): FormGroup {
     return this._helpMessageForm;
   }
@@ -210,6 +211,37 @@ export class LoginComponent implements OnInit {
   }
 
   sendMessageToUMISupport() {
-
+    const data = {
+      umi: {
+        email: 'support@umi.us',
+      },
+      user: {
+        email: this._helpMessageForm.get('contactEmail').value,
+        message: this._helpMessageForm.get('message').value,
+      },
+    };
+    this._userService.contactUMISupport(data).subscribe(
+      (next) => {
+        if (next.status === 200) {
+          this._translateNotificationsService.success(
+            'Success',
+            'We received your email, we will contact you soon.'
+          );
+          this._isShowModal = true;
+        } else {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            'Sorry, an error occurred.'
+          );
+        }
+      },
+      (error) => {
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          'An error occurred'
+        );
+        console.error(error);
+      }
+    );
   }
 }
