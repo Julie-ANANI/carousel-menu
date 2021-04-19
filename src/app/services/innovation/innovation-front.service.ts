@@ -130,11 +130,11 @@ export class InnovationFrontService {
         case 'Validating market needs':
           return 'pain_point';
 
-        case 'Validating the interest of my solution':
-          return 'innovation';
+        case 'Sourcing innovative solutions / partners':
+          return 'sourcing';
 
         default:
-          return 'sourcing';
+          return 'innovation';
       }
     }
   }
