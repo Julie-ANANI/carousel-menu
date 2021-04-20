@@ -54,6 +54,12 @@ export class SharedProfessionalsListComponent {
 
   private _localConfig: Config = <Config>{};
 
+  /**
+   * deletion confirmation modal
+   * @private
+   */
+  private _isShowModal = false;
+
   private _sidebarValue: SidebarInterface = {
     animate_state: 'inactive',
   };
@@ -97,8 +103,8 @@ export class SharedProfessionalsListComponent {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isTitle: true,
       _isPaginable: true,
-      _isFilterCountry: true,
-      _isCanSelectAll: true,
+      _isFilterCountry: this.tableSelector === 'admin-campaign-pros-limit',
+      _isCanSelectAll: this.tableSelector === 'admin-campaign-pros-limit',
       _isNoMinHeight: this.total < 11,
       _isDeletable: this.canAccess(['user', 'delete']),
       _isSelectable:
@@ -124,8 +130,8 @@ export class SharedProfessionalsListComponent {
           _label: 'Remove',
           _icon: 'icon icon-delete',
           _iconSize: '12px',
-          _isHidden: !this.canAccess(['user', 'edit']),
-        }
+          _isHidden: !this.canAccess(['user', 'edit']) || this.tableSelector !== 'admin-campaign-pros-limit',
+        },
       ],
       _clickIndex:
         this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit'])
@@ -369,6 +375,11 @@ export class SharedProfessionalsListComponent {
         this._editProfessionalTags(value._rows);
         break;
 
+      case 'Remove':
+        console.log('remove');
+        this._isShowModal = true;
+        break;
+
       default:
         this._translateNotificationsService.error(
           'Error',
@@ -512,5 +523,21 @@ export class SharedProfessionalsListComponent {
 
   get isDeleting(): boolean {
     return this._isDeleting;
+  }
+
+  get isShowModal(): boolean {
+    return this._isShowModal;
+  }
+
+  set isShowModal(value: boolean) {
+    this._isShowModal = value;
+  }
+
+  closeRemoveProModal() {
+    this._isShowModal = false;
+  }
+
+  onClickConfirmRemovePros() {
+    this._isShowModal = false;
   }
 }
