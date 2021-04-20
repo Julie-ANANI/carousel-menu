@@ -99,17 +99,13 @@ export class TableComponent {
 
   @Output() sendEditNavigator = new EventEmitter();
 
-  /**
-   * abandon parent value
-   */
-  @Output() sendUndoFilled = new EventEmitter();
-
-  /**
-   * replace value
-   */
-  @Output() sendExchangeValue = new EventEmitter();
-
   private _table: Table;
+
+  /**
+   * boolean: if all the data is selected(not the rows in table)
+   * @private
+   */
+  private _isSelectAll = false;
 
   private _isSearching: boolean;
 
@@ -931,15 +927,6 @@ export class TableComponent {
     return this._selectedIndex;
   }
 
-  exchangeValue(context: any) {
-    this.sendExchangeValue.emit(context);
-  }
-
-  undoFilled(context: any) {
-    this.sendUndoFilled.emit(context);
-  }
-
-
   public getContext(row: any, column: any) {
     return {
       row: row,
@@ -984,6 +971,11 @@ export class TableComponent {
     }
   }
 
+
+  get isSelectAll(): boolean {
+    return this._isSelectAll;
+  }
+
   isToAddColor(column: Column) {
     return (column.hasOwnProperty('_isFilled') || column.hasOwnProperty('_isReplaceable')) &&
       (column['_isFilled'] === true || column._isReplaceable === true);
@@ -991,5 +983,19 @@ export class TableComponent {
 
   getPerformedAction(action: string, context: any) {
     this.performAction.emit({_action: action, _context: context});
+  }
+
+  selectAllTheData() {
+    this._isSelectAll = true;
+    this._table._content.forEach((value) => {
+      value._isSelected = true;
+    });
+  }
+
+  clearAllTheSelections() {
+    this._isSelectAll = false;
+    this._table._content.forEach((value) => {
+      value._isSelected = false;
+    });
   }
 }

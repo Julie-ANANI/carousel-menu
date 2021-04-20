@@ -97,6 +97,8 @@ export class SharedProfessionalsListComponent {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isTitle: true,
       _isPaginable: true,
+      _isFilterCountry: true,
+      _isCanSelectAll: true,
       _isNoMinHeight: this.total < 11,
       _isDeletable: this.canAccess(['user', 'delete']),
       _isSelectable:
@@ -118,6 +120,12 @@ export class SharedProfessionalsListComponent {
           _iconSize: '12px',
           _isHidden: !this.canAccess(['user', 'edit']),
         },
+        {
+          _label: 'Remove',
+          _icon: 'icon icon-delete',
+          _iconSize: '12px',
+          _isHidden: !this.canAccess(['user', 'edit']),
+        }
       ],
       _clickIndex:
         this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit'])
