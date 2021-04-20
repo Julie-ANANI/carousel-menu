@@ -19,6 +19,14 @@
 
   }
 
+  .table {
+
+    thead th:not(.cell-checkbox), tbody tr td:not(.cell-checkbox) {
+      max-width: 100%;
+    }
+
+  }
+
 }
 
 .table {
@@ -28,6 +36,13 @@
   text-align: left;
   width: 100%;
   border: $border-width solid $table-tr-border-color;
+
+  thead th:not(.cell-checkbox), tbody tr td:not(.cell-checkbox) {
+    height: 44px;
+    min-width: 150px;
+    max-width: 300px;
+    flex: 1 1 auto;
+  }
 
   thead {
 
@@ -69,14 +84,6 @@
 
     }
 
-  }
-
-  thead th:not(.cell-checkbox), tbody tr td:not(.cell-checkbox) {
-    height: 44px;
-    min-width: 150px;
-    width: 100%;
-    max-width: 300px;
-    flex: 1 1 auto;
   }
 
   .cell-checkbox {
