@@ -1,0 +1,69 @@
+@import "variables";
+@import "mixins";
+
+.menu {
+  background-color: $white-color;
+  border-radius: 4px;
+  list-style: none;
+  margin: 0;
+  min-width: $control-width-xs;
+  padding: $unit-2 0;
+  transform: translateY($unit-1);
+  z-index: 300;
+  box-shadow: $box-shadow-menu;
+
+  .menu-item {
+    @include control-transition();
+    font-size: $font-size-sm;
+    text-decoration: none;
+    margin-top: 0;
+    color: $dark-color;
+    font-weight: normal;
+    padding: $unit-2 12px;
+    cursor: pointer;
+
+    & > a {
+      display: block;
+      color: inherit;
+      margin: (-$unit-2) -12px;
+      padding: $unit-2 12px;
+    }
+
+    &.disabled {
+      cursor: not-allowed !important;
+      background-color: transparent;
+
+      &:not(.active):hover {
+        background-color: transparent !important;
+      }
+
+    }
+
+    &:hover, &:focus, &:active, &.active {
+      background-color: $bg-menu-hover-color;
+    }
+
+    &:not(:first-child) {
+      margin-top: 2px;
+    }
+
+  }
+
+  &.menu-nav {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  &.is-xs {
+    width: $control-width-xs;
+  }
+
+  &.is-md {
+    width: 230px;
+  }
+
+  &.is-lg {
+    width: 300px;
+  }
+
+}
