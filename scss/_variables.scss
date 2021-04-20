@@ -69,11 +69,11 @@ $box-shadow-settings-menu: $box-shadow-form !default;;
 
 
 // Fonts
-$base-font-family: 'Open Sans', sans-serif, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
-$fallback-font-family: "Helvetica Neue", sans-serif !default;
+$base-font-family: 'Open Sans' !default;
+$fallback-font-family: Roboto, "Helvetica Neue", -apple-system, system-ui, "Segoe UI", !default;
 $font-family: $base-font-family, $fallback-font-family !default;
-$font-family-oswald: Oswald, sans-serif !default;
-$font-family-open-sans-light: 'Open Sans Light', sans-serif !default;
+$font-family-oswald: Oswald !default;
+$font-family-open-sans-light: 'Open Sans Light' !default;
 
 
 // Unit sizes
