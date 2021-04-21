@@ -559,6 +559,9 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     this._isShowModal = false;
   }
 
+  /**
+   * filter table content: countries
+   */
   filterAccordingToCountries() {
     const countries: Array<any> = [];
     this._subCountriesSelected = this._campaignFrontService
