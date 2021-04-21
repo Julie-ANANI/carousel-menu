@@ -316,7 +316,7 @@ export class TableComponent {
    */
   public selectAll(event: Event): void {
     event.preventDefault();
-
+    this._isSelectAll = false;
     if (this._table._isLocal) {
       this._filteredContent.forEach((value) => {
         value._isSelected = (event.target as HTMLInputElement).checked;
@@ -652,6 +652,7 @@ export class TableComponent {
   public selectRow(key: string): void {
     const rowKey: number = TableComponent._getRowKey(key);
 
+    this._isSelectAll = false;
     if (this._table._isSelectable) {
       if (this._table._isLocal) {
         this._filteredContent[rowKey]._isSelected = !this._filteredContent[
