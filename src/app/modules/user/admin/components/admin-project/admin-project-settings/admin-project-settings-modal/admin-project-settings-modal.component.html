@@ -79,7 +79,7 @@
     <div class="m-bottom-10">
 
       <label class="form-label" for="admin-project-modal-owner">Publication medias*
-        <span class="text-notify">(removing or modifying them won't change the actual medias of the market test.)</span>
+        <span class="text-notify">(Removing or modifying them won't change the actual medias of the market test.)</span>
       </label>
 
       <div
@@ -116,7 +116,7 @@
     <!-- owner -->
     <div class="form-group m-bottom-30 m-right-15">
       <label class="form-label" for="admin-project-modal-owner">Publication owner*
-        <span class="text-notify">(it won't change the actual owner of the market test.)</span>
+        <span class="text-notify">(It won't change the actual owner of the market test.)</span>
       </label>
       <select
         (ngModelChange)="onChangeOwner($event)"
@@ -134,7 +134,7 @@
     <!-- project tags -->
     <div class="form-group m-bottom-30">
       <label class="form-label">Publication sectors*
-        <span class="text-notify">(removing or modifying them won't change the actual market test tags.)</span>
+        <span class="text-notify">(Removing or modifying them won't change the actual market test tags.)</span>
       </label>
       <div *ngFor="let sector of community.sectors" class="label is-tag is-rounded">
         {{ sector.label && sector.label['en'] }}
@@ -146,7 +146,7 @@
     <!-- hashtag -->
     <div class="form-group m-bottom-25 m-right-15">
       <label class="form-label">Publication hashtags
-        <span class="text-notify">(do not include '#' keyword.)</span>
+        <span class="text-notify">(Do not include '#' keyword.)</span>
       </label>
       <app-utility-text-input
         (textEntered)="addHashtags($event)"
