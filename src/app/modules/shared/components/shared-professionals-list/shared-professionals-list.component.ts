@@ -392,6 +392,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
 
       case 'Remove':
         this._isShowModal = true;
+        this._professionalsToRemove = value._rows;
         break;
 
       case 'Filter':
@@ -403,6 +404,14 @@ export class SharedProfessionalsListComponent implements OnDestroy {
           'Error',
           'Idk how to do that :('
         );
+    }
+  }
+
+  private _removeAllProfessionalsSelectedFromCampaign() {
+    if (this._professionalsToRemove.length > 0) {
+      this._professionalsToRemove.map((item, index) => {
+        this._removeProfessionalFromCampaign(item._id, index);
+      });
     }
   }
 
@@ -557,6 +566,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
 
   onClickConfirmRemovePros() {
     this._isShowModal = false;
+    this._removeAllProfessionalsSelectedFromCampaign();
   }
 
   /**
@@ -596,7 +606,6 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         }, 500);
       });
   }
-
 
   get isLoading(): boolean {
     return this._isLoading;
