@@ -1,0 +1,41 @@
+<div id="check-box-wrapper" class="p-10">
+  <div class="form-group">
+    <ng-container *ngIf="isCanSelectAll">
+      <ng-container
+        *ngTemplateOutlet="checkBoxItem;
+      context: {$implicit: getContext('Select all', false, [], {})}">
+      </ng-container>
+    </ng-container>
+    <ng-container *ngFor="let item of sources; index as i">
+      <ng-container
+        *ngTemplateOutlet="checkBoxItem;
+      context: {$implicit: getContext(item.title, item['children'].length>0, item['children'],item,  i, 0)}">
+      </ng-container>
+      <div class="form-group m-left-20" *ngIf="item.isOpened">
+        <ng-container *ngFor="let childItem of item.children; index as j">
+          <ng-container
+            *ngTemplateOutlet="checkBoxItem;
+            context: {$implicit: getContext(childItem.name, false, [], childItem, i, j)}">
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-template #checkBoxItem let-context>
+    <div class="d-flex align-center">
+      <label class="form-checkbox">
+        <input type="checkbox"
+               (change)="selectItem($event, context)"
+               [checked]="context.item.isSelected">
+        <i class="form-icon"></i> {{context.title | titlecase}}
+      </label>
+      <i class="icon icon-arrow-down"
+         style="margin-left: auto; cursor: pointer; color: #0B90C6"
+         (click)="openCheckBoxGroup(context)"
+         *ngIf="context.hasChildren"></i>
+    </div>
+  </ng-template>
+</div>
+
+

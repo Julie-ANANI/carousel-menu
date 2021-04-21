@@ -95,6 +95,7 @@ export class SharedProfessionalsListComponent {
   }
 
   private _initializeTable() {
+    console.log(this._professionals);
     this._table = {
       _selector: this.tableSelector,
       _title: 'professionals',
@@ -130,7 +131,9 @@ export class SharedProfessionalsListComponent {
           _label: 'Remove',
           _icon: 'icon icon-delete',
           _iconSize: '12px',
-          _isHidden: !this.canAccess(['user', 'edit']) || this.tableSelector !== 'admin-campaign-pros-limit',
+          _isHidden:
+            !this.canAccess(['user', 'edit']) ||
+            this.tableSelector !== 'admin-campaign-pros-limit',
         },
       ],
       _clickIndex:
