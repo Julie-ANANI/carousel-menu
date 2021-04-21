@@ -64,7 +64,7 @@ export class TypeRankingComponent {
     switch (field) {
 
       case 'title':
-        this._titleColor = CommonService.getLimitColor(this._section.title, 26);
+        this._titleColor = CommonService.getLimitColor(this._section.title, 40);
         break;
 
       case 'abstract':
