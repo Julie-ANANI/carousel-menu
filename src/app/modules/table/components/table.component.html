@@ -42,7 +42,9 @@
           Filter by country<i class="icon icon-caret icon-right"></i>
         </a>
         <div class="menu">
-          <app-check-box-filter [config]="checkBoxConfig">
+          <app-check-box-filter
+            [config]="checkBoxConfig"
+            (sendFilters)="onActionClick('Filter')">
 
           </app-check-box-filter>
         </div>

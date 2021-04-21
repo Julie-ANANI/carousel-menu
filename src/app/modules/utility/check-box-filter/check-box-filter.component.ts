@@ -101,7 +101,7 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
         context.item.isSelected = !context.item.isSelected;
       }
     }
-    this.sendFilters.emit(this._sources);
+    this.saveData(this._sources);
   }
 
   ngOnInit(): void {
@@ -111,6 +111,7 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           this._sources = data;
           this.initialiseSources(false);
+          this.saveData([]);
         });
     }
   }
@@ -133,6 +134,11 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
 
   openCheckBoxGroup(context: any) {
     context.item.isOpened = !context.item.isOpened;
-    this.sendFilters.emit(this._sources);
+    this.saveData(this._sources);
+  }
+
+  saveData(source: any) {
+    this._campaignFrontService.setCountriesSelectedInFilter(source);
+    this.sendFilters.emit(true);
   }
 }

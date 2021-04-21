@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { Professional } from '../../../../models/professional';
 import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
@@ -12,6 +18,8 @@ import { Tag } from '../../../../models/tag';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { Subscription } from 'rxjs';
+import { CampaignFrontService } from '../../../../services/campaign/campaign-front.service';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -22,7 +30,7 @@ export interface SelectedProfessional extends Professional {
   templateUrl: './shared-professionals-list.component.html',
   styleUrls: ['./shared-professionals-list.component.scss'],
 })
-export class SharedProfessionalsListComponent {
+export class SharedProfessionalsListComponent implements OnDestroy {
   @Input() accessPath: Array<string> = [];
 
   @Input() set config(value: Config) {
@@ -78,10 +86,15 @@ export class SharedProfessionalsListComponent {
 
   private _isDeleting = false;
 
+  private _subCountriesSelected: Subscription;
+
+  private _isLoading = false;
+
   constructor(
     private _professionalsService: ProfessionalsService,
     private _router: Router,
     private _rolesFrontService: RolesFrontService,
+    private _campaignFrontService: CampaignFrontService,
     private _translateNotificationsService: TranslateNotificationsService
   ) {}
 
@@ -95,7 +108,6 @@ export class SharedProfessionalsListComponent {
   }
 
   private _initializeTable() {
-    console.log(this._professionals);
     this._table = {
       _selector: this.tableSelector,
       _title: 'professionals',
@@ -379,8 +391,11 @@ export class SharedProfessionalsListComponent {
         break;
 
       case 'Remove':
-        console.log('remove');
         this._isShowModal = true;
+        break;
+
+      case 'Filter':
+        this.filterAccordingToCountries();
         break;
 
       default:
@@ -542,5 +557,49 @@ export class SharedProfessionalsListComponent {
 
   onClickConfirmRemovePros() {
     this._isShowModal = false;
+  }
+
+  filterAccordingToCountries() {
+    const countries: Array<any> = [];
+    this._subCountriesSelected = this._campaignFrontService
+      .getCountriesSelected()
+      .subscribe((data) => {
+        this._isLoading = true;
+        data.map((item) => {
+          if (
+            item.isSelected &&
+            item.hasOwnProperty('children') &&
+            item.children.length > 0
+          ) {
+            item.children.map((c: any) => {
+              if (c.isSelected) {
+                countries.push(c.code);
+              }
+            });
+          }
+        });
+        setTimeout(() => {
+          if (countries.length > 0) {
+            this._table._content = this._professionals.filter((item) =>
+              countries
+                .toString()
+                .toLowerCase()
+                .includes(item.country.toLowerCase())
+            );
+          } else {
+            this._table._content = this._professionals;
+          }
+          this._isLoading = false;
+        }, 500);
+      });
+  }
+
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  ngOnDestroy(): void {
+    this._subCountriesSelected.unsubscribe();
   }
 }

@@ -19,6 +19,10 @@ export class CampaignFrontService {
 
   private _filtersCountries: Subject<Array<any>> = new Subject<Array<any>>();
 
+  private _countriesSelectedInFilter: Subject<Array<any>> = new Subject<
+    Array<any>
+  >();
+
   /***
    * this function is to calculate the campaign stat for the answers component in the
    * campaign component.
@@ -286,7 +290,15 @@ export class CampaignFrontService {
     this._filtersCountries.next(value);
   }
 
+  public setCountriesSelectedInFilter(value: any) {
+    this._countriesSelectedInFilter.next(value);
+  }
+
   public getFilters(): Observable<Array<any>> {
     return this._filtersCountries.asObservable();
+  }
+
+  public getCountriesSelected(): Observable<Array<any>> {
+    return this._countriesSelectedInFilter.asObservable();
   }
 }
