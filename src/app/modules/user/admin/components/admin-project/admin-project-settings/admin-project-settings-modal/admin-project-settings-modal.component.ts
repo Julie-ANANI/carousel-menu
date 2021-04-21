@@ -128,12 +128,13 @@ export class AdminProjectSettingsModalComponent implements OnInit {
 
   private _initDefaultMedias() {
     if (!this._community.media) {
+      const _cardMedias = this._innovCard.media.filter((media) => media.type === 'PHOTO');
       for (let i = 0; i < this._totalMedias; i++) {
-        if (this._innovCard.media[i] && this._innovCard.media[i].type === 'PHOTO') {
+        if (_cardMedias[i] && _cardMedias[i].url) {
           this._allMedias[i] = {
-            url: this._innovCard.media[i].url,
-            actualContent: this._innovCard.media[i],
-            type: this._innovCard.media[i].type
+            url: _cardMedias[i].url,
+            actualContent: _cardMedias[i],
+            type: _cardMedias[i].type
           };
         }
       }
