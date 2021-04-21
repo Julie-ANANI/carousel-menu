@@ -62,9 +62,11 @@
               class="form-select is-sm is-shadowed"
               [id]="section.type">
               <option [ngValue]="''" selected>Select market test section</option>
-              <option *ngFor="let cardSection of innovCard.sections" [ngValue]="cardSection._id">
-                {{ cardSection.title | titlecase }}
-              </option>
+              <ng-container *ngFor="let cardSection of innovCard.sections">
+                <option *ngIf="cardSection.visibility" [ngValue]="cardSection._id">
+                  {{ cardSection.title | titlecase }}
+                </option>
+              </ng-container>
             </select>
           </label>
 
