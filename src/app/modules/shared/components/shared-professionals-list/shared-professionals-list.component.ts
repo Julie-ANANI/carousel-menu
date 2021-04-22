@@ -5,21 +5,21 @@ import {
   OnDestroy,
   Output,
 } from '@angular/core';
-import {Professional} from '../../../../models/professional';
-import {Table} from '../../../table/models/table';
-import {Config} from '../../../../models/config';
-import {ProfessionalsService} from '../../../../services/professionals/professionals.service';
-import {first} from 'rxjs/operators';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
-import {Campaign} from '../../../../models/campaign';
-import {Router} from '@angular/router';
-import {Tag} from '../../../../models/tag';
-import {RolesFrontService} from '../../../../services/roles/roles-front.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../services/error/error-front.service';
-import {Subscription} from 'rxjs';
-import {CampaignFrontService} from '../../../../services/campaign/campaign-front.service';
+import { Professional } from '../../../../models/professional';
+import { Table } from '../../../table/models/table';
+import { Config } from '../../../../models/config';
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { first } from 'rxjs/operators';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
+import { Campaign } from '../../../../models/campaign';
+import { Router } from '@angular/router';
+import { Tag } from '../../../../models/tag';
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { Subscription } from 'rxjs';
+import { CampaignFrontService } from '../../../../services/campaign/campaign-front.service';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -98,8 +98,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     private _rolesFrontService: RolesFrontService,
     private _campaignFrontService: CampaignFrontService,
     private _translateNotificationsService: TranslateNotificationsService
-  ) {
-  }
+  ) {}
 
   private _setProfessionals() {
     if (this._professionals.length > 0) {
@@ -154,8 +153,8 @@ export class SharedProfessionalsListComponent implements OnDestroy {
       _clickIndex:
         this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit'])
           ? this.canAccess(['tableColumns', 'member'])
-          ? 2
-          : 1
+            ? 2
+            : 1
           : null,
       _columns: [
         {
@@ -166,7 +165,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
           _isHidden: !this.canAccess(['tableColumns', 'member']),
           _width: '180px',
           _choices: [
-            {_name: 'false', _alias: 'No', _url: ''},
+            { _name: 'false', _alias: 'No', _url: '' },
             {
               _name: 'true',
               _alias: 'Yes',
@@ -494,7 +493,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
             this._translateNotificationsService.error(
               'Error',
               'A professional with that E-mail already exists. ' +
-              'Try to manually merge both professionals. For more info, ask the tech team.'
+                'Try to manually merge both professionals. For more info, ask the tech team.'
             );
           } else {
             this._translateNotificationsService.error(
@@ -576,7 +575,27 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     if (!this._isSelectAll) {
       this._removeAllProfessionalsSelectedFromCampaign();
     } else {
-      console.log('delete all the pros in one campaign');
+      const _campaignId = this.campaign && this.campaign._id;
+      const _innovationId =
+        this.campaign &&
+        this.campaign.innovation &&
+        this.campaign.innovation._id;
+      this._localConfig.limit = '500';
+      this._localConfig.offset = '0';
+      const body = {
+        batchSize: 500,
+        total: this.total,
+        campaignId: _campaignId,
+      };
+      this._professionalsService
+        .removeAllFromCampaign(_campaignId, _innovationId, this.config, body)
+        .pipe(first())
+        .subscribe(
+          (next) => {
+            console.log(next);
+          },
+          (error) => console.error(error)
+        );
     }
   }
 
@@ -616,20 +635,6 @@ export class SharedProfessionalsListComponent implements OnDestroy {
           this._isLoading = false;
         }, 500);
       });
-  }
-
-  /**
-   * if all select: divide blocks=500
-   */
-  private setBatchesForPros() {
-    this.config.limit = '500';
-    let ngBatches = Math.floor(this.total / 500);
-    if (this.total % 500 !== 0) {
-      ngBatches += 1;
-    }
-    for (let i = 0; i < ngBatches - 1; i++) {
-      this.config.offset = (i * 500).toString();
-    }
   }
 
   get isLoading(): boolean {
