@@ -55,13 +55,26 @@
             id="key-learnings">
             <div class="box-style p-50" *ngIf="!areAnswersLoading">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
-              <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+              <div class="d-flex align-center">
+                <h6 *ngIf="isMainDomain" class="op-text m-right-4" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+                <!-- Edit mode toggle -->
+                <button
+                  [attr.data-tooltip]="(showKeyLearningsEditor)? 'Preview':'Edit'"
+                  *ngIf="canAccess(['edit', 'umiWord'])"
+                  (click)="showKeyLearningsEditor = !showKeyLearningsEditor"
+                  [id]="'sharedPresetSection-btn-add-question'"
+                  class="button tooltip is-circled is-action text-no-underline is-info is-xs text-sm op-text text-white"
+                  type="button">
+                  <i *ngIf="!showKeyLearningsEditor" class="fas fa-pencil-alt"></i>
+                  <i *ngIf="showKeyLearningsEditor" class="fas fa-eye"></i>
+                </button>
+              </div>
               <app-shared-editors
                 (textChange)="saveOperatorComment($event, 'keyLearning')"
                 [text]="innovation.marketReport?.keyLearning?.conclusion"
                 [innovationId]="innovation._id"
                 [elementId]="'key-learning'"
-                [isEditable]="canAccess(['edit', 'umiWord'])"
+                [isEditable]="canAccess(['edit', 'umiWord']) && showKeyLearningsEditor"
                 [type]="'synthesis'">
               </app-shared-editors>
             </div>
@@ -149,13 +162,26 @@
             id="conclusion">
             <div class="box-style p-50" *ngIf="!areAnswersLoading">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.CONCLUSION'" translate></h2>
-              <h6 *ngIf="isMainDomain" class="op-text" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+              <div class="d-flex align-center">
+                <h6 *ngIf="isMainDomain" class="op-text m-right-4" [innerText]="'COMMON.UMI_WORD'" translate></h6>
+                <!-- Edit mode toggle -->
+                <button
+                  [attr.data-tooltip]="(showConclusionEditor)? 'Preview':'Edit'"
+                  *ngIf="canAccess(['edit', 'umiWord'])"
+                  (click)="showConclusionEditor = !showConclusionEditor"
+                  [id]="'sharedPresetSection-btn-add-question'"
+                  class="button tooltip is-circled is-action text-no-underline is-info is-xs text-sm op-text text-white"
+                  type="button">
+                  <i *ngIf="!showConclusionEditor" class="fas fa-pencil-alt"></i>
+                  <i *ngIf="showConclusionEditor" class="fas fa-eye"></i>
+                </button>
+              </div>
               <app-shared-editors
                 (textChange)="saveOperatorComment($event, 'finalConclusion')"
                 [text]="innovation.marketReport?.finalConclusion?.conclusion"
                 [innovationId]="innovation._id"
                 [elementId]="'conclusion'"
-                [isEditable]="canAccess(['edit', 'umiWord'])"
+                [isEditable]="canAccess(['edit', 'umiWord']) && showConclusionEditor"
                 [type]="'synthesis'">
               </app-shared-editors>
             </div>

@@ -18,14 +18,29 @@
       </div>
     </div>
 
-    <h5 *ngIf="isMainDomain" class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</h5>
+
+
+    <div class="d-flex align-center">
+      <h5 *ngIf="isMainDomain" class="op-text m-right-4">{{ 'COMMON.UMI_WORD' | translate }}</h5>
+      <!-- Edit mode toggle -->
+      <button
+        *ngIf="!readonly"
+        (click)="toggleEditor()"
+        [attr.data-tooltip]="(showEditor)? 'Preview':'Edit'"
+        [id]="'sharedPresetSection-btn-add-question'"
+        class="button tooltip is-circled is-action text-no-underline is-info is-xs text-sm op-text text-white"
+        type="button">
+        <i *ngIf="!showEditor" class="fas fa-pencil-alt"></i>
+        <i *ngIf="showEditor" class="fas fa-eye"></i>
+      </button>
+    </div>
 
     <app-shared-editors
       (textChange)="keyupHandlerFunction($event)"
       [text]="innovation.marketReport[question.identifier]?.conclusion || ''"
       [innovationId]="innovation._id"
       [elementId]="question.identifier"
-      [isEditable]="!readonly"
+      [isEditable]="!readonly && showEditor"
       [type]="'synthesis'">
     </app-shared-editors>
 

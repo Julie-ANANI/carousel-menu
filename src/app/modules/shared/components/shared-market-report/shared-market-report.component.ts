@@ -58,6 +58,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _previewMode = false;
 
+  private _showKeyLearningsEditor = false;
+
+  private _showConclusionEditor = false;
+
   private _answers: Array<Answer> = [];
 
   private _filteredAnswers: Array<Answer> = [];
@@ -370,6 +374,20 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get isMainDomain(): boolean {
     return this._isMainDomain;
+  }
+
+  get showConclusionEditor(): boolean {
+    return this._showConclusionEditor;
+  }
+  get showKeyLearningsEditor(): boolean {
+    return this._showKeyLearningsEditor;
+  }
+
+  set showConclusionEditor(value: boolean) {
+    this._showConclusionEditor = value;
+  }
+  set showKeyLearningsEditor(value: boolean) {
+    this._showKeyLearningsEditor = value;
   }
 
   hideQuestionAnswers(question: Question) {

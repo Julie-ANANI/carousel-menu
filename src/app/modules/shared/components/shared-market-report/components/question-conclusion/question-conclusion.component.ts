@@ -32,6 +32,8 @@ export class QuestionConclusionComponent implements OnInit {
 
   private _isMainDomain = environment.domain === 'umi' || false;
 
+  private _showEditor = false;
+
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
               private _innovationFrontService: InnovationFrontService) {}
@@ -47,6 +49,10 @@ export class QuestionConclusionComponent implements OnInit {
     this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
   }
 
+  toggleEditor() {
+    this.showEditor = !this.showEditor;
+  }
+
   get tags(): Array<Tag> {
     return this._dataService.answersTagsLists[this.question._id];
   }
@@ -59,4 +65,11 @@ export class QuestionConclusionComponent implements OnInit {
     return this._isMainDomain;
   }
 
+  get showEditor(): boolean {
+    return this._showEditor;
+  }
+
+  set showEditor(value: boolean) {
+    this._showEditor = value;
+  }
 }
