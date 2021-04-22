@@ -9,6 +9,7 @@ import { LoginRoutingModule } from "./login-routing.module";
 import { ForgetPasswordModule } from "./components/forget-password/forget-password.module";
 import { ResetPasswordModule } from './components/reset-password/reset-password.module';
 import { SpinnerLoaderModule } from '../../utility/spinner-loader/spinner-loader.module';
+import {ModalModule} from '../../utility/modals/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -19,11 +20,9 @@ import { SpinnerLoaderModule } from '../../utility/spinner-loader/spinner-loader
     FormsModule,
     ReactiveFormsModule,
     ResetPasswordModule,
-    SpinnerLoaderModule
+    SpinnerLoaderModule,
+    ModalModule,
   ],
-  declarations: [
-    LoginComponent,
-  ]
+  declarations: [LoginComponent],
 })
-
 export class LoginModule {}
