@@ -11,6 +11,8 @@ import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
 import * as compression from 'compression';
+
+// @ts-ignore
 import { lookup } from 'mime-types';
 import { join, extname } from 'path';
 
@@ -59,7 +61,9 @@ app.use('*.*', function (req, res, next) {
 });
 
 // Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
+  maxAge: '1y'
+}));
 
 // Use compression only for Universal routes, not static files
 app.use(compression());
@@ -89,5 +93,5 @@ app.get('*', (req, res) => {
 
 // Start up the Node server
 app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
+  console.log(`Node express server listening on http://localhost:${PORT}`);
 });

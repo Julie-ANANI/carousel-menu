@@ -17,7 +17,7 @@ import { NguiAutoComplete } from './auto-complete';
  *   2. dataValue as any e.g.
  */
 @Component({
-    selector: 'ngui-auto-complete',
+    selector: 'app-ngui-auto-complete',
     template: `
         <div #autoCompleteContainer class="ng2-auto-complete">
             <!-- keyword input -->
@@ -122,36 +122,36 @@ export class NguiAutoCompleteComponent implements OnInit {
     @Input('list-formatter') public listFormatter: (arg: any) => string;
     @Input('source') public source: any;
     @Input('path-to-data') public pathToData: string;
-    @Input('min-chars') public minChars: number = 0;
+    @Input('min-chars') public minChars = 0;
     @Input('placeholder') public placeholder: string;
     @Input('blank-option-text') public blankOptionText: string;
     @Input('no-match-found-text') public noMatchFoundText: string;
-    @Input('accept-user-input') public acceptUserInput: boolean = true;
-    @Input('loading-text') public loadingText: string = 'Loading';
+    @Input('accept-user-input') public acceptUserInput = true;
+    @Input('loading-text') public loadingText = 'Loading';
     @Input('loading-template') public loadingTemplate: string = null;
     @Input('max-num-list') public maxNumList: number;
-    @Input('show-input-tag') public showInputTag: boolean = true;
-    @Input('show-dropdown-on-init') public showDropdownOnInit: boolean = false;
-    @Input('tab-to-select') public tabToSelect: boolean = true;
-    @Input('match-formatted') public matchFormatted: boolean = false;
-    @Input('auto-select-first-item') public autoSelectFirstItem: boolean = false;
-    @Input('select-on-blur') public selectOnBlur: boolean = false;
-    @Input('re-focus-after-select') public reFocusAfterSelect: boolean = true;
+    @Input('show-input-tag') public showInputTag = true;
+    @Input('show-dropdown-on-init') public showDropdownOnInit = false;
+    @Input('tab-to-select') public tabToSelect = true;
+    @Input('match-formatted') public matchFormatted = false;
+    @Input('auto-select-first-item') public autoSelectFirstItem = false;
+    @Input('select-on-blur') public selectOnBlur = false;
+    @Input('re-focus-after-select') public reFocusAfterSelect = true;
     @Input('header-item-template') public headerItemTemplate: string = null;
-    @Input('ignore-accents') public ignoreAccents: boolean = true;
+    @Input('ignore-accents') public ignoreAccents = true;
 
     @Output() public valueSelected = new EventEmitter();
     @Output() public customSelected = new EventEmitter();
     @Output() public textEntered = new EventEmitter();
 
-    @ViewChild('autoCompleteInput') public autoCompleteInput: ElementRef;
-    @ViewChild('autoCompleteContainer') public autoCompleteContainer: ElementRef;
+    @ViewChild('autoCompleteInput', {read: ElementRef, static: true}) public autoCompleteInput: ElementRef;
+    @ViewChild('autoCompleteContainer', {read: ElementRef, static: true}) public autoCompleteContainer: ElementRef;
 
-    public dropdownVisible: boolean = false;
-    public isLoading: boolean = false;
+    public dropdownVisible = false;
+    public isLoading = false;
 
     public filteredList: any[] = [];
-    public minCharsEntered: boolean = false;
+    public minCharsEntered = false;
     public itemIndex: number = null;
     public keyword: string;
 
@@ -162,7 +162,7 @@ export class NguiAutoCompleteComponent implements OnInit {
             timer = setTimeout(callback, ms);
         };
     })();
-    private selectOnEnter: boolean = false;
+    private selectOnEnter = false;
 
     /**
      * constructor

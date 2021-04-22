@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {EmailSignature} from '../../../../models/email-signature';
 import {EmailTemplate} from '../../../../models/email-template';
 import {TranslateService} from '@ngx-translate/core';
@@ -54,7 +54,8 @@ export class SharedMailEditorComponent {
     if (value) {
       this._customField = value[this._translateService.currentLang];
 
-      for (let valueKey in value) {
+      // tslint:disable-next-line:forin
+      for (const valueKey in value) {
         value[valueKey].forEach( (field: {label: string, value: string}) => {
           this._variableMapping[valueKey][field.value.replace(/[\|\*]/g, '')] = field.label;
         });
@@ -90,7 +91,7 @@ export class SharedMailEditorComponent {
 
   @Output() emailsObjectChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('textZone') child: any;
+  @ViewChild('textZone', { read: ElementRef, static: true }) child: any;
 
   private _display = false;
 
@@ -145,7 +146,7 @@ export class SharedMailEditorComponent {
 
   public onSelectProfessional(professionalId: string) {
     if (professionalId) {
-      const pro = this.professionals.find(pro => pro._id === professionalId);
+      const pro = this.professionals.find(_pro => _pro._id === professionalId);
       const language = pro.language;
       const html = '<span class="variable">';
       this._professionalPreview = `${this._emailsObject[language].subject}<p>${this._emailsObject[language].content}</p>`
