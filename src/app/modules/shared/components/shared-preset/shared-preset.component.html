@@ -1,7 +1,7 @@
 <div [hidden]="!preset && !preset._id">
 
   <!-- title -->
-  <h2 class="title">{{ preset.name }} <span class="text-notify text-normal text-sm">(Preset name)</span></h2>
+  <h2 class="title is-4">{{ preset.name }} <span class="text-notify text-normal text-sm">(Preset name)</span></h2>
   <!-- /title -->
 
   <!-- sections -->
@@ -11,6 +11,7 @@
       [ngClass]="{'m-bottom-30': (i + 1) < preset.sections.length}">
       <app-shared-preset-section
         [isEditable]="isEditable"
+        [presetLanguages]="presetLanguages"
         [sectionIndex]="i"
         [section]="section">
       </app-shared-preset-section>
@@ -26,7 +27,7 @@
       [id]="'sharedPreset-btn-add-section'"
       class="button is-xl is-primary is-outlined"
       type="button">
-      Add new section
+      Add preset section
     </button>
   </section>
   <!-- /add section -->
