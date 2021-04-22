@@ -41,7 +41,7 @@ export class SharedPresetComponent implements OnInit {
     event.preventDefault();
     if (this.isEditable) {
       this.presetService.addSection();
-      this._savePreset()
+      this._savePreset();
     }
   }
 
