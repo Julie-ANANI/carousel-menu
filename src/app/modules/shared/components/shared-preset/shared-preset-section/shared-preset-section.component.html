@@ -14,7 +14,7 @@
       <ng-container *ngIf="!editSection">
 
         <label class="m-right-20">
-          <select class="form-select is-xs" disabled>
+          <select class="form-select is-sm" disabled>
             <option *ngIf="!isNumber(section.description)">
               <ng-container *ngIf="section.description ==='1st'">Problem</ng-container>
               <ng-container *ngIf="section.description ==='2nd'">Solution</ng-container>
@@ -42,7 +42,7 @@
           <select
             (ngModelChange)="notifyChanges()"
             [(ngModel)]="section.description"
-            class="form-select is-xs">
+            class="form-select is-sm">
             <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
             <option [ngValue]="'nothing'">Nothing</option>
           </select>
@@ -54,7 +54,7 @@
           <select
             (ngModelChange)="notifyChanges()"
             [(ngModel)]="section.description"
-            class="form-select is-xs">
+            class="form-select is-sm">
             <option [ngValue]="'1st'">Problem</option>
             <option [ngValue]="'2nd'">Solution</option>
             <option [ngValue]="'nothing'">Nothing</option>
@@ -72,7 +72,7 @@
             [(ngModel)]="section.label[lang]"
             [attr.placeholder]="'Section name in ' + (lang === 'fr' ? 'French' : 'English')"
             [id]="lang"
-            class="form-input is-xs"
+            class="form-input is-sm"
             type="text">
         </div>
         <!-- /labels -->
