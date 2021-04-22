@@ -1,13 +1,11 @@
 <div [hidden]="!preset && !preset._id">
 
-  <!-- title and save button -->
-  <section>
-    <h2 class="title text-20">{{ preset.name }}</h2>
-  </section>
-  <!-- /title and save button -->
+  <!-- title -->
+  <h2 class="title">{{ preset.name }} <span class="text-notify text-normal text-sm">(Preset name)</span></h2>
+  <!-- /title -->
 
   <!-- sections -->
-  <ng-container *ngIf="preset.sections && preset.sections.length > 0">
+  <ng-container *ngIf="preset.sections && preset.sections.length">
     <section
       *ngFor="let section of preset.sections; let i = index;"
       [ngClass]="{'m-bottom-30': (i + 1) < preset.sections.length}">
@@ -21,16 +19,15 @@
   <!-- /sections -->
 
   <!-- add section -->
-  <section *ngIf="isEditable" class="p-bottom-30 text-center">
+  <section *ngIf="isEditable" class="p-bottom-20 text-center">
     <div class="divider m-bottom-50"></div>
     <button
       (click)="addSection($event)"
       [id]="'sharedPreset-btn-add-section'"
-      class="button is-xl is-primary"
+      class="button is-xl is-primary is-outlined"
       type="button">
       Add new section
     </button>
-    <div class="divider m-top-50"></div>
   </section>
   <!-- /add section -->
 
