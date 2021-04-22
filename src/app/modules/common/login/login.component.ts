@@ -222,12 +222,12 @@ export class LoginComponent implements OnInit {
     };
     this._userService.contactUMISupport(data).subscribe(
       (next) => {
+        this._isShowModal = false;
         if (next.status === 200) {
           this._translateNotificationsService.success(
             'Success',
             'We received your email, we will contact you soon.'
           );
-          this._isShowModal = true;
         } else {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
