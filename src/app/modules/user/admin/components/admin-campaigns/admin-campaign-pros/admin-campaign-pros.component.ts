@@ -129,6 +129,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _getProfessionals() {
     if (isPlatformBrowser(this._platformId)) {
+      console.log(this._config);
       this._professionalsService
         .getAll(this._config)
         .pipe(first())

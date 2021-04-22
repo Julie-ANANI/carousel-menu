@@ -1048,6 +1048,7 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = true;
     });
+    this.performAction.emit({_action: 'Select all', _context: true});
   }
 
   clearAllTheSelections() {
@@ -1055,6 +1056,7 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = false;
     });
+    this.performAction.emit({_action: 'Select all', _context: false});
   }
 
   get checkBoxConfig(): CheckBoxFilterConfig {
