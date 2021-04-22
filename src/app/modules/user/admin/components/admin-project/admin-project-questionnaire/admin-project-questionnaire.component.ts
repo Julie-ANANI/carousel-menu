@@ -33,6 +33,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _cardsLanguages: Array<string> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
@@ -45,6 +47,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         this._innovation = innovation || <Innovation>{};
+        this._cardsLanguages = this._innovation.innovationCards.map((card) => card.lang);
         this._setQuizLink();
         this._setSectionsNames();
       });
@@ -191,6 +194,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   get sectionsNames(): Array<string> {
     return this._sectionsNames;
+  }
+
+  get cardsLanguages(): Array<string> {
+    return this._cardsLanguages;
   }
 
   ngOnDestroy(): void {

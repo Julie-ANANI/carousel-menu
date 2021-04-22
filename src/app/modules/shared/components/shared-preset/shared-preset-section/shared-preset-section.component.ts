@@ -16,48 +16,55 @@ export class SharedPresetSectionComponent {
    */
   @Input() isEditable = false;
 
+  @Input() presetLanguages: Array<string> = [];
+
   @Input() set section(value: Section) {
     this._section = value;
+    console.log(this._section);
+    console.log(this.presetLanguages);
   }
 
   @Input() set sectionIndex(value: number) {
     this._sectionIndex = value;
   }
 
-  private _section: Section;
+  private _section: Section = <Section>{};
+
   private _sectionIndex = 0;
+
   public editSection = false;
 
   private _picto: Picto = picto;
 
   private _isCollapsed = false;
 
-  constructor(private presetFrontService: PresetFrontService,
-              private translateService: TranslateService) {}
+  constructor(private _presetFrontService: PresetFrontService,
+              private _translateService: TranslateService) {
+  }
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
-    this.presetFrontService.addQuestion(this._sectionIndex);
+    this._presetFrontService.addQuestion(this._sectionIndex);
     this.notifyChanges();
   }
 
   public up(event: Event): void {
     event.preventDefault();
-    this.presetFrontService.moveSection(this._sectionIndex, -1);
+    this._presetFrontService.moveSection(this._sectionIndex, -1);
     this.notifyChanges();
   }
 
   public down(event: Event): void {
     event.preventDefault();
-    this.presetFrontService.moveSection(this._sectionIndex, 1);
+    this._presetFrontService.moveSection(this._sectionIndex, 1);
     this.notifyChanges();
   }
 
   public removeSection(event: Event): void {
     event.preventDefault();
-    const res = confirm('Are you sure you want to delete this section ?');
+    const res = confirm('Are you sure you want to delete this section?');
     if (res) {
-      this.presetFrontService.removeSection(this._sectionIndex);
+      this._presetFrontService.removeSection(this._sectionIndex);
       this.notifyChanges();
     }
   }
@@ -68,14 +75,21 @@ export class SharedPresetSectionComponent {
 
   public notifyChanges() {
     if (this.isEditable) {
-      this.presetFrontService.setNotifyChanges(true);
+      this._presetFrontService.setNotifyChanges(true);
     }
   }
 
   get sectionIndex(): number { return this._sectionIndex; }
+
   get section(): Section { return this._section; }
-  get sectionsNames(): Array< string> { return this.presetFrontService.sectionsNames; }
-  get lang() { return this.translateService.currentLang; }
+
+  get sectionsNames(): Array<string> {
+    return this._presetFrontService.sectionsNames;
+  }
+
+  get platformLang() {
+    return this._translateService.currentLang;
+  }
 
   get picto(): Picto {
     return this._picto;

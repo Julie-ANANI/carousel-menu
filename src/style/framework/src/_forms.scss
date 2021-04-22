@@ -135,6 +135,11 @@ textarea {
     padding: $unit-1 $layout-spacing;
     height: auto;
     font-size: $font-size-xs;
+
+    &:not([multiple]):not([size]) {
+      background-size: 10px !important;
+    }
+
   }
 
   &.is-sm {
