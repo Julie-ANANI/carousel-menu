@@ -5,8 +5,7 @@
     <section
       *ngIf="canAccess(['import']) || canAccess(['quiz', 'generate'])
       || quizLink && canAccess(['quiz', 'view'])"
-      [ngClass]="quizLink && canAccess(['quiz', 'view']) ? 'flex-between' : 'flex-end'"
-      class="flex-wrap">
+      class="flex-between flex-wrap">
 
       <!-- quiz link -->
       <div *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30 m-right-15 d-flex flex-wrap">
