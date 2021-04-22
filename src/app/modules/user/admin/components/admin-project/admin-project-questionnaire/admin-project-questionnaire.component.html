@@ -5,7 +5,8 @@
     <section
       *ngIf="canAccess(['import']) || canAccess(['quiz', 'generate'])
       || quizLink && canAccess(['quiz', 'view'])"
-      class="flex-between flex-wrap">
+      [ngClass]="quizLink && canAccess(['quiz', 'view']) ? 'flex-between' : 'flex-end'"
+      class="flex-wrap">
 
       <!-- quiz link -->
       <div *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30 m-right-15 d-flex flex-wrap">
@@ -48,6 +49,7 @@
       <app-shared-preset
         (save)="updatePreset($event)"
         [isEditable]="canAccess(['edit'])"
+        [presetLanguages]="cardsLanguages"
         [preset]="innovation.preset"
         [sectionsNames]="sectionsNames">
       </app-shared-preset>

@@ -12,15 +12,27 @@
       </div>
 
       <ng-container *ngIf="!editSection">
+
         <label class="m-right-20">
-          <select class="form-select is-sm" disabled>
+          <select class="form-select is-xs" disabled>
             <option *ngIf="!isNumber(section.description)">
-              {{ "PRESETS.SECTION.DESCRIPTION." + section.description | translate }}
+              <ng-container *ngIf="section.description ==='1st'">Problem</ng-container>
+              <ng-container *ngIf="section.description ==='2nd'">Solution</ng-container>
+              <ng-container *ngIf="section.description ==='nothing'">Nothing</ng-container>
             </option>
             <option *ngIf="isNumber(section.description)">{{ sectionsNames[section.description] }}</option>
           </select>
         </label>
-        <span>{{ section.label | multiling:lang }}</span>
+
+        <div class="d-flex flex-wrap">
+          <div *ngFor="let lang of presetLanguages" class="m-right-20 d-flex align-center">
+            <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
+              {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
+            </label>
+            {{ section.label[lang] }}
+          </div>
+        </div>
+
       </ng-container>
 
       <ng-container *ngIf="editSection">
@@ -30,7 +42,7 @@
           <select
             (ngModelChange)="notifyChanges()"
             [(ngModel)]="section.description"
-            class="form-select is-sm">
+            class="form-select is-xs">
             <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
             <option [ngValue]="'nothing'">Nothing</option>
           </select>
@@ -42,35 +54,28 @@
           <select
             (ngModelChange)="notifyChanges()"
             [(ngModel)]="section.description"
-            class="form-select is-sm">
-            <option [ngValue]="'nothing'">Nothing</option>
+            class="form-select is-xs">
             <option [ngValue]="'1st'">Problem</option>
             <option [ngValue]="'2nd'">Solution</option>
+            <option [ngValue]="'nothing'">Nothing</option>
           </select>
         </label>
         <!-- if not section names -->
 
-        <!-- label English -->
-        <label class="m-right-20">
+        <!-- labels -->
+        <div *ngFor="let lang of presetLanguages" class="m-right-20 d-flex align-center">
+          <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
+            {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
+          </label>
           <input
             (ngModelChange)="notifyChanges()"
-            [(ngModel)]="section.label.en"
-            class="form-input is-sm"
-            placeholder="Section name in English"
+            [(ngModel)]="section.label[lang]"
+            [attr.placeholder]="'Section name in ' + (lang === 'fr' ? 'French' : 'English')"
+            [id]="lang"
+            class="form-input is-xs"
             type="text">
-        </label>
-        <!-- /label English -->
-
-        <!-- label French -->
-        <label class="m-right-20">
-          <input
-            (ngModelChange)="notifyChanges()"
-            [(ngModel)]="section.label.fr"
-            class="form-input is-sm"
-            placeholder="Section name in French"
-            type="text">
-        </label>
-        <!-- /label French -->
+        </div>
+        <!-- /labels -->
 
       </ng-container>
 
@@ -78,7 +83,7 @@
     <!-- /move button / description -->
 
     <!-- edit / delete buttons -->
-    <div>
+    <div class="d-flex align-center">
 
       <!-- delete -->
       <div
@@ -108,7 +113,7 @@
       <div
         (click)="isCollapsed = !isCollapsed"
         class="icon-container is-overlay m-bottom-10">
-        <span [attr.data-tooltip]="isCollapsed ? 'Expand' : 'Collapse'" class="tooltip">
+        <span [attr.data-tooltip]="isCollapsed ? 'Expand section' : 'Collapse section'" class="tooltip">
           <i [ngClass]="isCollapsed ? 'icon-arrow-down' : 'icon-arrow-up'" class="icon text-white"></i>
         </span>
       </div>
@@ -142,9 +147,9 @@
       <button
         (click)="addNewQuestion($event)"
         [id]="'sharedPresetSection-btn-add-question'"
-        class="button is-link is-draft text-bold is-sm text-md"
+        class="button is-outlined is-draft text-bold is-sm"
         type="button">
-        <span class="icon-container is-overlay active m-right-10">
+        <span class="icon-container is-sm is-overlay active m-right-10">
           <i class="icon icon-plus"></i>
         </span>
         Add question

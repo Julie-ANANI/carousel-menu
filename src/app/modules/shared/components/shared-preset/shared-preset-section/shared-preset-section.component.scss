@@ -4,16 +4,19 @@
 
   .header-wrapper {
     background-color: $bg-draft-color;
-    min-height: 40px;
-    border-radius: 10px;
-    padding: 20px 25px 10px 20px;
-    font-size: 18px;
+    min-height: 20px;
+    border-radius: 6px;
+    padding: 10px 25px 0 20px;
+    font-size: 14px;
     font-weight: 600;
     color: $text-white-color;
-    box-shadow: 0 4px 16px rgba(20,23,28,0.25);
+
+    .form-select {
+      min-width: 115px;
+    }
 
     .form-input {
-      min-width: 200px;
+      min-width: 250px;
     }
 
     .move-arrows {
@@ -36,6 +39,7 @@
   }
 
   #sharedPresetSection-btn-add-question {
+    border-color: transparent;
 
     .icon-container {
       color: $text-white-color;
