@@ -116,6 +116,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
       if (this._campaignId) {
         this._config.campaign = this._campaignId;
+        delete this._config.recycled;
       }
 
       if (this.mails) {

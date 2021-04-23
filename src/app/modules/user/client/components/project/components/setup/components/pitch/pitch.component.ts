@@ -314,6 +314,15 @@ export class PitchComponent implements OnInit, OnDestroy {
     let _sectionIndex = sectionIndex;
 
     switch (sectionType) {
+      // Fixed sections
+      case 'SUMMARY':
+        _sectionIndex = null;
+        break;
+      case 'TITLE':
+        _sectionIndex = null;
+        break;
+
+      // Dynamic sections
       case 'ISSUE':
         _sectionIndex = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'ISSUE');
         break;
