@@ -409,6 +409,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
 
       case 'Select all':
         this._isSelectAll = value._context;
+        this.hideButtonsWhenSelectAll();
         break;
 
       default:
@@ -417,6 +418,14 @@ export class SharedProfessionalsListComponent implements OnDestroy {
           'Idk how to do that :('
         );
     }
+  }
+
+  private hideButtonsWhenSelectAll() {
+    this._table._buttons.map((button) => {
+      if (button._label !== 'Remove') {
+        button._isHidden = this._isSelectAll;
+      }
+    });
   }
 
   private _removeAllProfessionalsSelectedFromCampaign() {
