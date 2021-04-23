@@ -75,6 +75,8 @@ export class AdminProjectSettingsModalComponent implements OnInit {
 
   private _isPublishingCommunity = false;
 
+  private _tagsError: Array<Tag> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateNotificationsService: TranslateNotificationsService,
               private _communityService: CommunityService) { }
@@ -84,8 +86,13 @@ export class AdminProjectSettingsModalComponent implements OnInit {
     this._initPublicationType();
     this._community.owner = 'community@umi.us';
     this._community.sectors = this._community.sectors || this.innovation.tags;
+    this._checkTagsError();
     this._initDefaultMedias();
     this._setCommunityMedias();
+  }
+
+  private _checkTagsError() {
+    this._tagsError = this._community.sectors.filter((tag) => !tag.label || !tag.label['en']);
   }
 
   public _initPublicationType() {
@@ -268,6 +275,10 @@ export class AdminProjectSettingsModalComponent implements OnInit {
     this._community.sectors = this._community.sectors.filter((value) => value._id !== sector._id);
   }
 
+  public hasError(sector: Tag): boolean {
+    return !sector.label || !sector.label['en'];
+  }
+
   get canBePublished(): boolean {
 
     if (!(this._community.sectors && this._community.sectors.length) || !(this._community.visibility)
@@ -317,6 +328,10 @@ export class AdminProjectSettingsModalComponent implements OnInit {
 
   get isPublishingCommunity(): boolean {
     return this._isPublishingCommunity;
+  }
+
+  get tagsError(): Array<Tag> {
+    return this._tagsError;
   }
 
 }
