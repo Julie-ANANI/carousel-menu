@@ -17,10 +17,11 @@ export class DomSanitizerPipe implements PipeTransform {
   // Display <img> tags from <a> tags containing img url
   // Used for etherpad formatting
   extractImgFromHref(html: string) {
-    const imgInHrefTagRegex = /<a.*href="(http?s?:?\/\/[^"']*\.(?:png|jpg|jpeg|gif|svg))".*?<\/a>/gm;
+    const imgInHrefTagRegex = /<a[^>]*(http?s?:?\/\/[^"'<>]*\.(?:png|jpg|jpeg|gif|svg)).*?<\/a>/gm;
+    const htmlToTransform = html;
     let m;
 
-    while ((m = imgInHrefTagRegex.exec(html)) !== null) {
+    while ((m = imgInHrefTagRegex.exec(htmlToTransform)) !== null) {
       if (m.index === imgInHrefTagRegex.lastIndex) {
         imgInHrefTagRegex.lastIndex++;
       }
@@ -35,10 +36,11 @@ export class DomSanitizerPipe implements PipeTransform {
   extractVideoFromHref(html: string) {
     // Youtube doesn't authorize cross-platforms iframes
     // const youtubeInHrefTagRegex = /<a.*href="((?:(?:http|https)?:\/\/)?(?:www.youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v=))|youtu\.be\/)(?:[a-zA-Z0-9_-]{6,11}))" .*<\/a>/gm;
-    const vimeoInHrefTagRegex = /<a.*href="((?:http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?))" .*<\/a>/gm;
+    const vimeoInHrefTagRegex = /<a[^>]*href="((?:http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?))" .*?<\/a>/gm;
+    const htmlToTransform = html;
     let m;
 
-    while ((m = vimeoInHrefTagRegex.exec(html)) !== null) {
+    while ((m = vimeoInHrefTagRegex.exec(htmlToTransform)) !== null) {
       if (m.index === vimeoInHrefTagRegex.lastIndex) {
         vimeoInHrefTagRegex.lastIndex++;
       }

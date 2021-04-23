@@ -70,6 +70,7 @@ export class SidebarSearchHistoryComponent {
         .getRequests({
           motherRequest: this._request._id,
           region: '',
+          entity: '{"$ne": "MAIL_ADDRESS"}',
           fields:
             'entity keywords created country elapsedTime status cost flag campaign motherRequest ' +
             'totalResults metadata results',
@@ -84,6 +85,7 @@ export class SidebarSearchHistoryComponent {
                   ' pros';
                 return request;
               });
+              this._total = this._requests.length;
             }
             this._initTable();
           },

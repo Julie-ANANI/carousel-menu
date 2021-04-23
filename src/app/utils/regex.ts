@@ -9,3 +9,4 @@ export const vimeoVideoId = /([^vimeo\.com\/]+)(\d+)(?=\/?)/; // Javascript does
 export const youtubeVideoId = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
 
 export const specialCharRegEx = /[^a-zA-Z0-9 ]/g;
+export const emptyHtmlRegex = /<!DOCTYPE HTML><html><body>(<br>)+<\/body><\/html>/g;

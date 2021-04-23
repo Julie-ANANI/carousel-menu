@@ -50,9 +50,8 @@
 
           <!-- key learning section -->
           <section
-            *ngIf="innovation.marketReport?.keyLearning?.conclusion?.length > 0 || adminSide"
+            *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion)"
             [ngClass]="{ 'p-top-50': !reportShared }"
-            class="p-bottom-50"
             id="key-learnings">
             <div class="box-style p-50" *ngIf="!areAnswersLoading">
               <h2 class="title is-main" [innerText]="'MARKET_REPORT.KEY_LEARNING'" translate></h2>
@@ -71,8 +70,7 @@
 
           <!-- origin comment and professional responses -->
           <section
-            [ngClass]="{ 'p-top-50': !innovation.marketReport?.keyLearning?.conclusion?.length }"
-            class="p-bottom-30"
+            class="p-bottom-30 p-top-50"
             id="origin-responses">
             <div class="box-style" *ngIf="!areAnswersLoading">
               <app-question-conclusion
@@ -146,7 +144,7 @@
 
           <!-- conclusion -->
           <section
-            *ngIf="innovation.marketReport?.finalConclusion?.conclusion?.length > 0 || adminSide"
+            *ngIf="showSection(innovation.marketReport?.finalConclusion?.conclusion)"
             class="p-bottom-50"
             id="conclusion">
             <div class="box-style p-50" *ngIf="!areAnswersLoading">
