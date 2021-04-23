@@ -11,6 +11,7 @@ import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
+import {cloudinaryImageRegEx, videoDomainRegEx} from '../../../../../../../utils/regex';
 
 interface PubType {
   key: string;
@@ -22,10 +23,6 @@ interface PubMedia {
   type: string;
   actualContent: any; // in case of type 'FILE' we store the File object otherwise same as url.
 }
-
-const IMAGE_REGEX = /https:\/\/res\.cloudinary\.com/gm;
-
-const VIDEO_REGEX = /https:\/\/player\.vimeo\.com\/video/gm;
 
 @Component({
   selector: 'app-admin-project-settings-modal',
@@ -290,7 +287,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
       return false;
     }
     const section = InnovationFrontService.cardDynamicSectionById(this._innovCard, this._community.sections[index].id);
-    return !!(<string>section.content).match(IMAGE_REGEX) || !!((<string>section.content).match(VIDEO_REGEX));
+    return !!(<string>section.content).match(cloudinaryImageRegEx) || !!((<string>section.content).match(videoDomainRegEx));
   }
 
   get canBePublished(): boolean {
