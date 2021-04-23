@@ -1,14 +1,14 @@
 <app-utility-modal
   [(showModal)]="showModal"
-  [maxWidth]="'840px'"
+  [maxWidth]="'960px'"
   [title]="'Community Publish Settings'">
 
   <!-- body -->
-  <div class="modal-body admin-project-settings-modal">
+  <div class="modal-body p-left-50 p-right-50 admin-project-settings-modal">
 
     <!-- if errors -->
     <div *ngIf="tagsError.length" class="m-bottom-30">
-      <div class="bg-alert-light p-2 text-alert-dark text-xs text-center">
+      <div class="bg-alert-light label text-alert-dark text-center">
         There are sectors that does not include label in English. Please remove
         them below before publishing the project to community or add them in english.
         Those are marked in red.
@@ -20,8 +20,8 @@
     <div class="flex-between flex-wrap">
 
       <!-- publication type -->
-      <div class="form-group m-bottom-30 mxw-350 m-right-15 w-full">
-        <label class="form-label" for="admin-project-modal-publication-type">Publication type*</label>
+      <div class="form-group m-bottom-40 mxw-350 m-right-15 w-full">
+        <label class="form-label" for="admin-project-modal-publication-type">1. Publication type*</label>
         <select
           (ngModelChange)="onChangePubType($event)"
           [ngModel]="community.publicationType"
@@ -35,8 +35,8 @@
       <!-- /publication type -->
 
       <!-- circle -->
-      <div class="form-group m-bottom-30 mxw-350 m-right-15 w-full">
-        <label class="form-label" for="admin-project-modal-circle">Publication circle*</label>
+      <div class="form-group m-bottom-40 mxw-350 m-right-15 w-full">
+        <label class="form-label" for="admin-project-modal-circle">2. Publication circle*</label>
         <select
           (ngModelChange)="onChangeCircle($event)"
           [ngModel]="community.visibility || ''"
@@ -55,8 +55,8 @@
 
     <!-- sections -->
     <div class="form-group m-bottom-25">
-      <label class="form-label">Publication sections*</label>
-      <div class="flex-between flex-wrap">
+      <label class="form-label">3. Publication sections*</label>
+      <div class="d-flex justify-space flex-wrap">
         <div
           *ngFor="let section of community.sections; let i = index;"
           class="form-group m-top-1 m-right-15 mxw-350 w-full">
@@ -80,15 +80,19 @@
             </select>
           </label>
 
+          <p *ngIf="hasMedia(i)" class="m-top-10 m-bottom-10 label is-progress text-center">
+            This section content contains the video or image in it. It will be shown as url in the community.
+          </p>
+
         </div>
       </div>
     </div>
     <!-- /sections -->
 
     <!-- medias -->
-    <div class="m-bottom-10">
+    <div class="m-bottom-20">
 
-      <label class="form-label" for="admin-project-modal-owner">Publication medias*
+      <label class="form-label" for="admin-project-modal-owner">4. Publication medias*
         <span class="text-notify">(Removing or modifying them won't change the actual medias of the market test.)</span>
       </label>
 
@@ -124,8 +128,8 @@
     <!-- /medias -->
 
     <!-- owner -->
-    <div class="form-group m-bottom-30 m-right-15">
-      <label class="form-label" for="admin-project-modal-owner">Publication owner*
+    <div class="form-group m-bottom-40 m-right-15">
+      <label class="form-label" for="admin-project-modal-owner">5. Publication owner*
         <span class="text-notify">(It won't change the actual owner of the market test.)</span>
       </label>
       <select
@@ -142,8 +146,8 @@
     <!-- owner -->
 
     <!-- project tags -->
-    <div class="form-group m-bottom-30">
-      <label class="form-label">Publication sectors*
+    <div class="form-group m-bottom-40">
+      <label class="form-label">6. Publication sectors*
         <span class="text-notify">(Removing or modifying them won't change the actual market test tags.)</span>
       </label>
       <div
@@ -156,8 +160,8 @@
     <!-- /project tags -->
 
     <!-- hashtag -->
-    <div class="form-group m-bottom-25 m-right-15">
-      <label class="form-label">Publication hashtags
+    <div class="form-group m-bottom-35 m-right-15">
+      <label class="form-label">7. Publication hashtags
         <span class="text-notify">(Do not include '#' keyword.)</span>
       </label>
       <app-utility-text-input
@@ -172,7 +176,7 @@
     </div>
     <!-- /hashtag -->
 
-    <p class="text-15 p-top-15">
+    <p class="text-sm p-top-25">
       <span class="text-medium text-alert">Warning:</span>
       Please verify all the things before publishing the project to the Community. Once published you want be able to
       modify any settings.

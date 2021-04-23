@@ -23,6 +23,10 @@ interface PubMedia {
   actualContent: any; // in case of type 'FILE' we store the File object otherwise same as url.
 }
 
+const IMAGE_REGEX = /https:\/\/res\.cloudinary\.com/gm;
+
+const VIDEO_REGEX = /https:\/\/player\.vimeo\.com\/video/gm;
+
 @Component({
   selector: 'app-admin-project-settings-modal',
   templateUrl: './admin-project-settings-modal.component.html',
@@ -84,6 +88,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   ngOnInit() {
     this._innovCard = InnovationFrontService.currentLangInnovationCard(this.innovation, 'en', 'CARD');
     this._initPublicationType();
+    console.log(this._innovCard);
     this._community.owner = 'community@umi.us';
     this._community.sectors = this._community.sectors || this.innovation.tags;
     this._checkTagsError();
@@ -273,10 +278,19 @@ export class AdminProjectSettingsModalComponent implements OnInit {
 
   public removeSector(sector: Tag) {
     this._community.sectors = this._community.sectors.filter((value) => value._id !== sector._id);
+    this._checkTagsError();
   }
 
   public hasError(sector: Tag): boolean {
     return !sector.label || !sector.label['en'];
+  }
+
+  public hasMedia(index: number): boolean {
+    if (!this._community.sections[index] || !this._community.sections[index].id) {
+      return false;
+    }
+    const section = InnovationFrontService.cardDynamicSectionById(this._innovCard, this._community.sections[index].id);
+    return !!(<string>section.content).match(IMAGE_REGEX) || !!((<string>section.content).match(VIDEO_REGEX));
   }
 
   get canBePublished(): boolean {

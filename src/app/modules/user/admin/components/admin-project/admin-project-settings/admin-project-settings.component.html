@@ -551,7 +551,7 @@
 
 
 <!-- modal -->
-<ng-container *ngIf="canAccess(['edit', 'community']) && !isLoading">
+<ng-container *ngIf="canAccess(['edit', 'community']) && !isLoading && !innovation.published">
   <app-admin-project-settings-modal
     (communityChange)="publishCommunity($event)"
     [(isPublishingCommunity)]="isPublishingCommunity"

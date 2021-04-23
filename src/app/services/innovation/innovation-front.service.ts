@@ -227,6 +227,21 @@ export class InnovationFrontService {
     return <InnovCardSection>{};
   }
 
+  /**
+   * look for the section based on the sectionId.
+   * @param innovCard
+   * @param sectionId
+   */
+  public static cardDynamicSectionById(innovCard: InnovCard, sectionId = ''): InnovCardSection {
+    if (innovCard && innovCard.sections && innovCard.sections.length) {
+      const index = innovCard.sections.findIndex((section) => section._id === sectionId);
+      if (index !== -1) {
+        return innovCard.sections[index];
+      }
+    }
+    return <InnovCardSection>{};
+  }
+
   /***
    * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER'
    * if we have searchKey then we search bby it otherwise with the type.
