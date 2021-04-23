@@ -36,24 +36,21 @@ export class ProfessionalsService {
   }
 
   public removeFromCampaign(
-    professionalId: string,
     campaignId: string,
-    innovationId: string
+    innovationId: string,
+    body: any,
   ): Observable<any> {
-    return this._http.delete(
-      `/professional/${professionalId}/${campaignId}/${innovationId}`
+    return this._http.post(
+      `/professional/removePros/${campaignId}/${innovationId}`, body
     );
   }
 
   public removeAllFromCampaign(
     oldCampaignId: string,
     oldInnovationId: string,
-    config: any,
     data: any,
   ): Observable<any> {
-    return this._http.post(`/professional/removeAll/${oldCampaignId}/${oldInnovationId}`, data, {
-      params: config,
-    });
+    return this._http.post(`/professional/removeAll/${oldCampaignId}/${oldInnovationId}`, data);
   }
 
   public save(

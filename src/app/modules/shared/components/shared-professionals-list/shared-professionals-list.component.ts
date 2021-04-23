@@ -298,7 +298,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
       this._isDeleting = true;
       this._professionalsToRemove.forEach((professional, index) => {
         if (this._isCampaignProfessional()) {
-          this._removeProfessionalFromCampaign(professional._id, index);
+          this._removeProfessionalFromCampaign(index, [professional]);
         } else {
           this._removeProfessional(professional._id, index);
         }
@@ -306,13 +306,15 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     }
   }
 
-  private _removeProfessionalFromCampaign(value: string, index: number) {
+  private _removeProfessionalFromCampaign(index: number, pros: any[]) {
     const _campaignId = this.campaign && this.campaign._id;
     const _innovationId =
       this.campaign && this.campaign.innovation && this.campaign.innovation._id;
-
+    const body = {
+      queryResult: pros,
+    };
     this._professionalsService
-      .removeFromCampaign(value, _campaignId, _innovationId)
+      .removeFromCampaign(_campaignId, _innovationId, body)
       .pipe(first())
       .subscribe(
         (result) => {
@@ -415,9 +417,10 @@ export class SharedProfessionalsListComponent implements OnDestroy {
 
   private _removeAllProfessionalsSelectedFromCampaign() {
     if (this._professionalsToRemove.length > 0) {
-      this._professionalsToRemove.map((item, index) => {
-        this._removeProfessionalFromCampaign(item._id, index);
-      });
+      this._removeProfessionalFromCampaign(
+        this._professionalsToRemove.length - 1,
+        this._professionalsToRemove
+      );
     }
   }
 
@@ -586,9 +589,11 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         batchSize: 500,
         total: this.total,
         campaignId: _campaignId,
+        query: this._localConfig,
+        innovationId: _innovationId,
       };
       this._professionalsService
-        .removeAllFromCampaign(_campaignId, _innovationId, this.config, body)
+        .removeAllFromCampaign(_campaignId, _innovationId, body)
         .pipe(first())
         .subscribe(
           (next) => {
