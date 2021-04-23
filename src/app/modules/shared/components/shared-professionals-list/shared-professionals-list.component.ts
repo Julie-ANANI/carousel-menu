@@ -307,10 +307,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     }
   }
 
-  private _removeProfessionalFromCampaign(
-    index: number,
-    pros: any[],
-  ) {
+  private _removeProfessionalFromCampaign(index: number, pros: any[]) {
     const _campaignId = this.campaign && this.campaign._id;
     const _innovationId =
       this.campaign && this.campaign.innovation && this.campaign.innovation._id;
@@ -322,6 +319,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
       .pipe(first())
       .subscribe(
         (result) => {
+          console.log(result);
           if (index === this._professionalsToRemove.length - 1) {
             this.onConfigChange(this._localConfig);
             this._translateNotificationsService.success(
@@ -423,7 +421,10 @@ export class SharedProfessionalsListComponent implements OnDestroy {
 
   private _removeAllProfessionalsSelectedFromCampaign() {
     if (this._professionalsToRemove.length > 0) {
-      this._removeProfessionalFromCampaign(this._professionalsToRemove.length - 1, this._professionalsToRemove);
+      this._removeProfessionalFromCampaign(
+        this._professionalsToRemove.length - 1,
+        this._professionalsToRemove
+      );
     }
   }
 
@@ -581,6 +582,10 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     if (!this._isSelectAll) {
       this._removeAllProfessionalsSelectedFromCampaign();
     } else {
+      this._translateNotificationsService.success(
+        'Success',
+        'We received your request, the process will take a few minutes.'
+      );
       const _campaignId = this.campaign && this.campaign._id;
       const _innovationId =
         this.campaign &&
@@ -601,8 +606,24 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         .subscribe(
           (next) => {
             console.log(next);
+            if (next.status === 200) {
+              this._translateNotificationsService.success(
+                'Success',
+                'The professional(s) are deleted from the campaign.'
+              );
+              this._isShowModal = false;
+              this._table._content = [];
+              this._table._total = 0;
+            }
           },
-          (error) => console.error(error)
+          (error) => {
+            console.error(error);
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(error.status)
+            );
+            this._isShowModal = false;
+          }
         );
     }
   }
