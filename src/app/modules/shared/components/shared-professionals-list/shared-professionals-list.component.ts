@@ -296,6 +296,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
   public onClickConfirm() {
     if (!this._isDeleting) {
       this._isDeleting = true;
+      console.log(this._professionalsToRemove);
       this._professionalsToRemove.forEach((professional, index) => {
         if (this._isCampaignProfessional()) {
           this._removeProfessionalFromCampaign(index, [professional]);
@@ -306,7 +307,10 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     }
   }
 
-  private _removeProfessionalFromCampaign(index: number, pros: any[]) {
+  private _removeProfessionalFromCampaign(
+    index: number,
+    pros: any[],
+  ) {
     const _campaignId = this.campaign && this.campaign._id;
     const _innovationId =
       this.campaign && this.campaign.innovation && this.campaign.innovation._id;
@@ -326,6 +330,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
             );
             this._modalDelete = false;
             this._professionalsToRemove = [];
+            this._isDeleting = false;
           }
         },
         (err: HttpErrorResponse) => {
@@ -354,6 +359,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
               'The professional(s) are deleted.'
             );
             this._modalDelete = false;
+            this._isDeleting = false;
             this._professionalsToRemove = [];
           }
         },
@@ -417,10 +423,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
 
   private _removeAllProfessionalsSelectedFromCampaign() {
     if (this._professionalsToRemove.length > 0) {
-      this._removeProfessionalFromCampaign(
-        this._professionalsToRemove.length - 1,
-        this._professionalsToRemove
-      );
+      this._removeProfessionalFromCampaign(this._professionalsToRemove.length - 1, this._professionalsToRemove);
     }
   }
 
