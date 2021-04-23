@@ -20,11 +20,11 @@ export class SharedWorldmapComponent implements OnInit {
 
   @Input() width: string;
 
-  @Input() countriesColor: string = '#2ECC71';
+  @Input() countriesColor = '#2ECC71';
 
-  @Input() isShowableQuartiles: boolean = true;
+  @Input() isShowableQuartiles = true;
 
-  @Input() type: string = 'default';
+  @Input() type = 'default';
 
   /***
    * use this when you have only the list of the
@@ -86,7 +86,7 @@ export class SharedWorldmapComponent implements OnInit {
 
   @Output() onCountryClick: EventEmitter<string> = new EventEmitter<string>();
 
-  private _showLegend: boolean = false;
+  private _showLegend = false;
 
   private _firstThreshold: number;
 
@@ -94,7 +94,7 @@ export class SharedWorldmapComponent implements OnInit {
 
   private _quartiles: [number, number, number];
 
-  private _isShowableTooltip: boolean = false;
+  private _isShowableTooltip = false;
 
   private _tooltipPosition: any = {};
 
@@ -186,11 +186,12 @@ export class SharedWorldmapComponent implements OnInit {
 
     // First we create an array with all the values, without doublons
     const valuesSet = new Set();
-    for (let key in this._countriesData) {
+    // tslint:disable-next-line:forin
+    for (const key in this._countriesData) {
       valuesSet.add(this._countriesData[key]);
     }
 
-    const results = Array.from(valuesSet).sort((a, b) => a - b);
+    const results: Array<any> = Array.from(valuesSet).sort((a: any, b: any) => a - b);
 
     // auxiliary function to calculate the squared deviation of an array
     const getSquaredDeviation = (array: Array<number>) => {
@@ -219,7 +220,7 @@ export class SharedWorldmapComponent implements OnInit {
           thirdGroup = results.slice(j);
           groups = [firstGroup, secondGroup, thirdGroup];
           // For each possibility of subsets, we calculate the sum of squared deviations of each subset
-          let sdcmAll = groups.reduce((sum, curr) => sum + getSquaredDeviation(curr), 0);
+          const sdcmAll = groups.reduce((sum, curr) => sum + getSquaredDeviation(curr), 0);
           if (sdcmAll < min) {
             // We update the mininum and the optimal subsets
             min = sdcmAll;
@@ -240,19 +241,20 @@ export class SharedWorldmapComponent implements OnInit {
         this._secondThreshold = 0;
       } else {
         this._secondThreshold = optimalGroups[optimalGroups.length - 1][0] - 1;
-        if (optimalGroups.length == 3) {
+        if (optimalGroups.length === 3) {
           this._firstThreshold = optimalGroups[1][0];
         } else {
-          this._firstThreshold = optimalGroups[0][optimalGroups[0].length - 1]
+          this._firstThreshold = optimalGroups[0][optimalGroups[0].length - 1];
         }
       }
     }
 
     this._reinitializeMap();
 
-    for (let country in this._countriesData) {
-      const color = this._countriesData[country] < this._firstThreshold ? "#97E8B9" : this._countriesData[country] < this._secondThreshold ? "#9BDE56" : "#39CB74";
-      this._colorCountry(country, color)
+    // tslint:disable-next-line:forin
+    for (const country in this._countriesData) {
+      const color = this._countriesData[country] < this._firstThreshold ? '#97E8B9' : this._countriesData[country] < this._secondThreshold ? '#9BDE56' : '#39CB74';
+      this._colorCountry(country, color);
     }
 
   }
@@ -277,13 +279,13 @@ export class SharedWorldmapComponent implements OnInit {
           top: `${event.layerY + 25}px`,
           opacity: 1,
           display: 'block'
-        }
+        };
 
       } else {
         this._tooltipPosition = {
           opacity: 0,
           display: 'none'
-        }
+        };
       }
 
     }
@@ -300,22 +302,22 @@ export class SharedWorldmapComponent implements OnInit {
   }
 
   private _demoTooltip(countryId: string) {
-    const country = this._allCountries.find((country) => country.code === countryId);
-    let code = country ? country.code : '';
-    let name = country ? country.name : 'NA';
-    let value = this._countriesData[code] || "NA";
+    const _country = this._allCountries.find((country) => country.code === countryId);
+    const code = _country ? _country.code : '';
+    const name = _country ? _country.name : 'NA';
+    let value = this._countriesData[code] || 'NA';
 
     if (this.minValue && (value || value === 0) && value <= this.minValue) {
-      value = "< " + this.minValue;
+      value = '< ' + this.minValue;
     } else if (this.minValue && (value || value === 0) && value >= this.maxValue) {
-      value = "> " + this.maxValue;
+      value = '> ' + this.maxValue;
     }
 
     this._tooltipInfo = {
       flag: code,
       name: name,
       value: value
-    }
+    };
 
   }
 
@@ -335,7 +337,7 @@ export class SharedWorldmapComponent implements OnInit {
     return this._showLegend;
   }
 
-  get quartiles(): [number, number, number]{
+  get quartiles(): [number, number, number] {
     return this._quartiles;
   }
 

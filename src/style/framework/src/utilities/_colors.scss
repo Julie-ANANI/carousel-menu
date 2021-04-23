@@ -40,6 +40,10 @@
   color: $text-community-color !important;
 }
 
+.text-alert-dark {
+  color: $bg-alert-text-color !important;
+}
+
 .bg-primary {
   color: $text-white-color !important;
   background: $bg-primary-color !important;
@@ -96,6 +100,10 @@
 
 .bg-transparent {
   background-color: transparent !important;
+}
+
+.bg-alert-light {
+  background-color: $bg-alert-light-color !important;
 }
 
 .bg-gradient-primary {

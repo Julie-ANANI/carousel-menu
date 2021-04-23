@@ -7,21 +7,24 @@ import { environment } from '../../../environments/environment';
 import { Tag } from '../../models/tag';
 import { Config } from '../../models/config';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class UserService {
-
   constructor(private _http: HttpClient) {}
 
-  public getMyInnovations(config?: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get('/user/me/innovations', {params: config});
+  public getMyInnovations(config?: {
+    [header: string]: string | string[];
+  }): Observable<any> {
+    return this._http.get('/user/me/innovations', { params: config });
   }
 
   public getInnovations(userId: string): Observable<any> {
     return this._http.get(`/user/${userId}/innovations`);
   }
 
-  public getSharedWithMe(config?: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get('/user/me/sharedwithme', {params: config});
+  public getSharedWithMe(config?: {
+    [header: string]: string | string[];
+  }): Observable<any> {
+    return this._http.get('/user/me/sharedwithme', { params: config });
   }
 
   public create(user: User): Observable<any> {
@@ -29,14 +32,27 @@ export class UserService {
   }
 
   public resetPassword(email?: string): Observable<any> {
-    return this._http.post('/user/resetPassword', {email: email, callback: environment.clientUrl});
+    return this._http.post('/user/resetPassword', {
+      email: email,
+      callback: environment.clientUrl,
+    });
   }
 
-  public changePassword(data: {email: string, oldPassword: string, newPassword: string, confirmPassword: string}): Observable<any> {
+  public changePassword(data: {
+    email: string;
+    oldPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  }): Observable<any> {
     return this._http.post('/user/me/changePassword', data);
   }
 
-  public updatePassword(data: {email: string, password: string, passwordConfirm: string, tokenEmail: string}): Observable<any> {
+  public updatePassword(data: {
+    email: string;
+    password: string;
+    passwordConfirm: string;
+    tokenEmail: string;
+  }): Observable<any> {
     return this._http.post('/user/updatePassword', data);
   }
 
@@ -54,7 +70,7 @@ export class UserService {
 
   public activate(state: string, tokenEmail?: string): Observable<any> {
     // On envoie emailToken pour vérifier l'adresse email.
-    return this._http.put('/user/me', {state: state, tokenEmail: tokenEmail});
+    return this._http.put('/user/me', { state: state, tokenEmail: tokenEmail });
   }
 
   public getSelf(): Observable<any> {
@@ -63,16 +79,22 @@ export class UserService {
 
   // todo check for the config in the back
   public get(userId: string, config?: any): Observable<User> {
-    return this._http.get<User>('/user/' + userId, {params: config});
+    return this._http.get<User>('/user/' + userId, { params: config });
   }
 
-  public getAll(config?: {[header: string]: string | string[]}): Observable<Array<User>> {
-    return this._http.get<Array<User>>('/user', {params: config});
+  public getAll(config?: {
+    [header: string]: string | string[];
+  }): Observable<Array<User>> {
+    return this._http.get<Array<User>>('/user', { params: config });
   }
 
   public getCommercials(config?: Config): Observable<Array<User>> {
-    const _config = config || { roles: 'commercial', fields: '_id firstName lastName email phone', sort: '{"firstName": 1}'};
-    return this._http.get<Array<User>>('/user', {params: _config});
+    const _config = config || {
+      roles: 'commercial',
+      fields: '_id firstName lastName email phone',
+      sort: '{"firstName": 1}',
+    };
+    return this._http.get<Array<User>>('/user', { params: _config });
   }
 
   public delete(): Observable<any> {
@@ -91,4 +113,7 @@ export class UserService {
     return this._http.post('/misc/swellrt/synchronizeUsers', {});
   }
 
+  public contactUMISupport(data: any): Observable<any> {
+    return this._http.post('/user/contactUMI', data);
+  }
 }

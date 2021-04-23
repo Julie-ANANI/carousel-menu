@@ -6,6 +6,16 @@
   <!-- body -->
   <div class="modal-body admin-project-settings-modal">
 
+    <!-- if errors -->
+    <div *ngIf="tagsError.length" class="m-bottom-30">
+      <div class="bg-alert-light p-2 text-alert-dark text-xs text-center">
+        There are sectors that does not include label in English. Please remove
+        them below before publishing the project to community or add them in english.
+        Those are marked in red.
+      </div>
+    </div>
+    <!-- /if errors -->
+
     <!-- publication type | circle -->
     <div class="flex-between flex-wrap">
 
@@ -136,7 +146,9 @@
       <label class="form-label">Publication sectors*
         <span class="text-notify">(Removing or modifying them won't change the actual market test tags.)</span>
       </label>
-      <div *ngFor="let sector of community.sectors" class="label is-tag is-rounded">
+      <div
+        *ngFor="let sector of community.sectors" [ngClass]="hasError(sector) ? 'is-danger': 'is-tag'"
+        class="label is-rounded">
         {{ sector.label && sector.label['en'] }}
         <div (click)="removeSector(sector)" class="close m-left-2 is-xs"></div>
       </div>
@@ -182,7 +194,7 @@
 
     <button
       (click)="publishCommunity($event)"
-      [disabled]="isPublishingCommunity || !canBePublished"
+      [disabled]="isPublishingCommunity || !canBePublished || tagsError.length"
       [id]="'modal-confirm-publish-community'"
       class="button is-primary">
       <ng-container *ngIf="isPublishingCommunity; else modalPublishDefText">is publishing...</ng-container>

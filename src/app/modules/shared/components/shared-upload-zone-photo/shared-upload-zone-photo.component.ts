@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import {Component, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { FileSystemFileEntry } from 'ngx-file-drop';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -22,7 +22,7 @@ export class SharedUploadZonePhotoComponent {
 
   @Output() cbFn: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('fileInput') fileInput: any;
+  @ViewChild('fileInput',  { read: ElementRef, static: true }) fileInput: any;
 
   private _isUploading = false;
 
