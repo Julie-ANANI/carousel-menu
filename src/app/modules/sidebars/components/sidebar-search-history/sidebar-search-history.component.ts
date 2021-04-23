@@ -67,16 +67,22 @@ export class SidebarSearchHistoryComponent {
       this._searchService.getRequests({
         'motherRequest': this._request._id,
         'region': '',
-        'fields': 'entity keywords created country elapsedTime status cost flag campaign motherRequest ' +
-          'totalResults metadata results'
+        entity: '{"$ne": "MAIL_ADDRESS"}',
+        fields:
+          'entity keywords created country elapsedTime status cost flag campaign motherRequest ' +
+          'totalResults metadata results',
       })
         .pipe(first())
-        .subscribe((result: any) => {
-          if(result.requests) {
-            this._requests = result.requests.map((request: any) => {
-              request.pros = (request.results.person.length || request.totalResults || 0) + " pros";
-              return request;
-            });
+        .subscribe(
+          (result: any) => {
+            if (result.requests) {
+              this._requests = result.requests.map((request: any) => {
+                request.pros =
+                  (request.results.person.length || request.totalResults || 0) +
+                  ' pros';
+                return request;
+              });
+              this._total = this._requests.length;
           }
           this._initTable();
         }, (err: HttpErrorResponse) => {
