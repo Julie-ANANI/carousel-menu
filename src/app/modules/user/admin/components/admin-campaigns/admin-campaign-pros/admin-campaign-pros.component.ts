@@ -15,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
-import {Bytes2Human} from '../../../../../../utils/bytes2human';
+import { Bytes2Human } from '../../../../../../utils/bytes2human';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -26,16 +26,16 @@ const SIZE_LIMIT = 10 * 1024 * 1024; // 10 mb
 @Component({
   selector: 'app-admin-campaign-pros',
   templateUrl: './admin-campaign-pros.component.html',
-  styleUrls: ['./admin-campaign-pros.component.scss']
+  styleUrls: ['./admin-campaign-pros.component.scss'],
 })
 export class AdminCampaignProsComponent implements OnInit {
-
   private _config: Config = {
-    fields: 'language firstName lastName companyOriginalName email emailConfidence country jobTitle personId messages campaigns',
+    fields:
+      'language firstName lastName companyOriginalName email emailConfidence country jobTitle personId messages campaigns',
     limit: this._configService.configLimit('admin-campaign-pros-limit'),
     offset: '0',
     search: '{}',
-    sort: '{ "created": -1 }'
+    sort: '{ "created": -1 }',
   };
 
   private _campaign: Campaign = <Campaign>{};
@@ -64,7 +64,7 @@ export class AdminCampaignProsComponent implements OnInit {
     jobTitle: '',
     company: '',
     country: '',
-    profileUrl: ''
+    profileUrl: '',
   };
 
   private _contextSelectedPros: Array<any> = [];
@@ -75,17 +75,25 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _isCreating = false;
 
-  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'pros'];
+  private _accessPath: Array<string> = [
+    'projects',
+    'project',
+    'campaigns',
+    'campaign',
+    'pros',
+  ];
 
   private _csvImportError = '';
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _activatedRoute: ActivatedRoute,
-              private _rolesFrontService: RolesFrontService,
-              private _campaignFrontService: CampaignFrontService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _professionalsService: ProfessionalsService,
-              private _configService: ConfigService) { }
+  constructor(
+    @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _activatedRoute: ActivatedRoute,
+    private _rolesFrontService: RolesFrontService,
+    private _campaignFrontService: CampaignFrontService,
+    private _translateNotificationsService: TranslateNotificationsService,
+    private _professionalsService: ProfessionalsService,
+    private _configService: ConfigService
+  ) {}
 
   ngOnInit() {
     this._activatedRoute.data.subscribe((data) => {
@@ -106,7 +114,9 @@ export class AdminCampaignProsComponent implements OnInit {
 
   public canAccess(path?: Array<string>) {
     if (path) {
-      return this._rolesFrontService.hasAccessAdminSide(this._accessPath.concat(path));
+      return this._rolesFrontService.hasAccessAdminSide(
+        this._accessPath.concat(path)
+      );
     } else {
       return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
     }
@@ -114,13 +124,23 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _getProfessionals() {
     if (isPlatformBrowser(this._platformId)) {
-      this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-        this._professionals = response && response.result || [];
-        this._total = response._metadata.totalCount || response.result.length;
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
+      this._professionalsService
+        .getAll(this._config)
+        .pipe(first())
+        .subscribe(
+          (response: Response) => {
+            this._professionals = (response && response.result) || [];
+            this._total =
+              response._metadata.totalCount || response.result.length;
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -129,27 +149,33 @@ export class AdminCampaignProsComponent implements OnInit {
       {
         heading: 'Pros',
         content: [
-          {subHeading: 'Found', value: this._campaignStat('professional').toString(10)},
-          {subHeading: 'Not reached', value: this._campaignStat('notReached').toString(10)},
-          {subHeading: 'Stared', value: '--'},
-          {subHeading: 'Duplicated', value: '--'}
-        ]
+          {
+            subHeading: 'Found',
+            value: this._campaignStat('professional').toString(10),
+          },
+          {
+            subHeading: 'Not reached',
+            value: this._campaignStat('notReached').toString(10),
+          },
+          { subHeading: 'Stared', value: '--' },
+          { subHeading: 'Duplicated', value: '--' },
+        ],
       },
       {
         heading: 'Emails',
         content: [
-          {subHeading: 'Good', value: this._campaignStat('good') + '%'},
-          {subHeading: 'Unsure', value: this._campaignStat('unsure') + '%'},
-          {subHeading: 'Bad', value: this._campaignStat('bad') + '%'},
-        ]
+          { subHeading: 'Good', value: this._campaignStat('good') + '%' },
+          { subHeading: 'Unsure', value: this._campaignStat('unsure') + '%' },
+          { subHeading: 'Bad', value: this._campaignStat('bad') + '%' },
+        ],
       },
       {
         heading: 'Cost',
         content: [
-          {subHeading: 'Requested', value: '--'},
-          {subHeading: 'Emails', value: '--'},
-        ]
-      }
+          { subHeading: 'Requested', value: '--' },
+          { subHeading: 'Emails', value: '--' },
+        ],
+      },
     ];
   }
 
@@ -161,7 +187,7 @@ export class AdminCampaignProsComponent implements OnInit {
     this._sidebarValue = {
       animate_state: 'active',
       title: 'Add Professional',
-      type: 'addPro'
+      type: 'addPro',
     };
   }
 
@@ -180,20 +206,37 @@ export class AdminCampaignProsComponent implements OnInit {
       // Verify the size here...
       if (file) {
         if (file.size <= SIZE_LIMIT) {
-          this._professionalsService.importProsFromCsv(this._campaign._id, this._campaign.innovation._id, file).pipe(first())
-            .subscribe((res: any) => {
-              this._getProfessionals();
-              this._modalImport = false;
-              this._isImporting = false;
-              this._translateNotificationsService.success('Success', res.message);
-            }, (err: HttpErrorResponse) => {
-              this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-              this._isImporting = false;
-              this._csvImportError = err.error.message;
-            });
+          this._professionalsService
+            .importProsFromCsv(
+              this._campaign._id,
+              this._campaign.innovation._id,
+              file
+            )
+            .pipe(first())
+            .subscribe(
+              (res: any) => {
+                this._getProfessionals();
+                this._modalImport = false;
+                this._isImporting = false;
+                this._translateNotificationsService.success(
+                  'Success',
+                  res.message
+                );
+              },
+              (err: HttpErrorResponse) => {
+                this._translateNotificationsService.error(
+                  'ERROR.ERROR',
+                  ErrorFrontService.getErrorMessage(err.status)
+                );
+                this._isImporting = false;
+                this._csvImportError = err.error.message;
+              }
+            );
         } else {
           this._isImporting = false;
-          this._csvImportError = `Le fichier est trop grand (${Bytes2Human.convert(file.size)} mb). Max : ${Bytes2Human.convert(SIZE_LIMIT)} mb`;
+          this._csvImportError = `Le fichier est trop grand (${Bytes2Human.convert(
+            file.size
+          )} mb). Max : ${Bytes2Human.convert(SIZE_LIMIT)} mb`;
         }
       }
     }
@@ -202,19 +245,31 @@ export class AdminCampaignProsComponent implements OnInit {
   public onClickConfirm() {
     if (!this._isImporting) {
       this._isImporting = true;
-      this._professionalsService.importProsFromCampaign(this._originCampaign[0]._id, this._campaign._id,
-        this._originCampaign[0].innovation.toString(), this._campaign.innovation._id).pipe(first())
-        .subscribe((answer: any) => {
-          this._getProfessionals();
-          const message = `${answer.nbProfessionalsMoved} pros are imported.`;
-          this._translateNotificationsService.success('Success', message);
-          this._modalImport = false;
-          this._isImporting = false;
-        }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          this._isImporting = false;
-          console.error(err);
-        });
+      this._professionalsService
+        .importProsFromCampaign(
+          this._originCampaign[0]._id,
+          this._campaign._id,
+          this._originCampaign[0].innovation.toString(),
+          this._campaign.innovation._id
+        )
+        .pipe(first())
+        .subscribe(
+          (answer: any) => {
+            this._getProfessionals();
+            const message = `${answer.nbProfessionalsMoved} pros are imported.`;
+            this._translateNotificationsService.success('Success', message);
+            this._modalImport = false;
+            this._isImporting = false;
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isImporting = false;
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -230,25 +285,42 @@ export class AdminCampaignProsComponent implements OnInit {
         country: value.country,
         profileUrl: value.profileUrl,
         company: value.company,
-        emailConfidence: 100
+        emailConfidence: 100,
       };
 
-      this._professionalsService.create([this._newPro], this._campaign._id, this._campaign.innovation._id)
-        .pipe(first()).subscribe((result: any) => {
-        this._getProfessionals();
-        this._isCreating = false;
-        if (result.nbProfessionalsMoved) {
-          this._translateNotificationsService.success('Success', 'The professional is added.');
-        } else {
-          this._translateNotificationsService.error('Error', 'The profile is not added. ' +
-            'It may belong to another campaign of the project, or maybe blacklisted.');
-        }
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isCreating = false;
-        console.error(err);
-      });
-
+      this._professionalsService
+        .create(
+          [this._newPro],
+          this._campaign._id,
+          this._campaign.innovation._id
+        )
+        .pipe(first())
+        .subscribe(
+          (result: any) => {
+            this._getProfessionals();
+            this._isCreating = false;
+            if (result.nbProfessionalsMoved) {
+              this._translateNotificationsService.success(
+                'Success',
+                'The professional is added.'
+              );
+            } else {
+              this._translateNotificationsService.error(
+                'Error',
+                'The profile is not added. ' +
+                  'It may belong to another campaign of the project, or maybe blacklisted.'
+              );
+            }
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isCreating = false;
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -261,7 +333,8 @@ export class AdminCampaignProsComponent implements OnInit {
       this._isExporting = true;
 
       const _config: any = {
-        fields: 'language firstName lastName email emailConfidence profileUrl company companyOriginalName keywords country ' +
+        fields:
+          'language firstName lastName email emailConfidence profileUrl company companyOriginalName keywords country ' +
           'jobTitle messages',
         professionals: [],
         campaignId: this._campaign._id,
@@ -269,32 +342,44 @@ export class AdminCampaignProsComponent implements OnInit {
           campaignId: this._campaign._id,
           emailConfidence: this._exportConfidence,
           countries: this._exportCountries,
-          search: ''
-        }
+          search: '',
+        },
       };
 
-      _config.query.search = this._config.search ? JSON.parse(this._config.search) : null;
+      _config.query.search = this._config.search
+        ? JSON.parse(this._config.search)
+        : null;
 
-      if ( this._contextSelectedPros.length ) {
-        _config.professionals = this._contextSelectedPros.map(pro => pro._id);
+      if (this._contextSelectedPros.length) {
+        _config.professionals = this._contextSelectedPros.map((pro) => pro._id);
       } else {
         _config.professionals = 'all';
       }
 
-      this._professionalsService.export(_config).pipe(first()).subscribe(() => {
-        this._isExporting = false;
-        this._translateNotificationsService.success(
-          'Export processing',
-          'Export is processing. You will receive an email with the file soon.');
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isExporting = false;
-        console.error(err);
-      });
+      this._professionalsService
+        .export(_config)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this._isExporting = false;
+            this._translateNotificationsService.success(
+              'Export processing',
+              'Export is processing. You will receive an email with the file soon.'
+            );
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isExporting = false;
+            console.error(err);
+          }
+        );
     }
   }
 
-  public selectedProsEvent(value: {total: number, pros: Array<any>}) {
+  public selectedProsEvent(value: { total: number; pros: Array<any> }) {
     this._contextSelectedPros = value.pros;
   }
 
@@ -382,5 +467,4 @@ export class AdminCampaignProsComponent implements OnInit {
   get csvImportError(): string {
     return this._csvImportError;
   }
-
 }

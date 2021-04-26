@@ -13,6 +13,8 @@ import {ScrapeHTMLTags} from '../../pipe/pipes/ScrapeHTMLTags';
 import {Question} from '../../models/question';
 import {Section} from '../../models/section';
 import {DomSanitizer} from '@angular/platform-browser';
+import {PublicationType} from '../../models/community';
+import {MediaFrontService} from '../media/media-front.service';
 
 export interface Values {
   settingPercentage?: number;
@@ -120,6 +122,23 @@ export class InnovationFrontService {
 
   }
 
+  public static publicationType(objective: string): PublicationType {
+    if (objective) {
+      switch (objective) {
+
+        case 'Detecting needs / trends':
+        case 'Validating market needs':
+          return 'pain_point';
+
+        case 'Sourcing innovative solutions / partners':
+          return 'sourcing';
+
+        default:
+          return 'innovation';
+      }
+    }
+  }
+
   /***
    * this function returns the demanded field from the innovation
    * based on the current lang provided.
@@ -208,6 +227,21 @@ export class InnovationFrontService {
     return <InnovCardSection>{};
   }
 
+  /**
+   * look for the section based on the sectionId.
+   * @param innovCard
+   * @param sectionId
+   */
+  public static cardDynamicSectionById(innovCard: InnovCard, sectionId = ''): InnovCardSection {
+    if (innovCard && innovCard.sections && innovCard.sections.length) {
+      const index = innovCard.sections.findIndex((section) => section._id === sectionId);
+      if (index !== -1) {
+        return innovCard.sections[index];
+      }
+    }
+    return <InnovCardSection>{};
+  }
+
   /***
    * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER'
    * if we have searchKey then we search bby it otherwise with the type.
@@ -276,10 +310,6 @@ export class InnovationFrontService {
     return new ScrapeHTMLTags().transform(text);
   }
 
-  public static defaultMedia(width = '240', height = '159'): string {
-    return `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/v1542811700/app/default-images/icons/no-image.png`;
-  }
-
   /***
    * first it checks the principal media at the innovation level, if not found then check at the
    * card level based on the lang and return the url..
@@ -290,7 +320,7 @@ export class InnovationFrontService {
    */
   public static principalMedia(innovation: Innovation, lang = 'en', width = '240', height = '159'): string {
     if (innovation && innovation.principalMedia) {
-      return InnovationFrontService.getMedia(innovation.principalMedia, width, height);
+      return MediaFrontService.getMedia(innovation.principalMedia, width, height);
     } else if (innovation && innovation.innovationCards && innovation.innovationCards.length > 0) {
       const _card = InnovationFrontService.currentLangInnovationCard(innovation, lang, 'CARD');
       return InnovationFrontService.innovCardPrincipalMedia(_card, width, height);
@@ -305,48 +335,14 @@ export class InnovationFrontService {
    */
   public static innovCardPrincipalMedia(innovCard: InnovCard, width = '240', height = '159'): string {
     if (innovCard && innovCard.principalMedia) {
-      return InnovationFrontService.getMedia(innovCard.principalMedia, width, height);
+      return MediaFrontService.getMedia(innovCard.principalMedia, width, height);
     } else if (innovCard && innovCard.media && innovCard.media.length > 0) {
       const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
       const _media: Media = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
-      return InnovationFrontService.getMedia(_media, width, height);
+      return MediaFrontService.getMedia(_media, width, height);
     } else {
-      return InnovationFrontService.defaultMedia(width, height);
+      return MediaFrontService.defaultMedia(width, height);
     }
-  }
-
-  public static getMedia(media: Media, width = '240', height = '159'): string {
-    let _src = '';
-
-    if (media && media.type && media.type === 'PHOTO') {
-      _src = InnovationFrontService.imageSrc(media, width, height);
-    } else if (media && media.type && media.type === 'VIDEO') {
-      _src = this._videoThumbnail(media);
-    }
-
-    return _src === '' ? InnovationFrontService.defaultMedia(width, height) : _src;
-  }
-
-  private static _videoThumbnail(media: Media): string {
-    return media && media.video && media.video.thumbnail || '';
-  }
-
-  /***
-   * options are the cloudinary params.
-   * https://cloudinary.com/documentation/image_transformations
-   * @param media
-   * @param width
-   * @param height
-   * @param options ex: ['c_fill', 'f_auto']
-   */
-  public static imageSrc(media: Media, width = '240', height = '159', options?: Array<string>): string {
-    let _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/`;
-    if (options && options.length > 0) {
-      _prefix = `https://res.cloudinary.com/umi/image/upload/`;
-      _prefix += options.join(',') + `,h_${height},w_${width}/`;
-    }
-    const _suffix = '.jpg';
-    return media && media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
   }
 
   /***

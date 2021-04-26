@@ -12,12 +12,12 @@
           (keyup)="textColor('title')"
           [(ngModel)]="section.title"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.TITLE' | translate"
-          maxlength="26"
+          maxlength="40"
           class="form-input"
           type="text">
 
         <span [ngStyle]="{ 'color': titleColor }" class="text-limit-wrapper">
-          {{ 26 - section.title.length }}
+          {{ 40 - section.title.length }}
         </span>
 
       </label>

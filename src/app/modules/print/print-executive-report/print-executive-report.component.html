@@ -1,17 +1,17 @@
-<!-- first page -->
+<!-- main page -->
 <app-project-front-page
   [data]="data"
   [media]="media"
   [title]="title">
 </app-project-front-page>
-<!-- /first page -->
-
-<!-- second page - umi intro -->
-<div *ngIf="isUMI" id="print-intro">
-  <img [src]="introSrc" alt=" ">
-</div>
-<!-- /second page - umi intro -->
+<!-- /main page -->
 
 <!-- third / forth page -->
 <app-print-report *ngIf="data._id" [data]="data" [anonymous]="anonymous"></app-print-report>
 <!-- /third / forth page -->
+
+<!-- umi intro -->
+<div *ngIf="isUMI" id="print-intro">
+  <img [src]="introSrc" alt=" ">
+</div>
+<!-- umi intro -->

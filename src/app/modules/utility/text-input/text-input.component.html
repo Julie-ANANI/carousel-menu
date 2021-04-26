@@ -1,0 +1,47 @@
+<div id="text-input">
+
+  <!-- input field -->
+  <form autocomplete="off" class="relative" novalidate>
+    <div [ngStyle]="{'max-width': inputMaxWidth}" class="input-wrapper">
+      <label class="relative d-block">
+
+        <input
+          [attr.placeholder]="placeholder | translate"
+          [formControl]="text"
+          [name]="'text'"
+          [ngClass]="{'is-sm': isFormSmall}"
+          autocomplete="off"
+          class="form-input p-right-50"
+          type="text">
+
+        <!-- add button -->
+        <span [ngClass]="{'is-sm': isFormSmall}" class="add-btn-wrapper absolute">
+          <button
+            (click)="onAddValue()"
+            [disabled]="!text.value"
+            [ngStyle]="{'padding': '5px'}"
+            class="button is-primary is-circled"
+            type="submit">
+            <i class="icon icon-plus text-xs"></i>
+          </button>
+        </span>
+        <!-- /add button -->
+
+      </label>
+    </div>
+  </form>
+  <!-- /input field -->
+
+  <!-- showing added text -->
+  <div *ngIf="addedText.length > 0" [ngStyle]="{ 'margin-bottom': '-4px' }" class="p-top-15">
+    <div
+      *ngFor="let text of addedText"
+      [ngClass]="labelBgColor"
+      class="m-bottom-1 label is-sm is-rounded m-no-top">
+      {{ text }}
+      <div (click)="removeText(text)" class="close m-left-2 is-xs"></div>
+    </div>
+  </div>
+  <!-- /showing added text -->
+
+</div>

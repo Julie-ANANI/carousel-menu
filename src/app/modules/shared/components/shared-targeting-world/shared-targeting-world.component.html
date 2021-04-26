@@ -52,6 +52,46 @@
 
     <!-- list -->
     <div *ngIf="continents.length > 0" [ngClass]="showToggleList ? 'd-block' : 'd-none'" class="m-top-25">
+
+      <!-- /search bar -->
+      <div *ngIf="isShowSearch">
+        <app-utility-search-input-2
+          [searchPlaceholder]="'Search'"
+          (searchFieldOutput)="onChangeCountrySearch($event)">
+        </app-utility-search-input-2>
+      </div>
+      <!-- /search bar -->
+
+      <!-- countries after search-->
+      <div class="stw-continent-list-wrapper" *ngIf="searchCountryString !== ''">
+        <div class="country-list-wrapper">
+          <div *ngFor="let country of searchCountries" class="card is-responsive">
+            <div class="d-flex align-center" style="min-height: 40px">
+
+              <label class="form-checkbox p-no-right">
+                <input
+                  (change)="onChangeCountry($event, country)"
+                  [checked]="checkCountry(country)"
+                  [disabled]="!isEditable && !isAdmin"
+                  [id]="country.name"
+                  [name]="country.name"
+                  [value]="country.name"
+                  type="checkbox">
+                <i class="form-icon"></i>
+              </label>
+
+              <figure class="avatar m-right-2">
+                <img [src]="getFlagSrc(country.code)" alt=" ">
+              </figure>
+
+              <span class="text-xs">{{ country.name }}</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /countries after search -->
+
       <div *ngFor="let continent of getContinents()" class="stw-continent-list-wrapper">
 
         <!-- continents -->

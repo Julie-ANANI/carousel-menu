@@ -12,9 +12,14 @@ import {Config} from '../../models/config';
 import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
+import {Community} from '../../models/community';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
+
+  public static export(innovationId: string, params: string): string {
+    return environment.apiUrl + `/innovation/${innovationId}/export?${params}`;
+  }
 
   constructor(private _http: HttpClient) { }
 
@@ -159,18 +164,14 @@ export class InnovationService {
     return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }
 
-  public static export(innovationId: string, params: string): string {
-    return environment.apiUrl + `/innovation/${innovationId}/export?${params}`;
-  }
-
-  public import(file:File): Observable<any> {
+  public import(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, 'import_project');
     return this._http.post('/innovation/import/', formData);
   }
 
-  public publishToCommunity(innovationId: string): Observable<any> {
-    return this._http.get('/innovation/' + innovationId + '/communityPublish');
+  public publishToCommunity(innovationId: string, data: any): Observable<{community: Community, published: Date}> {
+    return this._http.post<{community: Community, published: Date}>('/innovation/' + innovationId + '/communityPublish', data);
   }
 
   public updateFollowUpEmails(innovationId: string): Observable<any> {

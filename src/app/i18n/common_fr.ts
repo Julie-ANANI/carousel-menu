@@ -118,6 +118,10 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'TENTATIVE_LEFT': 'tentative(s) restante(s)',
+    'FEEDBACK_COLLECTION': 'Collecte de feedback',
+    'RSETITUTION': 'Restitution',
+    'SELECT_COLUMN_TO_EDIT': 'Sélectionnez une colonne',
     'ACTIVITY_FIELDS': 'Champs d\'activité',
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
@@ -189,6 +193,8 @@ export const COMMON = {
     'PROJECT_TITLE': 'Ajoutez le titre du projet ici...',
     'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
     'MEDIA_SLIDE': 'Faites glisser votre photo ici',
+    'SELECT_A_SCOPE': 'Choisir un scope',
+    'INPUT_VALUE': 'Entrez la valeur'
   },
 
   'REQUIRED': {

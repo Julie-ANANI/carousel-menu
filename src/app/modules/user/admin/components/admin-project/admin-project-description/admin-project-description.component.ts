@@ -14,6 +14,7 @@ import {TranslationService} from '../../../../../../services/translation/transla
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {ScrapeHTMLTags} from '../../../../../../pipe/pipes/ScrapeHTMLTags';
 import {EtherpadFrontService} from '../../../../../../services/etherpad/etherpad-front.service';
+import {MediaFrontService} from '../../../../../../services/media/media-front.service';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 
@@ -397,7 +398,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: Media, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
-      return InnovationFrontService.imageSrc(media);
+      return MediaFrontService.imageSrc(media);
     } else if (media && type === 'VIDEO') {
       return this._innovationFrontService.videoSrc(media);
     }

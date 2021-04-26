@@ -30,7 +30,8 @@ import { isPlatformBrowser } from '@angular/common';
  * display auto-complete section with input and dropdown list when it is clicked
  */
 @Directive({
-    selector: '[auto-complete], [ngui-auto-complete]'
+  // tslint:disable-next-line:directive-selector
+    selector: '[auto-complete], [app-ngui-auto-complete]'
 })
 export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 

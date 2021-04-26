@@ -17,21 +17,21 @@ import { PaginationTemplate2Module } from '../utility/paginations/pagination-tem
 import {ModalEmptyModule} from '../utility/modals/modal-empty/modal-empty.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SharedSearchMultiModule,
-    SharedSortModule,
-    FormsModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    ProgressBarModule,
-    SharedLoaderModule,
-    CountryFlagModule,
-    MessageTemplateModule,
-    PaginationTemplate2Module,
-    ModalEmptyModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SharedSearchMultiModule,
+        SharedSortModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        ProgressBarModule,
+        SharedLoaderModule,
+        CountryFlagModule,
+        MessageTemplateModule,
+        PaginationTemplate2Module,
+        ModalEmptyModule,
+    ],
   declarations: [
     TableComponent
   ],

@@ -25,5 +25,6 @@ export interface Batch {
     opened: number,
     clicked: number,
     insights: number
-  }>
+  }>;
+  childBatch?: Array<string>;
 }

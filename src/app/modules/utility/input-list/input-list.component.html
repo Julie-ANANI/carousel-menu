@@ -16,9 +16,8 @@
           required
           type="text">
       </label>
-
       <button
-        [disabled]="f.form.invalid || !isEditable"
+        [disabled]="answer==='' || !isEditable"
         [ngClass]="{'is-xs': isSmall, 'is-sm': !isSmall}"
         class="button is-circled is-primary"
         type="submit">
@@ -34,17 +33,19 @@
 
         <!-- text -->
         <div class="answer-wrapper text-sm text-primary-dark m-right-2">
-          <span (click)="clickItem.emit(answer)" *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer.text || answer.name}}</span>
-          <a class="c-hand" *ngIf="isClickable && !(enableUpdate && i === indexNumber)" (click)="clickItem.emit(answer)">{{ answer.text  || answer.name }}</a>
+          <span (click)="clickItem.emit(answer)"
+                *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer.text || answer.name || answer.label || answer.expression}}</span>
+          <a class="c-hand" *ngIf="isClickable && !(enableUpdate && i === indexNumber)"
+             (click)="clickItem.emit(answer)">{{ answer.text || answer.name || answer.label || answer.expression}}</a>
           <label *ngIf="enableUpdate && i === indexNumber">
             <input
-                #updateAnswer
-                (keyup.enter)="updateProposition($event, i, updateAnswer.value)"
-                [name]="'text' + [i]"
-                [ngModel]="answerList[i].text || answerList[i].name"
-                autocomplete="off"
-                class="form-input is-sm"
-                type="text">
+              #updateAnswer
+              (keyup.enter)="updateProposition($event, i, updateAnswer.value)"
+              [name]="'text' + [i]"
+              [ngModel]="answerList[i].text || answerList[i].name || answerList[i].label || answerList[i].expression"
+              autocomplete="off"
+              class="form-input is-sm"
+              type="text">
           </label>
         </div>
         <!-- /text -->
@@ -112,7 +113,6 @@
 
   </form>
 </div>
-
 
 
 <!-- modal -->

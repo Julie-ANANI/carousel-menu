@@ -30,6 +30,8 @@ import {MissionService} from '../../../../../../services/mission/mission.service
 import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 
+// todo remove this
+
 @Component({
   selector: 'app-admin-project-followed',
   templateUrl: './admin-project-management.component.html',
@@ -773,7 +775,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   public publish() {
-    this._innovationService.publishToCommunity(this._project._id).subscribe(published => {
+    /*this._innovationService.publishToCommunity(this._project._id).subscribe(published => {
       if (published) {
         this._project['published'] = published;
       } else {
@@ -782,7 +784,7 @@ export class AdminProjectManagementComponent implements OnInit {
     }, err => {
       this._project['published'] = null;
       this._notificationsService.error('Error', 'Cannot publish the innovation at this time!');
-    });
+    });*/
   }
 
   public getRate(value1: number, value2: number, decimals?: number): string {

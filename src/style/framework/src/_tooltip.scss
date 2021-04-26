@@ -33,6 +33,7 @@
   &.is-multiline::before {
     width: 100%;
     white-space: normal;
+    max-width: 280px;
   }
 
   &::after {

@@ -19,6 +19,7 @@ import {CollaborativeComment} from '../../../../../../../../../models/collaborat
 import {EtherpadFrontService} from '../../../../../../../../../services/etherpad/etherpad-front.service';
 import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
+import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -277,7 +278,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public mediaSrc(media: Media) {
-    return InnovationFrontService.getMedia(media);
+    return MediaFrontService.getMedia(media);
   }
 
   public onRequestProofreading(event: Event) {

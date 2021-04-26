@@ -1,22 +1,22 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { Innovation } from '../../../../../models/innovation';
-import { Table } from '../../../../table/models/table';
-import { first } from 'rxjs/operators';
-import { Config } from '../../../../../models/config';
-import { Response } from '../../../../../models/response';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ConfigService } from '../../../../../services/config/config.service';
-import { isPlatformBrowser } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorFrontService } from '../../../../../services/error/error-front.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { UserService } from '../../../../../services/user/user.service';
-import { environment } from '../../../../../../environments/environment';
-import { User } from '../../../../../models/user.model';
-import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {TranslateTitleService} from '../../../../../services/title/title.service';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
+import {Innovation} from '../../../../../models/innovation';
+import {Table} from '../../../../table/models/table';
+import {first} from 'rxjs/operators';
+import {Config} from '../../../../../models/config';
+import {Response} from '../../../../../models/response';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {ConfigService} from '../../../../../services/config/config.service';
+import {isPlatformBrowser} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {UserService} from '../../../../../services/user/user.service';
+import {environment} from '../../../../../../environments/environment';
+import {User} from '../../../../../models/user.model';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 import {AuthService} from '../../../../../services/auth/auth.service';
 import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObjectives';
 
@@ -26,6 +26,62 @@ import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObje
 })
 
 export class AdminProjectsComponent implements OnInit {
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: ConfigService,
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
+              private _translateTitleService: TranslateTitleService,
+              private _userService: UserService) {
+    this._translateTitleService.setTitle('Market Tests');
+  }
+
+  set config(value: Config) {
+    this._config = value; // TODO how to change the config when searching things like the operator?
+    try {
+      // Parse the config.search field to see if there's something
+      if (this._config['fromCollection']) {
+        this._searchMissionsByOther(this._config);
+      } else {
+        this._getProjects();
+      }
+    } catch (ex) {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.status));
+      this._getProjects();
+      console.error(ex);
+    }
+  }
+
+  get canImport(): boolean {
+    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get projects(): Array<Innovation> {
+    return this._projects;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get authUserId() {
+    return this._authService.userId;
+  }
 
   private _projects: Array<any> = [];
 
@@ -55,24 +111,12 @@ export class AdminProjectsComponent implements OnInit {
 
   private _fetchingError = false;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
-              private _innovationService: InnovationService,
-              private _translateService: TranslateService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _rolesFrontService: RolesFrontService,
-              private _authService: AuthService,
-              private _translateTitleService: TranslateTitleService,
-              private _userService: UserService) {
-    this._translateTitleService.setTitle('Market Tests');
-  }
-
   ngOnInit(): void {
     this._initializeTable();
 
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
-      this._getOperators().then( _ => {
+      this._getOperators().then(_ => {
         // this._configOperator();
         this._getProjects();
       }, (err: HttpErrorResponse) => {
@@ -89,6 +133,7 @@ export class AdminProjectsComponent implements OnInit {
    * Todo will be activated later when we have the functionality to search in mission team also.
    * @private
    */
+
   /*private _configOperator() {
     const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
     if (!!operator) {
@@ -119,7 +164,7 @@ export class AdminProjectsComponent implements OnInit {
    * @private
    */
   private _getOperators() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const operatorConfig = <Config>{
         fields: 'firstName,lastName',
         limit: '20',
@@ -132,7 +177,7 @@ export class AdminProjectsComponent implements OnInit {
       this._userService.getAll(operatorConfig).pipe(first()).subscribe(operators => {
         this._operators = operators && operators['result'] ? operators['result'] : [];
         resolve(true);
-        }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         console.error(err);
         reject(err);
       });
@@ -165,11 +210,18 @@ export class AdminProjectsComponent implements OnInit {
   private _initProjects() {
     this._projects = this._projects.map((project) => {
       if (project.innovationCards && project.innovationCards.length) {
+        this.updateTypeByStatus(project);
         project.innovationCards =
           InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
       return project;
     });
+  }
+
+  updateTypeByStatus(project: any) {
+    if (project.status === 'EVALUATING' && project.mission) {
+      project.mission.type = 'CLIENT';
+    }
   }
 
   /***
@@ -202,7 +254,7 @@ export class AdminProjectsComponent implements OnInit {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
           _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
-          _searchConfig: { _collection: 'innovationcard', _searchKey: 'title' }
+          _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
         }, // Using _searchConfig for advanced search
         {
           _attrs: ['mission.externalDiffusion.community'],
@@ -254,13 +306,14 @@ export class AdminProjectsComponent implements OnInit {
           _width: '180px',
           _isHidden: !this.canAccess(['tableColumns', 'owner'])
         },
-        { _attrs: ['owner.company.name'],
+        {
+          _attrs: ['owner.company.name'],
           _name: 'Company',
           _type: 'TEXT',
           _width: '180px',
           _isSearchable: this.canAccess(['searchBy', 'company']),
           _isHidden: !this.canAccess(['tableColumns', 'company']),
-          _searchConfig: {_collection: 'user', _searchKey: 'company.name' }
+          _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
         },
         {
           _attrs: ['mission.type'],
@@ -290,7 +343,7 @@ export class AdminProjectsComponent implements OnInit {
           _name: 'Type',
           _type: 'MULTI-CHOICES',
           _isHidden: true,
-          _searchConfig: {_collection: 'mission', _searchKey: 'type' },
+          _searchConfig: {_collection: 'mission', _searchKey: 'type'},
           _isSearchable: this.canAccess(['filterBy', 'type']),
           _choices: [
             {_name: 'USER', _alias: 'User'},
@@ -305,7 +358,7 @@ export class AdminProjectsComponent implements OnInit {
           _type: 'MULTI-CHOICES',
           _isSearchable: this.canAccess(['filterBy', 'objective']),
           _isHidden: true,
-          _searchConfig: { _collection: 'mission', _searchKey: this._objectiveSearchKey },
+          _searchConfig: {_collection: 'mission', _searchKey: this._objectiveSearchKey},
           _choices: ObjectivesPrincipal.map((objective) => {
             return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
           })
@@ -320,10 +373,11 @@ export class AdminProjectsComponent implements OnInit {
           _width: '150px',
           _choices: [
             {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
-            {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label is-draft'},
-            {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label is-progress'},
+            {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
+            {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
             {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-          ]},
+          ]
+        },
         {
           _attrs: ['operator'],
           _name: 'Operator',
@@ -365,50 +419,6 @@ export class AdminProjectsComponent implements OnInit {
     } else {
       return this._rolesFrontService.hasAccessAdminSide(['projects']);
     }
-  }
-
-  set config(value: Config) {
-    this._config = value; // TODO how to change the config when searching things like the operator?
-    try {
-      // Parse the config.search field to see if there's something
-      if (this._config['fromCollection']) {
-        this._searchMissionsByOther(this._config);
-      } else {
-        this._getProjects();
-      }
-    } catch (ex) {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.status));
-      this._getProjects();
-      console.error(ex);
-    }
-  }
-
-  get canImport(): boolean {
-    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get projects(): Array<Innovation> {
-    return this._projects;
-  }
-
-  get table(): Table {
-    return this._table;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get authUserId() {
-    return this._authService.userId;
   }
 
 }

@@ -1,0 +1,44 @@
+@import "../../../../style/framework/src/variables";
+
+#text-input {
+
+  .input-wrapper {
+
+    .add-btn-wrapper {
+      top: 15px;
+      right: 14px;
+
+      &.is-sm {
+        top: 7px;
+      }
+
+      .button.is-circled {
+        width: 25px;
+        height: 25px;
+
+        i {
+          margin-left: 0;
+          margin-right: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+  .label {
+    font-size: 13px;
+    padding-right: 6px;
+
+    .close:hover {
+
+      &::before {
+        background-color: rgba(58, 66, 77, 0.96);
+      }
+
+    }
+
+  }
+
+}

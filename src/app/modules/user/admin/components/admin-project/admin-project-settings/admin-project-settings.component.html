@@ -272,6 +272,15 @@
               <label>Questionnaire</label>
 
               <button
+                (click)="openQuiz($event)"
+                [ngClass]="'is-info'"
+                class="button is-outlined is-sm"
+                id="btn-quiz-link-open"
+                type="button">
+                {{ 'Open quiz' }}
+              </button>
+
+              <button
                 (click)="onCopyQuizLink($event)"
                 [ngClass]="quizUrlCopied ? 'is-success' : 'is-info'"
                 class="button is-outlined is-sm"
@@ -344,7 +353,7 @@
                     {{ innovation.created | date:dateFormat }} - Preparation
                   </li>
                   <ng-container *ngFor="let milestone of milestones; let i = index;">
-                    <li [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
+                    <li *ngIf="milestone.dueDate" [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
                         <span class="shape is-circle"></span>
                         <span
@@ -497,22 +506,33 @@
 
               <span
                 *ngIf="canAccess(['edit', 'community'])"
-                [ngClass]="{'tooltip': !innovation.isPublic}"
-                data-tooltip="Publish to Showroom">
+                [ngClass]="{'tooltip is-multiline': !innovation.isPublic}"
+                data-tooltip="The project needs to be published to Showroom before publishing to Community.">
                 <label class="form-switch">
                   <input
-                    (change)="onPublishCommunity($event)"
                     [checked]="!!innovation['published']"
-                    [disabled]="!innovation.isPublic || !!innovation['published']"
+                    [disabled]="true"
                     id="admin-project-community"
                     type="checkbox">
-                  <i class="form-icon"></i> {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+                  <i class="form-icon"></i> {{ innovation.published ? 'Published' : 'Unpublished' }}
                 </label>
               </span>
 
               <span *ngIf="!canAccess(['edit', 'community'])" class="is-text">
-                {{ innovation['published'] ? 'Published' : 'Unpublished' }}
+                {{ innovation.published ? 'Published' : 'Unpublished' }}
               </span>
+
+              <span
+                (click)="onEdit('PUBLISH_COMMUNITY')"
+                *ngIf="!innovation.published && canAccess(['edit', 'community']) && innovation.isPublic"
+                class="icon-container m-left-20">
+                  <span data-tooltip="Community publish settings" class="tooltip">
+                    <img
+                      [src]="picto.edit.blue"
+                      alt="Edit"
+                      class="img-responsive">
+                  </span>
+                </span>
 
             </div>
             <!-- /community -->
@@ -528,6 +548,19 @@
   <!-- /settings -->
 
 </div>
+
+
+<!-- modal -->
+<ng-container *ngIf="canAccess(['edit', 'community']) && !isLoading && !innovation.published">
+  <app-admin-project-settings-modal
+    (communityChange)="publishCommunity($event)"
+    [(isPublishingCommunity)]="isPublishingCommunity"
+    [(showModal)]="showModal"
+    [innovation]="innovation"
+    [mission]="mission">
+  </app-admin-project-settings-modal>
+</ng-container>
+<!-- /modal -->
 
 
 <!-- sidebar -->

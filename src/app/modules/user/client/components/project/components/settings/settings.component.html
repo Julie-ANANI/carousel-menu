@@ -82,16 +82,18 @@
                 <div class="d-flex align-center">
 
                   <ul class="roadmap-wrapper">
-                    <li *ngIf="mission.milestoneDates.length > 1" class="active">
+                    <li *ngIf="mission.milestoneDates.length > 0"
+                        class="active">
                     <span class="d-flex flex-d-column align-center">
                       <span class="shape is-circle is-sm"></span>
-                      <span class="divider-vert active"></span>
+                      <span class="divider-vert"
+                            [ngClass]="{ 'active': isNextMilestoneReached(0) }"></span>
                     </span>
                       {{ innovation.created | date:dateFormat }} - {{ 'COMMON.LABEL.PREPARATION' | translate }}
                     </li>
                     <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
                       <li
-                        *ngIf="milestone.code !== 'RDO' && !milestone.code.includes('RDO')"
+                        *ngIf="milestone.dueDate"
                         [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span class="d-flex flex-d-column align-center">
                         <span class="shape is-circle is-sm"></span>
@@ -101,7 +103,7 @@
                           class="divider-vert">
                         </span>
                       </span>
-                        {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
+                        {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name | translate}}
                       </li>
                     </ng-container>
                   </ul>
@@ -128,7 +130,8 @@
                   </ng-container>
 
                   <!-- edit button -->
-                  <span *ngIf="section.isEditable" (click)="editRestitutionDate(); dp.toggleCalendar();" class="text-link">
+                  <span *ngIf="section.isEditable" (click)="editRestitutionDate(); dp.toggleCalendar();"
+                        class="text-link">
                   <i class="fas fa-pen"></i>{{ 'COMMON.BUTTON.EDIT' | translate }}
                 </span>
                   <!-- /edit button -->
@@ -194,7 +197,8 @@
               <div *ngSwitchCase="'COLLABORATORS'">
                 <div *ngFor="let collaborator of innovation.collaborators" class="collaborator-wrapper">
                   <span class="m-right-40">{{ collaborator.email }}</span>
-                  <span (click)="openDeleteModal($event, section, collaborator)" class="button is-xs is-outlined is-danger">
+                  <span (click)="openDeleteModal($event, section, collaborator)"
+                        class="button is-xs is-outlined is-danger">
                   {{ 'COMMON.BUTTON.DELETE' | translate }}
                 </span>
                 </div>
@@ -212,7 +216,8 @@
               <div *ngSwitchCase="'OPERATOR'">
 
                 <p *ngIf="innovation.operator" class="text-md text-bold">
-                  <ng-container *ngIf="innovation.operator.name; else flName">{{ innovation.operator.name }}</ng-container>
+                  <ng-container
+                    *ngIf="innovation.operator.name; else flName">{{ innovation.operator.name }}</ng-container>
                   <ng-template #flName>
                     <ng-container *ngIf="innovation.operator.firstName">{{ innovation.owner.firstName }}</ng-container>
                     <ng-container *ngIf="innovation.operator.firstName">{{ ' ' }}</ng-container>
@@ -240,11 +245,14 @@
               <div *ngSwitchCase="'COMMERCIAL'">
 
                 <p *ngIf="clientProject.commercial" class="text-md text-bold">
-                  <ng-container *ngIf="clientProject.commercial.name; else flName">{{ clientProject.commercial.name }}</ng-container>
+                  <ng-container
+                    *ngIf="clientProject.commercial.name; else flName">{{ clientProject.commercial.name }}</ng-container>
                   <ng-template #flName>
-                    <ng-container *ngIf="clientProject.commercial.firstName">{{ clientProject.commercial.firstName }}</ng-container>
+                    <ng-container
+                      *ngIf="clientProject.commercial.firstName">{{ clientProject.commercial.firstName }}</ng-container>
                     <ng-container *ngIf="clientProject.commercial.firstName">{{ ' ' }}</ng-container>
-                    <ng-container *ngIf="clientProject.commercial.lastName">{{ clientProject.commercial.lastName }}</ng-container>
+                    <ng-container
+                      *ngIf="clientProject.commercial.lastName">{{ clientProject.commercial.lastName }}</ng-container>
                   </ng-template>
                 </p>
 

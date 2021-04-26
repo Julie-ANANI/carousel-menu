@@ -277,7 +277,7 @@ export class ResponseService {
           count: filteredAnswers.length,
           positive: q.positive,
           identifier: q.identifier
-        }
+        };
 
       });
 
@@ -286,10 +286,38 @@ export class ResponseService {
         return (acc < bd.count) ? bd.count : acc;
       }, 0);
 
+      const relativePercentages: {difference: Array<number>, rounded: Array<number>} = {
+        difference: [],
+        rounded: []
+      };
       barsData.forEach((bd) => {
-        bd.absolutePercentage = `${((bd.count * 100) / answers.length) >> 0}%`;
-        bd.relativePercentage = `${((bd.count * 100) / maxAnswersCount) >> 0}%`;
+        const absolutePercentage = bd.count * 100 / answers.length;
+        bd.absolutePercentage = `${Math.round(absolutePercentage)}%`;
+        const relativePercentage = bd.count * 100 / maxAnswersCount;
+        relativePercentages.difference.push(Math.round(relativePercentage) - relativePercentage);
+        relativePercentages.rounded.push(Math.round(relativePercentage));
       });
+
+      const fixPercentagesSum = (values: {difference: Array<number>, rounded: Array<number>}, questionType: string) => {
+        if (questionType === 'radio') {
+          // first we check if the sum of rounded values is equal to 100
+          let diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0) - 100;
+          // if there is a difference, we need to fix it!
+          while (diff) {
+            const index = diff < 0 ?
+              values.difference.findIndex((value: number) => value === Math.min(...values.difference)) :
+              values.difference.findIndex((value: number) => value === Math.max(...values.difference));
+            values.rounded[index] += diff / Math.abs(diff);
+            values.difference[index] = 1 + values.difference[index];
+            diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0) - 100;
+          }
+        }
+        fixPercentagesSum(relativePercentages, question.controlType);
+
+        barsData.forEach((bd, i) => {
+          bd.relativePercentage = `${relativePercentages.rounded[i]}%`;
+        });
+      };
 
       if (question.controlType === 'checkbox') {
         barsData.sort((a, b) => {

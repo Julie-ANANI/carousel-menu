@@ -1,16 +1,16 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { TranslateTitleService } from '../../../services/title/title.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
-import { AuthService } from '../../../services/auth/auth.service';
-import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
-import { FormGroup } from '@angular/forms';
-import { User } from '../../../models/user.model';
-import { UserService } from '../../../services/user/user.service';
-import { RandomUtil } from "../../../utils/randomUtil";
-import { isPlatformBrowser } from '@angular/common';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {environment} from '../../../../environments/environment';
+import {TranslateTitleService} from '../../../services/title/title.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {first} from 'rxjs/operators';
+import {TranslateNotificationsService} from '../../../services/notifications/notifications.service';
+import {AuthService} from '../../../services/auth/auth.service';
+import {SidebarInterface} from '../../sidebars/interfaces/sidebar-interface';
+import {FormGroup} from '@angular/forms';
+import {User} from '../../../models/user.model';
+import {UserService} from '../../../services/user/user.service';
+import {RandomUtil} from '../../../utils/randomUtil';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -54,7 +54,8 @@ export class SignupComponent implements OnInit {
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   private linkedInUrl() {
     const linkedinConfig = {
@@ -76,12 +77,12 @@ export class SignupComponent implements OnInit {
       state: this._linkedInState
     };
 
-    this._authService.preRegisterDataOAuth2('linkedin', data).subscribe(_=>{
-        console.log(_);
-      }, err=>{
-        console.error(err);
-      }, ()=>{
-        window.open(this._linkedInLink, '_self');
+    this._authService.preRegisterDataOAuth2('linkedin', data).subscribe(_ => {
+      console.log(_);
+    }, err => {
+      console.error(err);
+    }, () => {
+      window.open(this._linkedInLink, '_self');
     });
 
   }
@@ -92,7 +93,7 @@ export class SignupComponent implements OnInit {
     this._sidebarValue = {
       animate_state: 'active',
       title: 'SIDEBAR.TITLE.SIGN_UP'
-    }
+    };
   }
 
   public createUser(formValue: FormGroup) {

@@ -1,0 +1,211 @@
+<app-utility-modal
+  [(showModal)]="showModal"
+  [maxWidth]="'960px'"
+  [title]="'Community Publish Settings'">
+
+  <!-- body -->
+  <div class="modal-body p-left-50 p-right-50 admin-project-settings-modal">
+
+    <!-- if errors -->
+    <div *ngIf="tagsError.length" class="m-bottom-30">
+      <div class="bg-alert-light label text-alert-dark text-center">
+        There are sectors that does not include label in English. Please remove
+        them below before publishing the project to community or add them in english.
+        Those are marked in red.
+      </div>
+    </div>
+    <!-- /if errors -->
+
+    <!-- publication type | circle -->
+    <div class="flex-between flex-wrap">
+
+      <!-- publication type -->
+      <div class="form-group m-bottom-40 mxw-350 m-right-15 w-full">
+        <label class="form-label" for="admin-project-modal-publication-type">1. Publication type*</label>
+        <select
+          (ngModelChange)="onChangePubType($event)"
+          [ngModel]="community.publicationType"
+          class="form-select is-sm is-shadowed"
+          id="admin-project-modal-publication-type">
+          <option *ngFor="let type of publicationType" [ngValue]="type.key">
+            {{ type.name }}
+          </option>
+        </select>
+      </div>
+      <!-- /publication type -->
+
+      <!-- circle -->
+      <div class="form-group m-bottom-40 mxw-350 m-right-15 w-full">
+        <label class="form-label" for="admin-project-modal-circle">2. Publication circle*</label>
+        <select
+          (ngModelChange)="onChangeCircle($event)"
+          [ngModel]="community.visibility || ''"
+          class="form-select is-sm is-shadowed"
+          id="admin-project-modal-circle">
+          <option [ngValue]="''" selected>Select circle</option>
+          <option *ngFor="let circle of circles" [ngValue]="circle._id">
+            {{ circle.name | titlecase }}
+          </option>
+        </select>
+      </div>
+      <!-- /circle -->
+
+    </div>
+    <!-- /publication type | circle -->
+
+    <!-- sections -->
+    <div class="form-group m-bottom-25">
+      <label class="form-label">3. Publication sections*</label>
+      <div class="d-flex justify-space flex-wrap">
+        <div
+          *ngFor="let section of community.sections; let i = index;"
+          class="form-group m-top-1 m-right-15 mxw-350 w-full">
+
+          <label class="form-label text-notify text-normal">
+            Community {{ section.type === 'ISSUE' ? 'issue' : section.type === 'SOLUTION' ? 'solution' : 'context' }}
+          </label>
+
+          <label>
+            <select
+              (ngModelChange)="onChangePubSection($event, i)"
+              [ngModel]="section.id || ''"
+              class="form-select is-sm is-shadowed"
+              [id]="section.type">
+              <option [ngValue]="''" selected>Select market test section</option>
+              <ng-container *ngFor="let cardSection of innovCard.sections">
+                <option *ngIf="cardSection.visibility" [ngValue]="cardSection._id">
+                  {{ cardSection.title | titlecase }}
+                </option>
+              </ng-container>
+            </select>
+          </label>
+
+          <p *ngIf="hasMedia(i)" class="m-top-10 m-bottom-10 label is-progress text-center">
+            This section content contains the video or image in it. It will be shown as url in the community.
+          </p>
+
+        </div>
+      </div>
+    </div>
+    <!-- /sections -->
+
+    <!-- medias -->
+    <div class="m-bottom-20">
+
+      <label class="form-label" for="admin-project-modal-owner">4. Publication medias*
+        <span class="text-notify">(Removing or modifying them won't change the actual medias of the market test.)</span>
+      </label>
+
+      <div
+        [ngStyle]="{'margin-right': '-30px', 'margin-left': '-30px'}"
+        class="d-flex flex-wrap text-center">
+        <div *ngFor="let media of allMedias; let index = index;" class="media-wrapper d-flex flex-d-column">
+
+          <div class="media">
+            <ng-container *ngIf="!!media.url; else mediaUpload">
+              <img [src]="media.url" alt="" class="img-responsive">
+            </ng-container>
+            <ng-template #mediaUpload>
+              <app-shared-upload-zone-photo
+                [uploadCloudinary]="false"
+                (cbFn)="mediaToUpload($event)">
+              </app-shared-upload-zone-photo>
+            </ng-template>
+          </div>
+
+          <ng-container *ngIf="!!media.url">
+            <p *ngIf="index === 0" class="text-notify text-13 m-bottom-1">Main media</p>
+            <p *ngIf="index > 0" (click)="setMainMedia(index)" class="text-primary text-link text-13 m-bottom-1">
+              Set as main media
+            </p>
+            <p (click)="removeMedia(index)" class="text-alert text-link text-13 m-no-bottom">Remove media</p>
+          </ng-container>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- /medias -->
+
+    <!-- owner -->
+    <div class="form-group m-bottom-40 m-right-15">
+      <label class="form-label" for="admin-project-modal-owner">5. Publication owner*
+        <span class="text-notify">(It won't change the actual owner of the market test.)</span>
+      </label>
+      <select
+        (ngModelChange)="onChangeOwner($event)"
+        [ngModel]="community.owner || ''"
+        class="form-select is-sm is-shadowed mxw-350"
+        id="admin-project-modal-owner">
+        <option [ngValue]="''">Select owner</option>
+        <option *ngFor="let owner of owners" [ngValue]="owner.email">
+          {{ owner.firstName }} {{ owner.lastName }} - {{ owner.email }}
+        </option>
+      </select>
+    </div>
+    <!-- owner -->
+
+    <!-- project tags -->
+    <div class="form-group m-bottom-40">
+      <label class="form-label">6. Publication sectors*
+        <span class="text-notify">(Removing or modifying them won't change the actual market test tags.)</span>
+      </label>
+      <div
+        *ngFor="let sector of community.sectors" [ngClass]="hasError(sector) ? 'is-danger': 'is-tag'"
+        class="label is-rounded">
+        {{ sector.label && sector.label['en'] }}
+        <div (click)="removeSector(sector)" class="close m-left-2 is-xs"></div>
+      </div>
+    </div>
+    <!-- /project tags -->
+
+    <!-- hashtag -->
+    <div class="form-group m-bottom-35 m-right-15">
+      <label class="form-label">7. Publication hashtags
+        <span class="text-notify">(Do not include '#' keyword.)</span>
+      </label>
+      <app-utility-text-input
+        (textEntered)="addHashtags($event)"
+        (valueToRemove)="removeHashtags($event)"
+        [addedText]="community.tags || []"
+        [inputMaxWidth]="'350px'"
+        [isFormSmall]="true"
+        [labelBgColor]="'is-primary'"
+        [placeholder]="'Enter the hashtag here...'">
+      </app-utility-text-input>
+    </div>
+    <!-- /hashtag -->
+
+    <p class="text-sm p-top-25">
+      <span class="text-medium text-alert">Warning:</span>
+      Please verify all the things before publishing the project to the Community. Once published you want be able to
+      modify any settings.
+    </p>
+
+  </div>
+  <!-- /body -->
+
+  <!-- footer -->
+  <div class="modal-footer">
+
+    <button
+      (click)="closeModal()"
+      [disabled]="isPublishingCommunity"
+      [id]="'modal-cancel-publish-community'"
+      class="button modal-cancel">
+      Cancel
+    </button>
+
+    <button
+      (click)="publishCommunity($event)"
+      [disabled]="isPublishingCommunity || !canBePublished || tagsError.length"
+      [id]="'modal-confirm-publish-community'"
+      class="button is-primary">
+      <ng-container *ngIf="isPublishingCommunity; else modalPublishDefText">is publishing...</ng-container>
+      <ng-template #modalPublishDefText>Publish to community</ng-template>
+    </button>
+
+  </div>
+  <!-- /footer -->
+
+</app-utility-modal>

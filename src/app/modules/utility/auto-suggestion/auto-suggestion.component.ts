@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AutoSuggestionConfig } from './interface/auto-suggestion-config';
-import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AutoSuggestionConfig} from './interface/auto-suggestion-config';
+import {FormControl} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -40,6 +40,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class AutoSuggestionComponent implements OnInit, OnDestroy {
+  private _suggestionDefaultList: Array<any> = [];
+  private _requestType = '';
+  private _showSuggestionFirst = false;
 
   @Input() set config(config: AutoSuggestionConfig) {
     if (config) {
@@ -47,6 +50,13 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
       this._placeholder = config.placeholder || 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';
       this._type = config.type || 'users';
       this._identifier = config.identifier || 'name';
+      this._default = config.default || '';
+      this._suggestionDefaultList = config.suggestionList || [];
+      this._requestType = config.requestType || 'remote';
+      this._isShowAddButton = config.isShowAddButton || false;
+      this._showSuggestionFirst = config.showSuggestionFirst || false;
+
+      this.setDefaultValue();
     }
   }
 
@@ -54,7 +64,24 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   @Output() valueSelected: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() valueAdded = new EventEmitter();
+
+
+  get requestType(): string {
+    return this._requestType;
+  }
+
+  get isShowAddButton(): boolean {
+    return this._isShowAddButton;
+  }
+
   private _minChars = 3;
+
+  private _inputNewValue = '';
+
+  private _isShowAddButton = false;
+
+  private _default = '';
 
   private _placeholder = 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';
 
@@ -72,25 +99,64 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   private _suggestionsSource: Array<any> = [];
 
-  private _itemSelected: any;
+  private _itemSelected: any = '';
 
   private _isSearching = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+  private _width = '100%';
 
-  constructor(private _autoCompleteService: AutocompleteService) { }
+  constructor(private _autoCompleteService: AutocompleteService) {
+  }
+
+
+  get default(): string {
+    return this._default;
+  }
+
+  get width(): any {
+    return this._width;
+  }
+
+  get inputNewValue(): string {
+    return this._inputNewValue;
+  }
 
   ngOnInit() {
     this._searchKeyword.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
       .subscribe((input: any) => {
         if (input) {
+          this._inputNewValue = input;
           this._isSearching = true;
-          this._loadResult(input);
+          if (this._requestType === 'remote') {
+            this._loadResult(input);
+          } else {
+            this._loadListResults(input);
+          }
         } else {
           this.hideAutoSuggestionDropdown();
         }
       });
+  }
+
+  setDefaultValue() {
+    if (this._default !== '') {
+      this._searchKeyword.setValue(this._default);
+    } else {
+      this._searchKeyword.setValue('');
+    }
+  }
+
+  _loadListResults(value: string) {
+    if (value) {
+      this._suggestionsSource = [];
+      this._dropdownVisible = true;
+      this._loading = true;
+      if (value.length >= this._minChars) {
+        this._getSuggestionsList(value);
+      }
+    }
   }
 
   private _loadResult(value: any) {
@@ -107,14 +173,24 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _getSuggestionsList(keyword: string) {
+    if (this._isShowAddButton) {
+      this._width = '80%';
+    }
+    this._suggestionsSource = this._suggestionDefaultList.filter(item => item.toString().toLowerCase().includes(keyword.toLowerCase()) ||
+      keyword.toLowerCase().includes(item.toString().toLowerCase()));
+    this._loading = false;
+    this._isSearching = this._suggestionsSource.length !== 0;
+  }
+
   private _getSuggestions(searchKey: string) {
-    this._autoCompleteService.get({ query: searchKey, type: this._type })
+    this._autoCompleteService.get({query: searchKey, type: this._type})
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data) => {
         this._suggestionsSource = data;
         this._loading = false;
         this._isSearching = data.length !== 0;
-        },(err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         console.error(err);
       });
   }
@@ -122,7 +198,13 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   public showAutoSuggestionDropdown(event: Event) {
     event.preventDefault();
     const value = ((event.target) as HTMLInputElement).value;
-    this._loadResult(value);
+    if (this._requestType === 'remote') {
+      this._loadResult(value);
+    } else if (this._showSuggestionFirst) {
+      this._dropdownVisible = true;
+      this._isSearching = true;
+      this._suggestionsSource = this._suggestionDefaultList;
+    }
   }
 
   public hideAutoSuggestionDropdown() {
@@ -161,8 +243,22 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   public onValueSelect(value: any) {
     this._itemSelected = value;
-    this._searchKeyword.setValue(value[this._identifier]);
-    this._emitValue(value);
+    if (this._requestType === 'remote') {
+      this._searchKeyword.setValue(value[this._identifier]);
+      this._emitValue(value);
+    } else {
+      this._emitValue({
+        type: this._type,
+        value: value
+      });
+      this._searchKeyword.setValue('');
+      if (!this.isShowAddButton) {
+        this._searchKeyword.setValue(value);
+      }
+      this._inputNewValue = '';
+      this._width = '100%';
+      this._itemSelected = value;
+    }
     this.hideAutoSuggestionDropdown();
   }
 
@@ -199,9 +295,29 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     return this._isSearching;
   }
 
+  get type(): string {
+    return this._type;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
+  /**
+   * add new value => reset state
+   */
+  addNewValue() {
+    if (this.inputNewValue) {
+      this._itemSelected = this.inputNewValue;
+      this._searchKeyword.setValue('');
+      this.valueAdded.emit({
+        type: this.type,
+        value: this.searchKeyword.value
+      });
+      this._inputNewValue = '';
+      this._width = '100%';
+      this.hideAutoSuggestionDropdown();
+    }
+  }
 }

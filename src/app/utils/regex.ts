@@ -4,6 +4,7 @@ export const urlRegEx = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]
 export const phoneRegEx = /^\+?[0-9 \.\-\(\)]+$/;
 
 export const videoDomainRegEx = /youtu\.?be|vimeo/;
+export const cloudinaryImageRegEx = /https?:\/\/res\.cloudinary\.com/gm;
 
 export const vimeoVideoId = /([^vimeo\.com\/]+)(\d+)(?=\/?)/; // Javascript does not support positive lookbehinds
 export const youtubeVideoId = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
