@@ -16,9 +16,7 @@
         <label class="m-right-20">
           <select class="form-select is-sm" disabled>
             <option *ngIf="!isNumber(section.description)">
-              <ng-container *ngIf="section.description ==='1st'">Problem</ng-container>
-              <ng-container *ngIf="section.description ==='2nd'">Solution</ng-container>
-              <ng-container *ngIf="section.description ==='nothing'">Nothing</ng-container>
+              {{ 'PRESETS.SECTION.DESCRIPTION.' + section.description | translate }}
             </option>
             <option *ngIf="isNumber(section.description)">{{ sectionsNames[section.description] }}</option>
           </select>
@@ -44,7 +42,7 @@
             [(ngModel)]="section.description"
             class="form-select is-sm">
             <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
-            <option [ngValue]="'nothing'">Nothing</option>
+            <option [ngValue]="'nothing'">{{ 'PRESETS.SECTION.DESCRIPTION.nothing' | translate }}</option>
           </select>
         </label>
         <!-- if section names -->
@@ -55,9 +53,9 @@
             (ngModelChange)="notifyChanges()"
             [(ngModel)]="section.description"
             class="form-select is-sm">
-            <option [ngValue]="'1st'">Problem</option>
-            <option [ngValue]="'2nd'">Solution</option>
-            <option [ngValue]="'nothing'">Nothing</option>
+            <option [ngValue]="'1st'">{{ 'PRESETS.SECTION.DESCRIPTION.1st' | translate }}</option>
+            <option [ngValue]="'2nd'">{{ 'PRESETS.SECTION.DESCRIPTION.2nd' | translate }}</option>
+            <option [ngValue]="'nothing'">{{ 'PRESETS.SECTION.DESCRIPTION.nothing' | translate }}</option>
           </select>
         </label>
         <!-- if not section names -->

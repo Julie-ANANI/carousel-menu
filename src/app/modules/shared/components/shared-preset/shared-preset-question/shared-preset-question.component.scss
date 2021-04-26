@@ -4,7 +4,6 @@
 
   .header-wrapper {
     background-color: $bg-meta-color;
-    min-height: 64px;
     border-radius: 6px;
     padding: 10px 25px 10px 20px;
     font-size: 14px;
@@ -17,8 +16,12 @@
       border-bottom-right-radius: 0;
     }
 
-    .form-input, .form-select {
+    .form-input {
       min-width: 200px;
+    }
+
+    .form-select {
+      min-width: 156px;
     }
 
     .move-arrows {
@@ -41,7 +44,7 @@
     .buttons-wrapper {
       position: absolute;
       background-color: $bg-meta-color;
-      padding: 14px 14px 14px 20px;
+      padding: 10px 14px 10px 20px;
       right: 12px;
     }
 
