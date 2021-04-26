@@ -3,6 +3,7 @@
   <!-- if the question type is checkbox or radio -->
   <div *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
     <app-bar-chart
+      (questionChanged)="questionChanged.emit($event)"
       (answerButtonClicked)="answerBtnClicked($event)"
       (modalAnswerChange)="seeAnswer($event)"
       [innovation]="innovation"
@@ -19,6 +20,7 @@
     *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'"
     class="box-style">
     <app-question-conclusion
+      (questionChanged)="questionChanged.emit($event)"
       [innovation]="innovation"
       [question]="questionReceived"
       [readonly]="readonly"

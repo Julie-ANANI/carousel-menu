@@ -5,6 +5,7 @@
   </p>
 
   <canvas
+    class="c-hand"
     *ngIf="pieChart"
     [chartType]="'pie'"
     [colors]="colors"
@@ -12,6 +13,7 @@
     [labels]="pieChart.labels | multiling:lang"
     [legend]="false"
     [options]="options"
+    (chartClick)="chartClicked($event)"
     baseChart>
   </canvas>
 

@@ -3,6 +3,7 @@
   <!-- header section -->
   <div class="box-style">
     <app-question-conclusion
+      (questionChanged)="questionChange()"
       [innovation]="innovation"
       [pieChart]="pieChart"
       [question]="question"

@@ -1,0 +1,16 @@
+<div class="d-flex justify-center flex-wrap">
+  <ng-container *ngFor="let color of colors; let i = index" class="m-4">
+    <ng-container *ngIf="i < nbDisplayedColors">
+      <input (change)="changeColor($event)"
+             type="radio"
+             name="color"
+             [id]="color.label"
+             [value]="color.value"/>
+      <label [for]="color.label">
+      <span
+        [ngStyle]="{background: color.value}"
+        [class]="color.label"></span>
+      </label>
+    </ng-container>
+  </ng-container>
+</div>

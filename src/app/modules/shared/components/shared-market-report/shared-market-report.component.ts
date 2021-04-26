@@ -250,9 +250,26 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
   }
 
+  /***
+   * This function saves changes of any question of the operator (piechart colors, title, subtitle)
+   * @param question
+   */
+  public saveQuestion(question: Question) {
+
+    // If section title is from question
+    this._innovation.preset.sections.forEach((section: any) => {
+      const indexOfQuestion = section.questions.indexOf((que: Question ) => que.identifier === question.identifier);
+      if (indexOfQuestion >= 0) {
+        section.questions[indexOfQuestion] = question;
+      }
+    });
+
+    this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
+  }
+
   public saveInnovation(event: Event) {
     event.preventDefault();
-    this._innovationService.save(this._innovation._id, {marketReport: this._innovation.marketReport}).subscribe(() => {
+    this._innovationService.save(this._innovation._id, {marketReport: this._innovation.marketReport, preset: this._innovation.preset}).subscribe(() => {
       this._toBeSaved = false;
       this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
     }, (err: HttpErrorResponse) => {

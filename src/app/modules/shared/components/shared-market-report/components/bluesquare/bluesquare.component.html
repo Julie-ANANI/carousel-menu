@@ -1,8 +1,20 @@
-<div id="bluesquare">
+<div id="bluesquare d-flex">
   <div [ngStyle]="{'font-size': '100px'}">{{ numberFocus || 0 }}</div>
-  <div [ngStyle]="{ 'display': subtitle !== '' ? 'block' : 'none' }" class="text-medium text-sm">
-    {{ subtitle }}
+  <div *ngIf="!editSubtitle" [ngStyle]="{ 'display': subtitle !== '' ? 'block' : 'none' }" class="text-medium text-sm">
+    <span> {{ subtitle }} </span>
   </div>
+  <div *ngIf="editSubtitle"  class="text-medium text-sm">
+    <textarea class="form-input" (focusout)="editSubtitle = false" [(ngModel)]="subtitle"
+              (ngModelChange)="subtitleChanged.emit(subtitle)"></textarea>
+  </div>
+  <span
+    *ngIf="!readonly"
+    (click)="editSubtitle = !editSubtitle"
+    [attr.data-tooltip]="'Edit section subtitle'"
+    class="tooltip c-hand m-left-2">
+        <i class="fas fa-edit tex-draft text-md" [ngClass]="{'text-warning': !editSubtitle}"></i>
+  </span>
+
 </div>
 
 

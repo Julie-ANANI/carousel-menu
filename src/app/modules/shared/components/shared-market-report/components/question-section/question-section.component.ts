@@ -40,6 +40,8 @@ export class QuestionSectionComponent implements OnInit {
 
   @Output() executiveTags = new EventEmitter<Array<Tag>>();
 
+  @Output() questionChanged = new EventEmitter<Question>();
+
   private _answersReceived: Array<Answer> = [];
 
   private _toggleAnswers = false;

@@ -87,6 +87,7 @@
             id="origin-responses">
             <div class="box-style" *ngIf="!areAnswersLoading">
               <app-question-conclusion
+                (questionChanged)="saveQuestion($event)"
                 [innovation]="innovation"
                 [originAnswers]="answersOrigins"
                 [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
@@ -142,6 +143,7 @@
           <!-- other question sections -->
           <section *ngFor="let question of questions" class="p-bottom-50" id="questions">
             <app-question-section
+              (questionChanged)="saveQuestion($event)"
               *ngIf="!areAnswersLoading"
               (modalAnswerChange)="seeAnswer($event)"
               [answers]="filteredAnswers"

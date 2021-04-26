@@ -1,7 +1,8 @@
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
-import { PieChart } from '../../../../models/pie-chart';
+import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID, ViewChild} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
+import {PieChart} from '../../../../models/pie-chart';
+import {BaseChartDirective} from 'ng2-charts';
 
 @Component({
   selector: 'app-utility-piechart',
@@ -18,6 +19,10 @@ export class PiechartComponent {
     this._loadData();
   }
 
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
+  @Output() chartSectionClicked = new EventEmitter<{index: number, position: {x: number, y: number}}>();
+
   private _pieChart: PieChart = <PieChart>{};
 
   private _datasets: Array<{data: Array<number>}> = [];
@@ -30,15 +35,30 @@ export class PiechartComponent {
 
   private _options = {
     responsive: true
-  }
+  };
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService) { }
+
+  chartClicked(event: any) {
+    const currentChartIndexModified = event.active[0]._index;
+    if (currentChartIndexModified >= 0) {
+      this.chartSectionClicked.emit({
+        index: currentChartIndexModified,
+        position: {x: event.event.offsetX, y: event.event.offsetY}
+      });
+    }
+  }
 
   private _loadData() {
     if (this._pieChart) {
       this._colors = [{backgroundColor: this._pieChart.colors || []}];
       this._datasets = [{data: this._pieChart.data || []}];
+
+      if (this.chart) {
+        this.chart.chart.data.datasets[0].backgroundColor = this._pieChart.colors || [];
+        this.chart.chart.update();
+      }
     }
   }
 
