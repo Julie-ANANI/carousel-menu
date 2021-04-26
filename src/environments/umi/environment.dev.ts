@@ -1,4 +1,4 @@
-// 10 minutes for the expiration time
+// 48hrs for the expiration time
 
 export const environment = {
   local: false,
@@ -16,5 +16,5 @@ export const environment = {
   background: 'https://res.cloudinary.com/umi/image/upload/v1527583034/app/default-images/cover-image.jpg',
   commercialContact: 'klegrand@umi.us',
   secureCookie: true,
-  cookieTime: 600 * 1000
+  cookieTime: 48 * 3600 * 1000
 };
