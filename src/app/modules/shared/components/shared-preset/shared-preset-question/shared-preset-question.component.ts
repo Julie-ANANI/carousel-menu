@@ -19,6 +19,11 @@ export class SharedPresetQuestionComponent {
    */
   @Input() isEditable = false;
 
+  /**
+   * provide the innovation cards lang.
+   */
+  @Input() presetLanguages: Array<string> = [];
+
   @Input() set question(value: Question) {
     this._question = value;
     this._isTaggedQuestion = this.presetService.isTaggedQuestion(value.identifier);

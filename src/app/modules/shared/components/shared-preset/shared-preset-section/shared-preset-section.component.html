@@ -130,9 +130,10 @@
     <div
       *ngFor="let question of section.questions; let i = index;"
       [ngStyle]="{'width': '95%', 'display': isCollapsed ? 'none' : 'block'}"
-      class="m-top-20 m-left-auto">
+      class="m-top-2 m-left-auto">
       <app-shared-preset-question
         [isEditable]="isEditable"
+        [presetLanguages]="presetLanguages"
         [questionIndex]="i"
         [question]="question"
         [sectionIndex]="sectionIndex">
