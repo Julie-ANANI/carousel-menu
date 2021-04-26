@@ -321,6 +321,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         (result) => {
           console.log(result);
           if (index === this._professionalsToRemove.length - 1) {
+            this._localConfig.limit = '10';
             this.onConfigChange(this._localConfig);
             this._translateNotificationsService.success(
               'Success',
@@ -623,6 +624,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
               this._isShowModal = false;
               this._table._content = [];
               this._table._total = 0;
+              this._localConfig.limit = '10';
             }
           },
           (error) => {
@@ -632,6 +634,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
               ErrorFrontService.getErrorMessage(error.status)
             );
             this._isShowModal = false;
+            this._localConfig.limit = '10';
           }
         );
     }
