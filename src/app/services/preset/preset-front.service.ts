@@ -3,6 +3,7 @@ import { Preset } from '../../models/preset';
 import { Question, QuestionType } from '../../models/question';
 import { Section } from '../../models/section';
 import {Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({providedIn: 'root'})
 export class PresetFrontService {
@@ -85,7 +86,28 @@ export class PresetFrontService {
 
   private _preset: Preset;
 
-  constructor() {}
+  constructor(private _translateService: TranslateService) {
+  }
+
+  /**
+   * based on the languages will search the label and if not found then return first label based
+   * on the presetLanguages
+   * @param question
+   * @param presetLanguages
+   */
+  public questionLabel(question: Question = <Question>{}, presetLanguages: Array<string>): string {
+    if (presetLanguages.length) {
+      const _lang = presetLanguages.find((lang) => lang === this._translateService.currentLang);
+      if (!!_lang && question.label && question.label[_lang]) {
+        return question.label[_lang];
+      }
+      if (question.label && question.label[presetLanguages[0]]) {
+        return question.label[presetLanguages[0]];
+      }
+    }
+
+    return question.label && question.label[this._translateService.currentLang] || '';
+  }
 
   /***
    * this function is called when there are some changes and we want to notify
