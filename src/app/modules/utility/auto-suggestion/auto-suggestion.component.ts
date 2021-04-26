@@ -41,7 +41,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 
 export class AutoSuggestionComponent implements OnInit, OnDestroy {
   private _suggestionDefaultList: Array<any> = [];
-  private _requestType = '';
+  private _requestType = 'remote';
   private _showSuggestionFirst = false;
 
   @Input() set config(config: AutoSuggestionConfig) {
