@@ -16,12 +16,13 @@ export class SharedPresetSectionComponent {
    */
   @Input() isEditable = false;
 
+  /**
+   * provide the innovation cards lang.
+   */
   @Input() presetLanguages: Array<string> = [];
 
   @Input() set section(value: Section) {
     this._section = value;
-    console.log(this._section);
-    console.log(this.presetLanguages);
   }
 
   @Input() set sectionIndex(value: number) {
