@@ -1,6 +1,6 @@
 @import "framework/src/variables";
 
-@media print and (color) {
+@media print {
 
   * {
     -webkit-print-color-adjust: exact !important;
@@ -63,13 +63,14 @@
   #report {
 
     .first-page {
+      margin-top: 20px;
       min-height: unset;
       height: 934.5px;
     }
 
     .second-page {
       min-height: unset;
-      height: 931.5px;
+      height: 920px;
     }
 
   }
