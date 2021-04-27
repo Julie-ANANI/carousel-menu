@@ -7,8 +7,8 @@
     <div class="d-flex align-center">
 
       <div *ngIf="isEditable" data-tooltip="Move question" class="move-arrows tooltip">
-        <i (click)="up($event)" class="icon icon-arrow-up"></i>
-        <i (click)="down($event)" class="icon icon-arrow-down"></i>
+        <i (click)="upQuestion($event)" class="icon icon-arrow-up"></i>
+        <i (click)="downQuestion($event)" class="icon icon-arrow-down"></i>
       </div>
 
       <ng-container *ngIf="!editMode || isTaggedQuestion">
@@ -149,57 +149,90 @@
         class="question-content">
 
         <!-- language -->
-        <div class="text-center m-bottom-20">
-          <div class="label lang-label relative">
+        <div [ngClass]="presetLanguages.length === 1 ? 'text-center' : 'text-left'" class="m-bottom-20">
+          <div class="label m-no is-progress lang-label relative">
             {{ 'COMMON.LANG.' + lang | uppercase | translate }}
-            <span *ngIf="countErrors(lang) !== 0" class="label is-danger is-sm is-rounded">
-              {{ countErrors(lang) }}
-            </span>
           </div>
         </div>
         <!-- /language -->
 
         <!-- label -->
         <div class="m-bottom-15">
-          <label class="form-label">{{ 'COMMON.LABEL.QUESTION_LABEL' | translate }}</label>
+          <label class="form-label">Question</label>
           <p *ngIf="!isEditable" class="text-sm">{{ question.label[lang] || 'NA' }}</p>
           <textarea
             (ngModelChange)="notifyChanges()"
             *ngIf="isEditable"
             [(ngModel)]="question.label[lang]"
-            [id]="'question-label'"
-            class="form-input is-sm"
+            [id]="'question-label-'+lang"
+            class="form-input"
             type="text">
           </textarea>
         </div>
         <!-- /label -->
 
-        <!-- title -->
-        <div class="m-bottom-15">
-          <label class="form-label">{{ 'COMMON.LABEL.INFOGRAPHIC_TITLE' | translate }}</label>
-          <p class="text-sm">{{ question.title[lang] || 'NA' }}</p>
-        </div>
-        <!-- /title -->
+        <!-- question types -->
+        <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
+          || question.controlType === 'stars'">
 
-        <!-- subtitle -->
-        <div class="m-bottom-15">
-          <label class="form-label">{{ 'COMMON.LABEL.INFOGRAPHIC_SUBTITLE' | translate }}</label>
-          <p class="text-sm">{{ question.subtitle[lang] || 'NA' }}</p>
-        </div>
-        <!-- /subtitle -->
+          <!-- options -->
+          <div [ngClass]="{'has-single-option': presetLanguages.length === 1}" class="options-wrapper">
+            <div
+              *ngFor="let option of question.options; let i = index;"
+              [ngClass]="{'is-editable': isEditable}"
+              class="card">
+
+              <ng-container *ngIf="!isEditable">{{ option.label[lang] || 'NA' }}</ng-container>
+
+              <!-- move option -->
+              <div *ngIf="isEditable" class="flex-centered m-top-10 m-bottom-10">
+                <div data-tooltip="Move option" class="move-arrows m-no-right tooltip is-bottom">
+                  <i (click)="moveQuestionOption($event, i, 1)" class="icon icon-arrow-up"></i>
+                  <i (click)="moveQuestionOption($event, i, -1)" class="icon icon-arrow-down"></i>
+                </div>
+              </div>
+              <!-- /move option -->
+
+              <!-- input -->
+              <textarea
+                (ngModelChange)="notifyChanges()"
+                *ngIf="isEditable"
+                [(ngModel)]="option.label[lang]"
+                [id]="'option-label-'+lang"
+                class="form-input"
+                type="text">
+              </textarea>
+              <!-- /input -->
+
+              <!-- delete icon -->
+              <div class="text-center m-top-10">
+                <div
+                  (click)="deleteOption($event, i)"
+                  *ngIf="isEditable"
+                  [id]="'sharedPresetQuestion-btn-delete-option-' + i"
+                  class="icon-container is-overlay">
+                  <span data-tooltip="Delete option" class="tooltip">
+                    <i class="icon icon-delete text-alert"></i>
+                  </span>
+                </div>
+              </div>
+              <!-- /delete icon -->
+
+            </div>
+          </div>
+          <!-- /options -->
+
+        </ng-container>
+        <!-- /question types -->
 
       </div>
     </div>
     <!-- /question content -->
 
-    <!-- question types -->
-    <ng-container
-      *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-      || question.controlType === 'stars'">
-
-
-      <!-- add item -->
-      <div *ngIf="isEditable" class="text-center m-top-30 m-bottom-15">
+    <!-- add item -->
+    <ng-container *ngIf="isEditable && (question.controlType === 'radio' || question.controlType === 'checkbox'
+     || question.controlType === 'stars')">
+      <div [ngClass]="presetLanguages.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
         <button
           (click)="addNewOption($event)"
           [id]="'sharedPresetQuestion-btn-add-item'"
@@ -211,10 +244,8 @@
           Add item
         </button>
       </div>
-      <!-- /add item -->
-
     </ng-container>
-    <!-- /question types -->
+    <!-- /add item -->
 
   </div>
   <!-- /question edition -->

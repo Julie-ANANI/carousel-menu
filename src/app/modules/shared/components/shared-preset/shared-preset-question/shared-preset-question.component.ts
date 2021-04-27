@@ -1,8 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {PresetFrontService} from '../../../../../services/preset/preset-front.service';
-import {Innovation} from '../../../../../models/innovation';
 import {Question} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
@@ -61,20 +59,20 @@ export class SharedPresetQuestionComponent {
 
   public editMode = false;
 
-  private _language: 'en' | 'fr' = 'en';
-
   private _picto: Picto = picto;
-
-  private _optionColors: Array<string> = ['#34AC01', '#82CD30', '#F2C500', '#C0210F'];
 
   constructor(private _presetFrontService: PresetFrontService,
               private _innovationFrontService: InnovationFrontService,
-              private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService) { }
+              private _translateService: TranslateService) {
+  }
 
   public removeQuestion(event: Event) {
     event.preventDefault();
-    const res = confirm('Are you sure you want to delete this question ?');
+
+    const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
+      : 'Are you sure you want to delete this question?';
+    const res = confirm(_msg);
+
     if (res) {
       this._presetFrontService.removeQuestion(this._questionIndex, this._sectionIndex);
       this.notifyChanges();
@@ -102,51 +100,39 @@ export class SharedPresetQuestionComponent {
     this.notifyChanges();
   }
 
-  public fillWithBenefits(event: Event) {
-    event.preventDefault();
-    const innovation = this._activatedRoute.snapshot.parent.data['innovation'] as Innovation;
-    // Calcul benefits
-    this._question.options = innovation.innovationCards.reduce((acc, innovCard) => {
-      innovCard.advantages.forEach((advantage, index) => {
-        if (index < acc.length) {
-          acc[index].label[innovCard.lang] = advantage.text;
-        } else {
-          acc.push({identifier: index.toString(), label: { [innovCard.lang]: advantage.text }});
-        }
-      });
-      return acc;
-    }, []);
-    this.notifyChanges();
-  }
-
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
-    const options = this._question.options;
-    options.splice(index, 1);
-    // re-index options to keep a count from 0 to X
-    options.forEach(function (option, i) {
-      option.identifier = i.toString();
-    });
-    this.notifyChanges();
+
+    const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette option ?'
+      : 'Are you sure you want to delete this option?';
+    const res = confirm(_msg);
+
+    if (res) {
+      const options = this._question.options;
+      options.splice(index, 1);
+      // re-index options to keep a count from 0 to X
+      options.forEach(function (option, i) {
+        option.identifier = i.toString();
+      });
+      this.notifyChanges();
+    }
   }
 
-  public countErrors(lang: string) {
-    let missing = 0;
-    if (!this._question.label[lang]) { missing ++; }
-    if (!this._question.title[lang]) { missing ++; }
-    if (!this._question.subtitle[lang]) { missing ++; }
-    return missing;
-  }
-
-  public up(event: Event) {
+  public upQuestion(event: Event) {
     event.preventDefault();
     this._presetFrontService.moveQuestion(this._questionIndex, this._sectionIndex, -1);
     this.notifyChanges();
   }
 
-  public down(event: Event) {
+  public downQuestion(event: Event) {
     event.preventDefault();
     this._presetFrontService.moveQuestion(this._questionIndex, this._sectionIndex, 1);
+    this.notifyChanges();
+  }
+
+  public moveQuestionOption(event: Event, optionIndex: number, move: 1 | -1) {
+    event.preventDefault();
+    this._presetFrontService.moveQuestionOption(this._questionIndex, optionIndex, move);
     this.notifyChanges();
   }
 
@@ -197,19 +183,21 @@ export class SharedPresetQuestionComponent {
     return this._presetFrontService.questionLabel(this._question, this.presetLanguages);
   }
 
-  get language() { return this._language; }
+  get platformLang() {
+    return this._translateService.currentLang;
+  }
 
-  set language(value: 'en' | 'fr') { this._language = value; }
+  get question(): Question {
+    return this._question;
+  }
 
-  get platformLang() { return this._translateService.currentLang; }
+  get customId(): string {
+    return this._customId;
+  }
 
-  get question(): Question { return this._question; }
-
-  get customId(): string { return this._customId; }
-
-  get isTaggedQuestion(): boolean { return this._isTaggedQuestion; }
-
-  get innovation(): boolean { return  !!this._activatedRoute.snapshot.parent.data['innovation']; }
+  get isTaggedQuestion(): boolean {
+    return this._isTaggedQuestion;
+  }
 
   get questionIndex(): number {
     return this._questionIndex;
@@ -217,10 +205,6 @@ export class SharedPresetQuestionComponent {
 
   get picto(): Picto {
     return this._picto;
-  }
-
-  get optionColors(): Array<string> {
-    return this._optionColors;
   }
 
 }

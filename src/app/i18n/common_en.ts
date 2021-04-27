@@ -174,9 +174,9 @@ export const COMMON = {
     'SELECT_A_SCOPE': 'Select a scope',
     'INPUT_VALUE': 'Input the value',
     'CUSTOM': 'Custom',
-    'QUESTION_LABEL': 'Question Label',
     'INFOGRAPHIC_TITLE': 'Infographic Title',
     'INFOGRAPHIC_SUBTITLE': 'Infographic Subtitle',
+    'OPTION_COLOR': 'Option Color'
   },
 
   'PLACEHOLDER': {

@@ -227,6 +227,10 @@ export class PresetFrontService {
     }
   }
 
+  public moveQuestionOption(questionIndex: number, optionIndex: number, move: number) {
+
+  }
+
   public cloneQuestion(questionIndex: number, sectionIndex: number) {
     const questions: Array<Question> = this._preset.sections[sectionIndex].questions;
     const question: Question = { ...questions[questionIndex] };
