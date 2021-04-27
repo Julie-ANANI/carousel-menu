@@ -38,7 +38,7 @@
         </label>
       </ng-container>
 
-      <!--<ng-container *ngIf="editMode && isEditable">
+      <ng-container *ngIf="editMode && isEditable">
         <label class="m-right-20">
           <select
             (ngModelChange)="changeIdentifier($event)"
@@ -49,13 +49,13 @@
             <option [value]="customId">custom</option>
           </select>
         </label>
-      </ng-container>-->
+      </ng-container>
 
-      <!--<ng-container *ngIf="isTaggedQuestion && (!editMode || !isEditable)">
+      <ng-container *ngIf="isTaggedQuestion && (!editMode || !isEditable)">
         <div class="label is-rounded is-tag m-no m-right-20 text-sm">
           #{{question.identifier}}
         </div>
-      </ng-container>-->
+      </ng-container>
 
     </div>
     <!-- /move / select / type / label -->
@@ -105,14 +105,14 @@
   <!-- /header -->
 
   <!-- question edition -->
-  <!--<div *ngIf="editMode" class="question-body">
+  <div *ngIf="editMode" class="question-body">
 
-    &lt;!&ndash; toolbar &ndash;&gt;
+    <!-- toolbar -->
     <div class="question-toolbar m-bottom-25">
 
       <div class="d-flex align-center">
 
-        &lt;!&ndash; english &ndash;&gt;
+        <!-- english -->
         <button
           (click)="language = 'en'"
           [ngClass]="{'active': language === 'en'}"
@@ -122,9 +122,9 @@
           {{ countErrors('en') }}
         </span>
         </button>
-        &lt;!&ndash; /english &ndash;&gt;
+        <!-- /english -->
 
-        &lt;!&ndash; french &ndash;&gt;
+        <!-- french -->
         <button
           (click)="language = 'fr'"
           [ngClass]="{'active': language === 'fr'}"
@@ -134,9 +134,9 @@
           {{ countErrors('fr') }}
         </span>
         </button>
-        &lt;!&ndash; /french &ndash;&gt;
+        <!-- /french -->
 
-        &lt;!&ndash; add comment &ndash;&gt;
+        <!-- add comment -->
         <label class="form-switch m-right-50">
           <input
             (ngModelChange)="updateValue($event, 'COMMENT')"
@@ -145,9 +145,9 @@
             type="checkbox">
           <i class="form-icon"></i> Add comment
         </label>
-        &lt;!&ndash; /add comment &ndash;&gt;
+        <!-- /add comment -->
 
-        &lt;!&ndash; is sensitive data &ndash;&gt;
+        <!-- is sensitive data -->
         <span class="tooltip" [attr.data-tooltip]="'For anonymous shared link. To \n hide answers that may contain \n phone numbers, mails...'">
           <label class="form-switch m-right-50">
           <input
@@ -158,9 +158,9 @@
             <i class="form-icon"></i> Sensitive answer
           </label>
         </span>
-        &lt;!&ndash; /is sensitive data &ndash;&gt;
+        <!-- /is sensitive data -->
 
-        &lt;!&ndash; show favourable answers &ndash;&gt;
+        <!-- show favourable answers -->
         <label *ngIf="question.controlType === 'radio'" class="form-switch">
           <input
             (ngModelChange)="updateValue($event, 'FAV_ANSWERS')"
@@ -169,23 +169,23 @@
             type="checkbox">
           <i class="form-icon"></i> Show favorable answers
         </label>
-        &lt;!&ndash; /show favourable answers &ndash;&gt;
+        <!-- /show favourable answers -->
 
       </div>
 
-      &lt;!&ndash; import benefits &ndash;&gt;
+      <!-- import benefits -->
       <button
         (click)="fillWithBenefits($event)"
         *ngIf="question.controlType === 'stars' && isEditable"
         class="button is-outlined is-info is-sm m-left-50">
         Import benefits
       </button>
-      &lt;!&ndash; /import benefits &ndash;&gt;
+      <!-- /import benefits -->
 
     </div>
-    &lt;!&ndash; /toolbar &ndash;&gt;
+    <!-- /toolbar -->
 
-    &lt;!&ndash; label / title / subtitle &ndash;&gt;
+    <!-- label / title / subtitle -->
     <div *ngFor="let lang of ['en', 'fr']">
       <div *ngIf="lang === language" class="question-labelling-options flex-between">
         <div class="form-group">
@@ -226,18 +226,18 @@
         </div>
       </div>
     </div>
-    &lt;!&ndash; /label / title / subtitle &ndash;&gt;
+    <!-- /label / title / subtitle -->
 
-    &lt;!&ndash; question types &ndash;&gt;
+    <!-- question types -->
     <ng-container
       *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
       || question.controlType === 'stars'">
 
-      &lt;!&ndash; options &ndash;&gt;
+      <!-- options -->
       <div class="options-wrapper">
         <div *ngFor="let option of question.options; let i = index;" class="card">
 
-          &lt;!&ndash; cross icon &ndash;&gt;
+          <!-- cross icon -->
           <div class="text-center m-bottom-10">
             <button
               (click)="deleteOption($event, i)"
@@ -246,9 +246,9 @@
               class="close text-center text-primary-dark is-sm">
             </button>
           </div>
-          &lt;!&ndash; /cross icon &ndash;&gt;
+          <!-- /cross icon -->
 
-          &lt;!&ndash; positive answer &ndash;&gt;
+          <!-- positive answer -->
           <ng-container *ngIf="question.controlType === 'radio' && question.visibility">
             <div class="text-center m-bottom-20">
               <label class="form-switch">
@@ -261,9 +261,9 @@
               </label>
             </div>
           </ng-container>
-          &lt;!&ndash; /positive answer &ndash;&gt;
+          <!-- /positive answer -->
 
-          &lt;!&ndash; label English &ndash;&gt;
+          <!-- label English -->
           <div class="form-group">
             <label class="form-label" for="label-en">English</label>
             <span *ngIf="!isEditable" class="text-sm">{{ option.label.en }}</span>
@@ -275,9 +275,9 @@
               id="label-en"
               type="text">
           </div>
-          &lt;!&ndash; /label English &ndash;&gt;
+          <!-- /label English -->
 
-          &lt;!&ndash; label French &ndash;&gt;
+          <!-- label French -->
           <div class="form-group">
             <label class="form-label" for="label-fr">French</label>
             <span *ngIf="!isEditable" class="text-sm">{{ option.label.fr }}</span>
@@ -289,12 +289,12 @@
               id="label-fr"
               type="text">
           </div>
-          &lt;!&ndash; /label French &ndash;&gt;
+          <!-- /label French -->
 
-          &lt;!&ndash; if type Radio &ndash;&gt;
+          <!-- if type Radio -->
           <ng-container *ngIf="question.controlType === 'radio'">
 
-            &lt;!&ndash; option color &ndash;&gt;
+            <!-- option color -->
             <div class="p-top-25 text-sm text-medium flex-centered m-bottom-30">
               <span class="m-right-2">Selected option color:</span>
               <span
@@ -311,9 +311,9 @@
                 </span>
               </div>
             </div>
-            &lt;!&ndash; /option color &ndash;&gt;
+            <!-- /option color -->
 
-            &lt;!&ndash; color options &ndash;&gt;
+            <!-- color options -->
             <div *ngIf="isEditable" class="d-flex align-center text-sm text-medium m-bottom-20">
               <span class="m-right-2">Pre-defined colors:</span>
               <span
@@ -323,16 +323,16 @@
                 class="shape c-hand is-circle is-sm m-right-1">
               </span>
             </div>
-            &lt;!&ndash; /color options &ndash;&gt;
+            <!-- /color options -->
 
           </ng-container>
-          &lt;!&ndash; /if type Radio &ndash;&gt;
+          <!-- /if type Radio -->
 
         </div>
       </div>
-      &lt;!&ndash; /options &ndash;&gt;
+      <!-- /options -->
 
-      &lt;!&ndash; add item &ndash;&gt;
+      <!-- add item -->
       <div *ngIf="isEditable" class="text-center p-top-10 m-bottom-15">
         <button
           (click)="addNewOption($event)"
@@ -345,12 +345,12 @@
           Add item
         </button>
       </div>
-      &lt;!&ndash; /add item &ndash;&gt;
+      <!-- /add item -->
 
     </ng-container>
-    &lt;!&ndash; /question types &ndash;&gt;
+    <!-- /question types -->
 
-  </div>-->
+  </div>
   <!-- /question edition -->
 
 </div>
