@@ -68,7 +68,7 @@
             </div>
 
             <!-- tentatives + contact UMI -->
-            <p class="text text-sm m-top-10 m-bottom-10 is-info" style="display: flex">
+            <p *ngIf="nbTentatives<3" class="text text-sm m-top-10 m-bottom-10 is-info" style="display: flex">
               {{nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate)}}
               <span class="text-link" style="margin-left: auto"
                     (click)="showContactUMIModal()"
