@@ -24,9 +24,11 @@
 
         <div class="d-flex flex-wrap">
           <div *ngFor="let lang of presetLanguages" class="m-right-20 d-flex align-center">
-            <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
-              {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
-            </label>
+            <ng-container *ngIf="presetLanguages.length > 1">
+              <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
+                {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
+              </label>
+            </ng-container>
             {{ section.label[lang] }}
           </div>
         </div>

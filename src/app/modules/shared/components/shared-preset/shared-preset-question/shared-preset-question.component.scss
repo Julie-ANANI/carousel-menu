@@ -52,9 +52,44 @@
 
   .question-body {
     background-color: $bg-white-color;
-    padding: 35px 50px 10px 50px;
+    padding: 20px 50px 10px 50px;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
+
+    .question-content {
+      flex: 1;
+
+      .lang-label {
+        min-width: 125px;
+        border-radius: 4px;
+        font-size: 13px;
+
+        .label {
+          width: 21px;
+          height: 21px;
+          margin-left: 15px;
+        }
+
+      }
+
+      &.has-border {
+        border-left: 1px solid $border-default-color;
+        padding-left: 30px;
+      }
+
+      &.has-more-content {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        textarea {
+          max-width: 90%;
+          font-size: 13px;
+          min-height: 100px;
+        }
+
+      }
+
+    }
 
     .question-toolbar {
       display: flex;
@@ -107,6 +142,10 @@
         background-color: #F2F2F2;
       }
 
+    }
+
+    #sharedPresetQuestion-btn-add-item {
+      border-color: transparent;
     }
 
   }

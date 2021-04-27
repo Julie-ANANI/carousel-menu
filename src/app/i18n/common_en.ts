@@ -172,7 +172,11 @@ export const COMMON = {
     'TRY_AGAIN': 'Try again',
     'SELECT_COLUMN_TO_EDIT': 'Select a column',
     'SELECT_A_SCOPE': 'Select a scope',
-    'INPUT_VALUE': 'Input the value'
+    'INPUT_VALUE': 'Input the value',
+    'CUSTOM': 'Custom',
+    'QUESTION_LABEL': 'Question Label',
+    'INFOGRAPHIC_TITLE': 'Infographic Title',
+    'INFOGRAPHIC_SUBTITLE': 'Infographic Subtitle',
   },
 
   'PLACEHOLDER': {

@@ -8,7 +8,7 @@
   <ng-container *ngIf="preset.sections && preset.sections.length">
     <section
       *ngFor="let section of preset.sections; let i = index;"
-      [ngClass]="{'m-bottom-30': (i + 1) < preset.sections.length}">
+      [ngClass]="{'m-bottom-20': (i + 1) < preset.sections.length}">
       <app-shared-preset-section
         [isEditable]="isEditable"
         [presetLanguages]="presetLanguages"
