@@ -62,6 +62,10 @@ export const MARKET_REPORT = {
     'BUTTON_CONFIRM': 'Confirm',
   },
 
+  'RESTITUTION_LANG': 'Language of restitution',
+
+  'GEOGRAPHICAL_DISTRIBUTION': 'Geographical distribution',
+
   'MAP': {
     'TITLE': 'Map',
   },

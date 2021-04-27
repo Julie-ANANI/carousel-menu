@@ -3,6 +3,7 @@
   <!-- if the question type is checkbox or radio -->
   <div *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
     <app-bar-chart
+      [reportingLang]="reportingLang"
       (questionChanged)="questionChanged.emit($event)"
       (answerButtonClicked)="answerBtnClicked($event)"
       (modalAnswerChange)="seeAnswer($event)"
@@ -20,6 +21,7 @@
     *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'"
     class="box-style">
     <app-question-conclusion
+      [reportingLang]="reportingLang"
       (questionChanged)="questionChanged.emit($event)"
       [innovation]="innovation"
       [question]="questionReceived"
@@ -38,7 +40,7 @@
         (click)="toggleAnswers = !toggleAnswers"
         class="button is-community is-sm"
         type="button">
-        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
         <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
       </button>
     </div>
@@ -90,7 +92,7 @@
         (click)="toggleAnswers = !toggleAnswers"
         class="button is-community is-sm"
         type="button">
-        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
         <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
       </button>
     </div>
@@ -158,7 +160,7 @@
 
     <div class="p-top-50">
       <h5 [ngStyle]="{'font-size': '22px'}" class="title text-secondary">
-        {{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}
+        {{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translateIn: reportingLang }}
       </h5>
     </div>
 

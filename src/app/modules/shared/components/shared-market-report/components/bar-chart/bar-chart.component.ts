@@ -44,7 +44,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   private _toggleFilterIcon: {[index: string]: boolean} = {};
 
-  private _currentLang = this._translateService.currentLang;
+  @Input() reportingLang = this._translateService.currentLang;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -127,10 +127,6 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   get toggleFilterIcon(): { [p: string]: boolean } {
     return this._toggleFilterIcon;
-  }
-
-  get currentLang(): string {
-    return this._currentLang;
   }
 
   ngOnDestroy(): void {

@@ -70,7 +70,7 @@
   <!-- views type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
   <div>
 
-    <h6>{{ 'SIDEBAR_MARKET_REPORT.MY_VIEWS' | translate }}</h6>
+    <h6>{{ 'SIDEBAR_MARKET_REPORT.MY_VIEWS' | translateIn: reportingLang }}</h6>
 
     <!-- show views -->
     <app-utility-input-list
@@ -93,7 +93,7 @@
           <input
             [(ngModel)]="filterName"
             [ngModelOptions]="{ standalone: true }"
-            [placeholder]="'SIDEBAR_MARKET_REPORT.FORM_VIEW_PLACEHOLDER' | translate"
+            [placeholder]="'SIDEBAR_MARKET_REPORT.FORM_VIEW_PLACEHOLDER' | translateIn: reportingLang"
             class="form-input is-sm"
             type="text">
         </label>
@@ -105,7 +105,7 @@
           class="button is-draft is-outlined is-sm"
           id="btn-create-view"
           type="submit">
-          {{ 'COMMON.BUTTON.SAVE' | translate }}
+          {{ 'COMMON.BUTTON.SAVE' | translateIn: reportingLang }}
         </button>
       </div>
 
@@ -120,7 +120,7 @@
   <!-- view activated type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
   <div *ngIf="activatedCustomFilters.length > 0">
 
-    <h6 class="m-bottom-2">{{ 'SIDEBAR_MARKET_REPORT.ACTIVATED_VIEW' | translate }}</h6>
+    <h6 class="m-bottom-2">{{ 'SIDEBAR_MARKET_REPORT.ACTIVATED_VIEW' | translateIn: reportingLang }}</h6>
 
     <div *ngFor="let filter of activatedCustomFilters" class="m-top-1">
       <div
@@ -152,7 +152,7 @@
   <!-- key-learning type === 'MARKET_REPORT' -->
   <div *ngIf="templateType === 'MARKET_REPORT' && (isKeyLearning || isAdminSide)" class="scroll-wrapper">
     <a [href]="'#key-learnings'" pageScroll>
-      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.KEY_LEARNING' | translate }}
+      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.KEY_LEARNING' | translateIn: reportingLang }}
     </a>
   </div>
   <!-- /key-learning type === 'MARKET_REPORT'  -->
@@ -160,7 +160,7 @@
   <!-- origin type === 'MARKET_REPORT' -->
   <div *ngIf="templateType === 'MARKET_REPORT'" class="scroll-wrapper">
     <a [href]="'#origin-responses'" pageScroll>
-      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.ORIGIN' | translate }}
+      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.ORIGIN' | translateIn: reportingLang }}
     </a>
   </div>
   <!-- /origin type === 'MARKET_REPORT'  -->
@@ -174,7 +174,7 @@
         <i *ngIf="showSection.map" class="icon icon-arrow-down"></i>
         <i *ngIf="!showSection.map" class="icon icon-arrow-up"></i>
       </span>
-      {{ 'MARKET_REPORT.MAP.TITLE' | translate }}
+      {{ 'MARKET_REPORT.MAP.TITLE' | translateIn: reportingLang }}
     </a>
     <!-- /type 'MARKET_REPORT' -->
 
@@ -212,7 +212,7 @@
         <i *ngIf="showSection.professionals" class="icon icon-arrow-down"></i>
         <i *ngIf="!showSection.professionals" class="icon icon-arrow-up"></i>
       </span>
-      {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+      {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translateIn: reportingLang }}
     </a>
     <!-- /type 'MARKET_REPORT' -->
 
@@ -234,7 +234,7 @@
           id="select-all-professionals"
           (change)="filterEverything($event.target['checked'], professionalsTags, 'TAG')"
           [checked]="!filters['tags']">
-        <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+        <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
       </label>
 
       <div
@@ -244,17 +244,17 @@
           <input
             (change)="checkTag($event, tag._id)"
             [checked]="selectedTags[tag._id]"
-            [id]="tag.label | multiling:userLang"
-            [name]="tag.label | multiling:userLang"
+            [id]="tag.label | multiling:reportingLang"
+            [name]="tag.label | multiling:reportingLang"
             type="checkbox">
-          <i class="form-icon"></i> {{ tag.label | multiling:userLang | FormatText }}
+          <i class="form-icon"></i> {{ tag.label | multiling:reportingLang | FormatText }}
         </label>
       </div>
 
       <!-- see more -->
       <div *ngIf="professionalsTags.length > 6 && !seeMore.professionals">
         <span (click)="seeMore.professionals = true" class="text-link">
-          {{ 'MARKET_REPORT.SEE_MORE' | translate }}
+          {{ 'MARKET_REPORT.SEE_MORE' | translateIn: reportingLang }}
         </span>
       </div>
       <!-- /see more -->
@@ -262,7 +262,7 @@
       <!-- see less -->
       <div *ngIf="professionalsTags.length > 6 && seeMore.professionals">
         <span class="text-link" (click)="seeMore.professionals = false">
-          {{ 'MARKET_REPORT.SEE_LESS' | translate }}
+          {{ 'MARKET_REPORT.SEE_LESS' | translateIn: reportingLang }}
         </span>
       </div>
       <!-- /see less -->
@@ -275,10 +275,10 @@
           *ngIf="professional.value['professional']"
           (click)="deleteProfessionalFilter($event, professional.key)"
           class="tooltip prof-hidden-wrapper"
-          [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_UNHIDE_PROFESSIONAL' | translate">
+          [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_UNHIDE_PROFESSIONAL' | translateIn: reportingLang">
           <i class="fas fa-eye-slash text-alert"></i>
           <ng-container *ngIf="!professionalName(professional.value); else profName">
-            {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
+            {{ 'MARKET_REPORT.ANONYMOUS' | translateIn: reportingLang }}
           </ng-container>
           <ng-template #profName>
             {{ professionalName(professional.value) }}
@@ -304,7 +304,7 @@
             <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
           </ng-container>
         </span>
-        {{ question.title | multiling:userLang | FormatText }}
+        {{ question.title | multiling:reportingLang | FormatText }}
       </a>
       <!-- /type 'MARKET_REPORT' -->
 
@@ -316,7 +316,7 @@
             <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
           </ng-container>
         </span>
-        {{ question.title | multiling:userLang | FormatText }}
+        {{ question.title | multiling:reportingLang | FormatText }}
       </a>
       <!-- /type 'FOLLOW_UP' -->
 
@@ -327,10 +327,10 @@
         <label class="form-checkbox">
           <input
             type="checkbox"
-            [id]="'select-all'+(question.title | multiling:userLang)"
+            [id]="'select-all'+(question.title | multiling:reportingLang)"
             (change)="filterEverything($event.target['checked'], [question], question.controlType)"
             [checked]="!filters[question.identifier]">
-          <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+          <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
         </label>
 
         <div
@@ -344,7 +344,7 @@
               [id]="answerTag._id"
               [name]="answerTag._id"
               type="checkbox">
-            <i class="form-icon"></i> {{ answerTag.label | multiling:userLang | FormatText }}
+            <i class="form-icon"></i> {{ answerTag.label | multiling:reportingLang | FormatText }}
           </label>
         </div>
 
@@ -352,7 +352,7 @@
         <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 4
         && !seeMore[question.identifier]">
           <span (click)="seeMore[question.identifier] = true" class="text-link">
-            {{ 'MARKET_REPORT.SEE_MORE' | translate }}
+            {{ 'MARKET_REPORT.SEE_MORE' | translateIn: reportingLang }}
           </span>
         </div>
         <!-- /see more -->
@@ -361,7 +361,7 @@
         <div *ngIf="answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length > 4
         && seeMore[question.identifier]">
           <span class="text-link" (click)="seeMore[question.identifier] = false">
-            {{ 'MARKET_REPORT.SEE_LESS' | translate }}
+            {{ 'MARKET_REPORT.SEE_LESS' | translateIn: reportingLang }}
           </span>
         </div>
         <!-- /see less -->
@@ -380,7 +380,7 @@
           <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
           <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
         </span>
-        {{ question.title | multiling:userLang | FormatText }}
+        {{ question.title | multiling:reportingLang | FormatText }}
       </a>
       <!-- /type 'MARKET_REPORT' -->
 
@@ -390,7 +390,7 @@
           <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
           <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
         </span>
-        {{ question.title | multiling:userLang | FormatText }}
+        {{ question.title | multiling:reportingLang | FormatText }}
       </a>
       <!-- /type 'FOLLOW_UP' -->
 
@@ -399,10 +399,10 @@
         <label class="form-checkbox">
           <input
             type="checkbox"
-            [id]="'select-all'+(question.title | multiling:userLang)"
+            [id]="'select-all'+(question.title | multiling:reportingLang)"
             (change)="filterEverything($event.target['checked'], [question], question.controlType)"
             [checked]="!filters[question.identifier]">
-          <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+          <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
         </label>
 
         <div *ngFor="let option of (seeMore[question.identifier] ? question.options
@@ -414,14 +414,14 @@
               [id]="option.identifier"
               [name]="option.identifier"
               type="checkbox">
-            <i class="form-icon"></i> {{ option.label | multiling:userLang | FormatText }}
+            <i class="form-icon"></i> {{ option.label | multiling:reportingLang | FormatText }}
           </label>
         </div>
 
         <!-- see more -->
         <div *ngIf="question.options && question.options.length > 4 && !seeMore[question.identifier]">
           <span (click)="seeMore[question.identifier] = true" class="text-link">
-            {{ 'MARKET_REPORT.SEE_MORE' | translate }}
+            {{ 'MARKET_REPORT.SEE_MORE' | translateIn: reportingLang }}
           </span>
         </div>
         <!-- /see more -->
@@ -429,7 +429,7 @@
         <!-- see less -->
         <div *ngIf="question.options && question.options.length > 4 && seeMore[question.identifier]">
           <span class="text-link" (click)="seeMore[question.identifier] = false">
-            {{ 'MARKET_REPORT.SEE_LESS' | translate }}
+            {{ 'MARKET_REPORT.SEE_LESS' | translateIn: reportingLang }}
           </span>
         </div>
         <!-- /see less -->
@@ -443,7 +443,7 @@
     <div *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox'
     && question.controlType !== 'radio'" class="scroll-wrapper">
       <a [href]="'#' + question.identifier" pageScroll>
-        <i class="icon icon-arrow-right"></i> {{ question.title | multiling:userLang | FormatText }}
+        <i class="icon icon-arrow-right"></i> {{ question.title | multiling:reportingLang | FormatText }}
       </a>
     </div>
     <!-- /rest types -->
@@ -454,7 +454,7 @@
   <!-- conclusion filters -->
   <div *ngIf="isFinalConclusion || isAdminSide" class="scroll-wrapper">
     <a [href]="'#conclusion'" pageScroll>
-      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.CONCLUSION' | translate }}
+      <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.CONCLUSION' | translateIn: reportingLang }}
     </a>
   </div>
   <!-- /conclusion filters -->

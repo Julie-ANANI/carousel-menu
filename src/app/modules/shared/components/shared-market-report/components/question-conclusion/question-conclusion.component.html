@@ -4,8 +4,8 @@
   <div class="conclusion-wrapper">
 
     <h3 *ngIf="question.title" [ngClass]="{'m-no-bottom': !question.label}" class="title is-main d-flex">
-      <span *ngIf="!editTitle"> {{ question.title | multiling:currentLang }} </span>
-      <input class="form-input" type="text" *ngIf="editTitle" (focusout)="editTitle = false" [(ngModel)]="question.title[currentLang]" (ngModelChange)="questionChanged.emit(question)">
+      <span *ngIf="!editTitle"> {{ question.title | multiling:reportingLang }} </span>
+      <input class="form-input" type="text" *ngIf="editTitle" (focusout)="editTitle = false" [(ngModel)]="question.title[reportingLang]" (ngModelChange)="questionChanged.emit(question)">
       <span
         (click)="editTitle = !editTitle"
         *ngIf="!readonly"
@@ -16,12 +16,12 @@
     </h3>
 
     <h4 *ngIf="question.label" [ngStyle]="{'color': '#484848'}" class="m-no-bottom text-lg">
-      {{ question.label | multiling:currentLang }}
+      {{ question.label | multiling:reportingLang }}
     </h4>
 
     <div *ngIf="tags && tags.length > 0" class="tags-wrapper">
-      <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-tag is-rounded">
-        <i class="fas fa-tag icon-left"></i> {{ tag.label | multiling:currentLang }}
+      <div *ngFor="let tag of tags" [title]="tag.description | multiling:reportingLang" class="label is-tag is-rounded">
+        <i class="fas fa-tag icon-left"></i> {{ tag.label | multiling:reportingLang }}
         <ng-container *ngIf="tag.count > 1">(x{{ tag.count }})</ng-container>
       </div>
     </div>
@@ -29,7 +29,7 @@
 
 
     <div class="d-flex align-center">
-      <h5 *ngIf="isMainDomain" class="op-text m-right-4">{{ 'COMMON.UMI_WORD' | translate }}</h5>
+      <h5 *ngIf="isMainDomain" class="op-text m-right-4">{{ 'COMMON.UMI_WORD' | translateIn: reportingLang }}</h5>
       <!-- Edit mode toggle -->
       <button
         *ngIf="!readonly"
@@ -53,12 +53,12 @@
     </app-shared-editors>
 
     <div *ngIf="originAnswers !== null" class="p-top-20">
-      <h4 class="title is-5 m-bottom-15">Geographical Distribution:</h4>
+      <h4 class="title is-5 m-bottom-15">{{'MARKET_REPORT.GEOGRAPHICAL_DISTRIBUTION' | translateIn: reportingLang }}:</h4>
       <div class="m-no-bottom">
         <div *ngFor="let continent of originAnswers | keyvalue | orderBy:'value'" [id]="continent.key" class="m-top-1">
           <app-shared-toggle-list>
             <div slot="header">
-              <span class="text-bold"> {{ ('CONTINENTS.' + continent.key) | translate }}: {{ continent.value.count }} </span>
+              <span class="text-bold"> {{ ('CONTINENTS.' + continent.key) | translateIn: reportingLang }}: {{ continent.value.count }} </span>
             </div>
             <div slot="body" >
               <ul class="m-no-bottom">
@@ -76,7 +76,7 @@
   <!-- /conclusion -->
 
   <!-- stats -->
-  <div [ngSwitch]="question.controlType" class="stats-wrapper relative">
+  <div *ngIf="question.controlType" [ngSwitch]="question.controlType" class="stats-wrapper relative">
 
     <!-- pie chart -->
     <ng-container *ngSwitchCase="'radio'">
@@ -87,7 +87,7 @@
           [showFavorable]="question.visibility">
         </app-utility-piechart>
         <div *ngIf="!readonly && currentChartIndexModified >= 0" class="absolute popover-container max-width-200"
-             [ngStyle]="{'left': currentChartOffsetXModified - 20 + 'px', 'top': currentChartOffsetYModified + 20 + 'px'}">
+             [ngStyle]="{'left': currentChartOffsetXModified + 'px', 'top': currentChartOffsetYModified + 20 + 'px'}">
           <div class="card p-10">
             <label class="form-checkbox text-background">
               <input type="checkbox" [(ngModel)]="question.options[currentChartIndexModified].positive" (change)="positiveAnswerChange()">
@@ -110,7 +110,7 @@
         [readonly]="readonly"
         [numberFocus]="stats.nbAnswers"
         [percentage]="stats.percentage"
-        [subtitle]="question.subtitle | multiling:currentLang">
+        [subtitle]="question.subtitle | multiling:reportingLang">
       </app-bluesquare>
     </ng-container>
     <!-- /rectangle box -->

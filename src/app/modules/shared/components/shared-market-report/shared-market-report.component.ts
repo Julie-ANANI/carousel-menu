@@ -97,6 +97,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _isMainDomain = environment.domain === 'umi';
 
+  private _reportingLang = '';
+
   public areAnswersLoading = false;
 
   public displayFilters = false;
@@ -115,6 +117,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {
+    this.reportingLang = this.innovation.settings.reportingLang || this._translateService.currentLang;
     this._filterService.reset();
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe))
@@ -278,6 +281,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     });
   }
 
+  public setNewSelectedLang(value: string) {
+    this._reportingLang = value;
+    this.innovation.settings.reportingLang = this.reportingLang;
+  }
+
   public filterPro(answer: Answer, event: Event) {
     event.preventDefault();
     let proFiltered: any = {};
@@ -405,6 +413,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
   set showKeyLearningsEditor(value: boolean) {
     this._showKeyLearningsEditor = value;
+  }
+
+  get reportingLang(): string {
+    return this._reportingLang;
+  }
+
+  set reportingLang(value: string) {
+    this._reportingLang = value;
   }
 
   hideQuestionAnswers(question: Question) {

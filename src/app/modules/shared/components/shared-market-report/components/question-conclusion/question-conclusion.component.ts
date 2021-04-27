@@ -30,7 +30,7 @@ export class QuestionConclusionComponent implements OnInit {
 
   @Output() questionChanged = new EventEmitter<Question>();
 
-  private _currentLang = this._translateService.currentLang;
+  @Input() reportingLang = this._translateService.currentLang;
 
   private _isMainDomain = environment.domain === 'umi' || false;
 
@@ -81,16 +81,12 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   subtitleChange(event: string) {
-    this.question.subtitle[this.currentLang] = event;
+    this.question.subtitle[this.reportingLang] = event;
     this.questionChanged.emit(this.question);
   }
 
   get tags(): Array<Tag> {
     return this._dataService.answersTagsLists[this.question._id];
-  }
-
-  get currentLang(): string {
-    return this._currentLang;
   }
 
   get isMainDomain(): boolean {

@@ -7,6 +7,7 @@ import {ResponseService} from '../../services/response.service';
 import {DataService} from '../../services/data.service';
 import {Observable} from 'rxjs';
 import {AnswersStats} from '../../models/stats';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-question-section',
@@ -25,6 +26,8 @@ export class QuestionSectionComponent implements OnInit {
   @Input() canEditQuestionTags = false;
 
   @Input() questionReceived: Question = <Question>{};
+
+  @Input() reportingLang = this._translateService.currentLang;
 
   @Input() set answers(value: Array<Answer>) {
     this._answersReceived = value;
@@ -53,7 +56,8 @@ export class QuestionSectionComponent implements OnInit {
   private _showComment = false;
 
   constructor(private _responseService: ResponseService,
-              private _dataService: DataService) { }
+              private _dataService: DataService,
+              private _translateService: TranslateService) { }
 
   ngOnInit() {
     this._updateAnswersData();
