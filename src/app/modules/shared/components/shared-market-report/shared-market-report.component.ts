@@ -272,7 +272,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   public saveInnovation(event: Event) {
     event.preventDefault();
-    this._innovationService.save(this._innovation._id, {marketReport: this._innovation.marketReport, preset: this._innovation.preset}).subscribe(() => {
+    this._innovationService.save(this._innovation._id, {
+        marketReport: this._innovation.marketReport,
+        // Modified only admin side
+        preset: this._innovation.preset,
+        settings: this._innovation.settings
+    }).subscribe(() => {
       this._toBeSaved = false;
       this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
     }, (err: HttpErrorResponse) => {
@@ -284,6 +289,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   public setNewSelectedLang(value: string) {
     this._reportingLang = value;
     this.innovation.settings.reportingLang = this.reportingLang;
+    this._innovationFrontService.setNotifyChanges({key: 'settings', state: true});
   }
 
   public filterPro(answer: Answer, event: Event) {
