@@ -4,7 +4,7 @@
     <span> {{ subtitle }} </span>
   </div>
   <div *ngIf="editSubtitle"  class="text-medium text-sm">
-    <textarea class="form-input" (focusout)="editSubtitle = false" [(ngModel)]="subtitle"
+    <textarea class="form-input text-sm" (focusout)="editSubtitle = false" [(ngModel)]="subtitle"
               (ngModelChange)="subtitleChanged.emit(subtitle)"></textarea>
   </div>
   <span

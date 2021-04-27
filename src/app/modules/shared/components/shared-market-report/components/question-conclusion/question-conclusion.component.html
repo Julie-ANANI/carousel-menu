@@ -82,12 +82,17 @@
     <ng-container *ngSwitchCase="'radio'">
       <div class="popover" (mouseleave)="currentChartIndexModified = -1">
         <app-utility-piechart
+          (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
           (chartSectionClicked)="chartSectionClicked($event)"
           [pieChart]="pieChart"
-          [showFavorable]="question.visibility">
+          [readonly]="readonly"
+          [reportingLang]="reportingLang"
+          [showFavorable]="question.visibility"
+          [favorableAnswersLabel]="question.positivesAnswersLabel || {en: '', fr: ''}"
+        >
         </app-utility-piechart>
         <div *ngIf="!readonly && currentChartIndexModified >= 0" class="absolute popover-container max-width-200"
-             [ngStyle]="{'left': currentChartOffsetXModified + 'px', 'top': currentChartOffsetYModified + 20 + 'px'}">
+             [ngStyle]="{'left': currentChartOffsetXModified + 'px', 'top': currentChartOffsetYModified + 25 + 'px'}">
           <div class="card p-10">
             <label class="form-checkbox text-background">
               <input type="checkbox" [(ngModel)]="question.options[currentChartIndexModified].positive" (change)="positiveAnswerChange()">

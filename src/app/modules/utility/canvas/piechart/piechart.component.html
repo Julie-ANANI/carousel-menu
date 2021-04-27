@@ -1,7 +1,28 @@
 <div *ngIf="isBrowser" class="text-sm text-medium" id="piechart">
 
-  <p *ngIf="showFavorable && pieChart && pieChart.percentage" class="m-bottom-15">
-    {{ pieChart.percentage || 0 }}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}
+  <p *ngIf="showFavorable && pieChart" class="m-bottom-15">
+    <ng-container  *ngIf="!editFavorableAnswersLabel">
+      <span *ngIf="pieChart.percentage">
+        {{ pieChart.percentage || 0 }}% {{ favorableAnswersLabel[reportingLang] || ('MARKET_REPORT.PIE_CHART' | translateIn: reportingLang) }}
+      </span>
+      <span  *ngIf="!pieChart.percentage && favorableAnswersLabel[reportingLang]">
+        {{ favorableAnswersLabel[reportingLang]}}
+      </span>
+    </ng-container>
+
+    <span *ngIf="editFavorableAnswersLabel" class="d-flex align-center">
+      <span *ngIf="pieChart.percentage" class="m-right-4">{{ pieChart.percentage || 0 }}%</span>
+      <input class="form-input text-sm" type="text" (focusout)="editFavorableAnswersLabel = false"
+             [(ngModel)]="favorableAnswersLabel[reportingLang]"
+             (ngModelChange)="positiveLabelChanged.emit(favorableAnswersLabel)">
+    </span>
+    <span
+      (click)="editFavorableAnswersLabel = !editFavorableAnswersLabel"
+      *ngIf="!readonly"
+      [attr.data-tooltip]="'Edit favorable answers label'"
+      class="tooltip c-hand m-left-2">
+        <i class="fas fa-edit tex-draft text-md" [ngClass]="{'text-warning': !editFavorableAnswersLabel}"></i>
+      </span>
   </p>
 
   <canvas
@@ -10,7 +31,7 @@
     [chartType]="'pie'"
     [colors]="colors"
     [datasets]="datasets"
-    [labels]="pieChart.labels | multiling:lang"
+    [labels]="pieChart.labels | multiling:reportingLang"
     [legend]="false"
     [options]="options"
     (chartClick)="chartClicked($event)"
@@ -18,7 +39,7 @@
   </canvas>
 
   <ul *ngIf="pieChart" class="pie-data-wrapper animate-fade is-5">
-    <li *ngFor="let label of (pieChart.labels | multiling:lang); let i = index">
+    <li *ngFor="let label of (pieChart.labels | multiling:reportingLang); let i = index">
       <span
         class="shape is-circle is-xs m-right-1"
         [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }">

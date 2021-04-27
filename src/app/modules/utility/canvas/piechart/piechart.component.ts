@@ -3,6 +3,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
 import {PieChart} from '../../../../models/pie-chart';
 import {BaseChartDirective} from 'ng2-charts';
+import {Multiling} from '../../../../models/multiling';
 
 @Component({
   selector: 'app-utility-piechart',
@@ -14,14 +15,20 @@ export class PiechartComponent {
 
   @Input() showFavorable = true;
 
+  @Input() readonly = true;
+
   @Input() set pieChart(value: PieChart) {
     this._pieChart = value;
     this._loadData();
   }
 
+  @Input() favorableAnswersLabel: Multiling;
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   @Output() chartSectionClicked = new EventEmitter<{index: number, position: {x: number, y: number}}>();
+
+  @Output() positiveLabelChanged = new EventEmitter<Multiling>();
 
   private _pieChart: PieChart = <PieChart>{};
 
@@ -29,9 +36,11 @@ export class PiechartComponent {
 
   private _colors: Array<{backgroundColor: Array<string>}> = [];
 
-  private readonly _lang = this._translateService.currentLang;
+  @Input() reportingLang = this._translateService.currentLang;
 
   private readonly _isBrowser = isPlatformBrowser(this.platformId);
+
+  private _editFavorableAnswersLabel = false;
 
   private _options = {
     responsive: true
@@ -74,10 +83,6 @@ export class PiechartComponent {
     return this._colors;
   }
 
-  get lang() {
-    return this._lang;
-  }
-
   get isBrowser(): boolean {
     return this._isBrowser;
   }
@@ -86,4 +91,11 @@ export class PiechartComponent {
     return this._options;
   }
 
+  get editFavorableAnswersLabel(): boolean {
+    return this._editFavorableAnswersLabel;
+  }
+
+  set editFavorableAnswersLabel(value: boolean) {
+    this._editFavorableAnswersLabel = value;
+  }
 }

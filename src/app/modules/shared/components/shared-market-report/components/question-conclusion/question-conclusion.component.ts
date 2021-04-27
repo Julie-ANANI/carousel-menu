@@ -7,6 +7,7 @@ import {Tag} from '../../../../../../models/tag';
 import {environment} from '../../../../../../../environments/environment';
 import {PieChart} from '../../../../../../models/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {Multiling} from '../../../../../../models/multiling';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -67,6 +68,11 @@ export class QuestionConclusionComponent implements OnInit {
     this._currentChartIndexModified = event.index;
     this._currentChartOffsetXModified = event.position.x;
     this._currentChartOffsetYModified = event.position.y;
+  }
+
+  positiveAnswerLabelChanged(positivesAnswersLabel: Multiling) {
+    this.question.positivesAnswersLabel = positivesAnswersLabel;
+    this.questionChanged.emit(this.question);
   }
 
   chartColorChanged(color: string) {
