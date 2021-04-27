@@ -149,7 +149,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._enterpriseService.get(null, config).pipe(first()).subscribe((enterprises: any) => {
       if (enterprises && enterprises.result && enterprises.result.length) {
         this._results = true;
-        this._initTable(this.addShieldEmailsInTable(enterprises.result), enterprises._metadata.totalCount);
+        this._initTable(enterprises.result, enterprises._metadata.totalCount);
         this.resultTableConfiguration._content.map(item => {
           if (item['parentEnterprise']) {
             this._enterpriseService.get(item['parentEnterprise'], null).pipe(first()).subscribe((parent) => {
@@ -180,20 +180,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       this._isSearching = false;
       console.error(err);
     });
-  }
-
-  private addShieldEmailsInTable(content: Array<any> = []) {
-    this._shieldSortedList.map(item => {
-      const element = content.find(el => el._id === item.company);
-      if (element !== undefined) {
-        element['shieldEmails'] = item.shieldEmails;
-      } else {
-        content.map(v => {
-          v['shieldEmails'] = null;
-        });
-      }
-    });
-    return content;
   }
 
   private _initTable(content: Array<any> = [], total: number = -1) {
@@ -267,12 +253,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _enableTooltip: true,
         },
         {
-          _attrs: ['emailSettings.goodEmails'],
+          _attrs: ['goodEmails'],
           _name: 'Good emails',
           _type: 'NUMBER',
         },
         {
-          _attrs: ['emailSettings.bouncedEmails'],
+          _attrs: ['bouncedEmails'],
           _name: 'Deduced emails',
           _type: 'NUMBER',
           _width: '170px',
