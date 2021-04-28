@@ -641,7 +641,7 @@ export class SharedProfessionalsListComponent {
     } else {
       delete this._localConfig.country;
     }
-    // this.configChange.emit(this._localConfig);
+    this.configChange.emit(this._localConfig);
   }
 
   get isLoading(): boolean {
