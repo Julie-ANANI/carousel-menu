@@ -93,12 +93,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _type: 'TEXT',
         },
         {
-          _attrs: ['emailSettings.goodEmails'],
+          _attrs: ['goodEmails'],
           _name: 'Good emails',
           _type: 'NUMBER',
         },
         {
-          _attrs: ['emailSettings.bouncedEmails'],
+          _attrs: ['bouncedEmails'],
           _name: 'Deduced emails',
           _type: 'NUMBER',
           _width: '170px',
