@@ -44,7 +44,7 @@
         <div class="menu">
           <app-check-box-filter
             [config]="checkBoxConfig"
-            (sendFilters)="onActionClick('Filter')">
+            (sendFilters)="performFilters($event)">
           </app-check-box-filter>
         </div>
       </div>

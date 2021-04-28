@@ -16,7 +16,6 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Bytes2Human } from '../../../../../../utils/bytes2human';
-import { IndexService } from '../../../../../../services/index/index.service';
 import { Country } from '../../../../../../models/country';
 
 export interface SelectedProfessional extends Professional {
@@ -96,9 +95,7 @@ export class AdminCampaignProsComponent implements OnInit {
     private _campaignFrontService: CampaignFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _professionalsService: ProfessionalsService,
-    private _configService: ConfigService,
-    private _indexService: IndexService
-  ) {}
+    private _configService: ConfigService) {}
 
   ngOnInit() {
     this._activatedRoute.data.subscribe((data) => {
@@ -129,7 +126,6 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _getProfessionals() {
     if (isPlatformBrowser(this._platformId)) {
-      console.log(this._config);
       this._professionalsService
         .getAll(this._config)
         .pipe(first())
@@ -507,48 +503,18 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
   setFilterCountriesList() {
-    this._indexService.getWholeSet({ type: 'countries' }).subscribe(
-      (data) => {
-        const allCountries = data.result;
-        this.setFiltersCountriesFormat(allCountries);
-        this._campaignFrontService.setFilterCountriesList(this._filtersCountriesList);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  setFiltersCountriesFormat(allCountries: Array<Country>) {
-    const countriesInProfessionals: Array<any> = [];
-
-    // add countries associated with professionals.country
-    allCountries.map((item: any) => {
+    this._professionals.map((item) => {
       if (
-        this.professionals.find((c: any) => c.country === item.code) &&
-        !countriesInProfessionals.find((c: any) => c.code === item.code)
+        this._filtersCountriesList.length === 0 ||
+        !this._filtersCountriesList.includes(item.country)
       ) {
-        countriesInProfessionals.push(item);
+        this._filtersCountriesList.push(item.country);
       }
     });
-
-    // format countries with continent
-    const countriesContinent = this.formatCountriesContinent(
-      countriesInProfessionals
+    console.log(this._filtersCountriesList);
+    this._campaignFrontService.setFilterCountriesList(
+      this._filtersCountriesList
     );
-
-    for (const key in countriesContinent) {
-      if (
-        countriesContinent.hasOwnProperty(key) &&
-        countriesContinent[key].length === 0
-      ) {
-        delete countriesContinent[key];
-      } else {
-        this._filtersCountriesList.push({
-          title: key.toString(),
-          children: countriesContinent[key]
-        });
-      }
-    }
   }
+
 }

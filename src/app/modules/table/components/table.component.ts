@@ -138,7 +138,7 @@ export class TableComponent {
     height: '40px',
     isCanSelectAll: true,
     hasChildrenItem: true,
-    type: 'country'
+    type: 'country',
   };
 
   constructor(
@@ -1048,7 +1048,7 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = true;
     });
-    this.performAction.emit({_action: 'Select all', _context: true});
+    this.performAction.emit({ _action: 'Select all', _context: true });
   }
 
   clearAllTheSelections() {
@@ -1056,10 +1056,16 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = false;
     });
-    this.performAction.emit({_action: 'Select all', _context: false});
+    this.performAction.emit({ _action: 'Select all', _context: false });
   }
 
   get checkBoxConfig(): CheckBoxFilterConfig {
     return this._checkBoxConfig;
+  }
+
+  performFilters(event: any) {
+    if (event) {
+      this.performAction.emit({ _action: 'Filter', _context: event });
+    }
   }
 }

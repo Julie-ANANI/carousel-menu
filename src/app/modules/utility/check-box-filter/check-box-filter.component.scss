@@ -1,6 +1,7 @@
 @import "../../../../style/framework/src/variables";
 @import "../../../../style/framework/src/mixins";
 
-#check-box-wrapper{
-
+#check-box-wrapper {
+  max-height: 350px;
+  overflow-y: scroll;
 }

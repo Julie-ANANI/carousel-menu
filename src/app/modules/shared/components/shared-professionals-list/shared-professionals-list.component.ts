@@ -19,7 +19,6 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { Subscription } from 'rxjs';
-import { CampaignFrontService } from '../../../../services/campaign/campaign-front.service';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -96,7 +95,6 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     private _professionalsService: ProfessionalsService,
     private _router: Router,
     private _rolesFrontService: RolesFrontService,
-    private _campaignFrontService: CampaignFrontService,
     private _translateNotificationsService: TranslateNotificationsService
   ) {}
 
@@ -405,7 +403,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         break;
 
       case 'Filter':
-        this.filterAccordingToCountries();
+        this.filterAccordingToCountries(value._context);
         break;
 
       case 'Select all':
@@ -643,39 +641,18 @@ export class SharedProfessionalsListComponent implements OnDestroy {
   /**
    * filter table content: countries
    */
-  filterAccordingToCountries() {
+  filterAccordingToCountries(context: any) {
     const countries: Array<any> = [];
-    this._subCountriesSelected = this._campaignFrontService
-      .getCountriesSelected()
-      .subscribe((data) => {
-        this._isLoading = true;
-        data.map((item) => {
-          if (
-            item.isSelected &&
-            item.hasOwnProperty('children') &&
-            item.children.length > 0
-          ) {
-            item.children.map((c: any) => {
-              if (c.isSelected) {
-                countries.push(c.code);
-              }
-            });
-          }
-        });
-        setTimeout(() => {
-          if (countries.length > 0) {
-            this._table._content = this._professionals.filter((item) =>
-              countries
-                .toString()
-                .toLowerCase()
-                .includes(item.country.toLowerCase())
-            );
-          } else {
-            this._table._content = this._professionals;
-          }
-          this._isLoading = false;
-        }, 500);
-      });
+    context.map((item: any) => {
+      if (item.isSelected) {
+        countries.push(item.label);
+      }
+    });
+    console.log(countries);
+    if (countries.length > 0) {
+      this._localConfig.country = JSON.stringify({ $in: countries });
+      this.configChange.emit(this._localConfig);
+    }
   }
 
   get isLoading(): boolean {

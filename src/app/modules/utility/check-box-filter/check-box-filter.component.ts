@@ -9,6 +9,7 @@ import {
 import { CheckBoxFilterConfig } from './interface/check-box-filter-config';
 import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
 import { Subscription } from 'rxjs';
+import { countries } from '../../../models/static-data/country';
 
 @Component({
   selector: 'app-check-box-filter',
@@ -65,43 +66,20 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
     return this._title;
   }
 
-  getChildren(item: any) {
-    return ['child1', 'child2'];
-  }
-
-  getContext(
-    title: string,
-    hasChildren: boolean,
-    dataSource?: Array<any>,
-    item?: any,
-    i?: number,
-    j?: number
-  ) {
+  getContext(item: any) {
     return {
-      title: title,
-      hasChildren: hasChildren,
-      dataSource: dataSource || [],
       item: item,
-      indexF: i,
-      indexC: j,
     };
   }
 
   selectItem(event: Event, context: any) {
-    if (context.title === 'Select all') {
+    if (context.item.label === 'Select All') {
       this.initialiseSources((event.target as HTMLInputElement).checked);
     } else {
-      if (context.hasChildren) {
-        context.item.isSelected = !context.item.isSelected;
-        context.item.isOpened = context.item.isSelected;
-        context.item.children.map(
-          (c: any) => (c.isSelected = context.item.isSelected)
-        );
-      } else {
-        context.item.isSelected = !context.item.isSelected;
-      }
+      context.item.isSelected = (event.target as HTMLInputElement).checked;
     }
-    this.saveData(this._sources);
+    console.log(this._sources);
+    this.sendFilters.emit(this._sources);
   }
 
   ngOnInit(): void {
@@ -109,36 +87,41 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
       this._subFilters = this._campaignFrontService
         .getFilters()
         .subscribe((data) => {
-          this._sources = data;
-          this.initialiseSources(false);
-          this.saveData([]);
+          if (
+            this._sources.length - data.length &&
+            this._sources.length - 1 !== data.length
+          ) {
+            this._sources = [];
+            data.map((item) => {
+              this._sources.push({ label: item, isSelected: false });
+            });
+            if (this._isCanSelectAll) {
+              this._sources.unshift({
+                label: 'Select All',
+                isSelected: false,
+              });
+            }
+          }
         });
+    }
+  }
+
+  public getCountryName(isoCode: string): string {
+    if (isoCode) {
+      return countries[isoCode] || 'NA';
+    } else {
+      return 'NA';
     }
   }
 
   initialiseSources(value: boolean) {
     this._sources.map((item) => {
-      item.isOpened = value;
       item.isSelected = value;
-      if (item.hasOwnProperty('children')) {
-        item['children'].map((c: any) => {
-          c.isSelected = value;
-        });
-      }
     });
+    console.log(this._sources);
   }
 
   ngOnDestroy(): void {
     this._subFilters.unsubscribe();
-  }
-
-  openCheckBoxGroup(context: any) {
-    context.item.isOpened = !context.item.isOpened;
-    this.saveData(this._sources);
-  }
-
-  saveData(source: any) {
-    this._campaignFrontService.setCountriesSelectedInFilter(source);
-    this.sendFilters.emit(true);
   }
 }
