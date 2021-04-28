@@ -1,9 +1,21 @@
 <div class="container fluid grid-2xl p-top-30 p-bottom-30">
   <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <div class="text-right m-bottom-30">
+      <button
+        (click)="onSave($event)"
+        [disabled]="!toSave || isSaving"
+        [id]="'library-btn-save-preset'"
+        class="button is-primary is-sm">
+        {{ isSaving ? 'is saving preset...' : 'Save preset' }}
+      </button>
+    </div>
+
     <app-shared-preset
+      (save)="savePreset($event)"
       [isEditable]="true"
-      [preset]="preset"
-      (save)="savePreset($event)">
+      [presetLanguages]="['en', 'fr']"
+      [preset]="preset">
     </app-shared-preset>
   </div>
 </div>
