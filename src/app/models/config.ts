@@ -11,5 +11,6 @@ export interface Config {
   operator?: string;
   fromCollection?: string;
   missionMember?: string;
+  country?: string;
   [property: string]: string;
 }

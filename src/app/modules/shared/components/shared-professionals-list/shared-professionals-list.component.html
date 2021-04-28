@@ -6,6 +6,7 @@
     (removeRows)="onClickDelete($event)"
     (selectRows)="onSelectRows($event)"
     [config]="localConfig"
+    [loading]="isLoading"
     [data]="table">
   </app-shared-table>
 </div>
@@ -41,7 +42,7 @@
 <!-- /sidebar -->
 
 
-<!-- modal -->
+<!-- modal deletion-->
 <app-utility-modal
   *ngIf="canAccess(['user', 'delete'])"
   [(showModal)]="modalDelete"
@@ -73,4 +74,29 @@
   </footer>
 
 </app-utility-modal>
-<!-- /modal -->
+<!-- /modal deletion-->
+
+<!-- modal-remove pro from campaign -->
+<app-utility-modal
+  *ngIf="canAccess(['user', 'edit'])"
+  [(showModal)]="isShowModal"
+  [title]="'Remove Professional'">
+
+  <section class="modal-body">
+    <div>
+      Remove these professionals from this campaign?
+    </div>
+  </section>
+
+  <footer class="modal-footer">
+    <button class="button modal-cancel" type="button" (click)="closeRemoveProModal()">Cancel</button>
+    <button
+      (click)="onClickConfirmRemovePros()"
+      class="button is-primary"
+      type="button">
+      Confirm
+    </button>
+  </footer>
+
+</app-utility-modal>
+<!-- /modal-remove pro from campaign  -->

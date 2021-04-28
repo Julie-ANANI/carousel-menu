@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
-import {Subject} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CampaignFrontService {
-
-  private _allCampaigns: Subject<Array<Campaign>> = new Subject<Array<Campaign>>();
+  private _allCampaigns: Subject<Array<Campaign>> = new Subject<
+    Array<Campaign>
+  >();
 
   private _activeCampaign: Subject<Campaign> = new Subject<Campaign>();
 
@@ -16,6 +17,9 @@ export class CampaignFrontService {
 
   private _loadingCampaign: Subject<boolean> = new Subject<boolean>();
 
+  private _filtersCountries: Subject<Array<any>> = new Subject<Array<any>>();
+
+
   /***
    * this function is to calculate the campaign stat for the answers component in the
    * campaign component.
@@ -23,16 +27,21 @@ export class CampaignFrontService {
    * @param requestFor
    * @param searchKey string | number
    */
-  public static answerStat(answers: Array<Answer>, requestFor: string, searchKey: any): number {
+  public static answerStat(
+    answers: Array<Answer>,
+    requestFor: string,
+    searchKey: any
+  ): number {
     let value = 0;
 
     if (answers.length > 0) {
-
       answers.forEach((answer: Answer) => {
         switch (requestFor) {
-
           case 'status':
-            if (Array.isArray(searchKey) && searchKey.indexOf(answer.status) !== -1) {
+            if (
+              Array.isArray(searchKey) &&
+              searchKey.indexOf(answer.status) !== -1
+            ) {
               value += 1;
             } else {
               if (answer.status === searchKey) {
@@ -52,14 +61,12 @@ export class CampaignFrontService {
               value += Math.floor(answer.time_elapsed / 60);
             }
             break;
-
         }
       });
 
-      if (searchKey === 'time_elapsed' ) {
+      if (searchKey === 'time_elapsed') {
         value = Math.floor(value / answers.length);
       }
-
     }
 
     return value;
@@ -74,33 +81,67 @@ export class CampaignFrontService {
   static getProsCampaignStat(campaign: Campaign, searchKey: any): number {
     let value = 0;
 
-    if(campaign && campaign.stats) {
+    if (campaign && campaign.stats) {
       switch (searchKey) {
-
         case 'professional':
           value = campaign.stats.nbPros ? campaign.stats.nbPros : 0;
           break;
 
         case 'notReached':
-          value = campaign.stats.nbPros && campaign.stats.nbProsSent ? Math.round(((campaign.stats.nbPros - campaign.stats.nbProsSent) / campaign.stats.nbPros) * 100) : 0;
+          value =
+            campaign.stats.nbPros && campaign.stats.nbProsSent
+              ? Math.round(
+                  ((campaign.stats.nbPros - campaign.stats.nbProsSent) /
+                    campaign.stats.nbPros) *
+                    100
+                )
+              : 0;
           break;
 
         case 'good':
-          value = campaign.stats.campaign && campaign.stats.campaign.nbFirstTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbFirstTierMails / campaign.stats.nbPros) * 100) : 0;
+          value =
+            campaign.stats.campaign &&
+            campaign.stats.campaign.nbFirstTierMails &&
+            campaign.stats.nbPros
+              ? Math.round(
+                  (campaign.stats.campaign.nbFirstTierMails /
+                    campaign.stats.nbPros) *
+                    100
+                )
+              : 0;
           break;
 
         case 'unsure':
-          value = campaign.stats.campaign && campaign.stats.campaign.nbSecondTierMails && campaign.stats.nbPros ? Math.round((campaign.stats.campaign.nbSecondTierMails / campaign.stats.nbPros) * 100): 0;
+          value =
+            campaign.stats.campaign &&
+            campaign.stats.campaign.nbSecondTierMails &&
+            campaign.stats.nbPros
+              ? Math.round(
+                  (campaign.stats.campaign.nbSecondTierMails /
+                    campaign.stats.nbPros) *
+                    100
+                )
+              : 0;
           break;
 
         case 'bad':
-          value = campaign.stats.nbPros && campaign.stats.campaign && campaign.stats.campaign.nbFirstTierMails && campaign.stats.campaign.nbSecondTierMails ?
-            Math.round(((campaign.stats.nbPros - (campaign.stats.campaign.nbFirstTierMails + campaign.stats.campaign.nbSecondTierMails ))/ campaign.stats.nbPros) * 100) : 0;
+          value =
+            campaign.stats.nbPros &&
+            campaign.stats.campaign &&
+            campaign.stats.campaign.nbFirstTierMails &&
+            campaign.stats.campaign.nbSecondTierMails
+              ? Math.round(
+                  ((campaign.stats.nbPros -
+                    (campaign.stats.campaign.nbFirstTierMails +
+                      campaign.stats.campaign.nbSecondTierMails)) /
+                    campaign.stats.nbPros) *
+                    100
+                )
+              : 0;
           break;
 
         default:
         // do nothing...
-
       }
     }
 
@@ -118,7 +159,6 @@ export class CampaignFrontService {
 
     if (campaign && campaign.stats && campaign.stats.campaign) {
       switch (searchKey) {
-
         case 'good_emails':
           value = campaign.stats.campaign.nbFirstTierMails || 0;
           break;
@@ -128,23 +168,43 @@ export class CampaignFrontService {
           break;
 
         case 'bounces':
-          value = campaign.stats.nbProsReceived && campaign.stats.nbProsSent
-            ? campaign.stats.nbProsSent - campaign.stats.nbProsReceived : 0;
+          value =
+            campaign.stats.nbProsReceived && campaign.stats.nbProsSent
+              ? campaign.stats.nbProsSent - campaign.stats.nbProsReceived
+              : 0;
           break;
 
         case 'opened':
-          value = campaign.stats.nbProsReceived  && campaign.stats.nbProsOpened
-            ? Math.round((campaign.stats.nbProsOpened / campaign.stats.nbProsReceived) * 10000) / 100 : 0;
+          value =
+            campaign.stats.nbProsReceived && campaign.stats.nbProsOpened
+              ? Math.round(
+                  (campaign.stats.nbProsOpened /
+                    campaign.stats.nbProsReceived) *
+                    10000
+                ) / 100
+              : 0;
           break;
 
         case 'clicked':
-          value = campaign.stats.nbProsClicked  && campaign.stats.nbProsOpened
-            ? Math.round((campaign.stats.nbProsClicked / campaign.stats.nbProsOpened) * 10000) / 100 : 0;
+          value =
+            campaign.stats.nbProsClicked && campaign.stats.nbProsOpened
+              ? Math.round(
+                  (campaign.stats.nbProsClicked / campaign.stats.nbProsOpened) *
+                    10000
+                ) / 100
+              : 0;
           break;
 
         case 'answer_rate':
-          value = campaign.stats.campaign.nbValidatedResp  && campaign.stats.nbProsReceived
-            ? Math.round((campaign.stats.campaign.nbValidatedResp / campaign.stats.nbProsReceived) * 10000) / 100 : 0;
+          value =
+            campaign.stats.campaign.nbValidatedResp &&
+            campaign.stats.nbProsReceived
+              ? Math.round(
+                  (campaign.stats.campaign.nbValidatedResp /
+                    campaign.stats.nbProsReceived) *
+                    10000
+                ) / 100
+              : 0;
           break;
 
         case 'email':
@@ -156,7 +216,7 @@ export class CampaignFrontService {
           break;
 
         default:
-          console.log('Defaulting at campaign-front.service.ts')
+          console.log('Defaulting at campaign-front.service.ts');
       }
     }
 
@@ -221,6 +281,14 @@ export class CampaignFrontService {
 
   public loadingCampaign(): Subject<boolean> {
     return this._loadingCampaign;
+  }
+
+  public setFilterCountriesList(value: any) {
+    this._filtersCountries.next(value);
+  }
+
+  public getFilters(): Observable<Array<any>> {
+    return this._filtersCountries.asObservable();
   }
 
 }

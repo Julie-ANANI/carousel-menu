@@ -1,26 +1,25 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Table} from '../models/table';
-import {Row} from '../models/row';
-import {Column, types} from '../models/column';
-import {Choice} from '../models/choice';
-import {TranslateService} from '@ngx-translate/core';
-import {countries} from '../../../models/static-data/country';
-import {Config} from '../../../models/config';
-import {Pagination} from '../../utility/paginations/interfaces/pagination';
-import {LocalStorageService} from '../../../services/localStorage/localStorage.service';
-import {ConfigService} from '../../../services/config/config.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Table } from '../models/table';
+import { Row } from '../models/row';
+import { Column, types } from '../models/column';
+import { Choice } from '../models/choice';
+import { TranslateService } from '@ngx-translate/core';
+import { countries } from '../../../models/static-data/country';
+import { Config } from '../../../models/config';
+import { Pagination } from '../../utility/paginations/interfaces/pagination';
+import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
+import { ConfigService } from '../../../services/config/config.service';
 
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
-
+import { CheckBoxFilterConfig } from '../../utility/check-box-filter/interface/check-box-filter-config';
 
 @Component({
   selector: 'app-shared-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
-
 export class TableComponent {
   @Output() sendAddParentNavigator = new EventEmitter();
 
@@ -90,26 +89,28 @@ export class TableComponent {
    * dropdown list.
    * @type {EventEmitter<{content: any, item: Choice}>}
    */
-  @Output() dropdownAction: EventEmitter<{ content: any, item: Choice }> = new EventEmitter<{ content: any, item: Choice }>();
+  @Output() dropdownAction: EventEmitter<{
+    content: any;
+    item: Choice;
+  }> = new EventEmitter<{ content: any; item: Choice }>();
 
   /***
    * output the custom filter value when changes in the Search bar.
    */
-  @Output() customFilter: EventEmitter<{ key: string, value: any }> = new EventEmitter<{ key: string, value: any }>();
+  @Output() customFilter: EventEmitter<{
+    key: string;
+    value: any;
+  }> = new EventEmitter<{ key: string; value: any }>();
 
   @Output() sendEditNavigator = new EventEmitter();
 
-  /**
-   * abandon parent value
-   */
-  @Output() sendUndoFilled = new EventEmitter();
-
-  /**
-   * replace value
-   */
-  @Output() sendExchangeValue = new EventEmitter();
-
   private _table: Table;
+
+  /**
+   * boolean: if all the data is selected(not the rows in table)
+   * @private
+   */
+  private _isSelectAll = false;
 
   private _isSearching: boolean;
 
@@ -131,9 +132,20 @@ export class TableComponent {
   // copy an original table
   private _isOrginal = false;
 
-  constructor(private _translateService: TranslateService,
-              private _configService: ConfigService,
-              private _localStorageService: LocalStorageService) {
+  private _checkBoxConfig: CheckBoxFilterConfig = {
+    title: 'Filter by country',
+    sources: [],
+    height: '40px',
+    isCanSelectAll: true,
+    hasChildrenItem: true,
+    type: 'country',
+  };
+
+  constructor(
+    private _translateService: TranslateService,
+    private _configService: ConfigService,
+    private _localStorageService: LocalStorageService
+  ) {
     this._initializeTable();
   }
 
@@ -175,7 +187,6 @@ export class TableComponent {
       this._initializeColumns();
       this._initializeContents();
     }
-
   }
 
   private _initializeVariables() {
@@ -191,11 +202,14 @@ export class TableComponent {
    * @private
    */
   private _getFilteredContent(rows: Array<any>) {
-    this._pagination.parPage = this._table._isPaginable ?
-      parseInt(this._configService.configLimit(this._table._selector)) || Number(this._config.limit) || 10 :
-      rows.length;
+    this._pagination.parPage = this._table._isPaginable
+      ? parseInt(this._configService.configLimit(this._table._selector)) ||
+        Number(this._config.limit) ||
+        10
+      : rows.length;
 
-    this._table._total = this._table._total === -1 ? this._table._total : rows.length;
+    this._table._total =
+      this._table._total === -1 ? this._table._total : rows.length;
 
     if (this._pagination.offset >= this._table._total) {
       this._pagination.offset = 0;
@@ -217,9 +231,18 @@ export class TableComponent {
     this._pagination = {
       propertyName: this._table._selector,
       offset: offset,
-      currentPage: this._pagination && this._pagination.currentPage ? this._pagination.currentPage : 1,
-      previousPage: this._pagination && this._pagination.previousPage ? this._pagination.previousPage : 0,
-      nextPage: this._pagination && this._pagination.nextPage ? this._pagination.nextPage : 2,
+      currentPage:
+        this._pagination && this._pagination.currentPage
+          ? this._pagination.currentPage
+          : 1,
+      previousPage:
+        this._pagination && this._pagination.previousPage
+          ? this._pagination.previousPage
+          : 0,
+      nextPage:
+        this._pagination && this._pagination.nextPage
+          ? this._pagination.nextPage
+          : 2,
     };
   }
 
@@ -234,8 +257,10 @@ export class TableComponent {
    */
   private _initializeColumns() {
     this._table._columns.forEach((value, index) => {
-      this._table._columns[index]._isSearchable = this._table._columns[index]._isSearchable ?
-        this._table._columns[index]._isSearchable : false;
+      this._table._columns[index]._isSearchable = this._table._columns[index]
+        ._isSearchable
+        ? this._table._columns[index]._isSearchable
+        : false;
       this._table._columns[index]._isSelected = this._columnActive(value);
     });
   }
@@ -267,7 +292,6 @@ export class TableComponent {
     }
 
     return this.getAttrs(column).indexOf(sortKey) !== -1;
-
   }
 
   /***
@@ -275,19 +299,15 @@ export class TableComponent {
    * @returns {number}
    */
   private _getSelectedRowsNumber(): number {
-
     if (this._massSelection) {
-
       if (this._table._isLocal) {
         return this._filteredContent.length;
       } else {
         return this._table._content.length;
       }
-
     } else {
       return this.getSelectedRows().length;
     }
-
   }
 
   /***
@@ -296,7 +316,7 @@ export class TableComponent {
    */
   public selectAll(event: Event): void {
     event.preventDefault();
-
+    this._isSelectAll = false;
     if (this._table._isLocal) {
       this._filteredContent.forEach((value) => {
         value._isSelected = (event.target as HTMLInputElement).checked;
@@ -309,7 +329,6 @@ export class TableComponent {
 
     this._massSelection = (event.target as HTMLInputElement).checked;
     this._onSelectRow();
-
   }
 
   /***
@@ -319,9 +338,9 @@ export class TableComponent {
    */
   private _onSelectRow() {
     if (this._massSelection) {
-      this.selectRows.emit({_rows: this._getAllContent()});
+      this.selectRows.emit({ _rows: this._getAllContent() });
     } else {
-      this.selectRows.emit({_rows: this._getSelectedRowsContent()});
+      this.selectRows.emit({ _rows: this._getSelectedRowsContent() });
     }
   }
 
@@ -334,7 +353,6 @@ export class TableComponent {
     this._isLoadingData = true;
     this.configChange.emit(this._config);
   }
-
 
   /***
    * This function is call when the user click on the click name
@@ -366,9 +384,15 @@ export class TableComponent {
    */
   public onActionClick(action: string) {
     if (this._massSelection) {
-      this.performAction.emit({_action: action, _rows: this._getAllContent()});
+      this.performAction.emit({
+        _action: action,
+        _rows: this._getAllContent(),
+      });
     } else {
-      this.performAction.emit({_action: action, _rows: this._getSelectedRowsContent()});
+      this.performAction.emit({
+        _action: action,
+        _rows: this._getSelectedRowsContent(),
+      });
     }
   }
 
@@ -392,7 +416,6 @@ export class TableComponent {
    * @returns {string}
    */
   public getContentValue(rowKey: string, columnAttr: string): any {
-
     const row: number = TableComponent._getRowKey(rowKey);
     let contents: Array<any> = [];
 
@@ -403,7 +426,6 @@ export class TableComponent {
     }
 
     if (contents.length > 0) {
-
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
 
@@ -416,19 +438,14 @@ export class TableComponent {
         }
 
         return tmpContent || '';
-
       } else {
-
         if (contents[row] && contents[row][columnAttr]) {
           return contents[row][columnAttr];
         }
-
       }
 
       return '';
-
     }
-
   }
 
   /**
@@ -437,9 +454,11 @@ export class TableComponent {
    * @param column
    */
   public getTitle(row: string, column: Column) {
-    const title = this.getAttrs(column).map(attr => {
-      return (this.getContentValue(row, attr) || ' - ').toString();
-    }).join(' ');
+    const title = this.getAttrs(column)
+      .map((attr) => {
+        return (this.getContentValue(row, attr) || ' - ').toString();
+      })
+      .join(' ');
     if (title.length > 23) {
       return title;
     } else {
@@ -497,7 +516,7 @@ export class TableComponent {
    * @returns {number}
    */
   public getAttrIndex(column: Column, attr: string) {
-    return this.getAttrs(column).findIndex(value => value === attr);
+    return this.getAttrs(column).findIndex((value) => value === attr);
   }
 
   /***
@@ -527,7 +546,12 @@ export class TableComponent {
    * @returns {Choice}
    */
   public getChoice(column: Column, name: string): Choice {
-    return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
+    return (
+      this.getChoices(column).find((value) => value._name === name) || {
+        _name: '',
+        _class: '',
+      }
+    );
   }
 
   /***
@@ -577,7 +601,7 @@ export class TableComponent {
    * @returns {MultiLabel | {}}
    */
   public getMultiLabel(column: Column, attr: string) {
-    return column._multiLabels.find(value => value._attr === attr) || {};
+    return column._multiLabels.find((value) => value._attr === attr) || {};
   }
 
   /***
@@ -601,12 +625,15 @@ export class TableComponent {
    */
   public getSelectedRows(): Row[] {
     if (this._table._isLocal) {
-      return this._filteredContent.filter((content) => content._isSelected === true);
+      return this._filteredContent.filter(
+        (content) => content._isSelected === true
+      );
     } else {
-      return this._table._content.filter((content) => content._isSelected === true);
+      return this._table._content.filter(
+        (content) => content._isSelected === true
+      );
     }
   }
-
 
   /***
    * This function returns the content of the selected rows
@@ -614,7 +641,7 @@ export class TableComponent {
    */
   private _getSelectedRowsContent(): any[] {
     const content: any[] = [];
-    this.getSelectedRows().forEach(value => content.push(value));
+    this.getSelectedRows().forEach((value) => content.push(value));
     return content;
   }
 
@@ -623,22 +650,23 @@ export class TableComponent {
    * @param {string} key
    */
   public selectRow(key: string): void {
-
     const rowKey: number = TableComponent._getRowKey(key);
 
+    this._isSelectAll = false;
     if (this._table._isSelectable) {
-
       if (this._table._isLocal) {
-        this._filteredContent[rowKey]._isSelected = !(this._filteredContent[rowKey]._isSelected);
+        this._filteredContent[rowKey]._isSelected = !this._filteredContent[
+          rowKey
+        ]._isSelected;
       } else {
-        this._table._content[rowKey]._isSelected = !(this._table._content[rowKey]._isSelected);
+        this._table._content[rowKey]._isSelected = !this._table._content[rowKey]
+          ._isSelected;
       }
 
       this._massSelection = false;
     }
 
     this._onSelectRow();
-
   }
 
   /***
@@ -648,7 +676,9 @@ export class TableComponent {
    */
   public selectColumn(key: string) {
     this._initializeColumns();
-    const index = this._table._columns.findIndex(value => value._name === key);
+    const index = this._table._columns.findIndex(
+      (value) => value._name === key
+    );
     this._table._columns[index]._isSelected = true;
   }
 
@@ -736,7 +766,6 @@ export class TableComponent {
    * @private
    */
   private _setFilteredContent() {
-
     if (this._localStorageService.getItem('table-search') === 'active') {
       this._isSearching = true;
       this._isLoadingData = true;
@@ -747,7 +776,6 @@ export class TableComponent {
     } else {
       this._getFilteredContent(this._table._content);
     }
-
   }
 
   public disabledRow(content: any): boolean {
@@ -755,7 +783,7 @@ export class TableComponent {
   }
 
   public onClickDropdownItem(content: any, item: Choice) {
-    this.dropdownAction.emit({content: content, item: item});
+    this.dropdownAction.emit({ content: content, item: item });
   }
 
   public getTime(content: string): string {
@@ -780,7 +808,6 @@ export class TableComponent {
     if (!this._table._isLocal) {
       this._emitConfigChange();
     }
-
   }
 
   get pagination(): Pagination {
@@ -797,47 +824,57 @@ export class TableComponent {
     } else {
       this._emitConfigChange();
     }
-
   }
 
   private _searchLocally(): Array<any> {
-
     let rows: Array<any> = this._table._content;
     this._localStorageService.setItem('table-search', '');
 
     for (const configKey of Object.keys(this._config)) {
-      if (this._table._columns.find((column) => column._attrs[0] === configKey) || this._config.search.length > 2) {
-
+      if (
+        this._table._columns.find((column) => column._attrs[0] === configKey) ||
+        this._config.search.length > 2
+      ) {
         if (this._config.search.length > 2) {
           for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
             const searchValue = JSON.parse(this._config.search)[searchKey];
-            rows = this._searchContent(rows, searchKey, searchValue.toString().toLowerCase());
+            rows = this._searchContent(
+              rows,
+              searchKey,
+              searchValue.toString().toLowerCase()
+            );
           }
         }
 
-        if (this._table._columns.find((column) => column._attrs[0] === configKey)) {
+        if (
+          this._table._columns.find((column) => column._attrs[0] === configKey)
+        ) {
           const searchValue = this._config[configKey];
-          rows = this._searchContent(rows, configKey, searchValue.toLowerCase());
+          rows = this._searchContent(
+            rows,
+            configKey,
+            searchValue.toLowerCase()
+          );
         }
 
         this._localStorageService.setItem('table-search', 'active');
-
       }
     }
 
     return rows;
-
   }
 
-  private _searchContent(totalContents: Array<any>, searchKey: string, searchValue: string): Array<any> {
+  private _searchContent(
+    totalContents: Array<any>,
+    searchKey: string,
+    searchValue: string
+  ): Array<any> {
     return totalContents.filter((content) => {
-
       if (searchKey === 'country') {
         searchKey = 'country.flag';
       }
 
       for (const contentKey of Object.keys(content)) {
-
         if (searchKey.split('.').length > 1) {
           let newAttr = searchKey.split('.');
 
@@ -849,21 +886,25 @@ export class TableComponent {
               tmpContent = tmpContent ? tmpContent[i] : '-';
             }
 
-            if (tmpContent && tmpContent.toString().toLowerCase().indexOf(searchValue) !== -1) {
+            if (
+              tmpContent &&
+              tmpContent.toString().toLowerCase().indexOf(searchValue) !== -1
+            ) {
               return true;
             }
-
           }
-
-        } else if (contentKey === searchKey && searchValue && content[searchKey]
-          && content[searchKey].toString().toLowerCase() === searchValue.toLowerCase()) {
+        } else if (
+          contentKey === searchKey &&
+          searchValue &&
+          content[searchKey] &&
+          content[searchKey].toString().toLowerCase() ===
+            searchValue.toLowerCase()
+        ) {
           return true;
         }
-
       }
 
       return false;
-
     });
   }
 
@@ -879,18 +920,20 @@ export class TableComponent {
       this._setFilteredContent();
 
       if (this._table._hasCustomFilters) {
-        this.customFilter.emit({key: '', value: ''});
+        this.customFilter.emit({ key: '', value: '' });
         for (const key of Object.keys(this._config)) {
-          if (this._table._columns.find((col) => col._isCustomFilter && col._attrs[0] === key)) {
-            this.customFilter.emit({key: key, value: this._config[key]});
+          if (
+            this._table._columns.find(
+              (col) => col._isCustomFilter && col._attrs[0] === key
+            )
+          ) {
+            this.customFilter.emit({ key: key, value: this._config[key] });
           }
         }
       }
-
     } else {
       this._emitConfigChange();
     }
-
   }
 
   get config(): Config {
@@ -922,7 +965,7 @@ export class TableComponent {
   }
 
   get visibleColumns(): Array<Column> {
-    return this._table._columns.filter(col => {
+    return this._table._columns.filter((col) => {
       return !col._isHidden;
     });
   }
@@ -931,19 +974,10 @@ export class TableComponent {
     return this._selectedIndex;
   }
 
-  exchangeValue(context: any) {
-    this.sendExchangeValue.emit(context);
-  }
-
-  undoFilled(context: any) {
-    this.sendUndoFilled.emit(context);
-  }
-
-
   public getContext(row: any, column: any) {
     return {
       row: row,
-      column: column
+      column: column,
     };
   }
 
@@ -958,9 +992,13 @@ export class TableComponent {
     const temList = this.getContentValue(row, this.getAttrs(column)[0]);
     temList.map((item: any, index: any) => {
       if (index === temList.length - 1) {
-        this._stringInArrayColumn = this._stringInArrayColumn.concat(item[label]);
+        this._stringInArrayColumn = this._stringInArrayColumn.concat(
+          item[label]
+        );
       } else {
-        this._stringInArrayColumn = this._stringInArrayColumn.concat(item[label] + ', ');
+        this._stringInArrayColumn = this._stringInArrayColumn.concat(
+          item[label] + ', '
+        );
       }
     });
     return this._stringInArrayColumn;
@@ -974,22 +1012,60 @@ export class TableComponent {
    */
   public getTextColor(index: any, column: Column) {
     if (this.isToAddColor(column)) {
-      if (lodash.isEqual(this._table._content[index][column._attrs[0]], this._originalTable._content[index][column._attrs[0]])) {
+      if (
+        lodash.isEqual(
+          this._table._content[index][column._attrs[0]],
+          this._originalTable._content[index][column._attrs[0]]
+        )
+      ) {
         return null;
       } else {
         return {
-          color: column._color
+          color: column._color,
         };
       }
     }
   }
 
+  get isSelectAll(): boolean {
+    return this._isSelectAll;
+  }
+
   isToAddColor(column: Column) {
-    return (column.hasOwnProperty('_isFilled') || column.hasOwnProperty('_isReplaceable')) &&
-      (column['_isFilled'] === true || column._isReplaceable === true);
+    return (
+      (column.hasOwnProperty('_isFilled') ||
+        column.hasOwnProperty('_isReplaceable')) &&
+      (column['_isFilled'] === true || column._isReplaceable === true)
+    );
   }
 
   getPerformedAction(action: string, context: any) {
-    this.performAction.emit({_action: action, _context: context});
+    this.performAction.emit({ _action: action, _context: context });
+  }
+
+  selectAllTheData() {
+    this._isSelectAll = true;
+    this._table._content.forEach((value) => {
+      value._isSelected = true;
+    });
+    this.performAction.emit({ _action: 'Select all', _context: true });
+  }
+
+  clearAllTheSelections() {
+    this._isSelectAll = false;
+    this._table._content.forEach((value) => {
+      value._isSelected = false;
+    });
+    this.performAction.emit({ _action: 'Select all', _context: false });
+  }
+
+  get checkBoxConfig(): CheckBoxFilterConfig {
+    return this._checkBoxConfig;
+  }
+
+  performFilters(event: any) {
+    if (event) {
+      this.performAction.emit({ _action: 'Filter', _context: event });
+    }
   }
 }

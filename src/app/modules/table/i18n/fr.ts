@@ -62,6 +62,10 @@ export const TABLE = {
 
   'SELECTED_ROWS': 'sélectionné(s)',
 
+  'SELECT_ALL': 'tout sélectionner',
+
+  'CLEAR_ALL': 'tout effacer',
+
   'CHOOSE': 'Choisir',
 
   'AT': 'à'

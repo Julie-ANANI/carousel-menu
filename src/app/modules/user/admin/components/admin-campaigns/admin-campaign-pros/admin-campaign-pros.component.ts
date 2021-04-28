@@ -16,6 +16,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Bytes2Human } from '../../../../../../utils/bytes2human';
+import { Country } from '../../../../../../models/country';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -85,6 +86,8 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _csvImportError = '';
 
+  private _filtersCountriesList: Array<any> = [];
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _activatedRoute: ActivatedRoute,
@@ -92,8 +95,7 @@ export class AdminCampaignProsComponent implements OnInit {
     private _campaignFrontService: CampaignFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _professionalsService: ProfessionalsService,
-    private _configService: ConfigService
-  ) {}
+    private _configService: ConfigService) {}
 
   ngOnInit() {
     this._activatedRoute.data.subscribe((data) => {
@@ -132,6 +134,7 @@ export class AdminCampaignProsComponent implements OnInit {
             this._professionals = (response && response.result) || [];
             this._total =
               response._metadata.totalCount || response.result.length;
+            this.setFilterCountriesList();
           },
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
@@ -467,4 +470,50 @@ export class AdminCampaignProsComponent implements OnInit {
   get csvImportError(): string {
     return this._csvImportError;
   }
+
+  formatCountriesContinent(allCountries: Array<Country>) {
+    return allCountries.reduce(
+      (acc, country) => {
+        const continent_name = country.continent.toLowerCase();
+
+        if (continent_name === 'americas') {
+          const subcontinent_name = country.subcontinent.toLowerCase();
+
+          if (subcontinent_name === 'northern america') {
+            acc['americaNord'].push(country);
+          } else {
+            acc['americaSud'].push(country);
+          }
+        } else {
+          acc[continent_name].push(country);
+        }
+
+        return acc;
+      },
+      {
+        africa: [],
+        americaNord: [],
+        americaSud: [],
+        antarctic: [],
+        asia: [],
+        europe: [],
+        oceania: [],
+      }
+    );
+  }
+
+  setFilterCountriesList() {
+    this._professionals.map((item) => {
+      if (
+        this._filtersCountriesList.length === 0 ||
+        !this._filtersCountriesList.includes(item.country)
+      ) {
+        this._filtersCountriesList.push(item.country);
+      }
+    });
+    this._campaignFrontService.setFilterCountriesList(
+      this._filtersCountriesList
+    );
+  }
+
 }
