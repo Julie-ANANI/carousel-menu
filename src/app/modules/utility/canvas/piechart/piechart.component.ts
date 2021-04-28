@@ -24,7 +24,7 @@ export class PiechartComponent {
 
   @Input() favorableAnswersLabel: Multiling;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective, {static: false}) chart: BaseChartDirective;
 
   @Output() chartSectionClicked = new EventEmitter<{index: number, position: {x: number, y: number}}>();
 
