@@ -1,9 +1,26 @@
 <div id="check-box-wrapper" class="p-10">
-  <div class="form-group">
-    <ng-container *ngFor="let item of sources; index as i">
+  <div>
+    <app-utility-search-input-2
+    [searchPlaceholder]="'Search: FR-GB-US'"
+    (searchFieldOutput)="displayResults($event)">
+    </app-utility-search-input-2>
+  </div>
+  <div *ngIf="displaySources.length === 0">
+    <ng-container>
+      <div class="section-light-pad">
+        <app-message-template
+          [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
+          [widthMax]="'273px'">
+        <span [innerText]="'No results'"></span>
+        </app-message-template>
+      </div>
+    </ng-container>
+  </div>
+  <div class="form-group" *ngIf="displaySources.length > 0">
+    <ng-container *ngFor="let item of displaySources; index as i">
       <ng-container
         *ngTemplateOutlet="checkBoxItem;
-      context: {$implicit: getContext(item)}">
+      context: {$implicit: getContext(item, i)}">
       </ng-container>
     </ng-container>
   </div>
@@ -15,7 +32,7 @@
                [checked]="context.item.isSelected"
                (change)="selectItem($event, context)">
         <i
-          class="form-icon"></i> {{(context.item.label === 'Select All' ? context.item.label : getCountryName(context.item.label)) | titlecase}}
+          class="form-icon"></i> {{(context.item.label === 'Select All' ? context.item.label : (getCountryName(context.item.label) + ' - ' +context.item.label.toUpperCase())) | titlecase}}
       </label>
     </div>
   </ng-template>

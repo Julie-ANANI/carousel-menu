@@ -511,7 +511,6 @@ export class AdminCampaignProsComponent implements OnInit {
         this._filtersCountriesList.push(item.country);
       }
     });
-    console.log(this._filtersCountriesList);
     this._campaignFrontService.setFilterCountriesList(
       this._filtersCountriesList
     );

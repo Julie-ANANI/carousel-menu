@@ -294,7 +294,6 @@ export class SharedProfessionalsListComponent implements OnDestroy {
   public onClickConfirm() {
     if (!this._isDeleting) {
       this._isDeleting = true;
-      console.log(this._professionalsToRemove);
       this._professionalsToRemove.forEach((professional, index) => {
         if (this._isCampaignProfessional()) {
           this._removeProfessionalFromCampaign(index, [professional]);
@@ -317,7 +316,6 @@ export class SharedProfessionalsListComponent implements OnDestroy {
       .pipe(first())
       .subscribe(
         (result) => {
-          console.log(result);
           if (index === this._professionalsToRemove.length - 1) {
             this._localConfig.limit = '10';
             this.onConfigChange(this._localConfig);
@@ -613,7 +611,6 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         .pipe(first())
         .subscribe(
           (next) => {
-            console.log(next);
             if (next.status === 200) {
               this._translateNotificationsService.success(
                 'Success',
@@ -648,11 +645,12 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         countries.push(item.label);
       }
     });
-    console.log(countries);
     if (countries.length > 0) {
       this._localConfig.country = JSON.stringify({ $in: countries });
-      this.configChange.emit(this._localConfig);
+    } else {
+      delete this._localConfig.country;
     }
+    this.configChange.emit(this._localConfig);
   }
 
   get isLoading(): boolean {

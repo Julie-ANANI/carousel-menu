@@ -42,6 +42,8 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
 
   private _title = 'Filter';
 
+  private _displaySources: Array<any> = [];
+
   private _subFilters: Subscription;
 
   constructor(private _campaignFrontService: CampaignFrontService) {}
@@ -66,9 +68,10 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
     return this._title;
   }
 
-  getContext(item: any) {
+  getContext(item: any, i: any) {
     return {
       item: item,
+      index: i,
     };
   }
 
@@ -76,9 +79,9 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
     if (context.item.label === 'Select All') {
       this.initialiseSources((event.target as HTMLInputElement).checked);
     } else {
-      context.item.isSelected = (event.target as HTMLInputElement).checked;
+      this._displaySources[context.index].isSelected = (event.target as HTMLInputElement).checked;
+      this._sources[context.index].isSelected = (event.target as HTMLInputElement).checked;
     }
-    console.log(this._sources);
     this.sendFilters.emit(this._sources);
   }
 
@@ -101,6 +104,7 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
                 isSelected: false,
               });
             }
+            this._displaySources = JSON.parse(JSON.stringify(this._sources));
           }
         });
     }
@@ -115,13 +119,29 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
   }
 
   initialiseSources(value: boolean) {
+    this._displaySources.map((item) => {
+      item.isSelected = value;
+    });
     this._sources.map((item) => {
       item.isSelected = value;
     });
-    console.log(this._sources);
   }
 
   ngOnDestroy(): void {
     this._subFilters.unsubscribe();
+  }
+
+  displayResults(event: string) {
+    if (event !== '') {
+      this._displaySources = this._sources.filter((item) =>
+        event.toUpperCase().split('-').includes(item.label.toUpperCase())
+      );
+    } else {
+      this._displaySources = this._sources;
+    }
+  }
+
+  get displaySources(): Array<any> {
+    return this._displaySources;
   }
 }
