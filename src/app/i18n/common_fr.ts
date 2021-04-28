@@ -169,7 +169,11 @@ export const COMMON = {
     'OR': 'Ou',
     'PREPARATION': 'Préparation',
     'LOADING_EDITOR': 'chargement de l\'éditeur...',
-    'TRY_AGAIN': 'Essayez encore'
+    'TRY_AGAIN': 'Essayez encore',
+    'CUSTOM': 'Personnalisé',
+    'INFOGRAPHIC_TITLE': 'Titre de l\'infographie',
+    'INFOGRAPHIC_SUBTITLE': 'Sous-titre de l\'infographie',
+    'OPTION_COLOR': 'Option Couleur'
   },
 
   'PLACEHOLDER': {

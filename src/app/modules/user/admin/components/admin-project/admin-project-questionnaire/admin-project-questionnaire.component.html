@@ -2,47 +2,54 @@
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
     <!-- section actions -->
-    <section *ngIf="canAccess(['import']) || canAccess(['quiz', 'generate'])" class="text-right p-bottom-10">
+    <section
+      *ngIf="canAccess(['import']) || canAccess(['quiz', 'generate'])
+      || quizLink && canAccess(['quiz', 'view'])"
+      [ngClass]="quizLink && canAccess(['quiz', 'view']) ? 'flex-between' : 'flex-end'"
+      class="flex-wrap">
 
-      <!-- import preset -->
-      <button
-        (click)="openPresetSelection($event)"
-        *ngIf="canAccess(['import'])"
-        class="button is-info is-sm m-right-25 is-outlined m-bottom-20"
-        id="btn-import-preset"
-        type="button">
-        Import preset
-      </button>
-      <!-- /import preset -->
+      <!-- quiz link -->
+      <div *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30 m-right-15 d-flex flex-wrap">
+        <p class="text-secondary-dark m-right-2 text-sm m-no-bottom">Quiz URL:</p>
+        <a [href]="quizLink" class="text-link text-secondary text-sm text-break" target="_blank">{{ quizLink }}</a>
+      </div>
+      <!-- /quiz link -->
 
-      <!-- generate quiz -->
-      <button
-        (click)="generateQuiz($event)"
-        *ngIf="innovation.preset && canAccess(['quiz', 'generate'])"
-        class="button is-primary is-sm m-bottom-20"
-        id="btn-generate-quiz"
-        type="button">
-        Generate quiz
-      </button>
-      <!-- /generate quiz -->
+      <div *ngIf="canAccess(['import']) || canAccess(['quiz', 'generate'])">
+
+        <!-- import preset -->
+        <button
+          (click)="openPresetSelection($event)"
+          *ngIf="canAccess(['import'])"
+          class="button is-info is-sm m-right-25 is-outlined m-bottom-30"
+          id="btn-import-preset"
+          type="button">
+          Import preset
+        </button>
+        <!-- /import preset -->
+
+        <!-- generate quiz -->
+        <button
+          (click)="generateQuiz($event)"
+          *ngIf="innovation.preset && canAccess(['quiz', 'generate'])"
+          class="button is-primary is-sm m-bottom-30"
+          id="btn-generate-quiz"
+          type="button">
+          Generate quiz
+        </button>
+        <!-- /generate quiz -->
+
+      </div>
 
     </section>
     <!-- /section actions -->
-
-    <!-- section quiz link -->
-    <section *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30">
-      <span class="text-md m-right-2" translate>URL to access the quiz:</span>
-      <a [href]="quizLink" class="text-link text-md" target="_blank">
-        {{ quizLink }}
-      </a>
-    </section>
-    <!-- /section quiz link -->
 
     <!-- section to add preset -->
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
       <app-shared-preset
         (save)="updatePreset($event)"
         [isEditable]="canAccess(['edit'])"
+        [presetLanguages]="cardsLanguages"
         [preset]="innovation.preset"
         [sectionsNames]="sectionsNames">
       </app-shared-preset>

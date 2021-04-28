@@ -103,12 +103,12 @@ export const PRESETS = {
       'CHOOSE': 'Choisissez le type de question',
       'list': 'Liste d\'items',
       'clearbit': 'Liste d\'entreprises',
-      'radio': 'Question choix unique',
+      'radio': 'Choix unique',
       'scale': 'Notes',
       'stars': 'Notes étoiles',
       'textarea': 'Texte',
       'toggle': 'Toggle',
-      'checkbox': 'Question choix multiples'
+      'checkbox': 'Choix multiples'
     },
     'EDIT': {
       'TITLE': 'Titre dans l\'infographie',

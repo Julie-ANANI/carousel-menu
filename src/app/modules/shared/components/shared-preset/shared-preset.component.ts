@@ -15,24 +15,29 @@ export class SharedPresetComponent implements OnInit {
    */
   @Input() isEditable = false;
 
+  /**
+   * provide the lang of the innovation cards.
+   */
+  @Input() presetLanguages: Array<string> = [];
+
   @Input() set preset(value: Preset) {
-    this.presetService.preset = value;
+    this._presetFrontService.preset = value;
   }
 
   @Input() set sectionsNames(value: Array<string>) {
-    this.presetService.sectionsNames = value;
+    this._presetFrontService.sectionsNames = value;
   }
 
-  @Output() save = new EventEmitter<Preset>();
+  @Output() save: EventEmitter<Preset> = new EventEmitter<Preset>();
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  constructor(private presetService: PresetFrontService) {}
+  constructor(private _presetFrontService: PresetFrontService) {}
 
   ngOnInit(): void {
-    this.presetService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((changes) => {
+    this._presetFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((changes) => {
       if (changes) {
-        this.save.emit(this.presetService.preset);
+        this.save.emit(this._presetFrontService.preset);
       }
     });
   }
@@ -40,17 +45,17 @@ export class SharedPresetComponent implements OnInit {
   public addSection(event: Event) {
     event.preventDefault();
     if (this.isEditable) {
-      this.presetService.addSection();
-      this._savePreset()
+      this._presetFrontService.addSection();
+      this._savePreset();
     }
   }
 
   private _savePreset() {
     if (this.isEditable) {
-      this.save.emit(this.presetService.preset);
+      this.save.emit(this._presetFrontService.preset);
     }
   }
 
-  get preset() { return this.presetService.preset; }
+  get preset() { return this._presetFrontService.preset; }
 
 }

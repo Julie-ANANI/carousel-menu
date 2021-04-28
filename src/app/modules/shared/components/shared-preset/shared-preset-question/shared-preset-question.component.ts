@@ -1,8 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {PresetFrontService} from '../../../../../services/preset/preset-front.service';
-import {Innovation} from '../../../../../models/innovation';
 import {Question} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
@@ -19,12 +17,17 @@ export class SharedPresetQuestionComponent {
    */
   @Input() isEditable = false;
 
+  /**
+   * provide the innovation cards lang.
+   */
+  @Input() presetLanguages: Array<string> = [];
+
   @Input() set question(value: Question) {
     this._question = value;
-    this._isTaggedQuestion = this.presetService.isTaggedQuestion(value.identifier);
-    this._isContactQuestion = this.presetService.isContactQuestion(value.identifier);
+    this._isTaggedQuestion = this._presetFrontService.isTaggedQuestion(value.identifier);
+    this._isContactQuestion = this._presetFrontService.isContactQuestion(value.identifier);
     if (this._question.identifier && this._isTaggedQuestion) {
-      this._customId = this.presetService.generateId();
+      this._customId = this._presetFrontService.generateId();
     } else {
       this._customId = this._question.identifier;
     }
@@ -42,38 +45,43 @@ export class SharedPresetQuestionComponent {
     this._sectionIndex = value;
   }
 
-  private _question: Question;
+  private _question: Question = <Question>{};
+
   private _questionIndex: number;
+
   private _sectionIndex: number;
 
-  private _customId: string;
-  private _isTaggedQuestion: boolean;
-  private _isContactQuestion: boolean;
-  public editMode = false;
+  private _customId = '';
 
-  private _language: 'en' | 'fr' = 'en';
+  private _isTaggedQuestion = false;
+
+  private _isContactQuestion = false;
+
+  public editMode = false;
 
   private _picto: Picto = picto;
 
-  private _optionColors: Array<string> = ['#34AC01', '#82CD30', '#F2C500', '#C0210F'];
-
-  constructor(private presetService: PresetFrontService,
+  constructor(private _presetFrontService: PresetFrontService,
               private _innovationFrontService: InnovationFrontService,
-              private activatedRoute: ActivatedRoute,
-              private translateService: TranslateService) { }
+              private _translateService: TranslateService) {
+  }
 
   public removeQuestion(event: Event) {
     event.preventDefault();
-    const res = confirm('Are you sure you want to delete this question ?');
+
+    const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
+      : 'Are you sure you want to delete this question?';
+    const res = confirm(_msg);
+
     if (res) {
-      this.presetService.removeQuestion(this._questionIndex, this._sectionIndex);
+      this._presetFrontService.removeQuestion(this._questionIndex, this._sectionIndex);
       this.notifyChanges();
     }
   }
 
   public cloneQuestion(event: Event) {
     event.preventDefault();
-    this.presetService.cloneQuestion(this._questionIndex, this._sectionIndex);
+    this._presetFrontService.cloneQuestion(this._questionIndex, this._sectionIndex);
     this.notifyChanges();
   }
 
@@ -92,62 +100,51 @@ export class SharedPresetQuestionComponent {
     this.notifyChanges();
   }
 
-  public fillWithBenefits(event: Event) {
-    event.preventDefault();
-    const innovation = this.activatedRoute.snapshot.parent.data['innovation'] as Innovation;
-    // Calcul benefits
-    this._question.options = innovation.innovationCards.reduce((acc, innovCard) => {
-      innovCard.advantages.forEach((advantage, index) => {
-        if (index < acc.length) {
-          acc[index].label[innovCard.lang] = advantage.text;
-        } else {
-          acc.push({identifier: index.toString(), label: { [innovCard.lang]: advantage.text }});
-        }
-      });
-      return acc;
-    }, []);
-    this.notifyChanges();
-  }
-
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
     const options = this._question.options;
     options.splice(index, 1);
-    // re-index options to keep a count from 0 to X
-    options.forEach(function (option, i) {
-      option.identifier = i.toString();
-    });
+    PresetFrontService.reConfigureOptionsIdentifier(options);
     this.notifyChanges();
   }
 
-  public countErrors(lang: string) {
-    let missing = 0;
-    if (!this._question.label[lang]) { missing ++; }
-    if (!this._question.title[lang]) { missing ++; }
-    if (!this._question.subtitle[lang]) { missing ++; }
-    return missing;
-  }
-
-  public up(event: Event) {
+  public upQuestion(event: Event) {
     event.preventDefault();
-    this.presetService.moveQuestion(this._questionIndex, this._sectionIndex, -1);
+    this._presetFrontService.moveQuestion(this._questionIndex, this._sectionIndex, -1);
     this.notifyChanges();
   }
 
-  public down(event: Event) {
+  public downQuestion(event: Event) {
     event.preventDefault();
-    this.presetService.moveQuestion(this._questionIndex, this._sectionIndex, 1);
+    this._presetFrontService.moveQuestion(this._questionIndex, this._sectionIndex, 1);
+    this.notifyChanges();
+  }
+
+  public moveQuestionOption(event: Event, optionIndex: number, move: 1 | -1) {
+    event.preventDefault();
+    this._presetFrontService.moveQuestionOption(this._questionIndex, this._sectionIndex, optionIndex, move);
+    this.notifyChanges();
+  }
+
+  public onChangeInstruction(value: string, lang: string) {
+    if (!this._question.instruction) {
+      this._question.instruction = {
+        en: '',
+        fr: ''
+      };
+    }
+    this._question.instruction[lang] = value;
     this.notifyChanges();
   }
 
   public getNonUsedQuestions() {
-    return this.presetService.getNonUsedQuestions();
+    return this._presetFrontService.getNonUsedQuestions();
   }
 
   public changeIdentifier(identifier: string) {
-    this._isTaggedQuestion = this.presetService.isTaggedQuestion(identifier);
+    this._isTaggedQuestion = this._presetFrontService.isTaggedQuestion(identifier);
     if (this._isTaggedQuestion) {
-      this._question.controlType = this.presetService.getQuestionType(identifier);
+      this._question.controlType = this._presetFrontService.getQuestionType(identifier);
     }
     this.notifyChanges();
   }
@@ -160,6 +157,7 @@ export class SharedPresetQuestionComponent {
   public notifyChanges() {
     if (this.isEditable) {
       this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
+      this._presetFrontService.setNotifyChanges(true);
     }
   }
 
@@ -183,14 +181,25 @@ export class SharedPresetQuestionComponent {
     }
   }
 
-  get language() { return this._language; }
-  set language(value: 'en' | 'fr') { this._language = value; }
-  get lang() { return this.translateService.currentLang; }
+  get questionLabel(): string {
+    return this._presetFrontService.questionLabel(this._question, this.presetLanguages);
+  }
 
-  get question(): Question { return this._question; }
-  get customId(): string { return this._customId; }
-  get isTaggedQuestion(): boolean { return this._isTaggedQuestion; }
-  get innovation(): boolean { return  !!this.activatedRoute.snapshot.parent.data['innovation']; }
+  get platformLang() {
+    return this._translateService.currentLang;
+  }
+
+  get question(): Question {
+    return this._question;
+  }
+
+  get customId(): string {
+    return this._customId;
+  }
+
+  get isTaggedQuestion(): boolean {
+    return this._isTaggedQuestion;
+  }
 
   get questionIndex(): number {
     return this._questionIndex;
@@ -198,10 +207,6 @@ export class SharedPresetQuestionComponent {
 
   get picto(): Picto {
     return this._picto;
-  }
-
-  get optionColors(): Array<string> {
-    return this._optionColors;
   }
 
 }

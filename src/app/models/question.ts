@@ -28,4 +28,10 @@ export interface Question {
   options?: Array<Option>;
   visibility?: boolean;
   toggle?: boolean; // using this in only front-side, to toggle the question.
+
+  /**
+   *  it's a text used in the quiz front for help or an instruction based on the questionType.
+   */
+  instruction?: Multiling;
+
 }

@@ -6,21 +6,33 @@
     <!-- move button / description -->
     <div class="d-flex align-center m-bottom-10">
 
-      <div *ngIf="isEditable" data-tooltip="Move section" class="move-arrows tooltip">
+      <div *ngIf="isEditable" data-tooltip="Move" class="move-arrows tooltip">
         <i (click)="up($event)" class="icon icon-arrow-up"></i>
         <i (click)="down($event)" class="icon icon-arrow-down"></i>
       </div>
 
       <ng-container *ngIf="!editSection">
+
         <label class="m-right-20">
           <select class="form-select is-sm" disabled>
             <option *ngIf="!isNumber(section.description)">
-              {{ "PRESETS.SECTION.DESCRIPTION." + section.description | translate }}
+              {{ 'PRESETS.SECTION.DESCRIPTION.' + section.description | translate }}
             </option>
             <option *ngIf="isNumber(section.description)">{{ sectionsNames[section.description] }}</option>
           </select>
         </label>
-        <span>{{ section.label | multiling:lang }}</span>
+
+        <div class="d-flex flex-wrap">
+          <div *ngFor="let lang of presetLanguages" class="m-right-20 d-flex align-center">
+            <ng-container *ngIf="presetLanguages.length > 1">
+              <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
+                {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
+              </label>
+            </ng-container>
+            {{ section.label[lang] }}
+          </div>
+        </div>
+
       </ng-container>
 
       <ng-container *ngIf="editSection">
@@ -32,7 +44,7 @@
             [(ngModel)]="section.description"
             class="form-select is-sm">
             <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
-            <option [ngValue]="'nothing'">Nothing</option>
+            <option [ngValue]="'nothing'">{{ 'PRESETS.SECTION.DESCRIPTION.nothing' | translate }}</option>
           </select>
         </label>
         <!-- if section names -->
@@ -43,34 +55,27 @@
             (ngModelChange)="notifyChanges()"
             [(ngModel)]="section.description"
             class="form-select is-sm">
-            <option [ngValue]="'nothing'">Nothing</option>
-            <option [ngValue]="'1st'">Problem</option>
-            <option [ngValue]="'2nd'">Solution</option>
+            <option [ngValue]="'1st'">{{ 'PRESETS.SECTION.DESCRIPTION.1st' | translate }}</option>
+            <option [ngValue]="'2nd'">{{ 'PRESETS.SECTION.DESCRIPTION.2nd' | translate }}</option>
+            <option [ngValue]="'nothing'">{{ 'PRESETS.SECTION.DESCRIPTION.nothing' | translate }}</option>
           </select>
         </label>
         <!-- if not section names -->
 
-        <!-- label English -->
-        <label class="m-right-20">
+        <!-- labels -->
+        <div *ngFor="let lang of presetLanguages" class="m-right-20 d-flex align-center">
+          <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
+            {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
+          </label>
           <input
             (ngModelChange)="notifyChanges()"
-            [(ngModel)]="section.label.en"
+            [(ngModel)]="section.label[lang]"
+            [attr.placeholder]="'Section name in ' + (lang === 'fr' ? 'French' : 'English')"
+            [id]="lang"
             class="form-input is-sm"
-            placeholder="Section name in English"
             type="text">
-        </label>
-        <!-- /label English -->
-
-        <!-- label French -->
-        <label class="m-right-20">
-          <input
-            (ngModelChange)="notifyChanges()"
-            [(ngModel)]="section.label.fr"
-            class="form-input is-sm"
-            placeholder="Section name in French"
-            type="text">
-        </label>
-        <!-- /label French -->
+        </div>
+        <!-- /labels -->
 
       </ng-container>
 
@@ -78,7 +83,7 @@
     <!-- /move button / description -->
 
     <!-- edit / delete buttons -->
-    <div>
+    <div class="d-flex align-center">
 
       <!-- delete -->
       <div
@@ -108,7 +113,7 @@
       <div
         (click)="isCollapsed = !isCollapsed"
         class="icon-container is-overlay m-bottom-10">
-        <span [attr.data-tooltip]="isCollapsed ? 'Expand' : 'Collapse'" class="tooltip">
+        <span [attr.data-tooltip]="isCollapsed ? 'Expand section' : 'Collapse section'" class="tooltip">
           <i [ngClass]="isCollapsed ? 'icon-arrow-down' : 'icon-arrow-up'" class="icon text-white"></i>
         </span>
       </div>
@@ -125,9 +130,10 @@
     <div
       *ngFor="let question of section.questions; let i = index;"
       [ngStyle]="{'width': '95%', 'display': isCollapsed ? 'none' : 'block'}"
-      class="m-top-20 m-left-auto">
+      class="m-top-2 m-left-auto">
       <app-shared-preset-question
         [isEditable]="isEditable"
+        [presetLanguages]="presetLanguages"
         [questionIndex]="i"
         [question]="question"
         [sectionIndex]="sectionIndex">
@@ -142,9 +148,9 @@
       <button
         (click)="addNewQuestion($event)"
         [id]="'sharedPresetSection-btn-add-question'"
-        class="button is-link is-draft text-bold is-sm text-md"
+        class="button is-outlined is-draft text-bold is-sm"
         type="button">
-        <span class="icon-container is-overlay active m-right-10">
+        <span class="icon-container is-sm is-overlay active m-right-10">
           <i class="icon icon-plus"></i>
         </span>
         Add question
