@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {DataService} from '../../services/data.service';
 import {Innovation} from '../../../../../../models/innovation';
@@ -7,6 +7,7 @@ import {Tag} from '../../../../../../models/tag';
 import {environment} from '../../../../../../../environments/environment';
 import {PieChart} from '../../../../../../models/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {Multiling} from '../../../../../../models/multiling';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -28,18 +29,35 @@ export class QuestionConclusionComponent implements OnInit {
 
   @Input() stats: { nbAnswers: number, percentage: number } = null;
 
-  private _currentLang = this._translateService.currentLang;
+  @Output() questionChanged = new EventEmitter<Question>();
+
+  @Input() reportingLang = this._translateService.currentLang;
 
   private _isMainDomain = environment.domain === 'umi' || false;
+
+  private _showEditor = false;
+
+  private _editTitle = false;
+
+  private _editSubtitle = false;
+
+  private _currentChartIndexModified = -1;
+  private _currentChartOffsetXModified = 0;
+  private _currentChartOffsetYModified = 0;
 
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
               private _innovationFrontService: InnovationFrontService) {}
 
   ngOnInit() {
+    this._cleanQuestionHtml();
     if (!!this.innovation && !this.innovation.marketReport) {
       this.innovation.marketReport = {};
     }
+  }
+
+  private _cleanQuestionHtml() {
+    this.question.label[this.reportingLang] = this.question.label[this.reportingLang].replace('<br>/gm', '');
   }
 
   public keyupHandlerFunction(event: {content: string}) {
@@ -47,16 +65,82 @@ export class QuestionConclusionComponent implements OnInit {
     this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
   }
 
-  get tags(): Array<Tag> {
-    return this._dataService.answersTagsLists[this.question._id];
+  toggleEditor() {
+    this.showEditor = !this.showEditor;
   }
 
-  get currentLang(): string {
-    return this._currentLang;
+  chartSectionClicked(event: {index: number, position: any}) {
+    this._currentChartIndexModified = event.index;
+    this._currentChartOffsetXModified = event.position.x;
+    this._currentChartOffsetYModified = event.position.y;
+  }
+
+  positiveAnswerLabelChanged(positivesAnswersLabel: Multiling) {
+    this.question.positivesAnswersLabel = positivesAnswersLabel;
+    this.questionChanged.emit(this.question);
+  }
+
+  chartColorChanged(color: string) {
+    this.question.options[this._currentChartIndexModified].color = color;
+    this.questionChanged.emit(this.question);
+    this._currentChartIndexModified = -1;
+  }
+
+  positiveAnswerChange() {
+    this.questionChanged.emit(this.question);
+    this._currentChartIndexModified = -1;
+  }
+
+  subtitleChange(event: string) {
+    this.question.subtitle[this.reportingLang] = event;
+    this.questionChanged.emit(this.question);
+  }
+
+  get tags(): Array<Tag> {
+    return this._dataService.answersTagsLists[this.question._id];
   }
 
   get isMainDomain(): boolean {
     return this._isMainDomain;
   }
 
+  get showEditor(): boolean {
+    return this._showEditor;
+  }
+
+  set showEditor(value: boolean) {
+    this._showEditor = value;
+  }
+
+  get editSubtitle(): boolean {
+    return this._editSubtitle;
+  }
+
+  set editSubtitle(value: boolean) {
+    this._editSubtitle = value;
+  }
+
+  get editTitle(): boolean {
+    return this._editTitle;
+  }
+
+  set editTitle(value: boolean) {
+    this._editTitle = value;
+  }
+
+  set currentChartIndexModified(value: number) {
+    this._currentChartIndexModified = value;
+  }
+
+  get currentChartIndexModified(): number {
+    return this._currentChartIndexModified;
+  }
+
+  get currentChartOffsetYModified(): number {
+    return this._currentChartOffsetYModified;
+  }
+
+  get currentChartOffsetXModified(): number {
+    return this._currentChartOffsetXModified;
+  }
 }

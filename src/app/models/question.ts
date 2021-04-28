@@ -26,6 +26,7 @@ export interface Question {
     step: number;
   };
   options?: Array<Option>;
+  positivesAnswersLabel?: Multiling;
   visibility?: boolean;
   toggle?: boolean; // using this in only front-side, to toggle the question.
 

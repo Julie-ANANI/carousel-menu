@@ -62,6 +62,12 @@ export const MARKET_REPORT = {
     'BUTTON_CONFIRM': 'Confirm',
   },
 
+  'RESTITUTION_LANG': 'Language of restitution',
+
+  'NUMBER_ANSWERS': 'professionals answered the question',
+
+  'GEOGRAPHICAL_DISTRIBUTION': 'Geographical distribution',
+
   'MAP': {
     'TITLE': 'Map',
   },

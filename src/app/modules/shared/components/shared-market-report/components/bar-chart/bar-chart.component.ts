@@ -1,16 +1,16 @@
-import { Component, EventEmitter, OnInit, Output, Input, OnDestroy } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { FilterService } from '../../services/filters.service';
-import { Answer } from '../../../../../../models/answer';
-import { Innovation } from '../../../../../../models/innovation';
-import { Question } from '../../../../../../models/question';
-import { ResponseService } from '../../services/response.service';
-import { BarData } from '../../models/bar-data';
-import { PieChart } from '../../../../../../models/pie-chart';
-import { DataService } from "../../services/data.service";
-import { AnswersStats } from "../../models/stats";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {FilterService} from '../../services/filters.service';
+import {Answer} from '../../../../../../models/answer';
+import {Innovation} from '../../../../../../models/innovation';
+import {Question} from '../../../../../../models/question';
+import {ResponseService} from '../../services/response.service';
+import {BarData} from '../../models/bar-data';
+import {PieChart} from '../../../../../../models/pie-chart';
+import {DataService} from '../../services/data.service';
+import {AnswersStats} from '../../models/stats';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-bar-chart',
@@ -34,6 +34,8 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   @Output() answerButtonClicked = new EventEmitter<boolean>();
 
+  @Output() questionChanged = new EventEmitter<Question>();
+
   private _barsData: Array<BarData> = [];
 
   private _pieChart: PieChart = <PieChart>{};
@@ -42,7 +44,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   private _toggleFilterIcon: {[index: string]: boolean} = {};
 
-  private _currentLang = this._translateService.currentLang;
+  @Input() reportingLang = this._translateService.currentLang;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -51,7 +53,10 @@ export class BarChartComponent implements OnInit, OnDestroy {
               private _filterService: FilterService) { }
 
   ngOnInit() {
-    /* Update Answers Data */
+   this._updateAnswersData();
+  }
+
+  private _updateAnswersData() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((answers: Array<Answer>) => {
         this._barsData = ResponseService.barsData(this.question, answers);
@@ -99,6 +104,11 @@ export class BarChartComponent implements OnInit, OnDestroy {
     }
   }
 
+  public questionChange() {
+    this._updateAnswersData();
+    this.questionChanged.emit(this.question);
+  }
+
   get filter() {
     return this._filterService.filters[this.question.identifier];
   }
@@ -117,10 +127,6 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   get toggleFilterIcon(): { [p: string]: boolean } {
     return this._toggleFilterIcon;
-  }
-
-  get currentLang(): string {
-    return this._currentLang;
   }
 
   ngOnDestroy(): void {

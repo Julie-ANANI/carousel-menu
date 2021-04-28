@@ -99,7 +99,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _isKeyLearning = false;
 
-  private _userLang = this._translateService.currentLang || 'en';
+  @Input() reportingLang = this._translateService.currentLang;
 
   private _isFinalConclusion = true;
 
@@ -491,10 +491,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   get isKeyLearning(): boolean {
     return this._isKeyLearning;
-  }
-
-  get userLang(): string {
-    return this._userLang;
   }
 
   get isFinalConclusion(): boolean {

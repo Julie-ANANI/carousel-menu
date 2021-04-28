@@ -93,6 +93,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _isMainDomain = environment.domain === 'umi';
 
+  private _reportingLang = '';
+
   public areAnswersLoading = false;
 
   public displayFilters = false;
@@ -111,6 +113,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
               private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {
+    this.reportingLang = this.innovation.settings.reportingLang || this._translateService.currentLang;
     this._filterService.reset();
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe))
@@ -246,15 +249,78 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
   }
 
+  /***
+   * This function saves changes of any question of the operator (piechart colors, title, subtitle)
+   * @param question
+   */
+  public saveQuestion(question: Question) {
+
+    // If section title is from question
+    this._innovation.preset.sections.forEach((section: any) => {
+      const indexOfQuestion = section.questions.indexOf((que: Question ) => que.identifier === question.identifier);
+      if (indexOfQuestion >= 0) {
+        section.questions[indexOfQuestion] = question;
+      }
+    });
+
+    // If section title is from default market report sections (key learnings, origin of responses, conclusion)
+    switch (question.identifier) {
+      case 'professionals':
+        this._innovation.marketReport.professionals.title = question.title;
+        break;
+      case 'keyLearning':
+        this._innovation.marketReport.keyLearning.title = question.title;
+        break;
+      case 'finalConclusion':
+        this._innovation.marketReport.finalConclusion.title = question.title;
+        break;
+    }
+    this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
+  }
+
   public saveInnovation(event: Event) {
     event.preventDefault();
-    this._innovationService.save(this._innovation._id, {marketReport: this._innovation.marketReport}).subscribe(() => {
+    this._innovationService.save(this._innovation._id, {
+        marketReport: this._innovation.marketReport,
+        // Modified only admin side
+        preset: this._innovation.preset,
+        settings: this._innovation.settings
+    }).subscribe(() => {
       this._toBeSaved = false;
       this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+  }
+
+  public displayFixedQuestion(question: any) {
+
+    switch (question.identifier) {
+      case 'professionals':
+        if (this._innovation.marketReport.professionals) {
+          question.title = this._innovation.marketReport.professionals.title || question.title;
+        }
+        break;
+      case 'keyLearning':
+        if (this._innovation.marketReport.keyLearning) {
+          question.title = this._innovation.marketReport.keyLearning.title || question.title;
+        }
+        break;
+      case 'finalConclusion':
+        if (this._innovation.marketReport.finalConclusion) {
+          question.title = this._innovation.marketReport.finalConclusion.title || question.title;
+        }
+        break;
+    }
+
+    return question;
+  }
+
+  public setNewSelectedLang(value: string) {
+    this._reportingLang = value;
+    this.innovation.settings.reportingLang = this.reportingLang;
+    this._innovationFrontService.setNotifyChanges({key: 'settings', state: true});
   }
 
   public filterPro(answer: Answer, event: Event) {
@@ -370,6 +436,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get isMainDomain(): boolean {
     return this._isMainDomain;
+  }
+
+  get reportingLang(): string {
+    return this._reportingLang;
+  }
+
+  set reportingLang(value: string) {
+    this._reportingLang = value;
   }
 
   hideQuestionAnswers(question: Question) {

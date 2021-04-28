@@ -50,4 +50,6 @@ export interface InnovationSettings {
 
   domain?: any; // {en: string, fr: string},
 
+  reportingLang?: string; // 'en' | 'fr'
+
 }

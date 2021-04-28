@@ -3,6 +3,8 @@
   <!-- header section -->
   <div class="box-style">
     <app-question-conclusion
+      [reportingLang]="reportingLang"
+      (questionChanged)="questionChange()"
       [innovation]="innovation"
       [pieChart]="pieChart"
       [question]="question"
@@ -21,7 +23,7 @@
         (click)="toggleAnswer($event)"
         class="button is-community is-sm"
         type="button">
-        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
         <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
       </button>
     </div>
@@ -43,7 +45,7 @@
                   (mouseleave)="toggleFilterIcon[i] = false;"
                   [ngStyle]="{ 'width': '20px', 'height': '20px' }"
                   class="c-hand icon-container">
-                  <span [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translate" class="tooltip">
+                  <span [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translateIn: reportingLang" class="tooltip">
                     <i
                       [ngClass]="toggleFilterIcon[i] ? 'fa-eye-slash text-alert' : 'fa-eye text-info'"
                       class="fas">
@@ -51,7 +53,7 @@
                   </span>
                 </div>
                 <span class="text-lg m-left-3 m-right-2 text-background">
-                  {{ barData.label | multiling:currentLang }}
+                  {{ barData.label | multiling:reportingLang }}
                 </span>
               </div>
 
@@ -59,7 +61,7 @@
                 (click)="onShowAnswers(i, (barData.answers && barData.answers.length))"
                 [ngClass]="{'c-hand': barData.answers && barData.answers.length}"
                 class="d-flex text-notify text-medium align-center text-md">
-                <span class="m-right-2">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+                <span class="m-right-2">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translateIn: reportingLang }}</span>
                 <i [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-up'" aria-hidden="true" class="icon"></i>
               </div>
 
