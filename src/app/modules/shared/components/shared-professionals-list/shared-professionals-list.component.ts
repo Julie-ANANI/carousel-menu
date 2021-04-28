@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Professional } from '../../../../models/professional';
 import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
@@ -18,7 +12,6 @@ import { Tag } from '../../../../models/tag';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { Subscription } from 'rxjs';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -29,7 +22,7 @@ export interface SelectedProfessional extends Professional {
   templateUrl: './shared-professionals-list.component.html',
   styleUrls: ['./shared-professionals-list.component.scss'],
 })
-export class SharedProfessionalsListComponent implements OnDestroy {
+export class SharedProfessionalsListComponent {
   @Input() accessPath: Array<string> = [];
 
   @Input() set config(value: Config) {
@@ -84,8 +77,6 @@ export class SharedProfessionalsListComponent implements OnDestroy {
   private _professionalsToTags: Array<SelectedProfessional> = [];
 
   private _isDeleting = false;
-
-  private _subCountriesSelected: Subscription;
 
   private _isLoading = false;
 
@@ -650,14 +641,10 @@ export class SharedProfessionalsListComponent implements OnDestroy {
     } else {
       delete this._localConfig.country;
     }
-    this.configChange.emit(this._localConfig);
+    // this.configChange.emit(this._localConfig);
   }
 
   get isLoading(): boolean {
     return this._isLoading;
-  }
-
-  ngOnDestroy(): void {
-    this._subCountriesSelected.unsubscribe();
   }
 }
