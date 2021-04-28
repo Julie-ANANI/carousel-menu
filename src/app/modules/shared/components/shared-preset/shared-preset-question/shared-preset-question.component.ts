@@ -102,17 +102,10 @@ export class SharedPresetQuestionComponent {
 
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
-
-    const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette option ?'
-      : 'Are you sure you want to delete this option?';
-    const res = confirm(_msg);
-
-    if (res) {
-      const options = this._question.options;
-      options.splice(index, 1);
-      PresetFrontService.reConfigureOptionsIdentifier(options);
-      this.notifyChanges();
-    }
+    const options = this._question.options;
+    options.splice(index, 1);
+    PresetFrontService.reConfigureOptionsIdentifier(options);
+    this.notifyChanges();
   }
 
   public upQuestion(event: Event) {
