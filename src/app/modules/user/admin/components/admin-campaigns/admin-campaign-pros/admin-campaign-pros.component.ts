@@ -504,9 +504,9 @@ export class AdminCampaignProsComponent implements OnInit {
 
   setFilterCountriesList() {
     this._professionals.map((item) => {
-      if (
+      if (item.country && (
         this._filtersCountriesList.length === 0 ||
-        !this._filtersCountriesList.includes(item.country)
+        !this._filtersCountriesList.includes(item.country))
       ) {
         this._filtersCountriesList.push(item.country);
       }
