@@ -133,6 +133,17 @@ export class SharedPresetQuestionComponent {
     this.notifyChanges();
   }
 
+  public onChangeInstruction(value: string, lang: string) {
+    if (!this._question.instruction) {
+      this._question.instruction = {
+        en: '',
+        fr: ''
+      };
+    }
+    this._question.instruction[lang] = value;
+    this.notifyChanges();
+  }
+
   public getNonUsedQuestions() {
     return this._presetFrontService.getNonUsedQuestions();
   }
@@ -153,6 +164,7 @@ export class SharedPresetQuestionComponent {
   public notifyChanges() {
     if (this.isEditable) {
       this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
+      this._presetFrontService.setNotifyChanges(true);
     }
   }
 
