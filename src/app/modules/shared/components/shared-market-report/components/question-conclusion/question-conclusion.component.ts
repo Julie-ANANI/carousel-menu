@@ -50,9 +50,14 @@ export class QuestionConclusionComponent implements OnInit {
               private _innovationFrontService: InnovationFrontService) {}
 
   ngOnInit() {
+    this._cleanQuestionHtml();
     if (!!this.innovation && !this.innovation.marketReport) {
       this.innovation.marketReport = {};
     }
+  }
+
+  private _cleanQuestionHtml() {
+    this.question.label[this.reportingLang] = this.question.label[this.reportingLang].replace('<br>/gm', '');
   }
 
   public keyupHandlerFunction(event: {content: string}) {

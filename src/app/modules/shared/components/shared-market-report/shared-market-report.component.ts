@@ -58,10 +58,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _previewMode = false;
 
-  private _showKeyLearningsEditor = false;
-
-  private _showConclusionEditor = false;
-
   private _answers: Array<Answer> = [];
 
   private _filteredAnswers: Array<Answer> = [];
@@ -267,6 +263,18 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       }
     });
 
+    // If section title is from default market report sections (key learnings, origin of responses, conclusion)
+    switch (question.identifier) {
+      case 'professionals':
+        this._innovation.marketReport.professionals.title = question.title;
+        break;
+      case 'keyLearning':
+        this._innovation.marketReport.keyLearning.title = question.title;
+        break;
+      case 'finalConclusion':
+        this._innovation.marketReport.finalConclusion.title = question.title;
+        break;
+    }
     this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
   }
 
@@ -284,6 +292,29 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+  }
+
+  public displayFixedQuestion(question: any) {
+
+    switch (question.identifier) {
+      case 'professionals':
+        if (this._innovation.marketReport.professionals) {
+          question.title = this._innovation.marketReport.professionals.title || question.title;
+        }
+        break;
+      case 'keyLearning':
+        if (this._innovation.marketReport.keyLearning) {
+          question.title = this._innovation.marketReport.keyLearning.title || question.title;
+        }
+        break;
+      case 'finalConclusion':
+        if (this._innovation.marketReport.finalConclusion) {
+          question.title = this._innovation.marketReport.finalConclusion.title || question.title;
+        }
+        break;
+    }
+
+    return question;
   }
 
   public setNewSelectedLang(value: string) {
@@ -405,20 +436,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get isMainDomain(): boolean {
     return this._isMainDomain;
-  }
-
-  get showConclusionEditor(): boolean {
-    return this._showConclusionEditor;
-  }
-  get showKeyLearningsEditor(): boolean {
-    return this._showKeyLearningsEditor;
-  }
-
-  set showConclusionEditor(value: boolean) {
-    this._showConclusionEditor = value;
-  }
-  set showKeyLearningsEditor(value: boolean) {
-    this._showKeyLearningsEditor = value;
   }
 
   get reportingLang(): string {

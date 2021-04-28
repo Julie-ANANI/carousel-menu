@@ -15,8 +15,6 @@ export class SharedColorPickerComponent implements OnInit {
 
   private _selectedColor: string; // color hex code
 
-  private _nbDisplayedColors = 4;
-
   private _colors = [
     {label: 'red', value: '#EA5858'},
     {label: 'orange', value: '#F89424'},
@@ -30,13 +28,15 @@ export class SharedColorPickerComponent implements OnInit {
     {label: 'neutral-6', value: '#2e6188'},
   ];
 
+  private _displayedColors = this._colors;
+
   ngOnInit() {
     if (this.nbColors <= 4) {
-      this._nbDisplayedColors = 4;
-    } else if (this.nbColors < 10) {
-      this._nbDisplayedColors = 6;
+      this._displayedColors = this._colors.slice(0, 4);
+    } else if (this.nbColors <= 6) {
+      this._displayedColors = this._colors.slice(4, 10);
     } else {
-      this._nbDisplayedColors = 10;
+      this._displayedColors = this._colors;
     }
   }
 
@@ -50,11 +50,7 @@ export class SharedColorPickerComponent implements OnInit {
     return this._selectedColor;
   }
 
-  get nbDisplayedColors(): number {
-    return this._nbDisplayedColors;
-  }
-
-  get colors(): ({ label: string; value: string; })[] {
-    return this._colors;
+  get displayedColors(): ({ label: string; value: string })[] {
+    return this._displayedColors;
   }
 }

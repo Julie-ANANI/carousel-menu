@@ -77,8 +77,8 @@
                 [reportingLang]="reportingLang"
                 (questionChanged)="saveQuestion($event)"
                 [innovation]="innovation"
-                [question]="{ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
-                title: { en: 'Key learnings', fr: 'Connaissances clés' } }"
+                [question]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
+                title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
                 [readonly]="!canAccess(['edit', 'umiWord'])">
               </app-question-conclusion>
             </div>
@@ -94,9 +94,9 @@
                 [reportingLang]="reportingLang"
                 (questionChanged)="saveQuestion($event)"
                 [innovation]="innovation"
-                [originAnswers]="answersOrigins"
-                [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
-                title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
+                [originAnswers]="answersOrigins || {}"
+                [question]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
+                title: { en: 'Origin of responses', fr: 'Origine des réponses' }, controlType: 'textarea' })"
                 [readonly]="!canAccess(['edit', 'umiWord'])"
                 [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
               </app-question-conclusion>
@@ -173,8 +173,8 @@
                 [reportingLang]="reportingLang"
                 (questionChanged)="saveQuestion($event)"
                 [innovation]="innovation"
-                [question]="{ identifier: 'finalConclusion', subtitle: { en: '', fr: '' },
-                title: { en: 'Final conclusion', fr: 'Conclusion finale' } }"
+                [question]="displayFixedQuestion({ identifier: 'finalConclusion', subtitle: { en: '', fr: '' },
+                title: { en: 'Final conclusion', fr: 'Conclusion finale' } })"
                 [readonly]="!canAccess(['edit', 'umiWord'])">
               </app-question-conclusion>
             </div>

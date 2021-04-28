@@ -64,6 +64,8 @@ export const MARKET_REPORT = {
 
   'RESTITUTION_LANG': 'Language of restitution',
 
+  'NUMBER_ANSWERS': 'professionals answered the question',
+
   'GEOGRAPHICAL_DISTRIBUTION': 'Geographical distribution',
 
   'MAP': {

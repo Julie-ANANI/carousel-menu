@@ -36,7 +36,7 @@
         (click)="toggleEditor()"
         [attr.data-tooltip]="(showEditor)? 'Preview':'Edit'"
         [id]="'sharedPresetSection-btn-add-question'"
-        class="button tooltip is-circled is-action text-no-underline is-info is-xs text-sm op-text text-white"
+        class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-notify"
         type="button">
         <i *ngIf="!showEditor" class="fas fa-pencil-alt"></i>
         <i *ngIf="showEditor" class="fas fa-eye"></i>
@@ -52,59 +52,46 @@
       [type]="'synthesis'">
     </app-shared-editors>
 
-    <div *ngIf="originAnswers !== null" class="p-top-20">
-      <h4 class="title is-5 m-bottom-15">{{'MARKET_REPORT.GEOGRAPHICAL_DISTRIBUTION' | translateIn: reportingLang }}:</h4>
-      <div class="m-no-bottom">
-        <div *ngFor="let continent of originAnswers | keyvalue | orderBy:'value'" [id]="continent.key" class="m-top-1">
-          <app-shared-toggle-list>
-            <div slot="header">
-              <span class="text-bold"> {{ ('CONTINENTS.' + continent.key) | translateIn: reportingLang }}: {{ continent.value.count }} </span>
-            </div>
-            <div slot="body" >
-              <ul class="m-no-bottom">
-                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value'" class="m-top-1">
-                  {{ country.key }}: {{ country.value }}
-                </li>
-              </ul>
-            </div>
-          </app-shared-toggle-list>
-        </div>
-      </div>
-    </div>
+
 
   </div>
   <!-- /conclusion -->
 
   <!-- stats -->
   <div *ngIf="question.controlType" [ngSwitch]="question.controlType" class="stats-wrapper relative">
-
     <!-- pie chart -->
     <ng-container *ngSwitchCase="'radio'">
-      <div class="popover" (mouseleave)="currentChartIndexModified = -1">
-        <app-utility-piechart
-          (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
-          (chartSectionClicked)="chartSectionClicked($event)"
-          [pieChart]="pieChart"
-          [readonly]="readonly"
-          [reportingLang]="reportingLang"
-          [showFavorable]="question.visibility"
-          [favorableAnswersLabel]="question.positivesAnswersLabel || {en: '', fr: ''}"
-        >
-        </app-utility-piechart>
-        <div *ngIf="!readonly && currentChartIndexModified >= 0" class="absolute popover-container max-width-200"
-             [ngStyle]="{'left': currentChartOffsetXModified + 'px', 'top': currentChartOffsetYModified + 25 + 'px'}">
-          <div class="card p-10">
-            <label class="form-checkbox text-background">
-              <input type="checkbox" [(ngModel)]="question.options[currentChartIndexModified].positive" (change)="positiveAnswerChange()">
-              <i class="form-icon"></i> Positive answers
-            </label>
-            <app-shared-color-picker
-              [nbColors]="pieChart.colors.length"
-              (colorChanged)="chartColorChanged($event)">
-            </app-shared-color-picker>
+      <app-bluesquare
+        (subtitleChanged)="subtitleChange($event)"
+        [readonly]="readonly"
+        [percentage]="stats.percentage"
+        [subtitle]="question.subtitle | multiling:reportingLang">
+        <div class="popover" (mouseleave)="currentChartIndexModified = -1">
+          <app-utility-piechart
+            (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
+            (chartSectionClicked)="chartSectionClicked($event)"
+            [pieChart]="pieChart"
+            [readonly]="readonly"
+            [reportingLang]="reportingLang"
+            [showFavorable]="question.visibility"
+            [favorableAnswersLabel]="question.positivesAnswersLabel || {en: '', fr: ''}"
+          >
+          </app-utility-piechart>
+          <div *ngIf="!readonly && currentChartIndexModified >= 0" class="absolute popover-container max-width-200"
+               [ngStyle]="{'left': currentChartOffsetXModified + 'px', 'top': currentChartOffsetYModified + 25 + 'px'}">
+            <div class="card p-10">
+              <label class="form-checkbox text-background">
+                <input type="checkbox" [(ngModel)]="question.options[currentChartIndexModified].positive" (change)="positiveAnswerChange()">
+                <i class="form-icon"></i> Positive answers
+              </label>
+              <app-shared-color-picker
+                [nbColors]="pieChart.colors.length"
+                (colorChanged)="chartColorChanged($event)">
+              </app-shared-color-picker>
+            </div>
           </div>
         </div>
-      </div>
+      </app-bluesquare>
     </ng-container>
     <!-- /pie chart -->
 
@@ -113,9 +100,9 @@
       <app-bluesquare
         (subtitleChanged)="subtitleChange($event)"
         [readonly]="readonly"
-        [numberFocus]="stats.nbAnswers"
         [percentage]="stats.percentage"
-        [subtitle]="question.subtitle | multiling:reportingLang">
+        [subtitle]="(question.subtitle | multiling:reportingLang) || 'MARKET_REPORT.NUMBER_ANSWERS' | translateIn: reportingLang">
+        <div [ngStyle]="{'font-size': '100px'}">{{ stats.nbAnswers || 0 }}</div>
       </app-bluesquare>
     </ng-container>
     <!-- /rectangle box -->

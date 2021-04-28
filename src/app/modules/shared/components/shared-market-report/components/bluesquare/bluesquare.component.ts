@@ -8,8 +8,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 export class BluesquareComponent {
 
-  @Input() numberFocus: number = null
-
   @Input() subtitle = '';
 
   @Input() percentage: number = null;
