@@ -6,7 +6,7 @@
     <!-- move / select / type / label-->
     <div class="d-flex align-center">
 
-      <div *ngIf="isEditable" data-tooltip="Move question" class="move-arrows tooltip">
+      <div *ngIf="isEditable" data-tooltip="Move" class="move-arrows tooltip">
         <i (click)="upQuestion($event)" class="icon icon-arrow-up"></i>
         <i (click)="downQuestion($event)" class="icon icon-arrow-down"></i>
       </div>
@@ -186,9 +186,17 @@
 
               <!-- move option -->
               <div *ngIf="isEditable" class="flex-centered m-top-10 m-bottom-10">
-                <div data-tooltip="Move option" class="move-arrows m-no-right tooltip is-bottom">
-                  <i (click)="moveQuestionOption($event, i, 1)" class="icon icon-arrow-up"></i>
-                  <i (click)="moveQuestionOption($event, i, -1)" class="icon icon-arrow-down"></i>
+                <div data-tooltip="Move" class="move-arrows m-no-right tooltip is-bottom">
+                  <i
+                    (click)="moveQuestionOption($event, i, -1)"
+                    [ngClass]="{'disabled': i == 0}"
+                    class="icon icon-arrow-up">
+                  </i>
+                  <i
+                    (click)="moveQuestionOption($event, i, 1)"
+                    [ngClass]="{'disabled': (i + 1) == question.options.length}"
+                    class="icon icon-arrow-down">
+                  </i>
                 </div>
               </div>
               <!-- /move option -->

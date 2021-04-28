@@ -110,10 +110,7 @@ export class SharedPresetQuestionComponent {
     if (res) {
       const options = this._question.options;
       options.splice(index, 1);
-      // re-index options to keep a count from 0 to X
-      options.forEach(function (option, i) {
-        option.identifier = i.toString();
-      });
+      PresetFrontService.reConfigureOptionsIdentifier(options);
       this.notifyChanges();
     }
   }
@@ -132,7 +129,7 @@ export class SharedPresetQuestionComponent {
 
   public moveQuestionOption(event: Event, optionIndex: number, move: 1 | -1) {
     event.preventDefault();
-    this._presetFrontService.moveQuestionOption(this._questionIndex, optionIndex, move);
+    this._presetFrontService.moveQuestionOption(this._questionIndex, this._sectionIndex, optionIndex, move);
     this.notifyChanges();
   }
 

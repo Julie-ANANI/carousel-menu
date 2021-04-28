@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preset } from '../../models/preset';
-import { Question, QuestionType } from '../../models/question';
+import {Option, Question, QuestionType} from '../../models/question';
 import { Section } from '../../models/section';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
@@ -87,6 +87,16 @@ export class PresetFrontService {
   private _preset: Preset;
 
   constructor(private _translateService: TranslateService) {
+  }
+
+  /**
+   * re-index options to keep a count from 0 to X
+   * @param options
+   */
+  public static reConfigureOptionsIdentifier(options: Array<Option>) {
+    options.forEach(function (option, i) {
+      option.identifier = i.toString();
+    });
   }
 
   /**
@@ -227,8 +237,20 @@ export class PresetFrontService {
     }
   }
 
-  public moveQuestionOption(questionIndex: number, optionIndex: number, move: number) {
-
+  /**
+   * change the question option place
+   * @param questionIndex
+   * @param sectionIndex
+   * @param optionIndex
+   * @param move - 1 (down) | -1 (up)
+   */
+  public moveQuestionOption(questionIndex: number, sectionIndex: number, optionIndex: number, move: number) {
+    const new_place = optionIndex + move;
+    const options = this._preset.sections[sectionIndex].questions[questionIndex].options;
+    if (new_place >= 0 && new_place < options.length) {
+      options[new_place] = options.splice(optionIndex, 1, options[new_place])[0];
+      PresetFrontService.reConfigureOptionsIdentifier(options);
+    }
   }
 
   public cloneQuestion(questionIndex: number, sectionIndex: number) {
