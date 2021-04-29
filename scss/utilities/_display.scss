@@ -14,6 +14,14 @@
   display: flex !important;
 }
 
+.flex-wrap-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-wrap-nowrap {
+  flex-wrap: nowrap !important;
+}
+
 .d-inline-flex {
   display: inline-flex !important;
 }
