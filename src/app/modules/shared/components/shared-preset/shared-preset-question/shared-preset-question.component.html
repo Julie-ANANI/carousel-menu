@@ -172,23 +172,20 @@
         <!-- /label -->
 
         <!-- instruction -->
-        <ng-container *ngIf="question.controlType === 'rating' || question.controlType === 'stars'
-        || question.controlType === 'checkbox'">
-          <div class="m-bottom-15">
-            <label class="form-label">{{ lang === 'fr' ? 'Consigne' : 'Instruction' }}</label>
-            <p *ngIf="!isEditable" class="text-sm">
-              {{ (question.instruction && question.instruction[lang]) || 'NA' }}
-            </p>
-            <textarea
-              (ngModelChange)="onChangeInstruction($event, lang)"
-              *ngIf="isEditable"
-              [id]="'question-instruction-'+lang"
-              [ngModel]="(question.instruction && question.instruction[lang]) ? question.instruction[lang] : ''"
-              class="form-input"
-              type="text">
+        <div class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Consigne' : 'Instruction' }}</label>
+          <p *ngIf="!isEditable" class="text-sm">
+            {{ (question.instruction && question.instruction[lang]) || 'NA' }}
+          </p>
+          <textarea
+            (ngModelChange)="onChangeInstruction($event, lang)"
+            *ngIf="isEditable"
+            [id]="'question-instruction-'+lang"
+            [ngModel]="(question.instruction && question.instruction[lang]) ? question.instruction[lang] : ''"
+            class="form-input"
+            type="text">
           </textarea>
-          </div>
-        </ng-container>
+        </div>
         <!-- /instruction -->
 
         <!-- question types -->
