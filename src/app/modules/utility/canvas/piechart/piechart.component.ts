@@ -4,6 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {PieChart} from '../../../../models/pie-chart';
 import {BaseChartDirective} from 'ng2-charts';
 import {Multiling} from '../../../../models/multiling';
+import {Picto, picto} from '../../../../models/static-data/picto';
 
 @Component({
   selector: 'app-utility-piechart',
@@ -45,6 +46,8 @@ export class PiechartComponent {
   private _options = {
     responsive: true
   };
+
+  private _picto: Picto = picto;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _translateService: TranslateService) { }
@@ -97,5 +100,9 @@ export class PiechartComponent {
 
   set editFavorableAnswersLabel(value: boolean) {
     this._editFavorableAnswersLabel = value;
+  }
+
+  get picto(): Picto {
+    return this._picto;
   }
 }

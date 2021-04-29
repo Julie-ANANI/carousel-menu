@@ -64,6 +64,9 @@ export const MARKET_REPORT = {
 
   'RESTITUTION_LANG': 'Language of restitution',
 
+  'TRANSLATE_DEEPL_FR': 'Translate in french',
+  'TRANSLATE_DEEPL_EN': 'Translate in english',
+
   'NUMBER_ANSWERS': 'professionals answered the question',
 
   'GEOGRAPHICAL_DISTRIBUTION': 'Geographical distribution',

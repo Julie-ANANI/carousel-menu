@@ -1,15 +1,17 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Answer } from '../../../../../../models/answer';
-import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { DataService } from '../../services/data.service';
-import { TranslateService } from '@ngx-translate/core';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { Question } from '../../../../../../models/question';
-import { Tag } from '../../../../../../models/tag';
-import { first } from "rxjs/operators";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
-import { UserFrontService } from "../../../../../../services/user/user-front.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Answer} from '../../../../../../models/answer';
+import {AnswerService} from '../../../../../../services/answer/answer.service';
+import {DataService} from '../../services/data.service';
+import {TranslateService} from '@ngx-translate/core';
+import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {Question} from '../../../../../../models/question';
+import {Tag} from '../../../../../../models/tag';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {UserFrontService} from '../../../../../../services/user/user-front.service';
+import {TranslationService} from '../../../../../../services/translation/translation.service';
+import {Multiling} from '../../../../../../models/multiling';
 
 @Component({
   selector: 'app-market-comment-2',
@@ -25,14 +27,39 @@ export class SharedMarketComment2Component {
 
   @Input() question: Question = <Question>{};
 
+  @Input() reportingLang = this._translateService.currentLang;
+
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   private _currentLang = this._translateService.currentLang;
 
+  private _translation: Multiling = {};
+
+  private _showTranslation = false;
+
   constructor(private _answerService: AnswerService,
               private _dataService: DataService,
               private _translateService: TranslateService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _deepl: TranslationService) { }
+
+  public translate(lang: string) {
+
+    // We already have translated before
+    if (this._translation && this._translation[lang]) {
+      this._showTranslation = true;
+    } else {
+      this._deepl.translate(this.answer.answers[this.questionId], lang)
+        .pipe(first())
+        .subscribe((value) => {
+          this._translation[lang] = value.translation;
+          this._showTranslation = true;
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+        });
+    }
+  }
 
   public seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
@@ -95,4 +122,19 @@ export class SharedMarketComment2Component {
     return this.question.controlType === 'textarea' ? this.question.identifier : this.question.identifier + 'Comment';
   }
 
+  get translation(): Multiling {
+    return this._translation;
+  }
+
+  set translation(value: Multiling) {
+    this._translation = value;
+  }
+
+  get showTranslation(): boolean {
+    return this._showTranslation;
+  }
+
+  set showTranslation(value: boolean) {
+    this._showTranslation = value;
+  }
 }

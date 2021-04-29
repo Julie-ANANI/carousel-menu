@@ -8,6 +8,7 @@ import {environment} from '../../../../../../../environments/environment';
 import {PieChart} from '../../../../../../models/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Multiling} from '../../../../../../models/multiling';
+import {Picto, picto} from '../../../../../../models/static-data/picto';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -44,6 +45,8 @@ export class QuestionConclusionComponent implements OnInit {
   private _currentChartIndexModified = -1;
   private _currentChartOffsetXModified = 0;
   private _currentChartOffsetYModified = 0;
+
+  private _picto: Picto = picto;
 
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
@@ -142,5 +145,9 @@ export class QuestionConclusionComponent implements OnInit {
 
   get currentChartOffsetXModified(): number {
     return this._currentChartOffsetXModified;
+  }
+
+  get picto(): Picto {
+    return this._picto;
   }
 }
