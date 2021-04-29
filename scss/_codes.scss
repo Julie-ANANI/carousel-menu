@@ -1,0 +1,38 @@
+@import "variables";
+
+code {
+  font-size: $font-size-sm;
+  line-height: $line-height;
+  color: $alert-dark-color;
+  border-radius: $border-radius;
+  background-color: $bg-alert-light-color;
+  padding: 4px 8px;
+}
+
+.code {
+  background: $light-color;
+  border-radius: $border-radius;
+  color: $dark-color;
+  position: relative;
+
+  &::before {
+    color: $meta-color;
+    content: attr(data-lang);
+    font-size: $font-size-sm;
+    position: absolute;
+    right: $unit-2;
+    top: $unit-h;
+  }
+
+  code {
+    color: inherit;
+    display: block;
+    line-height: $line-height;
+    overflow-x: auto;
+    padding: 1.25rem;
+    width: 100%;
+    background-color: inherit;
+    font-size: $font-size-sm;
+  }
+
+}

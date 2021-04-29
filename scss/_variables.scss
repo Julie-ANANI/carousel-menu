@@ -11,6 +11,7 @@ $warning-color: #FFB300 !default;
 $primary-color: #00B0FF !default;
 $page-color: #F5F5F5 !default;
 $pending-color: #F89424 !default;
+$alert-dark-color: #a94442 !default;
 
 
 // gradient variables
@@ -38,9 +39,13 @@ $border-card-color: #EAEAEA !default;
 
 // background variables
 $bg-menu-hover-color: #F2F2F2 !default;
-$bg-overlay-color: rgba(58,66,77,0.96) !default;
 $bg-media-color: #CAF0F8 !default;
 $bg-page-dark-blue-color: #2E6188 !default;
+$bg-overlay-color: rgba(0,0,0,0.75) !default;
+$bg-overlay-dark-color: rgba(58,66,77,0.96)!default;
+$bg-tooltip-color: rgba(0,0,0,1) !default;
+$bg-menu-item-color: #F2F2F2 !default;
+$bg-alert-light-color: #F2DEDE !default;
 
 
 // form variables
@@ -117,6 +122,7 @@ $line-height-sm: 1 !default;
 $font-weight-normal: 400 !default;
 $font-weight-medium: 600 !default;
 $font-weight-bold: 700 !default;
+$font-weight-800: 800 !default;
 
 
 // Sizes
