@@ -136,6 +136,14 @@
         </span>
         <!-- /is sensitive data -->
 
+        <!-- max select -->
+        <ng-container *ngIf="question.controlType === 'checkbox'">
+          <div>
+
+          </div>
+        </ng-container>
+        <!-- /ax select -->
+
       </div>
 
     </div>
@@ -203,16 +211,22 @@
 
               <!-- move option -->
               <div *ngIf="isEditable" class="flex-centered m-top-10 m-bottom-10">
-                <div data-tooltip="Move" class="move-arrows m-no-right tooltip is-bottom">
+                <div
+                  [ngClass]="{'is-horizontal': presetLanguages.length === 1}"
+                  data-tooltip="Move"
+                  class="move-arrows m-no-right tooltip is-bottom">
                   <i
                     (click)="moveQuestionOption($event, i, -1)"
-                    [ngClass]="{'disabled': i == 0}"
-                    class="icon icon-arrow-up">
+                    [ngClass]="{'disabled': i == 0, 'icon-arrow-up': presetLanguages.length > 1,
+                    'icon-arrow-left': presetLanguages.length === 1}"
+                    class="icon">
                   </i>
                   <i
                     (click)="moveQuestionOption($event, i, 1)"
-                    [ngClass]="{'disabled': (i + 1) == question.options.length}"
-                    class="icon icon-arrow-down">
+                    [ngClass]="{'disabled': (i + 1) == question.options.length,
+                    'icon-arrow-down': presetLanguages.length > 1, 'icon-arrow-right':
+                    presetLanguages.length === 1}"
+                    class="icon">
                   </i>
                 </div>
               </div>

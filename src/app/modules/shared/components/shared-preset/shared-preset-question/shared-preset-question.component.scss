@@ -54,6 +54,10 @@
 
     }
 
+    &.is-horizontal {
+      flex-direction: row;
+    }
+
   }
 
   .question-body {
