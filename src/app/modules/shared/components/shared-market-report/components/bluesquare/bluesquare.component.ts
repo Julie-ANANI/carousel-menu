@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Picto, picto} from '../../../../../../models/static-data/picto';
 
 @Component({
   selector: 'app-bluesquare',
@@ -18,6 +19,8 @@ export class BluesquareComponent {
 
   private _editSubtitle = false;
 
+  private _picto: Picto = picto;
+
   constructor() {}
 
   get editSubtitle(): boolean {
@@ -26,5 +29,9 @@ export class BluesquareComponent {
 
   set editSubtitle(value: boolean) {
     this._editSubtitle = value;
+  }
+
+  get picto(): Picto {
+    return this._picto;
   }
 }

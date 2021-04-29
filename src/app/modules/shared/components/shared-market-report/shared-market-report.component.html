@@ -69,10 +69,10 @@
 
           <!-- synthesis reporting lang  -->
           <section
-            *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion)"
+            *ngIf="!areAnswersLoading && showSection(innovation.marketReport?.keyLearning?.conclusion)"
             [ngClass]="{ 'p-top-50': !reportShared }"
             id="key-learnings">
-            <div class="box-style" *ngIf="!areAnswersLoading">
+            <div class="box-style">
               <app-question-conclusion
                 [reportingLang]="reportingLang"
                 (questionChanged)="saveQuestion($event)"
@@ -87,9 +87,10 @@
 
           <!-- origin comment and professional responses -->
           <section
+            *ngIf="!areAnswersLoading"
             class="p-bottom-30 p-top-50"
             id="origin-responses">
-            <div class="box-style" *ngIf="!areAnswersLoading">
+            <div class="box-style">
               <app-question-conclusion
                 [reportingLang]="reportingLang"
                 (questionChanged)="saveQuestion($event)"
@@ -165,10 +166,10 @@
 
           <!-- conclusion -->
           <section
-            *ngIf="showSection(innovation.marketReport?.finalConclusion?.conclusion)"
+            *ngIf="!areAnswersLoading && showSection(innovation.marketReport?.finalConclusion?.conclusion)"
             class="p-bottom-50"
             id="conclusion">
-            <div class="box-style" *ngIf="!areAnswersLoading">
+            <div class="box-style">
               <app-question-conclusion
                 [reportingLang]="reportingLang"
                 (questionChanged)="saveQuestion($event)"
