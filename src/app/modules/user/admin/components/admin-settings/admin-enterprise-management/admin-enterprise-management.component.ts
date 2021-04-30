@@ -15,8 +15,6 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {ShieldService} from '../../../../../../services/shield/shield.service';
-import {NotificationsService} from 'angular2-notifications';
 import {Router} from '@angular/router';
 
 @Component({
@@ -97,8 +95,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _shieldService: ShieldService,
-              private _notificationsService: NotificationsService,
               private _route: Router
               /*private _autoCompleteService: AutocompleteService,*/
               /*private _sanitizer: DomSanitizer*/) {
@@ -125,7 +121,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
-      this._getShieldedPros();
       this._buildForm();
       this._companiesSelected = this._enterpriseService._enterprisesSelected;
       this._initTable([], 0);
@@ -319,31 +314,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         this._resultTableConfiguration._total = total;
       }, 800);
     }
-  }
-
-  private _getShieldedPros() {
-    this._shieldService.get(null, null)
-      .pipe(first())
-      .subscribe(response => {
-        this.sortShieldList(response.result);
-      }, err => {
-        this._notificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-      });
-  }
-
-  private sortShieldList(shieldList: any[]) {
-    shieldList.map((item) => {
-      const element = this.shieldSortedList.find(el => el.company === item.professional.company);
-      if (element) {
-        element.shieldEmails += 1;
-      } else {
-        const newElement = {
-          company: item.professional.company,
-          shieldEmails: 1
-        };
-        this._shieldSortedList.push(newElement);
-      }
-    });
   }
 
   public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
