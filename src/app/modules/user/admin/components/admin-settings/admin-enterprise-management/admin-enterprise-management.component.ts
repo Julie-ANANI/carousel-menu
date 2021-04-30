@@ -147,7 +147,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         this._initTable(enterprises.result, enterprises._metadata.totalCount);
         this.resultTableConfiguration._content.map(item => {
           if (item['parentEnterprise']) {
-            this._enterpriseService.get(item['parentEnterprise'], null).pipe(first()).subscribe((parent) => {
+            this._enterpriseService.get(item['parentEnterprise']).pipe(first()).subscribe((parent) => {
                 item['parentEnterpriseName'] = parent['name'];
               },
               (err: HttpErrorResponse) => {
@@ -157,7 +157,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           if (item['subsidiaries'].length > 0) {
             item.subsidiariesName = [];
             item['subsidiaries'].map((idSub: any) => {
-              this._enterpriseService.get(idSub, null).pipe(first()).subscribe((sub) => {
+              this._enterpriseService.get(idSub).pipe(first()).subscribe((sub) => {
                   item.subsidiariesName.push({id: idSub, name: sub['name']});
                 },
                 (err: HttpErrorResponse) => {
@@ -419,7 +419,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           if (idx > -1) {
             this._resultTableConfiguration._content[idx] = result;
           }
-          this._enterpriseService.get(result['parentEnterprise'], null).pipe(first()).subscribe((parent) => {
+          this._enterpriseService.get(result['parentEnterprise']).pipe(first()).subscribe((parent) => {
               this._resultTableConfiguration._content[idx]['parentEnterpriseName'] = parent['name'];
             },
             (err: HttpErrorResponse) => {
