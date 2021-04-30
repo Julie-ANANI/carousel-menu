@@ -1,43 +1,17 @@
-@mixin flex-centered {
+@mixin flex-position($justify) {
   display: flex;
-  justify-content: center;
+  justify-content: $justify;
   align-items: center;
 }
 
-@mixin inline-flex-centered {
+@mixin inline-flex-position($justify) {
   display: inline-flex;
-  justify-content: center;
+  justify-content: $justify;
   align-items: center;
 }
 
-@mixin flex-start {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-@mixin flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-@mixin flex-end {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-@mixin absolute-full-page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-@mixin fixed-full-page {
-  position: fixed;
+@mixin full-page($position) {
+  position: $position;
   top: 0;
   left: 0;
   right: 0;

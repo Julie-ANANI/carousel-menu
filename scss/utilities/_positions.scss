@@ -1,0 +1,126 @@
+@import "../mixins";
+
+.clearfix {
+  @include clearfix();
+}
+
+.float-left {
+  float: left !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.static {
+  position: static;
+}
+
+.flex-centered {
+  @include flex-position(center);
+}
+
+.flex-end {
+  @include flex-position(flex-end);
+}
+
+.flex-between {
+  @include flex-position(space-between);
+}
+
+.flex-start {
+  @include flex-position(flex-start);
+}
+
+.flex-around {
+  @include flex-position(space-around);
+}
+
+.flex-full {
+  flex: 1 !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.justify-start {
+  justify-content: flex-start !important;
+}
+
+.justify-end {
+  justify-content: flex-end !important;
+}
+
+.justify-space {
+  justify-content: space-between !important;
+}
+
+.justify-around {
+  justify-content: space-around !important;
+}
+
+.align-center {
+  align-items: center !important;
+}
+
+.align-start {
+  align-items: flex-start !important;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap !important;
+}
+
+.flex-wrap-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.flex-wrap-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-d-column {
+  flex-direction: column !important;
+}
+
+.flex-r-column {
+  flex-direction: row !important;
+}
+
+.flex-no-shrink {
+  flex-shrink: 0 !important;
+}
+
+.block-centered {
+  display: block;
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+
+
+
+
+
+
+

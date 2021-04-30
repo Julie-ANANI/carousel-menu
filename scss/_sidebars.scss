@@ -3,7 +3,7 @@
 
 // Sidebar backdrop
 .sidebar-backdrop {
-  @include fixed-full-page();
+  @include full-page(fixed);
   z-index: 7997;
 
   &.inactive {
@@ -33,7 +33,7 @@
   }
 
   .sidebar-header {
-    @include flex-start();
+    @include flex-position(start);
     position: sticky;
     z-index: 2;
     top: 0;

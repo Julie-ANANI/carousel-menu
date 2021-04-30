@@ -2,7 +2,7 @@
 @import "mixins";
 
 .buttons {
-  @include flex-start();
+  @include flex-position(start);
   flex-wrap: wrap;
   margin-bottom: -15px;
 
@@ -18,7 +18,7 @@
 
 
 .button {
-  @include inline-flex-centered();
+  @include inline-flex-position(center);
   @include button-transition();
   @include button-default-variant($primary-color);
   text-align: center;
