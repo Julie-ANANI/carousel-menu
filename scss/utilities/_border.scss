@@ -1,9 +1,23 @@
 /**
 defined the border
  */
+@import "../variables";
 
 .border-no {
   border: 0 !important;
+}
+
+.border {
+  border: $border-width solid $border-default-color !important;
+
+  &.is-xl {
+    border-width: $border-width-xl !important;
+  }
+
+  &.is-lg {
+    border-width: $border-width-lg !important;
+  }
+
 }
 
 .br-no {
@@ -20,6 +34,14 @@ defined the border
 
 .br-6 {
   border-radius: 6px !important;
+}
+
+.br-25 {
+  border-radius: 25px !important;
+}
+
+.br-30 {
+  border-radius: 30px !important;
 }
 
 .br-half {
