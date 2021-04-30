@@ -2,7 +2,7 @@
 @import "mixins";
 
 .buttons {
-  @include flex-position(start);
+  @include flex-position(flex-start);
   flex-wrap: wrap;
   margin-bottom: -15px;
 
