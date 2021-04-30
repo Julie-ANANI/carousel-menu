@@ -1,9 +1,5 @@
 @import "../variables";
 
-.p-auto {
-  padding: auto !important;
-}
-
 .p-no {
   padding: 0 !important;
 }
@@ -66,10 +62,6 @@
   padding-top: 0 !important;
 }
 
-.p-top-auto {
-  padding-top: auto !important;
-}
-
 .p-top-h {
   padding-top: $unit-h !important;
 }
@@ -126,10 +118,6 @@
 
 .p-no-right {
   padding-right: 0 !important;
-}
-
-.p-right-auto {
-  padding-right: auto !important;
 }
 
 .p-right-h {
@@ -190,10 +178,6 @@
   padding-bottom: 0 !important;
 }
 
-.p-bottom-auto {
-  padding-bottom: auto !important;
-}
-
 .p-bottom-h {
   padding-bottom: $unit-h !important;
 }
@@ -252,10 +236,6 @@
   padding-left: 0 !important;
 }
 
-.p-left-auto {
-  padding-left: auto !important;
-}
-
 .p-left-h {
   padding-left: $unit-h !important;
 }
@@ -302,10 +282,6 @@
 
 .p-left-50 {
   padding-left: 50px !important;
-}
-
-.p-left-55 {
-  padding-left: 55px !important;
 }
 
 .p-left-100 {
