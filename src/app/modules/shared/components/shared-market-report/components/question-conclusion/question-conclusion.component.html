@@ -98,7 +98,7 @@
             [favorableAnswersLabel]="question.positivesAnswersLabel || {en: '', fr: ''}"
           >
           </app-utility-piechart>
-          <div *ngIf="!readonly && currentChartIndexModified >= 0" class="absolute popover-container max-width-200"
+          <div *ngIf="!readonly && currentChartIndexModified >= 0" class="absolute popover-container max-width-250"
                [ngStyle]="{'left': currentChartOffsetXModified + 'px', 'top': currentChartOffsetYModified + 25 + 'px'}">
             <div class="card p-10">
               <label class="form-checkbox text-background">
