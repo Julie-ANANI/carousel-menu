@@ -16,6 +16,10 @@
   color: $draft-color !important;
 }
 
+.text-light {
+  color: $light-color !important;
+}
+
 .text-dark {
   color: $dark-color !important;
 }
@@ -32,6 +36,18 @@
   color: $warning-color !important;
 }
 
+.text-pending {
+  color: $pending-color !important;
+}
+
+.text-alert-dark {
+  color: $alert-dark-color !important;
+}
+
+.text-link {
+  color: $link-color !important;
+}
+
 .bg-primary {
   background: $primary-color !important;
 }
@@ -40,8 +56,28 @@
   background: $white-color !important;
 }
 
+.bg-dark {
+  background: $dark-color !important;
+}
+
+.bg-light {
+  background: $light-color !important;
+}
+
+.bg-meta {
+  background: $meta-color !important;
+}
+
 .bg-alert {
   background: $alert-color !important;
+}
+
+.bg-pending {
+  background: $pending-color !important;
+}
+
+.bg-warning {
+  background: $warning-color !important;
 }
 
 .bg-success {
@@ -61,7 +97,7 @@
 }
 
 .bg-media {
-  background: $bg-page-dark-blue-color  !important;
+  background: #CAF0F8 !important;
 }
 
 .bg-transparent {
@@ -78,4 +114,8 @@
 
 .bg-navbar {
   background: #2E6188 !important;
+}
+
+.bg-alert-light {
+  background: $bg-alert-light-color !important;
 }
