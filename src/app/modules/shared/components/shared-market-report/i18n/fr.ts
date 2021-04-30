@@ -73,6 +73,7 @@ export const MARKET_REPORT = {
 
   'TRANSLATE_DEEPL_FR': 'Traduire en français',
   'TRANSLATE_DEEPL_EN': 'Traduire en anglais',
+  'ORIGINAL_TEXT': 'Texte original',
 
   'NUMBER_ANSWERS': 'professionnels ont répondu à la question',
 

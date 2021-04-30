@@ -64,6 +64,6 @@
 
   <ng-container *ngIf="showTranslation">
     <p class="text-15 m-no p-top-h">{{ translation[((answer.used_language.toLowerCase() === 'fr')? 'en':'fr')] }}</p>
-    <span class="text-sm text-link text-secondary" (click)="showTranslation = false">{{'COMMON.BUTTON.CANCEL' | translateIn: reportingLang}}</span>
+    <span class="text-sm text-link text-secondary" (click)="showTranslation = false">{{'MARKET_REPORT.ORIGINAL_TEXT' | translateIn: reportingLang}}</span>
   </ng-container>
 </div>

@@ -66,6 +66,7 @@ export const MARKET_REPORT = {
 
   'TRANSLATE_DEEPL_FR': 'Translate in french',
   'TRANSLATE_DEEPL_EN': 'Translate in english',
+  'ORIGINAL_TEXT': 'Original text',
 
   'NUMBER_ANSWERS': 'professionals answered the question',
 

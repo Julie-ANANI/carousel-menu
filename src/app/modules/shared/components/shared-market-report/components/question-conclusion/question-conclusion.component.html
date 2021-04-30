@@ -55,7 +55,25 @@
       [type]="'synthesis'">
     </app-shared-editors>
 
-
+    <div *ngIf="originAnswers !== null" class="p-top-20">
+      <h4 class="title is-5 m-bottom-15">{{'MARKET_REPORT.GEOGRAPHICAL_DISTRIBUTION' | translateIn: reportingLang }}:</h4>
+      <div class="m-no-bottom">
+        <div *ngFor="let continent of originAnswers | keyvalue | orderBy:'value'" [id]="continent.key" class="m-top-1">
+          <app-shared-toggle-list>
+            <div slot="header">
+              <span class="text-bold"> {{ ('CONTINENTS.' + continent.key) | translateIn: reportingLang }}: {{ continent.value.count }} </span>
+            </div>
+            <div slot="body" >
+              <ul class="m-no-bottom">
+                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value'" class="m-top-1">
+                  {{ country.key }}: {{ country.value }}
+                </li>
+              </ul>
+            </div>
+          </app-shared-toggle-list>
+        </div>
+      </div>
+    </div>
 
   </div>
   <!-- /conclusion -->
