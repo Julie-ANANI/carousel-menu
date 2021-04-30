@@ -79,8 +79,12 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
     if (context.item.label === 'Select All') {
       this.initialiseSources((event.target as HTMLInputElement).checked);
     } else {
-      this._displaySources[context.index].isSelected = (event.target as HTMLInputElement).checked;
-      this._sources[context.index].isSelected = (event.target as HTMLInputElement).checked;
+      this._displaySources[
+        context.index
+      ].isSelected = (event.target as HTMLInputElement).checked;
+      this._sources[
+        context.index
+      ].isSelected = (event.target as HTMLInputElement).checked;
     }
     this.sendFilters.emit(this._sources);
   }
@@ -98,7 +102,7 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
             data.map((item) => {
               this._sources.push({ label: item, isSelected: false });
             });
-            if (this._isCanSelectAll) {
+            if (this._sources.length > 0 && this._isCanSelectAll) {
               this._sources.unshift({
                 label: 'Select All',
                 isSelected: false,

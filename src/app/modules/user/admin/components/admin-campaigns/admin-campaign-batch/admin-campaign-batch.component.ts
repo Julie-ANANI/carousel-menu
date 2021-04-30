@@ -385,7 +385,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   private _initBatchTable(batch: Batch): Table {
-    console.log(batch);
     const firstJSdate = new Date(batch.firstMail);
     const firstTime =
       ('0' + firstJSdate.getHours()).slice(-2) +
