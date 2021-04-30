@@ -33,7 +33,7 @@
   }
 
   .sidebar-header {
-    @include flex-position(start);
+    @include flex-position(flex-start);
     position: sticky;
     z-index: 2;
     top: 0;
