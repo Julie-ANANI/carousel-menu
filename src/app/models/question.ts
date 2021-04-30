@@ -35,4 +35,9 @@ export interface Question {
    */
   instruction?: Multiling;
 
+  /**
+   * maximum options he can select for controlType === 'checkbox'
+   */
+  maxOptionsSelect?: number;
+
 }

@@ -136,13 +136,27 @@
         </span>
         <!-- /is sensitive data -->
 
-        <!-- max select -->
+        <!-- max options select -->
         <ng-container *ngIf="question.controlType === 'checkbox'">
-          <div>
-
+          <div class="d-flex align-center">
+            <label class="form-label m-no-bottom m-right-2 text-normal" [for]="'question-maxOption'">
+              Maximum options to select:
+            </label>
+            <p *ngIf="!isEditable" class="text-sm">{{ question.maxOptionsSelect || 'NA' }}</p>
+            <input
+              (ngModelChange)="notifyChanges()"
+              *ngIf="isEditable"
+              [(ngModel)]="question.maxOptionsSelect"
+              [attr.placeholder]="question.options.length"
+              [id]="'question-maxOption'"
+              [max]="question.options.length"
+              [ngStyle]="{'max-width': '40px'}"
+              class="form-input is-sm text-center"
+              min="1"
+              type="number">
           </div>
         </ng-container>
-        <!-- /ax select -->
+        <!-- /max options select -->
 
       </div>
 
