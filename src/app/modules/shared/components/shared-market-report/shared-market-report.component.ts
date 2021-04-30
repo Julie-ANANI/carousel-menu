@@ -95,7 +95,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _reportingLang = '';
 
-  public areAnswersLoading = false;
+  public areAnswersLoading = true;
 
   public displayFilters = false;
 
@@ -451,7 +451,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
   showSection(sectionText: string) {
-    return (sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide;
+    return ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) && !this.areAnswersLoading && this.questions.length > 0;
   }
 
   ngOnDestroy(): void {

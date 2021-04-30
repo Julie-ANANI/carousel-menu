@@ -19,6 +19,8 @@ export class QuestionSectionComponent implements OnInit {
 
   @Input() innovation: Innovation = <Innovation>{};
 
+  @Input() originAnswers: {[continent: string]: {count: any, countries: {[country: string]: {count: number}}}} = null;
+
   @Input() readonly = true;
 
   @Input() hideAnswers = true;
@@ -51,7 +53,7 @@ export class QuestionSectionComponent implements OnInit {
 
   private _answersWithComment: Array<Answer> = [];
 
-  private _stats: AnswersStats = null;
+  @Input() stats: AnswersStats = null;
 
   private _showComment = false;
 
@@ -76,16 +78,18 @@ export class QuestionSectionComponent implements OnInit {
       // sort comments
       this._answersWithComment = ResponseService.sortComments(this.questionReceived, this._answersWithComment);
 
-      this._stats = {
-        nbAnswers: answersToShow.length,
-        percentage: Math.round((answersToShow.length * 100) / this._answersReceived.length)
-      };
+      if (!this.stats) {
+        this.stats = {
+          nbAnswers: answersToShow.length,
+          percentage: Math.round((answersToShow.length * 100) / this._answersReceived.length)
+        };
+      }
 
     }
   }
 
   public updateNumberOfItems(event: number): void {
-    this._stats = {...this._stats, nbAnswers: event};
+    this.stats = {...this.stats, nbAnswers: event};
   }
 
   public seeAnswer(event: Answer) {
@@ -110,10 +114,6 @@ export class QuestionSectionComponent implements OnInit {
 
   get answersWithComment(): Array<Answer> {
     return this._answersWithComment;
-  }
-
-  get stats(): AnswersStats {
-    return this._stats;
   }
 
 }
