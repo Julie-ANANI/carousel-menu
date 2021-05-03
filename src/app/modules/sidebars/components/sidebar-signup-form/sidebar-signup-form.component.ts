@@ -101,7 +101,7 @@ export class SidebarSignupFormComponent implements OnDestroy {
   }
 
   public getTermsLink(): string {
-    return this._translatesService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/confidentialite/';
+    return this._translatesService.currentLang === 'en' ? 'https://www.umi.us/privacy/' : 'https://www.umi.us/fr/protection-des-donnees/';
   }
 
   public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
