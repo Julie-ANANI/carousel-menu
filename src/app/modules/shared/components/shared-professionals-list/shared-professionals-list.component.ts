@@ -309,6 +309,7 @@ export class SharedProfessionalsListComponent {
         (result) => {
           if (index === this._professionalsToRemove.length - 1) {
             this._localConfig.limit = '10';
+            delete this._localConfig.country;
             this.onConfigChange(this._localConfig);
             this._translateNotificationsService.success(
               'Success',
@@ -607,11 +608,17 @@ export class SharedProfessionalsListComponent {
                 'Success',
                 'The professional(s) are deleted from the campaign.'
               );
-              this._isShowModal = false;
-              this._table._content = [];
-              this._table._total = 0;
-              this._localConfig.limit = '10';
             }
+            if (next.status === 400) {
+              this._translateNotificationsService.error(
+                'Information',
+                'The professional(s) are partially deleted from the campaign.'
+              );
+            }
+            this._isShowModal = false;
+            this._table._content = [];
+            this._table._total = 0;
+            this._localConfig.limit = '10';
           },
           (error) => {
             console.error(error);
