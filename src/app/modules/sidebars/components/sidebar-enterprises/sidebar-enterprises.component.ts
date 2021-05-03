@@ -1,23 +1,33 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Enterprise, Industry, Pattern} from '../../../../models/enterprise';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
-import {Clearbit} from '../../../../models/clearbit';
-import {AutoSuggestionConfig} from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
-import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries} from '../../../../models/static-data/enterprise';
-
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Enterprise, Industry, Pattern } from '../../../../models/enterprise';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
+import { Clearbit } from '../../../../models/clearbit';
+import { AutoSuggestionConfig } from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import {
+  EnterpriseSizeList,
+  EnterpriseTypes,
+  EnterpriseValueChains,
+  Industries,
+} from '../../../../models/static-data/enterprise';
 
 type Template = 'CREATE' | 'EDIT';
 
 @Component({
   selector: 'app-sidebar-enterprises',
   templateUrl: './sidebar-enterprises.component.html',
-  styleUrls: ['./sidebar-enterprises.component.scss']
+  styleUrls: ['./sidebar-enterprises.component.scss'],
 })
-
 export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   /**
    *
@@ -46,7 +56,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
-// provide this value when you want to update the existing enterprise, not while creating new one.
+  // provide this value when you want to update the existing enterprise, not while creating new one.
 
   private _newValueChains: Array<any> = [];
   @Input() isEditable = false;
@@ -55,8 +65,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   @Input() isSaving = false;
 
-  @Output() finalOutput: EventEmitter<{ enterprise: Enterprise, opType: string }> =
-    new EventEmitter<{ enterprise: Enterprise, opType: string }>();
+  @Output() finalOutput: EventEmitter<{
+    enterprise: Enterprise;
+    opType: string;
+  }> = new EventEmitter<{ enterprise: Enterprise; opType: string }>();
 
   private _enterprise: Enterprise = <Enterprise>{};
 
@@ -66,7 +78,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
+  private _defaultLogoURI =
+    'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
 
   private _logo = '';
 
@@ -100,42 +113,21 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _isShowSyntax = false;
 
-  private _industrySelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
+  private _industrySelectConfig: AutoSuggestionConfig = <
+    AutoSuggestionConfig
+  >{};
 
-  private _valueChainSelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
+  private _valueChainSelectConfig: AutoSuggestionConfig = <
+    AutoSuggestionConfig
+  >{};
 
-  private _enterpriseSizeSelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
+  private _enterpriseSizeSelectConfig: AutoSuggestionConfig = <
+    AutoSuggestionConfig
+  >{};
 
-  private _enterpriseTypeSelectConfig: AutoSuggestionConfig = <AutoSuggestionConfig>{};
-
-  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
-    return this._enterpriseTypeSelectConfig;
-  }
-
-  private fillTheForm() {
-    this._form.get('name').setValue(this._enterprise.name);
-    this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
-    this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
-    this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
-    this._form.get('parentEnterprise').setValue(this._enterprise.parentEnterpriseName || '');
-    this._newEnterpriseType = [];
-    if (this._enterprise.enterpriseType && this._enterprise.enterpriseType !== '') {
-      this._newEnterpriseType.push(this._enterprise.enterpriseType);
-    }
-    this._newIndustry = this._enterprise.industries || [];
-    this._newValueChains = this._enterprise.valueChain || [];
-    this._newBrands = this._enterprise.brands || [];
-    this._newPatterns = this._enterprise.patterns || [];
-    this._newGeoZone = this._enterprise.geographicalZone || [];
-    this._newSubsidiary = this._enterprise.subsidiariesName || [];
-    this._inputPatterns = this._enterprise.patterns || [];
-    this._inputGeoZone = this._enterprise.geographicalZone || [];
-    this._inputBrands = this._enterprise.brands || [];
-    this._isGeoConfig = false;
-    this._isBrandConfig = false;
-    this._isPatternConfig = false;
-    this._logo = this._enterprise.logo && this._enterprise.logo.uri || '';
-  }
+  private _enterpriseTypeSelectConfig: AutoSuggestionConfig = <
+    AutoSuggestionConfig
+  >{};
 
   private initAutoSuggestionConfig() {
     this._industrySelectConfig = {
@@ -145,7 +137,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       identifier: '',
       suggestionList: Industries,
       isShowAddButton: true,
-      requestType: 'local'
+      requestType: 'local',
     };
 
     this._valueChainSelectConfig = {
@@ -155,7 +147,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       identifier: '',
       suggestionList: EnterpriseValueChains,
       isShowAddButton: true,
-      requestType: 'local'
+      requestType: 'local',
     };
 
     this._enterpriseSizeSelectConfig = {
@@ -167,7 +159,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       isShowAddButton: false,
       requestType: 'local',
       showSuggestionFirst: true,
-      default: this._enterprise.enterpriseSize || ''
+      default: this._enterprise.enterpriseSize || '',
     };
 
     this._enterpriseTypeSelectConfig = {
@@ -180,13 +172,31 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       requestType: 'local',
       showSuggestionFirst: true,
     };
-
   }
+
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _autoCompleteService: AutocompleteService,
+    private _domSanitizer: DomSanitizer
+  ) {}
+
+  ngOnInit() {
+    this._form.valueChanges
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(() => {
+        this._saveChanges();
+      });
+  }
+
+
+  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
+    return this._enterpriseTypeSelectConfig;
+  }
+
 
   get industrySelectConfig() {
     return this._industrySelectConfig;
   }
-
 
   get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
     return this._enterpriseSizeSelectConfig;
@@ -196,21 +206,46 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._valueChainSelectConfig;
   }
 
-  constructor(private _formBuilder: FormBuilder,
-              private _autoCompleteService: AutocompleteService,
-              private _domSanitizer: DomSanitizer) {
-  }
-
-  ngOnInit() {
-    this._form.valueChanges.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-      this._saveChanges();
-    });
+  private fillTheForm() {
+    this._form.get('name').setValue(this._enterprise.name);
+    this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
+    this._form.get('enterpriseURL').setValue(this._enterprise.enterpriseURL);
+    this._form.get('enterpriseSize').setValue(this._enterprise.enterpriseSize);
+    if (
+      this._enterprise.parentEnterpriseObject &&
+      this._enterprise.parentEnterpriseObject.length > 0
+    ) {
+      this._form
+        .get('parentEnterprise')
+        .setValue(this._enterprise.parentEnterpriseObject[0]['name']);
+    } else {
+      this._form.get('parentEnterprise').setValue('');
+    }
+    this._newEnterpriseType = [];
+    if (
+      this._enterprise.enterpriseType &&
+      this._enterprise.enterpriseType !== ''
+    ) {
+      this._newEnterpriseType.push(this._enterprise.enterpriseType);
+    }
+    this._newIndustry = this._enterprise.industries || [];
+    this._newValueChains = this._enterprise.valueChain || [];
+    this._newBrands = this._enterprise.brands || [];
+    this._newPatterns = this._enterprise.patterns || [];
+    this._newGeoZone = this._enterprise.geographicalZone || [];
+    this._newSubsidiary = this._enterprise.subsidiariesList || [];
+    this._inputPatterns = this._enterprise.patterns || [];
+    this._inputGeoZone = this._enterprise.geographicalZone || [];
+    this._inputBrands = this._enterprise.brands || [];
+    this._isGeoConfig = false;
+    this._isBrandConfig = false;
+    this._isPatternConfig = false;
+    this._logo = (this._enterprise.logo && this._enterprise.logo.uri) || '';
   }
 
   private _saveChanges() {
     this.isSaving = true;
   }
-
 
   get newGeoZone(): any {
     return this._newGeoZone;
@@ -234,14 +269,13 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       brands: [null],
       geographicalZone: [null],
       enterpriseSize: [null],
-      valueChain: [null]
+      valueChain: [null],
     });
   }
 
   get newBrands(): any {
     return this._newBrands;
   }
-
 
   get newSubsidiary(): Array<any> {
     return this._newSubsidiary;
@@ -259,12 +293,24 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     );
   };
 
-  public companiesSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'company'});
+  public companiesSuggestions = (
+    searchString: string
+  ): Observable<Array<{ name: string; domain: string; logo: string }>> => {
+    return this._autoCompleteService.get({
+      query: searchString,
+      type: 'company',
+    });
   };
 
-  public enterpriseSuggestions = (searchString: string): Observable<Array<{ name: string, logo: any, domain: string, _id: string }>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
+  public enterpriseSuggestions = (
+    searchString: string
+  ): Observable<
+    Array<{ name: string; logo: any; domain: string; _id: string }>
+  > => {
+    return this._autoCompleteService.get({
+      query: searchString,
+      type: 'enterprise',
+    });
   };
 
   public selectCompany(c: string | Clearbit | any) {
@@ -287,7 +333,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           break;
         case 'parent':
           this._parentEnterprise = c;
-          this._form.get('parentEnterprise').setValue(this._parentEnterprise.name);
+          this._enterprise.parentEnterpriseObject = [this._parentEnterprise];
+          this._form
+            .get('parentEnterprise')
+            .setValue(this._parentEnterprise.name);
           break;
       }
       this._saveChanges();
@@ -302,7 +351,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   getSubsidiaries() {
     const ids: string[] = [];
     this._newSubsidiary.map((sub) => {
-      ids.push(sub['id']);
+      ids.push(sub['id'] || sub['_id']);
     });
     return ids;
   }
@@ -315,15 +364,19 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
         patterns: this.newPatterns,
-        parentEnterprise: this._parentEnterprise ? this._parentEnterprise['id'] : null,
+        parentEnterprise: this._parentEnterprise
+          ? this._parentEnterprise['id']
+          : null,
         industries: this.newIndustry,
         brands: this.newBrands,
         geographicalZone: this.newGeoZone,
         subsidiaries: this.getSubsidiaries(),
-        valueChain: this._newValueChains
+        valueChain: this._newValueChains,
+        subsidiariesList: this._newSubsidiary,
+        parentEnterpriseObject: this._enterprise.parentEnterpriseObject
       };
 
-      Object.keys(this._form.controls).forEach(key => {
+      Object.keys(this._form.controls).forEach((key) => {
         switch (key) {
           case 'patterns':
           case 'name':
@@ -338,8 +391,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             break;
           case 'logo':
             _newEnterprise[key] = {
-              'uri': this._logo === '' ? this.defaultLogoURI : this._logo,
-              'alt': this._form.get('name').value
+              uri: this._logo === '' ? this.defaultLogoURI : this._logo,
+              alt: this._form.get('name').value,
             };
             break;
 
@@ -349,7 +402,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             }
         }
       });
-      this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
+      this.finalOutput.emit({ enterprise: _newEnterprise, opType: this.type });
     }
   }
 
@@ -364,7 +417,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   public patternsUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
       event.value.map((text) => {
-        this._newPatterns.push({expression: text.expression || text.text, avg: 0});
+        this._newPatterns.push({
+          expression: text.expression || text.text,
+          avg: 0,
+        });
       });
       this._saveChanges();
     }
@@ -372,7 +428,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   public industryUpdate(event: any) {
     if (this.isEditable) {
-      this._newIndustry.push({label: event, code: event});
+      this._newIndustry.push({ label: event, code: event });
       this._saveChanges();
     }
   }
@@ -388,7 +444,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newBrands = [];
       event.value.map((text) => {
-        this._newBrands.push({label: text.text || text.label, url: ''});
+        this._newBrands.push({ label: text.text || text.label, url: '' });
       });
       this._saveChanges();
     }
@@ -398,7 +454,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newGeoZone = [];
       this._newGeoZone = event.value.map((text) => {
-        return {scope: 'country', name: text.text || text.name};
+        return { scope: 'country', name: text.text || text.name };
       });
       this._saveChanges();
     }
@@ -409,7 +465,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._isPatternConfig = true;
       return {
         placeholder: 'Enter the enterprise pattern',
-        initialData: this._inputPatterns
+        initialData: this._inputPatterns,
       };
     }
   }
@@ -419,7 +475,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._isBrandConfig = true;
       return {
         placeholder: 'Enter the enterprise brand',
-        initialData: this._inputBrands
+        initialData: this._inputBrands,
       };
     }
   }
@@ -429,7 +485,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       this._isGeoConfig = true;
       return {
         placeholder: 'Enter the geographical zone',
-        initialData: this._inputGeoZone
+        initialData: this._inputGeoZone,
       };
     }
   }
@@ -467,12 +523,15 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
-
   getValueSelected($event: any) {
     if ($event) {
       switch ($event.type) {
         case 'industry':
-          if (this._newIndustry.length === 0 || this._newIndustry.find(item => item.label === $event.value) === undefined) {
+          if (
+            this._newIndustry.length === 0 ||
+            this._newIndustry.find((item) => item.label === $event.value) ===
+              undefined
+          ) {
             this.industryUpdate($event.value);
           }
           break;
@@ -489,7 +548,12 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           this._newEnterpriseType[0] = $event.value;
           break;
         case 'patterns':
-          if (this._newPatterns.length === 0 || this._newPatterns.find(item => item.expression === $event.value) === undefined) {
+          if (
+            this._newPatterns.length === 0 ||
+            this._newPatterns.find(
+              (item) => item.expression === $event.value
+            ) === undefined
+          ) {
             this.patternsUpdate($event.value);
           }
           break;
@@ -500,20 +564,28 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   deleteItem(type: any, answer: any) {
     switch (type) {
       case 'industry':
-        this._newIndustry = this._newIndustry.filter(item => item.code !== answer.code);
+        this._newIndustry = this._newIndustry.filter(
+          (item) => item.code !== answer.code
+        );
         break;
       case 'valueChain':
-        this._newValueChains = this._newValueChains.filter(item => item !== answer);
+        this._newValueChains = this._newValueChains.filter(
+          (item) => item !== answer
+        );
         break;
       case 'enterpriseType':
         this._form.get('enterpriseType').setValue('');
         this._newEnterpriseType = [];
         break;
       case 'subsidiaries':
-        this._newSubsidiary = this._newSubsidiary.filter(item => item.name !== answer.name);
+        this._newSubsidiary = this._newSubsidiary.filter(
+          (item) => item.name !== answer.name
+        );
         break;
       case 'patterns':
-        this._newPatterns = this._newPatterns.filter(item => item.expression !== answer.expression);
+        this._newPatterns = this._newPatterns.filter(
+          (item) => item.expression !== answer.expression
+        );
         break;
     }
   }
@@ -522,10 +594,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return {
       type: type,
       isString: isString,
-      answerList: list
+      answerList: list,
     };
   }
-
 
   get newValueChains(): Array<any> {
     return this._newValueChains;
@@ -546,7 +617,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   showEnterpriseSizeInfo() {
     this._isSizeInfo = true;
   }
-
 
   get isSizeInfo(): boolean {
     return this._isSizeInfo;

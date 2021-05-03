@@ -94,9 +94,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _rolesFrontService: RolesFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
-    private _route: Router
-  ) /*private _autoCompleteService: AutocompleteService,*/
-  /*private _sanitizer: DomSanitizer*/ {}
+    private _route: Router /*private _autoCompleteService: AutocompleteService,*/
+  ) /*private _sanitizer: DomSanitizer*/ {}
 
   private _buildForm() {
     // New company form
@@ -235,11 +234,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _isHidden: true,
         },
         {
-          _attrs: ['parentEnterpriseName'],
+          _attrs: ['parentEnterpriseObject'],
           _name: 'Parent Enterprise',
-          _type: 'TEXT',
+          _type: 'NAME-LABEL-LIST',
           _width: '170px',
-          _enableTooltip: true,
         },
         {
           _attrs: ['goodEmails'],
@@ -280,7 +278,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'GEO-ZONE-LIST',
+          _type: 'NAME-LABEL-LIST',
           _width: '190px',
           _enableTooltip: true,
         },
@@ -433,20 +431,9 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               );
               if (idx > -1) {
                 this._resultTableConfiguration._content[idx] = result;
+                this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = event.enterprise.parentEnterpriseObject;
+                this._resultTableConfiguration._content[idx]['subsidiariesList'] = event.enterprise.subsidiariesList;
               }
-              this._enterpriseService
-                .get(result['parentEnterprise'])
-                .pipe(first())
-                .subscribe(
-                  (parent) => {
-                    this._resultTableConfiguration._content[idx][
-                      'parentEnterpriseName'
-                    ] = parent['name'];
-                  },
-                  (err: HttpErrorResponse) => {
-                    console.log(err);
-                  }
-                );
             },
             (err: HttpErrorResponse) => {
               this._translateNotificationsService.error(

@@ -111,9 +111,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _type: 'NUMBER',
         },
         {
-          _attrs: ['parentEnterprise.name'],
+          _attrs: ['parentEnterpriseObject'],
           _name: 'Parent Enterprise',
-          _type: 'TEXT',
+          _type: 'NAME-LABEL-LIST',
           _isHidden: true,
         },
         {
@@ -150,7 +150,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'GEO-ZONE-LIST',
+          _type: 'NAME-LABEL-LIST',
           _width: '190px',
         },
         {

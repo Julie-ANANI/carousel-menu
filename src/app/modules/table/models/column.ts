@@ -49,5 +49,5 @@ export type types =
   | 'DATE_TIME'
   | 'NUMBER'
   | 'PATTERNS-OBJECT-LIST'
-  | 'GEO-ZONE-LIST'
+  | 'NAME-LABEL-LIST'
   | 'LABEL-OBJECT-LIST';

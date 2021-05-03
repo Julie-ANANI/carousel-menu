@@ -38,10 +38,12 @@ export interface Enterprise {
   subsidiariesName?: Array<any>;
   parentEnterprise?: string;
   parentEnterpriseName?: string;
+  parentEnterpriseObject?: any;
   patterns?: Array<Pattern>;
   enterpriseType?: string;
   industries?: Array<Industry>;
   brands?: Array<Brand>;
+  subsidiariesList?: Array<any>;
   geographicalZone?: Array<GeographicalZone>;
   enterpriseSize?: string;
   valueChain?: Array<string>;
