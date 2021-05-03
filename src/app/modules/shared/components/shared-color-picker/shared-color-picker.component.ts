@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {colors} from '../../../../utils/chartColors';
 
 @Component({
   selector: 'app-shared-color-picker',
@@ -15,18 +16,7 @@ export class SharedColorPickerComponent implements OnInit {
 
   private _selectedColor: string; // color hex code
 
-  private _colors = [
-    {label: 'red', value: '#EA5858'},
-    {label: 'orange', value: '#F89424'},
-    {label: 'lightgreen', value: '#99E04B'},
-    {label: 'green', value: '#2ECC71'},
-    {label: 'neutral-1', value: '#bbc7d6'},
-    {label: 'neutral-2', value: '#ffb300'},
-    {label: 'neutral-3', value: '#ffcc6e'},
-    {label: 'neutral-4', value: '#2e6188'},
-    {label: 'neutral-5', value: '#3a78a8'},
-    {label: 'neutral-6', value: '#dde3ea'},
-  ];
+  public colors = colors;
 
   ngOnInit() {
 
@@ -40,9 +30,5 @@ export class SharedColorPickerComponent implements OnInit {
 
   get selectedColor(): string {
     return this._selectedColor;
-  }
-
-  get colors(): ({ label: string; value: string })[] {
-    return this._colors;
   }
 }

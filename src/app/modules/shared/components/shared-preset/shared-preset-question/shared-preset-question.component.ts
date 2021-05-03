@@ -4,6 +4,7 @@ import {PresetFrontService} from '../../../../../services/preset/preset-front.se
 import {Question} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import {colors} from '../../../../../utils/chartColors';
 
 @Component({
   selector: 'app-shared-preset-question',
@@ -38,6 +39,10 @@ export class SharedPresetQuestionComponent {
 
     if (!this._question.maxOptionsSelect && this._question.controlType === 'checkbox') {
       this._question.maxOptionsSelect = (this._question.options && this._question.options.length);
+    }
+
+    if (this._question.controlType === 'radio' && this._question.options.length === 0) {
+        this.addNewOptions(4);
     }
 
   }
@@ -90,8 +95,16 @@ export class SharedPresetQuestionComponent {
     this.notifyChanges();
   }
 
-  public addNewOption(event: Event) {
-    event.preventDefault();
+  addNewOptions(nbOptions: number) {
+    for (let i = 0; i < nbOptions; i++) {
+      this.addNewOption();
+    }
+  }
+
+  public addNewOption(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     const options = this._question.options;
     const stringId = options.length.toString();
     const newOption = {
@@ -102,6 +115,7 @@ export class SharedPresetQuestionComponent {
       }
     };
     options.push(newOption);
+    this.setOptionsColors();
     this.notifyChanges();
   }
 
@@ -110,6 +124,7 @@ export class SharedPresetQuestionComponent {
     const options = this._question.options;
     options.splice(index, 1);
     PresetFrontService.reConfigureOptionsIdentifier(options);
+    this.setOptionsColors();
     this.notifyChanges();
   }
 
@@ -157,6 +172,19 @@ export class SharedPresetQuestionComponent {
   public setColor(color: string, index: number) {
     this._question.options[index].color = color;
     this.notifyChanges();
+  }
+
+  public setOptionsColors() {
+    const nbOptions = this._question.options.length;
+    if (nbOptions > 4 && nbOptions <= 6) {
+      for (let i = 0; i < nbOptions; i++) {
+        this._question.options[i].color = colors[i + 4].value;
+      }
+    } else {
+      for (let i = 0; i < nbOptions; i++) {
+        this._question.options[i].color = colors[i % 10].value;
+      }
+    }
   }
 
   public notifyChanges() {
