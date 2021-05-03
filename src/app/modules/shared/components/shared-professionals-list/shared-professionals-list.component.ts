@@ -123,22 +123,22 @@ export class SharedProfessionalsListComponent implements OnDestroy {
       _isSelectable:
         this.canAccess(['user', 'delete']) || this.canAccess(['user', 'edit']),
       _buttons: [
-        {
-          _label: 'Merge',
-          _icon: 'fas fa-object-group',
-          _isHidden: !this.canAccess(['user', 'edit']),
-        },
-        {
-          _label: 'Convert to ambassador',
-          _icon: 'fas fa-user-graduate',
-          _isHidden: !this.canAccess(['user', 'edit']),
-        },
-        {
-          _label: 'Add tags',
-          _icon: 'icon icon-plus',
-          _iconSize: '12px',
-          _isHidden: !this.canAccess(['user', 'edit']),
-        },
+        // {
+        //   _label: 'Merge',
+        //   _icon: 'fas fa-object-group',
+        //   _isHidden: !this.canAccess(['user', 'edit']),
+        // },
+        // {
+        //   _label: 'Convert to ambassador',
+        //   _icon: 'fas fa-user-graduate',
+        //   _isHidden: !this.canAccess(['user', 'edit']),
+        // },
+        // {
+        //   _label: 'Add tags',
+        //   _icon: 'icon icon-plus',
+        //   _iconSize: '12px',
+        //   _isHidden: !this.canAccess(['user', 'edit']),
+        // },
         {
           _label: 'Remove',
           _icon: 'icon icon-delete',
