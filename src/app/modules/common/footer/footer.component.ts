@@ -13,10 +13,10 @@ export class FooterComponent {
   private _companyName = environment.companyName;
 
   private _termsLink = this._translateService.currentLang === 'fr'
-    ? 'https://www.umi.us/fr/mentions-legales/' : 'https://www.umi.us/terms/';
+    ? 'https://www.umi.us/fr/conditions-generales/' : 'https://www.umi.us/terms-and-conditions/';
 
   private _privacyLink = this._translateService.currentLang === 'fr'
-    ? 'https://www.umi.us/fr/confidentialite/' : 'https://www.umi.us/privacy/';
+    ? 'https://www.umi.us/fr/protection-des-donnees/' : 'https://www.umi.us/privacy/';
 
   private _ideasLink = 'https://unitedmotionideas.aha.io/settings/account/idea_portals/6777639094795433405';
 
