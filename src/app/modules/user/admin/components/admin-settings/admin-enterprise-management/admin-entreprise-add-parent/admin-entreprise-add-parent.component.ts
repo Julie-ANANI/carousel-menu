@@ -1,20 +1,19 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Router} from '@angular/router';
-import {Table} from '../../../../../../table/models/table';
-import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
-import {Config} from '../../../../../../../models/config';
-import {EnterpriseService} from '../../../../../../../services/enterprise/enterprise.service';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Enterprise} from '../../../../../../../models/enterprise';
-import {NotificationsService} from 'angular2-notifications';
-import {Column} from '../../../../../../table/models/column';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
+import { Table } from '../../../../../../table/models/table';
+import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
+import { Config } from '../../../../../../../models/config';
+import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Enterprise } from '../../../../../../../models/enterprise';
+import { NotificationsService } from 'angular2-notifications';
+import { Column } from '../../../../../../table/models/column';
 
 @Component({
   templateUrl: './admin-entreprise-add-parent.component.html',
-  styleUrls: ['./admin-entreprise-add-parent.component.scss']
+  styleUrls: ['./admin-entreprise-add-parent.component.scss'],
 })
-
 export class AdminEntrepriseAddParentComponent implements OnInit {
   private _companiesToAddParent: Array<any> = [];
   private _parentCompany: Enterprise = <Enterprise>{};
@@ -26,7 +25,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"created":-1}'
+    sort: '{"created":-1}',
   };
 
   private _success = 0;
@@ -38,16 +37,16 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     placeholder: 'Enter the parent company',
     initialData: this._data,
     type: 'company',
-    showDomain: true
+    showDomain: true,
   };
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _router: Router,
-              private _notificationService: NotificationsService,
-              private _entrepriseService: EnterpriseService,
-              private _rolesFrontService: RolesFrontService) {
-  }
-
+  constructor(
+    @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _router: Router,
+    private _notificationService: NotificationsService,
+    private _entrepriseService: EnterpriseService,
+    private _rolesFrontService: RolesFrontService
+  ) {}
 
   get companiesToAddParent(): Array<any> {
     return this._companiesToAddParent;
@@ -73,7 +72,10 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   _initTable() {
     this._companiesTable = {
       _selector: 'admin-enterprises-bulk-edit-table',
-      _title: this.companiesToAddParent.length > 1 ? 'Companies selected' : 'Company selected',
+      _title:
+        this.companiesToAddParent.length > 1
+          ? 'Companies selected'
+          : 'Company selected',
       _content: this.companiesToAddParent,
       _total: this.companiesToAddParent.length,
       _isTitle: true,
@@ -109,6 +111,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _type: 'NUMBER',
         },
         {
+          _attrs: ['parentEnterpriseObject'],
+          _name: 'Parent Enterprise',
+          _type: 'NAME-LABEL-LIST',
+          _isHidden: true,
+        },
+        {
           _attrs: ['topLevelDomain'],
           _name: 'Domain',
           _type: 'TEXT',
@@ -117,7 +125,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _attrs: ['patterns'],
           _name: 'Patterns',
           _type: 'PATTERNS-OBJECT-LIST',
-          _width: '120px'
+          _width: '120px',
         },
         {
           _attrs: ['enterpriseURL'],
@@ -142,7 +150,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'GEO-ZONE-LIST',
+          _type: 'NAME-LABEL-LIST',
           _width: '190px',
         },
         {
@@ -154,24 +162,32 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
-        }
-      ]
+        },
+      ],
     };
-    this._companiesTable._content.map(item => {
+    this._companiesTable._content.map((item) => {
       item._isSelected = false;
     });
-    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
-    this._companiesToSwapTable = JSON.parse(JSON.stringify(this._companiesTable));
+    this._companiesOriginalTable = JSON.parse(
+      JSON.stringify(this._companiesTable)
+    );
+    this._companiesToSwapTable = JSON.parse(
+      JSON.stringify(this._companiesTable)
+    );
   }
 
   public canAccess(path?: Array<string>) {
     if (path) {
-      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises'].concat(path));
+      return this._rolesFrontService.hasAccessAdminSide(
+        ['settings', 'enterprises'].concat(path)
+      );
     } else {
-      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises']);
+      return this._rolesFrontService.hasAccessAdminSide([
+        'settings',
+        'enterprises',
+      ]);
     }
   }
-
 
   get parentCompany(): Enterprise {
     return this._parentCompany;
@@ -182,43 +198,53 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param event
    */
   addCompanyToInclude(event: { value: Array<string> }): void {
-    this._entrepriseService.get(event.value[0]['id'], null).pipe(first()).subscribe(res => {
-        this._parentCompany = res;
-        this.replaceChildrenWithParentValue();
-      },
-      (err: HttpErrorResponse) => {
-        console.error(err);
-      });
+    this._entrepriseService
+      .get(event.value[0]['id'])
+      .pipe(first())
+      .subscribe(
+        (res) => {
+          this._parentCompany = res;
+          console.log(this._parentCompany);
+          this.replaceChildrenWithParentValue();
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+        }
+      );
   }
 
   /**
+   * add parentEnterpriseId to children
    * replace with parent values
    * blue: empty value in children, filled with parent value
    * red: children have value, can be replaced with parent value
    */
   replaceChildrenWithParentValue() {
-    this._companiesTable._content.map(item => {
-      this._companiesTable._columns.slice(2, this._companiesTable._columns.length).map(c => {
-        switch (c._attrs.toString()) {
-          case 'topLevelDomain':
-          case 'enterpriseType':
-          case 'enterpriseSize':
-          case 'enterpriseURL':
-            if (item.hasOwnProperty(c._attrs[0])) {
-              this.compareChildValueToFillReplace(item, c);
-            }
-            break;
-          case 'valueChain':
-          case 'industries':
-          case 'patterns':
-          case 'brands':
-          case 'geographicalZone':
-            if (item.hasOwnProperty(c._attrs[0])) {
-              this.compareChildValueToFillReplace(item, c);
-            }
-            break;
-        }
-      });
+    this._companiesTable._content.map((item) => {
+      item.parentEnterprise = this._parentCompany._id || '';
+      this._companiesTable._columns
+        .slice(2, this._companiesTable._columns.length)
+        .map((c) => {
+          switch (c._attrs.toString()) {
+            case 'topLevelDomain':
+            case 'enterpriseType':
+            case 'enterpriseSize':
+            case 'enterpriseURL':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
+            case 'valueChain':
+            case 'industries':
+            case 'patterns':
+            case 'brands':
+            case 'geographicalZone':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
+          }
+        });
     });
   }
 
@@ -283,10 +309,17 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     if (context) {
       const rowIndex = context.row;
       const column = context.column;
-      const temp = this.companiesTable._content[rowIndex][column._attrs.toString()];
-      this.companiesTable._content[rowIndex][column._attrs.toString()]
-        = this._companiesToSwapTable._content[rowIndex][column._attrs.toString()];
-      this._companiesToSwapTable._content[rowIndex][column._attrs.toString()] = temp;
+      const temp = this.companiesTable._content[rowIndex][
+        column._attrs.toString()
+      ];
+      this.companiesTable._content[rowIndex][
+        column._attrs.toString()
+      ] = this._companiesToSwapTable._content[rowIndex][
+        column._attrs.toString()
+      ];
+      this._companiesToSwapTable._content[rowIndex][
+        column._attrs.toString()
+      ] = temp;
     }
   }
 
@@ -294,21 +327,32 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * Update enterprises
    */
   updateChange() {
-    this.companiesTable._content.map(item => {
-      this._entrepriseService.save(item._id, item).pipe(first()).subscribe(
-        (result) => {
-          this._success += 1;
-          if (this._success + this._failed === this.companiesTable._content.length) {
-            this.getNotification();
+    this.companiesTable._content.map((item) => {
+      console.log(item);
+      this._entrepriseService
+        .save(item._id, item)
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            this._success += 1;
+            if (
+              this._success + this._failed ===
+              this.companiesTable._content.length
+            ) {
+              this.getNotification();
+            }
+          },
+          (err: HttpErrorResponse) => {
+            this._failed += 1;
+            if (
+              this._success + this._failed ===
+              this.companiesTable._content.length
+            ) {
+              this.getNotification();
+            }
+            console.error(err);
           }
-        },
-        (err: HttpErrorResponse) => {
-          this._failed += 1;
-          if (this._success + this._failed === this.companiesTable._content.length) {
-            this.getNotification();
-          }
-          console.error(err);
-        });
+        );
     });
   }
 
@@ -322,7 +366,10 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     } else if (this._failed === this.companiesTable._content.length) {
       this._notificationService.error('Error', 'Update all failed');
     } else {
-      this._notificationService.error('Warning', this._success + 'update succeed, ' + this._failed + 'update failed.');
+      this._notificationService.error(
+        'Warning',
+        this._success + 'update succeed, ' + this._failed + 'update failed.'
+      );
     }
     this.removeFillTemplate();
     this._success = 0;
@@ -333,10 +380,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * remove styles / initialize states in tables
    */
   removeFillTemplate() {
-    this.companiesTable._columns.map(c => {
+    this.companiesTable._columns.map((c) => {
       this.removeStyle(c);
     });
-    this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
+    this._companiesOriginalTable = JSON.parse(
+      JSON.stringify(this._companiesTable)
+    );
   }
 
   addReplaceStyle(c: Column) {
@@ -356,7 +405,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     c._isReplaceable = undefined;
     c._isFilled = undefined;
   }
-
 
   returnTo(event: Event) {
     event.preventDefault();

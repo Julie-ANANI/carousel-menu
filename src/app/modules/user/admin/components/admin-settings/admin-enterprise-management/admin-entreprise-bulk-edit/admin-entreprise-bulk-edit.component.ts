@@ -268,7 +268,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'GEO-ZONE-LIST',
+          _type: 'NAME-LABEL-LIST',
 
           _width: '190px',
         },
