@@ -352,8 +352,8 @@ export class SharedTargetingWorldComponent implements OnInit {
     } else if (this._searchCountryString.length > 2) {
       this._searchCountries = this._allCountries.filter(
         (item) =>
-          item.name.toLowerCase().includes(value) ||
-          value.toLowerCase().includes(item.name)
+          item.name.toLowerCase().indexOf(value) !== -1 ||
+          value.toLowerCase().indexOf(item.name) !== -1
       );
     }
   }

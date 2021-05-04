@@ -146,7 +146,7 @@ export class PresetFrontService {
   }
 
   public isContactQuestion(identifier: string): boolean {
-    return this.isTaggedQuestion(identifier) && identifier.includes('contact');
+    return this.isTaggedQuestion(identifier) && identifier.indexOf('contact') !== -1;
   }
 
   public getNonUsedQuestions(): Array<string> {
