@@ -36,8 +36,8 @@
   color: $warning-color !important;
 }
 
-.text-pending {
-  color: $pending-color !important;
+.text-highlight {
+  color: $highlight-color !important;
 }
 
 .text-alert-dark {
@@ -72,8 +72,8 @@
   background: $alert-color !important;
 }
 
-.bg-pending {
-  background: $pending-color !important;
+.bg-highlight {
+  background: $highlight-color !important;
 }
 
 .bg-warning {
@@ -92,8 +92,12 @@
   background: $page-color !important;
 }
 
-.bg-page-dark-blue {
-  background: $bg-page-dark-blue-color !important;
+.bg-page {
+  background: $page-light-color !important;
+}
+
+.bg-page-light {
+  background: $page-light-color !important;
 }
 
 .bg-media {

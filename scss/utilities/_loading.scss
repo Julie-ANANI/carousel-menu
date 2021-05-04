@@ -55,10 +55,6 @@
     @include loading-color($warning-color);
   }
 
-  &.is-pending {
-    @include loading-color($pending-color);
-  }
-
   &.is-meta {
     @include loading-color($meta-color);
   }

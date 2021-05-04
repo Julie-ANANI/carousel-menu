@@ -7,10 +7,11 @@ $success-color: #2ECC71 !default;
 $alert-color: #EA5858 !default;
 $link-color: #00B0FF !default;
 $draft-color: #4F5D6B !default;
-$warning-color: #FFB300 !default;
+$warning-color: #F89424 !default;
 $primary-color: #00B0FF !default;
-$page-color: #F5F5F5 !default;
-$pending-color: #F89424 !default;
+$page-light-color: #F5F5F5 !default;
+$page-color: #2E6188 !default;
+$highlight-color: #FFB300 !default;
 $alert-dark-color: #a94442 !default;
 
 
@@ -40,7 +41,6 @@ $border-card-color: #EAEAEA !default;
 // background variables
 $bg-menu-hover-color: #F2F2F2 !default;
 $bg-media-color: #CAF0F8 !default;
-$bg-page-dark-blue-color: #2E6188 !default;
 $bg-overlay-color: rgba(0,0,0,0.75) !default;
 $bg-overlay-dark-color: rgba(58,66,77,0.96)!default;
 $bg-tooltip-color: rgba(0,0,0,1) !default;
