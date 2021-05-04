@@ -8,27 +8,38 @@ import {colors} from '../../../../utils/chartColors';
 })
 export class SharedColorPickerComponent implements OnInit {
 
+  @Input() color: string;
   @Input() nbColors = 4;
   @Output() colorChanged = new EventEmitter<string>();
+
+  public toggleCustomColorPicker = false;
+
+  private _customColor = '';
 
   constructor() {
   }
 
-  private _selectedColor: string; // color hex code
-
   public colors = colors;
 
   ngOnInit() {
+    this.customColor = (!this.colors.some(c => c.value === this.color)) ? this.color : this.customColor;
+  }
 
+  toggleCustomColor() {
+    this.customColor = (!this.customColor) ? this.color : this.customColor;
+    this.toggleCustomColorPicker = true;
   }
 
   changeColor(event: any) {
     event.preventDefault();
-    this._selectedColor = event.srcElement.value;
-    this.colorChanged.emit(this.selectedColor);
+    this.colorChanged.emit(event.srcElement.value);
   }
 
-  get selectedColor(): string {
-    return this._selectedColor;
+  get customColor(): string {
+    return this._customColor;
+  }
+
+  set customColor(value: string) {
+    this._customColor = value;
   }
 }
