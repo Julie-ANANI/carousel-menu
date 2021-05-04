@@ -1,0 +1,81 @@
+@import "../variables";
+@import "../mixins";
+
+.star-rating {
+  display: inline-block;
+  overflow: hidden;
+
+  &:not(:checked) {
+
+    > input {
+      position: absolute;
+      top: -9999px;
+      clip: rect(0,0,0,0);
+    }
+
+    > label {
+      font-family: "Font Awesome 5 Free", serif;
+      font-style: normal;
+      text-decoration: inherit;
+      float: right;
+      width: 19px;
+      height: 22px;
+      padding: 0 1px;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: pointer;
+      color: $primary-color;
+      font-weight: 400;
+
+      &:before {
+        content: '\f005';
+      }
+
+      &:hover, &:hover ~ label {
+        color: $primary-color;
+        font-weight: 900;
+      }
+
+    }
+
+  }
+
+  > input:checked {
+
+    & ~ label {
+      font-weight: 900;
+
+      &:before {
+        content: '\f005';
+      }
+
+    }
+
+  }
+
+  > label:active {
+    position: relative;
+    top: 2px;
+  }
+
+  &.is-meta {
+    @include start-rating-color($meta-color);
+  }
+
+  &.is-success {
+    @include start-rating-color($success-color);
+  }
+
+  &.is-warning {
+    @include start-rating-color($warning-color);
+  }
+
+  &.is-lg {
+    @include start-rating-size(20px)
+  }
+
+  &.is-xl {
+    @include start-rating-size(24px)
+  }
+
+}
