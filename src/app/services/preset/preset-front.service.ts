@@ -100,6 +100,89 @@ export class PresetFrontService {
   }
 
   /**
+   * get the new option for the controlType = 'radio' | 'checkbox' | 'stars'
+   * @param question
+   */
+  public static addNewOption(question: Question): Option {
+    if (question && !!question.options) {
+      const stringId = question.options.length.toString();
+      return {
+        identifier: stringId,
+        label: {
+          en: 'Option ' + stringId,
+          fr: 'Option ' + stringId
+        }
+      };
+    }
+
+    return <Option>{};
+  }
+
+  /**
+   * based on the control type we configure question
+   * maxOptionsSelect, options and instructions
+   * @param question
+   */
+  public static configureQuestion(question: Question): Question {
+    if (question && question.controlType) {
+      question.instruction = PresetFrontService.questionInstruction(question.controlType);
+
+      switch (question.controlType) {
+        case 'checkbox':
+        case 'radio':
+        case 'stars':
+          question.maxOptionsSelect = 4;
+          question.options = [];
+          for (let i = 0; i < 4; i++) {
+            question.options.push(PresetFrontService.addNewOption(question));
+          }
+          break;
+
+        case 'textarea':
+        case 'scale':
+          question.maxOptionsSelect = null;
+          question.options = [];
+          break;
+      }
+
+    }
+
+    return question;
+  }
+
+  /**
+   * return the default instruction for the different questions
+   * @param controlType
+   */
+  public static questionInstruction(controlType: QuestionType): {en: string, fr: string} {
+    switch (controlType) {
+      case 'scale':
+        return {
+          en: '1 = Not at all / 10 = Totally',
+          fr: '1 = Pas du tout / 10 = Totalement'
+        };
+
+      case 'stars':
+        return {
+          en: '0 stars = Not at all / 5 stars = Totally',
+          fr: '0 étoile = Pas du tout / 5 étoiles = Totalement'
+        };
+
+      case 'checkbox':
+        return {
+          en: 'You can select upto 4 items.',
+          fr: 'Vous pouvez sélectionner jusqu\'à 4 items.'
+        };
+
+      default:
+        return {
+          en: '',
+          fr: ''
+        };
+    }
+  }
+
+  /**
    * based on the languages will search the label and if not found then return first label based
    * on the presetLanguages
    * @param question
@@ -183,7 +266,7 @@ export class PresetFrontService {
       if (Array.isArray(section.questions)) {
         name += section.questions.length;
       }
-      const newQuestion: Question = {
+      let newQuestion: Question = {
         label: {
           en: name,
           fr: name
@@ -200,8 +283,8 @@ export class PresetFrontService {
         controlType: 'radio',
         canComment: true,
         sensitiveAnswerData: false,
-        options: []
       };
+      newQuestion = PresetFrontService.configureQuestion(newQuestion);
       section.questions.push(newQuestion);
     }
   }

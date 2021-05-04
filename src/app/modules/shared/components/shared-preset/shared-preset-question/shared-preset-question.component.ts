@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {PresetFrontService} from '../../../../../services/preset/preset-front.service';
-import {Question} from '../../../../../models/question';
+import {Question, QuestionType} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
@@ -90,19 +90,20 @@ export class SharedPresetQuestionComponent {
     this.notifyChanges();
   }
 
+  public onChangeQuestionType(type: QuestionType) {
+    this._question.controlType = type;
+    this._question = PresetFrontService.configureQuestion(this._question);
+    this.notifyChanges();
+  }
+
   public addNewOption(event: Event) {
     event.preventDefault();
-    const options = this._question.options;
-    const stringId = options.length.toString();
-    const newOption = {
-      identifier: stringId,
-      label: {
-        en: 'Option ' + stringId,
-        fr: 'Option ' + stringId
-      }
-    };
-    options.push(newOption);
-    this.notifyChanges();
+    const option = PresetFrontService.addNewOption(this._question);
+
+    if (option && !!option.identifier) {
+      this._question.options.push(option);
+      this.notifyChanges();
+    }
   }
 
   public deleteOption(event: Event, index: number) {
