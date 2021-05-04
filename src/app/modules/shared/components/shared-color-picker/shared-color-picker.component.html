@@ -1,4 +1,4 @@
-<div class="d-flex justify-center flex-wrap">
+<div class="d-flex align-center justify-center flex-wrap">
   <ng-container *ngFor="let color of colors; let i = index" class="m-4">
     <ng-container>
       <input (change)="changeColor($event)"
@@ -12,5 +12,22 @@
         [class]="color.label"></span>
       </label>
     </ng-container>
+  </ng-container>
+
+  <!-- Custom color picker -->
+  <ng-container class="m-4" *ngIf="nbColors > 10 && customColor">
+    <input (change)="changeColor($event)" type="radio" name="color" [id]="customColor" [value]="customColor"
+           [style.background]="customColor"/>
+    <label #ignoredInput [for]="customColor" class="m-4"
+           [cpIgnoredElements]="[ignoredInput]" [(cpToggle)]="toggleCustomColorPicker" [(colorPicker)]="customColor">
+      <span [ngStyle]="{background: customColor}" [class]="customColor"></span>
+    </label>
+  </ng-container>
+  <ng-container class="m-4" *ngIf="nbColors > 10">
+    <span *ngIf="!toggleCustomColorPicker" class="icon-container is-overlay is-sm active m-4"
+          (click)="toggleCustomColor()">
+            <i *ngIf="!customColor" class="icon icon-plus text-xs"></i>
+            <i *ngIf="customColor" class="icon icon-edit text-xs"></i>
+    </span>
   </ng-container>
 </div>

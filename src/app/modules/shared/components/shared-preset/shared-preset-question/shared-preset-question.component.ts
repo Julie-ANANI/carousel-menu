@@ -111,6 +111,11 @@ export class SharedPresetQuestionComponent {
     const options = this._question.options;
     options.splice(index, 1);
     PresetFrontService.reConfigureOptionsIdentifier(options);
+
+    if (this._question.controlType === 'radio') {
+      this._question = PresetFrontService.setOptionsColors(this._question);
+    }
+
     this.notifyChanges();
   }
 

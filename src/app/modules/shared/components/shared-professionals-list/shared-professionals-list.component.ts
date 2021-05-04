@@ -114,22 +114,22 @@ export class SharedProfessionalsListComponent {
       _isSelectable:
         this.canAccess(['user', 'delete']) || this.canAccess(['user', 'edit']),
       _buttons: [
-        {
-          _label: 'Merge',
-          _icon: 'fas fa-object-group',
-          _isHidden: !this.canAccess(['user', 'edit']),
-        },
-        {
-          _label: 'Convert to ambassador',
-          _icon: 'fas fa-user-graduate',
-          _isHidden: !this.canAccess(['user', 'edit']),
-        },
-        {
-          _label: 'Add tags',
-          _icon: 'icon icon-plus',
-          _iconSize: '12px',
-          _isHidden: !this.canAccess(['user', 'edit']),
-        },
+        // {
+        //   _label: 'Merge',
+        //   _icon: 'fas fa-object-group',
+        //   _isHidden: !this.canAccess(['user', 'edit']),
+        // },
+        // {
+        //   _label: 'Convert to ambassador',
+        //   _icon: 'fas fa-user-graduate',
+        //   _isHidden: !this.canAccess(['user', 'edit']),
+        // },
+        // {
+        //   _label: 'Add tags',
+        //   _icon: 'icon icon-plus',
+        //   _iconSize: '12px',
+        //   _isHidden: !this.canAccess(['user', 'edit']),
+        // },
         {
           _label: 'Remove',
           _icon: 'icon icon-delete',
@@ -309,6 +309,7 @@ export class SharedProfessionalsListComponent {
         (result) => {
           if (index === this._professionalsToRemove.length - 1) {
             this._localConfig.limit = '10';
+            delete this._localConfig.country;
             this.onConfigChange(this._localConfig);
             this._translateNotificationsService.success(
               'Success',
@@ -607,11 +608,17 @@ export class SharedProfessionalsListComponent {
                 'Success',
                 'The professional(s) are deleted from the campaign.'
               );
-              this._isShowModal = false;
-              this._table._content = [];
-              this._table._total = 0;
-              this._localConfig.limit = '10';
             }
+            if (next.status === 400) {
+              this._translateNotificationsService.error(
+                'Information',
+                'The professional(s) are partially deleted from the campaign.'
+              );
+            }
+            this._isShowModal = false;
+            this._table._content = [];
+            this._table._total = 0;
+            this._localConfig.limit = '10';
           },
           (error) => {
             console.error(error);

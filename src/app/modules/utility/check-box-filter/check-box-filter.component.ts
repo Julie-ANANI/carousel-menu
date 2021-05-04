@@ -137,9 +137,25 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
 
   displayResults(event: string) {
     if (event !== '') {
-      this._displaySources = this._sources.filter((item) =>
-        event.toUpperCase().split('-').includes(item.label.toUpperCase())
-      );
+      if (event.indexOf('-') !== -1) {
+        this._displaySources = this._sources.filter(
+          (item) =>
+            event
+              .toUpperCase()
+              .split('-')
+              .indexOf(this.getCountryName(item.label).toUpperCase()) !== -1
+        );
+      } else {
+        this._displaySources = this._sources.filter(
+          (item) =>
+            event
+              .toUpperCase()
+              .indexOf(this.getCountryName(item.label).toUpperCase()) !== -1 ||
+            this.getCountryName(item.label)
+              .toUpperCase()
+              .indexOf(event.toUpperCase()) !== -1
+        );
+      }
     } else {
       this._displaySources = this._sources;
     }

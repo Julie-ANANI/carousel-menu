@@ -87,31 +87,17 @@
         [readonly]="readonly"
         [percentage]="stats.percentage"
         [subtitle]="question.subtitle | multiling:reportingLang">
-        <div class="popover" (mouseleave)="currentChartIndexModified = -1">
-          <app-utility-piechart
-            (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
-            (chartSectionClicked)="chartSectionClicked($event)"
-            [pieChart]="pieChart"
-            [readonly]="readonly"
-            [reportingLang]="reportingLang"
-            [showFavorable]="question.visibility"
-            [favorableAnswersLabel]="question.positivesAnswersLabel || {en: '', fr: ''}"
-          >
-          </app-utility-piechart>
-          <div *ngIf="!readonly && currentChartIndexModified >= 0" class="absolute popover-container max-width-250"
-               [ngStyle]="{'left': currentChartOffsetXModified + 'px', 'top': currentChartOffsetYModified + 25 + 'px'}">
-            <div class="card p-10">
-              <label class="form-checkbox text-background">
-                <input type="checkbox" [(ngModel)]="question.options[currentChartIndexModified].positive" (change)="positiveAnswerChange()">
-                <i class="form-icon"></i> Positive answers
-              </label>
-              <app-shared-color-picker
-                [nbColors]="pieChart.colors.length"
-                (colorChanged)="chartColorChanged($event)">
-              </app-shared-color-picker>
-            </div>
-          </div>
-        </div>
+        <app-utility-piechart
+          (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
+          (chartSectionColorChanged)="chartSectionColorChanged($event)"
+          (chartSectionPositiveChanged)="positiveAnswerChange($event)"
+          [pieChart]="pieChart"
+          [readonly]="readonly"
+          [reportingLang]="reportingLang"
+          [showFavorable]="question.visibility"
+          [positiveSections]="positivesAnswers"
+          [favorableAnswersLabel]="question.positivesAnswersLabel || {en: '', fr: ''}"
+        ></app-utility-piechart>
       </app-bluesquare>
     </ng-container>
     <!-- /pie chart -->

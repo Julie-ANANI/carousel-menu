@@ -4,6 +4,7 @@ import {Option, Question, QuestionType} from '../../models/question';
 import { Section } from '../../models/section';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {colors} from '../../utils/chartColors';
 
 @Injectable({providedIn: 'root'})
 export class PresetFrontService {
@@ -126,23 +127,25 @@ export class PresetFrontService {
   public static configureQuestion(question: Question): Question {
     if (question && question.controlType) {
       question.instruction = PresetFrontService.questionInstruction(question.controlType);
+      question.maxOptionsSelect = null;
+      question.options = [];
 
       switch (question.controlType) {
         case 'checkbox':
         case 'radio':
         case 'stars':
-          question.maxOptionsSelect = 4;
-          question.options = [];
           for (let i = 0; i < 4; i++) {
             question.options.push(PresetFrontService.addNewOption(question));
           }
           break;
+      }
 
-        case 'textarea':
-        case 'scale':
-          question.maxOptionsSelect = null;
-          question.options = [];
-          break;
+      if (question.controlType === 'checkbox') {
+        question.maxOptionsSelect = 4;
+      }
+
+      if (question.controlType === 'radio') {
+        question = PresetFrontService.setOptionsColors(question);
       }
 
     }
@@ -180,6 +183,26 @@ export class PresetFrontService {
           fr: ''
         };
     }
+  }
+
+  /**
+   * setting the options color for control type === 'radio'
+   * @param question
+   */
+  public static setOptionsColors(question: Question): Question {
+    const nbOptions = question.options.length;
+
+    if (nbOptions > 4 && nbOptions <= 6) {
+      for (let i = 0; i < nbOptions; i++) {
+        question.options[i].color = colors[i + 4].value;
+      }
+    } else {
+      for (let i = 0; i < nbOptions; i++) {
+        question.options[i].color = colors[i % 10].value;
+      }
+    }
+
+    return question;
   }
 
   /**
@@ -229,7 +252,7 @@ export class PresetFrontService {
   }
 
   public isContactQuestion(identifier: string): boolean {
-    return this.isTaggedQuestion(identifier) && identifier.includes('contact');
+    return this.isTaggedQuestion(identifier) && identifier.indexOf('contact') !== -1;
   }
 
   public getNonUsedQuestions(): Array<string> {

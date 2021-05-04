@@ -68,7 +68,7 @@ export class WorldmapService {
       if (continent) {
         acc[continent] = acc[continent] || [];
 
-        if (countryCodesToInclude.length === 0 || countryCodesToInclude.includes(country.code)) {
+        if (countryCodesToInclude.length === 0 || countryCodesToInclude.indexOf(country.code) !== -1) {
           acc[continent].push(country);
         }
       }

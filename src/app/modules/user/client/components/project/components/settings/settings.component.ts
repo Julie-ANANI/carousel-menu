@@ -663,11 +663,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   isNotTypeRD0(code: string) {
-    return code !== 'RDO' && !code.includes('RDO');
+    return code !== 'RDO' && code.indexOf('RDO') === -1;
   }
 
   isNotTypeFC0(code: string) {
-    return code !== 'FCO' && !code.includes('FCO');
+    return code !== 'FCO' && code.indexOf('FCO') === -1;
   }
 
   ngOnDestroy(): void {
