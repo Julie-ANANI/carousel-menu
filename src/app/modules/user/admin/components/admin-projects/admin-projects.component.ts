@@ -210,18 +210,11 @@ export class AdminProjectsComponent implements OnInit {
   private _initProjects() {
     this._projects = this._projects.map((project) => {
       if (project.innovationCards && project.innovationCards.length) {
-        this.updateTypeByStatus(project);
         project.innovationCards =
           InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
       return project;
     });
-  }
-
-  updateTypeByStatus(project: any) {
-    if (project.status === 'EVALUATING' && project.mission) {
-      project.mission.type = 'CLIENT';
-    }
   }
 
   /***
