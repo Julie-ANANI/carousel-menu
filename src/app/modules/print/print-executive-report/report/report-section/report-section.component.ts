@@ -253,9 +253,9 @@ export class ReportSectionComponent implements OnChanges {
    */
   private _getRankingColor(title: Multiling): string {
     if (title) {
-      if (title['en'].toLowerCase().includes('objections')) {
+      if (title['en'].toLowerCase().indexOf('objections') !== -1) {
         return '#EA5858';
-      } else if (title['en'].toLowerCase().includes('strengths') || title['fr'].toLowerCase().includes('points forts')) {
+      } else if (title['en'].toLowerCase().indexOf('strengths') !== -1 || title['fr'].toLowerCase().indexOf('points forts') !== -1) {
         return '#2ECC71';
       }
     }

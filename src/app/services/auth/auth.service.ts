@@ -252,7 +252,7 @@ export class AuthService {
 
   private _etherpadCookiesOptions(): any {
     const hostName = environment.etherpadUrl;
-    if (hostName.includes('localhost')) {
+    if (hostName.indexOf('localhost') !== -1) {
       return this._cookieOptions;
     } else {
       const domain = '.' + hostName.substring(hostName.lastIndexOf('.', hostName.lastIndexOf('.') - 1) + 1);

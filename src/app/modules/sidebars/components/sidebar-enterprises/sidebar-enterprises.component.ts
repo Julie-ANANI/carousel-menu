@@ -188,11 +188,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       });
   }
 
-
   get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
     return this._enterpriseTypeSelectConfig;
   }
-
 
   get industrySelectConfig() {
     return this._industrySelectConfig;
@@ -373,7 +371,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
         subsidiaries: this.getSubsidiaries(),
         valueChain: this._newValueChains,
         subsidiariesList: this._newSubsidiary,
-        parentEnterpriseObject: this._enterprise.parentEnterpriseObject
+        parentEnterpriseObject: this._enterprise.parentEnterpriseObject,
       };
 
       Object.keys(this._form.controls).forEach((key) => {
@@ -536,7 +534,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           }
           break;
         case 'valueChain':
-          if (!this._newValueChains.toString().includes($event)) {
+          if (this._newValueChains.toString().indexOf($event) === -1) {
             this.valueChainUpdate($event.value);
           }
           break;

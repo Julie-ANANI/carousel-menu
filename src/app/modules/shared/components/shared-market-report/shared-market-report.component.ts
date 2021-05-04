@@ -447,7 +447,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
   hideQuestionAnswers(question: Question) {
-    return this.showAnonymousAnswers && (question.sensitiveAnswerData || question.identifier.includes('contact'));
+    return this.showAnonymousAnswers && (question.sensitiveAnswerData || question.identifier.indexOf('contact') !== -1);
   }
 
   showSection(sectionText: string) {
