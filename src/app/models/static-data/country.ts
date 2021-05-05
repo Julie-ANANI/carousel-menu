@@ -230,7 +230,6 @@ export const countries: { [code: string]: string } = {
   TZ: 'Tanzania',
   UA: 'Ukraine',
   UG: 'Uganda',
-  UK: 'United Kingdom',
   UM: 'United States Minor Outlying Islands',
   US: 'United States',
   UY: 'Uruguay',
