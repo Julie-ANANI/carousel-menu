@@ -316,6 +316,7 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   private _emitChanges() {
+    console.log(this._geography);
     this.geographyChange.emit(this._geography);
   }
 

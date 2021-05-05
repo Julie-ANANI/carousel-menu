@@ -13,7 +13,6 @@ import { ConfigService } from '../../../services/config/config.service';
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
-import { CheckBoxFilterConfig } from '../../utility/check-box-filter/interface/check-box-filter-config';
 
 @Component({
   selector: 'app-shared-table',
@@ -131,15 +130,6 @@ export class TableComponent {
 
   // copy an original table
   private _isOrginal = false;
-
-  private _checkBoxConfig: CheckBoxFilterConfig = {
-    title: 'Filter by country',
-    sources: [],
-    height: '40px',
-    isCanSelectAll: true,
-    hasChildrenItem: true,
-    type: 'country',
-  };
 
   constructor(
     private _translateService: TranslateService,
@@ -1059,13 +1049,9 @@ export class TableComponent {
     this.performAction.emit({ _action: 'Select all', _context: false });
   }
 
-  get checkBoxConfig(): CheckBoxFilterConfig {
-    return this._checkBoxConfig;
-  }
-
   performFilters(event: any) {
     if (event) {
-      this.performAction.emit({ _action: 'Filter', _context: event });
+      this.performAction.emit({ _action: 'Filter'});
     }
   }
 }
