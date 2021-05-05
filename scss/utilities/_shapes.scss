@@ -1,0 +1,49 @@
+@import "../variables";
+@import "../mixins";
+
+.shape {
+  @include inline-flex-position(center);
+  @include control-transition();
+  color: $dark-color;
+  background-color: #D8D8D8;
+  line-height: $line-height-sm;
+  font-size: $font-size-sm;
+  width: 35px;
+  height: 35px;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 2px;
+
+  &.is-circled {
+    border-radius: 50%;
+  }
+
+  &.is-rounded {
+    border-radius: $border-radius;
+  }
+
+  &.is-circled, &.is-rounded {
+
+    &.is-xs {
+      width: 15px;
+      height: 15px;
+      font-size: 8px;
+    }
+
+    &.is-sm {
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+    }
+
+    &.is-lg {
+      width: 45px;
+      height: 45px;
+      font-size: 16px;
+    }
+
+  }
+
+}
+

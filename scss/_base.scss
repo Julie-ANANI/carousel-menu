@@ -31,14 +31,14 @@ body {
 }
 
 a {
-  color: inherit;
+  color: $link-color;
   outline: none;
   text-decoration: none;
   cursor: pointer;
 
   &:focus, &:hover, &:active, &.active {
-    color: $link-color;
-    text-decoration: none;
+    color: inherit;
+    text-decoration: underline;
   }
 
 }
