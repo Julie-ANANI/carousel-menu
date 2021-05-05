@@ -21,7 +21,7 @@ export class AdminEditWorkflowComponent {
     this._campaignScenario = value;
     this._inCampaign =
       this._campaignScenario.emails[0] &&
-      this._campaignScenario.emails[0].modified != undefined;
+      this._campaignScenario.emails[0].modified !== undefined;
     this._setModified();
     this._initTable();
   }
