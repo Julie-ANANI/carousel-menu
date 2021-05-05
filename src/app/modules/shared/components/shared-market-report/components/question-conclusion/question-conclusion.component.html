@@ -19,7 +19,7 @@
     </h3>
 
     <h4 *ngIf="question.label" [ngStyle]="{'color': '#484848'}" class="m-no-bottom text-lg">
-      {{ question.label | multiling:reportingLang }}
+      {{ displayedQuestionLabel }}
     </h4>
 
     <div *ngIf="tags && tags.length > 0" class="tags-wrapper">
