@@ -1,4 +1,4 @@
-<div class="shared-market-report" id="shared-market-report">
+<div *ngIf="!!innovation.marketReport" class="shared-market-report" id="shared-market-report">
 
   <!-- project status not done at client side -->
   <section
@@ -68,40 +68,42 @@
           <!-- /synthesis reporting lang -->
 
           <!-- key learning section  -->
-          <section
-            *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion)"
-            [ngClass]="{ 'p-top-50': !reportShared }"
-            id="key-learnings">
-            <app-question-section
-              [reportingLang]="reportingLang"
-              (questionChanged)="saveQuestion($event)"
-              [innovation]="innovation"
-              [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
+          <ng-container *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion)">
+            <section
+              [ngClass]="{ 'p-top-50': !reportShared }"
+              id="key-learnings">
+              <app-question-section
+                [reportingLang]="reportingLang"
+                (questionChanged)="saveQuestion($event)"
+                [innovation]="innovation"
+                [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
                 title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
-              [readonly]="!canAccess(['edit', 'umiWord'])"
-              [hideAnswers]="true">
-            </app-question-section>
-          </section>
+                [readonly]="!canAccess(['edit', 'umiWord'])"
+                [hideAnswers]="true">
+              </app-question-section>
+            </section>
+          </ng-container>
           <!-- /key learning section -->
 
           <!-- origin comment and professional responses -->
-          <section
-            *ngIf="innovation && !areAnswersLoading && questions.length > 0 && filteredAnswers.length > 0 && answersOrigins"
-            class="p-bottom-30 p-top-50"
-            id="origin-responses">
-            <app-question-section
-              [reportingLang]="reportingLang"
-              (questionChanged)="saveQuestion($event)"
-              [answers]="filteredAnswers"
-              [innovation]="innovation"
-              [originAnswers]="answersOrigins"
-              [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
+          <ng-container *ngIf="!areAnswersLoading && questions.length > 0 && filteredAnswers.length > 0 && answersOrigins">
+            <section
+              class="p-bottom-30 p-top-50"
+              id="origin-responses">
+              <app-question-section
+                [reportingLang]="reportingLang"
+                (questionChanged)="saveQuestion($event)"
+                [answers]="filteredAnswers"
+                [innovation]="innovation"
+                [originAnswers]="answersOrigins"
+                [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' }, controlType: 'textarea' })"
-              [readonly]="!canAccess(['edit', 'umiWord'])"
-              [hideAnswers]="true"
-              [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
-            </app-question-section>
-          </section>
+                [readonly]="!canAccess(['edit', 'umiWord'])"
+                [hideAnswers]="true"
+                [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
+              </app-question-section>
+            </section>
+          </ng-container>
           <!-- /origin comment and professional responses -->
 
           <!-- map -->
@@ -111,9 +113,9 @@
           <!-- /map -->
 
           <!-- professionals -->
-          <section class="p-bottom-50" id="professionals" *ngIf="answersOrigins && !areAnswersLoading && questions.length > 0">
+          <section class="p-bottom-50" id="professionals" *ngIf="answersOrigins && !areAnswersLoading && answers && questions.length > 0">
 
-            <div class="text-center p-top-25">
+            <div *ngIf="filteredAnswers.length" class="text-center p-top-25">
               <button
                 (click)="toggleProfessional = !toggleProfessional"
                 class="button is-community is-sm"
