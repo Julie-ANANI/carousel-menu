@@ -1,0 +1,37 @@
+@import "../variables";
+
+// Icon variables
+$icon-border-width: $border-width-lg;
+$icon-prefix: "icon";
+
+// Icon base style
+.#{$icon-prefix} {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: inherit;
+  font-style: normal;
+  height: 1em;
+  position: relative;
+  text-indent: -9999px;
+  vertical-align: middle;
+  width: 1em;
+
+  &::before, &::after {
+    content: "";
+    display: block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+}
+
+// Component icon support
+.accordion, .button, .toast, .menu {
+
+  .#{$icon-prefix} {
+    vertical-align: -10%;
+  }
+
+}
