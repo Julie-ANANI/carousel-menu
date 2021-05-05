@@ -17,6 +17,7 @@ export class SharedColorPickerComponent implements OnInit {
   public toggleCustomColorPicker = false;
 
   private _customColor = '';
+  private _selectedColor = '';
 
   constructor(private _translateService: TranslateService) {
   }
@@ -24,17 +25,18 @@ export class SharedColorPickerComponent implements OnInit {
   public colors = colors;
 
   ngOnInit() {
-    this.customColor = (!this.colors.some(c => c.value === this.color)) ? this.color : this.customColor;
+    this._selectedColor = this.color;
+    this._customColor = (!this.colors.some(c => c.value === this.color)) ? this.color : this.customColor;
   }
 
   toggleCustomColor() {
-    this.customColor = (!this.customColor) ? this.color : this.customColor;
+    this._customColor = (!this.customColor) ? this.color : this.customColor;
     this.toggleCustomColorPicker = true;
   }
 
   changeColor(event: any) {
     event.preventDefault();
-    this.colorChanged.emit(event.srcElement.value);
+    this._selectedColor = event.srcElement.value;
   }
 
   get customColor(): string {
@@ -43,5 +45,9 @@ export class SharedColorPickerComponent implements OnInit {
 
   set customColor(value: string) {
     this._customColor = value;
+  }
+
+  get selectedColor(): string {
+    return this._selectedColor;
   }
 }

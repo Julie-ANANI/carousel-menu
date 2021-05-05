@@ -75,8 +75,6 @@ export class PiechartComponent {
 
   chartPositiveSectionChanged(index: number) {
     this.chartSectionPositiveChanged.emit({index: index, positive: this.positiveSections[index]});
-    this.indexLegend = -1;
-    this.indexSection = -1;
   }
 
   private _loadData() {
