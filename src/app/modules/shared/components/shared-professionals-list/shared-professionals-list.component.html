@@ -39,7 +39,7 @@
   <!-- /tags -->
 
   <!-- sidebar to advanced search -->
-  <div class="m-top-10 p-30">
+  <div class="m-top-10 p-30" *ngIf="isFiltersSidebar">
     <app-shared-targeting-world
       (geographyChange)="onGeographyChange($event)"
       [(geography)]="geography"

@@ -274,6 +274,7 @@ export class SharedProfessionalsListComponent {
 
   public onClickEdit(value: Professional) {
     this._resetSidebarVariables('tags');
+    this._resetSidebarVariables('filters');
     this._professionalsService
       .get(value._id)
       .pipe(first())
@@ -449,7 +450,8 @@ export class SharedProfessionalsListComponent {
   }
 
   private _filtersByCountry() {
-    this._resetSidebarVariables('filters');
+    this._resetSidebarVariables('professional');
+    this._resetSidebarVariables('tags');
     this._isFiltersSidebar = true;
     this._sidebarValue = {
       animate_state: 'active',
@@ -461,6 +463,7 @@ export class SharedProfessionalsListComponent {
 
   private _editProfessionalTags(value: Array<SelectedProfessional>) {
     this._resetSidebarVariables('professional');
+    this._resetSidebarVariables('filters');
     this._professionalsToTags = value;
     this._isTagsSidebar = true;
     this._sidebarValue = {
