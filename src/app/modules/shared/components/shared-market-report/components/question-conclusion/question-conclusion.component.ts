@@ -9,6 +9,7 @@ import {PieChart} from '../../../../../../models/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Multiling} from '../../../../../../models/multiling';
 import {Picto, picto} from '../../../../../../models/static-data/picto';
+import {htmlTagsRegex} from '../../../../../../utils/regex';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -44,6 +45,8 @@ export class QuestionConclusionComponent implements OnInit {
 
   private _picto: Picto = picto;
 
+  public displayedQuestionLabel: string;
+
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
               private _innovationFrontService: InnovationFrontService) {}
@@ -56,7 +59,7 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   private _cleanQuestionHtml() {
-    this.question.label[this.reportingLang] = this.question.label[this.reportingLang].replace('<br>/gm', '');
+    this.displayedQuestionLabel = this.question.label[this.reportingLang].replace(htmlTagsRegex, '');
   }
 
   public keyupHandlerFunction(event: {content: string}) {

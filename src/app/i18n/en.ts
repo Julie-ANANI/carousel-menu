@@ -30,7 +30,7 @@ import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
 import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/en';
 import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/en';
 import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/en';
-import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
+import {CONTINENTS, COUNTRIES} from '../modules/shared/components/shared-worldmap/i18n/en';
 import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/en';
 import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-filter-answers/i18n/en';
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/en';
@@ -47,6 +47,7 @@ import {SHARED_TEXT_ZONE} from '../modules/shared/components/shared-editors/i18n
 export const en = {
   'COMMON': COMMON,
   'CONTINENTS': CONTINENTS,
+  'COUNTRIES': COUNTRIES,
   'ERROR': ERROR,
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,

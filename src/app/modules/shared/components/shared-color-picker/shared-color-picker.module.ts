@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedColorPickerComponent } from './shared-color-picker.component';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {FormsModule} from '@angular/forms';
+import {PipeModule} from '../../../../pipe/pipe.module';
 
 @NgModule({
     declarations: [SharedColorPickerComponent],
@@ -12,7 +13,8 @@ import {FormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     ColorPickerModule,
-    FormsModule
+    FormsModule,
+    PipeModule
   ]
 })
 export class SharedColorPickerModule { }
