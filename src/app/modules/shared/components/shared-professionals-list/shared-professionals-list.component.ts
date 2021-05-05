@@ -401,7 +401,7 @@ export class SharedProfessionalsListComponent implements OnDestroy {
         break;
 
       case 'Filter':
-        this.filterAccordingToCountries(value._context);
+        // this.filterAccordingToCountries(value._context);
         break;
 
       case 'Select all':
@@ -638,20 +638,20 @@ export class SharedProfessionalsListComponent implements OnDestroy {
   /**
    * filter table content: countries
    */
-  filterAccordingToCountries(context: any) {
-    const countries: Array<any> = [];
-    context.map((item: any) => {
-      if (item.isSelected) {
-        countries.push(item.label);
-      }
-    });
-    if (countries.length > 0) {
-      this._localConfig.country = JSON.stringify({ $in: countries });
-    } else {
-      delete this._localConfig.country;
-    }
-    this.configChange.emit(this._localConfig);
-  }
+  // filterAccordingToCountries(context: any) {
+  //   const countries: Array<any> = [];
+  //   context.map((item: any) => {
+  //     if (item.isSelected) {
+  //       countries.push(item.label);
+  //     }
+  //   });
+  //   if (countries.length > 0) {
+  //     this._localConfig.country = JSON.stringify({ $in: countries });
+  //   } else {
+  //     delete this._localConfig.country;
+  //   }
+  //   this.configChange.emit(this._localConfig);
+  // }
 
   get isLoading(): boolean {
     return this._isLoading;
