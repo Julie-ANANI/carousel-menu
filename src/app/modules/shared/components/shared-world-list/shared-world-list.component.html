@@ -7,7 +7,7 @@
       (change)="selectAllContinents($event.target['checked'], continents)"
       [indeterminate]="partiallySelectedContinents()"
       [checked]="!(filters['worldmap'])">
-    <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translate }}
+    <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
   </label>
 
   <div [id]="continent" *ngFor="let continent of continents">
@@ -21,7 +21,7 @@
             [id]="'continent-'+continent"
             [indeterminate]="partiallySelectedCountries(continent)"
             [checked]="filteredContinents ? filteredContinents[continent] : true">
-          <i class="form-icon"></i> {{ ('CONTINENTS.' + continent) | translate }}
+          <i class="form-icon"></i> {{ ('CONTINENTS.' + continent) | translateIn: reportingLang }}
         </label>
       </div>
       <div slot="body">
@@ -33,7 +33,7 @@
               [id]="'country-'+country.code"
               (change)="checkCountry.emit($event)"
               [checked]="filteredCountries ? filteredCountries[country.code] : true">
-            <i class="form-icon"></i> {{ country.name }}
+            <i class="form-icon"></i> {{ ('COUNTRIES.' + country.code) | translateIn: reportingLang }}
           </label>
         </div>
       </div>
