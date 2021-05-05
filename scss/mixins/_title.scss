@@ -1,0 +1,23 @@
+@import "../variables";
+
+// Title mixin
+@mixin title-variant($size: 24px) {
+  color: $dark-color;
+  font-size: $size;
+  font-weight: $font-weight-bold;
+  margin-top: 0;
+  margin-bottom: 25px;
+  line-height: $line-height;
+  word-break: break-word;
+}
+
+// Subtitle mixin
+@mixin subtitle-variant($size: 18px) {
+  color: #9E9E9E;
+  font-size: $size;
+  font-weight: $font-weight-normal;
+  margin-top: 0;
+  margin-bottom: 25px;
+  line-height: $line-height;
+  word-break: break-word;
+}
