@@ -1,0 +1,103 @@
+@import "../mixins";
+
+.w-full {
+  @include width(100%);
+}
+
+.w-auto {
+  @include width(auto);
+}
+
+.w-50 {
+  @include width(50px);
+}
+
+.w-80 {
+  @include width(80px);
+}
+
+.w-100 {
+  @include width(100px);
+}
+
+.w-140 {
+  @include width(140px);
+}
+
+.w-150 {
+  @include width(150px);
+}
+
+.w-165 {
+  @include width(165px);
+}
+
+.w-180 {
+  @include width(180px);
+}
+
+.w-200 {
+  @include width(200px);
+}
+
+.w-250 {
+  @include width(250px);
+}
+
+.w-280 {
+  @include width(280px);
+}
+
+.w-300 {
+  @include width(300px);
+}
+
+.w-350 {
+  @include width(350px);
+}
+
+.w-400 {
+  @include width(400px);
+}
+
+.w-450 {
+  @include width(450px);
+}
+
+.w-480 {
+  @include width(480px);
+}
+
+.w-500 {
+  @include width(500px);
+}
+
+.w-550 {
+  @include width(550px);
+}
+
+.w-600 {
+  @include width(600px);
+}
+
+.w-650 {
+  @include width(650px);
+}
+
+.w-700 {
+  @include width(700px);
+}
+
+.w-750 {
+  @include width(750px);
+}
+
+.w-800 {
+  @include width(800px);
+}
+
+.w-840 {
+  @include width(840px);
+}
+
+

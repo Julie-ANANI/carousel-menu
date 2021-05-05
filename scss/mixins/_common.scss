@@ -1,3 +1,7 @@
 @mixin max-width($width) {
   max-width: $width !important;
 }
+
+@mixin width($width) {
+  width: $width !important;
+}
