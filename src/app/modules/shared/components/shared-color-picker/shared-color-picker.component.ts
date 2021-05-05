@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {colors} from '../../../../utils/chartColors';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-color-picker',
@@ -10,13 +11,14 @@ export class SharedColorPickerComponent implements OnInit {
 
   @Input() color: string;
   @Input() nbColors = 4;
+  @Input() reportingLang = this._translateService.currentLang;
   @Output() colorChanged = new EventEmitter<string>();
 
   public toggleCustomColorPicker = false;
 
   private _customColor = '';
 
-  constructor() {
+  constructor(private _translateService: TranslateService) {
   }
 
   public colors = colors;

@@ -52,6 +52,7 @@
           <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
         </label>
         <app-shared-color-picker
+          [reportingLang]="reportingLang"
           [color]="pieChart.colors[indexSection]"
           [nbColors]="pieChart.colors.length"
           (colorChanged)="chartColorChanged($event, indexSection)">
@@ -75,6 +76,7 @@
               <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
             </label>
             <app-shared-color-picker
+              [reportingLang]="reportingLang"
               [color]="pieChart.colors[indexLegend]"
               [nbColors]="pieChart.colors.length"
               (colorChanged)="chartColorChanged($event, indexLegend)">
