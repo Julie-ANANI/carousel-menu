@@ -38,6 +38,16 @@
   </app-sidebar-tags>
   <!-- /tags -->
 
+  <!-- sidebar to advanced search -->
+  <div class="m-top-10 p-30">
+    <app-shared-targeting-world
+      (geographyChange)="onGeographyChange($event)"
+      [(geography)]="geography"
+      [isShowSearch]="true"
+      [isEditable]="true">
+    </app-shared-targeting-world>
+  </div>
+
 </app-sidebar>
 <!-- /sidebar -->
 

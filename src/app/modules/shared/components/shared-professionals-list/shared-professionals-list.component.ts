@@ -12,6 +12,7 @@ import { Tag } from '../../../../models/tag';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { GeographySettings } from '../../../../models/innov-settings';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -24,6 +25,8 @@ export interface SelectedProfessional extends Professional {
 })
 export class SharedProfessionalsListComponent {
   @Input() accessPath: Array<string> = [];
+
+  private _isFiltersSidebar = false;
 
   @Input() set config(value: Config) {
     this._localConfig = value;
@@ -81,6 +84,21 @@ export class SharedProfessionalsListComponent {
   private _isLoading = false;
 
   private _isSelectAll = false;
+
+  private _countriesSelected: Array<any> = [];
+
+  private _geography: GeographySettings = {
+    continentTarget: {
+      africa: false,
+      oceania: false,
+      asia: false,
+      europe: false,
+      americaNord: false,
+      americaSud: false,
+    },
+    exclude: [],
+    include: [],
+  };
 
   constructor(
     private _professionalsService: ProfessionalsService,
@@ -244,6 +262,10 @@ export class SharedProfessionalsListComponent {
         this._isProfessionalSidebar = false;
         return;
 
+      case 'filters':
+        this._isFiltersSidebar = false;
+        return;
+
       case 'tags':
         this._isTagsSidebar = false;
         return;
@@ -393,7 +415,7 @@ export class SharedProfessionalsListComponent {
         break;
 
       case 'Filter':
-        this.filterAccordingToCountries(value._context);
+        this._filtersByCountry();
         break;
 
       case 'Select all':
@@ -424,6 +446,17 @@ export class SharedProfessionalsListComponent {
         this._professionalsToRemove
       );
     }
+  }
+
+  private _filtersByCountry() {
+    this._resetSidebarVariables('filters');
+    this._isFiltersSidebar = true;
+    this._sidebarValue = {
+      animate_state: 'active',
+      title: 'Filter by country',
+      type: 'Filter',
+      size: '600px',
+    };
   }
 
   private _editProfessionalTags(value: Array<SelectedProfessional>) {
@@ -633,25 +666,33 @@ export class SharedProfessionalsListComponent {
     }
   }
 
-  /**
-   * filter table content: countries
-   */
-  filterAccordingToCountries(context: any) {
-    const countries: Array<any> = [];
-    context.map((item: any) => {
-      if (item.isSelected) {
-        countries.push(item.label);
-      }
-    });
-    if (countries.length > 0) {
-      this._localConfig.country = JSON.stringify({ $in: countries });
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get isFiltersSidebar(): boolean {
+    return this._isFiltersSidebar;
+  }
+
+  get geography(): GeographySettings {
+    return this._geography;
+  }
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
+  }
+
+  public onGeographyChange(value: GeographySettings) {
+    this._geography = value;
+    this._countriesSelected = this._geography.include.map((c) => c.code);
+    if (this._countriesSelected.length > 0) {
+      this._localConfig.country = JSON.stringify({
+        $in: this._countriesSelected,
+      });
     } else {
       delete this._localConfig.country;
     }
     this.configChange.emit(this._localConfig);
   }
 
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
 }
