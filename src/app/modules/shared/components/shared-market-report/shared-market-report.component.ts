@@ -46,6 +46,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   @Input() set project(value: Innovation) {
     if (value && value._id) {
       this._innovation = value;
+      this._innovation.marketReport = this._innovation.marketReport || {};
       this._initializeReport();
       this._isOwner = (this._authService.userId === (this._innovation.owner && this._innovation.owner.id))
         || this._authService.adminLevel > 3;
@@ -62,7 +63,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _filteredAnswers: Array<Answer> = [];
 
-  private _answersOrigins: {[continent: string]: {count: number, countries: {[country: string]: number}}} = {};
+  private _answersOrigins: {[continent: string]: {count: number, countries: {[country: string]: {count: number, names: any}}}} = {};
 
   private _countries: Array<string> = [];
 
@@ -414,7 +415,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isOwner;
   }
 
-  get answersOrigins(): {[continent: string]: {count: number, countries: {[country: string]: number}}} {
+  get answersOrigins(): {[continent: string]: {count: number, countries: {[country: string]: {count: number, names: any}}}} {
     return this._answersOrigins;
   }
 
@@ -451,7 +452,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
   showSection(sectionText: string) {
-    return ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) && !this.areAnswersLoading && this.questions.length > 0;
+    return ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) && !this.areAnswersLoading;
   }
 
   ngOnDestroy(): void {

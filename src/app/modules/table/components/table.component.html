@@ -37,16 +37,10 @@
       <!-- /Add parent: legend -->
 
       <!-- filter-country -->
-      <div *ngIf="table._isFilterCountry" class="dropdown is-right m-bottom-20" style="height: 40px">
-        <a class="button is-sm is-outlined dropdown-toggle" tabindex="0">
-          Filter by country<i class="icon icon-caret icon-right"></i>
-        </a>
-        <div class="menu" style="left: 5%; width: 280px">
-          <app-check-box-filter
-            [config]="checkBoxConfig"
-            (sendFilters)="performFilters($event)">
-          </app-check-box-filter>
-        </div>
+      <div *ngIf="table._isFilterCountry" class="filters-wrap">
+        <button class="button is-primary" style="height: inherit" (click)="performFilters($event)">
+          Filter by country
+        </button>
       </div>
       <!-- /filter-country -->
 
@@ -183,7 +177,7 @@
                   <span class="text-lowercase text-underline" style="cursor: pointer; color: orangered"
                         *ngIf="isSelectAll"
                         (click)="clearAllTheSelections()">{{'TABLE.CLEAR_ALL' | translate}}</span>
-                  {{ isSelectAll ? table._total : selectedRows }}{{'/' + table._total}}
+                  {{ isSelectAll ? table._total : 0 }}{{'/' + table._total}}
                 </div>
                 <!-- /total selected text -->
 

@@ -54,54 +54,56 @@
                class="d-flex flex-d-row align-center justify-end dropdown w-full m-top-15 is-right">
             <span class="text-sm text-background m-right-4">{{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}</span>
             <a class="button dropdown-toggle is-info is-sm is-outlined" tabindex="0">
-              {{ 'COMMON.LANG.' + reportingLang | uppercase | translate }} <i class="icon icon-caret"></i>
+              {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }} <i class="icon icon-caret"></i>
             </a>
             <ul class="menu">
               <li (click)="setNewSelectedLang('fr')" *ngIf="reportingLang === 'en'" class="menu-item">
-                {{ 'COMMON.LANG.FR' | translate }}
+                {{ 'COMMON.LANG.FR' | translateIn: reportingLang }}
               </li>
               <li (click)="setNewSelectedLang('en')" *ngIf="reportingLang === 'fr'" class="menu-item">
-                {{ 'COMMON.LANG.EN' | translate }}
+                {{ 'COMMON.LANG.EN' | translateIn: reportingLang }}
               </li>
             </ul>
           </div>
           <!-- /synthesis reporting lang -->
 
           <!-- key learning section  -->
-          <section
-            *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion)"
-            [ngClass]="{ 'p-top-50': !reportShared }"
-            id="key-learnings">
-            <app-question-section
-              [reportingLang]="reportingLang"
-              (questionChanged)="saveQuestion($event)"
-              [innovation]="innovation"
-              [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
+          <ng-container *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion)">
+            <section
+              [ngClass]="{ 'p-top-50': !reportShared }"
+              id="key-learnings">
+              <app-question-section
+                [reportingLang]="reportingLang"
+                (questionChanged)="saveQuestion($event)"
+                [innovation]="innovation"
+                [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
                 title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
-              [readonly]="!canAccess(['edit', 'umiWord'])"
-              [hideAnswers]="true">
-            </app-question-section>
-          </section>
+                [readonly]="!canAccess(['edit', 'umiWord'])"
+                [hideAnswers]="true">
+              </app-question-section>
+            </section>
+          </ng-container>
           <!-- /key learning section -->
 
           <!-- origin comment and professional responses -->
-          <section
-            *ngIf="innovation && !areAnswersLoading && questions.length > 0 && filteredAnswers.length > 0 && answersOrigins"
-            class="p-bottom-30 p-top-50"
-            id="origin-responses">
-            <app-question-section
-              [reportingLang]="reportingLang"
-              (questionChanged)="saveQuestion($event)"
-              [answers]="filteredAnswers"
-              [innovation]="innovation"
-              [originAnswers]="answersOrigins"
-              [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
+          <ng-container *ngIf="!areAnswersLoading && answersOrigins">
+            <section
+              class="p-bottom-30 p-top-50"
+              id="origin-responses">
+              <app-question-section
+                [reportingLang]="reportingLang"
+                (questionChanged)="saveQuestion($event)"
+                [answers]="filteredAnswers"
+                [innovation]="innovation"
+                [originAnswers]="answersOrigins"
+                [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' }, controlType: 'textarea' })"
-              [readonly]="!canAccess(['edit', 'umiWord'])"
-              [hideAnswers]="true"
-              [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
-            </app-question-section>
-          </section>
+                [readonly]="!canAccess(['edit', 'umiWord'])"
+                [hideAnswers]="true"
+                [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
+              </app-question-section>
+            </section>
+          </ng-container>
           <!-- /origin comment and professional responses -->
 
           <!-- map -->
@@ -111,9 +113,9 @@
           <!-- /map -->
 
           <!-- professionals -->
-          <section class="p-bottom-50" id="professionals" *ngIf="answersOrigins && !areAnswersLoading && questions.length > 0">
+          <section class="p-bottom-50" id="professionals" *ngIf="answersOrigins && !areAnswersLoading && answers && questions.length > 0">
 
-            <div class="text-center p-top-25">
+            <div *ngIf="filteredAnswers.length" class="text-center p-top-25">
               <button
                 (click)="toggleProfessional = !toggleProfessional"
                 class="button is-community is-sm"
@@ -128,7 +130,7 @@
               <div class="card-wrapper">
                 <div *ngFor="let answer of filteredAnswers" class="card is-card-3 relative">
                   <div (click)="filterPro(answer, $event)" class="icon-container text-alert absolute">
-                    <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translate">
+                    <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translateIn: reportingLang">
                       <i class="fas fa-eye-slash" aria-hidden="true"></i>
                     </span>
                   </div>

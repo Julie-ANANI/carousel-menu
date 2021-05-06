@@ -1,7 +1,17 @@
 <div class="content-body" id="question-conclusion">
 
+  <div [hidden]="!!question.identifier" class="conclusion-wrapper">
+    <h2 class="loading-content m-bottom-20"></h2>
+    <p class="loading-content m-bottom-20"></p>
+    <div class="card-header">
+      <div class="card-title loading-content"></div>
+    </div>
+    <div class="card-body loading-content"></div>
+    <div class="card-body loading-content"></div>
+  </div>
+
   <!-- conclusion -->
-  <div class="conclusion-wrapper">
+  <div class="conclusion-wrapper" [hidden]="!question.identifier">
 
     <h3 *ngIf="question.title" [ngClass]="{'m-no-bottom': !question.label}" class="title is-main d-flex align-center">
       <span *ngIf="!editTitle"> {{ question.title | multiling:reportingLang }} </span>
@@ -19,7 +29,7 @@
     </h3>
 
     <h4 *ngIf="question.label" [ngStyle]="{'color': '#484848'}" class="m-no-bottom text-lg">
-      {{ question.label | multiling:reportingLang }}
+      {{ displayedQuestionLabel }}
     </h4>
 
     <div *ngIf="tags && tags.length > 0" class="tags-wrapper">
@@ -65,8 +75,8 @@
             </div>
             <div slot="body" >
               <ul class="m-no-bottom">
-                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value'" class="m-top-1">
-                  {{ country.key }}: {{ country.value }}
+                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value.count'" class="m-top-1">
+                  {{ country.value.names | multiling:reportingLang }}: {{ country.value.count }}
                 </li>
               </ul>
             </div>

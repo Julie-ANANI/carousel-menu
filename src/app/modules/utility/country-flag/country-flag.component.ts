@@ -4,16 +4,15 @@ import { countries } from '../../../models/static-data/country';
 @Component({
   selector: 'app-utility-country-flag',
   templateUrl: './country-flag.component.html',
-  styleUrls: ['./country-flag.component.scss']
+  styleUrls: ['./country-flag.component.scss'],
 })
 export class CountryFlagComponent {
-
   private _country: any;
 
   @Input() set country(value: any) {
     this._country = value;
     this.updateFlag();
-  };
+  }
 
   @Input() width = 37;
 
@@ -34,6 +33,7 @@ export class CountryFlagComponent {
 
     this._url = `https://res.cloudinary.com/umi/image/upload/app/flags/${flag}.png`;
 
+    flag = flag === 'UK' ? 'GB' : flag;
     this._name = countries[flag] || 'Unknown';
   }
 

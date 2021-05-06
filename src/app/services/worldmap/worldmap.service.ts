@@ -47,7 +47,7 @@ export class WorldmapService {
   /*
    * Return the counter of the countries by continents.
    */
-  public async getCountriesRepartitionByContinent(countries: Array<string>): Promise<{ [continent: string]: { count: number, countries: { [country: string]: number } } }> {
+  public async getCountriesRepartitionByContinent(countries: Array<string>): Promise<{ [continent: string]: { count: number, countries: { [country: string]: {count: number, names: any} } } }> {
     const countriesList = await this.getCountriesList();
     return countries.reduce((acc, countryCode) => {
       const continent = this._countries[countryCode];
@@ -55,10 +55,11 @@ export class WorldmapService {
       if (continent) {
         acc[continent] = acc[continent] || {count: 0, countries: {}};
         acc[continent].count = acc[continent].count + 1;
-        acc[continent].countries[country.name] = (acc[continent].countries[country.name] || 0) + 1;
+        acc[continent].countries[country.name] = acc[continent].countries[country.name] || {count: 0, names: country.names};
+        acc[continent].countries[country.name].count = acc[continent].countries[country.name].count + 1;
       }
       return acc;
-    }, {} as { [continent: string]: { count: number, countries: { [country: string]: number } } });
+    }, {} as { [continent: string]: { count: number, countries: { [country: string]: {count: number, names: any} } } });
   }
 
   public async getCountriesByContinent(countryCodesToInclude: string[]= []): Promise<{ [continent: string]: Array<Country> }> {

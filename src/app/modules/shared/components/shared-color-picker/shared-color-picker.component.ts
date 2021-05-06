@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {colors} from '../../../../utils/chartColors';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-color-picker',
@@ -10,29 +11,33 @@ export class SharedColorPickerComponent implements OnInit {
 
   @Input() color: string;
   @Input() nbColors = 4;
+  @Input() reportingLang = this._translateService.currentLang;
   @Output() colorChanged = new EventEmitter<string>();
 
   public toggleCustomColorPicker = false;
 
   private _customColor = '';
+  private _selectedColor = '';
 
-  constructor() {
+  constructor(private _translateService: TranslateService) {
   }
 
   public colors = colors;
 
   ngOnInit() {
-    this.customColor = (!this.colors.some(c => c.value === this.color)) ? this.color : this.customColor;
+    this._selectedColor = this.color;
+    this._customColor = (!this.colors.some(c => c.value === this.color)) ? this.color : this.customColor;
   }
 
   toggleCustomColor() {
-    this.customColor = (!this.customColor) ? this.color : this.customColor;
+    this._customColor = (!this.customColor) ? 'black' : this.customColor;
+    this._selectedColor = this._customColor;
     this.toggleCustomColorPicker = true;
   }
 
   changeColor(event: any) {
     event.preventDefault();
-    this.colorChanged.emit(event.srcElement.value);
+    this._selectedColor = event.srcElement.value;
   }
 
   get customColor(): string {
@@ -41,5 +46,13 @@ export class SharedColorPickerComponent implements OnInit {
 
   set customColor(value: string) {
     this._customColor = value;
+  }
+
+  get selectedColor(): string {
+    return this._selectedColor;
+  }
+
+  set selectedColor(value: string) {
+    this._selectedColor = value;
   }
 }

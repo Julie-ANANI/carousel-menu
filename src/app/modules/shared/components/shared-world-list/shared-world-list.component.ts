@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Country} from '../../../../models/country';
 import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
 import {Filter} from '../shared-market-report/models/filter';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-world-list',
@@ -13,6 +14,7 @@ export class SharedWorldListComponent {
   @Input() filters: { [questionId: string]: Filter } = {};
   @Input() filteredContinents: any;
   @Input() filteredCountries: any;
+  @Input() reportingLang = this._translateService.currentLang;
 
   @Input() set answersCountries(value: string[]) {
     if (!!value) {
@@ -26,7 +28,8 @@ export class SharedWorldListComponent {
   @Output() checkContinent: EventEmitter<Event> = new EventEmitter();
   @Output() checkCountry: EventEmitter<Event> = new EventEmitter();
 
-  constructor(private _worldmapService: WorldmapService) {
+  constructor(private _worldmapService: WorldmapService,
+              private _translateService: TranslateService) {
   }
 
   private _continentCountries: { [continent: string]: Array<Country> } = {};

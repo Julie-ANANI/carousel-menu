@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedProfessionalsListComponent } from './shared-professionals-list.component';
@@ -10,6 +8,11 @@ import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.modul
 import { SidebarUserFormModule } from '../../../sidebars/components/user-form/sidebar-user-form.module';
 import { SidebarTagsModule } from '../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
+import {SidebarSearchModule} from '../../../sidebars/components/sidebar-search/sidebar-search.module';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {SharedWorldListModule} from '../shared-world-list/shared-world-list.module';
+import {SharedTargetingWorldModule} from '../shared-targeting-world/shared-targeting-world.module';
 
 @NgModule({
   imports: [
@@ -20,14 +23,12 @@ import { ModalModule } from '../../../utility/modals/modal/modal.module';
     SidebarModule,
     SidebarUserFormModule,
     SidebarTagsModule,
-    ModalModule
+    ModalModule,
+    SidebarSearchModule,
+    SharedWorldListModule,
+    SharedTargetingWorldModule,
   ],
-  declarations: [
-    SharedProfessionalsListComponent
-  ],
-  exports: [
-    SharedProfessionalsListComponent
-  ]
+  declarations: [SharedProfessionalsListComponent],
+  exports: [SharedProfessionalsListComponent],
 })
-
-export class SharedProfessionalsListModule { }
+export class SharedProfessionalsListModule {}
