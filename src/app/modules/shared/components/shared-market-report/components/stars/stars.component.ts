@@ -17,6 +17,7 @@ import { takeUntil } from "rxjs/operators";
 export class StarsComponent implements OnInit, OnDestroy {
 
   @Input() question: Question = <Question>{};
+  @Input() reportingLang = this._translateService.currentLang;
 
   private _notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
 

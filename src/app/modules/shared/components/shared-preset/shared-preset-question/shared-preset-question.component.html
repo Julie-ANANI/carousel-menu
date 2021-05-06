@@ -23,7 +23,7 @@
       <ng-container *ngIf="isEditable && editMode && !isTaggedQuestion">
         <label class="m-right-20">
           <select
-            (ngModelChange)="notifyChanges()"
+            (ngModelChange)="onChangeQuestionType($event)"
             [(ngModel)]="question.controlType"
             class="form-select is-sm">
             <option value="radio">{{ 'PRESETS.QUESTION.TYPE.radio' | translate }}</option>

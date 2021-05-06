@@ -1,7 +1,7 @@
 import { COMMON } from './common_fr';
 import { ERROR } from './error_fr';
 import { ADMIN_USERS } from '../modules/user/admin/components/admin-users/i18n/fr';
-import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/fr';
+import {CONTINENTS, COUNTRIES} from '../modules/shared/components/shared-worldmap/i18n/fr';
 import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { DASHBOARD } from '../modules/user/admin/components/admin-dashboard/i18n/fr';
@@ -47,6 +47,7 @@ import {SHARED_TEXT_ZONE} from '../modules/shared/components/shared-editors/i18n
 export const fr = {
   'COMMON': COMMON,
   'CONTINENTS': CONTINENTS,
+  'COUNTRIES': COUNTRIES,
   'ERROR': ERROR,
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,

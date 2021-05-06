@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {colors} from '../../../../utils/chartColors';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-color-picker',
@@ -7,50 +9,45 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class SharedColorPickerComponent implements OnInit {
 
+  @Input() color: string;
   @Input() nbColors = 4;
+  @Input() reportingLang = this._translateService.currentLang;
   @Output() colorChanged = new EventEmitter<string>();
 
-  constructor() {
+  public toggleCustomColorPicker = false;
+
+  private _customColor = '';
+  private _selectedColor = '';
+
+  constructor(private _translateService: TranslateService) {
   }
 
-  private _selectedColor: string; // color hex code
-
-  private _colors = [
-    {label: 'red', value: '#EA5858'},
-    {label: 'orange', value: '#F89424'},
-    {label: 'lightgreen', value: '#99E04B'},
-    {label: 'green', value: '#2ECC71'},
-    {label: 'neutral-1', value: '#dde3ea'},
-    {label: 'neutral-2', value: '#bbc7d6'},
-    {label: 'neutral-3', value: '#ffcc6e'},
-    {label: 'neutral-4', value: '#ffb300'},
-    {label: 'neutral-5', value: '#3a78a8'},
-    {label: 'neutral-6', value: '#2e6188'},
-  ];
-
-  private _displayedColors = this._colors;
+  public colors = colors;
 
   ngOnInit() {
-    if (this.nbColors <= 4) {
-      this._displayedColors = this._colors.slice(0, 4);
-    } else if (this.nbColors <= 6) {
-      this._displayedColors = this._colors.slice(4, 10);
-    } else {
-      this._displayedColors = this._colors;
-    }
+    this._selectedColor = this.color;
+    this._customColor = (!this.colors.some(c => c.value === this.color)) ? this.color : this.customColor;
+  }
+
+  toggleCustomColor() {
+    this._customColor = (!this.customColor) ? this.color : this.customColor;
+    this.toggleCustomColorPicker = true;
   }
 
   changeColor(event: any) {
     event.preventDefault();
     this._selectedColor = event.srcElement.value;
-    this.colorChanged.emit(this.selectedColor);
+  }
+
+  get customColor(): string {
+    return this._customColor;
+  }
+
+  set customColor(value: string) {
+    this._customColor = value;
   }
 
   get selectedColor(): string {
     return this._selectedColor;
-  }
-
-  get displayedColors(): ({ label: string; value: string })[] {
-    return this._displayedColors;
   }
 }

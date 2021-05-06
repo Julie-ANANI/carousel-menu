@@ -268,7 +268,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
-          _type: 'GEO-ZONE-LIST',
+          _type: 'NAME-LABEL-LIST',
 
           _width: '190px',
         },
@@ -395,7 +395,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           }
           break;
         case 'valueChain':
-          if (this._valueChains.length === 0 || !this._valueChains.toString().includes($event)) {
+          if (this._valueChains.length === 0 || this._valueChains.toString().indexOf($event) === -1) {
             this._valueChains.push($event.value);
             this.updateEnterpriseValues('valueChain', this._valueChains, 'Value chain');
           }

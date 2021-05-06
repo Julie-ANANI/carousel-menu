@@ -1,16 +1,46 @@
-<div class="d-flex justify-center flex-wrap">
-  <ng-container *ngFor="let color of displayedColors; let i = index" class="m-4">
-    <ng-container>
-      <input (change)="changeColor($event)"
-             type="radio"
-             name="color"
-             [id]="color.label"
-             [value]="color.value"/>
-      <label [for]="color.label">
-      <span
-        [ngStyle]="{background: color.value}"
-        [class]="color.label"></span>
+<div class="d-flex align-center flex-d-column justify-center flex-wrap">
+  <ng-content></ng-content>
+  <div class="d-flex align-center justify-center flex-wrap">
+    <div *ngFor="let color of colors; let i = index">
+        <input (change)="changeColor($event)"
+               [checked]="selectedColor === color.value"
+               type="radio"
+               name="color"
+               [id]="color.label"
+               [value]="color.value"/>
+        <label [for]="color.label">
+          <span
+            [ngStyle]="{background: color.value}"
+            [class]="color.label"
+            class="d-flex align-center justify-center">
+            <i *ngIf="selectedColor === color.value" class="icon icon-check text-sm text-white m-auto"></i>
+          </span>
+        </label>
+    </div>
+  </div>
+
+  <!-- Custom color picker -->
+  <div *ngIf="nbColors > 10" class="d-flex justify-between">
+    <ng-container *ngIf="customColor">
+      <input (change)="changeColor($event)" type="radio" name="color" [id]="customColor"
+             [checked]="selectedColor === customColor"
+             [value]="customColor"
+             [style.background]="customColor"/>
+      <label #ignoredInput [for]="customColor" class="m-top-4"
+             [cpIgnoredElements]="[ignoredInput]" [(cpToggle)]="toggleCustomColorPicker" [(colorPicker)]="customColor">
+      <span [ngStyle]="{background: customColor}" [class]="customColor" class="d-flex align-center justify-center">
+        <i *ngIf="selectedColor === customColor" class="icon icon-check text-sm text-white m-auto"></i>
+      </span>
       </label>
     </ng-container>
-  </ng-container>
+    <ng-container>
+      <span *ngIf="!toggleCustomColorPicker" class="icon-container is-overlay is-sm active m-4"
+            (click)="toggleCustomColor()">
+              <i *ngIf="!customColor" class="icon icon-plus text-xs"></i>
+              <i *ngIf="customColor" class="icon icon-edit text-xs"></i>
+      </span>
+    </ng-container>
+  </div>
+
+  <button (click)="colorChanged.emit(this.selectedColor)" class="btn btn-primary btn-xs m-top-4">{{'COMMON.BUTTON.CONFIRM' | translateIn: reportingLang}}</button>
 </div>

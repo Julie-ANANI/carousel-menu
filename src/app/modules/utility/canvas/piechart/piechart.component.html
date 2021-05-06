@@ -29,25 +29,61 @@
     </sub>
   </p>
 
-  <canvas
-    class="c-hand"
-    *ngIf="pieChart"
-    [chartType]="'pie'"
-    [colors]="colors"
-    [datasets]="datasets"
-    [labels]="pieChart.labels | multiling:reportingLang"
-    [legend]="false"
-    [options]="options"
-    (chartClick)="chartClicked($event)"
-    baseChart>
-  </canvas>
+  <div class="popover" (mouseleave)="indexSection = -1">
+    <canvas
+      class="c-hand"
+      *ngIf="pieChart"
+      [chartType]="'pie'"
+      [colors]="colors"
+      [datasets]="datasets"
+      [labels]="pieChart.labels | multiling:reportingLang"
+      [legend]="false"
+      [options]="options"
+      (chartClick)="chartClicked($event)"
+      baseChart>
+    </canvas>
+    <div *ngIf="!readonly && indexSection >= 0" class="absolute popover-container max-width-250"
+         [ngStyle]="{'left': offsetXSection + 'px', 'top': offsetYSection + 'px'}">
+      <div class="card p-10">
+        <span>{{(pieChart.labels| multiling:reportingLang)[indexSection] }}</span>
+        <div class="divider"></div>
+        <app-shared-color-picker
+          [reportingLang]="reportingLang"
+          [color]="pieChart.colors[indexSection]"
+          [nbColors]="pieChart.colors.length"
+          (colorChanged)="chartColorChanged($event, indexSection)">
+          <label class="form-checkbox text-background">
+            <input type="checkbox" [(ngModel)]="positiveSections[indexSection]" (change)="chartPositiveSectionChanged(indexSection)">
+            <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
+          </label>
+        </app-shared-color-picker>
+      </div>
+    </div>
+  </div>
 
   <ul *ngIf="pieChart" class="pie-data-wrapper animate-fade is-5">
     <li *ngFor="let label of (pieChart.labels | multiling:reportingLang); let i = index">
-      <span
-        class="shape is-circle is-xs m-right-1"
-        [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }">
-      </span>
+      <div class="popover" (mouseleave)="indexLegend = -1">
+        <span (click)="indexLegend = i" class="shape is-circle is-xs m-right-1 c-hand"
+          [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }">
+        </span>
+        <div *ngIf="!readonly && indexLegend === i" class="absolute popover-container max-width-250">
+          <div class="card p-10">
+            <span>{{(pieChart.labels | multiling:reportingLang)[indexLegend]}}</span>
+            <div class="divider"></div>
+            <label class="form-checkbox text-background">
+              <input type="checkbox" [(ngModel)]="positiveSections[indexLegend]" (change)="chartPositiveSectionChanged(indexLegend)">
+              <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
+            </label>
+            <app-shared-color-picker
+              [reportingLang]="reportingLang"
+              [color]="pieChart.colors[indexLegend]"
+              [nbColors]="pieChart.colors.length"
+              (colorChanged)="chartColorChanged($event, indexLegend)">
+            </app-shared-color-picker>
+          </div>
+        </div>
+      </div>
       <span class="m-right-1">{{ pieChart.data[i] }}</span>
       <span class="m-right-1">{{ label }}</span>
       ({{ pieChart.labelPercentage[i] }})

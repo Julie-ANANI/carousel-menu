@@ -11,7 +11,7 @@
 
     <div
       (click)="setDefaultScenario()"
-      *ngIf="inCampaign && defaultScenario != campaignScenario.name && isEditable"
+      *ngIf="inCampaign && defaultScenario !== campaignScenario.name && isEditable"
       class="m-left-10">
       Use by default
     </div>

@@ -9,6 +9,7 @@ import {PieChart} from '../../../../../../models/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Multiling} from '../../../../../../models/multiling';
 import {Picto, picto} from '../../../../../../models/static-data/picto';
+import {htmlTagsRegex} from '../../../../../../utils/regex';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -42,11 +43,9 @@ export class QuestionConclusionComponent implements OnInit {
 
   private _editSubtitle = false;
 
-  private _currentChartIndexModified = -1;
-  private _currentChartOffsetXModified = 0;
-  private _currentChartOffsetYModified = 0;
-
   private _picto: Picto = picto;
+
+  public displayedQuestionLabel: string;
 
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
@@ -60,7 +59,7 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   private _cleanQuestionHtml() {
-    this.question.label[this.reportingLang] = this.question.label[this.reportingLang].replace('<br>/gm', '');
+    this.displayedQuestionLabel = this.question.label[this.reportingLang].replace(htmlTagsRegex, '');
   }
 
   public keyupHandlerFunction(event: {content: string}) {
@@ -72,10 +71,9 @@ export class QuestionConclusionComponent implements OnInit {
     this.showEditor = !this.showEditor;
   }
 
-  chartSectionClicked(event: {index: number, position: any}) {
-    this._currentChartIndexModified = event.index;
-    this._currentChartOffsetXModified = event.position.x;
-    this._currentChartOffsetYModified = event.position.y;
+  chartSectionColorChanged(event: {index: number, color: string}) {
+    this.question.options[event.index].color = event.color;
+    this.questionChanged.emit(this.question);
   }
 
   positiveAnswerLabelChanged(positivesAnswersLabel: Multiling) {
@@ -83,20 +81,18 @@ export class QuestionConclusionComponent implements OnInit {
     this.questionChanged.emit(this.question);
   }
 
-  chartColorChanged(color: string) {
-    this.question.options[this._currentChartIndexModified].color = color;
+  positiveAnswerChange(event: {index: number, positive: boolean}) {
+    this.question.options[event.index].positive = event.positive;
     this.questionChanged.emit(this.question);
-    this._currentChartIndexModified = -1;
-  }
-
-  positiveAnswerChange() {
-    this.questionChanged.emit(this.question);
-    this._currentChartIndexModified = -1;
   }
 
   subtitleChange(event: string) {
     this.question.subtitle[this.reportingLang] = event;
     this.questionChanged.emit(this.question);
+  }
+
+  get positivesAnswers(): boolean[] {
+    return this.question.options.map(q => q.positive);
   }
 
   get tags(): Array<Tag> {
@@ -129,22 +125,6 @@ export class QuestionConclusionComponent implements OnInit {
 
   set editTitle(value: boolean) {
     this._editTitle = value;
-  }
-
-  set currentChartIndexModified(value: number) {
-    this._currentChartIndexModified = value;
-  }
-
-  get currentChartIndexModified(): number {
-    return this._currentChartIndexModified;
-  }
-
-  get currentChartOffsetYModified(): number {
-    return this._currentChartOffsetYModified;
-  }
-
-  get currentChartOffsetXModified(): number {
-    return this._currentChartOffsetXModified;
   }
 
   get picto(): Picto {

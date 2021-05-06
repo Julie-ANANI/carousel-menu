@@ -69,6 +69,7 @@ export const MARKET_REPORT = {
   'ORIGINAL_TEXT': 'Original text',
 
   'NUMBER_ANSWERS': 'professionals answered the question',
+  'POSITIVE_ANSWER': 'Positive answer',
 
   'GEOGRAPHICAL_DISTRIBUTION': 'Geographical distribution',
 
