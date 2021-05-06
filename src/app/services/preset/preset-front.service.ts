@@ -146,6 +146,7 @@ export class PresetFrontService {
 
       if (question.controlType === 'radio') {
         question = PresetFrontService.setOptionsColors(question);
+        question = PresetFrontService.setOptionsPositiveAnswer(question);
       }
 
     }
@@ -200,6 +201,25 @@ export class PresetFrontService {
       for (let i = 0; i < nbOptions; i++) {
         question.options[i].color = colors[i % 10].value;
       }
+    }
+
+    return question;
+  }
+
+  /**
+   * setting the options are positive answers or not for control type === 'radio'
+   * @param question
+   */
+  public static setOptionsPositiveAnswer(question: Question): Question {
+    const nbOptions = question.options.length;
+
+    // If 4 items, 3rd and 4th are positive answers
+    if (nbOptions === 4) {
+      question.options[2].positive = true;
+      question.options[3].positive = true;
+    } else {
+      question.options[2].positive = false;
+      question.options[3].positive = false;
     }
 
     return question;
