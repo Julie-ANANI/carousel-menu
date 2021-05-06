@@ -33,7 +33,7 @@
               [id]="'country-'+country.code"
               (change)="checkCountry.emit($event)"
               [checked]="filteredCountries ? filteredCountries[country.code] : true">
-            <i class="form-icon"></i> {{ ('COUNTRIES.' + country.code) | translateIn: reportingLang }}
+            <i class="form-icon"></i> {{ country.names | multiling:reportingLang }}
           </label>
         </div>
       </div>

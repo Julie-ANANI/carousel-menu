@@ -23,10 +23,11 @@
   <div *ngIf="nbColors > 10" class="d-flex justify-between">
     <ng-container *ngIf="customColor">
       <input (change)="changeColor($event)" type="radio" name="color" [id]="customColor"
-             [checked]="selectedColor === customColor"
+             [checked]="selectedColor == customColor"
              [value]="customColor"
              [style.background]="customColor"/>
       <label #ignoredInput [for]="customColor" class="m-top-4"
+             (colorPickerChange)="selectedColor = $event"
              [cpIgnoredElements]="[ignoredInput]" [(cpToggle)]="toggleCustomColorPicker" [(colorPicker)]="customColor">
       <span [ngStyle]="{background: customColor}" [class]="customColor" class="d-flex align-center justify-center">
         <i *ngIf="selectedColor === customColor" class="icon icon-check text-sm text-white m-auto"></i>

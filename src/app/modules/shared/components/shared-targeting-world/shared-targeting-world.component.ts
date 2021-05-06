@@ -361,4 +361,8 @@ export class SharedTargetingWorldComponent implements OnInit {
   get searchCountries(): Array<Country> {
     return this._searchCountries;
   }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
 }

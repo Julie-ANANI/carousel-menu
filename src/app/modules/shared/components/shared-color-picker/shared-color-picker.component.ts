@@ -30,7 +30,8 @@ export class SharedColorPickerComponent implements OnInit {
   }
 
   toggleCustomColor() {
-    this._customColor = (!this.customColor) ? this.color : this.customColor;
+    this._customColor = (!this.customColor) ? 'black' : this.customColor;
+    this._selectedColor = this._customColor;
     this.toggleCustomColorPicker = true;
   }
 
@@ -49,5 +50,9 @@ export class SharedColorPickerComponent implements OnInit {
 
   get selectedColor(): string {
     return this._selectedColor;
+  }
+
+  set selectedColor(value: string) {
+    this._selectedColor = value;
   }
 }

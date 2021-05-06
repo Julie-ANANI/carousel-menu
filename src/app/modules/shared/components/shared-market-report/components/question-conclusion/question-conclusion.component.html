@@ -72,8 +72,8 @@
             </div>
             <div slot="body" >
               <ul class="m-no-bottom">
-                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value'" class="m-top-1">
-                  {{ country.key }}: {{ country.value }}
+                <li *ngFor="let country of continent.value.countries | keyvalue | orderBy:'value.count'" class="m-top-1">
+                  {{ country.value.names | multiling:reportingLang }}: {{ country.value.count }}
                 </li>
               </ul>
             </div>

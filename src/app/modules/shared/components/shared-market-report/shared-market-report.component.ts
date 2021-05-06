@@ -62,7 +62,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _filteredAnswers: Array<Answer> = [];
 
-  private _answersOrigins: {[continent: string]: {count: number, countries: {[country: string]: number}}} = {};
+  private _answersOrigins: {[continent: string]: {count: number, countries: {[country: string]: {count: number, names: any}}}} = {};
 
   private _countries: Array<string> = [];
 
@@ -414,7 +414,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isOwner;
   }
 
-  get answersOrigins(): {[continent: string]: {count: number, countries: {[country: string]: number}}} {
+  get answersOrigins(): {[continent: string]: {count: number, countries: {[country: string]: {count: number, names: any}}}} {
     return this._answersOrigins;
   }
 

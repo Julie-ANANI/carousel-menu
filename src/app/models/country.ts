@@ -1,3 +1,5 @@
+import {Multiling} from './multiling';
+
 export interface Country {
   name?: string;
   latitude?: number;
@@ -7,4 +9,5 @@ export interface Country {
   continent?: string;
   subcontinent?: string;
   flag?: string;
+  names?: Multiling;
 }

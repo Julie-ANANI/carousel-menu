@@ -19,7 +19,7 @@ import {htmlTagsRegex} from '../../../../../../utils/regex';
 
 export class QuestionConclusionComponent implements OnInit {
 
-  @Input() originAnswers: {[continent: string]: {count: any, countries: {[country: string]: {count: number}}}} = null;
+  @Input() originAnswers: {[continent: string]: {count: any, countries: {[country: string]: {count: number, names: any}}}} = null;
 
   @Input() readonly = true;
 
