@@ -38,7 +38,7 @@ export class ExecutiveReportFrontService {
     if (professionals && professionals.length > 0) {
       section.examples = professionals.map((professional, index) => {
         return index === 0 ? professional.firstName + ' ' + professional.lastName
-          : ' ' + professional.firstName + ' ' + professional.lastName
+          : ' ' + professional.firstName + ' ' + professional.lastName;
       }).toString().slice(0, 175);
     }
 
@@ -55,7 +55,7 @@ export class ExecutiveReportFrontService {
       quotation: '',
       name: '',
       job: '',
-    }
+    };
   }
 
   /***
@@ -79,7 +79,7 @@ export class ExecutiveReportFrontService {
         section.favorable_answers = {
           percentage: pieChartData.percentage,
           visibility: pieChartData.percentage > 0
-        }
+        };
       }
 
       if (pieChartData.data) {
@@ -103,11 +103,11 @@ export class ExecutiveReportFrontService {
 
       for (let i = 0; i < 4; i++) {
         section.values.push({
-          percentage: 0,
+          percentage: 25,
           color: i === 0 ? '#C0210F' : i === 1 ? '#82CD30' : i === 2 ? '#34AC01' : '#F2C500',
           legend: '',
           answers: 0
-        })
+        });
       }
 
     }
@@ -123,14 +123,14 @@ export class ExecutiveReportFrontService {
    */
   public barSection(barsData: Array<BarData>, lang: string): SectionBar {
 
-    let section: SectionBar = {
+    const section: SectionBar = {
       showExamples: true,
       values: []
     };
 
     if (barsData && barsData.length > 0) {
 
-      barsData.slice(0, 3).forEach((bar, index) => {
+      barsData.slice(0, 3).forEach((bar) => {
 
         const professionals: Array<Professional> = ResponseService.answersProfessionals(bar.answers);
 
@@ -139,9 +139,9 @@ export class ExecutiveReportFrontService {
           visibility: (Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0) > 0,
           percentage: Number(bar.absolutePercentage.replace(specialCharRegEx, '')) || 0,
           legend: professionals.map((professional, index) => {
-            return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle
+            return index === 0 ? professional.jobTitle : ' ' + professional.jobTitle;
           }).toString().slice(0, 40)
-        })
+        });
       });
     } else {
       for (let i = 0; i < 3; i++) {
@@ -150,7 +150,7 @@ export class ExecutiveReportFrontService {
           legend: '',
           name: '',
           visibility: false
-        })
+        });
       }
     }
 
@@ -176,7 +176,7 @@ export class ExecutiveReportFrontService {
           color: '#4F5D6B',
           name: this._multilingPipe.transform(tag.label, lang),
           visibility: tag.count > 0
-        })
+        });
       });
     } else {
       for (let i = 0; i < 3; i++) {
@@ -185,7 +185,7 @@ export class ExecutiveReportFrontService {
           legend: '',
           name: '',
           visibility: false
-        })
+        });
       }
     }
 
