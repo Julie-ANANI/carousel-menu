@@ -139,6 +139,7 @@ export class SharedPresetQuestionComponent {
   public addNewOption(event: Event) {
     event.preventDefault();
     const option = PresetFrontService.addNewOption(this._question);
+    this._question = PresetFrontService.setOptionsPositiveAnswer(this._question);
 
     if (option && !!option.identifier) {
       this._question.options.push(option);
@@ -155,6 +156,7 @@ export class SharedPresetQuestionComponent {
 
     if (this._question.controlType === 'radio') {
       this._question = PresetFrontService.setOptionsColors(this._question);
+      this._question = PresetFrontService.setOptionsPositiveAnswer(this._question);
     }
 
     this.notifyChanges();
