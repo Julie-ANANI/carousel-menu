@@ -442,7 +442,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   }
 
   public onActions(action: any) {
-    switch (action._label) {
+    switch (action._action) {
       case 'Validate':
         this._updateStatus(action._rows, 'VALIDATED');
         break;
