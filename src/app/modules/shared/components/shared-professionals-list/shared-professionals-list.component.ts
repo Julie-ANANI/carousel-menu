@@ -689,6 +689,9 @@ export class SharedProfessionalsListComponent {
     this._geography = value;
     this._countriesSelected = this._geography.include.map((c) => c.code);
     if (this._countriesSelected.length > 0) {
+      if (this._countriesSelected.indexOf('GB') !== -1) {
+        this._countriesSelected.push('UK');
+      }
       this._localConfig.country = JSON.stringify({
         $in: this._countriesSelected,
       });
@@ -697,5 +700,4 @@ export class SharedProfessionalsListComponent {
     }
     this.configChange.emit(this._localConfig);
   }
-
 }

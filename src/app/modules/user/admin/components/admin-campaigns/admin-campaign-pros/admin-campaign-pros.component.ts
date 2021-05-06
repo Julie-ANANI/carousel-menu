@@ -85,10 +85,6 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _csvImportError = '';
 
-  private _filtersCountriesList: Array<any> = [];
-
-  private _isInitialiseFilters = false;
-
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _activatedRoute: ActivatedRoute,
@@ -107,7 +103,6 @@ export class AdminCampaignProsComponent implements OnInit {
         this._campaignFrontService.setActiveCampaignTab('pros');
         this._initCampaign();
         this._campaignFrontService.setLoadingCampaign(false);
-        this._isInitialiseFilters = true;
       }
     });
   }
@@ -138,7 +133,6 @@ export class AdminCampaignProsComponent implements OnInit {
             this._professionals = (response && response.result) || [];
             this._total =
               response._metadata.totalCount || response.result.length;
-            this.setFilterCountriesList();
           },
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
@@ -475,26 +469,4 @@ export class AdminCampaignProsComponent implements OnInit {
     return this._csvImportError;
   }
 
-  setFilterCountriesList() {
-    if (this._isInitialiseFilters) {
-      this._filtersCountriesList = [];
-    }
-    if (this._professionals.length > 0) {
-      this._professionals.map((item) => {
-        if (
-          item.country &&
-          (this._filtersCountriesList.length === 0 ||
-            !this._filtersCountriesList.includes(item.country))
-        ) {
-          this._filtersCountriesList.push(item.country);
-        }
-      });
-    } else {
-      this._filtersCountriesList = [];
-    }
-    this._isInitialiseFilters = false;
-    this._campaignFrontService.setFilterCountriesList(
-      this._filtersCountriesList
-    );
-  }
 }

@@ -177,7 +177,7 @@
                   <span class="text-lowercase text-underline" style="cursor: pointer; color: orangered"
                         *ngIf="isSelectAll"
                         (click)="clearAllTheSelections()">{{'TABLE.CLEAR_ALL' | translate}}</span>
-                  {{ isSelectAll ? table._total : selectedRows }}{{'/' + table._total}}
+                  {{ isSelectAll ? table._total : 0 }}{{'/' + table._total}}
                 </div>
                 <!-- /total selected text -->
 
