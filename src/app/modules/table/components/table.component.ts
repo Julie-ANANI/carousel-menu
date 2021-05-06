@@ -724,6 +724,7 @@ export class TableComponent {
 
   public getCountryName(isoCode: string): string {
     if (isoCode) {
+      isoCode = isoCode === 'UK' ? 'GB' : isoCode;
       return countries[isoCode] || 'NA';
     } else {
       return 'NA';
@@ -1051,7 +1052,7 @@ export class TableComponent {
 
   performFilters(event: any) {
     if (event) {
-      this.performAction.emit({ _action: 'Filter'});
+      this.performAction.emit({ _action: 'Filter' });
     }
   }
 }

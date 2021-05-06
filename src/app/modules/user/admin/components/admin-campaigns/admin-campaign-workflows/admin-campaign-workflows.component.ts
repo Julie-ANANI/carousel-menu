@@ -64,7 +64,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       this._activatedRoute.data.subscribe((data) => {
         if (data['campaign']) {
           this._campaign = data['campaign'];
-          console.log(this._campaign);
           this._campaignFrontService.setActiveCampaign(this._campaign);
           this._campaignFrontService.setActiveCampaignTab('workflows');
           this._initCampaign();
@@ -94,7 +93,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       (item) => item.name.toUpperCase().indexOf(workflow.toUpperCase()) !== -1
     );
     if (this._campaign.settings.defaultWorkflow === '') {
-      console.log(workflowToAdd);
       this._selectedTemplate = workflowToAdd;
       this._prepareImport();
       this.updateAvailableScenario(this._selectedTemplate);
@@ -204,7 +202,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   public updateAvailableScenario(scenario: EmailScenario) {
-    console.log(scenario);
     // DROP
     this._campaign.settings.emails = this._campaign.settings.emails.filter(
       (mail) => {
