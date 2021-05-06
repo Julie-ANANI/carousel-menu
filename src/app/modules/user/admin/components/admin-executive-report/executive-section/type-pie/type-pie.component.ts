@@ -73,9 +73,21 @@ export class TypePieComponent {
 
   public emitChanges() {
     if (this.isEditable) {
+      this.setLastPercentage();
       this._section.content = this._content;
       this.sectionChange.emit(this._section);
     }
+  }
+
+  public setLastPercentage() {
+    let total = 0;
+    this._content.values.forEach((value, index) => {
+      if (index < this._content.values.length - 1) {
+        total += value.percentage;
+      } else {
+        value.percentage = 100 - total;
+      }
+    });
   }
 
   public toggleResponses() {

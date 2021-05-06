@@ -104,6 +104,7 @@
             <input
               (change)="emitChanges()"
               [(ngModel)]="pie.percentage"
+              [disabled]="i === content.values.length - 1"
               placeholder="25"
               maxlength="3"
               class="form-input"
