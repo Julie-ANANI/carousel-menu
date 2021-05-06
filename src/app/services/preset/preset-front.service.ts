@@ -167,14 +167,14 @@ export class PresetFrontService {
 
       case 'stars':
         return {
-          en: '0 stars = Not at all / 5 stars = Totally',
+          en: '0 star = Not at all / 5 stars = Totally',
           fr: '0 étoile = Pas du tout / 5 étoiles = Totalement'
         };
 
       case 'checkbox':
         return {
-          en: 'You can select upto 4 items.',
-          fr: 'Vous pouvez sélectionner jusqu\'à 4 items.'
+          en: 'You can select up to 4 items',
+          fr: 'Vous pouvez sélectionner jusqu\'à 4 items'
         };
 
       default:

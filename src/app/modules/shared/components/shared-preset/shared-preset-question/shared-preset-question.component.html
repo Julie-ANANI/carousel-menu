@@ -183,11 +183,13 @@
           <label class="form-label">Question</label>
           <p *ngIf="!isEditable" class="text-sm">{{ question.label[lang] || 'NA' }}</p>
           <textarea
+            #textAreaElement
             (ngModelChange)="notifyChanges()"
             *ngIf="isEditable"
             [(ngModel)]="question.label[lang]"
             [id]="'question-label-'+lang"
-            class="form-input"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
             type="text">
           </textarea>
         </div>
@@ -200,10 +202,13 @@
             {{ (question.instruction && question.instruction[lang]) || 'NA' }}
           </p>
           <textarea
+            #textAreaElement
             (ngModelChange)="onChangeInstruction($event, lang)"
             *ngIf="isEditable"
             [id]="'question-instruction-'+lang"
-            [ngModel]="(question.instruction && question.instruction[lang]) ? question.instruction[lang] : ''"
+            [ngModel]="(question.instruction && question.instruction[lang])
+            ? checkboxInstruction(question.instruction[lang]) : ''"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
             class="form-input"
             type="text">
           </textarea>
@@ -248,10 +253,12 @@
 
               <!-- input -->
               <textarea
+                #textAreaElement
                 (ngModelChange)="notifyChanges()"
                 *ngIf="isEditable"
                 [(ngModel)]="option.label[lang]"
                 [id]="'option-label-'+lang"
+                [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
                 class="form-input"
                 type="text">
               </textarea>

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostListener, Input} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {PresetFrontService} from '../../../../../services/preset/preset-front.service';
 import {Question, QuestionType} from '../../../../../models/question';
@@ -71,6 +71,46 @@ export class SharedPresetQuestionComponent {
               private _translateService: TranslateService) {
   }
 
+  @HostListener('keydown', ['$event'])
+  onKeyDown(_event: KeyboardEvent) {
+    const textarea = (_event.target as HTMLTextAreaElement);
+    if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
+      return;
+    }
+    this.calcTextareaHeight(textarea, _event);
+  }
+
+  /**
+   * this function is to make the textarea responsive based on the text and scroll height.
+   * @param textarea
+   * @param _event
+   */
+  public calcTextareaHeight(textarea: HTMLTextAreaElement, _event?: KeyboardEvent) {
+    const currentHeight = textarea.offsetHeight;
+    const scrollHeight = textarea.scrollHeight + 2;
+    const padding = 20;
+    const minHeight = Number(textarea.getAttribute('min-height'));
+
+    if (currentHeight >= minHeight || currentHeight < scrollHeight) {
+      if (scrollHeight < currentHeight) {
+        textarea.style.height = (scrollHeight + padding) + 'px';
+      } else if (scrollHeight >= minHeight) {
+        if (_event && _event.code === 'Backspace' || _event.key === 'Backspace') {
+          if (currentHeight + padding > scrollHeight) {
+            textarea.style.height = currentHeight - 15 + 'px';
+          }
+        } else if (scrollHeight !== currentHeight) {
+          textarea.style.height = currentHeight + (scrollHeight - currentHeight) + padding + 'px';
+        }
+      }
+    }
+
+  }
+
+  public checkboxInstruction(text: string) {
+    return text.replace(/\d/g, (this._question.maxOptionsSelect && this._question.maxOptionsSelect.toString(10)));
+  }
+
   public removeQuestion(event: Event) {
     event.preventDefault();
 
@@ -102,6 +142,7 @@ export class SharedPresetQuestionComponent {
 
     if (option && !!option.identifier) {
       this._question.options.push(option);
+      this._question.maxOptionsSelect = this._question.options.length;
       this.notifyChanges();
     }
   }

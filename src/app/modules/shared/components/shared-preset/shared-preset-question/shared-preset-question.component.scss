@@ -84,9 +84,8 @@
 
       textarea {
         font-size: 13px;
-        min-height: 80px;
+        min-height: 60px;
         padding: 10px;
-        resize: vertical;
       }
 
       .options-wrapper {
@@ -140,7 +139,6 @@
 
         .options-wrapper .card textarea {
           max-width: 100%;
-          min-height: 80px;
         }
 
       }
