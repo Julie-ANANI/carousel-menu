@@ -13,7 +13,8 @@ export class DashboardService {
       params: {
         $or: JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'},]),
         fields: 'firstName,lastName,email,domain',
-        sort: '{"firstName": 1}'
+        sort: '{"firstName": 1}',
+        limit: '-1'
       }
     });
   }
