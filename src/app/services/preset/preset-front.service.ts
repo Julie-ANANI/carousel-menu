@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Preset } from '../../models/preset';
+import {Injectable} from '@angular/core';
+import {Preset} from '../../models/preset';
 import {Option, Question, QuestionType} from '../../models/question';
-import { Section } from '../../models/section';
+import {Section} from '../../models/section';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {colors} from '../../utils/chartColors';
@@ -212,16 +212,18 @@ export class PresetFrontService {
    */
   public static setOptionsPositiveAnswer(question: Question): Question {
     const nbOptions = question.options.length;
-
+    console.log(nbOptions)
     // If 4 items, 3rd and 4th are positive answers
     if (nbOptions === 4) {
       question.options[2].positive = true;
       question.options[3].positive = true;
     } else {
-      question.options[2].positive = false;
-      question.options[3].positive = false;
+      for (let i = 0; i < nbOptions; i++) {
+        question.options[i].positive = false;
+      }
     }
 
+    console.log(question);
     return question;
   }
 

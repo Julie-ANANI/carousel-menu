@@ -154,10 +154,11 @@ export class SharedPresetQuestionComponent {
   public addNewOption(event: Event) {
     event.preventDefault();
     const option = PresetFrontService.addNewOption(this._question);
-    this._question = PresetFrontService.setOptionsPositiveAnswer(this._question);
 
     if (option && !!option.identifier) {
       this._question.options.push(option);
+      this._question = PresetFrontService.setOptionsColors(this._question);
+      this._question = PresetFrontService.setOptionsPositiveAnswer(this._question);
       this.configureCheckbox();
       this.notifyChanges();
     }
