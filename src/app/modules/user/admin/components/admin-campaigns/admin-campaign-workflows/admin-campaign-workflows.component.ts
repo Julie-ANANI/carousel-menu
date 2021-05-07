@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign } from '../../../../../../models/campaign';
-import { EmailScenario } from '../../../../../../models/email-scenario';
-import { EmailSignature } from '../../../../../../models/email-signature';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { Campaign } from '../../../../../../models/campaign';
+import { EmailScenario } from '../../../../../../models/email-scenario';
+import { EmailSignature } from '../../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
@@ -15,6 +15,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import {AuthService} from '../../../../../../services/auth/auth.service';
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
@@ -56,6 +57,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     private _campaignFrontService: CampaignFrontService,
     private _templatesService: TemplatesService,
     private _rolesFrontService: RolesFrontService,
+    private _authService: AuthService,
     private _translateNotificationsService: TranslateNotificationsService
   ) {}
 
@@ -240,7 +242,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._selectedTemplate = template;
   }
 
-  private _prepareImport(){
+  private _prepareImport() {
     this._selectedTemplate = {
       name: this._selectedTemplate.name,
       emails: this._selectedTemplate.emails.map((m) => {
@@ -287,8 +289,14 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     if (!this._isTesting) {
       this._isTesting = true;
       for (let i = 1; i < 4; i++) {
+        const userInfo = {
+          email: this._authService.user.email || '',
+          displayName: this._authService.user.name || '',
+          firstName: this._authService.user.firstName || '',
+          lastName: this._authService.user.lastName || '',
+        };
         this._campaignService
-          .sendTestEmails(this._campaign._id, i)
+          .sendTestEmails(this._campaign._id, i, userInfo)
           .pipe(first())
           .subscribe(
             (res) => {
@@ -381,7 +389,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       });
     }
     scenariosNames.forEach((name) => {
-      let scenar = {} as EmailScenario;
+      const scenar = {} as EmailScenario;
       scenar.name = name;
       scenar.emails = this._campaign.settings.emails.filter((email) => {
         return email.nameWorkflow === name;

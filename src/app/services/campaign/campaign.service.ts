@@ -93,8 +93,8 @@ export class CampaignService {
     return this._http.delete(`/batch/${batchId}`);
   }
 
-  public sendTestEmails(campaignId: string, batchStatus: number): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {batchStatus: batchStatus});
+  public sendTestEmails(campaignId: string, batchStatus: number, userInfo: any): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {batchStatus: batchStatus, user: userInfo});
   }
 
   public setNuggets(campaignId: string): Observable<any> {
