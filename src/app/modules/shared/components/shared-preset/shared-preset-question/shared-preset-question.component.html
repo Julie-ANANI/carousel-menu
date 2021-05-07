@@ -144,7 +144,7 @@
             </label>
             <p *ngIf="!isEditable" class="text-sm">{{ question.maxOptionsSelect || 'NA' }}</p>
             <input
-              (ngModelChange)="notifyChanges()"
+              (ngModelChange)="onChangeMaxOptions($event)"
               *ngIf="isEditable"
               [(ngModel)]="question.maxOptionsSelect"
               [attr.placeholder]="question.options.length"
@@ -206,8 +206,7 @@
             (ngModelChange)="onChangeInstruction($event, lang)"
             *ngIf="isEditable"
             [id]="'question-instruction-'+lang"
-            [ngModel]="(question.instruction && question.instruction[lang])
-            ? checkboxInstruction(question.instruction[lang]) : ''"
+            [ngModel]="(question.instruction && question.instruction[lang]) ? question.instruction[lang] : ''"
             [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
             class="form-input"
             type="text">

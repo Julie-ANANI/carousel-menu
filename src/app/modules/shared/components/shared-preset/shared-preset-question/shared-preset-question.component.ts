@@ -107,8 +107,23 @@ export class SharedPresetQuestionComponent {
 
   }
 
-  public checkboxInstruction(text: string) {
-    return text.replace(/\d/g, (this._question.maxOptionsSelect && this._question.maxOptionsSelect.toString(10)));
+  public onChangeMaxOptions(value: number) {
+    if (value !== null) {
+      this.configureCheckbox(value);
+      this.notifyChanges();
+    }
+  }
+
+  public configureCheckbox(total?: number) {
+    if (this._question.controlType === 'checkbox') {
+      this._question.maxOptionsSelect = this._question.options.length;
+      total = total || this._question.maxOptionsSelect;
+      this.presetLanguages.forEach((lang) => {
+        if (this._question.instruction && this._question.instruction[lang]) {
+          this._question.instruction[lang] = this._question.instruction[lang].replace(/\d/g, (total.toString(10)));
+        }
+      });
+    }
   }
 
   public removeQuestion(event: Event) {
@@ -143,7 +158,7 @@ export class SharedPresetQuestionComponent {
 
     if (option && !!option.identifier) {
       this._question.options.push(option);
-      this._question.maxOptionsSelect = this._question.options.length;
+      this.configureCheckbox();
       this.notifyChanges();
     }
   }
@@ -153,6 +168,7 @@ export class SharedPresetQuestionComponent {
     const options = this._question.options;
     options.splice(index, 1);
     PresetFrontService.reConfigureOptionsIdentifier(options);
+    this.configureCheckbox();
 
     if (this._question.controlType === 'radio') {
       this._question = PresetFrontService.setOptionsColors(this._question);
