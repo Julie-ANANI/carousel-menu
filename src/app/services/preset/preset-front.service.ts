@@ -212,7 +212,7 @@ export class PresetFrontService {
    */
   public static setOptionsPositiveAnswer(question: Question): Question {
     const nbOptions = question.options.length;
-    console.log(nbOptions)
+
     // If 4 items, 3rd and 4th are positive answers
     if (nbOptions === 4) {
       question.options[2].positive = true;
@@ -223,7 +223,6 @@ export class PresetFrontService {
       }
     }
 
-    console.log(question);
     return question;
   }
 
