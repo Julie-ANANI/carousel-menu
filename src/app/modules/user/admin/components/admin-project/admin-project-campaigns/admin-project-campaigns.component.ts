@@ -1,4 +1,10 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -6,20 +12,28 @@ import { environment } from '../../../../../../../environments/environment';
 import { Campaign } from '../../../../../../models/campaign';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
-import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  keyframes,
+  query,
+  stagger,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
-import { isPlatformBrowser} from "@angular/common";
-import { Response } from "../../../../../../models/response";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
-import {first, takeUntil} from 'rxjs/operators';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
-import {Subject} from 'rxjs';
-import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
-import {SocketService} from '../../../../../../services/socket/socket.service';
-import {QuizService} from '../../../../../../services/quiz/quiz.service';
-import {CommonService} from '../../../../../../services/common/common.service';
+import { isPlatformBrowser } from '@angular/common';
+import { Response } from '../../../../../../models/response';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { Subject } from 'rxjs';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import { SocketService } from '../../../../../../services/socket/socket.service';
+import { QuizService } from '../../../../../../services/quiz/quiz.service';
+import { CommonService } from '../../../../../../services/common/common.service';
 
 @Component({
   templateUrl: 'admin-project-campaigns.component.html',
@@ -28,20 +42,24 @@ import {CommonService} from '../../../../../../services/common/common.service';
     trigger('listAnimation', [
       transition('* => *', [
         query(':enter', style({ opacity: 0 }), { optional: true }),
-        query(':enter', stagger('300ms', [
-          animate('300ms ease-in-out', keyframes([
-              style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
-              style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
-            ])
-          )]
-        ), { optional: true }),
-      ])
-    ])
-  ]
+        query(
+          ':enter',
+          stagger('300ms', [
+            animate(
+              '300ms ease-in-out',
+              keyframes([
+                style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
+                style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 }),
+              ])
+            ),
+          ]),
+          { optional: true }
+        ),
+      ]),
+    ]),
+  ],
 })
-
 export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
-
   private _innovation: Innovation = <Innovation>{};
 
   private _campaigns: Array<Campaign> = [];
@@ -62,49 +80,69 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   private _socketListening = false;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _innovationService: InnovationService,
-              private _innovationFrontService: InnovationFrontService,
-              private _campaignFrontService: CampaignFrontService,
-              private _rolesFrontService: RolesFrontService,
-              private _commonService: CommonService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _socketService: SocketService,
-              private _campaignService: CampaignService) { }
+  constructor(
+    @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _innovationService: InnovationService,
+    private _innovationFrontService: InnovationFrontService,
+    private _campaignFrontService: CampaignFrontService,
+    private _rolesFrontService: RolesFrontService,
+    private _commonService: CommonService,
+    private _translateNotificationsService: TranslateNotificationsService,
+    private _socketService: SocketService,
+    private _campaignService: CampaignService
+  ) {}
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-        this._innovation = innovation || <Innovation>{};
+      this._innovationFrontService
+        .innovation()
+        .pipe(takeUntil(this._ngUnsubscribe))
+        .subscribe((innovation) => {
+          this._innovation = innovation || <Innovation>{};
 
-        if (!this._socketListening) {
-          this._socketService.getNewCampaign(this._innovation._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
-            this._campaigns.push(update.data);
-            this._setAllCampaigns();
-          }, (error) => {
-            console.error(error);
-          });
-          this._socketListening = true;
-        }
+          if (!this._socketListening) {
+            this._socketService
+              .getNewCampaign(this._innovation._id)
+              .pipe(takeUntil(this._ngUnsubscribe))
+              .subscribe(
+                (update: any) => {
+                  this._campaigns.push(update.data);
+                  this._setAllCampaigns();
+                },
+                (error) => {
+                  console.error(error);
+                }
+              );
+            this._socketListening = true;
+          }
 
-        if (!this._campaigns.length && this._innovation._id) {
-          this._getCampaigns();
-        }
-      });
+          if (!this._campaigns.length && this._innovation._id) {
+            this._getCampaigns();
+          }
+        });
     }
   }
 
   private _getCampaigns() {
-    this._innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((response: Response) => {
-      this._isLoading = false;
-      this._campaigns = response && response.result || [];
-      this._setAllCampaigns();
-    }, (err: HttpErrorResponse) => {
-      this._fetchingError = true;
-      this._isLoading = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._innovationService
+      .campaigns(this._innovation._id)
+      .pipe(first())
+      .subscribe(
+        (response: Response) => {
+          this._isLoading = false;
+          this._campaigns = (response && response.result) || [];
+          this._setAllCampaigns();
+        },
+        (err: HttpErrorResponse) => {
+          this._fetchingError = true;
+          this._isLoading = false;
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   private _setAllCampaigns() {
@@ -113,9 +151,15 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   public canAccess(path?: Array<string>) {
     if (path) {
-      return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'campaigns'].concat(path));
+      return this._rolesFrontService.hasAccessAdminSide(
+        ['projects', 'project', 'campaigns'].concat(path)
+      );
     } else {
-      return this._rolesFrontService.hasAccessAdminSide(['projects', 'project', 'campaigns']);
+      return this._rolesFrontService.hasAccessAdminSide([
+        'projects',
+        'project',
+        'campaigns',
+      ]);
     }
   }
 
@@ -127,24 +171,37 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isAddingCampaign) {
       this._isAddingCampaign = true;
-      const _newTitle = this._innovation.name ? this._innovation.name : 'New campaign';
+      const _newTitle = this._innovation.name
+        ? this._innovation.name
+        : 'New campaign';
 
       const _newCampaign: any = {
         domain: environment.domain,
         innovation: this._innovation._id,
         owner: this._innovation.owner.id,
-        title: (this._campaigns.length + 1) + '. ' + _newTitle
+        title: this._campaigns.length + 1 + '. ' + _newTitle,
       };
 
-      this._campaignService.create(_newCampaign).pipe(first()).subscribe((campaign: Campaign) => {
-        this._translateNotificationsService.success('Success', 'The new campaign is added.');
-        this._isAddingCampaign = false;
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isAddingCampaign = false;
-        console.error(err);
-      });
-
+      this._campaignService
+        .create(_newCampaign)
+        .pipe(first())
+        .subscribe(
+          (campaign: Campaign) => {
+            this._translateNotificationsService.success(
+              'Success',
+              'The new campaign is added.'
+            );
+            this._isAddingCampaign = false;
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isAddingCampaign = false;
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -154,7 +211,9 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
   }
 
   public route(id: string): string {
-    return `/user/admin/projects/project/${this._innovation._id}/preparation/campaigns/campaign/${id}/${this._rolesFrontService.campaignDefaultRoute()}`;
+    return `/user/admin/projects/project/${
+      this._innovation._id
+    }/preparation/campaigns/campaign/${id}/${this._rolesFrontService.campaignDefaultRoute()}`;
   }
 
   /***
@@ -168,7 +227,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
     this._sidebarValue = {
       animate_state: 'active',
       title: this.canAccess(['edit']) ? 'Edit Campaign' : 'Campaign',
-      type: 'EDIT_NAME'
+      type: 'EDIT_NAME',
     };
   }
 
@@ -178,14 +237,26 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
    */
   public updateCampaign(formGroup: FormGroup) {
     this._selectCampaign.title = formGroup.value['title'];
-    this._campaignService.put(this._selectCampaign).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The campaign is updated.');
-      this._setAllCampaigns();
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      this._selectCampaign = null;
-      console.error(err);
-    });
+    this._campaignService
+      .put(this._selectCampaign)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this._translateNotificationsService.success(
+            'Success',
+            'The campaign is updated.'
+          );
+          this._setAllCampaigns();
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          this._selectCampaign = null;
+          console.error(err);
+        }
+      );
   }
 
   /***
@@ -195,14 +266,26 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
    */
   public onUpdateStats(event: Event, campaign: Campaign, index: number) {
     event.preventDefault();
-    this._campaignService.updateStats(campaign._id).pipe(first()).subscribe((updatedCampaign: Campaign) => {
-      this._campaigns[index] = updatedCampaign;
-      this._translateNotificationsService.success('Success', 'The campaign stats is updated.');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-  };
+    this._campaignService
+      .updateStats(campaign._id)
+      .pipe(first())
+      .subscribe(
+        (updatedCampaign: Campaign) => {
+          this._campaigns[index] = updatedCampaign;
+          this._translateNotificationsService.success(
+            'Success',
+            'The campaign stats is updated.'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
+  }
 
   /***
    * clicks on Delete button
@@ -219,21 +302,41 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
    * clicks on the Confirm button of the Delete modal.
    */
   public onConfirmDelete() {
-    this._campaignService.remove(this._selectCampaign._id).pipe(first()).subscribe(() => {
-      this._campaigns = this._campaigns.filter((c) => c._id !== this._selectCampaign._id);
-      this._selectCampaign = null;
-      this._setAllCampaigns();
-      this._translateNotificationsService.success('Success', 'The campaign is deleted.');
-      this._activateModal = false;
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      this._selectCampaign = null;
-      console.error(err);
-    });
+    this._campaignService
+      .remove(this._selectCampaign._id)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this._campaigns = this._campaigns.filter(
+            (c) => c._id !== this._selectCampaign._id
+          );
+          this._selectCampaign = null;
+          this._setAllCampaigns();
+          this._translateNotificationsService.success(
+            'Success',
+            'The campaign is deleted.'
+          );
+          this._activateModal = false;
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          this._selectCampaign = null;
+          console.error(err);
+        }
+      );
   }
 
   public stats(campaign: Campaign, type: string): number {
-    return campaign && campaign.stats && campaign.stats.campaign && campaign.stats.campaign[type] || 0;
+    return (
+      (campaign &&
+        campaign.stats &&
+        campaign.stats.campaign &&
+        campaign.stats.campaign[type]) ||
+      0
+    );
   }
 
   public quizURL(lang: string, campaign: Campaign) {
@@ -242,7 +345,10 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   public copyQuizLink(lang: string, campaign: Campaign) {
     this._commonService.copyToClipboard(this.quizURL(lang, campaign));
-    this._translateNotificationsService.success('Success', 'The quiz url has been copied to clipboard.');
+    this._translateNotificationsService.success(
+      'Success',
+      'The quiz url has been copied to clipboard.'
+    );
   }
 
   get campaigns(): Array<Campaign> {
@@ -285,5 +391,4 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
-
 }

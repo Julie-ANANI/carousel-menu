@@ -25,7 +25,6 @@ export class SocketService extends AbstractSocketService {
   getTagsUpdatedForPro(innovationId: string): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
       this.socket.on(`tagsUpdate_${innovationId}`, (data: any) => {
-        console.log(1234);
         subscriber.next(data);
       });
     });

@@ -135,8 +135,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       this._translateService.currentLang;
     this._filterService.reset();
 
-    console.log(`tagsUpdate_${this.innovation._id}`);
-
     this._innovationFrontService
       .getNotifyChanges()
       .pipe(takeUntil(this._ngUnsubscribe))
