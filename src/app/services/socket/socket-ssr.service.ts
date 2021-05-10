@@ -7,7 +7,6 @@ import { EMPTY, Observable } from 'rxjs';
  */
 @Injectable()
 export class SocketSsrService implements SocketService {
-
   socket: any = null;
 
   listenToSocket(): Observable<Notification> {
@@ -42,10 +41,13 @@ export class SocketSsrService implements SocketService {
     return EMPTY;
   }
 
+  getTagsUpdatedForPro(): Observable<Notification> {
+    return EMPTY;
+  }
+
   getProsRepartition(): Observable<any> {
     return EMPTY;
   }
 
-  sendDataToApi(e: any) { }
-
+  sendDataToApi(e: any) {}
 }

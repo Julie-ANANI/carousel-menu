@@ -1,40 +1,46 @@
-import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {AnswerService} from '../../../../services/answer/answer.service';
-import {FilterService} from './services/filters.service';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {Answer} from '../../../../models/answer';
-import {Filter} from './models/filter';
-import {Question} from '../../../../models/question';
-import {Tag} from '../../../../models/tag';
-import {Innovation} from '../../../../models/innovation';
-import {environment} from '../../../../../environments/environment';
-import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
-import {Clearbit} from '../../../../models/clearbit';
-import {AuthService} from '../../../../services/auth/auth.service';
-import {ResponseService} from './services/response.service';
-import {TagsFiltersService} from './services/tags-filter.service';
-import {WorldmapFiltersService} from './services/worldmap-filter.service';
-import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
-import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
-import {AnswerFrontService} from '../../../../services/answer/answer-front.service';
-import {Subject} from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
-import {RolesFrontService} from '../../../../services/roles/roles-front.service';
-import {isPlatformBrowser} from '@angular/common';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../services/error/error-front.service';
-import {emptyHtmlRegex} from '../../../../utils/regex';
+import {
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { AnswerService } from '../../../../services/answer/answer.service';
+import { FilterService } from './services/filters.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { Answer } from '../../../../models/answer';
+import { Filter } from './models/filter';
+import { Question } from '../../../../models/question';
+import { Tag } from '../../../../models/tag';
+import { Innovation } from '../../../../models/innovation';
+import { environment } from '../../../../../environments/environment';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
+import { Clearbit } from '../../../../models/clearbit';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { ResponseService } from './services/response.service';
+import { TagsFiltersService } from './services/tags-filter.service';
+import { WorldmapFiltersService } from './services/worldmap-filter.service';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
+import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { emptyHtmlRegex } from '../../../../utils/regex';
+import { SocketService } from '../../../../services/socket/socket.service';
 
 @Component({
   selector: 'app-shared-market-report',
   templateUrl: './shared-market-report.component.html',
-  styleUrls: ['./shared-market-report.component.scss']
+  styleUrls: ['./shared-market-report.component.scss'],
 })
-
 export class SharedMarketReportComponent implements OnInit, OnDestroy {
-
   @Input() accessPath: Array<string> = [];
 
   @Input() adminSide = false;
@@ -48,8 +54,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       this._innovation = value;
       this._innovation.marketReport = this._innovation.marketReport || {};
       this._initializeReport();
-      this._isOwner = (this._authService.userId === (this._innovation.owner && this._innovation.owner.id))
-        || this._authService.adminLevel > 3;
+      this._isOwner =
+        this._authService.userId ===
+          (this._innovation.owner && this._innovation.owner.id) ||
+        this._authService.adminLevel > 3;
     }
   }
 
@@ -63,7 +71,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _filteredAnswers: Array<Answer> = [];
 
-  private _answersOrigins: {[continent: string]: {count: number, countries: {[country: string]: {count: number, names: any}}}} = {};
+  private _answersOrigins: {
+    [continent: string]: {
+      count: number;
+      countries: { [country: string]: { count: number; names: any } };
+    };
+  } = {};
 
   private _countries: Array<string> = [];
 
@@ -77,7 +90,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _leftSidebarTemplateValue: SidebarInterface = {
     animate_state: 'active',
-    type: 'MARKET_REPORT'
+    type: 'MARKET_REPORT',
   };
 
   private _sidebarTemplateValue: SidebarInterface = <SidebarInterface>{};
@@ -100,47 +113,86 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   public displayFilters = false;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateService: TranslateService,
-              private _answerService: AnswerService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationService: InnovationService,
-              private _authService: AuthService,
-              private _rolesFrontService: RolesFrontService,
-              private _innovationFrontService: InnovationFrontService,
-              private _filterService: FilterService,
-              private _tagFiltersService: TagsFiltersService,
-              private _sharedWorldMapService: WorldmapService,
-              private _worldmapFiltersService: WorldmapFiltersService) { }
+  constructor(
+    @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _translateService: TranslateService,
+    private _answerService: AnswerService,
+    private _translateNotificationsService: TranslateNotificationsService,
+    private _innovationService: InnovationService,
+    private _authService: AuthService,
+    private _rolesFrontService: RolesFrontService,
+    private _innovationFrontService: InnovationFrontService,
+    private _filterService: FilterService,
+    private _tagFiltersService: TagsFiltersService,
+    private _sharedWorldMapService: WorldmapService,
+    private _socketService: SocketService,
+    private _worldmapFiltersService: WorldmapFiltersService
+  ) {}
 
   ngOnInit() {
-    this.reportingLang = this.innovation.settings.reportingLang || this._translateService.currentLang;
+    this.reportingLang =
+      this.innovation.settings.reportingLang ||
+      this._translateService.currentLang;
     this._filterService.reset();
 
-    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe))
+    console.log(`tagsUpdate_${this.innovation._id}`);
+
+    this._innovationFrontService
+      .getNotifyChanges()
+      .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((value) => {
         this._toBeSaved = !!(value && value.state);
       });
+
+    this._socketService
+      .getTagsUpdatedForPro(this.innovation._id)
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(
+        (data: any) => {
+          this._realTimeUpdateTags(data);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   public canAccess(path: Array<string>) {
-    return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
+    return this._rolesFrontService.hasAccessAdminSide(
+      this.accessPath.concat(path)
+    );
   }
 
   /***
    * This function is calling all the initial functions.
    */
   private _initializeReport() {
-    this._anonymousAnswers = !!(this._innovation._metadata && this._innovation._metadata.campaign
-      && this._innovation._metadata.campaign.anonymous_answers);
+    this._anonymousAnswers = !!(
+      this._innovation._metadata &&
+      this._innovation._metadata.campaign &&
+      this._innovation._metadata.campaign.anonymous_answers
+    );
 
     this._getAnswers();
 
     // this is to check, if the admin make the synthesis available before the status is Done.
-    this._previewMode = this._innovation.previewMode ? this._innovation.previewMode : false;
+    this._previewMode = this._innovation.previewMode
+      ? this._innovation.previewMode
+      : false;
 
     this._worldmapFiltersService.reset();
     this._questions = ResponseService.presets(this._innovation);
+  }
+
+  _realTimeUpdateTags(data: any) {
+    this.areAnswersLoading = true;
+    this._processAnswers(data);
+    this._processAnswersCompanies(data);
+    this._processAnswersCountries(data);
+    this._processAnswersTags(data);
+    this._processAnswersQuestion(data);
+    this.areAnswersLoading = false;
+    setTimeout(() => (this.displayFilters = true), 500);
   }
 
   /***
@@ -149,68 +201,106 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
       this.areAnswersLoading = true;
-      this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first())
-        .subscribe((response) => {
-          this._answers = AnswerFrontService.qualitySort(response.answers);
-
-          if (this._anonymousAnswers) {
-            this._answers = AnswerFrontService.anonymous(this._answers);
+      this._answerService
+        .getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers)
+        .pipe(first())
+        .subscribe(
+          (response) => {
+            this._processAnswers(response.answers);
+            this._processAnswersCompanies(response.answers);
+            this._processAnswersCountries(response.answers);
+            this._processAnswersTags(response.answers);
+            this._processAnswersQuestion(response.answers);
+            this.areAnswersLoading = false;
+            setTimeout(() => (this.displayFilters = true), 500);
+          },
+          (err: HttpErrorResponse) => {
+            this.areAnswersLoading = false;
+            this.displayFilters = true;
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            console.error(err);
           }
-
-          this._filteredAnswers = this._answers;
-          this._updateAnswersToShow();
-
-          this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() =>
-            this._updateAnswersToShow()
-          );
-
-          this._companies = response.answers.map((answer: any) => answer.company || {
-            name: answer.professional.company
-          }).filter(function(item: any, pos: any, self: any) {
-            return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
-          });
-
-          this._countries = response.answers.reduce((acc, answer) => {
-            if (!!answer.country && !!answer.country.flag && acc.indexOf(answer.country.flag) === -1) {
-              acc.push(answer.country.flag);
-            }
-            return acc;
-          }, []);
-
-          /*
-					 * compute tag list globally
-					 */
-          const tagsDict = response.answers.reduce(function (acc, answer) {
-            answer.tags.forEach((tag) => {
-              if (!acc[tag._id]) {
-                acc[tag._id] = tag;
-              }
-            });
-            return acc;
-          }, {} as {[id: string]: Tag});
-
-          this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
-
-          /*
-					 * compute tags lists for each questions of type textarea
-					 */
-          this._questions.forEach((question) => {
-            const tags = ResponseService.tagsList(response.answers, question);
-            const identifier = (question.controlType === 'textarea') ? question.identifier
-              : question.identifier + 'Comment';
-            this._tagFiltersService.setAnswerTags(identifier, tags);
-          });
-
-          this.areAnswersLoading = false;
-          setTimeout(() => this.displayFilters = true, 500);
-
-        }, (err: HttpErrorResponse) => {
-          this.areAnswersLoading = false;
-          this.displayFilters = true;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          console.error(err);
-        });
+        );
     }
+  }
+
+  private _processAnswers(answers: any) {
+    this._answers = AnswerFrontService.qualitySort(answers);
+
+    if (this._anonymousAnswers) {
+      this._answers = AnswerFrontService.anonymous(this._answers);
+    }
+
+    this._filteredAnswers = this._answers;
+    this._updateAnswersToShow();
+
+    this._filterService.filtersUpdate
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe(() => this._updateAnswersToShow());
+  }
+
+  private _processAnswersCompanies(answers: any) {
+    this._companies = answers
+      .map(
+        (answer: any) =>
+          answer.company || {
+            name: answer.professional.company,
+          }
+      )
+      .filter(function (item: any, pos: any, self: any) {
+        return (
+          self.findIndex((subitem: Clearbit) => subitem.name === item.name) ===
+          pos
+        );
+      });
+  }
+
+  private _processAnswersCountries(answers: any) {
+    this._countries = answers.reduce((acc: any[], answer: any) => {
+      if (
+        !!answer.country &&
+        !!answer.country.flag &&
+        acc.indexOf(answer.country.flag) === -1
+      ) {
+        acc.push(answer.country.flag);
+      }
+      return acc;
+    }, []);
+  }
+
+  /*
+   * compute tag list globally
+   */
+  private _processAnswersTags(answers: any) {
+    const tagsDict = answers.reduce(function (acc: any, answer: any) {
+      answer.tags.forEach((tag: any) => {
+        if (!acc[tag._id]) {
+          acc[tag._id] = tag;
+        }
+      });
+      return acc;
+    }, {} as { [id: string]: Tag });
+
+    this._tagFiltersService.tagsList = Object.keys(tagsDict).map(
+      (k) => tagsDict[k]
+    );
+  }
+
+  /*
+   * compute tags lists for each questions of type textarea
+   */
+  private _processAnswersQuestion(answers: any) {
+    this._questions.forEach((question) => {
+      const tags = ResponseService.tagsList(answers, question);
+      const identifier =
+        question.controlType === 'textarea'
+          ? question.identifier
+          : question.identifier + 'Comment';
+      this._tagFiltersService.setAnswerTags(identifier, tags);
+    });
   }
 
   private _updateAnswersToShow(): void {
@@ -223,7 +313,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     };
     this._answersByCountries = {};
     this._filteredAnswers = this._filterService.filter(this._answers);
-    const countriesList = this._filteredAnswers.map(function (answer: Answer): string {
+    const countriesList = this._filteredAnswers.map(function (
+      answer: Answer
+    ): string {
       let answerIsAlreadyCounted = false;
       if (!!answer.country && !!answer.country.flag) {
         answerIsAlreadyCounted = true;
@@ -231,13 +323,17 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         return answer.country.flag;
       }
       if (!!answer.professional && !!answer.professional.country) {
-        if (!answerIsAlreadyCounted) { addAnswer(answer.professional.country); }
+        if (!answerIsAlreadyCounted) {
+          addAnswer(answer.professional.country);
+        }
         return answer.professional.country;
       }
       return '';
     });
 
-    this._sharedWorldMapService.getCountriesRepartitionByContinent(countriesList).then(r => this._answersOrigins = r);
+    this._sharedWorldMapService
+      .getCountriesRepartitionByContinent(countriesList)
+      .then((r) => (this._answersOrigins = r));
   }
 
   /***
@@ -245,9 +341,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param event
    * @param {string} ob
    */
-  public saveOperatorComment(event: {content: string}, ob: string) {
+  public saveOperatorComment(event: { content: string }, ob: string) {
     this._innovation.marketReport[ob] = { conclusion: event.content };
-    this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
+    this._innovationFrontService.setNotifyChanges({
+      key: 'marketReport',
+      state: true,
+    });
   }
 
   /***
@@ -255,10 +354,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    * @param question
    */
   public saveQuestion(question: Question) {
-
     // If section title is from question
     this._innovation.preset.sections.forEach((section: any) => {
-      const indexOfQuestion = section.questions.indexOf((que: Question ) => que.identifier === question.identifier);
+      const indexOfQuestion = section.questions.indexOf(
+        (que: Question) => que.identifier === question.identifier
+      );
       if (indexOfQuestion >= 0) {
         section.questions[indexOfQuestion] = question;
       }
@@ -276,41 +376,58 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         this._innovation.marketReport.finalConclusion.title = question.title;
         break;
     }
-    this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
+    this._innovationFrontService.setNotifyChanges({
+      key: 'preset',
+      state: true,
+    });
   }
 
   public saveInnovation(event: Event) {
     event.preventDefault();
-    this._innovationService.save(this._innovation._id, {
+    this._innovationService
+      .save(this._innovation._id, {
         marketReport: this._innovation.marketReport,
         // Modified only admin side
         preset: this._innovation.preset,
-        settings: this._innovation.settings
-    }).subscribe(() => {
-      this._toBeSaved = false;
-      this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+        settings: this._innovation.settings,
+      })
+      .subscribe(
+        () => {
+          this._toBeSaved = false;
+          this._translateNotificationsService.success(
+            'Success',
+            'The synthesis has been saved.'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   public displayFixedQuestion(question: any) {
-
     switch (question.identifier) {
       case 'professionals':
         if (this._innovation.marketReport.professionals) {
-          question.title = this._innovation.marketReport.professionals.title || question.title;
+          question.title =
+            this._innovation.marketReport.professionals.title || question.title;
         }
         break;
       case 'keyLearning':
         if (this._innovation.marketReport.keyLearning) {
-          question.title = this._innovation.marketReport.keyLearning.title || question.title;
+          question.title =
+            this._innovation.marketReport.keyLearning.title || question.title;
         }
         break;
       case 'finalConclusion':
         if (this._innovation.marketReport.finalConclusion) {
-          question.title = this._innovation.marketReport.finalConclusion.title || question.title;
+          question.title =
+            this._innovation.marketReport.finalConclusion.title ||
+            question.title;
         }
         break;
     }
@@ -321,7 +438,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   public setNewSelectedLang(value: string) {
     this._reportingLang = value;
     this.innovation.settings.reportingLang = this.reportingLang;
-    this._innovationFrontService.setNotifyChanges({key: 'settings', state: true});
+    this._innovationFrontService.setNotifyChanges({
+      key: 'settings',
+      state: true,
+    });
   }
 
   public filterPro(answer: Answer, event: Event) {
@@ -334,7 +454,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._filterService.addFilter({
       status: 'PROFESSIONALS',
       value: proFiltered,
-      questionId: 'professionals'
+      questionId: 'professionals',
     });
   }
 
@@ -343,7 +463,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._sidebarTemplateValue = {
       animate_state: 'active',
       title: 'Insight',
-      size: '726px'
+      size: '726px',
     };
   }
 
@@ -359,7 +479,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._toggleAnswers;
   }
 
-  get filters(): {[questionId: string]: Filter} {
+  get filters(): { [questionId: string]: Filter } {
     return this._filterService.filters;
   }
 
@@ -415,7 +535,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._isOwner;
   }
 
-  get answersOrigins(): {[continent: string]: {count: number, countries: {[country: string]: {count: number, names: any}}}} {
+  get answersOrigins(): {
+    [continent: string]: {
+      count: number;
+      countries: { [country: string]: { count: number; names: any } };
+    };
+  } {
     return this._answersOrigins;
   }
 
@@ -448,16 +573,22 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
   hideQuestionAnswers(question: Question) {
-    return this.showAnonymousAnswers && (question.sensitiveAnswerData || question.identifier.indexOf('contact') !== -1);
+    return (
+      this.showAnonymousAnswers &&
+      (question.sensitiveAnswerData ||
+        question.identifier.indexOf('contact') !== -1)
+    );
   }
 
   showSection(sectionText: string) {
-    return ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) && !this.areAnswersLoading;
+    return (
+      ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) &&
+      !this.areAnswersLoading
+    );
   }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
-
 }
