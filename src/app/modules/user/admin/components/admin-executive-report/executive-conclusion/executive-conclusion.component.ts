@@ -56,13 +56,14 @@ export class ExecutiveConclusionComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       const config = {
         '$or': JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'}]),
-        fields: '_id firstName lastName'
+        fields: '_id firstName lastName',
+        limit: '-1'
       };
       this._userService.getAll(config)
         .pipe(first()).subscribe((response) => {
           this._allOperators = response && response['result'] ? response['result'] : [];
 
-          if (this._allOperators.length > 0) {
+          if (this._allOperators.length > 0) { // TODO stop doing sorts here if the database can handle them
             this._allOperators = this._allOperators.sort((a, b) => {
               const nameA = (a.firstName + a.lastName).toLowerCase();
               const nameB =  (b.firstName + b.lastName).toLowerCase();
