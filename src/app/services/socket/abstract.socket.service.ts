@@ -1,9 +1,8 @@
 import { environment } from '../../../environments/environment';
-import {io, Socket} from 'socket.io-client';
-// import * as io from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 export class AbstractSocketService {
-  socket: Socket;
+  socket: any;
 
   constructor() {
     this.socket = io(environment.apiUrl.slice(0, -4), {
