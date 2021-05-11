@@ -76,7 +76,6 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/ms": "^0.7.31",
     "@types/node": "~9.4.6",
-    "@types/socket.io-client": "^1.4.33",
     "codelyzer": "~5.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
