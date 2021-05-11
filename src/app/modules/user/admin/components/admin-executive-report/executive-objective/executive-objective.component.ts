@@ -102,7 +102,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
           this._allCommercials = response && response['result'] ? response['result'] : [];
 
-          if (this._allCommercials.length > 0) {
+          if (this._allCommercials.length > 0) {  // TODO really? a sort?
             this._allCommercials = this._allCommercials.sort((a, b) => {
               const nameA = (a.firstName + a.lastName).toLowerCase();
               const nameB =  (b.firstName + b.lastName).toLowerCase();
