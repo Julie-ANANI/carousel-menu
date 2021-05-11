@@ -138,6 +138,10 @@ export class PresetFrontService {
             question.options.push(PresetFrontService.addNewOption(question));
           }
           break;
+
+        case 'textarea':
+          question.canComment = false;
+          break;
       }
 
       if (question.controlType === 'checkbox') {
