@@ -78,7 +78,7 @@ export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
       const _config: any = {
         fields: 'firstName lastName company email country jobTitle innovations',
         search: '{"emailConfidence":90}',
-        limit: 0
+        limit: '-1'
       };
 
       if (!this._socketListening) {
