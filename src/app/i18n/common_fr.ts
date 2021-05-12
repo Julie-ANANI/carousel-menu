@@ -173,7 +173,8 @@ export const COMMON = {
     'CUSTOM': 'Personnalisé',
     'INFOGRAPHIC_TITLE': 'Titre de l\'infographie',
     'INFOGRAPHIC_SUBTITLE': 'Sous-titre de l\'infographie',
-    'OPTION_COLOR': 'Option Couleur'
+    'OPTION_COLOR': 'Option Couleur',
+    'FORGOT_PASSWORD': 'Mot de passe oublié ?'
   },
 
   'PLACEHOLDER': {

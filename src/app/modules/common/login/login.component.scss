@@ -2,80 +2,51 @@
 
 #login {
 
-  .cover-image {
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    min-height: 100vh;
-  }
+  .main-wrapper {
 
-  .section-login {
-    flex-direction: column;
-    min-height: 100vh;
+    .cover-image {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      min-height: 100vh;
+      background-color: #CAF0F8;
+      max-width: 480px;
+      width: 100%;
+    }
 
     .logo-wrapper {
 
       img {
-        height: 57.58px;
-        width: 110px;
+        height: 44.83px;
+        width: 85px;
       }
 
     }
 
-    .form {
-      flex: 1 0 auto;
+    .content-body {
+      min-width: 480px;
+      flex: 1;
+      display: flex;
       flex-direction: column;
-      width: 100%;
-      margin-right: auto;
-      margin-left: auto;
+      min-height: 100vh;
+      padding: 30px 20px;
 
-      .title-primary {
-        font-size: 1.4rem;
-      }
+      .content-login {
+        flex: 1 0 auto;
+        padding-top: 10px;
+        padding-bottom: 30px;
+        flex-direction: column;
 
-      .credentials-wrapper {
-        width: 80%;
+        .login-form {
+          max-width: 480px;
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
 
-        .submit-wrapper {
-          padding-top: 1rem;
-
-          .login-button {
-            padding-bottom: 0.7rem;
-
-            .button {
-              min-width: 150px;
-            }
-
-            .loading {
-              position: absolute;
-              left: 25px;
-            }
-
+          h1 {
+            font-size: 28px;
           }
 
-          p, .text-link {
-            font-size: 0.7rem;
-            margin-bottom: 0;
-          }
-
-        }
-
-      }
-
-      .linkedIn-wrapper {
-        padding-top: 0.8rem;
-
-        .or-wrapper {
-          padding-bottom: 1.25rem;
-        }
-
-        .btn {
-          min-width: 250px;
-        }
-
-        .loading {
-          margin-right: 20px;
         }
 
       }
@@ -91,12 +62,16 @@
 
   #login {
 
-    .cover-image {
-      display: none;
-    }
+    .main-wrapper {
 
-    .credentials-wrapper {
-      width: 90% !important;
+      .cover-image {
+        display: none;
+      }
+
+      .content-body {
+        min-width: unset;
+      }
+
     }
 
   }

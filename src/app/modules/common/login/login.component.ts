@@ -12,6 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 import { UserService } from '../../../services/user/user.service';
+import {MediaFrontService} from '../../../services/media/media-front.service';
 
 @Component({
   selector: 'app-login',
@@ -58,7 +59,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._backgroundImage = environment.background;
+      this._backgroundImage = MediaFrontService.customDefaultImageSrc(environment.background, '480', '2000');
       this.linkedInUrl();
     }
   }
@@ -157,15 +158,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  getCompanyUrl(): string {
-    return environment.companyURL || '';
+  get logo(): string {
+    return environment.logoSynthURL;
   }
 
-  getLogoWBG(): string {
-    return environment.logoURL;
-  }
-
-  checkIsMainDomain(): boolean {
+  get isDomainUMI(): boolean {
     return environment.domain === 'umi';
   }
 

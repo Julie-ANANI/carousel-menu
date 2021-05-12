@@ -176,7 +176,8 @@ export const COMMON = {
     'CUSTOM': 'Custom',
     'INFOGRAPHIC_TITLE': 'Infographic Title',
     'INFOGRAPHIC_SUBTITLE': 'Infographic Subtitle',
-    'OPTION_COLOR': 'Option Color'
+    'OPTION_COLOR': 'Option Color',
+    'FORGOT_PASSWORD': 'Forgot password?'
   },
 
   'PLACEHOLDER': {

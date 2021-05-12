@@ -3,16 +3,11 @@ export const LOG_IN = {
 
   'DOES_NOT_HAVE_ACCOUNT': 'Don\'t have an account?',
 
-  'LOG_IN_BTN': 'Login',
+  'LOG_IN_BTN': 'Sign in',
 
   'HEADING': 'Welcome back!',
 
-  'LOG_IN_LINKEDIN': 'Login with LinkedIn',
-
-  'FORGOT_PASSWORD': {
-    'A': 'Did you',
-    'B': 'forget your password?'
-  },
+  'LOG_IN_LINKEDIN': 'Sign in with LinkedIn',
 
   'SIGN_UP': 'Create an account'
 
