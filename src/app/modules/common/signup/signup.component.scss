@@ -2,48 +2,51 @@
 
 #signup {
 
-  .cover-image {
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    min-height: 100vh;
-  }
+  .main-wrapper {
 
-  .signup-details {
-    flex-direction: column;
-    min-height: 100vh;
+    .cover-image {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      min-height: 100vh;
+      background-color: #CAF0F8;
+      max-width: 480px;
+      width: 100%;
+    }
 
     .logo-wrapper {
 
       img {
-        height: 57.58px;
-        width: 110px;
+        height: 44.83px;
+        width: 85px;
       }
 
     }
 
-    .register {
-      flex: 1 0 auto;
+    .content-body {
+      min-width: 480px;
+      flex: 1;
+      display: flex;
       flex-direction: column;
-      width: 100%;
-      margin-right: auto;
-      margin-left: auto;
+      min-height: 100vh;
+      padding: 30px 20px;
 
-      .title-primary {
-        font-size: 1.4rem;
-        padding: 0 0.4rem 0.4rem;
-      }
+      .content-signup {
+        flex: 1 0 auto;
+        padding-top: 10px;
+        padding-bottom: 30px;
+        flex-direction: column;
 
-      .btn {
-        width: 280px;
-      }
+        .signup-form {
+          max-width: 420px;
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
 
-      .linkedIn-wrapper {
-        padding-top: 1rem;
+          h1 {
+            font-size: 28px;
+          }
 
-        .or-wrapper {
-          padding-bottom: 1.25rem;
         }
 
       }
@@ -51,6 +54,7 @@
     }
 
   }
+
 }
 
 
@@ -58,8 +62,16 @@
 
   #signup {
 
-    .cover-image {
-      display: none;
+    .main-wrapper {
+
+      .cover-image {
+        display: none;
+      }
+
+      .content-body {
+        min-width: unset;
+      }
+
     }
 
   }
