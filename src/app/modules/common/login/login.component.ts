@@ -44,6 +44,12 @@ export class LoginComponent implements OnInit {
 
   private _isShowModal = false;
 
+  private _companyUrl = environment.companyURL;
+
+  private _logo = environment.logoSynthURL;
+
+  private _isDomainUMI = environment.domain === 'umi';
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateTitleService: TranslateTitleService,
@@ -159,11 +165,11 @@ export class LoginComponent implements OnInit {
   }
 
   get logo(): string {
-    return environment.logoSynthURL;
+    return this._logo;
   }
 
   get isDomainUMI(): boolean {
-    return environment.domain === 'umi';
+    return this._isDomainUMI;
   }
 
   get formData(): FormGroup {
@@ -200,6 +206,10 @@ export class LoginComponent implements OnInit {
 
   get helpMessageForm(): FormGroup {
     return this._helpMessageForm;
+  }
+
+  get companyUrl(): string {
+    return this._companyUrl;
   }
 
   cancelMessage() {
