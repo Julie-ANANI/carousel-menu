@@ -112,10 +112,10 @@ export const COMMON = {
     'PROFESSIONALS': 'Professionals',
     'USERS': 'Users',
     'COMMUNITY_PROJECTS': 'Projects | Community',
-    'ANSWER_TAGS': 'Answer tags | Project',
-    'NEW_PROJECT': 'Add project',
-    'NOT_FOUND': 'Page not found',
-    'NOT_AUTHORIZED': 'Access denied',
+    'ANSWER_TAGS': 'Answer Tags | Project',
+    'NEW_PROJECT': 'Add Project',
+    'NOT_FOUND': 'Page Not Found',
+    'NOT_AUTHORIZED': 'Access Denied',
   },
 
   'LABEL': {

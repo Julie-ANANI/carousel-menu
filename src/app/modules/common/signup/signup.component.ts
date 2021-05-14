@@ -11,6 +11,7 @@ import {User} from '../../../models/user.model';
 import {UserService} from '../../../services/user/user.service';
 import {RandomUtil} from '../../../utils/randomUtil';
 import {isPlatformBrowser} from '@angular/common';
+import {MediaFrontService} from '../../../services/media/media-front.service';
 
 @Component({
   selector: 'app-signup',
@@ -32,6 +33,14 @@ export class SignupComponent implements OnInit {
 
   private _isCreatingAccount = false;
 
+  private _logo = environment.logoSynthURL;
+
+  private _isDomainUMI = environment.domain === 'umi';
+
+  private _isCreatingAccountLinkedin = false;
+
+  private _companyUrl = environment.companyURL;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
@@ -45,16 +54,13 @@ export class SignupComponent implements OnInit {
     this._activatedRoute.queryParams.subscribe((params: Params) => {
       this._isInvitation = params['invitation'] && params['invitation'] === 'true';
     });
-
-    this.linkedInUrl();
-
-    if (isPlatformBrowser(this._platformId)) {
-      this._backgroundImage = environment.background;
-    }
-
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._backgroundImage = MediaFrontService.customDefaultImageSrc(environment.background, '480', '2000');
+      this.linkedInUrl();
+    }
   }
 
   private linkedInUrl() {
@@ -72,14 +78,17 @@ export class SignupComponent implements OnInit {
   }
 
   public linkedInEvent() {
+    this._isCreatingAccountLinkedin = true;
     const data = {
       domain: environment.domain,
       state: this._linkedInState
     };
 
-    this._authService.preRegisterDataOAuth2('linkedin', data).subscribe(_ => {
-      console.log(_);
+    this._authService.preRegisterDataOAuth2('linkedin', data).pipe(first()).subscribe(_ => {
+      this._isCreatingAccountLinkedin = false;
+      // console.log(_);
     }, err => {
+      this._isCreatingAccountLinkedin = false;
       console.error(err);
     }, () => {
       window.open(this._linkedInLink, '_self');
@@ -124,16 +133,12 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  getCompanyUrl(): string {
-    return environment.companyURL || '';
+  get logo(): string {
+    return this._logo;
   }
 
-  getLogoWBG(): string {
-    return environment.logoURL;
-  }
-
-  checkIsMainDomain(): boolean {
-    return environment.domain === 'umi';
+  get isDomainUMI(): boolean {
+    return this._isDomainUMI;
   }
 
   get isInvitation(): boolean {
@@ -154,6 +159,14 @@ export class SignupComponent implements OnInit {
 
   get isCreatingAccount(): boolean {
     return this._isCreatingAccount;
+  }
+
+  get isCreatingAccountLinkedin(): boolean {
+    return this._isCreatingAccountLinkedin;
+  }
+
+  get companyUrl(): string {
+    return this._companyUrl;
   }
 
 }
