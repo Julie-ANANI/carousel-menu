@@ -8,12 +8,7 @@ import { NewProjectComponent } from './new-project.component';
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { NewProjectWelcomeComponent } from './new-project-welcome/new-project-welcome.component';
-import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
-import { NewProjectLastStepComponent } from './new-project-last-step/new-project-last-step.component';
-import {TextInputModule} from '../../../../utility/text-input/text-input.module';
-import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
-import {NgxPageScrollModule} from 'ngx-page-scroll';
+import { MarketTestWelcomeComponent } from './market-test-welcome/market-test-welcome.component';
 
 @NgModule({
   imports: [
@@ -22,16 +17,11 @@ import {NgxPageScrollModule} from 'ngx-page-scroll';
     FormsModule,
     ObjectivesPrimaryModule,
     ObjectivesSecondaryModule,
-    MarketTestObjectivesModule,
-    AngularMyDatePickerModule,
-    TextInputModule,
-    DatePickerModule,
-    NgxPageScrollModule,
+    AngularMyDatePickerModule // https://github.com/kekeh/angular-mydatepicker
   ],
   declarations: [
     NewProjectComponent,
-    NewProjectWelcomeComponent,
-    NewProjectLastStepComponent
+    MarketTestWelcomeComponent
   ],
   exports: [
     NewProjectComponent

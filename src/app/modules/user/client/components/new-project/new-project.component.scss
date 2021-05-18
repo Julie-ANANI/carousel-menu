@@ -2,6 +2,7 @@
 
 #new-project {
   background-color: #2E6188;
+  min-height: calc(100vh - 126px);
 
   .main-container {
     display: flex;
@@ -36,6 +37,25 @@
       textarea {
         padding: 14.5px;
         line-height: 1.3;
+      }
+
+    }
+
+    .circle-wrapper {
+
+      .shape {
+
+        &.is-circle {
+          width: 15px;
+          height: 15px;
+          margin: 3px 7.5px;
+
+          &.active {
+            background-color: $bg-primary-color;
+          }
+
+        }
+
       }
 
     }
