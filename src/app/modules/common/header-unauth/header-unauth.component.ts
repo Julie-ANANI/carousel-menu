@@ -176,10 +176,6 @@ export class HeaderUnauthComponent implements OnInit {
     return this._company;
   }
 
-  get contactUrl(): string {
-    return this.currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
-  }
-
   get sidebarValue(): SidebarInterface {
     return this._sidebarValue;
   }
