@@ -43,7 +43,13 @@ export class ErrorService {
 
       });
 
+    } else {
+      /**
+       * for the debugging purposes.
+       */
+      console.error(error);
     }
+
   }
 
 }
