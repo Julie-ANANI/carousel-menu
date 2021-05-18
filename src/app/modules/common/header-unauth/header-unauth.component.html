@@ -1,22 +1,22 @@
 <header class="container fluid grid-2xl" id="header-unauth">
   <div class="column col-sm-12 col-11 col-mx-auto">
-    <nav class="navbar">
+    <nav class="navbar header-height">
 
       <!-- brand -->
-      <div class="navbar-brand">
+      <div class="navbar-brand header-height">
         <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
           <img
             [alt]="company"
-            [ngStyle]="{'width': '110px', 'height': '57.58px', 'margin-top': '-2px'}"
+            [ngStyle]="{'width': '85px', 'height': '44.48px', 'margin-top': '-1px'}"
             [src]="logo"
-            height="57.58"
-            width="110">
+            height="44.48"
+            width="85">
         </a>
       </div>
       <!-- /brand -->
 
       <!-- hamburger icon for mobile -->
-      <div class="navbar-burger" (click)="toggleMenuState($event)">
+      <div class="navbar-burger header-height" (click)="toggleMenuState($event)">
         <i class="icon icon-menu"></i>
         <span class="m-left-2 text-medium">Menu</span>
       </div>
