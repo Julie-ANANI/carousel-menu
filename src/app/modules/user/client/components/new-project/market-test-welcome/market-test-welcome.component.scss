@@ -1,0 +1,58 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#market-test-welcome {
+
+  .market-step {
+    text-align: center;
+    max-width: 322px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 231px;
+    margin-top: 30px;
+
+    p {
+      font-size: 18px;
+      font-weight: bold;
+      opacity: 0.7;
+      color: $white-color;
+      margin-bottom: 15px;
+    }
+
+    img {
+      width: 197.89px;
+      height: 142.31px;
+    }
+
+    &.is-collecte {
+      img {
+        height: 188.33px;
+        width: 321.15px;
+      }
+    }
+
+  }
+
+  .arrow img {
+    margin: 50px 30px;
+    height: 65.22px;
+    width: 35px;
+    transition: all 0.5s;
+  }
+
+}
+
+@media screen and (max-width: $size-lg) {
+  #market-test-welcome {
+    flex-direction: column;
+
+    .market-step {
+      min-height: 100%;
+      margin-top: 0;
+    }
+
+    .arrow img {
+      transform: rotate(90deg);
+    }
+
+  }
+}
