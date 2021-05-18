@@ -147,6 +147,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(
         (data: any) => {
+          this._anonymousAnswers = !!(
+            this._innovation._metadata &&
+            this._innovation._metadata.campaign &&
+            this._innovation._metadata.campaign.anonymous_answers
+          );
           this._realTimeUpdateTags(data);
         },
         (error) => {
@@ -185,10 +190,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   _realTimeUpdateTags(data: any) {
     this.areAnswersLoading = true;
     this._processAnswers(data);
+    this._processFilterAnswers();
     this._processAnswersCompanies(data);
     this._processAnswersCountries(data);
-    this._processAnswersTags(data);
-    this._processAnswersQuestion(data);
     this.areAnswersLoading = false;
     setTimeout(() => (this.displayFilters = true), 500);
   }
@@ -205,11 +209,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         .subscribe(
           (response) => {
             this._processAnswers(response.answers);
+            this._processFilterAnswers();
             this._processAnswersCompanies(response.answers);
             this._processAnswersCountries(response.answers);
             this._processAnswersTags(response.answers);
             this._processAnswersQuestion(response.answers);
             this.areAnswersLoading = false;
+            console.log(this._tagFiltersService.selectedTags);
             setTimeout(() => (this.displayFilters = true), 500);
           },
           (err: HttpErrorResponse) => {
@@ -231,7 +237,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     if (this._anonymousAnswers) {
       this._answers = AnswerFrontService.anonymous(this._answers);
     }
+  }
 
+  private _processFilterAnswers() {
     this._filteredAnswers = this._answers;
     this._updateAnswersToShow();
 
