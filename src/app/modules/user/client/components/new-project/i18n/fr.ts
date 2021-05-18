@@ -1,10 +1,25 @@
 export const NEW_PROJECT = {
 
   'HEADINGS': {
+    'STEP_0': 'Votre futur Test Marché en 3 étapes',
+    'STEP_1': 'Que souhaitez-vous faire ?',
+    'STEP_LAST': 'Dans quelle langue souhaitez-vous les résultats de votre Test Marché ?',
     'TITLE': 'Pour commencer…',
     'PRIMARY_OBJECTIVE': 'Quel est l\'objectif principal du test marché UMI ?',
     'SECONDARY_OBJECTIVE': 'J\'aimerais aussi...',
     'RESTITUTION_DATE': 'Et pour finir !'
+  },
+
+  'BUTTONS': {
+    'STEP_0': 'J’ai compris',
+    'STEP_1': 'Suite',
+    'STEP_LAST': 'Tester le marché',
+  },
+
+  'STEP_0': {
+    'PREPARATION': '1. Préparation',
+    'COLLECTE': '2. Collecte',
+    'ANALYSE': '3. Analyse'
   },
 
   'SUB_HEADING': {

@@ -24,9 +24,11 @@ export class NewProjectComponent implements OnInit {
 
   private _currentStep = 0;
 
-  private _fields: Array<string> = ['TITLE', 'PRIMARY_OBJECTIVE', 'SECONDARY_OBJECTIVE', 'RESTITUTION_DATE'];
+  // private _fields: Array<string> = ['TITLE', 'PRIMARY_OBJECTIVE', 'SECONDARY_OBJECTIVE', 'RESTITUTION_DATE'];
 
-  private _heading = '';
+  private _fields: Array<string> = ['STEP_0', 'STEP_1', 'STEP_LAST'];
+
+  // private _heading = '';
 
   private _isLoading = true;
 
@@ -80,7 +82,7 @@ export class NewProjectComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._isLoading = false;
+      // this._isLoading = false;
     }
   }
 
@@ -175,25 +177,58 @@ export class NewProjectComponent implements OnInit {
     return this._mission.objective.principal['en'] !== 'Other';
   }
 
+  public goToNextStep(event: Event) {
+    event.preventDefault();
+
+    if (!this.isDisabled) {
+      /***
+       * this is the finale step to create the new project.
+       */
+      if (this._fields[this._currentStep] === 'STEP_LAST') {
+
+      } else {
+        this._currentStep++;
+      }
+    }
+  }
+
   /***
    * based on the conditions of the fields this make the
    * next button disabled/enabled.
    */
   get isDisabled(): boolean {
     switch (this._fields[this._currentStep]) {
+      case 'STEP_1':
+        return true;
 
-      case 'TITLE':
+      case 'STEP_LAST':
+        return true;
+
+      /*case 'TITLE':
         return !this._clientProject.name;
 
       case 'PRIMARY_OBJECTIVE':
         return !this._mission.objective.principal[this._currentLang];
 
       case 'RESTITUTION_DATE':
-        return !(this._mission.milestoneDates.length > 0 && this._mission.milestoneDates[0].name);
+        return !(this._mission.milestoneDates.length > 0 && this._mission.milestoneDates[0].name);*/
 
     }
 
     return false;
+  }
+
+  get buttonId(): string {
+    switch (this._fields[this._currentStep]) {
+      case 'STEP_0':
+        return 'new-project-btn-step-welcome';
+      case 'STEP_1':
+        return 'new-project-btn-step-objectives';
+      case 'STEP_LAST':
+        return 'new-project-btn-step-create-market-test';
+      default:
+        return 'new-project-btn-' + this._fields[this._currentStep].toLowerCase();
+    }
   }
 
   get currentStep(): number {
@@ -204,9 +239,9 @@ export class NewProjectComponent implements OnInit {
     return this._fields;
   }
 
-  get heading(): string {
+  /*get heading(): string {
     return this._heading;
-  }
+  }*/
 
   get isLoading(): boolean {
     return this._isLoading;

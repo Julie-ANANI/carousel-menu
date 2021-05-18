@@ -1,4 +1,46 @@
-<div [hidden]="isLoading" class="p-top-40 p-bottom-40" id="new-project">
+<div id="new-project" class="p-top-40 p-bottom-50">
+  <div class="container grid-2xl">
+    <div class="column col-sm-12 col-11 col-mx-auto">
+      <ng-container [ngSwitch]="fields[currentStep]">
+
+        <!-- heading -->
+        <h1 class="title text-white text-center is-4 text-bold">
+          {{ 'NEW_PROJECT.HEADINGS.' + fields[currentStep] | translate }}
+        </h1>
+        <!-- /heading -->
+
+        <!-- STEP_0 -->
+        <ng-container *ngSwitchCase="'STEP_0'">
+          <section class="p-bottom-50 p-top-30">
+            <app-market-test-welcome></app-market-test-welcome>
+          </section>
+        </ng-container>
+        <!-- /STEP_0 -->
+
+        <!-- buttons to navigate next step -->
+        <div class="text-center p-top-40">
+          <button
+            (click)="goToNextStep($event)"
+            [disabled]="isDisabled || isCreating"
+            [id]="buttonId"
+            class="button is-community is-xl">
+            <span *ngIf="isCreating" class="loading is-white"></span>
+            <ng-container *ngIf="!isCreating">
+              {{'NEW_PROJECT.BUTTONS.' + fields[currentStep] | translate }}
+            </ng-container>
+          </button>
+        </div>
+        <!-- /buttons to navigate next step -->
+
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="false" class="p-top-40 p-bottom-40">
   <div class="container grid-2xl">
     <div class="column col-sm-12 col-11 col-mx-auto">
       <div class="main-container animate-fade">

@@ -1,6 +1,8 @@
 @import "../../../../../../style/framework/src/variables";
 
 #new-project {
+  background-color: #2E6188;
+  min-height: calc(100vh - 126px);
 
   .main-container {
     display: flex;
