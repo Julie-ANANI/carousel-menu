@@ -4,6 +4,19 @@
   visibility: hidden;
 }
 
+// calculate page height => 65px (Header) + 45px (Footer) + 1px
+.page-height {
+  min-height: calc(100vh - 111px);
+}
+
+.header-height {
+  min-height: 65px !important;
+}
+
+.footer-height {
+  min-height: 45px !important;
+}
+
 @import "style/shared-editors";
 @import "style/admin-executive-report";
 @import "style/admin-campaign-stat";
