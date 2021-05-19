@@ -13,11 +13,11 @@ interface PrincipalObjective {
 })
 export class MarketTestObjectivesComponent implements OnInit {
 
-  selectCategory = '';
+  selectedCategory = '';
 
   objectivesCategory: Array<string> = ['INNOVATE', 'INNOVATION'];
 
-  selectPrincipalObjective: PrincipalObjective = <PrincipalObjective>{};
+  selectedPrincipal: PrincipalObjective = <PrincipalObjective>{};
 
   principalObjectives: Array<PrincipalObjective> = [
     {category: 'INNOVATE', objective: 'Detecting market needs'},
@@ -28,11 +28,11 @@ export class MarketTestObjectivesComponent implements OnInit {
     {category: 'INNOVATION', objective: 'Optimizing my value proposition'},
   ];
 
-  @Output() selectedPrincipalObjective: EventEmitter<any> = new EventEmitter<any>();
+  @Output() emitPrincipalObjective: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() selectedSecondaryObjectives: EventEmitter<any> = new EventEmitter<any>();
+  @Output() emitSecondaryObjectives: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() selectedObjectiveComment: EventEmitter<string> = new EventEmitter<string>();
+  @Output() emitObjectiveComment: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private _translateService: TranslateService) { }
 
@@ -41,16 +41,16 @@ export class MarketTestObjectivesComponent implements OnInit {
 
   public onChangeCategory(event: Event, value: string) {
     event.preventDefault();
-    if (value !== this.selectCategory) {
-      this.selectCategory = value;
-      this.selectPrincipalObjective = <PrincipalObjective>{};
+    if (value !== this.selectedCategory) {
+      this.selectedCategory = value;
+      this.selectedPrincipal = <PrincipalObjective>{};
     }
   }
 
-  public onChangePrincipalObjective(event: Event, value: PrincipalObjective) {
+  public onChangePrincipal(event: Event, value: PrincipalObjective) {
     event.preventDefault();
-    if (this.selectCategory && this.selectCategory === value.category) {
-      this.selectPrincipalObjective = value;
+    if (this.selectedCategory && this.selectedCategory === value.category) {
+      this.selectedPrincipal = value;
     }
   }
 
