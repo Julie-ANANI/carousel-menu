@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { environment } from '../../../../../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateTitleService} from '../../../../../services/title/title.service';
@@ -20,7 +20,7 @@ import {AuthService} from '../../../../../services/auth/auth.service';
   styleUrls: ['new-project.component.scss']
 })
 
-export class NewProjectComponent implements OnInit {
+export class NewProjectComponent implements OnInit, OnDestroy {
 
   private _currentStep = 0;
 
@@ -53,6 +53,8 @@ export class NewProjectComponent implements OnInit {
 
   private _isCreating = false;
 
+  isNextStep = false;
+
   // https://github.com/kekeh/angular-mydatepicker
   private _datePickerOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -66,6 +68,8 @@ export class NewProjectComponent implements OnInit {
   };
 
   private _milestoneDateComment = '';
+
+  nextStepTimeout: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
@@ -187,7 +191,11 @@ export class NewProjectComponent implements OnInit {
       if (this._fields[this._currentStep] === 'STEP_LAST') {
 
       } else {
-        this._currentStep++;
+        this.isNextStep = true;
+        this.nextStepTimeout = setTimeout(() => {
+          this._currentStep++;
+          this.isNextStep = false;
+        }, 250);
       }
     }
   }
@@ -274,5 +282,10 @@ export class NewProjectComponent implements OnInit {
   set milestoneDateComment(value: string) {
     this._milestoneDateComment = value;
   }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.nextStepTimeout);
+  }
+
 
 }
