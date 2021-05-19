@@ -19,7 +19,7 @@ import { FORGET_PASSWORD } from '../modules/common/login/components/forget-passw
 import { WELCOME } from '../modules/common/welcome/i18n/fr';
 import { PAGINATION } from '../modules/utility/paginations/i18n/fr';
 import { SHARE } from '../modules/public/share/i18n/fr';
-import { FOOTER } from "../modules/common/footer/i18n/fr";
+import { FOOTER } from '../modules/common/footer/i18n/fr';
 import { HEADER } from '../modules/common/header/i18n/fr';
 import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/fr';
 import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/fr';
@@ -43,6 +43,7 @@ import { PROJECT_PITCH } from '../modules/user/client/components/project/compone
 import { PROJECT_SETUP } from '../modules/user/client/components/project/components/setup/i18n/fr';
 import {COMMENT_CARD} from '../modules/sidebars/components/comment-card/i18n/fr';
 import {SHARED_TEXT_ZONE} from '../modules/shared/components/shared-editors/i18n/fr';
+import {MARKET_TEST_OBJECTIVES} from '../modules/user/client/components/market-test-objectives/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -89,5 +90,6 @@ export const fr = {
   'PROJECT_PITCH': PROJECT_PITCH,
   'PROJECT_SETUP': PROJECT_SETUP,
   'COMMENT_CARD': COMMENT_CARD,
-  'SHARED_TEXT_ZONE': SHARED_TEXT_ZONE
+  'SHARED_TEXT_ZONE': SHARED_TEXT_ZONE,
+  'MARKET_TEST_OBJECTIVES': MARKET_TEST_OBJECTIVES
 };

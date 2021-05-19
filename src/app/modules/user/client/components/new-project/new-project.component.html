@@ -27,7 +27,9 @@
 
         <!-- STEP_1 -->
         <ng-container *ngSwitchCase="'STEP_1'">
-
+          <section class="p-top-20">
+            <app-market-test-objectives></app-market-test-objectives>
+          </section>
         </ng-container>
         <!-- /STEP_1 -->
 
@@ -35,13 +37,13 @@
         <div class="text-center p-top-40">
           <button
             (click)="goToNextStep($event)"
-            [disabled]="isDisabled || isCreating"
+            [disabled]="isDisabled || isCreating || isNextStep"
             [id]="buttonId"
             class="button is-community is-xl">
-            <span *ngIf="isCreating" class="loading is-white"></span>
-            <ng-container *ngIf="!isCreating">
+            <span *ngIf="isCreating || isNextStep; else btnText" class="loading is-white"></span>
+            <ng-template #btnText>
               {{'NEW_PROJECT.BUTTONS.' + fields[currentStep] | translate }}
-            </ng-container>
+            </ng-template>
           </button>
         </div>
         <!-- /buttons to navigate next step -->
