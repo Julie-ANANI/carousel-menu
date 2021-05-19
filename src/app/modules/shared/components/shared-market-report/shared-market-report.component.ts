@@ -147,7 +147,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          this._realTimeUpdateTags(data);
+          this._realTimeUpdateTags(JSON.parse(data));
         },
         (error) => {
           console.error(error);
@@ -183,14 +183,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
   _realTimeUpdateTags(data: any) {
-    this.areAnswersLoading = true;
-    this._processAnswers(data);
-    this._processAnswersCompanies(data);
-    this._processAnswersCountries(data);
-    this._processAnswersTags(data);
-    this._processAnswersQuestion(data);
-    this.areAnswersLoading = false;
-    setTimeout(() => (this.displayFilters = true), 500);
+    for (let i = 0; i < this._filteredAnswers.length; i++) {
+      if (this._filteredAnswers[i]._id === data.id) {
+        data.professional = this._filteredAnswers[i].professional;
+        this._filteredAnswers[i] = data;
+      }
+    }
   }
 
   /***
@@ -205,6 +203,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         .subscribe(
           (response) => {
             this._processAnswers(response.answers);
+            this._processFilterAnswers();
             this._processAnswersCompanies(response.answers);
             this._processAnswersCountries(response.answers);
             this._processAnswersTags(response.answers);
@@ -231,7 +230,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     if (this._anonymousAnswers) {
       this._answers = AnswerFrontService.anonymous(this._answers);
     }
+  }
 
+  private _processFilterAnswers() {
     this._filteredAnswers = this._answers;
     this._updateAnswersToShow();
 
