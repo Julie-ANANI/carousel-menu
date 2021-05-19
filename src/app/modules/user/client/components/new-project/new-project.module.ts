@@ -9,6 +9,7 @@ import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primar
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { MarketTestWelcomeComponent } from './market-test-welcome/market-test-welcome.component';
+import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { MarketTestWelcomeComponent } from './market-test-welcome/market-test-we
     FormsModule,
     ObjectivesPrimaryModule,
     ObjectivesSecondaryModule,
+    MarketTestObjectivesModule,
     AngularMyDatePickerModule // https://github.com/kekeh/angular-mydatepicker
   ],
   declarations: [

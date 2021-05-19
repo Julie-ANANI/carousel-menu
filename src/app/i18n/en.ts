@@ -43,6 +43,7 @@ import { PROJECT_PITCH } from '../modules/user/client/components/project/compone
 import { PROJECT_SETUP } from '../modules/user/client/components/project/components/setup/i18n/en';
 import {COMMENT_CARD} from '../modules/sidebars/components/comment-card/i18n/en';
 import {SHARED_TEXT_ZONE} from '../modules/shared/components/shared-editors/i18n/en';
+import {MARKET_TEST_OBJECTIVES} from '../modules/user/client/components/market-test-objectives/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -89,5 +90,6 @@ export const en = {
   'PROJECT_PITCH': PROJECT_PITCH,
   'PROJECT_SETUP': PROJECT_SETUP,
   'COMMENT_CARD': COMMENT_CARD,
-  'SHARED_TEXT_ZONE': SHARED_TEXT_ZONE
+  'SHARED_TEXT_ZONE': SHARED_TEXT_ZONE,
+  'MARKET_TEST_OBJECTIVES': MARKET_TEST_OBJECTIVES
 };

@@ -2,7 +2,7 @@ export const NEW_PROJECT = {
 
   'HEADINGS': {
     'STEP_0': 'Votre futur Test Marché en 3 étapes',
-    'STEP_1': 'Que souhaitez-vous faire ?',
+    'STEP_1': '',
     'STEP_LAST': 'Dans quelle langue souhaitez-vous les résultats de votre Test Marché ?',
     'TITLE': 'Pour commencer…',
     'PRIMARY_OBJECTIVE': 'Quel est l\'objectif principal du test marché UMI ?',
