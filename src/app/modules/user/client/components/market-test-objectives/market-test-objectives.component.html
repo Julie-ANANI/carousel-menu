@@ -1,0 +1,114 @@
+<div id="market-test-objectives">
+
+  <!-- heading -->
+  <h1 class="title text-white text-center is-4 text-bold">
+    {{ 'MARKET_TEST_OBJECTIVES.HEADINGS.CATEGORY' | translate }}
+  </h1>
+  <!-- /heading -->
+
+  <!-- categories -->
+  <div class="flex-centered flex-wrap p-top-10">
+    <a
+      (click)="onChangeCategory($event, category)"
+      *ngFor="let category of objectivesCategory"
+      [href]="'#arrow-bottom-primary-objectives'"
+      [id]="'objectives-category-'+category.toLowerCase()"
+      [ngClass]="{'active': selectCategory === category}"
+      class="objectives-category m-bottom-25 m-left-10 m-right-10 box-info"
+      pageScroll>
+      <h4>{{ 'MARKET_TEST_OBJECTIVES.CATEGORY.TITLE.' + category | translate }}</h4>
+      <p>{{ 'MARKET_TEST_OBJECTIVES.CATEGORY.DESCRIPTION.' + category | translate }}</p>
+    </a>
+  </div>
+  <!-- /categories -->
+
+  <!-- arrow -->
+  <div class="flex-centered p-top-20">
+    <img
+      alt="Arrow bottom"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  </div>
+  <!-- /arrow -->
+
+  <!-- text -->
+  <div class="text-center p-top-40">
+    <h2 class="text-bold text-white title is-4">{{ 'MARKET_TEST_OBJECTIVES.WHAT_NEXT' | translate }}</h2>
+  </div>
+  <!-- /text -->
+
+  <!-- principal objectives -->
+  <div class="section-principal-objectives relative">
+
+    <!-- objectives -->
+    <div class="flex-between objectives-wrapper relative">
+      <ng-container *ngFor="let principal of principalObjectives">
+        <div
+          [ngClass]="{'disabled': !selectCategory || principal.category !== selectCategory}"
+          class="principal-objective relative">
+
+          <p
+            [ngClass]="{'active': selectPrincipalObjective.objective === principal.objective}"
+            (click)="onChangePrincipalObjective($event, principal)"
+            [id]="'market-test-principal-objective'"
+            class="box-info text-white text-medium text-md flex-centered">
+            {{ principal.objective }}
+          </p>
+
+          <!-- compass / boat image -->
+          <div class="compass-boat-image">
+
+            <ng-container *ngIf="selectCategory === principal.category; else compassInactive">
+              <ng-container *ngIf="selectPrincipalObjective.objective === principal.objective; else compassActive">
+                <img
+                  alt="Compass active"
+                  class="img-responsive animate-fade is-9 is-boat"
+                  src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/boat.svg">
+              </ng-container>
+              <ng-template #compassActive>
+                <img
+                  alt="Compass active"
+                  class="img-responsive animate-fade is-5"
+                  src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-active.svg">
+              </ng-template>
+            </ng-container>
+
+            <ng-template #compassInactive>
+              <img
+                alt="Compass inactive animate-fade is-5"
+                class="img-responsive"
+                src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-inactive.svg">
+            </ng-template>
+
+          </div>
+          <!-- /compass / boat image -->
+
+        </div>
+      </ng-container>
+    </div>
+    <!-- /objectives -->
+
+    <div class="market-path"></div>
+
+    <!-- island image -->
+    <div class="island-image absolute">
+      <img
+        [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/island-'+currentLang+'.png'"
+        alt="Test island"
+        class="img-responsive">
+    </div>
+    <!-- /island image -->
+
+  </div>
+  <!-- principal objectives -->
+
+  <!-- arrow -->
+  <div class="flex-centered p-top-40" id="arrow-bottom-primary-objectives">
+    <img
+      alt="Arrow bottom"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  </div>
+  <!-- /arrow -->
+
+</div>
