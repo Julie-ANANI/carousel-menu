@@ -3,19 +3,33 @@
     <div class="column col-sm-12 col-11 col-mx-auto">
       <ng-container [ngSwitch]="fields[currentStep]">
 
-        <!-- heading -->
-        <h1 class="title text-white text-center p-top-20 is-4 text-bold">
-          {{ 'NEW_PROJECT.HEADINGS.' + fields[currentStep] | translate }}
-        </h1>
-        <!-- /heading -->
+        <!-- circles -->
+        <ng-container *ngIf="currentStep !== 0">
+          <section class="flex-centered p-bottom-20">
+            <ng-container *ngFor="let field of fields; let i = index">
+              <div
+                *ngIf="i > 0"
+                [ngClass]="{ 'bg-primary': i === currentStep }"
+                class="shape is-sm is-circle">
+              </div>
+            </ng-container>
+          </section>
+        </ng-container>
+        <!-- /circles -->
 
         <!-- STEP_0 -->
         <ng-container *ngSwitchCase="'STEP_0'">
-          <section class="p-bottom-50 p-top-30">
+          <section class="p-bottom-50 p-top-20">
             <app-market-test-welcome></app-market-test-welcome>
           </section>
         </ng-container>
         <!-- /STEP_0 -->
+
+        <!-- STEP_1 -->
+        <ng-container *ngSwitchCase="'STEP_1'">
+
+        </ng-container>
+        <!-- /STEP_1 -->
 
         <!-- buttons to navigate next step -->
         <div class="text-center p-top-40">
