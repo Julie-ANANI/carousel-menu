@@ -79,7 +79,17 @@
 
       }
 
-      .compass-boat-image {
+      .boat-image {
+        position: absolute;
+        left: -30px;
+
+        .is-boat {
+          height: 55px;
+        }
+
+      }
+
+      .compass-image {
         position: absolute;
         left: 0;
         right: 0;
@@ -88,12 +98,6 @@
 
         img {
           height: 40px;
-          z-index: 1;
-
-          &.is-boat {
-            height: 55px;
-          }
-
         }
 
       }
@@ -143,7 +147,7 @@
 
         }
 
-        .compass-boat-image {
+        .compass-image {
           position: relative;
           align-items: center;
         }
