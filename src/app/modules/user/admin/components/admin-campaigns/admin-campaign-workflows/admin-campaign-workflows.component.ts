@@ -96,7 +96,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     );
     if (this._campaign.settings.defaultWorkflow === '') {
       this._selectedTemplate = workflowToAdd;
-      this._prepareImport();
+      this._prepareImport(true);
       this.updateAvailableScenario(this._selectedTemplate);
       this._saveTemplates('The workflow is added automatically.');
     }
@@ -242,12 +242,12 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._selectedTemplate = template;
   }
 
-  private _prepareImport() {
+  private _prepareImport(isModified: boolean) {
     this._selectedTemplate = {
       name: this._selectedTemplate.name,
       emails: this._selectedTemplate.emails.map((m) => {
         m.nameWorkflow = this._selectedTemplate.name;
-        m.modified = false;
+        m.modified = isModified;
         return m;
       }),
     };
@@ -268,7 +268,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
    * the selected template and the
    */
   public onClickImport() {
-    this._prepareImport();
+    this._prepareImport(false);
     if (
       this._availableScenarios
         .map((scenario) => scenario.name)
