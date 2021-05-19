@@ -1,3 +1,3 @@
-export type Multiling = {
+export interface Multiling {
   [lang: string]: string;
-};
+}

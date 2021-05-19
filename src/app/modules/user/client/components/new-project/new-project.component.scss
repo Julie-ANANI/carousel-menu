@@ -40,25 +40,6 @@
 
     }
 
-    .circle-wrapper {
-
-      .shape {
-
-        &.is-circle {
-          width: 15px;
-          height: 15px;
-          margin: 3px 7.5px;
-
-          &.active {
-            background-color: $bg-primary-color;
-          }
-
-        }
-
-      }
-
-    }
-
   }
 
 }
