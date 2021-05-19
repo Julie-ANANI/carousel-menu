@@ -15,10 +15,6 @@ export const MARKET_TEST_OBJECTIVES = {
     }
   },
 
-  'WHAT_NEXT': 'What next?',
-
-  'ALSO_LIKE': 'I would also like to...',
-
-  'SEVERAL_CHOICES': 'Several choices are possible'
+  'WHAT_NEXT': 'What next?'
 
 };

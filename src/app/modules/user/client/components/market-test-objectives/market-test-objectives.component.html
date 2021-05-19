@@ -13,7 +13,7 @@
       *ngFor="let category of objectivesCategory"
       [href]="'#arrow-bottom-primary-objectives'"
       [id]="'objectives-category-'+category.toLowerCase()"
-      [ngClass]="{'active': selectedCategory === category}"
+      [ngClass]="{'active': selectCategory === category}"
       class="objectives-category m-bottom-25 m-left-10 m-right-10 box-info"
       pageScroll>
       <h4>{{ 'MARKET_TEST_OBJECTIVES.CATEGORY.TITLE.' + category | translate }}</h4>
@@ -42,40 +42,24 @@
 
     <!-- objectives -->
     <div class="flex-between objectives-wrapper relative">
-      <ng-container *ngFor="let principal of principalObjectives; let i = index;">
-
+      <ng-container *ngFor="let principal of principalObjectives">
         <div
-          [ngClass]="{'disabled': !selectedCategory || principal.category !== selectedCategory}"
+          [ngClass]="{'disabled': !selectCategory || principal.category !== selectCategory}"
           class="principal-objective relative">
 
-          <a [href]="'#arrow-bottom-methodology'" pageScrollOffset="10" pageScroll class="d-block">
-            <p
-              [ngClass]="{'active': selectedPrincipal.objective === principal.objective}"
-              (click)="onChangePrincipal($event, principal)"
-              [id]="'market-test-principal-objective'"
-              class="box-info text-white text-medium text-md flex-centered">
-              {{ principal.objective }}
-            </p>
-          </a>
-
-          <!-- boat start / middle -->
-          <ng-container *ngIf="(i === 0 && (!selectedCategory || (selectedCategory === 'INNOVATE' &&
-          !selectedPrincipal.objective))) || (i === 3 && selectedCategory === 'INNOVATION' &&
-          !selectedPrincipal.objective)">
-            <div class="boat-image hide-lg">
-              <img
-                alt="Compass active"
-                class="img-responsive animate-fade is-9 is-boat"
-                src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/boat.svg">
-            </div>
-          </ng-container>
-          <!-- boat start / middle -->
+          <p
+            [ngClass]="{'active': selectPrincipalObjective.objective === principal.objective}"
+            (click)="onChangePrincipalObjective($event, principal)"
+            [id]="'market-test-principal-objective'"
+            class="box-info text-white text-medium text-md flex-centered">
+            {{ principal.objective }}
+          </p>
 
           <!-- compass / boat image -->
-          <div class="boat-image compass-image">
+          <div class="compass-boat-image">
 
-            <ng-container *ngIf="selectedCategory === principal.category; else compassInactive">
-              <ng-container *ngIf="selectedPrincipal.objective === principal.objective; else compassActive">
+            <ng-container *ngIf="selectCategory === principal.category; else compassInactive">
+              <ng-container *ngIf="selectPrincipalObjective.objective === principal.objective; else compassActive">
                 <img
                   alt="Compass active"
                   class="img-responsive animate-fade is-9 is-boat"
@@ -104,10 +88,10 @@
     </div>
     <!-- /objectives -->
 
-    <div class="market-path hide-lg"></div>
+    <div class="market-path"></div>
 
     <!-- island image -->
-    <div class="island-image hide-lg absolute">
+    <div class="island-image absolute">
       <img
         [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/island-'+currentLang+'.png'"
         alt="Test island"
@@ -119,50 +103,12 @@
   <!-- principal objectives -->
 
   <!-- arrow -->
-  <div class="flex-centered p-top-40 p-bottom-50" id="arrow-bottom-primary-objectives">
+  <div class="flex-centered p-top-40" id="arrow-bottom-primary-objectives">
     <img
       alt="Arrow bottom"
       class="img-responsive"
       src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
   </div>
   <!-- /arrow -->
-
-  <!-- methodology -->
-  <div
-    [ngClass]="!!selectedPrincipal.objective ? 'wrapper-expand' : 'wrapper-collapse'"
-    class="section-methodology m-left-auto m-right-auto">
-    <ng-container *ngIf="!!selectedPrincipal.objective">
-      <app-market-test-methodology [objective]="selectedPrincipal.objective"></app-market-test-methodology>
-    </ng-container>
-  </div>
-  <!-- /methodology -->
-
-  <!-- if principal objective selected -->
-  <ng-container *ngIf="!!selectedPrincipal.objective">
-
-    <!-- arrow -->
-    <div id="arrow-bottom-methodology" class="flex-centered p-top-50">
-      <img
-        alt="Arrow bottom"
-        class="img-responsive"
-        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
-    </div>
-    <!-- /arrow -->
-
-    <!-- text -->
-    <div class="text-center p-top-40 p-bottom-10">
-      <h2 class="text-bold text-white title is-4">{{ 'MARKET_TEST_OBJECTIVES.ALSO_LIKE' | translate }}</h2>
-      <h3 class="text-bold text-white subtitle text-lg">{{ 'MARKET_TEST_OBJECTIVES.SEVERAL_CHOICES' | translate }}</h3>
-    </div>
-    <!-- /text -->
-
-    <!-- secondary objectives -->
-    <app-market-test-objectives-secondary
-      [(objectiveComment)]="objectiveComment">
-    </app-market-test-objectives-secondary>
-    <!-- /secondary objectives -->
-
-  </ng-container>
-  <!-- /if principal objective selected -->
 
 </div>

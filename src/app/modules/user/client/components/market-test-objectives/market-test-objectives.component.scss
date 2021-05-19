@@ -54,9 +54,7 @@
     margin-bottom: 50px;
 
     .objectives-wrapper {
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 92%;
 
       .principal-objective {
         max-width: 170px;
@@ -81,17 +79,7 @@
 
       }
 
-      .boat-image {
-        position: absolute;
-        left: -50px;
-
-        .is-boat {
-          height: 55px;
-        }
-
-      }
-
-      .compass-image {
+      .compass-boat-image {
         position: absolute;
         left: 0;
         right: 0;
@@ -100,6 +88,12 @@
 
         img {
           height: 40px;
+          z-index: 1;
+
+          &.is-boat {
+            height: 55px;
+          }
+
         }
 
       }
@@ -126,25 +120,6 @@
 
   }
 
-  .wrapper-collapse {
-    height: 0;
-    transform: scaleY(0);
-    transform-origin: 100% 0;
-    visibility: hidden;
-  }
-
-  .wrapper-expand {
-    transition: all 0.5s ease;
-    height: 100%;
-    transform: scaleY(1);
-    visibility: visible;
-    transform-origin: 0 100%;
-  }
-
-  .section-methodology {
-    max-width: 1024px;
-  }
-
 }
 
 @media screen and  (max-width: $size-lg) {
@@ -158,8 +133,6 @@
         max-width: 100%;
 
         .principal-objective {
-          margin-left: 10px;
-          margin-right: 10px;
           margin-bottom: 30px;
           max-width: 200px;
 
@@ -170,13 +143,17 @@
 
         }
 
-        .compass-image {
+        .compass-boat-image {
           position: relative;
           align-items: center;
         }
 
       }
 
+    }
+
+   .island-image, .market-path {
+      display: none;
     }
 
   }
