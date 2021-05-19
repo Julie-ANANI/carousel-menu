@@ -44,16 +44,17 @@
 
 @media screen and (max-width: $size-lg) {
   #market-test-welcome {
-    flex-direction: column;
+    .market-step-wrapper {
+      flex-direction: column;
 
-    .market-step {
-      min-height: 100%;
-      margin-top: 0;
+      .market-step {
+        min-height: 100%;
+        margin-top: 0;
+      }
+
+      .arrow img {
+        transform: rotate(90deg);
+      }
     }
-
-    .arrow img {
-      transform: rotate(90deg);
-    }
-
   }
 }
