@@ -13,6 +13,7 @@ export interface Answer {
   quizReference?: string;
   originalAnswerReference?: string;
   tags: Array<Tag>;
+  _tags: Array<Tag>;
   answerTags: {[qestionID: string]: Array<Tag>};
   profileQuality?: number;
   time_elapsed?: number;

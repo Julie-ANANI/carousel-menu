@@ -2,16 +2,14 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Tag } from '../../../../../../models/tag';
-import { UserFrontService } from "../../../../../../services/user/user-front.service";
+import { UserFrontService } from '../../../../../../services/user/user-front.service';
 
 @Component({
   selector: 'app-pro-tag',
   templateUrl: 'pro-tag.component.html',
-  styleUrls: ['pro-tag.component.scss']
+  styleUrls: ['pro-tag.component.scss'],
 })
-
 export class ProfessionalTagComponent implements OnInit {
-
   @Input() answer: Answer = <Answer>{};
 
   @Input() questionId = '';
@@ -29,7 +27,9 @@ export class ProfessionalTagComponent implements OnInit {
   ngOnInit() {
     if (this.questionId) {
       this._tags = this.answer.answerTags[this.questionId] || [];
-      if (this.sectorTag) this._tags = [...this._tags, ...this.answer.tags];
+      if (this.sectorTag) {
+        this._tags = [...this._tags, ...this.answer.tags];
+      }
     } else {
       this._tags = this.answer.tags;
     }
@@ -41,7 +41,7 @@ export class ProfessionalTagComponent implements OnInit {
   }
 
   get professionalName(): string {
-    return UserFrontService.fullName(this.answer.professional)
+    return UserFrontService.fullName(this.answer.professional);
   }
 
   get tags() {

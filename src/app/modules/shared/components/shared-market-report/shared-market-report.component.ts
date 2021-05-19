@@ -147,12 +147,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          this._anonymousAnswers = !!(
-            this._innovation._metadata &&
-            this._innovation._metadata.campaign &&
-            this._innovation._metadata.campaign.anonymous_answers
-          );
-          this._realTimeUpdateTags(data);
+          this._realTimeUpdateTags(JSON.parse(data));
         },
         (error) => {
           console.error(error);
@@ -188,13 +183,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
   }
 
   _realTimeUpdateTags(data: any) {
-    this.areAnswersLoading = true;
-    this._processAnswers(data);
-    this._processFilterAnswers();
-    this._processAnswersCompanies(data);
-    this._processAnswersCountries(data);
-    this.areAnswersLoading = false;
-    setTimeout(() => (this.displayFilters = true), 500);
+    for (let i = 0; i < this._filteredAnswers.length; i++) {
+      if (this._filteredAnswers[i]._id === data.id) {
+        data.professional = this._filteredAnswers[i].professional;
+        this._filteredAnswers[i] = data;
+      }
+    }
   }
 
   /***
@@ -215,7 +209,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
             this._processAnswersTags(response.answers);
             this._processAnswersQuestion(response.answers);
             this.areAnswersLoading = false;
-            console.log(this._tagFiltersService.selectedTags);
             setTimeout(() => (this.displayFilters = true), 500);
           },
           (err: HttpErrorResponse) => {

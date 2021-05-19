@@ -44,6 +44,7 @@ export class SidebarUserAnswerComponent {
 
   @Output() answerUpdated: EventEmitter<boolean> = new EventEmitter<boolean>(); // sends updated answer.
 
+
   private _userAnswer: Answer = <Answer>{};
 
   private _floor: any = Math.floor;
