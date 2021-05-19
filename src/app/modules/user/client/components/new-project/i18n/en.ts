@@ -2,7 +2,6 @@ export const NEW_PROJECT = {
 
   'HEADINGS': {
     'STEP_0': 'Your future Market Test in 3 steps',
-    'STEP_1': 'What would you like to do?',
     'STEP_LAST': 'In which language would you like your Market Test results?',
     'TITLE': 'To begin with...',
     'PRIMARY_OBJECTIVE': 'What is the main objective of the UMI market test?',
@@ -12,7 +11,7 @@ export const NEW_PROJECT = {
 
   'BUTTONS': {
     'STEP_0': 'I understood',
-    'STEP_1': 'Continued',
+    'STEP_1': 'Continue',
     'STEP_LAST': 'Test the market',
   },
 
