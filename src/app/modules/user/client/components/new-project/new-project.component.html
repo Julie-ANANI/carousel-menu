@@ -1,56 +1,56 @@
 <div class="p-top-40 p-bottom-50 page-height" id="new-project">
-  <div class="container grid-2xl">
-    <div class="column col-sm-12 col-11 col-mx-auto">
-      <ng-container [ngSwitch]="fields[currentStep]">
+  <ng-container [ngSwitch]="fields[currentStep]">
 
-        <!-- circles -->
-        <ng-container *ngIf="currentStep !== 0">
-          <section class="flex-centered p-bottom-20">
-            <ng-container *ngFor="let field of fields; let i = index">
-              <div
-                *ngIf="i > 0"
-                [ngClass]="{ 'bg-primary': i === currentStep }"
-                class="shape is-sm is-circle">
-              </div>
-            </ng-container>
-          </section>
+    <!-- circles -->
+    <ng-container *ngIf="currentStep !== 0">
+      <section class="flex-centered p-bottom-20">
+        <ng-container *ngFor="let field of fields; let i = index">
+          <div
+            *ngIf="i > 0"
+            [ngClass]="{ 'bg-primary': i === currentStep }"
+            class="shape is-sm is-circle">
+          </div>
         </ng-container>
-        <!-- /circles -->
+      </section>
+    </ng-container>
+    <!-- /circles -->
 
-        <!-- STEP_0 -->
-        <ng-container *ngSwitchCase="'STEP_0'">
+    <!-- STEP_0 -->
+    <ng-container *ngSwitchCase="'STEP_0'">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
           <section class="p-bottom-50 p-top-20">
             <app-market-test-welcome></app-market-test-welcome>
           </section>
-        </ng-container>
-        <!-- /STEP_0 -->
-
-        <!-- STEP_1 -->
-        <ng-container *ngSwitchCase="'STEP_1'">
-          <section class="p-top-20">
-            <app-market-test-objectives></app-market-test-objectives>
-          </section>
-        </ng-container>
-        <!-- /STEP_1 -->
-
-        <!-- buttons to navigate next step -->
-        <div class="text-center p-top-40">
-          <button
-            (click)="goToNextStep($event)"
-            [disabled]="isDisabled || isCreating || isNextStep"
-            [id]="buttonId"
-            class="button is-community is-xl">
-            <span *ngIf="isCreating || isNextStep; else btnText" class="loading is-white"></span>
-            <ng-template #btnText>
-              {{'NEW_PROJECT.BUTTONS.' + fields[currentStep] | translate }}
-            </ng-template>
-          </button>
         </div>
-        <!-- /buttons to navigate next step -->
+      </div>
+    </ng-container>
+    <!-- /STEP_0 -->
 
-      </ng-container>
+    <!-- STEP_1 -->
+    <ng-container *ngSwitchCase="'STEP_1'">
+      <section class="p-top-20">
+        <app-market-test-objectives></app-market-test-objectives>
+      </section>
+    </ng-container>
+    <!-- /STEP_1 -->
+
+    <!-- buttons to navigate next step -->
+    <div class="text-center p-top-40">
+      <button
+        (click)="goToNextStep($event)"
+        [disabled]="isDisabled || isCreating || isNextStep"
+        [id]="buttonId"
+        class="button is-community is-xl">
+        <span *ngIf="isCreating || isNextStep; else btnText" class="loading is-white"></span>
+        <ng-template #btnText>
+          {{'NEW_PROJECT.BUTTONS.' + fields[currentStep] | translate }}
+        </ng-template>
+      </button>
     </div>
-  </div>
+    <!-- /buttons to navigate next step -->
+
+  </ng-container>
 </div>
 
 

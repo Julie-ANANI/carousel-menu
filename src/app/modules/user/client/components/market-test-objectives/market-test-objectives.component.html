@@ -56,13 +56,11 @@
             {{ principal.objective }}
           </p>
 
-          <!-- boat start / middle (i === 0 && (!selectedCategory
-          || (selectedCategory === 'INNOVATE' && !selectedPrincipal.objective)))
-          || (i === 3 && ()) -->
+          <!-- boat start / middle -->
           <ng-container *ngIf="(i === 0 && (!selectedCategory || (selectedCategory === 'INNOVATE' &&
           !selectedPrincipal.objective))) || (i === 3 && selectedCategory === 'INNOVATION' &&
           !selectedPrincipal.objective)">
-            <div class="boat-image">
+            <div class="boat-image hide-lg">
               <img
                 alt="Compass active"
                 class="img-responsive animate-fade is-9 is-boat"
@@ -104,10 +102,10 @@
     </div>
     <!-- /objectives -->
 
-    <div class="market-path"></div>
+    <div class="market-path hide-lg"></div>
 
     <!-- island image -->
-    <div class="island-image absolute">
+    <div class="island-image hide-lg absolute">
       <img
         [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/island-'+currentLang+'.png'"
         alt="Test island"
