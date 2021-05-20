@@ -126,6 +126,25 @@
 
   }
 
+  .wrapper-collapse {
+    height: 0;
+    transform: scaleY(0);
+    transform-origin: 100% 0;
+    visibility: hidden;
+  }
+
+  .wrapper-expand {
+    transition: all 0.5s ease;
+    height: 100%;
+    transform: scaleY(1);
+    visibility: visible;
+    transform-origin: 0 100%;
+  }
+
+  .section-methodology {
+    max-width: 1024px;
+  }
+
 }
 
 @media screen and  (max-width: $size-lg) {
