@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 interface PrincipalObjective {
@@ -13,11 +13,15 @@ interface PrincipalObjective {
 })
 export class MarketTestObjectivesComponent implements OnInit {
 
-  selectedCategory = '';
+  @Input() set objectiveComment(value: string) {
+    this._objectiveComment = value;
+  }
 
-  objectivesCategory: Array<string> = ['INNOVATE', 'INNOVATION'];
+  private _selectedCategory = '';
 
-  selectedPrincipal: PrincipalObjective = <PrincipalObjective>{};
+  private _objectivesCategory: Array<string> = ['INNOVATE', 'INNOVATION'];
+
+  private _selectedPrincipal: PrincipalObjective = <PrincipalObjective>{};
 
   principalObjectives: Array<PrincipalObjective> = [
     {category: 'INNOVATE', objective: 'Detecting market needs'},
@@ -28,11 +32,9 @@ export class MarketTestObjectivesComponent implements OnInit {
     {category: 'INNOVATION', objective: 'Optimizing my value proposition'},
   ];
 
-  @Output() emitPrincipalObjective: EventEmitter<any> = new EventEmitter<any>();
+  @Output() objectiveCommentChange: EventEmitter<string> = new EventEmitter<string>();
 
-  @Output() emitSecondaryObjectives: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() emitObjectiveComment: EventEmitter<string> = new EventEmitter<string>();
+  private _objectiveComment = '';
 
   constructor(private _translateService: TranslateService) { }
 
@@ -41,21 +43,37 @@ export class MarketTestObjectivesComponent implements OnInit {
 
   public onChangeCategory(event: Event, value: string) {
     event.preventDefault();
-    if (value !== this.selectedCategory) {
-      this.selectedCategory = value;
-      this.selectedPrincipal = <PrincipalObjective>{};
+    if (value !== this._selectedCategory) {
+      this._selectedCategory = value;
+      this._selectedPrincipal = <PrincipalObjective>{};
     }
   }
 
   public onChangePrincipal(event: Event, value: PrincipalObjective) {
     event.preventDefault();
-    if (this.selectedCategory && this.selectedCategory === value.category) {
-      this.selectedPrincipal = value;
+    if (this._selectedCategory && this._selectedCategory === value.category) {
+      this._selectedPrincipal = value;
     }
   }
 
   get currentLang(): string {
     return this._translateService.currentLang;
+  }
+
+  get objectiveComment(): string {
+    return this._objectiveComment;
+  }
+
+  get selectedPrincipal(): PrincipalObjective {
+    return this._selectedPrincipal;
+  }
+
+  get selectedCategory(): string {
+    return this._selectedCategory;
+  }
+
+  get objectivesCategory(): Array<string> {
+    return this._objectivesCategory;
   }
 
 }
