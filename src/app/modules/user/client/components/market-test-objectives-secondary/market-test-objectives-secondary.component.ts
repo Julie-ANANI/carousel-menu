@@ -65,17 +65,17 @@ export class MarketTestObjectivesSecondaryComponent {
     this._objectiveComment = value;
   }
 
-  @Input() set objectivesSecondary(value: Array<any>) {
-    this._objectivesSecondary = value;
+  @Input() set objectives(value: Array<any>) {
+    this._objectives = value;
   }
 
-  @Output() objectivesSecondaryChange: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+  @Output() objectivesChange: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   @Output() objectiveCommentChange: EventEmitter<string> = new EventEmitter<string>();
 
   private _objectiveComment = '';
 
-  private _objectivesSecondary: Array<any> = [];
+  private _objectives: Array<any> = [];
 
   constructor(private _translateService: TranslateService) { }
 
@@ -95,8 +95,8 @@ export class MarketTestObjectivesSecondaryComponent {
     this.objectiveCommentChange.emit(this._objectiveComment);
   }
 
-  get objectivesSecondary(): Array<any> {
-    return this._objectivesSecondary;
+  get objectives(): Array<any> {
+    return this._objectives;
   }
 
   get objectiveComment(): string {
