@@ -1,0 +1,57 @@
+@import "../../../../../../style/framework/src/variables";
+
+#market-test-methodology {
+  box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+
+  &:hover {
+    box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+  }
+
+  .methodology-description {
+    padding: 35px 35px 50px 50px;
+    max-width: 514px;
+    background-color: #1D4A6D;
+    width: 100%;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .methodology-image {
+    max-width: 514px;
+
+    img {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+
+  }
+
+}
+
+@media screen and (max-width: 1064px) {
+  #market-test-methodology {
+    flex-direction: column;
+
+    .methodology-description {
+      margin: auto;
+      order: 2;
+      border-radius: 6px;
+    }
+
+    .methodology-image {
+      margin: 0 auto 30px auto;
+      img {
+        border-radius: 6px;
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: $size-sm) {
+  #market-test-methodology {
+    .methodology-description {
+      padding: 15px;
+    }
+  }
+}

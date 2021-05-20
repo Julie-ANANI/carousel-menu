@@ -1,0 +1,51 @@
+<div class="d-flex" id="market-test-methodology">
+
+  <!-- left side -->
+  <div class="methodology-description text-white text-medium text-sm">
+
+    <!-- heading -->
+    <h3 class="title text-white text-lg text-bold m-bottom-30">
+      {{ 'MARKET_TEST_METHODOLOGY.HEADING.' + case | translate }}
+    </h3>
+    <!-- /heading -->
+
+    <!-- context -->
+    <div>
+      <h4 class="text-primary text-sm m-bottom-1">
+        {{ 'MARKET_TEST_METHODOLOGY.HEADING.CONTEXT' | translate | uppercase }}
+      </h4>
+      <p [innerHTML]="'MARKET_TEST_METHODOLOGY.CONTEXT.' + case | translate"></p>
+    </div>
+    <!-- /context -->
+
+    <!-- methodology -->
+    <div class="p-top-20">
+      <h4 class="text-primary text-sm m-bottom-1">
+        {{ 'MARKET_TEST_METHODOLOGY.HEADING.METHODOLOGY' | translate | uppercase }}
+      </h4>
+      <p [innerHTML]="'MARKET_TEST_METHODOLOGY.METHODOLOGY.' + case | translate"></p>
+    </div>
+    <!-- /methodology -->
+
+    <!-- results -->
+    <div class="p-top-20">
+      <h4 class="text-primary text-sm m-bottom-1">
+        {{ 'MARKET_TEST_METHODOLOGY.HEADING.RESULT' | translate | uppercase }}
+      </h4>
+      <p [innerHTML]="'MARKET_TEST_METHODOLOGY.RESULT.' + case | translate" class="m-no-bottom"></p>
+    </div>
+    <!-- /results -->
+
+  </div>
+  <!-- /left side -->
+
+  <!-- right side -->
+  <div class="methodology-image">
+    <img
+      [alt]="case"
+      [src]="caseImage"
+      class="img-responsive">
+  </div>
+  <!-- /right side -->
+
+</div>
