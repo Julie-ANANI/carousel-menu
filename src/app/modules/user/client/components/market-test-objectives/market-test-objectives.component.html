@@ -48,13 +48,15 @@
           [ngClass]="{'disabled': !selectedCategory || principal.category !== selectedCategory}"
           class="principal-objective relative">
 
-          <p
-            [ngClass]="{'active': selectedPrincipal.objective === principal.objective}"
-            (click)="onChangePrincipal($event, principal)"
-            [id]="'market-test-principal-objective'"
-            class="box-info text-white text-medium text-md flex-centered">
-            {{ principal.objective }}
-          </p>
+          <a [href]="'#arrow-bottom-methodology'" pageScrollOffset="50" pageScroll class="d-block">
+            <p
+              [ngClass]="{'active': selectedPrincipal.objective === principal.objective}"
+              (click)="onChangePrincipal($event, principal)"
+              [id]="'market-test-principal-objective'"
+              class="box-info text-white text-medium text-md flex-centered">
+              {{ principal.objective }}
+            </p>
+          </a>
 
           <!-- boat start / middle -->
           <ng-container *ngIf="(i === 0 && (!selectedCategory || (selectedCategory === 'INNOVATE' &&
@@ -136,7 +138,7 @@
   <!-- /methodology -->
 
   <!-- arrow -->
-  <div *ngIf="!!selectedPrincipal.objective" class="flex-centered p-top-50">
+  <div *ngIf="!!selectedPrincipal.objective" id="arrow-bottom-methodology" class="flex-centered p-top-50">
     <img
       alt="Arrow bottom"
       class="img-responsive"
