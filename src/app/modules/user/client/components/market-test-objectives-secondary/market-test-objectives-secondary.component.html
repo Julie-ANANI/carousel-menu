@@ -1,0 +1,32 @@
+<div id="market-test-objectives-secondary">
+
+  <!-- options -->
+  <label
+    *ngFor="let objective of objectivesList"
+    [ngClass]="{'checked': isChecked(objective)}"
+    class="form-checkbox mxw-450 objectives-option m-left-auto m-right-auto m-bottom-15 c-hand text-white text-medium">
+    <input
+      (change)="onChangeOption($event, objective)"
+      [id]="objective[currentLang]['label']"
+      type="checkbox">
+    {{ objective[currentLang]['label'] }}
+  </label>
+  <!-- /options -->
+
+  <!-- comment -->
+  <div class="form-group mxw-400 m-left-auto m-right-auto p-top-15">
+    <label>
+        <textarea
+          (change)="emitCommentChange()"
+          [(ngModel)]="objectiveComment"
+          [placeholder]="currentLang === 'fr' ? 'Avez-vous des précisions à apporter ?'
+          : 'Is there anything else you\'d like to do or add?'"
+          class="form-input is-shadowed text-sm"
+          id="market-text-objective-comment"
+          rows="3">
+        </textarea>
+    </label>
+  </div>
+  <!-- /comment -->
+
+</div>
