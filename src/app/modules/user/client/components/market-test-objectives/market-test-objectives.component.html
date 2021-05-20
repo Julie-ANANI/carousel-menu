@@ -117,7 +117,26 @@
   <!-- principal objectives -->
 
   <!-- arrow -->
-  <div class="flex-centered p-top-40" id="arrow-bottom-primary-objectives">
+  <div class="flex-centered p-top-40 p-bottom-50" id="arrow-bottom-primary-objectives">
+    <img
+      alt="Arrow bottom"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  </div>
+  <!-- /arrow -->
+
+  <!-- methodology -->
+  <div
+    [ngClass]="!!selectedPrincipal.objective ? 'wrapper-expand' : 'wrapper-collapse'"
+    class="section-methodology m-left-auto m-right-auto">
+    <ng-container *ngIf="!!selectedPrincipal.objective">
+      <app-market-test-methodology [objective]="selectedPrincipal.objective"></app-market-test-methodology>
+    </ng-container>
+  </div>
+  <!-- /methodology -->
+
+  <!-- arrow -->
+  <div *ngIf="!!selectedPrincipal.objective" class="flex-centered p-top-50">
     <img
       alt="Arrow bottom"
       class="img-responsive"
