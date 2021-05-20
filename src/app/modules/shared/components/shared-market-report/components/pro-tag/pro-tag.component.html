@@ -42,9 +42,9 @@
 
     <!-- company -->
     <p
-      *ngIf="(answer.company && answer.company.name) || (answer.professional && answer.professional.company)"
+      *ngIf="(answer.company && answer.company.name) || (answer.professional && answer.professional.company && answer.professional.company.name)"
       class="text-notify text-medium">
-      {{ (answer.company?.name || answer.professional?.company || '') | FormatText:true }}
+      {{ (answer.company?.name || answer.professional?.company?.name || '') | FormatText:true }}
     </p>
     <!-- /company -->
 
