@@ -54,7 +54,9 @@
     margin-bottom: 50px;
 
     .objectives-wrapper {
-      max-width: 92%;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
 
       .principal-objective {
         max-width: 170px;
@@ -81,7 +83,7 @@
 
       .boat-image {
         position: absolute;
-        left: -30px;
+        left: -50px;
 
         .is-boat {
           height: 55px;
@@ -137,6 +139,8 @@
         max-width: 100%;
 
         .principal-objective {
+          margin-left: 10px;
+          margin-right: 10px;
           margin-bottom: 30px;
           max-width: 200px;
 
@@ -154,10 +158,6 @@
 
       }
 
-    }
-
-   .island-image, .market-path {
-      display: none;
     }
 
   }
