@@ -160,7 +160,8 @@
               [questionReceived]="question"
               [readonly]="!canAccess(['edit', 'umiWord'])"
               [toggleAnswers]="toggleAnswers"
-              [hideAnswers]="hideQuestionAnswers(question)">
+              [hideAnswers]="hideQuestionAnswers(question)"
+              [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
             </app-question-section>
           </section>
           <!-- /other question sections -->
