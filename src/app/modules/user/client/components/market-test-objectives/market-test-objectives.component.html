@@ -48,7 +48,7 @@
           [ngClass]="{'disabled': !selectedCategory || principal.category !== selectedCategory}"
           class="principal-objective relative">
 
-          <a [href]="'#arrow-bottom-methodology'" pageScrollOffset="50" pageScroll class="d-block">
+          <a [href]="'#arrow-bottom-methodology'" pageScrollOffset="10" pageScroll class="d-block">
             <p
               [ngClass]="{'active': selectedPrincipal.objective === principal.objective}"
               (click)="onChangePrincipal($event, principal)"
@@ -137,13 +137,32 @@
   </div>
   <!-- /methodology -->
 
-  <!-- arrow -->
-  <div *ngIf="!!selectedPrincipal.objective" id="arrow-bottom-methodology" class="flex-centered p-top-50">
-    <img
-      alt="Arrow bottom"
-      class="img-responsive"
-      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
-  </div>
-  <!-- /arrow -->
+  <!-- if principal objective selected -->
+  <ng-container *ngIf="!!selectedPrincipal.objective">
+
+    <!-- arrow -->
+    <div id="arrow-bottom-methodology" class="flex-centered p-top-50">
+      <img
+        alt="Arrow bottom"
+        class="img-responsive"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+    </div>
+    <!-- /arrow -->
+
+    <!-- text -->
+    <div class="text-center p-top-40 p-bottom-10">
+      <h2 class="text-bold text-white title is-4">{{ 'MARKET_TEST_OBJECTIVES.ALSO_LIKE' | translate }}</h2>
+      <h3 class="text-bold text-white subtitle text-lg">{{ 'MARKET_TEST_OBJECTIVES.SEVERAL_CHOICES' | translate }}</h3>
+    </div>
+    <!-- /text -->
+
+    <!-- secondary objectives -->
+    <app-market-test-objectives-secondary
+      [(objectiveComment)]="objectiveComment">
+    </app-market-test-objectives-secondary>
+    <!-- /secondary objectives -->
+
+  </ng-container>
+  <!-- /if principal objective selected -->
 
 </div>
