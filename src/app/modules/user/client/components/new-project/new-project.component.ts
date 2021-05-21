@@ -23,7 +23,7 @@ import {Consent} from '../../../../../models/innovation';
 
 export class NewProjectComponent implements OnInit, OnDestroy {
 
-  private _currentStep = 2;
+  private _currentStep = 0;
 
   private _fields: Array<string> = ['STEP_0', 'STEP_1', 'STEP_LAST'];
 
