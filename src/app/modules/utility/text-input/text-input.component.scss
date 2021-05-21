@@ -4,25 +4,21 @@
 
   .input-wrapper {
 
-    .add-btn-wrapper {
-      top: 15px;
-      right: 14px;
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right-color: transparent;
 
-      &.is-sm {
-        top: 7px;
+      &.is-normal {
+        padding: 13px;
       }
 
-      .button.is-circled {
-        width: 25px;
-        height: 25px;
+    }
 
-        i {
-          margin-left: 0;
-          margin-right: 0;
-        }
-
-      }
-
+    .button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      min-width: unset;
     }
 
   }
