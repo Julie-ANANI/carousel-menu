@@ -40,9 +40,9 @@ export class TextInputComponent {
   @Input() btnAddTopValue = '';
 
   /**
-   * max width of the input field.
+   * input field text size.
    */
-  @Input() inputMaxWidth = '500px';
+  @Input() inputTextSize = '16px';
 
   /***
    * true to make input field and button in center.
