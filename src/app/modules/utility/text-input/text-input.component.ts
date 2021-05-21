@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
+import {emailRegEx} from '../../../utils/regex';
 
 /**
  * contains the input field and add button inside the input field.
@@ -20,6 +21,16 @@ export class TextInputComponent {
   }
 
   @Input() placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
+
+  /**
+   * error text color: text-white | text-primary ....
+   */
+  @Input() errorTextColorClass = 'text-alert';
+
+  /**
+   * can be email or password or ....
+   */
+  @Input() fieldType = 'text';
 
   /***
    * to make the form field small.
@@ -55,12 +66,19 @@ export class TextInputComponent {
 
   private _addedText: Array<string> = [];
 
+  isEmailError = false;
+
   constructor() { }
 
   public onAddValue() {
     if (this._text.value) {
-      this.textEntered.emit(this._text.value);
-      this._text.reset();
+      if ((this.fieldType === 'email' && this._text.value.match(emailRegEx)) || this.fieldType === 'text') {
+        this.isEmailError = false;
+        this.textEntered.emit(this._text.value);
+        this._text.reset();
+      } else if (this.fieldType === 'email' && !this._text.value.match(emailRegEx)) {
+        this.isEmailError = true;
+      }
     }
   }
 

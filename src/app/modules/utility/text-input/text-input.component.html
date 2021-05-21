@@ -10,9 +10,9 @@
           [formControl]="text"
           [name]="'text'"
           [ngClass]="isFormSmall ? 'is-sm' : 'is-normal'"
+          [type]="fieldType"
           autocomplete="off"
-          class="form-input"
-          type="text">
+          class="form-input">
       </label>
 
       <!-- add button -->
@@ -31,6 +31,11 @@
       <!-- /add button -->
 
     </div>
+
+    <ng-container *ngIf="fieldType === 'email' && isEmailError">
+      <div [ngClass]="errorTextColorClass" class="form-error text-medium">{{ 'COMMON.INVALID.EMAIL' | translate }}</div>
+    </ng-container>
+
   </form>
   <!-- /input field -->
 
