@@ -22,16 +22,19 @@ export const NEW_PROJECT = {
     'ANALYSE': '3. Analyse'
   },
 
-  'SUB_HEADING': {
-    'PRIMARY_OBJECTIVE': 'Vous aurez la possibilité de donner des précisions à la prochaine étape'
-  },
+  'COLLABORATORS_QUESTION': 'Souhaitez-vous ajouter des collaborateurs ?',
 
-  'TITLE_QUESTION': 'Donnez un nom à votre nouveau projet (titre à usage interne)',
+  'COLLABORATORS_TERMS': 'Veuillez noter que les collaborateurs ont accès au projet ainsi que aux résultats et aux ' +
+    'autres données sensibles. Voulez vous continuer ?',
 
-  'RESTITUTION_DATE_COMMENT': 'Avez-vous des précisions à donner sur cette date ?',
+  'TITLE_QUESTION': 'Quel titre souhaitez-vous donner à votre Test Marché ? (titre à usage interne)',
 
-  'RESTITUTION_DATE_QUESTION' : 'A quelle date souhaitez-vous idéalement obtenir les résultats finaux ?',
+  'COMMENT_PLACEHOLDER': 'Avez-vous des précisions à apporter ?',
 
-  'CHOOSE_DATE': 'Choisissez une date'
+  'RESTITUTION_DATE_QUESTION' : 'A quelle date souhaitez-vous idéalement obtenir les résultats ?',
+
+  'CHOOSE_DATE': 'Choisissez une date',
+
+  'ACCEPT_CONSENT': 'Vous devez accepter l\'accord.'
 
 };

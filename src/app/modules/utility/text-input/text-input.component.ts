@@ -76,18 +76,18 @@ export class TextInputComponent {
 
   private _addedText: Array<string> = [];
 
-  isEmailError = false;
+  private _isEmailError = false;
 
   constructor() { }
 
   public onAddValue() {
     if (this._text.value) {
       if ((this.fieldType === 'email' && this._text.value.match(emailRegEx)) || this.fieldType === 'text') {
-        this.isEmailError = false;
+        this._isEmailError = false;
         this.textEntered.emit(this._text.value);
         this._text.reset();
       } else if (this.fieldType === 'email' && !this._text.value.match(emailRegEx)) {
-        this.isEmailError = true;
+        this._isEmailError = true;
       }
     }
   }
@@ -103,6 +103,10 @@ export class TextInputComponent {
 
   get addedText(): Array<string> {
     return this._addedText;
+  }
+
+  get isEmailError(): boolean {
+    return this._isEmailError;
   }
 
 }
