@@ -10,6 +10,8 @@ import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-se
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { NewProjectWelcomeComponent } from './new-project-welcome/new-project-welcome.component';
 import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
+import { NewProjectLastStepComponent } from './new-project-last-step/new-project-last-step.component';
+import {TextInputModule} from '../../../../utility/text-input/text-input.module';
 
 @NgModule({
   imports: [
@@ -19,11 +21,14 @@ import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-
     ObjectivesPrimaryModule,
     ObjectivesSecondaryModule,
     MarketTestObjectivesModule,
-    AngularMyDatePickerModule // https://github.com/kekeh/angular-mydatepicker
+    AngularMyDatePickerModule,
+    TextInputModule,
+    // https://github.com/kekeh/angular-mydatepicker
   ],
   declarations: [
     NewProjectComponent,
-    NewProjectWelcomeComponent
+    NewProjectWelcomeComponent,
+    NewProjectLastStepComponent
   ],
   exports: [
     NewProjectComponent

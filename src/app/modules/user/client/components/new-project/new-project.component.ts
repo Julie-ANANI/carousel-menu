@@ -14,6 +14,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
 import {AuthService} from '../../../../../services/auth/auth.service';
+import {Consent} from '../../../../../models/innovation';
 
 @Component({
   templateUrl: 'new-project.component.html',
@@ -22,15 +23,9 @@ import {AuthService} from '../../../../../services/auth/auth.service';
 
 export class NewProjectComponent implements OnInit, OnDestroy {
 
-  private _currentStep = 0;
-
-  // private _fields: Array<string> = ['TITLE', 'PRIMARY_OBJECTIVE', 'SECONDARY_OBJECTIVE', 'RESTITUTION_DATE'];
+  private _currentStep = 2;
 
   private _fields: Array<string> = ['STEP_0', 'STEP_1', 'STEP_LAST'];
-
-  // private _heading = '';
-
-  private _isLoading = true;
 
   private _restitutionDate = this._commonService.getFutureMonth();
 
@@ -53,8 +48,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
   private _isCreating = false;
 
-  isNextStep = false;
-
   // https://github.com/kekeh/angular-mydatepicker
   private _datePickerOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -67,9 +60,17 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
   };
 
+  private _isNextStep = false;
+
   private _milestoneDateComment = '';
 
-  nextStepTimeout: any = null;
+  private _nextStepTimeout: any = null;
+
+  private _projectLang = this._translateService.currentLang;
+
+  private _collaboratorsConsent: Consent = <Consent>{};
+
+  private _collaborators: Array<string> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
@@ -86,8 +87,40 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      // this._isLoading = false;
     }
+  }
+
+  /***
+   * will receive this from the textarea filed after the restitution date
+   * @param value
+   */
+  public onChangeDateComment(value: string) {
+    this._milestoneDateComment = value;
+  }
+
+  /***
+   * project title and we assign to it the client project and mission name also.
+   * @param value
+   */
+  public onChangeProjectName(value: string) {
+    this._clientProject.name = value;
+    this._mission.name = value;
+  }
+
+  /**
+   * when toggle the collaborators consent checkbox.
+   * @param value
+   */
+  public onChangeCollaboratorsConsent(value: Consent) {
+   this._collaboratorsConsent = value;
+  }
+
+  /**
+   * users email to send the invitation to be part of this project.
+   * @param value
+   */
+  public onChangeCollaborators(value: Array<string>) {
+    this._collaborators = value;
   }
 
   /***
@@ -191,10 +224,10 @@ export class NewProjectComponent implements OnInit, OnDestroy {
       if (this._fields[this._currentStep] === 'STEP_LAST') {
 
       } else {
-        this.isNextStep = true;
-        this.nextStepTimeout = setTimeout(() => {
+        this._isNextStep = true;
+        this._nextStepTimeout = setTimeout(() => {
           this._currentStep++;
-          this.isNextStep = false;
+          this._isNextStep = false;
         }, 250);
       }
     }
@@ -247,14 +280,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     return this._fields;
   }
 
-  /*get heading(): string {
-    return this._heading;
-  }*/
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
   get clientProject(): ClientProject {
     return this._clientProject;
   }
@@ -283,9 +308,28 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     this._milestoneDateComment = value;
   }
 
-  ngOnDestroy(): void {
-    clearTimeout(this.nextStepTimeout);
+  get projectLang(): string {
+    return this._projectLang;
   }
 
+  set projectLang(value: string) {
+    this._projectLang = value;
+  }
+
+  get collaboratorsConsent(): Consent {
+    return this._collaboratorsConsent;
+  }
+
+  get collaborators(): Array<string> {
+    return this._collaborators;
+  }
+
+  get isNextStep(): boolean {
+    return this._isNextStep;
+  }
+
+  ngOnDestroy(): void {
+    clearTimeout(this._nextStepTimeout);
+  }
 
 }
