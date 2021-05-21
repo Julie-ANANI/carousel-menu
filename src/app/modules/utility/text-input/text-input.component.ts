@@ -23,6 +23,16 @@ export class TextInputComponent {
   @Input() placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
   /**
+   * max width of the input field.
+   */
+  @Input() inputMaxWidth = '500px';
+
+  /***
+   * true to make input field and button in center.
+   */
+  @Input() isFieldCenter = false;
+
+  /**
    * error text color: text-white | text-primary ....
    */
   @Input() errorTextColorClass = 'text-alert';
