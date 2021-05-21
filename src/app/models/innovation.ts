@@ -15,6 +15,11 @@ export interface InnovationMetadataValues {
   delivery?: number;
 }
 
+export interface Consent {
+  value: boolean;
+  date: Date;
+}
+
 export type InnovationStatus = 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
 
 // not use anymore. It's for the innovations old executive report.
@@ -86,6 +91,8 @@ export interface Innovation {
   };
 
   collaborators?: Array<User>;
+  collaboratorsConsent?: Consent;
+
   settings?: InnovationSettings;
   readonly stats?: InnovationStats;
   updatedStats?: Date;
