@@ -35,6 +35,24 @@
     </ng-container>
     <!-- /STEP_1 -->
 
+    <!-- STEP_LAST -->
+    <ng-container *ngSwitchCase="'STEP_LAST'">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
+          <section class="p-bottom-30 p-top-20">
+            <app-new-project-last-step
+              (collaboratorsChange)="onChangeCollaborators($event)"
+              (collaboratorsConsent)="onChangeCollaboratorsConsent($event)"
+              (milestoneDateCommentChange)="onChangeDateComment($event)"
+              (projectNameChange)="onChangeProjectName($event)"
+              [(projectLang)]="projectLang">
+            </app-new-project-last-step>
+          </section>
+        </div>
+      </div>
+    </ng-container>
+    <!-- /STEP_LAST -->
+
     <!-- buttons to navigate next step -->
     <div class="text-center p-top-40">
       <button
@@ -77,7 +95,7 @@
           class="content-wrapper col-lg-12 col-xl-10 col-8 col-mx-auto flex-centered p-bottom-40">
 
           <!-- TITLE -->
-          <div *ngSwitchCase="'TITLE'" class="w-full">
+          <!--<div *ngSwitchCase="'TITLE'" class="w-full">
             <div class="mxw-500 text-center col-mx-auto">
 
               <h6 class="text-normal">{{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}</h6>
@@ -92,7 +110,7 @@
               </div>
 
             </div>
-          </div>
+          </div>-->
           <!-- /TITLE -->
 
           <!-- PRIMARY_OBJECTIVE -->
@@ -146,7 +164,7 @@
             <!-- /divider -->
 
             <!-- comment -->
-            <div class="mxw-500 col-mx-auto p-top-30">
+            <!--<div class="mxw-500 col-mx-auto p-top-30">
 
               <h6 class="text-normal">{{ 'NEW_PROJECT.RESTITUTION_DATE_COMMENT' | translate }}</h6>
 
@@ -161,7 +179,7 @@
                 </label>
               </div>
 
-            </div>
+            </div>-->
             <!-- /comment -->
 
           </div>
