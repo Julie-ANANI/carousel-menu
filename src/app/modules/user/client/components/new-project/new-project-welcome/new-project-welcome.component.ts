@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-market-test-welcome',
-  templateUrl: './market-test-welcome.component.html',
-  styleUrls: ['./market-test-welcome.component.scss']
+  selector: 'app-new-project-welcome',
+  templateUrl: './new-project-welcome.component.html',
+  styleUrls: ['./new-project-welcome.component.scss']
 })
-export class MarketTestWelcomeComponent {
+export class NewProjectWelcomeComponent {
 
   constructor(private _translateService: TranslateService) { }
 
