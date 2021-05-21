@@ -8,7 +8,7 @@ import { NewProjectComponent } from './new-project.component';
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { MarketTestWelcomeComponent } from './market-test-welcome/market-test-welcome.component';
+import { NewProjectWelcomeComponent } from './new-project-welcome/new-project-welcome.component';
 import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
 
 @NgModule({
@@ -23,7 +23,7 @@ import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-
   ],
   declarations: [
     NewProjectComponent,
-    MarketTestWelcomeComponent
+    NewProjectWelcomeComponent
   ],
   exports: [
     NewProjectComponent

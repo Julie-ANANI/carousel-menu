@@ -1,6 +1,6 @@
 @import "../../../../../../../style/framework/src/variables";
 
-#market-test-welcome {
+#new-project-welcome {
 
   .market-step {
     text-align: center;
@@ -43,7 +43,7 @@
 }
 
 @media screen and (max-width: $size-lg) {
-  #market-test-welcome {
+  #new-project-welcome {
     .market-step-wrapper {
       flex-direction: column;
 
