@@ -1,0 +1,112 @@
+<div id="new-project-last-step">
+
+  <!-- heading -->
+  <h1 class="title text-white text-center is-4 text-bold m-bottom-10">
+    {{ 'NEW_PROJECT.HEADINGS.STEP_LAST' | translate }}
+  </h1>
+  <!-- /heading -->
+
+  <!-- lang selection -->
+  <div class="flex-centered flex-wrap p-bottom-40">
+    <div
+      (click)="onChangeProjectLang($event, lang)"
+      *ngFor="let lang of projectLangs"
+      [id]="'new-project-btn-project-lang-'+lang"
+      [ngClass]="{'bg-success': lang === projectLang}"
+      class="lang-wrapper c-hand flex-centered text-white text-medium text-md m-20">
+      {{ 'COMMON.LANG.' + lang | uppercase | translate }}
+    </div>
+  </div>
+  <!-- /lang selection -->
+
+  <!-- date -->
+  <div class="p-top-50">
+
+    <h2 class="title text-white text-center is-4 text-bold">
+      {{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}
+    </h2>
+
+    <div class="form-group mxw-450 m-left-auto m-right-auto p-top-20">
+      <label>
+        <textarea
+          (ngModelChange)="onChangeMilestoneComment($event)"
+          [ngModel]="milestoneDateComment"
+          [placeholder]="'NEW_PROJECT.COMMENT_PLACEHOLDER' | translate"
+          class="form-input is-shadowed text-sm"
+          id="new-project--comment"
+          rows="3">
+        </textarea>
+      </label>
+    </div>
+
+  </div>
+  <!-- /date -->
+
+  <!-- arrow -->
+  <div class="flex-centered p-top-50">
+    <img
+      alt="Arrow bottom"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  </div>
+  <!-- /arrow -->
+
+  <!-- title -->
+  <div class="p-top-50 p-bottom-40">
+    <h2 class="title text-white text-center is-4 text-bold">{{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}</h2>
+    <div class="form-group mxw-450 m-left-auto m-right-auto">
+      <label>
+        <input
+          (ngModelChange)="onChangeProject($event)"
+          [ngModel]="title"
+          [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
+          class="form-input is-shadowed"
+          type="text">
+      </label>
+    </div>
+  </div>
+  <!-- /title -->
+
+  <!-- collaborators -->
+  <div class="p-top-50">
+
+    <h2 class="title text-white text-center is-4 text-bold m-bottom-15">
+      {{ 'NEW_PROJECT.COLLABORATORS_QUESTION' | translate }}
+    </h2>
+
+    <div class="mxw-650 m-left-auto m-right-auto">
+
+      <label class="form-checkbox p-left-30">
+        <input
+          (ngModelChange)="consentChange($event)"
+          [id]="'new-project-collaborator-consent'"
+          [ngModel]="consent"
+          type="checkbox">
+        <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
+        <span class="text-white text-medium">{{ 'NEW_PROJECT.COLLABORATORS_TERMS' | translate }}</span>
+      </label>
+
+      <ng-container *ngIf="!consent && collaborators.length">
+        <div class="form-error text-medium">{{ 'NEW_PROJECT.ACCEPT_CONSENT' | translate }}</div>
+      </ng-container>
+
+    </div>
+
+    <div class="mxw-750 m-top-25 m-left-auto m-right-auto">
+      <app-utility-text-input
+        (textEntered)="addEmail($event)"
+        (valueToRemove)="removeEmail($event)"
+        [addedText]="collaborators"
+        [buttonColorClass]="'is-community'"
+        [fieldType]="'email'"
+        [inputMaxWidth]="'450px'"
+        [isFieldCenter]="true"
+        [labelBgColor]="'is-success'"
+        [placeholder]="'jhon@catco.com'">
+      </app-utility-text-input>
+    </div>
+
+  </div>
+  <!-- /collaborators -->
+
+</div>
