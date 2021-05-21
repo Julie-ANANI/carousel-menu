@@ -1,7 +1,12 @@
 <div id="text-input">
 
   <!-- input field -->
-  <form autocomplete="off" class="relative" novalidate>
+  <form
+    [ngClass]="{'m-left-auto m-right-auto': isFieldCenter}"
+    [ngStyle]="{'max-width': inputMaxWidth}"
+    autocomplete="off"
+    novalidate>
+
     <div class="input-wrapper d-flex align-center">
 
       <label class="d-block w-full">
@@ -33,7 +38,9 @@
     </div>
 
     <ng-container *ngIf="fieldType === 'email' && isEmailError">
-      <div [ngClass]="errorTextColorClass" class="form-error text-medium">{{ 'COMMON.INVALID.EMAIL' | translate }}</div>
+      <div [ngClass]="errorTextColorClass" class="form-error text-medium">
+        {{ 'COMMON.INVALID.EMAIL' | translate }}
+      </div>
     </ng-container>
 
   </form>
