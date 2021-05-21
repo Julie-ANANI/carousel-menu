@@ -2,32 +2,34 @@
 
   <!-- input field -->
   <form autocomplete="off" class="relative" novalidate>
-    <div [ngStyle]="{'max-width': inputMaxWidth}" class="input-wrapper">
-      <label class="relative d-block">
+    <div class="input-wrapper d-flex align-center">
 
+      <label class="d-block w-full">
         <input
           [attr.placeholder]="placeholder | translate"
           [formControl]="text"
           [name]="'text'"
-          [ngClass]="{'is-sm': isFormSmall}"
+          [ngClass]="isFormSmall ? 'is-sm' : 'is-normal'"
           autocomplete="off"
-          class="form-input p-right-50"
+          class="form-input"
           type="text">
-
-        <!-- add button -->
-        <span [ngClass]="{'is-sm': isFormSmall}" class="add-btn-wrapper absolute">
-          <button
-            (click)="onAddValue()"
-            [disabled]="!text.value"
-            [ngStyle]="{'padding': '5px'}"
-            class="button is-primary is-circled"
-            type="submit">
-            <i class="icon icon-plus text-xs"></i>
-          </button>
-        </span>
-        <!-- /add button -->
-
       </label>
+
+      <!-- add button -->
+      <button
+        (click)="onAddValue()"
+        [disabled]="!text.value"
+        [id]="'text-input-btn-add'"
+        [ngClass]="buttonColorClass"
+        [ngStyle]="{'padding': isFormSmall ? '10.5px 20px 10.5px 13px' : '15px 20px 15px 16px',
+        'font-size': isFormSmall ? '14px' : '16px'}"
+        class="button"
+        type="submit">
+        <i [ngClass]="isFormSmall ? 'text-xs' : 'text-sm'" class="icon icon-plus"></i>
+        {{ 'COMMON.LABEL.ADD' | translate }}
+      </button>
+      <!-- /add button -->
+
     </div>
   </form>
   <!-- /input field -->

@@ -27,14 +27,19 @@ export class TextInputComponent {
   @Input() isFormSmall = false;
 
   /**
-   * max width of the input field.
+   * input field text size.
    */
-  @Input() inputMaxWidth = '500px';
+  @Input() inputTextSize = '16px';
 
   /**
    * provide the label bg color class.
    */
   @Input() labelBgColor = 'is-draft';
+
+  /**
+   * provide the add button color class.
+   */
+  @Input() buttonColorClass = 'is-primary';
 
   /**
    * entered input field text
