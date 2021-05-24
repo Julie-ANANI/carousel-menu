@@ -96,7 +96,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     );
     if (this._campaign.settings.defaultWorkflow === '') {
       this._selectedTemplate = workflowToAdd;
-      this._prepareImport(true);
+      this._prepareImport(false);
       this.updateAvailableScenario(this._selectedTemplate);
       this._saveTemplates('The workflow is added automatically.');
     }

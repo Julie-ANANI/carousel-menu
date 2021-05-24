@@ -73,7 +73,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
-
   /***
    * Calcule d'une date d'envoi à partir des inputs de la date et heure
    * @param date
@@ -126,7 +125,9 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     return (
       this._campaign.settings &&
       this._campaign.settings.emails &&
-      this._campaign.settings.emails.length !== 0
+      this._campaign.settings.emails.length !== 0 &&
+      this._campaign.settings.emails.filter((e) => e.modified === false)
+        .length === 0
     );
   }
 
