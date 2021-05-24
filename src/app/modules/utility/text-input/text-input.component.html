@@ -1,50 +1,94 @@
 <div id="text-input">
 
-  <!-- input field -->
+  <!-- input filed template -->
   <form
     [ngClass]="{'m-left-auto m-right-auto': isFieldCenter}"
     [ngStyle]="{'max-width': inputMaxWidth}"
     autocomplete="off"
     novalidate>
 
-    <div class="input-wrapper d-flex align-center">
+    <div
+      [ngClass]="{'template-1': template === 'TYPE_1', 'template-2': template === 'TYPE_2'}"
+      [ngSwitch]="template"
+      class="input-wrapper d-flex align-center">
 
-      <label class="d-block w-full">
-        <input
-          [attr.placeholder]="placeholder | translate"
-          [formControl]="text"
-          [name]="'text'"
-          [ngClass]="isFormSmall ? 'is-sm' : 'is-normal'"
-          [type]="fieldType"
-          autocomplete="off"
-          class="form-input">
-      </label>
+      <!-- TYPE_1 -->
+      <ng-container *ngSwitchCase="'TYPE_1'">
+        <label class="relative d-block w-full">
 
-      <!-- add button -->
-      <button
-        (click)="onAddValue()"
-        [disabled]="!text.value"
-        [id]="'text-input-btn-add'"
-        [ngClass]="buttonColorClass"
-        [ngStyle]="{'padding': isFormSmall ? '10.5px 20px 10.5px 13px' : '15px 20px 15px 16px',
-        'font-size': isFormSmall ? '14px' : '16px'}"
-        class="button"
-        type="submit">
-        <i [ngClass]="isFormSmall ? 'text-xs' : 'text-sm'" class="icon icon-plus"></i>
-        {{ 'COMMON.LABEL.ADD' | translate }}
-      </button>
-      <!-- /add button -->
+          <input
+            [attr.placeholder]="placeholder | translate"
+            [formControl]="text"
+            [name]="'text'"
+            [ngClass]="{'is-sm': isFormSmall}"
+            [type]="fieldType"
+            autocomplete="off"
+            class="form-input p-right-50">
+
+          <!-- add button -->
+          <span
+            [ngClass]="{'is-sm': isFormSmall}"
+            [ngStyle]="{'top': btnAddTopValue}"
+            class="add-btn-wrapper absolute">
+            <button
+              (click)="onAddValue()"
+              [disabled]="!text.value"
+              [id]="'text-input-btn-add'"
+              [ngClass]="buttonColorClass"
+              class="button is-circled"
+              type="submit">
+              <i class="icon icon-plus text-xs"></i>
+            </button>
+          </span>
+          <!-- /add button -->
+
+        </label>
+      </ng-container>
+      <!-- /TYPE_1 -->
+
+      <!-- TYPE_2 -->
+      <ng-container *ngSwitchCase="'TYPE_2'">
+
+       <label class="d-block w-full">
+         <input
+           [attr.placeholder]="placeholder | translate"
+           [formControl]="text"
+           [name]="'text'"
+           [ngClass]="isFormSmall ? 'is-sm' : 'is-normal'"
+           [type]="fieldType"
+           autocomplete="off"
+           class="form-input">
+       </label>
+
+        <!-- add button -->
+        <button
+          (click)="onAddValue()"
+          [disabled]="!text.value"
+          [id]="'text-input-btn-add'"
+          [ngClass]="buttonColorClass"
+          [ngStyle]="{'padding': isFormSmall ? '10.5px 20px 10.5px 13px' : '15px 20px 15px 16px',
+          'font-size': isFormSmall ? '14px' : '16px'}"
+          class="button"
+          type="submit">
+          <i class="icon text-sm icon-plus"></i> {{ 'COMMON.LABEL.ADD' | translate }}
+        </button>
+        <!-- /add button -->
+
+      </ng-container>
+      <!-- /TYPE_2 -->
 
     </div>
 
+    <!-- email error -->
     <ng-container *ngIf="fieldType === 'email' && isEmailError">
-      <div [ngClass]="errorTextColorClass" class="form-error text-medium">
+      <div [ngClass]="errorTextColorClass" class="form-error p-top-10 text-medium">
         {{ 'COMMON.INVALID.EMAIL' | translate }}
       </div>
     </ng-container>
+    <!-- /email error -->
 
   </form>
-  <!-- /input field -->
+  <!-- /input filed template -->
 
   <!-- showing added text -->
   <div *ngIf="addedText.length > 0" [ngStyle]="{ 'margin-bottom': '-4px' }" class="p-top-15">
