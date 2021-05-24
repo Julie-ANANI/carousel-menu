@@ -2,6 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CalAnimation, IAngularMyDpOptions, IMyDateModel, IMyDefaultMonth} from 'angular-mydatepicker';
 
+export interface DatePickerDefMonth {
+  month: number;
+  year: number;
+}
+
 /**
  * a calendar view date picker.
  * ex: New project last step component.
@@ -15,6 +20,17 @@ import {CalAnimation, IAngularMyDpOptions, IMyDateModel, IMyDefaultMonth} from '
   templateUrl: './date-picker.component.html'
 })
 export class DatePickerComponent implements OnInit {
+
+  /**
+   * setting the default calendar view.
+   * for the first time it will be set when pass the value of isDisabledUntil.
+   * @param value
+   */
+  @Input() set defMonth(value: DatePickerDefMonth) {
+    if (!!value && value.month && value.year) {
+      this._setDefaultMonth(value.month, value.year);
+    }
+  }
 
   /**
    * value in format yyyy-mm-dd (2021-06-24)
