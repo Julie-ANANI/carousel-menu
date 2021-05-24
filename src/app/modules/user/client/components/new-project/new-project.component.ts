@@ -1,12 +1,9 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { environment } from '../../../../../../environments/environment';
-import { isPlatformBrowser } from '@angular/common';
 import { TranslateTitleService} from '../../../../../services/title/title.service';
 import { ClientProject } from '../../../../../models/client-project';
 import { Mission } from '../../../../../models/mission';
 import { TranslateService } from '@ngx-translate/core';
-import { CalAnimation, IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
-import { CommonService } from '../../../../../services/common/common.service';
 import { ClientProjectService } from '../../../../../services/client-project/client-project.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -27,8 +24,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
   private _fields: Array<string> = ['STEP_0', 'STEP_1', 'STEP_LAST'];
 
-  private _restitutionDate = this._commonService.getFutureMonth();
-
   private _clientProject: ClientProject = {
     name: '',
     roadmapDates: []
@@ -44,21 +39,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     milestoneDates: []
   };
 
-  private _currentLang = this._translateService.currentLang;
-
   private _isCreating = false;
-
-  // https://github.com/kekeh/angular-mydatepicker
-  private _datePickerOptions: IAngularMyDpOptions = {
-    dateRange: false,
-    dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
-    calendarAnimation: { in: CalAnimation.Fade, out: CalAnimation.Fade} ,
-    disableUntil: {
-      year: Number(this._restitutionDate.slice(0, 4)),
-      month: Number(this._restitutionDate.slice(5, 7)),
-      day: Number(this._restitutionDate.slice(8, 10))
-    }
-  };
 
   private _isNextStep = false;
 
@@ -76,18 +57,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _commonService: CommonService,
               private _router: Router,
               private _clientProjectService: ClientProjectService,
               private _authService: AuthService) {
-
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.NEW_PROJECT');
-
   }
 
   ngOnInit() {
-    if (isPlatformBrowser(this._platformId)) {
-    }
   }
 
   /***
@@ -123,38 +99,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     this._collaborators = value;
   }
 
-  /***
-   *
-   * @param event
-   * @param step
-   * @param type
-   */
-  public changeStep(event: Event, step: number, type: string) {
-    event.preventDefault();
-    if (type === 'next') { this._clientRoadmap(); }
-    this._currentStep = step;
-  }
-
-  /***
-   * this is to add the current date and step when clicked on the
-   * next button and create button.
-   * @private
-   */
-  private _clientRoadmap() {
-    this._clientProject.roadmapDates[this._currentStep] = {
-      name: this._currentStep === (this._fields.length - 1) ? 'Create' : 'Step ' + (this._currentStep + 1),
-      code: 'NEW_PROJECT',
-      date: new Date()
-    };
-  }
-
-  /***
+  /**
    * when the user selects the date from the date-picker then add
    * the milestoneDate.
    * @param event
    */
-  public onDateChanged(event: IMyDateModel) {
-    if (event && event.singleDate && event.singleDate.jsDate) {
+  public onChangeRestitutionDate(event: Date) {
+    if (!!event) {
       this._mission.milestoneDates[0] = {
         name: 'Feedback collection',
         code: 'FC0',
@@ -163,9 +114,22 @@ export class NewProjectComponent implements OnInit, OnDestroy {
       this._mission.milestoneDates[1] = {
         name: 'Restitution date',
         code: 'RDO',
-        dueDate: event.singleDate.jsDate
+        dueDate: event
       };
     }
+  }
+
+  /***
+   * this is to add the current date and step when clicked on the
+   * main action buttons.
+   * @private
+   */
+  private _clientRoadmap() {
+    this._clientProject.roadmapDates[this._currentStep] = {
+      name: this._currentStep === (this._fields.length - 1) ? 'Create' : 'Step ' + (this._currentStep + 1),
+      code: 'NEW_PROJECT',
+      date: new Date()
+    };
   }
 
   /***
@@ -186,7 +150,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     // innovation attributes
     const newInnovation = {
       name: this._clientProject.name,
-      lang: this._currentLang,
+      lang: this._projectLang,
       domain: environment.domain
     };
 
@@ -218,6 +182,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (!this.isDisabled) {
+      this._clientRoadmap();
+
       /***
        * this is the finale step to create the new project.
        */
@@ -240,10 +206,10 @@ export class NewProjectComponent implements OnInit, OnDestroy {
   get isDisabled(): boolean {
     switch (this._fields[this._currentStep]) {
       case 'STEP_1':
-        return true;
+        return false;
 
       case 'STEP_LAST':
-        return true;
+        return false;
 
       /*case 'TITLE':
         return !this._clientProject.name;
@@ -288,16 +254,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     return this._mission;
   }
 
-  get currentLang(): string {
-    return this._currentLang;
-  }
-
   get isCreating(): boolean {
     return this._isCreating;
-  }
-
-  get datePickerOptions(): IAngularMyDpOptions {
-    return this._datePickerOptions;
   }
 
   get milestoneDateComment(): string {
