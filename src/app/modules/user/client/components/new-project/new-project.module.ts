@@ -12,6 +12,8 @@ import { NewProjectWelcomeComponent } from './new-project-welcome/new-project-we
 import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
 import { NewProjectLastStepComponent } from './new-project-last-step/new-project-last-step.component';
 import {TextInputModule} from '../../../../utility/text-input/text-input.module';
+import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
+import {NgxPageScrollModule} from 'ngx-page-scroll';
 
 @NgModule({
   imports: [
@@ -23,7 +25,8 @@ import {TextInputModule} from '../../../../utility/text-input/text-input.module'
     MarketTestObjectivesModule,
     AngularMyDatePickerModule,
     TextInputModule,
-    // https://github.com/kekeh/angular-mydatepicker
+    DatePickerModule,
+    NgxPageScrollModule,
   ],
   declarations: [
     NewProjectComponent,

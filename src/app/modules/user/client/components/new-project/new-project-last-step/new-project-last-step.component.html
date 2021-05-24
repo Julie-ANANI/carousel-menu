@@ -8,14 +8,17 @@
 
   <!-- lang selection -->
   <div class="flex-centered flex-wrap p-bottom-40">
-    <div
+    <a
       (click)="onChangeProjectLang($event, lang)"
       *ngFor="let lang of projectLangs"
+      [href]="'#new-project-date-picker'"
       [id]="'new-project-btn-project-lang-'+lang"
       [ngClass]="{'bg-success': lang === projectLang}"
-      class="lang-wrapper c-hand flex-centered text-white text-medium text-md m-20">
+      class="lang-wrapper c-hand flex-centered text-white text-medium text-md m-20"
+      pageScroll
+      pageScrollOffset="100">
       {{ 'COMMON.LANG.' + lang | uppercase | translate }}
-    </div>
+    </a>
   </div>
   <!-- /lang selection -->
 
@@ -26,7 +29,14 @@
       {{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}
     </h2>
 
-    <div class="form-group mxw-450 m-left-auto m-right-auto p-top-20">
+    <div class="p-top-10 m-left-auto m-right-auto" id="new-project-date-picker">
+      <app-utility-date-picker
+        (selectedDate)="onChangeRestitutionDate($event)"
+        [isDisabledUntil]="restitutionDate">
+      </app-utility-date-picker>
+    </div>
+
+    <div class="form-group mxw-450 m-left-auto m-right-auto p-top-40">
       <label>
         <textarea
           (ngModelChange)="onChangeMilestoneComment($event)"
