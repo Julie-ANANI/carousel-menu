@@ -25,7 +25,7 @@ export interface Answer {
   readonly ip?: any;
   readonly answeredByEmail: boolean;
   readonly blacklistedCompany?: boolean;
-  readonly professional?: Professional;
+  professional?: Professional;
   readonly answers: any;
   answers_translations: any;
   readonly used_language: string;

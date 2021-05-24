@@ -26,6 +26,7 @@ import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Company } from '../../../../../../models/company';
 import { SocketService } from '../../../../../../services/socket/socket.service';
+import { Professional } from '../../../../../../models/professional';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -546,6 +547,9 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   updatePros(value: any) {
     const proToUpdate = this._answers.find((item) => item._id === value._id);
+    proToUpdate.professional = !proToUpdate.professional
+      ? <Professional>{}
+      : proToUpdate.professional;
     proToUpdate.professional.firstName = value.newPro.firstName;
     proToUpdate.professional.lastName = value.newPro.lastName;
     proToUpdate.professional.email = value.newPro.email;
