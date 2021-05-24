@@ -4,21 +4,47 @@
 
   .input-wrapper {
 
-    input {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right-color: transparent;
+    &.template-1 {
+      .add-btn-wrapper {
+        top: 10px;
+        right: 14px;
 
-      &.is-normal {
-        padding: 13px;
+        &.is-sm {
+          top: 4px;
+        }
+
+        .button.is-circled {
+          width: 25px;
+          height: 25px;
+          padding: 5px !important;
+
+          i {
+            margin-left: 0;
+            margin-right: 0;
+          }
+
+        }
+
       }
-
     }
 
-    .button {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      min-width: unset;
+    &.template-2 {
+      input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right-color: transparent;
+
+        &.is-normal {
+          padding: 13px;
+        }
+
+      }
+
+      .button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        min-width: unset;
+      }
     }
 
   }
