@@ -1,27 +1,25 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Question } from '../../../../models/question';
-import { Answer } from '../../../../models/answer';
-import { AnswerService } from '../../../../services/answer/answer.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Tag } from '../../../../models/tag';
-import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
-import { Company } from '../../../../models/company';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Question} from '../../../../models/question';
+import {Answer} from '../../../../models/answer';
+import {AnswerService} from '../../../../services/answer/answer.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {Tag} from '../../../../models/tag';
+import {ProfessionalsService} from '../../../../services/professionals/professionals.service';
+import {Company} from '../../../../models/company';
 import * as momentTimeZone from 'moment-timezone';
-import { first } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { NewPro } from './reassign-answer/reassign-answer.component';
-import { UserFrontService } from '../../../../services/user/user-front.service';
-import { Professional } from '../../../../models/professional';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import {NewPro} from './reassign-answer/reassign-answer.component';
+import {UserFrontService} from '../../../../services/user/user-front.service';
+import {Professional} from '../../../../models/professional';
 
 @Component({
   selector: 'app-sidebar-user-answer',
   templateUrl: './sidebar-user-answer.component.html',
-  styleUrls: ['./sidebar-user-answer.component.scss']
+  styleUrls: ['./sidebar-user-answer.component.scss'],
 })
-
 export class SidebarUserAnswerComponent {
-
   @Input() set sidebarState(value: any) {
     this._reinitVariables();
   }
@@ -44,6 +42,7 @@ export class SidebarUserAnswerComponent {
 
   @Output() answerUpdated: EventEmitter<boolean> = new EventEmitter<boolean>(); // sends updated answer.
 
+  @Output() sendNewPro: EventEmitter<any> = new EventEmitter();
 
   private _userAnswer: Answer = <Answer>{};
 
@@ -73,15 +72,18 @@ export class SidebarUserAnswerComponent {
 
   private _editSecondEmail = false;
 
-  private _answerStatus: Array<{name: any, class: string}> = [
+  private _answerStatus: Array<{ name: any; class: string }> = [
     {name: 'REJECTED', class: 'is-danger'},
     {name: 'SUBMITTED', class: 'is-progress'},
-    {name: 'VALIDATED', class: 'is-success'}
-    ];
+    {name: 'VALIDATED', class: 'is-success'},
+  ];
 
-  constructor(private _answerService: AnswerService,
-              private _professionalsService: ProfessionalsService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+  constructor(
+    private _answerService: AnswerService,
+    private _professionalsService: ProfessionalsService,
+    private _translateNotificationsService: TranslateNotificationsService
+  ) {
+  }
 
   private _reinitVariables() {
     this._editMode = false;
@@ -111,7 +113,6 @@ export class SidebarUserAnswerComponent {
 
   public onClickEdit(activate: string) {
     switch (activate) {
-
       case 'COUNTRY':
         this._editCountry = !this._editCountry;
         break;
@@ -127,7 +128,6 @@ export class SidebarUserAnswerComponent {
       case 'SECOND_EMAIL':
         this._editSecondEmail = !this._editSecondEmail;
         break;
-
     }
   }
 
@@ -152,19 +152,33 @@ export class SidebarUserAnswerComponent {
     // Hack : les réponses anciennes n'ont pas de champ quizReference,
     // mais il faut forcément une valeur pour sauvegarder la réponse
     // TODO: remove this hack
-    this._userAnswer.originalAnswerReference = this._userAnswer.originalAnswerReference || 'oldQuiz';
-    this._userAnswer.quizReference = this._userAnswer.quizReference || 'oldQuiz';
+    this._userAnswer.originalAnswerReference =
+      this._userAnswer.originalAnswerReference || 'oldQuiz';
+    this._userAnswer.quizReference =
+      this._userAnswer.quizReference || 'oldQuiz';
 
-    this._answerService.save(this._userAnswer._id, this._userAnswer).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The answer is updated.');
-      this._resetEdit();
-      this._resetSaveVariables();
-      this.answerUpdated.emit(true);
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      this._resetSaveVariables();
-      console.error(err);
-    });
+    this._answerService
+      .save(this._userAnswer._id, this._userAnswer)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this._translateNotificationsService.success(
+            'Success',
+            'The answer is updated.'
+          );
+          this._resetEdit();
+          this._resetSaveVariables();
+          this.answerUpdated.emit(true);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          this._resetSaveVariables();
+          console.error(err);
+        }
+      );
   }
 
   private _resetSaveVariables() {
@@ -178,15 +192,26 @@ export class SidebarUserAnswerComponent {
 
   public onClickLanguage(language: string) {
     if (language !== this._userAnswer.professional.language) {
-      this._professionalsService.changeProLanguage(this._userAnswer.professional._id, language).pipe(first())
-        .subscribe(pro => {
-          this._userAnswer.professional.language = pro.language;
-          this._translateNotificationsService.success('Success', 'The professional language is updated.');
-          }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          this._isSaving = false;
-          console.error(err);
-        });
+      this._professionalsService
+        .changeProLanguage(this._userAnswer.professional._id, language)
+        .pipe(first())
+        .subscribe(
+          (pro) => {
+            this._userAnswer.professional.language = pro.language;
+            this._translateNotificationsService.success(
+              'Success',
+              'The professional language is updated.'
+            );
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isSaving = false;
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -194,67 +219,120 @@ export class SidebarUserAnswerComponent {
     this._toBeSaved = true;
   }
 
-  public updateProfileQuality(object: {value: number}) {
+  public updateProfileQuality(object: { value: number }) {
     this._userAnswer.profileQuality = object.value;
     this.enableSave();
   }
 
-  public updateCountry(event: {value: Array<any>}) {
+  public updateCountry(event: { value: Array<any> }) {
     this._userAnswer.country = event.value[0];
     this.enableSave();
   }
 
-  public updateStatus(event: Event, status: 'REJECTED' | 'VALIDATED' | 'SUBMITTED') {
+  public updateStatus(
+    event: Event,
+    status: 'REJECTED' | 'VALIDATED' | 'SUBMITTED'
+  ) {
     event.preventDefault();
     this._userAnswer.status = status;
     this.enableSave();
   }
 
   public addTag(tag: Tag): void {
-    this._answerService.addTag(this._userAnswer._id, tag._id).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success' , 'The tag is added to the answer.');
-      this._userAnswer.tags.push(tag);
-      this.answerUpdated.emit(true);
-      }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', 'The tag is already added to the answer.');
-      console.error(err);
-    });
+    this._answerService
+      .addTag(this._userAnswer._id, tag._id)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this._translateNotificationsService.success(
+            'Success',
+            'The tag is added to the answer.'
+          );
+          this._userAnswer.tags.push(tag);
+          this.answerUpdated.emit(true);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'Error',
+            'The tag is already added to the answer.'
+          );
+          console.error(err);
+        }
+      );
   }
 
   public createTag(tag: Tag): void {
-    this._answerService.createTag(this._userAnswer._id, tag).pipe(first()).subscribe((newTag) => {
-      this._translateNotificationsService.success('Success' , 'The tag is created and added to the answer.');
-      this._userAnswer.tags.push(newTag);
-      this.answerUpdated.emit(true);
-      }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', 'The tag is already created/added to the answer.');
-      console.error(err);
-    });
+    this._answerService
+      .createTag(this._userAnswer._id, tag)
+      .pipe(first())
+      .subscribe(
+        (newTag) => {
+          this._translateNotificationsService.success(
+            'Success',
+            'The tag is created and added to the answer.'
+          );
+          this._userAnswer.tags.push(newTag);
+          this.answerUpdated.emit(true);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'Error',
+            'The tag is already created/added to the answer.'
+          );
+          console.error(err);
+        }
+      );
   }
 
   public removeTag(tag: Tag): void {
-    this._answerService.removeTag(this._userAnswer._id, tag._id).pipe(first()).subscribe((a: any) => {
-      this._translateNotificationsService.success('Success' , 'The tag is removed from the answer.');
-      this._userAnswer.tags = this._userAnswer.tags.filter(t => t._id !== tag._id);
-      this.answerUpdated.emit(true);
-      }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._answerService
+      .removeTag(this._userAnswer._id, tag._id)
+      .pipe(first())
+      .subscribe(
+        (a: any) => {
+          this._translateNotificationsService.success(
+            'Success',
+            'The tag is removed from the answer.'
+          );
+          this._userAnswer.tags = this._userAnswer.tags.filter(
+            (t) => t._id !== tag._id
+          );
+          this.answerUpdated.emit(true);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
   }
 
   public onImportAnswer(event: Event): void {
     event.preventDefault();
     if (!this._isImporting) {
       this._isImporting = true;
-      this._answerService.importFromQuiz(this._userAnswer).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('Success' , 'The answer is imported.');
-        this._isImporting = false;
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isImporting = false;
-        console.error(err);
-      });
+      this._answerService
+        .importFromQuiz(this._userAnswer)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this._translateNotificationsService.success(
+              'Success',
+              'The answer is imported.'
+            );
+            this._isImporting = false;
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isImporting = false;
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -265,34 +343,60 @@ export class SidebarUserAnswerComponent {
       // this._newPro.country = this._userAnswer.country && this._userAnswer.country.flag;
       // this._newPro.company = this._userAnswer.company && this._userAnswer.company.name;
 
-      this._answerService.answerReassign(this._userAnswer.campaign._id, this._userAnswer.originalAnswerReference,
-        this._userAnswer._id, this._newPro).pipe(first()).subscribe((_res: any) => {
-        this._translateNotificationsService.success('Success' ,
-          'The answer has been reassigned to the new professional.');
-        this._isReassigning = false;
-        this._assignNewPro = false;
-        this._newPro = <NewPro>{};
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isReassigning = false;
-        console.error(err);
-      });
-
+      this._answerService
+        .answerReassign(
+          this._userAnswer.campaign._id,
+          this._userAnswer.originalAnswerReference,
+          this._userAnswer._id,
+          this._newPro
+        )
+        .pipe(first())
+        .subscribe(
+          (_res: any) => {
+            this._translateNotificationsService.success(
+              'Success',
+              'The answer has been reassigned to the new professional.'
+            );
+            this._isReassigning = false;
+            this._assignNewPro = false;
+            this.sendNewPro.emit({newPro: this._newPro, _id: this._userAnswer._id});
+            this._newPro = <NewPro>{};
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isReassigning = false;
+            console.error(err);
+          }
+        );
     }
   }
 
   private _addContactEmail() {
-    this._professionalsService.addContactEmail(this._userAnswer.professional._id, this.newEmail).pipe(first())
-      .subscribe(() => {
-        this._translateNotificationsService.success('Success' , 'The second email is added to the professional.');
-        this._resetSaveVariables();
-        this._editSecondEmail = false;
-        }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._resetSaveVariables();
-        this._editSecondEmail = false;
-        console.error(err);
-      });
+    this._professionalsService
+      .addContactEmail(this._userAnswer.professional._id, this.newEmail)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this._translateNotificationsService.success(
+            'Success',
+            'The second email is added to the professional.'
+          );
+          this._resetSaveVariables();
+          this._editSecondEmail = false;
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          this._resetSaveVariables();
+          this._editSecondEmail = false;
+          console.error(err);
+        }
+      );
   }
 
   public createdDate(date: Date) {
@@ -304,12 +408,19 @@ export class SidebarUserAnswerComponent {
   }
 
   get companyLength(): number {
-    return (this._userAnswer.company && this._userAnswer.company.name && this._userAnswer.company.name.length
-      || this.professional.company && this.professional.company.length) || 30;
+    return (
+      (this._userAnswer.company &&
+        this._userAnswer.company.name &&
+        this._userAnswer.company.name.length) ||
+      (this.professional.company && this.professional.company.length) ||
+      30
+    );
   }
 
   get professional(): Professional {
-    return this._userAnswer.professional ? this._userAnswer.professional : <Professional>{};
+    return this._userAnswer.professional
+      ? this._userAnswer.professional
+      : <Professional>{};
   }
 
   get professionalName(): string {
@@ -357,7 +468,9 @@ export class SidebarUserAnswerComponent {
   }
 
   get autoTags(): Array<string> {
-    return this._userAnswer.autoTags && this._userAnswer.autoTags.length ? this._userAnswer.autoTags : [];
+    return this._userAnswer.autoTags && this._userAnswer.autoTags.length
+      ? this._userAnswer.autoTags
+      : [];
   }
 
   get isReassigning(): boolean {
@@ -383,5 +496,4 @@ export class SidebarUserAnswerComponent {
   get answerStatus(): Array<{ name: any; class: string }> {
     return this._answerStatus;
   }
-
 }
