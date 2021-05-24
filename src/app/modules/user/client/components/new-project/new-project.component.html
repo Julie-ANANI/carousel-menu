@@ -45,6 +45,7 @@
               (collaboratorsConsent)="onChangeCollaboratorsConsent($event)"
               (milestoneDateCommentChange)="onChangeDateComment($event)"
               (projectNameChange)="onChangeProjectName($event)"
+              (restitutionDateChange)="onChangeRestitutionDate($event)"
               [(projectLang)]="projectLang">
             </app-new-project-last-step>
           </section>
@@ -133,7 +134,7 @@
           <div *ngSwitchCase="'RESTITUTION_DATE'" class="w-full animate-fade is-2 text-center">
 
             <!-- date selection -->
-            <div class="p-bottom-40">
+            <!--<div class="p-bottom-40">
               <h6 class="text-normal m-no-bottom">{{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}</h6>
 
               <p
@@ -156,7 +157,7 @@
                 </label>
               </div>
 
-            </div>
+            </div>-->
             <!-- /date selection -->
 
             <!-- divider -->
@@ -193,7 +194,7 @@
         <section class="text-center">
 
           <!-- previous -->
-          <ng-container *ngIf="currentStep > 0">
+          <!--<ng-container *ngIf="currentStep > 0">
             <button
               (click)="changeStep($event, currentStep - 1, 'previous')"
               [disabled]="isCreating"
@@ -201,11 +202,11 @@
               id="btn-previous">
               {{ 'COMMON.BUTTON.PREVIOUS' | translate }}
             </button>
-          </ng-container>
+          </ng-container>-->
           <!-- /previous -->
 
           <!-- next -->
-          <ng-container *ngIf="currentStep < fields.length - 1">
+          <!--<ng-container *ngIf="currentStep < fields.length - 1">
             <button
               (click)="changeStep($event, currentStep + 1, 'next')"
               [disabled]="isDisabled"
@@ -213,7 +214,7 @@
               id="btn-next">
               {{ 'COMMON.BUTTON.NEXT' | translate }}
             </button>
-          </ng-container>
+          </ng-container>-->
           <!-- /next -->
 
           <!-- create -->
@@ -235,13 +236,13 @@
 
 
         <!-- circles -->
-        <section class="flex-centered flex-wrap p-top-15 circle-wrapper">
+        <!--<section class="flex-centered flex-wrap p-top-15 circle-wrapper">
           <div
             *ngFor="let field of fields; let i = index"
             [ngClass]="{ 'active': i === currentStep }"
             class="shape is-circle">
           </div>
-        </section>
+        </section>-->
         <!-- /circles -->
 
       </div>
