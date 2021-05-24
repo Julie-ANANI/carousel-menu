@@ -34,6 +34,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { emptyHtmlRegex } from '../../../../utils/regex';
 import { SocketService } from '../../../../services/socket/socket.service';
+import { Professional } from '../../../../models/professional';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -584,6 +585,26 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) &&
       !this.areAnswersLoading
     );
+  }
+
+  updateNewPro(value: any) {
+    const proToUpdate = this._answers.find((item) => item._id === value._id);
+    proToUpdate.professional = !proToUpdate.professional
+      ? <Professional>{}
+      : proToUpdate.professional;
+    proToUpdate.professional.firstName = value.newPro.firstName;
+    proToUpdate.professional.lastName = value.newPro.lastName;
+    proToUpdate.professional.email = value.newPro.email;
+    if (value.newPro.jobTitle) {
+      proToUpdate.professional.jobTitle = value.newPro.jobTitle;
+      proToUpdate.job = value.newPro.jobTitle;
+    }
+    if (value.newPro.company) {
+      proToUpdate.company.name = value.newPro.company;
+    }
+    if (value.newPro.country) {
+      proToUpdate.country = { flag: value.newPro.country.flag };
+    }
   }
 
   ngOnDestroy(): void {

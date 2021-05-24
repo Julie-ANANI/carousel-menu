@@ -26,6 +26,7 @@ import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Company } from '../../../../../../models/company';
 import { SocketService } from '../../../../../../services/socket/socket.service';
+import { Professional } from '../../../../../../models/professional';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -542,6 +543,26 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   get campaignList(): Array<{ _name: ''; _alias: '' }> {
     return this._campaignList;
+  }
+
+  updatePros(value: any) {
+    const proToUpdate = this._answers.find((item) => item._id === value._id);
+    proToUpdate.professional = !proToUpdate.professional
+      ? <Professional>{}
+      : proToUpdate.professional;
+    proToUpdate.professional.firstName = value.newPro.firstName;
+    proToUpdate.professional.lastName = value.newPro.lastName;
+    proToUpdate.professional.email = value.newPro.email;
+    if (value.newPro.jobTitle) {
+      proToUpdate.professional.jobTitle = value.newPro.jobTitle;
+      proToUpdate.job = value.newPro.jobTitle;
+    }
+    if (value.newPro.company) {
+      proToUpdate.company.name = value.newPro.company;
+    }
+    if (value.newPro.country) {
+      proToUpdate.country = value.newPro.country.flag;
+    }
   }
 
   ngOnDestroy(): void {
