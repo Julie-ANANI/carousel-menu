@@ -16,11 +16,28 @@ import {emailRegEx} from '../../../utils/regex';
 })
 export class TextInputComponent {
 
+  /**
+   * defines the different html styles.
+   * TYPE_1: has circle button on the input field. ex: Admin project settings component (Modal Publish to Community)
+   * TYPE_2: has normal button attached next to the input filed. Client new project last step component.
+   */
+  @Input() template: 'TYPE_1' | 'TYPE_2' = 'TYPE_1';
+
+  /**
+   * added text list.
+   * @param value
+   */
   @Input() set addedText(value: Array<string>) {
     this._addedText = value;
   }
 
   @Input() placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
+
+  /**
+   * top value of the btn add for the template TYPE_1.
+   * sometimes it's not in center from the top container of input.
+   */
+  @Input() btnAddTopValue = '';
 
   /**
    * max width of the input field.
@@ -46,11 +63,6 @@ export class TextInputComponent {
    * to make the form field small.
    */
   @Input() isFormSmall = false;
-
-  /**
-   * input field text size.
-   */
-  @Input() inputTextSize = '16px';
 
   /**
    * provide the label bg color class.
