@@ -550,6 +550,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     proToUpdate.professional = !proToUpdate.professional
       ? <Professional>{}
       : proToUpdate.professional;
+    console.log(proToUpdate.professional);
     proToUpdate.professional.firstName = value.newPro.firstName;
     proToUpdate.professional.lastName = value.newPro.lastName;
     proToUpdate.professional.email = value.newPro.email;
