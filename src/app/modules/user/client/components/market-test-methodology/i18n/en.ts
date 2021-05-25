@@ -13,108 +13,107 @@ export const MARKET_TEST_METHODOLOGY = {
   },
 
   'CONTEXT': {
-    'DETECTING_MARKET': 'Je souhaite innover sur une thématique pour laquelle je n’ai pas encore ' +
-      'identifié les besoins précis des acteurs du marché.',
+    'DETECTING_MARKET': 'I want to innovate on a topic and I have not yet identified the precise needs of the market players.',
 
-    'VALIDATING_MARKET': 'J’ai identifié des besoins potentiels : problèmes non-résolus, attentes spécifiques...',
+    'VALIDATING_MARKET': 'I have identified potential needs: unresolved issues, specific expectations…',
 
-    'SOURCING_SOLUTIONS': 'J’ai un problème à résoudre pour lequel je souhaite identifier des solutions / fournisseurs. ',
+    'SOURCING_SOLUTIONS': 'I have a problem to solve for which I want to identify solutions / suppliers.',
 
-    'IDENTIFYING_RECEPTIVE': 'J’ai une solution pour laquelle je recherche les marchés d’application potentiels.',
+    'IDENTIFYING_RECEPTIVE': 'I have a solution for which I am looking for potential application markets. ',
 
-    'VALIDATING_INTEREST': 'J’ai une solution innovante à proposer en réponse à un besoin. Je souhaite vérifier / ' +
-      'démontrer que mon projet présente un intérêt pour les acteurs du marché.',
+    'VALIDATING_INTEREST': 'I have an innovative solution to propose in response to a need. I want to ' +
+      'verify / demonstrate that my project is of interest to market players.',
 
-    'OPTIMIZING': 'J’ai un projet innovant dont j’ai déjà validé l’intérêt auprès du marché : besoin avéré et pertinence de ma ' +
-      'solution confirmée. Je souhaite maintenant ajuster ma proposition de valeur.',
+    'OPTIMIZING': 'I have an innovative project that I have already validated with the market: there is a proven need ' +
+      'and confirmation of the relevance of my solution. I now want to adjust my value proposition.',
   },
 
   'METHODOLOGY': {
-    'DETECTING_MARKET': 'Je vais décrire le contexte et laisser s\'exprimer les acteurs concernés par cette thématique afin : ' +
-      '<br>- de confirmer qu’il y a des opportunités d’innovation,' +
-      '<br>- d’identifier leurs besoins en lien avec cette thématique.' +
-      '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
-      '- identifier des tendances / axes de développement actuels et futurs,' +
-      '<br>- hiérarchiser des premières idées d’enjeux pré-identifiés,' +
-      '<br>- identifier les acteurs actifs dans le domaine,' +
-      '<br>- anticiper les impacts potentiels sur les marchés concernés,' +
+    'DETECTING_MARKET': 'I will describe the context and let the market players, who are relevant for this subject, ' +
+      'express themselves in order to' +
+      '<br>- confirm that there are opportunities for innovation' +
+      '<br>- identify their needs in relation to this subject' +
+      '<p class="p-top-20 m-no-bottom">I will also:</p>' +
+      '- identify current and future trends / areas of development' +
+      '<br>- prioritize the first pre-identified issues' +
+      '<br>- identify active market players in the field' +
+      '<br>- anticipate the potential impact on the relevant markets' +
       '<br>- …' +
-      '<br>À ce stade je ne vais pas présenter de solution.',
+      '<br>At this stage, I will not present a solution.',
 
-    'VALIDATING_MARKET': 'Je vais décrire ces besoins potentiels et les soumettre aux acteurs des marchés concernés afin ' +
-      'de confirmer ou non leur existence et leur criticité.' +
-      '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
-      '- hiérarchiser leurs besoins,' +
-      '<br>- identifier les solutions qu’ils utilisent ou connaissent,' +
-      '<br>- anticiper les impacts potentiels sur les marchés concernés,' +
+    'VALIDATING_MARKET': 'I will describe these potential needs and present them to relevant market players to confirm if ' +
+      'they exist and their criticality.' +
+      '<p class="p-top-20 m-no-bottom">I will also:</p>' +
+      '- rank their needs' +
+      '<br>- identify the solutions they use or know about' +
+      '<br>- know the limits of these solutions according to them' +
       '<br>- …' +
-      '<br>À ce stade je ne vais pas présenter de solution.',
+      '<br>At this stage, I will not present a solution.',
 
-    'SOURCING_SOLUTIONS': 'Je vais décrire mes attentes (spécifications, contraintes, …) afin :' +
-      '<br>- d’identifier des solutions / fournisseurs pouvant résoudre mon problème,' +
-      '<br>- d’évaluer leur niveau d’adéquation avec mon cahier des charges.' +
-      '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
-      '- déterminer le niveau de maturité des solutions proposées,' +
-      '<br>- découvrir qui a un problème similaire,' +
-      '<br>- identifier d’autres acteurs travaillant sur le sujet,' +
-      '<br>- …' +
-      '<br>À ce stade je ne vais pas présenter de solution.',
-
-    'IDENTIFYING_RECEPTIVE': 'Je vais décrire ma solution (principe, spécifications…) et la soumettre aux acteurs de différents marchés afin :' +
-      '<br>- d’identifier ceux qui perçoivent un intérêt dans leur domaine,' +
-      '<br>- de détecter les problématiques qu’elle pourrait résoudre,' +
-      '<br>- d’évaluer son adoptabilité dans leur métier,' +
-      '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
-      '- hiérarchiser des fonctionnalités / propriétés / options...' +
-      '<br>- préciser les spécifications attendues,' +
-      '<br>- identifier les éventuels freins à l\'adoption,' +
-      '<br>- identifier les solutions existantes utilisées et leurs limites,' +
-      '<br>- évaluer les volumes en jeu,' +
-      '<br>- …' +
-      '<br>À ce stade je ne vais pas présenter de solution.',
-
-    'VALIDATING_INTEREST': 'Je vais décrire le problème que je pense résoudre et la solution que je propose en face afin :' +
-      '<br>- de confirmer l’existence et la criticité du besoin,' +
-      '<br>- de valider que le marché perçoit de la valeur et est prêt à adopter ma solution.' +
-      '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
-      '- hiérarchiser des problématiques marché,' +
-      '<br>- identifier les solutions existantes utilisées et leurs limites,' +
-      '<br>- hiérarchiser des fonctionnalités / propriétés… de ma solution,' +
-      '<br>- identifier les points forts et points faibles perçus,' +
-      '<br>- valider la propension à payer,' +
+    'SOURCING_SOLUTIONS': 'I will describe my expectations (specifications, requirements, ...) to:' +
+      '<br>- identify solutions / suppliers that can solve my problem' +
+      '<br>- evaluate the problem-solution fit with my specifications' +
+      '<p class="p-top-20 m-no-bottom">I will also:</p>' +
+      '- determine the maturity level of the proposed solutions' +
+      '<br>- discover who has a similar problem' +
+      '<br>- identify other market players working on the subject' +
       '<br>- …',
 
-    'OPTIMIZING': 'Je vais décrire ma proposition de valeur afin de hiérarchiser les éléments plébiscités par les acteurs ' +
-      'du marché : points forts, avantages, arguments...' +
-      '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
-      '- hiérarchiser les freins à l\'adoption,' +
-      '<br>- confirmer mon positionnement concurrentiel,' +
-      '<br>- valider le positionnement prix,' +
-      '<br>- valider le business model,' +
-      '<br>- valider le canal de vente.',
+    'IDENTIFYING_RECEPTIVE': 'I will describe my solution (principle, specifications...) and submit it to stakeholders in different ' +
+      'markets in order to:' +
+      '<br>- identify those who perceive an interest for it in their field' +
+      '<br>- detect the problems that it could solve' +
+      '<br>- evaluate their willingness to adopt it' +
+      '<p class="p-top-20 m-no-bottom">I will also:</p>' +
+      '- rank features / properties / options...' +
+      '<br>- determine the expected specifications' +
+      '<br>- identify the potential adoption barriers' +
+      '<br>- identify existing solutions that are used and their limits' +
+      '<br>- evaluate the volume at stake' +
+      '<br>- …',
+
+    'VALIDATING_INTEREST': 'I will describe the problem I think I am solving and the solution that I’m proposing in order to: ' +
+      '<br>- confirm the existence and criticality of the need' +
+      '<br>- validate that the market perceives its value and is ready to adopt my solution' +
+      '<p class="p-top-20 m-no-bottom">I will also:</p>' +
+      '- rank market issues' +
+      '<br>- identify existing solutions that are used and their limits' +
+      '<br>- rank the functionalities / properties... of my solution' +
+      '<br>- identify the perceived strengths and weaknesses' +
+      '<br>- validate the willingness to pay' +
+      '<br>- …',
+
+    'OPTIMIZING': 'I will describe my value proposition in order to rank and prioritize the features that are favored by the market ' +
+      'players: strengths, advantages, argumentation...' +
+      '<p class="p-top-20 m-no-bottom">I will also:</p>' +
+      '-  rank the adoption barriers' +
+      '<br>- confirm my competitive positioning' +
+      '<br>- validate the price positioning' +
+      '<br>- validate the business model' +
+      '<br>- validate the sales channel(s)',
   },
 
   'RESULT': {
-    'DETECTING_MARKET': 'Je saurai s’il y a ou non des opportunités d’innovation sur cette thématique. ' +
-      'J’aurai le cas échéant la liste des besoins exprimés par les acteurs du marché.' +
-      '<br>Je pourrai recontacter les professionnels ayant manifesté un intérêt.',
+    'DETECTING_MARKET': 'I will know whether or not there are opportunities for innovation on this subject. If so, I will ' +
+      'have the list of needs as expressed by the market players.' +
+      '<br>I will be able to contact the professionals who expressed their interest.',
 
-    'VALIDATING_MARKET': 'Je saurai si mes hypothèses de besoins sont confirmées ou infirmées, et donc s’il ' +
-      'est opportun de proposer une solution pour y répondre ou non.' +
-      '<br>Je pourrai recontacter les professionnels ayant manifesté un intérêt.',
+    'VALIDATING_MARKET': 'I will know if my hypotheses about the market needs are confirmed or invalidated, and thus, ' +
+      'if it is advisable or not to propose a solution to meet those needs.' +
+      '<br>I will be able to contact the professionals who expressed their interest.',
 
-    'SOURCING_SOLUTIONS': 'J’obtiendrai une liste de solutions et fournisseurs potentiels.\n' +
-      'Je pourrai recontacter les professionnels ayant manifesté un intérêt.',
+    'SOURCING_SOLUTIONS': 'I will get a list of potential solutions and suppliers.\n' +
+      'I will be able to contact the professionals who expressed their interest.',
 
-    'IDENTIFYING_RECEPTIVE': 'J’obtiendrai une liste de marchés d’applications potentiels avec leurs besoins respectifs.' +
-      '<br> Je pourrai recontacter les professionnels ayant manifesté un intérêt.',
+    'IDENTIFYING_RECEPTIVE': 'I will get a list of potential application markets and their respective needs.' +
+      '<br> I will be able to contact the professionals who expressed their interest.',
 
-    'VALIDATING_INTEREST': 'Je connaîtrai le niveau d’intérêt de mon projet pour le marché et pourrai décider de poursuivre en affinant' +
-      ' ma proposition de valeur, de pivoter, ou d’abandonner sans regret.' +
-      '<br>Je pourrai recontacter les professionnels ayant manifesté un intérêt.',
+    'VALIDATING_INTEREST': 'I will know the market’s level of interest in my project and can decide to continue on, ' +
+      'by fine-tuning my value proposition, to pivot, or to abandon it without any regrets.' +
+      '<br>I will be able to contact the professionals who expressed their interest.',
 
-    'OPTIMIZING': 'J’obtiendrai une proposition de valeur parfaitement alignée avec les attentes marché et prête à être lancée.' +
-      '<br>Je pourrai recontacter les professionnels ayant manifesté un intérêt.',
+    'OPTIMIZING': 'I will have a value proposition that is perfectly aligned with market expectations and ready to launch.' +
+      '<br>I will be able to contact the professionals who expressed their interest.',
   },
 
 };
