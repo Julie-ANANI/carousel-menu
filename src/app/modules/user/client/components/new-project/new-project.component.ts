@@ -126,10 +126,23 @@ export class NewProjectComponent implements OnInit, OnDestroy {
    */
   private _clientRoadmap() {
     this._clientProject.roadmapDates[this._currentStep] = {
-      name: this._currentStep === (this._fields.length - 1) ? 'Create' : 'Step ' + (this._currentStep + 1),
+      name: this._stepName(),
       code: 'NEW_PROJECT',
       date: new Date()
     };
+  }
+
+  private _stepName() {
+    switch (this._currentStep) {
+      case 0:
+        return 'Step welcome';
+
+      case 1:
+        return 'Step objectives';
+
+      case (this._fields.length - 1):
+        return 'Create';
+    }
   }
 
   /***
