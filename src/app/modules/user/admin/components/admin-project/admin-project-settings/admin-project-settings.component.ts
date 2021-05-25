@@ -156,6 +156,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           if (!!this._innovation.clientProject) {
             this._clientProject = <ClientProject>this._innovation.clientProject;
           }
+          console.log(this._innovation);
+          console.log(this._clientProject);
+          console.log(this._mission);
+          console.log(this._missionTeam);
         });
     }
   }
@@ -490,6 +494,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe(
         () => {
+          console.log(this._innovation);
           this._innovationFrontService.setInnovation(this._innovation);
           this._translateNotificationsService.success('Success', notifyMessage);
         },
@@ -735,9 +740,16 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public onUpdateStatus(status: InnovationStatus) {
     this._innovation.status = status;
-    this._saveProject('The status has been updated.', {
-      status: this._innovation.status,
-    });
+    const saveObject: any = {};
+    saveObject.status = this._innovation.status;
+    if (status === 'EVALUATING') {
+      if (this._mission._id && this._mission.type === 'USER') {
+        this._mission.type = 'CLIENT';
+        console.log(this._mission);
+        saveObject.mission = this._mission;
+      }
+    }
+    this._saveProject('The status has been updated.', saveObject);
   }
 
   public onChangeAnonymous(event: Event) {
