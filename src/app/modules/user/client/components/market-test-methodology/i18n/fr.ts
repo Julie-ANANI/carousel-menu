@@ -57,8 +57,7 @@ export const MARKET_TEST_METHODOLOGY = {
       '- déterminer le niveau de maturité des solutions proposées,' +
       '<br>- découvrir qui a un problème similaire,' +
       '<br>- identifier d’autres acteurs travaillant sur le sujet,' +
-      '<br>- …' +
-      '<br>À ce stade je ne vais pas présenter de solution.',
+      '<br>- …',
 
     'IDENTIFYING_RECEPTIVE': 'Je vais décrire ma solution (principe, spécifications…) et la soumettre aux acteurs de différents marchés afin :' +
       '<br>- d’identifier ceux qui perçoivent un intérêt dans leur domaine,' +
@@ -70,8 +69,7 @@ export const MARKET_TEST_METHODOLOGY = {
       '<br>- identifier les éventuels freins à l\'adoption,' +
       '<br>- identifier les solutions existantes utilisées et leurs limites,' +
       '<br>- évaluer les volumes en jeu,' +
-      '<br>- …' +
-      '<br>À ce stade je ne vais pas présenter de solution.',
+      '<br>- …',
 
     'VALIDATING_INTEREST': 'Je vais décrire le problème que je pense résoudre et la solution que je propose en face afin :' +
       '<br>- de confirmer l’existence et la criticité du besoin,' +
