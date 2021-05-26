@@ -78,7 +78,7 @@ export class QuestionSectionComponent implements OnInit {
       // sort comments
       this._answersWithComment = ResponseService.sortComments(this.questionReceived, this._answersWithComment);
 
-      if (!this.stats) {
+      if (!this.originAnswers || (this.originAnswers && !this.stats)) {
         this.stats = {
           nbAnswers: answersToShow.length,
           percentage: Math.round((answersToShow.length * 100) / this._answersReceived.length)
