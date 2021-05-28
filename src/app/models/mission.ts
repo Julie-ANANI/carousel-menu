@@ -4,6 +4,30 @@ import { Multiling } from './multiling';
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 
+export interface MissionQuestion {
+  readonly _id: string;
+
+  entry: Array<{
+    label: string; // Intitulé de la question (text used in the Quiz)
+    lang: string;
+    objective: string; // text that we show to the client.
+  }>;
+
+}
+
+export interface MissionTemplate {
+  readonly _id: string;
+  essentials: Array<MissionQuestion>; // questions defined by us, compulsory for every market test.
+  complementary: Array<MissionQuestion>; // additional questions defined by us, user has right to select more then one.
+  comment?: string;
+
+  entry: Array<{
+    label: string;
+    lang: string;
+    objective: string; // name of the template (show to the user)
+  }>;
+}
+
 export interface  Milestone {
  name: string;
  code: string;
@@ -27,6 +51,10 @@ export interface Mission {
   milestoneDates?: Array<Milestone>;
   mailConf?: Array<MailConfiguration>;
 
+  /**
+   * not use it with the new project
+   *
+   */
   objective?: {
     principal: Multiling;
     secondary: Array<Multiling>;
