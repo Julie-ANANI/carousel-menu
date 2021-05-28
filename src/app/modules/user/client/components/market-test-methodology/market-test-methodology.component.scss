@@ -18,6 +18,8 @@
 
   .methodology-image {
     max-width: 514px;
+    background-color: #CAF0F8;
+    width: 100%;
 
     img {
       border-top-right-radius: 6px;
@@ -33,13 +35,12 @@
     flex-direction: column;
 
     .methodology-description {
-      margin: auto;
-      order: 2;
+      margin: 0 auto 30px auto;
       border-radius: 6px;
     }
 
     .methodology-image {
-      margin: 0 auto 30px auto;
+      margin: auto;
       img {
         border-radius: 6px;
       }
