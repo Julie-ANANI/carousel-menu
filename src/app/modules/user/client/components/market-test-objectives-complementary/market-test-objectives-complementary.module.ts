@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import {MarketTestObjectivesSecondaryComponent} from './market-test-objectives-secondary.component';
+import {MarketTestObjectivesComplementaryComponent} from './market-test-objectives-complementary.component';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
@@ -12,11 +12,11 @@ import {FormsModule} from '@angular/forms';
     FormsModule
   ],
   declarations: [
-    MarketTestObjectivesSecondaryComponent
+    MarketTestObjectivesComplementaryComponent
   ],
   exports: [
-    MarketTestObjectivesSecondaryComponent
+    MarketTestObjectivesComplementaryComponent
   ]
 })
 
-export class MarketTestObjectivesSecondaryModule {}
+export class MarketTestObjectivesComplementaryModule {}

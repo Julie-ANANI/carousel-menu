@@ -1,15 +1,15 @@
-<div id="market-test-objectives-secondary">
+<div id="market-test-objectives-complementary">
 
   <!-- options -->
   <label
-    *ngFor="let objective of objectivesList"
+    *ngFor="let objective of objectivesComplementary"
     [ngClass]="{'checked': isChecked(objective)}"
     class="form-checkbox mxw-450 objectives-option m-left-auto m-right-auto m-bottom-15 c-hand text-white text-medium">
     <input
       (change)="onChangeOption($event, objective)"
-      [id]="objective[currentLang]['label']"
+      [id]="'market-test-template-complementary-'+objectiveName(objective).toLowerCase()"
       type="checkbox">
-    {{ objective[currentLang]['label'] }}
+    {{ objectiveName(objective) }}
   </label>
   <!-- /options -->
 
@@ -18,7 +18,8 @@
     <label>
         <textarea
           (change)="emitCommentChange()"
-          [(ngModel)]="objectiveComment"
+          [(ngModel)]="templateComment"
+          [id]="'market-test-template-comment'"
           [placeholder]="currentLang === 'fr' ? 'Avez-vous des précisions à apporter ?'
           : 'Is there anything else you\'d like to do or add?'"
           class="form-input is-shadowed text-sm"
