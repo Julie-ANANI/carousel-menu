@@ -27,7 +27,9 @@ export const NEW_PROJECT = {
   'COLLABORATORS_TERMS': 'Veuillez noter que les collaborateurs ont accès au projet ainsi que aux résultats et aux ' +
     'autres données sensibles. Voulez vous continuer ?',
 
-  'TITLE_QUESTION': 'Quel titre souhaitez-vous donner à votre Test Marché ? (titre à usage interne)',
+  'TITLE_QUESTION': 'Quel titre souhaitez-vous donner à votre Test Marché ?',
+
+  'TITLE_INTERNAL': '(titre à usage interne)',
 
   'COMMENT_PLACEHOLDER': 'Avez-vous des précisions à apporter ?',
 

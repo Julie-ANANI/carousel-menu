@@ -52,8 +52,12 @@ export interface Mission {
   mailConf?: Array<MailConfiguration>;
 
   /**
-   * not use it with the new project
-   *
+   * the use case selected by the user for the Market Test.
+   */
+  template?: MissionTemplate;
+
+  /**
+   * do not use it any more
    */
   objective?: {
     principal: Multiling;
