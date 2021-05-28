@@ -1,6 +1,6 @@
 @import "../../../../../../style/framework/src/variables";
 
-#market-test-objectives-secondary {
+#market-test-objectives-complementary {
 
   .objectives-option {
     padding: 12px 30px;
@@ -15,6 +15,7 @@
 
     &:not(.checked):hover {
       box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+      transform: translateY(-5px);
     }
 
   }
