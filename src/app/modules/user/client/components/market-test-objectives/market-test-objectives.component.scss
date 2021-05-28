@@ -18,6 +18,7 @@
 
     &:not(.active):hover {
       box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+      transform: translateY(-5px);
     }
 
   }
@@ -49,18 +50,19 @@
 
   }
 
-  .section-principal-objectives {
+  .section-templates {
     padding-top: 30px;
     margin-bottom: 50px;
 
-    .objectives-wrapper {
+    .templates-wrapper {
       max-width: 90%;
       margin-left: auto;
       margin-right: auto;
 
-      .principal-objective {
+      .template-case {
         max-width: 170px;
         width: 100%;
+        margin: auto 2px;
 
         p {
           padding: 10px;
@@ -75,6 +77,10 @@
             background-color: transparent;
             cursor: not-allowed;
             box-shadow: none;
+          }
+
+          .box-info {
+            transform: none;
           }
 
         }
@@ -150,14 +156,14 @@
 @media screen and  (max-width: $size-lg) {
   #market-test-objectives {
 
-    .section-principal-objectives {
+    .section-templates {
       margin-bottom: 0;
 
-      .objectives-wrapper {
+      .templates-wrapper {
         flex-direction: column;
         max-width: 100%;
 
-        .principal-objective {
+        .template-case {
           margin-left: 10px;
           margin-right: 10px;
           margin-bottom: 30px;
