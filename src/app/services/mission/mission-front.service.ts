@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Milestone, Mission} from '../../models/mission';
+import {Milestone, Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
 import {ObjectivesPrincipal} from '../../models/static-data/missionObjectives';
 import {Pitches} from '../../models/static-data/project-pitch';
 
@@ -42,6 +42,22 @@ export class MissionFrontService {
 
     }
 
+    return '';
+  }
+
+  /**
+   * return the name to show the user readable form.
+   * both uses the same structure.
+   * @param value - can be Mission template or Mission question
+   * @param lang
+   */
+  public static objectiveName(value: MissionTemplate | MissionQuestion, lang = 'en'): string {
+    if (value && value.entry && value.entry.length) {
+      const find = value.entry.find((entry: any) => entry.lang === lang);
+      if (!!find && find.objective) {
+        return find.objective;
+      }
+    }
     return '';
   }
 
