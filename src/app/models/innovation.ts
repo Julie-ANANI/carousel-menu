@@ -9,6 +9,17 @@ import { ClientProject } from './client-project';
 import { Question } from './question';
 import {Community} from './community';
 
+/**
+ * when creating the new project.
+ */
+export interface NewInnovation {
+  name: string;
+  lang: string;
+  domain: string;
+  collaborators?: Array<string>;
+  collaboratorsConsent?: Consent;
+}
+
 export interface InnovationMetadataValues {
   preparation?: number;
   campaign?: number;

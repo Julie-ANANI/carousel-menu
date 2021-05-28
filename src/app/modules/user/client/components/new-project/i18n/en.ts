@@ -21,7 +21,9 @@ export const NEW_PROJECT = {
     'ANALYSE': '3. Analyse'
   },
 
-  'TITLE_QUESTION': 'What do you want to call your Market Test? (title for internal use)',
+  'TITLE_QUESTION': 'What do you want to call your Market Test?',
+
+  'TITLE_INTERNAL': '(title for internal use)',
 
   'COLLABORATORS_QUESTION': 'Do you want to add any colleagues?',
 
