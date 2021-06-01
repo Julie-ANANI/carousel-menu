@@ -17,9 +17,10 @@ import { AuthService } from '../../../../../services/auth/auth.service';
 
 interface Tab {
   route: string;
-  iconClass: string;
+  iconClass?: string;
   name: string;
   tracking: string;
+  number?: string;
 }
 
 @Component({
@@ -29,35 +30,39 @@ interface Tab {
 
 export class ProjectComponent implements OnInit, OnDestroy {
 
+  get openModal(): boolean {
+    return this._openModal;
+  }
+
+  set openModal(value: boolean) {
+    this._openModal = value;
+  }
+
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{};
 
   private _showBanner = '';
 
-  private _currentLang = this._translateService.currentLang || 'en';
-
-  private _dateFormat = this._currentLang === 'fr' ? 'dd-MM-y' : 'y-MM-dd';
-
   private _tabs: Array<Tab> = [
     { route: 'settings', iconClass: 'fas fa-cog', name: 'SETTINGS_TAB', tracking: 'gtm-tabs-settings' },
-    { route: 'setup', iconClass: 'fas fa-pencil-alt', name: 'SETUP_TAB', tracking: 'gtm-tabs-description' },
-    { route: 'exploration', iconClass: 'fas fa-globe', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration' },
-    { route: 'synthesis', iconClass: 'fas fa-signal', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis' },
-    { route: 'documents', iconClass: 'fas fa-file-download', name: 'DOCUMENTS_TAB', tracking: 'gtm-tabs-documents' }
+    { route: 'setup', name: 'SETUP_TAB', tracking: 'gtm-tabs-description', number: '1' },
+    { route: 'exploration', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration', number: '2' },
+    { route: 'synthesis', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis', number: '3' },
+    { route: 'documents', iconClass: 'fas fa-file-alt', name: 'DOCUMENTS_TAB', tracking: 'gtm-tabs-documents' }
   ];
-
-  private _isLoading = true;
 
   private _currentPage = '';
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _fetchingError = false;
 
   private _updateTime: number;
 
   private _socketListening = false;
+
+  private _openModal = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -69,7 +74,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _socketService: SocketService,
               private _authService: AuthService,
               private _innovationFrontService: InnovationFrontService) {
-
+    this._setSpinner(true);
     this._initPageTitle();
 
     this._activatedRoute.params.subscribe((params) => {
@@ -78,7 +83,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._getInnovation(params['projectId']);
       }
     });
-
   }
 
   ngOnInit() {
@@ -97,7 +101,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._socketService.getMissionUpdates(this._mission._id)
           .pipe(takeUntil(this._ngUnsubscribe))
           .subscribe((update: any) => {
-            console.log(update);
             this._realTimeUpdate('mission', update);
           }, (error) => {
             console.error(error);
@@ -114,7 +117,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
   private _realTimeUpdate(object: string, update: any) {
     if (update.userId !== this._authService.userId) {
@@ -163,17 +165,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
         this._innovationFrontService.setInnovation(innovation);
         this._innovation = innovation;
+        console.log(this._innovation);
 
         this._authService.initializeSession().pipe(first()).subscribe(() => {
           this._initPageTitle();
           this._setSpinner(false);
-          this._isLoading = false;
         });
-
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._fetchingError = true;
-        this._isLoading = false;
         this._setSpinner(false);
       });
     }
@@ -193,11 +193,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
   }
 
+  public showModal(event: Event) {
+    event.preventDefault();
+    this._openModal = true;
+  }
+
   public navigateTo(event: Event, route: string) {
     event.preventDefault();
     this._currentPage = route;
     this._initPageTitle();
     this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
+  }
+
+  public objectiveName(lang = this.currentLang): string {
+    return MissionFrontService.objectiveName(this._mission.template, lang);
   }
 
   get iconClass(): string {
@@ -209,19 +218,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   get currentLang(): string {
-    return this._currentLang;
+    return this._translateService.currentLang;
   }
 
   get dateFormat(): string {
-    return this._dateFormat;
+    return this.currentLang === 'fr' ? 'dd-MM-y' : 'y-MM-dd';
   }
 
   get tabs(): Array<Tab> {
     return this._tabs;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
   }
 
   get innovation(): Innovation {

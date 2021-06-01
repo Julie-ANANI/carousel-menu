@@ -35,6 +35,7 @@ import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/inn
 import { SynthesisComponent } from './components/synthesis/synthesis.component';
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
 import {CleanHtmlModule} from '../../../../../pipe/cleanHtml/cleanHtml.module';
+import {MarketTestMethodologyModule} from '../market-test-methodology/market-test-methodology.module';
 
 @NgModule({
     imports: [
@@ -62,7 +63,8 @@ import {CleanHtmlModule} from '../../../../../pipe/cleanHtml/cleanHtml.module';
         SidebarProjectPitchModule,
         InnovCardTitlePipeModule,
         MessageErrorModule,
-        CleanHtmlModule
+        CleanHtmlModule,
+        MarketTestMethodologyModule
     ],
   declarations: [
     ProjectComponent,
