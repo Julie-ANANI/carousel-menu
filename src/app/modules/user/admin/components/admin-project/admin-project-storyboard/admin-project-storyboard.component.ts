@@ -456,8 +456,8 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   get bannerBackground(): string {
-    return this._bannerVideo.status === 'ERROR' ? '#EA5858' : this._bannerVideo.status === 'DONE'
-      ? '#2ECC71' : '#FFB300';
+    return this._bannerVideo.status === 'ERROR' ? 'bg-alert' : this._bannerVideo.status === 'DONE'
+      ? 'bg-success' : 'bg-primary';
   }
 
   get isVideoDisabled(): boolean {
