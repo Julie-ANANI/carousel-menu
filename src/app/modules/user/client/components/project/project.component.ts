@@ -164,12 +164,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._innovationFrontService.setInnovation(innovation);
         this._innovation = innovation;
 
-        this._authService.initializeSession().subscribe(() => {
+        this._authService.initializeSession().pipe(first()).subscribe(() => {
           this._initPageTitle();
           this._setSpinner(false);
           this._isLoading = false;
         });
-        
+
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._fetchingError = true;
