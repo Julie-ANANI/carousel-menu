@@ -8,7 +8,7 @@ import { SpinnerService } from '../../../services/spinner/spinner.service';
  * use this component when you want to show the full page spinner
  * just use the spinner service in the parent component and pass the
  * value through the service when to start and stop the spinner.
- * example: admin project storyboard (admin-project-storyboard componnet).
+ * example: admin project storyboard (admin-project-storyboard component).
  */
 
 @Component({
