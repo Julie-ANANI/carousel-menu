@@ -232,6 +232,7 @@ export const COMMON = {
   },
 
   'BUTTON': {
+    'OUR_METHODOLOGY': 'Notre méthodologie',
     'CONTINUE': 'Continuer',
     'ADD': 'Ajouter',
     'SAVE': 'Sauvegarder',

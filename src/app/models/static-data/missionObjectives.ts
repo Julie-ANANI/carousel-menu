@@ -1,3 +1,8 @@
+/**
+ * not using it any more. still here for the old project.
+ * on 1st June, 2021
+ */
+
 export interface Objective {
   en: { label: string , description: string };
   fr: { label: string , description: string };
