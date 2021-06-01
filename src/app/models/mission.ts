@@ -1,6 +1,7 @@
 import { Innovation } from './innovation';
 import { User } from './user.model';
 import { Multiling } from './multiling';
+import {CardSectionTypes} from './innov-card';
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 
@@ -17,6 +18,8 @@ export interface MissionQuestion {
 
 export interface MissionTemplate {
   readonly _id: string;
+  readonly sections: Array<CardSectionTypes>; // length of array represents the number of the section in innovation card with type.
+
   essentials: Array<MissionQuestion>; // questions defined by us, compulsory for every market test.
   complementary: Array<MissionQuestion>; // additional questions defined by us, user has right to select more then one.
   comment?: string;
