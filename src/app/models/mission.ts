@@ -19,10 +19,8 @@ export interface MissionQuestion {
 export interface MissionTemplate {
   readonly _id: string;
   readonly sections: Array<CardSectionTypes>; // length of array represents the number of the section in innovation card with type.
-
   essentials: Array<MissionQuestion>; // questions defined by us, compulsory for every market test.
   complementary: Array<MissionQuestion>; // additional questions defined by us, user has right to select more then one.
-  comment?: string;
 
   entry: Array<{
     label: string;
@@ -60,7 +58,13 @@ export interface Mission {
   template?: MissionTemplate;
 
   /**
-   * do not use it any more
+   * comment written for the template.
+   */
+  objectiveComment?: string;
+
+  /**
+   * not using anymore. It's there for the old projects.
+   * on 1st June, 2021
    */
   objective?: {
     principal: Multiling;

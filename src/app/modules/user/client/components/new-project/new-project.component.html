@@ -32,6 +32,7 @@
       <section class="p-top-20 p-bottom-30">
         <app-market-test-objectives
           (missionTemplateChange)="onChangeMissionTemplate($event)"
+          [(objectiveComment)]="mission.objectiveComment"
           [missionTemplates]="missionTemplates">
         </app-market-test-objectives>
       </section>

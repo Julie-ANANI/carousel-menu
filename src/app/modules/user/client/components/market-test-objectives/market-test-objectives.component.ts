@@ -34,13 +34,8 @@ export class MarketTestObjectivesComponent {
     return this._selectedTemplate;
   }
 
-  get templateComment(): string {
-    return this._templateComment;
-  }
-
-  set templateComment(value: string) {
-    this._templateComment = value;
-    this._emitTemplate();
+  get objectiveComment(): string {
+    return this._objectiveComment;
   }
 
   get selectedObjectivesComplementary(): Array<MissionQuestion> {
@@ -73,10 +68,20 @@ export class MarketTestObjectivesComponent {
     });
   }
 
+  @Input() set objectiveComment(value: string) {
+    this._objectiveComment = value;
+    this.objectiveCommentChange.emit(this._objectiveComment);
+  }
+
   /**
    * emit the selected template with all the updated value in it.
    */
   @Output() missionTemplateChange: EventEmitter<MissionTemplate> = new EventEmitter<MissionTemplate>();
+
+  /**
+   * emit the change in the mission objective comment.
+   */
+  @Output() objectiveCommentChange: EventEmitter<string> = new EventEmitter<string>();
 
   private _selectedCategory = '';
 
@@ -86,7 +91,7 @@ export class MarketTestObjectivesComponent {
 
   private _missionTemplates: Array<MissionTemplate> = [];
 
-  private _templateComment = '';
+  private _objectiveComment = '';
 
   private _selectedObjectivesComplementary: Array<MissionQuestion> = [];
 
@@ -117,7 +122,6 @@ export class MarketTestObjectivesComponent {
     const template: MissionTemplate = JSON.parse(JSON.stringify(this._selectedTemplate));
     delete template['category'];
     template.complementary = this._selectedObjectivesComplementary;
-    template.comment = this._templateComment;
     this.missionTemplateChange.emit(template);
   }
 

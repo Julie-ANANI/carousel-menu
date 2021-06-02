@@ -14,8 +14,8 @@ import {MissionFrontService} from '../../../../../services/mission/mission-front
 })
 export class MarketTestObjectivesComplementaryComponent {
 
-  get templateComment(): string {
-    return this._templateComment;
+  get objectiveComment(): string {
+    return this._objectiveComment;
   }
 
   get currentLang(): string {
@@ -24,25 +24,25 @@ export class MarketTestObjectivesComplementaryComponent {
 
   /**
    * actual list of the complementary objectives.
-   * we do not modify it here.
+   * we do not modify them.
    */
   @Input() objectivesComplementary: Array<MissionQuestion> = [];
 
-  @Input() set templateComment(value: string) {
-    this._templateComment = value;
+  @Input() set objectiveComment(value: string) {
+    this._objectiveComment = value;
   }
 
   /**
    * emits the comment written in the textarea.
    */
-  @Output() templateCommentChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() objectiveCommentChange: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * emits the selected objectives list.
    */
   @Output() objectivesComplementaryChange: EventEmitter<Array<MissionQuestion>> = new EventEmitter<Array<MissionQuestion>>();
 
-  private _templateComment = '';
+  private _objectiveComment = '';
 
   private _selectedObjectives: Array<MissionQuestion> = [];
 
@@ -72,7 +72,7 @@ export class MarketTestObjectivesComplementaryComponent {
   }
 
   public emitCommentChange() {
-    this.templateCommentChange.emit(this._templateComment.trim());
+    this.objectiveCommentChange.emit(this._objectiveComment.trim());
   }
 
 }
