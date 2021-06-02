@@ -560,6 +560,10 @@
 
   &.is-white {
 
+    &.is-link {
+      @include button-link-variant($white-color);
+    }
+
     &.is-outlined {
       @include button-outline-variant($bg-white-color);
     }

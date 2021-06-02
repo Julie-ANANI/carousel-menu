@@ -103,7 +103,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _company = environment.companyShortName;
 
-  private _logo = environment.logoURL;
+  private _logo = environment.logoSynthURL;
 
   private _isMainDomain = environment.domain === 'umi';
 
