@@ -367,12 +367,15 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     switch (question.identifier) {
       case 'professionals':
         this._innovation.marketReport.professionals.title = question.title;
+        this._innovation.marketReport.professionals.subtitle = question.subtitle;
         break;
       case 'keyLearning':
         this._innovation.marketReport.keyLearning.title = question.title;
+        this._innovation.marketReport.keyLearning.subtitle = question.subtitle;
         break;
       case 'finalConclusion':
         this._innovation.marketReport.finalConclusion.title = question.title;
+        this._innovation.marketReport.finalConclusion.subtitle = question.subtitle;
         break;
     }
     this._innovationFrontService.setNotifyChanges({
@@ -412,21 +415,20 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     switch (question.identifier) {
       case 'professionals':
         if (this._innovation.marketReport.professionals) {
-          question.title =
-            this._innovation.marketReport.professionals.title || question.title;
+          question.title = this._innovation.marketReport.professionals.title || question.title;
+          question.subtitle = this._innovation.marketReport.professionals.subtitle || question.subtitle;
         }
         break;
       case 'keyLearning':
         if (this._innovation.marketReport.keyLearning) {
-          question.title =
-            this._innovation.marketReport.keyLearning.title || question.title;
+          question.title = this._innovation.marketReport.keyLearning.title || question.title;
+          question.subtitle = this._innovation.marketReport.keyLearning.subtitle || question.subtitle;
         }
         break;
       case 'finalConclusion':
         if (this._innovation.marketReport.finalConclusion) {
-          question.title =
-            this._innovation.marketReport.finalConclusion.title ||
-            question.title;
+          question.title = this._innovation.marketReport.finalConclusion.title || question.title;
+          question.subtitle = this._innovation.marketReport.finalConclusion.subtitle || question.subtitle;
         }
         break;
     }
