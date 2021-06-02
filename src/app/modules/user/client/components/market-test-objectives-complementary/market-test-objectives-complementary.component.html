@@ -18,7 +18,7 @@
     <label>
         <textarea
           (change)="emitCommentChange()"
-          [(ngModel)]="templateComment"
+          [(ngModel)]="objectiveComment"
           [id]="'market-test-template-comment'"
           [placeholder]="currentLang === 'fr' ? 'Avez-vous des précisions à apporter ?'
           : 'Is there anything else you\'d like to do or add?'"
