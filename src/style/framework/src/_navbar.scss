@@ -4,7 +4,7 @@
 .navbar {
   min-height: 75px;
   position: relative;
-  background-color: $bg-white-color;
+  background-color: #2E6188;
   border-bottom: $border-width solid $border-light-color;
 
   .navbar-brand {
@@ -14,7 +14,7 @@
   }
 
   .navbar-burger, .navbar-item, .dropdown-toggle {
-    color: $text-draft-color;
+    color: $white-color;
   }
 
   .navbar-burger {
@@ -41,19 +41,22 @@
     margin: 0 $unit-3;
 
     &.active, &:active, &:hover {
-      color: $text-warning-color;
+      color: $white-color;
       cursor: pointer;
+      opacity: 1;
     }
 
     &.has-dropdown {
       position: relative;
       cursor: default;
+      opacity: 1;
 
       .navbar-dropdown {
         margin: 0;
         padding: 0.5rem 0;
         list-style: none;
-        background: $bg-white-color;
+        background: $white-color;
+        opacity: 1;
 
         .navbar-divider {
           display: none;
@@ -66,6 +69,7 @@
           display: flex;
           margin: 0;
           padding: $unit-2 22px;
+          color: $dark-color;
         }
 
       }
@@ -73,6 +77,7 @@
     }
 
     &.has-button {
+      opacity: 1;
 
       .button.is-outlined:hover {
         background-color: transparent;
@@ -87,7 +92,7 @@
 .navbar-sidebar {
   min-height: 100vh;
   position: relative;
-  background-color: $bg-white-color;
+  background-color: $white-color;
 
   .navbar-menu {
     display: flex;
@@ -107,6 +112,7 @@
       margin: 0;
       list-style: none;
       padding: $unit-3 22px;
+      opacity: 1;
       border-bottom: $border-width solid $border-default-color;
 
       &.active, &:active, &:hover {
@@ -149,6 +155,7 @@
     justify-content: flex-end;
 
     .navbar-item {
+      opacity: 0.7;
 
       & > span:after {
         display: block;
@@ -168,6 +175,7 @@
 
         i {
           margin-left: $unit-2;
+          opacity: 1;
         }
 
         &.is-right {
@@ -199,6 +207,7 @@
           .navbar-item {
             @include control-transition();
             font-weight: $font-weight-normal;
+            opacity: 1;
 
             &:hover, &.active, &:active {
               background-color: $bg-menu-item-color;
@@ -212,7 +221,7 @@
         &:hover, .dropdown-toggle:hover {
 
           .icon.icon-arrow-down {
-            color: $text-warning-color;
+            color: $white-color;
           }
 
           .navbar-dropdown {
@@ -227,7 +236,7 @@
 
         & > span:after {
           visibility: visible;
-          background-color: $primary-color;
+          background-color: $white-color;
           transform: scaleX(1);
         }
 
@@ -253,7 +262,7 @@
       &:active, &.active {
         display: flex;
         flex-direction: column;
-        background-color: $bg-white-color;
+        background-color: $white-color;
         box-shadow: 0 8px 16px rgba(10,10,10,.1);
         padding: 10px 0;
         position: absolute;
@@ -276,7 +285,7 @@
                 position: absolute;
                 top: 15px;
                 right: 22px;
-                color: $text-warning-color;
+                color: $white-color;
               }
 
             }
