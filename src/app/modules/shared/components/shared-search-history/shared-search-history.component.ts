@@ -158,7 +158,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
       if (result.requests) {
         this._requests = result.requests.map((request: any) => {
-          request.pros = (request.results.person.length || request.totalResults || 0) + ' pros';
+          request.pros = ((request.results.person.length + request.results.limbo.length) || request.totalResults || 0) + ' pros';
           if (request.region) {
             request.targetting = request.region;
             request.keywords = request.keywords.replace(`"${request.region}"`, '');
