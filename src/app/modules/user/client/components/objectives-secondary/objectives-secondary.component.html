@@ -4,7 +4,7 @@
   <div class="d-flex flex-wrap options-wrapper m-left-auto m-right-auto p-bottom-30">
     <div *ngFor="let objective of objectiveOptions" class="popover col-sm-12 col-6">
 
-      <label class="form-checkbox">
+      <label [ngClass]="{'text-white': isTextWhite}" class="form-checkbox">
         <input
           (change)="onChangeOption($event, objective)"
           [checked]="isChecked(objective)"
@@ -24,33 +24,24 @@
   </div>
   <!-- /options -->
 
-
   <!-- divider -->
   <div class="divider m-right-auto m-left-auto"></div>
   <!-- /divider -->
 
-
   <!-- comment -->
-  <div class="mxw-500 text-center col-mx-auto p-top-30">
-
-    <h6 class="text-normal">
-      <ng-container *ngIf="currentLang === 'en'; else french">Do you have any details about your objective?</ng-container>
-      <ng-template #french>Avez-vous des précisions à apporter sur votre objectif ?</ng-template>
-    </h6>
-
-    <div class="form-group animate-slide slide-down is-3">
-      <label>
+  <div class="mxw-500 text-center col-mx-auto p-top-30 form-group animate-slide slide-down is-3">
+    <label>
         <textarea
           (change)="emitCommentChange()"
           [(ngModel)]="objectiveComment"
           [disabled]="!isEnabledComment"
-          class="form-input is-shadowed"
-          id="textarea-comment"
+          [id]="'objective-secondary-comment'"
+          [placeholder]="currentLang === 'fr' ? 'Avez-vous des précisions à apporter ?'
+          : 'Is there anything else you\'d like to do or add?'"
+          class="form-input"
           rows="3">
         </textarea>
-      </label>
-    </div>
-
+    </label>
   </div>
   <!-- /comment -->
 

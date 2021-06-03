@@ -35,17 +35,21 @@ export class ModalEmptyComponent implements OnInit, OnDestroy {
    */
   @Input() showModal = false;
 
+  /**
+   * make it false to show close btn in white color.
+   */
+  @Input() isCloseBtnDark = true;
+
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private readonly _element: any;
+  private _element: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private elementRef: ElementRef) {
-    this._element = this.elementRef.nativeElement;
-  }
+              private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      this._element = this.elementRef.nativeElement;
       document.body.appendChild(this._element);
     }
   }
@@ -64,7 +68,7 @@ export class ModalEmptyComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && !!this._element) {
       document.body.removeChild(this._element);
     }
   }
