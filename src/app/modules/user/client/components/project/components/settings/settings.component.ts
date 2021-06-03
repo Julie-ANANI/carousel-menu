@@ -1,7 +1,7 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
 import {Innovation} from '../../../../../../../models/innovation';
-import {Mission} from '../../../../../../../models/mission';
+import {Milestone, Mission, MissionTemplate} from '../../../../../../../models/mission';
 import {first, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {AuthService} from '../../../../../../../services/auth/auth.service';
@@ -12,13 +12,15 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {MissionService} from '../../../../../../../services/mission/mission.service';
-import {CalAnimation, IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
+import {IMyDateModel} from 'angular-mydatepicker';
 import {emailRegEx} from '../../../../../../../utils/regex';
 import {Collaborator} from '../../../../../../../models/collaborator';
 import {Invite} from '../../../../../../../services/invite/invite';
 import {User} from '../../../../../../../models/user.model';
 import {InnovCard} from '../../../../../../../models/innov-card';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {UserFrontService} from '../../../../../../../services/user/user-front.service';
 
 interface Section {
   name: string;
@@ -35,6 +37,38 @@ interface Section {
 
 export class SettingsComponent implements OnInit, OnDestroy {
 
+  get isEditable(): boolean {
+    return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+  }
+
+  get definedTemplate(): MissionTemplate {
+    return this._definedTemplate;
+  }
+
+  get missionTemplates(): Array<MissionTemplate> {
+    return this._missionTemplates;
+  }
+
+  get isFetchingTemplates(): boolean {
+    return this._isFetchingTemplates;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return !!(this._mission.template && this._mission.template.entry && this._mission.template.entry.length);
+  }
+
+  get isOldObjective(): boolean {
+    return !!(this._mission.objective.principal && this._mission.objective.principal[this.currentLang]);
+  }
+
+  get dateRDOIndex(): number {
+    return this._mission.milestoneDates.findIndex((value) => value.code === 'RDO');
+  }
+
+  get dateRDO(): Milestone {
+    return this._mission.milestoneDates.find((value) => value.code === 'RDO');
+  }
+
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{
@@ -50,12 +84,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _isAdmin = this._authService.isAdmin;
 
-  private _currentLang = this._translateService.currentLang;
-
   private _activeView = 'TITLE';
 
-  private _dateFormat = this._currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
-
+  /**
+   * for the old projects.
+   * on 2nd June, 2021
+   * @private
+   */
   private _collaboratorConsent = false;
 
   private _sections: Array<Section> = [
@@ -64,8 +99,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     {name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
     {name: 'ROADMAP', isVisible: false, isEditable: false, level: 'MISSION'},
     {name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION'},
+    {name: 'REPORTING_LANG', isVisible: false, isEditable: false, level: 'INNOVATION'},
     {name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL'},
-    {name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},
+    /*{name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},*/
     {name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION'},
     {name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT'},
     {name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION'},
@@ -78,8 +114,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _selectedValue: any = '';
 
-  private _datePickerOptions: IAngularMyDpOptions = <IAngularMyDpOptions>{};
-
   private _isSaving = false;
 
   private _showDeleteModal = false;
@@ -88,11 +122,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _isVisibleMenu = true;
 
-  private _ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _tabClicked = false;
 
-  constructor(private _authService: AuthService,
+  private _missionTemplates: Array<MissionTemplate> = [];
+
+  private _isFetchingTemplates = false;
+
+  /**
+   * store the actual store template that we get by filtering from missionTemplates.
+   */
+  private _definedTemplate: MissionTemplate = <MissionTemplate>{};
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _authService: AuthService,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _missionService: MissionService,
@@ -117,6 +161,45 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       this._initSections();
     });
+  }
+
+  /**
+   * getting the mission use cases templates from the back.
+   * @private
+   */
+  private _getAllMissionTemplates() {
+    if (isPlatformBrowser(this._platformId) && this.hasMissionTemplate && this.isEditable && this._missionTemplates.length === 0) {
+      this._isFetchingTemplates = true;
+      this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
+        this._missionTemplates = response && response.result || [];
+        const template = this._missionTemplates.filter((_template) => {
+          return _template._id === (this._mission.template && this._mission.template._id);
+        });
+        this._definedTemplate = template.length ? template[0] : <MissionTemplate>{};
+        this._isFetchingTemplates = false;
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isFetchingTemplates = false;
+        console.error(err);
+      });
+    }
+  }
+
+  /**
+   * name of the Commercial | Operator | Owner
+   * @param user
+   */
+  public fullName(user: User): string {
+    return UserFrontService.fullName(user);
+  }
+
+  /**
+   * make edit button visible and invisible for the section.
+   * @param value - based on it shows the edit button for the section.
+   */
+  public editButton(value: string): boolean {
+    return this.isEditable && (value === 'TITLE' || value === 'REPORTING_LANG' || value === 'RESTITUTION_DATE'
+      || value === 'SECONDARY_OBJECTIVE' || value === 'PRINCIPAL_OBJECTIVE') ;
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -166,15 +249,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'PRINCIPAL_OBJECTIVE':
-            section.isVisible = !!(this._mission.objective.principal[this._currentLang]);
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+            section.isVisible = this.hasMissionTemplate || this.isOldObjective;
+            section.isEditable = this.isEditable;
             break;
 
           case 'SECONDARY_OBJECTIVE':
-            section.isVisible = !!(this._mission.objective.principal[this._currentLang] && (this._innovation.status === 'EDITING'
-              || this._innovation.status === 'SUBMITTED')) || !!(this._mission.objective.secondary.length
-              || this._mission.objective.comment);
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+            section.isVisible = !!this._mission.objectiveComment || !!(this._mission.objective.comment)
+              || !!(this._mission.objective.secondary && this._mission.objective.secondary.length)
+              || !!(this.hasMissionTemplate && this._mission.template.complementary.length)
+              || ((this.hasMissionTemplate || this.isOldObjective) && this.isEditable);
+            section.isEditable = this.isEditable;
             break;
 
           case 'OWNER':
@@ -190,14 +274,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'RESTITUTION_DATE':
-            section.isVisible = !!(this._mission.milestoneDates.length > 0
-              && this._mission.milestoneDates.some((milestone) => milestone.code === 'RDO'));
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+            section.isVisible = this._mission.milestoneDates.length && !!this.dateRDO;
+            section.isEditable = this.isEditable;
             break;
 
           case 'ROADMAP':
             section.isVisible = !!(this._mission.milestoneDates.length > 0
               && this._mission.milestoneDates.some((milestone) => milestone.code !== 'RDO'));
+            break;
+
+          case 'REPORTING_LANG':
+            section.isVisible = !!(this._innovation.settings && this._innovation.settings.reportingLang);
+            section.isEditable = this.isEditable;
             break;
 
           case 'LANGUAGE':
@@ -213,9 +301,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * when change the result lang from the modal.
+   * @param event
+   * @param value
+   */
+  public onChangeReportingLang(event: Event, value: string) {
+    event.preventDefault();
+    this._selectedValue = value;
+  }
+
   public onClickTab(name: string) {
     this._tabClicked = true;
     this._activeView = name;
+  }
+
+  /**
+   * @param value
+   */
+  public objectiveName(value: any): string {
+    return MissionFrontService.objectiveName(value, this.currentLang);
   }
 
   /***
@@ -269,7 +374,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._initActiveModalValue();
       this._showModal = true;
     }
-
   }
 
   /***
@@ -284,8 +388,39 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._selectedValue = this._innovation.name;
         break;
 
+      case 'RESTITUTION_DATE':
+        this._selectedValue = {
+          comment: !!this.dateRDO && this.dateRDO.comment,
+          date: !!this.dateRDO && this.dateRDO.dueDate
+        };
+        break;
+
+      case 'REPORTING_LANG':
+        this._selectedValue = this._innovation.settings.reportingLang;
+        break;
+
       case 'PRINCIPAL_OBJECTIVE':
-        this._selectedValue = this._mission.objective.principal;
+        if (this.hasMissionTemplate) {
+          this._getAllMissionTemplates();
+          this._selectedValue = this._mission.template;
+        } else {
+          this._selectedValue = this._mission.objective.principal;
+        }
+        break;
+
+      case 'SECONDARY_OBJECTIVE':
+        if (this.hasMissionTemplate) {
+          this._getAllMissionTemplates();
+          this._selectedValue = {
+            objectives: JSON.parse(JSON.stringify(this._mission.template.complementary)),
+            comment: this._mission.objectiveComment
+          };
+        } else {
+          this._selectedValue = {
+            objectives: JSON.parse(JSON.stringify(this._mission.objective.secondary)),
+            comment: this._mission.objective.comment
+          };
+        }
         break;
 
     }
@@ -302,6 +437,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._selectedValue = '';
     this._activeModalSection = <Section>{};
     this._collaboratorConsent = false;
+    this._isFetchingTemplates = false;
   }
 
   /***
@@ -316,14 +452,54 @@ export class SettingsComponent implements OnInit, OnDestroy {
     switch (this._activeModalSection.level) {
 
       case 'INNOVATION':
-        this._updateInnovation();
+        switch (this._activeModalSection.name) {
+
+          case 'TITLE':
+            this._updateInnovation({name: this._selectedValue});
+            break;
+
+          case 'REPORTING_LANG':
+            const settings = JSON.parse(JSON.stringify(this._innovation.settings));
+            settings.reportingLang = this._selectedValue;
+            this._updateInnovation({settings: settings});
+            break;
+        }
         break;
 
       case 'MISSION':
-        if (this._activeModalSection.name === 'PRINCIPAL_OBJECTIVE') {
-          this._updateMainObjective();
-        } else {
-          this._updateMission({milestoneDates: this._mission.milestoneDates});
+        switch (this._activeModalSection.name) {
+
+          case 'RESTITUTION_DATE':
+            const milestones = JSON.parse(JSON.stringify(this._mission.milestoneDates));
+            milestones[this.dateRDOIndex].dueDate = this._selectedValue.date;
+            milestones[this.dateRDOIndex].comment = this._selectedValue.comment;
+            this._updateMission({milestoneDates: milestones});
+            break;
+
+          case 'PRINCIPAL_OBJECTIVE':
+            if (this.hasMissionTemplate) {
+
+            } else if (this.isOldObjective) {
+              const objective = JSON.parse(JSON.stringify(this._mission.objective));
+              objective.principal = this._selectedValue;
+              if (objective.principal['en'] === 'Other') {
+                objective.secondary = [];
+              }
+              this._updateMainObjective(objective);
+            }
+            break;
+
+          case 'SECONDARY_OBJECTIVE':
+            if (this.hasMissionTemplate) {
+              const template = JSON.parse(JSON.stringify(this._mission.template));
+              template.complementary = this._selectedValue.objectives;
+              this._updateMission({objectiveComment: this._selectedValue.comment, template: template});
+            } else if (this.isOldObjective) {
+              const objective = JSON.parse(JSON.stringify(this._mission.objective));
+              objective.secondary = this._selectedValue.objectives;
+              objective.comment = this._selectedValue.comment;
+              this._updateMission({objective: objective});
+            }
         }
         break;
 
@@ -340,22 +516,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * that user wants to update and call the service.
    * @private
    */
-  private _updateInnovation() {
-
-    if (this._activeModalSection.name === 'TITLE') {
-      this._innovation.name = this._selectedValue;
-    }
-
-    this._innovationService.save(this._innovation._id, {name: this._innovation.name}).pipe(first()).subscribe((innovation) => {
+  private _updateInnovation(innovObject: { [P in keyof Innovation]?: Innovation[P]; }) {
+    this._innovationService.save(this._innovation._id, innovObject).pipe(first()).subscribe((innovation) => {
       this._innovationFrontService.setInnovation(innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
-      console.error(err);
-      this._isSaving = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isSaving = false;
+      console.error(err);
     });
-
   }
 
   /***
@@ -370,28 +540,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
-      console.error(err);
-      this._isSaving = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isSaving = false;
+      console.error(err);
     });
   }
 
-  private _updateMainObjective() {
-    this._mission.objective.principal = this._selectedValue;
-    if (this._mission.objective.principal['en'] === 'Other') {
-      this._mission.objective.secondary = [];
-    }
-
-    this._missionService.updateMainObjective(this._mission._id, this._mission.objective).pipe(first()).subscribe((innovation) => {
+  private _updateMainObjective(objective: any) {
+    this._missionService.updateMainObjective(this._mission._id, objective).pipe(first()).subscribe((innovation) => {
       this._innovationFrontService.setInnovation(innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
       this._isSaving = false;
+      console.error(err);
     });
-
   }
 
   /***
@@ -409,9 +573,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
           this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
           this._innovationFrontService.setInnovation(this._innovation);
         } else if (collaborator.invitationsToSend.length > 0) {
-          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSend[0], this._currentLang), '_blank');
+          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSend[0], this.currentLang), '_blank');
         } else if (collaborator.invitationsToSendAgain.length > 0) {
-          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSendAgain[0], this._currentLang), '_blank');
+          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSendAgain[0], this.currentLang), '_blank');
         }
 
         this.closeModal();
@@ -429,79 +593,33 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   /***
    * when the user changes the secondary objectives.
-   * @param objectives
-   * @param section
+   * @param event
    */
-  public onChangeSecondaryObjective(objectives: Array<any>, section: Section) {
-    if (this.enableSecondaryObjectives(section)) {
-      this._mission.objective.secondary = objectives;
-      this._updateMission({objective: this._mission.objective});
+  public onChangeObjectives(event: Array<any>) {
+    if (this._activeModalSection.isEditable) {
+      this._selectedValue.objectives = event;
     }
   }
 
   /***
-   * when the user changes the comment of secondary objectives.
-   * @param comment
-   * @param section
+   * when the user changes the comment in the modal of restitution date.
+   * updated on 3rd June, 2021
+   * @param event
    */
-  public onChangeComment(comment: string, section: Section) {
-    if (section.isEditable) {
-      this._mission.objective.comment = comment;
-      this._updateMission({objective: this._mission.objective});
+  public onChangeComment(event: string) {
+    if (this._activeModalSection.isEditable) {
+      this._selectedValue.comment = event;
     }
   }
 
   /***
-   * when the user clicks on the Edit button to change the Restitution date.
-   */
-  public editRestitutionDate() {
-    const index = this._mission.milestoneDates.findIndex((milestone) => milestone.code === 'RDO');
-    if (index !== -1) {
-      const date = new Date(this._mission.milestoneDates[index].dueDate).toISOString();
-      this._datePickerOptions = {
-        dateRange: false,
-        dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
-        calendarAnimation: {in: CalAnimation.Fade, out: CalAnimation.Fade},
-        disableUntil: {
-          year: Number(date.slice(0, 4)),
-          month: Number(date.slice(5, 7)),
-          day: Number(date.slice(8, 10))
-        }
-      };
-    }
-  }
-
-  /***
-   * when the user selects the restitution date from the date-picker.
+   * when the user selects the restitution date from the date-picker in the modal.
+   * updated on 3rd June, 2021
    * @param event
    */
   public onChangeRestitutionDate(event: IMyDateModel) {
-    const index = this._mission.milestoneDates.findIndex((milestone) => milestone.code === 'RDO');
-
-    if (event && event.singleDate && event.singleDate.jsDate && index !== -1) {
-
-      this._mission.milestoneDates[index] = {
-        name: this._currentLang === 'en' ? 'Restitution Date' : 'Date de restitution',
-        code: 'RDO',
-        dueDate: event.singleDate.jsDate,
-        comment: this._mission.milestoneDates[index].comment
-      };
-
-      this._updateMission({milestoneDates: this._mission.milestoneDates});
-
-    }
-  }
-
-  /***
-   * when the user changes the comment of the restitution date.
-   * @param Event
-   * @param index
-   * @param section
-   */
-  public onChangeMilestoneComment(Event: Event, index: number, section: Section) {
-    if (section.isEditable) {
-      this._mission.milestoneDates[index].comment = ((event.target) as HTMLInputElement).value || '';
-      this._updateMission({milestoneDates: this._mission.milestoneDates});
+    if (event && event.singleDate && event.singleDate.jsDate) {
+      this._selectedValue.date = event.singleDate.jsDate;
     }
   }
 
@@ -558,17 +676,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * if the value of the mission principal objective is 'Other' then
    * we disabled the mission secondary objectives.
    */
-  public enableSecondaryObjectives(section: Section): boolean {
-    return this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
+  get enableSecondaryObjectives(): boolean {
+    return this._mission.objective.principal['en'] !== 'Other' && this._activeModalSection.isEditable;
   }
 
   get canPerformAction(): boolean {
     switch (this._activeModalSection.level) {
+
       case 'COLLABORATOR':
         return this._collaboratorConsent && !!this._selectedValue && !this._isSaving;
-      default:
-        return !!this._selectedValue && !this._isSaving;
+
+      case 'MISSION':
+        if (this.hasMissionTemplate) {
+          return !this._isFetchingTemplates;
+        }
+
     }
+
+    return !!this._selectedValue && !this._isSaving;
   }
 
   public isMilestoneReached(date: Date): boolean {
@@ -603,11 +728,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   get currentLang(): string {
-    return this._currentLang;
+    return this._translateService.currentLang;
   }
 
   get dateFormat(): string {
-    return this._dateFormat;
+    return this.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
   }
 
   get showModal(): boolean {
@@ -628,10 +753,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   set selectedValue(value: any) {
     this._selectedValue = value;
-  }
-
-  get datePickerOptions(): IAngularMyDpOptions {
-    return this._datePickerOptions;
   }
 
   get showDeleteModal(): boolean {
@@ -660,14 +781,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   set consent(value: boolean) {
     this._collaboratorConsent = value;
-  }
-
-  isNotTypeRD0(code: string) {
-    return code !== 'RDO' && code.indexOf('RDO') === -1;
-  }
-
-  isNotTypeFC0(code: string) {
-    return code !== 'FCO' && code.indexOf('FCO') === -1;
   }
 
   ngOnDestroy(): void {

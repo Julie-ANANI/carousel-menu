@@ -3,21 +3,21 @@
 #project-settings {
 
   .settings-wrapper {
+    max-width: 1024px;
 
     .menu-wrapper {
       min-width: 220px;
-      margin-right: 50px;
+      margin-right: 15px;
 
       ul {
         position: sticky;
         top: 0;
-        padding: 25px 35px 25px 0;
-        border-right: 1px solid $border-default-color;
+        padding: 50px 35px 25px 0;
         margin: 0;
         list-style: none;
 
         li {
-          margin: 15px 0;
+          margin: 0 0 15px 0;
           text-align: right;
           font-size: $font-size-lg;
           color: #BFC6D1;
@@ -27,7 +27,7 @@
             color: #BFC6D1;
 
             &.active {
-              color: $text-community-color;
+              color: $community-color;
             }
 
           }
@@ -44,21 +44,31 @@
 
     .content-wrapper {
       flex: 1;
+      max-width: 680px;
 
       .section-wrapper {
+        background-color: #F5F5F5;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+        padding: 20px 30px 22px 40px;
+
+        .btn-edit {
+          right: 4px;
+          top: 4px;
+        }
 
         .title {
           color: #4C4C4C;
-          margin-bottom: 18px;
+          margin-bottom: 10px;
         }
 
         .text-link {
           font-size: 14px;
-          color: $text-dark-color;
+          color: $dark-color;
           font-weight: $font-weight-bold;
 
           .fas.fa-pen, .fas.fa-plus-circle {
-            color: $text-dark-color;
+            color: $dark-color;
             font-size: 17px;
             margin-right: 8px;
           }
@@ -68,7 +78,7 @@
         .roadmap-wrapper {
           display: flex;
           flex-direction: column;
-          margin: 0 25px 0 0;
+          margin: 0;
           list-style: none;
 
           li {
@@ -80,20 +90,20 @@
             .shape.is-circle {
               margin: 0 10px;
               border: 2px solid $border-default-color;
-              background-color: $bg-white-color;
+              background-color: $white-color;
             }
 
             .divider-vert {
-              padding-top: 20px;
+              padding-top: 15px;
               margin: -7px 0 0;
-              padding-bottom: 20px;
+              padding-bottom: 15px;
 
               &::before {
                 border-left-width: 2px;
               }
 
               &.active::before {
-                border-color: $border-success-color;
+                border-color: $success-color;
               }
 
             }
@@ -105,8 +115,8 @@
             &.active {
 
               .shape.is-circle {
-                border-color: $bg-success-color;
-                background-color: lighten($bg-success-color, 42%);
+                border-color: $success-color;
+                background-color: lighten($success-color, 42%);
               }
 
             }
@@ -187,11 +197,6 @@
 
           }
 
-        }
-
-        .divider {
-          margin-top: 50px;
-          margin-bottom: 40px;
         }
 
       }
