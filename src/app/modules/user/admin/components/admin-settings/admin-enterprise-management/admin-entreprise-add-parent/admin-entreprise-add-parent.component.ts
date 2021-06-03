@@ -204,7 +204,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       .subscribe(
         (res) => {
           this._parentCompany = res;
-          console.log(this._parentCompany);
           this.replaceChildrenWithParentValue();
         },
         (err: HttpErrorResponse) => {
@@ -327,8 +326,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * Update enterprises
    */
   updateChange() {
+    // add subsidiaries in parent company
+    this.updateParentCompany();
     this.companiesTable._content.map((item) => {
-      console.log(item);
       this._entrepriseService
         .save(item._id, item)
         .pipe(first())
@@ -354,6 +354,24 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           }
         );
     });
+  }
+
+  updateParentCompany() {
+    this._parentCompany.subsidiaries = this.companiesTable._content.map(
+      (sub) => {
+        return sub._id;
+      }
+    );
+    this._entrepriseService
+      .save(this._parentCompany._id, this._parentCompany)
+      .pipe(first())
+      .subscribe(
+        (res) => {
+        },
+        (err: HttpErrorResponse) => {
+          console.log(err);
+        }
+      );
   }
 
   /**

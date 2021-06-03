@@ -99,8 +99,7 @@
                 [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' }, controlType: 'textarea' })"
                 [readonly]="!canAccess(['edit', 'umiWord'])"
-                [hideAnswers]="true"
-                [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
+                [hideAnswers]="true">
               </app-question-section>
             </section>
           </ng-container>
@@ -160,8 +159,7 @@
               [questionReceived]="question"
               [readonly]="!canAccess(['edit', 'umiWord'])"
               [toggleAnswers]="toggleAnswers"
-              [hideAnswers]="hideQuestionAnswers(question)"
-              [stats]="{ nbAnswers: filteredAnswers.length, percentage: 0 }">
+              [hideAnswers]="hideQuestionAnswers(question)">
             </app-question-section>
           </section>
           <!-- /other question sections -->

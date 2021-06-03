@@ -59,7 +59,7 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   private _cleanQuestionHtml() {
-    this.displayedQuestionLabel = this.question.label[this.reportingLang].replace(htmlTagsRegex, '');
+    this.displayedQuestionLabel = (this.question.label) ? this.question.label[this.reportingLang].replace(htmlTagsRegex, '') : '';
   }
 
   public keyupHandlerFunction(event: {content: string}) {

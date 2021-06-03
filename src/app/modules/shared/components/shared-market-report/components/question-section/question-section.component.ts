@@ -53,7 +53,7 @@ export class QuestionSectionComponent implements OnInit {
 
   private _answersWithComment: Array<Answer> = [];
 
-  @Input() stats: AnswersStats = null;
+  private _stats: AnswersStats = null;
 
   private _showComment = false;
 
@@ -78,18 +78,16 @@ export class QuestionSectionComponent implements OnInit {
       // sort comments
       this._answersWithComment = ResponseService.sortComments(this.questionReceived, this._answersWithComment);
 
-      if (!this.stats) {
-        this.stats = {
-          nbAnswers: answersToShow.length,
-          percentage: Math.round((answersToShow.length * 100) / this._answersReceived.length)
-        };
-      }
-
+      const nbAnswers = (this.originAnswers) ? this._answersReceived.length : answersToShow.length;
+      this._stats = {
+        nbAnswers: nbAnswers,
+        percentage: Math.round((nbAnswers * 100) / this._answersReceived.length)
+      };
     }
   }
 
   public updateNumberOfItems(event: number): void {
-    this.stats = {...this.stats, nbAnswers: event};
+    this._stats = {...this._stats, nbAnswers: event};
   }
 
   public seeAnswer(event: Answer) {
@@ -116,4 +114,11 @@ export class QuestionSectionComponent implements OnInit {
     return this._answersWithComment;
   }
 
+  get stats(): AnswersStats {
+    return this._stats;
+  }
+
+  set stats(value: AnswersStats) {
+    this._stats = value;
+  }
 }
