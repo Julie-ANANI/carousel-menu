@@ -165,7 +165,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
         this._innovationFrontService.setInnovation(innovation);
         this._innovation = innovation;
-        console.log(this._innovation);
 
         this._authService.initializeSession().pipe(first()).subscribe(() => {
           this._initPageTitle();
