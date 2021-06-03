@@ -28,6 +28,14 @@ export class MarketTestObjectivesComplementaryComponent {
    */
   @Input() objectivesComplementary: Array<MissionQuestion> = [];
 
+  /**
+   * pass the selected objectives in it.
+   * @param value
+   */
+  @Input() set selectedObjectives(value: Array<MissionQuestion>) {
+    this._selectedObjectives = value;
+  }
+
   @Input() set objectiveComment(value: string) {
     this._objectiveComment = value;
   }
