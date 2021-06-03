@@ -83,12 +83,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     this._milestoneDateComment = value;
   }
 
-  get projectLang(): string {
-    return this._projectLang;
+  get reportingLang(): string {
+    return this._reportingLang;
   }
 
-  set projectLang(value: string) {
-    this._projectLang = value;
+  set reportingLang(value: string) {
+    this._reportingLang = value;
   }
 
   get collaboratorsConsent(): Consent {
@@ -135,7 +135,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
   private _nextStepTimeout: any = null;
 
-  private _projectLang = this._translateService.currentLang;
+  private _reportingLang = this._translateService.currentLang;
 
   private _collaboratorsConsent: Consent = <Consent>{};
 
@@ -276,7 +276,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     // innovation attributes
     const newInnovation: NewInnovation = {
       name: this._clientProject.name,
-      lang: this._projectLang,
+      lang: this._translateService.currentLang,
+      reportingLang: this._reportingLang,
       domain: environment.domain
     };
 
