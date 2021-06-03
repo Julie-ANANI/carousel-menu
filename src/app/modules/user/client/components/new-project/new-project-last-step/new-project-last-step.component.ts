@@ -11,11 +11,11 @@ import {IMyDateModel} from 'angular-mydatepicker';
 })
 export class NewProjectLastStepComponent {
 
-  @Input() set projectLang(value: string) {
-   this._projectLang = value;
+  @Input() set reportingLang(value: string) {
+   this._reportingLang = value;
   }
 
-  @Output() projectLangChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() reportingLangChange: EventEmitter<string> = new EventEmitter<string>();
 
   @Output() milestoneDateCommentChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -29,7 +29,7 @@ export class NewProjectLastStepComponent {
 
   private _projectLangs: Array<string> = ['en', 'fr'];
 
-  private _projectLang = this.currentLang;
+  private _reportingLang = this.currentLang;
 
   private _milestoneDateComment = '';
 
@@ -51,8 +51,8 @@ export class NewProjectLastStepComponent {
    */
   public onChangeProjectLang(event: Event, value: string) {
     event.preventDefault();
-    if (this._projectLang !== value) {
-      this.projectLangChange.emit(value);
+    if (this._reportingLang !== value) {
+      this.reportingLangChange.emit(value);
     }
   }
 
@@ -126,8 +126,8 @@ export class NewProjectLastStepComponent {
     return this._translateService.currentLang;
   }
 
-  get projectLang(): string {
-    return this._projectLang;
+  get reportingLang(): string {
+    return this._reportingLang;
   }
 
   get projectLangs(): Array<string> {

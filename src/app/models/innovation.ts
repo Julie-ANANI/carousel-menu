@@ -14,8 +14,9 @@ import {Community} from './community';
  */
 export interface NewInnovation {
   name: string;
-  lang: string;
+  lang: string; // project language
   domain: string;
+  reportingLang: string; // market test result lang
   collaborators?: Array<string>;
   collaboratorsConsent?: Consent;
 }
