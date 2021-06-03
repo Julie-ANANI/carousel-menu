@@ -7,6 +7,7 @@
     class="form-checkbox mxw-450 objectives-option m-left-auto m-right-auto m-bottom-15 c-hand text-white text-medium">
     <input
       (change)="onChangeOption($event, objective)"
+      [checked]="isChecked(objective)"
       [id]="'market-test-template-complementary-'+objectiveName(objective).toLowerCase()"
       type="checkbox">
     {{ objectiveName(objective) }}
@@ -14,7 +15,7 @@
   <!-- /options -->
 
   <!-- comment -->
-  <div class="form-group mxw-450 m-left-auto m-right-auto p-top-15">
+  <div class="form-group mxw-450 m-left-auto m-right-auto p-top-15 animate-slide slide-down is-3">
     <label>
         <textarea
           (change)="emitCommentChange()"
