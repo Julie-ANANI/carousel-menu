@@ -1,24 +1,27 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
-import {Innovation} from '../../../../../../../models/innovation';
-import {Mission} from '../../../../../../../models/mission';
-import {first, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {AuthService} from '../../../../../../../services/auth/auth.service';
-import {TranslateService} from '@ngx-translate/core';
-import {ClientProject} from '../../../../../../../models/client-project';
-import {InnovationService} from '../../../../../../../services/innovation/innovation.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
-import {MissionService} from '../../../../../../../services/mission/mission.service';
-import {CalAnimation, IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
-import {emailRegEx} from '../../../../../../../utils/regex';
-import {Collaborator} from '../../../../../../../models/collaborator';
-import {Invite} from '../../../../../../../services/invite/invite';
-import {User} from '../../../../../../../models/user.model';
-import {InnovCard} from '../../../../../../../models/innov-card';
-import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
+import { Innovation } from '../../../../../../../models/innovation';
+import { Mission } from '../../../../../../../models/mission';
+import { first, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { AuthService } from '../../../../../../../services/auth/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ClientProject } from '../../../../../../../models/client-project';
+import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
+import { MissionService } from '../../../../../../../services/mission/mission.service';
+import {
+  CalAnimation,
+  IAngularMyDpOptions,
+  IMyDateModel,
+} from 'angular-mydatepicker';
+import { emailRegEx } from '../../../../../../../utils/regex';
+import { Collaborator } from '../../../../../../../models/collaborator';
+import { User } from '../../../../../../../models/user.model';
+import { InnovCard } from '../../../../../../../models/innov-card';
+import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
 
 interface Section {
   name: string;
@@ -30,20 +33,18 @@ interface Section {
 
 @Component({
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
-
 export class SettingsComponent implements OnInit, OnDestroy {
-
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{
     objective: {
-      principal: {en: '', fr: ''},
+      principal: { en: '', fr: '' },
       secondary: [],
-      comment: ''
+      comment: '',
     },
-    milestoneDates: []
+    milestoneDates: [],
   };
 
   private _clientProject: ClientProject = <ClientProject>{};
@@ -59,17 +60,57 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _collaboratorConsent = false;
 
   private _sections: Array<Section> = [
-    {name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION'},
-    {name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'ROADMAP', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL'},
-    {name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},
-    {name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION'},
-    {name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT'},
-    {name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION'},
-    {name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION'},
+    { name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION' },
+    {
+      name: 'PRINCIPAL_OBJECTIVE',
+      isVisible: false,
+      isEditable: false,
+      level: 'MISSION',
+    },
+    {
+      name: 'SECONDARY_OBJECTIVE',
+      isVisible: false,
+      isEditable: false,
+      level: 'MISSION',
+    },
+    { name: 'ROADMAP', isVisible: false, isEditable: false, level: 'MISSION' },
+    {
+      name: 'RESTITUTION_DATE',
+      isVisible: false,
+      isEditable: false,
+      level: 'MISSION',
+    },
+    { name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL' },
+    {
+      name: 'COLLABORATORS',
+      isVisible: true,
+      isEditable: true,
+      level: 'COLLABORATOR',
+    },
+    {
+      name: 'OPERATOR',
+      isVisible: false,
+      isEditable: false,
+      level: 'INNOVATION',
+    },
+    {
+      name: 'COMMERCIAL',
+      isVisible: false,
+      isEditable: false,
+      level: 'CLIENT_PROJECT',
+    },
+    {
+      name: 'LANGUAGE',
+      isVisible: false,
+      isEditable: false,
+      level: 'INNOVATION',
+    },
+    {
+      name: 'AUTHORISATION',
+      isVisible: false,
+      isEditable: true,
+      level: 'MISSION',
+    },
   ];
 
   private _showModal = false;
@@ -92,31 +133,43 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _tabClicked = false;
 
-  constructor(private _authService: AuthService,
-              private _translateService: TranslateService,
-              private _innovationService: InnovationService,
-              private _missionService: MissionService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService) {
-  }
+  constructor(
+    private _authService: AuthService,
+    private _translateService: TranslateService,
+    private _innovationService: InnovationService,
+    private _missionService: MissionService,
+    private _translateNotificationsService: TranslateNotificationsService,
+    private _innovationFrontService: InnovationFrontService
+  ) {}
 
   ngOnInit() {
-    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation;
+    this._innovationFrontService
+      .innovation()
+      .pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((innovation) => {
+        this._innovation = innovation;
 
-      if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
-        this._mission = <Mission>this._innovation.mission;
-        if (this._mission.milestoneDates.length > 1) {
-          this._mission.milestoneDates = MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
+        if (
+          <Mission>this._innovation.mission &&
+          (<Mission>this._innovation.mission)._id
+        ) {
+          this._mission = <Mission>this._innovation.mission;
+          if (this._mission.milestoneDates.length > 1) {
+            this._mission.milestoneDates = MissionFrontService.sortMilestoneDates(
+              this._mission.milestoneDates
+            );
+          }
         }
-      }
 
-      if (<ClientProject>this._innovation.clientProject && (<Mission>this._innovation.clientProject)._id) {
-        this._clientProject = <ClientProject>this._innovation.clientProject;
-      }
+        if (
+          <ClientProject>this._innovation.clientProject &&
+          (<Mission>this._innovation.clientProject)._id
+        ) {
+          this._clientProject = <ClientProject>this._innovation.clientProject;
+        }
 
-      this._initSections();
-    });
+        this._initSections();
+      });
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -128,7 +181,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
           const _element = document.getElementById(section.name.toLowerCase());
           if (_element) {
             const _elementOffset = _element.offsetTop;
-            if ((_elementOffset - _pageOffset) > -1 && (_elementOffset - _pageOffset) < 50) {
+            if (
+              _elementOffset - _pageOffset > -1 &&
+              _elementOffset - _pageOffset < 50
+            ) {
               this._activeView = section.name;
             }
           }
@@ -160,54 +216,84 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (this._innovation && this._innovation.status) {
       this._sections.forEach((section) => {
         switch (section.name) {
-
           case 'TITLE':
             section.isVisible = !!this._innovation.name;
             break;
 
           case 'PRINCIPAL_OBJECTIVE':
-            section.isVisible = !!(this._mission.objective.principal[this._currentLang]);
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+            section.isVisible = !!this._mission.objective.principal[
+              this._currentLang
+            ];
+            section.isEditable = !!(
+              this._innovation.status === 'EDITING' ||
+              this._innovation.status === 'SUBMITTED'
+            );
             break;
 
           case 'SECONDARY_OBJECTIVE':
-            section.isVisible = !!(this._mission.objective.principal[this._currentLang] && (this._innovation.status === 'EDITING'
-              || this._innovation.status === 'SUBMITTED')) || !!(this._mission.objective.secondary.length
-              || this._mission.objective.comment);
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+            section.isVisible =
+              !!(
+                this._mission.objective.principal[this._currentLang] &&
+                (this._innovation.status === 'EDITING' ||
+                  this._innovation.status === 'SUBMITTED')
+              ) ||
+              !!(
+                this._mission.objective.secondary.length ||
+                this._mission.objective.comment
+              );
+            section.isEditable = !!(
+              this._innovation.status === 'EDITING' ||
+              this._innovation.status === 'SUBMITTED'
+            );
             break;
 
           case 'OWNER':
-            section.isVisible = !!(this._innovation.owner);
+            section.isVisible = !!this._innovation.owner;
             break;
 
           case 'OPERATOR':
-            section.isVisible = !!(this._isAdmin) || !!(this._innovation.operator && this._innovation.operator.id);
+            section.isVisible =
+              !!this._isAdmin ||
+              !!(this._innovation.operator && this._innovation.operator.id);
             break;
 
           case 'COMMERCIAL':
-            section.isVisible = !!(this._isAdmin) || !!(this._clientProject.commercial);
+            section.isVisible =
+              !!this._isAdmin || !!this._clientProject.commercial;
             break;
 
           case 'RESTITUTION_DATE':
-            section.isVisible = !!(this._mission.milestoneDates.length > 0
-              && this._mission.milestoneDates.some((milestone) => milestone.code === 'RDO'));
-            section.isEditable = !!(this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+            section.isVisible = !!(
+              this._mission.milestoneDates.length > 0 &&
+              this._mission.milestoneDates.some(
+                (milestone) => milestone.code === 'RDO'
+              )
+            );
+            section.isEditable = !!(
+              this._innovation.status === 'EDITING' ||
+              this._innovation.status === 'SUBMITTED'
+            );
             break;
 
           case 'ROADMAP':
-            section.isVisible = !!(this._mission.milestoneDates.length > 0
-              && this._mission.milestoneDates.some((milestone) => milestone.code !== 'RDO'));
+            section.isVisible = !!(
+              this._mission.milestoneDates.length > 0 &&
+              this._mission.milestoneDates.some(
+                (milestone) => milestone.code !== 'RDO'
+              )
+            );
             break;
 
           case 'LANGUAGE':
-            section.isVisible = !!(this._innovation.innovationCards && this._innovation.innovationCards.length > 0);
+            section.isVisible = !!(
+              this._innovation.innovationCards &&
+              this._innovation.innovationCards.length > 0
+            );
             break;
 
           case 'AUTHORISATION':
-            section.isVisible = !!(this._mission.externalDiffusion);
+            section.isVisible = !!this._mission.externalDiffusion;
             break;
-
         }
       });
     }
@@ -241,7 +327,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._isDeleting = true;
 
     switch (this._activeModalSection.name) {
-
       case 'COLLABORATORS':
         this._deleteCollaborator(this._selectedValue);
         break;
@@ -249,9 +334,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       case 'LANGUAGE':
         this._deleteInnovationCard(this._selectedValue);
         break;
-
     }
-
   }
 
   /***
@@ -269,7 +352,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._initActiveModalValue();
       this._showModal = true;
     }
-
   }
 
   /***
@@ -279,7 +361,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   private _initActiveModalValue() {
     switch (this._activeModalSection.name) {
-
       case 'TITLE':
         this._selectedValue = this._innovation.name;
         break;
@@ -287,7 +368,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       case 'PRINCIPAL_OBJECTIVE':
         this._selectedValue = this._mission.objective.principal;
         break;
-
     }
   }
 
@@ -314,7 +394,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._isSaving = true;
 
     switch (this._activeModalSection.level) {
-
       case 'INNOVATION':
         this._updateInnovation();
         break;
@@ -323,16 +402,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (this._activeModalSection.name === 'PRINCIPAL_OBJECTIVE') {
           this._updateMainObjective();
         } else {
-          this._updateMission({milestoneDates: this._mission.milestoneDates});
+          this._updateMission({ milestoneDates: this._mission.milestoneDates });
         }
         break;
 
       case 'COLLABORATOR':
         this._addCollaborator();
         break;
-
     }
-
   }
 
   /***
@@ -341,21 +418,31 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _updateInnovation() {
-
     if (this._activeModalSection.name === 'TITLE') {
       this._innovation.name = this._selectedValue;
     }
 
-    this._innovationService.save(this._innovation._id, {name: this._innovation.name}).pipe(first()).subscribe((innovation) => {
-      this._innovationFrontService.setInnovation(innovation);
-      this.closeModal();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-    }, (err: HttpErrorResponse) => {
-      console.error(err);
-      this._isSaving = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
-
+    this._innovationService
+      .save(this._innovation._id, { name: this._innovation.name })
+      .pipe(first())
+      .subscribe(
+        (innovation) => {
+          this._innovationFrontService.setInnovation(innovation);
+          this.closeModal();
+          this._translateNotificationsService.success(
+            'ERROR.SUCCESS',
+            'ERROR.PROJECT.SAVED_TEXT'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+          this._isSaving = false;
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+        }
+      );
   }
 
   /***
@@ -363,17 +450,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * that user wants to update and call the service.
    * @private
    */
-  private _updateMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
-    this._missionService.save(this._mission._id, missionObj).pipe(first()).subscribe((mission) => {
-      this._innovation.mission = mission;
-      this._innovationFrontService.setInnovation(this._innovation);
-      this.closeModal();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-    }, (err: HttpErrorResponse) => {
-      console.error(err);
-      this._isSaving = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
+  private _updateMission(missionObj: { [P in keyof Mission]?: Mission[P] }) {
+    this._missionService
+      .save(this._mission._id, missionObj)
+      .pipe(first())
+      .subscribe(
+        (mission) => {
+          this._innovation.mission = mission;
+          this._innovationFrontService.setInnovation(this._innovation);
+          this.closeModal();
+          this._translateNotificationsService.success(
+            'ERROR.SUCCESS',
+            'ERROR.PROJECT.SAVED_TEXT'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+          this._isSaving = false;
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+        }
+      );
   }
 
   private _updateMainObjective() {
@@ -382,16 +481,27 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._mission.objective.secondary = [];
     }
 
-    this._missionService.updateMainObjective(this._mission._id, this._mission.objective).pipe(first()).subscribe((innovation) => {
-      this._innovationFrontService.setInnovation(innovation);
-      this.closeModal();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-      this._isSaving = false;
-    });
-
+    this._missionService
+      .updateMainObjective(this._mission._id, this._mission.objective)
+      .pipe(first())
+      .subscribe(
+        (innovation) => {
+          this._innovationFrontService.setInnovation(innovation);
+          this.closeModal();
+          this._translateNotificationsService.success(
+            'ERROR.SUCCESS',
+            'ERROR.PROJECT.SAVED_TEXT'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+          this._isSaving = false;
+        }
+      );
   }
 
   /***
@@ -402,28 +512,44 @@ export class SettingsComponent implements OnInit, OnDestroy {
     // Un check the consent... We don't want prechecked things
     this._collaboratorConsent = false;
     if (this._selectedValue && emailRegEx.test(this._selectedValue)) {
-      this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue)
-        .pipe(first()).subscribe((collaborator: Collaborator) => {
-
-        if (collaborator.usersAdded.length > 0) {
-          this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
-          this._innovationFrontService.setInnovation(this._innovation);
-        } else if (collaborator.invitationsToSend.length > 0) {
-          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSend[0], this._currentLang), '_blank');
-        } else if (collaborator.invitationsToSendAgain.length > 0) {
-          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSendAgain[0], this._currentLang), '_blank');
-        }
-
-        this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._isSaving = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
+      this._innovationService
+        .inviteCollaborators(this._innovation._id, this._selectedValue)
+        .pipe(first())
+        .subscribe(
+          (collaborator: Collaborator) => {
+            console.log(collaborator);
+            this._innovation.collaborators = this._innovation.collaborators.concat(
+              collaborator.usersAdded
+            );
+            const collaboratorToList = collaborator.invitationsToSend.concat(
+              collaborator.invitationsToSendAgain
+            );
+            collaboratorToList.map((col) => {
+              const newCollaborator = <User>{};
+              newCollaborator.email = col;
+              this._innovation.collaborators.push(newCollaborator);
+            });
+            this._innovationFrontService.setInnovation(this._innovation);
+            this.closeModal();
+            this._translateNotificationsService.success(
+              'ERROR.SUCCESS',
+              'ERROR.PROJECT.SAVED_TEXT'
+            );
+          },
+          (err: HttpErrorResponse) => {
+            console.error(err);
+            this._isSaving = false;
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+          }
+        );
     } else {
-      this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+      this._translateNotificationsService.error(
+        'ERROR.ERROR',
+        'COMMON.INVALID.EMAIL'
+      );
     }
   }
 
@@ -435,7 +561,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public onChangeSecondaryObjective(objectives: Array<any>, section: Section) {
     if (this.enableSecondaryObjectives(section)) {
       this._mission.objective.secondary = objectives;
-      this._updateMission({objective: this._mission.objective});
+      this._updateMission({ objective: this._mission.objective });
     }
   }
 
@@ -447,7 +573,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public onChangeComment(comment: string, section: Section) {
     if (section.isEditable) {
       this._mission.objective.comment = comment;
-      this._updateMission({objective: this._mission.objective});
+      this._updateMission({ objective: this._mission.objective });
     }
   }
 
@@ -455,18 +581,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * when the user clicks on the Edit button to change the Restitution date.
    */
   public editRestitutionDate() {
-    const index = this._mission.milestoneDates.findIndex((milestone) => milestone.code === 'RDO');
+    const index = this._mission.milestoneDates.findIndex(
+      (milestone) => milestone.code === 'RDO'
+    );
     if (index !== -1) {
-      const date = new Date(this._mission.milestoneDates[index].dueDate).toISOString();
+      const date = new Date(
+        this._mission.milestoneDates[index].dueDate
+      ).toISOString();
       this._datePickerOptions = {
         dateRange: false,
         dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
-        calendarAnimation: {in: CalAnimation.Fade, out: CalAnimation.Fade},
+        calendarAnimation: { in: CalAnimation.Fade, out: CalAnimation.Fade },
         disableUntil: {
           year: Number(date.slice(0, 4)),
           month: Number(date.slice(5, 7)),
-          day: Number(date.slice(8, 10))
-        }
+          day: Number(date.slice(8, 10)),
+        },
       };
     }
   }
@@ -476,19 +606,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param event
    */
   public onChangeRestitutionDate(event: IMyDateModel) {
-    const index = this._mission.milestoneDates.findIndex((milestone) => milestone.code === 'RDO');
+    const index = this._mission.milestoneDates.findIndex(
+      (milestone) => milestone.code === 'RDO'
+    );
 
     if (event && event.singleDate && event.singleDate.jsDate && index !== -1) {
-
       this._mission.milestoneDates[index] = {
-        name: this._currentLang === 'en' ? 'Restitution Date' : 'Date de restitution',
+        name:
+          this._currentLang === 'en'
+            ? 'Restitution Date'
+            : 'Date de restitution',
         code: 'RDO',
         dueDate: event.singleDate.jsDate,
-        comment: this._mission.milestoneDates[index].comment
+        comment: this._mission.milestoneDates[index].comment,
       };
 
-      this._updateMission({milestoneDates: this._mission.milestoneDates});
-
+      this._updateMission({ milestoneDates: this._mission.milestoneDates });
     }
   }
 
@@ -498,10 +631,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param index
    * @param section
    */
-  public onChangeMilestoneComment(Event: Event, index: number, section: Section) {
+  public onChangeMilestoneComment(
+    Event: Event,
+    index: number,
+    section: Section
+  ) {
     if (section.isEditable) {
-      this._mission.milestoneDates[index].comment = ((event.target) as HTMLInputElement).value || '';
-      this._updateMission({milestoneDates: this._mission.milestoneDates});
+      this._mission.milestoneDates[index].comment =
+        (event.target as HTMLInputElement).value || '';
+      this._updateMission({ milestoneDates: this._mission.milestoneDates });
     }
   }
 
@@ -511,17 +649,28 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _deleteCollaborator(collaborator: User) {
-    this._innovationService.removeCollaborator(this._innovation._id, collaborator).pipe(first())
-      .subscribe((collaborators: Array<User>) => {
-        this._innovation.collaborators = collaborators;
-        this._innovationFrontService.setInnovation(this._innovation);
-        this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._isDeleting = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
+    this._innovationService
+      .removeCollaborator(this._innovation._id, collaborator)
+      .pipe(first())
+      .subscribe(
+        (collaborators: Array<User>) => {
+          this._innovation.collaborators = collaborators;
+          this._innovationFrontService.setInnovation(this._innovation);
+          this.closeModal();
+          this._translateNotificationsService.success(
+            'ERROR.SUCCESS',
+            'ERROR.PROJECT.SAVED_TEXT'
+          );
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+          this._isDeleting = false;
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+        }
+      );
   }
 
   /***
@@ -531,16 +680,30 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   private _deleteInnovationCard(card: InnovCard) {
     if (this._innovation.innovationCards.length > 1) {
-      this._innovationService.removeInnovationCard(this._innovation._id, card._id).pipe(first()).subscribe(() => {
-        this._innovation.innovationCards = this._innovation.innovationCards.filter((value) => value._id !== card._id);
-        this._innovationFrontService.setInnovation(this._innovation);
-        this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._isDeleting = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
+      this._innovationService
+        .removeInnovationCard(this._innovation._id, card._id)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this._innovation.innovationCards = this._innovation.innovationCards.filter(
+              (value) => value._id !== card._id
+            );
+            this._innovationFrontService.setInnovation(this._innovation);
+            this.closeModal();
+            this._translateNotificationsService.success(
+              'ERROR.SUCCESS',
+              'ERROR.PROJECT.SAVED_TEXT'
+            );
+          },
+          (err: HttpErrorResponse) => {
+            console.error(err);
+            this._isDeleting = false;
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+          }
+        );
     }
   }
 
@@ -550,8 +713,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param type
    */
   public onChangeAuthorisation(event: Event, type: string) {
-    this._mission.externalDiffusion[type] = ((event.target) as HTMLInputElement).checked;
-    this._updateMission({externalDiffusion: this._mission.externalDiffusion});
+    this._mission.externalDiffusion[
+      type
+    ] = (event.target as HTMLInputElement).checked;
+    this._updateMission({ externalDiffusion: this._mission.externalDiffusion });
   }
 
   /***
@@ -559,13 +724,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * we disabled the mission secondary objectives.
    */
   public enableSecondaryObjectives(section: Section): boolean {
-    return this._mission.objective.principal['en'] !== 'Other' && section.isEditable;
+    return (
+      this._mission.objective.principal['en'] !== 'Other' && section.isEditable
+    );
   }
 
   get canPerformAction(): boolean {
     switch (this._activeModalSection.level) {
       case 'COLLABORATOR':
-        return this._collaboratorConsent && !!this._selectedValue && !this._isSaving;
+        return (
+          this._collaboratorConsent && !!this._selectedValue && !this._isSaving
+        );
       default:
         return !!this._selectedValue && !this._isSaving;
     }
@@ -576,8 +745,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   public isNextMilestoneReached(index: number): boolean {
-    if (this._mission.milestoneDates[index] && this._mission.milestoneDates[index].dueDate) {
-      return new Date(this._mission.milestoneDates[index].dueDate) <= new Date();
+    if (
+      this._mission.milestoneDates[index] &&
+      this._mission.milestoneDates[index].dueDate
+    ) {
+      return (
+        new Date(this._mission.milestoneDates[index].dueDate) <= new Date()
+      );
     }
     return false;
   }
@@ -674,5 +848,4 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
-
 }
