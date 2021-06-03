@@ -517,7 +517,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         .pipe(first())
         .subscribe(
           (collaborator: Collaborator) => {
-            console.log(collaborator);
             this._innovation.collaborators = this._innovation.collaborators.concat(
               collaborator.usersAdded
             );
