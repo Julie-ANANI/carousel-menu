@@ -4,11 +4,13 @@ export const PROJECT_SETTINGS = {
 
   'PRINCIPAL_OBJECTIVE': 'Main objective',
 
-  'SECONDARY_OBJECTIVE': 'Secondary Objectives',
+  'SECONDARY_OBJECTIVE': 'Secondary objectives',
 
   'ROADMAP': 'Roadmap',
 
   'RESTITUTION_DATE': 'Delivery date',
+
+  'REPORTING_LANG': 'Result language',
 
   'OWNER': 'Owner',
 
@@ -31,6 +33,7 @@ export const PROJECT_SETTINGS = {
     'SECONDARY_OBJECTIVE': 'Secondary Objectives',
     'ROADMAP': 'Forecast roadmap',
     'RESTITUTION_DATE': 'Desired delivery date',
+    'REPORTING_LANG': 'Language of the Market Test results',
     'OWNER': 'Owner',
     'COLLABORATORS': 'Collaborators',
     'OPERATOR': 'Market test manager',
@@ -60,6 +63,6 @@ export const PROJECT_SETTINGS = {
 
   'SELECT_OPERATOR': 'Select market test manager',
 
-  'RESTITUTION_DATE_COMMENT': 'Do you have any details about this date?',
+  'RESTITUTION_DATE_COMMENT': 'Is there anything else you\'d like to do or add ?',
 
 };
