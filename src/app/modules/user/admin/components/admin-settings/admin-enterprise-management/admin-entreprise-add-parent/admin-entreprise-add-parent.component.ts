@@ -36,7 +36,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   configCompany = {
     placeholder: 'Enter the parent company',
     initialData: this._data,
-    type: 'company',
+    type: 'enterprise',
     showDomain: true,
   };
 
