@@ -7,7 +7,7 @@
   <!-- /heading -->
 
   <!-- lang selection -->
-  <div class="flex-centered flex-wrap p-bottom-40">
+  <div [ngClass]="{'p-bottom-40': !!reportingLang}" class="flex-centered flex-wrap">
     <a
       (click)="onChangeProjectLang($event, lang)"
       *ngFor="let lang of projectLangs"
@@ -23,21 +23,22 @@
   <!-- /lang selection -->
 
   <!-- date -->
-  <div class="p-top-50">
+  <ng-container *ngIf="!!reportingLang">
+    <div class="p-top-50">
 
-    <h2 class="title text-white text-center is-4 text-bold">
-      {{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}
-    </h2>
+      <h2 class="title text-white text-center is-4 text-bold">
+        {{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}
+      </h2>
 
-    <div class="p-top-10 m-left-auto m-right-auto" id="new-project-date-picker">
-      <app-utility-date-picker
-        (selectedDate)="onChangeRestitutionDate($event)"
-        [isDisabledUntil]="restitutionDate">
-      </app-utility-date-picker>
-    </div>
+      <div class="p-top-10 m-left-auto m-right-auto" id="new-project-date-picker">
+        <app-utility-date-picker
+          (selectedDate)="onChangeRestitutionDate($event)"
+          [isDisabledUntil]="restitutionDate">
+        </app-utility-date-picker>
+      </div>
 
-    <div class="form-group mxw-450 m-left-auto m-right-auto p-top-40">
-      <label>
+      <div class="form-group mxw-450 m-left-auto m-right-auto p-top-40">
+        <label>
         <textarea
           (ngModelChange)="onChangeMilestoneComment($event)"
           [ngModel]="milestoneDateComment"
@@ -46,81 +47,90 @@
           id="new-project-comment"
           rows="3">
         </textarea>
-      </label>
-    </div>
+        </label>
+      </div>
 
-  </div>
+    </div>
+  </ng-container>
   <!-- /date -->
 
-  <!-- arrow -->
-  <div class="flex-centered p-top-50">
-    <img
-      alt="Arrow bottom"
-      class="img-responsive"
-      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
-  </div>
-  <!-- /arrow -->
+  <ng-container *ngIf="isRestitutionDateSelected">
 
-  <!-- title -->
-  <div class="p-top-50 p-bottom-40">
-    <h2 class="title text-white text-center is-4 text-bold">
-      {{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}
-      <span class="text-sm text-normal">{{ 'NEW_PROJECT.TITLE_INTERNAL' | translate }}</span>
-    </h2>
-    <div class="form-group mxw-450 m-left-auto m-right-auto">
-      <label>
-        <input
-          (ngModelChange)="onChangeProject($event)"
-          [ngModel]="title"
-          [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
-          class="form-input is-shadowed"
-          type="text">
-      </label>
+    <!-- arrow -->
+    <div class="flex-centered p-top-50">
+      <img
+        alt="Arrow bottom"
+        class="img-responsive"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
     </div>
-  </div>
-  <!-- /title -->
+    <!-- /arrow -->
 
-  <!-- collaborators -->
-  <div class="p-top-50">
+    <!-- title -->
+    <div class="p-top-50 p-bottom-40">
+      <h2 class="title text-white text-center is-4 text-bold">
+        {{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}
+        <span class="text-sm text-normal">{{ 'NEW_PROJECT.TITLE_INTERNAL' | translate }}</span>
+      </h2>
+      <div class="form-group mxw-450 m-left-auto m-right-auto">
+        <label>
+          <input
+            (ngModelChange)="onChangeProject($event)"
+            [ngModel]="title"
+            [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
+            class="form-input is-shadowed"
+            type="text">
+        </label>
+      </div>
+    </div>
+    <!-- /title -->
 
-    <h2 class="title text-white text-center is-4 text-bold m-bottom-15">
-      {{ 'NEW_PROJECT.COLLABORATORS_QUESTION' | translate }}
-    </h2>
+  </ng-container>
 
-    <div class="mxw-650 m-left-auto m-right-auto">
+  <ng-container *ngIf="!!title">
 
-      <label class="form-checkbox p-left-30">
-        <input
-          (ngModelChange)="consentChange($event)"
-          [id]="'new-project-collaborator-consent'"
-          [ngModel]="consent"
-          type="checkbox">
-        <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
-        <span class="text-white text-medium">{{ 'NEW_PROJECT.COLLABORATORS_TERMS' | translate }}</span>
-      </label>
+    <!-- collaborators -->
+    <div class="p-top-50">
 
-      <ng-container *ngIf="!consent && collaborators.length">
-        <div class="form-error text-medium">{{ 'NEW_PROJECT.ACCEPT_CONSENT' | translate }}</div>
-      </ng-container>
+      <h2 class="title text-white text-center is-4 text-bold m-bottom-15">
+        {{ 'NEW_PROJECT.COLLABORATORS_QUESTION' | translate }}
+      </h2>
+
+      <div class="mxw-650 m-left-auto m-right-auto">
+
+        <label class="form-checkbox p-left-30">
+          <input
+            (ngModelChange)="consentChange($event)"
+            [id]="'new-project-collaborator-consent'"
+            [ngModel]="consent"
+            type="checkbox">
+          <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
+          <span class="text-white text-medium">{{ 'NEW_PROJECT.COLLABORATORS_TERMS' | translate }}</span>
+        </label>
+
+        <ng-container *ngIf="!consent && collaborators.length">
+          <div class="form-error text-medium">{{ 'NEW_PROJECT.ACCEPT_CONSENT' | translate }}</div>
+        </ng-container>
+
+      </div>
+
+      <div class="mxw-750 m-top-25 m-left-auto m-right-auto">
+        <app-utility-text-input
+          (textEntered)="addEmail($event)"
+          (valueToRemove)="removeEmail($event)"
+          [addedText]="collaborators"
+          [buttonColorClass]="'is-community'"
+          [fieldType]="'email'"
+          [inputMaxWidth]="'450px'"
+          [isFieldCenter]="true"
+          [labelBgColor]="'is-success'"
+          [placeholder]="'jhon@catco.com'"
+          [template]="'TYPE_2'">
+        </app-utility-text-input>
+      </div>
 
     </div>
+    <!-- /collaborators -->
 
-    <div class="mxw-750 m-top-25 m-left-auto m-right-auto">
-      <app-utility-text-input
-        (textEntered)="addEmail($event)"
-        (valueToRemove)="removeEmail($event)"
-        [addedText]="collaborators"
-        [buttonColorClass]="'is-community'"
-        [fieldType]="'email'"
-        [inputMaxWidth]="'450px'"
-        [isFieldCenter]="true"
-        [labelBgColor]="'is-success'"
-        [placeholder]="'jhon@catco.com'"
-        [template]="'TYPE_2'">
-      </app-utility-text-input>
-    </div>
-
-  </div>
-  <!-- /collaborators -->
+  </ng-container>
 
 </div>

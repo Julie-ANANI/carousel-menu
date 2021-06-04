@@ -135,7 +135,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
   private _nextStepTimeout: any = null;
 
-  private _reportingLang = this._translateService.currentLang;
+  private _reportingLang = '';
 
   private _collaboratorsConsent: Consent = <Consent>{};
 
