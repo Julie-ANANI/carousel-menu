@@ -441,6 +441,7 @@
         <ng-container *ngIf="!isFetchingTemplates">
           <app-market-test-objectives
             [missionTemplates]="missionTemplates"
+            (missionTemplateChange)="onChangeTemplate($event)"
             [(objectiveComment)]="mission.objectiveComment">
           </app-market-test-objectives>
         </ng-container>
@@ -502,7 +503,7 @@
 
     <button
       (click)="onClickSaveModal($event)"
-      [disabled]="!canPerformAction"
+      [disabled]="isDisabled"
       [id]="'settings-modal-btn-save'"
       class="button is-community is-sm">
       {{ 'COMMON.BUTTON.SAVE' | translate }}

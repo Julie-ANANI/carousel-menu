@@ -172,10 +172,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._isFetchingTemplates = true;
       this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
         this._missionTemplates = response && response.result || [];
-        const template = this._missionTemplates.filter((_template) => {
-          return _template._id === (this._mission.template && this._mission.template._id);
-        });
-        this._definedTemplate = template.length ? template[0] : <MissionTemplate>{};
+        this._initDefinedTemplate();
         this._isFetchingTemplates = false;
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -183,6 +180,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
         console.error(err);
       });
     }
+  }
+
+  /**
+   * return the original template from the missionTemplates based on the template
+   * associated in the mission object.
+   * we need it when we perform the selection/de-selection of the secondary objectives.
+   * @private
+   */
+  private _initDefinedTemplate() {
+    const template = this._missionTemplates.filter((_template) => {
+      return _template._id === (this._mission.template && this._mission.template._id);
+    });
+    this._definedTemplate = template.length ? template[0] : <MissionTemplate>{};
   }
 
   /**
@@ -402,7 +412,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       case 'PRINCIPAL_OBJECTIVE':
         if (this.hasMissionTemplate) {
           this._getAllMissionTemplates();
-          this._selectedValue = this._mission.template;
+          this._selectedValue = null;
         } else {
           this._selectedValue = this._mission.objective.principal;
         }
@@ -478,7 +488,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           case 'PRINCIPAL_OBJECTIVE':
             if (this.hasMissionTemplate) {
-
+              this._updateTemplate({template: this._selectedValue, comment: this._mission.objectiveComment});
             } else if (this.isOldObjective) {
               const objective = JSON.parse(JSON.stringify(this._mission.objective));
               objective.principal = this._selectedValue;
@@ -509,6 +519,27 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     }
 
+  }
+
+  /**
+   * this update the mission template and the object comment if there.
+   * @param data
+   * @private
+   */
+  private _updateTemplate(data: any) {
+    this._missionService.updateTemplate(this._mission._id, data).pipe(first()).subscribe((innovation) => {
+      innovation.owner = this._innovation.owner;
+      innovation.clientProject = this._innovation.clientProject;
+      innovation.operator = this._innovation.operator;
+      this._innovationFrontService.setInnovation(innovation);
+      this.closeModal();
+      this._initDefinedTemplate();
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isSaving = false;
+      console.error(err);
+    });
   }
 
   /***
@@ -623,6 +654,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  public onChangeTemplate(event: MissionTemplate) {
+    if (this._activeModalSection.isEditable) {
+      this._selectedValue = event;
+    }
+  }
+
   /***
    * this deletes the collaborator.
    * @param collaborator
@@ -680,20 +717,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return this._mission.objective.principal['en'] !== 'Other' && this._activeModalSection.isEditable;
   }
 
-  get canPerformAction(): boolean {
-    switch (this._activeModalSection.level) {
-
-      case 'COLLABORATOR':
-        return this._collaboratorConsent && !!this._selectedValue && !this._isSaving;
-
-      case 'MISSION':
-        if (this.hasMissionTemplate) {
-          return !this._isFetchingTemplates;
-        }
-
+  get isDisabled(): boolean {
+    if (this._activeModalSection.level === 'COLLABORATOR') {
+      return this._collaboratorConsent && !!this._selectedValue && !this._isSaving;
+    } else if (this.hasMissionTemplate && this._activeModalSection.level === 'MISSION') {
+      return this._isFetchingTemplates || !this._selectedValue;
+    } else {
+      return !this._selectedValue || this._isSaving;
     }
-
-    return !!this._selectedValue && !this._isSaving;
   }
 
   public isMilestoneReached(date: Date): boolean {
