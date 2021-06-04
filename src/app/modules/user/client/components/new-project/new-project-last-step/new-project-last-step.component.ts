@@ -29,7 +29,7 @@ export class NewProjectLastStepComponent {
 
   private _projectLangs: Array<string> = ['en', 'fr'];
 
-  private _reportingLang = this.currentLang;
+  private _reportingLang = '';
 
   private _milestoneDateComment = '';
 
@@ -40,6 +40,8 @@ export class NewProjectLastStepComponent {
   private _collaborators: Array<string> = [];
 
   private _restitutionDate = this._commonService.getFutureMonth();
+
+  isRestitutionDateSelected = false;
 
   constructor(private _translateService: TranslateService,
               private _commonService: CommonService) { }
@@ -115,6 +117,7 @@ export class NewProjectLastStepComponent {
   public onChangeRestitutionDate(event: IMyDateModel) {
     if (event && event.singleDate && event.singleDate.jsDate) {
       this.restitutionDateChange.emit(event.singleDate.jsDate);
+      this.isRestitutionDateSelected = true;
     }
   }
 

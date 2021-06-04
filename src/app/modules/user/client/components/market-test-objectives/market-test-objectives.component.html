@@ -22,109 +22,115 @@
   </div>
   <!-- /categories -->
 
-  <!-- arrow -->
-  <div class="flex-centered p-top-20">
-    <img
-      alt="Arrow bottom"
-      class="img-responsive"
-      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
-  </div>
-  <!-- /arrow -->
+  <ng-container *ngIf="!!selectedCategory">
 
-  <!-- text -->
-  <div class="text-center p-top-40">
-    <h2 class="text-bold text-white title is-4">{{ 'MARKET_TEST_OBJECTIVES.WHAT_NEXT' | translate }}</h2>
-  </div>
-  <!-- /text -->
+    <!-- arrow -->
+    <div class="flex-centered p-top-20">
+      <img
+        alt="Arrow bottom"
+        class="img-responsive"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+    </div>
+    <!-- /arrow -->
 
-  <!-- mission templates -->
-  <div class="section-templates relative">
+    <!-- text -->
+    <div class="text-center p-top-40">
+      <h2 class="text-bold text-white title is-4">{{ 'MARKET_TEST_OBJECTIVES.WHAT_NEXT' | translate }}</h2>
+    </div>
+    <!-- /text -->
 
-    <!-- templates -->
-    <div class="flex-between templates-wrapper relative">
-      <ng-container *ngFor="let template of missionTemplates; let i = index;">
+    <!-- mission templates -->
+    <div class="section-templates relative">
 
-        <div
-          [ngClass]="{'disabled': !selectedCategory || template['category'] !== selectedCategory}"
-          class="template-case relative">
+      <!-- templates -->
+      <div class="flex-between templates-wrapper relative">
+        <ng-container *ngFor="let template of missionTemplates; let i = index;">
 
-          <a [href]="'#arrow-bottom-methodology'" pageScrollOffset="10" pageScroll class="d-block">
-            <p
-              [ngClass]="{'active': selectedTemplate._id === template._id}"
-              (click)="onChangeTemplate($event, template)"
-              [id]="'market-test-template-'+templateName(template).toLowerCase()"
-              class="box-info text-white text-medium text-md flex-centered">
-              {{ templateName(template) }}
-            </p>
-          </a>
+          <div
+            [ngClass]="{'disabled': !selectedCategory || template['category'] !== selectedCategory}"
+            class="template-case relative">
 
-          <!-- boat start / middle -->
-          <ng-container *ngIf="(i === 0 && (!selectedCategory || (selectedCategory === 'INNOVATE' &&
-          !selectedTemplate._id))) || (i === 3 && selectedCategory === 'INNOVATION' &&
-          !selectedTemplate._id)">
-            <div class="boat-image hide-lg">
-              <img
-                alt="Compass active"
-                class="img-responsive animate-fade is-9 is-boat"
-                src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/boat.svg">
-            </div>
-          </ng-container>
-          <!-- boat start / middle -->
+            <a [href]="'#arrow-bottom-methodology'" pageScrollOffset="10" pageScroll class="d-block">
+              <p
+                [ngClass]="{'active': selectedTemplate._id === template._id}"
+                (click)="onChangeTemplate($event, template)"
+                [id]="'market-test-template-'+templateName(template).toLowerCase()"
+                class="box-info text-white text-medium text-md flex-centered">
+                {{ templateName(template) }}
+              </p>
+            </a>
 
-          <!-- compass / boat image -->
-          <div class="boat-image compass-image">
-
-            <ng-container *ngIf="selectedCategory === template['category']; else compassInactive">
-              <ng-container *ngIf="selectedTemplate._id === template._id; else compassActive">
+            <!-- boat start / middle -->
+            <ng-container *ngIf="(i === 0 && (!selectedCategory || (selectedCategory === 'INNOVATE' &&
+            !selectedTemplate._id))) || (i === 3 && selectedCategory === 'INNOVATION' &&
+            !selectedTemplate._id)">
+              <div class="boat-image hide-lg">
                 <img
                   alt="Compass active"
                   class="img-responsive animate-fade is-9 is-boat"
                   src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/boat.svg">
-              </ng-container>
-              <ng-template #compassActive>
-                <img
-                  alt="Compass active"
-                  class="img-responsive animate-fade is-5"
-                  src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-active.svg">
-              </ng-template>
+              </div>
             </ng-container>
+            <!-- boat start / middle -->
 
-            <ng-template #compassInactive>
-              <img
-                alt="Compass inactive animate-fade is-5"
-                class="img-responsive"
-                src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-inactive.svg">
-            </ng-template>
+            <!-- compass / boat image -->
+            <div class="boat-image compass-image">
+
+              <ng-container *ngIf="selectedCategory === template['category']; else compassInactive">
+                <ng-container *ngIf="selectedTemplate._id === template._id; else compassActive">
+                  <img
+                    alt="Compass active"
+                    class="img-responsive animate-fade is-9 is-boat"
+                    src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/boat.svg">
+                </ng-container>
+                <ng-template #compassActive>
+                  <img
+                    alt="Compass active"
+                    class="img-responsive animate-fade is-5"
+                    src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-active.svg">
+                </ng-template>
+              </ng-container>
+
+              <ng-template #compassInactive>
+                <img
+                  alt="Compass inactive animate-fade is-5"
+                  class="img-responsive"
+                  src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-inactive.svg">
+              </ng-template>
+
+            </div>
+            <!-- /compass / boat image -->
 
           </div>
-          <!-- /compass / boat image -->
+        </ng-container>
+      </div>
+      <!-- /templates -->
 
-        </div>
-      </ng-container>
+      <div class="market-path hide-lg"></div>
+
+      <!-- island image -->
+      <div class="island-image hide-lg absolute">
+        <img
+          [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/island-'+currentLang+'.png'"
+          alt="Test island"
+          class="img-responsive">
+      </div>
+      <!-- /island image -->
+
     </div>
-    <!-- /templates -->
+    <!-- /mission templates -->
 
-    <div class="market-path hide-lg"></div>
-
-    <!-- island image -->
-    <div class="island-image hide-lg absolute">
-      <img
-        [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/island-'+currentLang+'.png'"
-        alt="Test island"
-        class="img-responsive">
-    </div>
-    <!-- /island image -->
-
-  </div>
-  <!-- /mission templates -->
+  </ng-container>
 
   <!-- arrow -->
-  <div class="flex-centered p-top-40 p-bottom-50" id="arrow-bottom-templates">
-    <img
-      alt="Arrow bottom"
-      class="img-responsive"
-      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
-  </div>
+  <ng-container *ngIf="!!selectedTemplate._id">
+    <div class="flex-centered p-top-40 p-bottom-50" id="arrow-bottom-templates">
+      <img
+        alt="Arrow bottom"
+        class="img-responsive"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+    </div>
+  </ng-container>
   <!-- /arrow -->
 
   <!-- methodology -->
