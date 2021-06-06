@@ -31,7 +31,7 @@
             *ngIf="section.isVisible"
             [id]="section.name.toLowerCase()"
             [ngStyle]="{ 'animation-duration': (i * 150) + 'ms' }"
-            class="section-wrapper animate-slide slide-down m-bottom-50 relative">
+            class="section-wrapper animate-slide slide-down m-bottom-30 relative">
             <div [ngSwitch]="section.name">
 
               <!-- edit button -->
@@ -72,7 +72,7 @@
               <!-- /PRINCIPAL_OBJECTIVE -->
 
               <!-- SECONDARY_OBJECTIVE -->
-              <ng-container *ngSwitchCase="'SECONDARY_OBJECTIVE'">
+              <div *ngSwitchCase="'SECONDARY_OBJECTIVE'">
 
                 <ng-container *ngIf="hasMissionTemplate || !!mission.objective.secondary.length">
 
@@ -90,7 +90,7 @@
 
                   <!-- old objective -->
                   <ng-template #oldSecondary>
-                    <div *ngIf="!!mission.objective.secondary.length" class="p-bottom-15">
+                    <div *ngIf="!!mission.objective.secondary.length; else noSecondary" class="p-bottom-15">
                       <div
                         *ngFor="let objective of mission.objective.secondary; let i = index;"
                         class="text-md p-bottom-1">
@@ -99,6 +99,10 @@
                     </div>
                   </ng-template>
                   <!-- /old objective -->
+
+                  <ng-template #noSecondary>
+                    <div class="text-md">{{ 'PROJECT_SETTINGS.NO_SECONDARY' | translate }}</div>
+                  </ng-template>
 
                 </ng-container>
 
@@ -113,11 +117,11 @@
                   </div>
                 </ng-container>
 
-              </ng-container>
+              </div>
               <!-- /SECONDARY_OBJECTIVE -->
 
               <!-- ROADMAP -->
-              <ng-container *ngSwitchCase="'ROADMAP'">
+              <div *ngSwitchCase="'ROADMAP'">
                 <div class="d-flex align-center p-top-1">
                   <ul class="roadmap-wrapper">
                     <li *ngIf="!!mission.milestoneDates.length" class="active">
@@ -142,30 +146,30 @@
                     </ng-container>
                   </ul>
                 </div>
-              </ng-container>
+              </div>
               <!-- /ROADMAP -->
 
               <!-- RESTITUTION_DATE -->
-              <ng-container *ngSwitchCase="'RESTITUTION_DATE'">
+              <div *ngSwitchCase="'RESTITUTION_DATE'">
                 <ng-container *ngIf="!!dateRDO">
                   <div class="text-md">{{ dateRDO.dueDate | date:dateFormat }}</div>
                   <div *ngIf="!!dateRDO.comment" class="text-md text-italics p-top-15">
                     {{ dateRDO.comment }}
                   </div>
                 </ng-container>
-              </ng-container>
+              </div>
               <!-- /RESTITUTION_DATE -->
 
               <!-- REPORTING_LANG -->
-              <ng-container *ngSwitchCase="'REPORTING_LANG'">
+              <div *ngSwitchCase="'REPORTING_LANG'">
                 <div class="text-md">
                   {{ 'COMMON.LANG.' + innovation.settings.reportingLang.toUpperCase() | translate }}.
                 </div>
-              </ng-container>
+              </div>
               <!-- /REPORTING_LANG -->
 
               <!-- OWNER -->
-              <ng-container *ngSwitchCase="'OWNER'">
+              <div *ngSwitchCase="'OWNER'">
                 <div class="flex-wrap text-md flex-start">
                   <span class="text-bold">{{ fullName(innovation.owner) }}</span>
                   <ng-container *ngIf="!!(innovation.owner.company && innovation.owner.company.name)">
@@ -181,11 +185,11 @@
                     <span>{{ innovation.owner.email }}</span>
                   </ng-container>
                 </div>
-              </ng-container>
+              </div>
               <!-- /OWNER -->
 
               <!-- COLLABORATORS -->
-              <ng-container *ngSwitchCase="'COLLABORATORS'">
+              <div *ngSwitchCase="'COLLABORATORS'">
                 <ng-container
                   *ngIf="innovation.collaborators && innovation.collaborators.length === 0; else noCollaborators">
                   <div class="text-md">{{ 'PROJECT_SETTINGS.NO_COLLABORATORS' | translate }}</div>
@@ -201,11 +205,11 @@
                     </div>
                   </div>
                 </ng-template>
-              </ng-container>
+              </div>
               <!-- /COLLABORATORS -->
 
               <!-- OPERATOR -->
-              <ng-container *ngSwitchCase="'OPERATOR'">
+              <div *ngSwitchCase="'OPERATOR'">
 
                 <ng-container *ngIf="!!fullName(innovation.operator)">
                   <div class="flex-wrap text-md flex-start">
@@ -225,11 +229,11 @@
                   <div class="text-md">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
                 </ng-container>
 
-              </ng-container>
+              </div>
               <!-- /OPERATOR -->
 
               <!-- COMMERCIAL -->
-              <ng-container *ngSwitchCase="'COMMERCIAL'">
+              <div *ngSwitchCase="'COMMERCIAL'">
 
                 <ng-container *ngIf="!!fullName(clientProject.commercial)">
                   <div class="flex-wrap text-md flex-start">
@@ -249,11 +253,11 @@
                   <div class="text-md">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
                 </ng-container>
 
-              </ng-container>
+              </div>
               <!-- /COMMERCIAL -->
 
               <!-- LANGUAGE -->
-              <ng-container *ngSwitchCase="'LANGUAGE'">
+              <div *ngSwitchCase="'LANGUAGE'">
                 <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper">
                 <span class="m-right-40">
                   {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
@@ -267,11 +271,11 @@
                   {{ 'COMMON.BUTTON.DELETE' | translate }}
                 </span>
                 </div>
-              </ng-container>
+              </div>
               <!-- /LANGUAGE -->
 
               <!-- AUTHORISATION -->
-              <ng-container *ngSwitchCase="'AUTHORISATION'">
+              <div *ngSwitchCase="'AUTHORISATION'">
 
                 <p class="text-md m-bottom-25">{{ 'PROJECT_SETTINGS.AUTHORISATION_TEXT' | translate }}</p>
 
@@ -311,7 +315,7 @@
                   </label>
                 </div>
 
-              </ng-container>
+              </div>
               <!-- /AUTHORISATION -->
 
             </div>
