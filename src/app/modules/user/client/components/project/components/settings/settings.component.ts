@@ -612,9 +612,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _addCollaborator() {
     if (this._selectedValue.email && emailRegEx.test(this._selectedValue.email)) {
       this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue.email)
-        .pipe(first()).subscribe((collaborator: Collaborator) => {
+        .pipe(first()).subscribe((collaborator: Collaborator = <Collaborator>{}) => {
         this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
-        this._innovation.collaboratorsConsent = collaborator.consent;
 
         const collaboratorToList = collaborator.invitationsToSend.concat(collaborator.invitationsToSendAgain);
         collaboratorToList.map((col) => {
@@ -625,7 +624,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
         this._innovationFrontService.setInnovation(this._innovation);
         this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+
+        if (collaboratorToList && collaboratorToList.length) {
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+        } else {
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATORS_ADDED');
+        }
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._isSaving = false;
