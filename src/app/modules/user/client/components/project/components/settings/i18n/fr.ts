@@ -46,6 +46,8 @@ export const PROJECT_SETTINGS = {
 
   'NO_COLLABORATORS': 'Pas de collaborateurs.',
 
+  'NO_SECONDARY': 'Pas d\'objectifs secondaires.',
+
   'PROJECT_IN': 'Projet en ',
 
   'AUTHORISATION_TEXT': 'Dans le but d\'optimiser les feedbacks, j’autorise UMI à rendre visible mon projet anonymement sur ses réseaux :',
