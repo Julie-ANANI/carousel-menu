@@ -44,6 +44,8 @@ export const PROJECT_SETTINGS = {
 
   'NOT_ASSIGNED': 'Not Assigned.',
 
+  'NO_COLLABORATORS': 'No Collaborators.',
+
   'PROJECT_IN': 'Project in ',
 
   'AUTHORISATION_TEXT': 'In order to optimize feedbacks, I authorize UMI to make my project visible anonymously on its networks:',

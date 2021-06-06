@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {Consent} from '../../../../../../models/innovation';
 import {CommonService} from '../../../../../../services/common/common.service';
 import {IMyDateModel} from 'angular-mydatepicker';
+import {Consent} from '../../../../../../models/consent';
 
 @Component({
   selector: 'app-new-project-last-step',

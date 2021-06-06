@@ -8,6 +8,7 @@ import { Mission } from './mission';
 import { ClientProject } from './client-project';
 import { Question } from './question';
 import {Community} from './community';
+import {Consent} from './consent';
 
 /**
  * when creating the new project.
@@ -25,11 +26,6 @@ export interface InnovationMetadataValues {
   preparation?: number;
   campaign?: number;
   delivery?: number;
-}
-
-export interface Consent {
-  value: boolean;
-  date: Date;
 }
 
 export type InnovationStatus = 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
@@ -125,10 +121,7 @@ export interface Innovation {
   readonly created?: Date;
   readonly updated?: Date;
 
-  ownerConsent?: {
-    value?: boolean,
-    date?: any
-  };
+  ownerConsent?: Consent;
 
   // not use anymore. It's for the innovations old executive report.
   executiveReport?: OldExecutiveReport;

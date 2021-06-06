@@ -11,9 +11,10 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
 import {AuthService} from '../../../../../services/auth/auth.service';
-import {Consent, NewInnovation} from '../../../../../models/innovation';
+import {NewInnovation} from '../../../../../models/innovation';
 import {MissionService} from '../../../../../services/mission/mission.service';
 import {isPlatformBrowser} from '@angular/common';
+import {Consent} from '../../../../../models/consent';
 
 @Component({
   templateUrl: 'new-project.component.html',
