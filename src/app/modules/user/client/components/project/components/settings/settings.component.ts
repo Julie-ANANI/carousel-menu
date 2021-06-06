@@ -15,7 +15,6 @@ import {MissionService} from '../../../../../../../services/mission/mission.serv
 import {IMyDateModel} from 'angular-mydatepicker';
 import {emailRegEx} from '../../../../../../../utils/regex';
 import {Collaborator} from '../../../../../../../models/collaborator';
-import {Invite} from '../../../../../../../services/invite/invite';
 import {User} from '../../../../../../../models/user.model';
 import {InnovCard} from '../../../../../../../models/innov-card';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
@@ -86,13 +85,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _activeView = 'TITLE';
 
-  /**
-   * for the old projects.
-   * on 2nd June, 2021
-   * @private
-   */
-  private _collaboratorConsent = false;
-
   private _sections: Array<Section> = [
     {name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION'},
     {name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
@@ -101,7 +93,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     {name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION'},
     {name: 'REPORTING_LANG', isVisible: false, isEditable: false, level: 'INNOVATION'},
     {name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL'},
-    /*{name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},*/
+    {name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},
     {name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION'},
     {name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT'},
     {name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION'},
@@ -208,8 +200,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param value - based on it shows the edit button for the section.
    */
   public editButton(value: string): boolean {
-    return this.isEditable && (value === 'TITLE' || value === 'REPORTING_LANG' || value === 'RESTITUTION_DATE'
-      || value === 'SECONDARY_OBJECTIVE' || value === 'PRINCIPAL_OBJECTIVE') ;
+    return (this.isEditable && (value === 'TITLE' || value === 'REPORTING_LANG' || value === 'RESTITUTION_DATE'
+      || value === 'SECONDARY_OBJECTIVE' || value === 'PRINCIPAL_OBJECTIVE')) || value === 'COLLABORATORS';
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -319,6 +311,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public onChangeReportingLang(event: Event, value: string) {
     event.preventDefault();
     this._selectedValue = value;
+  }
+
+  /**
+   * when change the collaborator consent in the modal.
+   * @param event
+   */
+  public onChangeCollaboratorsConsent(event: Event) {
+    const value = (event.target as HTMLInputElement).checked;
+    if (!!value) {
+      this._selectedValue.consent = true;
+      this._updateInnovation({collaboratorsConsent: {value: value, date: new Date()}}, false);
+    } else {
+      this._selectedValue.consent = false;
+    }
   }
 
   public onClickTab(name: string) {
@@ -433,6 +439,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
         break;
 
+      case 'COLLABORATORS':
+        this._selectedValue = {
+          consent: false,
+          email: ''
+        };
+        break;
+
     }
   }
 
@@ -446,7 +459,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._isSaving = false;
     this._selectedValue = '';
     this._activeModalSection = <Section>{};
-    this._collaboratorConsent = false;
     this._isFetchingTemplates = false;
   }
 
@@ -547,11 +559,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * that user wants to update and call the service.
    * @private
    */
-  private _updateInnovation(innovObject: { [P in keyof Innovation]?: Innovation[P]; }) {
+  private _updateInnovation(innovObject: { [P in keyof Innovation]?: Innovation[P]; }, closeModal = true) {
     this._innovationService.save(this._innovation._id, innovObject).pipe(first()).subscribe((innovation) => {
       this._innovationFrontService.setInnovation(innovation);
-      this.closeModal();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      if (closeModal) {
+        this.closeModal();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       this._isSaving = false;
@@ -591,27 +605,27 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   /***
    * when the users want to add the collaborator.
+   * Now we are storing the consent value in the innovation model.
+   * on 4th June, 2021
    * @private
    */
   private _addCollaborator() {
-    // Un check the consent... We don't want prechecked things
-    this._collaboratorConsent = false;
-    if (this._selectedValue && emailRegEx.test(this._selectedValue)) {
-      this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue)
+    if (this._selectedValue.email && emailRegEx.test(this._selectedValue.email)) {
+      this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue.email)
         .pipe(first()).subscribe((collaborator: Collaborator) => {
+        this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
+        this._innovation.collaboratorsConsent = collaborator.consent;
 
-        if (collaborator.usersAdded.length > 0) {
-          this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
-          this._innovationFrontService.setInnovation(this._innovation);
-        } else if (collaborator.invitationsToSend.length > 0) {
-          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSend[0], this.currentLang), '_blank');
-        } else if (collaborator.invitationsToSendAgain.length > 0) {
-          window.open(Invite.collaborator(this._innovation.name, collaborator.invitationsToSendAgain[0], this.currentLang), '_blank');
-        }
+        const collaboratorToList = collaborator.invitationsToSend.concat(collaborator.invitationsToSendAgain);
+        collaboratorToList.map((col) => {
+          const newCollaborator = <User>{};
+          newCollaborator.email = col;
+          this._innovation.collaborators.push(newCollaborator);
+        });
 
+        this._innovationFrontService.setInnovation(this._innovation);
         this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._isSaving = false;
@@ -719,7 +733,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get isDisabled(): boolean {
     if (this._activeModalSection.level === 'COLLABORATOR') {
-      return this._collaboratorConsent && !!this._selectedValue && !this._isSaving;
+      return !this._selectedValue.consent || !this._selectedValue.email || this._isSaving;
     } else if (this.hasMissionTemplate && this._activeModalSection.level === 'MISSION') {
       return this._isFetchingTemplates || !this._selectedValue;
     } else {
@@ -804,14 +818,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get activeView(): string {
     return this._activeView;
-  }
-
-  get consent(): boolean {
-    return this._collaboratorConsent;
-  }
-
-  set consent(value: boolean) {
-    this._collaboratorConsent = value;
   }
 
   ngOnDestroy(): void {

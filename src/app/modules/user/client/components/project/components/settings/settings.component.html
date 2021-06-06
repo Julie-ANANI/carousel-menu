@@ -185,22 +185,23 @@
               <!-- /OWNER -->
 
               <!-- COLLABORATORS -->
-              <!--<div *ngSwitchCase="'COLLABORATORS'">
-                <div *ngFor="let collaborator of innovation.collaborators" class="collaborator-wrapper">
-                  <span class="m-right-40">{{ collaborator.email }}</span>
-                  <span (click)="openDeleteModal($event, section, collaborator)"
-                        class="button is-xs is-outlined is-danger">
-                  {{ 'COMMON.BUTTON.DELETE' | translate }}
-                </span>
-                </div>
-
-                &lt;!&ndash; edit button &ndash;&gt;
-                <div *ngIf="section.isEditable" (click)="openModal($event, section)" class="text-link m-top-15">
-                  <i class="fas fa-plus-circle"></i>{{ 'COMMON.BUTTON.COLLABORATOR' | translate }}
-                </div>
-                &lt;!&ndash; /edit button &ndash;&gt;
-
-              </div>-->
+              <ng-container *ngSwitchCase="'COLLABORATORS'">
+                <ng-container
+                  *ngIf="innovation.collaborators && innovation.collaborators.length === 0; else noCollaborators">
+                  <div class="text-md">{{ 'PROJECT_SETTINGS.NO_COLLABORATORS' | translate }}</div>
+                </ng-container>
+                <ng-template #noCollaborators>
+                  <div *ngFor="let collaborator of innovation.collaborators" class="collaborator-wrapper">
+                    <div class="m-right-40">{{ collaborator.email }}</div>
+                    <div
+                      (click)="openDeleteModal($event, section, collaborator)"
+                      [id]="'open-modal-delete-collaborators'"
+                      class="button is-xs is-outlined is-danger">
+                      {{ 'COMMON.BUTTON.DELETE' | translate }}
+                    </div>
+                  </div>
+                </ng-template>
+              </ng-container>
               <!-- /COLLABORATORS -->
 
               <!-- OPERATOR -->
@@ -221,7 +222,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="!fullName(innovation.operator)">
-                  <div class="text-md m-right-15">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
+                  <div class="text-md">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
                 </ng-container>
 
               </ng-container>
@@ -245,7 +246,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="!fullName(clientProject.commercial)">
-                  <div class="text-md m-right-15">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
+                  <div class="text-md">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
                 </ng-container>
 
               </ng-container>
@@ -259,8 +260,9 @@
                   {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
                 </span>
                 <span
-                  *ngIf="innovation.innovationCards.length > 1"
                   (click)="openDeleteModal($event, section, card)"
+                  *ngIf="innovation.innovationCards.length > 1"
+                  [id]="'open-modal-delete-innovationCard'"
                   class="button is-xs is-outlined is-danger">
                   {{ 'COMMON.BUTTON.DELETE' | translate }}
                 </span>
@@ -460,32 +462,33 @@
     <!-- /PRINCIPAL_OBJECTIVE -->
 
     <!-- COLLABORATORS -->
-    <!--<div *ngSwitchCase="'COLLABORATORS'">
+    <ng-container *ngSwitchCase="'COLLABORATORS'">
 
-      &lt;!&ndash; Warning text &ndash;&gt;
+      <!-- Warning text -->
       <div [ngStyle]="{'max-width': '530px'}" class="m-left-auto m-right-auto m-bottom-30">
-        <label class="form-checkbox p-left-30">
+        <label class="form-checkbox p-left-30 text-white">
           <input
-            [(ngModel)]="consent"
+            (change)="onChangeCollaboratorsConsent($event)"
+            [ngModel]="selectedValue['consent']"
             id="collaborator-consent"
             type="checkbox">
           <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
           {{ 'PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
         </label>
       </div>
-      &lt;!&ndash; /Warning text &ndash;&gt;
+      <!-- /Warning text -->
 
       <div class="form-group mxw-400 m-left-auto m-right-auto">
         <label>
           <input
-            [(ngModel)]="selectedValue"
+            [(ngModel)]="selectedValue['email']"
+            class="form-input is-sm"
             placeholder="jhon.smith@gmail.com"
-            class="form-input is-sm is-shadowed"
             type="email">
         </label>
       </div>
 
-    </div>-->
+    </ng-container>
     <!-- /COLLABORATORS -->
 
   </section>
