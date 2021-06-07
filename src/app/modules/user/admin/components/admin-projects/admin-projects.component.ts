@@ -1,24 +1,24 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {TranslateTitleService} from '../../../../../services/title/title.service';
-import {InnovationService} from '../../../../../services/innovation/innovation.service';
-import {Innovation} from '../../../../../models/innovation';
-import {Table} from '../../../../table/models/table';
-import {first} from 'rxjs/operators';
-import {Config} from '../../../../../models/config';
-import {Response} from '../../../../../models/response';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {ConfigService} from '../../../../../services/config/config.service';
-import {isPlatformBrowser} from '@angular/common';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {UserService} from '../../../../../services/user/user.service';
-import {environment} from '../../../../../../environments/environment';
-import {User} from '../../../../../models/user.model';
-import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {AuthService} from '../../../../../services/auth/auth.service';
-import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObjectives';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { Innovation } from '../../../../../models/innovation';
+import { Table } from '../../../../table/models/table';
+import { first } from 'rxjs/operators';
+import { Config } from '../../../../../models/config';
+import { Response } from '../../../../../models/response';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { ConfigService } from '../../../../../services/config/config.service';
+import { isPlatformBrowser } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../../../../../services/user/user.service';
+import { environment } from '../../../../../../environments/environment';
+import { User } from '../../../../../models/user.model';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -249,34 +249,36 @@ export class AdminProjectsComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
           _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
         }, // Using _searchConfig for advanced search
-        {
+        /**
+         {
           _attrs: ['mission.externalDiffusion.community'],
           _name: 'Community',
           _width: '120px',
           _type: 'CHECK',
           _isHidden: !this.canAccess(['tableColumns', 'community']),
         },
-        {
+         {
           _attrs: ['mission.externalDiffusion.social'],
           _name: 'Social',
           _width: '100px',
           _type: 'CHECK',
           _isHidden: !this.canAccess(['tableColumns', 'social']),
         },
-        {
+         {
           _attrs: ['mission.externalDiffusion.umi'],
           _name: 'Website',
           _width: '100px',
           _type: 'CHECK',
           _isHidden: !this.canAccess(['tableColumns', 'website']),
         },
-        {
+         {
           _attrs: ['stats.emailsOK'],
           _name: 'Good Emails',
           _type: 'NUMBER',
           _width: '130px',
           _isHidden: !this.canAccess(['tableColumns', 'goodEmails'])
         },
+         **/
         {
           _attrs: ['stats.validatedAnswers'],
           _name: 'Validated Answers',
