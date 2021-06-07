@@ -230,6 +230,12 @@ export class PitchComponent implements OnInit, OnDestroy {
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').comment
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion;
 
+      case 'CONTEXT':
+        comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'CONTEXT').comments;
+        return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'CONTEXT').comment
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'CONTEXT').suggestion;
+
       case 'OTHER':
         comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'OTHER' &&
           cardSection.etherpadElementId === etherpadElementId).comments;
@@ -461,9 +467,6 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
       ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
     this._initEtherpadElementId();
-    console.log(this._sections);
-    console.log(this.activeInnovCard);
-    console.log(this._innovation.mission);
   }
 
   private _initEtherpadElementId() {

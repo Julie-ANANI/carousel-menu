@@ -114,6 +114,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
       case 'ISSUE':
       case 'SOLUTION':
+      case 'CONTEXT':
       case 'OTHER':
         if (type === 'COLOR') {
           return CommonService.getLimitColor(<string> this.activeInnovCard.sections[index].content, 1000);
@@ -135,7 +136,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     if (model === 'TITLE' || model === 'SUMMARY') {
       _text = htmlScraper.transform(from_card[_model]);
-    } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'OTHER') {
+    } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'CONTEXT' || model === 'OTHER') {
       _text = htmlScraper.transform(<String>from_card.sections[index].content);
     }
 
@@ -150,6 +151,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
           case 'ISSUE':
           case 'SOLUTION':
+          case 'CONTEXT':
           case 'OTHER':
             this.activeInnovCard.sections[index].content = o.translation;
             break;
