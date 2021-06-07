@@ -285,6 +285,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this._innovTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._currentLang, 'TITLE');
   }
 
+  public objectiveName(lang = this.currentLang): string {
+    return MissionFrontService.objectiveName(this.mission.template, lang);
+  }
+
   get title(): string {
     return  this._innovTitle ? this._innovTitle : this._project.name;
   }
@@ -295,7 +299,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   get hasMissionObjective(): boolean {
     return this.mission.objective && this.mission.objective.principal && this.mission.objective.principal['en']
-      && this.mission.objective.principal['en'] !== 'Other'
+      && this.mission.objective.principal['en'] !== 'Other';
+  }
+
+  get hasMissionTemplate(): boolean {
+    return this.mission.template && this.mission.template.entry && this.mission.template.entry.length > 0;
   }
 
   get iconClass(): string {
