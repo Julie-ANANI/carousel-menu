@@ -85,7 +85,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   @Input() cardContent: any = '';
 
-  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER'
+  // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | 'CONTEXT'
   @Input() type: CardSectionTypes = '';
 
   @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
@@ -288,6 +288,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
         case 'ISSUE':
         case 'SOLUTION':
+        case 'CONTEXT':
         case 'OTHER':
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 500);
@@ -334,6 +335,14 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
             return this.pitchHelp.solution;
           } else if (type === 'EXAMPLE') {
             return this.pitchHelp.example.solution;
+          }
+          break;
+
+        case 'CONTEXT':
+          if (type === 'TEXT') {
+            return this.pitchHelp.context;
+          } else if (type === 'EXAMPLE') {
+            return this.pitchHelp.example.issue;
           }
           break;
 

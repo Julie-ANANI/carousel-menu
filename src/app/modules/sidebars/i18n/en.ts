@@ -37,6 +37,7 @@ export const SIDEBAR = {
   'PROJECT_PITCH': {
     'EDIT': {
       'TITLE': 'Edit title',
+      'CONTEXT': 'Edit context',
       'SUMMARY': 'Edit summary',
       'ISSUE': 'Edit issue',
       'SOLUTION': 'Edit solution',
@@ -45,6 +46,7 @@ export const SIDEBAR = {
     'VIEW': {
       'TITLE': 'Title',
       'SUMMARY': 'Summary',
+      'CONTEXT': 'Context',
       'ISSUE': 'Issue',
       'SOLUTION': 'Solution',
       'MEDIA': 'Medias',

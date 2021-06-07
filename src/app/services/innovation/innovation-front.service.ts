@@ -169,6 +169,9 @@ export class InnovationFrontService {
         case 'SOLUTION':
           return InnovationFrontService.cardDynamicSection(_card, 'SOLUTION').content || '';
 
+        case 'CONTEXT':
+          return InnovationFrontService.cardDynamicSection(_card, 'CONTEXT').content || '';
+
         case 'LANG':
           return _card.lang;
 
@@ -213,11 +216,11 @@ export class InnovationFrontService {
   }
 
   /***
-   * returns the section info of the 'ISSUE' | 'SOLUTION'.
+   * returns the section info of the 'ISSUE' | 'SOLUTION' | 'CONTEXT'.
    * @param innovCard
    * @param field
    */
-  public static cardDynamicSection(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): InnovCardSection {
+  public static cardDynamicSection(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'CONTEXT'): InnovCardSection {
     if (innovCard && innovCard.sections && innovCard.sections.length) {
       const _index = InnovationFrontService.cardDynamicSectionIndex(innovCard, field);
       if (_index !== -1) {
@@ -243,7 +246,7 @@ export class InnovationFrontService {
   }
 
   /***
-   * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER'
+   * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT'
    * if we have searchKey then we search bby it otherwise with the type.
    * Please note that case won't work if we have more then one section of same type.
    *
@@ -251,7 +254,8 @@ export class InnovationFrontService {
    * @param field
    * @param searchKey - in case of OTHER send the etherpadElementId
    */
-  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'OTHER', searchKey = ''): number {
+  public static cardDynamicSectionIndex(
+    innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'OTHER' | 'CONTEXT', searchKey = ''): number {
     if (searchKey) {
       return innovCard.sections.findIndex((section) => section.type === field && section.etherpadElementId === searchKey);
     }
@@ -280,6 +284,9 @@ export class InnovationFrontService {
         case 'SOLUTION':
           return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'SOLUTION');
 
+        case 'CONTEXT':
+          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'CONTEXT');
+
         case 'OTHER':
           if (etherpadElementId) {
             return innovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId) || <CardComment>{};
@@ -292,11 +299,11 @@ export class InnovationFrontService {
   }
 
   /***
-   * returns the dynamic comment section info of the 'ISSUE' | 'SOLUTION'
+   * returns the dynamic comment section info of the 'ISSUE' | 'SOLUTION' | 'CONTEXT'
    * @param innovCard
    * @param field
    */
-  public static cardDynamicOperatorComment(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): CardComment {
+  public static cardDynamicOperatorComment(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'CONTEXT'): CardComment {
     if (innovCard && innovCard.operatorComment && innovCard.operatorComment.sections && innovCard.operatorComment.sections.length) {
       const _index = innovCard.operatorComment.sections.findIndex((section) => section.type === field);
       if (_index !== -1) {

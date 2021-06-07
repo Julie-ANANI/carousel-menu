@@ -1,17 +1,19 @@
 interface PitchExample {
   title: string;
   summary: string;
-  issue: string;
-  solution?: string
+  issue?: string;
+  solution?: string;
+  context?: string;
 }
 
 export interface PitchHelpFields {
   title: string;
   summary: string;
-  issue: string;
+  issue?: string;
   solution?: string;
+  context?: string;
   quiz: string;
-  example: PitchExample
+  example: PitchExample;
 }
 
 export interface PitchDescriptionHelp {
@@ -20,64 +22,6 @@ export interface PitchDescriptionHelp {
 }
 
 class ProjectPitch {
-
-  public object(objective: string): PitchDescriptionHelp {
-    let _obj: PitchDescriptionHelp = <PitchDescriptionHelp>{};
-
-    if (objective) {
-      switch (objective) {
-
-        case 'Validating the interest of my solution':
-        case 'Discovering new applications / markets':
-        case 'Targeting the most receptive application / market':
-        case 'Optimizing my value proposition':
-        case 'Other':
-          _obj = {
-            en: {
-              title: ProjectPitch._titleHelp(objective),
-              summary: ProjectPitch._summaryHelp(objective),
-              issue: ProjectPitch._issueHelp(objective),
-              solution: ProjectPitch._solutionHelp(objective),
-              quiz: ProjectPitch._quiz(objective),
-              example: ProjectPitch._example(objective)
-            },
-            fr: {
-              title: ProjectPitch._titleHelp(objective, 'fr'),
-              summary: ProjectPitch._summaryHelp(objective, 'fr'),
-              issue: ProjectPitch._issueHelp(objective, 'fr'),
-              solution: ProjectPitch._solutionHelp(objective, 'fr'),
-              quiz: ProjectPitch._quiz(objective, 'fr'),
-              example: ProjectPitch._example(objective, 'fr')
-            }
-          }
-          break;
-
-        case 'Detecting needs / trends':
-        case 'Validating market needs':
-        case 'Sourcing innovative solutions / partners':
-          _obj = {
-            en: {
-              title: ProjectPitch._titleHelp(objective),
-              summary: ProjectPitch._summaryHelp(objective),
-              issue: ProjectPitch._issueHelp(objective),
-              quiz: ProjectPitch._quiz(objective),
-              example: ProjectPitch._example(objective)
-            },
-            fr: {
-              title: ProjectPitch._titleHelp(objective, 'fr'),
-              summary: ProjectPitch._summaryHelp(objective, 'fr'),
-              issue: ProjectPitch._issueHelp(objective, 'fr'),
-              quiz: ProjectPitch._quiz(objective, 'fr'),
-              example: ProjectPitch._example(objective, 'fr')
-            }
-          }
-          break;
-
-      }
-    }
-
-    return _obj;
-  }
 
   private static _titleHelp(objective: string, lang: string = 'en'): string {
     switch (objective) {
@@ -94,17 +38,17 @@ class ProjectPitch {
         } else {
           return 'The title of the project is inserted in the subject of the emails sent to the thousands of professionals ' +
             'we reach out. It shouldn\'t be the name of the solution only, but also condense in a few words what your ' +
-            'solution brings.'
+            'solution brings.';
         }
 
       case 'Validating market needs':
         if (lang === 'fr') {
           return 'Le titre est présent dans l’objet des emails que l’on envoie aux milliers de professionnels, il résume en ' +
-            '3-4 mots la thématique du questionnaire.'
+            '3-4 mots la thématique du questionnaire.';
         } else {
           return 'The title of the project is inserted in the subject of the emails we send to the thousands of professionals ' +
             'we reach out to. ' +
-            'It condenses the the subject-matter of the questionnaire in a few words.'
+            'It condenses the the subject-matter of the questionnaire in a few words.';
         }
 
       default:
@@ -126,7 +70,7 @@ class ProjectPitch {
             'forte et différenciante du projet. Il sera présent dans le corps de texte des emails que nous enverrons aux professionnels.';
         } else {
           return 'The pitch must take the form of two sentences (this is a maximum) enlighting the strong and differentiating ' +
-            'value proposition of your project. It will be inserted in the body of the emails we\'ll send to the professionals.'
+            'value proposition of your project. It will be inserted in the body of the emails we\'ll send to the professionals.';
         }
 
       case 'Validating market needs':
@@ -160,19 +104,20 @@ class ProjectPitch {
             '<p class="text-medium">' +
             '3. Démarche <br> <span class="text-normal p-left-15"> Expliquez la démarche : dans quel but vous souhaitez collecter ' +
             'ces informations et à quoi elles vont servir.</span>' +
-            '</p>'
+            '</p>';
         } else {
           return '<p>This part helps to contextualize and introduce the subject matter of the questionnaire to the professionals.</p>' +
             '<p class="text-medium">' +
             '1. Introduction <br> <span class="text-normal p-left-15"> Introduce the subject matter / the market context.</span>' +
             '</p>' +
             '<p class="text-medium">' +
-            '2. Implications <br> <span class="text-normal p-left-15"> Explain what\'s at stake, the upcoming issues in your field.</span>' +
+            '2. Implications <br> <span class="text-normal p-left-15"> Explain what\'s at stake, the upcoming issues in your ' +
+            'field.</span>' +
             '</p>' +
             '<p class="text-medium">' +
             '3. Approach <br> <span class="text-normal p-left-15"> Explain your approach : why you\'re collecting this data and' +
             ' what your purpose is.</span>' +
-            '</p>'
+            '</p>';
         }
 
       case 'Validating market needs':
@@ -192,7 +137,7 @@ class ProjectPitch {
             '<p class="text-medium">' +
             '4. Démarche <br> <span class="text-normal p-left-15"> Expliquez la démarche : dans quel but vous souhaitez collecter ' +
             'ces informations et à quoi elles vont servir.</span>' +
-            '</p>'
+            '</p>';
         } else {
           return '<p>This part helps to contextualize and introduce the identified issues to the professionals.</p>' +
             '<p class="text-medium">' +
@@ -208,7 +153,7 @@ class ProjectPitch {
             '<p class="text-medium">' +
             '4. Approach <br> <span class="text-normal p-left-15"> Explain your approach : why you\'re collecting this data and' +
             ' what your purpose is.</span>' +
-            '</p>'
+            '</p>';
         }
 
       case 'Sourcing innovative solutions / partners':
@@ -399,7 +344,7 @@ class ProjectPitch {
               'L\'unité de production sur site est disponible suivant 3 capacités : 50 m3h / 100 m3h / 150 m3h.<br>' +
               'L’encombrement est limité dans des modules conteneurs de 20 ft pour le modèle 50m3h et 40 ft pour les modèles 100 m3h ' +
               'et 150 m3h.'
-          }
+          };
         } else {
           return {
             title: 'On-site hydrogen production unit',
@@ -435,7 +380,7 @@ class ProjectPitch {
               'The on-site H2 plant is available in 3 sizes: 50 m3/h, 100 m3/h, and 150 m3/h. The space requirement is limited to 20 ' +
               'ft. ' +
               'container modules for the 50m3/h model and 40 ft. for the 100 m3/h and 150 m3/h models.  '
-          }
+          };
         }
 
       case 'Optimizing my value proposition':
@@ -480,7 +425,7 @@ class ProjectPitch {
               'généralement nécessaire pour transférer un contenu cache / tampon dans une mémoire non volatile.<br>' +
               'Cette solution combine la meilleur des performances de batterie et de supercondensateur: un seul composant suffit à ' +
               'sauvegarder simultanément les formats RTC, µC et DRAM / SRAM, ainsi que les disques SSD d\'entreprise / client.'
-          }
+          };
         } else {
           return {
             title: 'Tiny rechargeable SMD micro-batteries for emergency backup power',
@@ -520,7 +465,7 @@ class ProjectPitch {
               'non volatile memory.<br>' +
               'This solution combines the best of battery and supercapacitor performance:a single component is enough to backup ' +
               'simultaneously RTC and µC and DRAM/SRAM and enterprise/client SSDs as well.'
-          }
+          };
         }
 
       case 'Discovering new applications / markets':
@@ -559,7 +504,7 @@ class ProjectPitch {
               'Notre écosystème de gestion intelligent de l’énergie s\'adapte sur tout type d\'applications aussi bien civiles que ' +
               'militaires (ex : Automobile, voiture hybride/électrique, énergies renouvelables, radio, téléphone, bâtiment, groupes ' +
               'électrogènes, objets connectés, ...) et pour toutes les technologies de batterie (lithium, plomb, ...)'
-          }
+          };
         } else {
           return {
             title: 'Smart Power Ecosystem',
@@ -589,7 +534,7 @@ class ProjectPitch {
               'Our Smart Power Ecosystem can be used for both civil and military applications (e. g. automotive, hybrid/electric ' +
               'cars, ' +
               'renewable energies, radio, Mobile, timers, power units, IoT, etc.) and for all battery technologies (lithium, lead, etc.)'
-          }
+          };
         }
 
       case 'Detecting needs / trends':
@@ -611,7 +556,7 @@ class ProjectPitch {
               'Through this questionnaire, we would like to better understand the stakes in order to anticipate future needs ' +
               'and issues: ' +
               'those of our customers, our own, those of our partners, but also those of other business sectors.'
-          }
+          };
         } else {
           return {
             title: '5G deployment impact for MNO',
@@ -630,7 +575,7 @@ class ProjectPitch {
               'Through this questionnaire, we would like to better understand the stakes in order to anticipate future needs ' +
               'and issues: ' +
               'those of our customers, our own, those of our partners, but also those of other business sectors.'
-          }
+          };
         }
 
       case 'Validating market needs':
@@ -649,7 +594,7 @@ class ProjectPitch {
             'availability is not immediate and/or of a lower quality compared to an experienced supplier. <br>' +
             'If this initial step was successful, the supply of kilogram quantities of cubane derivatives, ' +
             'in cGMP conditions, is not possible.'
-        }
+        };
 
       case 'Sourcing innovative solutions / partners':
         return {
@@ -719,7 +664,7 @@ class ProjectPitch {
               'L\'unité de production sur site est disponible suivant 3 capacités : 50 m3h / 100 m3h / 150 m3h.<br>' +
               'L’encombrement est limité dans des modules conteneurs de 20 ft pour le modèle 50m3h et 40 ft pour les modèles ' +
               '100 m3h et 150 m3h.'
-          }
+          };
         } else {
           return {
             title: 'On-site hydrogen production unit',
@@ -764,14 +709,138 @@ class ProjectPitch {
               'The on-site H2 plant is available in 3 sizes: 50 m3/h, 100 m3/h, and 150 m3/h. The space requirement is limited ' +
               'to 20 ft. ' +
               'container modules for the 50m3/h model and 40 ft. for the 100 m3/h and 150 m3/h models.  '
-          }
+          };
         }
 
     }
   }
 
+  /**
+   *
+   * @param objective
+   * @param template - true means using the new mission template so change in the object.
+   */
+  public object(objective: string, template: boolean = false): PitchDescriptionHelp {
+    let _obj: PitchDescriptionHelp = <PitchDescriptionHelp>{};
+
+    if (objective) {
+      if (template) {
+        switch (objective) {
+
+          case 'Detecting needs / trends':
+            _obj = {
+              en: {
+                title: ProjectPitch._titleHelp(objective),
+                summary: ProjectPitch._summaryHelp(objective),
+                quiz: ProjectPitch._quiz(objective),
+                example: ProjectPitch._example(objective),
+                context: ProjectPitch._issueHelp(objective)
+              },
+              fr: {
+                title: ProjectPitch._titleHelp(objective, 'fr'),
+                summary: ProjectPitch._summaryHelp(objective, 'fr'),
+                quiz: ProjectPitch._quiz(objective, 'fr'),
+                example: ProjectPitch._example(objective, 'fr'),
+                context: ProjectPitch._issueHelp(objective, 'fr')
+              }
+            };
+            break;
+
+          case 'Discovering new applications / markets':
+            _obj = {
+              en: {
+                title: ProjectPitch._titleHelp(objective),
+                summary: ProjectPitch._summaryHelp(objective),
+                quiz: ProjectPitch._quiz(objective),
+                example: ProjectPitch._example(objective),
+                solution: ProjectPitch._solutionHelp(objective)
+              },
+              fr: {
+                title: ProjectPitch._titleHelp(objective, 'fr'),
+                summary: ProjectPitch._summaryHelp(objective, 'fr'),
+                quiz: ProjectPitch._quiz(objective, 'fr'),
+                example: ProjectPitch._example(objective, 'fr'),
+                solution: ProjectPitch._solutionHelp(objective, 'fr')
+              }
+            };
+            break;
+
+        }
+      } else {
+        switch (objective) {
+
+          case 'Validating the interest of my solution':
+          case 'Discovering new applications / markets':
+          case 'Targeting the most receptive application / market':
+          case 'Optimizing my value proposition':
+          case 'Other':
+            _obj = {
+              en: {
+                title: ProjectPitch._titleHelp(objective),
+                summary: ProjectPitch._summaryHelp(objective),
+                issue: ProjectPitch._issueHelp(objective),
+                solution: ProjectPitch._solutionHelp(objective),
+                quiz: ProjectPitch._quiz(objective),
+                example: ProjectPitch._example(objective)
+              },
+              fr: {
+                title: ProjectPitch._titleHelp(objective, 'fr'),
+                summary: ProjectPitch._summaryHelp(objective, 'fr'),
+                issue: ProjectPitch._issueHelp(objective, 'fr'),
+                solution: ProjectPitch._solutionHelp(objective, 'fr'),
+                quiz: ProjectPitch._quiz(objective, 'fr'),
+                example: ProjectPitch._example(objective, 'fr')
+              }
+            };
+            break;
+
+          case 'Detecting needs / trends':
+          case 'Validating market needs':
+          case 'Sourcing innovative solutions / partners':
+            _obj = {
+              en: {
+                title: ProjectPitch._titleHelp(objective),
+                summary: ProjectPitch._summaryHelp(objective),
+                issue: ProjectPitch._issueHelp(objective),
+                quiz: ProjectPitch._quiz(objective),
+                example: ProjectPitch._example(objective)
+              },
+              fr: {
+                title: ProjectPitch._titleHelp(objective, 'fr'),
+                summary: ProjectPitch._summaryHelp(objective, 'fr'),
+                issue: ProjectPitch._issueHelp(objective, 'fr'),
+                quiz: ProjectPitch._quiz(objective, 'fr'),
+                example: ProjectPitch._example(objective, 'fr')
+              }
+            };
+            break;
+
+        }
+      }
+    }
+
+    return _obj;
+  }
+
 }
 
+/**
+ * as we have the definition for certain objective.
+ * based on the new mission templates
+ * on 7th June, 2021
+ */
+export const Template_Pitches = {
+  'Detecting market needs': new ProjectPitch().object('Detecting needs / trends', true),
+  'Validating market needs': new ProjectPitch().object('Validating market needs'),
+  'Sourcing solutions / suppliers': new ProjectPitch().object('Sourcing innovative solutions / partners'),
+  'Identifying receptive markets': new ProjectPitch().object('Discovering new applications / markets', true),
+  'Validating the interest in my project': new ProjectPitch().object('Validating the interest of my solution'),
+  'Optimizing my value proposition': new ProjectPitch().object('Optimizing my value proposition'),
+};
+
+/**
+ * using for the old mission objective.
+ */
 export const Pitches = {
   'Detecting needs / trends': new ProjectPitch().object('Detecting needs / trends'),
   'Validating market needs': new ProjectPitch().object('Validating market needs'),

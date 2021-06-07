@@ -79,7 +79,9 @@
           <div class="flex-between w-full">
             <div class="d-flex align-center m-right-1">
             <span class="m-right-2 field-heading">
-              <ng-container *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'; else defTitle">
+              <ng-container
+                *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'
+                || section.type === 'CONTEXT'; else defTitle">
                 {{ section.title | InnovCardTitle:section.content:activeInnovCard.lang }}
               </ng-container>
               <ng-template #defTitle>{{ section.title }}</ng-template>
@@ -88,7 +90,7 @@
                 {{ 'COMMON.LABEL.COMMENTS' | translate }}
               </span>
             </div>
-            <span (click)="openSidebar(section)" class="icon-container is-overlay">
+            <span (click)="openSidebar(section, i)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
           </div>
