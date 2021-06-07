@@ -1,113 +1,128 @@
-<div [hidden]="isLoading" id="admin-project">
+<!-- error message while fetching -->
+<section *ngIf="fetchingError" class="container fluid grid-2xl">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+    <app-utility-message-error></app-utility-message-error>
+  </div>
+</section>
+<!-- /error message while fetching -->
 
-  <!-- error message while fetching -->
-  <section *ngIf="fetchingError" class="container fluid grid-2xl">
-    <div class="column col-sm-12 col-11 col-mx-auto">
-      <app-utility-message-error></app-utility-message-error>
-    </div>
-  </section>
-  <!-- /error message while fetching -->
+<!-- no error -->
+<div [hidden]="fetchingError" id="admin-project">
 
-  <!-- no fetching error -->
-  <div [hidden]="fetchingError">
+  <!-- banner project message  -->
+  <app-utility-banner [(showBanner)]="!!showBanner" [background]="'bg-progress'" [position]="'relative'">
+    <span class="text-normal">
+      This project has been updated by
+      <span class="text-medium">{{ showBanner }}</span>
+      at
+      <span class="text-medium">{{ updateTime | date: 'H:mm' }}.</span>
+    </span>
+  </app-utility-banner>
+  <!-- banner project message  -->
 
-    <!-- banner project message  -->
-    <app-utility-banner [(showBanner)]="showBanner" [position]="'relative'">
-      This project has been updated by {{ showBanner }} at {{ updateTime | date: 'H:mm' }}
-    </app-utility-banner>
-    <!-- banner project message  -->
+  <!-- section header -->
+  <section class="section-header p-top-25">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 col-mx-auto">
 
-    <!-- section header -->
-    <section class="bg-draft">
-      <div class="container fluid grid-2xl">
-        <div class="column col-sm-12 col-11 p-top-25 col-mx-auto">
+        <!-- heading / actions button -->
+        <div class="flex-between flex-wrap m-bottom-10">
 
-          <!-- heading / actions button -->
-          <div class="flex-between flex-wrap m-bottom-10">
+          <!-- heading / view like client / objective / activity -->
+          <div class="m-right-15 m-bottom-15">
 
-            <!-- heading / view like client / objective / activity -->
-            <div class="m-right-15 m-bottom-15">
+            <div class="d-flex align-center flex-wrap m-bottom-1">
+              <h1 class="title is-4 text-white m-bottom-1">{{ title }}</h1>
+              <a
+                [routerLink]="['/user/projects/', project._id]"
+                class="button is-link text-white is-xs"
+                target="_blank">
+                View like client
+              </a>
+            </div>
 
-              <div class="d-flex align-center flex-wrap m-bottom-1">
-                <h1 class="title is-4 text-white m-bottom-2">{{ title }}</h1>
-                <a
-                  [routerLink]="['/user/projects/', project._id]"
-                  class="button is-link text-white is-xs"
-                  target="_blank">
-                  View like client
-                </a>
-              </div>
+            <!-- mission objective / activity -->
+            <div class="flex-start flex-wrap">
 
-              <!-- mission objective / activity -->
-              <div class="flex-start flex-wrap">
-                <div *ngIf="hasMissionObjective" [ngStyle]="{ 'min-height': '25px' }" class="m-bottom-1 m-right-20">
-                  <div class="objective-wrapper">
-                    <i [ngClass]="iconClass"></i> {{ mission.objective.principal[currentLang] }}
+              <!-- use cases on 1st June, 2021 -->
+              <ng-container *ngIf="hasMissionTemplate; else oldObjective">
+                <h3 class="op-7 text-sm text-medium text-white m-bottom-1 m-right-20">{{ objectiveName() }}</h3>
+              </ng-container>
+              <!-- /use cases on 1st June, 2021 -->
+
+              <!-- old project -->
+              <ng-template #oldObjective>
+                <ng-container *ngIf="hasMissionObjective">
+                  <div class="op-7 text-sm text-medium text-white m-bottom-1 m-right-20">
+                    <i [ngClass]="iconClass" class="text-md m-right-10"></i>
+                    {{ mission.objective.principal[currentLang] }}
                   </div>
-                </div>
-                <app-shared-activity-modal [innovationId]="project._id"></app-shared-activity-modal>
-              </div>
-              <!-- /mission objective / activity -->
+                </ng-container>
+              </ng-template>
+              <!-- /old project -->
+
+              <app-shared-activity-modal [innovationId]="project._id"></app-shared-activity-modal>
 
             </div>
-            <!-- /heading / view like client / objective / activity -->
+            <!-- /mission objective / activity -->
+
+          </div>
+          <!-- /heading / view like client / objective / activity -->
 
           <!-- actions button -->
           <div *ngIf="canImport" class="dropdown is-right m-bottom-15">
 
-              <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
-                Actions <i class="icon icon-caret icon-right"></i>
-              </a>
+            <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
+              Actions <i class="icon icon-caret icon-right"></i>
+            </a>
 
-              <ul class="menu is-md">
-                <li
-                  *ngIf="isTech || isOperSupervisor"
-                  (click)="openModal($event, 'PROJECT')"
-                  class="menu-item">
-                  Export project
-                </li>
-                <li (click)="onClickImportFollowUp($event)" class="menu-item">
-                  Import follow up emails
-                </li>
-              </ul>
-
-            </div>
-            <!-- /actions button -->
+            <ul class="menu is-md">
+              <li
+                *ngIf="isTech || isOperSupervisor"
+                (click)="openModal($event, 'PROJECT')"
+                class="menu-item">
+                Export project
+              </li>
+              <li (click)="onClickImportFollowUp($event)" class="menu-item">
+                Import follow up emails
+              </li>
+            </ul>
 
           </div>
-          <!-- /heading / actions button -->
-
-          <!-- tabs -->
-          <ul class="tab is-fullwidth">
-            <ng-container *ngFor="let tab of tabs">
-              <li *ngIf="canAccess(['tabs', tab.key])" class="tab-item">
-                <a
-                  (click)="onClickTab($event, tab.name, tab.route, tab.key)"
-                  [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
-                  routerLinkActive="active">
-                  <i [ngClass]="tab.icon"></i> {{ tab.name }}
-                </a>
-              </li>
-            </ng-container>
-          </ul>
-          <!-- /tabs -->
+          <!-- /actions button -->
 
         </div>
+        <!-- /heading / actions button -->
+
+        <!-- tabs -->
+        <ul class="tab is-fullwidth">
+          <ng-container *ngFor="let tab of tabs">
+            <li *ngIf="canAccess(['tabs', tab.key])" class="tab-item text-white">
+              <a
+                (click)="onClickTab($event, tab.name, tab.route, tab.key)"
+                [id]="tab.route"
+                [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
+                class="text-medium text-md"
+                routerLinkActive="active">
+                <i [ngClass]="tab.icon"></i>
+                {{ tab.name }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+        <!-- /tabs -->
+
       </div>
-    </section>
-    <!-- /section header -->
-
-    <!-- different pages -->
-    <div>
-      <router-outlet></router-outlet>
     </div>
-    <!-- /different pages -->
+  </section>
+  <!-- /section header -->
 
-  </div>
-  <!-- /no fetching error -->
+  <!-- different pages -->
+  <router-outlet></router-outlet>
+  <!-- /different pages -->
 
 </div>
-
+<!-- /no error -->
 
 <!-- modals for different actions -->
 <app-utility-modal *ngIf="canImport" [(showModal)]="showModal" [enableCloseButton]="true">
