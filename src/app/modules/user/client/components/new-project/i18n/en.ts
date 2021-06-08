@@ -17,8 +17,8 @@ export const NEW_PROJECT = {
 
   'STEP_0': {
     'PREPARATION': '1. Preparation',
-    'COLLECTE': '2. Collecte',
-    'ANALYSE': '3. Analyse'
+    'COLLECTE': '2. Collection',
+    'ANALYSE': '3. Analysis'
   },
 
   'TITLE_QUESTION': 'What do you want to call your Market Test?',

@@ -13,8 +13,49 @@ import {PageScrollService} from 'ngx-page-scroll-core';
 })
 export class NewProjectLastStepComponent {
 
+  /**
+   * @param value
+   */
   @Input() set reportingLang(value: string) {
    this._reportingLang = value;
+  }
+
+  /**
+   * @param value
+   */
+  @Input() set projectName(value: string) {
+    this._projectName = value;
+  }
+
+  /**
+   * @param value
+   */
+  @Input() set milestoneDateComment(value: string) {
+    this._milestoneDateComment = value;
+  }
+
+  /**
+   *
+   * @param value
+   */
+  @Input() set collaboratorsConsent(value: Consent) {
+    this._collaboratorsConsent = value;
+  }
+
+  /**
+   *
+   * @param value
+   */
+  @Input() set collaborators(value: Array<string>) {
+    this._collaborators = value;
+  }
+
+  /**
+   *
+   * @param value
+   */
+  @Input() set restitutionDate(value: Date) {
+    this._restitutionDate = value;
   }
 
   @Output() reportingLangChange: EventEmitter<string> = new EventEmitter<string>();
@@ -23,7 +64,7 @@ export class NewProjectLastStepComponent {
 
   @Output() projectNameChange: EventEmitter<string> = new EventEmitter<string>();
 
-  @Output() collaboratorsConsent: EventEmitter<Consent> = new EventEmitter<Consent>();
+  @Output() collaboratorsConsentChange: EventEmitter<Consent> = new EventEmitter<Consent>();
 
   @Output() collaboratorsChange: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
 
@@ -33,15 +74,21 @@ export class NewProjectLastStepComponent {
 
   private _reportingLang = '';
 
+  private _projectName = '';
+
   private _milestoneDateComment = '';
 
-  private _title = '';
-
-  private _consent = false;
+  private _collaboratorsConsent: Consent = <Consent>{};
 
   private _collaborators: Array<string> = [];
 
-  private _restitutionDate = this._commonService.getFutureMonth();
+  private _restitutionDate: Date = new Date();
+
+  /**
+   * upto this date all the previous date are disabled for the selection.
+   * @private
+   */
+  private _disabledDate = this._commonService.getFutureMonth();
 
   private _isRestitutionDateSelected = false;
 
@@ -67,7 +114,6 @@ export class NewProjectLastStepComponent {
    * @param value
    */
   public onChangeMilestoneComment(value: string) {
-    this._milestoneDateComment = value;
     this.milestoneDateCommentChange.emit(this._milestoneDateComment);
   }
 
@@ -76,8 +122,7 @@ export class NewProjectLastStepComponent {
    * @param value
    */
   public onChangeProject(value: string) {
-    this._title = value;
-    this.projectNameChange.emit(this._title);
+    this.projectNameChange.emit(this._projectName);
   }
 
   /**
@@ -85,9 +130,8 @@ export class NewProjectLastStepComponent {
    * @param value
    */
   public consentChange(value: boolean) {
-    this._consent = value;
-    this.collaboratorsConsent.emit({
-      value: this._consent,
+    this.collaboratorsConsentChange.emit({
+      value: value,
       date: new Date()
     });
   }
@@ -120,6 +164,7 @@ export class NewProjectLastStepComponent {
    */
   public onChangeRestitutionDate(event: IMyDateModel) {
     if (event && event.singleDate && event.singleDate.jsDate) {
+      console.log(typeof event.singleDate.jsDate);
       this.restitutionDateChange.emit(event.singleDate.jsDate);
       this._isRestitutionDateSelected = true;
       this._pageScrollService.scroll({
@@ -141,16 +186,20 @@ export class NewProjectLastStepComponent {
     return this._reportingLang;
   }
 
+  get projectName(): string {
+    return this._projectName;
+  }
+
+  get restitutionDate(): Date {
+    return this._restitutionDate;
+  }
+
   get projectLangs(): Array<string> {
     return this._projectLangs;
   }
 
-  get consent(): boolean {
-    return this._consent;
-  }
-
-  get title(): string {
-    return this._title;
+  get collaboratorsConsent(): Consent {
+    return this._collaboratorsConsent;
   }
 
   get collaborators(): Array<string> {
@@ -161,8 +210,8 @@ export class NewProjectLastStepComponent {
     return this._milestoneDateComment;
   }
 
-  get restitutionDate(): string {
-    return this._restitutionDate;
+  get disabledDate(): string {
+    return this._disabledDate;
   }
 
   get isRestitutionDateSelected(): boolean {

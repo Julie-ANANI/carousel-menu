@@ -34,6 +34,10 @@ export class MarketTestObjectivesComponent {
     return this._selectedTemplate;
   }
 
+  get missionTemplate(): MissionTemplate {
+    return this._missionTemplate;
+  }
+
   get objectiveComment(): string {
     return this._objectiveComment;
   }
@@ -74,6 +78,24 @@ export class MarketTestObjectivesComponent {
   }
 
   /**
+   * pass the selected mission template here then we search that template into the list of templates
+   * and assign that as selected template.
+   * @param value
+   */
+  @Input() set missionTemplate(value: MissionTemplate) {
+    this._missionTemplate = value || <MissionTemplate>{};
+
+    if (!!this._missionTemplate._id && this._missionTemplates.length) {
+      const template = this._missionTemplates.find((_template) => _template._id === this._missionTemplate._id);
+
+      if (!!template) {
+        this._selectedTemplate = template;
+        this._selectedCategory = template['category'];
+      }
+    }
+  }
+
+  /**
    * emit the selected template with all the updated value in it.
    */
   @Output() missionTemplateChange: EventEmitter<MissionTemplate> = new EventEmitter<MissionTemplate>();
@@ -90,6 +112,8 @@ export class MarketTestObjectivesComponent {
   private _selectedTemplate: MissionTemplate = <MissionTemplate>{};
 
   private _missionTemplates: Array<MissionTemplate> = [];
+
+  private _missionTemplate: MissionTemplate = <MissionTemplate>{};
 
   private _objectiveComment = '';
 
