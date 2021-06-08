@@ -122,15 +122,22 @@ export class InnovationFrontService {
 
   }
 
+  /**
+   * update to work with the new template mission
+   * on 8th June, 2021
+   * @param objective
+   */
   public static publicationType(objective: string): PublicationType {
     if (objective) {
       switch (objective) {
 
         case 'Detecting needs / trends':
+        case 'Detecting market needs':
         case 'Validating market needs':
           return 'pain_point';
 
         case 'Sourcing innovative solutions / partners':
+        case 'Sourcing solutions / suppliers':
           return 'sourcing';
 
         default:
