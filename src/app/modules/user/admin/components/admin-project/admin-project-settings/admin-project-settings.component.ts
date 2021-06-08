@@ -32,10 +32,10 @@ import { ClientProject } from '../../../../../../models/client-project';
 import { UserService } from '../../../../../../services/user/user.service';
 import { Response } from '../../../../../../models/response';
 import { ClientProjectService } from '../../../../../../services/client-project/client-project.service';
-import {
+/*import {
   Objective,
   ObjectivesPrincipal,
-} from '../../../../../../models/static-data/missionObjectives';
+} from '../../../../../../models/static-data/missionObjectives';*/
 import { environment } from '../../../../../../../environments/environment';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
@@ -76,7 +76,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _newOwner: UserSuggestion = <UserSuggestion>{};
 
-  private _missionObjectives: Array<Objective> = ObjectivesPrincipal;
+  /*private _missionObjectives: Array<Objective> = ObjectivesPrincipal;*/
 
   private _quizLink = '';
 
@@ -640,7 +640,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onMainObjectiveChange(objective: string) {
+  /**
+   * Only client is allowed to update the objective.
+   * commented on 8th June, 2021
+   */
+  /*public onMainObjectiveChange(objective: string) {
     const _index = this._missionObjectives.findIndex(
       (value) => value['en']['label'] === objective
     );
@@ -663,7 +667,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         'The main objective has been updated.'
       );
     }
-  }
+  }*/
 
   public onCopyQuizLink(event: Event) {
     event.preventDefault();
@@ -762,7 +766,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._saveProject(
       (event.target as HTMLInputElement).checked
         ? 'The answers will be anonymous.'
-        : "The answers won't be anonymous.",
+        : 'The answers won\'t be anonymous.',
       { _metadata: this._innovation._metadata }
     );
   }
@@ -870,9 +874,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._newOwner;
   }
 
-  get missionObjectives(): Array<Objective> {
+  /*get missionObjectives(): Array<Objective> {
     return this._missionObjectives;
-  }
+  }*/
 
   get quizLink(): string {
     return this._quizLink;
