@@ -30,9 +30,9 @@
 
     <div class="p-top-10 m-left-auto m-right-auto" id="new-project-date-picker">
       <app-utility-date-picker
-        *ngIf="!!reportingLang"
         (selectedDate)="onChangeRestitutionDate($event)"
-        [isDisabledUntil]="restitutionDate">
+        *ngIf="!!reportingLang"
+        [isDisabledUntil]="disabledDate">
       </app-utility-date-picker>
     </div>
 
@@ -40,7 +40,7 @@
       <label>
         <textarea
           (ngModelChange)="onChangeMilestoneComment($event)"
-          [ngModel]="milestoneDateComment"
+          [(ngModel)]="milestoneDateComment"
           [placeholder]="'NEW_PROJECT.COMMENT_PLACEHOLDER' | translate"
           class="form-input is-shadowed text-sm"
           id="new-project-comment"
@@ -72,7 +72,7 @@
       <label>
         <input
           (ngModelChange)="onChangeProject($event)"
-          [ngModel]="title"
+          [(ngModel)]="projectName"
           [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
           class="form-input is-shadowed"
           type="text">
@@ -81,7 +81,7 @@
   </div>
   <!-- /title -->
 
-  <ng-container *ngIf="!!title">
+  <ng-container *ngIf="!!projectName">
 
     <!-- collaborators -->
     <div class="p-top-50">
@@ -95,14 +95,14 @@
         <label class="form-checkbox p-left-30">
           <input
             (ngModelChange)="consentChange($event)"
+            [(ngModel)]="collaboratorsConsent.value"
             [id]="'new-project-collaborator-consent'"
-            [ngModel]="consent"
             type="checkbox">
           <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
           <span class="text-white text-medium">{{ 'NEW_PROJECT.COLLABORATORS_TERMS' | translate }}</span>
         </label>
 
-        <ng-container *ngIf="!consent && collaborators.length">
+        <ng-container *ngIf="!collaboratorsConsent.value && collaborators.length">
           <div class="form-error text-medium">{{ 'NEW_PROJECT.ACCEPT_CONSENT' | translate }}</div>
         </ng-container>
 

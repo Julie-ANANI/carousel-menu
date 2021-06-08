@@ -23,6 +23,10 @@ import {Consent} from '../../../../../models/consent';
 
 export class NewProjectComponent implements OnInit, OnDestroy {
 
+  get restitutionDate(): Date {
+    return this._restitutionDate;
+  }
+
   get missionTemplates(): Array<MissionTemplate> {
     return this._missionTemplates;
   }
@@ -96,8 +100,16 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     return this._collaboratorsConsent;
   }
 
+  set collaboratorsConsent(value: Consent) {
+    this._collaboratorsConsent = value;
+  }
+
   get collaborators(): Array<string> {
     return this._collaborators;
+  }
+
+  set collaborators(value: Array<string>) {
+    this._collaborators = value;
   }
 
   get isNextStep(): boolean {
@@ -144,6 +156,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
   private _missionTemplates: Array<MissionTemplate> = [];
 
+  private _restitutionDate: Date = new Date();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _missionService: MissionService,
@@ -184,39 +198,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     this._mission.template = event;
   }
 
-  /***
-   * will receive this from the textarea filed after the restitution date
-   * @param value
-   */
-  public onChangeDateComment(value: string) {
-    this._milestoneDateComment = value;
-  }
-
-  /***
-   * project title and we assign to it the client project and mission name also.
-   * @param value
-   */
-  public onChangeProjectName(value: string) {
-    this._clientProject.name = value;
-    this._mission.name = value;
-  }
-
-  /**
-   * when toggle the collaborators consent checkbox.
-   * @param value
-   */
-  public onChangeCollaboratorsConsent(value: Consent) {
-   this._collaboratorsConsent = value;
-  }
-
-  /**
-   * users email to send the invitation to be part of this project.
-   * @param value
-   */
-  public onChangeCollaborators(value: Array<string>) {
-    this._collaborators = value;
-  }
-
   /**
    * when the user selects the date from the date-picker then add
    * the milestoneDate.
@@ -224,6 +205,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
    */
   public onChangeRestitutionDate(event: Date) {
     if (!!event) {
+      this._restitutionDate = event;
       this._mission.milestoneDates[1] = {
         name: 'Restitution date',
         code: 'RDO',
@@ -263,6 +245,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
    */
   private _createProject() {
     this._isCreating = true;
+    this._mission.name = this._clientProject.name;
 
     /**
      * assign comment to milestone date === Restitution date.
@@ -299,6 +282,11 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this._isCreating = false;
         console.error(err);
       });
+  }
+
+  public goToBackStep(event: Event) {
+    event.preventDefault();
+    this._currentStep--;
   }
 
   public goToNextStep(event: Event) {

@@ -7,7 +7,7 @@ export const PROJECT_MODULE = {
 
   'SETUP_TAB': 'Preparation',
 
-  'EXPLORATION_TAB': 'Collect',
+  'EXPLORATION_TAB': 'Collection',
 
   'SYNTHESIS_TAB': 'Analysis',
 
