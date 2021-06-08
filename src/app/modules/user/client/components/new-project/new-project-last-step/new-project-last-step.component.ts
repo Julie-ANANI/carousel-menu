@@ -1,8 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CommonService} from '../../../../../../services/common/common.service';
 import {IMyDateModel} from 'angular-mydatepicker';
 import {Consent} from '../../../../../../models/consent';
+import {DOCUMENT} from '@angular/common';
+import {PageScrollService} from 'ngx-page-scroll-core';
 
 @Component({
   selector: 'app-new-project-last-step',
@@ -41,9 +43,11 @@ export class NewProjectLastStepComponent {
 
   private _restitutionDate = this._commonService.getFutureMonth();
 
-  isRestitutionDateSelected = false;
+  private _isRestitutionDateSelected = false;
 
-  constructor(private _translateService: TranslateService,
+  constructor(@Inject(DOCUMENT) private _document: Document,
+              private _translateService: TranslateService,
+              private _pageScrollService: PageScrollService,
               private _commonService: CommonService) { }
 
   /**
@@ -117,7 +121,11 @@ export class NewProjectLastStepComponent {
   public onChangeRestitutionDate(event: IMyDateModel) {
     if (event && event.singleDate && event.singleDate.jsDate) {
       this.restitutionDateChange.emit(event.singleDate.jsDate);
-      this.isRestitutionDateSelected = true;
+      this._isRestitutionDateSelected = true;
+      this._pageScrollService.scroll({
+        document: this._document,
+        scrollTarget: '#arrow-title',
+      });
     }
   }
 
@@ -155,6 +163,10 @@ export class NewProjectLastStepComponent {
 
   get restitutionDate(): string {
     return this._restitutionDate;
+  }
+
+  get isRestitutionDateSelected(): boolean {
+    return this._isRestitutionDateSelected;
   }
 
 }

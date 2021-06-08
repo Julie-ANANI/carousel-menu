@@ -15,30 +15,29 @@
       [id]="'new-project-btn-project-lang-'+lang"
       [ngClass]="{'bg-success': lang === reportingLang}"
       class="lang-wrapper c-hand flex-centered text-white text-medium text-md m-20"
-      pageScroll
-      pageScrollOffset="100">
+      pageScroll>
       {{ 'COMMON.LANG.' + lang | uppercase | translate }}
     </a>
   </div>
   <!-- /lang selection -->
 
   <!-- date -->
-  <ng-container *ngIf="!!reportingLang">
-    <div class="p-top-50">
+  <div class="p-top-50">
 
-      <h2 class="title text-white text-center is-4 text-bold">
-        {{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}
-      </h2>
+    <h2 *ngIf="!!reportingLang" class="title text-white text-center is-4 text-bold">
+      {{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}
+    </h2>
 
-      <div class="p-top-10 m-left-auto m-right-auto" id="new-project-date-picker">
-        <app-utility-date-picker
-          (selectedDate)="onChangeRestitutionDate($event)"
-          [isDisabledUntil]="restitutionDate">
-        </app-utility-date-picker>
-      </div>
+    <div class="p-top-10 m-left-auto m-right-auto" id="new-project-date-picker">
+      <app-utility-date-picker
+        *ngIf="!!reportingLang"
+        (selectedDate)="onChangeRestitutionDate($event)"
+        [isDisabledUntil]="restitutionDate">
+      </app-utility-date-picker>
+    </div>
 
-      <div class="form-group mxw-450 m-left-auto m-right-auto p-top-40">
-        <label>
+    <div *ngIf="!!reportingLang" class="form-group mxw-450 m-left-auto m-right-auto p-top-40">
+      <label>
         <textarea
           (ngModelChange)="onChangeMilestoneComment($event)"
           [ngModel]="milestoneDateComment"
@@ -47,44 +46,40 @@
           id="new-project-comment"
           rows="3">
         </textarea>
-        </label>
-      </div>
-
+      </label>
     </div>
-  </ng-container>
+
+  </div>
   <!-- /date -->
 
-  <ng-container *ngIf="isRestitutionDateSelected">
+  <!-- arrow -->
+  <div class="flex-centered p-top-50" id="arrow-title">
+    <img
+      *ngIf="isRestitutionDateSelected"
+      alt="Arrow bottom"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  </div>
+  <!-- /arrow -->
 
-    <!-- arrow -->
-    <div class="flex-centered p-top-50">
-      <img
-        alt="Arrow bottom"
-        class="img-responsive"
-        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  <!-- title -->
+  <div *ngIf="isRestitutionDateSelected" class="p-top-50 p-bottom-40">
+    <h2 class="title text-white text-center is-4 text-bold">
+      {{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}
+      <span class="text-sm text-normal">{{ 'NEW_PROJECT.TITLE_INTERNAL' | translate }}</span>
+    </h2>
+    <div class="form-group mxw-450 m-left-auto m-right-auto">
+      <label>
+        <input
+          (ngModelChange)="onChangeProject($event)"
+          [ngModel]="title"
+          [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
+          class="form-input is-shadowed"
+          type="text">
+      </label>
     </div>
-    <!-- /arrow -->
-
-    <!-- title -->
-    <div class="p-top-50 p-bottom-40">
-      <h2 class="title text-white text-center is-4 text-bold">
-        {{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}
-        <span class="text-sm text-normal">{{ 'NEW_PROJECT.TITLE_INTERNAL' | translate }}</span>
-      </h2>
-      <div class="form-group mxw-450 m-left-auto m-right-auto">
-        <label>
-          <input
-            (ngModelChange)="onChangeProject($event)"
-            [ngModel]="title"
-            [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
-            class="form-input is-shadowed"
-            type="text">
-        </label>
-      </div>
-    </div>
-    <!-- /title -->
-
-  </ng-container>
+  </div>
+  <!-- /title -->
 
   <ng-container *ngIf="!!title">
 

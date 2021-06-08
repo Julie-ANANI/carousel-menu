@@ -4,9 +4,9 @@
   visibility: hidden;
 }
 
-// calculate page height => 65px (Header) + 45px (Footer) + 1px
+// calculate page height => 65px (Header) + 45px (Footer)
 .page-height {
-  min-height: calc(100vh - 111px);
+  min-height: calc(100vh - 110px);
 }
 
 .header-height {
