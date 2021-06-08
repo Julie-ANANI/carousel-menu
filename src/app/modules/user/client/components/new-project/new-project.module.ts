@@ -14,6 +14,7 @@ import { NewProjectLastStepComponent } from './new-project-last-step/new-project
 import {TextInputModule} from '../../../../utility/text-input/text-input.module';
 import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
 import {NgxPageScrollModule} from 'ngx-page-scroll';
+import {NgxPageScrollCoreModule} from 'ngx-page-scroll-core';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import {NgxPageScrollModule} from 'ngx-page-scroll';
     TextInputModule,
     DatePickerModule,
     NgxPageScrollModule,
+    NgxPageScrollCoreModule
   ],
   declarations: [
     NewProjectComponent,

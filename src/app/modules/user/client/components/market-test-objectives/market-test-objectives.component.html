@@ -11,7 +11,7 @@
     <a
       (click)="onChangeCategory($event, category)"
       *ngFor="let category of objectivesCategory"
-      [href]="'#arrow-bottom-templates'"
+      [href]="'#arrow-templates'"
       [id]="'market-test-category-'+category.toLowerCase()"
       [ngClass]="{'active': selectedCategory === category}"
       class="objectives-category m-bottom-25 m-left-10 m-right-10 box-info"
@@ -50,7 +50,7 @@
             [ngClass]="{'disabled': !selectedCategory || template['category'] !== selectedCategory}"
             class="template-case relative">
 
-            <a [href]="'#arrow-bottom-methodology'" pageScrollOffset="10" pageScroll class="d-block">
+            <a [href]="'#arrow-methodology'" pageScrollOffset="10" pageScroll class="d-block">
               <p
                 [ngClass]="{'active': selectedTemplate._id === template._id}"
                 (click)="onChangeTemplate($event, template)"
@@ -123,14 +123,13 @@
   </ng-container>
 
   <!-- arrow -->
-  <ng-container *ngIf="!!selectedTemplate._id">
-    <div class="flex-centered p-top-40 p-bottom-50" id="arrow-bottom-templates">
-      <img
-        alt="Arrow bottom"
-        class="img-responsive"
-        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
-    </div>
-  </ng-container>
+  <div class="flex-centered p-top-40 p-bottom-50" id="arrow-templates">
+    <img
+      *ngIf="!!selectedTemplate._id"
+      alt="Arrow bottom"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  </div>
   <!-- /arrow -->
 
   <!-- methodology -->
@@ -145,17 +144,18 @@
   </div>
   <!-- /methodology -->
 
+  <!-- arrow -->
+  <div id="arrow-methodology" class="flex-centered p-top-50">
+    <img
+      *ngIf="!!selectedTemplate._id"
+      alt="Arrow bottom"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
+  </div>
+  <!-- /arrow -->
+
   <!-- if template selected -->
   <ng-container *ngIf="!!selectedTemplate._id">
-
-    <!-- arrow -->
-    <div id="arrow-bottom-methodology" class="flex-centered p-top-50">
-      <img
-        alt="Arrow bottom"
-        class="img-responsive"
-        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-bottom.svg">
-    </div>
-    <!-- /arrow -->
 
     <!-- text -->
     <div class="text-center p-top-40 p-bottom-10">
