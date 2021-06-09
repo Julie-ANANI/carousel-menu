@@ -1,17 +1,19 @@
 <div id="market-test-objectives-complementary">
 
   <!-- options -->
-  <label
-    *ngFor="let objective of objectivesComplementary"
-    [ngClass]="{'checked': isChecked(objective)}"
-    class="form-checkbox mxw-450 objectives-option m-left-auto m-right-auto m-bottom-15 c-hand text-white text-medium">
-    <input
-      (change)="onChangeOption($event, objective)"
-      [checked]="isChecked(objective)"
-      [id]="'market-test-template-complementary-'+objectiveName(objective).toLowerCase()"
-      type="checkbox">
-    {{ objectiveName(objective) }}
-  </label>
+  <ng-container *ngFor="let section of templateSections; let i = index;">
+    <label
+      *ngFor="let objective of section.complementary"
+      [ngClass]="{'checked': isChecked(objective, i)}"
+      class="form-checkbox mxw-450 objectives-option m-left-auto m-right-auto m-bottom-15 c-hand text-white text-medium">
+      <input
+        (change)="onChangeOption($event, objective, i)"
+        [checked]="isChecked(objective, i)"
+        [id]="'market-test-template-complementary-'+objectiveName(objective).toLowerCase()"
+        type="checkbox">
+      {{ objectiveName(objective) }}
+    </label>
+  </ng-container>
   <!-- /options -->
 
   <!-- comment -->

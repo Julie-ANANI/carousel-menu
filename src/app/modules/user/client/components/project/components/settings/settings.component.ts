@@ -256,10 +256,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'SECONDARY_OBJECTIVE':
-            section.isVisible = !!this._mission.objectiveComment || !!(this._mission.objective.comment)
+            /*section.isVisible = !!this._mission.objectiveComment || !!(this._mission.objective.comment)
               || !!(this._mission.objective.secondary && this._mission.objective.secondary.length)
               || !!(this.hasMissionTemplate && this._mission.template.complementary.length)
-              || ((this.hasMissionTemplate || this.isOldObjective) && this.isEditable);
+              || ((this.hasMissionTemplate || this.isOldObjective) && this.isEditable);*/
             section.isEditable = this.isEditable;
             break;
 
@@ -427,10 +427,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
       case 'SECONDARY_OBJECTIVE':
         if (this.hasMissionTemplate) {
           this._getAllMissionTemplates();
-          this._selectedValue = {
+          /*this._selectedValue = {
             objectives: JSON.parse(JSON.stringify(this._mission.template.complementary)),
             comment: this._mission.objectiveComment
-          };
+          };*/
         } else {
           this._selectedValue = {
             objectives: JSON.parse(JSON.stringify(this._mission.objective.secondary)),

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {MissionQuestion, MissionTemplate} from '../../../../../models/mission';
+import {MissionTemplate, MissionTemplateSection} from '../../../../../models/mission';
 import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
 /**
@@ -42,8 +42,8 @@ export class MarketTestObjectivesComponent {
     return this._objectiveComment;
   }
 
-  get selectedObjectivesComplementary(): Array<MissionQuestion> {
-    return this._selectedObjectivesComplementary;
+  get selectedSectionsObjectives(): Array<MissionTemplateSection> {
+    return this._selectedSectionsObjectives;
   }
 
   /**
@@ -117,7 +117,7 @@ export class MarketTestObjectivesComponent {
 
   private _objectiveComment = '';
 
-  private _selectedObjectivesComplementary: Array<MissionQuestion> = [];
+  private _selectedSectionsObjectives: Array<MissionTemplateSection> = [];
 
   constructor(private _translateService: TranslateService) { }
 
@@ -145,12 +145,12 @@ export class MarketTestObjectivesComponent {
   private _emitTemplate() {
     const template: MissionTemplate = JSON.parse(JSON.stringify(this._selectedTemplate));
     delete template['category'];
-    template.complementary = this._selectedObjectivesComplementary;
+    template.sections = this._selectedSectionsObjectives;
     this.missionTemplateChange.emit(template);
   }
 
-  public onChangeObjectivesComplementary(event: Array<MissionQuestion>) {
-    this._selectedObjectivesComplementary = event;
+  public onChangeObjectivesComplementary(event: Array<MissionTemplateSection>) {
+    this._selectedSectionsObjectives = event;
     this._emitTemplate();
   }
 

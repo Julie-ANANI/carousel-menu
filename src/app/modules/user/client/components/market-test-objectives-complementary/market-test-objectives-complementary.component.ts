@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {MissionQuestion} from '../../../../../models/mission';
+import {MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
 import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
 /**
@@ -14,6 +14,14 @@ import {MissionFrontService} from '../../../../../services/mission/mission-front
 })
 export class MarketTestObjectivesComplementaryComponent {
 
+  get selectedSectionsObjectives(): Array<MissionTemplateSection> {
+    return this._selectedSectionsObjectives;
+  }
+
+  get templateSections(): Array<MissionTemplateSection> {
+    return this._templateSections;
+  }
+
   get objectiveComment(): string {
     return this._objectiveComment;
   }
@@ -23,17 +31,19 @@ export class MarketTestObjectivesComplementaryComponent {
   }
 
   /**
-   * actual list of the complementary objectives.
+   * pass the actual list of mission template sections.
    * we do not modify them.
    */
-  @Input() objectivesComplementary: Array<MissionQuestion> = [];
+  @Input() set templateSections(value: Array<MissionTemplateSection>) {
+    this._templateSections = value;
+  }
 
   /**
-   * pass the selected objectives in it.
+   * pass the selected objectives with the section info.
    * @param value
    */
-  @Input() set selectedObjectives(value: Array<MissionQuestion>) {
-    this._selectedObjectives = value;
+  @Input() set selectedSectionsObjectives(value: Array<MissionTemplateSection>) {
+    this._selectedSectionsObjectives = value;
   }
 
   @Input() set objectiveComment(value: string) {
@@ -46,33 +56,53 @@ export class MarketTestObjectivesComplementaryComponent {
   @Output() objectiveCommentChange: EventEmitter<string> = new EventEmitter<string>();
 
   /**
-   * emits the selected objectives list.
+   * emits the selected objectives with the section info.
    */
-  @Output() objectivesComplementaryChange: EventEmitter<Array<MissionQuestion>> = new EventEmitter<Array<MissionQuestion>>();
+  @Output() templateSectionsChange: EventEmitter<Array<MissionTemplateSection>> = new EventEmitter<Array<MissionTemplateSection>>();
 
   private _objectiveComment = '';
 
-  private _selectedObjectives: Array<MissionQuestion> = [];
+  private _templateSections: Array<MissionTemplateSection> = [];
+
+  private _selectedSectionsObjectives: Array<MissionTemplateSection> = [];
 
   constructor(private _translateService: TranslateService) { }
 
-  public onChangeOption(event: Event, value: MissionQuestion) {
+  public onChangeOption(event: Event, value: MissionQuestion, sectionIndex: number) {
     event.preventDefault();
 
-    if (((event.target) as HTMLInputElement).checked) {
-      this._selectedObjectives.push(value);
-    } else {
-      const index = this._selectedObjectives.findIndex((objective) => objective._id === value._id);
-      if (index !== -1) {
-        this._selectedObjectives.splice(index, 1);
-      }
+    if (!this._selectedSectionsObjectives.length) {
+      this._selectedSectionsObjectives = JSON.parse(JSON.stringify(this._templateSections));
+      this._selectedSectionsObjectives = this._selectedSectionsObjectives.map((_section) => {
+        _section.complementary = [];
+        return _section;
+      });
     }
 
-    this.objectivesComplementaryChange.emit(this._selectedObjectives);
+    if (this._selectedSectionsObjectives.length) {
+      if (((event.target) as HTMLInputElement).checked) {
+        value.status = 'PUBLISHED';
+        this._selectedSectionsObjectives[sectionIndex].complementary.push(value);
+      } else {
+        const index = this._selectedSectionsObjectives[sectionIndex].complementary.findIndex((objective) => {
+          return objective._id === value._id;
+        });
+        if (index !== -1) {
+          this._selectedSectionsObjectives[sectionIndex].complementary.splice(index, 1);
+        }
+      }
+
+      this.templateSectionsChange.emit(this._selectedSectionsObjectives);
+    }
   }
 
-  public isChecked(value: MissionQuestion): boolean {
-    return this._selectedObjectives.some((objective) => objective._id === value._id);
+  public isChecked(value: MissionQuestion, sectionIndex: number): boolean {
+    if (this._selectedSectionsObjectives.length) {
+      return this._selectedSectionsObjectives[sectionIndex].complementary.some((objective) => {
+        return objective._id === value._id;
+      });
+    }
+    return false;
   }
 
   public objectiveName(value: MissionQuestion): string {

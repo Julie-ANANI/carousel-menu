@@ -177,7 +177,7 @@ export interface MissionTemplate {
    * PLEASE NOTE: we don't use the 'NOTHING' section info to create the innovation card
    * we need it for the questionnaire because it is for general questions.
    */
-  readonly sections: Array<MissionTemplateSection>;
+  sections: Array<MissionTemplateSection>;
 
   entry: Array<{
     /**

@@ -372,12 +372,12 @@
         <ng-container *ngIf="!!hasMissionTemplate; else oldSecondary;">
           <div *ngIf="isFetchingTemplates" class="loading is-white"></div>
           <ng-container *ngIf="!isFetchingTemplates">
-            <app-market-test-objectives-complementary
+            <!--<app-market-test-objectives-complementary
               (objectivesComplementaryChange)="onChangeObjectives($event)"
               [(objectiveComment)]="selectedValue['comment']"
               [objectivesComplementary]="definedTemplate.complementary"
               [selectedObjectives]="selectedValue['objectives']">
-            </app-market-test-objectives-complementary>
+            </app-market-test-objectives-complementary>-->
           </ng-container>
         </ng-container>
         <!-- /template -->
