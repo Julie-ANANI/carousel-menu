@@ -147,7 +147,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
       }
 
-      if (<ClientProject>this._innovation.clientProject && (<Mission>this._innovation.clientProject)._id) {
+      if (<ClientProject>this._innovation.clientProject && (<ClientProject>this._innovation.clientProject)._id) {
         this._clientProject = <ClientProject>this._innovation.clientProject;
       }
 
