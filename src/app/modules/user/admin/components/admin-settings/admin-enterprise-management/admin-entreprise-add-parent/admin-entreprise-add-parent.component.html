@@ -3,7 +3,7 @@
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- search parent company -->
-    <section class="width-75">
+    <section class="width-75" *ngIf="canAccess(['edit'])">
       <app-utility-auto-complete-input
         (update)="addCompanyToInclude($event)"
         [onlyOne]="true"
@@ -32,10 +32,12 @@
       </button>
 
       <button class="button is-primary is-lg is-outlined"
+              *ngIf="canAccess(['edit'])"
               (click)="cancel()">
         Discard
       </button>
       <button class="button is-primary is-lg"
+              *ngIf="canAccess(['edit'])"
               style="margin-left: auto"
               (click)="updateChange()">
         Update

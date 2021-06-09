@@ -81,10 +81,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     {
       _label: 'Add parent',
       _icon: 'icon-left text-sm icon icon-plus',
+      _isHidden: !this.canAccess(['addParent', 'view'])
     },
     {
       _label: 'Bulk edit',
       _icon: 'icon-left text-sm icon icon-edit',
+      _isHidden: !this.canAccess(['bulkEdit', 'view'])
     },
   ];
 

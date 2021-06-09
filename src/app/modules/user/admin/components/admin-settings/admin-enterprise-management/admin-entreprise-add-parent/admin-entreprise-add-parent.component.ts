@@ -46,7 +46,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     private _notificationService: NotificationsService,
     private _entrepriseService: EnterpriseService,
     private _rolesFrontService: RolesFrontService
-  ) {}
+  ) {
+  }
 
   get companiesToAddParent(): Array<any> {
     return this._companiesToAddParent;
@@ -179,12 +180,13 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   public canAccess(path?: Array<string>) {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(
-        ['settings', 'enterprises'].concat(path)
+        ['settings', 'enterprises', 'addParent'].concat(path)
       );
     } else {
       return this._rolesFrontService.hasAccessAdminSide([
         'settings',
         'enterprises',
+        'addParent'
       ]);
     }
   }
@@ -310,15 +312,15 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       const column = context.column;
       const temp = this.companiesTable._content[rowIndex][
         column._attrs.toString()
-      ];
+        ];
       this.companiesTable._content[rowIndex][
         column._attrs.toString()
-      ] = this._companiesToSwapTable._content[rowIndex][
+        ] = this._companiesToSwapTable._content[rowIndex][
         column._attrs.toString()
-      ];
+        ];
       this._companiesToSwapTable._content[rowIndex][
         column._attrs.toString()
-      ] = temp;
+        ] = temp;
     }
   }
 
@@ -357,11 +359,15 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
   updateParentCompany() {
-    this._parentCompany.subsidiaries = this.companiesTable._content.map(
+    const subsidiaries = this._parentCompany.subsidiaries || [];
+    const subsidiariesToAdd = this.companiesTable._content.map(
       (sub) => {
-        return sub._id;
+        if (sub._id && subsidiaries.indexOf(sub._id) === -1) {
+          return sub._id;
+        }
       }
     );
+    this._parentCompany.subsidiaries = subsidiariesToAdd.concat(subsidiaries);
     this._entrepriseService
       .save(this._parentCompany._id, this._parentCompany)
       .pipe(first())

@@ -298,9 +298,15 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   public canAccess(path?: Array<string>) {
     if (path) {
-      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises'].concat(path));
+      return this._rolesFrontService.hasAccessAdminSide(
+        ['settings', 'enterprises', 'bulkEdit'].concat(path)
+      );
     } else {
-      return this._rolesFrontService.hasAccessAdminSide(['settings', 'enterprises']);
+      return this._rolesFrontService.hasAccessAdminSide([
+        'settings',
+        'enterprises',
+        'bulkEdit'
+      ]);
     }
   }
 
