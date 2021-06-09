@@ -224,14 +224,19 @@ export class SharedSearchHistoryComponent implements OnInit {
           _isHidden: !this.canAccess(['putBackInQueue'])
         },
         {
-          _icon: 'fas fa-share-square',
-          _label: 'Add to campaign',
+          _icon: 'fas fa-recycle',
+          _label: 'Import to a new campaign',
           _isHidden: !this.canAccess(['add', 'toCampaign'])
         },
         {
           _icon: 'fas fa-envelope',
           _label: 'Search emails',
           _isHidden: !this.canAccess(['launch', 'emailsSearch'])
+        },
+        {
+          _icon: 'fas fa-share-square',
+          _label: 'Add to campaign',
+          _isHidden: !this.canAccess(['add', 'toCampaign'])
         }
       ],
       _columns: [
@@ -366,6 +371,15 @@ export class SharedSearchHistoryComponent implements OnInit {
           const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
           request.status = 'DONE';
         });
+        this._translateNotificationsService.success('Success', 'The requests have been paused.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+
+    } else if (value._action === 'Add to campaign') {
+
+      this._searchService.addManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         this._translateNotificationsService.success('Success', 'The requests have been paused.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
