@@ -211,77 +211,90 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       _isTitle: true,
       _isPaginable: this.companiesToEdit.length > 10,
       _isNoMinHeight: this.companiesToEdit.length < 11,
-      _columns: [
+      _columns:
+        [
         {
           _attrs: ['logo.uri'],
           _name: 'Logo',
           _type: 'PICTURE',
           _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'logo']),
         },
         {
           _attrs: ['name'],
           _name: 'Name',
           _type: 'TEXT',
-        },
-        {
-          _attrs: ['goodEmails'],
-          _name: 'Good emails',
-          _type: 'NUMBER',
-        },
-        {
-          _attrs: ['bouncedEmails'],
-          _name: 'Deduced emails',
-          _type: 'NUMBER',
-          _width: '170px',
-        },
-        {
-          _attrs: ['shieldEmails'],
-          _name: 'Shield emails',
-          _type: 'NUMBER',
+          _isHidden: !this.canAccess(['tableColumns', 'name']),
         },
         {
           _attrs: ['patterns'],
           _name: 'Patterns',
           _type: 'PATTERNS-OBJECT-LIST',
           _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'patterns']),
         },
         {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'url']),
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
+          _isHidden: !this.canAccess(['tableColumns', 'industry']),
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
+          _isHidden: !this.canAccess(['tableColumns', 'brand']),
         },
         {
           _attrs: ['enterpriseType'],
           _name: 'Type',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'type']),
         },
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
           _type: 'NAME-LABEL-LIST',
-
+          _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
           _width: '190px',
         },
         {
           _attrs: ['enterpriseSize'],
           _name: 'Enterprise size',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'size']),
         },
         {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
-        }
+          _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
+        },
+          {
+            _attrs: ['goodEmails'],
+            _name: 'Good emails',
+            _type: 'NUMBER',
+            _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
+          },
+          {
+            _attrs: ['bouncedEmails'],
+            _name: 'Deduced emails',
+            _type: 'NUMBER',
+            _width: '170px',
+            _isHidden: !this.canAccess(['tableColumns', 'deducedEmails']),
+          },
+          {
+            _attrs: ['shieldEmails'],
+            _name: 'Shield emails',
+            _type: 'NUMBER',
+            _isHidden: !this.canAccess(['tableColumns', 'shieldEmails']),
+          },
       ]
     };
     this._companiesTable._content.map(item => {

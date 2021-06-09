@@ -187,12 +187,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isEditable: this.canAccess(['edit']),
       _clickIndex:
         this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
-      _columns: [
-        {
+      _columns:
+        [
+          {
           _attrs: ['logo.uri'],
           _name: 'Logo',
           _type: 'PICTURE',
           _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'logo']),
         },
         {
           _attrs: ['name'],
@@ -200,6 +202,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'name']),
+          _isHidden: !this.canAccess(['tableColumns', 'name']),
         },
         {
           _attrs: ['topLevelDomain'],
@@ -207,7 +210,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _enableTooltip: true,
           _isSortable: true,
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'domain']),
+          _isHidden: !this.canAccess(['tableColumns', 'domain']),
         },
         {
           _attrs: ['patterns'],
@@ -215,6 +219,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'LENGTH',
           _width: '120px',
           _enableTooltip: true,
+          _isHidden: !this.canAccess(['tableColumns', 'patterns']),
         },
         {
           _attrs: ['enterpriseURL'],
@@ -222,12 +227,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSortable: true,
           _enableTooltip: true,
+          _isHidden: !this.canAccess(['tableColumns', 'url']),
         },
         {
           _attrs: ['subsidiariesList'],
           _name: 'Subsidiaries',
           _type: 'LENGTH',
           _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'subsidiary']),
         },
         {
           _attrs: ['parentEnterprise'],
@@ -240,42 +247,49 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _name: 'Parent Enterprise',
           _type: 'NAME-LABEL-LIST',
           _width: '170px',
+          _isHidden: !this.canAccess(['tableColumns', 'parent']),
         },
         {
           _attrs: ['goodEmails'],
           _name: 'Good emails',
           _type: 'NUMBER',
+          _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
         },
         {
           _attrs: ['bouncedEmails'],
           _name: 'Deduced emails',
           _type: 'NUMBER',
           _width: '170px',
+          _isHidden: !this.canAccess(['tableColumns', 'deducedEmails']),
         },
         {
           _attrs: ['shieldEmails'],
           _name: 'Shield emails',
           _type: 'NUMBER',
+          _isHidden: !this.canAccess(['tableColumns', 'shieldEmails']),
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
           _enableTooltip: true,
+          _isHidden: !this.canAccess(['tableColumns', 'industry']),
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
           _enableTooltip: true,
+          _isHidden: !this.canAccess(['tableColumns', 'brand']),
         },
         {
           _attrs: ['enterpriseType'],
           _name: 'Type',
           _type: 'TEXT',
-          _isSearchable: true,
+          _isSearchable: this.canAccess(['searchBy', 'type']),
           _isSortable: true,
           _enableTooltip: true,
+          _isHidden: !this.canAccess(['tableColumns', 'type']),
         },
         {
           _attrs: ['geographicalZone'],
@@ -283,12 +297,14 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'NAME-LABEL-LIST',
           _width: '190px',
           _enableTooltip: true,
+          _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
         },
         {
           _attrs: ['enterpriseSize'],
           _name: 'Company size',
           _type: 'TEXT',
           _isSortable: true,
+          _isHidden: !this.canAccess(['tableColumns', 'size']),
         },
         {
           _attrs: ['valueChain'],
@@ -296,6 +312,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           _type: 'TEXT',
           _isSortable: true,
           _enableTooltip: true,
+          _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
         },
       ],
     };
