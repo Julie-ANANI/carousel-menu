@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Innovation } from '../../../../../../models/innovation';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Innovation} from '../../../../../../models/innovation';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   templateUrl: 'admin-project-synthesis.component.html',
@@ -23,7 +23,13 @@ export class AdminProjectSynthesisComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
+      if (!this._innovation._id) {
+        this._innovation = innovation || <Innovation>{};
+      } else {
+        this._innovation.marketReport = innovation.marketReport;
+        this._innovation.preset = innovation.preset;
+        this._innovation = JSON.parse(JSON.stringify(this._innovation));
+      }
     });
   }
 
