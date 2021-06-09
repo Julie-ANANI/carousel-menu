@@ -164,7 +164,6 @@ export class NewProjectLastStepComponent {
    */
   public onChangeRestitutionDate(event: IMyDateModel) {
     if (event && event.singleDate && event.singleDate.jsDate) {
-      console.log(typeof event.singleDate.jsDate);
       this.restitutionDateChange.emit(event.singleDate.jsDate);
       this._isRestitutionDateSelected = true;
       this._pageScrollService.scroll({

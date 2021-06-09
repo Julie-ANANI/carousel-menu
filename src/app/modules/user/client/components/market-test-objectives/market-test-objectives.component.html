@@ -166,10 +166,10 @@
 
     <!-- complementary objectives -->
     <app-market-test-objectives-complementary
-      (objectivesComplementaryChange)="onChangeObjectivesComplementary($event)"
+      (templateSectionsChange)="onChangeObjectivesComplementary($event)"
       [(objectiveComment)]="objectiveComment"
-      [objectivesComplementary]="selectedTemplate.complementary"
-      [selectedObjectives]="missionTemplate.complementary">
+      [selectedSectionsObjectives]="missionTemplate.sections"
+      [templateSections]="selectedTemplate.sections">
     </app-market-test-objectives-complementary>
     <!-- /complementary objectives -->
 
