@@ -178,7 +178,8 @@ export class AdminProjectsComponent implements OnInit {
     }
   ];
 
-  private _columnsForMTM: Array<Column> = [
+  private _columnsForMTM: Array<Column> =
+    [
     {
       _attrs: ['name'],
       _name: 'Name',
@@ -299,7 +300,110 @@ export class AdminProjectsComponent implements OnInit {
       _width: '130px',
       _isHidden: !this.canAccess(['tableColumns', 'created'])
     },
+    {
+      _attrs: ['emailSent'],
+      _name: 'Email sent',
+      _type: 'TEXT',
+      _isSortable: true,
+      _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+    },
   ];
+
+  private _columnsForMTMBack: Array<Column> =
+    [
+      {
+        _attrs: ['name'],
+        _name: 'Name',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isSearchable: this.canAccess(['searchBy', 'name']),
+        _isHidden: !this.canAccess(['tableColumns', 'name'])
+      },
+      {
+        _attrs: ['owner.company.name'],
+        _name: 'Company',
+        _type: 'TEXT',
+        _width: '180px',
+        _isSearchable: this.canAccess(['searchBy', 'company']),
+        _isHidden: !this.canAccess(['tableColumns', 'company']),
+        _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
+      },
+      {
+        _attrs: ['status'],
+        _name: 'Status',
+        _type: 'MULTI-CHOICES',
+        _isSortable: true,
+        _isSearchable: this.canAccess(['filterBy', 'status']),
+        _isHidden: !this.canAccess(['tableColumns', 'status']),
+        _width: '150px',
+        _choices: [
+          {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+          {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
+          {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
+          {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
+        ]
+      },
+      {
+        _attrs: ['stats.emailsOK'],
+        _name: 'Good Emails',
+        _type: 'NUMBER',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
+      },
+      {
+        _attrs: ['stats.validatedAnswers'],
+        _name: 'Validated Answers',
+        _type: 'NUMBER',
+        _width: '170px',
+        _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
+      },
+      {
+        _attrs: ['mission.type'],
+        _name: 'Type',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'type']),
+        _width: '100px'
+      },
+      {
+        _attrs: ['type'],
+        _name: 'Type',
+        _type: 'MULTI-CHOICES',
+        _isHidden: true,
+        _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+        _isSearchable: this.canAccess(['filterBy', 'type']),
+        _choices: [
+          {_name: 'USER', _alias: 'User'},
+          {_name: 'CLIENT', _alias: 'Client'},
+          {_name: 'DEMO', _alias: 'Demo'},
+          {_name: 'TEST', _alias: 'Test'},
+        ]
+      },
+      {
+        _attrs: ['created'],
+        _name: 'Created',
+        _type: 'DATE',
+        _isSortable: true,
+        _width: '130px',
+        _isHidden: !this.canAccess(['tableColumns', 'created'])
+      },
+      {
+        _attrs: ['innovationCards.title'],
+        _name: 'Innovation Card Title',
+        _type: 'TEXT',
+        _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
+        _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
+        _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
+      },
+      {
+        _attrs: ['emailSent'],
+        _name: 'Email sent',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+      },
+    ];
+
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
@@ -337,10 +441,14 @@ export class AdminProjectsComponent implements OnInit {
    * @private
    */
   private _setColumnOrderForUser(): Array<Column> {
-    if (this._authService.user.roles === 'market-test-manager-umi') {
-      return this._columnsForMTM;
-    } else {
-      return this._generalColumns;
+    console.log(this._authService.user.roles);
+    switch (this._authService.user.roles){
+      case 'market-test-manager-umi':
+        return this._columnsForMTM;
+      case 'market-test-manager-umi-back':
+        return this._columnsForMTMBack;
+      default:
+        return this._generalColumns;
     }
   }
 
