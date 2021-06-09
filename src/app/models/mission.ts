@@ -1,12 +1,34 @@
 import { Innovation } from './innovation';
 import { User } from './user.model';
 import { Multiling } from './multiling';
-import {CardSectionTypes} from './innov-card';
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
-export type MissionQuestionOptionType = 'checkbox' | 'radio' | 'stars' | 'textarea';
+export type MissionTemplateSectionType = 'NOTHING' | 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT';
+export type MissionQuestionOptionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 'ranking' | 'scale';
 export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 'email' | 'month' | 'number'
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
+
+export interface MissionTemplateSection {
+  /**
+   * based on ISSUE', 'SOLUTION', 'CONTEXT', 'OTHER' we create the sections in the
+   * innovation card (back handles that).
+   */
+  type: MissionTemplateSectionType;
+  /**
+   * these are questions defined by us for each template
+   * every template has fixed number of these questions
+   * user dose not have right to change them.
+   */
+  essentials: Array<MissionQuestion>;
+  /**
+   * each template has some additional questions that can be selected
+   * or not.
+   * user has right to change these questions.
+   * in the copy of the template in the mission we only store those which are selected by the
+   * client not all.
+   */
+  complementary: Array<MissionQuestion>;
+}
 
 export interface MissionQuestionEntry {
   lang: string;
@@ -42,6 +64,11 @@ export interface MissionQuestionEntry {
 }
 
 export interface MissionQuestionOption {
+  /**
+   * it's a text used in the quiz front for help or an instruction based on the questionType.
+   * editable by the operator.
+   * Comes from the preset model.
+   */
   identifier: string;
   /**
    * La couleur dans laquelle est représentée l'option dans les charts de l'infographie
@@ -113,7 +140,7 @@ export interface MissionQuestion {
   /**
    * Comes from the preset model.
    */
-  parameters?: {
+  parameters: {
     type: {
       type: String,
       enum: MissionQuestionParameterType
@@ -144,20 +171,13 @@ export interface MissionTemplate {
   /**
    * number of sections to have in the Innovation Card and of which type.
    * length of array represents the number of the section in innovation card.
+   * And we also use the sections to show the sections of the questionnaire
+   * Every section will have essentials and complementary questions in it.
+   *
+   * PLEASE NOTE: we don't use the 'NOTHING' section info to create the innovation card
+   * we need it for the questionnaire because it is for general questions.
    */
-  readonly sections: Array<CardSectionTypes>;
-  /**
-   * these are questions defined by us for each template
-   * every template has fixed number of these questions
-   * user dose not have right to change them.
-   */
-  essentials: Array<MissionQuestion>;
-  /**
-   * each template has some additional questions that can be selected
-   * or not.
-   * user has right to change these questions.
-   */
-  complementary: Array<MissionQuestion>;
+  readonly sections: Array<MissionTemplateSection>;
 
   entry: Array<{
     /**
