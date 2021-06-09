@@ -197,7 +197,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
    */
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this.areAnswersLoading = true;
       this._answerService
         .getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers)
         .pipe(first())
