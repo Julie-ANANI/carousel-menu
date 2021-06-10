@@ -1,0 +1,19 @@
+<div class="container fluid grid-2xl p-top-30" id="admin-settings-tracking">
+
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- month select -->
+    <section>
+      <div class="form-group">
+        <label class="form-label" for="select-month">Select a month</label>
+        <select class="form-select" id="select-month">
+          <option *ngFor="let month of months" (click)="getMonth(month)">{{month.name}}</option>
+        </select>
+      </div>
+
+    </section>
+    <!-- /month select -->
+
+  </div>
+
+</div>
