@@ -24,6 +24,7 @@ import {AutoCompleteInputModule} from '../../../../utility/auto-complete-input/a
 import {InputListModule} from '../../../../utility/input-list/input-list.module';
 import {AutoSuggestionModule} from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { AdminProductTrackingComponent } from './admin-product-management/admin-product-tracking.component';
+import { AdminProductSubscriptionTrackingComponent } from './admin-product-management/admin-product-subscription-tracking/admin-product-subscription-tracking.component';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import { AdminProductTrackingComponent } from './admin-product-management/admin-
     AdminEmailBlacklistComponent,
     AdminEntrepriseBulkEditComponent,
     AdminEntrepriseAddParentComponent,
-    AdminProductTrackingComponent
+    AdminProductTrackingComponent,
+    AdminProductSubscriptionTrackingComponent
   ],
   exports: [
     AdminSettingsComponent

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { Table } from '../../../../../table/models/table';
+import { Column } from '../../../../../table/models/column';
 
-interface Month {
+export interface Month {
   name: string;
   shortForm: string;
   number: number;
@@ -13,7 +15,7 @@ interface Month {
   styleUrls: ['./admin-product-tracking.component.scss']
 })
 
-export class AdminProductTrackingComponent {
+export class AdminProductTrackingComponent implements OnInit {
   private _months: Array<Month> = [
     {
       name: 'January',
@@ -89,18 +91,83 @@ export class AdminProductTrackingComponent {
     }
   ];
 
-  private _monthSelected = 'Select a month';
+  public _trackingTable: Table = <Table>{};
 
-  constructor(private _rolesFrontService: RolesFrontService) {
+  private _monthSelected: Month =
+    {
+      name: 'January',
+      shortForm: 'Jan.',
+      number: 1,
+      days: 31
+    };
+
+  constructor(protected _rolesFrontService: RolesFrontService) {
+  }
+
+  ngOnInit(): void {
+  }
+
+  public initTrackingTable(content: Array<any>, total = 0, title: string) {
+    this._trackingTable = {
+      _selector: 'admin-product-tracking-table',
+      _title: title,
+      _content: content,
+      _total: total,
+      _isTitle: true,
+      _columns:
+      [
+        {
+          _attrs: ['day'],
+          _name: 'Day',
+          _type: 'NUMBER',
+        },
+        {
+          _attrs: ['mean'],
+          _name: 'Mean',
+          _type: 'TEXT',
+        },
+        {
+          _attrs: ['sd'],
+          _name: 'SD',
+          _type: 'TEXT',
+        },
+        {
+          _attrs: ['min'],
+          _name: 'MIN',
+          _type: 'TEXT',
+        },
+        {
+          _attrs: ['max'],
+          _name: 'MAX',
+          _type: 'TEXT',
+        }
+      ]
+    };
+  }
+
+  /**
+   * init columns by days of the month
+   * @param month
+   */
+  public initColumnsByMonth(month: Month) {
+    const columns: Array<Column> = [];
+    [...Array(month.days).keys()].map(day => {
+      columns.push({
+        _attrs: [(day + 1).toString()],
+        _name: (day + 1).toString(),
+        _type: 'TEXT',
+      });
+    });
+    return columns;
   }
 
 
-  get months(): Array<Month> {
+  public get months(): Array<Month> {
     return this._months;
   }
 
 
-  get monthSelected(): string {
+  public get monthSelected(): Month {
     return this._monthSelected;
   }
 
@@ -112,7 +179,7 @@ export class AdminProductTrackingComponent {
     }
   }
 
-  getMonth(month: Month) {
-    this._monthSelected = month.name;
+  public get trackingTable(): Table {
+    return this._trackingTable;
   }
 }
