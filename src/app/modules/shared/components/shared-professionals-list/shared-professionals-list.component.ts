@@ -530,7 +530,6 @@ export class SharedProfessionalsListComponent {
   }
 
   private _isSelectable() {
-    console.log(this.accessPath);
     if (this.accessPath.indexOf('professionals') === -1) {
       return this.canAccess(['user', 'remove']);
     } else {
