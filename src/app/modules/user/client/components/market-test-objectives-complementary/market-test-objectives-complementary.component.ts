@@ -43,7 +43,7 @@ export class MarketTestObjectivesComplementaryComponent {
    * @param value
    */
   @Input() set selectedSectionsObjectives(value: Array<MissionTemplateSection>) {
-    this._selectedSectionsObjectives = value;
+    this._selectedSectionsObjectives = value || [];
   }
 
   @Input() set objectiveComment(value: string) {

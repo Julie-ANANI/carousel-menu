@@ -133,6 +133,7 @@ export class MarketTestObjectivesComponent {
     event.preventDefault();
     if (this._selectedCategory && this._selectedCategory === value['category']) {
       this._selectedTemplate = value;
+      this._selectedSectionsObjectives = [];
       this._emitTemplate();
     }
   }
@@ -145,7 +146,11 @@ export class MarketTestObjectivesComponent {
   private _emitTemplate() {
     const template: MissionTemplate = JSON.parse(JSON.stringify(this._selectedTemplate));
     delete template['category'];
-    template.sections = this._selectedSectionsObjectives;
+    if (!this._selectedSectionsObjectives.length) {
+      template.sections = MissionFrontService.resetComplementaryObjectives(template.sections);
+    } else {
+      template.sections = this._selectedSectionsObjectives;
+    }
     this.missionTemplateChange.emit(template);
   }
 
