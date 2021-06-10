@@ -85,7 +85,7 @@ export class InnovationService {
 
   public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
     const _fieldsToPopulate = ['tags', 'mission', 'owner', 'operator', 'collaborators', 'statusLogs', 'clientProject',
-      'principalMedia', 'innovationCards', 'campaigns', 'settings', 'status', 'name'];
+      'principalMedia', 'innovationCards', 'campaigns', 'settings', 'status', 'name', 'created'];
     return this._http.put<Innovation>(
       `/innovation/${innovationId}?fields=${_fieldsToPopulate.join(',')}`, innovationObj
     );

@@ -4,7 +4,7 @@ import {PitchHelpFields} from '../../../../../../../../../models/static-data/pro
 import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
 import {first, takeUntil} from 'rxjs/operators';
 import {MissionFrontService} from '../../../../../../../../../services/mission/mission-front.service';
-import {Mission} from '../../../../../../../../../models/mission';
+import {Mission, MissionQuestion, MissionQuestionOption} from '../../../../../../../../../models/mission';
 import {Subject} from 'rxjs';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
 import {SidebarInterface} from '../../../../../../../../sidebars/interfaces/sidebar-interface';
@@ -284,6 +284,14 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: Media) {
     return MediaFrontService.getMedia(media);
+  }
+
+  public questionName(value: MissionQuestion): string {
+    return MissionFrontService.objectiveName(value, this.activeInnovCard.lang);
+  }
+
+  public questionOptionName(value: MissionQuestionOption): string {
+    return MissionFrontService.questionOptionName(value, this.activeInnovCard.lang);
   }
 
   public onRequestProofreading(event: Event) {
