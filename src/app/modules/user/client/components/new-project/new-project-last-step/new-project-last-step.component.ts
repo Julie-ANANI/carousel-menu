@@ -119,9 +119,8 @@ export class NewProjectLastStepComponent {
 
   /**
    * when the user enter the title of the project
-   * @param value
    */
-  public onChangeProject(value: string) {
+  public onChangeProject() {
     this.projectNameChange.emit(this._projectName);
   }
 

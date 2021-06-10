@@ -22,7 +22,7 @@
   </div>
   <!-- /categories -->
 
-  <ng-container *ngIf="!!selectedCategory">
+  <div *ngIf="!!selectedCategory" class="animate-fade is-2">
 
     <!-- arrow -->
     <div class="flex-centered p-top-20">
@@ -120,7 +120,7 @@
     </div>
     <!-- /mission templates -->
 
-  </ng-container>
+  </div>
 
   <!-- arrow -->
   <div class="flex-centered p-top-40 p-bottom-50" id="arrow-templates">
@@ -155,7 +155,7 @@
   <!-- /arrow -->
 
   <!-- if template selected -->
-  <ng-container *ngIf="!!selectedTemplate._id">
+  <div *ngIf="!!selectedTemplate._id" class="animate-fade is-2">
 
     <!-- text -->
     <div class="text-center p-top-40 p-bottom-10">
@@ -173,7 +173,7 @@
     </app-market-test-objectives-complementary>
     <!-- /complementary objectives -->
 
-  </ng-container>
+  </div>
   <!-- /if template selected -->
 
 </div>

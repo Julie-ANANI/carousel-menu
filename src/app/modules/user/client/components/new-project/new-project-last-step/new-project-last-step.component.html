@@ -24,7 +24,7 @@
   <!-- date -->
   <div class="p-top-50">
 
-    <h2 *ngIf="!!reportingLang" class="title text-white text-center is-4 text-bold">
+    <h2 *ngIf="!!reportingLang" class="title text-white text-center is-4 text-bold animate-fade is-2">
       {{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}
     </h2>
 
@@ -63,7 +63,7 @@
   <!-- /arrow -->
 
   <!-- title -->
-  <div *ngIf="isRestitutionDateSelected" class="p-top-50 p-bottom-40">
+  <div *ngIf="isRestitutionDateSelected" class="p-top-50 p-bottom-40 animate-fade is-2">
     <h2 class="title text-white text-center is-4 text-bold">
       {{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}
       <span class="text-sm text-normal">{{ 'NEW_PROJECT.TITLE_INTERNAL' | translate }}</span>
@@ -71,7 +71,7 @@
     <div class="form-group mxw-450 m-left-auto m-right-auto">
       <label>
         <input
-          (ngModelChange)="onChangeProject($event)"
+          (change)="onChangeProject()"
           [(ngModel)]="projectName"
           [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
           class="form-input is-shadowed"
@@ -81,7 +81,7 @@
   </div>
   <!-- /title -->
 
-  <ng-container *ngIf="!!projectName">
+  <div *ngIf="!!projectName" class="animate-fade is-2">
 
     <!-- collaborators -->
     <div class="p-top-50">
@@ -126,6 +126,6 @@
     </div>
     <!-- /collaborators -->
 
-  </ng-container>
+  </div>
 
 </div>
