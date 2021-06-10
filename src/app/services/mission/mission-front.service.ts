@@ -14,9 +14,9 @@ export class MissionFrontService {
    * @param missionSections
    */
   public static combineComplementaryObjectives(missionSections: Array<MissionTemplateSection>): Array<MissionQuestion> {
-    let objectives: Array<MissionQuestion> = [];
+    const objectives: Array<MissionQuestion> = [];
     for (let i = 0 ; i < missionSections.length; i++) {
-      objectives = [...missionSections[i].complementary];
+      objectives.push(...missionSections[i].complementary);
     }
     return objectives;
   }

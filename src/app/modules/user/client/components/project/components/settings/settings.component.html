@@ -77,11 +77,9 @@
                 <ng-container *ngIf="hasMissionTemplate || !!mission.objective.secondary.length">
 
                   <!-- template -->
-                  <div
-                    *ngIf="!!(hasMissionTemplate && mission.template.complementary.length); else oldSecondary;"
-                    class="p-bottom-15">
+                  <div *ngIf="templateComplementary.length > 0; else oldSecondary;" class="p-bottom-15">
                     <div
-                      *ngFor="let objective of mission.template.complementary; let i = index;"
+                      *ngFor="let objective of templateComplementary; let i = index;"
                       class="text-md p-bottom-1">
                       {{i + 1}}. {{ objectiveName(objective) }}
                     </div>
@@ -372,12 +370,12 @@
         <ng-container *ngIf="!!hasMissionTemplate; else oldSecondary;">
           <div *ngIf="isFetchingTemplates" class="loading is-white"></div>
           <ng-container *ngIf="!isFetchingTemplates">
-            <!--<app-market-test-objectives-complementary
-              (objectivesComplementaryChange)="onChangeObjectives($event)"
+            <app-market-test-objectives-complementary
+              (templateSectionsChange)="onChangeObjectives($event)"
               [(objectiveComment)]="selectedValue['comment']"
-              [objectivesComplementary]="definedTemplate.complementary"
-              [selectedObjectives]="selectedValue['objectives']">
-            </app-market-test-objectives-complementary>-->
+              [selectedSectionsObjectives]="selectedValue['sections']"
+              [templateSections]="definedTemplate.sections">
+            </app-market-test-objectives-complementary>
           </ng-container>
         </ng-container>
         <!-- /template -->

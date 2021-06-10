@@ -1,7 +1,7 @@
 import {Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
 import {Innovation} from '../../../../../../../models/innovation';
-import {Milestone, Mission, MissionTemplate} from '../../../../../../../models/mission';
+import {Milestone, Mission, MissionQuestion, MissionTemplate} from '../../../../../../../models/mission';
 import {first, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {AuthService} from '../../../../../../../services/auth/auth.service';
@@ -38,6 +38,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get isEditable(): boolean {
     return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+  }
+
+  get templateComplementary(): Array<MissionQuestion> {
+    return this.hasMissionTemplate && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections) || [];
   }
 
   get definedTemplate(): MissionTemplate {
@@ -256,10 +260,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
             break;
 
           case 'SECONDARY_OBJECTIVE':
-            /*section.isVisible = !!this._mission.objectiveComment || !!(this._mission.objective.comment)
+            section.isVisible = !!this._mission.objectiveComment || !!(this._mission.objective.comment)
               || !!(this._mission.objective.secondary && this._mission.objective.secondary.length)
-              || !!(this.hasMissionTemplate && this._mission.template.complementary.length)
-              || ((this.hasMissionTemplate || this.isOldObjective) && this.isEditable);*/
+              || this.templateComplementary.length > 0
+              || ((this.hasMissionTemplate || this.isOldObjective) && this.isEditable);
             section.isEditable = this.isEditable;
             break;
 
@@ -427,10 +431,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
       case 'SECONDARY_OBJECTIVE':
         if (this.hasMissionTemplate) {
           this._getAllMissionTemplates();
-          /*this._selectedValue = {
-            objectives: JSON.parse(JSON.stringify(this._mission.template.complementary)),
+          this._selectedValue = {
+            sections: JSON.parse(JSON.stringify(this._mission.template.sections)),
             comment: this._mission.objectiveComment
-          };*/
+          };
         } else {
           this._selectedValue = {
             objectives: JSON.parse(JSON.stringify(this._mission.objective.secondary)),
@@ -514,7 +518,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           case 'SECONDARY_OBJECTIVE':
             if (this.hasMissionTemplate) {
               const template = JSON.parse(JSON.stringify(this._mission.template));
-              template.complementary = this._selectedValue.objectives;
+              template.sections = this._selectedValue.sections;
               this._updateMission({objectiveComment: this._selectedValue.comment, template: template});
             } else if (this.isOldObjective) {
               const objective = JSON.parse(JSON.stringify(this._mission.objective));
@@ -646,7 +650,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   public onChangeObjectives(event: Array<any>) {
     if (this._activeModalSection.isEditable) {
-      this._selectedValue.objectives = event;
+      this._selectedValue.sections = event;
     }
   }
 
