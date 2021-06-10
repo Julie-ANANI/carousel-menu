@@ -105,7 +105,8 @@ export class SharedProfessionalsListComponent {
     private _router: Router,
     private _rolesFrontService: RolesFrontService,
     private _translateNotificationsService: TranslateNotificationsService
-  ) {}
+  ) {
+  }
 
   private _setProfessionals() {
     if (this._professionals.length > 0) {
@@ -129,39 +130,20 @@ export class SharedProfessionalsListComponent {
       _isCanSelectAll: this.tableSelector === 'admin-campaign-pros-limit',
       _isNoMinHeight: this.total < 11,
       _isDeletable: this.canAccess(['user', 'delete']),
-      _isSelectable:
-        this.canAccess(['user', 'delete']) || this.canAccess(['user', 'edit']),
+      _isSelectable: this._isSelectable(),
       _buttons: [
-        // {
-        //   _label: 'Merge',
-        //   _icon: 'fas fa-object-group',
-        //   _isHidden: !this.canAccess(['user', 'edit']),
-        // },
-        // {
-        //   _label: 'Convert to ambassador',
-        //   _icon: 'fas fa-user-graduate',
-        //   _isHidden: !this.canAccess(['user', 'edit']),
-        // },
-        // {
-        //   _label: 'Add tags',
-        //   _icon: 'icon icon-plus',
-        //   _iconSize: '12px',
-        //   _isHidden: !this.canAccess(['user', 'edit']),
-        // },
         {
           _label: 'Remove',
           _icon: 'icon icon-delete',
           _iconSize: '12px',
-          _isHidden:
-            !this.canAccess(['user', 'edit']) ||
-            this.tableSelector !== 'admin-campaign-pros-limit',
+          _isHidden: !this.canAccess(['user', 'remove'])
         },
       ],
       _clickIndex:
         this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit'])
           ? this.canAccess(['tableColumns', 'member'])
-            ? 2
-            : 1
+          ? 2
+          : 1
           : null,
       _columns: [
         {
@@ -172,7 +154,7 @@ export class SharedProfessionalsListComponent {
           _isHidden: !this.canAccess(['tableColumns', 'member']),
           _width: '180px',
           _choices: [
-            { _name: 'false', _alias: 'No', _url: '' },
+            {_name: 'false', _alias: 'No', _url: ''},
             {
               _name: 'true',
               _alias: 'Yes',
@@ -534,7 +516,7 @@ export class SharedProfessionalsListComponent {
             this._translateNotificationsService.error(
               'Error',
               'A professional with that E-mail already exists. ' +
-                'Try to manually merge both professionals. For more info, ask the tech team.'
+              'Try to manually merge both professionals. For more info, ask the tech team.'
             );
           } else {
             this._translateNotificationsService.error(
@@ -545,6 +527,14 @@ export class SharedProfessionalsListComponent {
           console.error(err);
         }
       );
+  }
+
+  private _isSelectable() {
+    if (this.accessPath.indexOf('professionals') === -1) {
+      return this.canAccess(['user', 'remove']);
+    } else {
+      return this.canAccess(['user', 'edit']) || this.canAccess(['user', 'delete']);
+    }
   }
 
   private _isCampaignProfessional(): boolean {
