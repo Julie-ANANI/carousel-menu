@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Milestone, Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
+import {Milestone, Mission, MissionQuestion, MissionTemplate, MissionTemplateSection} from '../../models/mission';
 import {ObjectivesPrincipal} from '../../models/static-data/missionObjectives';
 import {Pitches, Template_Pitches} from '../../models/static-data/project-pitch';
 
@@ -8,6 +8,29 @@ import {Pitches, Template_Pitches} from '../../models/static-data/project-pitch'
 export class MissionFrontService {
 
   private _missionObj: BehaviorSubject<Mission> = new BehaviorSubject<Mission>(<Mission>{});
+
+  /**
+   * return the combined complementary objectives of the sections of template.
+   * @param missionSections
+   */
+  public static combineComplementaryObjectives(missionSections: Array<MissionTemplateSection>): Array<MissionQuestion> {
+    let objectives: Array<MissionQuestion> = [];
+    for (let i = 0 ; i < missionSections.length; i++) {
+      objectives = [...missionSections[i].complementary];
+    }
+    return objectives;
+  }
+
+  /**
+   * for the sections it assign the complementary = []
+   * @param missionSections
+   */
+  public static resetComplementaryObjectives(missionSections: Array<MissionTemplateSection>): Array<MissionTemplateSection> {
+    return missionSections.map((_section) => {
+      _section.complementary = [];
+      return _section;
+    });
+  }
 
   /***
    * this function return the value based on the required filed and the provided language.
