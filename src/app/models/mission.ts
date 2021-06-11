@@ -69,17 +69,17 @@ export interface MissionQuestionOption {
    * editable by the operator.
    * Comes from the preset model.
    */
-  identifier: string;
+  identifier?: string;
   /**
    * La couleur dans laquelle est représentée l'option dans les charts de l'infographie
    * Comes from the preset model.
    */
-  color: string;
+  color?: string;
   /**
    * (ie à prendre en compte dans l'infographie dans les x% de réponses positives à la question)
    * Comes from the preset model.
    */
-  positive: boolean;
+  positive?: boolean;
   entry: Array<{
     label: string;
     lang: string;
@@ -87,36 +87,31 @@ export interface MissionQuestionOption {
 }
 
 export interface MissionQuestion {
-  readonly _id: string;
+  readonly _id?: string;
   readonly created?: Date;
 
   /**
    * stores the information.
    */
   entry: Array<MissionQuestionEntry>;
-  /**
-   * make it Hidden if the client selected it before but now
-   * he has unselected it. The operator wants to know this.
-   */
-  status: 'HIDDEN' | 'PUBLISHED';
   /***
    * this is to, when the client and operator having
    * discussion to finalize the questionnaire template.
    * Comes from the preset model.
    */
-  requirements: [{
+  requirements?: [{
     lang: String,
     text: String
   }];
   /**
    * Comes from the preset model.
    */
-  isTagged: boolean;
+  isTagged?: boolean;
   /**
    * maximum options he can select for controlType === 'checkbox'
    * Comes from the preset model.
    */
-  maxOptionsSelect: number;
+  maxOptionsSelect?: number;
   /**
    * Comes from the preset model.
    */
@@ -138,9 +133,14 @@ export interface MissionQuestion {
    */
   sensitiveAnswerData: boolean;
   /**
+   * Generate a random id for custom questions
    * Comes from the preset model.
    */
-  parameters: {
+  identifier: string;
+  /**
+   * Comes from the preset model.
+   */
+  parameters?: {
     type: {
       type: String,
       enum: MissionQuestionParameterType
@@ -163,7 +163,7 @@ export interface MissionQuestion {
    * Liste des réponses possibles à la question for the controlType = 'radio' | 'checkbox' | 'stars'
    * Comes from the preset model.
    */
-  options: Array<MissionQuestionOption>;
+  options?: Array<MissionQuestionOption>;
 }
 
 export interface MissionTemplate {

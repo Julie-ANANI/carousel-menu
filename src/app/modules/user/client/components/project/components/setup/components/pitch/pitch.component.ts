@@ -20,6 +20,7 @@ import {EtherpadFrontService} from '../../../../../../../../../services/etherpad
 import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
+import {MissionQuestionService} from '../../../../../../../../../services/mission/mission-question.service';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -291,7 +292,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public questionOptionName(value: MissionQuestionOption): string {
-    return MissionFrontService.questionOptionName(value, this.activeInnovCard.lang);
+    return MissionQuestionService.questionOptionName(value, this.activeInnovCard.lang);
   }
 
   public onRequestProofreading(event: Event) {
