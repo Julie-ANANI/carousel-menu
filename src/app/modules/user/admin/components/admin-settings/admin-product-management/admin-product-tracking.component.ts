@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { Table } from '../../../../../table/models/table';
 import { Column } from '../../../../../table/models/column';
+import { TrackingService } from '../../../../../../services/tracking/tracking.service';
 
 export interface Month {
   name: string;
@@ -101,7 +102,8 @@ export class AdminProductTrackingComponent implements OnInit {
       days: 31
     };
 
-  constructor(protected _rolesFrontService: RolesFrontService) {
+  constructor(protected _rolesFrontService: RolesFrontService,
+              protected _trackingService: TrackingService) {
   }
 
   ngOnInit(): void {
@@ -139,6 +141,11 @@ export class AdminProductTrackingComponent implements OnInit {
         {
           _attrs: ['max'],
           _name: 'MAX',
+          _type: 'TEXT',
+        },
+        {
+          _attrs: ['total'],
+          _name: 'Total',
           _type: 'TEXT',
         }
       ]

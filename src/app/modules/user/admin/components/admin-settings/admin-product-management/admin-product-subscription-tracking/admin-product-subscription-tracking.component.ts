@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AdminProductTrackingComponent, Month } from '../admin-product-tracking.component';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { Config } from '../../../../../../../models/config';
+import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-subscription-tracking',
@@ -28,19 +30,20 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
       days: 31
     };
 
-  constructor(protected _rolesFrontService: RolesFrontService) {
-    super(_rolesFrontService);
+  constructor(protected _rolesFrontService: RolesFrontService,
+              protected _trackingService: TrackingService) {
+    super(_rolesFrontService, _trackingService);
   }
 
   ngOnInit(): void {
-    this._testContent();
     this.initTrackingTable(this._contents, this._contents.length, 'Subscription');
-  }
 
-  private _testContent() {
-    for (let i = 1; i < 8; i++) {
-      this._contents.push({day: i, mean: 'Mean' + i, sd: 'SD' + i, min: 'MIN' + i, max: 'MAX' + i});
-    }
+    this._trackingService.getSubscriptionTrackingTimelines().pipe(first()).subscribe(res => {
+      console.log(res);
+      if (res) {
+        this._contents = res.data;
+      }
+    });
   }
 
   get queryConfig(): Config {
