@@ -81,7 +81,6 @@ export class MarketTestObjectivesComplementaryComponent {
 
     if (this._selectedSectionsObjectives.length) {
       if (((event.target) as HTMLInputElement).checked) {
-        value.status = 'PUBLISHED';
         this._selectedSectionsObjectives[sectionIndex].complementary.push(value);
       } else {
         const index = this._selectedSectionsObjectives[sectionIndex].complementary.findIndex((objective) => {

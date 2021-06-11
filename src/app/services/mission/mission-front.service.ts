@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Milestone, Mission, MissionQuestion, MissionQuestionOption, MissionTemplate, MissionTemplateSection} from '../../models/mission';
+import {Milestone, Mission, MissionQuestion, MissionTemplate, MissionTemplateSection} from '../../models/mission';
 import {ObjectivesPrincipal} from '../../models/static-data/missionObjectives';
 import {Pitches, Template_Pitches} from '../../models/static-data/project-pitch';
 
@@ -96,21 +96,6 @@ export class MissionFrontService {
       const find = value.entry.find((entry: any) => entry.lang === lang);
       if (!!find && find.objective) {
         return find.objective;
-      }
-    }
-    return '';
-  }
-
-  /**
-   * return the label of the question option
-   * @param option
-   * @param lang - based on this.
-   */
-  public static questionOptionName(option: MissionQuestionOption, lang = 'en'): string {
-    if (option && option.entry && option.entry.length) {
-      const find = option.entry.find((entry: any) => entry.lang === lang);
-      if (!!find && find.label) {
-        return find.label;
       }
     }
     return '';
