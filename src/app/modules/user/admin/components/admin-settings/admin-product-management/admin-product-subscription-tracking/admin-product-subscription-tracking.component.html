@@ -8,8 +8,8 @@
       <!-- month select -->
       <div class="form-group">
         <label class="form-label" for="select-month">Select a month</label>
-        <select class="form-select" id="select-month" [ngModel]="monthSelectedSub.name">
-          <option *ngFor="let month of this.months" [value]="month.name">{{month.name}}</option>
+        <select class="form-select" id="select-month" [(ngModel)]="monthSelectedSub">
+          <option *ngFor="let month of this.months" [ngValue]="month">{{month.name}}</option>
         </select>
       </div>
       <!-- /month select -->
@@ -17,9 +17,9 @@
       <!-- subscription tracking table -->
       <div>
         <app-shared-table
-          [loading]="false"
+          [loading]="isLoading"
           [(config)]="queryConfig"
-          [data]="_trackingTable">
+          [data]="trackingTable">
         </app-shared-table>
       </div>
       <!-- /subscription tracking table  -->

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { Table } from '../../../../../table/models/table';
 import { Column } from '../../../../../table/models/column';
 import { TrackingService } from '../../../../../../services/tracking/tracking.service';
 
@@ -92,8 +91,6 @@ export class AdminProductTrackingComponent implements OnInit {
     }
   ];
 
-  public _trackingTable: Table = <Table>{};
-
   private _monthSelected: Month =
     {
       name: 'January',
@@ -107,49 +104,6 @@ export class AdminProductTrackingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  public initTrackingTable(content: Array<any>, total = 0, title: string) {
-    this._trackingTable = {
-      _selector: 'admin-product-tracking-table',
-      _title: title,
-      _content: content,
-      _total: total,
-      _isTitle: true,
-      _columns:
-      [
-        {
-          _attrs: ['day'],
-          _name: 'Day',
-          _type: 'NUMBER',
-        },
-        {
-          _attrs: ['mean'],
-          _name: 'Mean',
-          _type: 'TEXT',
-        },
-        {
-          _attrs: ['sd'],
-          _name: 'SD',
-          _type: 'TEXT',
-        },
-        {
-          _attrs: ['min'],
-          _name: 'MIN',
-          _type: 'TEXT',
-        },
-        {
-          _attrs: ['max'],
-          _name: 'MAX',
-          _type: 'TEXT',
-        },
-        {
-          _attrs: ['total'],
-          _name: 'Total',
-          _type: 'TEXT',
-        }
-      ]
-    };
   }
 
   /**
@@ -184,9 +138,5 @@ export class AdminProductTrackingComponent implements OnInit {
     } else {
       return this._rolesFrontService.hasAccessAdminSide(['settings']);
     }
-  }
-
-  public get trackingTable(): Table {
-    return this._trackingTable;
   }
 }

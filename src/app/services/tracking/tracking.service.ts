@@ -8,8 +8,8 @@ export class TrackingService {
   constructor(private _http: HttpClient) {
   }
 
-  public getSubscriptionTrackingTimelines(): Observable<any> {
-    return this._http.get('/tracking/timelines');
+  public getSubscriptionTrackingTimelines(month: string): Observable<any> {
+    return this._http.get('/tracking/timelines', {params: {month: month}});
   }
 
 }
