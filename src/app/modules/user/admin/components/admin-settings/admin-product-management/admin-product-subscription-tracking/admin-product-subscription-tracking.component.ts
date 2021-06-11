@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdminProductTrackingComponent, Month } from '../admin-product-tracking.component';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { Config } from '../../../../../../../models/config';
-import { Column } from '../../../../../../table/models/column';
 
 @Component({
   selector: 'app-product-subscription-tracking',
@@ -18,8 +17,6 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
     search: '{}',
     sort: '{"created":-1}',
   };
-
-  private _columns: Array<Column> = [];
 
   private _contents: Array<any> = [];
 
