@@ -45,7 +45,7 @@ export class MissionFrontService {
    * @param questions
    */
   public static essentialsObjectives(questions: Array<MissionQuestion>): Array<MissionQuestion> {
-    return questions.filter((_question) => _question.type === 'ESSENTIALS');
+    return questions.filter((_question) => _question.type === 'ESSENTIAL');
   }
 
   /***

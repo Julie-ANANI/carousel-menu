@@ -124,7 +124,7 @@ export interface MissionQuestion {
    * ESSENTIALS - these are questions defined by us for each template every template has fixed number of these
    * questions client dose not have right to change them.
    */
-  type: 'COMPLEMENTARY' | 'ESSENTIALS';
+  type: 'COMPLEMENTARY' | 'ESSENTIAL';
 
   /**
    * stores the information.
