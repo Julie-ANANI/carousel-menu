@@ -73,21 +73,18 @@ export class MarketTestObjectivesComplementaryComponent {
 
     if (!this._selectedSectionsObjectives.length) {
       this._selectedSectionsObjectives = JSON.parse(JSON.stringify(this._templateSections));
-      this._selectedSectionsObjectives = this._selectedSectionsObjectives.map((_section) => {
-        _section.complementary = [];
-        return _section;
-      });
+      this._selectedSectionsObjectives = MissionFrontService.resetComplementaryObjectives(this._selectedSectionsObjectives);
     }
 
     if (this._selectedSectionsObjectives.length) {
       if (((event.target) as HTMLInputElement).checked) {
-        this._selectedSectionsObjectives[sectionIndex].complementary.push(value);
+        this._selectedSectionsObjectives[sectionIndex].questions.push(value);
       } else {
-        const index = this._selectedSectionsObjectives[sectionIndex].complementary.findIndex((objective) => {
+        const index = this._selectedSectionsObjectives[sectionIndex].questions.findIndex((objective) => {
           return objective._id === value._id;
         });
         if (index !== -1) {
-          this._selectedSectionsObjectives[sectionIndex].complementary.splice(index, 1);
+          this._selectedSectionsObjectives[sectionIndex].questions.splice(index, 1);
         }
       }
 
@@ -97,7 +94,7 @@ export class MarketTestObjectivesComplementaryComponent {
 
   public isChecked(value: MissionQuestion, sectionIndex: number): boolean {
     if (this._selectedSectionsObjectives.length) {
-      return this._selectedSectionsObjectives[sectionIndex].complementary.some((objective) => {
+      return this._selectedSectionsObjectives[sectionIndex].questions.some((objective) => {
         return objective._id === value._id;
       });
     }

@@ -2,79 +2,106 @@ import { Innovation } from './innovation';
 import { User } from './user.model';
 import { Multiling } from './multiling';
 
+
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 export type MissionTemplateSectionType = 'NOTHING' | 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT';
 export type MissionQuestionOptionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 'ranking' | 'scale';
 export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 'email' | 'month' | 'number'
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
 
+
+export interface MissionTemplateSectionEntry {
+  name: string;
+  lang: string;
+}
+
+
 export interface MissionTemplateSection {
+
   /**
    * based on ISSUE', 'SOLUTION', 'CONTEXT', 'OTHER' we create the sections in the
    * innovation card (back handles that).
    */
   type: MissionTemplateSectionType;
+
   /**
-   * these are questions defined by us for each template
-   * every template has fixed number of these questions
-   * user dose not have right to change them.
+   * contains the list of the question for the template.
+   * includes both the essential and complementary questions.
    */
-  essentials: Array<MissionQuestion>;
+  questions: Array<MissionQuestion>;
+
   /**
-   * each template has some additional questions that can be selected
-   * or not.
-   * user has right to change these questions.
-   * in the copy of the template in the mission we only store those which are selected by the
-   * client not all.
+   * define the name of the section and the lang.
+   * used for the questionnaire view
    */
-  complementary: Array<MissionQuestion>;
+  entry: Array<MissionTemplateSectionEntry>;
+
+  /**
+   * if we have more then one sections in the innovation card of same type in that case
+   * we assign the section name as the identifier so that at the time of the quiz generation
+   * we can identify which to take.
+   * this value is assigned when the questionnaire is being created.
+   * this value is not present all the time. It will come in play when we don't have the classic innovation.
+   */
+  identifier?: string;
 }
+
 
 export interface MissionQuestionEntry {
   lang: string;
+
   /**
    * Titre de la section dans l'infographie
    * Comes from the preset model.
    */
   title: string;
+
   /**
    * Sous-titre de la section dans le carré bleu de l'infographie
    * Comes from the preset model.
    */
   subtitle: string;
+
   /**
    * it's a text used in the quiz front for help or an instruction based on the questionType.
    * editable by the operator.
    * Comes from the preset model.
    */
   instruction: string;
+
   /**
    * Positive answers label
    * Comes from the preset model.
    */
   positivesAnswersLabel?: string;
+
   /**
    * Intitulé de la question (text used in the Quiz)
    */
   label: string;
+
   /**
    * text that we show to the client.
    */
   objective: string;
 }
 
+
 export interface MissionQuestionOption {
+
   /**
    * it's a text used in the quiz front for help or an instruction based on the questionType.
    * editable by the operator.
    * Comes from the preset model.
    */
   identifier?: string;
+
   /**
    * La couleur dans laquelle est représentée l'option dans les charts de l'infographie
    * Comes from the preset model.
    */
   color?: string;
+
   /**
    * (ie à prendre en compte dans l'infographie dans les x% de réponses positives à la question)
    * Comes from the preset model.
@@ -86,14 +113,24 @@ export interface MissionQuestionOption {
   }>;
 }
 
+
 export interface MissionQuestion {
   readonly _id?: string;
   readonly created?: Date;
 
   /**
+   * COMPLEMENTARY - each template has some additional questions that can be selected or not. client has right
+   * to change these questions.
+   * ESSENTIALS - these are questions defined by us for each template every template has fixed number of these
+   * questions client dose not have right to change them.
+   */
+  type: 'COMPLEMENTARY' | 'ESSENTIALS';
+
+  /**
    * stores the information.
    */
   entry: Array<MissionQuestionEntry>;
+
   /***
    * this is to, when the client and operator having
    * discussion to finalize the questionnaire template.
@@ -103,40 +140,48 @@ export interface MissionQuestion {
     lang: String,
     text: String
   }];
+
   /**
    * Comes from the preset model.
    */
   isTagged?: boolean;
+
   /**
    * maximum options he can select for controlType === 'checkbox'
    * Comes from the preset model.
    */
   maxOptionsSelect?: number;
+
   /**
    * Comes from the preset model.
    */
   controlType: MissionQuestionOptionType;
+
   /**
    * used this to activate/deactivate a field or legend or anything
    * For example: Activate/Deactivate "x% favourable responses" for type === 'radio'
    * Comes from the preset model.
    */
   visibility: boolean;
+
   /**
    * Possibilité d'ajouter un commentaire à sa réponse
    * Comes from the preset model.
    */
   canComment: boolean;
+
   /**
    * Answer contains sensitive private data as phone number or email
    * Comes from the preset model.
    */
   sensitiveAnswerData: boolean;
+
   /**
    * Generate a random id for custom questions
    * Comes from the preset model.
    */
   identifier: string;
+
   /**
    * Comes from the preset model.
    */
@@ -159,6 +204,7 @@ export interface MissionQuestion {
       type: Number
     }
   };
+
   /**
    * Liste des réponses possibles à la question for the controlType = 'radio' | 'checkbox' | 'stars'
    * Comes from the preset model.
@@ -166,8 +212,10 @@ export interface MissionQuestion {
   options?: Array<MissionQuestionOption>;
 }
 
+
 export interface MissionTemplate {
   readonly _id: string;
+
   /**
    * number of sections to have in the Innovation Card and of which type.
    * length of array represents the number of the section in innovation card.
@@ -180,10 +228,6 @@ export interface MissionTemplate {
   sections: Array<MissionTemplateSection>;
 
   entry: Array<{
-    /**
-     * can be used for the internal
-     */
-    label: string;
     lang: string;
     /**
      * name of the template (show to the user)
@@ -192,6 +236,7 @@ export interface MissionTemplate {
   }>;
 }
 
+
 export interface  Milestone {
  name: string;
  code: string;
@@ -199,11 +244,13 @@ export interface  Milestone {
  comment?: string;
 }
 
+
 export interface MailConfiguration {
   domain: string;
   service: string;
   region: string;
 }
+
 
 export interface Mission {
   readonly _id?: string;
@@ -215,20 +262,25 @@ export interface Mission {
    * instead of deleting it. (back takes care of it.)
    */
   readonly status?: 'PUBLISHED' | 'HIDDEN';
+
   /**
    * name of the mission
    */
   name?: string;
+
   innovations?: Array<Innovation>;
   goal?: string;
+
   /**
    * same as owner of the innovation
    */
   client?: User | string;
+
   /**
    * number of operators working on the mission.
    */
   team?: Array<User>;
+
   /**
    * use name & code 'RDO', when save the restitution date by owner while creating new project.
    * for code use the 'Page name' like 'NEW_PROJECT' when save any dates
