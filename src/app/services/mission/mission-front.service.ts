@@ -16,20 +16,36 @@ export class MissionFrontService {
   public static combineComplementaryObjectives(missionSections: Array<MissionTemplateSection>): Array<MissionQuestion> {
     const objectives: Array<MissionQuestion> = [];
     for (let i = 0 ; i < missionSections.length; i++) {
-      objectives.push(...missionSections[i].complementary);
+      objectives.push(...MissionFrontService.complementaryObjectives(missionSections[i].questions));
     }
     return objectives;
   }
 
   /**
-   * for the sections it assign the complementary = []
+   * the list questions in the sections only contain the list of the essentials objectives.
    * @param missionSections
    */
   public static resetComplementaryObjectives(missionSections: Array<MissionTemplateSection>): Array<MissionTemplateSection> {
     return missionSections.map((_section) => {
-      _section.complementary = [];
+      _section.questions = MissionFrontService.essentialsObjectives(_section.questions);
       return _section;
     });
+  }
+
+  /**
+   * return the list of the complementary objectives
+   * @param questions
+   */
+  public static complementaryObjectives(questions: Array<MissionQuestion>): Array<MissionQuestion> {
+    return questions.filter((_question) => _question.type === 'COMPLEMENTARY');
+  }
+
+  /**
+   * return the list of the essentials objectives
+   * @param questions
+   */
+  public static essentialsObjectives(questions: Array<MissionQuestion>): Array<MissionQuestion> {
+    return questions.filter((_question) => _question.type === 'ESSENTIALS');
   }
 
   /***

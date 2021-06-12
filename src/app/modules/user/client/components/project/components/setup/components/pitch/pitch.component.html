@@ -179,7 +179,7 @@
 
           <p *ngIf="section.type !== 'NOTHING'">SECTION {{ section.type | uppercase }}</p>
 
-          <ng-container *ngFor="let question of section.essentials.concat(section.complementary); let j = index;">
+          <ng-container *ngFor="let question of section.questions; let j = index;">
             <div
               [ngStyle]="{'margin-top': '18px', 'animation-duration': ((j+1) * 110) + 'ms'}"
               class="animate-slide slide-down">
