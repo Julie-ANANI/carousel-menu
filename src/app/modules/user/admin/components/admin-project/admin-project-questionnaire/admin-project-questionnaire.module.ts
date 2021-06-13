@@ -9,6 +9,7 @@ import { AdminProjectQuestionnaireComponent } from './admin-project-questionnair
 import { SharedPresetModule } from '../../../../../shared/components/shared-preset/shared-preset.module';
 import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
+import {SharedQuestionnaireModule} from '../../../../../shared/components/shared-questionnaire/shared-questionnaire.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/aut
     SharedPresetModule,
     FormsModule,
     ModalModule,
-    NguiAutoCompleteModule
+    NguiAutoCompleteModule,
+    SharedQuestionnaireModule
   ],
   declarations: [
     AdminProjectQuestionnaireComponent,
