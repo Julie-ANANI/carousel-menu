@@ -16,6 +16,12 @@ export interface MissionTemplateSectionEntry {
 }
 
 
+export interface OptionEntry {
+  label: string;
+  lang: string;
+}
+
+
 export interface MissionTemplateSection {
 
   /**
@@ -107,15 +113,12 @@ export interface MissionQuestionOption {
    * Comes from the preset model.
    */
   positive?: boolean;
-  entry: Array<{
-    label: string;
-    lang: string;
-  }>;
+  entry: Array<OptionEntry>;
 }
 
 
 export interface MissionQuestion {
-  readonly _id?: string;
+  _id?: string;
   readonly created?: Date;
 
   /**
@@ -229,6 +232,7 @@ export interface MissionTemplate {
 
   entry: Array<{
     lang: string;
+
     /**
      * name of the template (show to the user)
      */
