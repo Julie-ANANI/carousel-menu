@@ -17,7 +17,7 @@
             <option>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType | translate }}</option>
           </select>
         </label>
-        <span *ngIf="!editMode || !isEditable" class="m-right-20">{{ questionEntry.label }}</span>
+        <span *ngIf="!editMode || !isEditable" class="m-right-20">{{ questionEntry().label }}</span>
       </ng-container>
 
       <ng-container *ngIf="isEditable && editMode && !isTaggedQuestion">
@@ -181,12 +181,12 @@
         <!-- label -->
         <div class="m-bottom-15">
           <label class="form-label">Question</label>
-          <p *ngIf="!isEditable" class="text-sm">{{ questionEntry.label || 'NA' }}</p>
+          <p *ngIf="!isEditable" class="text-sm">{{ questionEntry(lang).label || 'NA' }}</p>
           <textarea
             #textAreaElement
             (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'label')"
             *ngIf="isEditable"
-            [ngModel]="questionEntry.label"
+            [ngModel]="questionEntry(lang).label || 'NA'"
             [id]="'question-label-'+lang"
             [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
             class="form-input auto-expand"
@@ -198,13 +198,13 @@
         <!-- instruction -->
         <div class="m-bottom-15">
           <label class="form-label">{{ lang === 'fr' ? 'Consigne' : 'Instruction' }}</label>
-          <p *ngIf="!isEditable" class="text-sm">{{ questionEntry.instruction || 'NA' }}</p>
+          <p *ngIf="!isEditable" class="text-sm">{{ questionEntry(lang).instruction || 'NA' }}</p>
           <textarea
             #textAreaElement
             (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'instruction')"
             *ngIf="isEditable"
             [id]="'question-instruction-'+lang"
-            [ngModel]="(questionEntry.instruction) ? questionEntry.instruction : ''"
+            [ngModel]="questionEntry(lang).instruction || ''"
             [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
             class="form-input"
             type="text">
@@ -223,7 +223,7 @@
               [ngClass]="{'is-editable': isEditable}"
               class="card">
 
-              <ng-container *ngIf="!isEditable">{{ optionEntry.label || 'NA' }}</ng-container>
+              <ng-container *ngIf="!isEditable">{{ optionEntry(option, lang).label || 'NA' }}</ng-container>
 
               <!-- move option -->
               <div *ngIf="isEditable" class="flex-centered m-top-10 m-bottom-10">
@@ -253,7 +253,7 @@
                 #textAreaElement
                 (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
                 *ngIf="isEditable"
-                [ngModel]="optionEntry.label"
+                [ngModel]="optionEntry(option, lang).label || 'NA'"
                 [id]="'option-label-'+lang"
                 [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
                 class="form-input"

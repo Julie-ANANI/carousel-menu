@@ -6,7 +6,7 @@ import {
   MissionQuestionOption,
   MissionQuestionOptionType,
   MissionTemplate,
-  MissionTemplateSection, OptionEntry
+  MissionTemplateSection
 } from '../../models/mission';
 import {Subject} from 'rxjs/Subject';
 import {colors} from '../../utils/chartColors';
@@ -494,39 +494,27 @@ export class MissionQuestionService {
   }
 
   /**
+   * first we search the entry by the lang passed if not found then
    * based on the languages will search the entry of the question and if not found then return first entry based
    * on the questionnaireLangs
    * @param question
+   * @param lang
    */
-  public questionEntry(question: MissionQuestion = <MissionQuestion>{}): MissionQuestionEntry {
-    if (this._questionnaireLangs.length) {
-      const lang = this._questionnaireLangs.find((_lang) => _lang === this._translateService.currentLang);
-      if (!!lang) {
-        return MissionQuestionService.entryInfo(question, lang);
+  public questionEntry(question: MissionQuestion = <MissionQuestion>{}, lang: string): MissionQuestionEntry {
+    const find = MissionQuestionService.entryInfo(question, lang);
+
+    if (!!find) {
+      return find;
+    } else if (this._questionnaireLangs.length) {
+      const quesLang = this._questionnaireLangs.find((_lang) => _lang === this._translateService.currentLang);
+      if (!!quesLang) {
+        return MissionQuestionService.entryInfo(question, quesLang);
       } else {
         return MissionQuestionService.entryInfo(question, this._questionnaireLangs[0]) || <MissionQuestionEntry>{};
       }
     }
 
     return question.entry && question.entry[0] || <MissionQuestionEntry>{};
-  }
-
-  /**
-   * based on the languages will search the entry of the option and if not found then return first entry based
-   * on the questionnaireLangs
-   * @param option
-   */
-  public optionEntry(option: MissionQuestionOption = <MissionQuestionOption>{}): OptionEntry {
-    if (this._questionnaireLangs.length) {
-      const lang = this._questionnaireLangs.find((_lang) => _lang === this._translateService.currentLang);
-      if (!!lang) {
-        return <OptionEntry>MissionQuestionService.entryInfo(option, lang);
-      } else {
-        return <OptionEntry>MissionQuestionService.entryInfo(option, this._questionnaireLangs[0]) || <OptionEntry>{};
-      }
-    }
-
-    return option.entry && option.entry[0] || <OptionEntry>{};
   }
 
   /**
