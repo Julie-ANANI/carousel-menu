@@ -4,6 +4,7 @@ import {PresetFrontService} from '../../../../../services/preset/preset-front.se
 import {Question, QuestionType} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import {CommonService} from '../../../../../services/common/common.service';
 
 @Component({
   selector: 'app-shared-preset-question',
@@ -77,34 +78,7 @@ export class SharedPresetQuestionComponent {
     if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
       return;
     }
-    this.calcTextareaHeight(textarea, _event);
-  }
-
-  /**
-   * this function is to make the textarea responsive based on the text and scroll height.
-   * @param textarea
-   * @param _event
-   */
-  public calcTextareaHeight(textarea: HTMLTextAreaElement, _event?: KeyboardEvent) {
-    const currentHeight = textarea.offsetHeight;
-    const scrollHeight = textarea.scrollHeight + 2;
-    const padding = 20;
-    const minHeight = Number(textarea.getAttribute('min-height'));
-
-    if (currentHeight >= minHeight || currentHeight < scrollHeight) {
-      if (scrollHeight < currentHeight) {
-        textarea.style.height = (scrollHeight + padding) + 'px';
-      } else if (scrollHeight >= minHeight) {
-        if (_event && _event.code === 'Backspace' || _event.key === 'Backspace') {
-          if (currentHeight + padding > scrollHeight) {
-            textarea.style.height = currentHeight - 15 + 'px';
-          }
-        } else if (scrollHeight !== currentHeight) {
-          textarea.style.height = currentHeight + (scrollHeight - currentHeight) + padding + 'px';
-        }
-      }
-    }
-
+    CommonService.calcTextareaHeight(textarea, _event);
   }
 
   public onChangeMaxOptions(value: number) {
