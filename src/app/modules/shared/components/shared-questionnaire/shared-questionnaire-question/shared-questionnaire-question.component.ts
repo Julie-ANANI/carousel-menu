@@ -1,6 +1,12 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {picto, Picto} from '../../../../../models/static-data/picto';
-import {MissionQuestion, MissionQuestionEntry, MissionQuestionOptionType, OptionEntry} from '../../../../../models/mission';
+import {
+  MissionQuestion,
+  MissionQuestionEntry,
+  MissionQuestionOption,
+  MissionQuestionOptionType,
+  OptionEntry
+} from '../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 import {CommonService} from '../../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -30,14 +36,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   get question(): MissionQuestion {
     return this._question;
-  }
-
-  get questionEntry(): MissionQuestionEntry {
-    return this._missionQuestionService.questionEntry(this._question) || <MissionQuestionEntry>{};
-  }
-
-  get optionEntry(): OptionEntry {
-    return this._missionQuestionService.optionEntry(this._question) || <OptionEntry>{};
   }
 
   get editMode(): boolean {
@@ -184,6 +182,14 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
     this._missionQuestionService.deleteOption(this._question, index);
+  }
+
+  public optionEntry(option: MissionQuestionOption, lang: string): OptionEntry {
+    return <OptionEntry>MissionQuestionService.entryInfo(option, lang) || <OptionEntry>{};
+  }
+
+  public questionEntry(lang: string = this.platformLang): MissionQuestionEntry {
+    return this._missionQuestionService.questionEntry(this._question, lang);
   }
 
   public updateValue(value: any, attr: string, index?: number) {
