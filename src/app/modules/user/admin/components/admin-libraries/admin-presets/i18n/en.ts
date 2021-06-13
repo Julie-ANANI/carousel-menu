@@ -108,7 +108,8 @@ export const PRESETS = {
       'stars': 'Stars rating',
       'textarea': 'Text',
       'toggle': 'Toggle',
-      'checkbox': 'Multiple choice'
+      'checkbox': 'Multiple choice',
+      'ranking': 'Ranking'
     },
     'EDIT': {
       'SAVE': 'Save the question',

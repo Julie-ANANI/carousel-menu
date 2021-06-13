@@ -20,7 +20,7 @@
         <!-- import preset -->
         <button
           (click)="openPresetSelection($event)"
-          *ngIf="canAccess(['import'])"
+          *ngIf="canAccess(['import']) && !hasMissionTemplate"
           class="button is-info is-sm m-right-25 is-outlined m-bottom-30"
           id="btn-import-preset"
           type="button">
@@ -44,15 +44,31 @@
     </section>
     <!-- /section actions -->
 
-    <!-- section to add preset -->
+    <!-- section to add preset  -->
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
-      <app-shared-preset
-        (save)="updatePreset($event)"
-        [isEditable]="canAccess(['edit'])"
-        [presetLanguages]="cardsLanguages"
-        [preset]="innovation.preset"
-        [sectionsNames]="sectionsNames">
-      </app-shared-preset>
+
+      <ng-container *ngIf="hasMissionTemplate; else oldPresets">
+        <app-shared-questionnaire
+          (templateChange)="updatePreset($event, 'TEMPLATE')"
+          [isEditable]="canAccess(['edit'])"
+          [questionnaireLanguages]="cardsLanguages"
+          [sectionsNames]="sectionsNames"
+          [template]="mission.template">
+        </app-shared-questionnaire>
+      </ng-container>
+
+      <ng-template #oldPresets>
+        <ng-container *ngIf="!!innovation.preset">
+          <app-shared-preset
+            (save)="updatePreset($event, 'PRESET')"
+            [isEditable]="canAccess(['edit'])"
+            [presetLanguages]="cardsLanguages"
+            [preset]="innovation.preset"
+            [sectionsNames]="sectionsNames">
+          </app-shared-preset>
+        </ng-container>
+      </ng-template>
+
     </section>
     <!-- /section to add preset -->
 
@@ -62,7 +78,7 @@
 
 <!-- modal -->
 <app-utility-modal
-  *ngIf="canAccess(['import'])"
+  *ngIf="canAccess(['import']) && !hasMissionTemplate"
   [(showModal)]="showPresetModal"
   [title]="'Import Board'">
 

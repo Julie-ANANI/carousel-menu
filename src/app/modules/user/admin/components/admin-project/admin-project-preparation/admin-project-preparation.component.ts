@@ -17,6 +17,8 @@ import {isPlatformBrowser} from '@angular/common';
 import {Response} from '../../../../../../models/response';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {SocketService} from '../../../../../../services/socket/socket.service';
+import {MissionService} from '../../../../../../services/mission/mission.service';
+import {Mission} from '../../../../../../models/mission';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -66,6 +68,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _router: Router,
               private _innovationService: InnovationService,
               private _campaignFrontService: CampaignFrontService,
+              private _missionService: MissionService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -235,11 +238,18 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   public onSave(event: Event) {
     event.preventDefault();
+
     if (!this._isSaving && (this._toBeSaved || this._toBeSavedComment)) {
-      this._isSaving = true;
       if (this._activeTab === 'questionnaire') {
-        this._saveProject({preset: this._project.preset});
+        if (this._toBeSaved.indexOf('mission') !== -1) {
+          this._isSaving = true;
+          this._saveMission({template: (<Mission>this._project.mission).template});
+        } else if (this._toBeSaved.indexOf('preset') !== -1) {
+          this._isSaving = true;
+          this._saveProject({preset: this._project.preset});
+        }
       } else {
+        this._isSaving = true;
         const fields = this._toBeSaved.split(',');
         const saveObject = {};
         fields.forEach(field => {
@@ -248,6 +258,23 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._saveProject(saveObject);
         this._saveComment();
       }
+    }
+  }
+
+  private _saveMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
+    const id = this._project.mission && (<Mission>this._project.mission)._id;
+    if (!!id) {
+      this._missionService.save(id, missionObj).pipe(first()).subscribe((mission) => {
+        this._project.mission = mission;
+        this._isSaving = false;
+        this._toBeSaved = '';
+        this._setInnovation();
+        this._translateNotificationsService.success('Success', 'The project has been updated.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._isSaving = false;
+        console.error(err);
+      });
     }
   }
 
