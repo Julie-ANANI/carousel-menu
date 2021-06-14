@@ -118,15 +118,18 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    */
   public generateQuiz(event: Event) {
     event.preventDefault();
-    this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
-      this._innovation = innovation;
-      this._innovationFrontService.setInnovation(innovation);
-      this._setQuizLink();
-      this._translateNotificationsService.success('Success', 'The quiz is generated.');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+
+    if (this._innovation === 'EVALUATING') {
+      this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
+        this._innovation = innovation;
+        this._innovationFrontService.setInnovation(innovation);
+        this._setQuizLink();
+        this._translateNotificationsService.success('Success', 'The quiz is generated.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+    }
   }
 
   /***
@@ -135,8 +138,11 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    */
   public openPresetSelection(event: Event) {
     event.preventDefault();
-    this._chosenPreset = null;
-    this._showPresetModal = true;
+
+    if (this._innovation === 'EVALUATING') {
+      this._chosenPreset = null;
+      this._showPresetModal = true;
+    }
   }
 
   public presetSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
