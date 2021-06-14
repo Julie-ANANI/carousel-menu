@@ -53,6 +53,12 @@ export class MissionQuestionService {
 
   private _questionnaireLangs: Array<string> = ['en', 'fr'];
 
+  /**
+   * for the moment we always add the entry in both languages
+   * later we will deal with it.
+   */
+  private _addEntryLang: Array<string> = ['en', 'fr'];
+
   constructor(private _translateService: TranslateService) {
   }
 
@@ -229,7 +235,7 @@ export class MissionQuestionService {
       const stringId = question.options.length.toString();
       return {
         identifier: stringId,
-        entry: this._questionnaireLangs.map((_lang) => {
+        entry: this._addEntryLang.map((_lang) => {
           return {
             lang: _lang,
             label: 'Option ' + stringId
@@ -298,14 +304,14 @@ export class MissionQuestionService {
    */
   public createQuestionEntry(questionType: MissionQuestionOptionType): Array<MissionQuestionEntry> {
     const entry: Array<MissionQuestionEntry> = [];
-    for (let i = 0; i < this._questionnaireLangs.length; i++) {
+    for (let i = 0; i < this._addEntryLang.length; i++) {
       entry.push({
         title: '',
         subtitle: '',
-        instruction: MissionQuestionService.questionInstruction(questionType)[this._questionnaireLangs[i]],
+        instruction: MissionQuestionService.questionInstruction(questionType)[this._addEntryLang[i]],
         label: '',
         objective: '',
-        lang: this._questionnaireLangs[i]
+        lang: this._addEntryLang[i]
       });
     }
     return entry;
@@ -326,7 +332,7 @@ export class MissionQuestionService {
       const section: MissionTemplateSection = {
         type: 'NOTHING',
         questions: [],
-        entry: this._questionnaireLangs.map((_lang) => {
+        entry: this._addEntryLang.map((_lang) => {
           return {
             lang: _lang,
             name: 'Section' + this._template.sections.length
