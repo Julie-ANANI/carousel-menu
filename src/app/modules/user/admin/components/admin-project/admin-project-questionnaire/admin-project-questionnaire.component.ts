@@ -119,7 +119,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   public generateQuiz(event: Event) {
     event.preventDefault();
 
-    if (this._innovation === 'EVALUATING') {
+    if (this._innovation.status === 'EVALUATING') {
       this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
         this._innovation = innovation;
         this._innovationFrontService.setInnovation(innovation);
@@ -139,7 +139,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   public openPresetSelection(event: Event) {
     event.preventDefault();
 
-    if (this._innovation === 'EVALUATING') {
+    if (this._innovation.status === 'EVALUATING') {
       this._chosenPreset = null;
       this._showPresetModal = true;
     }
@@ -165,9 +165,12 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   public importPreset(event: Event): void {
     event.preventDefault();
-    this._innovation.preset = this._chosenPreset;
-    this._saveInnovation();
-    this._showPresetModal = false;
+
+    if (this._innovation.status === 'EVALUATING') {
+      this._innovation.preset = this._chosenPreset;
+      this._saveInnovation();
+      this._showPresetModal = false;
+    }
   }
 
   /***
@@ -176,7 +179,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    * @param type
    */
   public updatePreset(event: Preset | MissionTemplate, type: 'TEMPLATE' | 'PRESET'): void {
-    if (this.canAccess(['edit'])) {
+    if (this.canAccess(['edit']) && this._innovation.status === 'EVALUATING') {
       if (type === 'TEMPLATE') {
         this._mission.template = <MissionTemplate>event;
         this._innovation.mission = this._mission;
