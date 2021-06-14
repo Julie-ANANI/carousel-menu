@@ -28,6 +28,8 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   private _monthSelectedSub: Month = this.months[0];
 
+  private _yearSelectedSub: number = this.years[0];
+
   private _trackingTable: Table = <Table>{};
 
   private _columns: Array<Column> = [
@@ -74,18 +76,19 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   ngOnInit(): void {
     this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, this._contents, this._columns);
-    this._getSubscriptionTrackingTimelines(this._monthSelectedSub);
+    this._getSubscriptionTrackingTimelines(this._monthSelectedSub, this._yearSelectedSub.toString());
   }
 
-  _getSubscriptionTrackingTimelines(month: Month) {
+  _getSubscriptionTrackingTimelines(month: Month, year: string) {
     this._trackingTable._total = -1;
-    this._trackingService.getSubscriptionTrackingTimelines(month.number.toString()).pipe(first()).subscribe(res => {
-      if (res) {
-        this._contents = res.data.data;
-        this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, this._contents, this._columns);
-        this._isLoading = false;
-      }
-    });
+    this._trackingService.getSubscriptionTrackingTimelines(month.number.toString(), this._yearSelectedSub.toString()).pipe(first())
+      .subscribe(res => {
+        if (res) {
+          this._contents = res.data.data;
+          this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, this._contents, this._columns);
+          this._isLoading = false;
+        }
+      });
   }
 
   get queryConfig(): Config {
@@ -108,11 +111,20 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   set monthSelectedSub(value: Month) {
     this._monthSelectedSub = value;
-    this._getSubscriptionTrackingTimelines(this._monthSelectedSub);
+    this._getSubscriptionTrackingTimelines(this._monthSelectedSub, this._yearSelectedSub.toString());
   }
-
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+
+  get yearSelectedSub(): number {
+    return this._yearSelectedSub;
+  }
+
+  set yearSelectedSub(value: number) {
+    this._yearSelectedSub = value;
+    this._getSubscriptionTrackingTimelines(this._monthSelectedSub, this._yearSelectedSub.toString());
   }
 }

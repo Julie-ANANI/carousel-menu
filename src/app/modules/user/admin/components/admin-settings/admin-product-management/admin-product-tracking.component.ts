@@ -100,15 +100,25 @@ export class AdminProductTrackingComponent implements OnInit {
       days: 31
     };
 
+  private _years: Array<number> = [];
+
   protected _tableSelector = '';
 
   protected _tableTitle = '';
 
   constructor(protected _rolesFrontService: RolesFrontService,
               protected _trackingService: TrackingService) {
+    this._generateYears();
   }
 
   ngOnInit(): void {
+  }
+
+  private _generateYears() {
+    this._years = [];
+    for (let i = new Date().getFullYear(); i >= 2018; i--) {
+      this._years.push(i);
+    }
   }
 
   /**
@@ -129,6 +139,10 @@ export class AdminProductTrackingComponent implements OnInit {
     };
   }
 
+
+  get years(): Array<number> {
+    return this._years;
+  }
 
   public get months(): Array<Month> {
     return this._months;
