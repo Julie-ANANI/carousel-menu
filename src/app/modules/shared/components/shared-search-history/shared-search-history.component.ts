@@ -236,7 +236,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         {
           _icon: 'fas fa-share-square',
           _label: 'Add to campaign',
-          _isHidden: !this.canAccess(['add', 'toCampaign'])
+          _isHidden: !this.canAccess(['add', 'toSameCampaign'])
         }
       ],
       _columns: [
