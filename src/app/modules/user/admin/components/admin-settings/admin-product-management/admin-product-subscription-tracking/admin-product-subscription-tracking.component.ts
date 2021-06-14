@@ -5,6 +5,7 @@ import { Config } from '../../../../../../../models/config';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { first } from 'rxjs/operators';
 import { Table } from '../../../../../../table/models/table';
+import { Column } from '../../../../../../table/models/column';
 
 @Component({
   selector: 'app-product-subscription-tracking',
@@ -29,58 +30,51 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   private _trackingTable: Table = <Table>{};
 
+  private _columns: Array<Column> = [
+    {
+      _attrs: ['day'],
+      _name: 'Day',
+      _type: 'NUMBER',
+    },
+    {
+      _attrs: ['mean'],
+      _name: 'Mean',
+      _type: 'TEXT',
+    },
+    {
+      _attrs: ['sd'],
+      _name: 'SD',
+      _type: 'TEXT',
+    },
+    {
+      _attrs: ['min'],
+      _name: 'MIN',
+      _type: 'TEXT',
+    },
+    {
+      _attrs: ['max'],
+      _name: 'MAX',
+      _type: 'TEXT',
+    },
+    {
+      _attrs: ['total'],
+      _name: 'Total',
+      _type: 'TEXT',
+    }
+  ];
+
 
   constructor(protected _rolesFrontService: RolesFrontService,
               protected _trackingService: TrackingService) {
     super(_rolesFrontService, _trackingService);
+    this._tableSelector = 'admin-product-tracking-table';
+    this._tableTitle = 'Subscription tracking';
+
   }
 
   ngOnInit(): void {
-    this.initTrackingTable(this._contents);
+    this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, this._contents, this._columns);
     this._getSubscriptionTrackingTimelines(this._monthSelectedSub);
-  }
-
-  public initTrackingTable(content: Array<any>) {
-    this._trackingTable = {
-      _selector: 'admin-product-tracking-table',
-      _title: 'Subscription tracking',
-      _content: content,
-      _total: content.length,
-      _isTitle: true,
-      _columns:
-        [
-          {
-            _attrs: ['day'],
-            _name: 'Day',
-            _type: 'NUMBER',
-          },
-          {
-            _attrs: ['mean'],
-            _name: 'Mean',
-            _type: 'TEXT',
-          },
-          {
-            _attrs: ['sd'],
-            _name: 'SD',
-            _type: 'TEXT',
-          },
-          {
-            _attrs: ['min'],
-            _name: 'MIN',
-            _type: 'TEXT',
-          },
-          {
-            _attrs: ['max'],
-            _name: 'MAX',
-            _type: 'TEXT',
-          },
-          {
-            _attrs: ['total'],
-            _name: 'Total',
-            _type: 'TEXT',
-          }
-        ]
-    };
   }
 
   _getSubscriptionTrackingTimelines(month: Month) {
@@ -88,7 +82,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
     this._trackingService.getSubscriptionTrackingTimelines(month.number.toString()).pipe(first()).subscribe(res => {
       if (res) {
         this._contents = res.data.data;
-        this.initTrackingTable(this._contents);
+        this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, this._contents, this._columns);
         this._isLoading = false;
       }
     });

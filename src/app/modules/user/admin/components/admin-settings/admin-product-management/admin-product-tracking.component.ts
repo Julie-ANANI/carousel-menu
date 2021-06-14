@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { Column } from '../../../../../table/models/column';
 import { TrackingService } from '../../../../../../services/tracking/tracking.service';
+import { Table } from '../../../../../table/models/table';
 
 export interface Month {
   name: string;
@@ -99,6 +100,10 @@ export class AdminProductTrackingComponent implements OnInit {
       days: 31
     };
 
+  protected _tableSelector = '';
+
+  protected _tableTitle = '';
+
   constructor(protected _rolesFrontService: RolesFrontService,
               protected _trackingService: TrackingService) {
   }
@@ -107,19 +112,21 @@ export class AdminProductTrackingComponent implements OnInit {
   }
 
   /**
-   * init columns by days of the month
-   * @param month
+   *
+   * @param selector
+   * @param title
+   * @param content
+   * @param columns
    */
-  public initColumnsByMonth(month: Month) {
-    const columns: Array<Column> = [];
-    [...Array(month.days).keys()].map(day => {
-      columns.push({
-        _attrs: [(day + 1).toString()],
-        _name: (day + 1).toString(),
-        _type: 'TEXT',
-      });
-    });
-    return columns;
+  public initTrackingTable(selector: string, title: string, content: Array<any>, columns: Array<Column>): Table {
+    return {
+      _selector: selector,
+      _title: title,
+      _content: content,
+      _total: content.length,
+      _isTitle: true,
+      _columns: columns
+    };
   }
 
 
