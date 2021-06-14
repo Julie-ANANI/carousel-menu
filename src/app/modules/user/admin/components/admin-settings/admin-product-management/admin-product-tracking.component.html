@@ -10,7 +10,7 @@
 
         <li class="text-bold"> Tips to share - Get started
           <ul class="m-left-3">
-            <li> How to help the community grow
+            <li class="text-normal"> How to help the community grow
               <ul class="tab">
                 <li class="tab-item" [ngClass]="helpCommunityTabActivated===help? 'active': ''"
                     *ngFor="let help of helpCommunity">
@@ -22,7 +22,7 @@
                 [activatedTracking]="helpCommunityTabActivated"></app-help-community>
             </li>
 
-            <li> How to future help the community grow
+            <li class="text-normal"> How to future help the community grow
               <ul class="tab">
                 <li class="tab-item" [ngClass]="futureHelpCommunityTabActivated===future? 'active': ''"
                     *ngFor="let future of futureHelpCommunity">
@@ -41,6 +41,7 @@
             <li> Click on "Use super tools"
             </li>
           </ul>
+          <app-use-super-tools></app-use-super-tools>
         </li>
       </ul>
     </section>

@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AdminProductTrackingComponent } from '../../admin-product-tracking.component';
-import { Table } from '../../../../../../../table/models/table';
-import { Column } from '../../../../../../../table/models/column';
-import { RolesFrontService } from '../../../../../../../../services/roles/roles-front.service';
-import { TrackingService } from '../../../../../../../../services/tracking/tracking.service';
-import { Config } from '../../../../../../../../models/config';
+import { AdminProductTrackingComponent } from '../admin-product-tracking.component';
+import { Table } from '../../../../../../table/models/table';
+import { Column } from '../../../../../../table/models/column';
+import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
+import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
+import { Config } from '../../../../../../../models/config';
 
 @Component({
   selector: 'app-help-community',
@@ -51,7 +51,7 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
   };
 
 
-  constructor(private _rolesFrontService: RolesFrontService, private _trackingService: TrackingService) {
+  constructor(protected _rolesFrontService: RolesFrontService, protected _trackingService: TrackingService) {
     super(_rolesFrontService, _trackingService);
   }
 
