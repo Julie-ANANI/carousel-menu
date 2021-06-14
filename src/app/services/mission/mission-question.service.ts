@@ -282,6 +282,9 @@ export class MissionQuestionService {
       if (question.controlType === 'textarea') {
         question.canComment = false;
       }
+      if (question.controlType === 'ranking') {
+        question.randomization = true;
+      }
 
       this._emitTemplate();
     }
@@ -297,7 +300,8 @@ export class MissionQuestionService {
 
     question.options = [];
 
-    if (question.controlType === 'checkbox' || question.controlType === 'radio' || question.controlType === 'stars') {
+    if (question.controlType === 'checkbox' || question.controlType === 'radio'
+      || question.controlType === 'stars' || question.controlType === 'ranking') {
       for (let i = 0; i < 4; i++) {
         question.options.push(this.addOption(question));
       }
@@ -320,7 +324,7 @@ export class MissionQuestionService {
    * @param question
    */
   public addOption(question: MissionQuestion = <MissionQuestion>{}): MissionQuestionOption {
-    if (question.controlType === 'radio' || question.controlType === 'checkbox' || question.controlType === 'stars') {
+    if (question.controlType === 'radio' || question.controlType === 'checkbox' || question.controlType === 'stars' || question.controlType === 'ranking') {
       const stringId = question.options.length.toString();
       return {
         identifier: stringId,
@@ -445,6 +449,7 @@ export class MissionQuestionService {
         controlType: 'radio',
         visibility: true,
         canComment: true,
+        randomization: false,
         sensitiveAnswerData: false,
         identifier: this.generateId(),
         entry: this.createQuestionEntry( 'radio'),

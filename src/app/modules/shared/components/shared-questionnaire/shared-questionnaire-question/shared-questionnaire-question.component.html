@@ -120,6 +120,17 @@
         </label>
         <!-- /add comment -->
 
+        <!-- add comment -->
+        <label *ngIf="question.controlType === 'ranking'" class="form-switch text-sm m-right-50">
+          <input
+            (ngModelChange)="updateValue($event, 'RANDOMIZATION')"
+            [ngModel]="question.randomization"
+            [disabled]="!isEditable"
+            type="checkbox">
+          <i class="form-icon"></i> Randomization
+        </label>
+        <!-- /add comment -->
+
         <!-- is sensitive data -->
         <span
           *ngIf="question.controlType === 'textarea'"
@@ -214,7 +225,7 @@
 
         <!-- question types -->
         <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-          || question.controlType === 'stars'">
+          || question.controlType === 'stars' || question.controlType === 'ranking'">
 
           <!-- options -->
           <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
@@ -288,7 +299,7 @@
 
     <!-- add item -->
     <ng-container *ngIf="isEditable && (question.controlType === 'radio' || question.controlType === 'checkbox'
-     || question.controlType === 'stars')">
+     || question.controlType === 'stars'|| question.controlType === 'ranking')">
       <div [ngClass]="questionnaireLangs.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
         <button
           (click)="addNewOption($event)"

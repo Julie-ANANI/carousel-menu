@@ -174,6 +174,12 @@ export interface MissionQuestion {
   canComment: boolean;
 
   /**
+   * Les options de la question seront affichées aléatoirement côté quiz.
+   * Comes from the preset model.
+   */
+  randomization: boolean;
+
+  /**
    * Answer contains sensitive private data as phone number or email
    * Comes from the preset model.
    */
