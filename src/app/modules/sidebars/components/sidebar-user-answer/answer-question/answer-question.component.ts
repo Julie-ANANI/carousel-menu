@@ -207,6 +207,15 @@ export class AnswerQuestionComponent {
     }
   }
 
+  moveListElement(questionId: string, event: any, initialIndex: number) {
+    const selectElem = document.getElementById(`select-${questionId}-${initialIndex}`) as HTMLSelectElement;
+    if (selectElem) {
+      const targetIndex = selectElem.selectedIndex;
+      this.fullAnswer.answers[questionId].splice(targetIndex, 0, this.fullAnswer.answers[questionId].splice(initialIndex, 1)[0]);
+      this.emitChanges();
+    }
+  }
+
   get showCommentTranslation(): boolean {
     return this._showCommentTranslation;
   }
