@@ -11,21 +11,27 @@
         <li class="text-bold"> Tips to share - Get started
           <ul class="m-left-3">
             <li> How to help the community grow
-              <ul class="m-left-10">
-                <li> Skip</li>
-                <li> Text</li>
-                <li> Download</li>
-                <li> Linkedin</li>
-                <li> Video</li>
+              <ul class="tab">
+                <li class="tab-item" [ngClass]="helpCommunityTabActivated===help? 'active': ''"
+                    *ngFor="let help of helpCommunity">
+                  <a (click)="activateTab(help)">{{help | titlecase}}</a>
+                </li>
               </ul>
+              <app-help-community
+                [pageTitle]="'How to help the community grow'"
+                [activatedTracking]="helpCommunityTabActivated"></app-help-community>
             </li>
 
             <li> How to future help the community grow
-              <ul class="m-left-10">
-                <li> Text</li>
-                <li> Linkedin</li>
-                <li> Video</li>
+              <ul class="tab">
+                <li class="tab-item" [ngClass]="futureHelpCommunityTabActivated===future? 'active': ''"
+                    *ngFor="let future of futureHelpCommunity">
+                  <a (click)="activateTabFuture(future)">{{future | titlecase}}</a>
+                </li>
               </ul>
+              <app-help-community
+                [pageTitle]="'How to future help the community grow'"
+                [activatedTracking]="futureHelpCommunityTabActivated"></app-help-community>
             </li>
           </ul>
         </li>

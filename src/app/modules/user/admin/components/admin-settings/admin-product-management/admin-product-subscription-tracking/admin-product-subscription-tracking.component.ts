@@ -32,38 +32,39 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   private _trackingTable: Table = <Table>{};
 
-  private _columns: Array<Column> = [
-    {
-      _attrs: ['day'],
-      _name: 'Day',
-      _type: 'NUMBER',
-    },
-    {
-      _attrs: ['mean'],
-      _name: 'Mean',
-      _type: 'TEXT',
-    },
-    {
-      _attrs: ['sd'],
-      _name: 'SD',
-      _type: 'TEXT',
-    },
-    {
-      _attrs: ['min'],
-      _name: 'MIN',
-      _type: 'TEXT',
-    },
-    {
-      _attrs: ['max'],
-      _name: 'MAX',
-      _type: 'TEXT',
-    },
-    {
-      _attrs: ['total'],
-      _name: 'Total',
-      _type: 'TEXT',
-    }
-  ];
+  private _columns: Array<Column> =
+    [
+      {
+        _attrs: ['day'],
+        _name: 'Day',
+        _type: 'NUMBER',
+      },
+      {
+        _attrs: ['mean'],
+        _name: 'Mean',
+        _type: 'TEXT',
+      },
+      {
+        _attrs: ['sd'],
+        _name: 'SD',
+        _type: 'TEXT',
+      },
+      {
+        _attrs: ['min'],
+        _name: 'MIN',
+        _type: 'TEXT',
+      },
+      {
+        _attrs: ['max'],
+        _name: 'MAX',
+        _type: 'TEXT',
+      },
+      {
+        _attrs: ['total'],
+        _name: 'Total',
+        _type: 'TEXT',
+      }
+    ];
 
 
   constructor(protected _rolesFrontService: RolesFrontService,
@@ -75,7 +76,8 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
   }
 
   ngOnInit(): void {
-    this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, this._contents, this._columns);
+    this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, true, this._contents, this._columns);
+    console.log(this._trackingTable);
     this._getSubscriptionTrackingTimelines(this._monthSelectedSub, this._yearSelectedSub.toString());
   }
 
@@ -85,7 +87,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
       .subscribe(res => {
         if (res) {
           this._contents = res.data.data;
-          this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, this._contents, this._columns);
+          this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, true, this._contents, this._columns);
           this._isLoading = false;
         }
       });

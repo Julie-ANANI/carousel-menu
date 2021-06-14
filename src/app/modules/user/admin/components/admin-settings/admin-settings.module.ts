@@ -26,6 +26,7 @@ import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-s
 import { AdminProductTrackingComponent } from './admin-product-management/admin-product-tracking.component';
 import { AdminProductSubscriptionTrackingComponent } from './admin-product-management/admin-product-subscription-tracking/admin-product-subscription-tracking.component';
 import { AdminDateSelectorComponent } from './admin-product-management/admin-product-date-selector/admin-date-selector.component';
+import { HelpCommunityGrowComponent } from './admin-product-management/admin-product-tips-to-share/help-community-grow/help-community-grow.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { AdminDateSelectorComponent } from './admin-product-management/admin-pro
     AdminEntrepriseAddParentComponent,
     AdminProductTrackingComponent,
     AdminProductSubscriptionTrackingComponent,
-    AdminDateSelectorComponent
+    AdminDateSelectorComponent,
+    HelpCommunityGrowComponent
   ],
   exports: [
     AdminSettingsComponent

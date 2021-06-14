@@ -46,12 +46,10 @@ export class AdminDateSelectorComponent extends AdminProductTrackingComponent im
   }
 
   sendMonthSelection() {
-    console.log(this._monthSelected);
     this.monthSelectedChange.emit(this._monthSelected);
   }
 
   sendYearSelection() {
-    console.log(this._yearSelected);
     this.yearSelectedChange.emit(this._yearSelected);
   }
 }

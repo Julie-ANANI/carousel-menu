@@ -18,6 +18,14 @@ export class AdminProductTrackingComponent implements OnInit {
 
   protected _tableTitle = '';
 
+  private _helpCommunity = ['skip', 'text', 'download', 'linkedin', 'video'];
+
+  private _futureHelpCommunity = ['text', 'linkedin', 'video'];
+
+  private _helpCommunityTabActivated = 'skip';
+
+  private _futureHelpCommunityTabActivated = 'text';
+
   constructor(protected _rolesFrontService: RolesFrontService,
               protected _trackingService: TrackingService) {
     this._generateYears();
@@ -39,14 +47,15 @@ export class AdminProductTrackingComponent implements OnInit {
    * @param title
    * @param content
    * @param columns
+   * @param isTitle
    */
-  public initTrackingTable(selector: string, title: string, content: Array<any>, columns: Array<Column>): Table {
+  public initTrackingTable(selector: string, title: string, isTitle: boolean, content: Array<any>, columns: Array<Column>): Table {
     return {
       _selector: selector,
       _title: title,
       _content: content,
       _total: content.length,
-      _isTitle: true,
+      _isTitle: isTitle,
       _columns: columns
     };
   }
@@ -61,11 +70,36 @@ export class AdminProductTrackingComponent implements OnInit {
   }
 
 
+  get helpCommunity(): string[] {
+    return this._helpCommunity;
+  }
+
+  get futureHelpCommunity(): string[] {
+    return this._futureHelpCommunity;
+  }
+
   public canAccess(path?: Array<string>) {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(['settings'].concat(path));
     } else {
       return this._rolesFrontService.hasAccessAdminSide(['settings']);
     }
+  }
+
+  activateTab(help: string) {
+    this._helpCommunityTabActivated = help;
+  }
+
+
+  get helpCommunityTabActivated(): string {
+    return this._helpCommunityTabActivated;
+  }
+
+  get futureHelpCommunityTabActivated(): string {
+    return this._futureHelpCommunityTabActivated;
+  }
+
+  activateTabFuture(future: string) {
+    this._futureHelpCommunityTabActivated = future;
   }
 }
