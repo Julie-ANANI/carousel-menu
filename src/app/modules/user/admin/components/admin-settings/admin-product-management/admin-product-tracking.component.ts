@@ -4,101 +4,13 @@ import { Column } from '../../../../../table/models/column';
 import { TrackingService } from '../../../../../../services/tracking/tracking.service';
 import { Table } from '../../../../../table/models/table';
 
-export interface Month {
-  name: string;
-  shortForm: string;
-  number: number;
-  days: number;
-}
-
 @Component({
   templateUrl: './admin-product-tracking.component.html',
   styleUrls: ['./admin-product-tracking.component.scss']
 })
 
 export class AdminProductTrackingComponent implements OnInit {
-  private _months: Array<Month> = [
-    {
-      name: 'January',
-      shortForm: 'Jan.',
-      number: 1,
-      days: 31
-    },
-    {
-      name: 'February',
-      shortForm: 'Feb.',
-      number: 2,
-      days: 28
-    },
-    {
-      name: 'March',
-      shortForm: 'Mar.',
-      number: 3,
-      days: 31
-    },
-    {
-      name: 'April',
-      shortForm: 'Apr.',
-      number: 4,
-      days: 31
-    },
-    {
-      name: 'May',
-      shortForm: 'May',
-      number: 5,
-      days: 31
-    },
-    {
-      name: 'June',
-      shortForm: 'Jun.',
-      number: 6,
-      days: 30
-    },
-    {
-      name: 'July',
-      shortForm: 'Jul.',
-      number: 7,
-      days: 31
-    },
-    {
-      name: 'August',
-      shortForm: 'Aug.',
-      number: 8,
-      days: 31
-    },
-    {
-      name: 'September',
-      shortForm: 'Sep.',
-      number: 9,
-      days: 30
-    },
-    {
-      name: 'October',
-      shortForm: 'Oct.',
-      number: 10,
-      days: 31
-    },
-    {
-      name: 'November',
-      shortForm: 'Nov.',
-      number: 11,
-      days: 30
-    },
-    {
-      name: 'December',
-      shortForm: 'Dec.',
-      number: 12,
-      days: 31
-    }
-  ];
-
-  private _monthSelected: Month =
-    {
-      name: 'January',
-      shortForm: 'Jan.',
-      number: 1,
-      days: 31
-    };
+  private _months: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   private _years: Array<number> = [];
 
@@ -144,14 +56,10 @@ export class AdminProductTrackingComponent implements OnInit {
     return this._years;
   }
 
-  public get months(): Array<Month> {
+  public get months(): Array<number> {
     return this._months;
   }
 
-
-  public get monthSelected(): Month {
-    return this._monthSelected;
-  }
 
   public canAccess(path?: Array<string>) {
     if (path) {

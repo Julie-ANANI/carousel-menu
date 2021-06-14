@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminProductTrackingComponent, Month } from '../admin-product-tracking.component';
+import { AdminProductTrackingComponent } from '../admin-product-tracking.component';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { Config } from '../../../../../../../models/config';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
@@ -26,7 +26,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   private _isLoading = false;
 
-  private _monthSelectedSub: Month = this.months[0];
+  private _monthSelectedSub: number = this.months[0];
 
   private _yearSelectedSub: number = this.years[0];
 
@@ -79,9 +79,9 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
     this._getSubscriptionTrackingTimelines(this._monthSelectedSub, this._yearSelectedSub.toString());
   }
 
-  _getSubscriptionTrackingTimelines(month: Month, year: string) {
+  _getSubscriptionTrackingTimelines(month: number, year: string) {
     this._trackingTable._total = -1;
-    this._trackingService.getSubscriptionTrackingTimelines(month.number.toString(), this._yearSelectedSub.toString()).pipe(first())
+    this._trackingService.getSubscriptionTrackingTimelines(month.toString(), this._yearSelectedSub.toString()).pipe(first())
       .subscribe(res => {
         if (res) {
           this._contents = res.data.data;
@@ -100,7 +100,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
   }
 
 
-  get monthSelectedSub(): Month {
+  get monthSelectedSub(): number {
     return this._monthSelectedSub;
   }
 
@@ -109,7 +109,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
     return this._trackingTable;
   }
 
-  set monthSelectedSub(value: Month) {
+  set monthSelectedSub(value: number) {
     this._monthSelectedSub = value;
     this._getSubscriptionTrackingTimelines(this._monthSelectedSub, this._yearSelectedSub.toString());
   }

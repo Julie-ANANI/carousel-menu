@@ -4,26 +4,12 @@
 
     <!-- subscription tracking -->
     <section>
-
-      <div class="d-flex m-bottom-50">
-        <!-- month select -->
-        <div class="form-group">
-          <label class="form-label" for="select-month">Select a month</label>
-          <select class="form-select" id="select-month" [(ngModel)]="monthSelectedSub">
-            <option *ngFor="let month of months" [ngValue]="month">{{month.name}}</option>
-          </select>
-        </div>
-        <!-- /month select -->
-
-        <!-- year select -->
-        <div class="form-group m-left-25">
-          <label class="form-label" for="select-year">Select a year</label>
-          <select class="form-select" id="select-year" [(ngModel)]="yearSelectedSub">
-            <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
-          </select>
-        </div>
-        <!-- /year select -->
-      </div>
+      <!-- Month/Year selector -->
+      <app-product-date-selector
+        [(monthSelected)]="monthSelectedSub"
+        [(yearSelected)]="yearSelectedSub">
+      </app-product-date-selector>
+      <!-- /Month/Year selector -->
 
       <!-- subscription tracking table -->
       <div>
