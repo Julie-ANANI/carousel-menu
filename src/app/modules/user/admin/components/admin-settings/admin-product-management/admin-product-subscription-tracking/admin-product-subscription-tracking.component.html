@@ -6,7 +6,7 @@
     <section>
 
       <!-- month select -->
-      <div class="form-group">
+      <div class="form-group m-bottom-50">
         <label class="form-label" for="select-month">Select a month</label>
         <select class="form-select" id="select-month" [(ngModel)]="monthSelectedSub">
           <option *ngFor="let month of this.months" [ngValue]="month">{{month.name}}</option>
