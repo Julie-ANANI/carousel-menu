@@ -5,6 +5,8 @@ import { Column } from '../../../../../../table/models/column';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { Config } from '../../../../../../../models/config';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-help-community',
@@ -13,12 +15,25 @@ import { Config } from '../../../../../../../models/config';
 })
 
 export class HelpCommunityGrowComponent extends AdminProductTrackingComponent implements OnInit {
-  @Input() pageTitle = 'How to help the community grow';
-  @Input() activatedTracking = 'skip';
+  // @Input() pageTitle = 'How to help the community grow';
+  // @Input() activatedTracking = 'skip';
+  @Input() set activatedTracking(value: string) {
+    this._activatedTracking = value;
+    this._getTrackers();
+  }
+
+  @Input() set pageTitle(value: string) {
+    this._pageTitle = value;
+    this._getTrackers();
+  }
 
   private _monthSelectedSub: number = this.months[0];
 
   private _yearSelectedSub: number = this.years[0];
+
+  private _activatedTracking = 'skip';
+
+  private _pageTitle = 'How to help the community grow';
 
   private _helpCommunityTable: Table = <Table>{};
 
@@ -34,11 +49,11 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
         _name: 'Nb click',
         _type: 'NUMBER',
       },
-      {
-        _attrs: ['view'],
-        _name: 'Nb view',
-        _type: 'NUMBER',
-      }
+      // {
+      //   _attrs: ['view'],
+      //   _name: 'Nb view',
+      //   _type: 'NUMBER',
+      // }
     ];
 
   private _content: Array<any> = [];
@@ -56,7 +71,7 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
   }
 
   ngOnInit() {
-    this._helpCommunityTable = this.initTrackingTable('admin-help-community-grow-trcking', 'test', false, this._content, this._columns);
+    this._helpCommunityTable = this.initTrackingTable('admin-help-community-grow-tracking', '', false, this._content, this._columns);
   }
 
   get monthSelectedSub(): number {
@@ -65,6 +80,7 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
 
   set monthSelectedSub(value: number) {
     this._monthSelectedSub = value;
+    this._getTrackers();
   }
 
 
@@ -74,6 +90,7 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
 
   set yearSelectedSub(value: number) {
     this._yearSelectedSub = value;
+    this._getTrackers();
   }
 
 
@@ -88,5 +105,18 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
 
   set queryConfig(value: Config) {
     this._queryConfig = value;
+  }
+
+  private _getTrackers() {
+    this._trackingService.getTrackers(this._monthSelectedSub.toString(), this._yearSelectedSub.toString(), this._pageTitle, this._activatedTracking)
+      .pipe(first())
+      .subscribe((data: any) => {
+        if (data) {
+          this._content = data.data;
+          this._helpCommunityTable = this.initTrackingTable('admin-help-community-grow-tracking', '', false, this._content, this._columns);
+        }
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
   }
 }

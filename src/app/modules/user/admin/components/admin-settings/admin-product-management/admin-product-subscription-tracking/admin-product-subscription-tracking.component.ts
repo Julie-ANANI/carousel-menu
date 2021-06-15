@@ -77,7 +77,6 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   ngOnInit(): void {
     this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, true, this._contents, this._columns);
-    console.log(this._trackingTable);
     this._getSubscriptionTrackingTimelines(this._monthSelectedSub, this._yearSelectedSub.toString());
   }
 
