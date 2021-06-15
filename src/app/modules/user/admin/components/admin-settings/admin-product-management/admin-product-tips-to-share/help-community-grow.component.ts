@@ -15,16 +15,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class HelpCommunityGrowComponent extends AdminProductTrackingComponent implements OnInit {
-  @Input() pageTitle = 'How to help the community grow';
-  @Input() activatedTracking = 'skip';
+  @Input() set pageTitle(value: string) {
+    this._pageTitle = value;
+    this._getTrackers();
+  }
+
+  @Input() set activatedTracking(value: string) {
+    this._activatedTracking = value;
+    this._getTrackers();
+  }
 
   private _monthSelectedSub: number = this.months[0];
 
+  private _pageTitle = '';
+
+  private _activatedTracking = '';
+
   private _yearSelectedSub: number = this.years[0];
-
-  private _activatedTracking = 'skip';
-
-  private _pageTitle = 'How to help the community grow';
 
   private _helpCommunityTable: Table = <Table>{};
 
@@ -40,11 +47,11 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
         _name: 'Nb click',
         _type: 'NUMBER',
       },
-      // {
-      //   _attrs: ['view'],
-      //   _name: 'Nb view',
-      //   _type: 'NUMBER',
-      // }
+      {
+        _attrs: ['view'],
+        _name: 'Nb view',
+        _type: 'NUMBER',
+      }
     ];
 
   private _content: Array<any> = [];
@@ -99,6 +106,7 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
   }
 
   private _getTrackers() {
+    this._helpCommunityTable._total = -1;
     this._trackingService.getTrackers(this._monthSelectedSub.toString(), this._yearSelectedSub.toString(), this._pageTitle, this._activatedTracking)
       .pipe(first())
       .subscribe((data: any) => {
