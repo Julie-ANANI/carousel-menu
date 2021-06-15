@@ -82,7 +82,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
 
   _getSubscriptionTrackingTimelines(month: number, year: string) {
     this._trackingTable._total = -1;
-    this._trackingService.getSubscriptionTrackingTimelines(month.toString(), this._yearSelectedSub.toString()).pipe(first())
+    this._trackingService.getSubscriptionTrackingTimelines(month.toString(), year).pipe(first())
       .subscribe(res => {
         if (res) {
           this._contents = res.data.data;

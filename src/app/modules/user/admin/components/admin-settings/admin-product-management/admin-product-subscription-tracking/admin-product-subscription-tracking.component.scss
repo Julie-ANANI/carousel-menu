@@ -3,4 +3,9 @@
     width: 200px;
     height: 40px;
   }
+
+  .table-container{
+    max-height: 400px;
+    overflow: scroll;
+  }
 }
