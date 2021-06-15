@@ -15,17 +15,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class HelpCommunityGrowComponent extends AdminProductTrackingComponent implements OnInit {
-  // @Input() pageTitle = 'How to help the community grow';
-  // @Input() activatedTracking = 'skip';
-  @Input() set activatedTracking(value: string) {
-    this._activatedTracking = value;
-    this._getTrackers();
-  }
-
-  @Input() set pageTitle(value: string) {
-    this._pageTitle = value;
-    this._getTrackers();
-  }
+  @Input() pageTitle = 'How to help the community grow';
+  @Input() activatedTracking = 'skip';
 
   private _monthSelectedSub: number = this.months[0];
 
@@ -114,9 +105,12 @@ export class HelpCommunityGrowComponent extends AdminProductTrackingComponent im
         if (data) {
           this._content = data.data;
           this._helpCommunityTable = this.initTrackingTable('admin-help-community-grow-tracking', '', false, this._content, this._columns);
+        } else {
+          this._helpCommunityTable._total = 0;
         }
       }, (err: HttpErrorResponse) => {
         console.log(err);
+        this._helpCommunityTable._total = 0;
       });
   }
 }

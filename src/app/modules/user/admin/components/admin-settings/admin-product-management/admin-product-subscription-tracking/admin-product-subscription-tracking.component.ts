@@ -41,22 +41,22 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
       },
       {
         _attrs: ['mean'],
-        _name: 'Mean',
+        _name: 'Mean / ms',
         _type: 'TEXT',
       },
       {
         _attrs: ['sd'],
-        _name: 'SD',
+        _name: 'SD / ms',
         _type: 'TEXT',
       },
       {
         _attrs: ['min'],
-        _name: 'MIN',
+        _name: 'MIN / ms',
         _type: 'TEXT',
       },
       {
         _attrs: ['max'],
-        _name: 'MAX',
+        _name: 'MAX / ms',
         _type: 'TEXT',
       },
       {
@@ -85,10 +85,15 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductTrack
     this._trackingService.getSubscriptionTrackingTimelines(month.toString(), year).pipe(first())
       .subscribe(res => {
         if (res) {
-          this._contents = res.data.data;
+          this._contents = res.data;
           this._trackingTable = this.initTrackingTable(this._tableSelector, this._tableTitle, true, this._contents, this._columns);
           this._isLoading = false;
+        } else {
+          this._trackingTable._total = 0;
         }
+      }, err => {
+        console.log(err);
+        this._trackingTable._total = -1;
       });
   }
 
