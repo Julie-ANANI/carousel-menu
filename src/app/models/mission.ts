@@ -5,7 +5,7 @@ import { Multiling } from './multiling';
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 export type MissionTemplateSectionType = 'NOTHING' | 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT';
-export type MissionQuestionOptionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 'ranking' | 'scale';
+export type MissionQuestionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 'ranking' | 'scale';
 export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 'email' | 'month' | 'number'
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
 
@@ -158,7 +158,7 @@ export interface MissionQuestion {
   /**
    * Comes from the preset model.
    */
-  controlType: MissionQuestionOptionType;
+  controlType: MissionQuestionType;
 
   /**
    * used this to activate/deactivate a field or legend or anything

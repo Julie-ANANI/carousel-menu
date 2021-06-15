@@ -36,10 +36,10 @@
         </label>
       </ng-container>
 
-      <!--<ng-container *ngIf="editMode && isEditable">
+      <ng-container *ngIf="editMode && isEditable">
         <label class="m-right-20">
           <select
-            (ngModelChange)="changeIdentifier($event)"
+            (ngModelChange)="onChangeIdentifier($event)"
             [(ngModel)]="question.identifier"
             class="form-select is-sm">
             <option *ngIf="isTaggedQuestion" [value]="question.identifier">#{{question.identifier}}</option>
@@ -47,7 +47,7 @@
             <option [value]="customId">{{ 'COMMON.LABEL.CUSTOM' | translate }}</option>
           </select>
         </label>
-      </ng-container>-->
+      </ng-container>
 
       <ng-container *ngIf="isTaggedQuestion && (!editMode || !isEditable)">
         <div class="label is-rounded is-tag is-sm m-no m-right-20">

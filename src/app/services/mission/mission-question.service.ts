@@ -4,7 +4,7 @@ import {
   MissionQuestion,
   MissionQuestionEntry,
   MissionQuestionOption,
-  MissionQuestionOptionType,
+  MissionQuestionType,
   MissionTemplate,
   MissionTemplateSection
 } from '../../models/mission';
@@ -14,6 +14,10 @@ import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
+
+  get taggedQuestionsTypes(): { [p: string]: MissionQuestionType } {
+    return this._taggedQuestionsTypes;
+  }
 
   get questionnaireLangs(): Array<string> {
     return this._questionnaireLangs;
@@ -59,6 +63,63 @@ export class MissionQuestionService {
    */
   private _addEntryLang: Array<string> = ['en', 'fr'];
 
+  private _taggedQuestionsTypes: {[identifier: string]: MissionQuestionType} = {
+    DetectingMarketNeeds_InnovationOpportunities: 'radio',
+    DetectingMarketNeeds_MarketNeeds: 'textarea',
+    DetectingMarketNeeds_FutureTrends: 'textarea',
+    DetectingMarketNeeds_AreasOfDevelopment: 'textarea',
+    DetectingMarketNeeds_PreIdentifiedIssues: 'ranking',
+    DetectingMarketNeeds_MarketPlayers: 'textarea',
+    DetectingMarketNeeds_MarketImpact: 'textarea',
+    DetectingMarketNeeds_Stakeholders: 'radio',
+    DetectingMarketNeeds_Recontact: 'textarea',
+    ValidatingMarketNeeds_ExistenceOfNeeds: 'radio',
+    ValidatingMarketNeeds_CriticalityOfNeeds: 'radio',
+    ValidatingMarketNeeds_RankNeeds: 'ranking',
+    ValidatingMarketNeeds_Recontact: 'textarea',
+    ValidatingMarketNeeds_Stakeholders: 'radio',
+    ValidatingMarketNeeds_CurrentUsedSolutions: 'textarea',
+    ValidatingMarketNeeds_SolutionsLimitations: 'textarea',
+    Sourcing_IdentifySolutions: 'textarea',
+    Sourcing_IdentifySuppliers: 'textarea',
+    Sourcing_ProblemSolutionFit: 'stars',
+    Sourcing_MaturityLevel: 'radio',
+    Sourcing_SimilarProblem: 'textarea',
+    Sourcing_MarketPlayers: 'textarea',
+    Sourcing_Stakeholders: 'radio',
+    Sourcing_Recontact: 'textarea',
+    IdentifyingReceptiveMarkets_DetectNeeds: 'textarea',
+    IdentifyingReceptiveMarkets_Adaptability: 'scale',
+    IdentifyingReceptiveMarkets_RankFeatures: 'radio',
+    IdentifyingReceptiveMarkets_ExpectedSpecifications: 'textarea',
+    IdentifyingReceptiveMarkets_AdoptionBarriers: 'textarea',
+    IdentifyingReceptiveMarkets_ExistingSolutions: 'textarea',
+    IdentifyingReceptiveMarkets_SolutionsLimitations: 'textarea',
+    IdentifyingReceptiveMarkets_Stakeholders: 'radio',
+    IdentifyingReceptiveMarkets_Recontact: 'textarea',
+    ValidatingInterestProject_ExistenceOfNeeds: 'scale',
+    ValidatingInterestProject_ExistenceOfCriticality: 'scale',
+    ValidatingInterestProject_RankIssues: 'ranking',
+    ValidatingInterestProject_SolutionsUsed: 'textarea',
+    ValidatingInterestProject_SolutionsLimitations: 'textarea',
+    ValidatingInterestProject_ValueOfSolution: 'scale',
+    ValidatingInterestProject_Adaptability: 'scale',
+    ValidatingInterestProject_RankFeatures: 'ranking',
+    ValidatingInterestProject_Strengths: 'textarea',
+    ValidatingInterestProject_Stakeholders: 'textarea',
+    ValidatingInterestProject_BusinessModel: 'radio',
+    ValidatingInterestProject_Recontact: 'textarea',
+    ValidatingInterestProject_Weaknesses: 'textarea',
+    ValidatingInterestProject_WillingnessToPay: 'textarea',
+    OptimizingMyPV_RankMarketNeeds: 'ranking',
+    OptimizingMyPV_RankArguments: 'ranking',
+    OptimizingMyPV_AdoptionBarriers: 'ranking',
+    OptimizingMyPV_PricePositioning: 'radio',
+    OptimizingMyPV_BusinessModel: 'radio',
+    OptimizingMyPV_Stakeholders: 'radio',
+    OptimizingMyPV_Recontact: 'textarea',
+  };
+
   constructor(private _translateService: TranslateService) {
   }
 
@@ -94,7 +155,7 @@ export class MissionQuestionService {
    * return the default instruction for the different questions
    * @param controlType
    */
-  public static questionInstruction(controlType: MissionQuestionOptionType): {en: string, fr: string} {
+  public static questionInstruction(controlType: MissionQuestionType): {en: string, fr: string} {
     switch (controlType) {
       case 'scale':
         return {
@@ -302,7 +363,7 @@ export class MissionQuestionService {
    * return the question entry of the question.
    * @param questionType
    */
-  public createQuestionEntry(questionType: MissionQuestionOptionType): Array<MissionQuestionEntry> {
+  public createQuestionEntry(questionType: MissionQuestionType): Array<MissionQuestionEntry> {
     const entry: Array<MissionQuestionEntry> = [];
     for (let i = 0; i < this._addEntryLang.length; i++) {
       entry.push({
@@ -548,6 +609,41 @@ export class MissionQuestionService {
     delete question._id;
     question.identifier = this.generateId();
     questions.push(JSON.parse(JSON.stringify(question)));
+  }
+
+  /**
+   *
+   * @param identifier
+   */
+  public isTaggedQuestion(identifier: string): boolean {
+    return Object.keys(this._taggedQuestionsTypes).indexOf(identifier) !== -1;
+  }
+
+  /**
+   * make sensitiveAnswerData to true if exists.
+   * @param identifier
+   */
+  public isContactQuestion(identifier: string): boolean {
+    return this.isTaggedQuestion(identifier) && identifier.indexOf('Recontact') !== -1;
+  }
+
+  /**
+   *
+   */
+  public getNonUsedQuestions(): Array<string> {
+    const identifiersMap = this._template.sections.reduce((accS, section) => {
+      const subIdentifiersMap = section.questions.reduce((accQ, question) => Object.assign(accQ, {[question.identifier]: 1}), {});
+      return Object.assign(accS, subIdentifiersMap);
+    }, {} as {[questionId: string]: 1});
+    return Object.keys(this._taggedQuestionsTypes).filter((tag) => !identifiersMap[tag]);
+  }
+
+  /**
+   *
+   * @param identifier
+   */
+  public getQuestionType(identifier: string): MissionQuestionType {
+    return this._taggedQuestionsTypes[identifier];
   }
 
   /**
