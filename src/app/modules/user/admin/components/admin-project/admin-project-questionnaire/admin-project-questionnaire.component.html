@@ -52,7 +52,7 @@
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
         <app-shared-questionnaire
           (templateChange)="updatePreset($event, 'TEMPLATE')"
-          [isEditable]="canAccess(['edit']) && innovation.status !== 'EVALUATING'"
+          [isEditable]="canAccess(['edit']) && innovation.status === 'EVALUATING'"
           [questionnaireLanguages]="cardsLanguages"
           [sectionsNames]="sectionsNames"
           [template]="mission.template">
@@ -63,7 +63,7 @@
         <ng-container *ngIf="!!innovation.preset">
           <app-shared-preset
             (save)="updatePreset($event, 'PRESET')"
-            [isEditable]="canAccess(['edit']) && innovation.status !== 'EVALUATING'"
+            [isEditable]="canAccess(['edit']) && innovation.status === 'EVALUATING'"
             [presetLanguages]="cardsLanguages"
             [preset]="innovation.preset"
             [sectionsNames]="sectionsNames">

@@ -3,8 +3,7 @@ import {picto, Picto} from '../../../../../models/static-data/picto';
 import {
   MissionQuestion,
   MissionQuestionEntry,
-  MissionQuestionOption,
-  MissionQuestionOptionType,
+  MissionQuestionOption, MissionQuestionType,
   OptionEntry
 } from '../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
@@ -17,6 +16,10 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./shared-questionnaire-question.component.scss']
 })
 export class SharedQuestionnaireQuestionComponent implements OnInit {
+
+  get isTaggedQuestion(): boolean {
+    return this._isTaggedQuestion;
+  }
 
   get picto(): Picto {
     return this._picto;
@@ -72,8 +75,15 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   @Input() set question(value: MissionQuestion) {
     this._question = value;
+    this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(value.identifier);
 
-    if (this._question.identifier && this.isTaggedQuestion) {
+    if (!this._question.sensitiveAnswerData) {
+      if (this._missionQuestionService.isContactQuestion(value.identifier)) {
+        this._question.sensitiveAnswerData = true;
+      }
+    }
+
+    if (this._question.identifier && this._isTaggedQuestion) {
       this._customId = this._missionQuestionService.generateId();
     } else {
       this._customId = this._question.identifier;
@@ -101,7 +111,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   private _editMode = false;
 
-  isTaggedQuestion = false;
+  private _isTaggedQuestion = false;
 
   private _customId = '';
 
@@ -149,12 +159,24 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     }
   }
 
+  public onChangeIdentifier(identifier: string) {
+    this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(identifier);
+    if (this._isTaggedQuestion) {
+      this._question.controlType = this._missionQuestionService.getQuestionType(identifier);
+    }
+    this.notifyChanges();
+  }
+
+  public getNonUsedQuestions() {
+    return this._missionQuestionService.getNonUsedQuestions();
+  }
+
   public cloneQuestion(event: Event) {
     event.preventDefault();
     this._missionQuestionService.cloneQuestion(this._questionIndex, this._sectionIndex);
   }
 
-  public onChangeQuestionType(type: MissionQuestionOptionType) {
+  public onChangeQuestionType(type: MissionQuestionType) {
     this._question.controlType = type;
     this._missionQuestionService.configureQuestion(this._question);
   }
