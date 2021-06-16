@@ -1,7 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AdminProductTrackingComponent } from '../admin-product-tracking.component';
-import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
-import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 
 @Component({
   selector: 'app-product-date-selector',
@@ -9,7 +6,15 @@ import { TrackingService } from '../../../../../../../services/tracking/tracking
   styleUrls: ['./admin-date-selector.component.scss']
 })
 
-export class AdminDateSelectorComponent extends AdminProductTrackingComponent implements OnInit {
+export class AdminDateSelectorComponent implements OnInit {
+  @Input() set months(value: Array<number>) {
+      this._months = value;
+  }
+
+  @Input() set years(value: Array<number>) {
+    this._years = value;
+  }
+
   @Input() set monthSelected(month: number) {
     this._monthSelected = month;
   }
@@ -26,10 +31,11 @@ export class AdminDateSelectorComponent extends AdminProductTrackingComponent im
 
   private _yearSelected: number;
 
-  constructor(protected _rolesFrontService: RolesFrontService,
-              protected _trackingService: TrackingService) {
-    super(_rolesFrontService, _trackingService);
+  private _months: Array<number> = [];
 
+  private _years: Array<number> = [];
+
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -51,5 +57,14 @@ export class AdminDateSelectorComponent extends AdminProductTrackingComponent im
 
   sendYearSelection() {
     this.yearSelectedChange.emit(this._yearSelected);
+  }
+
+
+  get months(): Array<number> {
+    return this._months;
+  }
+
+  get years(): Array<number> {
+    return this._years;
   }
 }

@@ -24,10 +24,11 @@ import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input
 import { InputListModule } from '../../../../utility/input-list/input-list.module';
 import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { AdminProductTrackingComponent } from './admin-product-management/admin-product-tracking.component';
-import { AdminProductSubscriptionTrackingComponent } from './admin-product-management/admin-product-subscription-tracking/admin-product-subscription-tracking.component';
 import { AdminDateSelectorComponent } from './admin-product-management/admin-product-date-selector/admin-date-selector.component';
-import { HelpCommunityGrowComponent } from './admin-product-management/admin-product-tips-to-share/help-community-grow.component';
-import { UseSuperToolsComponent } from './admin-product-management/admin-product-tips-to-show/use-super-tools.component';
+import { AdminProductSubscriptionTrackingComponent } from './admin-product-management/admin-product-shared-tracking-table/admin-product-subscription-tracking.component';
+import { UseSuperToolsComponent } from './admin-product-management/admin-product-shared-tracking-table/use-super-tools.component';
+import { HelpCommunityGrowComponent } from './admin-product-management/admin-product-shared-tracking-table/help-community-grow.component';
+import { AdminProductSharedTrackingTableComponent } from './admin-product-management/admin-product-shared-tracking-table/admin-product-shared-tracking-table.component';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import { UseSuperToolsComponent } from './admin-product-management/admin-product
     AdminProductSubscriptionTrackingComponent,
     AdminDateSelectorComponent,
     HelpCommunityGrowComponent,
-    UseSuperToolsComponent
+    UseSuperToolsComponent,
+    AdminProductSharedTrackingTableComponent
   ],
   exports: [
     AdminSettingsComponent

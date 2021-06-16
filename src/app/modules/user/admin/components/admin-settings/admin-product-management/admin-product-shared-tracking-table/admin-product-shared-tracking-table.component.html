@@ -6,15 +6,17 @@
     <section>
       <!-- Month/Year selector -->
       <app-product-date-selector
-        [(monthSelected)]="monthSelectedSub"
-        [(yearSelected)]="yearSelectedSub">
+        [months]="months"
+        [years]="years"
+        [(monthSelected)]="monthSelected"
+        [(yearSelected)]="yearSelected">
       </app-product-date-selector>
       <!-- /Month/Year selector -->
 
       <!-- subscription tracking table -->
       <div class="table-container">
         <app-shared-table
-          [loading]="isLoading"
+          [loading]="false"
           [(config)]="queryConfig"
           [data]="trackingTable">
         </app-shared-table>
