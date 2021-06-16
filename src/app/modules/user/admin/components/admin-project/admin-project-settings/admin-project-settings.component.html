@@ -164,8 +164,9 @@
                   <li *ngIf="mission.team.length === 0" class="menu-item c-default">No members</li>
                 </ul>
 
-                <div *ngIf="mission.team.length > 0 && canAccess(['view', 'missionTeam'])" class="mission-members-container">
+                <div *ngIf="mission.team.length > 0 && canAccess(['edit', 'missionTeam'])" class="mission-members-container">
                   <span class="label is-rounded is-sm" *ngFor="let member of mission.team">{{name(member)}}
+                    <i class="fas fa-times icon-right" (click)="onChangeMissionTeam(member)"></i>
                   </span>
                 </div>
 
