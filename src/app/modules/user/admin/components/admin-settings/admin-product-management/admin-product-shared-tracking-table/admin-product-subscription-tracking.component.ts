@@ -59,6 +59,11 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductShare
     this._getTrackers();
   }
 
+  /**
+   * override _getTrackers in parent class
+   * get subscription's timelines
+   * @protected
+   */
   protected _getTrackers() {
     this._trackingTable._total = -1;
     this._trackingService.getSubscriptionTrackingTimelines(this._monthSelected.toString(), this._yearSelected.toString()).pipe(first())

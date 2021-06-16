@@ -13,8 +13,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class AdminProductSharedTrackingTableComponent implements OnInit {
+  // months selector list
   protected _months: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+  // years selector list
   protected _years: Array<number> = [];
 
   protected _monthSelected: number;
@@ -44,6 +46,7 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
   protected _activatedTab = '';
 
   constructor(protected _rolesFrontService: RolesFrontService, protected _trackingService: TrackingService) {
+    // initialise the selectors
     this._generateYears();
     this._monthSelected = this.months[0];
     this._yearSelected = this.years[0];
@@ -52,6 +55,10 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * community from 2018
+   * @private
+   */
   private _generateYears() {
     this._years = [];
     for (let i = new Date().getFullYear(); i >= 2018; i--) {
@@ -59,6 +66,13 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
     }
   }
 
+  /**
+   * initialise tracking table
+   * @param _selector
+   * @param _title
+   * @param _content
+   * @param _columns
+   */
   public initTrackingTable(_selector: string, _title: string, _content: Array<any>, _columns: Array<Column>): Table {
     return {
       _selector: _selector,
@@ -70,6 +84,10 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
     };
   }
 
+  /**
+   * get trackers: month, year, page, link
+   * @protected
+   */
   protected _getTrackers() {
     this._trackingTable._total = -1;
     this._trackingService.getTrackers(this._monthSelected.toString(), this._yearSelected.toString(), this._pageTitle, this._activatedTab)

@@ -11,11 +11,19 @@ import { AdminProductSharedTrackingTableComponent } from './admin-product-shared
 })
 
 export class HelpCommunityGrowComponent extends AdminProductSharedTrackingTableComponent implements OnInit {
+  /**
+   * on which page we get the trackers
+   * @param value
+   */
   @Input() set pageTitle(value: string) {
     this._pageTitle = value;
     this._getTrackers();
   }
 
+  /**
+   * value: which link/button
+   * @param value
+   */
   @Input() set activatedTracking(value: string) {
     this._activatedTab = value;
     this._getTrackers();
