@@ -81,7 +81,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductShare
       }, err => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.log(err);
-        this._trackingTable._total = -1;
+        this._trackingTable._total = 0;
       });
   }
 }
