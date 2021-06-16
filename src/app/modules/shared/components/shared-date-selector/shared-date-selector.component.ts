@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-product-date-selector',
-  templateUrl: './admin-date-selector.component.html',
-  styleUrls: ['./admin-date-selector.component.scss']
+  selector: 'app-shared-date-selector',
+  templateUrl: './shared-date-selector.component.html',
+  styleUrls: ['./shared-date-selector.component.scss']
 })
 
-export class AdminDateSelectorComponent implements OnInit {
+export class SharedDateSelectorComponent implements OnInit {
   @Input() set months(value: Array<number>) {
       this._months = value;
   }
