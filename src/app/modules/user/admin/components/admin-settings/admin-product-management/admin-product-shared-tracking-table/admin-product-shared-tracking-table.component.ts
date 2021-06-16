@@ -45,6 +45,8 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
 
   protected _activatedTab = '';
 
+  protected _path: string[] = [];
+
   constructor(protected _rolesFrontService: RolesFrontService, protected _trackingService: TrackingService) {
     // initialise the selectors
     this._generateYears();
@@ -145,5 +147,18 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
 
   get years(): Array<number> {
     return this._years;
+  }
+
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['settings'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'tracking']);
+    }
+  }
+
+
+  get path(): any[] {
+    return this._path;
   }
 }

@@ -52,6 +52,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductShare
     ];
     this._content = [];
     this._trackingTable = <Table>{};
+    this._path = ['tracking', 'subscription'];
   }
 
   ngOnInit(): void {

@@ -37,6 +37,7 @@ export class UseSuperToolsComponent extends AdminProductSharedTrackingTableCompo
     this._trackingTable = <Table>{};
     this._pageTitle = 'link';
     this._activatedTab = 'user-super-tool';
+    this._path = ['tracking', 'tipsShow', 'useSuperTool'];
   }
 
   ngOnInit() {

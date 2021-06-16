@@ -1,4 +1,4 @@
-<div class="container fluid grid-2xl p-top-30" id="admin-settings-subscription-tracking">
+<div [hidden]="!canAccess(path)" class="container fluid grid-2xl p-top-30" id= "admin-settings-subscription-tracking">
 
   <div class="column col-sm-12 col-11 col-mx-auto">
 
@@ -14,7 +14,7 @@
       <!-- /Month/Year selector -->
 
       <!-- subscription tracking table -->
-      <div class="table-container">
+      <div class="table-responsive">
         <app-shared-table
           [loading]="false"
           [(config)]="queryConfig"

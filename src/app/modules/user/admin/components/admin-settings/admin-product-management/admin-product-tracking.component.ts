@@ -33,7 +33,7 @@ export class AdminProductTrackingComponent implements OnInit {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(['settings'].concat(path));
     } else {
-      return this._rolesFrontService.hasAccessAdminSide(['settings']);
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'tracking']);
     }
   }
 

@@ -53,6 +53,7 @@ export class HelpCommunityGrowComponent extends AdminProductSharedTrackingTableC
     ];
     this._content = [];
     this._trackingTable = <Table>{};
+    this._path = ['tracking', 'tipsShare', 'helpCommunity'];
   }
 
   ngOnInit() {
