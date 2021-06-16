@@ -10,7 +10,6 @@ import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { Response } from '../../../../../models/response';
-import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
   templateUrl: './discover-innovations.component.html',
@@ -21,7 +20,7 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'created principalMedia innovationCards tags status projectStatus',
-    limit: '0',
+    limit: '25',
     offset: '',
     isPublic: '1',
     search: '{}',
@@ -31,7 +30,7 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _fetchingError: boolean;
 
-  private _totalInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
+  private _totalInnovations: number;
 
   private _recommendedInnovations: Array<Innovation> = [];
 
@@ -39,7 +38,6 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _latestInnovations: Array<Innovation> = [];
 
-  private _trendingInnovations: Array<Innovation> = [];
 
   private _filteredInnovations: Array<Innovation> = [];
 
@@ -47,24 +45,22 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _selectedFilters: Array<Tag> = [];
 
-  private _userAuthenticated: boolean;
-
   private _filterActivated: boolean;
 
   private _searchKey = '';
 
   private _stopLoading: boolean = false;
 
+  private _stopLoadingLatest: boolean = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _translateService: TranslateService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
-              private _authService: AuthService,
               private _filterService: DiscoverService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
-    this._userAuthenticated = this._authService.isAuthenticated;
 
     this._activatedRoute.queryParams.subscribe(params => {
       if (params['innovation']) {
@@ -78,15 +74,15 @@ export class DiscoverInnovationsComponent implements OnInit {
 
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-        this._totalInnovations = response.result;
+        this._totalInnovations = response._metadata.totalCount;
+        this._filteredInnovations = response.result;
         if (this._recommendedInnovationId) {
           this._applyInnoRecommendation();
         }
         this._getLatestInnovations();
-        this._getTrendingInnovations();
         this._getAllSectorTags();
-        this._getFilteredInnovations();
         this._stopLoading = true;
+        this._stopLoadingLatest = true;
       }, () => {
         this._fetchingError = true;
       });
@@ -101,9 +97,7 @@ export class DiscoverInnovationsComponent implements OnInit {
    */
   private _applyInnoRecommendation() {
     this._innovationService.getRecommendation(this._recommendedInnovationId).subscribe((response) => {
-      response.forEach((inno_similar: Innovation) => {
-        this._recommendedInnovations.push(this._totalInnovations.find((inno: Innovation) => (inno._id) === inno_similar._id));
-      });
+      this._recommendedInnovations = response;
     });
   }
 
@@ -113,16 +107,7 @@ export class DiscoverInnovationsComponent implements OnInit {
    * @private
    */
   private _getLatestInnovations() {
-    this._latestInnovations = this._totalInnovations.length > 0 ? this._totalInnovations.slice(0, 4) : [];
-  }
-
-  /***
-   * this function will get the remaining innovations that are not latest t
-   * o show in the section trending.
-   * @private
-   */
-  private _getTrendingInnovations() {
-    this._trendingInnovations = this._totalInnovations.length > 0 ? this._totalInnovations.slice(4) : [];
+    this._latestInnovations = this._filteredInnovations.length > 0 ? this._filteredInnovations.slice(0, 4) : [];
   }
 
   /***
@@ -130,17 +115,31 @@ export class DiscoverInnovationsComponent implements OnInit {
    * sectorTags.
    */
   private _getAllSectorTags() {
-    this._sectorTags = DiscoverService.getAllSectorTags(this._totalInnovations);
+    //this._sectorTags = DiscoverService.getAllSectorTags(this._totalInnovations);
+  }
+
+  onChangePage(event: {offset: number; limit: number}) {
+    this._config.limit = event.limit.toString();
+    this._config.offset = event.offset ? event.offset.toString() : '4';
+    this._getFilteredInnovations();
   }
 
   public onSelectFilters(filters: Array<Tag>) {
     this._selectedFilters = filters;
+    if (filters && filters.length) {
+      this._config.tags = JSON.stringify({$in: filters.join(',')});
+    }
     this._checkFilterActivation();
     this._getFilteredInnovations();
   }
 
   public onInputField(value: string) {
     this._searchKey = value;
+    if (value) {
+      this._config.search = JSON.stringify({
+        title: value
+      });
+    }
     this._checkFilterActivation();
     this._getFilteredInnovations();
   }
@@ -150,7 +149,13 @@ export class DiscoverInnovationsComponent implements OnInit {
   }
 
   private _getFilteredInnovations() {
-    this._filteredInnovations = DiscoverService.getFilteredInnovations(this._totalInnovations, this._selectedFilters, this._searchKey);
+    this._stopLoading = false;
+    this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+      this._filteredInnovations = response.result;
+      this._stopLoading = true;
+    }, () => {
+      this._fetchingError = true;
+    });
   }
 
   public onClickRemove(tagId: string) {
@@ -169,7 +174,7 @@ export class DiscoverInnovationsComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get totalInnovations(): Array<Innovation> {
+  get totalInnovations(): number {
     return this._totalInnovations;
   }
 
@@ -185,20 +190,12 @@ export class DiscoverInnovationsComponent implements OnInit {
     return this._latestInnovations;
   }
 
-  get trendingInnovations(): Array<Innovation> {
-    return this._trendingInnovations;
-  }
-
   get sectorTags(): Array<Tag> {
     return this._sectorTags;
   }
 
   get userLang(): string {
     return this._translateService.currentLang;
-  }
-
-  get userAuthenticated(): boolean {
-    return this._userAuthenticated;
   }
 
   get filteredInnovations(): Array<Innovation> {
@@ -219,6 +216,10 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   get stopLoading(): boolean {
     return this._stopLoading;
+  }
+
+  get stopLoadingLatest(): boolean {
+    return this._stopLoadingLatest;
   }
 
 }
