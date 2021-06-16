@@ -1,0 +1,32 @@
+<div [hidden]="!canAccess(path)" class="container fluid grid-2xl p-top-30" id= "admin-settings-subscription-tracking">
+
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- subscription tracking -->
+    <section>
+      <!-- Month/Year selector -->
+      <app-shared-date-selector
+        [months]="months"
+        [years]="years"
+        [(monthSelected)]="monthSelected"
+        [(yearSelected)]="yearSelected">
+      </app-shared-date-selector>
+      <!-- /Month/Year selector -->
+
+      <!-- subscription tracking table -->
+      <div class="table-responsive">
+        <app-shared-table
+          [loading]="false"
+          [(config)]="queryConfig"
+          [data]="trackingTable">
+        </app-shared-table>
+      </div>
+      <!-- /subscription tracking table  -->
+
+    </section>
+    <!-- /subscription tracking  -->
+
+
+  </div>
+
+</div>
