@@ -77,15 +77,19 @@
                 class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
                 [ngClass]="{ 'loading-content': !stopLoading }">
 
-                <div [ngStyle]="{ 'margin-bottom': '0.25rem' }">
+                <div [ngStyle]="{ 'margin-bottom': '0.25rem' }" *ngIf="filterActivated">
                   <span>
-                    {{ filteredInnovations.length }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
+                    {{ totalFilteredInnovations }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
                     <ng-container *ngIf="searchKey">
                       <span class="text-medium">{{ searchKey }}</span>
                       <ng-container *ngIf="selectedFilters.length > 0"> | </ng-container>
                     </ng-container>
                   </span>
                 </div>
+
+                <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }" *ngIf="!filterActivated">
+                  <span>{{ 'DISCOVER.TRENDING' | translate }}</span>
+                </h2>
 
                 <div
                   *ngFor="let filter of selectedFilters"
@@ -102,7 +106,7 @@
               <div class="p-top-10">
                 <app-cards
                   [allInnovations]="filteredInnovations"
-                  [total] = "totalInnovations"
+                  [total] = "totalFilteredInnovations"
                   [isPagination]="true"
                   (offsetLimit)="onChangePage($event)"
                   [stopLoading]="stopLoading">

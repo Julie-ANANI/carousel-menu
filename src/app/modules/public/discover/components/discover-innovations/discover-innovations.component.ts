@@ -32,6 +32,8 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _totalInnovations: number;
 
+  private _totalFilteredInnovations: number;
+
   private _recommendedInnovations: Array<Innovation> = [];
 
   private _recommendedInnovationId: string;
@@ -49,9 +51,9 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _searchKey = '';
 
-  private _stopLoading: boolean = false;
+  private _stopLoading = false;
 
-  private _stopLoadingLatest: boolean = false;
+  private _stopLoadingLatest = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
@@ -68,6 +70,9 @@ export class DiscoverInnovationsComponent implements OnInit {
       }
     });
 
+    if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
+      this._sectorTags = this._activatedRoute.snapshot.data['tags'];
+    }
   }
 
   ngOnInit() {
@@ -75,12 +80,12 @@ export class DiscoverInnovationsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
         this._totalInnovations = response._metadata.totalCount;
+        this._totalFilteredInnovations = response._metadata.totalCount;
         this._filteredInnovations = response.result;
         if (this._recommendedInnovationId) {
           this._applyInnoRecommendation();
         }
         this._getLatestInnovations();
-        this._getAllSectorTags();
         this._stopLoading = true;
         this._stopLoadingLatest = true;
       }, () => {
@@ -110,14 +115,6 @@ export class DiscoverInnovationsComponent implements OnInit {
     this._latestInnovations = this._filteredInnovations.length > 0 ? this._filteredInnovations.slice(0, 4) : [];
   }
 
-  /***
-   * this function searches for the tags of type sector and push them to the attribute
-   * sectorTags.
-   */
-  private _getAllSectorTags() {
-    //this._sectorTags = DiscoverService.getAllSectorTags(this._totalInnovations);
-  }
-
   onChangePage(event: {offset: number; limit: number}) {
     this._config.limit = event.limit.toString();
     this._config.offset = event.offset ? event.offset.toString() : '4';
@@ -127,7 +124,9 @@ export class DiscoverInnovationsComponent implements OnInit {
   public onSelectFilters(filters: Array<Tag>) {
     this._selectedFilters = filters;
     if (filters && filters.length) {
-      this._config.tags = JSON.stringify({$in: filters.join(',')});
+      this._config.tags = JSON.stringify({$in: filters.map((filter: Tag) => filter._id)});
+    } else {
+      delete this._config.filters;
     }
     this._checkFilterActivation();
     this._getFilteredInnovations();
@@ -176,6 +175,10 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   get totalInnovations(): number {
     return this._totalInnovations;
+  }
+
+  get totalFilteredInnovations(): number {
+    return this._totalFilteredInnovations;
   }
 
   get recommendedInnovations(): Array<Innovation> {
