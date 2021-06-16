@@ -6,6 +6,8 @@ import { TrackingService } from '../../../../../../../services/tracking/tracking
 import { Config } from '../../../../../../../models/config';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-product-shared-tracking-table.component.html',
@@ -47,7 +49,9 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
 
   protected _path: string[] = [];
 
-  constructor(protected _rolesFrontService: RolesFrontService, protected _trackingService: TrackingService) {
+  constructor(protected _rolesFrontService: RolesFrontService,
+              protected _trackingService: TrackingService,
+              protected _translateNotificationsService: TranslateNotificationsService) {
     // initialise the selectors
     this._generateYears();
     this._monthSelected = this.months[0];
@@ -102,6 +106,7 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
           this._trackingTable._total = 0;
         }
       }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.log(err);
         this._trackingTable._total = 0;
       });

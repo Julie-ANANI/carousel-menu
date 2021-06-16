@@ -4,6 +4,8 @@ import { TrackingService } from '../../../../../../../services/tracking/tracking
 import { first } from 'rxjs/operators';
 import { Table } from '../../../../../../table/models/table';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-shared-tracking-table.component';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 
 @Component({
   selector: 'app-product-subscription-tracking',
@@ -14,8 +16,9 @@ import { AdminProductSharedTrackingTableComponent } from './admin-product-shared
 export class AdminProductSubscriptionTrackingComponent extends AdminProductSharedTrackingTableComponent implements OnInit {
 
   constructor(protected _rolesFrontService: RolesFrontService,
-              protected _trackingService: TrackingService) {
-    super(_rolesFrontService, _trackingService);
+              protected _trackingService: TrackingService,
+              protected _translateNotificationsService: TranslateNotificationsService) {
+    super(_rolesFrontService, _trackingService, _translateNotificationsService);
     this._selector = 'admin-product-tracking-table';
     this._title = 'Subscription tracking';
     this._columns = [
@@ -76,6 +79,7 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductShare
           this._trackingTable._total = 0;
         }
       }, err => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.log(err);
         this._trackingTable._total = -1;
       });

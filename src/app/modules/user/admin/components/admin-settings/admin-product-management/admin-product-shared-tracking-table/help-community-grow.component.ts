@@ -3,6 +3,7 @@ import { Table } from '../../../../../../table/models/table';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-shared-tracking-table.component';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-help-community',
@@ -30,8 +31,10 @@ export class HelpCommunityGrowComponent extends AdminProductSharedTrackingTableC
   }
 
 
-  constructor(protected _rolesFrontService: RolesFrontService, protected _trackingService: TrackingService) {
-    super(_rolesFrontService, _trackingService);
+  constructor(protected _rolesFrontService: RolesFrontService,
+              protected _trackingService: TrackingService,
+              protected _translateNotificationsService: TranslateNotificationsService) {
+    super(_rolesFrontService, _trackingService, _translateNotificationsService);
     this._selector = 'admin-help-community-grow-tracking-table';
     this._title = '';
     this._columns = [
