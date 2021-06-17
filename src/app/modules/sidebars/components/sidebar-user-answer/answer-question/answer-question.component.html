@@ -5,7 +5,7 @@
   class="p-top-40 answer-question">
 
   <!-- label -->
-  <div class="text-15 text-bold text-notify p-bottom-15">{{ question.label | multiling:currentLang }}</div>
+  <div class="text-15 text-bold text-notify p-bottom-15">{{ questionLabel }}</div>
   <!-- /label -->
 
   <!-- answers -->
@@ -238,7 +238,7 @@
           <div
             *ngFor="let opt of question.options; let i = index"
             [ngClass]="{'m-bottom-10': i !== (question.options && question.options.length - 1)}">
-            {{ opt.label | multiling:currentLang }}:
+            {{ optionLabel(opt.identifier) }}:
             <span class="text-primary m-left-2">
               {{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}
             </span>
@@ -249,7 +249,7 @@
         <!-- edit mode -->
         <div *ngIf="editMode">
           <div *ngFor="let opt of question.options; index as i" class="d-flex align-center">
-            {{ opt.label | multiling:currentLang }}:
+            {{ optionLabel(opt.identifier) }}:
             <label
               *ngFor="let value of starCase"
               class="form-radio m-left-2 p-right-10"
