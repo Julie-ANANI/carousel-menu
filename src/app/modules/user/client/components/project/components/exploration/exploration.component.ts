@@ -6,8 +6,6 @@ import { TranslateNotificationsService } from '../../../../../../../services/not
 import { Answer } from '../../../../../../../models/answer';
 import { Campaign } from '../../../../../../../models/campaign';
 import { Innovation } from '../../../../../../../models/innovation';
-import { Question } from '../../../../../../../models/question';
-import { Section } from '../../../../../../../models/section';
 import { Table } from '../../../../../../table/models/table';
 import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
 import { first, takeUntil } from 'rxjs/operators';
@@ -34,7 +32,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _countries: Array<string> = [];
 
-  private _questions: Array<Question> = [];
+  private _questions: Array<any> = [];
 
   private _modalAnswer: Answer = <Answer>{};
 
@@ -145,14 +143,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
       });
 
-    this._questions = [];
-
-    if (this._innovation.preset && Array.isArray(this._innovation.preset.sections)) {
-      this._innovation.preset.sections.forEach((section: Section) => {
-        this._questions = this._questions.concat(section.questions || []);
-      });
-    }
-
+    this._questions = InnovationFrontService.questionsList(this._innovation);
   }
 
 
