@@ -23,10 +23,10 @@ import { CampaignFrontService } from '../../../../../../services/campaign/campai
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Question } from '../../../../../../models/question';
-import { Section } from '../../../../../../models/section';
 import { Company } from '../../../../../../models/company';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { Professional } from '../../../../../../models/professional';
+import {MissionQuestion} from '../../../../../../models/mission';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -59,7 +59,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  private _questions: Array<Question> = [];
+  private _questions: Array<Question | MissionQuestion> = [];
 
   private _excludedCompanies: Array<Company> = [];
 
@@ -78,6 +78,14 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     private _socketService: SocketService,
     private _innovationFrontService: InnovationFrontService
   ) {}
+
+  private static _campaignStat(
+    answers: Array<Answer>,
+    type: string,
+    searchKey?: any
+  ): number {
+    return CampaignFrontService.answerStat(answers, type, searchKey);
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -170,23 +178,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   }
 
   private _initQuestions() {
-    if (
-      this._innovation.preset &&
-      this._innovation.preset.sections &&
-      Array.isArray(this._innovation.preset.sections)
-    ) {
-      this._innovation.preset.sections.forEach((section: Section) => {
-        this._questions = this._questions.concat(section.questions || []);
-      });
-    }
-  }
-
-  private static _campaignStat(
-    answers: Array<Answer>,
-    type: string,
-    searchKey?: any
-  ): number {
-    return CampaignFrontService.answerStat(answers, type, searchKey);
+    this._questions = InnovationFrontService.questionsList(this._innovation);
   }
 
   private _setStats(answers: Array<Answer>) {
@@ -533,7 +525,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return this._answers;
   }
 
-  get questions(): Array<Question> {
+  get questions(): Array<Question | MissionQuestion> {
     return this._questions;
   }
 

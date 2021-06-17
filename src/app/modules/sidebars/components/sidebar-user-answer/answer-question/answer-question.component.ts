@@ -10,6 +10,7 @@ import { Tag } from '../../../../../models/tag';
 import { first} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-answer-question',
@@ -18,6 +19,10 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 })
 
 export class AnswerQuestionComponent {
+
+  get questionLabel(): string {
+    return MissionQuestionService.label(this.question, 'label', this.currentLang);
+  }
 
   @Input() projectId = '';
 
@@ -75,11 +80,7 @@ export class AnswerQuestionComponent {
 
   public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
-    if (option && option.label) {
-      return option.label[this._currentLang];
-    } else {
-      return undefined;
-    }
+    return MissionQuestionService.label(option, 'label', this.currentLang);
   }
 
   public selectOption(event: Event, option: any) {
@@ -156,11 +157,11 @@ export class AnswerQuestionComponent {
         }
         this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this._currentLang)
           .pipe(first())
-          .subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier][this._currentLang] = value.translation;
+          .subscribe((_value) => {
+          this._fullAnswer.answers_translations[this.question.identifier][this._currentLang] = _value.translation;
           this._showQuestionTranslation = true;
-          const objToSave = {answers_translations: {[this.question.identifier]: {[this._currentLang]: value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
+          const objToSave = {answers_translations: {[this.question.identifier]: {[this._currentLang]: _value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {});
         }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
             console.error(err);
@@ -190,12 +191,12 @@ export class AnswerQuestionComponent {
         this._deepl.translate(this._fullAnswer.answers[this.question.identifier + 'Comment'],
           this._currentLang)
           .pipe(first())
-          .subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang] = value.translation;
+          .subscribe((_value) => {
+          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang] = _value.translation;
           this._showCommentTranslation = true;
           const objToSave = {answers_translations: {[this.question.identifier + 'Comment']:
-                {[this._currentLang]: value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
+                {[this._currentLang]: _value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {});
         }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
             console.error(err);
