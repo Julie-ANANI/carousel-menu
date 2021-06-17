@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Innovation } from '../../models/innovation';
 import { Tag } from '../../models/tag';
-import { InnovCard } from '../../models/innov-card';
 import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Subject } from 'rxjs';
 
@@ -43,36 +42,6 @@ export class DiscoverService {
       });
     }
     return highlightTags;
-  }
-
-
-  static getFilteredInnovations(totalInnovations: Array<Innovation>, selectedTags: Array<Tag>, searchFieldInput: string = '') {
-    if (totalInnovations.length > 0) {
-      return totalInnovations.filter((innovation: Innovation) => {
-
-        if (searchFieldInput) {
-          // we check if there is any card containing searchFieldInput
-          const containSearchFieldInput = innovation.innovationCards.some((card: InnovCard) => {
-            return card.title.toLowerCase().indexOf(searchFieldInput.toLowerCase()) !== -1;
-          });
-          if (!containSearchFieldInput) {
-            return false;
-          }
-        }
-
-        if (selectedTags.length > 0) {
-          // we check common tags between innovation.tags & selectedTags
-          const intersection = innovation.tags.filter((t) => selectedTags.some((st) => t._id === st._id));
-          if (intersection.length === 0) {
-            return false;
-          }
-        }
-
-        return true;
-
-      });
-    }
-    return [];
   }
 
   public sortTags(tags: Array<Tag>, userLang: string) {

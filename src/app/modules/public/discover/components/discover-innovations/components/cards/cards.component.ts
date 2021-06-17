@@ -1,4 +1,4 @@
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
 import { InnovCard } from '../../../../../../../models/innov-card';
@@ -16,8 +16,11 @@ export class CardsComponent {
 
   @Input() set allInnovations(value: Array<Innovation>) {
     this._totalInnovations = value;
-    this._total = value.length;
     this._initializeInnovations();
+  }
+
+  @Input() set total(value: number) {
+    this._total = value;
   }
 
   @Input() set isPagination(value: boolean) {
@@ -31,6 +34,8 @@ export class CardsComponent {
     this._initializeInnovations();
   }
 
+  @Output() offsetLimit: EventEmitter<{offset: number; limit: number}> = new EventEmitter<{offset: number; limit: number}>();
+
   private _pagination: Pagination;
 
   private _innovations: Array<any> = [];
@@ -39,9 +44,9 @@ export class CardsComponent {
 
   private _total: number;
 
-  private _startIndex: number = 0;
+  private _startIndex = 0;
 
-  private _endIndex: number = 4;
+  private _endIndex = 4;
 
   private _isPagination: boolean;
 
@@ -100,6 +105,7 @@ export class CardsComponent {
     this._pagination = value;
     this._startIndex = value.offset;
     this._endIndex = value.currentPage * value.parPage;
+    this.offsetLimit.emit({offset: this._startIndex, limit: value.parPage});
   }
 
   get innovations(): Array<any> {

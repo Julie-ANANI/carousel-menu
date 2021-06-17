@@ -9,8 +9,11 @@ export interface Config {
   campaigns?: string;
   isDiscover?: string;
   operator?: string;
-  fromCollection?: string;
+  fromCollection?: {
+    model: string;
+    [property: string]: string;
+  };
   missionMember?: string;
   country?: string;
-  [property: string]: string;
+  [property: string]: any;
 }

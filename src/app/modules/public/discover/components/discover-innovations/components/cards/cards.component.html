@@ -3,7 +3,7 @@
   <!-- cards -->
   <section class="c-cards-wrapper d-flex text-center flex-wrap">
     <div
-      *ngFor="let innovation of innovations | slice:startIndex:endIndex"
+      *ngFor="let innovation of innovations"
       [ngClass]="{ 'c-effect': stopLoading }"
       class="card is-responsive m-bottom-30">
       <a

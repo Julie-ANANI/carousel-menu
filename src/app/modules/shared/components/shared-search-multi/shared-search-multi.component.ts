@@ -116,13 +116,15 @@ export class SharedSearchMultiComponent {
    */
   private _initAdvanceConfig(value: Column, type: 'TEXT' | 'CHOICE', searchString: any) {
     if (value._searchConfig) {
-      this._searchConfig['fromCollection'] = value._searchConfig._collection;
+      this._searchConfig['fromCollection'] = {
+        model: value._searchConfig._collection
+      };
       switch (type) {
         case 'TEXT':
-          this._searchConfig[value._searchConfig._searchKey] = encodeURIComponent(searchString.join(' '));
+          this._searchConfig['fromCollection'][value._searchConfig._searchKey] = encodeURIComponent(searchString.join(' '));
           break;
         case 'CHOICE':
-          this._searchConfig[value._searchConfig._searchKey] = searchString;
+          this._searchConfig['fromCollection'][value._searchConfig._searchKey] = searchString;
           break;
       }
     }
@@ -130,8 +132,9 @@ export class SharedSearchMultiComponent {
 
   private _deleteAdvanceConfig(value: Column) {
     if (value._searchConfig) {
-      delete this._searchConfig['fromCollection'];
-      delete this._searchConfig[value._searchConfig._searchKey];
+      this._searchConfig['fromCollection'] = {
+        model: ''
+      };
     }
   }
 
@@ -143,13 +146,13 @@ export class SharedSearchMultiComponent {
 
     this._searchConfig.offset = '0';
 
-    if (this._searchConfig[prop._attrs[0]] === null || this._searchConfig[prop._attrs[0]] === undefined) {
+    if (this._searchConfig.fromCollection[prop._attrs[0]] === null || this._searchConfig.fromCollection[prop._attrs[0]] === undefined) {
       delete this._searchConfig[prop._attrs[0]];
       this._deleteAdvanceConfig(prop);
     }
 
     if (prop._searchConfig && prop._searchConfig._collection && this._isExistsSearchKey()) {
-      this._searchConfig['fromCollection'] = prop._searchConfig._collection;
+      this._searchConfig.fromCollection.model = prop._searchConfig._collection;
     } else if (this._searchString) {
       this.onSearch();
     }
@@ -161,8 +164,8 @@ export class SharedSearchMultiComponent {
   private _isExistsSearchKey(): boolean {
     if (this._otherProps.length) {
       for (let i = 0; i < this._otherProps.length; i++) {
-        for (const property in this._searchConfig) {
-          if (this._searchConfig.hasOwnProperty(property) && this._otherProps[i]._searchConfig) {
+        for (const property in this._searchConfig.fromCollection) {
+          if (this._searchConfig.fromCollection.hasOwnProperty(property) && this._otherProps[i]._searchConfig) {
             if (this._otherProps[i]._searchConfig._searchKey === property) {
               return true;
             }

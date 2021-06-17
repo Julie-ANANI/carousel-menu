@@ -38,6 +38,9 @@ export class AdminProjectsComponent implements OnInit {
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
+    fromCollection: {
+      model: ''
+    },
     sort: '{"created":-1}'
   };
 

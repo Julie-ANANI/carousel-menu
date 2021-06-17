@@ -6,11 +6,15 @@ import { DiscoverInnovationsComponent } from './components/discover-innovations/
 import { DiscoverDescriptionComponent } from './components/discover-description/discover-description.component';
 
 import { InnovationResolver } from '../../../resolvers/innovation.resolver';
+import { TagsSectorResolver } from '../../../resolvers/tags-sector-resolver';
 
 const discoverRoutes: Routes = [
   {
     path: '',
     component: DiscoverComponent,
+    resolve: {
+      tags: TagsSectorResolver,
+    },
     children: [
       { path: '', component: DiscoverInnovationsComponent, pathMatch: 'full' },
       {
