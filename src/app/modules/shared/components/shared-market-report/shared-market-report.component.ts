@@ -35,6 +35,9 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 import { emptyHtmlRegex } from '../../../../utils/regex';
 import { SocketService } from '../../../../services/socket/socket.service';
 import { Professional } from '../../../../models/professional';
+import {MissionFrontService} from '../../../../services/mission/mission-front.service';
+import {Mission} from '../../../../models/mission';
+import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -83,7 +86,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   private _answersByCountries: any = {};
 
-  private _questions: Array<Question> = [];
+  private _questions: Array<any> = [];
 
   private _toggleAnswers = false;
 
@@ -122,6 +125,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     private _innovationService: InnovationService,
     private _authService: AuthService,
     private _rolesFrontService: RolesFrontService,
+    private _missionQuestionService: MissionQuestionService,
     private _innovationFrontService: InnovationFrontService,
     private _filterService: FilterService,
     private _tagFiltersService: TagsFiltersService,
@@ -142,6 +146,13 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       .subscribe((value) => {
         this._toBeSaved = !!(value && value.state);
       });
+
+    this._missionQuestionService.missionTemplate().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
+      if (value && value.entry && value.entry.length) {
+        (<Mission>this._innovation.mission).template = value;
+        this._innovationFrontService.setNotifyChanges({key: 'mission', state: true});
+      }
+    });
 
     this._socketService
       .getTagsUpdatedForPro(this.innovation._id)
@@ -180,7 +191,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
       : false;
 
     this._worldmapFiltersService.reset();
-    this._questions = ResponseService.presets(this._innovation);
+    this._questions = InnovationFrontService.questionsList(this._innovation);
   }
 
   _realTimeUpdateTags(data: any) {
@@ -350,18 +361,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   /***
    * This function saves changes of any question of the operator (piechart colors, title, subtitle)
+   *
+   * updated on 17th June, 2021
    * @param question
    */
   public saveQuestion(question: Question) {
-    // If section title is from question
-    this._innovation.preset.sections.forEach((section: any) => {
-      const indexOfQuestion = section.questions.indexOf(
-        (que: Question) => que.identifier === question.identifier
-      );
-      if (indexOfQuestion >= 0) {
-        section.questions[indexOfQuestion] = question;
-      }
-    });
 
     // If section title is from default market report sections (key learnings, origin of responses, conclusion)
     switch (question.identifier) {
@@ -378,37 +382,52 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
         this._innovation.marketReport.finalConclusion.subtitle = question.subtitle;
         break;
     }
+
     this._innovationFrontService.setNotifyChanges({
-      key: 'preset',
+      key: 'marketReport',
       state: true,
     });
+
+    // If section title is from question
+    if (!MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
+      this._innovation.preset.sections.forEach((section: any) => {
+        const indexOfQuestion = section.questions.indexOf(
+          (que: Question) => que.identifier === question.identifier
+        );
+        if (indexOfQuestion >= 0) {
+          section.questions[indexOfQuestion] = question;
+        }
+      });
+
+      this._innovationFrontService.setNotifyChanges({
+        key: 'preset',
+        state: true,
+      });
+
+    }
   }
 
   public saveInnovation(event: Event) {
     event.preventDefault();
-    this._innovationService
-      .save(this._innovation._id, {
-        marketReport: this._innovation.marketReport,
-        // Modified only admin side
-        preset: this._innovation.preset,
-        settings: this._innovation.settings,
-      })
-      .subscribe(
-        () => {
-          this._toBeSaved = false;
-          this._translateNotificationsService.success(
-            'Success',
-            'The synthesis has been saved.'
-          );
-        },
-        (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
-          console.error(err);
-        }
-      );
+    const objToSave = {
+      marketReport: this._innovation.marketReport,
+      settings: this._innovation.settings
+    };
+
+    // Modified only admin side
+    if (MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
+      objToSave['missionTemplate'] = this._innovation.mission;
+    } else {
+      objToSave['preset'] = this._innovation.preset;
+    }
+
+    this._innovationService.save(this._innovation._id, objToSave).subscribe(() => {
+      this._toBeSaved = false;
+      this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
   }
 
   public displayFixedQuestion(question: any) {
@@ -500,7 +519,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     return this._countries;
   }
 
-  get questions(): Array<Question> {
+  get questions(): Array<any> {
     return this._questions;
   }
 

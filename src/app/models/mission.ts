@@ -189,23 +189,11 @@ export interface MissionQuestion {
    * Comes from the preset model.
    */
   parameters?: {
-    type: {
-      type: String,
-      enum: MissionQuestionParameterType
-      default: 'text'
-    },
-    addon: {
-      type: String
-    },
-    min: {
-      type: Number
-    },
-    max: {
-      type: Number
-    },
-    step: {
-      type: Number
-    }
+    type: MissionQuestionParameterType;
+    addon: string,
+    min: number,
+    max: number,
+    step: number
   };
 
   /**

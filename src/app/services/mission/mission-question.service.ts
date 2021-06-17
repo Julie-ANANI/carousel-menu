@@ -133,7 +133,7 @@ export class MissionQuestionService {
    * @param attr
    * @param lang
    */
-  public static label(value: any = <any>{}, attr: string, lang = 'en'): string {
+  public static label(value: any = <any>{}, attr: string, lang = 'en') {
     if (value.entry && value.entry.length) {
       const entry = MissionQuestionService.entryInfo(value, lang);
       if (!!entry && entry[attr]) {
@@ -142,7 +142,11 @@ export class MissionQuestionService {
         return value.entry[0] && value.entry[0][attr];
       }
     } else {
-      return value.label && value.label[lang] || '';
+      if (attr === 'title' || value === 'subtitle') {
+        return value[attr] && value[attr][lang] || '';
+      } else {
+        return value.label && value.label[lang] || '';
+      }
     }
   }
 
@@ -547,11 +551,12 @@ export class MissionQuestionService {
    * @param question
    * @param attr - should be the attribute of the model MissionQuestion
    */
-  public changeQuestionEntry(newValue: string, lang: string, question: MissionQuestion, attr: string) {
+  public changeQuestionEntry(newValue: any, lang: string, question: MissionQuestion, attr: string) {
     if (question && question.entry && question.entry.length) {
       const index = question.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         question.entry[index][attr] = newValue;
+        console.log(question.entry[index]);
         this._emitTemplate();
       }
     }
@@ -570,6 +575,23 @@ export class MissionQuestionService {
       const index = option.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         option.entry[index].label = newValue;
+        this._emitTemplate();
+      }
+    }
+  }
+
+  /**
+   * update the value of the option with new value not the option entry.
+   * @param newValue
+   * @param question
+   * @param optionIndex
+   * @param attr
+   */
+  public changeQuestionOption(newValue: any, question: MissionQuestion, optionIndex: number, attr: string) {
+    if (question && question.options && question.options[optionIndex]) {
+      const option = question.options[optionIndex];
+      if (!!option) {
+        option[attr] = newValue;
         this._emitTemplate();
       }
     }
