@@ -128,7 +128,7 @@ export class MissionQuestionService {
    * If it's from the entry you need to pass the attr value.
    * For the previous questions we always have the label attribute.
    *
-   * Entry can be the MissionOptionEntry, MissionSectionEntry... see the respective interface.
+   * Entry can be the MissionOptionEntry, MissionSectionEntry, MissionQuestion... see the respective interface.
    * @param value
    * @param attr
    * @param lang

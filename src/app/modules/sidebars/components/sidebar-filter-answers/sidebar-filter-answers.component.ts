@@ -20,6 +20,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {Professional} from '../../../../models/professional';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {picto, Picto} from '../../../../models/static-data/picto';
+import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
 
 type Template = 'MARKET_REPORT' | 'FOLLOW_UP';
 
@@ -37,7 +38,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   @Input() isAdminSide = false;
 
-  @Input() questions: Array<Question> = [];
+  @Input() questions: Array<any> = [];
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
@@ -124,6 +125,14 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
       });
     }
     this._initQuestions();
+  }
+
+  public questionTitle(question: any): string {
+    return MissionQuestionService.label(question, 'title', this.reportingLang);
+  }
+
+  public optionLabel(option: any): string {
+    return MissionQuestionService.label(option, 'label', this.reportingLang);
   }
 
   private _loadSharedFiltersList() {
