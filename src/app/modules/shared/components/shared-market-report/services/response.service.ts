@@ -20,7 +20,7 @@ export class ResponseService {
    * @param answers
    * @param question
    */
-  static tagsList(answers: Array<Answer>, question: Question): Array<Tag> {
+  static tagsList(answers: Array<Answer>, question: any): Array<Tag> {
 
     const tagId = question.identifier + (question.controlType !== 'textarea' ? 'Comment' : '');
 
