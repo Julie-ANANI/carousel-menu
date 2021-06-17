@@ -10,6 +10,14 @@ export class MissionFrontService {
   private _missionObj: BehaviorSubject<Mission> = new BehaviorSubject<Mission>(<Mission>{});
 
   /**
+   * return true if the mission has template in it.
+   * @param mission
+   */
+  public static hasMissionTemplate(mission: Mission = <Mission>{}): boolean {
+    return mission.template && mission.template.entry && mission.template.entry.length > 0;
+  }
+
+  /**
    * return the combined complementary objectives of the sections of template.
    * @param missionSections
    */

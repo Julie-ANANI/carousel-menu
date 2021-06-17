@@ -124,6 +124,29 @@ export class MissionQuestionService {
   }
 
   /**
+   * return the value from the entry or directly from the questions.
+   * If it's from the entry you need to pass the attr value.
+   * For the previous questions we always have the label attribute.
+   *
+   * Entry can be the MissionOptionEntry, MissionSectionEntry... see the respective interface.
+   * @param value
+   * @param attr
+   * @param lang
+   */
+  public static label(value: any = <any>{}, attr: string, lang = 'en'): string {
+    if (value.entry && value.entry.length) {
+      const entry = MissionQuestionService.entryInfo(value, lang);
+      if (!!entry && entry[attr]) {
+        return entry[attr];
+      } else {
+        return value.entry[0] && value.entry[0][attr];
+      }
+    } else {
+      return value.label && value.label[lang] || '';
+    }
+  }
+
+  /**
    * return the entry info of different type
    * 'MissionTemplateSection | MissionQuestionOption | MissionQuestion | MissionTemplateSectionEntry | MissionQuestionEntry | OptionEntry'
    * for the return value check the respective interface.
