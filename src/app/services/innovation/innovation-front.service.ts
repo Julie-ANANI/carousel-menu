@@ -15,6 +15,8 @@ import {Section} from '../../models/section';
 import {DomSanitizer} from '@angular/platform-browser';
 import {PublicationType} from '../../models/community';
 import {MediaFrontService} from '../media/media-front.service';
+import {Mission, MissionQuestion} from '../../models/mission';
+import {MissionFrontService} from '../mission/mission-front.service';
 
 export interface Values {
   settingPercentage?: number;
@@ -120,6 +122,27 @@ export class InnovationFrontService {
 
     return src === '' ? defaultSrc : src;
 
+  }
+
+  /**
+   * return the list of the question if the innovation has mission template then will return the list form the
+   * mission template sections otherwise we check the innovation preset sections.
+   * @param innovation
+   */
+  public static questionsList(innovation: Innovation = <Innovation>{}): Array<Question | MissionQuestion> {
+    let questions: Array<Question | MissionQuestion> = [];
+
+    if (innovation.mission && MissionFrontService.hasMissionTemplate(<Mission>innovation.mission)) {
+      (<Mission>innovation.mission).template.sections.forEach((_section) => {
+        questions = questions.concat(_section.questions || []);
+      });
+    } else if (innovation.preset && innovation.preset.sections && innovation.preset.sections.length) {
+      innovation.preset.sections.forEach((section: Section) => {
+        questions = questions.concat(section.questions || []);
+      });
+    }
+
+    return questions;
   }
 
   /**
