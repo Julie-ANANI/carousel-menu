@@ -43,7 +43,7 @@ export class AdminProjectsComponent implements OnInit {
     this._config = value; // TODO how to change the config when searching things like the operator?
     try {
       // Parse the config.search field to see if there's something
-      if (this._config['fromCollection']) {
+      if (this._config['fromCollection'] && this._config.fromCollection.model) {
         this._searchMissionsByOther(this._config);
       } else {
         this._getProjects();
@@ -94,6 +94,9 @@ export class AdminProjectsComponent implements OnInit {
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
+    fromCollection: {
+      model: ''
+    },
     sort: '{"created":-1}'
   };
 

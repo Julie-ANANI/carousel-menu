@@ -135,9 +135,12 @@ export class DiscoverInnovationsComponent implements OnInit {
   public onInputField(value: string) {
     this._searchKey = value;
     if (value) {
-      this._config.search = JSON.stringify({
+      this._config.fromCollection = {
+        model: 'innovationcard',
         title: value
-      });
+      };
+    } else {
+      delete this._config.fromCollection;
     }
     this._checkFilterActivation();
     this._getFilteredInnovations();
@@ -149,12 +152,25 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _getFilteredInnovations() {
     this._stopLoading = false;
-    this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-      this._filteredInnovations = response.result;
-      this._stopLoading = true;
-    }, () => {
-      this._fetchingError = true;
-    });
+    if (this._config.fromCollection && this._config.fromCollection.model) {
+      this._innovationService.advancedSearch({
+        config: encodeURI(Buffer.from(JSON.stringify(this._config)).toString('base64'))
+      }).pipe(first()).subscribe(response => {
+        this._filteredInnovations = response.result;
+        this._totalFilteredInnovations = response._metadata.totalCount;
+        this._stopLoading = true;
+      }, err => {
+        this._fetchingError = true;
+      });
+    } else {
+      this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+        this._filteredInnovations = response.result;
+        this._totalFilteredInnovations = response._metadata.totalCount;
+        this._stopLoading = true;
+      }, () => {
+        this._fetchingError = true;
+      });
+    }
   }
 
   public onClickRemove(tagId: string) {
