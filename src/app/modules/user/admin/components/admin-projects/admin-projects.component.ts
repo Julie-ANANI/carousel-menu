@@ -466,7 +466,9 @@ export class AdminProjectsComponent implements OnInit {
           fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
           limit: this._configService.configLimit('admin-projects-limit'),
           offset: '0',
-          fromCollection: 'mission',
+          fromCollection: {
+            model: ''
+          },
           search: '{}',
           sort: '{"created":-1}',
           type: 'CLIENT'
@@ -490,7 +492,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   private _getInnovations() {
-    if (this._config['fromCollection']) {
+    if (this._config.fromCollection.model) {
       this._searchMissionsByOther(this._config);
     } else {
       this._getProjects();
