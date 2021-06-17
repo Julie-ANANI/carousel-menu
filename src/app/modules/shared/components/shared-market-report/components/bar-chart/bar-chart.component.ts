@@ -11,6 +11,9 @@ import {DataService} from '../../services/data.service';
 import {AnswersStats} from '../../models/stats';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {Mission, MissionQuestion} from '../../../../../../models/mission';
+import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-bar-chart',
@@ -20,9 +23,13 @@ import {takeUntil} from 'rxjs/operators';
 
 export class BarChartComponent implements OnInit, OnDestroy {
 
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(<Mission>this.innovation.mission);
+  }
+
   @Input() innovation: Innovation = <Innovation>{};
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question>{};
 
   @Input() readonly = true;
 
@@ -72,6 +79,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
     if (this._filterService.filters[this.question.identifier]) {
       filterValue = this._filterService.filters[this.question.identifier].value;
     } else {
+      // @ts-ignore
       filterValue = this.question.options.reduce((acc, opt) => {
         acc[opt.identifier] = true; return acc; }, {} as any);
     }
@@ -106,7 +114,13 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   public questionChange() {
     this._updateAnswersData();
-    this.questionChanged.emit(this.question);
+    if (!this.hasMissionTemplate) {
+      this.questionChanged.emit(<Question>this.question);
+    }
+  }
+
+  public barDataLabel(barData: any) {
+    return MissionQuestionService.label(barData, 'label', this.reportingLang);
   }
 
   get filter() {

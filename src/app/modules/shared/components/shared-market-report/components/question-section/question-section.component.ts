@@ -8,6 +8,7 @@ import {DataService} from '../../services/data.service';
 import {Observable} from 'rxjs';
 import {AnswersStats} from '../../models/stats';
 import {TranslateService} from '@ngx-translate/core';
+import {MissionQuestion} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-question-section',
@@ -27,7 +28,7 @@ export class QuestionSectionComponent implements OnInit {
 
   @Input() canEditQuestionTags = false;
 
-  @Input() questionReceived: Question = <Question>{};
+  @Input() questionReceived: Question | MissionQuestion = <Question | MissionQuestion>{};
 
   @Input() reportingLang = this._translateService.currentLang;
 

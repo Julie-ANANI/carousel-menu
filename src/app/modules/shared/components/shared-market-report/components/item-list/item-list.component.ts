@@ -3,7 +3,8 @@ import { DataService } from '../../services/data.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
-import { AnswersStats } from "../../models/stats";
+import { AnswersStats } from '../../models/stats';
+import {MissionQuestion} from '../../../../../../models/mission';
 
 export interface Item {
   rating: number;
@@ -24,7 +25,7 @@ export class ItemListComponent implements OnInit {
 
   @Input() innovation: Innovation = <Innovation>{};
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question | MissionQuestion>{};
 
   @Input() readonly = true;
 

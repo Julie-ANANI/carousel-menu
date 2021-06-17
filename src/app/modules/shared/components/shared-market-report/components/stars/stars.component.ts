@@ -5,8 +5,10 @@ import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
 import { DataService } from '../../services/data.service';
 import { ResponseService } from '../../services/response.service';
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import {MissionQuestion} from '../../../../../../models/mission';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-stars',
@@ -16,10 +18,10 @@ import { takeUntil } from "rxjs/operators";
 
 export class StarsComponent implements OnInit, OnDestroy {
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question | MissionQuestion>{};
   @Input() reportingLang = this._translateService.currentLang;
 
-  private _notesData: Array<{label: Multiling, sum: number, percentage: string}> = [];
+  private _notesData: Array<{label: Multiling, entry: [], sum: number, percentage: string}> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -35,11 +37,15 @@ export class StarsComponent implements OnInit, OnDestroy {
       });
   }
 
+  public noteLabel(note: any): string {
+    return MissionQuestionService.label(note, 'label', this._currentLang);
+  }
+
   get currentLang(): string {
     return this._currentLang;
   }
 
-  get notesData(): Array<{ label: Multiling; sum: number; percentage: string }> {
+  get notesData(): Array<{ label: Multiling; entry: [], sum: number; percentage: string }> {
     return this._notesData;
   }
 

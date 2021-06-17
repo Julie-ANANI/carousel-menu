@@ -5,6 +5,7 @@ import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import {MissionQuestion} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-scale',
@@ -14,7 +15,7 @@ import { takeUntil } from "rxjs/operators";
 
 export class ScaleComponent implements OnInit, OnDestroy {
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question | MissionQuestion>{};
 
   private _barsData: {[prop: string]: {count: number, percentage?: string}} = {};
 
