@@ -50,7 +50,7 @@
             [ngClass]="{'disabled': !selectedCategory || template['category'] !== selectedCategory}"
             class="template-case relative">
 
-            <a [href]="'#arrow-methodology'" pageScrollOffset="10" pageScroll class="d-block">
+            <a [href]="'#section-methodology'" pageScrollOffset="10" pageScroll class="d-block">
               <p
                 [ngClass]="{'active': selectedTemplate._id === template._id}"
                 (click)="onChangeTemplate($event, template)"
@@ -134,6 +134,7 @@
 
   <!-- methodology -->
   <div
+    [id]="'section-methodology'"
     [ngClass]="selectedTemplate._id ? 'wrapper-expand' : 'wrapper-collapse'"
     class="section-methodology m-left-auto m-right-auto">
     <ng-container *ngIf="!!selectedTemplate._id">
