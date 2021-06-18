@@ -17,6 +17,7 @@
         <label class="relative d-block w-full">
 
           <input
+            (keyup)="onKeyboardPress($event)"
             [attr.placeholder]="placeholder | translate"
             [formControl]="text"
             [name]="'text'"
@@ -32,7 +33,7 @@
             class="add-btn-wrapper absolute">
             <button
               (click)="onAddValue()"
-              [disabled]="!text.value"
+              [disabled]="!text.value || isEmailError"
               [id]="'text-input-btn-add'"
               [ngClass]="buttonColorClass"
               class="button is-circled"
@@ -51,6 +52,7 @@
 
        <label class="d-block w-full">
          <input
+           (keyup)="onKeyboardPress($event)"
            [attr.placeholder]="placeholder | translate"
            [formControl]="text"
            [name]="'text'"
@@ -63,7 +65,7 @@
         <!-- add button -->
         <button
           (click)="onAddValue()"
-          [disabled]="!text.value"
+          [disabled]="!text.value || isEmailError"
           [id]="'text-input-btn-add'"
           [ngClass]="buttonColorClass"
           [ngStyle]="{'padding': isFormSmall ? '10.5px 20px 10.5px 13px' : '15px 20px 15px 16px',

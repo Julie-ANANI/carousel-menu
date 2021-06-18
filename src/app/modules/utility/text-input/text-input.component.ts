@@ -93,14 +93,43 @@ export class TextInputComponent {
   constructor() { }
 
   public onAddValue() {
-    if (this._text.value) {
-      if ((this.fieldType === 'email' && this._text.value.match(emailRegEx)) || this.fieldType === 'text') {
-        this._isEmailError = false;
+    if (this._text.value && !this._isEmailError) {
+      if (this.fieldType === 'email') {
+        this._iterateEmails();
+      } else {
         this.textEntered.emit(this._text.value);
         this._text.reset();
-      } else if (this.fieldType === 'email' && !this._text.value.match(emailRegEx)) {
+      }
+    }
+  }
+
+  /**
+   * we iterate through the emails.
+   * @private
+   */
+  private _iterateEmails() {
+    const emails = this._text.value.split(',');
+
+    emails.forEach((_email: string) => {
+      if (_email.trim().match(emailRegEx)) {
+        this.textEntered.emit(_email.trim());
+      } else {
         this._isEmailError = true;
       }
+    });
+
+    if (!this._isEmailError) {
+      this._text.reset();
+    }
+  }
+
+  /**
+   * @param event
+   */
+  public onKeyboardPress(event: KeyboardEvent) {
+    event.preventDefault();
+    if (this.fieldType === 'email' && (!this._text.value || (this._text.value && this._isEmailError))) {
+      this._isEmailError = false;
     }
   }
 
