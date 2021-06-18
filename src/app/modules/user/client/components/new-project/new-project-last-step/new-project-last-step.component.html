@@ -71,7 +71,7 @@
     <div class="form-group mxw-450 m-left-auto m-right-auto">
       <label>
         <input
-          (change)="onChangeProject()"
+          (keyup)="onChangeProject()"
           [(ngModel)]="projectName"
           [placeholder]="'COMMON.PLACEHOLDER.TITLE' | translate"
           class="form-input is-shadowed"
