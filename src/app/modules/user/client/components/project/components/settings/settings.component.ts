@@ -20,6 +20,7 @@ import {InnovCard} from '../../../../../../../models/innov-card';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
 import {isPlatformBrowser} from '@angular/common';
 import {UserFrontService} from '../../../../../../../services/user/user-front.service';
+import * as moment from 'moment';
 
 interface Section {
   name: string;
@@ -35,6 +36,10 @@ interface Section {
 })
 
 export class SettingsComponent implements OnInit, OnDestroy {
+
+  get disabledDate(): string {
+    return this._disabledDate;
+  }
 
   get isEditable(): boolean {
     return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
@@ -130,6 +135,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * store the actual store template that we get by filtering from missionTemplates.
    */
   private _definedTemplate: MissionTemplate = <MissionTemplate>{};
+
+  private _disabledDate = moment().add(-1, 'days').format('YYYY-MM-DD');
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,

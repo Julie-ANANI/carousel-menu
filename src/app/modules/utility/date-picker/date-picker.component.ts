@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CalAnimation, IAngularMyDpOptions, IMyDateModel, IMyDefaultMonth} from 'angular-mydatepicker';
+import * as moment from 'moment';
 
 export interface DatePickerDefMonth {
   month: number;
@@ -86,7 +87,8 @@ export class DatePickerComponent implements OnInit {
       dateRange: false,
       dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
       calendarAnimation: { in: CalAnimation.ScaleTop, out: CalAnimation.ScaleTop},
-      disableWeekends: true
+      disableWeekends: true,
+      maxYear: moment().add(1, 'years').year()
     };
 
     if (!!this._isDisabledUntil) {
