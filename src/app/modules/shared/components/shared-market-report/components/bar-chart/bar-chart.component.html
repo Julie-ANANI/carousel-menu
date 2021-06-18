@@ -24,7 +24,7 @@
         class="button is-community is-sm"
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
-        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
+        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
       </button>
     </div>
     <!-- /button to toggle answers display -->
@@ -62,7 +62,7 @@
                 [ngClass]="{'c-hand': barData.answers && barData.answers.length}"
                 class="d-flex text-notify text-medium align-center text-md">
                 <span class="m-right-2">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translateIn: reportingLang }}</span>
-                <i [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-up'" aria-hidden="true" class="icon"></i>
+                <i [ngClass]="showAnswers[i] ? 'icon-arrow-up' : 'icon-arrow-down'" aria-hidden="true" class="icon"></i>
               </div>
 
             </div>
