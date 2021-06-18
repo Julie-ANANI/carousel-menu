@@ -146,12 +146,17 @@ export class SharedSearchMultiComponent {
 
     this._searchConfig.offset = '0';
 
-    if (this._searchConfig.fromCollection[prop._attrs[0]] === null || this._searchConfig.fromCollection[prop._attrs[0]] === undefined) {
-      delete this._searchConfig[prop._attrs[0]];
-      this._deleteAdvanceConfig(prop);
+    if (prop._searchConfig) {
+      if (this._searchConfig.fromCollection[prop._attrs[0]] === null || this._searchConfig.fromCollection[prop._attrs[0]] === undefined) {
+        this._deleteAdvanceConfig(prop);
+      }
+    } else {
+      if (this._searchConfig[prop._attrs[0]] === null || this._searchConfig[prop._attrs[0]] === undefined) {
+        delete this._searchConfig[prop._attrs[0]];
+      }
     }
 
-    if (prop._searchConfig && prop._searchConfig._collection && this._isExistsSearchKey()) {
+    if (prop._searchConfig && prop._searchConfig._collection) {
       this._searchConfig.fromCollection.model = prop._searchConfig._collection;
     } else if (this._searchString) {
       this.onSearch();
@@ -159,21 +164,6 @@ export class SharedSearchMultiComponent {
 
     this.searchConfigChange.emit(this._searchConfig);
 
-  }
-
-  private _isExistsSearchKey(): boolean {
-    if (this._otherProps.length) {
-      for (let i = 0; i < this._otherProps.length; i++) {
-        for (const property in this._searchConfig.fromCollection) {
-          if (this._searchConfig.fromCollection.hasOwnProperty(property) && this._otherProps[i]._searchConfig) {
-            if (this._otherProps[i]._searchConfig._searchKey === property) {
-              return true;
-            }
-          }
-        }
-      }
-    }
-    return false;
   }
 
   getType(column: Column): types {

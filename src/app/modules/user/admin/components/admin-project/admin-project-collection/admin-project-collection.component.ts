@@ -130,7 +130,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
         (response) => {
           this._answers = response.answers;
           this._answers.forEach((answer) => {
-            if (
+            if ( answer.campaign &&
               this._campaignList.findIndex(
                 (list) => list._name === answer.campaign['_id']
               ) === -1
