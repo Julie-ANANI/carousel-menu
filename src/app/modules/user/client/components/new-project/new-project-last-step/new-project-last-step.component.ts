@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {CommonService} from '../../../../../../services/common/common.service';
 import {IMyDateModel} from 'angular-mydatepicker';
 import {Consent} from '../../../../../../models/consent';
 import {DOCUMENT} from '@angular/common';
 import {PageScrollService} from 'ngx-page-scroll-core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-new-project-last-step',
@@ -88,14 +88,13 @@ export class NewProjectLastStepComponent {
    * upto this date all the previous date are disabled for the selection.
    * @private
    */
-  private _disabledDate = this._commonService.getFutureMonth();
+  private _disabledDate = moment().add(-1, 'days').format('YYYY-MM-DD');
 
   private _isRestitutionDateSelected = false;
 
   constructor(@Inject(DOCUMENT) private _document: Document,
               private _translateService: TranslateService,
-              private _pageScrollService: PageScrollService,
-              private _commonService: CommonService) { }
+              private _pageScrollService: PageScrollService) { }
 
   /**
    * when user select the lang of the project.
