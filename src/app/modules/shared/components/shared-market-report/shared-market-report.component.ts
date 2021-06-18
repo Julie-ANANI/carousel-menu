@@ -414,7 +414,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
     // Modified only admin side
     if (MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
-      objToSave['missionTemplate'] = this._innovation.mission;
+      objToSave['missionTemplate'] = (<Mission>this._innovation.mission).template;
     } else {
       objToSave['preset'] = this._innovation.preset;
     }
