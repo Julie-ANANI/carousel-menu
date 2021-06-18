@@ -46,7 +46,7 @@ export const MARKET_TEST_METHODOLOGY = {
       '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
       '- hiérarchiser leurs besoins,' +
       '<br>- identifier les solutions qu’ils utilisent ou connaissent,' +
-      '<br>- anticiper les impacts potentiels sur les marchés concernés,' +
+      '<br>- connaître les limites de ces solutions d’après eux.”' +
       '<br>- …' +
       '<br>À ce stade je ne vais pas présenter de solution.',
 
@@ -86,10 +86,8 @@ export const MARKET_TEST_METHODOLOGY = {
       'du marché : points forts, avantages, arguments...' +
       '<p class="p-top-20 m-no-bottom">Je pourrai aussi :</p>' +
       '- hiérarchiser les freins à l\'adoption,' +
-      '<br>- confirmer mon positionnement concurrentiel,' +
       '<br>- valider le positionnement prix,' +
-      '<br>- valider le business model,' +
-      '<br>- valider le canal de vente.',
+      '<br>- valider le business model,'
   },
 
   'RESULT': {

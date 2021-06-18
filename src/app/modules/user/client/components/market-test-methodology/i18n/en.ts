@@ -87,10 +87,8 @@ export const MARKET_TEST_METHODOLOGY = {
       'players: strengths, advantages, argumentation...' +
       '<p class="p-top-20 m-no-bottom">I will also:</p>' +
       '-  rank the adoption barriers' +
-      '<br>- confirm my competitive positioning' +
       '<br>- validate the price positioning' +
-      '<br>- validate the business model' +
-      '<br>- validate the sales channel(s)',
+      '<br>- validate the business model'
   },
 
   'RESULT': {
