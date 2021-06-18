@@ -275,11 +275,11 @@
         <!-- not edit mode -->
         <div *ngIf="fullAnswer.answers[question.identifier] && !editMode">
           <div
-            *ngFor="let opt of fullAnswer.answers[question.identifier]; let index = index"
+            *ngFor="let opt of fullAnswer.answers[question.identifier] | keyvalue; let index = index"
             [ngClass]="{'m-bottom-10': index !== (question.options && question.options.length - 1)}">
             {{index + 1}} -
             <span class="m-left-2">
-              {{ question.options[opt].label | multiling:currentLang }}
+              {{ question.options[opt.value].label | multiling:currentLang }}
             </span>
           </div>
         </div>
@@ -288,14 +288,14 @@
         <!-- edit mode -->
         <div *ngIf="editMode">
           <div
-            *ngFor="let opt of fullAnswer.answers[question.identifier]; let index = index"
+            *ngFor="let opt of fullAnswer.answers[question.identifier] | keyvalue; let index = index"
             [ngClass]="{'m-bottom-10': index !== (question.options && question.options.length - 1)}">
-            <select [id]="'select-' + question.identifier + '-' + index" (change)="moveListElement(question.identifier, $event, index)">
+            <select [id]="'select-' + question.identifier + '-' + index" (change)="moveListElement(question.identifier, index)">
               <option [selected]="index === j"
-                      *ngFor="let a of [].constructor(fullAnswer.answers[question.identifier].length); let j = index">{{ j + 1 }}</option>
+                      *ngFor="let a of [].constructor(question.options.length); let j = index">{{ j + 1 }}</option>
             </select>
             <span class="m-left-2">
-              {{ question.options[opt].label | multiling:currentLang }}
+              {{ question.options[opt.value].label | multiling:currentLang }}
             </span>
           </div>
         </div>

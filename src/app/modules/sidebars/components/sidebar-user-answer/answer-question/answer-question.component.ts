@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
-import { Question } from '../../../../../models/question';
-import { Answer } from '../../../../../models/answer';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { TranslationService } from '../../../../../services/translation/translation.service';
-import { AnswerService } from '../../../../../services/answer/answer.service';
-import { Tag } from '../../../../../models/tag';
-import { first} from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import {Question} from '../../../../../models/question';
+import {Answer} from '../../../../../models/answer';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {TranslationService} from '../../../../../services/translation/translation.service';
+import {AnswerService} from '../../../../../services/answer/answer.service';
+import {Tag} from '../../../../../models/tag';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 
 @Component({
@@ -207,11 +207,14 @@ export class AnswerQuestionComponent {
     }
   }
 
-  moveListElement(questionId: string, event: any, initialIndex: number) {
+  moveListElement(questionId: string, initialIndex: number) {
     const selectElem = document.getElementById(`select-${questionId}-${initialIndex}`) as HTMLSelectElement;
     if (selectElem) {
       const targetIndex = selectElem.selectedIndex;
-      this.fullAnswer.answers[questionId].splice(targetIndex, 0, this.fullAnswer.answers[questionId].splice(initialIndex, 1)[0]);
+      const keys = Object.keys(this.fullAnswer.answers[questionId]);
+      const values = Object.values(this.fullAnswer.answers[questionId]);
+      values.splice(targetIndex, 0, values.splice(initialIndex, 1)[0]);
+      keys.map(x => { this.fullAnswer.answers[questionId][x] =  values[x]; });
       this.emitChanges();
     }
   }

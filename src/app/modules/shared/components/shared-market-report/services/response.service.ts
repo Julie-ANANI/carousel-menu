@@ -132,6 +132,31 @@ export class ResponseService {
   }
 
   /***
+   * this function is to get the ranks data answer for the question type ranking.
+   * @param question
+   * @param answers
+   */
+  public static getRanksAnswers(question: Question, answers: Array<Answer>) {
+
+    let ranksData: Array<{label: Multiling, sum: number, percentage: string}> = [];
+
+    if (question && answers) {
+      const ranking = this.rankingChartData(question, answers);
+
+      ranksData = ranking.map((rank) => {
+        return {
+          label: rank.label,
+          sum: rank.count,
+          percentage: `${rank.percentage || 0}%`
+        };
+      });
+
+    }
+
+    return ranksData;
+  }
+
+  /***
    * this function is to get the bars data answer for the question type checkbox and radio.
    * @param question
    * @param answers
@@ -275,6 +300,85 @@ export class ResponseService {
 
     return pieChartData;
 
+  }
+
+  public static rankingChartData(question: Question = <Question>{}, answers: Array<Answer> = []) {
+
+    let rankingChartData = [];
+    const weights = this.computeWeights(question.options.length);
+    const multipliers = this.computeMultiplier(question.options.length);
+    rankingChartData = question.options.map((opt) => {
+
+      const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
+        && Object.values(a.answers[question.identifier]).every((i: number) => {
+          return i >= 0;
+        }));
+
+      let optRankingAvg = 0;
+
+      filteredAnswers.forEach(a => {
+        // position in ranking
+        const entry = Object.entries(a.answers[question.identifier]).find(k => k[1] === opt.identifier);
+        if (entry) {
+          const optRank = parseInt(entry[0]);
+          if (optRank >= 0) {
+            const weight = weights[optRank]; // weight of the rank
+            const multiplier = multipliers[optRank]; // multiplier of the rank
+            optRankingAvg += weight * multiplier;
+          }
+        }
+      });
+
+      optRankingAvg = Math.round(optRankingAvg / filteredAnswers.length * 100);
+
+      return {
+        label: opt.label,
+        answers: filteredAnswers,
+        percentage: optRankingAvg || 0,
+        count: filteredAnswers.length,
+        identifier: opt.identifier
+      };
+
+    });
+
+    rankingChartData.sort((a, b) => b.percentage - a.percentage);
+
+    return rankingChartData;
+  }
+
+  /**
+   * Compute positions weights depending of number of options
+   * First position will always be 1
+   * Last position will always be 0
+   * @param n
+   */
+  public static computeWeights(n: number) {
+    const weights = [].constructor(n);
+    const steps = 1 / (n - 1);
+    for (let i = 0; i < weights.length; i++) {
+      weights[i] = 1 - steps * i;
+    }
+
+    console.log(weights);
+
+    return weights;
+  }
+
+  /**
+   * Compute positions multiplier depending of number of options
+   * @param n
+   */
+  public static computeMultiplier(n: number) {
+    const multipliers = [].constructor(n);
+    const steps = 1 / (n - 1);
+    for (let i = 0; i < multipliers.length / 2; i++) {
+      multipliers[i] = 1 - steps * i;
+      multipliers[n - i - 1 ] = 1 - steps * i;
+    }
+
+    console.log(multipliers);
+
+    return multipliers;
   }
 
   public static filterCommentAnswers(question: any = <any>{}, answers: Array<Answer> = []) {

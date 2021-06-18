@@ -1,0 +1,15 @@
+<div *ngIf="ranksData.length > 0" id="star">
+  <div *ngFor="let rank of ranksData; let i = index" class="p-top-25 text-lg">
+
+
+    <div class="flex-between text-medium m-bottom-10">
+      <span class="text-background">{{i + 1 }} - {{ rank.label | multiling:reportingLang }}</span>
+      <span class="text-notify text-md">{{ rank.percentage || '0%' }}</span>
+    </div>
+
+    <div [ngStyle]="{'height': '12px'}" class="bar">
+      <div [ngStyle]="{ 'width': rank.percentage, 'background': '#FFB300' }" class="bar-item"></div>
+    </div>
+
+  </div>
+</div>

@@ -119,6 +119,21 @@
     </ng-container>
     <!-- /pie chart -->
 
+    <!-- ranking chart -->
+    <ng-container *ngSwitchCase="'ranking'">
+      <app-bluesquare
+        (subtitleChanged)="subtitleChange($event)"
+        [readonly]="readonly"
+        [percentage]="stats.percentage"
+        [subtitle]="question.subtitle | multiling:reportingLang">
+        <app-ranking-chart
+          [reportingLang]="reportingLang"
+          [question]="question"
+        ></app-ranking-chart>
+      </app-bluesquare>
+    </ng-container>
+    <!-- /ranking chart -->
+
     <!-- rectangle box -->
     <ng-container *ngSwitchDefault>
       <app-bluesquare
