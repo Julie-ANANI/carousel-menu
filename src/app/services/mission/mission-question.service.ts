@@ -556,7 +556,6 @@ export class MissionQuestionService {
       const index = question.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         question.entry[index][attr] = newValue;
-        console.log(question.entry[index]);
         this._emitTemplate();
       }
     }

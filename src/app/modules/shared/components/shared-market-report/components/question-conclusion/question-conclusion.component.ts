@@ -144,7 +144,6 @@ export class QuestionConclusionComponent implements OnInit {
 
   positiveAnswerLabelChanged(positivesAnswersLabel: Multiling) {
     if (this.hasMissionTemplate) {
-      console.log(positivesAnswersLabel);
       (<MissionQuestion>this._question).entry.forEach((_entry) => {
         this._missionQuestionService.changeQuestionEntry(
           positivesAnswersLabel[_entry.lang], _entry.lang, <MissionQuestion>this._question, 'positivesAnswersLabel'
