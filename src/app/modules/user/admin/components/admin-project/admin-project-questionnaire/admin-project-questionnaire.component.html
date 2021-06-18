@@ -21,7 +21,6 @@
         <button
           (click)="openPresetSelection($event)"
           *ngIf="canAccess(['import']) && !hasMissionTemplate"
-          [disabled]="innovation.status !== 'EVALUATING'"
           class="button is-info is-sm m-right-25 is-outlined m-bottom-30"
           id="btn-import-preset"
           type="button">
@@ -33,7 +32,6 @@
         <button
           (click)="generateQuiz($event)"
           *ngIf="(!!innovation.preset || hasMissionTemplate) && canAccess(['quiz', 'generate'])"
-          [disabled]="innovation.status !== 'EVALUATING'"
           class="button is-primary is-sm m-bottom-30"
           id="btn-generate-quiz"
           type="button">
@@ -52,7 +50,7 @@
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
         <app-shared-questionnaire
           (templateChange)="updatePreset($event, 'TEMPLATE')"
-          [isEditable]="canAccess(['edit']) && innovation.status === 'EVALUATING'"
+          [isEditable]="canAccess(['edit'])"
           [questionnaireLanguages]="cardsLanguages"
           [sectionsNames]="sectionsNames"
           [template]="mission.template">
@@ -63,7 +61,7 @@
         <ng-container *ngIf="!!innovation.preset">
           <app-shared-preset
             (save)="updatePreset($event, 'PRESET')"
-            [isEditable]="canAccess(['edit']) && innovation.status === 'EVALUATING'"
+            [isEditable]="canAccess(['edit'])"
             [presetLanguages]="cardsLanguages"
             [preset]="innovation.preset"
             [sectionsNames]="sectionsNames">
