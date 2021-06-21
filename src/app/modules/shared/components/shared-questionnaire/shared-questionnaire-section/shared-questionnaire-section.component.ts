@@ -119,6 +119,10 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     this._missionQuestionService.changeSectionName(value, lang, this._section);
   }
 
+  public sectionIdentifier(): string {
+    return this.sectionsNames.length > 0 ? this.sectionsNames[Number(this._section.identifier)] : this._section.identifier;
+  }
+
   public notifyChanges() {
     if (this.isEditable) {
       this._missionQuestionService.setNotifyChanges(true);
