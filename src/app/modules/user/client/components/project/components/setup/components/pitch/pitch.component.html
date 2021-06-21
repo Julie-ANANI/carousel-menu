@@ -170,8 +170,7 @@
       <!-- /heading / sub heading -->
 
       <!-- questionnaire template -->
-      <ng-container *ngIf="mission.template && mission.template.sections && mission.template.sections.length > 0;
-      else oldPreset">
+      <ng-container *ngIf="hasMissionTemplate; else oldPreset">
         <section
           *ngFor="let section of mission.template.sections; let i = index;"
           [ngClass]="{'p-top-20': i !== 0 && section.type !== 'NOTHING' }"

@@ -45,6 +45,13 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
   }
 
+  /**
+   * return true if the mission has template in it.
+   */
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(this.mission);
+  }
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,

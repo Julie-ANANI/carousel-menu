@@ -170,18 +170,19 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _initToggle() {
     this._toggleComment = {
-      title: !!this.activeInnovCard.operatorComment.title.comment,
-      summary: !!this.activeInnovCard.operatorComment.summary.comment
+      title: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title.comment),
+      summary: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.summary.comment)
     };
 
     this._toggleSuggestion = {
-      title: !!this.activeInnovCard.operatorComment.title.suggestion,
-      summary: !!this.activeInnovCard.operatorComment.summary.suggestion
+      title: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title.suggestion),
+      summary: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.summary.suggestion)
     };
 
     for (let i = 0; i < this.activeInnovCard.sections.length; i++) {
       const etherpadElementId = this.activeInnovCard.sections[i].etherpadElementId;
-      const operatorComment = this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId);
+      const operatorComment = this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections
+        ? this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId) : null;
       this._toggleComment[i] = (etherpadElementId && operatorComment && !!operatorComment.comment);
       this._toggleSuggestion[i] = (etherpadElementId && operatorComment && !!operatorComment.suggestion);
     }
@@ -307,7 +308,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   public deleteSection(event: Event) {
     event.preventDefault();
     this.activeInnovCard.sections.splice(this._deleteSectionIndex, 1);
-    this.activeInnovCard.operatorComment.sections.splice(this._deleteSectionIndex, 1);
+
+    if (this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections) {
+      this.activeInnovCard.operatorComment.sections.splice(this._deleteSectionIndex, 1);
+    }
+
     this._deleteSectionIndex = null;
     this._initToggle();
     this.closeModal();
