@@ -110,9 +110,8 @@ export class NewProjectLastStepComponent {
 
   /**
    * when the user writes the comment in the textarea of the restitution date.
-   * @param value
    */
-  public onChangeMilestoneComment(value: string) {
+  public onChangeMilestoneComment() {
     this.milestoneDateCommentChange.emit(this._milestoneDateComment);
   }
 

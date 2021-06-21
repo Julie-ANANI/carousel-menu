@@ -39,7 +39,7 @@
     <div *ngIf="!!reportingLang" class="form-group mxw-450 m-left-auto m-right-auto p-top-40">
       <label>
         <textarea
-          (ngModelChange)="onChangeMilestoneComment($event)"
+          (change)="onChangeMilestoneComment()"
           [(ngModel)]="milestoneDateComment"
           [placeholder]="'NEW_PROJECT.COMMENT_PLACEHOLDER' | translate"
           class="form-input is-shadowed text-sm"
