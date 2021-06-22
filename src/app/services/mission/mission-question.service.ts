@@ -203,6 +203,12 @@ export class MissionQuestionService {
           fr: 'Vous pouvez sélectionner jusqu\'à 4 items'
         };
 
+      case 'ranking':
+        return {
+          en: 'Drag and drop to rank items',
+          fr: 'Drag and drop pour classer les items'
+        };
+
       default:
         return {
           en: '',

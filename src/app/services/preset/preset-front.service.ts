@@ -189,10 +189,8 @@ export class PresetFrontService {
 
       case 'ranking':
         return {
-          // en: 'Drag and drop to rank items',
-          // fr: 'Drag and drop pour classer les items'
-          en: '',
-          fr: ''
+          en: 'Drag and drop to rank items',
+          fr: 'Drag and drop pour classer les items'
         };
 
       default:
