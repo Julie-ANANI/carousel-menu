@@ -13,6 +13,15 @@ import { Table } from '../../../../table/models/table';
   styleUrls: ['admin-edit-workflow.component.scss'],
 })
 export class AdminEditWorkflowComponent {
+  @Input() set projectLangs(value: string[]) {
+    if (value && value.length) {
+      this._projectLangs = value;
+      this._language = this._projectLangs[0];
+    } else {
+      this._projectLangs = ['fr', 'en'];
+    }
+  }
+
   @Input() isEditable = false;
 
   @Input() isDeletable = false;
@@ -47,9 +56,11 @@ export class AdminEditWorkflowComponent {
 
   private _isModifiedFr = false;
 
+  private _projectLangs: string[] = [];
+
   private _inCampaign = false;
 
-  private _language = 'en';
+  private _language = '';
 
   private _signatures: Array<EmailSignature> = [];
 
@@ -73,14 +84,15 @@ export class AdminEditWorkflowComponent {
     sort: '{"created":-1}',
   };
 
-  constructor() {}
+  constructor() {
+  }
 
   private _initTable() {
     const steps: any = {
-      FIRST: { step: 'FIRST', num: '01 - ' },
-      SECOND: { step: 'SECOND', num: '02 - ' },
-      THIRD: { step: 'THIRD', num: '03 - ' },
-      THANKS: { step: 'THANKS', num: '04 - ' },
+      FIRST: {step: 'FIRST', num: '01 - '},
+      SECOND: {step: 'SECOND', num: '02 - '},
+      THIRD: {step: 'THIRD', num: '03 - '},
+      THANKS: {step: 'THANKS', num: '04 - '},
     };
 
     this._campaignScenario.emails.forEach((email: EmailTemplate) => {
@@ -116,8 +128,8 @@ export class AdminEditWorkflowComponent {
         _name: 'Status',
         _type: 'MULTI-CHOICES',
         _choices: [
-          { _name: 'false', _alias: 'To modify', _class: 'label is-draft' },
-          { _name: 'true', _alias: 'Modified', _class: 'label is-success' },
+          {_name: 'false', _alias: 'To modify', _class: 'label is-draft'},
+          {_name: 'true', _alias: 'Modified', _class: 'label is-success'},
         ],
       });
     }
@@ -249,5 +261,9 @@ export class AdminEditWorkflowComponent {
 
   set localConfig(value: Config) {
     this._localConfig = value;
+  }
+
+  get projectLangs(): string[] {
+    return this._projectLangs;
   }
 }

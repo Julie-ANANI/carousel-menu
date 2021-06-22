@@ -57,6 +57,8 @@ export class AdminCampaignComponent implements OnInit {
         }
       }
 
+      console.log(this._campaign);
+
     } else {
       this._isLoading = false;
       this._fetchingError = true;

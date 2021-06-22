@@ -15,7 +15,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
-import {AuthService} from '../../../../../../services/auth/auth.service';
+import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
@@ -50,6 +50,8 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _isTesting = false;
 
+  private _innovationCardLanguages: string[] = [];
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _activatedRoute: ActivatedRoute,
@@ -59,7 +61,8 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     private _rolesFrontService: RolesFrontService,
     private _authService: AuthService,
     private _translateNotificationsService: TranslateNotificationsService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -80,6 +83,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._getAllSignatures();
     this._generateAvailableScenario();
     this._generateModifiedScenarios();
+    this._getInnovationCardLanguages();
   }
 
   private _verifyCampaignType() {
@@ -99,6 +103,15 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       this._prepareImport(false);
       this.updateAvailableScenario(this._selectedTemplate);
       this._saveTemplates('The workflow is added automatically.');
+    }
+  }
+
+  private _getInnovationCardLanguages() {
+    this._innovationCardLanguages = [];
+    if (this._campaign.innovation && this._campaign.innovation.innovationCards && this._campaign.innovation.innovationCards.length) {
+      this._campaign.innovation.innovationCards.map(innoCard => {
+        this._innovationCardLanguages.push(innoCard.lang);
+      });
     }
   }
 
@@ -148,7 +161,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
    */
   private _getAllSignatures() {
     this._templatesService
-      .getAllSignatures({ limit: '0', sort: '{"_id":-1}' })
+      .getAllSignatures({limit: '0', sort: '{"_id":-1}'})
       .pipe(first())
       .subscribe(
         (response: Response) => {
@@ -177,23 +190,23 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
             subHeading: 'Not reached',
             value: this._campaignStat('notReached').toString(10),
           },
-          { subHeading: 'Stared', value: '--' },
-          { subHeading: 'Duplicated', value: '--' },
+          {subHeading: 'Stared', value: '--'},
+          {subHeading: 'Duplicated', value: '--'},
         ],
       },
       {
         heading: 'Emails',
         content: [
-          { subHeading: 'Good', value: this._campaignStat('good') + '%' },
-          { subHeading: 'Unsure', value: this._campaignStat('unsure') + '%' },
-          { subHeading: 'Bad', value: this._campaignStat('bad') + '%' },
+          {subHeading: 'Good', value: this._campaignStat('good') + '%'},
+          {subHeading: 'Unsure', value: this._campaignStat('unsure') + '%'},
+          {subHeading: 'Bad', value: this._campaignStat('bad') + '%'},
         ],
       },
       {
         heading: 'Cost',
         content: [
-          { subHeading: 'Requested', value: '--' },
-          { subHeading: 'Emails', value: '--' },
+          {subHeading: 'Requested', value: '--'},
+          {subHeading: 'Emails', value: '--'},
         ],
       },
     ];
@@ -294,6 +307,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
           displayName: this._authService.user.name || '',
           firstName: this._authService.user.firstName || '',
           lastName: this._authService.user.lastName || '',
+          languages: this._innovationCardLanguages
         };
         this._campaignService
           .sendTestEmails(this._campaign._id, i, userInfo)
@@ -457,5 +471,10 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   get isTesting(): boolean {
     return this._isTesting;
+  }
+
+
+  get innovationCardLanguages(): string[] {
+    return this._innovationCardLanguages;
   }
 }
