@@ -149,7 +149,9 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _getFilteredInnovations() {
     this._stopLoading = false;
-    this._config.offset = this._config.offset && this._config.offset !== '0' ? this._config.offset.toString() : '4';
+    if (this._config.offset === '0' && !this.filterActivated) {
+      this._config.offset = '4';
+    }
     if (this._config.fromCollection && this._config.fromCollection.model) {
       this._innovationService.advancedSearch({
         config: encodeURI(Buffer.from(JSON.stringify(this._config)).toString('base64'))
