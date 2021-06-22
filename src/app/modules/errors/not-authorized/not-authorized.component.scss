@@ -1,31 +1,27 @@
 @import "../../../../style/framework/src/variables";
 
 #not-authorized {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-  .error-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  .content-wrapper {
+    text-align: center;
+    flex: 1 0 auto;
+    width: 100%;
+    padding: 50px 25px;
 
-    .navbar {
-      border: none;
+    img {
+      height: 247.4px;
+      margin-bottom: 30px;
     }
 
-    .content-wrapper {
-      text-align: center;
-      flex: 1 0 auto;
-      width: 100%;
-      padding: 50px 25px;
+    p {
+      opacity: 0.5;
+    }
 
-      img {
-        height: 247.4px;
-        margin-bottom: 30px;
-      }
-
-      p {
-        opacity: 0.5;
-      }
-
+    .button {
+      height: 54px;
     }
 
   }
