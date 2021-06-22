@@ -5,6 +5,7 @@ import {Question, QuestionType} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 import {CommonService} from '../../../../../services/common/common.service';
+import {replaceNumberRegex} from '../../../../../utils/regex';
 
 @Component({
   selector: 'app-shared-preset-question',
@@ -94,7 +95,7 @@ export class SharedPresetQuestionComponent {
       total = total || this._question.maxOptionsSelect;
       this.presetLanguages.forEach((lang) => {
         if (this._question.instruction && this._question.instruction[lang]) {
-          this._question.instruction[lang] = this._question.instruction[lang].replace(/\d/g, (total.toString(10)));
+          this._question.instruction[lang] = this._question.instruction[lang].replace(replaceNumberRegex, (total.toString(10)));
         }
       });
     }

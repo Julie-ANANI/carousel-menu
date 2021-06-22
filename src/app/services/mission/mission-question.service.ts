@@ -11,6 +11,7 @@ import {
 import {Subject} from 'rxjs/Subject';
 import {colors} from '../../utils/chartColors';
 import {TranslateService} from '@ngx-translate/core';
+import {replaceNumberRegex} from '../../utils/regex';
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
@@ -362,7 +363,7 @@ export class MissionQuestionService {
       total = total || question.maxOptionsSelect;
 
       question.entry.forEach((_entry) => {
-        _entry.instruction = _entry.instruction.replace(/\d/g, (total.toString(10)));
+        _entry.instruction = _entry.instruction.replace(replaceNumberRegex, (total.toString(10)));
       });
     }
 
