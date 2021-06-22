@@ -143,7 +143,7 @@ export class MissionQuestionService {
         return value.entry[0] && value.entry[0][attr];
       }
     } else {
-      if (attr === 'title' || value === 'subtitle') {
+      if (attr === 'title' || attr === 'subtitle') {
         return value[attr] && value[attr][lang] || '';
       } else {
         return value.label && value.label[lang] || '';
