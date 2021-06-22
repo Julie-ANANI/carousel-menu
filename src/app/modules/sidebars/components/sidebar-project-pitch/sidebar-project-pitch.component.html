@@ -72,7 +72,8 @@
       *ngIf="type && type !== 'MEDIA' && isEditable"
       [ngStyle]="{'color': remaining('COLOR')}"
       class="text-right text-medium text-xs">
-      {{ remaining('CHAR') }} {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
+      {{ cardContent | characterCountdown:remaining('CHAR') }}
+      {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
     </div>
     <!-- /remaining text -->
 

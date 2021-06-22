@@ -48,9 +48,9 @@
             <!-- remaining text -->
             <div
               *ngIf="isEditable"
-              [ngStyle]="{'color': remaining('COLOR', 'TITLE')}"
+              [ngStyle]="{'color': remaining('TITLE')}"
               class="text-right text-medium p-top-1 text-xs">
-              {{ remaining('CHAR', 'TITLE') }} characters remaining
+              {{ activeInnovCard.title | characterCountdown:100 }} characters remaining
             </div>
             <!-- /remaining text -->
 
@@ -175,9 +175,9 @@
             <!-- remaining text -->
             <div
               *ngIf="isEditable"
-              [ngStyle]="{'color': remaining('COLOR', 'SUMMARY')}"
+              [ngStyle]="{'color': remaining('SUMMARY')}"
               class="text-right text-medium p-top-1 text-xs">
-              {{ remaining('CHAR', 'SUMMARY') }} characters remaining
+              {{ activeInnovCard.summary | characterCountdown:500 }} characters remaining
             </div>
             <!-- /remaining text -->
 
@@ -345,9 +345,9 @@
             <!-- remaining text -->
             <div
               *ngIf="isEditable"
-              [ngStyle]="{'color': remaining('COLOR', section.type, i)}"
+              [ngStyle]="{'color': remaining(section.type, i)}"
               class="text-right text-medium p-top-1 text-xs">
-              {{ remaining('CHAR', section.type, i) }} characters remaining
+              {{ section.content | characterCountdown:1000 }} characters remaining
             </div>
             <!-- /remaining text -->
 

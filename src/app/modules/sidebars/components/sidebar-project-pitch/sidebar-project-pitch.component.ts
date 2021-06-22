@@ -261,19 +261,18 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   }
 
   /***
-   * returns the remaining Char and Color of the field
+   * returns the character limit and color of the field
    * @param type
    */
-  public remaining(type: string): string {
+  public remaining(type: string): any {
     if (this.type && type) {
-      const text = this.cardContent.replace(/<img .*?>/g, '');
       switch (this.type) {
 
         case 'TITLE':
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 100);
           } else if (type === 'CHAR') {
-            return (100 - text.length).toString(10);
+            return 100;
           }
           break;
 
@@ -281,7 +280,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
-            return (500 - text.length).toString(10);
+            return 500;
           }
           break;
 
@@ -293,12 +292,13 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           if (type === 'COLOR') {
             return CommonService.getLimitColor(this.cardContent, 500);
           } else if (type === 'CHAR') {
-            return (1000 - text.length).toString(10);
+            return 1000;
           }
           break;
 
       }
     }
+
     return '';
   }
 

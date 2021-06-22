@@ -93,37 +93,23 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
-  public remaining(type: string, property: CardSectionTypes, index?: number): string {
+  public remaining(property: CardSectionTypes, index?: number): string {
     switch (property) {
 
       case 'TITLE':
-        if (type === 'COLOR') {
-          return CommonService.getLimitColor(this.activeInnovCard.title, 100);
-        } else if (type === 'CHAR') {
-          return (100 - this.activeInnovCard.title.length).toString(10);
-        }
-        break;
+        return CommonService.getLimitColor(this.activeInnovCard.title, 100);
 
       case 'SUMMARY':
-        if (type === 'COLOR') {
-          return CommonService.getLimitColor(this.activeInnovCard.summary, 500);
-        } else if (type === 'CHAR') {
-          return (500 - this.activeInnovCard.summary.length).toString(10);
-        }
-        break;
+        return CommonService.getLimitColor(this.activeInnovCard.summary, 500);
 
       case 'ISSUE':
       case 'SOLUTION':
       case 'CONTEXT':
       case 'OTHER':
-        if (type === 'COLOR') {
-          return CommonService.getLimitColor(<string> this.activeInnovCard.sections[index].content, 1000);
-        } else if (type === 'CHAR') {
-          return (1000 - this.activeInnovCard.sections[index].content.length).toString(10);
-        }
-        break;
+        return CommonService.getLimitColor(<string> this.activeInnovCard.sections[index].content, 1000);
 
     }
+
     return '';
   }
 

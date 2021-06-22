@@ -10,19 +10,21 @@ import {SharedUploadZonePhotoModule} from '../../../../../shared/components/shar
 import {SharedUploadZoneVideoModule} from '../../../../../shared/components/shared-upload-zone-video/shared-upload-zone-video.module';
 import {CommentListModule} from '../../../../../sidebars/components/comment-list/comment-list.module';
 import {SharedEditorsModule} from '../../../../../shared/components/shared-editors/shared-editors.module';
+import {PipeModule} from '../../../../../../pipe/pipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    SharedEditorTinymceModule,
-    ModalEmptyModule,
-    SharedUploadZonePhotoModule,
-    SharedUploadZoneVideoModule,
-    SharedEditorsModule,
-    CommentListModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        SharedEditorTinymceModule,
+        ModalEmptyModule,
+        SharedUploadZonePhotoModule,
+        SharedUploadZoneVideoModule,
+        SharedEditorsModule,
+        CommentListModule,
+        PipeModule
+    ],
   declarations: [
     AdminProjectDescriptionComponent,
   ]
