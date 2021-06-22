@@ -19,6 +19,7 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 import {SocketService} from '../../../../../../services/socket/socket.service';
 import {MissionService} from '../../../../../../services/mission/mission.service';
 import {Mission} from '../../../../../../models/mission';
+import {environment} from '../../../../../../../environments/environment';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -26,6 +27,10 @@ import {Mission} from '../../../../../../models/mission';
 })
 
 export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
+
+  get quizPreviewLink(): string {
+    return this._quizPreviewLink;
+  }
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
@@ -63,6 +68,8 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _toBeSavedComment = false;
 
+  private _quizPreviewLink = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
               private _router: Router,
@@ -81,6 +88,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._project = innovation || <Innovation>{};
       this.setPageTitle();
       this._setActiveCardIndex();
+      this._quizPreviewLink = `${environment.quizUrl}/quiz/${this._project._id}/preview`;
     });
 
     // Cards text has already been saved by another user
