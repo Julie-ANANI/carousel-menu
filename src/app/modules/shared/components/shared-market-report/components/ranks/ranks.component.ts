@@ -7,6 +7,8 @@ import {DataService} from '../../services/data.service';
 import {takeUntil} from 'rxjs/operators';
 import {Answer} from '../../../../../../models/answer';
 import {ResponseService} from '../../services/response.service';
+import * as _ from 'lodash';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-ranks',
@@ -18,7 +20,7 @@ export class RanksComponent implements OnInit, OnDestroy {
   @Input() question: Question = <Question>{};
   @Input() reportingLang = this._translateService.currentLang;
 
-  private _ranksData: Array<{label: Multiling, sum: number, percentage: string}> = [];
+  private _ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -34,11 +36,16 @@ export class RanksComponent implements OnInit, OnDestroy {
       });
   }
 
+  public optionLabel(identifier: string) {
+    const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
+    return MissionQuestionService.label(option, 'label', this.currentLang);
+  }
+
   get currentLang(): string {
     return this._currentLang;
   }
 
-  get ranksData(): Array<{ label: Multiling; sum: number; percentage: string }> {
+  get ranksData(): Array<{ label: Multiling; sum: number; identifier: string; percentage: string }> {
     return this._ranksData;
   }
 

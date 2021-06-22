@@ -6,6 +6,8 @@ import {DataService} from '../../services/data.service';
 import {Question} from '../../../../../../models/question';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import * as _ from 'lodash';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-ranking-chart',
@@ -33,6 +35,11 @@ export class RankingChartComponent implements OnInit, OnDestroy {
       .subscribe((answers: Array<Answer>) => {
         this._rankingChart = ResponseService.rankingChartData(this.question, answers);
       });
+  }
+
+  public optionLabel(identifier: string) {
+    const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
+    return MissionQuestionService.label(option, 'label', this.reportingLang);
   }
 
   get rankingChart() {

@@ -220,6 +220,9 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
         case 'COMMENT':
           this._question.canComment = !this._question.canComment;
           break;
+        case 'RANDOMIZATION':
+          this._question.randomization = !this._question.randomization;
+          break;
         case 'SENSITIVE_DATA':
           this._question.sensitiveAnswerData = !this._question.sensitiveAnswerData;
           break;

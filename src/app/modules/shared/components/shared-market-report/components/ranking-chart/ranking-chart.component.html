@@ -2,6 +2,6 @@
   <div *ngFor="let rank of rankingChart | stopat:3; let i = index;"
        class="ranking-group-item">
     <span class="bullet"> {{i + 1}} </span>
-    <span>{{rank.label | multiling:reportingLang}}</span>
+    <span>{{ optionLabel(rank.identifier) }}</span>
   </div>
 </div>

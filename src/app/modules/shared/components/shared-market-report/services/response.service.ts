@@ -138,13 +138,14 @@ export class ResponseService {
    */
   public static getRanksAnswers(question: Question, answers: Array<Answer>) {
 
-    let ranksData: Array<{label: Multiling, sum: number, percentage: string}> = [];
+    let ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
 
     if (question && answers) {
       const ranking = this.rankingChartData(question, answers);
 
       ranksData = ranking.map((rank) => {
         return {
+          identifier: rank.identifier,
           label: rank.label,
           sum: rank.count,
           percentage: `${rank.percentage || 0}%`

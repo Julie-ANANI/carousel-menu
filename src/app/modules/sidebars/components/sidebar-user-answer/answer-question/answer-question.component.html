@@ -279,7 +279,7 @@
             [ngClass]="{'m-bottom-10': index !== (question.options && question.options.length - 1)}">
             {{index + 1}} -
             <span class="m-left-2">
-              {{ question.options[opt.value].label | multiling:currentLang }}
+              {{ optionLabel(question.options[opt.value].identifier)}}
             </span>
           </div>
         </div>
@@ -295,7 +295,7 @@
                       *ngFor="let a of [].constructor(question.options.length); let j = index">{{ j + 1 }}</option>
             </select>
             <span class="m-left-2">
-              {{ question.options[opt.value].label | multiling:currentLang }}
+              {{ optionLabel(question.options[opt.value].identifier)}}
             </span>
           </div>
         </div>
