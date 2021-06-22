@@ -13,12 +13,12 @@ import { Table } from '../../../../table/models/table';
   styleUrls: ['admin-edit-workflow.component.scss'],
 })
 export class AdminEditWorkflowComponent {
-  @Input() set projectLangs(value: string[]) {
+  @Input() set innovationCardLanguages(value: string[]) {
     if (value && value.length) {
-      this._projectLangs = value;
-      this._language = this._projectLangs[0];
+      this._innovationCardLanguages = value;
+      this._language = this._innovationCardLanguages[0];
     } else {
-      this._projectLangs = ['fr', 'en'];
+      this._innovationCardLanguages = ['fr', 'en'];
     }
   }
 
@@ -56,7 +56,7 @@ export class AdminEditWorkflowComponent {
 
   private _isModifiedFr = false;
 
-  private _projectLangs: string[] = [];
+  private _innovationCardLanguages: string[] = [];
 
   private _inCampaign = false;
 
@@ -193,7 +193,7 @@ export class AdminEditWorkflowComponent {
 
   private _isModified(language: string) {
     return this._campaignScenario.emails.reduce((acc, current) => {
-      return acc && (current.language != language || current.modified);
+      return acc && (current.language !== language || current.modified);
     }, true);
   }
 
@@ -263,7 +263,7 @@ export class AdminEditWorkflowComponent {
     this._localConfig = value;
   }
 
-  get projectLangs(): string[] {
-    return this._projectLangs;
+  get innovationCardLanguages(): string[] {
+    return this._innovationCardLanguages;
   }
 }
