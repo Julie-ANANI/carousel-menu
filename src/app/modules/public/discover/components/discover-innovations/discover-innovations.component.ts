@@ -30,8 +30,6 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _fetchingError: boolean;
 
-  private _totalInnovations: number;
-
   private _totalFilteredInnovations: number;
 
   private _recommendedInnovations: Array<Innovation> = [];
@@ -79,13 +77,12 @@ export class DiscoverInnovationsComponent implements OnInit {
 
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-        this._totalInnovations = response._metadata.totalCount;
         this._totalFilteredInnovations = response._metadata.totalCount;
-        this._filteredInnovations = response.result;
+        this._filteredInnovations = response.result.slice(4);
         if (this._recommendedInnovationId) {
           this._applyInnoRecommendation();
         }
-        this._getLatestInnovations();
+        this._getLatestInnovations(response.result);
         this._stopLoading = true;
         this._stopLoadingLatest = true;
       }, () => {
@@ -111,13 +108,13 @@ export class DiscoverInnovationsComponent implements OnInit {
    * latest.
    * @private
    */
-  private _getLatestInnovations() {
-    this._latestInnovations = this._filteredInnovations.length > 0 ? this._filteredInnovations.slice(0, 4) : [];
+  private _getLatestInnovations(innovations: Array<Innovation>) {
+    this._latestInnovations = innovations.length > 0 ? innovations.slice(0, 4) : [];
   }
 
   onChangePage(event: {offset: number; limit: number}) {
     this._config.limit = event.limit.toString();
-    this._config.offset = event.offset ? event.offset.toString() : '4';
+    this._config.offset = event.offset.toString();
     this._getFilteredInnovations();
   }
 
@@ -152,6 +149,7 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _getFilteredInnovations() {
     this._stopLoading = false;
+    this._config.offset = this._config.offset && this._config.offset !== '0' ? this._config.offset.toString() : '4';
     if (this._config.fromCollection && this._config.fromCollection.model) {
       this._innovationService.advancedSearch({
         config: encodeURI(Buffer.from(JSON.stringify(this._config)).toString('base64'))
@@ -187,10 +185,6 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
-  }
-
-  get totalInnovations(): number {
-    return this._totalInnovations;
   }
 
   get totalFilteredInnovations(): number {
