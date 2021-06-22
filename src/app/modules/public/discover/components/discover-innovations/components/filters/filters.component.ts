@@ -6,7 +6,7 @@ import { environment } from '../../../../../../../../environments/environment';
 import { DiscoverService } from '../../../../../../../services/discover/discover.service';
 import { TagsService } from '../../../../../../../services/tags/tags.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from "../../../../../../../services/auth/auth.service";
+import { AuthService } from '../../../../../../../services/auth/auth.service';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -32,6 +32,7 @@ export class FiltersComponent {
 
   @Input() set tags(value: Array<Tag>) {
     if (value) {
+      this._tagsUpdated = true;
       this._allTags = value;
       this._sortTags('allTags');
       this._getHighlightedTags();
@@ -40,10 +41,6 @@ export class FiltersComponent {
       this._getSuggestedTags();
       this._sendSelectedFilters();
     }
-  }
-
-  @Input() set stopLoading(value: boolean) {
-    this._stopLoading = value;
   }
 
   @Output() appliedFilters = new EventEmitter<Array<Tag>>();
@@ -58,6 +55,8 @@ export class FiltersComponent {
 
   private _urlCopied: boolean = false;
 
+  private _tagsUpdated: boolean = false;
+
   private _allTags: Array<Tag> = [];
 
   private _selectedTags: Array<Tag> = [];
@@ -67,8 +66,6 @@ export class FiltersComponent {
   private _highLightTags: Array<Tag> = [];
 
   private _suggestedTags: Array<Tag> = [];
-
-  private _stopLoading: boolean;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
@@ -266,9 +263,7 @@ export class FiltersComponent {
   }
 
   public showAllTags() {
-    if (this._stopLoading) {
       this._modalTag = true;
-    }
   }
 
   /***
@@ -276,11 +271,9 @@ export class FiltersComponent {
    * page url.
    */
   public onClickShare() {
-    if (this._stopLoading) {
       this._urlCopied = false;
       this._modalShare = true;
       this._getShareLink();
-    }
   }
 
   /***
@@ -381,6 +374,10 @@ export class FiltersComponent {
     return this._modalShare;
   }
 
+  get tagsUpdated(): boolean {
+    return this._tagsUpdated;
+  }
+
   set modalShare(value: boolean) {
     this._modalShare = value;
   }
@@ -423,10 +420,6 @@ export class FiltersComponent {
 
   get suggestedTags(): Array<Tag> {
     return this._suggestedTags;
-  }
-
-  get stopLoading(): boolean {
-    return this._stopLoading;
   }
 
 }

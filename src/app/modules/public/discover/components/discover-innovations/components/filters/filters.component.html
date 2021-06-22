@@ -12,14 +12,13 @@
       <div class="flex-start action-wrapper">
 
         <div
-          class="filter-icon"
-          (click)="showAllTags()"
-          [ngClass]="stopLoading ? 'text-notify c-hand' : 'loading-content'">
+          class="filter-icon text-notify c-hand"
+          (click)="showAllTags()">
           <i class="fas fa-sliders-h"></i>
           <span class="text-medium" [innerText]="'DISCOVER.FILTER_TEXT'" translate></span>
         </div>
 
-        <div class="search-wrapper" [ngClass]="{ 'd-hide': !stopLoading }">
+        <div class="search-wrapper">
           <app-utility-search-input-2
             [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'"
             (searchFieldOutput)="onInputField($event)">
@@ -33,7 +32,7 @@
 
         <ng-container *ngIf="isAdmin && selectedTags.length > 0">
           <a
-            [ngClass]="stopLoading ? 'ghost-edit' : 'loading-content'"
+            class="ghost-edit"
             [queryParams]="{ 'tag': getSelectedTagsIds() }"
             [routerLink]="['/demo', 'showcase']"
             class="btn btn-sm rounded m-right-20"
@@ -44,8 +43,7 @@
 
         <button
           (click)="onClickShare()"
-          [ngClass]="stopLoading ? 'btn-secondary' : 'loading-content'"
-          class="btn btn-sm rounded"
+          class="btn btn-sm rounded btn-secondary"
           type="button">
           <i class="fas fa-share"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
@@ -57,7 +55,7 @@
 
 
     <!-- highlight tags -->
-    <div *ngIf="highLightTags.length > 0" [@tagAnimation]="stopLoading" class="sector-wrapper d-flex">
+    <div *ngIf="highLightTags.length > 0" [@tagAnimation]="tagsUpdated" class="sector-wrapper d-flex">
       <div
         *ngFor="let tag of highLightTags"
         class="label is-rounded c-hand animate-tag"
