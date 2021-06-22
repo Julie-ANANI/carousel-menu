@@ -50,7 +50,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _isTesting = false;
 
-  private _projectLangs: string[] = [];
+  private _innovationCardLanguages: string[] = [];
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
@@ -83,7 +83,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._getAllSignatures();
     this._generateAvailableScenario();
     this._generateModifiedScenarios();
-    this._getProjectsLangs();
+    this._getInnovationCardLanguages();
   }
 
   private _verifyCampaignType() {
@@ -106,11 +106,11 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     }
   }
 
-  private _getProjectsLangs() {
-    this._projectLangs = [];
-    if (this._campaign.innovation && this._campaign.innovation.innovationCards) {
+  private _getInnovationCardLanguages() {
+    this._innovationCardLanguages = [];
+    if (this._campaign.innovation && this._campaign.innovation.innovationCards && this._campaign.innovation.innovationCards.length) {
       this._campaign.innovation.innovationCards.map(innoCard => {
-        this._projectLangs.push(innoCard.lang);
+        this._innovationCardLanguages.push(innoCard.lang);
       });
     }
   }
@@ -307,7 +307,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
           displayName: this._authService.user.name || '',
           firstName: this._authService.user.firstName || '',
           lastName: this._authService.user.lastName || '',
-          languages: this._projectLangs
+          languages: this._innovationCardLanguages
         };
         this._campaignService
           .sendTestEmails(this._campaign._id, i, userInfo)
@@ -474,7 +474,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
 
-  get projectLangs(): string[] {
-    return this._projectLangs;
+  get innovationCardLanguages(): string[] {
+    return this._innovationCardLanguages;
   }
 }

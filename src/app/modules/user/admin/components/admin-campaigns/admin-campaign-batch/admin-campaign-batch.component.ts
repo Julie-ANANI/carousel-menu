@@ -73,6 +73,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
+  private _innovationCardLanguages: string[] = [];
+
   /***
    * Calcule d'une date d'envoi à partir des inputs de la date et heure
    * @param date
@@ -101,7 +103,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     private _innovationFrontService: InnovationFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _translateService: TranslateService
-  ) {}
+  ) {
+  }
 
   // DEBUG AUTOBATCH => Creation de pro a la volée
   /*createPro() {
@@ -122,12 +125,13 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   get templatesStatus(): boolean {
+    const emailsImported = this._campaign.settings.emails.filter(e => this._innovationCardLanguages.indexOf(e.language) !== -1);
     return (
       this._campaign.settings &&
       this._campaign.settings.emails &&
       this._campaign.settings.emails.length !== 0 &&
-      this._campaign.settings.emails.filter((e) => e.modified === false)
-        .length === 0
+      emailsImported.length !== 0 &&
+      emailsImported.filter((e) => e.modified === false).length === 0
     );
   }
 
@@ -263,6 +267,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   private _initCampaign() {
+    this._getInnovationLanguages();
+
     this._getBatches();
 
     if (this._campaign.innovation && this._campaign.innovation.quizId) {
@@ -300,6 +306,18 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
     } else {
       return this._rolesFrontService.hasAccessAdminSide(_default);
+    }
+  }
+
+  private _getInnovationLanguages() {
+    this._innovationCardLanguages = [];
+    if (this._campaign
+      && this._campaign.innovation
+      && this._campaign.innovation.innovationCards
+      && this._campaign.innovation.innovationCards.length) {
+      this._campaign.innovation.innovationCards.map(innovationCard => {
+        this._innovationCardLanguages.push(innovationCard.lang);
+      });
     }
   }
 
@@ -428,7 +446,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           time: thirdTime,
           status: AdminCampaignBatchComponent._getStatus(2, batch.status),
         },
-        { title: '04 - Thanks', date: '', status: '', time: '' },
+        {title: '04 - Thanks', date: '', status: '', time: ''},
       ];
       return {
         Step: data[i].title,
@@ -454,7 +472,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     };
 
     if (!batch.predictions || batch.predictions.length === 0) {
-      const reset = { opened: 0, clicked: 0, insights: 0 };
+      const reset = {opened: 0, clicked: 0, insights: 0};
       batch.predictions = [reset, reset, reset];
     }
 
@@ -483,36 +501,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           _name: workflowName,
           _type: 'TEXT',
         },
-        // {
-        //   // _attrs: ['OpenedPred', 'OpenedReel'],
-        //   _attrs: ['OpenedReel'],
-        //   _name: 'Opened',
-        //   _type: 'MULTI-LABEL',
-        //   _multiLabels: [
-        //     { _attr: 'OpenedReel', _class: 'label is-success' },
-        //     // { _attr: 'OpenedPred', _class: 'label is-info' },
-        //   ],
-        // },
-        // {
-        //   // _attrs: ['ClickedPred', 'ClickedReel'],
-        //   _attrs: ['ClickedReel'],
-        //   _name: 'Clicked',
-        //   _type: 'MULTI-LABEL',
-        //   _multiLabels: [
-        //     { _attr: 'ClickedReel', _class: 'label is-success' },
-        //     // { _attr: 'ClickedPred', _class: 'label is-info' },
-        //   ],
-        // },
-        // {
-        //   // _attrs: ['InsightsPred', 'InsightsReel'],
-        //   _attrs: ['InsightsReel'],
-        //   _name: 'Insights',
-        //   _type: 'MULTI-LABEL',
-        //   _multiLabels: [
-        //     { _attr: 'InsightsReel', _class: 'label is-success' },
-        //     // { _attr: 'InsightsPred', _class: 'label is-info' },
-        //   ],
-        // },
         {
           _attrs: ['Date'],
           _name: 'Date',
@@ -528,8 +516,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           _name: 'Status',
           _type: 'MULTI-CHOICES',
           _choices: [
-            { _name: 'Sent', _class: 'label is-success' },
-            { _name: 'Planned', _class: 'label is-progress' },
+            {_name: 'Sent', _class: 'label is-success'},
+            {_name: 'Planned', _class: 'label is-progress'},
           ],
         },
       ],
@@ -658,9 +646,9 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         formValue.value['send'] === 'true'
           ? Date.now()
           : AdminCampaignBatchComponent._computeDate(
-              formValue.value['date'],
-              formValue.value['time'] || '00:00'
-            ),
+          formValue.value['date'],
+          formValue.value['time'] || '00:00'
+          ),
       sendNow: formValue.value['send'],
       campaign: this._campaign,
       active: true,
@@ -782,7 +770,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         (modifiedBatch: any) => {
           this._stats.batches[
             this._getBatchIndex(modifiedBatch._id)
-          ] = modifiedBatch;
+            ] = modifiedBatch;
           this._translateNotificationsService.success(
             'Success',
             'The batch is frozen.'
@@ -832,7 +820,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _contentWorkflowStep(batch: Batch, step: any): any {
     const workflowName = this._workflowName(batch);
-    const content = { en: '', fr: '', _id: batch._id };
+    const content = {en: '', fr: '', _id: batch._id};
 
     if (this._campaign.settings && this._campaign.settings.emails) {
       this._campaign.settings.emails.forEach((mail) => {
