@@ -29,22 +29,22 @@ export class AdminProductSubscriptionTrackingComponent extends AdminProductShare
       },
       {
         _attrs: ['mean'],
-        _name: 'Mean / ms',
+        _name: 'Mean(ms)',
         _type: 'NUMBER',
       },
       {
         _attrs: ['sd'],
-        _name: 'SD / ms',
+        _name: 'SD(ms)',
         _type: 'NUMBER',
       },
       {
         _attrs: ['min'],
-        _name: 'MIN / ms',
+        _name: 'MIN(ms)',
         _type: 'NUMBER',
       },
       {
         _attrs: ['max'],
-        _name: 'MAX / ms',
+        _name: 'MAX(ms)',
         _type: 'NUMBER',
       },
       {
