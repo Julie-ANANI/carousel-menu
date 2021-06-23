@@ -272,7 +272,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((result) => {
         this._currentSectionComments = result;
-        }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         console.error(err);
       });
   }
@@ -441,16 +441,22 @@ export class PitchComponent implements OnInit, OnDestroy {
         visibility: true,
         type: 'SUMMARY'
       },
-      {
-        title: this.activeInnovCard.lang === 'fr' ? 'Ajouter des médias' : 'Add medias',
-        content: this.activeInnovCard.media,
-        visibility: true,
-        type: 'MEDIA'
-      }
     ];
 
+    // make sure media will be the last one in the section list => the order description: admin + client
+    const _defaultMedia: InnovCardSection = {
+      title: this.activeInnovCard.lang === 'fr' ? 'Ajouter des médias' : 'Add medias',
+      content: this.activeInnovCard.media,
+      visibility: true,
+      type: 'MEDIA'
+    };
+
     this._sections = this.activeInnovCard.sections && this.activeInnovCard.sections.length
-      ? this.activeInnovCard.sections.concat(_defaultSections) : _defaultSections;
+      ? _defaultSections.concat(this.activeInnovCard.sections) : _defaultSections;
+
+    // push media as last section
+    this._sections.push(_defaultMedia);
+
     this._initEtherpadElementId();
   }
 
