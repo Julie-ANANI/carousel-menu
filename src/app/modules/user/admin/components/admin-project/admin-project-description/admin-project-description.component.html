@@ -32,11 +32,22 @@
               </div>
               <!-- /translation button -->
 
+              <button
+                *ngIf="innovation.innovationCards.length > 1 && isEditable"
+                [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
+                (click)="padPreviewModeOnChange('title')"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                type="button">
+                <i class="fas fa-pencil-alt"
+                   *ngIf="getPadPreviewMode('title')"></i>
+                <i class="fas fa-eye" *ngIf="!getPadPreviewMode('title')"></i>
+              </button>
+
             </div>
 
             <app-shared-editors
               id="project-title"
-              *ngIf="isEditable"
+              *ngIf="isEditable && !getPadPreviewMode('title')"
               (textChange)="onContentChange($event, 'title')"
               [text]="activeInnovCard.title"
               [innovationId]="innovation._id"
@@ -44,6 +55,10 @@
               [type]="'pitch'"
               [isEditable]="isEditable">
             </app-shared-editors>
+
+            <div *ngIf="isEditable && getPadPreviewMode('title')"
+                 class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
+            </div>
 
             <!-- remaining text -->
             <div
@@ -158,9 +173,20 @@
               </div>
               <!-- /translation button -->
 
+              <button
+                *ngIf="innovation.innovationCards.length > 1 && isEditable"
+                [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
+                (click)="padPreviewModeOnChange('summary')"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                type="button">
+                <i class="fas fa-pencil-alt"
+                   *ngIf="getPadPreviewMode('summary')"></i>
+                <i class="fas fa-eye" *ngIf="!getPadPreviewMode('summary')"></i>
+              </button>
+
             </div>
 
-            <div *ngIf="isEditable" class="text-15">
+            <div *ngIf="isEditable && !getPadPreviewMode('summary')" class="text-15">
               <app-shared-editors
                 id="project-summary"
                 (textChange)="onContentChange($event, 'summary')"
@@ -170,6 +196,11 @@
                 [isEditable]="isEditable"
                 [type]="'pitch'">
               </app-shared-editors>
+            </div>
+
+            <div *ngIf="isEditable && getPadPreviewMode('summary')"
+                 class="width-100 mce-tinymce pad-preview-mode text-15"
+                 [innerHTML]="activeInnovCard.summary | cleanHtml">
             </div>
 
             <!-- remaining text -->
@@ -303,6 +334,17 @@
                 </div>
                 <!-- /translation button -->
 
+                <button
+                  *ngIf="innovation.innovationCards.length > 1 && isEditable"
+                  [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
+                  (click)="padPreviewModeOnChange(i.toString())"
+                  class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                  type="button">
+                  <i class="fas fa-pencil-alt"
+                     *ngIf="getPadPreviewMode(i.toString())"></i>
+                  <i class="fas fa-eye" *ngIf="!getPadPreviewMode(i.toString())"></i>
+                </button>
+
               </div>
 
               <!-- visibility -->
@@ -331,7 +373,7 @@
             </div>
             <!-- /label / actions -->
 
-            <div *ngIf="isEditable">
+            <div *ngIf="isEditable && !getPadPreviewMode(i.toString())">
               <app-shared-editors
                 [isEditable]="isEditable"
                 (textChange)="onContentChange($event, 'sections', i)"
@@ -342,6 +384,9 @@
               </app-shared-editors>
             </div>
 
+            <div *ngIf="isEditable && getPadPreviewMode(i.toString())"
+                 class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
+            </div>
             <!-- remaining text -->
             <div
               *ngIf="isEditable"

@@ -57,6 +57,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: false
   };
 
+  private _togglePreviewMode: Toggle = {
+    title: true,
+    summary: true
+  };
+
   private _isSavingMedia = false;
 
   private _isEditableComment = false;
@@ -182,6 +187,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       const operatorComment = this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId);
       this._toggleComment[i] = (etherpadElementId && operatorComment && !!operatorComment.comment);
       this._toggleSuggestion[i] = (etherpadElementId && operatorComment && !!operatorComment.suggestion);
+      this._togglePreviewMode[i] = true;
     }
 
   }
@@ -404,6 +410,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
+  get togglePreviewMode(): Toggle {
+    return this._togglePreviewMode;
+  }
+
+  public getPadPreviewMode(value: string) {
+    return this._togglePreviewMode[value];
+  }
+
   public isNotMainMedia(media: any): boolean {
     if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id && media && media['_id']) {
       return this.activeInnovCard.principalMedia._id !== media['_id'];
@@ -468,4 +482,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  padPreviewModeOnChange(title: string) {
+    this._togglePreviewMode[title] = !this._togglePreviewMode[title];
+  }
 }
