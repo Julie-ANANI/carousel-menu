@@ -21,7 +21,7 @@ export class DiscoverInnovationsComponent implements OnInit {
   private _config: Config = {
     fields: 'created principalMedia innovationCards tags status projectStatus',
     limit: '25',
-    offset: '',
+    offset: '0',
     isPublic: '1',
     search: '{}',
     $or: '[{ "status": "EVALUATING" },{ "status": "DONE" }]',
