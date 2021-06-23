@@ -442,7 +442,7 @@ export class SharedSearchProsComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            err.error.message
           );
           console.error(err);
         }

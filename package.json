@@ -1,6 +1,6 @@
 {
   "name": "umi-application-client",
-  "version": "2.6.4-RC1",
+  "version": "2.6.15",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

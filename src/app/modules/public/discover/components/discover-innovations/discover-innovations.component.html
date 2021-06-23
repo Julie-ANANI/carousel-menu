@@ -22,7 +22,6 @@
           <div class="section-light-pad">
             <app-filters
               [tags]="sectorTags"
-              [stopLoading]="stopLoading"
               (appliedFilters)="onSelectFilters($event)"
               (searchFieldOutput)="onInputField($event)">
             </app-filters>

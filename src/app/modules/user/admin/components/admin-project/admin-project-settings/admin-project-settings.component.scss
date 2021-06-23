@@ -79,6 +79,17 @@
 
             }
 
+            .mission-members-container{
+              max-height: 100px;
+              overflow-y: scroll;
+              max-width: 300px;
+              overflow-x: scroll;
+
+              .icon-right{
+                cursor: pointer;
+              }
+            }
+
           }
 
           .roadmap-wrapper {

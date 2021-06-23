@@ -3,7 +3,7 @@
   <!-- header -->
   <div class="header-wrapper">
 
-    <div>{{ campaignScenario.name }} - </div>
+    <div>{{ campaignScenario.name }} -</div>
 
     <div *ngIf="inCampaign && defaultScenario === campaignScenario.name" class="m-left-10">
       By default
@@ -17,28 +17,31 @@
     </div>
 
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"
       class="shape is-circle m-left-2">
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       (click)="changeLanguage('en')"
       [ngClass]="{ 'active': language === 'en' }"
       class="text-link">
       English
-
     </div>
 
-    &nbsp;&nbsp;|
+    &nbsp;&nbsp;<span *ngIf="innovationCardLanguages && innovationCardLanguages.length===2">|</span>
 
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"
       class="shape is-circle m-left-2">
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       (click)="changeLanguage('fr')"
       [ngClass]="{ 'active': language === 'fr' }"
       class="text-link">
