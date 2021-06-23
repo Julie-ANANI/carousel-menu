@@ -1,7 +1,7 @@
-<div class="ranking-group">
+<div class="ranking-group text-sm">
   <div *ngFor="let rank of rankingChart | stopat:3; let i = index;"
        class="ranking-group-item">
-    <span class="bullet"> {{i + 1}} </span>
+    <span class="shape is-circle is-sm text-13">{{i + 1}}</span>
     <span>{{ optionLabel(rank.identifier) }}</span>
   </div>
 </div>
