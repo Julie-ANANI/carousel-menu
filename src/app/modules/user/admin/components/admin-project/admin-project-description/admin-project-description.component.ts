@@ -182,6 +182,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       summary: !!this.activeInnovCard.operatorComment.summary.suggestion
     };
 
+    this._togglePreviewMode = {
+      title: true,
+      summary: true
+    };
+
     for (let i = 0; i < this.activeInnovCard.sections.length; i++) {
       const etherpadElementId = this.activeInnovCard.sections[i].etherpadElementId;
       const operatorComment = this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId);
@@ -408,10 +413,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     } else if (media && type === 'VIDEO') {
       return this._innovationFrontService.videoSrc(media);
     }
-  }
-
-  get togglePreviewMode(): Toggle {
-    return this._togglePreviewMode;
   }
 
   public getPadPreviewMode(value: string) {
