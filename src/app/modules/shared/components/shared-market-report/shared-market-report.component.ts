@@ -1,46 +1,39 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  PLATFORM_ID,
-} from '@angular/core';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { AnswerService } from '../../../../services/answer/answer.service';
-import { FilterService } from './services/filters.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { Answer } from '../../../../models/answer';
-import { Filter } from './models/filter';
-import { Question } from '../../../../models/question';
-import { Tag } from '../../../../models/tag';
-import { Innovation } from '../../../../models/innovation';
-import { environment } from '../../../../../environments/environment';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
-import { Clearbit } from '../../../../models/clearbit';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { ResponseService } from './services/response.service';
-import { TagsFiltersService } from './services/tags-filter.service';
-import { WorldmapFiltersService } from './services/worldmap-filter.service';
-import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
-import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
-import { Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
-import { RolesFrontService } from '../../../../services/roles/roles-front.service';
-import { isPlatformBrowser } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { emptyHtmlRegex } from '../../../../utils/regex';
-import { SocketService } from '../../../../services/socket/socket.service';
+import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChange, SimpleChanges} from '@angular/core';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {TranslateService} from '@ngx-translate/core';
+import {AnswerService} from '../../../../services/answer/answer.service';
+import {FilterService} from './services/filters.service';
+import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {Answer} from '../../../../models/answer';
+import {Filter} from './models/filter';
+import {Question} from '../../../../models/question';
+import {Tag} from '../../../../models/tag';
+import {Innovation} from '../../../../models/innovation';
+import {environment} from '../../../../../environments/environment';
+import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
+import {Clearbit} from '../../../../models/clearbit';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {ResponseService} from './services/response.service';
+import {TagsFiltersService} from './services/tags-filter.service';
+import {WorldmapFiltersService} from './services/worldmap-filter.service';
+import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
+import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
+import {AnswerFrontService} from '../../../../services/answer/answer-front.service';
+import {Subject} from 'rxjs';
+import {first, takeUntil} from 'rxjs/operators';
+import {RolesFrontService} from '../../../../services/roles/roles-front.service';
+import {isPlatformBrowser} from '@angular/common';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import {emptyHtmlRegex} from '../../../../utils/regex';
+import {SocketService} from '../../../../services/socket/socket.service';
 
 @Component({
   selector: 'app-shared-market-report',
   templateUrl: './shared-market-report.component.html',
   styleUrls: ['./shared-market-report.component.scss'],
 })
-export class SharedMarketReportComponent implements OnInit, OnDestroy {
+export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges {
   @Input() accessPath: Array<string> = [];
 
   @Input() adminSide = false;
@@ -53,7 +46,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     if (value && value._id) {
       this._innovation = value;
       this._innovation.marketReport = this._innovation.marketReport || {};
-      this._initializeReport();
       this._isOwner =
         this._authService.userId ===
           (this._innovation.owner && this._innovation.owner.id) ||
@@ -153,6 +145,16 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
           console.error(error);
         }
       );
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const currentItem: SimpleChange = changes.project;
+    if (!currentItem.previousValue) {
+      this._initializeReport();
+    } else {
+      // todo change to InnovationFrontService.questionsList(this._innovation); with new configurator
+      this._questions = ResponseService.presets(this._innovation);
+    }
   }
 
   public canAccess(path: Array<string>) {
@@ -365,14 +367,17 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     // If section title is from default market report sections (key learnings, origin of responses, conclusion)
     switch (question.identifier) {
       case 'professionals':
+        this._innovation.marketReport.professionals = this._innovation.marketReport.professionals || {};
         this._innovation.marketReport.professionals.title = question.title;
         this._innovation.marketReport.professionals.subtitle = question.subtitle;
         break;
       case 'keyLearning':
+        this._innovation.marketReport.keyLearning = this._innovation.marketReport.keyLearning || {};
         this._innovation.marketReport.keyLearning.title = question.title;
         this._innovation.marketReport.keyLearning.subtitle = question.subtitle;
         break;
       case 'finalConclusion':
+        this._innovation.marketReport.finalConclusion = this._innovation.marketReport.finalConclusion || {};
         this._innovation.marketReport.finalConclusion.title = question.title;
         this._innovation.marketReport.finalConclusion.subtitle = question.subtitle;
         break;
@@ -501,6 +506,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   get questions(): Array<Question> {
     return this._questions;
+  }
+
+  trackQuestions(index: number, question: Question) {
+    return question.identifier;
   }
 
   get modalAnswer(): Answer {

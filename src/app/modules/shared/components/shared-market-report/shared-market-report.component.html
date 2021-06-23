@@ -147,7 +147,7 @@
           <!-- /professionals -->
 
           <!-- other question sections -->
-          <section *ngFor="let question of questions" class="p-bottom-50" id="questions">
+          <section *ngFor="let question of questions; trackBy: trackQuestions" class="p-bottom-50" id="questions">
             <app-question-section
               [reportingLang]="reportingLang"
               (questionChanged)="saveQuestion($event)"
