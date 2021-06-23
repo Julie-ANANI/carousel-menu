@@ -295,7 +295,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   public questionName(value: MissionQuestion): string {
-    return MissionFrontService.objectiveName(value, this.activeInnovCard.lang);
+    return MissionQuestionService.entryInfo(value, this.activeInnovCard.lang)['label'];
   }
 
   public questionOptionName(value: MissionQuestionOption): string {
