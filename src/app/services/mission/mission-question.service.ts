@@ -16,6 +16,10 @@ import {replaceNumberRegex} from '../../utils/regex';
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
 
+  get generalMarketQuestionsTypes(): Array<string> {
+    return this._generalMarketQuestionsTypes;
+  }
+
   get taggedQuestionsTypes(): { [p: string]: MissionQuestionType } {
     return this._taggedQuestionsTypes;
   }
@@ -124,6 +128,13 @@ export class MissionQuestionService {
     OMPV_Stakeholders: 'checkbox',
     OMPV_Recontact: 'textarea',
   };
+
+  /**
+   * these are the identifier of the question that we use in the Market report are of type general which do not have to do anything
+   * with the Innovation preset or Mission template.
+   * @private
+   */
+  private _generalMarketQuestionsTypes: Array<string> = ['finalConclusion', 'professionals', 'keyLearning'];
 
   constructor(private _translateService: TranslateService) {
   }
@@ -705,6 +716,14 @@ export class MissionQuestionService {
    */
   public getQuestionType(identifier: string): MissionQuestionType {
     return this._taggedQuestionsTypes[identifier];
+  }
+
+  /**
+   * return true if the identifier matches to market report general type questions.
+   * @param question
+   */
+  public marketReportGeneralQuestion(question: any): boolean {
+    return question && question.identifier && this._generalMarketQuestionsTypes.indexOf(question.identifier) !== -1;
   }
 
   /**

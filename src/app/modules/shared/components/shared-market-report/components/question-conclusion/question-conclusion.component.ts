@@ -165,7 +165,7 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   subtitleChange(event: string) {
-    if (this.hasMissionTemplate) {
+    if (this.hasMissionTemplate && !this._missionQuestionService.marketReportGeneralQuestion(this._question)) {
       this._missionQuestionService.changeQuestionEntry(event, this.reportingLang, <MissionQuestion>this._question, 'subtitle');
     } else if (this._question && !!(<Question>this._question).subtitle) {
       (<Question>this._question).subtitle[this.reportingLang] = event;

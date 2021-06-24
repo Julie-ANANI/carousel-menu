@@ -23,6 +23,10 @@ export class BluesquareComponent {
 
   constructor() {}
 
+  public onChangeSubtitle() {
+    this.subtitleChanged.emit(this.subtitle);
+  }
+
   get editSubtitle(): boolean {
     return this._editSubtitle;
   }

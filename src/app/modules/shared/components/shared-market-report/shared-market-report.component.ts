@@ -371,14 +371,32 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     // If section title is from default market report sections (key learnings, origin of responses, conclusion)
     switch (question.identifier) {
       case 'professionals':
+        if (!this._innovation.marketReport.professionals) {
+          this._innovation.marketReport.professionals = {
+            title: {},
+            subtitle: {}
+          };
+        }
         this._innovation.marketReport.professionals.title = question.title;
         this._innovation.marketReport.professionals.subtitle = question.subtitle;
         break;
       case 'keyLearning':
+        if (!this._innovation.marketReport.keyLearning) {
+          this._innovation.marketReport.keyLearning = {
+            title: {},
+            subtitle: {}
+          };
+        }
         this._innovation.marketReport.keyLearning.title = question.title;
         this._innovation.marketReport.keyLearning.subtitle = question.subtitle;
         break;
       case 'finalConclusion':
+        if (!this._innovation.marketReport.finalConclusion) {
+          this._innovation.marketReport.finalConclusion = {
+            title: {},
+            subtitle: {}
+          };
+        }
         this._innovation.marketReport.finalConclusion.title = question.title;
         this._innovation.marketReport.finalConclusion.subtitle = question.subtitle;
         break;
