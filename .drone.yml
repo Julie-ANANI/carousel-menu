@@ -20,7 +20,7 @@ steps:
     event:
       - push
     branch:
-      - ux_configurator_2021_admin
+      - rebase_with_dev_configurator
 
 - name: dockerDev
   image: plugins/docker
@@ -39,7 +39,7 @@ steps:
     event:
       - push
     branch:
-      - ux_configurator_2021_admin
+      - rebase_with_dev_configurator
 
 - name: rancherDev
   image: peloton/drone-rancher
@@ -57,7 +57,7 @@ steps:
     event:
       - push
     branch:
-      - ux_configurator_2021_admin
+      - rebase_with_dev_configurator
 
 ## UMI production steps
 ## This will build the base image. The base image for the front is the same for all instances
