@@ -436,20 +436,6 @@ export class AdminProjectsComponent implements OnInit {
           return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
         }) : []
       },
-      {
-        _attrs: ['type'],
-        _name: 'Type',
-        _type: 'MULTI-CHOICES',
-        _isHidden: true,
-        _searchConfig: {_collection: 'mission', _searchKey: 'type'},
-        _isSearchable: this.canAccess(['filterBy', 'type']),
-        _choices: [
-          {_name: 'USER', _alias: 'User'},
-          {_name: 'CLIENT', _alias: 'Client'},
-          {_name: 'DEMO', _alias: 'Demo'},
-          {_name: 'TEST', _alias: 'Test'},
-        ]
-      }, // Using _searchConfig for advanced search
     ];
 
 
