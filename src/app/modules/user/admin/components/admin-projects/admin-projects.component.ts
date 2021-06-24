@@ -76,6 +76,27 @@ export class AdminProjectsComponent implements OnInit {
       _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
     }, // Using _searchConfig for advanced search
     {
+      _attrs: ['mission.externalDiffusion.community'],
+      _name: 'Community',
+      _width: '120px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'community']),
+    },
+    {
+      _attrs: ['mission.externalDiffusion.social'],
+      _name: 'Social',
+      _width: '100px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'social']),
+    },
+    {
+      _attrs: ['mission.externalDiffusion.umi'],
+      _name: 'Website',
+      _width: '100px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'website']),
+    },
+    {
       _attrs: ['stats.validatedAnswers'],
       _name: 'Validated Answers',
       _type: 'NUMBER',
@@ -405,6 +426,30 @@ export class AdminProjectsComponent implements OnInit {
         _isSortable: true,
         _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
       },
+      {
+        _attrs: ['operator'],
+        _name: 'Operator',
+        _type: 'MULTI-CHOICES',
+        _isSearchable: this.canAccess(['filterBy', 'operator']),
+        _isHidden: true,
+        _choices: this._operators && this._operators.length ? this._operators.map(oper => {
+          return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+        }) : []
+      },
+      {
+        _attrs: ['type'],
+        _name: 'Type',
+        _type: 'MULTI-CHOICES',
+        _isHidden: true,
+        _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+        _isSearchable: this.canAccess(['filterBy', 'type']),
+        _choices: [
+          {_name: 'USER', _alias: 'User'},
+          {_name: 'CLIENT', _alias: 'Client'},
+          {_name: 'DEMO', _alias: 'Demo'},
+          {_name: 'TEST', _alias: 'Test'},
+        ]
+      }, // Using _searchConfig for advanced search
     ];
 
 
@@ -464,14 +509,14 @@ export class AdminProjectsComponent implements OnInit {
       case 'market-test-manager-umi-back':
         this._config = {
           fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
-          limit: this._configService.configLimit('admin-projects-limit'),
+          limit: '10',
           offset: '0',
           fromCollection: {
-            model: ''
+            model: 'mission',
+            type: 'CLIENT'
           },
           search: '{}',
           sort: '{"created":-1}',
-          type: 'CLIENT'
         };
         break;
       default:

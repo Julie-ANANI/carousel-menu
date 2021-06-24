@@ -10,6 +10,7 @@ import {SharedUploadZonePhotoModule} from '../../../../../shared/components/shar
 import {SharedUploadZoneVideoModule} from '../../../../../shared/components/shared-upload-zone-video/shared-upload-zone-video.module';
 import {CommentListModule} from '../../../../../sidebars/components/comment-list/comment-list.module';
 import {SharedEditorsModule} from '../../../../../shared/components/shared-editors/shared-editors.module';
+import { CleanHtmlModule } from '../../../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {SharedEditorsModule} from '../../../../../shared/components/shared-edito
     SharedUploadZonePhotoModule,
     SharedUploadZoneVideoModule,
     SharedEditorsModule,
-    CommentListModule
+    CommentListModule,
+    CleanHtmlModule,
   ],
   declarations: [
     AdminProjectDescriptionComponent,
