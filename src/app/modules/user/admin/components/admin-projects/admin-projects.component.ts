@@ -76,6 +76,27 @@ export class AdminProjectsComponent implements OnInit {
       _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
     }, // Using _searchConfig for advanced search
     {
+      _attrs: ['mission.externalDiffusion.community'],
+      _name: 'Community',
+      _width: '120px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'community']),
+    },
+    {
+      _attrs: ['mission.externalDiffusion.social'],
+      _name: 'Social',
+      _width: '100px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'social']),
+    },
+    {
+      _attrs: ['mission.externalDiffusion.umi'],
+      _name: 'Website',
+      _width: '100px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'website']),
+    },
+    {
       _attrs: ['stats.validatedAnswers'],
       _name: 'Validated Answers',
       _type: 'NUMBER',
