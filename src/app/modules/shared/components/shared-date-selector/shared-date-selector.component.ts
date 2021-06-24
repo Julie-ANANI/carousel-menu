@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Months } from '../../../../models/static-data/months';
 
 @Component({
   selector: 'app-shared-date-selector',
@@ -8,7 +9,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 export class SharedDateSelectorComponent implements OnInit {
   @Input() set months(value: Array<number>) {
-      this._months = value;
+    this._months = value;
   }
 
   @Input() set years(value: Array<number>) {
@@ -66,5 +67,9 @@ export class SharedDateSelectorComponent implements OnInit {
 
   get years(): Array<number> {
     return this._years;
+  }
+
+  getMonthName(number: number) {
+    return Months[number];
   }
 }

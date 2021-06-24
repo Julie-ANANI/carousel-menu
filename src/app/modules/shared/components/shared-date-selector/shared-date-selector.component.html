@@ -3,7 +3,7 @@
   <div class="form-group">
     <label class="form-label" for="select-month">Select a month</label>
     <select class="form-select" id="select-month" [(ngModel)]="monthSelected" (ngModelChange)="sendMonthSelection()">
-      <option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
+      <option *ngFor="let month of months" [ngValue]="month">{{month + ' - ' + getMonthName(month)}}</option>
     </select>
   </div>
   <!-- /month select -->

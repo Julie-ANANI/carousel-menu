@@ -644,6 +644,22 @@
 
   }
 
+  &.is-xxs {
+    padding: 3px 20px;
+    font-size: $font-size-xs;
+
+    &.is-circled {
+      width: 25px;
+      height: 25px;
+
+      i {
+        font-size: 10px;
+      }
+
+    }
+
+  }
+
   &.is-lg, &.is-xl {
     padding: $unit-4 20px;
     width: 100%;
