@@ -1,6 +1,200 @@
 <div class="container fluid grid-2xl" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
+    <!-- sections dynamic -->
+    <section
+      *ngFor="let section of activeInnovCard.sections; let i=index;"
+      [ngStyle]="{ 'animation-duration': ((i+1) * 110) + 'ms' }"
+      class="animate-slide slide-down section-wrapper has-border">
+      <div class="section-body">
+
+        <!-- content -->
+        <div class="section-content">
+          <div class="form-group">
+
+            <!-- label / actions -->
+            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap">
+
+              <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom">
+
+                <label
+                  [for]="section.type+i"
+                  [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
+                  class="form-label">
+                  <span class="shape is-rounded bg-draft">{{ i + 1 }}</span>
+                  <ng-container *ngIf="!isEditable">{{ section.title }}</ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <input
+                      (change)="updateInnovation()"
+                      [(ngModel)]="section.title"
+                      [id]="section.type.toLowerCase()+'-'+i+1"
+                      autocomplete="off"
+                      class="form-input is-sm is-shadowed w-300"
+                      type="text">
+                  </ng-container>
+                </label>
+
+                <!-- translation button -->
+                <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
+                  <button
+                    (click)="importTranslation($event, section.type, i)"
+                    [disabled]="section.content"
+                    class="button is-link is-sm m-right-10"
+                    type="button">
+                    Translate content
+                  </button>
+                </div>
+                <!-- /translation button -->
+
+              </div>
+
+              <!-- visibility -->
+              <div
+                *ngIf="isEditable"
+                (click)="toggleVisibility($event, i)"
+                [ngClass]="{'m-right-15': section.type === 'OTHER'}"
+                class="icon-container is-overlay">
+                <span class="tooltip" [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Unhide section'">
+                  <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
+                </span>
+              </div>
+              <!-- /visibility -->
+
+              <!-- delete -->
+              <div
+                *ngIf="isEditable && section.type === 'OTHER'"
+                (click)="openModal($event, 'DELETE_SECTION', i)"
+                class="icon-container is-overlay">
+                <span class="tooltip" data-tooltip="Delete section">
+                  <i class="text-alert icon icon-delete"></i>
+                </span>
+              </div>
+              <!-- /delete -->
+
+            </div>
+            <!-- /label / actions -->
+
+            <div *ngIf="isEditable">
+              <app-shared-editors
+                [isEditable]="isEditable"
+                (textChange)="onContentChange($event, 'sections', i)"
+                [text]="section.content"
+                [innovationId]="innovation._id"
+                [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i+1 + '-' + currentLang"
+                [type]="'pitch'">
+              </app-shared-editors>
+            </div>
+
+            <!-- remaining text -->
+            <div
+              *ngIf="isEditable"
+              [ngStyle]="{'color': remaining('COLOR', section.type, i)}"
+              class="text-right text-medium p-top-1 text-xs">
+              {{ remaining('CHAR', section.type, i) }} characters remaining
+            </div>
+            <!-- /remaining text -->
+
+            <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
+
+          </div>
+        </div>
+        <!-- /content -->
+
+        <!-- suggestion / comments -->
+        <div class="section-suggestion">
+
+          <!-- comment -->
+          <div class="m-bottom-25">
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleComment($event, i.toString(10))"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleComment[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleComment($event, i.toString(10))" class="spec-text-op">Comment</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div
+                [hidden]="!isEditableComment"
+                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
+                class="box-shadow">
+                <app-shared-editor-tinymce
+                  (onTextChange)="onCommentChange($event, 'sections', 'comment', i)"
+                  [data]="zoneData('sections', 'comment', i)"
+                  [id]="section.type.toLowerCase()+'-'+i+1+'-comment'">
+                </app-shared-editor-tinymce>
+              </div>
+              <div
+                *ngIf="!isEditableComment"
+                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
+                class="message">
+                <p [innerHTML]="zoneData('sections', 'comment', i)" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /comment -->
+
+          <!-- suggestion -->
+          <div>
+            <div class="d-flex align-center">
+              <div
+                (click)="onToggleSuggestion($event, i.toString(10))"
+                class="icon-container is-sm is-overlay m-right-1">
+                <i
+                  [ngClass]="toggleSuggestion[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                  class="c-hand text-primary text-15">
+                </i>
+              </div>
+              <span (click)="onToggleSuggestion($event, i.toString(10))" class="spec-text-op">Suggestion</span>
+              <div class="label is-primary is-sm">UMI</div>
+            </div>
+            <div class="m-top-20">
+              <div
+                *ngIf="isEditableComment"
+                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}">
+                <app-shared-editors
+                  [isEditable]="isEditableComment"
+                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
+                  [text]="zoneData('sections', 'suggestion', i)"
+                  [innovationId]="innovation._id"
+                  [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i+1 + '-' + currentLang"
+                  [type]="'suggestion'">
+                </app-shared-editors>
+              </div>
+              <div
+                *ngIf="!isEditableComment"
+                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
+                class="message">
+                <p [innerHTML]="zoneData('sections', 'suggestion', i)" class="message-body"></p>
+              </div>
+            </div>
+          </div>
+          <!-- /suggestion -->
+
+        </div>
+        <!-- /suggestion / comments -->
+
+      </div>
+    </section>
+    <!-- /sections dynamic -->
+
+    <!-- add new section -->
+    <section *ngIf="isEditable" class="section-wrapper text-center has-border p-bottom-50">
+      <button
+        (click)="openModal($event, 'NEW_SECTION')"
+        class="button is-primary is-lg"
+        type="button">
+        Add new section
+      </button>
+    </section>
+    <!-- /add new section -->
+
+
+
     <!-- section title -->
     <section
       [ngStyle]="{ 'animation-duration': '110ms' }"
@@ -17,7 +211,7 @@
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-title">
-                <span class="shape is-rounded bg-draft">1</span>Title
+                <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 1}}</span>Title
               </label>
 
               <!-- translation button -->
@@ -143,7 +337,7 @@
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-summary">
-                <span class="shape is-rounded bg-draft">2</span>Summary
+                <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 2}}</span>Summary
               </label>
 
               <!-- translation button -->
@@ -257,198 +451,6 @@
       </div>
     </section>
     <!-- /section summary -->
-
-    <!-- sections dynamic -->
-    <section
-      *ngFor="let section of activeInnovCard.sections; let i=index;"
-      [ngStyle]="{ 'animation-duration': ((i+3) * 110) + 'ms' }"
-      class="animate-slide slide-down section-wrapper has-border">
-      <div class="section-body">
-
-        <!-- content -->
-        <div class="section-content">
-          <div class="form-group">
-
-            <!-- label / actions -->
-            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap">
-
-              <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom">
-
-                <label
-                  [for]="section.type+i"
-                  [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
-                  class="form-label">
-                  <span class="shape is-rounded bg-draft">{{ i + 3 }}</span>
-                  <ng-container *ngIf="!isEditable">{{ section.title }}</ng-container>
-                  <ng-container *ngIf="isEditable">
-                    <input
-                      (change)="updateInnovation()"
-                      [(ngModel)]="section.title"
-                      [id]="section.type.toLowerCase()+'-'+i+3"
-                      autocomplete="off"
-                      class="form-input is-sm is-shadowed w-300"
-                      type="text">
-                  </ng-container>
-                </label>
-
-                <!-- translation button -->
-                <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
-                  <button
-                    (click)="importTranslation($event, section.type, i)"
-                    [disabled]="section.content"
-                    class="button is-link is-sm m-right-10"
-                    type="button">
-                    Translate content
-                  </button>
-                </div>
-                <!-- /translation button -->
-
-              </div>
-
-              <!-- visibility -->
-              <div
-                *ngIf="isEditable"
-                (click)="toggleVisibility($event, i)"
-                [ngClass]="{'m-right-15': section.type === 'OTHER'}"
-                class="icon-container is-overlay">
-                <span class="tooltip" [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Unhide section'">
-                  <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
-                </span>
-              </div>
-              <!-- /visibility -->
-
-              <!-- delete -->
-              <div
-                *ngIf="isEditable && section.type === 'OTHER'"
-                (click)="openModal($event, 'DELETE_SECTION', i)"
-                class="icon-container is-overlay">
-                <span class="tooltip" data-tooltip="Delete section">
-                  <i class="text-alert icon icon-delete"></i>
-                </span>
-              </div>
-              <!-- /delete -->
-
-            </div>
-            <!-- /label / actions -->
-
-            <div *ngIf="isEditable">
-              <app-shared-editors
-                [isEditable]="isEditable"
-                (textChange)="onContentChange($event, 'sections', i)"
-                [text]="section.content"
-                [innovationId]="innovation._id"
-                [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
-                [type]="'pitch'">
-              </app-shared-editors>
-            </div>
-
-            <!-- remaining text -->
-            <div
-              *ngIf="isEditable"
-              [ngStyle]="{'color': remaining('COLOR', section.type, i)}"
-              class="text-right text-medium p-top-1 text-xs">
-              {{ remaining('CHAR', section.type, i) }} characters remaining
-            </div>
-            <!-- /remaining text -->
-
-            <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
-
-          </div>
-        </div>
-        <!-- /content -->
-
-        <!-- suggestion / comments -->
-        <div class="section-suggestion">
-
-          <!-- comment -->
-          <div class="m-bottom-25">
-            <div class="d-flex align-center">
-              <div
-                (click)="onToggleComment($event, i.toString(10))"
-                class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleComment[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
-              </div>
-              <span (click)="onToggleComment($event, i.toString(10))" class="spec-text-op">Comment</span>
-              <div class="label is-primary is-sm">UMI</div>
-            </div>
-            <div class="m-top-20">
-              <div
-                [hidden]="!isEditableComment"
-                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
-                class="box-shadow">
-                <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'sections', 'comment', i)"
-                  [data]="zoneData('sections', 'comment', i)"
-                  [id]="section.type.toLowerCase()+'-'+i+3+'-comment'">
-                </app-shared-editor-tinymce>
-              </div>
-              <div
-                *ngIf="!isEditableComment"
-                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
-                class="message">
-                <p [innerHTML]="zoneData('sections', 'comment', i)" class="message-body"></p>
-              </div>
-            </div>
-          </div>
-          <!-- /comment -->
-
-          <!-- suggestion -->
-          <div>
-            <div class="d-flex align-center">
-              <div
-                (click)="onToggleSuggestion($event, i.toString(10))"
-                class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleSuggestion[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
-              </div>
-              <span (click)="onToggleSuggestion($event, i.toString(10))" class="spec-text-op">Suggestion</span>
-              <div class="label is-primary is-sm">UMI</div>
-            </div>
-            <div class="m-top-20">
-              <div
-                *ngIf="isEditableComment"
-                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}">
-                <app-shared-editors
-                  [isEditable]="isEditableComment"
-                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
-                  [text]="zoneData('sections', 'suggestion', i)"
-                  [innovationId]="innovation._id"
-                  [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i+3 + '-' + currentLang"
-                  [type]="'suggestion'">
-                </app-shared-editors>
-              </div>
-              <div
-                *ngIf="!isEditableComment"
-                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
-                class="message">
-                <p [innerHTML]="zoneData('sections', 'suggestion', i)" class="message-body"></p>
-              </div>
-            </div>
-          </div>
-          <!-- /suggestion -->
-
-        </div>
-        <!-- /suggestion / comments -->
-
-      </div>
-    </section>
-    <!-- /sections dynamic -->
-
-    <!-- add new section -->
-    <section *ngIf="isEditable" class="section-wrapper text-center has-border p-bottom-50">
-      <button
-        (click)="openModal($event, 'NEW_SECTION')"
-        class="button is-primary is-lg"
-        type="button">
-        Add new section
-      </button>
-    </section>
-    <!-- /add new section -->
 
     <!-- section media -->
     <section
