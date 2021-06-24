@@ -125,13 +125,12 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   get templatesStatus(): boolean {
-    const emailsImported = this._campaign.settings.emails.filter(e => this._innovationCardLanguages.indexOf(e.language) !== -1);
+    // const emailsImported = this._campaign.settings.emails.filter(e => this._innovationCardLanguages.indexOf(e.language) !== -1);
     return (
       this._campaign.settings &&
       this._campaign.settings.emails &&
       this._campaign.settings.emails.length !== 0 &&
-      emailsImported.length !== 0 &&
-      emailsImported.filter((e) => e.modified === false).length === 0
+      this._campaign.settings.emails.filter(e => e.modified === false).length === 0
     );
   }
 
