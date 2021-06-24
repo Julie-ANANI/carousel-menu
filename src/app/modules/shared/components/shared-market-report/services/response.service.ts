@@ -191,9 +191,19 @@ export class ResponseService {
           }
         });
 
+        /**
+         * we are iterating through entry and converting to Multiling label here
+         * so that we same value for every one.
+         */
+        if (q.entry && q.entry.length) {
+          q.label = q.entry.reduce((acc: any, value: any) => {
+            acc[value.lang] = value.label;
+            return acc;
+          }, {});
+        }
+
         return {
           label: q.label,
-          entry: q.entry,
           answers: filteredAnswers,
           absolutePercentage: '0%',
           relativePercentage: '0%',
@@ -272,27 +282,15 @@ export class ResponseService {
     };
 
     barsData.forEach((barData) => {
-      let fr = barData.label && barData.label['fr'] || '';
-      let en = barData.label && barData.label['en'] || '';
 
       if (barData.positive) {
         positiveAnswersCount += barData.count;
       }
 
-      if (barData.entry && barData.entry.length) {
-        barData.entry.forEach((_entry) => {
-          if (_entry.lang === 'fr') {
-            fr = _entry.label;
-          } else if (_entry.lang === 'en') {
-            en = _entry.label;
-          }
-        });
-      }
-
       pieChartData.data.push(barData.count);
       pieChartData.colors.push(barData.color);
-      pieChartData.labels.fr.push(fr);
-      pieChartData.labels.en.push(en);
+      pieChartData.labels.fr.push(barData.label['fr'] || '');
+      pieChartData.labels.en.push(barData.label['en'] || '');
       pieChartData.labelPercentage.push(barData.absolutePercentage);
 
     });

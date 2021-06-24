@@ -2,13 +2,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
 import { ExecutiveSection } from '../../../../../../models/executive-report';
-import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
 import { Tag } from '../../../../../../models/tag';
 import { PieChart } from '../../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
+import {MissionQuestion} from '../../../../../../models/mission';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-admin-executive-section',
@@ -20,7 +21,7 @@ export class ExecutiveSectionComponent {
 
   @Input() isEditable = false;
 
-  @Input() questions: Array<Question> = [];
+  @Input() questions: Array<Question | MissionQuestion> = [];
 
   @Input() answers: Array<Answer> = [];
 
@@ -48,8 +49,7 @@ export class ExecutiveSectionComponent {
 
   private _enableVisualPie = false;
 
-  constructor(private _multilingPipe: MultilingPipe,
-              private _executiveReportFrontService: ExecutiveReportFrontService,
+  constructor(private _executiveReportFrontService: ExecutiveReportFrontService,
               private _responseService: ResponseService) { }
 
   public emitChanges() {
@@ -71,7 +71,7 @@ export class ExecutiveSectionComponent {
    */
   public selectQuestion(id: string) {
     this._section.questionId = id;
-    const question: Question = this._getQuestion(this._section.questionId);
+    const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
     this._resetVisuals();
 
     if (question && question.controlType) {
@@ -177,10 +177,10 @@ export class ExecutiveSectionComponent {
       this._section.title = 'Custom KPI ';
       this._section.content = ExecutiveReportFrontService.kpiSection([], '0');
     } else {
-      const question: Question = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const professionals: Array<Professional> = ResponseService.answersProfessionals(answers);
-      this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+      this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       this._section.content = ExecutiveReportFrontService.kpiSection(professionals, answers.length.toString(10));
     }
   }
@@ -194,8 +194,8 @@ export class ExecutiveSectionComponent {
       this._section.title = 'Custom quotation';
       this._section.content = ExecutiveReportFrontService.quoteSection();
     } else {
-      const question: Question = this._getQuestion(this._section.questionId);
-      this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
+      this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       this._section.content = ExecutiveReportFrontService.quoteSection();
     }
   }
@@ -209,10 +209,10 @@ export class ExecutiveSectionComponent {
       this._section.title = 'Custom progress bars';
       this._section.content = this._executiveReportFrontService.barSection([], this.reportLang);
     } else {
-      const question: Question = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const barsData: Array<BarData> = ResponseService.barsData(question, answers);
-      this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+      this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       this._section.content = this._executiveReportFrontService.barSection(barsData, this.reportLang);
     }
   }
@@ -226,10 +226,10 @@ export class ExecutiveSectionComponent {
       this._section.title = 'Custom ranking';
       this._section.content = this._executiveReportFrontService.rankingSection([], this.reportLang);
     } else {
-      const question: Question = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
-      this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+      this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       this._section.content = this._executiveReportFrontService.rankingSection(tagsData, this.reportLang);
     }
   }
@@ -243,16 +243,16 @@ export class ExecutiveSectionComponent {
       this._section.title = 'Custom pie';
       this._section.content = ExecutiveReportFrontService.pieChartSection(null, this.reportLang);
     } else {
-      const question: Question = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const barsData: Array<BarData> = ResponseService.barsData(question, answers);
       const pieChartData: PieChart = ResponseService.pieChartData(barsData, answers);
-      this._section.title = this._multilingPipe.transform(question.title, this.reportLang);
+      this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       this._section.content = ExecutiveReportFrontService.pieChartSection(pieChartData, this.reportLang);
     }
   }
 
-  private _getQuestion(id: string): Question {
+  private _getQuestion(id: string): Question | MissionQuestion {
     const index = this.questions.findIndex((ques) => ques._id === id);
     if (index !== -1) {
       return this.questions[index];

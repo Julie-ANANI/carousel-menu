@@ -14,8 +14,8 @@ import { Question } from '../../../../../models/question';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ResponseService } from '../../../../shared/components/shared-market-report/services/response.service';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import {MissionQuestion} from '../../../../../models/mission';
 
 @Component({
   selector: 'app-admin-executive-report',
@@ -48,7 +48,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _answers: Array<Answer> = [];
 
-  private _questions: Array<Question> = [];
+  private _questions: Array<Question | MissionQuestion> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -70,7 +70,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
       this._anonymous = innovation._metadata && innovation._metadata.campaign ?
         !!innovation._metadata.campaign.anonymous_answers : false;
       this._getAnswers(innovation._id);
-      this._questions = ResponseService.presets(innovation);
+      this._questions = InnovationFrontService.questionsList(innovation);
     });
 
   }
@@ -234,7 +234,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
     return this._answers;
   }
 
-  get questions(): Array<Question> {
+  get questions(): Array<Question | MissionQuestion> {
     return this._questions;
   }
 

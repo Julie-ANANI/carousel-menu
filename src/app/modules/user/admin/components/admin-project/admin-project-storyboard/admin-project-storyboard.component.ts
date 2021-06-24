@@ -13,7 +13,6 @@ import { Question } from '../../../../../../models/question';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { Answer } from '../../../../../../models/answer';
-import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
 import { PieChart } from '../../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
@@ -27,6 +26,9 @@ import { ActivatedRoute } from '@angular/router';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../../../../../services/auth/auth.service';
+import {MissionQuestion} from '../../../../../../models/mission';
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 
 @Component({
   templateUrl: './admin-project-storyboard.component.html',
@@ -51,7 +53,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   private _reportType = '';
 
-  private _questions: Array<Question> = [];
+  private _questions: Array<Question | MissionQuestion> = [];
 
   private _isGeneratingReport = false;
 
@@ -87,7 +89,6 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
               private _executiveReportFrontService: ExecutiveReportFrontService,
-              private _multilingPipe: MultilingPipe,
               private _innovationService: InnovationService,
               private _responseService: ResponseService,
               private _socketService: SocketService,
@@ -99,7 +100,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
 
       this._innovation = this._activatedRoute.snapshot.parent.parent.data['innovation'];
-      this._questions = ResponseService.presets(this._innovation);
+      this._questions = InnovationFrontService.questionsList(this._innovation);
 
       if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
         this._isChargingReport = false;
@@ -249,7 +250,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
           sections[index] = this._executiveReport.sections[index];
         } else {
           sections[index].questionId = question._id;
-          sections[index].title = this._multilingPipe.transform(question.title, this._executiveReport.lang);
+          sections[index].title = MissionQuestionService.label(question, 'title', this._executiveReport.lang);
           const answersToShow: Array<Answer> = this._responseService.answersToShow(answers, question);
           const barsData: Array<BarData> = ResponseService.barsData(question, answersToShow);
 
@@ -500,7 +501,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
     return this._innovation;
   }
 
-  get questions(): Array<Question> {
+  get questions(): Array<Question | MissionQuestion> {
     return this._questions;
   }
 
