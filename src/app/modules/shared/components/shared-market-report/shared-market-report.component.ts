@@ -150,6 +150,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._missionQuestionService.missionTemplate().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
       if (value && value.entry && value.entry.length) {
         (<Mission>this._innovation.mission).template = value;
+        this._toBeSaved = true;
         this._innovationFrontService.setNotifyChanges({key: 'mission', state: true});
       }
     });

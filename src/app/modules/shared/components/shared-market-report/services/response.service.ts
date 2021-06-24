@@ -360,8 +360,6 @@ export class ResponseService {
       weights[i] = 1 - steps * i;
     }
 
-    console.log(weights);
-
     return weights;
   }
 
@@ -376,8 +374,6 @@ export class ResponseService {
       multipliers[i] = 1 - steps * i;
       multipliers[n - i - 1 ] = 1 - steps * i;
     }
-
-    console.log(multipliers);
 
     return multipliers;
   }

@@ -302,7 +302,7 @@ export class MissionQuestionService {
   }
 
   /**
-   * return the
+   * based on the question type its configure the question attributes to its default values.
    * @param question
    */
   public configureQuestionOptions(question: MissionQuestion = <MissionQuestion>{})
@@ -330,11 +330,12 @@ export class MissionQuestionService {
   }
 
   /**
-   * return the new option for the controlType = 'radio' | 'checkbox' | 'stars'
+   * return the new option for the controlType = 'radio' | 'checkbox' | 'stars' | 'ranking'
    * @param question
    */
   public addOption(question: MissionQuestion = <MissionQuestion>{}): MissionQuestionOption {
-    if (question.controlType === 'radio' || question.controlType === 'checkbox' || question.controlType === 'stars' || question.controlType === 'ranking') {
+    if (question.controlType === 'radio' || question.controlType === 'checkbox'
+      || question.controlType === 'stars' || question.controlType === 'ranking') {
       const stringId = question.options.length.toString();
       return {
         identifier: stringId,
