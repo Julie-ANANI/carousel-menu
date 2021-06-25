@@ -267,10 +267,16 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               sections[index].content = this._executiveReportFrontService.barSection(barsData, this._executiveReport.lang);
               break;
 
+            case 'ranking':
+              const rankingData = ResponseService.rankingChartData(answersToShow, question, this.currentLang);
+              sections[index].questionType = 'RANKING';
+              sections[index].content = this._executiveReportFrontService.rankingSection(rankingData, this._executiveReport.lang);
+              break;
+
             default:
               const tagsData: Array<Tag> = ResponseService.tagsList(answersToShow, question);
               sections[index].questionType = 'RANKING';
-              sections[index].content = this._executiveReportFrontService.rankingSection(tagsData, this._executiveReport.lang);
+              sections[index].content = this._executiveReportFrontService.rankingTagsSection(tagsData, this._executiveReport.lang);
               break;
 
           }

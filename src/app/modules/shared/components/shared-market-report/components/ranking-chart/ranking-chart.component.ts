@@ -33,7 +33,7 @@ export class RankingChartComponent implements OnInit, OnDestroy {
   private _createChart() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((answers: Array<Answer>) => {
-        this._rankingChart = ResponseService.rankingChartData(this.question, answers);
+        this._rankingChart = ResponseService.rankingChartData(answers, this.question, this.reportingLang);
       });
   }
 

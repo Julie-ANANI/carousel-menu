@@ -32,7 +32,7 @@ export class RanksComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((answers: Array<Answer>) => {
-        this._ranksData = ResponseService.getRanksAnswers(this.question, answers);
+        this._ranksData = ResponseService.getRanksAnswers(this.question, answers, this.reportingLang);
       });
   }
 

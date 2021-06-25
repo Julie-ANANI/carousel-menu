@@ -5,7 +5,6 @@ import { ExecutiveSection } from '../../../../../../models/executive-report';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
-import { Tag } from '../../../../../../models/tag';
 import { PieChart } from '../../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import {MissionQuestion} from '../../../../../../models/mission';
@@ -224,13 +223,19 @@ export class ExecutiveSectionComponent {
   private _setRankingData() {
     if (this._section.questionId === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom ranking';
-      this._section.content = this._executiveReportFrontService.rankingSection([], this.reportLang);
+      this._section.content = this._executiveReportFrontService.rankingTagsSection([], this.reportLang);
     } else {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
-      const tagsData: Array<Tag> = ResponseService.tagsList(answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      this._section.content = this._executiveReportFrontService.rankingSection(tagsData, this.reportLang);
+      let data;
+      if (question.controlType === 'ranking') {
+        data = ResponseService.rankingChartData(answers, question, this.reportLang);
+        this._section.content = this._executiveReportFrontService.rankingSection(data, this.reportLang);
+      } else {
+        data = ResponseService.tagsList(answers, question);
+        this._section.content = this._executiveReportFrontService.rankingTagsSection(data, this.reportLang);
+      }
     }
   }
 
@@ -261,6 +266,10 @@ export class ExecutiveSectionComponent {
 
   public onClickPlay(section: ExecutiveSection) {
     this._executiveReportFrontService.audio(section.abstract, this.reportLang);
+  }
+
+  public questionTitle(question: any): string {
+    return MissionQuestionService.label(question, 'title', this.reportLang);
   }
 
   get section(): ExecutiveSection {

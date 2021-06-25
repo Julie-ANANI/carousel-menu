@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 import { Subject } from 'rxjs/Subject';
-import { Question } from '../../../../../models/question';
+import {Option, Question} from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
@@ -9,6 +9,8 @@ import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
 import { PieChart } from '../../../../../models/pie-chart';
 import { Professional } from '../../../../../models/professional';
+import {MissionQuestion, MissionQuestionOption} from '../../../../../models/mission';
+import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 
 @Injectable({ providedIn: 'root' })
 export class ResponseService {
@@ -135,15 +137,16 @@ export class ResponseService {
    * this function is to get the ranks data answer for the question type ranking.
    * @param question
    * @param answers
+   * @param lang
    */
-  public static getRanksAnswers(question: Question, answers: Array<Answer>) {
+  public static getRanksAnswers(question: Question, answers: Array<Answer>, lang: string) {
 
     let ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
 
     if (question && answers) {
-      const ranking = this.rankingChartData(question, answers);
+      const ranking = this.rankingChartData(answers, question, lang);
 
-      ranksData = ranking.map((rank) => {
+      ranksData = ranking.map((rank: any) => {
         return {
           identifier: rank.identifier,
           label: rank.label,
@@ -301,13 +304,15 @@ export class ResponseService {
 
   }
 
-  public static rankingChartData(question: Question = <Question>{}, answers: Array<Answer> = []) {
+  public static rankingChartData(answers: Array<Answer> = [],
+                                 question: Question | MissionQuestion = <Question | MissionQuestion>{},
+                                 lang: string) {
 
-    let rankingChartData = [];
+    const rankingChart: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[] = [];
     const weights = this.computeWeights(question.options.length);
     const multipliers = this.computeMultiplier(question.options.length);
-    rankingChartData = question.options.map((opt) => {
-
+    question.options.forEach((option: Option | MissionQuestionOption) => {
+      const identifier = option.identifier;
       const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
         && Object.values(a.answers[question.identifier]).every((i: number) => {
           return i >= 0;
@@ -317,7 +322,7 @@ export class ResponseService {
 
       filteredAnswers.forEach(a => {
         // position in ranking
-        const entry = Object.entries(a.answers[question.identifier]).find(k => k[1] === opt.identifier);
+        const entry = Object.entries(a.answers[question.identifier]).find(k => k[1] === identifier);
         if (entry) {
           const optRank = parseInt(entry[0]);
           if (optRank >= 0) {
@@ -330,19 +335,19 @@ export class ResponseService {
 
       optRankingAvg = Math.round(optRankingAvg / filteredAnswers.length * 100);
 
-      return {
-        label: opt.label,
+      rankingChart.push({
+        label: MissionQuestionService.label(option, 'label', lang),
         answers: filteredAnswers,
         percentage: optRankingAvg || 0,
         count: filteredAnswers.length,
-        identifier: opt.identifier
-      };
+        identifier: identifier
+      });
 
     });
 
-    rankingChartData.sort((a, b) => b.percentage - a.percentage);
+    rankingChart.sort((a, b) => b.percentage - a.percentage);
 
-    return rankingChartData;
+    return rankingChart;
   }
 
   /**

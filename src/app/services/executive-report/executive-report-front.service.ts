@@ -13,6 +13,7 @@ import { first} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../error/error-front.service';
 import { CommonService } from '../common/common.service';
+import {Answer} from '../../models/answer';
 
 @Injectable({ providedIn: 'root' })
 export class ExecutiveReportFrontService {
@@ -159,11 +160,12 @@ export class ExecutiveReportFrontService {
   }
 
   /***
-   * this returns the content of the RANKING section.
+   * this returns the content of the RANKING section for tags.
    * @param tagsData
    * @param lang
    */
-  public rankingSection(tagsData: Array<Tag>, lang: string): SectionRanking {
+
+  public rankingTagsSection(tagsData: Array<Tag>, lang: string): SectionRanking {
 
     const section: SectionRanking = {
       values: []
@@ -176,6 +178,43 @@ export class ExecutiveReportFrontService {
           color: '#4F5D6B',
           name: this._multilingPipe.transform(tag.label, lang),
           visibility: tag.count > 0
+        });
+      });
+    } else {
+      for (let i = 0; i < 3; i++) {
+        section.values.push({
+          color: '#4F5D6B',
+          legend: '',
+          name: '',
+          visibility: false
+        });
+      }
+    }
+
+    return section;
+
+  }
+
+
+  /***
+   * this returns the content of the RANKING section.
+   * @param rankingData
+   * @param lang
+   */
+  public rankingSection(rankingData: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[],
+                        lang: string): SectionRanking {
+
+    const section: SectionRanking = {
+      values: []
+    };
+
+    if (rankingData && rankingData.length > 0) {
+      rankingData.slice(0, 3).forEach((rank, index) => {
+        section.values.push({
+          legend: (index + 1).toString(),
+          color: '#4F5D6B',
+          name: rank.label,
+          visibility: true
         });
       });
     } else {
