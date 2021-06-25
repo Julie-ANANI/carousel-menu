@@ -1,7 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ExecutiveReport, ExecutiveSection } from '../../../../../../models/executive-report';
 import { Innovation } from '../../../../../../models/innovation';
@@ -160,7 +159,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._isChargingReport = false;
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', err.message);
       console.error(err);
     });
     this._realtimeUpdate(this._innovation.executiveReportId);
@@ -226,7 +225,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._setReportSections(answers);
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', err.message);
         console.error(err);
       });
   }
@@ -332,7 +331,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._realtimeUpdate(response._id);
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', err.message);
         console.error(err);
       });
   }
@@ -342,7 +341,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._createExecutiveReport();
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', err.message);
       console.error(err);
     });
   }
@@ -395,7 +394,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
           this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', err.message);
           this._isGeneratingVideo = false;
           console.error(err);
         });
@@ -413,7 +412,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         FileSaver.saveAs(blob, filename);
         this._isGeneratingReport = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', err.message);
         this._isGeneratingReport = false;
         console.error(err);
       });
@@ -435,7 +434,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._toBeSaved = false;
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', err.message);
         console.error(err);
       });
     }

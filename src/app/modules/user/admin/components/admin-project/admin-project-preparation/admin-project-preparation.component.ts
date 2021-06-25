@@ -9,7 +9,6 @@ import {InnovationService} from '../../../../../../services/innovation/innovatio
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {Campaign} from '../../../../../../models/campaign';
 import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
@@ -187,7 +186,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._allCampaigns = response && response.result || [];
         this._campaignFrontService.setAllCampaigns(this._allCampaigns);
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Campaigns Fetching Error...', err.message);
         console.error(err);
       });
     }
@@ -279,7 +278,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._setInnovation();
         this._translateNotificationsService.success('Success', 'The project has been updated.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Project Saving Error...', err.message);
         this._isSaving = false;
         console.error(err);
       });
@@ -296,7 +295,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         }
       }, (err: HttpErrorResponse) => {
         this._isSaving = false;
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Project Saving Error...', err.message);
         console.error(err);
       });
   }
@@ -314,7 +313,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         }, (err: HttpErrorResponse) => {
           this._isSaving = false;
           this._toBeSavedComment = true;
-          this._translateNotificationsService.error('Comment Saving Error...', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('Comment Saving Error...', err.message);
           console.error(err);
         });
     }
@@ -344,7 +343,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
         this.closeModal();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Card Adding Error...', err.message);
         this._isAddingCard = false;
         console.error(err);
       });
@@ -366,7 +365,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this.closeModal();
       }, (err: HttpErrorResponse) => {
         this._cardToDelete = <InnovCard>{};
-        this._translateNotificationsService.error('Card Deleting Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Card Deleting Error...', err.message);
         this._isDeletingCard = false;
         console.error(err);
       });

@@ -15,7 +15,6 @@ import { Config } from '../../../../../../models/config';
 import { ConfigService } from '../../../../../../services/config/config.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { Table } from '../../../../../table/models/table';
@@ -152,10 +151,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           this._initAnswers();
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Answers Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
+          this._translateNotificationsService.error('Answers Error...', err.message);
           console.error(err);
         }
       );
@@ -266,10 +262,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             this._isImportingAnswers = false;
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error(
-              'Importing Error...',
-              ErrorFrontService.getErrorMessage(err.status)
-            );
+            this._translateNotificationsService.error('Importing Error...', err.message);
             this._isImportingAnswers = false;
             console.error(err);
           }
@@ -463,10 +456,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             }
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error(
-              'Answer Update Error...',
-              ErrorFrontService.getErrorMessage(err.status)
-            );
+            this._translateNotificationsService.error('Answer Update Error...', err.message);
             console.error(err);
           }
         );

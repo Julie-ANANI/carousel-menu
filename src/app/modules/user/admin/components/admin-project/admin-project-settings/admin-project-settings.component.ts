@@ -24,7 +24,6 @@ import { User } from '../../../../../../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MissionService } from '../../../../../../services/mission/mission.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { DashboardService } from '../../../../../../services/dashboard/dashboard.service';
 import { UserFrontService } from '../../../../../../services/user/user-front.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
@@ -169,10 +168,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._commercials = response.result;
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Commercial Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
+          this._translateNotificationsService.error('Commercial Error...', err.message);
           console.error(err);
         }
       );
@@ -187,10 +183,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._operators = response.result;
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Operator Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
+          this._translateNotificationsService.error('Operator Error...', err.message);
           console.error(err);
         }
       );
@@ -397,10 +390,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           );
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Stats Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
+          this._translateNotificationsService.error('Stats Error...', err.message);
           console.error(err);
         }
       );
@@ -443,10 +433,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Mission Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
+          this._translateNotificationsService.error('Mission Error...', err.message);
           console.error(err);
         }
       );
@@ -494,10 +481,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Project Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
+          this._translateNotificationsService.error('Project Error...', err.message);
           console.error(err);
         }
       );
@@ -522,10 +506,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Client Project Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
+          this._translateNotificationsService.error('Client Project Error...', err.message);
           console.error(err);
         }
       );
@@ -607,10 +588,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             }
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error(
-              'Publish Error...',
-              ErrorFrontService.getErrorMessage(err.status)
-            );
+            this._translateNotificationsService.error('Publish Error...', err.message);
             console.error(err);
             this._isPublishingCommunity = false;
           }

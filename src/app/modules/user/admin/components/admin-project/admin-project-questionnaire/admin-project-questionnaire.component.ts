@@ -10,7 +10,6 @@ import {Observable, Subject} from 'rxjs';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import {first, takeUntil} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import {isPlatformBrowser} from '@angular/common';
 import {Mission, MissionTemplate} from '../../../../../../models/mission';
@@ -107,7 +106,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The preset is updated.');
     }, (err: HttpErrorResponse) => {
-     this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+     this._translateNotificationsService.error('ERROR.ERROR', err.message);
      console.error(err);
     });
   }
@@ -125,7 +124,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', err.message);
       console.error(err);
     });
   }
@@ -153,7 +152,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._presetService.get(event._id).pipe(first()).subscribe((preset) => {
       this._chosenPreset = preset;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', err.message);
       console.error(err);
     });
   }
