@@ -208,11 +208,12 @@ export class AnswerQuestionComponent {
   }
 
   moveListElement(questionId: string, initialIndex: number) {
+    const emptyRanking = this.fullAnswer.answers[questionId][0] === null;
     const selectElem = document.getElementById(`select-${questionId}-${initialIndex}`) as HTMLSelectElement;
     if (selectElem) {
       const targetIndex = selectElem.selectedIndex;
       const keys = Object.keys(this.fullAnswer.answers[questionId]);
-      const values = Object.values(this.fullAnswer.answers[questionId]);
+      const values = (emptyRanking) ? keys : Object.values(this.fullAnswer.answers[questionId]);
       values.splice(targetIndex, 0, values.splice(initialIndex, 1)[0]);
       keys.map(x => { this.fullAnswer.answers[questionId][x] =  values[x]; });
       this.emitChanges();
