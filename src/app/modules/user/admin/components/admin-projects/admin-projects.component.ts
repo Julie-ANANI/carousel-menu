@@ -1,24 +1,25 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {TranslateTitleService} from '../../../../../services/title/title.service';
-import {InnovationService} from '../../../../../services/innovation/innovation.service';
-import {Innovation} from '../../../../../models/innovation';
-import {Table} from '../../../../table/models/table';
-import {first} from 'rxjs/operators';
-import {Config} from '../../../../../models/config';
-import {Response} from '../../../../../models/response';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {ConfigService} from '../../../../../services/config/config.service';
-import {isPlatformBrowser} from '@angular/common';
-import {TranslateService} from '@ngx-translate/core';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {UserService} from '../../../../../services/user/user.service';
-import {environment} from '../../../../../../environments/environment';
-import {User} from '../../../../../models/user.model';
-import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {AuthService} from '../../../../../services/auth/auth.service';
-import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObjectives';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { Innovation } from '../../../../../models/innovation';
+import { Table } from '../../../../table/models/table';
+import { first } from 'rxjs/operators';
+import { Config } from '../../../../../models/config';
+import { Response } from '../../../../../models/response';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { ConfigService } from '../../../../../services/config/config.service';
+import { isPlatformBrowser } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../../../../../services/user/user.service';
+import { environment } from '../../../../../../environments/environment';
+import { User } from '../../../../../models/user.model';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
+import { Column } from '../../../../table/models/column';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -26,63 +27,6 @@ import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObje
 })
 
 export class AdminProjectsComponent implements OnInit {
-
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
-              private _innovationService: InnovationService,
-              private _translateService: TranslateService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _rolesFrontService: RolesFrontService,
-              private _authService: AuthService,
-              private _translateTitleService: TranslateTitleService,
-              private _userService: UserService) {
-    this._translateTitleService.setTitle('Market Tests');
-  }
-
-  set config(value: Config) {
-    this._config = value; // TODO how to change the config when searching things like the operator?
-    try {
-      // Parse the config.search field to see if there's something
-      if (this._config['fromCollection'] && this._config.fromCollection.model) {
-        this._searchMissionsByOther(this._config);
-      } else {
-        this._getProjects();
-      }
-    } catch (ex) {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.status));
-      this._getProjects();
-      console.error(ex);
-    }
-  }
-
-  get canImport(): boolean {
-    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get projects(): Array<Innovation> {
-    return this._projects;
-  }
-
-  get table(): Table {
-    return this._table;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get authUserId() {
-    return this._authService.userId;
-  }
-
   private _projects: Array<any> = [];
 
   private _totalProjects = -1;
@@ -114,14 +58,422 @@ export class AdminProjectsComponent implements OnInit {
 
   private _fetchingError = false;
 
+  private _generalColumns: Array<Column> = [
+    {
+      _attrs: ['name'],
+      _name: 'Name',
+      _type: 'TEXT',
+      _isSortable: true,
+      _isSearchable: this.canAccess(['searchBy', 'name']),
+      _isHidden: !this.canAccess(['tableColumns', 'name'])
+    },
+    {
+      _attrs: ['innovationCards.title'],
+      _name: 'Innovation Card Title',
+      _type: 'TEXT',
+      _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
+      _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
+      _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
+    }, // Using _searchConfig for advanced search
+    {
+      _attrs: ['mission.externalDiffusion.community'],
+      _name: 'Community',
+      _width: '120px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'community']),
+    },
+    {
+      _attrs: ['mission.externalDiffusion.social'],
+      _name: 'Social',
+      _width: '100px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'social']),
+    },
+    {
+      _attrs: ['mission.externalDiffusion.umi'],
+      _name: 'Website',
+      _width: '100px',
+      _type: 'CHECK',
+      _isHidden: !this.canAccess(['tableColumns', 'website']),
+    },
+    {
+      _attrs: ['emailSent'],
+      _name: 'Email sent',
+      _type: 'TEXT',
+      _isSortable: true,
+      _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+    },
+    {
+      _attrs: ['stats.emailsOK'],
+      _name: 'Good Emails',
+      _type: 'NUMBER',
+      _isSortable: true,
+      _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
+    },
+    {
+      _attrs: ['stats.validatedAnswers'],
+      _name: 'Validated Answers',
+      _type: 'NUMBER',
+      _width: '170px',
+      _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
+    },
+    {
+      _attrs: ['updated'],
+      _name: 'Last Updated',
+      _type: 'DATE_TIME',
+      _isSortable: true,
+      _width: '200px',
+      _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
+    },
+    {
+      _attrs: ['owner.firstName', 'owner.lastName'],
+      _name: 'Owner',
+      _type: 'TEXT',
+      _width: '180px',
+      _isHidden: !this.canAccess(['tableColumns', 'owner'])
+    },
+    {
+      _attrs: ['owner.company.name'],
+      _name: 'Company',
+      _type: 'TEXT',
+      _width: '180px',
+      _isSearchable: this.canAccess(['searchBy', 'company']),
+      _isHidden: !this.canAccess(['tableColumns', 'company']),
+      _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
+    },
+    {
+      _attrs: ['mission.type'],
+      _name: 'Type',
+      _type: 'TEXT',
+      _isSortable: true,
+      _isHidden: !this.canAccess(['tableColumns', 'type']),
+      _width: '100px'
+    },
+    {
+      _attrs: [this._mainObjective],
+      _name: 'Objective',
+      _type: 'TEXT',
+      _isHidden: !this.canAccess(['tableColumns', 'objective']),
+      _width: '200px'
+    },
+    {
+      _attrs: ['created'],
+      _name: 'Created',
+      _type: 'DATE',
+      _isSortable: true,
+      _width: '130px',
+      _isHidden: !this.canAccess(['tableColumns', 'created'])
+    },
+    {
+      _attrs: ['type'],
+      _name: 'Type',
+      _type: 'MULTI-CHOICES',
+      _isHidden: true,
+      _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+      _isSearchable: this.canAccess(['filterBy', 'type']),
+      _choices: [
+        {_name: 'USER', _alias: 'User'},
+        {_name: 'CLIENT', _alias: 'Client'},
+        {_name: 'DEMO', _alias: 'Demo'},
+        {_name: 'TEST', _alias: 'Test'},
+      ]
+    }, // Using _searchConfig for advanced search
+    {
+      _attrs: [this._objectiveSearchKey],
+      _name: 'Objective',
+      _type: 'MULTI-CHOICES',
+      _isSearchable: this.canAccess(['filterBy', 'objective']),
+      _isHidden: true,
+      _searchConfig: {_collection: 'mission', _searchKey: this._objectiveSearchKey},
+      _choices: ObjectivesPrincipal.map((objective) => {
+        return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
+      })
+    },
+    {
+      _attrs: ['status'],
+      _name: 'Status',
+      _type: 'MULTI-CHOICES',
+      _isSortable: true,
+      _isSearchable: this.canAccess(['filterBy', 'status']),
+      _isHidden: !this.canAccess(['tableColumns', 'status']),
+      _width: '150px',
+      _choices: [
+        {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+        {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
+        {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
+        {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
+      ]
+    },
+    {
+      _attrs: ['operator'],
+      _name: 'Operator',
+      _type: 'MULTI-CHOICES',
+      _isSearchable: this.canAccess(['filterBy', 'operator']),
+      _isHidden: true,
+      _choices: this._operators && this._operators.length ? this._operators.map(oper => {
+        return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+      }) : []
+    }
+  ];
+
+  private _columnsForMTM: Array<Column> =
+    [
+      {
+        _attrs: ['name'],
+        _name: 'Name',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isSearchable: this.canAccess(['searchBy', 'name']),
+        _isHidden: !this.canAccess(['tableColumns', 'name'])
+      },
+      {
+        _attrs: ['owner.company.name'],
+        _name: 'Company',
+        _type: 'TEXT',
+        _width: '180px',
+        _isSearchable: this.canAccess(['searchBy', 'company']),
+        _isHidden: !this.canAccess(['tableColumns', 'company']),
+        _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
+      },
+      {
+        _attrs: ['status'],
+        _name: 'Status',
+        _type: 'MULTI-CHOICES',
+        _isSortable: true,
+        _isSearchable: this.canAccess(['filterBy', 'status']),
+        _isHidden: !this.canAccess(['tableColumns', 'status']),
+        _width: '150px',
+        _choices: [
+          {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+          {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
+          {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
+          {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
+        ]
+      },
+      {
+        _attrs: [this._mainObjective],
+        _name: 'Objective',
+        _type: 'TEXT',
+        _isHidden: !this.canAccess(['tableColumns', 'objective']),
+        _width: '200px'
+      },
+      {
+        _attrs: ['stats.validatedAnswers'],
+        _name: 'Validated Answers',
+        _type: 'NUMBER',
+        _width: '170px',
+        _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
+      },
+      {
+        _attrs: ['owner.firstName', 'owner.lastName'],
+        _name: 'Owner',
+        _type: 'TEXT',
+        _width: '180px',
+        _isHidden: !this.canAccess(['tableColumns', 'owner'])
+      },
+      {
+        _attrs: ['innovationCards.title'],
+        _name: 'Innovation Card Title',
+        _type: 'TEXT',
+        _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
+        _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
+        _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
+      }, // Using _searchConfig for advanced search
+      {
+        _attrs: ['updated'],
+        _name: 'Last Updated',
+        _type: 'DATE_TIME',
+        _isSortable: true,
+        _width: '200px',
+        _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
+      },
+      {
+        _attrs: ['mission.type'],
+        _name: 'Type',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'type']),
+        _width: '100px'
+      },
+      {
+        _attrs: ['type'],
+        _name: 'Type',
+        _type: 'MULTI-CHOICES',
+        _isHidden: true,
+        _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+        _isSearchable: this.canAccess(['filterBy', 'type']),
+        _choices: [
+          {_name: 'USER', _alias: 'User'},
+          {_name: 'CLIENT', _alias: 'Client'},
+          {_name: 'DEMO', _alias: 'Demo'},
+          {_name: 'TEST', _alias: 'Test'},
+        ]
+      }, // Using _searchConfig for advanced search
+      {
+        _attrs: [this._objectiveSearchKey],
+        _name: 'Objective',
+        _type: 'MULTI-CHOICES',
+        _isSearchable: this.canAccess(['filterBy', 'objective']),
+        _isHidden: true,
+        _searchConfig: {_collection: 'mission', _searchKey: this._objectiveSearchKey},
+        _choices: ObjectivesPrincipal.map((objective) => {
+          return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
+        })
+      },
+      {
+        _attrs: ['operator'],
+        _name: 'Operator',
+        _type: 'MULTI-CHOICES',
+        _isSearchable: this.canAccess(['filterBy', 'operator']),
+        _isHidden: true,
+        _choices: this._operators && this._operators.length ? this._operators.map(oper => {
+          return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+        }) : []
+      },
+      {
+        _attrs: ['created'],
+        _name: 'Created',
+        _type: 'DATE',
+        _isSortable: true,
+        _width: '130px',
+        _isHidden: !this.canAccess(['tableColumns', 'created'])
+      },
+      {
+        _attrs: ['emailSent'],
+        _name: 'Email sent',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+      },
+    ];
+
+  private _columnsForMTMBack: Array<Column> =
+    [
+      {
+        _attrs: ['name'],
+        _name: 'Name',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isSearchable: this.canAccess(['searchBy', 'name']),
+        _isHidden: !this.canAccess(['tableColumns', 'name'])
+      },
+      {
+        _attrs: ['owner.company.name'],
+        _name: 'Company',
+        _type: 'TEXT',
+        _width: '180px',
+        _isSearchable: this.canAccess(['searchBy', 'company']),
+        _isHidden: !this.canAccess(['tableColumns', 'company']),
+        _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
+      },
+      {
+        _attrs: ['status'],
+        _name: 'Status',
+        _type: 'MULTI-CHOICES',
+        _isSortable: true,
+        _isSearchable: this.canAccess(['filterBy', 'status']),
+        _isHidden: !this.canAccess(['tableColumns', 'status']),
+        _width: '150px',
+        _choices: [
+          {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+          {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
+          {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
+          {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
+        ]
+      },
+      {
+        _attrs: ['stats.emailsOK'],
+        _name: 'Good Emails',
+        _type: 'NUMBER',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
+      },
+      {
+        _attrs: ['stats.validatedAnswers'],
+        _name: 'Validated Answers',
+        _type: 'NUMBER',
+        _width: '170px',
+        _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
+      },
+      {
+        _attrs: ['mission.type'],
+        _name: 'Type',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'type']),
+        _width: '100px'
+      },
+      {
+        _attrs: ['type'],
+        _name: 'Type',
+        _type: 'MULTI-CHOICES',
+        _isHidden: true,
+        _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+        _isSearchable: this.canAccess(['filterBy', 'type']),
+        _choices: [
+          {_name: 'USER', _alias: 'User'},
+          {_name: 'CLIENT', _alias: 'Client'},
+          {_name: 'DEMO', _alias: 'Demo'},
+          {_name: 'TEST', _alias: 'Test'},
+        ]
+      },
+      {
+        _attrs: ['created'],
+        _name: 'Created',
+        _type: 'DATE',
+        _isSortable: true,
+        _width: '130px',
+        _isHidden: !this.canAccess(['tableColumns', 'created'])
+      },
+      {
+        _attrs: ['innovationCards.title'],
+        _name: 'Innovation Card Title',
+        _type: 'TEXT',
+        _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
+        _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
+        _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
+      },
+      {
+        _attrs: ['emailSent'],
+        _name: 'Email sent',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+      },
+      {
+        _attrs: ['operator'],
+        _name: 'Operator',
+        _type: 'MULTI-CHOICES',
+        _isSearchable: this.canAccess(['filterBy', 'operator']),
+        _isHidden: true,
+        _choices: this._operators && this._operators.length ? this._operators.map(oper => {
+          return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+        }) : []
+      },
+    ];
+
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: ConfigService,
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
+              private _translateTitleService: TranslateTitleService,
+              private _userService: UserService) {
+    this._translateTitleService.setTitle('Market Tests');
+  }
+
   ngOnInit(): void {
     this._initializeTable();
 
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
+      this._setConfigForUmiBack();
       this._getOperators().then(_ => {
         // this._configOperator();
-        this._getProjects();
+        this._getInnovations();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._isLoading = false;
@@ -130,6 +482,94 @@ export class AdminProjectsComponent implements OnInit {
       });
     }
 
+  }
+
+  /**
+   * Only for MTM UMI Role
+   * Different column order
+   * @private
+   */
+  private _setColumnOrderForUser(): Array<Column> {
+    switch (this._authService.user.roles) {
+      case 'market-test-manager-umi':
+        return this._columnsForMTM;
+      case 'market-test-manager-umi-back':
+        return this._columnsForMTMBack;
+      default:
+        return this._generalColumns;
+    }
+  }
+
+  /**
+   * MTM Umi Back => Type = client
+   * @private
+   */
+  private _setConfigForUmiBack() {
+    switch (this._authService.user.roles) {
+      case 'market-test-manager-umi-back':
+        this._config = {
+          fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
+          limit: '10',
+          offset: '0',
+          fromCollection: {
+            model: 'mission',
+            type: 'CLIENT'
+          },
+          search: '{}',
+          sort: '{"created":-1}',
+        };
+        break;
+      default:
+        break;
+    }
+  }
+
+  set config(value: Config) {
+    this._config = value; // TODO how to change the config when searching things like the operator?
+    try {
+      // Parse the config.search field to see if there's something
+      this._getInnovations();
+    } catch (ex) {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.status));
+      this._getProjects();
+      console.error(ex);
+    }
+  }
+
+  private _getInnovations() {
+    if (this._config.fromCollection.model) {
+      this._searchMissionsByOther(this._config);
+    } else {
+      this._getProjects();
+    }
+  }
+
+  get canImport(): boolean {
+    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get projects(): Array<Innovation> {
+    return this._projects;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get authUserId() {
+    return this._authService.userId;
   }
 
   /**
@@ -235,156 +675,7 @@ export class AdminProjectsComponent implements OnInit {
       _clickIndex: this.canAccess(['project', 'tabs']) ? 1 : null,
       _isPaginable: true,
       _isNoMinHeight: true,
-      _columns: [
-        {
-          _attrs: ['name'],
-          _name: 'Name',
-          _type: 'TEXT',
-          _isSortable: true,
-          _isSearchable: this.canAccess(['searchBy', 'name']),
-          _isHidden: !this.canAccess(['tableColumns', 'name'])
-        },
-        {
-          _attrs: ['innovationCards.title'],
-          _name: 'Innovation Card Title',
-          _type: 'TEXT',
-          _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
-          _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
-          _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
-        }, // Using _searchConfig for advanced search
-        {
-          _attrs: ['mission.externalDiffusion.community'],
-          _name: 'Community',
-          _width: '120px',
-          _type: 'CHECK',
-          _isHidden: !this.canAccess(['tableColumns', 'community']),
-        },
-        {
-          _attrs: ['mission.externalDiffusion.social'],
-          _name: 'Social',
-          _width: '100px',
-          _type: 'CHECK',
-          _isHidden: !this.canAccess(['tableColumns', 'social']),
-        },
-        {
-          _attrs: ['mission.externalDiffusion.umi'],
-          _name: 'Website',
-          _width: '100px',
-          _type: 'CHECK',
-          _isHidden: !this.canAccess(['tableColumns', 'website']),
-        },
-        {
-          _attrs: ['stats.emailsOK'],
-          _name: 'Good Emails',
-          _type: 'NUMBER',
-          _width: '130px',
-          _isHidden: !this.canAccess(['tableColumns', 'goodEmails'])
-        },
-        {
-          _attrs: ['stats.validatedAnswers'],
-          _name: 'Validated Answers',
-          _type: 'NUMBER',
-          _width: '170px',
-          _isHidden: !this.canAccess(['tableColumns', 'validatedAnswers'])
-        },
-        {
-          _attrs: ['updated'],
-          _name: 'Last Updated',
-          _type: 'DATE_TIME',
-          _isSortable: true,
-          _width: '200px',
-          _isHidden: !this.canAccess(['tableColumns', 'lastUpdated'])
-        },
-        {
-          _attrs: ['owner.firstName', 'owner.lastName'],
-          _name: 'Owner',
-          _type: 'TEXT',
-          _width: '180px',
-          _isHidden: !this.canAccess(['tableColumns', 'owner'])
-        },
-        {
-          _attrs: ['owner.company.name'],
-          _name: 'Company',
-          _type: 'TEXT',
-          _width: '180px',
-          _isSearchable: this.canAccess(['searchBy', 'company']),
-          _isHidden: !this.canAccess(['tableColumns', 'company']),
-          _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
-        },
-        {
-          _attrs: ['mission.type'],
-          _name: 'Type',
-          _type: 'TEXT',
-          _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'type']),
-          _width: '100px'
-        },
-        {
-          _attrs: [this._mainObjective],
-          _name: 'Objective',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'objective']),
-          _width: '200px'
-        },
-        {
-          _attrs: ['created'],
-          _name: 'Created',
-          _type: 'DATE',
-          _isSortable: true,
-          _width: '130px',
-          _isHidden: !this.canAccess(['tableColumns', 'created'])
-        },
-        {
-          _attrs: ['type'],
-          _name: 'Type',
-          _type: 'MULTI-CHOICES',
-          _isHidden: true,
-          _searchConfig: {_collection: 'mission', _searchKey: 'type'},
-          _isSearchable: this.canAccess(['filterBy', 'type']),
-          _choices: [
-            {_name: 'USER', _alias: 'User'},
-            {_name: 'CLIENT', _alias: 'Client'},
-            {_name: 'DEMO', _alias: 'Demo'},
-            {_name: 'TEST', _alias: 'Test'},
-          ]
-        }, // Using _searchConfig for advanced search
-        {
-          _attrs: [this._objectiveSearchKey],
-          _name: 'Objective',
-          _type: 'MULTI-CHOICES',
-          _isSearchable: this.canAccess(['filterBy', 'objective']),
-          _isHidden: true,
-          _searchConfig: {_collection: 'mission', _searchKey: this._objectiveSearchKey},
-          _choices: ObjectivesPrincipal.map((objective) => {
-            return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
-          })
-        },
-        {
-          _attrs: ['status'],
-          _name: 'Status',
-          _type: 'MULTI-CHOICES',
-          _isSortable: true,
-          _isSearchable: this.canAccess(['filterBy', 'status']),
-          _isHidden: !this.canAccess(['tableColumns', 'status']),
-          _width: '150px',
-          _choices: [
-            {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
-            {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
-            {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
-            {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-          ]
-        },
-        {
-          _attrs: ['operator'],
-          _name: 'Operator',
-          _type: 'MULTI-CHOICES',
-          _isSearchable: this.canAccess(['filterBy', 'operator']),
-          _isHidden: true,
-          _choices: this._operators && this._operators.length ? this._operators.map(oper => {
-            return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
-          }) : []
-        }
-      ]
+      _columns: this._setColumnOrderForUser()
     };
   }
 

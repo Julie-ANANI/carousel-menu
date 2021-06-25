@@ -1,32 +1,41 @@
-import {Component, Inject, Input, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChange, SimpleChanges} from '@angular/core';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {TranslateService} from '@ngx-translate/core';
-import {AnswerService} from '../../../../services/answer/answer.service';
-import {FilterService} from './services/filters.service';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {Answer} from '../../../../models/answer';
-import {Filter} from './models/filter';
-import {Question} from '../../../../models/question';
-import {Tag} from '../../../../models/tag';
-import {Innovation} from '../../../../models/innovation';
-import {environment} from '../../../../../environments/environment';
-import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
-import {Clearbit} from '../../../../models/clearbit';
-import {AuthService} from '../../../../services/auth/auth.service';
-import {ResponseService} from './services/response.service';
-import {TagsFiltersService} from './services/tags-filter.service';
-import {WorldmapFiltersService} from './services/worldmap-filter.service';
-import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
-import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
-import {AnswerFrontService} from '../../../../services/answer/answer-front.service';
-import {Subject} from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
-import {RolesFrontService} from '../../../../services/roles/roles-front.service';
-import {isPlatformBrowser} from '@angular/common';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../services/error/error-front.service';
-import {emptyHtmlRegex} from '../../../../utils/regex';
-import {SocketService} from '../../../../services/socket/socket.service';
+import {
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  OnChanges,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { AnswerService } from '../../../../services/answer/answer.service';
+import { FilterService } from './services/filters.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { Answer } from '../../../../models/answer';
+import { Filter } from './models/filter';
+import { Question } from '../../../../models/question';
+import { Tag } from '../../../../models/tag';
+import { Innovation } from '../../../../models/innovation';
+import { environment } from '../../../../../environments/environment';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
+import { Clearbit } from '../../../../models/clearbit';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { ResponseService } from './services/response.service';
+import { TagsFiltersService } from './services/tags-filter.service';
+import { WorldmapFiltersService } from './services/worldmap-filter.service';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
+import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { emptyHtmlRegex } from '../../../../utils/regex';
+import { SocketService } from '../../../../services/socket/socket.service';
+import { Professional } from '../../../../models/professional';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -594,6 +603,26 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) &&
       !this.areAnswersLoading
     );
+  }
+
+  updateNewPro(value: any) {
+    const proToUpdate = this._answers.find((item) => item._id === value._id);
+    proToUpdate.professional = !proToUpdate.professional
+      ? <Professional>{}
+      : proToUpdate.professional;
+    proToUpdate.professional.firstName = value.newPro.firstName;
+    proToUpdate.professional.lastName = value.newPro.lastName;
+    proToUpdate.professional.email = value.newPro.email;
+    if (value.newPro.jobTitle) {
+      proToUpdate.professional.jobTitle = value.newPro.jobTitle;
+      proToUpdate.job = value.newPro.jobTitle;
+    }
+    if (value.newPro.company) {
+      proToUpdate.company.name = value.newPro.company;
+    }
+    if (value.newPro.country) {
+      proToUpdate.country = { flag: value.newPro.country.flag };
+    }
   }
 
   ngOnDestroy(): void {

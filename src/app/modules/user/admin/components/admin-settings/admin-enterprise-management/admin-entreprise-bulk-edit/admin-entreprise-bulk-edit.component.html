@@ -20,7 +20,7 @@
           (update)="patternsUpdate($event)"
           [config]="patternConfig"
           [isSmall]="true"
-          [isEditable]="true">
+          [isEditable]="canAccess(['edit'])">
         </app-utility-input-list>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('patterns', patterns, false)}">
@@ -31,12 +31,12 @@
       <!-- Enterprise url input -->
       <div class="input-column">
         <span class="text is-sm">Enterprise url</span>
-        <input class="form-input is-shadowed" [(ngModel)]="enterpriseUrlModel" (keyup.enter)="updateUrl()">
+        <input class="form-input is-shadowed" [disabled]="!canAccess(['edit'])" [(ngModel)]="enterpriseUrlModel" (keyup.enter)="updateUrl()">
       </div>
       <!-- /Enterprise url input -->
 
       <!-- Industry input -->
-      <div class="input-column">
+      <div class="input-column" *ngIf="canAccess(['edit'])">
         <span class="text is-sm">Industry</span>
         <app-utility-auto-suggestion
           [config]="industrySelectConfig"
@@ -58,7 +58,7 @@
           (update)="brandUpdate($event)"
           [isSmall]="true"
           [config]="brandConfig"
-          [isEditable]="true">
+          [isEditable]="canAccess(['edit'])">
         </app-utility-input-list>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('brand', brands, false)}">
@@ -67,7 +67,7 @@
       <!-- /Brand input -->
 
       <!-- Enterprise Type input -->
-      <div class="input-column">
+      <div class="input-column" *ngIf="canAccess(['edit'])">
         <span class="text is-sm">Enterprise Type
           </span>
         <app-utility-auto-suggestion
@@ -90,7 +90,7 @@
           (update)="geoZoneUpdate($event)"
           [config]="geoConfig"
           [isSmall]="true"
-          [isEditable]="true">
+          [isEditable]="canAccess(['edit'])">
         </app-utility-input-list>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('geoZone', geoZones, false)}">
@@ -99,7 +99,7 @@
       <!-- /Geographical Zone input -->
 
       <!-- Enterprise size input -->
-      <div class="input-column">
+      <div class="input-column" *ngIf="canAccess(['edit'])">
         <span class="text is-sm">Enterprise size
         <i class="fas fa-info-circle is-primary"
            (mouseenter)="showSizeInfo()"
@@ -123,7 +123,7 @@
       <!-- /Enterprise size input -->
 
       <!-- Value chain input -->
-      <div class="input-column">
+      <div class="input-column" *ngIf="canAccess(['edit'])">
         <span class="text is-sm">Value chain</span>
         <app-utility-auto-suggestion
           [config]="valueChainSelectConfig"
@@ -158,11 +158,13 @@
       </button>
 
       <button class="button is-primary is-lg is-outlined"
+              *ngIf="canAccess(['edit'])"
               (click)="cancel()">
         Discard
       </button>
 
       <button class="button is-primary is-lg"
+              *ngIf="canAccess(['edit'])"
               style="margin-left: auto"
               (click)="updateChange()">
         Update

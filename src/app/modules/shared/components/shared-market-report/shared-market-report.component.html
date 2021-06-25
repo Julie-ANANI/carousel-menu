@@ -209,6 +209,7 @@
     [adminMode]="canAccess(['edit', 'respondentProfile'])"
     [projectId]="innovation._id"
     [questions]="questions"
+    (sendNewPro)="updateNewPro($event)"
     [sidebarState]="sidebarTemplateValue.animate_state"
     [userAnswer]="modalAnswer">
   </app-sidebar-user-answer>

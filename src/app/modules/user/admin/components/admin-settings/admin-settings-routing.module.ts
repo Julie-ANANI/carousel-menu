@@ -9,6 +9,7 @@ import {AdminSettingsComponent} from './admin-settings.component';
 import {AdminRoleGuard} from '../../../../../guards/admin-role-guard.service';
 import {AdminEntrepriseBulkEditComponent} from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
 import {AdminEntrepriseAddParentComponent} from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
+import { AdminProductTrackingComponent } from './admin-product-management/admin-product-tracking.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,13 @@ export const routes: Routes = [
         pathMatch: 'full',
         canActivate: [AdminRoleGuard],
         data: {accessPath: ['settings', 'enterprises']}
+      },
+      {
+        path: 'tracking',
+        component: AdminProductTrackingComponent,
+        pathMatch: 'full',
+        canActivate: [AdminRoleGuard],
+        data: {accessPath: ['settings', 'tracking']}
       },
       {
         path: 'enterprises/bulkedit',

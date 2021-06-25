@@ -272,7 +272,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((result) => {
         this._currentSectionComments = result;
-        }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         console.error(err);
       });
   }

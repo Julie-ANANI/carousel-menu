@@ -12,6 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 import { UserService } from '../../../services/user/user.service';
+import {MediaFrontService} from '../../../services/media/media-front.service';
 
 @Component({
   selector: 'app-login',
@@ -43,6 +44,12 @@ export class LoginComponent implements OnInit {
 
   private _isShowModal = false;
 
+  private _companyUrl = environment.companyURL;
+
+  private _logo = environment.logoSynthURL;
+
+  private _isDomainUMI = environment.domain === 'umi';
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateTitleService: TranslateTitleService,
@@ -58,7 +65,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._backgroundImage = environment.background;
+      this._backgroundImage = MediaFrontService.customDefaultImageSrc(environment.background, '480', '2000');
       this.linkedInUrl();
     }
   }
@@ -157,16 +164,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  getCompanyUrl(): string {
-    return environment.companyURL || '';
+  get logo(): string {
+    return this._logo;
   }
 
-  getLogoWBG(): string {
-    return environment.logoURL;
-  }
-
-  checkIsMainDomain(): boolean {
-    return environment.domain === 'umi';
+  get isDomainUMI(): boolean {
+    return this._isDomainUMI;
   }
 
   get formData(): FormGroup {
@@ -203,6 +206,10 @@ export class LoginComponent implements OnInit {
 
   get helpMessageForm(): FormGroup {
     return this._helpMessageForm;
+  }
+
+  get companyUrl(): string {
+    return this._companyUrl;
   }
 
   cancelMessage() {

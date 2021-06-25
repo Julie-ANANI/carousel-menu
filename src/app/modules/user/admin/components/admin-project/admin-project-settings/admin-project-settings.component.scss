@@ -36,6 +36,18 @@
             margin-right: 20px;
           }
 
+          .mission-members-container{
+            max-height: 100px;
+            overflow-y: scroll;
+            max-width: 300px;
+            overflow-x: scroll;
+            margin-left: auto;
+
+            .icon-right{
+              cursor: pointer;
+            }
+          }
+
           .is-text {
             width: 100%;
             font-size: 15px;
@@ -78,7 +90,6 @@
               }
 
             }
-
           }
 
           .roadmap-wrapper {

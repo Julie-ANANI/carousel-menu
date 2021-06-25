@@ -1,0 +1,19 @@
+<div class="d-flex m-bottom-50 w-full" id="date-selector-tracking">
+  <!-- month select -->
+  <div class="form-group">
+    <label class="form-label" for="select-month">Select a month</label>
+    <select class="form-select" id="select-month" [(ngModel)]="monthSelected" (ngModelChange)="sendMonthSelection()">
+      <option *ngFor="let month of months" [ngValue]="month">{{month + ' - ' + getMonthName(month)}}</option>
+    </select>
+  </div>
+  <!-- /month select -->
+
+  <!-- year select -->
+  <div class="form-group m-left-25">
+    <label class="form-label" for="select-year">Select a year</label>
+    <select class="form-select" id="select-year" [(ngModel)]="yearSelected" (ngModelChange)="sendYearSelection()">
+      <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+    </select>
+  </div>
+  <!-- /year select -->
+</div>

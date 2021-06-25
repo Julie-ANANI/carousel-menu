@@ -10,7 +10,7 @@ import { RolesFrontService } from '../../../../../services/roles/roles-front.ser
 
 export class AdminSettingsComponent {
 
-  private _tabs: Array<string> = ['blocklist', 'countries', 'enterprises'];
+  private _tabs: Array<string> = ['blocklist', 'countries', 'enterprises', 'tracking'];
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _router: Router,

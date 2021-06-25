@@ -1,46 +1,71 @@
-<main class="container fluid" id="login">
-  <section class="columns col-gapless">
+<div class="container fluid" id="login">
+  <div class="main-wrapper d-flex">
 
-    <!-- section image -->
-    <div class="column col-md-6 col-xl-7 col-8 col-mx-auto">
-      <div [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }" class="cover-image"></div>
+    <!-- left side -->
+    <div [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }" class="cover-image">
+      <ng-container *ngIf="isDomainUMI">
+        <div class="logo-wrapper p-top-20 p-left-40">
+          <a [href]="companyUrl" class="d-inline-flex">
+            <img
+              [src]="logo"
+              height="44.83"
+              width="85"
+              alt=" "
+              class="img-responsive">
+          </a>
+        </div>
+      </ng-container>
     </div>
-    <!-- /section image -->
+    <!-- /left side -->
 
-    <!-- section login -->
-    <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto section-login section-light-pad flex-centered">
+    <!-- right side -->
+    <div class="content-body">
 
-      <!-- logo -->
-      <div class="logo-wrapper">
-        <a href="{{ getCompanyUrl() }}">
-          <img
-            [src]="getLogoWBG()"
-            height="57.58"
-            width="110"
-            alt=" "
-            class="img-responsive">
-        </a>
+      <!-- sign up -->
+      <div class="flex-end">
+        <span class="text-13 text-notify m-right-20">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
+        <button
+          [id]="'login-btn-signup'"
+          [routerLink]="'/register'"
+          class="button is-primary text-xs is-sm is-rounded is-outlined"
+          type="button">
+          {{ 'LOG_IN.SIGN_UP' | translate }}
+        </button>
       </div>
+      <!-- /sign up  -->
 
-      <!-- form -->
-      <div class="form section-light-pad flex-centered">
+      <!-- body -->
+      <section class="content-login flex-centered">
+        <div class="login-form">
 
-        <!-- heading -->
-        <h1 [innerText]="'LOG_IN.HEADING'" class="title-primary text-background" translate></h1>
+          <h1 class="title text-center">{{'LOG_IN.HEADING' | translate}}</h1>
 
-        <!-- details -->
-        <div class="credentials-wrapper">
-          <form (submit)="onClickLogin()" [formGroup]="formData">
+          <!-- tentatives + contact UMI  -->
+          <ng-container *ngIf="nbTentatives<3">
+            <div class="m-bottom-15 text-alert text-sm d-flex">
+              {{ nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate) }}
+              <span
+                (click)="showContactUMIModal()"
+                *ngIf="nbTentatives ===0"
+                [id]="'login-btn-modal-contact'"
+                class="text-link text-normal text-underline m-left-20">
+                Contact UMI support
+              </span>
+            </div>
+          </ng-container>
+          <!-- /tentatives + contact UMI-->
 
-            <div class="form-group has-error">
-              <label class="form-label" for="login-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
+          <form (submit)="onClickLogin()" [formGroup]="formData" autocomplete="off">
+
+            <div class="form-group m-bottom-20 has-error">
+              <label class="form-label text-xs" for="login-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
               <input
-                type="email"
-                id="login-email"
                 class="form-input"
                 formControlName="email"
-                placeholder="john@catco.com">
-              <span *ngIf="formData.get('email').touched">
+                id="login-email"
+                placeholder="john@catco.com"
+                type="email">
+              <ng-container *ngIf="formData.get('email').touched">
                 <span *ngIf="formData.get('email').hasError('required')" class="form-input-hint">
                   {{ 'COMMON.REQUIRED.EMAIL' | translate }}
                 </span>
@@ -49,90 +74,85 @@
                   class="form-input-hint">
                   {{ 'COMMON.INVALID.EMAIL' | translate }}
                 </span>
-              </span>
+              </ng-container>
             </div>
 
             <div class="form-group has-error">
-              <label class="form-label" for="login-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
+
+              <div class="flex-between">
+                <label class="form-label text-xs" for="login-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
+                <a
+                  [id]="'login-btn-forgot-password'"
+                  [routerLink]="'forgetpassword'"
+                  class="gtm-change-password text-xs text-underline text-link">
+                  {{ 'COMMON.LABEL.FORGOT_PASSWORD' | translate }}
+                </a>
+              </div>
+
               <input
+                [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate "
                 class="form-input"
-                id="login-password"
-                type="password"
                 formControlName="password"
-                [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
-              <span
-                *ngIf="formData.get('password').hasError('required') && formData.get('password').touched"
-                class="form-input-hint">
-                {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-              </span>
+                id="login-password"
+                type="password">
+
+              <ng-container *ngIf="formData.get('password').touched">
+                <span *ngIf="formData.get('password').hasError('required')" class="form-input-hint">
+                  {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                </span>
+              </ng-container>
+
             </div>
 
-            <!-- tentatives + contact UMI -->
-            <p *ngIf="nbTentatives<3" class="text text-sm m-top-10 m-bottom-10 is-info" style="display: flex">
-              {{nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate)}}
-              <span class="text-link" style="margin-left: auto"
-                    (click)="showContactUMIModal()"
-                    *ngIf="nbTentatives ===0">Contact UMI support</span>
-            </p>
-            <!-- /tentatives + contact UMI-->
+            <!-- login button -->
+            <div class="p-top-30">
+              <button
+                [id]="'login-btn-submit'"
+                class="button is-primary text-sm w-full gtm-signin-email"
+                type="submit"
+                [disabled]="formData.invalid || displayLoading || displayLoadingLinkedIn">
+                <ng-container *ngIf="!displayLoading">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</ng-container>
+                <span *ngIf="displayLoading" class="loading is-white"></span>
+              </button>
+            </div>
+            <!-- /login button  -->
 
-            <!-- login button and forget password -->
-            <div class="submit-wrapper text-center">
-              <div class="login-button">
+            <!-- domain UMI -->
+            <ng-container *ngIf="isDomainUMI">
+
+              <div class="text-center p-top-25 p-bottom-30">
+                <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+              </div>
+
+              <!-- linkedin -->
+              <div class="text-center">
                 <button
-                  id="login-submit"
-                  class="button is-primary gtm-signin-email"
-                  type="submit"
-                  [disabled]="formData.invalid">
-                  <span *ngIf="displayLoading" class="loading is-white"></span>
-                  {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                  (click)="onClickLinkedIn()"
+                  [disabled]="displayLoading || displayLoadingLinkedIn"
+                  [id]="'login-btn-linkedin'"
+                  class="button is-secondary icon-left text-sm is-lg gtm-signin-linkedin">
+                  <span *ngIf="displayLoadingLinkedIn" class="loading is-white"></span>
+                  <ng-container *ngIf="!displayLoadingLinkedIn">
+                    <i class="fab fa-1x fa-linkedin-in"></i> {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+                  </ng-container>
                 </button>
               </div>
-              <p>
-                {{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}
-                <span class="text-link gtm-change-password" routerLink="forgetpassword">
-                  {{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}
-                </span>
-              </p>
-            </div>
+              <!-- /linkedin -->
+
+            </ng-container>
+            <!-- /domain UMI -->
 
           </form>
+
         </div>
-
-        <!-- linkedIn -->
-        <ng-container *ngIf="checkIsMainDomain()">
-          <div class="linkedIn-wrapper text-center">
-
-            <div class="or-wrapper">
-              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
-            </div>
-
-            <button class="btn btn-secondary gtm-signin-linkedin" (click)="onClickLinkedIn()">
-              <span *ngIf="displayLoadingLinkedIn" class="loading is-white"></span>
-              <span *ngIf="!displayLoadingLinkedIn"><i class="fab fa-1x fa-linkedin-in"></i></span>
-              {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
-            </button>
-
-          </div>
-        </ng-container>
-
-      </div>
-
-      <!-- sign up -->
-      <div class="text-center">
-        <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '0.4rem' }">
-          {{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
-        </span>
-        <button type="button" class="btn btn-sm ghost-primary" routerLink="/register">
-          {{ 'LOG_IN.SIGN_UP' | translate }}
-        </button>
-      </div>
+      </section>
+      <!-- /body -->
 
     </div>
-    <!-- /section login -->
+    <!-- /right side -->
 
-  </section>
-</main>
+  </div>
+</div>
 
 <app-utility-modal [title]="'Contact UMI support'" [(showModal)]="isShowModal" [maxWidth]="'550px'">
   <section class="modal-body p-top-15 p-bottom-15 p-left-25 p-right-25">

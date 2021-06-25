@@ -735,9 +735,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public onUpdateStatus(status: InnovationStatus) {
     this._innovation.status = status;
-    this._saveProject('The status has been updated.', {
-      status: this._innovation.status,
-    });
+    const saveObject: any = {};
+    saveObject.status = this._innovation.status;
+    if (status === 'EVALUATING') {
+      if (this._mission._id && this._mission.type === 'USER') {
+        this._mission.type = 'CLIENT';
+      }
+    }
+    this._saveProject('The status has been updated.', saveObject);
   }
 
   public onChangeAnonymous(event: Event) {

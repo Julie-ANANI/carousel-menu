@@ -46,7 +46,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     private _notificationService: NotificationsService,
     private _entrepriseService: EnterpriseService,
     private _rolesFrontService: RolesFrontService
-  ) {}
+  ) {
+  }
 
   get companiesToAddParent(): Array<any> {
     return this._companiesToAddParent;
@@ -88,27 +89,13 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _name: 'Logo',
           _type: 'PICTURE',
           _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'logo']),
         },
         {
           _attrs: ['name'],
           _name: 'Name',
           _type: 'TEXT',
-        },
-        {
-          _attrs: ['goodEmails'],
-          _name: 'Good emails',
-          _type: 'NUMBER',
-        },
-        {
-          _attrs: ['bouncedEmails'],
-          _name: 'Deduced emails',
-          _type: 'NUMBER',
-          _width: '170px',
-        },
-        {
-          _attrs: ['shieldEmails'],
-          _name: 'Shield emails',
-          _type: 'NUMBER',
+          _isHidden: !this.canAccess(['tableColumns', 'name']),
         },
         {
           _attrs: ['parentEnterpriseObject'],
@@ -120,48 +107,76 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           _attrs: ['topLevelDomain'],
           _name: 'Domain',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'domain']),
         },
         {
           _attrs: ['patterns'],
           _name: 'Patterns',
           _type: 'PATTERNS-OBJECT-LIST',
           _width: '120px',
+          _isHidden: !this.canAccess(['tableColumns', 'patterns']),
         },
         {
           _attrs: ['enterpriseURL'],
           _name: 'Enterprise Url',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'url']),
         },
         {
           _attrs: ['industries'],
           _name: 'Industry',
           _type: 'LABEL-OBJECT-LIST',
+          _isHidden: !this.canAccess(['tableColumns', 'industry']),
         },
         {
           _attrs: ['brands'],
           _name: 'Brand',
           _type: 'LABEL-OBJECT-LIST',
+          _isHidden: !this.canAccess(['tableColumns', 'brand']),
         },
         {
           _attrs: ['enterpriseType'],
           _name: 'Type',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'type']),
         },
         {
           _attrs: ['geographicalZone'],
           _name: 'Geographical Zone',
           _type: 'NAME-LABEL-LIST',
           _width: '190px',
+          _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
         },
         {
           _attrs: ['enterpriseSize'],
           _name: 'Company size',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'size']),
         },
         {
           _attrs: ['valueChain'],
           _name: 'Value chain',
           _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
+        },
+        {
+          _attrs: ['goodEmails'],
+          _name: 'Good emails',
+          _type: 'NUMBER',
+          _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
+        },
+        {
+          _attrs: ['bouncedEmails'],
+          _name: 'Deduced emails',
+          _type: 'NUMBER',
+          _width: '170px',
+          _isHidden: !this.canAccess(['tableColumns', 'deducedEmails']),
+        },
+        {
+          _attrs: ['shieldEmails'],
+          _name: 'Shield emails',
+          _type: 'NUMBER',
+          _isHidden: !this.canAccess(['tableColumns', 'shieldEmails']),
         },
       ],
     };
@@ -179,12 +194,13 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   public canAccess(path?: Array<string>) {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(
-        ['settings', 'enterprises'].concat(path)
+        ['settings', 'enterprises', 'addParent'].concat(path)
       );
     } else {
       return this._rolesFrontService.hasAccessAdminSide([
         'settings',
         'enterprises',
+        'addParent'
       ]);
     }
   }
@@ -310,15 +326,15 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       const column = context.column;
       const temp = this.companiesTable._content[rowIndex][
         column._attrs.toString()
-      ];
+        ];
       this.companiesTable._content[rowIndex][
         column._attrs.toString()
-      ] = this._companiesToSwapTable._content[rowIndex][
+        ] = this._companiesToSwapTable._content[rowIndex][
         column._attrs.toString()
-      ];
+        ];
       this._companiesToSwapTable._content[rowIndex][
         column._attrs.toString()
-      ] = temp;
+        ] = temp;
     }
   }
 
@@ -357,11 +373,15 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
   updateParentCompany() {
-    this._parentCompany.subsidiaries = this.companiesTable._content.map(
+    const subsidiaries = this._parentCompany.subsidiaries || [];
+    const subsidiariesToAdd = this.companiesTable._content.map(
       (sub) => {
-        return sub._id;
+        if (sub._id && subsidiaries.indexOf(sub._id) === -1) {
+          return sub._id;
+        }
       }
     );
+    this._parentCompany.subsidiaries = subsidiariesToAdd.concat(subsidiaries);
     this._entrepriseService
       .save(this._parentCompany._id, this._parentCompany)
       .pipe(first())

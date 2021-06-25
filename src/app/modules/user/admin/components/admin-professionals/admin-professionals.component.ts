@@ -25,7 +25,7 @@ export class AdminProfessionalsComponent implements OnInit {
 
   private _professionals: Array<SelectedProfessional> = [];
 
-  private _total = -1;
+  private _total = 0;
 
   private _config: Config = {
     fields: 'language firstName lastName companyOriginalName country jobTitle campaigns tags messages ambassador.is',
@@ -53,7 +53,6 @@ export class AdminProfessionalsComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
-      this._getProfessionals();
     }
   }
 

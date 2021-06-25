@@ -80,6 +80,21 @@
             </div>
             <!-- /domain -->
 
+            <!-- enterprise client -->
+            <div
+              *ngIf="canAccess(['view', 'enterprise']) && innovation.owner && innovation.owner.company && innovation.owner.company.name"
+              class="content">
+
+              <label for="admin-project-domain">Enterprise</label>
+
+
+              <span class="is-text">
+                {{ innovation.owner?.company?.name }}
+              </span>
+
+            </div>
+            <!-- /enterprise client -->
+
             <!-- mission type -->
             <div
               *ngIf="mission.type && (canAccess(['view', 'missionType'])
@@ -168,6 +183,14 @@
 
             </div>
             <!-- /mission team -->
+
+            <div *ngIf="mission.team.length > 0 && canAccess(['edit', 'missionTeam'])" class="content">
+              <div class="mission-members-container">
+                  <span class="label is-rounded is-sm" *ngFor="let member of mission.team">{{name(member)}}
+                    <i class="fas fa-times icon-right" (click)="onChangeMissionTeam(member)"></i>
+                  </span>
+              </div>
+            </div>
 
             <!-- commercial -->
             <div

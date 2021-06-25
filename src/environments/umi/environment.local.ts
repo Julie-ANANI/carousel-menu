@@ -11,7 +11,7 @@ export const environment = {
   companyURL: 'https://www.umi.us',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-animated-2020.gif',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-trans-2020.png',
-  background: 'https://res.cloudinary.com/umi/image/upload/v1527583034/app/default-images/cover-image.jpg',
+  background: 'https://res.cloudinary.com/umi/image/upload/f_auto/app/default-images/backgrounds/umi-welcome-picture-2021.jpg',
   commercialContact: 'klegrand@umi.us',
   secureCookie: false,
   cookieTime: 3600 * 1000

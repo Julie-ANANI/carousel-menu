@@ -7,7 +7,7 @@
   <!-- /top profile -->
 
   <!-- flag -->
-  <div *ngIf="answer.country && answer.country.flag" class="m-bottom-10">
+  <div *ngIf="answer.country" class="m-bottom-10">
     <app-utility-country-flag
       [country]="answer.country"
       [width]="23"

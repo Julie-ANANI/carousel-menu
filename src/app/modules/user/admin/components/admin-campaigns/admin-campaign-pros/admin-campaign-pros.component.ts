@@ -42,7 +42,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _professionals: Array<SelectedProfessional> = [];
 
-  private _total = -1;
+  private _total = 0;
 
   private _modalImport = false;
 
@@ -110,7 +110,6 @@ export class AdminCampaignProsComponent implements OnInit {
   private _initCampaign() {
     this._config.campaigns = this._campaign ? this._campaign._id : '';
     delete this._config.country;
-    this._getProfessionals();
   }
 
   public canAccess(path?: Array<string>) {
