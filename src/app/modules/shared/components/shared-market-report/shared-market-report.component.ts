@@ -6,6 +6,8 @@ import {
   OnChanges,
   OnInit,
   PLATFORM_ID,
+  SimpleChanges,
+  SimpleChange,
 } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
