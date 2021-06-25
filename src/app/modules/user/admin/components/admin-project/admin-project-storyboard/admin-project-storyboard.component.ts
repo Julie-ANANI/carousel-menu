@@ -28,6 +28,7 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-project-storyboard.component.html',
@@ -159,7 +160,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._isChargingReport = false;
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', err.message);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
       console.error(err);
     });
     this._realtimeUpdate(this._innovation.executiveReportId);
@@ -225,7 +226,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._setReportSections(answers);
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', err.message);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
         console.error(err);
       });
   }
@@ -331,7 +332,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._realtimeUpdate(response._id);
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', err.message);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
         console.error(err);
       });
   }
@@ -341,7 +342,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._createExecutiveReport();
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', err.message);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
       console.error(err);
     });
   }
@@ -394,7 +395,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
           this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', err.message);
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
           this._isGeneratingVideo = false;
           console.error(err);
         });
@@ -412,7 +413,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         FileSaver.saveAs(blob, filename);
         this._isGeneratingReport = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', err.message);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
         this._isGeneratingReport = false;
         console.error(err);
       });
@@ -434,7 +435,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._toBeSaved = false;
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', err.message);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
         console.error(err);
       });
     }

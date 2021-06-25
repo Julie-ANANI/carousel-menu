@@ -26,6 +26,7 @@ import { Company } from '../../../../../../models/company';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { Professional } from '../../../../../../models/professional';
 import {MissionQuestion} from '../../../../../../models/mission';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -151,7 +152,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           this._initAnswers();
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Answers Error...', err.message);
+          this._translateNotificationsService.error('Answers Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         }
       );
@@ -262,7 +263,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             this._isImportingAnswers = false;
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Importing Error...', err.message);
+            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.adminErrorMessage(err));
             this._isImportingAnswers = false;
             console.error(err);
           }
@@ -456,7 +457,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             }
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Answer Update Error...', err.message);
+            this._translateNotificationsService.error('Answer Update Error...', ErrorFrontService.adminErrorMessage(err));
             console.error(err);
           }
         );

@@ -45,6 +45,7 @@ import { MissionFrontService } from '../../../../../../services/mission/mission-
 import { picto, Picto } from '../../../../../../models/static-data/picto';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
 import { Community } from '../../../../../../models/community';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 interface UserSuggestion {
   name: string;
@@ -168,7 +169,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._commercials = response.result;
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Commercial Error...', err.message);
+          this._translateNotificationsService.error('Commercial Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         }
       );
@@ -183,7 +184,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._operators = response.result;
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Operator Error...', err.message);
+          this._translateNotificationsService.error('Operator Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         }
       );
@@ -390,7 +391,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           );
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Stats Error...', err.message);
+          this._translateNotificationsService.error('Stats Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         }
       );
@@ -433,7 +434,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Mission Error...', err.message);
+          this._translateNotificationsService.error('Mission Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         }
       );
@@ -481,7 +482,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Project Error...', err.message);
+          this._translateNotificationsService.error('Project Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         }
       );
@@ -506,7 +507,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Client Project Error...', err.message);
+          this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         }
       );
@@ -588,7 +589,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             }
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Publish Error...', err.message);
+            this._translateNotificationsService.error('Publish Error...', ErrorFrontService.adminErrorMessage(err));
             console.error(err);
             this._isPublishingCommunity = false;
           }

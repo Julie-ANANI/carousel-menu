@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import {isPlatformBrowser} from '@angular/common';
 import {Mission, MissionTemplate} from '../../../../../../models/mission';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -106,7 +107,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The preset is updated.');
     }, (err: HttpErrorResponse) => {
-     this._translateNotificationsService.error('ERROR.ERROR', err.message);
+     this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
      console.error(err);
     });
   }
@@ -124,7 +125,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', err.message);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
       console.error(err);
     });
   }
@@ -152,7 +153,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._presetService.get(event._id).pipe(first()).subscribe((preset) => {
       this._chosenPreset = preset;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', err.message);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
       console.error(err);
     });
   }
