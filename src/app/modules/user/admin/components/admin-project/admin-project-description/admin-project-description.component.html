@@ -47,8 +47,9 @@
                 </div>
                 <!-- /translation button -->
 
+                <!-- edit-preview button -->
                 <button
-                  *ngIf="innovation.innovationCards.length > 1 && isEditable"
+                  *ngIf="innovation.innovationCards.length > 0 && isEditable"
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
                   class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
@@ -57,6 +58,7 @@
                      *ngIf="getPadPreviewMode(i.toString())"></i>
                   <i class="fas fa-eye" *ngIf="!getPadPreviewMode(i.toString())"></i>
                 </button>
+                <!-- /edit-preview button -->
 
               </div>
 
@@ -239,8 +241,9 @@
               </div>
               <!-- /translation button -->
 
+              <!-- edit-preview button -->
               <button
-                *ngIf="innovation.innovationCards.length > 1 && isEditable"
+                *ngIf="innovation.innovationCards.length > 0 && isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
                 class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
@@ -249,6 +252,7 @@
                    *ngIf="getPadPreviewMode('title')"></i>
                 <i class="fas fa-eye" *ngIf="!getPadPreviewMode('title')"></i>
               </button>
+              <!-- /edit-preview button -->
 
             </div>
 
@@ -380,8 +384,9 @@
               </div>
               <!-- /translation button -->
 
+              <!-- edit-preview button -->
               <button
-                *ngIf="innovation.innovationCards.length > 1 && isEditable"
+                *ngIf="innovation.innovationCards.length > 0 && isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('summary')"
                 class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
@@ -390,6 +395,7 @@
                    *ngIf="getPadPreviewMode('summary')"></i>
                 <i class="fas fa-eye" *ngIf="!getPadPreviewMode('summary')"></i>
               </button>
+              <!-- /edit-preview button -->
 
             </div>
 
