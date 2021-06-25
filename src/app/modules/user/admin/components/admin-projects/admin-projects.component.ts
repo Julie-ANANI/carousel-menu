@@ -97,6 +97,20 @@ export class AdminProjectsComponent implements OnInit {
       _isHidden: !this.canAccess(['tableColumns', 'website']),
     },
     {
+      _attrs: ['emailSent'],
+      _name: 'Email sent',
+      _type: 'TEXT',
+      _isSortable: true,
+      _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+    },
+    {
+      _attrs: ['stats.emailsOK'],
+      _name: 'Good Emails',
+      _type: 'NUMBER',
+      _isSortable: true,
+      _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
+    },
+    {
       _attrs: ['stats.validatedAnswers'],
       _name: 'Validated Answers',
       _type: 'NUMBER',
