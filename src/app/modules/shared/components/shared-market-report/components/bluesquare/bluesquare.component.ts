@@ -9,7 +9,13 @@ import {Picto, picto} from '../../../../../../models/static-data/picto';
 
 export class BluesquareComponent {
 
-  @Input() subtitle = '';
+  get subtitle(): string {
+    return this._subtitle;
+  }
+
+  @Input() set subtitle(value: string) {
+    this._subtitle = value;
+  }
 
   @Input() percentage: number = null;
 
@@ -21,10 +27,12 @@ export class BluesquareComponent {
 
   private _picto: Picto = picto;
 
+  private _subtitle = '';
+
   constructor() {}
 
   public onChangeSubtitle() {
-    this.subtitleChanged.emit(this.subtitle);
+    this.subtitleChanged.emit(this._subtitle);
   }
 
   get editSubtitle(): boolean {

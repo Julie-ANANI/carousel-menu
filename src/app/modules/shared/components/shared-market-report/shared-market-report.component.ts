@@ -45,6 +45,7 @@ import {MissionQuestionService} from '../../../../services/mission/mission-quest
   styleUrls: ['./shared-market-report.component.scss'],
 })
 export class SharedMarketReportComponent implements OnInit, OnDestroy {
+
   @Input() accessPath: Array<string> = [];
 
   @Input() adminSide = false;
@@ -117,6 +118,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   public displayFilters = false;
 
+  private _toSaveTemplate = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateService: TranslateService,
@@ -136,7 +139,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.reportingLang =
-      this.innovation.settings.reportingLang ||
+      this._innovation.settings.reportingLang ||
       this._translateService.currentLang;
     this._filterService.reset();
 
@@ -150,8 +153,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     this._missionQuestionService.missionTemplate().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
       if (value && value.entry && value.entry.length) {
         (<Mission>this._innovation.mission).template = value;
+        this._toSaveTemplate = true;
         this._toBeSaved = true;
-        this._innovationFrontService.setNotifyChanges({key: 'mission', state: true});
       }
     });
 
@@ -434,14 +437,15 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy {
     };
 
     // Modified only admin side
-    if (MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
+    if (this._toSaveTemplate && MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
       objToSave['missionTemplate'] = (<Mission>this._innovation.mission).template;
     } else {
       objToSave['preset'] = this._innovation.preset;
     }
 
-    this._innovationService.save(this._innovation._id, objToSave).subscribe(() => {
+    this._innovationService.save(this._innovation._id, objToSave).pipe(first()).subscribe(() => {
       this._toBeSaved = false;
+      this._toSaveTemplate = false;
       this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));

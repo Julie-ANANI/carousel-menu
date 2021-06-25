@@ -128,20 +128,31 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
 
   private _realTimeUpdate(object: string, update: any) {
-      if (update.userId !== this._authService.userId) {
-        this._showBanner = update.userName;
-        this._updateTime = Date.now();
-      }
+
+    if (update.userId !== this._authService.userId) {
+      this._showBanner = update.userName;
+      this._updateTime = Date.now();
+    }
 
     this._setInnoTitle();
     this._operatorComments(update);
+
     Object.keys(update.data).forEach((field: string) => {
-      if (object === 'project') {
+
+      /**
+       * here we are checking the field because when we update the innovation some time we update the other object to
+       * in the back so to have the proper updated object here we check the field and try to have field name different
+       * from the object field name.
+       */
+      if (field === 'missionTemplate') {
+        this._project.mission['template'] = update.data[field];
+      } else if (object === 'project') {
         this._project[field] = update.data[field];
       } else {
         this._project.mission[field] = update.data[field];
       }
     });
+
     this._setInnovation();
   }
 
