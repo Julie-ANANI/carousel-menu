@@ -49,7 +49,7 @@
 
                 <!-- edit-preview button -->
                 <button
-                  *ngIf="innovation.innovationCards.length > 0 && isEditable"
+                  *ngIf=" isEditable"
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
                   class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
@@ -100,7 +100,8 @@
             </div>
 
             <div *ngIf="isEditable && getPadPreviewMode(i.toString())"
-                 class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
+                 class="width-100 mce-tinymce pad-preview-mode text-15"
+                 [innerHTML]="activeInnovCard.sections[i].content | cleanHtml">
             </div>
             <!-- remaining text -->
             <div
@@ -243,7 +244,7 @@
 
               <!-- edit-preview button -->
               <button
-                *ngIf="innovation.innovationCards.length > 0 && isEditable"
+                *ngIf=" isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
                 class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
@@ -386,7 +387,7 @@
 
               <!-- edit-preview button -->
               <button
-                *ngIf="innovation.innovationCards.length > 0 && isEditable"
+                *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('summary')"
                 class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
