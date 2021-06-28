@@ -2,6 +2,23 @@
 
 #market-test-objectives-complementary {
 
+  .template-2-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .objectives-option {
+      max-width: 400px !important;
+      width: 100%;
+      min-height: 60px;
+      margin: 0 10px;
+    }
+
+  }
+
   .objectives-option {
     padding: 12px 30px;
     background-color: #437194;

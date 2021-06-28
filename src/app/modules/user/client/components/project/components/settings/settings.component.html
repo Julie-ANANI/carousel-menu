@@ -333,7 +333,7 @@
   [(showModal)]="showModal"
   [isCloseBtnDark]="false"
   [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? hasMissionTemplate ? '95%' : '963px' :
-  activeModalSection.name === 'SECONDARY_OBJECTIVE' ? '840px' : '640px'">
+  activeModalSection.name === 'SECONDARY_OBJECTIVE' ? '920px' : '640px'">
 
   <!-- body -->
   <section
@@ -374,7 +374,8 @@
               (templateSectionsChange)="onChangeObjectives($event)"
               [(objectiveComment)]="selectedValue['comment']"
               [selectedSectionsObjectives]="selectedValue['sections']"
-              [templateSections]="definedTemplate.sections">
+              [templateSections]="definedTemplate.sections"
+              [template]="'TEMPLATE_2'">
             </app-market-test-objectives-complementary>
           </ng-container>
         </ng-container>

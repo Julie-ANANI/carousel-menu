@@ -3,6 +3,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
 import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
+type template = 'TEMPLATE_1' | 'TEMPLATE_2';
+
 /**
  * example: Market test objective component.
  */
@@ -29,6 +31,12 @@ export class MarketTestObjectivesComplementaryComponent {
   get currentLang(): string {
     return this._translateService.currentLang;
   }
+
+  /**
+   * TEMPLATE_1 : show the objective row by row.
+   * TEMPLATE_2 : show more than one objective in the row.
+   */
+  @Input() template: template = 'TEMPLATE_1';
 
   /**
    * pass the actual list of mission template sections.
