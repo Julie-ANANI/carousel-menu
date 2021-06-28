@@ -2,7 +2,7 @@
 @import "mixins";
 
 .label {
-  @include inline-flex-position('center');
+  @include inline-flex-position(center);
   @include label($light-color, $dark-color);
   text-align: center;
   font-weight: $font-weight-medium;

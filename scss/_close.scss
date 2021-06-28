@@ -1,0 +1,107 @@
+@import "variables";
+@import "mixins";
+
+.close, .modal-close {
+  @include inline-flex-position(center);
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  color: $dark-color;
+  padding: 0;
+  text-align: center;
+  outline: none;
+  position: relative;
+  min-width: unset;
+  width: 40px;
+  height: 40px;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  font-size: $font-icon-lg;
+
+  &::before {
+    display: none;
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  &::after {
+    display: block;
+    content: "\2715";
+    z-index: 2;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: $dark-color;
+
+    &::before {
+      display: block;
+      background-color: rgba(58, 66, 77, 0.10);
+    }
+
+  }
+
+  &.is-white {
+    color: $white-color;
+
+    &:hover {
+      color: $white-color;
+    }
+
+  }
+
+  &.has-hover-white:hover {
+
+    &::before {
+      background-color: rgba(255, 255, 255, 0.10);
+    }
+
+  }
+
+  &.has-background {
+
+    &::before {
+      display: block;
+      background-color: rgba(10,10,10,.2);
+    }
+
+    &:hover {
+
+      &::before {
+        background-color: rgba(10,10,10,.3);
+      }
+
+    }
+
+  }
+
+  &.is-xs {
+    width: 20px;
+    height: 20px;
+    font-size: $font-icon-sm;
+  }
+
+  &.is-sm {
+    width: 30px;
+    height: 30px;
+    font-size: $font-icon-md;
+  }
+
+  &.is-md {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+
+  &.is-lg {
+    width: 50px;
+    height: 50px;
+    font-size: 26px;
+  }
+
+}
