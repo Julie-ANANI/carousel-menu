@@ -656,6 +656,11 @@ export class AdminProjectsComponent implements OnInit {
         project.innovationCards =
           InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
+      if (project.stats && project.stats.received && project.stats.received > 0) {
+        project['emailSent'] = 'Yes';
+      } else {
+        project['emailSent'] = 'No';
+      }
       return project;
     });
   }
