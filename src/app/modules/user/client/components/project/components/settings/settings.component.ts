@@ -37,6 +37,14 @@ interface Section {
 
 export class SettingsComponent implements OnInit, OnDestroy {
 
+  get objectiveConsent(): boolean {
+    return this._objectiveConsent;
+  }
+
+  set objectiveConsent(value: boolean) {
+    this._objectiveConsent = value;
+  }
+
   get disabledDate(): string {
     return this._disabledDate;
   }
@@ -137,6 +145,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _definedTemplate: MissionTemplate = <MissionTemplate>{};
 
   private _disabledDate = moment().add(-1, 'days').format('YYYY-MM-DD');
+
+  /**
+   * when the user try to change the objective we ask him to tick the box to confirm.
+   */
+  private _objectiveConsent = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
@@ -398,6 +411,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (section.isEditable) {
       this._selectedValue = '';
       this._activeModalSection = section;
+      this._objectiveConsent = true;
       this._initActiveModalValue();
       this._showModal = true;
     }
@@ -428,6 +442,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       case 'PRINCIPAL_OBJECTIVE':
         if (this.hasMissionTemplate) {
+          this._objectiveConsent = false;
           this._getAllMissionTemplates();
           this._selectedValue = null;
         } else {
@@ -437,6 +452,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       case 'SECONDARY_OBJECTIVE':
         if (this.hasMissionTemplate) {
+          this._objectiveConsent = false;
           this._getAllMissionTemplates();
           this._selectedValue = {
             sections: JSON.parse(JSON.stringify(this._mission.template.sections)),

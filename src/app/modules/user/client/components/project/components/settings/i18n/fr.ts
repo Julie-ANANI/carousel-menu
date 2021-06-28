@@ -69,4 +69,8 @@ export const PROJECT_SETTINGS = {
 
   'RESTITUTION_DATE_COMMENT': 'Avez-vous des précisions à apporter ?',
 
+  'PRIMARY_OBJECTIVE_CONSENT': 'Une modification de votre cas d\'usage impacter votre questionnaire. Voulez vous continuer ?',
+
+  'SECONDARY_OBJECTIVE_CONSENT': 'Une modification de vos objectifs complementaries impacter votre questionnaire. Voulez vous continuer ?',
+
 };

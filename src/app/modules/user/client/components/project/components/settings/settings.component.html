@@ -496,6 +496,29 @@
     </ng-container>
     <!-- /COLLABORATORS -->
 
+    <!-- checkbox for SECONDARY_OBJECTIVE | PRINCIPAL_OBJECTIVE -->
+    <ng-container *ngIf="activeModalSection.name === 'PRINCIPAL_OBJECTIVE'
+    || activeModalSection.name === 'SECONDARY_OBJECTIVE'">
+      <div class="p-top-40 m-left-auto m-right-auto mxw-600">
+        <label class="form-checkbox p-left-30">
+          <input
+            (ngModelChange)="objectiveConsent = !objectiveConsent"
+            [(ngModel)]="objectiveConsent"
+            type="checkbox">
+          <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
+          <span class="text-white text-medium">
+            <ng-container *ngIf="activeModalSection.name === 'PRINCIPAL_OBJECTIVE'">
+              {{ 'PROJECT_SETTINGS.PRIMARY_OBJECTIVE_CONSENT' | translate }}
+            </ng-container>
+            <ng-container *ngIf="activeModalSection.name === 'SECONDARY_OBJECTIVE'">
+              {{ 'PROJECT_SETTINGS.SECONDARY_OBJECTIVE_CONSENT' | translate }}
+            </ng-container>
+          </span>
+        </label>
+      </div>
+    </ng-container>
+    <!-- /checkbox for SECONDARY_OBJECTIVE | PRINCIPAL_OBJECTIVE -->
+
   </section>
   <!-- /body -->
 
@@ -511,10 +534,15 @@
 
     <button
       (click)="onClickSaveModal($event)"
-      [disabled]="isDisabled"
+      [disabled]="isDisabled || !objectiveConsent"
       [id]="'settings-modal-btn-save'"
       class="button is-community is-sm">
-      {{ 'COMMON.BUTTON.SAVE' | translate }}
+      <ng-container
+        *ngIf="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' || activeModalSection.name === 'SECONDARY_OBJECTIVE';
+        else defBtnSave">
+        {{ 'COMMON.BUTTON.CONFIRM' | translate }}
+      </ng-container>
+      <ng-template #defBtnSave>{{ 'COMMON.BUTTON.SAVE' | translate }}</ng-template>
     </button>
 
   </footer>

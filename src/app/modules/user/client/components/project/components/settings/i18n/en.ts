@@ -69,4 +69,8 @@ export const PROJECT_SETTINGS = {
 
   'RESTITUTION_DATE_COMMENT': 'Is there anything else you\'d like to do or add ?',
 
+  'PRIMARY_OBJECTIVE_CONSENT': 'A change in your use case affects your questionnaire. Do you want to continue?',
+
+  'SECONDARY_OBJECTIVE_CONSENT': 'A change in your secondary objectives may affect your questionnaire. Do you want to continue?',
+
 };
