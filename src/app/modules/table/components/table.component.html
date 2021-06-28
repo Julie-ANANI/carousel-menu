@@ -605,7 +605,7 @@
                   <ng-container *ngIf="i !== table._clickIndex - 1">
                     <div
                       [attr.data-tooltip]="getTitle(row, column)"
-                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column)}"
+                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column), 'is-bottom': rowIndex < 1}"
                       class="w-full">
                       <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)">
                         <ng-container *ngFor="let attr of getAttrs(column)">
@@ -626,7 +626,7 @@
                   <ng-container *ngIf="i === table._clickIndex - 1">
                     <div
                       [attr.data-tooltip]="getTitle(row, column)"
-                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column)}"
+                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column), 'is-bottom': rowIndex < 1}"
                       class="w-full">
                       <div
                         (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
