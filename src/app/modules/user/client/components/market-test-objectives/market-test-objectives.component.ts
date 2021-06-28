@@ -1,7 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {MissionTemplate, MissionTemplateSection} from '../../../../../models/mission';
 import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
+import {DOCUMENT} from '@angular/common';
+import {PageScrollService} from 'ngx-page-scroll-core';
 
 /**
  * example: New project component.
@@ -42,9 +44,10 @@ export class MarketTestObjectivesComponent {
     return this._objectiveComment;
   }
 
-  get selectedSectionsObjectives(): Array<MissionTemplateSection> {
-    return this._selectedSectionsObjectives;
-  }
+  /**
+   * make it true if you include this component in the modal because page scroll does not work.
+   */
+  @Input() insideModal = false;
 
   /**
    * actual list of the mission templates we get from the back.
@@ -119,7 +122,9 @@ export class MarketTestObjectivesComponent {
 
   private _selectedSectionsObjectives: Array<MissionTemplateSection> = [];
 
-  constructor(private _translateService: TranslateService) { }
+  constructor(@Inject(DOCUMENT) private _document: Document,
+              private _pageScrollService: PageScrollService,
+              private _translateService: TranslateService) { }
 
   public onChangeCategory(event: Event, value: string) {
     event.preventDefault();
@@ -161,6 +166,21 @@ export class MarketTestObjectivesComponent {
 
   public templateName(template: MissionTemplate, lang = this.currentLang): string {
     return MissionFrontService.objectiveName(template, lang);
+  }
+
+  /**
+   * scroll to view
+   * @param elementId
+   * @param scrollOffset
+   */
+  public scrollTo(elementId: string, scrollOffset = 0) {
+    if (!this.insideModal) {
+      this._pageScrollService.scroll({
+        document: this._document,
+        scrollTarget: elementId,
+        scrollOffset: scrollOffset
+      });
+    }
   }
 
 }

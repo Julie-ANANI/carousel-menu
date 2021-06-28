@@ -445,9 +445,11 @@
         <div *ngIf="isFetchingTemplates" class="loading is-white"></div>
         <ng-container *ngIf="!isFetchingTemplates">
           <app-market-test-objectives
-            [missionTemplates]="missionTemplates"
             (missionTemplateChange)="onChangeTemplate($event)"
-            [(objectiveComment)]="mission.objectiveComment">
+            [(objectiveComment)]="mission.objectiveComment"
+            [insideModal]="true"
+            [missionTemplate]="mission.template"
+            [missionTemplates]="missionTemplates">
           </app-market-test-objectives>
         </ng-container>
       </ng-container>

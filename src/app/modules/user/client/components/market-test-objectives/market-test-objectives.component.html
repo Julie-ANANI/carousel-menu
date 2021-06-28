@@ -9,13 +9,11 @@
   <!-- categories -->
   <div class="flex-centered flex-wrap p-top-10">
     <a
-      (click)="onChangeCategory($event, category)"
+      (click)="onChangeCategory($event, category); scrollTo('#arrow-templates')"
       *ngFor="let category of objectivesCategory"
-      [href]="'#arrow-templates'"
       [id]="'market-test-category-'+category.toLowerCase()"
       [ngClass]="{'active': selectedCategory === category}"
-      class="objectives-category m-bottom-25 m-left-10 m-right-10 box-info"
-      pageScroll>
+      class="objectives-category m-bottom-25 m-left-10 m-right-10 box-info">
       <h4>{{ 'MARKET_TEST_OBJECTIVES.CATEGORY.TITLE.' + category | translate }}</h4>
       <p>{{ 'MARKET_TEST_OBJECTIVES.CATEGORY.DESCRIPTION.' + category | translate }}</p>
     </a>
@@ -50,7 +48,7 @@
             [ngClass]="{'disabled': !selectedCategory || template['category'] !== selectedCategory}"
             class="template-case relative">
 
-            <a [href]="'#section-methodology'" pageScrollOffset="10" pageScroll class="d-block">
+            <a (click)="scrollTo('#section-methodology', 10)" class="d-block">
               <p
                 [ngClass]="{'active': selectedTemplate._id === template._id}"
                 (click)="onChangeTemplate($event, template)"
