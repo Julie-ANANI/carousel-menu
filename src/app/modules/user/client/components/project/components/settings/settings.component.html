@@ -80,7 +80,7 @@
                   <div *ngIf="templateComplementary.length > 0; else oldSecondary;" class="p-bottom-15">
                     <div
                       *ngFor="let objective of templateComplementary; let i = index;"
-                      class="text-md p-bottom-1">
+                      class="text-md p-bottom-2">
                       {{i + 1}}. {{ objectiveName(objective) }}
                     </div>
                   </div>
@@ -88,7 +88,7 @@
 
                   <!-- old objective -->
                   <ng-template #oldSecondary>
-                    <div *ngIf="!!mission.objective.secondary.length; else noSecondary" class="p-bottom-15">
+                    <div *ngIf="!!mission.objective.secondary.length; else noSecondary" class="p-bottom-20">
                       <div
                         *ngFor="let objective of mission.objective.secondary; let i = index;"
                         class="text-md p-bottom-1">
@@ -151,7 +151,7 @@
               <div *ngSwitchCase="'RESTITUTION_DATE'">
                 <ng-container *ngIf="!!dateRDO">
                   <div class="text-md">{{ dateRDO.dueDate | date:dateFormat }}</div>
-                  <div *ngIf="!!dateRDO.comment" class="text-md text-italics p-top-15">
+                  <div *ngIf="!!dateRDO.comment" class="text-md text-italics p-top-20">
                     {{ dateRDO.comment }}
                   </div>
                 </ng-container>
