@@ -99,7 +99,7 @@
               </app-shared-editors>
             </div>
 
-            <div *ngIf="isEditable && getPadPreviewMode(i.toString())"
+            <div *ngIf="getPadPreviewMode(i.toString())"
                  class="width-100 mce-tinymce pad-preview-mode text-15"
                  [innerHTML]="activeInnovCard.sections[i].content | cleanHtml">
             </div>
@@ -268,7 +268,7 @@
               [isEditable]="isEditable">
             </app-shared-editors>
 
-            <div *ngIf="isEditable && getPadPreviewMode('title')"
+            <div *ngIf="getPadPreviewMode('title')"
                  class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
             </div>
 
@@ -412,7 +412,7 @@
               </app-shared-editors>
             </div>
 
-            <div *ngIf="isEditable && getPadPreviewMode('summary')"
+            <div *ngIf="getPadPreviewMode('summary')"
                  class="width-100 mce-tinymce pad-preview-mode text-15"
                  [innerHTML]="activeInnovCard.summary | cleanHtml">
             </div>
