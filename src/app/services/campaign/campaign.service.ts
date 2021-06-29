@@ -94,11 +94,10 @@ export class CampaignService {
     return this._http.delete(`/batch/${batchId}`);
   }
 
-  public sendTestEmails(campaignId: string, batchStatus: number, userInfo: any, innovationCardLanguages: any): Observable<any> {
+  public sendTestEmails(campaignId: string, batchStatus: number, userInfo: any): Observable<any> {
     return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {
       batchStatus: batchStatus,
-      user: userInfo,
-      innovationCardLanguages: innovationCardLanguages
+      user: userInfo
     });
   }
 

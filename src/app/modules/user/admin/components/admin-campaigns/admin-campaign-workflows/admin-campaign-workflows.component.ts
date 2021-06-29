@@ -309,11 +309,8 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
           lastName: this._authService.user.lastName || '',
           language: this._authService.user.language || ''
         };
-        const innovationCardLanguages = {
-          languages: this._innovationCardLanguages
-        };
         this._campaignService
-          .sendTestEmails(this._campaign._id, i, userInfo, innovationCardLanguages)
+          .sendTestEmails(this._campaign._id, i, userInfo)
           .pipe(first())
           .subscribe(
             (res) => {
