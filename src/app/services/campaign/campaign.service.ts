@@ -9,7 +9,8 @@ import { Professional } from '../../models/professional';
 @Injectable({providedIn: 'root'})
 export class CampaignService {
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) {
+  }
 
   public create(campaignObj: Campaign) {
     return this._http.post('/campaign/', campaignObj);
@@ -23,19 +24,19 @@ export class CampaignService {
     return this._http.put('/campaign/' + campaignObj._id, campaignObj);
   }
 
-  public getAll(config: {[header: string]: string | string[]}): Observable<any> {
+  public getAll(config: { [header: string]: string | string[] }): Observable<any> {
     return this._http.get<any>('/campaign/', {params: config});
   }
 
-  public getPros(campaignId: string, config: {[header: string]: string | string[]}): Observable<{result: Array<Professional>, _metadata: any}> {
+  public getPros(campaignId: string, config: { [header: string]: string | string[] }): Observable<{ result: Array<Professional>, _metadata: any }> {
     return this._http
-      .get<{result: Array<Professional>, _metadata: any}>
+      .get<{ result: Array<Professional>, _metadata: any }>
       ('/campaign/' + campaignId + '/pros', {params: config});
   }
 
-  public getAnswers(campaignId: string): Observable<{answers: {draftAnswers: Array<Answer>, localAnswers: Array<Answer>}}> {
+  public getAnswers(campaignId: string): Observable<{ answers: { draftAnswers: Array<Answer>, localAnswers: Array<Answer> } }> {
     return this._http
-      .get<{answers: {draftAnswers: Array<Answer>, localAnswers: Array<Answer>}}>
+      .get<{ answers: { draftAnswers: Array<Answer>, localAnswers: Array<Answer> } }>
       ('/campaign/' + campaignId + '/answer');
   }
 
@@ -69,11 +70,11 @@ export class CampaignService {
                         nameB: string,
                         sizeA: number,
                         sizeB: number): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/startAB`, { nameA, nameB, sizeA, sizeB });
+    return this._http.post(`/campaign/${campaignId}/startAB`, {nameA, nameB, sizeA, sizeB});
   }
 
   public freezeStatus(batch: Batch): Observable<any> {
-    return this._http.get( `/batch/${batch._id}/freezeStatus`);
+    return this._http.get(`/batch/${batch._id}/freezeStatus`);
   }
 
   // Update A/B test stats. (MailService / No NLP)
@@ -93,8 +94,12 @@ export class CampaignService {
     return this._http.delete(`/batch/${batchId}`);
   }
 
-  public sendTestEmails(campaignId: string, batchStatus: number, userInfo: any): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {batchStatus: batchStatus, user: userInfo});
+  public sendTestEmails(campaignId: string, batchStatus: number, userInfo: any, innovationCardLanguages: any): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {
+      batchStatus: batchStatus,
+      user: userInfo,
+      innovationCardLanguages: innovationCardLanguages
+    });
   }
 
   public setNuggets(campaignId: string): Observable<any> {
