@@ -608,14 +608,18 @@
                          (click)="testClick(row, column)"
                          [ngStyle]="getTextColor(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
-                        <input type="text"
-                               *ngIf="column._isEditable"
-                               [disabled]="inputType(row, column).disabled"
-                               [className]="inputType(row, column).className"
-                               [value]="((getContentValue(row, attr).toString() || '-') | titlecase)">
                         <ng-container *ngIf="!column._isEditable">
                           {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
                         </ng-container>
+                        <div class="form-group has-icon-right" *ngIf="column._isEditable">
+                          <input type="text"
+                                 class="form-input is-sm"
+                                 [disabled]="inputType(row, column).disabled"
+                                 [ngClass]="inputType(row, column).className"
+                                 [value]="((getContentValue(row, attr).toString() || '-') | titlecase)">
+                          <span class="icon is-right is-sm is-primary icon-check" *ngIf="!inputType(row, column).disabled">
+                          </span>
+                        </div>
                       </ng-container>
                     </div>
                     <ng-container
