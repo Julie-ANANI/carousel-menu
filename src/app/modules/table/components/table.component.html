@@ -604,9 +604,18 @@
                   <!-- not clickable -->
                   <ng-container *ngIf="i !== table._clickIndex - 1">
                     <div class="text-ellipsis" [title]="getTitle(row, column)"
+                         [ngClass]="(column._isEditable? 'cell-editable': '') "
+                         (click)="testClick(row, column)"
                          [ngStyle]="getTextColor(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
-                        {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                        <input type="text"
+                               *ngIf="column._isEditable"
+                               [disabled]="inputType(row, column).disabled"
+                               [className]="inputType(row, column).className"
+                               [value]="((getContentValue(row, attr).toString() || '-') | titlecase)">
+                        <ng-container *ngIf="!column._isEditable">
+                          {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
+                        </ng-container>
                       </ng-container>
                     </div>
                     <ng-container

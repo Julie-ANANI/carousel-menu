@@ -14,6 +14,14 @@ import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
 
+interface InputCell {
+  index: number;
+  column: Column;
+  disabled: boolean;
+  value: any;
+  className: string;
+}
+
 @Component({
   selector: 'app-shared-table',
   templateUrl: './table.component.html',
@@ -131,6 +139,8 @@ export class TableComponent {
   // copy an original table
   private _isOrginal = false;
 
+  private _inputCells: Array<InputCell> = [];
+
   constructor(
     private _translateService: TranslateService,
     private _configService: ConfigService,
@@ -194,8 +204,8 @@ export class TableComponent {
   private _getFilteredContent(rows: Array<any>) {
     this._pagination.parPage = this._table._isPaginable
       ? parseInt(this._configService.configLimit(this._table._selector)) ||
-        Number(this._config.limit) ||
-        10
+      Number(this._config.limit) ||
+      10
       : rows.length;
 
     this._table._total =
@@ -328,9 +338,9 @@ export class TableComponent {
    */
   private _onSelectRow() {
     if (this._massSelection) {
-      this.selectRows.emit({ _rows: this._getAllContent() });
+      this.selectRows.emit({_rows: this._getAllContent()});
     } else {
-      this.selectRows.emit({ _rows: this._getSelectedRowsContent() });
+      this.selectRows.emit({_rows: this._getSelectedRowsContent()});
     }
   }
 
@@ -647,7 +657,7 @@ export class TableComponent {
       if (this._table._isLocal) {
         this._filteredContent[rowKey]._isSelected = !this._filteredContent[
           rowKey
-        ]._isSelected;
+          ]._isSelected;
       } else {
         this._table._content[rowKey]._isSelected = !this._table._content[rowKey]
           ._isSelected;
@@ -774,7 +784,7 @@ export class TableComponent {
   }
 
   public onClickDropdownItem(content: any, item: Choice) {
-    this.dropdownAction.emit({ content: content, item: item });
+    this.dropdownAction.emit({content: content, item: item});
   }
 
   public getTime(content: string): string {
@@ -889,7 +899,7 @@ export class TableComponent {
           searchValue &&
           content[searchKey] &&
           content[searchKey].toString().toLowerCase() ===
-            searchValue.toLowerCase()
+          searchValue.toLowerCase()
         ) {
           return true;
         }
@@ -911,14 +921,14 @@ export class TableComponent {
       this._setFilteredContent();
 
       if (this._table._hasCustomFilters) {
-        this.customFilter.emit({ key: '', value: '' });
+        this.customFilter.emit({key: '', value: ''});
         for (const key of Object.keys(this._config)) {
           if (
             this._table._columns.find(
               (col) => col._isCustomFilter && col._attrs[0] === key
             )
           ) {
-            this.customFilter.emit({ key: key, value: this._config[key] });
+            this.customFilter.emit({key: key, value: this._config[key]});
           }
         }
       }
@@ -1031,7 +1041,7 @@ export class TableComponent {
   }
 
   getPerformedAction(action: string, context: any) {
-    this.performAction.emit({ _action: action, _context: context });
+    this.performAction.emit({_action: action, _context: context});
   }
 
   selectAllTheData() {
@@ -1039,7 +1049,7 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = true;
     });
-    this.performAction.emit({ _action: 'Select all', _context: true });
+    this.performAction.emit({_action: 'Select all', _context: true});
   }
 
   clearAllTheSelections() {
@@ -1047,12 +1057,42 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = false;
     });
-    this.performAction.emit({ _action: 'Select all', _context: false });
+    this.performAction.emit({_action: 'Select all', _context: false});
   }
 
   performFilters(event: any) {
     if (event) {
-      this.performAction.emit({ _action: 'Filter' });
+      this.performAction.emit({_action: 'Filter'});
+    }
+  }
+
+  testClick(row: any, column: Column) {
+    console.log(this._inputCells);
+    const cellInput = this._inputCells.find(cell => cell.index === row && cell.column === column);
+    if (cellInput) {
+      cellInput.disabled = false;
+      cellInput.className = 'editable-cell';
+    }
+    console.log(cellInput);
+  }
+
+  getInputCellObject(row: any, column: Column) {
+    return this._inputCells.find(cell => cell.index === row && cell.column === column);
+  }
+
+  inputType(row: any, column: Column) {
+    if (column._isEditable) {
+      const cellInputToAdd = {
+        index: row,
+        disabled: true,
+        column: column,
+        value: this._table._content[row],
+        className: 'no-editable-cell'
+      };
+      if (!this._inputCells.find(cell => cell.index === row && cell.column === column)) {
+        this._inputCells.push(cellInputToAdd);
+      }
+      return this._inputCells.find(cell => cell.index === row && cell.column === column);
     }
   }
 }
