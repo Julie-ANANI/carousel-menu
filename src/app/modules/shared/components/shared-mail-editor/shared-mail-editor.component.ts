@@ -41,6 +41,8 @@ export class SharedMailEditorComponent {
 
   @Input() ccEmail = '';
 
+  @Input() innovationCardLanguages: string [] = [];
+
   @Input() set emailsObject(value: EmailsObject) {
     if (value) {
       this._emailsObject = value;

@@ -19,9 +19,12 @@ export class SidebarWorkflowComponent {
 
   @Input() id = this.inputLanguage;
 
+  @Input() innovationCardLanguages: string [] = [];
+
   @Output() emailChange: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {
+  }
 
   public onClickSave() {
     if (this.isEditable) {

@@ -116,12 +116,12 @@
 
           <!-- message -->
           <app-shared-editor-tinymce
-              #textZone
-              [useVariables]="true"
-              (onTextChange)="updateContent($event, 'en')"
-              [data]="emailsObject['en'].content || ''"
-              [readonly]="!isEditableMode"
-              [variableMapping]="variableMapping['en']">
+            #textZone
+            [useVariables]="true"
+            (onTextChange)="updateContent($event, 'en')"
+            [data]="emailsObject['en'].content || ''"
+            [readonly]="!isEditableMode"
+            [variableMapping]="variableMapping['en']">
           </app-shared-editor-tinymce>
           <!-- /message -->
 
@@ -209,10 +209,15 @@
         <!-- language choice -->
         <div *ngIf="!noLanguage" class="language-wrapper">
           <label class="form-label">Choose language:</label>
-          <div (click)="changeLanguage('en')" [ngClass]="{ active: language === 'en' }" class="text-link">
+          <div *ngIf="innovationCardLanguages.indexOf('en') !== -1"
+               (click)="changeLanguage('en')"
+               [ngClass]="{ active: language === 'en' }"
+               class="text-link">
             English
           </div>
-          <div (click)="changeLanguage('fr')" [ngClass]="{ active: language === 'fr' }" class="text-link">
+          <div (click)="changeLanguage('fr')"
+               *ngIf="innovationCardLanguages.indexOf('fr') !== -1" [ngClass]="{ active: language === 'fr' }"
+               class="text-link">
             French
           </div>
         </div>
@@ -282,17 +287,18 @@
             </div>-->
 
             <!-- <div *ngIf="!innovationId"> -->
-              <app-shared-editor-tinymce
-                (onTextChange)="updateContent($event)"
-                *ngIf="isEditableMode"
-                [data]="email.content || ''"
-                [readonly]="!isEditableMode">
-              </app-shared-editor-tinymce>
+            <app-shared-editor-tinymce
+              (onTextChange)="updateContent($event)"
+              *ngIf="isEditableMode"
+              [data]="email.content || ''"
+              [readonly]="!isEditableMode">
+            </app-shared-editor-tinymce>
             <!-- </div> -->
 
           </div>
 
-          <p *ngIf="!isEditableMode && email && email.content" [innerHTML]="email.content | cleanHtml" class="text-md"></p>
+          <p *ngIf="!isEditableMode && email && email.content" [innerHTML]="email.content | cleanHtml"
+             class="text-md"></p>
         </div>
         <!-- /message -->
 
