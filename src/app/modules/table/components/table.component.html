@@ -605,19 +605,21 @@
                   <ng-container *ngIf="i !== table._clickIndex - 1">
                     <div class="text-ellipsis" [title]="getTitle(row, column)"
                          [ngClass]="(column._isEditable? 'cell-editable': '') "
-                         (click)="testClick(row, column)"
                          [ngStyle]="getTextColor(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         <ng-container *ngIf="!column._isEditable">
                           {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
                         </ng-container>
-                        <div class="form-group has-icon-right" *ngIf="column._isEditable">
+                        <div class="form-group has-icon-right" *ngIf="column._isEditable" (click)="testClick($event, row, column)">
                           <input type="text"
                                  class="form-input is-sm"
                                  [disabled]="inputType(row, column).disabled"
                                  [ngClass]="inputType(row, column).className"
-                                 [value]="((getContentValue(row, attr).toString() || '-') | titlecase)">
-                          <span class="icon is-right is-sm is-primary icon-check" *ngIf="!inputType(row, column).disabled">
+                                 (input)="cellEditOnChange($event.target.value, row, column)"
+                                 [attr.value]="((getContentValue(row, attr).toString() || '-') | titlecase)">
+                          <span class="icon is-right is-sm is-primary icon-check"
+                                (click)="sendEditedCell(row, column)"
+                                *ngIf="!inputType(row, column).disabled">
                           </span>
                         </div>
                       </ng-container>

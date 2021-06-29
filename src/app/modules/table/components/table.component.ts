@@ -20,6 +20,7 @@ interface InputCell {
   disabled: boolean;
   value: any;
   className: string;
+  input: string;
 }
 
 @Component({
@@ -1066,7 +1067,8 @@ export class TableComponent {
     }
   }
 
-  testClick(row: any, column: Column) {
+  testClick(event: Event, row: any, column: Column) {
+    event.preventDefault();
     console.log(this._inputCells);
     const cellInput = this._inputCells.find(cell => cell.index === row && cell.column === column);
     if (cellInput) {
@@ -1087,12 +1089,23 @@ export class TableComponent {
         disabled: true,
         column: column,
         value: this._table._content[row],
-        className: 'no-editable-cell'
+        className: 'no-editable-cell',
+        input: ''
       };
       if (!this._inputCells.find(cell => cell.index === row && cell.column === column)) {
         this._inputCells.push(cellInputToAdd);
       }
       return this._inputCells.find(cell => cell.index === row && cell.column === column);
     }
+  }
+
+  cellEditOnChange(value: string, row: any, column: Column) {
+    console.log(value);
+    this._inputCells.find(cell => cell.index === row && cell.column === column).input = value;
+    console.log(this._inputCells.find(cell => cell.index === row && cell.column === column));
+  }
+
+  sendEditedCell(row: any, column: Column) {
+    console.log(this._inputCells.find(cell => cell.index === row && cell.column === column));
   }
 }
