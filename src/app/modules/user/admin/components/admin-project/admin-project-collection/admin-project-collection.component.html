@@ -76,6 +76,7 @@
     [projectId]="innovation._id"
     [questions]="questions"
     [sidebarState]="sidebarValue.animate_state"
+    (answerUpdated)="updateAnswersTable($event)"
     (sendNewPro)="updatePros($event)"
     [userAnswer]="sidebarAnswer">
   </app-sidebar-user-answer>
