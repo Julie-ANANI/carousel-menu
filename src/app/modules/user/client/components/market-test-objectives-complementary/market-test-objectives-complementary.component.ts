@@ -33,13 +33,6 @@ export class MarketTestObjectivesComplementaryComponent {
   }
 
   /**
-   * when we change the template value in the parent we make it true
-   * so that questions are not checked because sometimes we have the same
-   * questions in other templates and they are checked by default.
-   */
-  @Input() isTemplateChanged = false;
-
-  /**
    * TEMPLATE_1 : show the objective row by row.
    * TEMPLATE_2 : show more than one objective in the row.
    */
@@ -51,6 +44,9 @@ export class MarketTestObjectivesComplementaryComponent {
    */
   @Input() set templateSections(value: Array<MissionTemplateSection>) {
     this._templateSections = value;
+    this._selectedSectionsObjectives = MissionFrontService.resetComplementaryObjectives(
+      JSON.parse(JSON.stringify(this._templateSections))
+    );
   }
 
   /**
@@ -86,29 +82,22 @@ export class MarketTestObjectivesComplementaryComponent {
   public onChangeOption(event: Event, value: MissionQuestion, sectionIndex: number) {
     event.preventDefault();
 
-    if (!this._selectedSectionsObjectives.length) {
-      this._selectedSectionsObjectives = JSON.parse(JSON.stringify(this._templateSections));
-      this._selectedSectionsObjectives = MissionFrontService.resetComplementaryObjectives(this._selectedSectionsObjectives);
-    }
-
-    if (this._selectedSectionsObjectives.length) {
-      if (((event.target) as HTMLInputElement).checked) {
-        this._selectedSectionsObjectives[sectionIndex].questions.push(value);
-      } else {
-        const index = this._selectedSectionsObjectives[sectionIndex].questions.findIndex((objective) => {
-          return objective._id === value._id;
-        });
-        if (index !== -1) {
-          this._selectedSectionsObjectives[sectionIndex].questions.splice(index, 1);
-        }
+    if (((event.target) as HTMLInputElement).checked) {
+      this._selectedSectionsObjectives[sectionIndex].questions.push(value);
+    } else {
+      const index = this._selectedSectionsObjectives[sectionIndex].questions.findIndex((objective) => {
+        return objective._id === value._id;
+      });
+      if (index !== -1) {
+        this._selectedSectionsObjectives[sectionIndex].questions.splice(index, 1);
       }
-
-      this.templateSectionsChange.emit(this._selectedSectionsObjectives);
     }
+
+    this.templateSectionsChange.emit(this._selectedSectionsObjectives);
   }
 
   public isChecked(value: MissionQuestion, sectionIndex: number): boolean {
-    if (this._selectedSectionsObjectives.length && this._selectedSectionsObjectives[sectionIndex] && !this.isTemplateChanged) {
+    if (this._selectedSectionsObjectives.length && this._selectedSectionsObjectives[sectionIndex]) {
       return this._selectedSectionsObjectives[sectionIndex].questions.some((objective) => {
         return objective._id === value._id;
       });
