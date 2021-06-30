@@ -14,7 +14,7 @@ import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
 
-interface InputCell {
+interface InputGrid {
   index: number;
   column: Column;
   disabled: boolean;
@@ -140,7 +140,7 @@ export class TableComponent {
   // copy an original table
   private _isOrginal = false;
 
-  private _inputCells: Array<InputCell> = [];
+  private _inputGrids: Array<InputGrid> = [];
 
   constructor(
     private _translateService: TranslateService,
@@ -450,7 +450,7 @@ export class TableComponent {
   }
 
   /**
-   * Gte the title of a cell
+   * Gte the title of a grid
    * @param row
    * @param column
    */
@@ -1067,45 +1067,40 @@ export class TableComponent {
     }
   }
 
-  testClick(event: Event, row: any, column: Column) {
+  enableInput(event: Event, row: any, column: Column) {
     event.preventDefault();
-    console.log(this._inputCells);
-    const cellInput = this._inputCells.find(cell => cell.index === row && cell.column === column);
-    if (cellInput) {
-      cellInput.disabled = false;
-      cellInput.className = 'editable-cell';
+    const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column === column);
+    if (gridInput) {
+      gridInput.disabled = false;
+      gridInput.className = 'editable-grid';
     }
-    console.log(cellInput);
   }
 
-  getInputCellObject(row: any, column: Column) {
-    return this._inputCells.find(cell => cell.index === row && cell.column === column);
-  }
-
-  inputType(row: any, column: Column) {
+  getInputGrid(row: any, column: Column) {
     if (column._isEditable) {
-      const cellInputToAdd = {
+      const gridInputToAdd = {
         index: row,
         disabled: true,
         column: column,
         value: this._table._content[row],
-        className: 'no-editable-cell',
+        className: 'no-editable-grid',
         input: ''
       };
-      if (!this._inputCells.find(cell => cell.index === row && cell.column === column)) {
-        this._inputCells.push(cellInputToAdd);
+      if (!this._inputGrids.find(grid => grid.index === row && grid.column === column)) {
+        this._inputGrids.push(gridInputToAdd);
       }
-      return this._inputCells.find(cell => cell.index === row && cell.column === column);
+      return this._inputGrids.find(grid => grid.index === row && grid.column === column);
     }
   }
 
-  cellEditOnChange(value: string, row: any, column: Column) {
+  gridEditOnChange(value: string, row: any, column: Column) {
     console.log(value);
-    this._inputCells.find(cell => cell.index === row && cell.column === column).input = value;
-    console.log(this._inputCells.find(cell => cell.index === row && cell.column === column));
+    this._inputGrids.find(grid => grid.index === row && grid.column === column).input = value;
+    console.log(this._inputGrids.find(grid => grid.index === row && grid.column === column));
   }
 
-  sendEditedCell(row: any, column: Column) {
-    console.log(this._inputCells.find(cell => cell.index === row && cell.column === column));
+  sendEditedGrid(event: Event, row: any, column: Column) {
+    event.preventDefault();
+    console.log(this._inputGrids.find(grid => grid.index === row && grid.column === column));
   }
 }

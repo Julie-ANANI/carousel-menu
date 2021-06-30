@@ -41,19 +41,24 @@
   }
 
   .form-group {
+
     .icon {
+      margin-left: 0.5rem;
       color: $primary-color;
+    }
+
+    .icon:hover{
       cursor: pointer;
     }
   }
 
-  .editable-cell {
+  .editable-grid {
     border: 1px solid $border-default-color;
     width: 100%;
     height: 100%;
   }
 
-  .no-editable-cell {
+  .no-editable-grid {
     border: none;
     width: 100%;
     height: 100%;
@@ -86,7 +91,7 @@
       width: 100%;
     }
 
-    .cell-text {
+    .grid-text {
       display: flex;
       align-items: center;
       flex-direction: row;
@@ -94,7 +99,7 @@
       padding: 2px 20px;
     }
 
-    .cell-action {
+    .grid-action {
       display: flex;
       align-items: center;
       padding: 2px 25px;
@@ -127,7 +132,7 @@
           background-color: $table-th-hover-background-color !important;
         }
 
-        &.cell-checkbox:hover, &.is-no-hovered:hover {
+        &.grid-checkbox:hover, &.is-no-hovered:hover {
           background-color: transparent !important;
         }
 
@@ -144,7 +149,7 @@
           font-size: 13px;
           padding: 0;
 
-          &:not(.cell-checkbox) {
+          &:not(.grid-checkbox) {
             padding: 2px 25px;
           }
 
