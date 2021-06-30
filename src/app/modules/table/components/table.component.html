@@ -672,12 +672,12 @@
                              [(ngModel)]="getInputGrid(context.row, context.column).input">
                     </div>
                     <div class="d-flex flex-d-column justify-center">
-                      <span class="icon is-md is-primary icon-check"
+                      <span class="icon is-md is-primary icon-check m-bottom-1"
                             (click)="sendEditedGrid($event, context.row, context.column)"
                             *ngIf="!getInputGrid(context.row, context.column).disabled">
                           </span>
 
-                      <span class="icon is-md is-primary icon-cross"
+                      <span class="icon is-md is-primary icon-cross m-top-1"
                             (click)="cancelEditedGrid($event, context.row, context.column)"
                             *ngIf="!getInputGrid(context.row, context.column).disabled">
                           </span>
