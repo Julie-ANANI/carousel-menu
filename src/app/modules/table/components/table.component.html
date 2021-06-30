@@ -587,8 +587,19 @@
                 <ng-container *ngSwitchCase="'NUMBER'">
                   <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)" [title]="getTitle(row, column)">
                     <ng-container *ngFor="let attr of getAttrs(column)">
-                      {{ (getContentValue(row, attr) || " - ") }}
+                      <!-- no-editable -->
+                      <ng-container *ngIf="!column._isEditable">
+                        {{ (getContentValue(row, attr) || " - ") }}
+                      </ng-container>
+                      <!-- /no-editable -->
+
+                      <!-- editable-->
+                      <ng-container
+                        *ngTemplateOutlet="gridEditTemplate; context: {$implicit: {column: column, row:row,attr: attr}}">
+                      </ng-container>
+                      <!-- /editable-->
                     </ng-container>
+
                   </div>
                   <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                   </ng-container>
@@ -607,12 +618,17 @@
                          [ngClass]="(column._isEditable? 'cell-editable': '') "
                          [ngStyle]="getTextColor(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
+                        <!-- no-editable-->
                         <ng-container *ngIf="!column._isEditable">
                           {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
                         </ng-container>
+                        <!-- /no-editable-->
+
+                        <!-- editable-->
                         <ng-container
                           *ngTemplateOutlet="gridEditTemplate; context: {$implicit: {column: column, row:row,attr: attr}}">
                         </ng-container>
+                        <!-- /editable-->
                       </ng-container>
                     </div>
                     <ng-container
@@ -662,6 +678,7 @@
                   </span>
                 </ng-template>
 
+                <!-- editable-cell-template-->
                 <ng-template #gridEditTemplate let-context>
                   <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
                     <div (click)="enableInput($event, context.row, context.column)">
@@ -684,6 +701,7 @@
                     </div>
                   </div>
                 </ng-template>
+                <!-- /editable-cell-template -->
 
               </div>
             </ng-container>
