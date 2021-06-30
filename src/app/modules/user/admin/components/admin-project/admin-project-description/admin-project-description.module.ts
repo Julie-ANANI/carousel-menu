@@ -11,6 +11,7 @@ import {SharedUploadZoneVideoModule} from '../../../../../shared/components/shar
 import {CommentListModule} from '../../../../../sidebars/components/comment-list/comment-list.module';
 import {SharedEditorsModule} from '../../../../../shared/components/shared-editors/shared-editors.module';
 import { CleanHtmlModule } from '../../../../../../pipe/cleanHtml/cleanHtml.module';
+import {PipeModule} from '../../../../../../pipe/pipe.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { CleanHtmlModule } from '../../../../../../pipe/cleanHtml/cleanHtml.modu
     SharedEditorsModule,
     CommentListModule,
     CleanHtmlModule,
+    PipeModule,
   ],
   declarations: [
     AdminProjectDescriptionComponent,
