@@ -71,6 +71,6 @@ export const PROJECT_SETTINGS = {
 
   'PRIMARY_OBJECTIVE_CONSENT': 'Une modification de votre cas d\'usage impacter votre questionnaire. Voulez vous continuer ?',
 
-  'SECONDARY_OBJECTIVE_CONSENT': 'Une modification de vos objectifs complementaries impacter votre questionnaire. Voulez vous continuer ?',
+  'SECONDARY_OBJECTIVE_CONSENT': 'Une modification de vos objectifs complémentaires impactera votre questionnaire. Voulez-vous continuer ?',
 
 };
