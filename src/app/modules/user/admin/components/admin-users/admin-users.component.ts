@@ -139,6 +139,7 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'company']),
           _isHidden: !this.canAccess(['tableColumns', 'company']),
+          _isEditable: true
         },
         {
           _attrs: ['domain'],
@@ -307,6 +308,7 @@ export class AdminUsersComponent implements OnInit {
             this._userToUpdate.id = context._id;
             this.updateUser(this._userToUpdate, false);
           }
+          break;
       }
     }
   }

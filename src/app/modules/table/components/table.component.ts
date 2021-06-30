@@ -1103,8 +1103,8 @@ export class TableComponent {
     event.preventDefault();
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column === column);
     if (_dataToUpdate) {
-      const _oldValueAttrs = column._attrs;
-      _dataToUpdate.value[_oldValueAttrs[0]] = _dataToUpdate.input;
+      const _attrs = column._attrs.toString().split('.');
+      lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
       this.performAction.emit({
         _action: 'Update grid',
         _context: _dataToUpdate.value
