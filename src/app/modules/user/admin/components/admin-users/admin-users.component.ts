@@ -147,7 +147,8 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _width: '200px',
           _isSearchable: this.canAccess(['searchBy', 'domain']),
-          _isHidden: !this.canAccess(['tableColumns', 'domain'])
+          _isHidden: !this.canAccess(['tableColumns', 'domain']),
+          _isEditable: true
         },
         {
           _attrs: ['created'],
@@ -184,10 +185,12 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  public updateUser(value: User) {
+  public updateUser(value: User, isResetTable = true) {
     if (this.canAccess(['user', 'edit'])) {
       this._userService.updateOther(value).pipe(first()).subscribe(() => {
-        this._getUsers();
+        if (isResetTable) {
+          this._getUsers();
+        }
         this._translateNotificationsService.success('Success', 'The user has been updated.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
@@ -302,7 +305,7 @@ export class AdminUsersComponent implements OnInit {
           if (context) {
             this._userToUpdate = context;
             this._userToUpdate.id = context._id;
-            this.updateUser(this._userToUpdate);
+            this.updateUser(this._userToUpdate, false);
           }
       }
     }
