@@ -258,6 +258,13 @@ export class AdminProjectsComponent implements OnInit {
         _width: '200px'
       },
       {
+        _attrs: ['emailSent'],
+        _name: 'Email sent',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+      },
+      {
         _attrs: ['stats.validatedAnswers'],
         _name: 'Validated Answers',
         _type: 'NUMBER',
@@ -338,13 +345,6 @@ export class AdminProjectsComponent implements OnInit {
         _width: '130px',
         _isHidden: !this.canAccess(['tableColumns', 'created'])
       },
-      {
-        _attrs: ['emailSent'],
-        _name: 'Email sent',
-        _type: 'TEXT',
-        _isSortable: true,
-        _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
-      },
     ];
 
   private _columnsForMTMBack: Array<Column> =
@@ -380,6 +380,13 @@ export class AdminProjectsComponent implements OnInit {
           {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
           {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
         ]
+      },
+      {
+        _attrs: ['emailSent'],
+        _name: 'Email sent',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
       },
       {
         _attrs: ['stats.emailsOK'],
@@ -432,13 +439,6 @@ export class AdminProjectsComponent implements OnInit {
         _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
         _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
         _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
-      },
-      {
-        _attrs: ['emailSent'],
-        _name: 'Email sent',
-        _type: 'TEXT',
-        _isSortable: true,
-        _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
       },
       {
         _attrs: ['operator'],
@@ -655,6 +655,11 @@ export class AdminProjectsComponent implements OnInit {
       if (project.innovationCards && project.innovationCards.length) {
         project.innovationCards =
           InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
+      }
+      if (project.stats && project.stats.received && project.stats.received > 0) {
+        project['emailSent'] = 'Yes';
+      } else {
+        project['emailSent'] = 'No';
       }
       return project;
     });
