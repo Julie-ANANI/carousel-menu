@@ -613,7 +613,7 @@
                         <div class="form-group d-flex align-center" *ngIf="column._isEditable">
                           <div (click)="enableInput($event, row, column)">
                             <input type="text"
-                                   class="form-input is-sm"
+                                   class="form-input is-sm text-ellipsis"
                                    [disabled]="getInputGrid(row, column).disabled"
                                    [ngClass]="getInputGrid(row, column).className"
                                    (input)="gridEditOnChange($event.target.value, row, column)"

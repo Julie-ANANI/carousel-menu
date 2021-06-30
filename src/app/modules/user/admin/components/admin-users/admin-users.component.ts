@@ -50,6 +50,8 @@ export class AdminUsersComponent implements OnInit {
 
   private _isLoading = true;
 
+  private _userToUpdate: User = <User>{};
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
               private _translateTitleService: TranslateTitleService,
@@ -292,4 +294,17 @@ export class AdminUsersComponent implements OnInit {
     return this._isLoading;
   }
 
+  getPerformActions($event: any) {
+    if ($event) {
+      switch ($event._action) {
+        case 'Update grid':
+          const context = $event._context;
+          if (context) {
+            this._userToUpdate = context;
+            this._userToUpdate.id = context._id;
+            this.updateUser(this._userToUpdate);
+          }
+      }
+    }
+  }
 }

@@ -1094,13 +1094,23 @@ export class TableComponent {
   }
 
   gridEditOnChange(value: string, row: any, column: Column) {
-    console.log(value);
-    this._inputGrids.find(grid => grid.index === row && grid.column === column).input = value;
-    console.log(this._inputGrids.find(grid => grid.index === row && grid.column === column));
+    if (this._inputGrids.find(grid => grid.index === row && grid.column === column)) {
+      this._inputGrids.find(grid => grid.index === row && grid.column === column).input = value;
+    }
   }
 
   sendEditedGrid(event: Event, row: any, column: Column) {
     event.preventDefault();
-    console.log(this._inputGrids.find(grid => grid.index === row && grid.column === column));
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column === column);
+    if (_dataToUpdate) {
+      const _oldValueAttrs = column._attrs;
+      _dataToUpdate.value[_oldValueAttrs[0]] = _dataToUpdate.input;
+      this.performAction.emit({
+        _action: 'Update grid',
+        _context: _dataToUpdate.value
+      });
+      _dataToUpdate.disabled = true;
+      _dataToUpdate.className = 'no-editable-grid';
+    }
   }
 }
