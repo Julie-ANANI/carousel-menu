@@ -33,6 +33,13 @@ export class MarketTestObjectivesComplementaryComponent {
   }
 
   /**
+   * when we change the template value in the parent we make it true
+   * so that questions are not checked because sometimes we have the same
+   * questions in other templates and they are checked by default.
+   */
+  @Input() isTemplateChanged = false;
+
+  /**
    * TEMPLATE_1 : show the objective row by row.
    * TEMPLATE_2 : show more than one objective in the row.
    */
@@ -101,7 +108,7 @@ export class MarketTestObjectivesComplementaryComponent {
   }
 
   public isChecked(value: MissionQuestion, sectionIndex: number): boolean {
-    if (this._selectedSectionsObjectives.length) {
+    if (this._selectedSectionsObjectives.length && this._selectedSectionsObjectives[sectionIndex] && !this.isTemplateChanged) {
       return this._selectedSectionsObjectives[sectionIndex].questions.some((objective) => {
         return objective._id === value._id;
       });

@@ -16,6 +16,10 @@ import {PageScrollService} from 'ngx-page-scroll-core';
 })
 export class MarketTestObjectivesComponent {
 
+  get isTemplateChanged(): boolean {
+    return this._isTemplateChanged;
+  }
+
   get currentLang(): string {
     return this._translateService.currentLang;
   }
@@ -122,6 +126,8 @@ export class MarketTestObjectivesComponent {
 
   private _selectedSectionsObjectives: Array<MissionTemplateSection> = [];
 
+  private _isTemplateChanged = false;
+
   constructor(@Inject(DOCUMENT) private _document: Document,
               private _pageScrollService: PageScrollService,
               private _translateService: TranslateService) { }
@@ -138,6 +144,7 @@ export class MarketTestObjectivesComponent {
     event.preventDefault();
     if (this._selectedCategory && this._selectedCategory === value['category']) {
       this._selectedTemplate = value;
+      this._isTemplateChanged = true;
       this._selectedSectionsObjectives = [];
       this._emitTemplate();
     }
