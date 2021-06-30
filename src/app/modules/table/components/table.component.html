@@ -610,20 +610,9 @@
                         <ng-container *ngIf="!column._isEditable">
                           {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
                         </ng-container>
-                        <div class="form-group d-flex align-center" *ngIf="column._isEditable">
-                          <div (click)="enableInput($event, row, column)">
-                            <input type="text"
-                                   class="form-input is-sm text-ellipsis"
-                                   [disabled]="getInputGrid(row, column).disabled"
-                                   [ngClass]="getInputGrid(row, column).className"
-                                   (input)="gridEditOnChange($event.target.value, row, column)"
-                                   [attr.value]="((getContentValue(row, attr).toString() || '-') | titlecase)">
-                          </div>
-                          <span class="icon is-md is-primary icon-check"
-                                (click)="sendEditedGrid($event, row, column)"
-                                *ngIf="!getInputGrid(row, column).disabled">
-                          </span>
-                        </div>
+                        <ng-container
+                          *ngTemplateOutlet="gridEditTemplate; context: {$implicit: {column: column, row:row,attr: attr}}">
+                        </ng-container>
                       </ng-container>
                     </div>
                     <ng-container
@@ -672,6 +661,30 @@
                     <i class="fas fa-redo" style="color: #EA5858"></i>
                   </span>
                 </ng-template>
+
+                <ng-template #gridEditTemplate let-context>
+                  <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
+                    <div (click)="enableInput($event, context.row, context.column)">
+                      <input type="text"
+                             class="form-input is-sm text-ellipsis"
+                             [disabled]="getInputGrid(context.row, context.column).disabled"
+                             [ngClass]="getInputGrid(context.row, context.column).className"
+                             [(ngModel)]="getInputGrid(context.row, context.column).input">
+                    </div>
+                    <div class="d-flex flex-d-column justify-center">
+                      <span class="icon is-md is-primary icon-check"
+                            (click)="sendEditedGrid($event, context.row, context.column)"
+                            *ngIf="!getInputGrid(context.row, context.column).disabled">
+                          </span>
+
+                      <span class="icon is-md is-primary icon-cross"
+                            (click)="cancelEditedGrid($event, context.row, context.column)"
+                            *ngIf="!getInputGrid(context.row, context.column).disabled">
+                          </span>
+                    </div>
+                  </div>
+                </ng-template>
+
               </div>
             </ng-container>
           </td>

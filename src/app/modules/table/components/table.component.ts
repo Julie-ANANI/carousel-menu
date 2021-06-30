@@ -1084,7 +1084,7 @@ export class TableComponent {
         column: column,
         value: this._table._content[row],
         className: 'no-editable-grid',
-        input: ''
+        input: this.getContentValue(row, column._attrs[0]),
       };
       if (!this._inputGrids.find(grid => grid.index === row && grid.column === column)) {
         this._inputGrids.push(gridInputToAdd);
@@ -1111,6 +1111,16 @@ export class TableComponent {
       });
       _dataToUpdate.disabled = true;
       _dataToUpdate.className = 'no-editable-grid';
+    }
+  }
+
+  cancelEditedGrid(event: Event, row: any, column: Column) {
+    event.preventDefault();
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column === column);
+    if (_dataToUpdate) {
+      _dataToUpdate.disabled = true;
+      _dataToUpdate.className = 'no-editable-grid';
+      _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
     }
   }
 }

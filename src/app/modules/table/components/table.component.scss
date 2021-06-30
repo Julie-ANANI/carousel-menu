@@ -44,7 +44,14 @@
 
     .icon {
       margin-left: 0.5rem;
+    }
+
+    .icon-check{
       color: $primary-color;
+    }
+
+    .icon-cross{
+      color: $alert-color;
     }
 
     .icon:hover{
