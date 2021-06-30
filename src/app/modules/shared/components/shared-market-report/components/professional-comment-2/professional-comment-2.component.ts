@@ -12,6 +12,7 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {UserFrontService} from '../../../../../../services/user/user-front.service';
 import {TranslationService} from '../../../../../../services/translation/translation.service';
 import {Multiling} from '../../../../../../models/multiling';
+import {MissionQuestion} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-market-comment-2',
@@ -25,7 +26,7 @@ export class SharedMarketComment2Component {
 
   @Input() canEditQuestionTags = false;
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question | MissionQuestion>{};
 
   @Input() reportingLang = this._translateService.currentLang;
 

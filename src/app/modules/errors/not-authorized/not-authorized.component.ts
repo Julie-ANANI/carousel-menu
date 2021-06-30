@@ -1,6 +1,5 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {TranslateTitleService} from "../../../services/title/title.service";
-import {isPlatformBrowser} from '@angular/common';
+import {Component} from '@angular/core';
+import {TranslateTitleService} from '../../../services/title/title.service';
 import {environment} from '../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import {RouteFrontService} from '../../../services/route/route-front.service';
@@ -11,41 +10,24 @@ import {Router} from '@angular/router';
   styleUrls: ['./not-authorized.component.scss']
 })
 
-export class NotAuthorizedComponent implements OnInit {
+export class NotAuthorizedComponent {
 
-  private _isLoading = true;
-
-  private _logo = environment.logoURL;
+  private _logo = environment.logoSynthURL;
 
   private _companyShortName = environment.companyShortName;
 
-  private _currentLang = this._translateService.currentLang;
-
   private _isReloading = false;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateService: TranslateService,
+  constructor(private _translateService: TranslateService,
               private _routeFrontService: RouteFrontService,
               private _router: Router,
               private _translateTitleService: TranslateTitleService) {
-
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.NOT_AUTHORIZED');
-
-  }
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      this._isLoading = false;
-    }
   }
 
   public onClickReload() {
     this.isReloading = true;
     this._router.navigate([this._routeFrontService.adminDefaultRoute()]);
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
   }
 
   get logo(): string {
@@ -57,7 +39,7 @@ export class NotAuthorizedComponent implements OnInit {
   }
 
   get currentLang(): string {
-    return this._currentLang;
+    return this._translateService.currentLang;
   }
 
   get isReloading(): boolean {

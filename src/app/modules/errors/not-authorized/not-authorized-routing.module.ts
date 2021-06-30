@@ -11,8 +11,6 @@ const notAuthorizedRoutes: Routes = [
   imports: [
     RouterModule.forChild(notAuthorizedRoutes)
   ],
-  providers: [
-  ],
   exports: [
     RouterModule
   ]

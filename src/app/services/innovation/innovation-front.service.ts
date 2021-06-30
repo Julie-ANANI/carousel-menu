@@ -15,6 +15,8 @@ import {Section} from '../../models/section';
 import {DomSanitizer} from '@angular/platform-browser';
 import {PublicationType} from '../../models/community';
 import {MediaFrontService} from '../media/media-front.service';
+import {Mission, MissionQuestion} from '../../models/mission';
+import {MissionFrontService} from '../mission/mission-front.service';
 
 export interface Values {
   settingPercentage?: number;
@@ -122,15 +124,43 @@ export class InnovationFrontService {
 
   }
 
+  /**
+   * return the list of the question if the innovation has mission template then will return the list form the
+   * mission template sections otherwise we check the innovation preset sections.
+   * @param innovation
+   */
+  public static questionsList(innovation: Innovation = <Innovation>{}): Array<Question | MissionQuestion> {
+    let questions: Array<Question | MissionQuestion> = [];
+
+    if (innovation.mission && MissionFrontService.hasMissionTemplate(<Mission>innovation.mission)) {
+      (<Mission>innovation.mission).template.sections.forEach((_section) => {
+        questions = questions.concat(_section.questions || []);
+      });
+    } else if (innovation.preset && innovation.preset.sections && innovation.preset.sections.length) {
+      innovation.preset.sections.forEach((section: Section) => {
+        questions = questions.concat(section.questions || []);
+      });
+    }
+
+    return questions;
+  }
+
+  /**
+   * update to work with the new template mission
+   * on 8th June, 2021
+   * @param objective
+   */
   public static publicationType(objective: string): PublicationType {
     if (objective) {
       switch (objective) {
 
         case 'Detecting needs / trends':
+        case 'Detecting market needs':
         case 'Validating market needs':
           return 'pain_point';
 
         case 'Sourcing innovative solutions / partners':
+        case 'Sourcing solutions / suppliers':
           return 'sourcing';
 
         default:
@@ -168,6 +198,9 @@ export class InnovationFrontService {
 
         case 'SOLUTION':
           return InnovationFrontService.cardDynamicSection(_card, 'SOLUTION').content || '';
+
+        case 'CONTEXT':
+          return InnovationFrontService.cardDynamicSection(_card, 'CONTEXT').content || '';
 
         case 'LANG':
           return _card.lang;
@@ -213,11 +246,11 @@ export class InnovationFrontService {
   }
 
   /***
-   * returns the section info of the 'ISSUE' | 'SOLUTION'.
+   * returns the section info of the 'ISSUE' | 'SOLUTION' | 'CONTEXT'.
    * @param innovCard
    * @param field
    */
-  public static cardDynamicSection(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): InnovCardSection {
+  public static cardDynamicSection(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'CONTEXT'): InnovCardSection {
     if (innovCard && innovCard.sections && innovCard.sections.length) {
       const _index = InnovationFrontService.cardDynamicSectionIndex(innovCard, field);
       if (_index !== -1) {
@@ -243,7 +276,7 @@ export class InnovationFrontService {
   }
 
   /***
-   * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER'
+   * return the index of the section 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT'
    * if we have searchKey then we search bby it otherwise with the type.
    * Please note that case won't work if we have more then one section of same type.
    *
@@ -251,7 +284,8 @@ export class InnovationFrontService {
    * @param field
    * @param searchKey - in case of OTHER send the etherpadElementId
    */
-  public static cardDynamicSectionIndex(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'OTHER', searchKey = ''): number {
+  public static cardDynamicSectionIndex(
+    innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'OTHER' | 'CONTEXT', searchKey = ''): number {
     if (searchKey) {
       return innovCard.sections.findIndex((section) => section.type === field && section.etherpadElementId === searchKey);
     }
@@ -280,6 +314,9 @@ export class InnovationFrontService {
         case 'SOLUTION':
           return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'SOLUTION');
 
+        case 'CONTEXT':
+          return InnovationFrontService.cardDynamicOperatorComment(innovCard, 'CONTEXT');
+
         case 'OTHER':
           if (etherpadElementId) {
             return innovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId) || <CardComment>{};
@@ -292,11 +329,11 @@ export class InnovationFrontService {
   }
 
   /***
-   * returns the dynamic comment section info of the 'ISSUE' | 'SOLUTION'
+   * returns the dynamic comment section info of the 'ISSUE' | 'SOLUTION' | 'CONTEXT'
    * @param innovCard
    * @param field
    */
-  public static cardDynamicOperatorComment(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE'): CardComment {
+  public static cardDynamicOperatorComment(innovCard: InnovCard, field: 'SOLUTION' | 'ISSUE' | 'CONTEXT'): CardComment {
     if (innovCard && innovCard.operatorComment && innovCard.operatorComment.sections && innovCard.operatorComment.sections.length) {
       const _index = innovCard.operatorComment.sections.findIndex((section) => section.type === field);
       if (_index !== -1) {

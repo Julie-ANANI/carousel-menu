@@ -50,7 +50,7 @@
         -
       </ng-container>
       <ng-container *ngIf="answer.company?.name || answer.professional?.company">
-        {{ answer.company?.name || answer.professional?.company }}
+        {{ answer.company?.name || answer.professional?.company?.name || '' }}
       </ng-container>
     </p>
 

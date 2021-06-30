@@ -119,6 +119,7 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'ADD': 'Add',
     'TENTATIVE_LEFT': 'tentative(s) left',
     'FEEDBACK_COLLECTION': 'Feedback collection',
     'RSETITUTION': 'Restitution',
@@ -199,6 +200,7 @@ export const COMMON = {
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Start typing to search...',
     'PROJECT_TITLE': 'Add the project title here...',
+    'TITLE': 'Add the title here...',
     'MEDIA_URL': 'Place the address of your Youtube or Vimeo video here',
     'MEDIA_SLIDE': 'Drag and drop your picture here',
   },
@@ -231,6 +233,7 @@ export const COMMON = {
   },
 
   'BUTTON': {
+    'OUR_METHODOLOGY': 'Our methodology',
     'CONTINUE': 'Continue',
     'ADD': 'Add',
     'SAVE': 'Save',

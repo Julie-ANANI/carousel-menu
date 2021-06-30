@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ClientProject } from '../../models/client-project';
 import { Mission } from '../../models/mission';
-import { Innovation } from '../../models/innovation';
+import {Innovation, NewInnovation} from '../../models/innovation';
 import { Config } from '../../models/config';
 
 interface CreateResponse {
   clientProject: ClientProject;
   mission: Mission;
-  innovation: Innovation
+  innovation: Innovation;
 }
 
 @Injectable({providedIn: 'root'})
@@ -17,7 +17,7 @@ export class ClientProjectService {
 
   constructor(private _http: HttpClient) { }
 
-  public create(clientObj: ClientProject, missionObj: Mission, innovationObj: { name: string, lang: string, domain: string }):
+  public create(clientObj: ClientProject, missionObj: Mission, innovationObj: NewInnovation):
     Observable<CreateResponse> {
     const _data = {
       clientProjectObj: clientObj,

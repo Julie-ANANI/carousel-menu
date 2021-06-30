@@ -23,7 +23,7 @@ export class ErrorService {
 
   public handleError(error: Error | HttpErrorResponse) {
 
-    if (environment.production === true) {
+    if (environment.production) {
 
       Sentry.withScope(scope => {
 
@@ -43,7 +43,13 @@ export class ErrorService {
 
       });
 
+    } else {
+      /**
+       * for the debugging purposes.
+       */
+      console.error(error);
     }
+
   }
 
 }

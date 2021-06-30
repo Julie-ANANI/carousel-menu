@@ -8,6 +8,19 @@ import { Mission } from './mission';
 import { ClientProject } from './client-project';
 import { Question } from './question';
 import {Community} from './community';
+import {Consent} from './consent';
+
+/**
+ * when creating the new project.
+ */
+export interface NewInnovation {
+  name: string;
+  lang: string; // project language
+  domain: string;
+  reportingLang: string; // market test result lang
+  collaborators?: Array<string>;
+  collaboratorsConsent?: Consent;
+}
 
 export interface InnovationMetadataValues {
   preparation?: number;
@@ -86,6 +99,8 @@ export interface Innovation {
   };
 
   collaborators?: Array<User>;
+  collaboratorsConsent?: Consent;
+
   settings?: InnovationSettings;
   readonly stats?: InnovationStats;
   updatedStats?: Date;
@@ -106,10 +121,7 @@ export interface Innovation {
   readonly created?: Date;
   readonly updated?: Date;
 
-  ownerConsent?: {
-    value?: boolean,
-    date?: any
-  };
+  ownerConsent?: Consent;
 
   // not use anymore. It's for the innovations old executive report.
   executiveReport?: OldExecutiveReport;

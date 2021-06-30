@@ -603,11 +603,16 @@
 
                   <!-- not clickable -->
                   <ng-container *ngIf="i !== table._clickIndex - 1">
-                    <div class="text-ellipsis" [title]="getTitle(row, column)"
-                         [ngStyle]="getTextColor(row, column)">
-                      <ng-container *ngFor="let attr of getAttrs(column)">
-                        {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
-                      </ng-container>
+                    <div
+                      [attr.data-tooltip]="getTitle(row, column)"
+                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column),
+                      'is-right': rowIndex < 1 && table._total >= 1}"
+                      class="w-full">
+                      <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)">
+                        <ng-container *ngFor="let attr of getAttrs(column)">
+                          {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                        </ng-container>
+                      </div>
                     </div>
                     <ng-container
                       *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
@@ -621,18 +626,23 @@
                   <!-- clickable -->
                   <ng-container *ngIf="i === table._clickIndex - 1">
                     <div
-                      (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
-                      [ngClass]="{ 'active': rowIndex === selectedIndex }"
-                      class="clickable-text text-ellipsis"
-                      [ngStyle]="getTextColor(row, column)"
-                      [title]="getTitle(row, column)">
-                      <ng-container *ngFor="let attr of getAttrs(column)">
-                        {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
-                      </ng-container>
-                      <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                      </ng-container>
-                      <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                      </ng-container>
+                      [attr.data-tooltip]="getTitle(row, column)"
+                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column),
+                      'is-right': rowIndex < 1 && table._total >= 1}"
+                      class="w-full">
+                      <div
+                        (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
+                        [ngClass]="{ 'active': rowIndex === selectedIndex }"
+                        class="clickable-text text-ellipsis"
+                        [ngStyle]="getTextColor(row, column)">
+                        <ng-container *ngFor="let attr of getAttrs(column)">
+                          {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                        </ng-container>
+                        <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
+                        </ng-container>
+                        <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
+                        </ng-container>
+                      </div>
                     </div>
                   </ng-container>
                   <!-- /clickable -->

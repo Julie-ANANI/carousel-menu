@@ -1,0 +1,189 @@
+@import "../../../../../../style/framework/src/variables";
+
+#market-test-objectives {
+
+  .box-info {
+    border-radius: 6px;
+    width: 100%;
+    padding: 20px 25px;
+    text-align: center;
+    background-color: #437194;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+    transition: all 0.2s;
+
+    &.active {
+      background-color: $success-color;
+    }
+
+    &:not(.active):hover {
+      box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+      transform: translateY(-5px);
+    }
+
+  }
+
+  .objectives-category {
+    max-width: 268px;
+
+    h4, p {
+      font-weight: $font-weight-medium;
+      color: $white-color;
+    }
+
+    h4 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    p {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-bottom: 0;
+    }
+
+    &.active {
+      p {
+        opacity: 1;
+      }
+    }
+
+  }
+
+  .section-templates {
+    padding-top: 30px;
+    margin-bottom: 50px;
+
+    .templates-wrapper {
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+
+      .template-case {
+        max-width: 170px;
+        width: 100%;
+        margin: auto 2px;
+
+        p {
+          padding: 10px;
+          height: 94px;
+          margin-bottom: 8px;
+        }
+
+        &.disabled {
+
+          p {
+            opacity: 0.4;
+            background-color: transparent;
+            cursor: not-allowed;
+            box-shadow: none;
+          }
+
+          .box-info {
+            transform: none;
+          }
+
+        }
+
+      }
+
+      .boat-image {
+        position: absolute;
+        left: -50px;
+
+        .is-boat {
+          height: 55px;
+        }
+
+      }
+
+      .compass-image {
+        position: absolute;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+
+        img {
+          height: 40px;
+        }
+
+      }
+
+    }
+
+    .market-path {
+      margin-top: 18px;
+      height: 5px;
+      background-image: linear-gradient(to right, rgba(255,255,255,0.3), transparent 80%);
+      background-size: 25px 5px;
+      background-repeat: repeat-x;
+    }
+
+    .island-image {
+      right: 0;
+      top: 32%;
+
+      img {
+        height: 174.7px;
+      }
+
+    }
+
+  }
+
+  .wrapper-collapse {
+    height: 0;
+    transform: scaleY(0);
+    transform-origin: 100% 0;
+    visibility: hidden;
+  }
+
+  .wrapper-expand {
+    transition: all 0.5s ease;
+    height: 100%;
+    transform: scaleY(1);
+    visibility: visible;
+    transform-origin: 0 100%;
+  }
+
+  .section-methodology {
+    max-width: 1024px;
+  }
+
+}
+
+@media screen and  (max-width: $size-lg) {
+  #market-test-objectives {
+
+    .section-templates {
+      margin-bottom: 0;
+
+      .templates-wrapper {
+        flex-direction: column;
+        max-width: 100%;
+
+        .template-case {
+          margin-left: 10px;
+          margin-right: 10px;
+          margin-bottom: 30px;
+          max-width: 200px;
+
+          p {
+            height: 100%;
+            margin-bottom: 15px;
+          }
+
+        }
+
+        .compass-image {
+          position: relative;
+          align-items: center;
+        }
+
+      }
+
+    }
+
+  }
+}

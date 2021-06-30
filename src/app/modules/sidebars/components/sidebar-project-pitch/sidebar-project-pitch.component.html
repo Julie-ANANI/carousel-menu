@@ -47,7 +47,7 @@
     </div>
     <!-- /media -->
 
-    <!-- title | summary | issue | solution -->
+    <!-- title | summary | issue | solution | context -->
     <div *ngSwitchDefault>
       <div class="form-group p-top-10">
         <div *ngIf="isEditable">
@@ -72,7 +72,8 @@
       *ngIf="type && type !== 'MEDIA' && isEditable"
       [ngStyle]="{'color': remaining('COLOR')}"
       class="text-right text-medium text-xs">
-      {{ remaining('CHAR') }} {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
+      {{ cardContent | characterCountdown:remaining('CHAR') }}
+      {{ 'SIDEBAR.PROJECT_PITCH.REMAINING_TEXT' | translate }}
     </div>
     <!-- /remaining text -->
 

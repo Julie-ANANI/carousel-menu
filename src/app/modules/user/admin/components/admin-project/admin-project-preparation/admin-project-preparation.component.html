@@ -96,6 +96,23 @@
             </div>
             <!-- /lang change -->
 
+            <!-- quiz preview -->
+            <ng-container *ngIf="activeTab === 'questionnaire'">
+              <a
+                [href]="quizPreviewLink"
+                [id]="'admin-btn-preview-quiz'"
+                class="button is-link is-sm m-right-10"
+                target="_blank">
+                <img
+                  [ngStyle]="{'width': '17px'}"
+                  src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
+                  alt=""
+                  class="icon-left">
+                Preview quiz
+              </a>
+            </ng-container>
+            <!-- /quiz preview -->
+
             <!-- save -->
             <button
               *ngIf="canEditDescription || canEditTargeting || activeTab === 'questionnaire'"

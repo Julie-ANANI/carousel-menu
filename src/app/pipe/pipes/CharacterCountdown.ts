@@ -2,7 +2,8 @@
     This is to calculate the remaining characters.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
+import {ScrapeHTMLTags} from './ScrapeHTMLTags';
 
 @Pipe ({
   name: 'characterCountdown',
@@ -10,16 +11,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class CharacterCountdown implements PipeTransform {
-  transform(text: any, args: number) {
-    const maxLength = args || 0;
+
+  transform(text: any, maxLength = 0) {
+
     if (typeof text === 'number') {
-      const length = text;
-      return maxLength - length;
+      return maxLength - text;
     } else if (typeof text === 'string') {
-      const length = text.length;
-      return maxLength - length;
+      text = new ScrapeHTMLTags().transform(text.replace(/<img .*?>/g, ''));
+      return maxLength - text.length;
     } else {
-      return args;
+      return maxLength;
     }
   }
 

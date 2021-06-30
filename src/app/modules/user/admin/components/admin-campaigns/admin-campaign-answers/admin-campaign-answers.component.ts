@@ -5,8 +5,6 @@ import { CampaignService } from '../../../../../../services/campaign/campaign.se
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
 import { Campaign } from '../../../../../../models/campaign';
-import { Question } from '../../../../../../models/question';
-import { Section } from '../../../../../../models/section';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
@@ -19,8 +17,9 @@ import { Company } from '../../../../../../models/company';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { StatsInterface } from "../../admin-stats-banner/admin-stats-banner.component";
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({
   templateUrl: './admin-campaign-answers.component.html',
@@ -51,7 +50,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _modalAnswer: Answer = <Answer>{};
 
-  private _questions: Array<Question> = [];
+  private _questions: Array<any> = [];
 
   private _excludedCompanies: Array<Company> = [];
 
@@ -117,11 +116,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
   private _initQuestions() {
-    if (this._campaign.innovation && this._campaign.innovation.preset && this._campaign.innovation.preset.sections
-      && Array.isArray(this._campaign.innovation.preset.sections)) {
-      this._campaign.innovation.preset.sections.forEach((section: Section) => {
-        this._questions = this._questions.concat(section.questions || []);
-      });
+    if (this._campaign.innovation) {
+      this._questions = InnovationFrontService.questionsList(this._campaign.innovation);
     }
   }
 
@@ -135,7 +131,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
         this._isImportingAnswers = false;
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isImportingAnswers = false
+        this._isImportingAnswers = false;
         console.error(err);
       });
     }
@@ -336,7 +332,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._modalAnswer = modalAnswer;
   }
 
-  get questions(): Array<Question> {
+  get questions(): Array<any> {
     return this._questions;
   }
 
@@ -349,7 +345,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
   get quizLinks() {
-    return this._quizLinks
+    return this._quizLinks;
   }
 
 }

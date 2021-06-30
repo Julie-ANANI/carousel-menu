@@ -42,7 +42,7 @@
         class="button is-community is-sm"
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
-        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
+        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
       </button>
     </div>
     <!-- /answer toggle button -->
@@ -95,7 +95,7 @@
         class="button is-community is-sm"
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
-        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
+        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
       </button>
     </div>
     <!-- answer toggle button -->
@@ -114,6 +114,12 @@
           <!-- rating -->
           <div *ngSwitchCase="'scale'">
             <app-scale [question]="questionReceived"></app-scale>
+          </div>
+          <!-- rating -->
+
+          <!-- ranking -->
+          <div *ngSwitchCase="'ranking'">
+            <app-ranks [question]="questionReceived"></app-ranks>
           </div>
           <!-- rating -->
 

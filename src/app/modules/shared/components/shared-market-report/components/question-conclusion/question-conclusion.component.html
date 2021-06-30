@@ -13,9 +13,16 @@
   <!-- conclusion -->
   <div class="conclusion-wrapper" [hidden]="!question.identifier">
 
-    <h3 *ngIf="question.title" [ngClass]="{'m-no-bottom': !question.label}" class="title is-main d-flex align-center">
-      <span *ngIf="!editTitle"> {{ question.title | multiling:reportingLang }} </span>
-      <input class="form-input" type="text" *ngIf="editTitle" (focusout)="editTitle = false" [(ngModel)]="question.title[reportingLang]" (ngModelChange)="questionChanged.emit(question)">
+    <h3 *ngIf="questionTitle()" [ngClass]="{'m-no-bottom': !questionLabel()}" class="title is-main d-flex align-center">
+      <span *ngIf="!editTitle"> {{ questionTitle() }} </span>
+      <input
+        #title
+        (change)="onChangeTitle(title.value)"
+        (focusout)="editTitle = false"
+        *ngIf="editTitle"
+        [ngModel]="questionTitle()"
+        class="form-input"
+        type="text">
       <sub
         (click)="editTitle = !editTitle"
         *ngIf="!readonly"
@@ -28,8 +35,8 @@
       </sub>
     </h3>
 
-    <h4 *ngIf="question.label" [ngStyle]="{'color': '#484848'}" class="m-no-bottom text-lg">
-      {{ displayedQuestionLabel }}
+    <h4 *ngIf="questionLabel()" [ngStyle]="{'color': '#484848'}" class="m-no-bottom text-lg">
+      {{ displayedQuestionLabel() }}
     </h4>
 
     <div *ngIf="tags && tags.length > 0" class="tags-wrapper">
@@ -96,7 +103,7 @@
         (subtitleChanged)="subtitleChange($event)"
         [readonly]="readonly"
         [percentage]="stats.percentage"
-        [subtitle]="question.subtitle | multiling:reportingLang">
+        [subtitle]="questionSubtitle()">
         <app-utility-piechart
           (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
           (chartSectionColorChanged)="chartSectionColorChanged($event)"
@@ -106,11 +113,26 @@
           [reportingLang]="reportingLang"
           [showFavorable]="question.visibility"
           [positiveSections]="positivesAnswers"
-          [favorableAnswersLabel]="question.positivesAnswersLabel || {en: '', fr: ''}"
+          [favorableAnswersLabel]="positiveAnswerLabels()"
         ></app-utility-piechart>
       </app-bluesquare>
     </ng-container>
     <!-- /pie chart -->
+
+    <!-- ranking chart -->
+    <ng-container *ngSwitchCase="'ranking'">
+      <app-bluesquare
+        (subtitleChanged)="subtitleChange($event)"
+        [readonly]="readonly"
+        [percentage]="stats.percentage"
+        [subtitle]="questionSubtitle()">
+        <app-ranking-chart
+          [reportingLang]="reportingLang"
+          [question]="question"
+        ></app-ranking-chart>
+      </app-bluesquare>
+    </ng-container>
+    <!-- /ranking chart -->
 
     <!-- rectangle box -->
     <ng-container *ngSwitchDefault>
@@ -118,7 +140,7 @@
         (subtitleChanged)="subtitleChange($event)"
         [readonly]="readonly"
         [percentage]="stats.percentage"
-        [subtitle]="(question.subtitle | multiling:reportingLang) || 'MARKET_REPORT.NUMBER_ANSWERS' | translateIn: reportingLang">
+        [subtitle]="(questionSubtitle()) || ('MARKET_REPORT.NUMBER_ANSWERS' | translateIn: reportingLang)">
         <div [ngStyle]="{'font-size': '100px'}">{{ stats.nbAnswers || 0 }}</div>
       </app-bluesquare>
     </ng-container>

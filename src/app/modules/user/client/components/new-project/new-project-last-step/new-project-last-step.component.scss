@@ -1,0 +1,41 @@
+@import "../../../../../../../style/framework/src/variables";
+
+#new-project-last-step {
+
+  .op-8 {
+    opacity: 0.8;
+  }
+
+  .lang-wrapper {
+    background-color: #437194;
+    border-radius: 6px;
+    width: 167px;
+    height: 52px;
+    box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+    transition: all 0.2s;
+
+    &:not(.bg-success):hover {
+      box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+    }
+
+  }
+
+  textarea {
+    padding: 14.5px;
+    line-height: 1.3;
+  }
+
+  .form-checkbox {
+    line-height: 1.4;
+
+    input {
+
+      &:not(:checked)  + .form-icon {
+        background: transparent;
+      }
+
+    }
+
+  }
+
+}

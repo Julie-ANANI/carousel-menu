@@ -118,6 +118,7 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'ADD': 'Ajouter',
     'TENTATIVE_LEFT': 'tentative(s) restante(s)',
     'FEEDBACK_COLLECTION': 'Collecte de feedback',
     'RSETITUTION': 'Restitution',
@@ -196,6 +197,7 @@ export const COMMON = {
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Commencez à taper pour rechercher...',
     'PROJECT_TITLE': 'Ajoutez le titre du projet ici...',
+    'TITLE': 'Ajoutez le titre ici...',
     'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
     'MEDIA_SLIDE': 'Faites glisser votre photo ici',
     'SELECT_A_SCOPE': 'Choisir un scope',
@@ -230,6 +232,7 @@ export const COMMON = {
   },
 
   'BUTTON': {
+    'OUR_METHODOLOGY': 'Notre méthodologie',
     'CONTINUE': 'Continuer',
     'ADD': 'Ajouter',
     'SAVE': 'Sauvegarder',

@@ -38,6 +38,7 @@ export const SIDEBAR = {
     'EDIT': {
       'TITLE': 'Editer le titre',
       'SUMMARY': 'Editer le résumé',
+      'CONTEXT': 'Editer le contexte',
       'ISSUE': 'Editer la problématique',
       'SOLUTION': 'Editer la solution',
       'MEDIA': 'Editer les médias',
@@ -46,6 +47,7 @@ export const SIDEBAR = {
       'TITLE': 'Titre',
       'SUMMARY': 'Résumé',
       'ISSUE': 'Problématique',
+      'CONTEXT': 'Contexte',
       'SOLUTION': 'Solution',
       'MEDIA': 'Médias',
     },

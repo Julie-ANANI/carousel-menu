@@ -1,0 +1,40 @@
+<div id="market-test-objectives-complementary">
+
+  <!-- options -->
+  <div [ngClass]="{'template-2-wrapper': template === 'TEMPLATE_2'}">
+    <ng-container *ngFor="let section of templateSections; let i = index;">
+      <ng-container *ngFor="let objective of section.questions">
+        <label
+          *ngIf="objective.type === 'COMPLEMENTARY'"
+          [ngClass]="{'checked': isChecked(objective, i)}"
+          class="form-checkbox mxw-450 objectives-option m-left-auto m-right-auto m-bottom-15 c-hand text-white text-medium">
+          <input
+            (change)="onChangeOption($event, objective, i)"
+            [checked]="isChecked(objective, i)"
+            [id]="'market-test-template-complementary-'+objectiveName(objective).toLowerCase()"
+            type="checkbox">
+          {{ objectiveName(objective) }}
+        </label>
+      </ng-container>
+    </ng-container>
+  </div>
+  <!-- /options -->
+
+  <!-- comment -->
+  <div class="form-group mxw-450 m-left-auto m-right-auto p-top-15 animate-slide slide-down is-3">
+    <label>
+        <textarea
+          (change)="emitCommentChange()"
+          [(ngModel)]="objectiveComment"
+          [id]="'market-test-template-comment'"
+          [placeholder]="currentLang === 'fr' ? 'Avez-vous des précisions à apporter ?'
+          : 'Is there anything else you\'d like to do or add?'"
+          class="form-input is-shadowed text-sm"
+          id="market-text-objective-comment"
+          rows="3">
+        </textarea>
+    </label>
+  </div>
+  <!-- /comment -->
+
+</div>

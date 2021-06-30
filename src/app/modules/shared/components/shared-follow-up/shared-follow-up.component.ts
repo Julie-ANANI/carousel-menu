@@ -1,24 +1,23 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { TranslateNotificationsService } from "../../../../services/notifications/notifications.service";
-import { InnovationService } from "../../../../services/innovation/innovation.service";
-import { Innovation } from "../../../../models/innovation";
-import { InnovationFrontService } from "../../../../services/innovation/innovation-front.service";
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { Innovation } from '../../../../models/innovation';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
-import { AnswerService } from "../../../../services/answer/answer.service";
-import { Answer } from "../../../../models/answer";
-import { Table } from "../../../table/models/table";
-import { Professional } from "../../../../models/professional";
+import { AnswerService } from '../../../../services/answer/answer.service';
+import { Answer } from '../../../../models/answer';
+import { Table } from '../../../table/models/table';
+import { Professional } from '../../../../models/professional';
 import { Config } from '../../../../models/config';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import { Question } from "../../../../models/question";
-import { ResponseService } from "../shared-market-report/services/response.service";
-import { Tag } from "../../../../models/tag";
-import { TagsFiltersService }  from "../shared-market-report/services/tags-filter.service";
-import { FilterService } from "../shared-market-report/services/filters.service";
+import { ResponseService } from '../shared-market-report/services/response.service';
+import { Tag } from '../../../../models/tag';
+import { TagsFiltersService } from '../shared-market-report/services/tags-filter.service';
+import { FilterService } from '../shared-market-report/services/filters.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { RolesFrontService } from "../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-shared-follow-up',
@@ -47,7 +46,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _project: Innovation = <Innovation>{};
 
-  private _questions: Array<Question> = [];
+  private _questions: Array<any> = [];
 
   private _modalAnswer: Answer = null;
 
@@ -99,7 +98,7 @@ export class SharedFollowUpComponent implements OnInit {
     this._initializeTable();
     if (this._project && this._project._id) {
       this._project.followUpEmails = this._project.followUpEmails || {};
-      this._questions = InnovationFrontService.presets(this._project);
+      this._questions = InnovationFrontService.questionsList(this._project);
       this._getAnswers();
     }
   }
@@ -303,7 +302,7 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   private _prosByObjective(objective: string, sent: boolean): Array<Answer> {
-    objective = objective === 'NOFOLLOW' ? 'NO_FOLLOW': objective;
+    objective = objective === 'NOFOLLOW' ? 'NO_FOLLOW' : objective;
     return this._answers.filter(answer => !!answer.followUp.date === sent && answer.followUp.objective === objective);
   }
 
@@ -391,7 +390,7 @@ export class SharedFollowUpComponent implements OnInit {
 
     // First we check if some of the selected users already have an objective
     const assignedAnswers = action._rows
-      .filter((answer: any) => answer.followUp.objective && answer.followUp.objective != objective)
+      .filter((answer: any) => answer.followUp.objective && answer.followUp.objective !== objective)
       .map((answer: any) => {
         return {name: `${answer.professional.firstName} ${answer.professional.lastName}`,
           objective: answer.followUp.objective};
@@ -435,7 +434,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   get emailsObject(): any {
     return this._project.followUpEmails[this._modalTemplateType] || { en: {content: '', subject: ''},
-      fr: {content: '', subject: ''} }
+      fr: {content: '', subject: ''} };
   }
 
   get project(): Innovation {
@@ -562,7 +561,7 @@ export class SharedFollowUpComponent implements OnInit {
     this._sidebarAnswer = value;
   }
 
-  get questions(): Array<Question> {
+  get questions(): Array<any> {
     return this._questions;
   }
 

@@ -4,7 +4,7 @@ import {PitchHelpFields} from '../../../../../../../../../models/static-data/pro
 import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
 import {first, takeUntil} from 'rxjs/operators';
 import {MissionFrontService} from '../../../../../../../../../services/mission/mission-front.service';
-import {Mission} from '../../../../../../../../../models/mission';
+import {Mission, MissionQuestion, MissionQuestionOption} from '../../../../../../../../../models/mission';
 import {Subject} from 'rxjs';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
 import {SidebarInterface} from '../../../../../../../../sidebars/interfaces/sidebar-interface';
@@ -20,6 +20,7 @@ import {EtherpadFrontService} from '../../../../../../../../../services/etherpad
 import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
+import {MissionQuestionService} from '../../../../../../../../../services/mission/mission-question.service';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -38,6 +39,17 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get activeSectionIndex(): number {
     return this._activeSectionIndex;
+  }
+
+  get isEditable(): boolean {
+    return this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+  }
+
+  /**
+   * return true if the mission has template in it.
+   */
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(this.mission);
   }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -88,12 +100,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get cardContent(): any {
     return this._cardContent;
-  }
-
-  private _isEditable = false;
-
-  get isEditable(): boolean {
-    return this._isEditable;
   }
 
   private _activeSection: InnovCardSection = <InnovCardSection>{};
@@ -171,7 +177,8 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   get operatorComment(): CardComment {
-    return InnovationFrontService.cardOperatorComment(this.activeInnovCard, this._activeSection.type, this._activeSection.etherpadElementId);
+    return InnovationFrontService.cardOperatorComment(
+      this.activeInnovCard, this._activeSection.type, this._activeSection.etherpadElementId);
   }
 
   get imagePostUri(): string {
@@ -193,7 +200,6 @@ export class PitchComponent implements OnInit, OnDestroy {
       if (this._innovation.mission) {
         this._mission = <Mission>this._innovation.mission;
       }
-      this._isEditable = this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._initDefaultSections();
       this._fetchCommentsOfSections();
     });
@@ -232,6 +238,12 @@ export class PitchComponent implements OnInit, OnDestroy {
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').comment
           || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'SOLUTION').suggestion;
 
+      case 'CONTEXT':
+        comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'CONTEXT').comments;
+        return (!!comments && comments.length > 0)
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'CONTEXT').comment
+          || !!InnovationFrontService.cardOperatorComment(this.activeInnovCard, 'CONTEXT').suggestion;
+
       case 'OTHER':
         comments = this._sections.find((cardSection: InnovCardSection) => cardSection.type === 'OTHER' &&
           cardSection.etherpadElementId === etherpadElementId).comments;
@@ -244,13 +256,14 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openSidebar(section: InnovCardSection) {
+  public openSidebar(section: InnovCardSection, index: number) {
     if (!this._toBeSaved) {
+      this._activeSectionIndex = index;
       this._activeSection = section;
       this._cardContent = section.content;
       const _title = section.type === 'OTHER'
         ? section.title
-        : 'SIDEBAR.PROJECT_PITCH.' + (this._isEditable ? 'EDIT.' : 'VIEW.') + section.type;
+        : 'SIDEBAR.PROJECT_PITCH.' + (this.isEditable ? 'EDIT.' : 'VIEW.') + section.type;
 
       this._getPadAllComments();
 
@@ -279,6 +292,14 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: Media) {
     return MediaFrontService.getMedia(media);
+  }
+
+  public questionName(value: MissionQuestion): string {
+    return MissionQuestionService.entryInfo(value, this.activeInnovCard.lang)['label'];
+  }
+
+  public questionOptionName(value: MissionQuestionOption): string {
+    return MissionQuestionService.entryInfo(value, this.activeInnovCard.lang)['label'];
   }
 
   public onRequestProofreading(event: Event) {
@@ -330,13 +351,17 @@ export class PitchComponent implements OnInit, OnDestroy {
       case 'SOLUTION':
         _sectionIndex = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
         break;
+
+      case 'CONTEXT':
+        _sectionIndex = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'CONTEXT');
+        break;
     }
 
     return this._etherpadFrontService.buildPadIdOldInnovation(sectionType, _sectionIndex, this.activeInnovCard.lang);
   }
 
   public onSaveProject(event: { type: string, content: any }) {
-    if (event.type && this._isEditable && this._isSaving && !this._isSubmitting) {
+    if (event.type && this.isEditable && this._isSaving && !this._isSubmitting) {
 
       switch (event.type) {
 
@@ -367,6 +392,12 @@ export class PitchComponent implements OnInit, OnDestroy {
         case 'SOLUTION':
           const _indexSolution = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'SOLUTION');
           this._innovation.innovationCards[this._activeCardIndex].sections[_indexSolution].content = event.content;
+          this._updateProject();
+          break;
+
+        case 'CONTEXT':
+          const _indexContext = InnovationFrontService.cardDynamicSectionIndex(this.activeInnovCard, 'CONTEXT');
+          this._innovation.innovationCards[this._activeCardIndex].sections[_indexContext].content = event.content;
           this._updateProject();
           break;
 
