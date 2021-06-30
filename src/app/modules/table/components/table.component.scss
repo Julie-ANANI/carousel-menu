@@ -91,7 +91,7 @@
       width: 100%;
     }
 
-    .grid-text {
+    .cell-text {
       display: flex;
       align-items: center;
       flex-direction: row;
@@ -99,7 +99,7 @@
       padding: 2px 20px;
     }
 
-    .grid-action {
+    .cell-action {
       display: flex;
       align-items: center;
       padding: 2px 25px;
@@ -132,7 +132,7 @@
           background-color: $table-th-hover-background-color !important;
         }
 
-        &.grid-checkbox:hover, &.is-no-hovered:hover {
+        &.cell-checkbox:hover, &.is-no-hovered:hover {
           background-color: transparent !important;
         }
 
@@ -149,7 +149,7 @@
           font-size: 13px;
           padding: 0;
 
-          &:not(.grid-checkbox) {
+          &:not(.cell-checkbox) {
             padding: 2px 25px;
           }
 
