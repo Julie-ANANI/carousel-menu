@@ -78,7 +78,7 @@
 
 <!-- modal -->
 <app-utility-modal
-  *ngIf="canAccess(['import']) && !hasMissionTemplate && innovation.status !== 'EVALUATING'"
+  *ngIf="canAccess(['import']) && !hasMissionTemplate"
   [(showModal)]="showPresetModal"
   [title]="'Import Board'">
 
