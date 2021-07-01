@@ -695,7 +695,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   public onChangeObjectives(event: Array<any>) {
     if (this._activeModalSection.isEditable) {
-      this._selectedValue.sections = event;
+      if (this.hasMissionTemplate) {
+        this._selectedValue.sections = event;
+      } else if (this.isOldObjective) {
+        this._selectedValue.objectives = event;
+      }
     }
   }
 
