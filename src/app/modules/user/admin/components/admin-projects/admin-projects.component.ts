@@ -20,6 +20,8 @@ import { RolesFrontService } from '../../../../../services/roles/roles-front.ser
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
 import { Column } from '../../../../table/models/column';
+import { Mission } from '../../../../../models/mission';
+import { MissionService } from '../../../../../services/mission/mission.service';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -411,7 +413,7 @@ export class AdminProjectsComponent implements OnInit {
         _type: 'TEXT',
         _isSortable: true,
         _isHidden: !this.canAccess(['tableColumns', 'type']),
-        _width: '100px'
+        _width: '100px',
       },
       {
         _attrs: ['type'],
@@ -464,6 +466,7 @@ export class AdminProjectsComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
               private _translateTitleService: TranslateTitleService,
+              private _missionService: MissionService,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
   }
@@ -721,7 +724,64 @@ export class AdminProjectsComponent implements OnInit {
       switch (event._action) {
         case 'Update grid':
           console.log(event._context);
+          this._update(event._context, event._column, event._value);
+
       }
     }
   }
+
+  private _update(context: any, column: any, value: any) {
+    switch (column._attrs[0]) {
+      case 'status':
+        const saveObject = {
+          status: value
+        };
+        this._updateInnovation('The project has been updated.', saveObject, context._id);
+        break;
+      case 'mission.type':
+        const missionObject = {
+          type: value
+        };
+        this._updateMission(missionObject, context.mission._id);
+
+    }
+  }
+
+  private _updateMission(missionObj: { [P in keyof Mission]?: Mission[P] }, missionId: any,
+                         notifyMessage = 'The project has been updated.') {
+    this._missionService
+      .save(missionId, missionObj)
+      .pipe(first())
+      .subscribe(
+        (mission) => {
+          this._translateNotificationsService.success('Success', notifyMessage);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'Mission Error...',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
+  }
+
+  private _updateInnovation(notifyMessage = 'The project has been updated.', saveObject: any, _innovationId: any) {
+    this._innovationService
+      .save(_innovationId, saveObject)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this._translateNotificationsService.success('Success', notifyMessage);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'Project Error...',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
+  }
+
 }

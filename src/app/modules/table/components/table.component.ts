@@ -1133,11 +1133,13 @@ export class TableComponent {
           if (choiceItem) {
             lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
           }
+          _dataToUpdate.input = choiceItem._name;
       }
-      console.log(_dataToUpdate);
       this.performAction.emit({
         _action: 'Update grid',
-        _context: _dataToUpdate.value
+        _context: _dataToUpdate.value,
+        _value: _dataToUpdate.input,
+        _column: column
       });
       _dataToUpdate.disabled = true;
       _dataToUpdate.className = 'no-editable-grid';
