@@ -14,7 +14,7 @@ export class MissionFrontService {
    * @param mission
    */
   public static hasMissionTemplate(mission: Mission = <Mission>{}): boolean {
-    return mission.template && mission.template.entry && mission.template.entry.length > 0;
+    return mission && mission.template && mission.template.entry && mission.template.entry.length > 0;
   }
 
   /**

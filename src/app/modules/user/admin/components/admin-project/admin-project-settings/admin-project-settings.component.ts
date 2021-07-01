@@ -716,6 +716,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * for the moment we do not publish the innovation of mission type Detecting market needs
+   * at the community.
+   */
+  public canPublishAtCommunity(): boolean {
+    return MissionFrontService.objectiveName((this._mission && this._mission.template)) !== 'Detecting market needs';
+  }
+
   public onUpdateStatus(status: InnovationStatus) {
     this._innovation.status = status;
     const saveObject: any = {};
