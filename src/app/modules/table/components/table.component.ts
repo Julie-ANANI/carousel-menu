@@ -1097,8 +1097,15 @@ export class TableComponent {
         column: column,
         value: this._table._content[row],
         className: 'no-editable-grid',
-        input: this.getContentValue(row, column._attrs[0]),
+        input: '',
       };
+      switch (column._editType) {
+        case 'TEXT':
+          gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
+          break;
+        case 'MULTI-CHOICES':
+          gridInputToAdd.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
+      }
       if (!this._inputGrids.find(grid => grid.index === row && grid.column === column)) {
         this._inputGrids.push(gridInputToAdd);
       }
@@ -1141,9 +1148,15 @@ export class TableComponent {
     event.preventDefault();
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column === column);
     if (_dataToUpdate) {
+      switch (column._editType) {
+        case 'TEXT':
+          _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+          break;
+        case 'MULTI-CHOICES':
+          _dataToUpdate.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
+      }
       _dataToUpdate.disabled = true;
       _dataToUpdate.className = 'no-editable-grid';
-      _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
     }
   }
 }
