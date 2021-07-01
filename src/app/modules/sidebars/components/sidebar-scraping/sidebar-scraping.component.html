@@ -1,0 +1,193 @@
+<div class="column col-sm-12 col-11 col-mx-auto p-top-25" id="sidebar-batch">
+
+  <!-- save -->
+  <!-- *ngIf="isEditable" -->
+  <div class="p-bottom-25 text-right">
+
+    <!-- Save Button (currently useless) -->
+    <button
+      (click)="saveParams($event)"
+      type="button"
+      class="button is-community is-sm"
+      id="btn-send-batch">
+      Save
+    </button>
+    <!-- Save Button -->
+
+  </div>
+  <!-- /save -->
+
+  <!-- formatted address -->
+  <div class="form-group">
+    <!-- [disabled]="!isEditable" -->
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params['formattedAddress']"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Formatted Address (request google api, use with caution)
+    </label>
+  </div>
+  <!-- /formatted address -->
+
+  <!-- raw data -->
+  <div class="form-group">
+    <!-- [disabled]="!isEditable" -->
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params['rawData']"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Automatic raw data
+    </label>
+  </div>
+  <!-- /raw data -->
+
+  <!-- dynamic html -->
+  <div class="form-group">
+    <!-- [disabled]="!isEditable" -->
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params['dynamicHTML']"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Dynamic HTML
+    </label>
+  </div>
+  <!-- /dynamic html -->
+
+  <label class="form-label">Emails to skip (separate with coma)</label>
+  <input
+    [(ngModel)]="params['skipMails']"
+    class="form-input"
+    placeholder="ex: contact@site.com,contactbis@site.fr"
+    type="text">
+
+
+  <!-- crawling field -->
+  <div class="form-group">
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params['isSpecificData']"
+        name="sidebar-regions"
+        type="checkbox">
+      <i class="form-icon"></i> Specific Data
+    </label>
+  </div>
+  <!-- crawling field -->
+
+  <div *ngIf="params['isSpecificData']" [ngClass]="params['isSpecificData'] ? 'd-block' : 'd-none'" class="m-left-4">
+
+    <div class="form-group">
+      <label class="form-label">Number of Specific Data</label>
+      <input
+        [(ngModel)]="params['numberSpecificData']"
+        type="number"
+        id="numberSpecificData"
+        name="numberSpecificData"
+        min="1"
+        max="5">
+    </div>
+
+    <!-- specific data -->
+    <div *ngFor="let sd of params['specificData']; let index = index;">
+      <div *ngIf="showSpecificData(index)" [ngClass]="showSpecificData(index) ? 'd-block' : 'd-none'" class="m-left-4">
+        <label class="form-label">Name - {{ index + 1 }}</label>
+        <input
+          [(ngModel)]="params['specificData'][index]['name']"
+          class="form-input"
+          placeholder="ex: phone number"
+          type="text">
+
+        <label class="form-label">xPath1 - {{ index + 1 }}</label>
+        <input
+          [(ngModel)]="params['specificData'][index]['xPath1']"
+          class="form-input"
+          placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
+          type="text">
+
+<!--        <label class="form-label">xPath2 - {{ index + 1 }}</label>-->
+<!--        <input-->
+<!--          [(ngModel)]="params['specificData'][index]['xPath2']"-->
+<!--          class="form-input"-->
+<!--          placeholder="ex: /html/body/div[5]/form/li[2]/div/li[1]/a/span"-->
+<!--          type="text">-->
+
+      </div>
+    </div>
+    <!--    /specific data-->
+  </div>
+
+  <!-- crawling -->
+  <div class="form-group">
+    <!-- [disabled]="!isEditable" -->
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params['isCrawling']"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Crawling
+    </label>
+  </div>
+  <!-- crawling -->
+
+  <div *ngIf="params['isCrawling']" [ngClass]="params['isCrawling'] ? 'd-block' : 'd-none'" class="m-left-4">
+
+    <!-- crawling field -->
+    <div class="form-group">
+      <!-- [disabled]="!isEditable" -->
+      <label class="form-switch">
+        <input
+          [(ngModel)]="params['isField']"
+          name="sidebar-smart"
+          type="checkbox">
+        <i class="form-icon"></i> Field
+      </label>
+    </div>
+    <!-- crawling field -->
+
+    <div *ngIf="params['isField']" [ngClass]="params['isField'] ? 'd-block' : 'd-none'" class="m-left-4">
+
+      <div class="form-group">
+        <label class="form-label">Number of Fields</label>
+        <input
+          [(ngModel)]="params['numberFields']"
+          type="number"
+          id="number-field"
+          name="number-field"
+          min="1"
+          max="5">
+      </div>
+
+      <div *ngFor="let field of params['fields']; let index = index;">
+        <div *ngIf="showField(index)" [ngClass]="showField(index) ? 'd-block' : 'd-none'" class="m-left-4">
+          <label class="form-label">Locator - {{ index + 1 }}</label>
+          <input
+            [(ngModel)]="params['fields'][index]['locator']"
+            class="form-input"
+            placeholder="ex: zipcode"
+            type="text">
+
+          <label class="form-label">Data - {{ index + 1 }} (separate with coma)</label>
+          <input
+            [(ngModel)]="params['fields'][index]['data']"
+            class="form-input"
+            placeholder="ex: 3800,4500,1200"
+            type="text">
+
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">Max Request</label>
+    <input
+      [(ngModel)]="params['maxRequest']"
+      class="form-input"
+      placeholder="ex: 1000"
+      type="number">
+    <!-- templateType === 'NEW_BATCH' no of pros -->
+
+  </div>
+
+</div>
+

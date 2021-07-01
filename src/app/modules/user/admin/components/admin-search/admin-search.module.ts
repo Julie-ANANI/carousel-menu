@@ -16,6 +16,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
 import { CountryFlagModule } from "../../../../utility/country-flag/country-flag.module";
 import { ModalModule } from "../../../../utility/modals/modal/modal.module";
+import { AdminSearchScrapingComponent } from './admin-search-scraping/admin-search-scraping.component';
+import {SidebarModule} from '../../../../sidebars/templates/sidebar/sidebar.module';
+import {SidebarScrapingModule} from '../../../../sidebars/components/sidebar-scraping/sidebar-scraping.module';
 
 @NgModule({
   imports: [
@@ -29,7 +32,9 @@ import { ModalModule } from "../../../../utility/modals/modal/modal.module";
     RouterModule,
     CountryFlagModule,
     ModalModule,
-    AdminSearchRoutingModule
+    AdminSearchRoutingModule,
+    SidebarModule,
+    SidebarScrapingModule
   ],
   declarations: [
     AdminSearchComponent,
@@ -37,7 +42,8 @@ import { ModalModule } from "../../../../utility/modals/modal/modal.module";
     AdminSearchMailComponent,
     AdminSearchHistoryComponent,
     AdminSearchQueueComponent,
-    AdminSearchResultsComponent
+    AdminSearchResultsComponent,
+    AdminSearchScrapingComponent
   ],
   exports: [
     AdminSearchComponent

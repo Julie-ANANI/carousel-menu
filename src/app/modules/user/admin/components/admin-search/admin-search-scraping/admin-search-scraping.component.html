@@ -1,0 +1,65 @@
+
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30" id="search-scraping">
+
+  <!-- search wrapper -->
+  <div class="search-wrapper">
+
+    <!-- heading -->
+    <div class="heading-wrapper">
+      <h2 class="title-secondary">Scraping</h2>
+      <span
+        (click)="activateSidebar('NEW_BATCH')"
+        class="text-link text-sm">
+          Settings
+        </span>
+    </div>
+    <!-- /heading -->
+
+    <!-- input -->
+    <div class="input-wrapper">
+
+        <label class="form-label">URL to scrape</label>
+        <input
+          [(ngModel)]="_params['url']"
+          class="form-input"
+          placeholder="ex: https://portal.research.lu.se/portal/en/persons/search.html"
+          type="text">
+      </div>
+
+      <!-- button scrape -->
+      <div class="form-group m-top-10"
+           (click)="onClickSearch($event)">
+        <button class="button is-primary is-md">Scrape</button>
+      </div>
+      <!-- /button scrape -->
+
+    <!-- display result -->
+    <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="m-top-25">
+      <h3> DISPLAY RESULT </h3>
+      <div *ngFor="let pro of result | keyvalue">
+        <h4 class="display-email"> {{pro.key}}</h4>
+        <div *ngFor="let data of pro.value | keyvalue">
+          <h5 class="display-key">{{data.key}}</h5>
+          <p class="display-value>">{{data.value}}</p>
+        </div>
+        <br>
+      </div>
+
+    </div>
+    <!-- /display result -->
+
+  </div>
+</div>
+
+
+<!-- sidebars to set settings -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-scraping
+    (paramsChange)="updateSettings($event)"
+    [params]="params"
+    [sidebarState]="sidebarValue.animate_state"
+    [templateType]="sidebarValue.type">
+  </app-sidebar-scraping>
+</app-sidebar>
+<!-- /sidebars to set settings  -->
+

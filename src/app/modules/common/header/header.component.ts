@@ -93,7 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       pageName: 'Search',
       pageLink: '/user/admin/search',
       key: 'search',
-      subRoutes: ['pros', 'history', 'queue']
+      subRoutes: ['pros', 'history', 'queue', 'scraping']
     },
   ];
 

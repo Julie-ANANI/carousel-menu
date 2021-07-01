@@ -1,0 +1,292 @@
+@import "../../../../../../../style/framework/src/variables";
+@import "../../../../../../../style/framework/src/mixins";
+
+#hiddenLinks a {
+  font-size: 12px;
+  color: #DDDDDD;
+}
+
+#search-scraping {
+  display: flex;
+
+  .search-wrapper {
+    flex: 0 1 50%;
+    padding-right: 5%;
+
+    .popover {
+
+      .popover-container {
+        width: 230px;
+
+        .card {
+          margin: 0;
+
+          .card-body {
+            padding: 10px 5px;
+            font-size: 12px;
+            color: $text-draft-color;
+            font-weight: 600;
+          }
+
+        }
+
+      }
+
+    }
+
+    .heading-wrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: -15px;
+      min-height: 45px;
+
+      .title-secondary, .text-link, .line {
+        margin-right: 8px;
+        margin-bottom: 15px;
+      }
+
+      .title-secondary {
+        color: $text-meta-color;
+        font-size: 16px;
+        margin-right: 10px;
+      }
+
+      .line {
+        color: $text-meta-color;
+      }
+
+      .popover {
+        margin-bottom: 15px;
+
+        .text-help {
+          color: $text-primary-color;
+          font-size: 14px;
+          cursor: default;
+        }
+
+        .popover-container {
+
+          .card {
+
+            .card-body {
+
+              ul {
+                margin: 0;
+
+                li {
+                  margin-left: 5px;
+                  margin-top: 2px;
+                  padding: 0;
+                }
+
+              }
+
+              .shape.is-circle {
+                margin-left: 5px;
+                margin-right: 11px;
+              }
+
+              .icons {
+                margin-left: 0;
+              }
+
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+    .input-wrapper {
+      padding-top: 15px;
+
+      .form-group {
+        position: relative;
+        margin-bottom: 10px !important;
+
+        .search-button-wrapper {
+          @include control-transition();
+          position: absolute;
+          right: 10px;
+          bottom: 4px;
+          color: $text-primary-color;
+
+          &:hover {
+            cursor: pointer;
+          }
+
+        }
+
+      }
+
+      .remaining-wrapper {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: $text-meta-color;
+        font-weight: 600;
+      }
+
+    }
+
+  }
+
+  .loader-wrapper, .analysis-wrapper, .suggested-wrapper, .profile-wrapper {
+    padding-top: 25px;
+  }
+
+  .loader-wrapper {
+
+    .loading::after {
+      border-color: $text-primary-color;
+      border-right-color: transparent;
+      border-top-color: transparent;
+    }
+
+  }
+
+  .analysis-content, .suggested-content, .profile-content {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-draft-color;
+    padding-top: 2px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid $border-default-color;
+
+    ul {
+      list-style: none;
+
+      li {
+        padding: 0;
+        margin-top: 8px;
+      }
+
+    }
+
+  }
+
+  .analysis-wrapper {
+
+    .icon {
+      margin-bottom: 15px;
+
+      &:hover {
+        cursor: default;
+      }
+
+    }
+
+    .analysis-content {
+
+      ul {
+
+        li {
+          display: flex;
+          justify-content: space-between;
+
+          .text-pros {
+            margin-right: 25px;
+          }
+
+          .fa-plus-circle {
+            color: $text-meta-color;
+            font-size: 20px;
+            vertical-align: middle;
+
+            &:hover {
+              cursor: pointer;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  .suggested-wrapper {
+
+    .suggested-content {
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          padding-right: 8px;
+          margin-right: 8px;
+          border-right: 2px solid $border-default-color;
+        }
+
+      }
+
+    }
+
+  }
+
+  .profile-wrapper {
+
+    .profile-content {
+      border-bottom: none;
+      padding-bottom: 0;
+
+      ul {
+
+        li {
+          margin-bottom: 15px;
+
+          .text-title:hover {
+            color: $text-primary-color;
+            cursor: pointer;
+          }
+
+          .popover .popover-container {
+            width: 250px;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+}
+
+
+@media (max-width: $size-md) {
+
+  #search-scraping {
+    flex-direction: column;
+
+    .search-wrapper {
+      flex: 1 !important;
+      padding-bottom: 25px;
+      padding-right: 15% !important;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #search-scraping{
+
+    .search-wrapper {
+      padding-right: 0 !important;
+    }
+
+  }
+
+}
