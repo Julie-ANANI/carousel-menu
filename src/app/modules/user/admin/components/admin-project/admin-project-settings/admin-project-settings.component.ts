@@ -717,11 +717,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * for the moment we do not publish the innovation of mission type Detecting market needs
+   * for the moment we do not publish the innovation of mission type Identifying receptive markets
    * at the community.
    */
   public canPublishAtCommunity(): boolean {
-    return MissionFrontService.objectiveName((this._mission && this._mission.template)) !== 'Detecting market needs';
+    return MissionFrontService.objectiveName((this._mission && this._mission.template)) !== 'Identifying receptive markets';
   }
 
   public onUpdateStatus(status: InnovationStatus) {
