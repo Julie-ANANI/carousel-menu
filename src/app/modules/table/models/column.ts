@@ -13,6 +13,7 @@ export interface Column {
   _isEditable?: boolean;
   readonly _attrs: string[];
   readonly _type: types;
+  readonly _editType?: types;
   readonly _name?: string;
   readonly _isSortable?: boolean;
   readonly _choices?: Choice[];

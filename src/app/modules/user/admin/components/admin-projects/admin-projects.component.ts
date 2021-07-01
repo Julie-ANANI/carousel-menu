@@ -202,7 +202,9 @@ export class AdminProjectsComponent implements OnInit {
         {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
         {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
         {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-      ]
+      ],
+      _isEditable: true,
+      _editType: 'MULTI-CHOICES'
     },
     {
       _attrs: ['operator'],
@@ -248,7 +250,8 @@ export class AdminProjectsComponent implements OnInit {
           {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
           {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
           {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-        ]
+        ],
+        _isEditable: true
       },
       {
         _attrs: [this._mainObjective],

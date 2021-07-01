@@ -286,7 +286,16 @@
                   <div
                     [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
                     class="td-multi-choice-label text-ellipsis">
-                    <span>{{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]) || " - "))) | translate }}</span>
+
+                    <ng-container *ngIf="!column._isEditable">
+                      <span>{{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]) || " - "))) | translate }}</span>
+                    </ng-container>
+
+                    <!-- editable-->
+                    <ng-container
+                      *ngTemplateOutlet="gridEditTemplate; context: {$implicit: {column: column, row:row}}">
+                    </ng-container>
+                    <!-- /editable-->
                   </div>
                 </ng-container>
                 <!-- /type MULTI-CHOICES -->
@@ -680,26 +689,69 @@
 
                 <!-- editable-cell-template-->
                 <ng-template #gridEditTemplate let-context>
-                  <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
-                    <div (click)="enableInput($event, context.row, context.column)">
-                      <input type="text"
-                             class="form-input is-sm text-ellipsis"
-                             [disabled]="getInputGrid(context.row, context.column).disabled"
-                             [ngClass]="getInputGrid(context.row, context.column).className"
-                             [(ngModel)]="getInputGrid(context.row, context.column).input">
-                    </div>
-                    <div class="d-flex flex-d-column justify-center">
+
+                  <ng-container *ngIf="context.column._isEditable">
+                    <ng-container *ngSwitchCase="context.column._editType">
+
+                      <!-- type MULTI-CHOICES -->
+                      <ng-container *ngSwitchCase="'MULTI-CHOICES'">
+                        <div *ngIf="getInputGrid(context.row, context.column).disabled" class="flex-wrapper">
+                          <div
+                               (click)="enableInput($event, context.row, context.column)"
+                               [ngClass]="getChoiceClass(getChoice(context.column, (getContentValue(context.row, getAttrs(context.column)[0]))))"
+                               class="td-multi-choice-label text-ellipsis">
+                          <span>
+                          {{ (getChoiceAlias(getChoice(context.column, getContentValue(context.row, getAttrs(context.column)[0]) || " - "))) | translate }}
+                        </span>
+                          </div>
+                        </div>
+                        <div class="form-group d-flex align-center"
+                             *ngIf="!getInputGrid(context.row, context.column).disabled">
+                          <div>
+                            <select class="form-select is-sm">
+                              <option *ngFor="let choice of context.column._choices">{{choice._alias}}</option>
+                            </select>
+                          </div>
+                          <div class="d-flex flex-d-column justify-center">
+                              <span class="icon is-md is-primary icon-check m-bottom-1">
+                                </span>
+
+                            <span class="icon is-md is-primary icon-cross m-top-1">
+                              </span>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <!-- /type MULTI-CHOICES -->
+
+                      <!-- type TEXT / DEFAULT -->
+                      <ng-container *ngSwitchCase="'TEXT'">
+                        <div class="form-group d-flex align-center">
+                          <div (click)="enableInput($event, context.row, context.column)">
+                            <input type="text"
+                                   class="form-input is-sm text-ellipsis"
+                                   [disabled]="getInputGrid(context.row, context.column).disabled"
+                                   [ngClass]="getInputGrid(context.row, context.column).className"
+                                   [(ngModel)]="getInputGrid(context.row, context.column).input">
+                          </div>
+                          <div class="d-flex flex-d-column justify-center">
                       <span class="icon is-md is-primary icon-check m-bottom-1"
                             (click)="sendEditedGrid($event, context.row, context.column)"
                             *ngIf="!getInputGrid(context.row, context.column).disabled">
                           </span>
 
-                      <span class="icon is-md is-primary icon-cross m-top-1"
-                            (click)="cancelEditedGrid($event, context.row, context.column)"
-                            *ngIf="!getInputGrid(context.row, context.column).disabled">
+                            <span class="icon is-md is-primary icon-cross m-top-1"
+                                  (click)="cancelEditedGrid($event, context.row, context.column)"
+                                  *ngIf="!getInputGrid(context.row, context.column).disabled">
                           </span>
-                    </div>
-                  </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <!-- /type TEXT / DEFAULT -->
+
+
+                    </ng-container>
+
+                  </ng-container>
                 </ng-template>
                 <!-- /editable-cell-template -->
 

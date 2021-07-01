@@ -130,7 +130,8 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'job']),
           _isHidden: !this.canAccess(['tableColumns', 'job']),
-          _isEditable: true
+          _isEditable: true,
+          _editType: 'TEXT'
         },
         {
           _attrs: ['company.name'],
@@ -139,7 +140,8 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'company']),
           _isHidden: !this.canAccess(['tableColumns', 'company']),
-          _isEditable: true
+          _isEditable: true,
+          _editType: 'TEXT'
         },
         {
           _attrs: ['domain'],
@@ -149,7 +151,8 @@ export class AdminUsersComponent implements OnInit {
           _width: '200px',
           _isSearchable: this.canAccess(['searchBy', 'domain']),
           _isHidden: !this.canAccess(['tableColumns', 'domain']),
-          _isEditable: true
+          _isEditable: true,
+          _editType: 'TEXT'
         },
         {
           _attrs: ['created'],

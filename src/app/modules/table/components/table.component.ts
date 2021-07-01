@@ -1074,6 +1074,7 @@ export class TableComponent {
       gridInput.disabled = false;
       gridInput.className = 'editable-grid';
     }
+    console.log(gridInput);
   }
 
   getInputGrid(row: any, column: Column) {
