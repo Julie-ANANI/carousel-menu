@@ -91,8 +91,6 @@ export class DatePickerComponent implements OnInit, OnChanges {
 
   private _isDisabledUntil = '';
 
-  private _currentLang = this._translateService.currentLang;
-
   private _defaultMonth: IMyDefaultMonth = <IMyDefaultMonth>{};
 
   private _defMonth: DatePickerDefMonth = <DatePickerDefMonth>{};
@@ -123,7 +121,7 @@ export class DatePickerComponent implements OnInit, OnChanges {
     this._datePickerOptions = {
       inline: true,
       dateRange: false,
-      dateFormat: this._currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
+      dateFormat: this.currentLang === 'en' ? 'yyyy-mm-dd' : 'dd-mm-yyyy',
       calendarAnimation: { in: CalAnimation.ScaleTop, out: CalAnimation.ScaleTop},
       disableWeekends: true,
       maxYear: moment().add(1, 'years').year()
@@ -167,10 +165,11 @@ export class DatePickerComponent implements OnInit, OnChanges {
    */
   public onDateChanged(event: IMyDateModel) {
     this.selectedDate.emit(event);
+    this._initDateOptions();
   }
 
   get currentLang(): string {
-    return this._currentLang;
+    return this._translateService.currentLang;
   }
 
   get isDisabledUntil(): string {
