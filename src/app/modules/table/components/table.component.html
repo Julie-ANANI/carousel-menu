@@ -706,7 +706,7 @@
 
                         <div class="form-group d-flex align-center"
                              *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          <select class="form-select is-xs">
+                          <select class="form-select is-xs" [(ngModel)]="getInputGrid(context.row, context.column).input">
                             <option *ngFor="let choice of context.column._choices">{{choice._alias}}</option>
                           </select>
                           <div class="d-flex flex-d-column justify-center">

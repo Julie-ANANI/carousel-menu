@@ -1117,7 +1117,17 @@ export class TableComponent {
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column === column);
     if (_dataToUpdate) {
       const _attrs = column._attrs.toString().split('.');
-      lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
+      switch (column._editType) {
+        case 'TEXT':
+          lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
+          break;
+        case 'MULTI-CHOICES':
+          const choiceItem = column._choices.find(item => item._alias === _dataToUpdate.input);
+          if (choiceItem) {
+            lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
+          }
+      }
+      console.log(_dataToUpdate);
       this.performAction.emit({
         _action: 'Update grid',
         _context: _dataToUpdate.value
