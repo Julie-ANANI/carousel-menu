@@ -283,20 +283,20 @@
 
                 <!-- type MULTI-CHOICES -->
                 <ng-container *ngSwitchCase="'MULTI-CHOICES'">
-                  <div
-                    [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
-                    class="td-multi-choice-label text-ellipsis">
+                  <div *ngIf="!column._isEditable"
+                       [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
+                       class="td-multi-choice-label text-ellipsis">
 
-                    <ng-container *ngIf="!column._isEditable">
+                    <ng-container>
                       <span>{{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]) || " - "))) | translate }}</span>
                     </ng-container>
-
-                    <!-- editable-->
-                    <ng-container
-                      *ngTemplateOutlet="gridEditTemplate; context: {$implicit: {column: column, row:row}}">
-                    </ng-container>
-                    <!-- /editable-->
                   </div>
+
+                  <!-- editable-->
+                  <ng-container
+                    *ngTemplateOutlet="gridEditTemplate; context: {$implicit: {column: column, row:row}}">
+                  </ng-container>
+                  <!-- /editable-->
                 </ng-container>
                 <!-- /type MULTI-CHOICES -->
 
@@ -695,29 +695,28 @@
 
                       <!-- type MULTI-CHOICES -->
                       <ng-container *ngSwitchCase="'MULTI-CHOICES'">
-                        <div *ngIf="getInputGrid(context.row, context.column).disabled" class="flex-wrapper">
-                          <div
-                               (click)="enableInput($event, context.row, context.column)"
-                               [ngClass]="getChoiceClass(getChoice(context.column, (getContentValue(context.row, getAttrs(context.column)[0]))))"
-                               class="td-multi-choice-label text-ellipsis">
-                          <span>
-                          {{ (getChoiceAlias(getChoice(context.column, getContentValue(context.row, getAttrs(context.column)[0]) || " - "))) | translate }}
-                        </span>
-                          </div>
+                        <div *ngIf="getInputGrid(context.row, context.column).disabled"
+                             (click)="enableInput($event, context.row, context.column)"
+                             [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
+                             class="td-multi-choice-label text-ellipsis editable-grid">
+                          <ng-container>
+                            <span>{{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]) || " - "))) | translate }}</span>
+                          </ng-container>
                         </div>
+
                         <div class="form-group d-flex align-center"
                              *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          <div>
-                            <select class="form-select is-sm">
-                              <option *ngFor="let choice of context.column._choices">{{choice._alias}}</option>
-                            </select>
-                          </div>
+                          <select class="form-select is-xs">
+                            <option *ngFor="let choice of context.column._choices">{{choice._alias}}</option>
+                          </select>
                           <div class="d-flex flex-d-column justify-center">
-                              <span class="icon is-md is-primary icon-check m-bottom-1">
-                                </span>
+                                                                                <span
+                                                                                  class="icon is-md is-primary icon-check m-bottom-1">
+                                                                                  </span>
 
-                            <span class="icon is-md is-primary icon-cross m-top-1">
-                              </span>
+                            <span class="icon is-md is-primary icon-cross m-top-1"
+                                  (click)="cancelEditedGrid($event, context.row, context.column)">
+                                                                                </span>
                           </div>
                         </div>
                       </ng-container>

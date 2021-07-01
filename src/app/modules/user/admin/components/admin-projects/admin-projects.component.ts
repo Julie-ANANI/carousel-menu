@@ -196,7 +196,7 @@ export class AdminProjectsComponent implements OnInit {
       _isSortable: true,
       _isSearchable: this.canAccess(['filterBy', 'status']),
       _isHidden: !this.canAccess(['tableColumns', 'status']),
-      _width: '150px',
+      _width: '200px',
       _choices: [
         {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
         {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},

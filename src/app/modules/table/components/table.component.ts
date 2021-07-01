@@ -140,6 +140,18 @@ export class TableComponent {
   // copy an original table
   private _isOrginal = false;
 
+  _enterpriseSizeSelectConfig = {
+    minChars: 0,
+    placeholder: 'Enter the enterprise size',
+    type: 'enterpriseSize',
+    identifier: '',
+    suggestionList: ['123', '456', '789'],
+    isShowAddButton: false,
+    requestType: 'local',
+    showSuggestionFirst: true,
+    default: '',
+  };
+
   private _inputGrids: Array<InputGrid> = [];
 
   constructor(
