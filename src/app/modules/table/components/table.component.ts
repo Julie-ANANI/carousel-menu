@@ -1081,7 +1081,9 @@ export class TableComponent {
 
   enableInput(event: Event, row: any, column: Column) {
     event.preventDefault();
-    const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column === column);
+    console.log(row);
+    console.log(column);
+    const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (gridInput) {
       gridInput.disabled = false;
       gridInput.className = 'editable-grid';
@@ -1106,22 +1108,22 @@ export class TableComponent {
         case 'MULTI-CHOICES':
           gridInputToAdd.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
       }
-      if (!this._inputGrids.find(grid => grid.index === row && grid.column === column)) {
+      if (!this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs)) {
         this._inputGrids.push(gridInputToAdd);
       }
-      return this._inputGrids.find(grid => grid.index === row && grid.column === column);
+      return this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     }
   }
 
   gridEditOnChange(value: string, row: any, column: Column) {
-    if (this._inputGrids.find(grid => grid.index === row && grid.column === column)) {
-      this._inputGrids.find(grid => grid.index === row && grid.column === column).input = value;
+    if (this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs)) {
+      this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs).input = value;
     }
   }
 
   sendEditedGrid(event: Event, row: any, column: Column) {
     event.preventDefault();
-    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column === column);
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (_dataToUpdate) {
       const _attrs = column._attrs.toString().split('.');
       switch (column._editType) {
@@ -1129,7 +1131,7 @@ export class TableComponent {
           lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
           break;
         case 'MULTI-CHOICES':
-          const choiceItem = column._choices.find(item => item._alias === _dataToUpdate.input);
+          const choiceItem = column._choices.find(item => item._alias.toLowerCase() === _dataToUpdate.input.toLowerCase());
           if (choiceItem) {
             lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
           }
@@ -1148,7 +1150,7 @@ export class TableComponent {
 
   cancelEditedGrid(event: Event, row: any, column: Column) {
     event.preventDefault();
-    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column === column);
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (_dataToUpdate) {
       switch (column._editType) {
         case 'TEXT':

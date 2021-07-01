@@ -149,7 +149,9 @@ export class AdminProjectsComponent implements OnInit {
       _type: 'TEXT',
       _isSortable: true,
       _isHidden: !this.canAccess(['tableColumns', 'type']),
-      _width: '100px'
+      _width: '100px',
+      _isEditable: true,
+      _editType: 'MULTI-CHOICES',
     },
     {
       _attrs: [this._mainObjective],
@@ -414,6 +416,8 @@ export class AdminProjectsComponent implements OnInit {
         _isSortable: true,
         _isHidden: !this.canAccess(['tableColumns', 'type']),
         _width: '100px',
+        _isEditable: true,
+        _editType: 'MULTI-CHOICES',
       },
       {
         _attrs: ['type'],
