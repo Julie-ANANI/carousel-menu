@@ -716,4 +716,12 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
+  getPerformedAction(event: any) {
+    if (event) {
+      switch (event._action) {
+        case 'Update grid':
+          console.log(event._context);
+      }
+    }
+  }
 }

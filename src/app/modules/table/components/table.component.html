@@ -710,13 +710,14 @@
                             <option *ngFor="let choice of context.column._choices">{{choice._alias}}</option>
                           </select>
                           <div class="d-flex flex-d-column justify-center">
-                                                                                <span
-                                                                                  class="icon is-md is-primary icon-check m-bottom-1">
-                                                                                  </span>
+                            <span
+                              (click)="sendEditedGrid($event, context.row, context.column)"
+                              class="icon is-md is-primary icon-check m-bottom-1">
+                            </span>
 
                             <span class="icon is-md is-primary icon-cross m-top-1"
                                   (click)="cancelEditedGrid($event, context.row, context.column)">
-                                                                                </span>
+                            </span>
                           </div>
                         </div>
                       </ng-container>
