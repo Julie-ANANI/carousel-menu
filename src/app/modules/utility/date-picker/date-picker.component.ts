@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CalAnimation, IAngularMyDpOptions, IMyDateModel, IMyDefaultMonth} from 'angular-mydatepicker';
 import * as moment from 'moment';
+import {IMyMarkedDates} from 'angular-mydatepicker/lib/interfaces/my-marked-dates.interface';
 
 export interface DatePickerDefMonth {
   month: number;
@@ -20,22 +21,41 @@ export interface DatePickerDefMonth {
   selector: 'app-utility-date-picker',
   templateUrl: './date-picker.component.html'
 })
-export class DatePickerComponent implements OnInit {
+export class DatePickerComponent implements OnInit, OnChanges {
+
+  get markDates(): Array<IMyMarkedDates> {
+    return this._markDates;
+  }
+
+  get defMonth(): DatePickerDefMonth {
+    return this._defMonth;
+  }
 
   /**
    * setting the default calendar view.
    * for the first time it will be set when pass the value of isDisabledUntil.
+   * implementation detail: https://github.com/kekeh/angular-mydatepicker/wiki/defaultMonth-attribute
    * @param value
    */
   @Input() set defMonth(value: DatePickerDefMonth) {
     if (!!value && value.month && value.year) {
-      this._setDefaultMonth(value.month, value.year);
+      this._defMonth = value;
     }
+  }
+
+  /**
+   * pass the array of the dates you want to marks.
+   * more info: https://github.com/kekeh/angular-mydatepicker/wiki/usage-of-markDates-option
+   * @param value
+   */
+  @Input() set markDates(value: Array<IMyMarkedDates>) {
+    this._markDates = value || [];
   }
 
   /**
    * value in format yyyy-mm-dd (2021-06-24)
    * when you pass it until this date and including this all are disabled.
+   * implementation detail: https://github.com/kekeh/angular-mydatepicker/wiki/disable-until-yesterday
    * @param value
    */
   @Input() set isDisabledUntil(value: string) {
@@ -75,10 +95,28 @@ export class DatePickerComponent implements OnInit {
 
   private _defaultMonth: IMyDefaultMonth = <IMyDefaultMonth>{};
 
+  private _defMonth: DatePickerDefMonth = <DatePickerDefMonth>{};
+
+  private _markDates: Array<IMyMarkedDates> = [];
+
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
     this._initDateOptions();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (changes && changes.defMonth && changes.defMonth.currentValue) {
+      this._setDefaultMonth(this._defMonth.month, this._defMonth.year);
+    } else if (!!this._isDisabledUntil) {
+      this._setDefaultMonth(Number(this._isDisabledUntil.slice(5, 7)), Number(this._isDisabledUntil.slice(0, 4)));
+    }
+
+    if (changes && changes.markDates && changes.markDates.currentValue && changes.markDates.currentValue.length) {
+      this._initMarkDates();
+    }
+
   }
 
   private _initDateOptions() {
@@ -97,9 +135,15 @@ export class DatePickerComponent implements OnInit {
         month: Number(this._isDisabledUntil.slice(5, 7)),
         day: Number(this._isDisabledUntil.slice(8, 10))
       };
-
-      this._setDefaultMonth(Number(this._isDisabledUntil.slice(5, 7)), Number(this._isDisabledUntil.slice(0, 4)));
     }
+
+    if (this._markDates.length) {
+      this._initMarkDates();
+    }
+  }
+
+  private _initMarkDates() {
+    this._datePickerOptions.markDates = this._markDates;
   }
 
   /**

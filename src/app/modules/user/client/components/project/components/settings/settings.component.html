@@ -404,7 +404,9 @@
 
       <app-utility-date-picker
         (selectedDate)="onChangeRestitutionDate($event)"
-        [isDisabledUntil]="disabledDate">
+        [defMonth]="selectedValue['datePickerMonth']"
+        [isDisabledUntil]="disabledDate"
+        [markDates]="selectedValue['markDates']">
       </app-utility-date-picker>
 
       <div class="form-group p-top-50 mxw-500 m-left-auto m-right-auto animate-slide slide-down is-3">

@@ -23,12 +23,12 @@
   }
 
   .myDpSelectedDay, .myDpSelectedMonth, .myDpSelectedYear {
-    background-color: $bg-success-color;
+    background-color: $success-color;
     color: $white-color;
     font-weight: $font-weight-medium;
 
     &:hover {
-      background-color: $bg-success-color;
+      background-color: $success-color;
     }
   }
 
@@ -84,6 +84,10 @@
 
   .myDpNoFooter {
     height: calc(100% - 45px);
+  }
+
+  .myDpMarkDate {
+    border-right-width: 20px;
   }
 
 }

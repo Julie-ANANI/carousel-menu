@@ -434,6 +434,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           comment: !!this.dateRDO && this.dateRDO.comment,
           date: !!this.dateRDO && this.dateRDO.dueDate
         };
+        this._setDatePicker();
         break;
 
       case 'REPORTING_LANG':
@@ -473,6 +474,27 @@ export class SettingsComponent implements OnInit, OnDestroy {
         };
         break;
 
+    }
+  }
+
+  /**
+   * we are setting the date picker default month value and
+   * marking the selected date.
+   * @private
+   */
+  private _setDatePicker() {
+    if (!!this._selectedValue && this._selectedValue.date) {
+      const date = moment(this._selectedValue.date);
+      this._selectedValue.datePickerMonth = {
+        month: date.month() + 1,
+        year: date.year()
+      };
+      this._selectedValue.markDates = [
+        {
+          dates: [{day: date.date(), month: date.month() + 1, year: date.year()}],
+          color: '#2ECC71'
+        }
+      ];
     }
   }
 
@@ -696,6 +718,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public onChangeRestitutionDate(event: IMyDateModel) {
     if (event && event.singleDate && event.singleDate.jsDate) {
       this._selectedValue.date = event.singleDate.jsDate;
+      this._setDatePicker();
     }
   }
 
