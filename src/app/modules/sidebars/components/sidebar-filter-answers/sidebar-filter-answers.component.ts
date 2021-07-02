@@ -41,7 +41,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
-    this._answersCountries = value.map(answer => answer.country.flag || answer.professional.country);
+    this._answersCountries = value.map(answer => (answer.country && answer.country.flag) || answer.professional.country);
   }
 
   @Input() templateType: Template = 'MARKET_REPORT';
