@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Question} from '../../../../models/question';
 import {Answer} from '../../../../models/answer';
 import {AnswerService} from '../../../../services/answer/answer.service';
@@ -13,18 +13,22 @@ import {ErrorFrontService} from '../../../../services/error/error-front.service'
 import {NewPro} from './reassign-answer/reassign-answer.component';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {Professional} from '../../../../models/professional';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar-user-answer',
   templateUrl: './sidebar-user-answer.component.html',
   styleUrls: ['./sidebar-user-answer.component.scss'],
 })
-export class SidebarUserAnswerComponent {
+export class SidebarUserAnswerComponent implements OnInit {
+
   @Input() set sidebarState(value: any) {
     this._reinitVariables();
   }
 
   @Input() projectId = ''; // id of the innovation
+
+  @Input() innovationCards: any[] = [];
 
   @Input() questions: Array<Question> = [];
 
@@ -78,11 +82,21 @@ export class SidebarUserAnswerComponent {
     {name: 'VALIDATED', class: 'is-success'},
   ];
 
+  private _innovationCardLanguages: string[] = [];
+
+  private _currentLang = this._translateService.currentLang;
+
   constructor(
     private _answerService: AnswerService,
     private _professionalsService: ProfessionalsService,
-    private _translateNotificationsService: TranslateNotificationsService
+    private _translateNotificationsService: TranslateNotificationsService,
+    private _translateService: TranslateService
   ) {
+  }
+
+  ngOnInit(): void {
+    this._getInnovationCardLanguages();
+    this._initCurrentLang();
   }
 
   private _reinitVariables() {
@@ -407,6 +421,19 @@ export class SidebarUserAnswerComponent {
     return momentTimeZone(date).tz('Europe/Paris').format('h:mm a');
   }
 
+  private _getInnovationCardLanguages() {
+    this._innovationCardLanguages = [];
+    if (this.innovationCards && this.innovationCards.length) {
+      this.innovationCards.map(innoCard => {
+        this._innovationCardLanguages.push(innoCard.lang);
+      });
+    }
+  }
+
+  private _initCurrentLang() {
+   this._currentLang = this._innovationCardLanguages.includes(this._currentLang) ? this._currentLang : this._innovationCardLanguages[0];
+  }
+
   get companyLength(): number {
     return (
       (this._userAnswer.company &&
@@ -495,5 +522,9 @@ export class SidebarUserAnswerComponent {
 
   get answerStatus(): Array<{ name: any; class: string }> {
     return this._answerStatus;
+  }
+
+  get currentLang(): string {
+    return this._currentLang;
   }
 }

@@ -40,6 +40,8 @@ export class AnswerQuestionComponent {
     this._showCommentTranslation = false;
   }
 
+  @Input() currentLang = this._translateService.currentLang;
+
   @Output() fullAnswerChange: EventEmitter<Answer> = new EventEmitter<Answer>();
 
   private _commenting = false;
@@ -49,8 +51,6 @@ export class AnswerQuestionComponent {
   private _showQuestionTranslation = false;
 
   private _showCommentTranslation = false;
-
-  private _currentLang = this._translateService.currentLang;
 
   private _starCase: Array<string> = ['1', '2', '3', '4', '5'];
 
@@ -76,7 +76,7 @@ export class AnswerQuestionComponent {
   public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
     if (option && option.label) {
-      return option.label[this._currentLang];
+      return option.label[this.currentLang];
     } else {
       return undefined;
     }
@@ -145,7 +145,7 @@ export class AnswerQuestionComponent {
   set showQuestionTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier][this._currentLang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier][this.currentLang]) {
           this._showQuestionTranslation = true;
         } else {
           throw new Error('no translation');
@@ -154,12 +154,12 @@ export class AnswerQuestionComponent {
         if (!this._fullAnswer.answers_translations[this.question.identifier]) {
           this._fullAnswer.answers_translations[this.question.identifier] = {};
         }
-        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this._currentLang)
+        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this.currentLang)
           .pipe(first())
           .subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier][this._currentLang] = value.translation;
+          this._fullAnswer.answers_translations[this.question.identifier][this.currentLang] = value.translation;
           this._showQuestionTranslation = true;
-          const objToSave = {answers_translations: {[this.question.identifier]: {[this._currentLang]: value.translation}}};
+          const objToSave = {answers_translations: {[this.question.identifier]: {[this.currentLang]: value.translation}}};
           this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
         }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -178,7 +178,7 @@ export class AnswerQuestionComponent {
   set showCommentTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang]) {
           this._showCommentTranslation = true;
         } else {
           throw new Error('no translation');
@@ -188,13 +188,13 @@ export class AnswerQuestionComponent {
           this._fullAnswer.answers_translations[this.question.identifier + 'Comment'] = {};
         }
         this._deepl.translate(this._fullAnswer.answers[this.question.identifier + 'Comment'],
-          this._currentLang)
+          this.currentLang)
           .pipe(first())
           .subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang] = value.translation;
+          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang] = value.translation;
           this._showCommentTranslation = true;
           const objToSave = {answers_translations: {[this.question.identifier + 'Comment']:
-                {[this._currentLang]: value.translation}}};
+                {[this.currentLang]: value.translation}}};
           this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
         }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -208,10 +208,6 @@ export class AnswerQuestionComponent {
 
   get showCommentTranslation(): boolean {
     return this._showCommentTranslation;
-  }
-
-  get currentLang(): string {
-    return this._currentLang;
   }
 
   get fullAnswer(): Answer {
