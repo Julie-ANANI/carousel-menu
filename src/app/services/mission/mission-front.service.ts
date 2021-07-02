@@ -18,6 +18,20 @@ export class MissionFrontService {
   }
 
   /**
+   * return the total list of the question in the template.
+   * @param template
+   */
+  public static totalTemplateQuestions(template: MissionTemplate): Array<MissionQuestion> {
+    const questions: Array<MissionQuestion> = [];
+    if (template && template.sections && template.sections.length) {
+      for (let i = 0 ; i < template.sections.length; i++) {
+        questions.push(...template.sections[i].questions);
+      }
+    }
+    return questions;
+  }
+
+  /**
    * return the combined complementary objectives of the sections of template.
    * @param missionSections
    */
