@@ -17,32 +17,6 @@
   </div>
   <!-- /save -->
 
-  <!-- formatted address -->
-  <div class="form-group">
-    <!-- [disabled]="!isEditable" -->
-    <label class="form-switch">
-      <input
-        [(ngModel)]="params['formattedAddress']"
-        name="sidebar-smart"
-        type="checkbox">
-      <i class="form-icon"></i> Formatted Address (request google api, use with caution)
-    </label>
-  </div>
-  <!-- /formatted address -->
-
-  <!-- raw data -->
-  <div class="form-group">
-    <!-- [disabled]="!isEditable" -->
-    <label class="form-switch">
-      <input
-        [(ngModel)]="params['rawData']"
-        name="sidebar-smart"
-        type="checkbox">
-      <i class="form-icon"></i> Automatic raw data
-    </label>
-  </div>
-  <!-- /raw data -->
-
   <!-- dynamic html -->
   <div class="form-group">
     <!-- [disabled]="!isEditable" -->
@@ -63,8 +37,21 @@
     placeholder="ex: contact@site.com,contactbis@site.fr"
     type="text">
 
+  <!-- raw data -->
+  <div class="form-group">
+    <!-- [disabled]="!isEditable" -->
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params['rawData']"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Automatic raw data
+    </label>
+  </div>
+  <!-- /raw data -->
 
-  <!-- crawling field -->
+  <!-- specific data -->
+  <!-- is specific data -->
   <div class="form-group">
     <label class="form-switch">
       <input
@@ -74,7 +61,7 @@
       <i class="form-icon"></i> Specific Data
     </label>
   </div>
-  <!-- crawling field -->
+  <!-- /is specific data -->
 
   <div *ngIf="params['isSpecificData']" [ngClass]="params['isSpecificData'] ? 'd-block' : 'd-none'" class="m-left-4">
 
@@ -89,7 +76,7 @@
         max="5">
     </div>
 
-    <!-- specific data -->
+    <!-- set specific data -->
     <div *ngFor="let sd of params['specificData']; let index = index;">
       <div *ngIf="showSpecificData(index)" [ngClass]="showSpecificData(index) ? 'd-block' : 'd-none'" class="m-left-4">
         <label class="form-label">Name - {{ index + 1 }}</label>
@@ -115,8 +102,40 @@
 
       </div>
     </div>
-    <!--    /specific data-->
+    <!--    /set specific data-->
   </div>
+  <!--    /specific data-->
+
+  <!-- formatted address -->
+  <div class="form-group">
+    <!-- [disabled]="!isEditable" -->
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params['formattedAddress']"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Formatted Address (request google api, use with caution)
+    </label>
+  </div>
+
+  <div *ngIf="params['formattedAddress']" [ngClass]="params['formattedAddress'] ? 'd-block' : 'd-none'" class="m-left-4">
+
+    <!-- where formatted address -->
+    <div class="form-group align-center m-bottom-30">
+      <label class="title is-6 m-no-bottom m-right-20" for="sidebar-pros-number">Use google api on which data ?</label>
+      <select
+        [(ngModel)]="params['whereFormattedAddress']"
+        class="form-select is-sm mxw-250"
+        id="sidebar-pros-number"
+        name="sidebar-pros-count">
+        <option *ngFor="let name of possibleFormattedAddress()" [value]="name">
+          {{ name }}
+        </option>
+      </select>
+    </div>
+    <!-- /where formatted address -->
+  </div>
+  <!-- /formatted address -->
 
   <!-- crawling -->
   <div class="form-group">
@@ -133,7 +152,18 @@
 
   <div *ngIf="params['isCrawling']" [ngClass]="params['isCrawling'] ? 'd-block' : 'd-none'" class="m-left-4">
 
+    <!--    max request-->
+    <label class="form-label">Max Request</label>
+    <input
+      [(ngModel)]="params['maxRequest']"
+      class="form-input"
+      placeholder="ex: 1000"
+      type="number">
+    <!-- /max request -->
+
     <!-- crawling field -->
+
+    <!-- is crawling field-->
     <div class="form-group">
       <!-- [disabled]="!isEditable" -->
       <label class="form-switch">
@@ -144,10 +174,11 @@
         <i class="form-icon"></i> Field
       </label>
     </div>
-    <!-- crawling field -->
+    <!-- /is crawling field-->
 
     <div *ngIf="params['isField']" [ngClass]="params['isField'] ? 'd-block' : 'd-none'" class="m-left-4">
 
+      <!-- number of field-->
       <div class="form-group">
         <label class="form-label">Number of Fields</label>
         <input
@@ -158,7 +189,7 @@
           min="1"
           max="5">
       </div>
-
+      <!-- /number of field-->
       <div *ngFor="let field of params['fields']; let index = index;">
         <div *ngIf="showField(index)" [ngClass]="showField(index) ? 'd-block' : 'd-none'" class="m-left-4">
           <label class="form-label">Locator - {{ index + 1 }}</label>
@@ -178,14 +209,8 @@
         </div>
       </div>
     </div>
+    <!-- crawling field -->
 
-    <label class="form-label">Max Request</label>
-    <input
-      [(ngModel)]="params['maxRequest']"
-      class="form-input"
-      placeholder="ex: 1000"
-      type="number">
-    <!-- templateType === 'NEW_BATCH' no of pros -->
 
   </div>
 

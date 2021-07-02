@@ -23,6 +23,8 @@ export class SidebarScrapingComponent implements OnChanges {
 
   private _hideInput = false;
 
+  // private _possibleFormattedAddress = new Array<string>();
+
   constructor() { }
 
   ngOnChanges(): void {
@@ -49,6 +51,42 @@ export class SidebarScrapingComponent implements OnChanges {
 
   get hideInput(): boolean {
     return this._hideInput;
+  }
+
+  /*
+  public updatePossibleFormattedAddress(): boolean {
+    // Return true if there is a data on which it can apply formatted address
+    // Update the _possibleFormattedAddress value
+    this._possibleFormattedAddress = [];
+    if (this.params['isSpecificData']) {
+      for (let index = 0; index < this.params['numberSpecificData']; index++) {
+        const name = this.params['specificData'][index]['name'];
+        if (name !== '') {
+          this._possibleFormattedAddress.push(name);
+        }
+      }
+    }
+    if (this.params['rawData']) {
+      this._possibleFormattedAddress.push('raw data');
+    }
+    return (this._possibleFormattedAddress !== []);
+  }
+   */
+
+  public possibleFormattedAddress(): Array<string> {
+    const possible = [];
+    if (this.params['isSpecificData']) {
+      for (let index = 0; index < this.params['numberSpecificData']; index++) {
+        const name = this.params['specificData'][index]['name'];
+        if (name !== '' && typeof name !== 'undefined') {
+          possible.push(name);
+        }
+      }
+    }
+    if (this.params['rawData']) {
+      possible.push('raw data');
+    }
+    return possible;
   }
 
 }
