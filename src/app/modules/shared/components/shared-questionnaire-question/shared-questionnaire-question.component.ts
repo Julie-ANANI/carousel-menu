@@ -1,13 +1,13 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {picto, Picto} from '../../../../../models/static-data/picto';
+import {picto, Picto} from '../../../../models/static-data/picto';
 import {
   MissionQuestion,
   MissionQuestionEntry,
   MissionQuestionOption, MissionQuestionType,
   OptionEntry
-} from '../../../../../models/mission';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {CommonService} from '../../../../../services/common/common.service';
+} from '../../../../models/mission';
+import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
+import {CommonService} from '../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -56,6 +56,13 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   get questionIndex(): number {
     return this._questionIndex;
   }
+
+  /**
+   * provide the access path if you are not providing the isEditable input value to give access
+   * to the functionalities.
+   * Example: use it on the Libraries page.
+   */
+  @Input() accessPath: Array<string> = [];
 
   /**
    * can be edit or not.

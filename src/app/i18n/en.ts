@@ -45,7 +45,7 @@ import {COMMENT_CARD} from '../modules/sidebars/components/comment-card/i18n/en'
 import {SHARED_TEXT_ZONE} from '../modules/shared/components/shared-editors/i18n/en';
 import {MARKET_TEST_OBJECTIVES} from '../modules/user/client/components/market-test-objectives/i18n/en';
 import {MARKET_TEST_METHODOLOGY} from '../modules/user/client/components/market-test-methodology/i18n/en';
-import {SHARED_QUESTIONNAIRE} from '../modules/shared/components/shared-questionnaire/i18n/en';
+import {SHARED_QUESTIONNAIRE} from '../modules/shared/components/shared-questionnaire-question/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
