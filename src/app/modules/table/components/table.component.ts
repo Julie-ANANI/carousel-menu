@@ -1084,7 +1084,6 @@ export class TableComponent {
   enableInput(event: Event, row: any, column: Column) {
     event.preventDefault();
     const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
-    console.log(gridInput);
     if (gridInput) {
       gridInput.disabled = false;
       gridInput.className = 'editable-grid';
@@ -1102,21 +1101,20 @@ export class TableComponent {
         input: '',
       };
       switch (column._editType) {
-        case 'TEXT':
-          gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
-          break;
-        case 'DATE_TIME':
-          gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
-          break;
         case 'DATE':
           if (this.getContentValue(row, column._attrs[0])) {
-            gridInputToAdd.input = new DatePipe(this._locale).transform(new Date(this.getContentValue(row, column._attrs[0])), 'yyyy-MM-dd');
+            gridInputToAdd.input = new DatePipe(this._locale)
+              .transform(new Date(this.getContentValue(row, column._attrs[0])), 'yyyy-MM-dd');
           } else {
             gridInputToAdd.input = '-';
           }
           break;
         case 'MULTI-CHOICES':
           gridInputToAdd.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
+          break;
+        default:
+          gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
+          break;
       }
       if (!this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs)) {
         this._inputGrids.push(gridInputToAdd);
