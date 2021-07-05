@@ -15,13 +15,16 @@ import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
 import { DatePipe } from '@angular/common';
 
+/**
+ * editable cell
+ */
 interface InputGrid {
-  index: number;
-  column: Column;
-  disabled: boolean;
-  value: any;
-  className: string;
-  input: string;
+  index: number; // which row
+  column: Column; // which column
+  disabled: boolean; // input disabled?
+  value: any; // content value
+  className: string; // class => input style
+  input: string; // input ngModel
 }
 
 @Component({
@@ -1081,6 +1084,12 @@ export class TableComponent {
     }
   }
 
+  /**
+   * click to edit
+   * @param event
+   * @param row
+   * @param column
+   */
   enableInput(event: Event, row: any, column: Column) {
     event.preventDefault();
     const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
@@ -1090,6 +1099,11 @@ export class TableComponent {
     }
   }
 
+  /**
+   * for one cell, get object
+   * @param row
+   * @param column
+   */
   getInputGrid(row: any, column: Column) {
     if (column._isEditable) {
       const gridInputToAdd = {
@@ -1123,12 +1137,12 @@ export class TableComponent {
     }
   }
 
-  gridEditOnChange(value: string, row: any, column: Column) {
-    if (this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs)) {
-      this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs).input = value;
-    }
-  }
-
+  /**
+   * validate input => send values
+   * @param event
+   * @param row
+   * @param column
+   */
   sendEditedGrid(event: Event, row: any, column: Column) {
     event.preventDefault();
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
@@ -1157,6 +1171,12 @@ export class TableComponent {
     }
   }
 
+  /**
+   * cancel edit in table => reset original value
+   * @param event
+   * @param row
+   * @param column
+   */
   cancelEditedGrid(event: Event, row: any, column: Column) {
     event.preventDefault();
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
