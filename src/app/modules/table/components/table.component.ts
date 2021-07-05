@@ -1082,6 +1082,7 @@ export class TableComponent {
   enableInput(event: Event, row: any, column: Column) {
     event.preventDefault();
     const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    console.log(gridInput);
     if (gridInput) {
       gridInput.disabled = false;
       gridInput.className = 'editable-grid';
@@ -1100,6 +1101,9 @@ export class TableComponent {
       };
       switch (column._editType) {
         case 'TEXT':
+          gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
+          break;
+        case 'DATE_TIME':
           gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
           break;
         case 'MULTI-CHOICES':

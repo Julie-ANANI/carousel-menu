@@ -36,20 +36,6 @@
       <!-- bot -->
       <div *ngIf="canAccess(['autoBatch']) || canAccess(['create'])" class="p-top-20">
         <app-message-template [widthMax]="'473px'">
-
-          <!--          <div class="toggle-wrapper p-bottom-15">-->
-          <!--            <div class="form-group">-->
-          <!--              <label class="form-switch" for="result-nuggets">-->
-          <!--                <input-->
-          <!--                  (change)="setNuggets()"-->
-          <!--                  [ngModel]="campaign.nuggets"-->
-          <!--                  id="result-nuggets"-->
-          <!--                  type="checkbox">-->
-          <!--                <i class="form-icon"></i>Nuggets-->
-          <!--              </label>-->
-          <!--            </div>-->
-          <!--          </div>-->
-
           <div class="toggle-wrapper p-bottom-10">
             <div class="form-group relative">
               <label class="form-switch" for="auto-batch">
@@ -177,6 +163,7 @@
           <app-shared-table
             (editRow)="onClickEdit($event, batch)"
             [config]="localConfig"
+            (performAction)="_updateBatch($event)"
             [data]="getBatch(batchIndex)">
           </app-shared-table>
         </div>
