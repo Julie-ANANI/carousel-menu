@@ -3,6 +3,7 @@ import {MissionTemplateSection} from '../../../../../models/mission';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
+import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-shared-questionnaire-section',
@@ -10,6 +11,10 @@ import {MissionQuestionService} from '../../../../../services/mission/mission-qu
   styleUrls: ['./shared-questionnaire-section.component.scss']
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
+
+  get sectionTypes(): Array<string> {
+    return this._sectionTypes;
+  }
 
   get questionnaireLangs(): Array<string> {
     return this._missionQuestionService.questionnaireLangs;
@@ -55,6 +60,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     return this._section;
   }
 
+  @Input() accessPath: Array<string> = [];
+
   /**
    * can be edit or not.
    */
@@ -78,7 +85,10 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   private _editSection = false;
 
+  private _sectionTypes: Array<string> = ['ISSUE', 'SOLUTION', 'CONTEXT', 'NOTHING'];
+
   constructor(private _translateService: TranslateService,
+              private _rolesFrontService: RolesFrontService,
               private _missionQuestionService: MissionQuestionService) { }
 
   ngOnInit() {
@@ -116,7 +126,9 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public onChangeName(value: string, lang: string) {
-    this._missionQuestionService.changeSectionName(value, lang, this._section);
+    if (this.isEditable || this.canAccess(['section', 'edit', 'name'])) {
+      this._missionQuestionService.changeSectionName(value, lang, this._section);
+    }
   }
 
   public sectionIdentifier(): string {
@@ -124,8 +136,14 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public notifyChanges() {
-    if (this.isEditable) {
+    if (this.isEditable || this.canAccess(['section', 'edit', 'type'])) {
       this._missionQuestionService.setNotifyChanges(true);
+    }
+  }
+
+  public canAccess(path: Array<string> = []) {
+    if (this.accessPath.length) {
+      return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
     }
   }
 

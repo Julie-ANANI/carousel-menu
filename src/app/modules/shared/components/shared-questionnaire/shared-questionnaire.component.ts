@@ -3,6 +3,7 @@ import {MissionTemplate} from '../../../../models/mission';
 import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {RolesFrontService} from '../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-shared-questionnaire',
@@ -10,6 +11,13 @@ import {Subject} from 'rxjs';
   styleUrls: ['./shared-questionnaire.component.scss']
 })
 export class SharedQuestionnaireComponent implements OnInit {
+
+  /**
+   * provide the access path if you are not providing the isEditable input value to give access
+   * to the functionalities.
+   * Example: use it on the Libraries page.
+   */
+  @Input() accessPath: Array<string> = [];
 
   /**
    * can be edit or not.
@@ -44,7 +52,8 @@ export class SharedQuestionnaireComponent implements OnInit {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  constructor(private _missionQuestionService: MissionQuestionService) { }
+  constructor(private _missionQuestionService: MissionQuestionService,
+              private _rolesFrontService: RolesFrontService) { }
 
   ngOnInit() {
     this._missionQuestionService.notifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((_changes) => {
@@ -56,8 +65,14 @@ export class SharedQuestionnaireComponent implements OnInit {
 
   public addSection(event: Event) {
     event.preventDefault();
-    if (this.isEditable) {
+    if (this.isEditable || this.canAccess(['section', 'add'])) {
       this._missionQuestionService.addSection();
+    }
+  }
+
+  public canAccess(path: Array<string> = []) {
+    if (this.accessPath.length) {
+      return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
     }
   }
 

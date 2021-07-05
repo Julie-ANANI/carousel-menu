@@ -6,19 +6,19 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {SharedQuestionnaireComponent} from './shared-questionnaire.component';
 import { SharedQuestionnaireSectionComponent } from './shared-questionnaire-section/shared-questionnaire-section.component';
-import { SharedQuestionnaireQuestionComponent } from './shared-questionnaire-question/shared-questionnaire-question.component';
+import {SharedQuestionnaireQuestionModule} from '../shared-questionnaire-question/shared-questionnaire-question.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     RouterModule,
-    FormsModule
+    FormsModule,
+    SharedQuestionnaireQuestionModule
   ],
   declarations: [
     SharedQuestionnaireComponent,
-    SharedQuestionnaireSectionComponent,
-    SharedQuestionnaireQuestionComponent
+    SharedQuestionnaireSectionComponent
   ],
   exports: [
     SharedQuestionnaireComponent
