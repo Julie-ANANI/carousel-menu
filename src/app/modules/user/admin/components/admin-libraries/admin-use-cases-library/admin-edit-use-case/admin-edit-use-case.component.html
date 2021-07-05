@@ -1,0 +1,123 @@
+<div [hidden]="!canAccess()" class="container fluid grid-2xl" id="admin-edit-use-case">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- error message while fetching -->
+    <ng-container *ngIf="fetchingError; else noError">
+      <app-utility-message-error></app-utility-message-error>
+    </ng-container>
+    <!-- /error message while fetching -->
+
+    <!-- no fetching error -->
+    <ng-template #noError>
+      <div class="p-top-30 p-bottom-30">
+
+        <!-- save template / name -->
+        <section [hidden]="!canAccess(['edit'])" class="flex-between m-bottom-20 flex-wrap">
+
+          <h2 class="title is-6 text-background m-bottom-15">
+            Use case name: <span class="text-notify">{{ templateName() }}</span>
+          </h2>
+
+          <button
+            (click)="onClickSave($event)"
+            [disabled]="isSaving || !toBeSaved"
+            [ngClass]="{'is-loading': isSaving, 'is-outlined': !toBeSaved}"
+            class="button is-primary is-sm m-bottom-15"
+            type="button">
+            {{ isSaving ? 'saving the use case...' : 'Save' }}
+          </button>
+
+        </section>
+        <!-- /save template / name -->
+
+        <!-- objective -->
+        <section [ngStyle]="{'margin-right': '-10px'}">
+          <div class="input-group">
+            <div
+              *ngFor="let entry of missionTemplate.entry; let i = index;"
+              class="m-bottom-25 form-group m-no-left m-right-10">
+              <label class="form-label" [for]="entry.lang">
+                {{ entry.lang === 'en' ? 'English' : entry.lang === 'fr' ? 'French'
+                : (entry.lang | titlecase) }} Objective
+              </label>
+              <input
+                (ngModelChange)="onChangeObjective($event, i)"
+                *ngIf="canAccess(['edit', 'objective'])"
+                [ngModel]="entry.objective"
+                class="form-input is-sm"
+                placeholder="Enter objective name*"
+                type='text'>
+              <p *ngIf="!canAccess(['edit', 'objective'])" class="text-sm">{{ entry.objective }}</p>
+            </div>
+          </div>
+        </section>
+        <!-- /objective -->
+
+        <!-- template sections -->
+        <section class="p-top-20">
+          <app-shared-questionnaire
+            (templateChange)="onChangeTemplate($event)"
+            [accessPath]="accessPath"
+            [questionnaireLanguages]="questionnaireLanguages"
+            [template]="missionTemplate">
+          </app-shared-questionnaire>
+        </section>
+        <!-- /template sections -->
+
+      </div>
+    </ng-template>
+    <!-- /no fetching error -->
+
+  </div>
+</div>
+
+<app-utility-modal-empty
+  *ngIf="canAccess(['section', 'edit']) || canAccess(['question', 'edit'])"
+  [(showModal)]="showModal"
+  [maxWidth]="'720px'">
+
+  <section class="modal-body">
+
+    <h2 class="title is-4 text-center text-bold m-bottom-30">Do you really want to update the use case:</h2>
+    <h3 class="subtitle is-5 text-center">{{ templateName() }}</h3>
+
+    <p class="m-bottom-10">It will impact permanently:</p>
+
+    <div class="mxw-250 m-left-auto m-right-auto">
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input (change)="validate.tool = !validate.tool" type="checkbox">
+          <i class="form-icon"></i> Market Test creation tool
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input (change)="validate.template = !validate.template" type="checkbox">
+          <i class="form-icon"></i> Questionnaire template
+        </label>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="modal-footer justify-center">
+
+    <button
+      (click)="closeModal()"
+      [id]="'btn-cancel'"
+      class="button modal-cancel"
+      type="button">
+      Cancel
+    </button>
+
+    <button
+      (click)="onClickValidate($event)"
+      [disabled]="!validate.tool || !validate.template"
+      class="button is-community"
+      type="button">
+      Validate
+    </button>
+
+  </footer>
+
+</app-utility-modal-empty>

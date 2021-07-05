@@ -450,7 +450,7 @@ export class MissionQuestionService {
         entry: this._addEntryLang.map((_lang) => {
           return {
             lang: _lang,
-            name: 'Section' + this._template.sections.length
+            name: 'New section ' + this._template.sections.length
           };
         })
       };

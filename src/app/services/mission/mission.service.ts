@@ -24,11 +24,28 @@ export class MissionService {
   }
 
   /**
+   * will return the template based on the id
+   * @param templateId
+   */
+  public getTemplate(templateId: string): Observable<MissionTemplate> {
+    return this._http.get<MissionTemplate>(`/mission/templates/${templateId}`);
+  }
+
+  /**
+   * this function is to save the actual use case Mission Template i.e. global one.
+   * @param templateId
+   * @param template
+   */
+  public saveTemplate(templateId: string, template: MissionTemplate): Observable<MissionTemplate> {
+    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}`, {data: template});
+  }
+
+  /**
    * will return all the use cases templates we have defined for a mission.
    * @param config
    */
   public getAllTemplates(config?: Config): Observable<Response> {
-    return this._http.get<Response>('/mission/templates', {params: config});
+    return this._http.get<Response>('/mission/templates/all', {params: config});
   }
 
   public create(missionObj: Mission): Observable<Mission> {
@@ -57,6 +74,11 @@ export class MissionService {
     return this._http.put<Innovation>(`/mission/${missionId}/updateMainObjective`, {objective: objective});
   }
 
+  /**
+   * this function is to update the template inside the mission.
+   * @param missionId
+   * @param data
+   */
   public updateTemplate(missionId: string, data: {template: MissionTemplate, comment: string}): Observable<Innovation> {
     return this._http.put<Innovation>(`/mission/${missionId}/updateTemplate`, {data: data});
   }

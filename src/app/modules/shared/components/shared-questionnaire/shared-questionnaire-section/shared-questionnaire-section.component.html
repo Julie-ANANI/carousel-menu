@@ -6,7 +6,10 @@
     <!-- move button / description -->
     <div class="d-flex align-center m-bottom-10">
 
-      <div *ngIf="isEditable" data-tooltip="Move section" class="move-arrows tooltip">
+      <div
+        *ngIf="isEditable || canAccess(['section', 'order'])"
+        data-tooltip="Move section"
+        class="move-arrows tooltip">
         <i (click)="up($event)" [ngClass]="{'disabled': sectionIndex === 0}" class="icon icon-arrow-up"></i>
         <i
           (click)="down($event)"
@@ -15,16 +18,20 @@
         </i>
       </div>
 
+      <!-- view -->
       <ng-container *ngIf="!editSection">
 
-        <label class="m-right-20">
+        <label class="tooltip m-right-20" data-tooltip="Section type">
           <select class="form-select is-sm" disabled>
             <option>{{ sectionIdentifier() || section.type | titlecase }}</option>
           </select>
         </label>
 
         <div class="d-flex flex-wrap">
-          <div *ngFor="let lang of questionnaireLangs" class="m-right-20 d-flex align-center">
+          <div
+            *ngFor="let lang of questionnaireLangs"
+            class="m-right-20 d-flex align-center tooltip"
+            data-tooltip="Section name">
             <ng-container *ngIf="questionnaireLangs.length > 1">
               <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
                 {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
@@ -35,7 +42,9 @@
         </div>
 
       </ng-container>
+      <!-- /view -->
 
+      <!-- edit -->
       <ng-container *ngIf="editSection">
 
         <ng-container *ngIf="sectionsNames.length > 0; else types">
@@ -48,11 +57,16 @@
         </ng-container>
 
         <ng-template #types>
-          <label class="m-right-20">
-            <select (change)="notifyChanges()" [(ngModel)]="section.type" class="form-select is-sm">
-              <option *ngFor="let section of sections" [ngValue]="section.type">{{section.type | titlecase}}</option>
-            </select>
-          </label>
+          <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'type']); else defSEditType">
+            <p class="m-right-20 m-no-bottom">{{ section.type }}</p>
+          </ng-container>
+          <ng-template #defSEditType>
+            <label class="m-right-20">
+              <select (change)="notifyChanges()" [(ngModel)]="section.type" class="form-select is-sm">
+                <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>
+              </select>
+            </label>
+          </ng-template>
         </ng-template>
 
         <!-- name -->
@@ -60,18 +74,24 @@
           <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
             {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
           </label>
-          <input
-            #name
-            (change)="onChangeName(name.value, lang)"
-            [attr.placeholder]="'Section name in ' + (lang === 'fr' ? 'French' : 'English')"
-            [id]="lang"
-            [ngModel]="sectionName(lang)"
-            class="form-input is-sm"
-            type="text">
+          <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'name']); else defSEditName">
+            <p class="m-no-bottom">{{ sectionName(lang) }}</p>
+          </ng-container>
+          <ng-template #defSEditName>
+            <input
+              #name
+              (change)="onChangeName(name.value, lang)"
+              [attr.placeholder]="'Section name in ' + (lang === 'fr' ? 'French' : 'English')"
+              [id]="lang"
+              [ngModel]="sectionName(lang)"
+              class="form-input is-sm"
+              type="text">
+          </ng-template>
         </div>
         <!-- /name -->
 
       </ng-container>
+      <!-- /edit -->
 
     </div>
     <!-- /move button / description -->
@@ -82,7 +102,7 @@
       <!-- delete -->
       <div
         (click)="removeSection($event)"
-        *ngIf="editSection && isEditable"
+        *ngIf="editSection && (isEditable || canAccess(['section', 'delete']))"
         [id]="'sharedQuestionnaireSection-btn-delete-section'"
         class="icon-container is-overlay m-bottom-10 m-right-15">
         <span data-tooltip="Delete" class="tooltip">
@@ -94,7 +114,7 @@
       <!-- edit -->
       <div
         (click)="editSection = !editSection"
-        *ngIf="isEditable"
+        *ngIf="isEditable || canAccess(['section', 'edit']) || canAccess(['section', 'delete'])"
         [id]="'sharedQuestionnaireSection-btn-edit-section'"
         class="icon-container is-overlay m-bottom-10 m-right-15">
         <span [attr.data-tooltip]="editSection ? 'Stop editing' : 'Edit'" class="tooltip">
@@ -126,6 +146,7 @@
       [ngStyle]="{'width': '95%', 'display': isCollapsed ? 'none' : 'block'}"
       class="m-top-2 m-left-auto">
       <app-shared-questionnaire-question
+        [accessPath]="accessPath.concat(['question'])"
         [isEditable]="isEditable"
         [questionIndex]="i"
         [question]="question"
@@ -136,7 +157,7 @@
   <!-- /questions -->
 
   <!-- add question -->
-  <ng-container *ngIf="isEditable">
+  <ng-container *ngIf="isEditable || canAccess(['question', 'add'])">
     <div *ngIf="!isCollapsed " class="text-center m-top-25 m-bottom-50">
       <button
         (click)="addNewQuestion($event)"
