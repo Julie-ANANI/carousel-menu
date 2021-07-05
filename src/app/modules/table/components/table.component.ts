@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
@@ -13,6 +13,7 @@ import { ConfigService } from '../../../services/config/config.service';
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
+import { DatePipe } from '@angular/common';
 
 interface InputGrid {
   index: number;
@@ -155,6 +156,7 @@ export class TableComponent {
   private _inputGrids: Array<InputGrid> = [];
 
   constructor(
+    @Inject(LOCALE_ID) private _locale: string,
     private _translateService: TranslateService,
     private _configService: ConfigService,
     private _localStorageService: LocalStorageService
@@ -1105,6 +1107,13 @@ export class TableComponent {
           break;
         case 'DATE_TIME':
           gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
+          break;
+        case 'DATE':
+          if (this.getContentValue(row, column._attrs[0])) {
+            gridInputToAdd.input = new DatePipe(this._locale).transform(new Date(this.getContentValue(row, column._attrs[0])), 'yyyy-MM-dd');
+          } else {
+            gridInputToAdd.input = '-';
+          }
           break;
         case 'MULTI-CHOICES':
           gridInputToAdd.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));

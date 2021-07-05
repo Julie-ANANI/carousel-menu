@@ -507,6 +507,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           _attrs: ['Date'],
           _name: 'Date',
           _type: 'DATE',
+          _isEditable: true,
+          _editType: 'DATE'
         },
         {
           _attrs: ['Time'],

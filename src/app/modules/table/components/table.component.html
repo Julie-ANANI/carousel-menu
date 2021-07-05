@@ -262,9 +262,15 @@
 
                 <!-- type DATE -->
                 <ng-container *ngSwitchCase="'DATE'">
-                  <div class="text-ellipsis">
+                  <div class="text-ellipsis" *ngIf="!column._isEditable">
                     <span>{{ (getContentValue(row, getAttrs(column)[0])?.toString() | date:dateFormat) }}</span>
                   </div>
+
+                  <ng-container *ngIf="column._isEditable && column._editType==='DATE'">
+                    <ng-container
+                      *ngTemplateOutlet="gridEditDateTemplate; context: {$implicit: {column: column, row:row}}">
+                    </ng-container>
+                  </ng-container>
                 </ng-container>
                 <!-- /type DATE -->
 
@@ -789,6 +795,32 @@
                         [disabled]="getInputGrid(context.row, context.column).disabled"
                         class="form-input is-sm"
                         type="time">
+                    </div>
+                    <div class="d-flex flex-d-column justify-center">
+                      <span class="icon is-md is-primary icon-check m-bottom-1"
+                            (click)="sendEditedGrid($event, context.row, context.column)"
+                            *ngIf="!getInputGrid(context.row, context.column).disabled">
+                          </span>
+
+                      <span class="icon is-md is-primary icon-cross m-top-1"
+                            (click)="cancelEditedGrid($event, context.row, context.column)"
+                            *ngIf="!getInputGrid(context.row, context.column).disabled">
+                          </span>
+                    </div>
+                  </div>
+                </ng-template>
+                <!-- /type TEXT / DEFAULT template-->
+
+                <!-- type TEXT / DEFAULT template-->
+                <ng-template #gridEditDateTemplate let-context>
+                  <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
+                    <div (click)="enableInput($event, context.row, context.column)">
+                      <input
+                        [value]="getInputGrid(context.row, context.column).input | date:'yyyy-MM-dd'"
+                        [ngClass]="getInputGrid(context.row, context.column).className"
+                        [disabled]="getInputGrid(context.row, context.column).disabled"
+                        class="form-input is-sm"
+                        type="date">
                     </div>
                     <div class="d-flex flex-d-column justify-center">
                       <span class="icon is-md is-primary icon-check m-bottom-1"
