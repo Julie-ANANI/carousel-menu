@@ -1137,15 +1137,16 @@ export class TableComponent {
     if (_dataToUpdate) {
       const _attrs = column._attrs.toString().split('.');
       switch (column._editType) {
-        case 'TEXT':
-          lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
-          break;
         case 'MULTI-CHOICES':
           const choiceItem = column._choices.find(item => item._alias.toLowerCase() === _dataToUpdate.input.toLowerCase());
           if (choiceItem) {
             lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
           }
           _dataToUpdate.input = choiceItem._name;
+          break;
+        default:
+          lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
+          break;
       }
       this.performAction.emit({
         _action: 'Update grid',
@@ -1163,11 +1164,19 @@ export class TableComponent {
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (_dataToUpdate) {
       switch (column._editType) {
-        case 'TEXT':
-          _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+        case 'DATE':
+          if (this.getContentValue(row, column._attrs[0])) {
+            _dataToUpdate.input = new DatePipe(this._locale).transform(new Date(this.getContentValue(row, column._attrs[0])), 'yyyy-MM-dd');
+          } else {
+            _dataToUpdate.input = '-';
+          }
           break;
         case 'MULTI-CHOICES':
           _dataToUpdate.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
+          break;
+        default:
+          _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+          break;
       }
       _dataToUpdate.disabled = true;
       _dataToUpdate.className = 'no-editable-grid';

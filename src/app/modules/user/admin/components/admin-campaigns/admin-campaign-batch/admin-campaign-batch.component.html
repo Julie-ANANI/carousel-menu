@@ -163,7 +163,7 @@
           <app-shared-table
             (editRow)="onClickEdit($event, batch)"
             [config]="localConfig"
-            (performAction)="_updateBatch($event)"
+            (performAction)="_updateBatch($event, batch)"
             [data]="getBatch(batchIndex)">
           </app-shared-table>
         </div>

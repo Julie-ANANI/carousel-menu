@@ -338,7 +338,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
             if (this._stats.batches) {
               this._getMissionToUpdate(this._stats.batches);
               this._stats.batches.forEach((batch: Batch) => {
-                console.log(batch);
                 this._batchesTable.push(this._initBatchTable(batch));
               });
             }
@@ -641,7 +640,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         break;
 
       case 'EDIT_BATCH':
-        this.updateBatch(form);
+        this._formBatchToUpdate(form);
         break;
     }
   }
@@ -819,6 +818,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         break;
     }
 
+    console.log(batch);
+
     this._content = this._contentWorkflowStep(batch, step);
     this._currentRow = row;
     this._currentBatch = batch;
@@ -844,45 +845,57 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     return content;
   }
 
-  private updateBatch(formValue: FormGroup) {
-    switch (this._currentStep) {
+  private _batchToUpdate(batch: Batch, step: any, date: any, time: any, workflow: any): Batch {
+    switch (step) {
       case 0:
-        this._currentBatch.firstMail = AdminCampaignBatchComponent._computeDate(
-          formValue.value['date'],
-          formValue.value['time']
+        batch.firstMail = AdminCampaignBatchComponent._computeDate(
+          date,
+          time
         );
         break;
 
       case 1:
-        this._currentBatch.secondMail = AdminCampaignBatchComponent._computeDate(
-          formValue.value['date'],
-          formValue.value['time']
+        batch.secondMail = AdminCampaignBatchComponent._computeDate(
+          date,
+          time
         );
         break;
 
       case 2:
-        this._currentBatch.thirdMail = AdminCampaignBatchComponent._computeDate(
-          formValue.value['date'],
-          formValue.value['time']
+        batch.thirdMail = AdminCampaignBatchComponent._computeDate(
+          date,
+          time
         );
         break;
     }
+    batch.workflow = workflow;
+    return batch;
+  }
 
-    this._currentBatch.workflow = formValue.value['workflow'];
+  private _formBatchToUpdate(formValue: FormGroup) {
+    this._currentBatch = this._batchToUpdate(this._currentBatch, this._currentStep,
+      formValue.value['date'], formValue.value['time'], formValue.value['workflow']);
+    this.updateBatch(this._currentBatch);
+  }
 
+
+  private updateBatch(batchToUpdate: Batch, needToUpdateTable = true) {
     this._campaignService
-      .updateBatch(this._currentBatch)
+      .updateBatch(batchToUpdate)
       .pipe(first())
       .subscribe(
         (batch) => {
-          this._stats.batches[this._getBatchIndex(batch._id)] = batch;
-          this._batchesTable.every((table, index) => {
-            if (table._selector === batch._id) {
-              this._batchesTable[index] = this._initBatchTable(batch);
-              return false;
-            }
-            return true;
-          });
+          console.log(batch);
+          if (needToUpdateTable) {
+            this._stats.batches[this._getBatchIndex(batch._id)] = batch;
+            this._batchesTable.every((table, index) => {
+              if (table._selector === batch._id) {
+                this._batchesTable[index] = this._initBatchTable(batch);
+                return false;
+              }
+              return true;
+            });
+          }
           this._translateNotificationsService.success(
             'Success',
             'The batch is updated.'
@@ -898,9 +911,19 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       );
   }
 
-  _updateBatch($event: any) {
-    if ($event) {
 
+  _updateBatch($event: any, batch: Batch) {
+    if ($event) {
+      switch ($event._action) {
+        case 'Update grid':
+          const _batchToUpdate = this._batchToUpdate(batch, $event._context.Step, $event._context.Date,
+            $event._context.Time, batch.workflow);
+          batch.firstMail = _batchToUpdate.firstMail;
+          batch.secondMail = _batchToUpdate.secondMail;
+          batch.thirdMail = _batchToUpdate.thirdMail;
+          this.updateBatch(batch, false);
+          break;
+      }
     }
   }
 

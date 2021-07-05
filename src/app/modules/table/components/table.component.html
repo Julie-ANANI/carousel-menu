@@ -816,7 +816,7 @@
                   <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
                     <div (click)="enableInput($event, context.row, context.column)">
                       <input
-                        [value]="getInputGrid(context.row, context.column).input | date:'yyyy-MM-dd'"
+                        [(ngModel)]="getInputGrid(context.row, context.column).input"
                         [ngClass]="getInputGrid(context.row, context.column).className"
                         [disabled]="getInputGrid(context.row, context.column).disabled"
                         class="form-input is-sm"
