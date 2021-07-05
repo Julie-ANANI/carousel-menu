@@ -794,36 +794,40 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   public onClickEdit(row: any, batch: Batch) {
-    let step = '';
-
-    switch (row.Step) {
-      case '01 - Hello World':
-        step = 'FIRST';
-        this._currentStep = 0;
-        break;
-
-      case '02 - 2nd try':
-        step = 'SECOND';
-        this._currentStep = 1;
-        break;
-
-      case '03 - 3rd try':
-        step = 'THIRD';
-        this._currentStep = 2;
-        break;
-
-      case '04 - Thanks':
-        step = 'THANKS';
-        this._currentStep = 3;
-        break;
-    }
-
-    console.log(batch);
-
+    const stepInfo = this._currentStepInfo(row.Step);
+    const step = stepInfo.step || '';
+    this._currentStep = stepInfo.nbStep;
     this._content = this._contentWorkflowStep(batch, step);
     this._currentRow = row;
     this._currentBatch = batch;
     this.activateSidebar('EDIT_BATCH');
+  }
+
+  private _currentStepInfo(mail: string) {
+    let nbStep = 0;
+    let step = '';
+    switch (mail) {
+      case '01 - Hello World':
+        step = 'FIRST';
+        nbStep = 0;
+        break;
+
+      case '02 - 2nd try':
+        step = 'SECOND';
+        nbStep = 1;
+        break;
+
+      case '03 - 3rd try':
+        step = 'THIRD';
+        nbStep = 2;
+        break;
+
+      case '04 - Thanks':
+        step = 'THANKS';
+        nbStep = 3;
+        break;
+    }
+    return {step: step, nbStep: nbStep};
   }
 
   private _contentWorkflowStep(batch: Batch, step: any): any {
@@ -916,12 +920,10 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     if ($event) {
       switch ($event._action) {
         case 'Update grid':
-          const _batchToUpdate = this._batchToUpdate(batch, $event._context.Step, $event._context.Date,
+          const stepInfo = this._currentStepInfo($event._context.Step);
+          const _batchToUpdate = this._batchToUpdate(batch, stepInfo.nbStep, $event._context.Date,
             $event._context.Time, batch.workflow);
-          batch.firstMail = _batchToUpdate.firstMail;
-          batch.secondMail = _batchToUpdate.secondMail;
-          batch.thirdMail = _batchToUpdate.thirdMail;
-          this.updateBatch(batch, false);
+          this.updateBatch(_batchToUpdate, false);
           break;
       }
     }
