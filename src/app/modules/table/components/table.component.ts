@@ -1081,14 +1081,11 @@ export class TableComponent {
 
   enableInput(event: Event, row: any, column: Column) {
     event.preventDefault();
-    console.log(row);
-    console.log(column);
     const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (gridInput) {
       gridInput.disabled = false;
       gridInput.className = 'editable-grid';
     }
-    console.log(gridInput);
   }
 
   getInputGrid(row: any, column: Column) {

@@ -634,7 +634,8 @@
                   <!-- not clickable -->
                   <ng-container *ngIf="i !== table._clickIndex - 1">
                     <div class="text-ellipsis" [title]="getTitle(row, column)"
-                         [ngClass]="(column._isEditable? 'cell-editable': '') "
+                         [ngClass]="(column._isEditable? 'editable-grid': '') "
+                         *ngIf="column._editType !== 'MULTI-CHOICES'"
                          [ngStyle]="getTextColor(row, column)">
                       <ng-container *ngFor="let attr of getAttrs(column)">
                         <!-- no-editable-->
@@ -644,12 +645,37 @@
                         <!-- /no-editable-->
 
                         <!-- editable-->
-                        <ng-container
-                          *ngTemplateOutlet="gridEditTextTemplate; context: {$implicit: {column: column, row:row,attr: attr}}">
+                        <ng-container *ngIf="column._isEditable && column._editType=== 'TEXT'">
+                          <ng-container
+                            *ngTemplateOutlet="gridEditTextTemplate; context: {$implicit: {column: column, row:row,attr: attr}}">
+                          </ng-container>
                         </ng-container>
                         <!-- /editable-->
                       </ng-container>
                     </div>
+
+                    <div
+                      [title]="getTitle(row, column)"
+                      *ngIf="column._isEditable && column._editType=== 'MULTI-CHOICES' && getInputGrid(row, column).disabled"
+                      (click)="enableInput($event, row, column)"
+                      class="text-ellipsis no-editable-grid d-flex align-center">
+                      <ng-container *ngFor="let attr of getAttrs(column)">
+                        <!-- no-editable-->
+                        <ng-container>
+                          {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
+                        </ng-container>
+                        <!-- /no-editable-->
+                      </ng-container>
+                    </div>
+
+                    <!-- editable-->
+                    <ng-container *ngIf="column._isEditable && column._editType=== 'MULTI-CHOICES'">
+                      <ng-container
+                        *ngTemplateOutlet="gridEditMultipleTemplate; context: {$implicit: {column: column, row:row}}">
+                      </ng-container>
+                    </ng-container>
+                    <!-- /editable-->
+
                     <ng-container
                       *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>

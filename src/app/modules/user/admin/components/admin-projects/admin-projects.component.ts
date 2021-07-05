@@ -149,9 +149,15 @@ export class AdminProjectsComponent implements OnInit {
       _type: 'TEXT',
       _isSortable: true,
       _isHidden: !this.canAccess(['tableColumns', 'type']),
-      _width: '100px',
+      _width: '180px',
       _isEditable: true,
       _editType: 'MULTI-CHOICES',
+      _choices: [
+        {_name: 'USER', _alias: 'User'},
+        {_name: 'CLIENT', _alias: 'Client'},
+        {_name: 'DEMO', _alias: 'Demo'},
+        {_name: 'TEST', _alias: 'Test'},
+      ]
     },
     {
       _attrs: [this._mainObjective],
