@@ -131,8 +131,10 @@ export class AdminProjectsComponent implements OnInit {
       _attrs: ['owner.firstName', 'owner.lastName'],
       _name: 'Owner',
       _type: 'TEXT',
-      _width: '180px',
-      _isHidden: !this.canAccess(['tableColumns', 'owner'])
+      _width: '230px',
+      _isHidden: !this.canAccess(['tableColumns', 'owner']),
+      _isEditable: true,
+      _editType: 'USER-INPUT'
     },
     {
       _attrs: ['owner.company.name'],

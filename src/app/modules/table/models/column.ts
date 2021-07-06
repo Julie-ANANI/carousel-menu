@@ -50,6 +50,7 @@ export type types =
   | 'DROPDOWN'
   | 'DATE_TIME'
   | 'NUMBER'
+  | 'USER-INPUT'
   | 'PATTERNS-OBJECT-LIST'
   | 'NAME-LABEL-LIST'
   | 'LABEL-OBJECT-LIST';
