@@ -32,6 +32,9 @@
   }
 
   .form-input {
+    color: #333333;
+    font-size: 13px;
+
     &:disabled, &.disabled {
       background: inherit;
       color: inherit;
