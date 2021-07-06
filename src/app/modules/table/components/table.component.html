@@ -714,8 +714,8 @@
                             (click)="enableInput($event, row, column)"
                             *ngIf="getInputGrid(row, column).disabled"
                             class="text-ellipsis no-editable-grid d-flex align-center">
-                            <ng-container *ngFor="let attr of getAttrs(column)">
-                              {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
+                            <ng-container >
+                              {{(getInputGrid(row, column).input.name || '-' | titlecase)}}
                             </ng-container>
                           </div>
                           <ng-container
@@ -892,7 +892,8 @@
     <div (click)="enableInput($event, context.row, context.column)">
       <label class="relative m-no-right mxw-full is-xs">
         <app-utility-auto-suggestion
-          [config]="{default: getInputGrid(context.row, context.column).input, placeholder: ''}"
+          (valueSelected)="getUserSelected($event, context.row, context.column)"
+          [config]="{default: getInputGrid(context.row, context.column).input.name}"
           [isSmallInput]="true">
         </app-utility-auto-suggestion>
       </label>

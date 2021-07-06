@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
 import { DatePipe } from '@angular/common';
+import { UserSuggestion } from '../../user/admin/components/admin-project/admin-project-settings/admin-project-settings.component';
 
 /**
  * editable cell
@@ -24,7 +25,7 @@ interface InputGrid {
   disabled: boolean; // input disabled?
   value: any; // content value
   className: string; // class => input style
-  input: string; // input ngModel
+  input: any; // input ngModel
 }
 
 @Component({
@@ -1106,7 +1107,7 @@ export class TableComponent {
    */
   getInputGrid(row: any, column: Column) {
     if (column._isEditable) {
-      const gridInputToAdd = {
+      const gridInputToAdd: InputGrid = {
         index: row,
         disabled: true,
         column: column,
@@ -1125,6 +1126,13 @@ export class TableComponent {
           break;
         case 'MULTI-CHOICES':
           gridInputToAdd.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
+          break;
+        case 'USER-INPUT':
+          let name = '';
+          for (const _attr of column._attrs) {
+            name += this.getContentValue(row, _attr) + ' ';
+          }
+          gridInputToAdd.input = {name: name};
           break;
         default:
           gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
@@ -1192,12 +1200,26 @@ export class TableComponent {
         case 'MULTI-CHOICES':
           _dataToUpdate.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
           break;
+        case 'USER-INPUT':
+          let name = '';
+          for (const _attr of column._attrs) {
+            name += this.getContentValue(row, _attr) + ' ';
+          }
+          _dataToUpdate.input = {name: name};
+          break;
         default:
           _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
           break;
       }
       _dataToUpdate.disabled = true;
       _dataToUpdate.className = 'no-editable-grid';
+    }
+  }
+
+  getUserSelected(value: UserSuggestion, row: any, column: Column) {
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    if (_dataToUpdate && value && value._id) {
+      _dataToUpdate.input = value;
     }
   }
 }

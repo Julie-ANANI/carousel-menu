@@ -755,7 +755,14 @@ export class AdminProjectsComponent implements OnInit {
           type: value
         };
         this._updateMission(missionObject, context.mission._id);
-
+        break;
+      case 'owner.firstName':
+        const ownerObject = {
+          owner: value
+        };
+        if (ownerObject.owner && ownerObject.owner._id) {
+          this._updateInnovation('The project has been updated.', ownerObject, context._id);
+        }
     }
   }
 
@@ -783,7 +790,7 @@ export class AdminProjectsComponent implements OnInit {
       .save(_innovationId, saveObject)
       .pipe(first())
       .subscribe(
-        () => {
+        (res) => {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
@@ -795,5 +802,6 @@ export class AdminProjectsComponent implements OnInit {
         }
       );
   }
+
 
 }
