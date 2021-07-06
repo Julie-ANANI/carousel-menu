@@ -133,7 +133,7 @@ export class AdminProjectsComponent implements OnInit {
       _type: 'TEXT',
       _width: '230px',
       _isHidden: !this.canAccess(['tableColumns', 'owner']),
-      _isEditable: true,
+      _isEditable: this.canAccess(['canEdit', 'owner']),
       _editType: 'USER-INPUT'
     },
     {
@@ -152,7 +152,7 @@ export class AdminProjectsComponent implements OnInit {
       _isSortable: true,
       _isHidden: !this.canAccess(['tableColumns', 'type']),
       _width: '180px',
-      _isEditable: true,
+      _isEditable: this.canAccess(['canEdit', 'type']),
       _editType: 'MULTI-CHOICES',
       _choices: [
         {_name: 'USER', _alias: 'User'},
@@ -215,7 +215,7 @@ export class AdminProjectsComponent implements OnInit {
         {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
         {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
       ],
-      _isEditable: true,
+      _isEditable: this.canAccess(['canEdit', 'status']),
       _editType: 'MULTI-CHOICES'
     },
     {
@@ -256,14 +256,15 @@ export class AdminProjectsComponent implements OnInit {
         _isSortable: true,
         _isSearchable: this.canAccess(['filterBy', 'status']),
         _isHidden: !this.canAccess(['tableColumns', 'status']),
-        _width: '150px',
+        _width: '200px',
         _choices: [
           {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
           {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
           {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
           {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
         ],
-        _isEditable: true
+        _isEditable: this.canAccess(['canEdit', 'status']),
+        _editType: 'MULTI-CHOICES'
       },
       {
         _attrs: [this._mainObjective],
@@ -290,8 +291,10 @@ export class AdminProjectsComponent implements OnInit {
         _attrs: ['owner.firstName', 'owner.lastName'],
         _name: 'Owner',
         _type: 'TEXT',
-        _width: '180px',
-        _isHidden: !this.canAccess(['tableColumns', 'owner'])
+        _width: '230px',
+        _isHidden: !this.canAccess(['tableColumns', 'owner']),
+        _isEditable: this.canAccess(['canEdit', 'owner']),
+        _editType: 'USER-INPUT'
       },
       {
         _attrs: ['innovationCards.title'],
@@ -315,7 +318,15 @@ export class AdminProjectsComponent implements OnInit {
         _type: 'TEXT',
         _isSortable: true,
         _isHidden: !this.canAccess(['tableColumns', 'type']),
-        _width: '100px'
+        _width: '200px',
+        _isEditable: this.canAccess(['canEdit', 'type']),
+        _editType: 'MULTI-CHOICES',
+        _choices: [
+          {_name: 'USER', _alias: 'User'},
+          {_name: 'CLIENT', _alias: 'Client'},
+          {_name: 'DEMO', _alias: 'Demo'},
+          {_name: 'TEST', _alias: 'Test'},
+        ]
       },
       {
         _attrs: ['type'],
@@ -394,7 +405,7 @@ export class AdminProjectsComponent implements OnInit {
           {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
           {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
           {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-        ]
+        ],
       },
       {
         _attrs: ['emailSent'],
@@ -423,9 +434,15 @@ export class AdminProjectsComponent implements OnInit {
         _type: 'TEXT',
         _isSortable: true,
         _isHidden: !this.canAccess(['tableColumns', 'type']),
-        _width: '100px',
-        _isEditable: true,
+        _width: '200px',
+        _isEditable: this.canAccess(['canEdit', 'type']),
         _editType: 'MULTI-CHOICES',
+        _choices: [
+          {_name: 'USER', _alias: 'User'},
+          {_name: 'CLIENT', _alias: 'Client'},
+          {_name: 'DEMO', _alias: 'Demo'},
+          {_name: 'TEST', _alias: 'Test'},
+        ]
       },
       {
         _attrs: ['type'],
@@ -735,9 +752,8 @@ export class AdminProjectsComponent implements OnInit {
     if (event) {
       switch (event._action) {
         case 'Update grid':
-          console.log(event._context);
           this._update(event._context, event._column, event._value);
-
+          break;
       }
     }
   }

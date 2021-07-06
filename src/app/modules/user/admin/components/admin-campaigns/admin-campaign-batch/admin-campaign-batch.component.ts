@@ -506,14 +506,14 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           _attrs: ['Date'],
           _name: 'Date',
           _type: 'DATE',
-          _isEditable: true,
+          _isEditable: this.canAccess(['canEdit', 'date']),
           _editType: 'DATE'
         },
         {
           _attrs: ['Time'],
           _name: 'Time',
           _type: 'TEXT',
-          _isEditable: true,
+          _isEditable: this.canAccess(['canEdit', 'time']),
           _editType: 'DATE_TIME'
         },
         {
@@ -524,7 +524,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
             {_name: 'Sent', _alias: 'Sent', _class: 'label is-success'},
             {_name: 'Planned', _alias: 'Planned', _class: 'label is-progress'},
           ],
-          _isEditable: false
         },
       ],
     };
