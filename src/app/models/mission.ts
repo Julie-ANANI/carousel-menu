@@ -31,10 +31,15 @@ export interface MissionTemplateSection {
   type: MissionTemplateSectionType;
 
   /**
+   * When we save the Template in the mission the type will be 'Mission Question'
+   * other wise it will be
+   * {
+   *   question: questionId,
+   *   essential: boolean
+   * }
    * contains the list of the question for the template.
-   * includes both the essential and complementary questions.
    */
-  questions: Array<MissionQuestion>;
+  questions: Array<any>;
 
   /**
    * define the name of the section and the lang.
@@ -122,6 +127,8 @@ export interface MissionQuestion {
   readonly created?: Date;
 
   /**
+   * this value we use when we save the question in the innovation mission only so that in the settings
+   * we can list the question.
    * COMPLEMENTARY - each template has some additional questions that can be selected or not. client has right
    * to change these questions.
    * ESSENTIALS - these are questions defined by us for each template every template has fixed number of these
@@ -217,7 +224,6 @@ export interface MissionTemplate {
    * number of sections to have in the Innovation Card and of which type.
    * length of array represents the number of the section in innovation card.
    * And we also use the sections to show the sections of the questionnaire
-   * Every section will have essentials and complementary questions in it.
    *
    * PLEASE NOTE: we don't use the 'NOTHING' section info to create the innovation card
    * we need it for the questionnaire because it is for general questions.

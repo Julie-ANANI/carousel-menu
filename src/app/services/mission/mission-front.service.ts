@@ -24,9 +24,17 @@ export class MissionFrontService {
   public static combineComplementaryObjectives(missionSections: Array<MissionTemplateSection>): Array<MissionQuestion> {
     const objectives: Array<MissionQuestion> = [];
     for (let i = 0 ; i < missionSections.length; i++) {
-      objectives.push(...MissionFrontService.complementaryObjectives(missionSections[i].questions));
+      objectives.push(...MissionFrontService.complementaryQuestions(missionSections[i].questions));
     }
     return objectives;
+  }
+
+  /**
+   * return the list of the complementary objectives
+   * @param questions
+   */
+  public static complementaryQuestions(questions: Array<MissionQuestion>): Array<MissionQuestion> {
+    return questions.filter((_question) => _question.type === 'COMPLEMENTARY');
   }
 
   /**
@@ -41,19 +49,25 @@ export class MissionFrontService {
   }
 
   /**
-   * return the list of the complementary objectives
-   * @param questions
+   * return the list of the questions whose essentials === false and map it Array<MissionQuestion>
+   * @param questions - only pass the questions of the template
    */
-  public static complementaryObjectives(questions: Array<MissionQuestion>): Array<MissionQuestion> {
-    return questions.filter((_question) => _question.type === 'COMPLEMENTARY');
+  public static complementaryObjectives(questions: Array<any>): Array<MissionQuestion> {
+    return questions.filter((_question) => !_question.essential).map((value) => {
+      value.question.type = 'COMPLEMENTARY';
+      return value.question;
+    });
   }
 
   /**
-   * return the list of the essentials objectives
-   * @param questions
+   * return the list of the questions whose essentials === true and map it Array<MissionQuestion>
+   * @param questions - only pass the questions of the template
    */
-  public static essentialsObjectives(questions: Array<MissionQuestion>): Array<MissionQuestion> {
-    return questions.filter((_question) => _question.type === 'ESSENTIAL');
+  public static essentialsObjectives(questions: Array<any>): Array<MissionQuestion> {
+    return questions.filter((_question) => !!_question.essential).map((value) => {
+      value.question.type = 'ESSENTIAL';
+      return value.question;
+    });
   }
 
   /***

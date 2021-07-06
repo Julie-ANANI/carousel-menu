@@ -499,8 +499,8 @@
     <!-- /COLLABORATORS -->
 
     <!-- checkbox for SECONDARY_OBJECTIVE | PRINCIPAL_OBJECTIVE -->
-    <ng-container *ngIf="hasMissionTemplate && (activeModalSection.name === 'PRINCIPAL_OBJECTIVE'
-    || activeModalSection.name === 'SECONDARY_OBJECTIVE')">
+    <ng-container *ngIf="!isFetchingTemplates && hasMissionTemplate && (activeModalSection.name ===
+    'PRINCIPAL_OBJECTIVE' || activeModalSection.name === 'SECONDARY_OBJECTIVE')">
       <div class="p-top-40 m-left-auto m-right-auto mxw-600">
         <label class="form-checkbox p-left-30">
           <input
