@@ -83,6 +83,10 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _showModal = false;
 
+  private _valuesToSave: any = {};
+
+  private _toSaveQuestion = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _missionService: MissionService,
               private _activatedRoute: ActivatedRoute,
@@ -93,6 +97,7 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   ngOnInit() {
     this._missionTemplate = this._missionQuestionService.template;
+    this._initStack();
 
     this._activatedRoute.params.subscribe((params) => {
       const id = params['templateId'] || '';
@@ -100,6 +105,12 @@ export class AdminEditUseCaseComponent implements OnInit {
         this._getTemplate(id);
       }
     });
+  }
+
+  private _initStack() {
+    this._valuesToSave = {
+      'question': {}
+    };
   }
 
   private _getTemplate(id: string) {
@@ -130,7 +141,7 @@ export class AdminEditUseCaseComponent implements OnInit {
   }
 
   public onChangeTemplate(event: MissionTemplate) {
-    if (this.canAccess(['section', 'edit']) || this.canAccess(['question', 'edit'])) {
+    if (this.canAccess(['section', 'edit'])) {
       this._missionTemplate = event;
       this._toBeSaved = true;
     }
@@ -145,18 +156,27 @@ export class AdminEditUseCaseComponent implements OnInit {
     event.preventDefault();
     if (this._validate.tool && this._validate.template) {
       this._isSaving = true;
-      this._missionService.saveTemplate(this._missionTemplate._id, this._missionTemplate)
-        .pipe(first())
-        .subscribe((_) => {
-          this.closeModal();
-          this._translateNotificationsService.error('Success', 'The use case has been updated successfully.');
-          this._isSaving = false;
-        }, error => {
-          this._isSaving = false;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
-          console.error(error);
-        });
+      if (this._toSaveQuestion) {
+
+      } else {
+        this._useCaseUpdate();
+      }
     }
+  }
+
+  private _useCaseUpdate() {
+    this._missionService.saveTemplate(this._missionTemplate._id, this._missionTemplate)
+      .pipe(first())
+      .subscribe((_) => {
+        this.closeModal();
+        this._translateNotificationsService.success('Success', 'The use case has been updated successfully.');
+        this._isSaving = false;
+        this._toBeSaved = false;
+      }, error => {
+        this._isSaving = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        console.error(error);
+      });
   }
 
   public templateName() {
@@ -169,6 +189,19 @@ export class AdminEditUseCaseComponent implements OnInit {
       this._showModal = true;
       this._validate = <ConfirmUpdate>{};
     }
+  }
+
+  public changeStack(event: {key: string, value: any}) {
+    console.log(event);
+    if (!!event && this.canAccess(['question', 'edit'])) {
+
+      switch (event.key) {
+
+      }
+
+      this._toBeSaved = true;
+    }
+    console.log(this._valuesToSave);
   }
 
 }

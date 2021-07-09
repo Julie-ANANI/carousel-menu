@@ -142,23 +142,41 @@
   <!-- questions -->
   <ng-container *ngIf="section.questions.length > 0">
     <div
-      *ngFor="let question of section.questions; let i = index;"
+      *ngFor="let ques of section.questions; let i = index;"
       [ngStyle]="{'width': '95%', 'display': isCollapsed ? 'none' : 'block'}"
       class="m-top-2 m-left-auto">
-      <app-shared-questionnaire-question
-        [accessPath]="accessPath.concat(['question'])"
-        [isEditable]="isEditable"
-        [questionIndex]="i"
-        [question]="question"
-        [sectionIndex]="sectionIndex">
-      </app-shared-questionnaire-question>
+
+      <!-- library -->
+      <ng-container *ngIf="isLibraryView; else defQuesView">
+        <app-shared-questionnaire-question
+          [accessPath]="accessPath.concat(['question'])"
+          [isEssential]="ques['essential']"
+          [isLibraryView]="true"
+          [questionIndex]="i"
+          [question]="ques['question']"
+          [sectionIndex]="sectionIndex">
+        </app-shared-questionnaire-question>
+      </ng-container>
+      <!-- /library -->
+
+      <!-- default -->
+      <ng-template #defQuesView>
+        <app-shared-questionnaire-question
+          [isEditable]="isEditable"
+          [questionIndex]="i"
+          [question]="ques"
+          [sectionIndex]="sectionIndex">
+        </app-shared-questionnaire-question>
+      </ng-template>
+      <!-- /default -->
+
     </div>
   </ng-container>
   <!-- /questions -->
 
   <!-- add question -->
-  <ng-container *ngIf="isEditable || canAccess(['question', 'add'])">
-    <div *ngIf="!isCollapsed " class="text-center m-top-25 m-bottom-50">
+  <ng-container *ngIf="isEditable">
+    <div *ngIf="!isCollapsed" class="text-center m-top-25 m-bottom-50">
       <button
         (click)="addNewQuestion($event)"
         [id]="'sharedQuestionnaireSection-btn-add-question'"
@@ -174,3 +192,76 @@
   <!-- /add question -->
 
 </div>
+
+
+<app-utility-modal-empty [(showModal)]="showModal" *ngIf="isLibraryView">
+
+  <section class="modal-body">
+
+    <h2 class="title is-4 text-center text-bold m-bottom-30">Add question</h2>
+
+    <p class="m-bottom-15">Select the way you would like to add the question.</p>
+
+    <!-- from scratch -->
+    <div class="form-group">
+      <label class="form-radio">
+        <input (change)="onChangeAddQuestion('SCRATCH')" type="radio" name="addQuestion">
+        <i class="form-icon"></i> From Scratch
+      </label>
+    </div>
+
+    <ng-container *ngIf="questionToAdd.from === 'SCRATCH'">
+      <div class="mxw-300 m-left-auto m-right-auto m-top-10 m-bottom-10">
+        <label>
+          <select
+            (ngModelChange)="questionToAdd.value = $event"
+            [ngModel]="questionToAdd.value || ''"
+            class="form-select is-sm">
+            <option value="" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
+            <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+            <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+            <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+            <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+            <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+            <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+          </select>
+        </label>
+      </div>
+    </ng-container>
+    <!-- /from scratch -->
+
+    <!-- from library -->
+    <div class="form-group">
+      <label class="form-radio">
+        <input (change)="onChangeAddQuestion('LIBRARY')" type="radio" name="addQuestion">
+        <i class="form-icon"></i> From Library
+      </label>
+    </div>
+
+    <ng-container *ngIf="questionToAdd.from === 'LIBRARY'">
+    </ng-container>
+    <!-- /from library -->
+
+  </section>
+
+  <footer class="modal-footer justify-center">
+
+    <button
+      (click)="closeModal()"
+      [id]="'btn-cancel'"
+      class="button modal-cancel"
+      type="button">
+      Cancel
+    </button>
+
+    <button
+      (click)="onClicAdd($event)"
+      [disabled]="!questionToAdd.from || !questionToAdd.value"
+      class="button is-community"
+      type="button">
+      Add
+    </button>
+
+  </footer>
+
+</app-utility-modal-empty>

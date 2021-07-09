@@ -57,7 +57,9 @@
         <section class="p-top-20">
           <app-shared-questionnaire
             (templateChange)="onChangeTemplate($event)"
+            (valueToSave)="changeStack($event)"
             [accessPath]="accessPath"
+            [isLibraryView]="true"
             [questionnaireLanguages]="questionnaireLanguages"
             [template]="missionTemplate">
           </app-shared-questionnaire>

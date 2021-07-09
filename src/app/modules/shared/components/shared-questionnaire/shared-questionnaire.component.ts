@@ -13,6 +13,12 @@ import {RolesFrontService} from '../../../../services/roles/roles-front.service'
 export class SharedQuestionnaireComponent implements OnInit {
 
   /**
+   * its true if we are integrating this under Library route.
+   * because there we are editing the use case template or questions directly from the collections.
+   */
+  @Input() isLibraryView = false;
+
+  /**
    * provide the access path if you are not providing the isEditable input value to give access
    * to the functionalities.
    * Example: use it on the Libraries page.
@@ -49,6 +55,11 @@ export class SharedQuestionnaireComponent implements OnInit {
   }
 
   @Output() templateChange: EventEmitter<MissionTemplate> = new EventEmitter<MissionTemplate>();
+
+  /**
+   * do not change this as we are using this under the Library page use case.
+   */
+  @Output() valueToSave: EventEmitter<any> = new EventEmitter<any>();
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
