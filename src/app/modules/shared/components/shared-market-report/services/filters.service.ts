@@ -63,7 +63,7 @@ export class FilterService {
           break;
         case 'COUNTRIES':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            const country = answer.country.flag || answer.professional.country;
+            const country = (answer.country && answer.country.flag) || answer.professional.country;
             const selectedCountries = Object.keys(filter.value.countries).filter((key) => filter.value.countries[key]);
             return selectedCountries.includes(country);
           });

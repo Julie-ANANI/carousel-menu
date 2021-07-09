@@ -110,7 +110,9 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       }
 
       this._countries = response.answers.reduce((acc: any, answer: any) => {
-        if (acc.indexOf(answer.country.flag) === -1) {
+        if (!!answer.country &&
+          !!answer.country.flag &&
+          acc.indexOf(answer.country.flag) === -1) {
           acc.push(answer.country.flag);
         }
         return acc;

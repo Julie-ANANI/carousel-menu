@@ -67,7 +67,9 @@ export class AdminCommunityProjectComponent {
     this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
       if (response && response.answers) {
         this._targetCountries = response.answers.reduce((acc, answer) => {
-          if (acc.indexOf(answer.country.flag) === -1) {
+          if (!!answer.country &&
+            !!answer.country.flag &&
+            acc.indexOf(answer.country.flag) === -1) {
             acc.push(answer.country.flag);
           }
           return acc;
