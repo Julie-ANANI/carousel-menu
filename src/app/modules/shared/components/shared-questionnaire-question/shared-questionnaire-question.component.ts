@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {picto, Picto} from '../../../../models/static-data/picto';
 import {
   MissionQuestion,
@@ -119,6 +119,11 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   @Input() set sectionIndex(value: number) {
     this._sectionIndex = value;
   }
+
+  /**
+   * do not change this as we are using this under the Library page use case.
+   */
+  @Output() valueToSave: EventEmitter<any> = new EventEmitter<any>();
 
   private _question: MissionQuestion = <MissionQuestion>{};
 
