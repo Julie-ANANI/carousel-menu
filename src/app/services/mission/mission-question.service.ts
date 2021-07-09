@@ -462,24 +462,31 @@ export class MissionQuestionService {
   /**
    * add a new question in the section complementary list with the predefined value.
    * @param sectionIndex
+   * @param type
+   * @param returnValue - when true return the question not add it in section
    */
-  public addQuestion(sectionIndex: number) {
+  public addQuestion(sectionIndex: number, type: MissionQuestionType = 'radio', returnValue = false) {
     if (this._template && this._template.sections[sectionIndex] && this._template.sections[sectionIndex].questions) {
 
       let question: MissionQuestion = {
         type: 'COMPLEMENTARY',
-        controlType: 'radio',
+        controlType: type,
         visibility: true,
         canComment: true,
         randomization: false,
         sensitiveAnswerData: false,
         identifier: this.generateId(),
-        entry: this.createQuestionEntry( 'radio'),
+        entry: this.createQuestionEntry(type),
       };
 
-      question = this.configureQuestionOptions(question);
-      this._template.sections[sectionIndex].questions.push(question);
-      this._emitTemplate();
+      if (!returnValue) {
+        question = this.configureQuestionOptions(question);
+        this._template.sections[sectionIndex].questions.push(question);
+        this._emitTemplate();
+      } else {
+        this.configureQuestion(question);
+        return { essential: false, question: question };
+      }
     }
   }
 

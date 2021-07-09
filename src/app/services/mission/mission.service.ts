@@ -37,7 +37,11 @@ export class MissionService {
    * @param template
    */
   public saveTemplate(templateId: string, template: MissionTemplate): Observable<MissionTemplate> {
-    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}`, {data: template});
+    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}`, template);
+  }
+
+  public updateUseCase(templateId: string, data: {}): Observable<MissionTemplate> {
+    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}`, data);
   }
 
   /**
