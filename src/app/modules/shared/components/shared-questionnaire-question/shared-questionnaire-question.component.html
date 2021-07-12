@@ -1,4 +1,4 @@
-<div [id]="'question-' + questionBelong.toLowerCase() + '-' + questionIndex" class="shared-questionnaire-question">
+<div [id]="'question-' + questionIndex" class="shared-questionnaire-question">
 
   <!-- header -->
   <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">
@@ -26,12 +26,12 @@
             (ngModelChange)="onChangeQuestionType($event)"
             [(ngModel)]="question.controlType"
             class="form-select is-sm">
-            <option value="radio">{{ 'SHARED_QUESTIONNAIRE.TYPE.radio' | translate }}</option>
-            <option value="checkbox">{{ 'SHARED_QUESTIONNAIRE.TYPE.checkbox' | translate }}</option>
-            <option value="textarea">{{ 'SHARED_QUESTIONNAIRE.TYPE.textarea' | translate }}</option>
-            <option value="scale">{{ 'SHARED_QUESTIONNAIRE.TYPE.scale' | translate }}</option>
-            <option value="stars">{{ 'SHARED_QUESTIONNAIRE.TYPE.stars' | translate }}</option>
-            <option value="ranking">{{ 'SHARED_QUESTIONNAIRE.TYPE.ranking' | translate }}</option>
+            <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+            <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+            <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+            <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+            <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+            <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
           </select>
         </label>
       </ng-container>

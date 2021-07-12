@@ -341,7 +341,7 @@ export const COMMON = {
     'DELETE': 'Supprimer le(s) utilisateur(s)',
     'DELETE_BOARD': {
       'HEADING': 'Suppression',
-      'CONTENT':'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
+      'CONTENT': 'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
     }
   },
 
@@ -357,7 +357,7 @@ export const COMMON = {
     'DELETE': 'Supprimer le(s) professionnel(s)',
     'DELETE_BOARD': {
       'HEADING': 'Suppression',
-      'CONTENT':'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
+      'CONTENT': 'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
     }
   },
 
@@ -438,7 +438,7 @@ export const COMMON = {
   'CAMPAIGN': {
     'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
     'DELETE_BOARD': {
-      'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
+      'CONTENT': 'Voulez-vous vraiment supprimer la campagne ?'
     }
   },
 
@@ -482,6 +482,19 @@ export const COMMON = {
     'WRONG_SIZE': 'Impossible de télécharger l\'image, la taille n\'est pas valide.',
     'UPLOADING': 'Téléchargement de l\'image, veuillez patienter.',
     'UPLOADING_VIDEO': 'Téléchargement de la vidéo, veuillez patienter.'
+  },
+
+  'QUESTIONNAIRE_TYPE': {
+    'CHOOSE': 'Choisissez le type de question',
+    'list': 'Liste d\'items',
+    'clearbit': 'Liste d\'entreprises',
+    'radio': 'Choix unique',
+    'scale': 'Notes',
+    'stars': 'Notes étoiles',
+    'textarea': 'Texte',
+    'toggle': 'Toggle',
+    'checkbox': 'Choix multiples',
+    'ranking': 'Ranking'
   }
 
 };

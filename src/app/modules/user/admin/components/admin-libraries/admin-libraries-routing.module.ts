@@ -13,6 +13,8 @@ import { SignaturesResolver } from '../../../../../resolvers/admin/signatures-re
 import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver';
 
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
+// import {AdminUseCasesLibraryComponent} from './admin-use-cases-library/admin-use-cases-library.component';
+// import {AdminEditUseCaseComponent} from './admin-use-cases-library/admin-edit-use-case/admin-edit-use-case.component';
 
 export const routes: Routes = [
   {
@@ -63,7 +65,21 @@ export const routes: Routes = [
         resolve: { preset: PresetResolver },
         runGuardsAndResolvers: 'always',
         pathMatch: 'full',
-      }
+      },
+      /*{
+        path: 'use-cases',
+        component: AdminUseCasesLibraryComponent,
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['libraries', 'useCases'] },
+        pathMatch: 'full'
+      },
+      {
+        path: 'use-cases/:templateId',
+        component: AdminEditUseCaseComponent,
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['libraries', 'useCases'] },
+        pathMatch: 'full'
+      }*/
     ]
   }
 ];

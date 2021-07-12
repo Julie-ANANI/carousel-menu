@@ -1,19 +1,19 @@
-<div *ngIf="canAccess()" id="admin-libraries">
+<div [hidden]="!canAccess()" id="admin-libraries">
 
   <!-- section header -->
-  <section class="p-top-25 bg-white">
+  <section class="p-top-25 section-header">
     <div class="container fluid grid-2xl">
       <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- heading and action button -->
-        <div class="flex-between flex-wrap m-bottom-10">
+        <div class="flex-between flex-wrap">
 
-          <h1 class="title is-4 m-right-25 m-bottom-15">Libraries</h1>
+          <h1 class="title is-4 text-white m-right-25 m-bottom-15">Libraries</h1>
 
           <!-- action button -->
-          <div *ngIf="options.length > 0 && isTech" class="dropdown is-right m-bottom-10">
+          <div *ngIf="options.length > 0 && isTech" class="dropdown is-right m-bottom-15">
 
-            <a class="button is-secondary is-sm is-outlined dropdown-toggle" tabindex="0">
+            <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
               Actions <i class="icon icon-caret icon-right"></i>
             </a>
 
@@ -48,15 +48,15 @@
         <!-- /heading and action button -->
 
         <!-- tabs -->
-        <ul class="tab">
+        <ul class="tab is-fullwidth">
           <ng-container *ngFor="let tab of tabs">
-            <li *ngIf="canAccess([tab])" class="tab-item">
+            <li *ngIf="canAccess([tab.path])" class="tab-item text-white">
               <a
-                (click)="setPageTitle(tab)"
-                [routerLinkActiveOptions]="{ exact: true }"
-                [routerLink]="tab"
+                (click)="setPageTitle(tab.name)"
+                [routerLink]="tab.link"
+                class="text-medium text-md"
                 routerLinkActive="active">
-                {{ tab | titlecase }}
+                {{ tab.name }}
               </a>
             </li>
           </ng-container>

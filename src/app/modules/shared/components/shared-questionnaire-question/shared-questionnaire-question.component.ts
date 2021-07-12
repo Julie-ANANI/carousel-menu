@@ -1,13 +1,13 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {picto, Picto} from '../../../../../models/static-data/picto';
+import {picto, Picto} from '../../../../models/static-data/picto';
 import {
   MissionQuestion,
   MissionQuestionEntry,
   MissionQuestionOption, MissionQuestionType,
   OptionEntry
-} from '../../../../../models/mission';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {CommonService} from '../../../../../services/common/common.service';
+} from '../../../../models/mission';
+import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
+import {CommonService} from '../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -58,15 +58,32 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   }
 
   /**
+   * true if the Array<Question> is of
+   * {
+   *   essential: boolean
+   *   question: MissionQuestion
+   * }
+   * we use it only in library page.
+   */
+  @Input() isEssential = false;
+
+  /**
+   * its true if we are integrating this under Library route.
+   * because there we are editing the use case template or questions directly from the collections.
+   */
+  @Input() isLibraryView = false;
+
+  /**
+   * provide the access path if you are not providing the isEditable input value to give access
+   * to the functionalities.
+   * Example: use it on the Libraries page.
+   */
+  @Input() accessPath: Array<string> = [];
+
+  /**
    * can be edit or not.
    */
   @Input() isEditable = false;
-
-  /**
-   * question belong to which array
-   * we need it to identify to which array will move up or down the question.
-   */
-  @Input() questionBelong: 'ESSENTIALS' | 'COMPLEMENTARY' = 'COMPLEMENTARY';
 
   /**
    * provide the innovation cards lang.
