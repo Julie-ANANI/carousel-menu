@@ -9,6 +9,32 @@
 #search-scraping {
   display: flex;
 
+  #result {
+    overflow-x: scroll;
+  }
+
+  thead td {
+    text-align: left;
+    padding: 1em;
+  }
+
+  thead th {
+    text-align: left;
+    padding: 1em;
+  }
+
+  tbody td {
+    text-align: left;
+    padding: 1em;
+    font-weight:normal;
+  }
+
+  tbody th {
+    text-align: left;
+    padding: 1em;
+    font-weight:normal;
+  }
+
   .search-wrapper {
     flex: 0 1 50%;
     padding-right: 5%;

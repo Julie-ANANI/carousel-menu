@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {ScrapingService} from '../../../../../../services/scraping/scraping.service';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
+import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-search-scraping',
@@ -18,12 +19,15 @@ export class AdminSearchScrapingComponent implements OnInit {
 
   private _result = 'TEST';
 
-  private _mails = new Array();
+  private _attributes = new Array();
+
+  private _pros = new Array();
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
   constructor(private _rolesFrontService: RolesFrontService,
-              private _scrapingService: ScrapingService) { }
+              private _scrapingService: ScrapingService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   public canAccess() {
     return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
@@ -43,6 +47,7 @@ export class AdminSearchScrapingComponent implements OnInit {
         this._result = value;
         console.log('Resultat : ', this._result);
         this.updateMails();
+        this.updateAttributes();
         this._showResultScraping = true;
       },
       (error) => {
@@ -56,28 +61,21 @@ export class AdminSearchScrapingComponent implements OnInit {
   }
 
   private updateMails(): void {
-    let i = 0;
-    this._mails = [];
+    this._pros = [];
     for (const key of Object.keys(this._result)) {
-        this._mails[i] = key;
-        i += 1;
+        this._pros.push(key);
     }
   }
 
-  public activateSidebar(type: string) {
+  public activateSidebar() {
         this._sidebarValue = {
           animate_state: 'active',
-          type: 'NEW_BATCH',
           title: 'Advanced settings',
         };
     }
 
   get showResultScraping(): boolean {
     return this._showResultScraping;
-  }
-
-  get getMails(): Array<string> {
-    return this._mails;
   }
 
   set sidebarValue(value: SidebarInterface) {
@@ -96,14 +94,47 @@ export class AdminSearchScrapingComponent implements OnInit {
     return this._result;
   }
 
+  public updateAttributes(): void {
+    this._attributes = ['email'];
+    const pros = Object.values(this._result);
+    if (pros.length !== 0) {
+      let isRawData = false;
+      for (const key of Object.keys(pros[0])) {
+        if (key !== 'raw data') {
+          this._attributes.push(key);
+        } else {
+          isRawData = true;
+        }
+      }
+      // raw data at the end
+      if (isRawData) {
+        this._attributes.push('raw data');
+      }
+    }
+  }
+
+  get attributes(): any {
+    return this._attributes;
+  }
+
+  public values(string: any): any {
+    const arrayValue = [string];
+    for (const key of this._attributes) {
+      if (key !== 'email') {
+        arrayValue.push(this._result[string][key]);
+      }
+    }
+    return arrayValue;
+  }
+
   public updateSettings(value: any) {
     this._params = value;
     console.log(this._params);
     // this._localStorageService.setItem('searchSettings', JSON.stringify(value));
-    // this._translateNotificationsService.success(
-    //  'Success',
-    //  'The settings has been updated.'
-    // );
+    this._translateNotificationsService.success(
+      'Success',
+      'The settings has been updated.'
+    );
   }
 
   ngOnInit(): void {
@@ -115,7 +146,12 @@ export class AdminSearchScrapingComponent implements OnInit {
       url: '',
       rawData: false,
       formattedAddress: false,
+      whereFormattedAddress: '',
       dynamicHTML: false,
+      isLoadMore: false,
+      loadMore: '',
+      numberLoadMore: 1,
+      waitTimeLoadMore: 0,
       skipMails: '',
       isSpecificData: false,
       numberSpecificData: 1,
@@ -125,6 +161,8 @@ export class AdminSearchScrapingComponent implements OnInit {
       numberFields: 1,
       fields: [{}, {}, {}, {}, {}],
       maxRequest: 300,
+      isSingle: false,
+      linkPro: ''
     };
   }
 }

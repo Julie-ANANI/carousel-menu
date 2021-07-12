@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import 'rxjs/add/operator/filter';
 
-type Template = 'NEW_BATCH' | 'EDIT_BATCH' | '';
-
 @Component({
   selector: 'app-sidebar-scraping',
   templateUrl: './sidebar-scraping.component.html',
@@ -14,8 +12,6 @@ export class SidebarScrapingComponent implements OnChanges {
   @Input() content: any = <any>{};
 
   @Input() sidebarState = 'inactive';
-
-  @Input() templateType: Template = '';
 
   @Input() params: any = null;
 

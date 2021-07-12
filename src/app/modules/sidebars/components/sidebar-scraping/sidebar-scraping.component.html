@@ -20,14 +20,56 @@
   <!-- dynamic html -->
   <div class="form-group">
     <!-- [disabled]="!isEditable" -->
-    <label class="form-switch">
-      <input
-        [(ngModel)]="params['dynamicHTML']"
-        name="sidebar-smart"
-        type="checkbox">
-      <i class="form-icon"></i> Dynamic HTML
-    </label>
+     <span
+       [ngClass]="{'tooltip is-multiline': true}"
+       data-tooltip="The project needs to be published to Showroom before publishing to Community.">
+       <label class="form-switch">
+        <input
+          [(ngModel)]="params['dynamicHTML']"
+          name="sidebar-smart"
+          type="checkbox">
+        <i class="form-icon"></i> Dynamic HTML
+        </label>
+     </span>
   </div>
+
+  <!-- load more option -->
+  <div *ngIf="params['dynamicHTML']" [ngClass]="params['dynamicHTML'] ? 'd-block' : 'd-none'" class="m-left-4">
+    <div class="form-group">
+      <!-- [disabled]="!isEditable" -->
+      <label class="form-switch">
+        <input
+          [(ngModel)]="params['isLoadMore']"
+          name="sidebar-smart"
+          type="checkbox">
+        <i class="form-icon"></i> "Load More" Button
+      </label>
+    </div>
+
+    <div *ngIf="params['isLoadMore']" [ngClass]="params['isLoadMore'] ? 'd-block' : 'd-none'" class="m-left-4">
+
+    <label class="form-label">XPath of the "load more" button</label>
+    <input
+      [(ngModel)]="params['loadMore']"
+      class="form-input"
+      placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
+      type="text">
+
+    <label class="form-label">Number of time the button should be clicked</label>
+    <input
+      [(ngModel)]="params['numberLoadMore']"
+      class="form-input"
+      placeholder="ex: 3"
+      type="number">
+    <label class="form-label">Load time in seconds (1s is generally enough)</label>
+    <input
+      [(ngModel)]="params['waitTimeLoadMore']"
+      class="form-input"
+      placeholder="ex: 1"
+      type="text">
+  </div>
+  </div>
+  <!-- /load more option-->
   <!-- /dynamic html -->
 
   <label class="form-label">Emails to skip (separate with coma)</label>
@@ -161,6 +203,29 @@
       type="number">
     <!-- /max request -->
 
+    <!-- link pro -->
+    <!-- is single pro by page -->
+    <div class="form-group">
+      <!-- [disabled]="!isEditable" -->
+      <label class="form-switch">
+        <input
+          [(ngModel)]="params['isSingle']"
+          name="sidebar-smart"
+          type="checkbox">
+        <i class="form-icon"></i> Only one mail by page
+      </label>
+    </div>
+    <!-- /is single pro by page-->
+    <div *ngIf="params['isSingle']" [ngClass]="params['isSingle'] ? 'd-block' : 'd-none'" class="m-left-4">
+
+      <label class="form-label">Start pattern link pro (leave blank for automatic guess)</label>
+      <input
+        [(ngModel)]="params['linkPro']"
+        class="form-input"
+        placeholder="ex: https://www.crnl.fr/fr/user/"
+        type="text">
+    <!-- /link pro -->
+    </div>
     <!-- crawling field -->
 
     <!-- is crawling field-->
