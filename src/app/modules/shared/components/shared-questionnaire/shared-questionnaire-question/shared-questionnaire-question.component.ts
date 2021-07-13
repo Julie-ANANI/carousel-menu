@@ -1,14 +1,15 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {picto, Picto} from '../../../../models/static-data/picto';
+import {picto, Picto} from '../../../../../models/static-data/picto';
 import {
   MissionQuestion,
   MissionQuestionEntry,
   MissionQuestionOption, MissionQuestionType,
   OptionEntry
-} from '../../../../models/mission';
-import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
-import {CommonService} from '../../../../services/common/common.service';
+} from '../../../../../models/mission';
+import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
+import {CommonService} from '../../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';
+import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-shared-questionnaire-question',
@@ -140,6 +141,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   private _picto: Picto = picto;
 
   constructor(private _missionQuestionService: MissionQuestionService,
+              private _rolesFrontService: RolesFrontService,
               private _translateService: TranslateService) { }
 
   ngOnInit() {
@@ -166,18 +168,29 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   public moveQuestionOption(event: Event, optionIndex: number, move: 1 | -1) {
     event.preventDefault();
-    this._missionQuestionService.moveQuestionOption(this._questionIndex, this._sectionIndex, optionIndex, move);
+    this._missionQuestionService.moveQuestionOption(this._question, optionIndex, move);
+    this._emitValueToSave(['edit', 'options', 'order']);
   }
 
   public removeQuestion(event: Event) {
     event.preventDefault();
 
-    const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
-      : 'Are you sure you want to delete this question?';
-    const res = confirm(_msg);
+    if (this.isLibraryView && this.canAccess(['delete'])) {
+      const question = this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex, true);
+      this.valueToSave.emit({
+        key: 'QUESTION_REMOVE',
+        value: {
+          questionId: question.question._id
+        }
+      });
+    } else if (this.isEditable) {
+      const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
+        : 'Are you sure you want to delete this question?';
+      const res = confirm(_msg);
 
-    if (res) {
-      this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex);
+      if (res) {
+        this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex);
+      }
     }
   }
 
@@ -187,6 +200,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
       this._question.controlType = this._missionQuestionService.getQuestionType(identifier);
     }
     this.notifyChanges();
+    this._emitValueToSave(['edit', 'identifier']);
   }
 
   public getNonUsedQuestions() {
@@ -195,37 +209,69 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   public cloneQuestion(event: Event) {
     event.preventDefault();
-    this._missionQuestionService.cloneQuestion(this._questionIndex, this._sectionIndex);
+    if (this.isEditable) {
+      this._missionQuestionService.cloneQuestion(this._questionIndex, this._sectionIndex);
+    } else if (this.isLibraryView && this.canAccess(['clone'])) {
+      const question: MissionQuestion = this._missionQuestionService.cloneQuestion(this._questionIndex, this._sectionIndex, true);
+      this.valueToSave.emit({
+        key: 'QUESTION_CLONE',
+        value: {
+          sectionId: this._sectionIndex,
+          [question._id]: {
+            essential: false,
+            question: question
+          }
+        }
+      });
+    }
+  }
+
+  private _emitValueToSave(access: Array<string>) {
+    if (this.isLibraryView && this.canAccess(access)) {
+      this.valueToSave.emit({
+        key: 'QUESTION_EDIT',
+        value: {
+          essential: this.isEssential,
+          [this._question._id]: this._question
+        }
+      });
+    }
   }
 
   public onChangeQuestionType(type: MissionQuestionType) {
     this._question.controlType = type;
     this._missionQuestionService.configureQuestion(this._question);
+    this._emitValueToSave(['edit', 'type']);
   }
 
   public addNewOption(event: Event) {
     event.preventDefault();
     this._missionQuestionService.addNewOption(this._question);
+    this._emitValueToSave(['edit', 'options', 'add']);
   }
 
   public onChangeMaxOptions(value: number) {
     if (value !== null) {
       this._question = this._missionQuestionService.configureCheckbox(this._question, value);
+      this._emitValueToSave(['edit', 'maxOptionsSelect']);
       this.notifyChanges();
     }
   }
 
   public onChangeQuestionEntry(value: string, lang: string, attr: string) {
     this._missionQuestionService.changeQuestionEntry(value, lang, this._question, attr);
+    this._emitValueToSave(['edit', attr]);
   }
 
   public onChangeQuestionOptionEntry(value: string, lang: string, optionIndex: number) {
     this._missionQuestionService.changeQuestionOptionEntry(value, lang, this._question, optionIndex);
+    this._emitValueToSave(['edit', 'options', 'label']);
   }
 
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
     this._missionQuestionService.deleteOption(this._question, index);
+    this._emitValueToSave(['edit', 'options', 'delete']);
   }
 
   public optionEntry(option: MissionQuestionOption, lang: string): OptionEntry {
@@ -237,22 +283,27 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   }
 
   public updateValue(value: any, attr: string, index?: number) {
-    if (this.isEditable) {
+    if (this.isEditable || this.isLibraryView) {
       switch (attr) {
         case 'COMMENT':
           this._question.canComment = !this._question.canComment;
+          this._emitValueToSave(['edit', 'canComment']);
           break;
         case 'RANDOMIZATION':
           this._question.randomization = !this._question.randomization;
+          this._emitValueToSave(['edit', 'randomization']);
           break;
         case 'SENSITIVE_DATA':
           this._question.sensitiveAnswerData = !this._question.sensitiveAnswerData;
+          this._emitValueToSave(['edit', 'sensitiveAnswerData']);
           break;
         case 'FAV_ANSWERS':
           this._question.visibility = !this._question.visibility;
+          this._emitValueToSave(['edit', 'visibility']);
           break;
         case 'OPTION_POSITIVE':
           this._question.options[index].positive = !this._question.options[index].positive;
+          this._emitValueToSave(['edit', 'options', 'positive']);
           break;
       }
 
@@ -263,6 +314,12 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   public notifyChanges() {
     if (this.isEditable) {
       this._missionQuestionService.setNotifyChanges(true);
+    }
+  }
+
+  public canAccess(path: Array<string> = []) {
+    if (this.accessPath.length) {
+      return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
     }
   }
 

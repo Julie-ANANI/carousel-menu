@@ -298,6 +298,7 @@ export class MissionQuestionService {
       });
 
       question.maxOptionsSelect = null;
+      question.canComment = true;
       question = this.configureQuestionOptions(question);
 
       if (question.controlType === 'textarea') {
@@ -350,6 +351,7 @@ export class MissionQuestionService {
       const stringId = question.options.length.toString();
       return {
         identifier: stringId,
+        positive: false,
         entry: this._addEntryLang.map((_lang) => {
           return {
             lang: _lang,
@@ -536,14 +538,13 @@ export class MissionQuestionService {
 
   /**
    * change the question option place
-   * @param questionIndex
-   * @param sectionIndex
+   * @param question
    * @param optionIndex
    * @param move - 1 (down) | -1 (up)
    */
-  public moveQuestionOption(questionIndex: number, sectionIndex: number, optionIndex: number, move: number) {
+  public moveQuestionOption(question: MissionQuestion, optionIndex: number, move: number) {
     const new_place = optionIndex + move;
-    const options = this._template.sections[sectionIndex].questions[questionIndex].options;
+    const options = question.options;
 
     if (new_place >= 0 && new_place < options.length) {
       options[new_place] = options.splice(optionIndex, 1, options[new_place])[0];
@@ -667,27 +668,47 @@ export class MissionQuestionService {
    * remove the question
    * @param questionIndex
    * @param sectionIndex
+   * @param returnValue
    */
-  public removeQuestion(questionIndex: number,  sectionIndex: number) {
+  public removeQuestion(questionIndex: number,  sectionIndex: number, returnValue = false) {
+    const question = this._template.sections[sectionIndex].questions[questionIndex];
     this._template.sections[sectionIndex].questions.splice(questionIndex, 1);
-    this._emitTemplate();
+
+    if (!returnValue) {
+      this._emitTemplate();
+    } else {
+      return question;
+    }
   }
 
   /**
    * clone the question.
    * @param questionIndex
    * @param sectionIndex
+   * @param returnValue
    */
-  public cloneQuestion(questionIndex: number, sectionIndex: number) {
+  public cloneQuestion(questionIndex: number, sectionIndex: number, returnValue = false) {
     const questions: Array<MissionQuestion> = this._template.sections[sectionIndex].questions;
-    const question: MissionQuestion = { ...questions[questionIndex] };
+    let question: any;
+
+    if (!returnValue) {
+      question = { ...questions[questionIndex] };
+    } else {
+      question = { ...questions[questionIndex]['question'] };
+    }
 
     /**
      * mutate question to avoid getting 2 questions with the same id
      */
     delete question._id;
     question.identifier = this.generateId();
-    questions.push(JSON.parse(JSON.stringify(question)));
+
+    if (!returnValue) {
+      questions.push(JSON.parse(JSON.stringify(question)));
+      this._emitTemplate();
+    } else {
+      return JSON.parse(JSON.stringify(question));
+    }
   }
 
   /**

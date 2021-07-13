@@ -6,21 +6,21 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {SharedQuestionnaireComponent} from './shared-questionnaire.component';
 import { SharedQuestionnaireSectionComponent } from './shared-questionnaire-section/shared-questionnaire-section.component';
-import {SharedQuestionnaireQuestionModule} from '../shared-questionnaire-question/shared-questionnaire-question.module';
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
+import {SharedQuestionnaireQuestionComponent} from './shared-questionnaire-question/shared-questionnaire-question.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        RouterModule,
-        FormsModule,
-        SharedQuestionnaireQuestionModule,
-        ModalEmptyModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    RouterModule,
+    FormsModule,
+    ModalEmptyModule
+  ],
   declarations: [
     SharedQuestionnaireComponent,
-    SharedQuestionnaireSectionComponent
+    SharedQuestionnaireSectionComponent,
+    SharedQuestionnaireQuestionComponent
   ],
   exports: [
     SharedQuestionnaireComponent

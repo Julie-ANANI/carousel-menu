@@ -11,23 +11,22 @@ import {SharedQuestionnaireModule} from '../../../../../shared/components/shared
 import {ModalEmptyModule} from '../../../../../utility/modals/modal-empty/modal-empty.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        MessageErrorModule,
-        TableModule,
-        ReactiveFormsModule,
-        FormsModule,
-        SharedQuestionnaireModule,
-        ModalEmptyModule,
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    MessageErrorModule,
+    TableModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SharedQuestionnaireModule,
+    ModalEmptyModule,
+  ],
   declarations: [
     AdminUseCasesLibraryComponent,
     AdminEditUseCaseComponent,
   ],
   exports: [
-    AdminUseCasesLibraryComponent,
-    AdminEditUseCaseComponent
+    AdminUseCasesLibraryComponent
   ]
 })
 

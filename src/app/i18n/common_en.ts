@@ -486,6 +486,19 @@ export const COMMON = {
     'WRONG_SIZE': 'Could not upload image, the size is invalid.',
     'UPLOADING': 'Uploading picture, please be patient.',
     'UPLOADING_VIDEO': 'Uploading video, please be patient.'
+  },
+
+  'QUESTIONNAIRE_TYPE': {
+    'CHOOSE': 'Choose the type of question',
+    'list': 'List of items',
+    'clearbit': 'List of companies',
+    'radio': 'Unique choice',
+    'scale': 'Rating',
+    'stars': 'Stars rating',
+    'textarea': 'Text',
+    'toggle': 'Toggle',
+    'checkbox': 'Multiple choice',
+    'ranking': 'Ranking'
   }
 
 };
