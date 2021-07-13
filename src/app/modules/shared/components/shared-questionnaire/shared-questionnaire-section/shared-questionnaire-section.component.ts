@@ -103,6 +103,9 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     this._section = value || <MissionTemplateSection>{};
   }
 
+  /**
+   * do not change this as we are using this under the Library page use case.
+   */
   @Output() valueToSave: EventEmitter<any> = new EventEmitter<any>();
 
   private _picto: Picto = picto;

@@ -149,6 +149,7 @@
       <!-- library -->
       <ng-container *ngIf="isLibraryView; else defQuesView">
         <app-shared-questionnaire-question
+          (valueToSave)="valueToSave.emit($event)"
           [accessPath]="accessPath.concat(['question'])"
           [isEssential]="ques['essential']"
           [isLibraryView]="true"

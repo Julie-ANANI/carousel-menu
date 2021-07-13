@@ -24,7 +24,7 @@ export const NEW_PROJECT = {
 
   'COLLABORATORS_QUESTION': 'Souhaitez-vous ajouter des collaborateurs ?',
 
-  'COLLABORATORS_TERMS': 'Veuillez noter que les collaborateurs ont accès au projet ainsi que aux résultats et aux ' +
+  'COLLABORATORS_TERMS': 'Veuillez noter que les collaborateurs ont accès au projet ainsi qu’aux résultats et aux ' +
     'autres données sensibles. Voulez vous continuer ?',
 
   'TITLE_QUESTION': 'Quel titre souhaitez-vous donner à votre Test Marché ?',
