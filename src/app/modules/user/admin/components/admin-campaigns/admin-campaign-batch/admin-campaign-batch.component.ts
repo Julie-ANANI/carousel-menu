@@ -320,6 +320,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         .pipe(first())
         .subscribe(
           (stats) => {
+            console.log(stats);
             this._stats = stats;
             this._batchesTable = [];
             if (this._stats.batches) {
@@ -411,7 +412,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
     const workflowName = ('Workflow ' + this._workflowName(batch)).toString();
 
-    const digit = 1; // number of decimals stats/pred
+    // const digit = 1; // number of decimals stats/pred
 
     const generateBatchLine = (i: number) => {
       const data = [
@@ -437,31 +438,31 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       ];
       return {
         Step: data[i].title,
-        Sent: batch.stats[i].delivered + batch.stats[i].bounced,
-        OpenedPred:
-          i < 3
-            ? (batch.predictions[i].opened * 100).toFixed(digit) + '%' || ''
-            : 0,
-        OpenedReel:
-          ((batch.stats[i].opened / batch.size) * 100).toFixed(digit) + '%',
-        ClickedPred:
-          i < 3
-            ? (batch.predictions[i].clicked * 100).toFixed(digit) + '%' || ''
-            : 0,
-        ClickedReel:
-          ((batch.stats[i].clicked / batch.size) * 100).toFixed(digit) + '%',
-        InsightsPred: i < 3 ? batch.predictions[i].insights : 0,
-        InsightsReel: i < 3 ? batch.stats[i].insights : 0,
+        // Sent: batch.stats[i].delivered + batch.stats[i].bounced,
+        // OpenedPred:
+        //   i < 3
+        //     ? (batch.predictions[i].opened * 100).toFixed(digit) + '%' || ''
+        //     : 0,
+        // OpenedReel:
+        //   ((batch.stats[i].opened / batch.size) * 100).toFixed(digit) + '%',
+        // ClickedPred:
+        //   i < 3
+        //     ? (batch.predictions[i].clicked * 100).toFixed(digit) + '%' || ''
+        //     : 0,
+        // ClickedReel:
+        //   ((batch.stats[i].clicked / batch.size) * 100).toFixed(digit) + '%',
+        // InsightsPred: i < 3 ? batch.predictions[i].insights : 0,
+        // InsightsReel: i < 3 ? batch.stats[i].insights : 0,
         Date: data[i].date,
         Time: data[i].time,
         Status: data[i].status,
       };
     };
 
-    if (!batch.predictions || batch.predictions.length === 0) {
-      const reset = {opened: 0, clicked: 0, insights: 0};
-      batch.predictions = [reset, reset, reset];
-    }
+    // if (!batch.predictions || batch.predictions.length === 0) {
+    //   const reset = {opened: 0, clicked: 0, insights: 0};
+    //   batch.predictions = [reset, reset, reset];
+    // }
 
     let content: any[];
     if (this._campaign && this._campaign.type === 'COMMUNITY') {
@@ -475,6 +476,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       ];
     }
 
+    console.log(content);
     return {
       _selector: batch._id,
       _clickIndex:
@@ -492,19 +494,23 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           _attrs: ['Date'],
           _name: 'Date',
           _type: 'DATE',
+          _isEditable: this.canAccess(['canEdit', 'date']),
+          _editType: 'DATE'
         },
         {
           _attrs: ['Time'],
           _name: 'Time',
           _type: 'TEXT',
+          _isEditable: this.canAccess(['canEdit', 'time']),
+          _editType: 'DATE_TIME'
         },
         {
           _attrs: ['Status'],
           _name: 'Status',
           _type: 'MULTI-CHOICES',
           _choices: [
-            {_name: 'Sent', _class: 'label is-success'},
-            {_name: 'Planned', _class: 'label is-progress'},
+            {_name: 'Sent', _alias: 'Sent', _class: 'label is-success'},
+            {_name: 'Planned', _alias: 'Planned', _class: 'label is-progress'},
           ],
         },
       ],
@@ -621,7 +627,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         break;
 
       case 'EDIT_BATCH':
-        this.updateBatch(form);
+        this._formBatchToUpdate(form);
         break;
     }
   }
@@ -775,34 +781,40 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   public onClickEdit(row: any, batch: Batch) {
-    let step = '';
-
-    switch (row.Step) {
-      case '01 - Hello World':
-        step = 'FIRST';
-        this._currentStep = 0;
-        break;
-
-      case '02 - 2nd try':
-        step = 'SECOND';
-        this._currentStep = 1;
-        break;
-
-      case '03 - 3rd try':
-        step = 'THIRD';
-        this._currentStep = 2;
-        break;
-
-      case '04 - Thanks':
-        step = 'THANKS';
-        this._currentStep = 3;
-        break;
-    }
-
+    const stepInfo = this._currentStepInfo(row.Step);
+    const step = stepInfo.step || '';
+    this._currentStep = stepInfo.nbStep;
     this._content = this._contentWorkflowStep(batch, step);
     this._currentRow = row;
     this._currentBatch = batch;
     this.activateSidebar('EDIT_BATCH');
+  }
+
+  private _currentStepInfo(mail: string) {
+    let nbStep = 0;
+    let step = '';
+    switch (mail) {
+      case '01 - Hello World':
+        step = 'FIRST';
+        nbStep = 0;
+        break;
+
+      case '02 - 2nd try':
+        step = 'SECOND';
+        nbStep = 1;
+        break;
+
+      case '03 - 3rd try':
+        step = 'THIRD';
+        nbStep = 2;
+        break;
+
+      case '04 - Thanks':
+        step = 'THANKS';
+        nbStep = 3;
+        break;
+    }
+    return {step: step, nbStep: nbStep};
   }
 
   private _contentWorkflowStep(batch: Batch, step: any): any {
@@ -824,45 +836,57 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     return content;
   }
 
-  private updateBatch(formValue: FormGroup) {
-    switch (this._currentStep) {
+  private _batchToUpdate(batch: Batch, step: any, date: any, time: any, workflow: any): Batch {
+    switch (step) {
       case 0:
-        this._currentBatch.firstMail = AdminCampaignBatchComponent._computeDate(
-          formValue.value['date'],
-          formValue.value['time']
+        batch.firstMail = AdminCampaignBatchComponent._computeDate(
+          date,
+          time
         );
         break;
 
       case 1:
-        this._currentBatch.secondMail = AdminCampaignBatchComponent._computeDate(
-          formValue.value['date'],
-          formValue.value['time']
+        batch.secondMail = AdminCampaignBatchComponent._computeDate(
+          date,
+          time
         );
         break;
 
       case 2:
-        this._currentBatch.thirdMail = AdminCampaignBatchComponent._computeDate(
-          formValue.value['date'],
-          formValue.value['time']
+        batch.thirdMail = AdminCampaignBatchComponent._computeDate(
+          date,
+          time
         );
         break;
     }
+    batch.workflow = workflow;
+    return batch;
+  }
 
-    this._currentBatch.workflow = formValue.value['workflow'];
+  private _formBatchToUpdate(formValue: FormGroup) {
+    this._currentBatch = this._batchToUpdate(this._currentBatch, this._currentStep,
+      formValue.value['date'], formValue.value['time'], formValue.value['workflow']);
+    this.updateBatch(this._currentBatch);
+  }
 
+
+  private updateBatch(batchToUpdate: Batch, needToUpdateTable = true) {
     this._campaignService
-      .updateBatch(this._currentBatch)
+      .updateBatch(batchToUpdate)
       .pipe(first())
       .subscribe(
         (batch) => {
-          this._stats.batches[this._getBatchIndex(batch._id)] = batch;
-          this._batchesTable.every((table, index) => {
-            if (table._selector === batch._id) {
-              this._batchesTable[index] = this._initBatchTable(batch);
-              return false;
-            }
-            return true;
-          });
+          console.log(batch);
+          if (needToUpdateTable) {
+            this._stats.batches[this._getBatchIndex(batch._id)] = batch;
+            this._batchesTable.every((table, index) => {
+              if (table._selector === batch._id) {
+                this._batchesTable[index] = this._initBatchTable(batch);
+                return false;
+              }
+              return true;
+            });
+          }
           this._translateNotificationsService.success(
             'Success',
             'The batch is updated.'
@@ -876,6 +900,20 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           console.error(err);
         }
       );
+  }
+
+
+  _updateBatch($event: any, batch: Batch) {
+    if ($event) {
+      switch ($event._action) {
+        case 'Update grid':
+          const stepInfo = this._currentStepInfo($event._context.Step);
+          const _batchToUpdate = this._batchToUpdate(batch, stepInfo.nbStep, $event._context.Date,
+            $event._context.Time, batch.workflow);
+          this.updateBatch(_batchToUpdate, false);
+          break;
+      }
+    }
   }
 
   getBatch(index: number) {

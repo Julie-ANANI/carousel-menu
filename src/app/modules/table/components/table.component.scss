@@ -11,12 +11,12 @@
     margin-left: auto;
   }
 
-  .fill-replace-icon{
+  .fill-replace-icon {
     margin-left: auto;
     cursor: pointer;
   }
 
-  .filters-wrap{
+  .filters-wrap {
     height: 40px;
     margin-right: 20px;
     margin-bottom: 20px;
@@ -31,6 +31,56 @@
     background-color: rgba(255, 255, 255, 0.8);
   }
 
+  .form-input {
+    color: #333333;
+    font-size: 13px;
+
+    &:disabled, &.disabled {
+      background: inherit;
+      color: inherit;
+      border-color: inherit;
+      cursor: pointer;
+    }
+  }
+
+  .form-group {
+    height: 100%;
+
+    .icon {
+      margin-left: 0.5rem;
+    }
+
+    .icon-check{
+      color: $primary-color;
+    }
+
+    .icon-cross{
+      color: $alert-color;
+    }
+
+    .icon:hover{
+      cursor: pointer;
+    }
+
+    .form-select{
+      height: 30px;
+      width: 85%;
+    }
+  }
+
+  .editable-grid {
+    border: 1px solid $border-default-color;
+    width: 100%;
+    height: 100%;
+  }
+
+  .no-editable-grid {
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer
+  }
+
   .table {
 
     .flex-wrapper {
@@ -43,7 +93,7 @@
       height: 100%;
     }
 
-    .object-list{
+    .object-list {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
