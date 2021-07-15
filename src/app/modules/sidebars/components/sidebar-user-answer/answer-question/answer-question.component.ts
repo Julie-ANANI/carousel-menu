@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
-import { Question } from '../../../../../models/question';
-import { Answer } from '../../../../../models/answer';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { TranslationService } from '../../../../../services/translation/translation.service';
-import { AnswerService } from '../../../../../services/answer/answer.service';
-import { Tag } from '../../../../../models/tag';
-import { first} from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import {Question} from '../../../../../models/question';
+import {Answer} from '../../../../../models/answer';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {TranslationService} from '../../../../../services/translation/translation.service';
+import {AnswerService} from '../../../../../services/answer/answer.service';
+import {Tag} from '../../../../../models/tag';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
+import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-answer-question',
@@ -18,6 +19,10 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 })
 
 export class AnswerQuestionComponent {
+
+  get questionLabel(): string {
+    return MissionQuestionService.label(this.question, 'label', this.currentLang);
+  }
 
   @Input() projectId = '';
 
@@ -40,6 +45,8 @@ export class AnswerQuestionComponent {
     this._showCommentTranslation = false;
   }
 
+  @Input() currentLang = this._translateService.currentLang;
+
   @Output() fullAnswerChange: EventEmitter<Answer> = new EventEmitter<Answer>();
 
   private _commenting = false;
@@ -49,8 +56,6 @@ export class AnswerQuestionComponent {
   private _showQuestionTranslation = false;
 
   private _showCommentTranslation = false;
-
-  private _currentLang = this._translateService.currentLang;
 
   private _starCase: Array<string> = ['1', '2', '3', '4', '5'];
 
@@ -75,11 +80,7 @@ export class AnswerQuestionComponent {
 
   public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
-    if (option && option.label) {
-      return option.label[this._currentLang];
-    } else {
-      return undefined;
-    }
+    return MissionQuestionService.label(option, 'label', this.currentLang);
   }
 
   public selectOption(event: Event, option: any) {
@@ -145,7 +146,7 @@ export class AnswerQuestionComponent {
   set showQuestionTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier][this._currentLang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier][this.currentLang]) {
           this._showQuestionTranslation = true;
         } else {
           throw new Error('no translation');
@@ -154,13 +155,13 @@ export class AnswerQuestionComponent {
         if (!this._fullAnswer.answers_translations[this.question.identifier]) {
           this._fullAnswer.answers_translations[this.question.identifier] = {};
         }
-        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this._currentLang)
+        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this.currentLang)
           .pipe(first())
-          .subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier][this._currentLang] = value.translation;
+          .subscribe((_value) => {
+          this._fullAnswer.answers_translations[this.question.identifier][this.currentLang] = _value.translation;
           this._showQuestionTranslation = true;
-          const objToSave = {answers_translations: {[this.question.identifier]: {[this._currentLang]: value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
+          const objToSave = {answers_translations: {[this.question.identifier]: {[this.currentLang]: _value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {});
         }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
             console.error(err);
@@ -178,7 +179,7 @@ export class AnswerQuestionComponent {
   set showCommentTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang]) {
           this._showCommentTranslation = true;
         } else {
           throw new Error('no translation');
@@ -188,14 +189,14 @@ export class AnswerQuestionComponent {
           this._fullAnswer.answers_translations[this.question.identifier + 'Comment'] = {};
         }
         this._deepl.translate(this._fullAnswer.answers[this.question.identifier + 'Comment'],
-          this._currentLang)
+          this.currentLang)
           .pipe(first())
-          .subscribe((value) => {
-          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this._currentLang] = value.translation;
+          .subscribe((_value) => {
+          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang] = _value.translation;
           this._showCommentTranslation = true;
           const objToSave = {answers_translations: {[this.question.identifier + 'Comment']:
-                {[this._currentLang]: value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe((value) => {});
+                {[this.currentLang]: _value.translation}}};
+          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {});
         }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
             console.error(err);
@@ -206,12 +207,21 @@ export class AnswerQuestionComponent {
     }
   }
 
-  get showCommentTranslation(): boolean {
-    return this._showCommentTranslation;
+  moveListElement(questionId: string, initialIndex: number) {
+    const emptyRanking = this.fullAnswer.answers[questionId][0] === null;
+    const selectElem = document.getElementById(`select-${questionId}-${initialIndex}`) as HTMLSelectElement;
+    if (selectElem) {
+      const targetIndex = selectElem.selectedIndex;
+      const keys = Object.keys(this.fullAnswer.answers[questionId]);
+      const values = (emptyRanking) ? keys : Object.values(this.fullAnswer.answers[questionId]);
+      values.splice(targetIndex, 0, values.splice(initialIndex, 1)[0]);
+      keys.map(x => { this.fullAnswer.answers[questionId][x] =  values[x]; });
+      this.emitChanges();
+    }
   }
 
-  get currentLang(): string {
-    return this._currentLang;
+  get showCommentTranslation(): boolean {
+    return this._showCommentTranslation;
   }
 
   get fullAnswer(): Answer {

@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorFrontService {
 
   constructor() {}
+
+  /**
+   * return the error message for the admin side. We try to show the genuine message we receive from the back.
+   * @param err
+   */
+  public static adminErrorMessage(err: HttpErrorResponse): string {
+    return err && (err.error && (err.error['err'] || err.error.message)) || err.message || ErrorFrontService.getErrorMessage(err.status);
+  }
 
   public static getErrorMessage(status?: number): string {
     if (status) {

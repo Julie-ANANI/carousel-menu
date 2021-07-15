@@ -10,4 +10,5 @@ export interface BarData {
   count?: number;
   positive?: boolean;
   identifier?: string;
+  entry?: Array<any>;
 }

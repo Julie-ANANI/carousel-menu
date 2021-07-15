@@ -27,7 +27,11 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 export class BannerComponent {
 
-  @Input() background = '#FFB300';
+  /**
+   * provide the class
+   * like bg-primary | bg-success
+   */
+  @Input() background = 'bg-primary';
 
   @Input() position = 'absolute';
 

@@ -21,6 +21,33 @@ export class CommonService {
     return 'NA';
   }
 
+  /**
+   * this function is to make the textarea responsive based on the text and scroll height.
+   * @param textarea
+   * @param _event
+   */
+  public static calcTextareaHeight(textarea: HTMLTextAreaElement, _event?: KeyboardEvent) {
+    const currentHeight = textarea.offsetHeight;
+    const scrollHeight = textarea.scrollHeight + 2;
+    const padding = 20;
+    const minHeight = Number(textarea.getAttribute('min-height'));
+
+    if (currentHeight >= minHeight || currentHeight < scrollHeight) {
+      if (scrollHeight < currentHeight) {
+        textarea.style.height = (scrollHeight + padding) + 'px';
+      } else if (scrollHeight >= minHeight) {
+        if (_event && _event.code === 'Backspace' || _event.key === 'Backspace') {
+          if (currentHeight + padding > scrollHeight) {
+            textarea.style.height = currentHeight - 15 + 'px';
+          }
+        } else if (scrollHeight !== currentHeight) {
+          textarea.style.height = currentHeight + (scrollHeight - currentHeight) + padding + 'px';
+        }
+      }
+    }
+
+  }
+
   /***
    * this function is to return the color based on the length and limit.
    * @param text

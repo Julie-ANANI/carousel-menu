@@ -5,7 +5,7 @@
   class="p-top-40 answer-question">
 
   <!-- label -->
-  <div class="text-15 text-bold text-notify p-bottom-15">{{ question.label | multiling:currentLang }}</div>
+  <div class="text-15 text-bold text-notify p-bottom-15">{{ questionLabel }}</div>
   <!-- /label -->
 
   <!-- answers -->
@@ -238,7 +238,7 @@
           <div
             *ngFor="let opt of question.options; let i = index"
             [ngClass]="{'m-bottom-10': i !== (question.options && question.options.length - 1)}">
-            {{ opt.label | multiling:currentLang }}:
+            {{ optionLabel(opt.identifier) }}:
             <span class="text-primary m-left-2">
               {{ '★'.repeat(fullAnswer.answers[question.identifier][opt.identifier]) }}
             </span>
@@ -249,7 +249,7 @@
         <!-- edit mode -->
         <div *ngIf="editMode">
           <div *ngFor="let opt of question.options; index as i" class="d-flex align-center">
-            {{ opt.label | multiling:currentLang }}:
+            {{ optionLabel(opt.identifier) }}:
             <label
               *ngFor="let value of starCase"
               class="form-radio m-left-2 p-right-10"
@@ -263,6 +263,40 @@
                 type="radio">
               <i class="form-icon"></i> {{ value }}
             </label>
+          </div>
+        </div>
+        <!-- /edit mode -->
+
+      </div>
+      <!-- /star case -->
+
+      <!-- ranking case -->
+      <div *ngSwitchCase="'ranking'" class="text-primary-dark">
+        <!-- not edit mode -->
+        <div *ngIf="fullAnswer.answers[question.identifier] && !editMode">
+          <div
+            *ngFor="let opt of fullAnswer.answers[question.identifier] | keyvalue; let index = index"
+            [ngClass]="{'m-bottom-10': index !== (question.options && question.options.length - 1)}">
+            {{index + 1}} -
+            <span class="m-left-2">
+              {{ (opt.value)? optionLabel(question.options[opt.value].identifier):'?' }}
+            </span>
+          </div>
+        </div>
+        <!-- /not edit mode -->
+
+        <!-- edit mode -->
+        <div *ngIf="editMode">
+          <div
+            *ngFor="let opt of fullAnswer.answers[question.identifier] | keyvalue; let index = index"
+            [ngClass]="{'m-bottom-10': index !== (question.options && question.options.length - 1)}">
+            <select [id]="'select-' + question.identifier + '-' + index" (change)="moveListElement(question.identifier, index)">
+              <option [selected]="index === j"
+                      *ngFor="let a of [].constructor(question.options.length); let j = index">{{ j + 1 }}</option>
+            </select>
+            <span class="m-left-2">
+              {{ optionLabel(question.options[opt.value || index].identifier)}}
+            </span>
           </div>
         </div>
         <!-- /edit mode -->

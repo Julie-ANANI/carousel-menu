@@ -12,6 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {cloudinaryImageRegEx, videoDomainRegEx} from '../../../../../../../utils/regex';
+import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
 
 interface PubType {
   key: string;
@@ -97,9 +98,15 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   }
 
   public _initPublicationType() {
-    this._community.publicationType = this._community.publicationType
-      || <PublicationType>(this.mission.objective && InnovationFrontService.publicationType(this.mission.objective.principal['en']))
-      || '';
+    let objective = '';
+
+    if (this.hasMissionTemplate) {
+      objective = MissionFrontService.objectiveName(this.mission.template);
+    } else if (this.mission.objective && this.mission.objective.principal && this.mission.objective.principal['en']) {
+      objective = this.mission.objective.principal['en'];
+    }
+
+    this._community.publicationType = this._community.publicationType || InnovationFrontService.publicationType(objective) || '';
 
     const issueId = this._innovCard.sections && this._innovCard.sections.length
       ? InnovationFrontService.cardDynamicSection(this._innovCard, 'ISSUE')._id : '';
@@ -306,6 +313,10 @@ export class AdminProjectSettingsModalComponent implements OnInit {
     }
 
     return false;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return this.mission.template && this.mission.template.entry && this.mission.template.entry.length > 0;
   }
 
   get innovCard(): InnovCard {

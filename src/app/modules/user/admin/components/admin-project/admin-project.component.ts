@@ -128,20 +128,31 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
 
   private _realTimeUpdate(object: string, update: any) {
-      if (update.userId !== this._authService.userId) {
-        this._showBanner = update.userName;
-        this._updateTime = Date.now();
-      }
+
+    if (update.userId !== this._authService.userId) {
+      this._showBanner = update.userName;
+      this._updateTime = Date.now();
+    }
 
     this._setInnoTitle();
     this._operatorComments(update);
+
     Object.keys(update.data).forEach((field: string) => {
-      if (object === 'project') {
+
+      /**
+       * here we are checking the field because when we update the innovation some time we update the other object to
+       * in the back so to have the proper updated object here we check the field and try to have field name different
+       * from the object field name.
+       */
+      if (field === 'missionTemplate') {
+        this._project.mission['template'] = update.data[field];
+      } else if (object === 'project') {
         this._project[field] = update.data[field];
       } else {
         this._project.mission[field] = update.data[field];
       }
     });
+
     this._setInnovation();
   }
 
@@ -285,6 +296,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this._innovTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._currentLang, 'TITLE');
   }
 
+  public objectiveName(lang = this.currentLang): string {
+    return MissionFrontService.objectiveName(this.mission.template, lang);
+  }
+
   get title(): string {
     return  this._innovTitle ? this._innovTitle : this._project.name;
   }
@@ -295,7 +310,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   get hasMissionObjective(): boolean {
     return this.mission.objective && this.mission.objective.principal && this.mission.objective.principal['en']
-      && this.mission.objective.principal['en'] !== 'Other'
+      && this.mission.objective.principal['en'] !== 'Other';
+  }
+
+  get hasMissionTemplate(): boolean {
+    return this.mission.template && this.mission.template.entry && this.mission.template.entry.length > 0;
   }
 
   get iconClass(): string {

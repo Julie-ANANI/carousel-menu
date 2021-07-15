@@ -6,7 +6,12 @@
     </div>
 
     <div *ngIf="editSubtitle"  class="text-medium text-sm">
-      <textarea class="form-input text-sm" (focusout)="editSubtitle = false" [(ngModel)]="subtitle" (ngModelChange)="subtitleChanged.emit(subtitle)"></textarea>
+      <textarea
+        (change)="onChangeSubtitle()"
+        (focusout)="editSubtitle = false"
+        [(ngModel)]="subtitle"
+        class="form-input text-sm">
+      </textarea>
     </div>
     <sub
       (click)="editSubtitle = !editSubtitle"

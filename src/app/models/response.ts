@@ -7,7 +7,7 @@ export interface Response {
   answers?: {
     localAnswers?: Array<Answer>;
     draftAnswers?: Array<Answer>;
-  }
+  };
 
   [property: string]: any;
 }

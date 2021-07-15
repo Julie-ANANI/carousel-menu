@@ -5,11 +5,11 @@ import { SETUP } from '../components/setup/i18n/en';
 
 export const PROJECT_MODULE = {
 
-  'SETUP_TAB': 'Market Test preparation',
+  'SETUP_TAB': 'Preparation',
 
-  'EXPLORATION_TAB': 'Market Exploration',
+  'EXPLORATION_TAB': 'Collection',
 
-  'SYNTHESIS_TAB': 'Synthesis',
+  'SYNTHESIS_TAB': 'Analysis',
 
   'DOCUMENTS_TAB': 'Documents',
 

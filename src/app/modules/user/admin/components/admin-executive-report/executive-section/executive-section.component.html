@@ -20,7 +20,7 @@
             *ngFor="let question of questions"
             [id]="question._id"
             [ngClass]="{ 'text-primary': question._id === section.questionId }">
-            {{ question.title | multiling:reportLang }}
+            {{ questionTitle(question) }}
           </li>
           <li
             (click)="selectQuestion('quesCustom_'+sectionIndex)"

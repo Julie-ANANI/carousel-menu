@@ -13,6 +13,7 @@ import {CommentCardModule} from '../comment-card/comment-card.module';
 import {CommentListModule} from '../comment-list/comment-list.module';
 import {SharedEditorsModule} from '../../../shared/components/shared-editors/shared-editors.module';
 import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
+import {PipeModule} from '../../../../pipe/pipe.module';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
         CommentListModule,
         SharedEditorsModule,
         CleanHtmlModule,
+        PipeModule,
     ],
   declarations: [
     SidebarProjectPitchComponent

@@ -4,11 +4,13 @@ export const PROJECT_SETTINGS = {
 
   'PRINCIPAL_OBJECTIVE': 'Main objective',
 
-  'SECONDARY_OBJECTIVE': 'Secondary Objectives',
+  'SECONDARY_OBJECTIVE': 'Secondary objectives',
 
   'ROADMAP': 'Roadmap',
 
   'RESTITUTION_DATE': 'Delivery date',
+
+  'REPORTING_LANG': 'Result language',
 
   'OWNER': 'Owner',
 
@@ -31,6 +33,7 @@ export const PROJECT_SETTINGS = {
     'SECONDARY_OBJECTIVE': 'Secondary Objectives',
     'ROADMAP': 'Forecast roadmap',
     'RESTITUTION_DATE': 'Desired delivery date',
+    'REPORTING_LANG': 'Language of the Market Test results',
     'OWNER': 'Owner',
     'COLLABORATORS': 'Collaborators',
     'OPERATOR': 'Market test manager',
@@ -40,6 +43,10 @@ export const PROJECT_SETTINGS = {
   },
 
   'NOT_ASSIGNED': 'Not Assigned.',
+
+  'NO_COLLABORATORS': 'No Collaborators.',
+
+  'NO_SECONDARY': 'No Secondary Objectives.',
 
   'PROJECT_IN': 'Project in ',
 
@@ -60,6 +67,10 @@ export const PROJECT_SETTINGS = {
 
   'SELECT_OPERATOR': 'Select market test manager',
 
-  'RESTITUTION_DATE_COMMENT': 'Do you have any details about this date?',
+  'RESTITUTION_DATE_COMMENT': 'Is there anything else you\'d like to do or add ?',
+
+  'PRIMARY_OBJECTIVE_CONSENT': 'A change in your use case affects your questionnaire. Do you want to continue?',
+
+  'SECONDARY_OBJECTIVE_CONSENT': 'A change in your secondary objectives may affect your questionnaire. Do you want to continue?',
 
 };

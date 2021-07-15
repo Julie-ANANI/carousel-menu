@@ -12,7 +12,7 @@ import { SpinnerService } from '../../../services/spinner/spinner.service';
 import { UserFrontService } from '../../../services/user/user-front.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { RolesFrontService } from "../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../services/roles/roles-front.service';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 
 interface Header {
@@ -103,7 +103,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _company = environment.companyShortName;
 
-  private _logo = environment.logoURL;
+  private _logo = environment.logoSynthURL;
 
   private _isMainDomain = environment.domain === 'umi';
 
@@ -132,8 +132,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
-      this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((state) => {
-        this._hide = state;
+      this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((_state) => {
+        this._hide = _state;
       });
       this._isLoading = false;
     }
@@ -212,10 +212,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public hasProfilePic(): boolean {
     return !!this.profilePicture && this.profilePicture !== '';
-  }
-
-  public getContactUrl(): string {
-    return this.currentLang === 'fr' ? 'https://www.umi.us/fr/contact/' : 'https://www.umi.us/contact/';
   }
 
   public toggleLangOptions(event: Event) {

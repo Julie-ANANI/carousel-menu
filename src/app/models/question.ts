@@ -7,7 +7,7 @@ export interface Option {
   positive?: boolean;
 }
 
-export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle';
+export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle' | 'ranking';
 
 export interface Question {
   _id?: string;
@@ -17,6 +17,7 @@ export interface Question {
   title: Multiling;
   subtitle: Multiling;
   canComment: boolean;
+  randomization?: boolean;
   sensitiveAnswerData: boolean;
   parameters?: {
     type: 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';

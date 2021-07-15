@@ -208,6 +208,7 @@
     *ngIf="modalAnswer._id"
     [adminMode]="canAccess(['edit', 'respondentProfile'])"
     [projectId]="innovation._id"
+    [innovationCards]="innovation.innovationCards"
     [questions]="questions"
     (sendNewPro)="updateNewPro($event)"
     [sidebarState]="sidebarTemplateValue.animate_state"

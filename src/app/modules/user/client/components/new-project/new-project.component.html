@@ -1,178 +1,95 @@
-<div [hidden]="isLoading" class="p-top-40 p-bottom-40" id="new-project">
-  <div class="container grid-2xl">
-    <div class="column col-sm-12 col-11 col-mx-auto">
-      <div class="main-container animate-fade">
+<div class="p-top-40 p-bottom-50 page-height" id="new-project">
+  <ng-container [ngSwitch]="fields[currentStep]">
 
-        <!-- heading / sub-heading -->
-        <section class="text-center">
-          <h1 class="title is-4 text-bold">
-            {{ 'NEW_PROJECT.HEADINGS.' + fields[currentStep] | translate }}
-          </h1>
-
-          <h2 *ngIf="fields[currentStep] === 'PRIMARY_OBJECTIVE'" class="subtitle text-lg">
-            {{ 'NEW_PROJECT.SUB_HEADING.' + fields[currentStep] | translate }}
-          </h2>
-        </section>
-        <!-- /heading / sub-heading  -->
-
-
-        <!-- different view -->
-        <section
-          [ngSwitch]="fields[currentStep]"
-          class="content-wrapper col-lg-12 col-xl-10 col-8 col-mx-auto flex-centered p-bottom-40">
-
-          <!-- TITLE -->
-          <div *ngSwitchCase="'TITLE'" class="w-full">
-            <div class="mxw-500 text-center col-mx-auto">
-
-              <h6 class="text-normal">{{ 'NEW_PROJECT.TITLE_QUESTION' | translate }}</h6>
-
-              <div class="form-group animate-slide slide-down is-3">
-                <label>
-                  <input
-                    [(ngModel)]="clientProject.name"
-                    class="form-input is-shadowed"
-                    type="text">
-                </label>
-              </div>
-
-            </div>
-          </div>
-          <!-- /TITLE -->
-
-          <!-- PRIMARY_OBJECTIVE -->
-          <div *ngSwitchCase="'PRIMARY_OBJECTIVE'" class="animate-fade w-full is-2">
-            <app-objectives-primary [(objective)]="mission.objective.principal"></app-objectives-primary>
-          </div>
-          <!-- /PRIMARY_OBJECTIVE -->
-
-          <!-- SECONDARY_OBJECTIVE -->
-          <div *ngSwitchCase="'SECONDARY_OBJECTIVE'" class="animate-fade w-full is-2">
-            <app-objectives-secondary
-              [(objectiveComment)]="mission.objective.comment"
-              [(objectives)]="mission.objective.secondary"
-              [isEnabledOptions]="enableSecondaryObjectives()">
-            </app-objectives-secondary>
-          </div>
-          <!-- /SECONDARY_OBJECTIVE -->
-
-          <!-- RESTITUTION_DATE -->
-          <div *ngSwitchCase="'RESTITUTION_DATE'" class="w-full animate-fade is-2 text-center">
-
-            <!-- date selection -->
-            <div class="p-bottom-40">
-              <h6 class="text-normal m-no-bottom">{{ 'NEW_PROJECT.RESTITUTION_DATE_QUESTION' | translate }}</h6>
-
-              <p
-                (click)="dp.toggleCalendar()"
-                class="text-link text-normal text-md">
-                {{ 'NEW_PROJECT.CHOOSE_DATE' | translate }}
-              </p>
-
-              <div class="date-picker">
-                <label>
-                  <input
-                    #dp="angular-mydatepicker"
-                    (dateChanged)="onDateChanged($event)"
-                    [locale]="currentLang"
-                    [options]="datePickerOptions"
-                    [readOnly]="true"
-                    angular-mydatepicker
-                    class="form-input"
-                    name="date-restitution">
-                </label>
-              </div>
-
-            </div>
-            <!-- /date selection -->
-
-            <!-- divider -->
-            <div class="divider"></div>
-            <!-- /divider -->
-
-            <!-- comment -->
-            <div class="mxw-500 col-mx-auto p-top-30">
-
-              <h6 class="text-normal">{{ 'NEW_PROJECT.RESTITUTION_DATE_COMMENT' | translate }}</h6>
-
-              <div class="form-group animate-slide slide-down is-3">
-                <label>
-                  <textarea
-                    [(ngModel)]="milestoneDateComment"
-                    class="form-input is-shadowed"
-                    id="textarea-comment"
-                    rows="3">
-                  </textarea>
-                </label>
-              </div>
-
-            </div>
-            <!-- /comment -->
-
-          </div>
-          <!-- /RESTITUTION_DATE -->
-
-        </section>
-        <!-- /different view -->
-
-
-        <!-- buttons -->
-        <section class="text-center">
-
-          <!-- previous -->
-          <ng-container *ngIf="currentStep > 0">
-            <button
-              (click)="changeStep($event, currentStep - 1, 'previous')"
-              [disabled]="isCreating"
-              class="button is-outlined m-right-20 animate-fade is-4 is-info"
-              id="btn-previous">
-              {{ 'COMMON.BUTTON.PREVIOUS' | translate }}
-            </button>
-          </ng-container>
-          <!-- /previous -->
-
-          <!-- next -->
-          <ng-container *ngIf="currentStep < fields.length - 1">
-            <button
-              (click)="changeStep($event, currentStep + 1, 'next')"
-              [disabled]="isDisabled"
-              class="button is-community animate-fade is-4 "
-              id="btn-next">
-              {{ 'COMMON.BUTTON.NEXT' | translate }}
-            </button>
-          </ng-container>
-          <!-- /next -->
-
-          <!-- create -->
-          <ng-container *ngIf="currentStep === fields.length - 1">
-            <button
-              (click)="createProject($event)"
-              [disabled]="isDisabled || isCreating"
-              [ngClass]="{ 'is-loading': isCreating }"
-              class="button is-community animate-fade is-4 "
-              id="btn-create">
-              {{ 'COMMON.BUTTON.CREATE' | translate }}
-              <span *ngIf="isCreating" class="loading is-white"></span>
-            </button>
-          </ng-container>
-          <!-- /create -->
-
-        </section>
-        <!-- buttons -->
-
-
-        <!-- circles -->
-        <section class="flex-centered flex-wrap p-top-15 circle-wrapper">
+    <!-- circles -->
+    <ng-container *ngIf="currentStep !== 0">
+      <section class="flex-centered p-bottom-20">
+        <ng-container *ngFor="let field of fields; let i = index">
           <div
-            *ngFor="let field of fields; let i = index"
-            [ngClass]="{ 'active': i === currentStep }"
-            class="shape is-circle">
+            *ngIf="i > 0"
+            [ngClass]="{ 'bg-primary': i === currentStep }"
+            class="shape is-sm is-circle">
           </div>
-        </section>
-        <!-- /circles -->
+        </ng-container>
+      </section>
+    </ng-container>
+    <!-- /circles -->
 
+    <!-- STEP_0 -->
+    <ng-container *ngSwitchCase="'STEP_0'">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
+          <section class="p-bottom-50 p-top-20">
+            <app-new-project-welcome></app-new-project-welcome>
+          </section>
+        </div>
       </div>
+    </ng-container>
+    <!-- /STEP_0 -->
+
+    <!-- STEP_1 -->
+    <ng-container *ngSwitchCase="'STEP_1'">
+      <section class="p-top-20 p-bottom-30">
+        <app-market-test-objectives
+          (missionTemplateChange)="onChangeMissionTemplate($event)"
+          [(objectiveComment)]="mission.objectiveComment"
+          [missionTemplate]="mission.template"
+          [missionTemplates]="missionTemplates">
+        </app-market-test-objectives>
+      </section>
+    </ng-container>
+    <!-- /STEP_1 -->
+
+    <!-- STEP_LAST -->
+    <ng-container *ngSwitchCase="'STEP_LAST'">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
+          <section class="p-bottom-30 p-top-20">
+            <app-new-project-last-step
+              (restitutionDateChange)="onChangeRestitutionDate($event)"
+              [(collaborators)]="collaborators"
+              [(collaboratorsConsent)]="collaboratorsConsent"
+              [(milestoneDateComment)]="milestoneDateComment"
+              [(projectName)]="clientProject.name"
+              [(reportingLang)]="reportingLang"
+              [restitutionDate]="restitutionDate">
+            </app-new-project-last-step>
+          </section>
+        </div>
+      </div>
+    </ng-container>
+    <!-- /STEP_LAST -->
+
+    <!-- buttons -->
+    <div class="text-center p-top-20">
+
+      <!-- previous -->
+      <button
+        (click)="goToBackStep($event)"
+        *ngIf="currentStep > 0"
+        [disabled]="isCreating || isNextStep"
+        [id]="'new-project-btn-step-previous'"
+        class="button is-white is-outlined is-lg m-top-20 m-left-20 m-right-20">
+        {{ 'COMMON.BUTTON.PREVIOUS' | translate }}
+      </button>
+      <!-- /previous -->
+
+      <!-- navigate next step -->
+      <button
+        (click)="goToNextStep($event)"
+        [disabled]="isDisabled || isCreating || isNextStep"
+        [id]="buttonId"
+        class="button is-community is-lg m-top-20 m-left-20 m-right-20">
+        <span *ngIf="isCreating || isNextStep; else btnText" class="loading is-white"></span>
+        <ng-template #btnText>
+          {{'NEW_PROJECT.BUTTONS.' + fields[currentStep] | translate }}
+        </ng-template>
+      </button>
+      <!-- /navigate next step -->
+
     </div>
-  </div>
+    <!-- /buttons -->
+
+  </ng-container>
 </div>
 

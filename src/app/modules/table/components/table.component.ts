@@ -478,7 +478,7 @@ export class TableComponent {
         return (this.getContentValue(row, attr) || ' - ').toString();
       })
       .join(' ');
-    if (title.length > 23) {
+    if (title.length > 20) {
       return title;
     } else {
       return '';

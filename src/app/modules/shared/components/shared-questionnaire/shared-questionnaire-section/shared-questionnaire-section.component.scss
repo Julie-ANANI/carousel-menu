@@ -1,0 +1,59 @@
+@import "../../../../../../style/framework/src/variables";
+
+.shared-questionnaire-section {
+
+  .header-wrapper {
+    background-color: $draft-color;
+    min-height: 20px;
+    border-radius: 6px;
+    padding: 15px 25px 5px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-white-color;
+
+    .form-select {
+      min-width: 115px;
+    }
+
+    .form-input {
+      min-width: 250px;
+    }
+
+    .move-arrows {
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      margin-right: 15px;
+
+      i {
+        cursor: pointer;
+
+        &.disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+
+        &:not(.is-disabled):hover {
+          color: $primary-color;
+        }
+
+      }
+
+    }
+
+  }
+
+  #sharedQuestionnaireSection-btn-add-question {
+    border-color: transparent;
+
+    .icon-container {
+      color: $white-color;
+
+      &::before {
+        background-color: $primary-color;
+      }
+
+    }
+
+  }
+}

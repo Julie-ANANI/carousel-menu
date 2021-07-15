@@ -102,19 +102,6 @@
       </section>
       <!-- /autobatch / new batch -->
 
-      <!-- quiz links -->
-      <section
-        *ngIf="quizLinks.length && canAccess(['quiz'])"
-        class="m-bottom-30 animate-fade is-7 p-left-1 p-right-10">
-        <p class="text-md text-notify text-medium">Visit these below links to see the questionnaire:</p>
-        <ul class="m-no-bottom">
-          <li *ngFor="let url of quizLinks" class="text-sm m-top-1">
-            <a [href]="url" target="_blank" class="d-inline-block text-hover-underline text-primary-dark">{{ url }}</a>
-          </li>
-        </ul>
-      </section>
-      <!-- /quiz links -->
-
       <!-- batches -->
       <section
         *ngFor="let batch of stats['batches'];

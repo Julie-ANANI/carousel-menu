@@ -98,36 +98,23 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
-  public remaining(type: string, property: CardSectionTypes, index?: number): string {
+  public remaining(property: CardSectionTypes, index?: number): string {
     switch (property) {
 
       case 'TITLE':
-        if (type === 'COLOR') {
-          return CommonService.getLimitColor(this.activeInnovCard.title, 100);
-        } else if (type === 'CHAR') {
-          return (100 - this.activeInnovCard.title.length).toString(10);
-        }
-        break;
+        return CommonService.getLimitColor(this.activeInnovCard.title, 100);
 
       case 'SUMMARY':
-        if (type === 'COLOR') {
-          return CommonService.getLimitColor(this.activeInnovCard.summary, 500);
-        } else if (type === 'CHAR') {
-          return (500 - this.activeInnovCard.summary.length).toString(10);
-        }
-        break;
+        return CommonService.getLimitColor(this.activeInnovCard.summary, 500);
 
       case 'ISSUE':
       case 'SOLUTION':
+      case 'CONTEXT':
       case 'OTHER':
-        if (type === 'COLOR') {
-          return CommonService.getLimitColor(<string> this.activeInnovCard.sections[index].content, 1000);
-        } else if (type === 'CHAR') {
-          return (1000 - this.activeInnovCard.sections[index].content.length).toString(10);
-        }
-        break;
+        return CommonService.getLimitColor(<string> this.activeInnovCard.sections[index].content, 1000);
 
     }
+
     return '';
   }
 
@@ -140,7 +127,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     if (model === 'TITLE' || model === 'SUMMARY') {
       _text = htmlScraper.transform(from_card[_model]);
-    } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'OTHER') {
+    } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'CONTEXT' || model === 'OTHER') {
       _text = htmlScraper.transform(<String>from_card.sections[index].content);
     }
 
@@ -155,6 +142,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
           case 'ISSUE':
           case 'SOLUTION':
+          case 'CONTEXT':
           case 'OTHER':
             this.activeInnovCard.sections[index].content = o.translation;
             break;
@@ -173,13 +161,13 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _initToggle() {
     this._toggleComment = {
-      title: !!this.activeInnovCard.operatorComment.title.comment,
-      summary: !!this.activeInnovCard.operatorComment.summary.comment
+      title: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title.comment),
+      summary: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.summary.comment)
     };
 
     this._toggleSuggestion = {
-      title: !!this.activeInnovCard.operatorComment.title.suggestion,
-      summary: !!this.activeInnovCard.operatorComment.summary.suggestion
+      title: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title.suggestion),
+      summary: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.summary.suggestion)
     };
 
     this._togglePreviewMode = {
@@ -189,7 +177,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.activeInnovCard.sections.length; i++) {
       const etherpadElementId = this.activeInnovCard.sections[i].etherpadElementId;
-      const operatorComment = this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId);
+      const operatorComment = this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections
+        ? this.activeInnovCard.operatorComment.sections.find(s => s.sectionId === etherpadElementId) : null;
       this._toggleComment[i] = (etherpadElementId && operatorComment && !!operatorComment.comment);
       this._toggleSuggestion[i] = (etherpadElementId && operatorComment && !!operatorComment.suggestion);
       this._togglePreviewMode[i] = true;
@@ -316,7 +305,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   public deleteSection(event: Event) {
     event.preventDefault();
     this.activeInnovCard.sections.splice(this._deleteSectionIndex, 1);
-    this.activeInnovCard.operatorComment.sections.splice(this._deleteSectionIndex, 1);
+
+    if (this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections) {
+      this.activeInnovCard.operatorComment.sections.splice(this._deleteSectionIndex, 1);
+    }
+
     this._deleteSectionIndex = null;
     this._initToggle();
     this.closeModal();

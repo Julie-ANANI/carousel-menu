@@ -305,7 +305,7 @@
             <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
           </ng-container>
         </span>
-        {{ question.title | multiling:reportingLang | FormatText }}
+        {{ questionTitle(question) | FormatText }}
       </a>
       <!-- /type 'MARKET_REPORT' -->
 
@@ -317,7 +317,7 @@
             <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
           </ng-container>
         </span>
-        {{ question.title | multiling:reportingLang | FormatText }}
+        {{ questionTitle(question) | FormatText }}
       </a>
       <!-- /type 'FOLLOW_UP' -->
 
@@ -328,7 +328,7 @@
         <label class="form-checkbox">
           <input
             type="checkbox"
-            [id]="'select-all'+(question.title | multiling:reportingLang)"
+            [id]="'select-all'+(questionTitle(question))"
             (change)="filterEverything($event.target['checked'], [question], question.controlType)"
             [checked]="!filters[question.identifier]">
           <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
@@ -381,7 +381,7 @@
           <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
           <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
         </span>
-        {{ question.title | multiling:reportingLang | FormatText }}
+        {{ questionTitle(question) | FormatText }}
       </a>
       <!-- /type 'MARKET_REPORT' -->
 
@@ -391,7 +391,7 @@
           <i *ngIf="showSection[question.identifier] " class="icon icon-arrow-down"></i>
           <i *ngIf="!showSection[question.identifier]" class="icon icon-arrow-up"></i>
         </span>
-        {{ question.title | multiling:reportingLang | FormatText }}
+        {{ questionTitle(question) | FormatText }}
       </a>
       <!-- /type 'FOLLOW_UP' -->
 
@@ -415,7 +415,7 @@
               [id]="option.identifier"
               [name]="option.identifier"
               type="checkbox">
-            <i class="form-icon"></i> {{ option.label | multiling:reportingLang | FormatText }}
+            <i class="form-icon"></i> {{ optionLabel(option) | FormatText }}
           </label>
         </div>
 
@@ -444,7 +444,7 @@
     <div *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox'
     && question.controlType !== 'radio'" class="scroll-wrapper">
       <a [href]="'#' + question.identifier" pageScroll>
-        <i class="icon icon-arrow-right"></i> {{ question.title | multiling:reportingLang | FormatText }}
+        <i class="icon icon-arrow-right"></i> {{ questionTitle(question) | FormatText }}
       </a>
     </div>
     <!-- /rest types -->

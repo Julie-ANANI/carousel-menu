@@ -1,16 +1,21 @@
 @import "../../../../style/framework/src/variables";
 
 #footer {
-  min-height: 50px;
+  background-color: #2E6188;
 
   .navbar {
-    min-height: 50px;
     border-bottom: 0;
+
+    .copyright-wrapper {
+      font-size: 13px;
+    }
 
     .privacy-wrapper {
 
       a {
         transition: all 0.5s ease;
+        font-size: 13px;
+        font-weight: normal;
       }
 
     }

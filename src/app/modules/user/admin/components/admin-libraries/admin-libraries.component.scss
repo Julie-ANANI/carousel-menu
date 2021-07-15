@@ -1,0 +1,34 @@
+@import "../../../../../../style/framework/src/variables";
+
+#admin-libraries {
+
+  .section-header {
+    background-color: #2E6188;
+  }
+
+  .tab {
+    border-bottom: none;
+
+    .tab-item {
+      border-bottom: none;
+      padding: 0 5px;
+
+      a {
+        border-bottom: none;
+        background-color: #2E6188;
+        border-top-right-radius: $border-width-xl;
+        border-top-left-radius: $border-width-xl;
+        min-width: 150px;
+
+        &.active, &:hover  {
+          color: $dark-color !important;
+          background-color: $white-color;
+        }
+
+      }
+
+    }
+
+  }
+
+}

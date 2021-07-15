@@ -1,57 +1,48 @@
-<div [hidden]="isLoading" class="container fluid grid-2xl bg-white" id="not-authorized">
-  <div class="column col-sm-12 col-11 col-mx-auto">
-    <div class="error-wrapper animate-fade is-5">
+<div id="not-authorized">
 
-      <!-- logo -->
-      <nav class="navbar">
-        <div class="navbar-brand">
-          <a [routerLink]="'/user/projects'" class="gtm-menu-logo navbar-item m-no">
-            <img
-              [ngStyle]="{ 'height': '57.58px', 'width': '110px' }"
-              [alt]="companyShortName"
-              [src]="logo">
-          </a>
-        </div>
-      </nav>
-      <!-- /logo -->
-
-      <!-- content -->
-      <section class="content-wrapper">
-
-        <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/not-found.svg" alt=" ">
-
-        <h1 class="title is-4 m-bottom-10">
-          <ng-container *ngIf="currentLang === 'fr'; else titleEn">Whoops - erreur 401</ng-container>
-          <ng-template #titleEn>Whoops - error 401</ng-template>
-        </h1>
-
-        <p class="m-bottom-30 text-md mxw-500 m-left-auto m-right-auto">
-          <ng-container *ngIf="currentLang === 'fr'; else messageEn">
-            Désolé, mais vous n'êtes pas autorisé à accéder à cette page. Veuillez contacter votre chef d'équipe.
-          </ng-container>
-          <ng-template #messageEn>
-            Sorry, but you are not authorized to access this page. Please contact your team manager.
-          </ng-template>
-        </p>
-
-        <button
-          (click)="onClickReload()"
-          [disabled]="isReloading"
-          class="button is-primary is-xl"
-          id="'btn-homepage'"
-          type="button">
-          <ng-container *ngIf="!isReloading; else reloadingText">
-            {{ 'COMMON.BUTTON.RETURN_HOMEPAGE' | translate }}
-          </ng-container>
-          <ng-template #reloadingText>
-            {{ 'COMMON.BUTTON.RETURNING_HOMEPAGE' | translate }}
-          </ng-template>
-        </button>
-
-      </section>
-      <!-- /content -->
-
+  <header class="header-height header-bg-color">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+        <nav class="navbar border-no">
+          <div class="navbar-brand">
+            <a [routerLink]="'/user/projects'" class="gtm-menu-logo navbar-item m-no">
+              <img
+                [alt]="companyShortName"
+                [ngStyle]="{'width': '85px', 'height': '44.48px', 'margin-top': '-1px'}"
+                [src]="logo"
+                height="44.48"
+                width="85">
+            </a>
+          </div>
+        </nav>
+      </div>
     </div>
-  </div>
+  </header>
+
+  <main class="content-wrapper animate-fade is-3">
+    <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/not-found.svg" alt="">
+    <h1 class="title is-4 m-bottom-10">
+      <ng-container *ngIf="currentLang === 'fr'; else titleEn">Whoops - erreur 401</ng-container>
+      <ng-template #titleEn>Whoops - error 401</ng-template>
+    </h1>
+    <p class="m-bottom-30 text-md mxw-500 m-left-auto m-right-auto">
+      <ng-container *ngIf="currentLang === 'fr'; else messageEn">
+        Désolé, mais vous n'êtes pas autorisé à accéder à cette page. Veuillez contacter votre chef d'équipe.
+      </ng-container>
+      <ng-template #messageEn>
+        Sorry, but you are not authorized to access this page. Please contact your team manager.
+      </ng-template>
+    </p>
+    <button
+      (click)="onClickReload()"
+      [disabled]="isReloading"
+      [id]="'btn-homepage'"
+      class="button is-community is-xl"
+      type="button">
+      <span *ngIf="!isReloading">{{ 'COMMON.BUTTON.RETURN_HOMEPAGE' | translate }}</span>
+      <span *ngIf="isReloading" class="loading is-white"></span>
+    </button>
+  </main>
+
 </div>
 

@@ -1,0 +1,33 @@
+<div [hidden]="!template && !template._id">
+
+  <!-- sections -->
+  <section
+    *ngFor="let section of template.sections; let i = index;"
+    [ngClass]="{'m-bottom-20': (i + 1) < template.sections.length}">
+    <app-shared-questionnaire-section
+      (valueToSave)="valueToSave.emit($event)"
+      [accessPath]="accessPath"
+      [isEditable]="isEditable"
+      [isLibraryView]="isLibraryView"
+      [sectionIndex]="i"
+      [section]="section">
+    </app-shared-questionnaire-section>
+  </section>
+  <!-- /sections -->
+
+  <!-- add section -->
+  <ng-container *ngIf="isEditable">
+    <section class="p-bottom-20 text-center">
+      <div class="divider m-bottom-50"></div>
+      <button
+        (click)="addSection($event)"
+        [id]="'sharedQuestionnaire-btn-add-section'"
+        class="button is-lg is-primary is-outlined"
+        type="button">
+        Add section
+      </button>
+    </section>
+  </ng-container>
+  <!-- /add section -->
+
+</div>

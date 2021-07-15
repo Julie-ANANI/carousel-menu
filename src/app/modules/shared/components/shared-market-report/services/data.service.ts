@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
-import { Question } from '../../../../../models/question';
 import { Tag } from '../../../../../models/tag';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ResponseService } from './response.service';
@@ -12,11 +11,11 @@ export class DataService {
 
   public answersTagsLists: {[questionId: string]: Array<Tag>} = {};
 
-  public getAnswers(question: Question): Observable<Array<Answer>> {
+  public getAnswers(question: any): Observable<Array<Answer>> {
     return this.answersToShow[question._id].asObservable();
   }
 
-  public setAnswers(question: Question, answers: Array<Answer>): void {
+  public setAnswers(question: any, answers: Array<Answer>): void {
     if (!this.answersToShow[question._id]) {
       this.answersToShow[question._id] = new BehaviorSubject(answers);
     } else {
@@ -27,7 +26,7 @@ export class DataService {
     this.updateTagsList(question);
   }
 
-  public updateTagsList(question: Question) {
+  public updateTagsList(question: any) {
     const answers = this.answersToShow[question._id].getValue();
     this.answersTagsLists[question._id] = ResponseService.tagsList(answers, question);
   }
