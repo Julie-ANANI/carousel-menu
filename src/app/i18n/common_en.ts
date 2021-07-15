@@ -182,6 +182,7 @@ export const COMMON = {
   },
 
   'PLACEHOLDER': {
+    'TITLE': 'Add the title here...',
     'PROS_CONTACT': 'Enter the number of pros to contact',
     'PASSWORD_SIGNUP': '9+ characters',
     'JOBTITLE': 'Enter your job title',
