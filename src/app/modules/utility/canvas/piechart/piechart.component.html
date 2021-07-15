@@ -2,7 +2,7 @@
 
   <p *ngIf="showFavorable && pieChart" class="m-bottom-15 d-flex align-center justify-center">
     <ng-container  *ngIf="!editFavorableAnswersLabel">
-      <span>
+      <span *ngIf="pieChart.percentage">
         {{ pieChart.percentage || 0 }}% {{ favorableAnswersLabel[reportingLang] || ('MARKET_REPORT.PIE_CHART' | translateIn: reportingLang) }}
       </span>
       <span  *ngIf="!pieChart.percentage && favorableAnswersLabel[reportingLang]">
