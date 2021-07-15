@@ -16,10 +16,6 @@ import {replaceNumberRegex} from '../../utils/regex';
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
 
-  get generalMarketQuestionsTypes(): Array<string> {
-    return this._generalMarketQuestionsTypes;
-  }
-
   get taggedQuestionsTypes(): { [p: string]: MissionQuestionType } {
     return this._taggedQuestionsTypes;
   }

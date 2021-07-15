@@ -6,7 +6,7 @@
     <!-- move / select / type / label-->
     <div class="d-flex align-center">
 
-      <div *ngIf="isEditable" data-tooltip="Move" class="move-arrows tooltip">
+      <div *ngIf="isEditable || canAccess(['order'])" data-tooltip="Move" class="move-arrows tooltip">
         <i (click)="up($event)" class="icon icon-arrow-up"></i>
         <i (click)="down($event)" class="icon icon-arrow-down"></i>
       </div>
@@ -94,7 +94,7 @@
       <!-- clone -->
       <div
         (click)="cloneQuestion($event)"
-        *ngIf="editMode && (isEditable || canAccess(['clone']))"
+        *ngIf="editMode && isEditable"
         [id]="'sharedQuestionnaireQuestion-btn-clone-question'"
         class="icon-container is-overlay m-right-15">
         <span data-tooltip="Clone" class="tooltip">

@@ -58,6 +58,7 @@ export class SharedQuestionnaireComponent implements OnInit {
 
   /**
    * do not change this as we are using this under the Library page use case.
+   * it emits the value in the for key and value.
    */
   @Output() valueToSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -76,11 +77,16 @@ export class SharedQuestionnaireComponent implements OnInit {
 
   public addSection(event: Event) {
     event.preventDefault();
-    if (this.isEditable || this.canAccess(['section', 'add'])) {
+    if (this.isEditable) {
       this._missionQuestionService.addSection();
     }
   }
 
+  /**
+   * to check the user has access to the defined functionality on the page or not.
+   *
+   * @param path
+   */
   public canAccess(path: Array<string> = []) {
     if (this.accessPath.length) {
       return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
