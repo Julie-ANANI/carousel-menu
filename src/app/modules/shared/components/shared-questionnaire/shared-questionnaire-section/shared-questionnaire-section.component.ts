@@ -5,10 +5,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 
-interface AddQuestion {
+/*interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
   value: any;
-}
+}*/
 
 @Component({
   selector: 'app-shared-questionnaire-section',
@@ -17,7 +17,7 @@ interface AddQuestion {
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
 
-  get questionToAdd(): AddQuestion {
+  /*get questionToAdd(): AddQuestion {
     return this._questionToAdd;
   }
 
@@ -27,7 +27,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   set showModal(value: boolean) {
     this._showModal = value;
-  }
+  }*/
 
   get sectionTypes(): Array<string> {
     return this._sectionTypes;
@@ -120,9 +120,9 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   private _sectionTypes: Array<string> = ['ISSUE', 'SOLUTION', 'CONTEXT', 'NOTHING'];
 
-  private _showModal = false;
+  // private _showModal = false;
 
-  private _questionToAdd: AddQuestion = <AddQuestion>{};
+  // private _questionToAdd: AddQuestion = <AddQuestion>{};
 
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
@@ -178,13 +178,18 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     }
   }
 
+  /**
+   * to check the user has access to the defined functionality on the page or not.
+   *
+   * @param path
+   */
   public canAccess(path: Array<string> = []) {
     if (this.accessPath.length) {
       return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
     }
   }
 
-  public onClicAdd(event: Event) {
+  /*public onClicAdd(event: Event) {
     event.preventDefault();
 
     if (this._questionToAdd.from && !!this._questionToAdd.value) {
@@ -200,16 +205,16 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
       }
     }
-  }
+  }*/
 
-  public closeModal() {
+  /*public closeModal() {
     this._showModal = false;
     this._questionToAdd = <AddQuestion>{};
-  }
+  }*/
 
-  public onChangeAddQuestion(event: any) {
+  /*public onChangeAddQuestion(event: any) {
     this._questionToAdd.from = event;
     this._questionToAdd.value = '';
-  }
+  }*/
 
 }

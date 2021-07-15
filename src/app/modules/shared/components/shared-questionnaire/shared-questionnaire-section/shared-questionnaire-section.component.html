@@ -6,10 +6,7 @@
     <!-- move button / description -->
     <div class="d-flex align-center m-bottom-10">
 
-      <div
-        *ngIf="isEditable || canAccess(['section', 'order'])"
-        data-tooltip="Move section"
-        class="move-arrows tooltip">
+      <div *ngIf="isEditable" data-tooltip="Move section" class="move-arrows tooltip">
         <i (click)="up($event)" [ngClass]="{'disabled': sectionIndex === 0}" class="icon icon-arrow-up"></i>
         <i
           (click)="down($event)"
@@ -114,7 +111,7 @@
       <!-- edit -->
       <div
         (click)="editSection = !editSection"
-        *ngIf="isEditable || canAccess(['section', 'edit']) || canAccess(['section', 'delete'])"
+        *ngIf="isEditable || canAccess(['section', 'edit'])"
         [id]="'sharedQuestionnaireSection-btn-edit-section'"
         class="icon-container is-overlay m-bottom-10 m-right-15">
         <span [attr.data-tooltip]="editSection ? 'Stop editing' : 'Edit'" class="tooltip">
@@ -195,7 +192,7 @@
 </div>
 
 
-<app-utility-modal-empty [(showModal)]="showModal" *ngIf="isLibraryView">
+<!--<app-utility-modal-empty [(showModal)]="showModal" *ngIf="isLibraryView">
 
   <section class="modal-body">
 
@@ -203,7 +200,7 @@
 
     <p class="m-bottom-15">Select the way you would like to add the question.</p>
 
-    <!-- from scratch -->
+    &lt;!&ndash; from scratch &ndash;&gt;
     <div class="form-group">
       <label class="form-radio">
         <input (change)="onChangeAddQuestion('SCRATCH')" type="radio" name="addQuestion">
@@ -229,9 +226,9 @@
         </label>
       </div>
     </ng-container>
-    <!-- /from scratch -->
+    &lt;!&ndash; /from scratch &ndash;&gt;
 
-    <!-- from library -->
+    &lt;!&ndash; from library &ndash;&gt;
     <div class="form-group">
       <label class="form-radio">
         <input (change)="onChangeAddQuestion('LIBRARY')" type="radio" name="addQuestion">
@@ -241,7 +238,7 @@
 
     <ng-container *ngIf="questionToAdd.from === 'LIBRARY'">
     </ng-container>
-    <!-- /from library -->
+    &lt;!&ndash; /from library &ndash;&gt;
 
   </section>
 
@@ -265,4 +262,4 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</app-utility-modal-empty>-->

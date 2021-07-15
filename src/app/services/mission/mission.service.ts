@@ -40,8 +40,15 @@ export class MissionService {
     return this._http.put<MissionTemplate>(`/mission/templates/${templateId}`, template);
   }
 
-  public updateUseCase(templateId: string, data: {}): Observable<MissionTemplate> {
-    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}`, data);
+  /**
+   * this route is to save the changes in the questions and also template
+   * under the Library page use case.
+   * http://localhost:4200/user/admin/libraries/use-cases/60ae157190499526ef804c7d
+   * @param templateId
+   * @param data
+   */
+  public saveLibraryTemplate(templateId: string, data: {}): Observable<MissionTemplate> {
+    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}/library`, data);
   }
 
   /**

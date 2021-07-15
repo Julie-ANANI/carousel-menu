@@ -77,6 +77,11 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     this._getAllTemplates();
   }
 
+  /**
+   * after getting use cases from the back we do some manipulation to how data in the table.
+   *
+   * @private
+   */
   private _getAllTemplates() {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getAllTemplates(this._config).pipe(first()).subscribe((response) => {
@@ -155,6 +160,11 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     };
   }
 
+  /**
+   * to check the user has access to the defined functionality on the page or not.
+   *
+   * @param path
+   */
   public canAccess(path?: Array<string>) {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(['libraries', 'useCases'].concat(path));
@@ -163,6 +173,12 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     }
   }
 
+  /**
+   * before navigating to the edit use case we set the template in the service so that
+   * we can access in the page without calling the back.
+   *
+   * @param event
+   */
   public navigateTo(event: MissionTemplate) {
     this._missionQuestionService.setMissionTemplate(event);
     this._router.navigate([`${this._router.url}/${event._id}`]);

@@ -23,6 +23,10 @@ interface ConfirmUpdate {
 })
 export class AdminEditUseCaseComponent implements OnInit {
 
+  get templateName(): string {
+    return this._templateName;
+  }
+
   get validate(): ConfirmUpdate {
     return this._validate;
   }
@@ -83,9 +87,16 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _showModal = false;
 
-  private _valuesToSave: any = {};
+  /**
+   * store the actions in the order wise they are performed.
+   *
+   * @private
+   */
+  private _valuesToSave: Array<any> = [];
 
   private _toSaveQuestion = false;
+
+  private _templateName = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _missionService: MissionService,
@@ -97,8 +108,12 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   ngOnInit() {
     this._missionTemplate = this._missionQuestionService.template;
-    this._initStack();
+    this._useCaseName();
 
+    /**
+     * if the user refresh the page in that case we do not have the value in the
+     * this._missionQuestionService.template so in that case we call the back service.
+     */
     this._activatedRoute.params.subscribe((params) => {
       const id = params['templateId'] || '';
       if (!!id && (id !== this._missionTemplate._id) || !this._missionTemplate._id ) {
@@ -107,16 +122,11 @@ export class AdminEditUseCaseComponent implements OnInit {
     });
   }
 
-  private _initStack() {
-    this._valuesToSave = {
-      'question': {}
-    };
-  }
-
   private _getTemplate(id: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getTemplate(id).pipe(first()).subscribe((response) => {
         this._missionTemplate = response;
+        this._useCaseName();
       }, error => {
         this._fetchingError = true;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
@@ -125,6 +135,11 @@ export class AdminEditUseCaseComponent implements OnInit {
     }
   }
 
+  /**
+   * to check the user has access to the defined functionality on the page or not.
+   *
+   * @param path
+   */
   public canAccess(path?: Array<string>) {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(this._accessPath.concat(path));
@@ -152,26 +167,42 @@ export class AdminEditUseCaseComponent implements OnInit {
     this._validate = <ConfirmUpdate>{};
   }
 
+  /**
+   * to the back we send the data object that always contains the
+   * mission template and questions actions if any changes in the questions.
+   *
+   * @param event
+   */
   public onClickValidate(event: Event) {
     event.preventDefault();
     if (this._validate.tool && this._validate.template) {
       this._isSaving = true;
-      if (this._toSaveQuestion) {
+      const data = { template: this._missionTemplate };
 
-      } else {
-        this._useCaseUpdate();
+      if (this._toSaveQuestion) {
+        data['actions'] = this._valuesToSave;
       }
+
+      this._updateLibraryTemplate(data);
     }
   }
 
-  private _useCaseUpdate() {
-    this._missionService.saveTemplate(this._missionTemplate._id, this._missionTemplate)
+  /**
+   * to update the changes in the back.
+   *
+   * @param data
+   * @private
+   */
+  private _updateLibraryTemplate(data = {}) {
+    this._missionService.saveLibraryTemplate(this._missionTemplate._id, data)
       .pipe(first())
       .subscribe((_) => {
         this.closeModal();
-        this._translateNotificationsService.success('Success', 'The use case has been updated successfully.');
+        this._valuesToSave = [];
+        this._toSaveQuestion = false;
         this._isSaving = false;
         this._toBeSaved = false;
+        this._translateNotificationsService.success('Success', 'The use case has been updated successfully.');
       }, error => {
         this._isSaving = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
@@ -179,8 +210,8 @@ export class AdminEditUseCaseComponent implements OnInit {
       });
   }
 
-  public templateName() {
-    return MissionFrontService.objectiveName(this._missionTemplate, this.currentLang);
+  private _useCaseName() {
+    this._templateName = MissionFrontService.objectiveName(this._missionTemplate, this.currentLang);
   }
 
   public onClickSave(event: Event) {
@@ -191,17 +222,43 @@ export class AdminEditUseCaseComponent implements OnInit {
     }
   }
 
+  /**
+   * we are adding the Action to the list based on the key.
+   *
+   * @param event
+   */
   public changeStack(event: {key: string, value: any}) {
-    console.log(event);
     if (!!event && this.canAccess(['question', 'edit'])) {
 
       switch (event.key) {
+        case 'QUESTION_REMOVE':
+          this._addAction(event);
+          break;
 
+        case 'QUESTION_EDIT':
+          this._addAction(event);
+          break;
       }
 
+      this._toSaveQuestion = true;
       this._toBeSaved = true;
+
     }
-    console.log(this._valuesToSave);
+  }
+
+  /**
+   * first we try to search in the this._valuesToSave if we have already the same action and same
+   * identifier we remove it and push it to the last.
+   *
+   * @param event: {key: string, value: any}
+   * @private
+   */
+  private _addAction(event: {key: string, value: any}) {
+    const index = this._valuesToSave.findIndex((_value) => _value.value.quesId === event.value.quesId);
+    if (index !== -1) {
+      this._valuesToSave.splice(index, 1);
+    }
+    this._valuesToSave.push(event);
   }
 
 }

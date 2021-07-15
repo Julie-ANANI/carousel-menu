@@ -23,6 +23,7 @@ export interface OptionEntry {
 
 
 export interface MissionTemplateSection {
+  readonly _id?: string;
 
   /**
    * based on ISSUE', 'SOLUTION', 'CONTEXT', 'OTHER' we create the sections in the
@@ -99,6 +100,7 @@ export interface MissionQuestionEntry {
 
 
 export interface MissionQuestionOption {
+  readonly _id?: string;
 
   /**
    * it's a text used in the quiz front for help or an instruction based on the questionType.

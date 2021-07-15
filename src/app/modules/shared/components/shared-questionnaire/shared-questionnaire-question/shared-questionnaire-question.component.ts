@@ -3,7 +3,8 @@ import {picto, Picto} from '../../../../../models/static-data/picto';
 import {
   MissionQuestion,
   MissionQuestionEntry,
-  MissionQuestionOption, MissionQuestionType,
+  MissionQuestionOption,
+  MissionQuestionType,
   OptionEntry
 } from '../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
@@ -175,21 +176,22 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   public removeQuestion(event: Event) {
     event.preventDefault();
 
-    if (this.isLibraryView && this.canAccess(['delete'])) {
-      const question = this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex, true);
-      this.valueToSave.emit({
-        key: 'QUESTION_REMOVE',
-        value: {
-          questionId: question.question._id
-        }
-      });
-    } else if (this.isEditable) {
-      const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
-        : 'Are you sure you want to delete this question?';
-      const res = confirm(_msg);
+    const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
+      : 'Are you sure you want to delete this question?';
+    const res = confirm(_msg);
 
-      if (res) {
+    if (res) {
+      if (this.isEditable) {
         this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex);
+      } else if (this.isLibraryView && this.canAccess(['delete'])) {
+        const question = this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex, true);
+        this.valueToSave.emit({
+          key: 'QUESTION_REMOVE',
+          value: {
+            sectionIndex: this._sectionIndex,
+            quesId: question.question._id
+          }
+        });
       }
     }
   }
@@ -211,19 +213,20 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     event.preventDefault();
     if (this.isEditable) {
       this._missionQuestionService.cloneQuestion(this._questionIndex, this._sectionIndex);
-    } else if (this.isLibraryView && this.canAccess(['clone'])) {
+    } /*else if (this.isLibraryView && this.canAccess(['clone'])) {
       const question: MissionQuestion = this._missionQuestionService.cloneQuestion(this._questionIndex, this._sectionIndex, true);
+      const value = { essential: false, question: question };
+      this._missionQuestionService.template.sections[this._sectionIndex].questions.push(value);
       this.valueToSave.emit({
         key: 'QUESTION_CLONE',
         value: {
-          sectionId: this._sectionIndex,
-          [question._id]: {
-            essential: false,
-            question: question
-          }
+          sectionIndex: this._sectionIndex,
+          identifier: question.identifier,
+          essential: value.essential,
+          question: value.question
         }
       });
-    }
+    }*/
   }
 
   private _emitValueToSave(access: Array<string>) {
@@ -231,8 +234,8 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
       this.valueToSave.emit({
         key: 'QUESTION_EDIT',
         value: {
-          essential: this.isEssential,
-          [this._question._id]: this._question
+          quesId: this._question._id,
+          ques: this._question
         }
       });
     }
