@@ -119,7 +119,7 @@ export const COMMON = {
   },
 
   'LABEL': {
-    'TENTATIVE_LEFT': 'tentative(s) left',
+    'TENTATIVE_LEFT': 'attempt(s) left',
     'FEEDBACK_COLLECTION': 'Feedback collection',
     'RSETITUTION': 'Restitution',
     'ACTIVITY_FIELDS': 'Activity Fields',
