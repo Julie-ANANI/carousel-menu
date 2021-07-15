@@ -40,21 +40,6 @@
 
           <h1 class="title text-center">{{'LOG_IN.HEADING' | translate}}</h1>
 
-          <!-- tentatives + contact UMI  -->
-          <ng-container *ngIf="nbTentatives<3">
-            <div class="m-bottom-15 text-alert text-sm d-flex">
-              {{ nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate) }}
-              <span
-                (click)="showContactUMIModal()"
-                *ngIf="nbTentatives ===0"
-                [id]="'login-btn-modal-contact'"
-                class="text-link text-normal text-underline m-left-20">
-                Contact UMI support
-              </span>
-            </div>
-          </ng-container>
-          <!-- /tentatives + contact UMI-->
-
           <form (submit)="onClickLogin()" [formGroup]="formData" autocomplete="off">
 
             <div class="form-group m-bottom-20 has-error">
@@ -103,15 +88,29 @@
               </ng-container>
 
             </div>
+            <!-- tentatives + contact UMI  -->
+            <ng-container *ngIf="nbTentatives<3">
+              <div class="m-bottom-15 text-alert text-sm d-flex">
+                <span>{{ nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate) }}</span>
+                <span
+                  (click)="showContactUMIModal()"
+                  *ngIf="nbTentatives ===0"
+                  [id]="'login-btn-modal-contact'"
+                  class="text-link text-normal text-underline m-left-auto">
+                Contact UMI support
+              </span>
+              </div>
+            </ng-container>
+            <!-- /tentatives + contact UMI-->
 
             <!-- login button -->
             <div class="p-top-30">
               <button
-                [disabled]="formData.invalid || displayLoading || displayLoadingLinkedIn"
                 [id]="'login-btn-submit'"
                 [ngStyle]="{'height': '50px'}"
                 class="button is-primary text-sm w-full gtm-signin-email"
-                type="submit">
+                type="submit"
+                [disabled]="formData.invalid || displayLoading || displayLoadingLinkedIn || nbTentatives < 1">
                 <ng-container *ngIf="!displayLoading">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</ng-container>
                 <span *ngIf="displayLoading" class="loading is-white"></span>
               </button>

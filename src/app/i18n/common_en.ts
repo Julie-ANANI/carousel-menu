@@ -119,8 +119,8 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'TENTATIVE_LEFT': 'attempt(s) left',
     'ADD': 'Add',
-    'TENTATIVE_LEFT': 'tentative(s) left',
     'FEEDBACK_COLLECTION': 'Feedback collection',
     'RSETITUTION': 'Restitution',
     'ACTIVITY_FIELDS': 'Activity Fields',
@@ -200,7 +200,6 @@ export const COMMON = {
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Start typing to search...',
     'PROJECT_TITLE': 'Add the project title here...',
-    'TITLE': 'Add the title here...',
     'MEDIA_URL': 'Place the address of your Youtube or Vimeo video here',
     'MEDIA_SLIDE': 'Drag and drop your picture here',
   },
@@ -233,7 +232,6 @@ export const COMMON = {
   },
 
   'BUTTON': {
-    'OUR_METHODOLOGY': 'Our methodology',
     'CONTINUE': 'Continue',
     'ADD': 'Add',
     'SAVE': 'Save',
@@ -486,19 +484,6 @@ export const COMMON = {
     'WRONG_SIZE': 'Could not upload image, the size is invalid.',
     'UPLOADING': 'Uploading picture, please be patient.',
     'UPLOADING_VIDEO': 'Uploading video, please be patient.'
-  },
-
-  'QUESTIONNAIRE_TYPE': {
-    'CHOOSE': 'Choose the type of question',
-    'list': 'List of items',
-    'clearbit': 'List of companies',
-    'radio': 'Unique choice',
-    'scale': 'Rating',
-    'stars': 'Stars rating',
-    'textarea': 'Text',
-    'toggle': 'Toggle',
-    'checkbox': 'Multiple choice',
-    'ranking': 'Ranking'
   }
 
 };
