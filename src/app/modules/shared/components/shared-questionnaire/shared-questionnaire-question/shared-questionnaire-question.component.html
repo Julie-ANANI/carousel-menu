@@ -23,6 +23,14 @@
         <span class="m-right-20">{{ questionEntry().label }}</span>
         <!-- /label / type -->
 
+        <!-- question type specific to template -->
+        <ng-container *ngIf="isLibraryView">
+          <div class="label is-rounded is-progress is-sm m-no m-right-20">
+            #{{isEssential ? 'Essential' : 'Secondary'}}
+          </div>
+        </ng-container>
+        <!-- /question type specific to template -->
+
         <!-- identifier -->
         <ng-container *ngIf="isTaggedQuestion">
           <div class="label is-rounded is-tag is-sm m-no m-right-20">
@@ -69,6 +77,20 @@
           </label>
         </ng-container>
         <!-- /identifier -->
+
+        <!-- question type specific to template -->
+        <ng-container *ngIf="isLibraryView && canAccess(['typeInUseCase'])">
+          <label class="m-right-20">
+            <select
+              (ngModelChange)="onChangeTemplateQuestion($event)"
+              [(ngModel)]="isEssential"
+              class="form-select is-sm">
+              <option [ngValue]="true">Essential</option>
+              <option [ngValue]="false">Secondary</option>
+            </select>
+          </label>
+        </ng-container>
+        <!-- /question type specific to template -->
 
       </ng-container>
       <!-- /edit mode -->
@@ -211,6 +233,63 @@
           </div>
         </div>
         <!-- /language -->
+
+        <!-- objective -->
+        <div *ngIf="isLibraryView" class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Objectif' : 'Objective' }}</label>
+          <ng-template #showObjective>
+            <p class="text-sm">{{ questionEntry(lang).objective || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'objective')"
+            *ngIf="canAccess(['edit', 'objective']); else showObjective"
+            [ngModel]="questionEntry(lang).objective || 'NA'"
+            [id]="'question-objective-'+lang"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /objective -->
+
+        <!-- title -->
+        <div *ngIf="isLibraryView" class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Titre synthèse' : 'Synthesis title' }}</label>
+          <ng-template #showTitle>
+            <p class="text-sm">{{ questionEntry(lang).title || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'title')"
+            *ngIf="canAccess(['edit', 'title']); else showTitle"
+            [ngModel]="questionEntry(lang).title || 'NA'"
+            [id]="'question-title-'+lang"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /title -->
+
+        <!-- subtitle -->
+        <div *ngIf="isLibraryView" class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Sous-titre synthèse' : 'Synthesis subtitle' }}</label>
+          <ng-template #showSubtitle>
+            <p class="text-sm">{{ questionEntry(lang).subtitle || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'subtitle')"
+            *ngIf="canAccess(['edit', 'subtitle']); else showSubtitle"
+            [ngModel]="questionEntry(lang).subtitle || 'NA'"
+            [id]="'question-subtitle-'+lang"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /subtitle -->
 
         <!-- label -->
         <div class="m-bottom-15">

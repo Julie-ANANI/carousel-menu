@@ -205,6 +205,13 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     this._emitValueToSave(['edit', 'identifier']);
   }
 
+  public onChangeTemplateQuestion(event: boolean) {
+    if (this.canAccess(['typeInUseCase'])) {
+      this._missionQuestionService.template.sections[this._sectionIndex].questions[this._questionIndex]['essential'] = event;
+      this._missionQuestionService.setNotifyChanges(true);
+    }
+  }
+
   public getNonUsedQuestions() {
     return this._missionQuestionService.getNonUsedQuestions();
   }
