@@ -15,6 +15,7 @@ import { PresetsResolver } from '../../../../../resolvers/admin/presets-resolver
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 import {AdminUseCasesLibraryComponent} from './admin-use-cases-library/admin-use-cases-library.component';
 import {AdminEditUseCaseComponent} from './admin-use-cases-library/admin-edit-use-case/admin-edit-use-case.component';
+import {AdminQuestionsLibraryComponent} from './admin-questions-library/admin-questions-library.component';
 
 export const routes: Routes = [
   {
@@ -79,7 +80,14 @@ export const routes: Routes = [
         canActivate: [AdminRoleGuard],
         data: { accessPath: ['libraries', 'useCases'] },
         pathMatch: 'full'
-      }
+      },
+      {
+        path: 'questions',
+        component: AdminQuestionsLibraryComponent,
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['libraries', 'questions'] },
+        pathMatch: 'full'
+      },
     ]
   }
 ];

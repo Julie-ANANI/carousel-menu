@@ -32,7 +32,8 @@ export class AdminLibrariesComponent {
     {name: 'Workflows', path: 'workflows', link: 'workflows'},
     {name: 'Emails', path: 'emails', link: 'emails'},
     {name: 'Signatures', path: 'signatures', link: 'signatures'},
-    {name: 'Use cases', path: 'useCases', link: 'use-cases'}
+    {name: 'Use cases', path: 'useCases', link: 'use-cases'},
+    {name: 'Questions', path: 'questions', link: 'questions'}
   ];
 
   private _options: Array<ActionOption> = [];
