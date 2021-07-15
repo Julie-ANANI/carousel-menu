@@ -635,6 +635,11 @@
                       </ng-container>
                       <!-- /no-editable -->
 
+                      <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
+                      </ng-container>
+                      <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
+                      </ng-container>
+
                       <!-- editable-->
                       <ng-container
                         *ngTemplateOutlet="gridEditTextTemplate; context: {$implicit: {column: column, row:row,attr: attr}}">
@@ -643,10 +648,6 @@
                     </ng-container>
 
                   </div>
-                  <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                  </ng-container>
-                  <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                  </ng-container>
                 </ng-container>
                 <!-- /type NUMBER -->
 
@@ -656,28 +657,16 @@
 
                   <!-- not clickable -->
                   <ng-container *ngIf="i !== table._clickIndex - 1">
-                    <div
-                      [attr.data-tooltip]="getTitle(row, column)"
-                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column),
+                    <div *ngIf="!column._isEditable"
+                         [attr.data-tooltip]="getTitle(row, column)"
+                         [ngClass]="{'tooltip is-multiline': !!getTitle(row, column),
                       'is-right': rowIndex < 1 && table._total >= 1}"
-                      class="w-full">
+                         class="w-full">
                       <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)">
                         <ng-container *ngFor="let attr of getAttrs(column)">
                           {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                         </ng-container>
                       </div>
-                    </div>
-                    <ng-container
-                      *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                    <!-- no-editable-->
-                    <div class="text-ellipsis" [title]="getTitle(row, column)"
-                         *ngIf="!column._isEditable"
-                         [ngStyle]="getTextColor(row, column)">
-                      <ng-container *ngFor="let attr of getAttrs(column)">
-                          {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
-                      </ng-container>
 
                       <ng-container
                         *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
@@ -685,7 +674,6 @@
                       <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                       </ng-container>
                     </div>
-                    <!-- /no-editable-->
 
                     <!-- editable-->
                     <ng-container *ngIf="column._isEditable">
@@ -714,7 +702,7 @@
                             *ngIf="getInputGrid(row, column).disabled"
                             class="text-ellipsis no-editable-grid d-flex align-center">
                             <ng-container *ngFor="let attr of getAttrs(column)">
-                                {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
+                              {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
                             </ng-container>
                           </div>
                           <ng-container
@@ -729,7 +717,7 @@
                             (click)="enableInput($event, row, column)"
                             *ngIf="getInputGrid(row, column).disabled"
                             class="text-ellipsis no-editable-grid d-flex align-center">
-                            <ng-container >
+                            <ng-container>
                               {{(getInputGrid(row, column).input.name || '-' | titlecase)}}
                             </ng-container>
                           </div>
@@ -744,8 +732,7 @@
                     <!-- /editable-->
 
                   </ng-container>
-                </ng-container>
-                <!-- /not clickable -->
+                  <!-- /not clickable -->
 
 
                   <!-- clickable -->
@@ -763,7 +750,8 @@
                         <ng-container *ngFor="let attr of getAttrs(column)">
                           {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
                         </ng-container>
-                        <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
+                        <ng-container
+                          *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                         </ng-container>
                         <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                         </ng-container>
@@ -771,25 +759,7 @@
                     </div>
                   </ng-container>
                   <!-- /clickable -->
-                <!-- clickable -->
-                <ng-container *ngIf="i === table._clickIndex - 1">
-                  <div
-                    (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
-                    [ngClass]="{ 'active': rowIndex === selectedIndex }"
-                    class="clickable-text text-ellipsis"
-                    [ngStyle]="getTextColor(row, column)"
-                    [title]="getTitle(row, column)">
-                    <ng-container *ngFor="let attr of getAttrs(column)">
-                      {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
-                    </ng-container>
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                  </div>
                 </ng-container>
-                <!-- /clickable -->
-
 
               </div>
             </ng-container>
@@ -926,7 +896,8 @@
 
 <!-- user edit template-->
 <ng-template #gridEditUserTemplate let-context>
-  <div class="form-group d-flex align-center" *ngIf="context.column._isEditable && !getInputGrid(context.row, context.column).disabled">
+  <div class="form-group d-flex align-center"
+       *ngIf="context.column._isEditable && !getInputGrid(context.row, context.column).disabled">
     <div (click)="enableInput($event, context.row, context.column)">
       <label class="relative m-no-right mxw-full is-xs">
         <app-utility-auto-suggestion
