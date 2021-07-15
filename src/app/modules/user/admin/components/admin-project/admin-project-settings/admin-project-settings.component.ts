@@ -47,7 +47,7 @@ import { StatsReferentsService } from '../../../../../../services/stats-referent
 import { Community } from '../../../../../../models/community';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
-interface UserSuggestion {
+export interface UserSuggestion {
   name: string;
   _id: string;
   email: string;
@@ -612,6 +612,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public saveOwner(event: Event) {
     event.preventDefault();
     this._innovation.owner = <any>this._newOwner;
+    console.log(this._innovation.owner);
     if (this._newOwner && this._newOwner._id) {
       this._saveProject('The owner has been updated.', {
         owner: this._innovation.owner,

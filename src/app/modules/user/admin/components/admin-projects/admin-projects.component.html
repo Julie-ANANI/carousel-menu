@@ -22,6 +22,7 @@
         <app-shared-table
           [(config)]="config"
           [data]="table"
+          (performAction)="getPerformedAction($event)"
           (editRow)="navigate($event)">
         </app-shared-table>
       </section>

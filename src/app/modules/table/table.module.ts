@@ -16,6 +16,9 @@ import { MessageTemplateModule } from '../utility/messages/message-template/mess
 import { PaginationTemplate2Module } from '../utility/paginations/pagination-template-2/pagination-template-2.module';
 import {ModalEmptyModule} from '../utility/modals/modal-empty/modal-empty.module';
 import {CheckBoxFilterModule} from '../utility/check-box-filter/check-box-filter.module';
+import { AutoCompleteInputModule } from '../utility/auto-complete-input/auto-complete-input.module';
+import { SearchInputModule } from '../utility/search-inputs/search-template-1/search-input.module';
+import { AutoSuggestionModule } from '../utility/auto-suggestion/auto-suggestion.module';
 
 @NgModule({
   imports: [
@@ -33,6 +36,9 @@ import {CheckBoxFilterModule} from '../utility/check-box-filter/check-box-filter
     PaginationTemplate2Module,
     ModalEmptyModule,
     CheckBoxFilterModule,
+    AutoCompleteInputModule,
+    SearchInputModule,
+    AutoSuggestionModule,
   ],
   declarations: [TableComponent],
   exports: [TableComponent],
