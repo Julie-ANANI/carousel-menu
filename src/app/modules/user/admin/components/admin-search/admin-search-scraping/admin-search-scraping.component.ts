@@ -17,7 +17,9 @@ export class AdminSearchScrapingComponent implements OnInit {
 
   private _showResultScraping = false;
 
-  private _result = 'TEST';
+  private _showKeepInformed = false;
+
+  private _result: any = null;
 
   private _attributes = new Array();
 
@@ -28,6 +30,10 @@ export class AdminSearchScrapingComponent implements OnInit {
   private _keepInformed = '';
 
   private _isScraping = false;
+
+  private _isError = false;
+
+  private _error = '';
 
   constructor(private _rolesFrontService: RolesFrontService,
               private _scrapingService: ScrapingService,
@@ -41,38 +47,55 @@ export class AdminSearchScrapingComponent implements OnInit {
     return this._accessPath;
   }
 
+  get showKeepInformed(): boolean {
+    return this._showKeepInformed;
+  }
+
   get isScraping(): boolean {
     return this._isScraping;
   }
 
+  get isError(): boolean {
+    return this._isError;
+  }
+
+  get error(): string {
+    return this._error;
+  }
+
   onClickSearch(event: Event): void {
     this._showResultScraping = false;
+    this._showKeepInformed = true;
     this._isScraping = true;
     const scrapeParams = this._params;
     console.log('url :', scrapeParams['url']);
     console.log(scrapeParams);
     const refreshIntervalId = setInterval (() => {
-      console.log('Hello from setInterval');
       this.autoKeepInformed();
     }, 1000);
     this._scrapingService.getScraping(scrapeParams).subscribe(
       (value) => {
+        this._showKeepInformed = false;
+        this._isScraping = false;
         this._result = value;
         console.log('Resultat : ', this._result);
-        this.updateMails();
-        this.updateAttributes();
-        this._showResultScraping = true;
-        this._isScraping = false;
+        if ('error' in this._result) {
+          this._isError = true;
+          this._error = this._result['error'];
+        } else {
+          this._isError = false;
+          this.updateMails();
+          this.updateAttributes();
+          this._showResultScraping = true;
+        }
       },
       (error) => {
         console.log('Uh-oh, an error occurred! : ', error);
         clearInterval(refreshIntervalId);
-        this.autoKeepInformed();
       },
       () => {
         console.log('Observable complete!');
         clearInterval(refreshIntervalId);
-        this.autoKeepInformed();
       }
     );
     this.autoKeepInformed();

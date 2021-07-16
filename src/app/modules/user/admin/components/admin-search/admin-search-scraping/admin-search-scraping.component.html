@@ -39,11 +39,18 @@
         </button>
       </div>
       <!-- /buttons -->
-  </div>
+
   <!-- /search wrapper -->
 
+  <!-- display error -->
+  <div *ngIf="isError" [ngClass]="isError ? 'd-block' : 'd-none'" class="text-error">
+    {{error}}
+  </div>
+
   <!-- keep informed -->
-  <h2>{{keepInformed}}</h2>
+  <div *ngIf="showKeepInformed" [ngClass]="showKeepInformed ? 'd-block' : 'd-none'" class="m-top-25">
+    <h2>{{keepInformed}}</h2>
+  </div>
   <!-- /keep informed -->
 
   <!-- display result -->
@@ -65,7 +72,7 @@
       </div>
   </div>
   <!-- /display result -->
-
+  </div>
 </div>
 
 
