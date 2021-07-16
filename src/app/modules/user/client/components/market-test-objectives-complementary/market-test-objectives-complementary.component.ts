@@ -16,18 +16,6 @@ type template = 'TEMPLATE_1' | 'TEMPLATE_2';
 })
 export class MarketTestObjectivesComplementaryComponent {
 
-  get selectedSectionsObjectives(): Array<MissionTemplateSection> {
-    return this._selectedSectionsObjectives;
-  }
-
-  get templateSections(): Array<MissionTemplateSection> {
-    return this._templateSections;
-  }
-
-  get objectiveComment(): string {
-    return this._objectiveComment;
-  }
-
   get currentLang(): string {
     return this._translateService.currentLang;
   }
@@ -42,24 +30,17 @@ export class MarketTestObjectivesComplementaryComponent {
    * pass the actual list of mission template sections.
    * we do not modify them.
    */
-  @Input() set templateSections(value: Array<MissionTemplateSection>) {
-    this._templateSections = value;
-    this._selectedSectionsObjectives = MissionFrontService.resetComplementaryObjectives(
-      JSON.parse(JSON.stringify(this._templateSections))
-    );
-  }
+  @Input() templateSections: Array<MissionTemplateSection> = [];
 
   /**
    * pass the selected objectives with the section info.
-   * @param value
    */
-  @Input() set selectedSectionsObjectives(value: Array<MissionTemplateSection>) {
-    this._selectedSectionsObjectives = value || [];
-  }
+  @Input() selectedSectionsObjectives: Array<MissionTemplateSection> = [];
 
-  @Input() set objectiveComment(value: string) {
-    this._objectiveComment = value;
-  }
+  /**
+   * pass the comment return for the objectives.
+   */
+  @Input() objectiveComment = '';
 
   /**
    * emits the comment written in the textarea.
@@ -71,34 +52,28 @@ export class MarketTestObjectivesComplementaryComponent {
    */
   @Output() templateSectionsChange: EventEmitter<Array<MissionTemplateSection>> = new EventEmitter<Array<MissionTemplateSection>>();
 
-  private _objectiveComment = '';
-
-  private _templateSections: Array<MissionTemplateSection> = [];
-
-  private _selectedSectionsObjectives: Array<MissionTemplateSection> = [];
-
   constructor(private _translateService: TranslateService) { }
 
   public onChangeOption(event: Event, value: MissionQuestion, sectionIndex: number) {
     event.preventDefault();
 
     if (((event.target) as HTMLInputElement).checked) {
-      this._selectedSectionsObjectives[sectionIndex].questions.push(value);
+      this.selectedSectionsObjectives[sectionIndex].questions.push(value);
     } else {
-      const index = this._selectedSectionsObjectives[sectionIndex].questions.findIndex((objective) => {
+      const index = this.selectedSectionsObjectives[sectionIndex].questions.findIndex((objective) => {
         return objective._id === value._id;
       });
       if (index !== -1) {
-        this._selectedSectionsObjectives[sectionIndex].questions.splice(index, 1);
+        this.selectedSectionsObjectives[sectionIndex].questions.splice(index, 1);
       }
     }
 
-    this.templateSectionsChange.emit(this._selectedSectionsObjectives);
+    this.templateSectionsChange.emit(this.selectedSectionsObjectives);
   }
 
   public isChecked(value: MissionQuestion, sectionIndex: number): boolean {
-    if (this._selectedSectionsObjectives.length && this._selectedSectionsObjectives[sectionIndex]) {
-      return this._selectedSectionsObjectives[sectionIndex].questions.some((objective) => {
+    if (this.selectedSectionsObjectives.length && this.selectedSectionsObjectives[sectionIndex]) {
+      return this.selectedSectionsObjectives[sectionIndex].questions.some((objective) => {
         return objective._id === value._id;
       });
     }
@@ -110,7 +85,7 @@ export class MarketTestObjectivesComplementaryComponent {
   }
 
   public emitCommentChange() {
-    this.objectiveCommentChange.emit(this._objectiveComment.trim());
+    this.objectiveCommentChange.emit(this.objectiveComment.trim());
   }
 
 }

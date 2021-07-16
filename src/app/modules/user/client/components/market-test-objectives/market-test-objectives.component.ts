@@ -138,6 +138,9 @@ export class MarketTestObjectivesComponent {
     event.preventDefault();
     if (this._selectedCategory && this._selectedCategory === value['category']) {
       this._selectedTemplate = value;
+      this._missionTemplate.sections = MissionFrontService.resetComplementaryObjectives(
+        JSON.parse(JSON.stringify(this._selectedTemplate.sections))
+      );
       this._selectedSectionsObjectives = [];
       this._emitTemplate();
     }
