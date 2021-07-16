@@ -22,6 +22,7 @@ import { ObjectivesPrincipal } from '../../../../../models/static-data/missionOb
 import { Column } from '../../../../table/models/column';
 import { Mission } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
+import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -51,9 +52,6 @@ export class AdminProjectsComponent implements OnInit {
   private _isLoading = true;
 
   private _currentLang = this._translateService.currentLang;
-
-  private _mainObjective = this._currentLang === 'en' ?
-    'mission.objective.principal.en' : 'mission.objective.principal.fr';
 
   private _objectiveSearchKey = this._currentLang === 'en' ?
     'objective.principal.en' : 'objective.principal.fr';
@@ -137,7 +135,7 @@ export class AdminProjectsComponent implements OnInit {
             _editType: 'MULTI-CHOICES'
           },
           {
-            _attrs: [this._mainObjective],
+            _attrs: ['mainObjective'],
             _name: 'Objective',
             _type: 'TEXT',
             _isHidden: !this.canAccess(['tableColumns', 'objective']),
@@ -457,7 +455,7 @@ export class AdminProjectsComponent implements OnInit {
             ]
           },
           {
-            _attrs: [this._mainObjective],
+            _attrs: ['mainObjective'],
             _name: 'Objective',
             _type: 'TEXT',
             _isHidden: !this.canAccess(['tableColumns', 'objective']),
@@ -682,6 +680,11 @@ export class AdminProjectsComponent implements OnInit {
       if (project.innovationCards && project.innovationCards.length) {
         project.innovationCards =
           InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
+      }
+      if (MissionFrontService.hasMissionTemplate(project.mission)) {
+        project['mainObjective'] = MissionFrontService.objectiveName(project.mission.template, this._currentLang);
+      } else {
+        project['mainObjective'] = project.mission.objective.principal[this._currentLang];
       }
       if (project.stats && project.stats.received && project.stats.received > 0) {
         project['emailSent'] = 'Yes';

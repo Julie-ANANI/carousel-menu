@@ -10,6 +10,20 @@ export class MissionFrontService {
   private _missionObj: BehaviorSubject<Mission> = new BehaviorSubject<Mission>(<Mission>{});
 
   /**
+   * based on the lang it will return the index of that entry;
+   *
+   * @param value
+   * @param lang
+   */
+  public static entryIndex(value: MissionTemplate | MissionQuestion, lang = 'en'): number {
+    let index = 0;
+    if (value && value.entry && value.entry.length > 1) {
+      index = value.entry.findIndex((_entry) => _entry.lang === lang);
+    }
+    return index === -1 ? 0 : index;
+  }
+
+  /**
    * return true if the mission has template in it.
    * @param mission
    */
