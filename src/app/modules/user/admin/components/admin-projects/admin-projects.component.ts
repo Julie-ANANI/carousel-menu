@@ -20,7 +20,7 @@ import { RolesFrontService } from '../../../../../services/roles/roles-front.ser
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
 import { Column } from '../../../../table/models/column';
-import { Mission } from '../../../../../models/mission';
+import {Mission, MissionTemplate} from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
@@ -30,6 +30,7 @@ import {MissionFrontService} from '../../../../../services/mission/mission-front
 })
 
 export class AdminProjectsComponent implements OnInit {
+
   private _projects: Array<any> = [];
 
   private _totalProjects = -1;
@@ -58,6 +59,7 @@ export class AdminProjectsComponent implements OnInit {
 
   private _fetchingError = false;
 
+  private _missionTemplates: Array<MissionTemplate> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
@@ -74,6 +76,7 @@ export class AdminProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this._initializeTable();
+    this._getMissionTemplates();
 
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
@@ -89,6 +92,16 @@ export class AdminProjectsComponent implements OnInit {
       });
     }
 
+  }
+
+  private _getMissionTemplates() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
+        this._missionTemplates = response && response.result || [];
+      }, error => {
+        console.error(error);
+      });
+    }
   }
 
   /**
@@ -209,7 +222,21 @@ export class AdminProjectsComponent implements OnInit {
               {_name: 'DEMO', _alias: 'Demo'},
               {_name: 'TEST', _alias: 'Test'},
             ]
-          }, // Using _searchConfig for advanced search
+          },
+          // Using _searchConfig for advanced search
+          {
+            _attrs: ['template.entry.objective'],
+            _name: 'Use case',
+            _type: 'MULTI-CHOICES',
+            _isSearchable: this.canAccess(['filterBy', 'objective']),
+            _isHidden: true,
+            _searchConfig: {_collection: 'mission', _searchKey: 'template.entry.objective'},
+            _choices: this._missionTemplates.map((_template) => {
+              const label = MissionFrontService.objectiveName(_template, this._currentLang);
+              return {_name: label, _alias: label};
+            })
+          },
+          // Using _searchConfig for advanced search
           {
             _attrs: [this._objectiveSearchKey],
             _name: 'Objective',
@@ -482,7 +509,21 @@ export class AdminProjectsComponent implements OnInit {
               {_name: 'DEMO', _alias: 'Demo'},
               {_name: 'TEST', _alias: 'Test'},
             ]
-          }, // Using _searchConfig for advanced search
+          },
+          // Using _searchConfig for advanced search
+          {
+            _attrs: ['template.entry.objective'],
+            _name: 'Use case',
+            _type: 'MULTI-CHOICES',
+            _isSearchable: this.canAccess(['filterBy', 'objective']),
+            _isHidden: true,
+            _searchConfig: {_collection: 'mission', _searchKey: 'template.entry.objective'},
+            _choices: this._missionTemplates.map((_template) => {
+              const label = MissionFrontService.objectiveName(_template, this._currentLang);
+              return {_name: label, _alias: label};
+            })
+          },
+          // Using _searchConfig for advanced search
           {
             _attrs: [this._objectiveSearchKey],
             _name: 'Objective',
