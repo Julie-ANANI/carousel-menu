@@ -13,14 +13,11 @@ export class MissionService {
   constructor(private _http: HttpClient) { }
 
   /**
-   * will return the list of all the questions defined by us for a mission.
+   * will return the list of all the questions.
    * @param config
    */
   public getAllQuestions(config?: Config): Observable<Response> {
-    const _config = !!config ? config : {
-      limit: '-1'
-    };
-    return this._http.get<Response>('/mission/questions', {params: _config});
+    return this._http.get<Response>('/mission/questions/all', {params: config});
   }
 
   /**

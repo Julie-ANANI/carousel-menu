@@ -94,6 +94,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
           _template['complementaryQuestions'] = MissionFrontService.complementaryObjectives(_template['totalQuestions']);
           return _template;
         });
+        this._missionQuestionService.setAllTemplates(this._templates);
         this._initializeTable();
       }, error => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
@@ -145,17 +146,17 @@ export class AdminUseCasesLibraryComponent implements OnInit {
           _width: '180px'
         },
         {
-          _attrs: ['created'],
-          _name: 'Created',
-          _type: 'DATE',
-          _width: '150px'
-        },
-        {
           _attrs: ['updated'],
           _name: 'Updated',
           _type: 'DATE',
           _width: '150px'
         },
+        {
+          _attrs: ['created'],
+          _name: 'Created',
+          _type: 'DATE',
+          _width: '150px'
+        }
       ]
     };
   }
@@ -180,7 +181,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
    * @param event
    */
   public navigateTo(event: MissionTemplate) {
-    this._missionQuestionService.setMissionTemplate(event);
+    this._missionQuestionService.setTemplate(event);
     this._router.navigate([`${this._router.url}/${event._id}`]);
   }
 

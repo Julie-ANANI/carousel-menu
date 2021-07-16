@@ -1,1 +1,29 @@
-<p>admin-questions-library works!</p>
+<div [hidden]="!canAccess()" class="container fluid grid-2xl" id="admin-questions-library">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- error message while fetching -->
+    <ng-container *ngIf="fetchingError; else noError">
+      <app-utility-message-error></app-utility-message-error>
+    </ng-container>
+    <!-- /error message while fetching -->
+
+    <!-- no fetching error -->
+    <ng-template #noError>
+      <div class="p-top-30 p-bottom-50">
+
+        <!-- table -->
+        <section>
+          <app-shared-table
+            (editRow)="navigateTo($event)"
+            [(config)]="config"
+            [data]="tableData">
+          </app-shared-table>
+        </section>
+        <!-- /table -->
+
+      </div>
+    </ng-template>
+    <!-- /no fetching error -->
+
+  </div>
+</div>

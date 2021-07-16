@@ -16,6 +16,30 @@ import {replaceNumberRegex} from '../../utils/regex';
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
 
+  get allQuestions(): Array<MissionQuestion> {
+    return this._allQuestions;
+  }
+
+  set allQuestions(value: Array<MissionQuestion>) {
+    this._allQuestions = value;
+  }
+
+  get allTemplates(): Array<MissionTemplate> {
+    return this._allTemplates;
+  }
+
+  set allTemplates(value: Array<MissionTemplate>) {
+    this._allTemplates = value;
+  }
+
+  get question(): MissionQuestion {
+    return this._question;
+  }
+
+  set question(value: MissionQuestion) {
+    this._question = value;
+  }
+
   get taggedQuestionsTypes(): { [p: string]: MissionQuestionType } {
     return this._taggedQuestionsTypes;
   }
@@ -46,7 +70,33 @@ export class MissionQuestionService {
 
   private _missionTemplateObj: BehaviorSubject<MissionTemplate> = new BehaviorSubject<MissionTemplate>(<MissionTemplate>{});
 
+  /**
+   * single template / use case
+   *
+   * @private
+   */
   private _template: MissionTemplate = <MissionTemplate>{};
+
+  /**
+   * hold all the use cases / templates
+   *
+   * @private
+   */
+  private _allTemplates: Array<MissionTemplate> = [];
+
+  /**
+   * hold all the questions
+   *
+   * @private
+   */
+  private _allQuestions: Array<MissionQuestion> = [];
+
+  /**
+   * single question.
+   *
+   * @private
+   */
+  private _question: MissionQuestion = <MissionQuestion>{};
 
   private _notifyObj: Subject<boolean> = new Subject<boolean>();
 
@@ -76,7 +126,7 @@ export class MissionQuestionService {
     PreIdentifiedIssues: 'ranking',
     MarketPlayers: 'textarea',
     MarketImpact: 'textarea',
-    ContinueDiscussion: 'checkbox',
+    ContinueDiscussion: 'radio',
     Recontact: 'textarea',
     ExistenceOfNeeds: 'radio',
     CritOfNeeds: 'radio',
@@ -259,7 +309,7 @@ export class MissionQuestionService {
    * @private
    */
   private _emitTemplate() {
-    this.setMissionTemplate(this._template);
+    this.setTemplate(this._template);
     this.setNotifyChanges(true);
   }
 
@@ -739,9 +789,41 @@ export class MissionQuestionService {
     return this._missionTemplateObj;
   }
 
-  public setMissionTemplate(value: MissionTemplate) {
+  /**
+   * set the mission template / use case.
+   *
+   * @param value
+   */
+  public setTemplate(value: MissionTemplate) {
     this._template = value;
     this._missionTemplateObj.next(value);
+  }
+
+  /**
+   * set the mission question
+   *
+   * @param value
+   */
+  public setQuestion(value: MissionQuestion) {
+    this._question = value;
+  }
+
+  /**
+   * set all the use cases
+   *
+   * @param value
+   */
+  public setAllTemplates(value: Array<MissionTemplate>) {
+    this._allTemplates = value;
+  }
+
+  /**
+   * set all the questions
+   *
+   * @param value
+   */
+  public setAllQuestions(value: Array<MissionQuestion>) {
+    this._allQuestions = value;
   }
 
   /***
