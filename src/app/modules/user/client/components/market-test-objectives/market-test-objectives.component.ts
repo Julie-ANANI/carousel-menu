@@ -54,25 +54,7 @@ export class MarketTestObjectivesComponent {
    * we do not modify it.
    */
   @Input() set missionTemplates(value: Array<MissionTemplate>) {
-    this._missionTemplates = value.map((template) => {
-      const enIndex = template.entry.findIndex((entry: any) => entry.lang === 'en');
-      if (enIndex !== -1) {
-        switch (template.entry[enIndex].objective) {
-          case 'Detecting market needs':
-          case 'Validating market needs':
-          case 'Sourcing solutions / suppliers':
-            template['category'] = 'INNOVATE';
-            break;
-
-          case 'Identifying receptive markets':
-          case 'Validating the interest in my project':
-          case 'Optimizing my value proposition':
-            template['category'] = 'INNOVATION';
-            break;
-        }
-      }
-      return template;
-    });
+    this._missionTemplates = MissionFrontService.sortTemplatesByCategory(value);
   }
 
   @Input() set objectiveComment(value: string) {
