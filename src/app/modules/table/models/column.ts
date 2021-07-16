@@ -51,6 +51,7 @@ export type types =
   | 'DATE_TIME'
   | 'NUMBER'
   | 'USER-INPUT'
+  | 'TAG'
   | 'PATTERNS-OBJECT-LIST'
   | 'NAME-LABEL-LIST'
   | 'LABEL-OBJECT-LIST';

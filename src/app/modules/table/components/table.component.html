@@ -530,6 +530,13 @@
                 </ng-container>
                 <!-- /type LENGTH -->
 
+                <!-- type TAG -->
+                <ng-container *ngSwitchCase="'TAG'">
+                  <div class="text-ellipsis label is-rounded d-block is-draft is-sm">
+                    <span>#{{ getContentValue(row, getAttrs(column)[0])}}</span>
+                  </div>
+                </ng-container>
+                <!-- /type TAG -->
 
                 <!-- type COUNTDOWN -->
                 <ng-container *ngSwitchCase="'DAYS-TO'">
