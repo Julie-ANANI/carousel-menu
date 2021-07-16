@@ -11,4 +11,12 @@ export class ScrapingService {
   public getScraping(params: any): Observable<any> {
     return this._http.post('/scraping/getScraping', params);
   }
+
+  public checkScraping(params: any): Observable<any> {
+    return this._http.post('/scraping/checkScraping', params);
+  }
+
+  public cancelScraping(params: any): Observable<any> {
+    return this._http.post('/scraping/cancelScraping', params);
+  }
 }

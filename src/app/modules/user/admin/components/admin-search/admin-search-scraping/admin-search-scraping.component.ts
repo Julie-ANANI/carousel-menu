@@ -25,6 +25,10 @@ export class AdminSearchScrapingComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
+  private _keepInformed = '';
+
+  private _isScraping = false;
+
   constructor(private _rolesFrontService: RolesFrontService,
               private _scrapingService: ScrapingService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -37,11 +41,20 @@ export class AdminSearchScrapingComponent implements OnInit {
     return this._accessPath;
   }
 
-  onClickSearch(event: Event): void {
-    const scrapeParams = this._params;
+  get isScraping(): boolean {
+    return this._isScraping;
+  }
 
+  onClickSearch(event: Event): void {
+    this._showResultScraping = false;
+    this._isScraping = true;
+    const scrapeParams = this._params;
     console.log('url :', scrapeParams['url']);
     console.log(scrapeParams);
+    const refreshIntervalId = setInterval (() => {
+      console.log('Hello from setInterval');
+      this.autoKeepInformed();
+    }, 1000);
     this._scrapingService.getScraping(scrapeParams).subscribe(
       (value) => {
         this._result = value;
@@ -49,6 +62,27 @@ export class AdminSearchScrapingComponent implements OnInit {
         this.updateMails();
         this.updateAttributes();
         this._showResultScraping = true;
+        this._isScraping = false;
+      },
+      (error) => {
+        console.log('Uh-oh, an error occurred! : ', error);
+        clearInterval(refreshIntervalId);
+        this.autoKeepInformed();
+      },
+      () => {
+        console.log('Observable complete!');
+        clearInterval(refreshIntervalId);
+        this.autoKeepInformed();
+      }
+    );
+    this.autoKeepInformed();
+  }
+
+  onClickCancel(event: Event): void {
+    console.log('send Cancel to ', this.getJsonId());
+    this._scrapingService.cancelScraping(this.getJsonId()).subscribe(
+      (value) => {
+        console.log('Resultat : ', value);
       },
       (error) => {
         console.log('Uh-oh, an error occurred! : ', error);
@@ -57,8 +91,32 @@ export class AdminSearchScrapingComponent implements OnInit {
         console.log('Observable complete!');
       }
     );
-
   }
+
+  private getJsonId(): any {
+    return {id: this._params['id']};
+  }
+
+  private autoKeepInformed(): void {
+    this._scrapingService.checkScraping(this.getJsonId()).subscribe(
+      (value) => {
+        console.log('id : ', this._params['id']);
+        console.log('Check result : ', value);
+        this._keepInformed = value['info'];
+      },
+      (error) => {
+        console.log('Uh-oh, an error occurred! : ', error);
+      },
+      () => {
+        console.log('Observable complete!');
+      }
+    );
+    console.log('Hello from autoKeepInformed');
+  }
+
+  // private updateKeepInformed(value: string): void {
+  //   this._keepInformed = value['info'];
+  // }
 
   private updateMails(): void {
     this._pros = [];
@@ -76,6 +134,10 @@ export class AdminSearchScrapingComponent implements OnInit {
 
   get showResultScraping(): boolean {
     return this._showResultScraping;
+  }
+
+  get keepInformed(): string {
+    return this._keepInformed;
   }
 
   set sidebarValue(value: SidebarInterface) {
@@ -162,7 +224,8 @@ export class AdminSearchScrapingComponent implements OnInit {
       fields: [{}, {}, {}, {}, {}],
       maxRequest: 300,
       isSingle: false,
-      linkPro: ''
+      linkPro: '',
+      id: Math.floor(Math.random() * 1000000)
     };
   }
 }

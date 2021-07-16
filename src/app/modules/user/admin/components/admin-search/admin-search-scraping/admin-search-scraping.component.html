@@ -15,59 +15,57 @@
     </div>
     <!-- /heading -->
 
-    <!-- input -->
-    <div class="input-wrapper">
+    <!-- url field -->
+    <div class="input-wrapper content">
       <label class="form-label">URL to scrape</label>
-      <span
-        [ngClass]="{'tooltip': true}"
-        data-tooltip="The project needs to be published to Showroom before publishing to Community.">
         <input
           [(ngModel)]="_params['url']"
           class="form-input"
           placeholder="ex: https://portal.research.lu.se/portal/en/persons/search.html"
           type="text">
-      </span>
       </div>
+    <!-- /url field -->
 
-      <!-- button scrape -->
-      <div class="form-group m-top-10"
-           (click)="onClickSearch($event)">
-        <button class="button is-primary is-md">Scrape</button>
+      <!-- buttons -->
+      <div class="form-group m-top-10">
+        <button class="button is-primary is-md"
+                (click)="onClickSearch($event)"
+                [disabled]="isScraping">
+          Scrape
+        </button>
+        <button class="button is-primary is-md float-right"
+                (click)="onClickCancel($event)">
+          Cancel
+        </button>
       </div>
-      <!-- /button scrape -->
-
-    <!-- display result -->
-    <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="m-top-25">
-        <div id="result">
-          <table>
-            <caption>Result</caption>
-            <thead>
-              <tr>
-                <th *ngFor="let key_attribute of attributes" class="display-key">{{key_attribute}}</th>
-              <tr>
-            </thead>
-            <tbody>
-  <!--            <tr *ngFor="let pro of result | keyvalue">-->
-              <tr *ngFor="let pro of result | keyvalue">
-  <!--              <th class="display-email">{{pro.key}}</th>-->
-                <th *ngFor="let data of values(pro.key)" class="display-value">{{data}}</th>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-<!--      <div *ngFor="let pro of result | keyvalue">-->
-<!--        <h4 class="display-email"> {{pro.key}}</h4>-->
-<!--        <div *ngFor="let data of pro.value | keyvalue">-->
-<!--          <h5 class="display-key">{{data.key}}</h5>-->
-<!--          <p class="display-value>">{{data.value}}</p>-->
-<!--        </div>-->
-<!--        <br>-->
-<!--      </div>-->
-
-    </div>
-    <!-- /display result -->
-
+      <!-- /buttons -->
   </div>
+  <!-- /search wrapper -->
+
+  <!-- keep informed -->
+  <h2>{{keepInformed}}</h2>
+  <!-- /keep informed -->
+
+  <!-- display result -->
+  <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="m-top-25">
+    <div id="result">
+        <table>
+          <caption>Result</caption>
+          <thead>
+            <tr>
+              <th *ngFor="let key_attribute of attributes" class="display-key">{{key_attribute}}</th>
+            <tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pro of result | keyvalue">
+              <th *ngFor="let data of values(pro.key)" class="display-value">{{data}}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <!-- /display result -->
+
 </div>
 
 
