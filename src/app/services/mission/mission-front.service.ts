@@ -15,32 +15,9 @@ export class MissionFrontService {
    * @param templates
    */
   public static sortTemplatesByCategory(templates: Array<MissionTemplate>): Array<MissionTemplate> {
-    const _templates: Array<MissionTemplate> = [];
-    const cases = ['Detecting market needs', 'Validating market needs', 'Sourcing solutions / suppliers',
-      'Identifying receptive markets', 'Validating the interest in my project', 'Optimizing my value proposition'];
-
-    templates.forEach((_template, index) => {
-      const _index = _template.entry.findIndex((entry: any) => entry.objective === cases[index]);
-
-      if (_index !== -1) {
-        switch (cases[index]) {
-          case 'Detecting market needs':
-          case 'Validating market needs':
-          case 'Sourcing solutions / suppliers':
-            templates[index]['category'] = 'INNOVATE';
-            break;
-
-          case 'Identifying receptive markets':
-          case 'Validating the interest in my project':
-          case 'Optimizing my value proposition':
-            templates[index]['category'] = 'INNOVATION';
-            break;
-        }
-
-        _templates.push(templates[index]);
-      }
-    });
-    return _templates;
+    return templates.filter((_template) => _template.category === 'INNOVATE').concat(
+      templates.filter((_template) => _template.category === 'INNOVATION')
+    );
   }
 
   /**

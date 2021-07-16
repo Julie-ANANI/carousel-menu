@@ -129,13 +129,11 @@ export class MarketTestObjectivesComponent {
   }
 
   /**
-   * before emitting it we remove the category attribute because we use it
-   * to enable / disable the template respective to its category.
+   *
    * @private
    */
   private _emitTemplate() {
     const template: MissionTemplate = JSON.parse(JSON.stringify(this._selectedTemplate));
-    delete template['category'];
     if (!this._selectedSectionsObjectives.length) {
       template.sections = MissionFrontService.resetComplementaryObjectives(template.sections);
     } else {

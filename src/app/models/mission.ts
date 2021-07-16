@@ -232,6 +232,11 @@ export interface MissionTemplate {
    */
   sections: Array<MissionTemplateSection>;
 
+  /**
+   * when adding the new project
+   */
+  category: 'INNOVATE' | 'INNOVATION';
+
   entry: Array<{
     lang: string;
 
