@@ -90,7 +90,6 @@ export class AdminQuestionsLibraryComponent implements OnInit {
           return _question;
         });
         this._initializeTable();
-        console.log(this._questions);
       }, error => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
         this._fetchingError = true;
