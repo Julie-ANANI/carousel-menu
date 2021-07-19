@@ -103,6 +103,7 @@ export class AdminCampaignProsComponent implements OnInit {
         this._campaignFrontService.setActiveCampaignTab('pros');
         this._initCampaign();
         this._campaignFrontService.setLoadingCampaign(false);
+        this._getProfessionals();
       }
     });
   }
