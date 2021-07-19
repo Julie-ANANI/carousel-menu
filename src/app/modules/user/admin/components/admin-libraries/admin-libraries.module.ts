@@ -17,6 +17,8 @@ import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.mo
 import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
+import {AdminUseCasesLibraryModule} from './admin-use-cases-library/admin-use-cases-library.module';
+import {AdminQuestionsLibraryModule} from './admin-questions-library/admin-questions-library.module';
 
 @NgModule({
   imports: [
@@ -27,6 +29,8 @@ import { MessageErrorModule } from '../../../../utility/messages/message-error/m
     PipeModule,
     AdminLibrariesWorkflowsModule,
     AdminSignaturesLibraryModule,
+    AdminUseCasesLibraryModule,
+    AdminQuestionsLibraryModule,
     AdminEmailsLibraryModule,
     AdminPresetsModule,
     TableModule,

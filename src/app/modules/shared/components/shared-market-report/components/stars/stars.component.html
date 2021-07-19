@@ -2,7 +2,7 @@
   <div *ngFor="let note of notesData" class="p-top-25 text-lg">
 
     <div class="flex-between text-medium m-bottom-10">
-      <span class="text-background">{{ note.label | multiling:reportingLang }}</span>
+      <span class="text-background">{{ noteLabel(note) }}</span>
       <span class="text-notify text-md">{{ 'MARKET_REPORT.GRADE' | translateIn: reportingLang }}: {{ note.percentage }}</span>
     </div>
 

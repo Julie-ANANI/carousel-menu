@@ -45,6 +45,8 @@ export class ObjectivesSecondaryComponent {
 
   @Input() isEnabledComment = true;
 
+  @Input() isTextWhite = false;
+
   @Input() set objectiveComment(value: string) {
     this._objectiveComment = value;
   }

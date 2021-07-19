@@ -37,6 +37,8 @@ import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
 import {SharedToggleListModule} from '../shared-toggle-list/shared-toggle-list.module';
 import {SpinnerLoaderModule} from '../../../utility/spinner-loader/spinner-loader.module';
 import {SharedColorPickerModule} from '../shared-color-picker/shared-color-picker.module';
+import {RankingChartModule} from './components/ranking-chart/ranking-chart.module';
+import {RanksModule} from './components/ranks/ranks.module';
 
 @NgModule({
   imports: [
@@ -63,7 +65,9 @@ import {SharedColorPickerModule} from '../shared-color-picker/shared-color-picke
     SharedEditorsModule,
     SharedToggleListModule,
     SpinnerLoaderModule,
-    SharedColorPickerModule
+    SharedColorPickerModule,
+    RankingChartModule,
+    RanksModule
   ],
   declarations: [
     SharedMarketReportComponent,
@@ -80,7 +84,8 @@ import {SharedColorPickerModule} from '../shared-color-picker/shared-color-picke
     StarsComponent,
   ],
   exports: [
-    SharedMarketReportComponent
+    SharedMarketReportComponent,
+    QuestionConclusionComponent
   ]
 })
 

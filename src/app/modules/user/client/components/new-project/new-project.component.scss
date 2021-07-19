@@ -1,6 +1,7 @@
 @import "../../../../../../style/framework/src/variables";
 
 #new-project {
+  background-color: #2E6188;
 
   .main-container {
     display: flex;
@@ -39,25 +40,10 @@
 
     }
 
-    .circle-wrapper {
+  }
 
-      .shape {
-
-        &.is-circle {
-          width: 15px;
-          height: 15px;
-          margin: 3px 7.5px;
-
-          &.active {
-            background-color: $bg-primary-color;
-          }
-
-        }
-
-      }
-
-    }
-
+  .button.is-lg {
+    max-width: 230px;
   }
 
 }

@@ -101,7 +101,7 @@ export class PresetFrontService {
   }
 
   /**
-   * get the new option for the controlType = 'radio' | 'checkbox' | 'stars'
+   * get the new option for the controlType = 'radio' | 'checkbox' | 'stars' | 'ranking'
    * @param question
    */
   public static addNewOption(question: Question): Option {
@@ -134,6 +134,7 @@ export class PresetFrontService {
         case 'checkbox':
         case 'radio':
         case 'stars':
+        case 'ranking':
           for (let i = 0; i < 4; i++) {
             question.options.push(PresetFrontService.addNewOption(question));
           }
@@ -146,6 +147,10 @@ export class PresetFrontService {
 
       if (question.controlType === 'checkbox') {
         question.maxOptionsSelect = 4;
+      }
+
+      if (question.controlType === 'ranking') {
+        question.randomization = true;
       }
 
       if (question.controlType === 'radio') {
@@ -180,6 +185,12 @@ export class PresetFrontService {
         return {
           en: 'You can select up to 4 items',
           fr: 'Vous pouvez sélectionner jusqu\'à 4 items'
+        };
+
+      case 'ranking':
+        return {
+          en: 'Drag and drop to rank items',
+          fr: 'Drag and drop pour classer les items'
         };
 
       default:
@@ -330,6 +341,7 @@ export class PresetFrontService {
         identifier: this.generateId(),
         controlType: 'radio',
         canComment: true,
+        randomization: false,
         sensitiveAnswerData: false,
       };
       newQuestion = PresetFrontService.configureQuestion(newQuestion);

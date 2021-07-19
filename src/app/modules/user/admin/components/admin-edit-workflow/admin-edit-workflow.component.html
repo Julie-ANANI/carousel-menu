@@ -16,64 +16,64 @@
       Use by default
     </div>
 
-    <!--    <div-->
-    <!--      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"-->
-    <!--      [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"-->
-    <!--      class="shape is-circle m-left-2">-->
-    <!--      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>-->
-    <!--    </div>-->
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"
       class="shape is-circle m-left-2">
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
-
     <!--    <div-->
-    <!--      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"-->
-    <!--      (click)="changeLanguage('en')"-->
-    <!--      [ngClass]="{ 'active': language === 'en' }"-->
-    <!--      class="text-link">-->
-    <!--      English-->
+    <!--      [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"-->
+    <!--      class="shape is-circle m-left-2">-->
+    <!--      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>-->
     <!--    </div>-->
 
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       (click)="changeLanguage('en')"
       [ngClass]="{ 'active': language === 'en' }"
       class="text-link">
       English
     </div>
 
-    <!--    &nbsp;&nbsp;<span *ngIf="innovationCardLanguages && innovationCardLanguages.length===2">|</span>-->
-    &nbsp;&nbsp;<span>|</span>
-
-
     <!--    <div-->
-    <!--      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"-->
-    <!--      [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"-->
-    <!--      class="shape is-circle m-left-2">-->
-    <!--      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>-->
+    <!--      (click)="changeLanguage('en')"-->
+    <!--      [ngClass]="{ 'active': language === 'en' }"-->
+    <!--      class="text-link">-->
+    <!--      English-->
     <!--    </div>-->
 
+    &nbsp;&nbsp;<span *ngIf="innovationCardLanguages && innovationCardLanguages.length===2">|</span>
+    <!--    &nbsp;&nbsp;<span>|</span>-->
+
+
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"
       class="shape is-circle m-left-2">
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
     <!--    <div-->
-    <!--      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"-->
-    <!--      (click)="changeLanguage('fr')"-->
-    <!--      [ngClass]="{ 'active': language === 'fr' }"-->
-    <!--      class="text-link">-->
-    <!--      French-->
+    <!--      [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"-->
+    <!--      class="shape is-circle m-left-2">-->
+    <!--      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>-->
     <!--    </div>-->
 
     <div
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       (click)="changeLanguage('fr')"
       [ngClass]="{ 'active': language === 'fr' }"
       class="text-link">
       French
     </div>
+
+<!--    <div-->
+<!--      (click)="changeLanguage('fr')"-->
+<!--      [ngClass]="{ 'active': language === 'fr' }"-->
+<!--      class="text-link">-->
+<!--      French-->
+<!--    </div>-->
 
     <div
       (click)="onClickDelete()"
@@ -128,6 +128,7 @@
     [emailsObject]="emailToEdit"
     [id]="getId()"
     [inputLanguage]="language"
+    [innovationCardLanguages]="innovationCardLanguages"
     [isEditable]="isEditable">
   </app-sidebar-workflow>
 </app-sidebar>

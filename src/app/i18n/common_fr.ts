@@ -118,6 +118,7 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'ADD': 'Ajouter',
     'TENTATIVE_LEFT': 'tentative(s) restante(s)',
     'FEEDBACK_COLLECTION': 'Collecte de feedback',
     'RSETITUTION': 'Restitution',
@@ -196,6 +197,7 @@ export const COMMON = {
     'CHOOSE_SALE': 'Choose sale',
     'AUTO_SUGGESTION': 'Commencez à taper pour rechercher...',
     'PROJECT_TITLE': 'Ajoutez le titre du projet ici...',
+    'TITLE': 'Ajoutez le titre ici...',
     'MEDIA_URL': 'Collez ici l\'adresse de votre vidéo Youtube ou Vimeo',
     'MEDIA_SLIDE': 'Faites glisser votre photo ici',
     'SELECT_A_SCOPE': 'Choisir un scope',
@@ -230,6 +232,7 @@ export const COMMON = {
   },
 
   'BUTTON': {
+    'OUR_METHODOLOGY': 'Notre méthodologie',
     'CONTINUE': 'Continuer',
     'ADD': 'Ajouter',
     'SAVE': 'Sauvegarder',
@@ -338,7 +341,7 @@ export const COMMON = {
     'DELETE': 'Supprimer le(s) utilisateur(s)',
     'DELETE_BOARD': {
       'HEADING': 'Suppression',
-      'CONTENT':'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
+      'CONTENT': 'Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?'
     }
   },
 
@@ -354,7 +357,7 @@ export const COMMON = {
     'DELETE': 'Supprimer le(s) professionnel(s)',
     'DELETE_BOARD': {
       'HEADING': 'Suppression',
-      'CONTENT':'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
+      'CONTENT': 'Voulez-vous vraiment supprimer le(s) professionnel(s) sélectionné(s) ?'
     }
   },
 
@@ -435,7 +438,7 @@ export const COMMON = {
   'CAMPAIGN': {
     'LABEL_REQUIRED': 'Le nom de la campagne est requis.',
     'DELETE_BOARD': {
-      'CONTENT':'Voulez-vous vraiment supprimer la campagne ?'
+      'CONTENT': 'Voulez-vous vraiment supprimer la campagne ?'
     }
   },
 
@@ -479,6 +482,19 @@ export const COMMON = {
     'WRONG_SIZE': 'Impossible de télécharger l\'image, la taille n\'est pas valide.',
     'UPLOADING': 'Téléchargement de l\'image, veuillez patienter.',
     'UPLOADING_VIDEO': 'Téléchargement de la vidéo, veuillez patienter.'
+  },
+
+  'QUESTIONNAIRE_TYPE': {
+    'CHOOSE': 'Choisissez le type de question',
+    'list': 'Liste d\'items',
+    'clearbit': 'Liste d\'entreprises',
+    'radio': 'Choix unique',
+    'scale': 'Notes',
+    'stars': 'Notes étoiles',
+    'textarea': 'Texte',
+    'toggle': 'Toggle',
+    'checkbox': 'Choix multiples',
+    'ranking': 'Ranking'
   }
 
 };

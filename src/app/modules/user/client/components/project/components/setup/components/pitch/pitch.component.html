@@ -79,7 +79,9 @@
           <div class="flex-between w-full">
             <div class="d-flex align-center m-right-1">
             <span class="m-right-2 field-heading">
-              <ng-container *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'; else defTitle">
+              <ng-container
+                *ngIf="section.type === 'ISSUE' || section.type === 'SOLUTION'
+                || section.type === 'CONTEXT'; else defTitle">
                 {{ section.title | InnovCardTitle:section.content:activeInnovCard.lang }}
               </ng-container>
               <ng-template #defTitle>{{ section.title }}</ng-template>
@@ -88,7 +90,7 @@
                 {{ 'COMMON.LABEL.COMMENTS' | translate }}
               </span>
             </div>
-            <span (click)="openSidebar(section)" class="icon-container is-overlay">
+            <span (click)="openSidebar(section, i)" class="icon-container is-overlay">
             <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-edit.svg" alt="">
           </span>
           </div>
@@ -167,37 +169,73 @@
       </section>
       <!-- /heading / sub heading -->
 
+      <!-- questionnaire template -->
+      <ng-container *ngIf="hasMissionTemplate; else oldPreset">
+        <section
+          *ngFor="let section of mission.template.sections; let i = index;"
+          [ngClass]="{'p-top-20': i !== 0 && section.type !== 'NOTHING' }"
+          class="preset-wrapper">
+
+          <p *ngIf="section.type !== 'NOTHING'">SECTION {{ section.type | uppercase }}</p>
+
+          <ng-container *ngFor="let question of section.questions; let j = index;">
+            <div
+              [ngStyle]="{'margin-top': '18px', 'animation-duration': ((j+1) * 110) + 'ms'}"
+              class="animate-slide slide-down">
+              <div (click)="question['toggle'] = !question['toggle']" class="d-flex align-center c-hand">
+                <div class="icon-container is-overlay m-right-1 is-sm">
+                  <i [ngClass]="question['toggle'] ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+                </div>
+                <span>{{ questionName(question) }}</span>
+              </div>
+              <div
+                *ngIf="!question['toggle'] && (question.controlType === 'checkbox' || question.controlType === 'radio'
+                || question.controlType === 'stars' || question.controlType === 'ranking')"
+                class="m-left-30 d-flex flex-wrap">
+                <div *ngFor="let option of question.options" class="label">
+                  {{ questionOptionName(option) }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </section>
+      </ng-container>
+      <!-- /questionnaire template -->
+
       <!-- preset -->
-      <section
-        *ngFor="let section of preset.sections; let i = index;"
-        [ngClass]="{'p-top-20': i !== 0 }"
-        class="preset-wrapper">
+      <ng-template #oldPreset>
+        <section
+          *ngFor="let section of preset.sections; let i = index;"
+          [ngClass]="{'p-top-20': i !== 0 }"
+          class="preset-wrapper">
 
-        <p *ngIf="section.label[activeInnovCard.lang]">
-          SECTION {{ section.label[activeInnovCard.lang] | uppercase }}
-        </p>
+          <p *ngIf="section.label[activeInnovCard.lang]">
+            SECTION {{ section.label[activeInnovCard.lang] | uppercase }}
+          </p>
 
-        <div
-          *ngFor="let question of section.questions; let j = index;"
-          [ngStyle]="{'margin-top': '18px', 'animation-duration': ((j+1) * 110) + 'ms'}"
-          class="animate-slide slide-down">
-          <div (click)="question.toggle = !question.toggle" class="d-flex align-center c-hand">
-            <div class="icon-container is-overlay m-right-1 is-sm">
-              <i [ngClass]="question.toggle ? 'icon-arrow-down' : 'icon-arrow-up'" class="icon"></i>
-            </div>
-            <span *ngIf="question.label[activeInnovCard.lang]">{{ question.label[activeInnovCard.lang] }}</span>
-          </div>
           <div
-            *ngIf="!question.toggle && (question.controlType === 'checkbox' || question.controlType === 'radio'
-            || question.controlType === 'stars')"
-               class="m-left-30 d-flex flex-wrap">
-            <div *ngFor="let option of question.options" class="label">
-              {{ option.label[activeInnovCard.lang] }}
+            *ngFor="let question of section.questions; let j = index;"
+            [ngStyle]="{'margin-top': '18px', 'animation-duration': ((j+1) * 110) + 'ms'}"
+            class="animate-slide slide-down">
+            <div (click)="question.toggle = !question.toggle" class="d-flex align-center c-hand">
+              <div class="icon-container is-overlay m-right-1 is-sm">
+                <i [ngClass]="question.toggle ? 'icon-arrow-up' : 'icon-arrow-down'" class="icon"></i>
+              </div>
+              <span *ngIf="question.label[activeInnovCard.lang]">{{ question.label[activeInnovCard.lang] }}</span>
+            </div>
+            <div
+              *ngIf="!question.toggle && (question.controlType === 'checkbox' || question.controlType === 'radio'
+            || question.controlType === 'stars'  || question.controlType === 'ranking')"
+              class="m-left-30 d-flex flex-wrap">
+              <div *ngFor="let option of question.options" class="label">
+                {{ option.label[activeInnovCard.lang] }}
+              </div>
             </div>
           </div>
-        </div>
 
-      </section>
+        </section>
+      </ng-template>
       <!-- /preset -->
 
       <!-- comment box -->

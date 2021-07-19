@@ -9,7 +9,6 @@ import {InnovationService} from '../../../../../../services/innovation/innovatio
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {Campaign} from '../../../../../../models/campaign';
 import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
@@ -17,6 +16,10 @@ import {isPlatformBrowser} from '@angular/common';
 import {Response} from '../../../../../../models/response';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {SocketService} from '../../../../../../services/socket/socket.service';
+import {MissionService} from '../../../../../../services/mission/mission.service';
+import {Mission} from '../../../../../../models/mission';
+import {environment} from '../../../../../../../environments/environment';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -24,6 +27,10 @@ import {SocketService} from '../../../../../../services/socket/socket.service';
 })
 
 export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
+
+  get quizPreviewLink(): string {
+    return this._quizPreviewLink;
+  }
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
@@ -61,11 +68,14 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _toBeSavedComment = false;
 
+  private _quizPreviewLink = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
               private _router: Router,
               private _innovationService: InnovationService,
               private _campaignFrontService: CampaignFrontService,
+              private _missionService: MissionService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -78,6 +88,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._project = innovation || <Innovation>{};
       this.setPageTitle();
       this._setActiveCardIndex();
+      this._quizPreviewLink = `${environment.quizUrl}/quiz/${this._project._id}/preview`;
     });
 
     // Cards text has already been saved by another user
@@ -176,7 +187,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._allCampaigns = response && response.result || [];
         this._campaignFrontService.setAllCampaigns(this._allCampaigns);
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.adminErrorMessage(err));
         console.error(err);
       });
     }
@@ -235,11 +246,18 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   public onSave(event: Event) {
     event.preventDefault();
+
     if (!this._isSaving && (this._toBeSaved || this._toBeSavedComment)) {
-      this._isSaving = true;
       if (this._activeTab === 'questionnaire') {
-        this._saveProject({preset: this._project.preset});
+        if (this._toBeSaved.indexOf('mission') !== -1) {
+          this._isSaving = true;
+          this._saveMission({template: (<Mission>this._project.mission).template});
+        } else if (this._toBeSaved.indexOf('preset') !== -1) {
+          this._isSaving = true;
+          this._saveProject({preset: this._project.preset});
+        }
       } else {
+        this._isSaving = true;
         const fields = this._toBeSaved.split(',');
         const saveObject = {};
         fields.forEach(field => {
@@ -248,6 +266,23 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._saveProject(saveObject);
         this._saveComment();
       }
+    }
+  }
+
+  private _saveMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
+    const id = this._project.mission && (<Mission>this._project.mission)._id;
+    if (!!id) {
+      this._missionService.save(id, missionObj).pipe(first()).subscribe((mission) => {
+        this._project.mission = mission;
+        this._isSaving = false;
+        this._toBeSaved = '';
+        this._setInnovation();
+        this._translateNotificationsService.success('Success', 'The project has been updated.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
+        this._isSaving = false;
+        console.error(err);
+      });
     }
   }
 
@@ -261,7 +296,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         }
       }, (err: HttpErrorResponse) => {
         this._isSaving = false;
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
         console.error(err);
       });
   }
@@ -279,7 +314,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         }, (err: HttpErrorResponse) => {
           this._isSaving = false;
           this._toBeSavedComment = true;
-          this._translateNotificationsService.error('Comment Saving Error...', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('Comment Saving Error...', ErrorFrontService.adminErrorMessage(err));
           console.error(err);
         });
     }
@@ -309,7 +344,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
         this.closeModal();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.adminErrorMessage(err));
         this._isAddingCard = false;
         console.error(err);
       });
@@ -331,7 +366,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this.closeModal();
       }, (err: HttpErrorResponse) => {
         this._cardToDelete = <InnovCard>{};
-        this._translateNotificationsService.error('Card Deleting Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Card Deleting Error...', ErrorFrontService.adminErrorMessage(err));
         this._isDeletingCard = false;
         console.error(err);
       });

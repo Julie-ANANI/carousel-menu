@@ -1,21 +1,93 @@
 @import "framework/src/variables";
 
 .date-picker {
-  position: relative;
-  width: 150px;
-  margin-right: auto;
+  width: 315px;
+  border-radius: 20px;
   margin-left: auto;
+  margin-right: auto;
+  background-color: $white-color;
+  box-shadow: 0 2px 10px 0 rgba(50,54,67,0.1);
+  padding: 17px 14px 12px 12px;
 
-  .form-input {
-    padding-top: 7px !important;
-    padding-bottom: 7px !important;
+  .myDpMonthLabel, .myDpYearLabel, .myDpCalTable, .myDpMonthTable, .myDpYearTable, .myDpWeekDayTitle, .myDpDayValue {
+    font-family: $base-font-family;
+  }
+
+  .myDpDaycell:focus, .myDpMonthcell:focus, .myDpYearcell:focus, .myDpSelector:focus {
+    box-shadow: none;
+  }
+
+  .myDpCalTable, .myDpDaycell, .myDpMonthTable, .myDpMonthcell, .myDpWeekDayTitle, .myDpYearTable, .myDpYearcell {
     font-size: 12px;
-    text-align: center;
+    color: #323643;
+  }
 
-    &[readonly] {
-      background-color: $bg-white-color;
+  .myDpSelectedDay, .myDpSelectedMonth, .myDpSelectedYear {
+    background-color: $success-color;
+    color: $white-color;
+    font-weight: $font-weight-medium;
+
+    &:hover {
+      background-color: $success-color;
+    }
+  }
+
+  .myDpSelector {
+    width: 290px!important;
+    height: 274px !important;
+    border: none;
+
+    .monthYearSelBar {
+      height: 45px;
+
+      .myDpIcon {
+        font-size: 16px;
+        color: #00B0FF;
+      }
+
+      .myDpMonthLabel, .myDpYearLabel {
+        font-size: 18px;
+        color: #333333;
+        font-weight: $font-weight-bold;
+      }
+
+      .myDpHeaderBtnDisabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
     }
 
+  }
+
+  table td {
+    border-radius: 6px;
+  }
+
+  .myDpCalTable {
+
+    thead tr {
+      border-top: 1.12px solid rgba(50,54,67,0.1);
+      border-bottom: 1.12px solid rgba(50,54,67,0.1);
+    }
+
+    .myDpWeekDayTitle {
+      font-size: 10px;
+      color: rgba(50,54,67,0.5);
+    }
+
+    .myDpDisabled {
+      cursor: not-allowed;
+    }
+
+  }
+
+  .myDpNoFooter {
+    height: calc(100% - 45px);
+  }
+
+  .myDpMarkDate {
+    border-right-width: 20px;
   }
 
 }

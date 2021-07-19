@@ -1,0 +1,51 @@
+<div id="new-project-welcome">
+
+  <!-- heading -->
+  <h1 class="title text-white text-center is-4 text-bold">
+    {{ 'NEW_PROJECT.HEADINGS.STEP_0' | translate }}
+  </h1>
+  <!-- /heading -->
+
+  <div class="flex-centered market-step-wrapper p-top-30">
+
+    <div class="market-step">
+      <p>{{ 'NEW_PROJECT.STEP_0.PREPARATION' | translate }}</p>
+      <img
+        [alt]="'NEW_PROJECT.STEP_0.PREPARATION' | translate"
+        [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/preparation-'+currentLang+'.png'"
+        class="img-responsive animate-slide slide-left is-5">
+    </div>
+
+    <div class="arrow">
+      <img
+        alt="Arrow right"
+        class="img-responsive"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-right.svg">
+    </div>
+
+    <div class="market-step is-collecte">
+      <p>{{ 'NEW_PROJECT.STEP_0.COLLECTE' | translate }}</p>
+      <img
+        [alt]="'NEW_PROJECT.STEP_0.COLLECTE' | translate"
+        [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/collection.png'"
+        class="img-responsive animate-slide slide-left is-7">
+    </div>
+
+    <div class="arrow">
+      <img
+        alt="Arrow right"
+        class="img-responsive"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/arrow-right.svg">
+    </div>
+
+    <div class="market-step">
+      <p>{{ 'NEW_PROJECT.STEP_0.ANALYSE' | translate }}</p>
+      <img
+        [alt]="'NEW_PROJECT.STEP_0.ANALYSE' | translate"
+        [src]="'https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/synthesis-'+currentLang+'.png'"
+        class="img-responsive animate-slide slide-left is-9">
+    </div>
+
+  </div>
+
+</div>

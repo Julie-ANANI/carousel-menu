@@ -29,6 +29,7 @@ export class AdminProjectSynthesisComponent implements OnInit, OnDestroy {
         this._innovation.marketReport = innovation.marketReport;
         this._innovation.preset = innovation.preset;
         this._innovation.settings.reportingLang = innovation.settings.reportingLang;
+        this._innovation.mission = innovation.mission;
         this._innovation = JSON.parse(JSON.stringify(this._innovation));
       }
     });

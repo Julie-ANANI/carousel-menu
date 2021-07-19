@@ -1,10 +1,10 @@
 @import "../../../../style/framework/src/variables";
 
 #header-unauth {
-  border-bottom: $border-width solid $border-light-color;
 
   .navbar {
     border-bottom: 0;
+    background-color: $white-color;
 
     .navbar-menu {
 
@@ -43,6 +43,10 @@
 
       }
 
+    }
+
+    .icon.icon-arrow-down, .navbar-burger {
+      color: $dark-color !important;
     }
 
   }

@@ -10,6 +10,7 @@ import { FormatText } from './pipes/FormatText';
 import { ScrapeHTMLTags } from './pipes/ScrapeHTMLTags';
 import { FormatBytes } from './pipes/FormatBytes';
 import { TranslateInPipe } from './pipes/translate-in.pipe';
+import {StopAtPipe} from './pipes/stopat.pipe';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { TranslateInPipe } from './pipes/translate-in.pipe';
     FormatText,
     ScrapeHTMLTags,
     FormatBytes,
-    TranslateInPipe
+    TranslateInPipe,
+    StopAtPipe
   ],
   exports: [
     CharacterCountdown,
@@ -37,7 +39,8 @@ import { TranslateInPipe } from './pipes/translate-in.pipe';
     FormatText,
     ScrapeHTMLTags,
     FormatBytes,
-    TranslateInPipe
+    TranslateInPipe,
+    StopAtPipe
   ]
 })
 

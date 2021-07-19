@@ -1,0 +1,430 @@
+<div [id]="'question-' + questionIndex" class="shared-questionnaire-question">
+
+  <!-- header -->
+  <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">
+
+    <!-- move / select / type / label-->
+    <div class="d-flex align-center">
+
+      <div *ngIf="isEditable || canAccess(['order'])" data-tooltip="Move" class="move-arrows tooltip">
+        <i (click)="up($event)" class="icon icon-arrow-up"></i>
+        <i (click)="down($event)" class="icon icon-arrow-down"></i>
+      </div>
+
+      <!-- not edit mode -->
+      <ng-container *ngIf="!editMode">
+
+        <!-- label / type -->
+        <label class="m-right-20">
+          <select class="form-select is-sm" disabled>
+            <option>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType | translate }}</option>
+          </select>
+        </label>
+        <span class="m-right-20">{{ questionEntry().label }}</span>
+        <!-- /label / type -->
+
+        <!-- question type specific to template -->
+        <ng-container *ngIf="isLibraryView">
+          <div class="label is-rounded is-progress is-sm m-no m-right-20">
+            #{{isEssential ? 'Essential' : 'Secondary'}}
+          </div>
+        </ng-container>
+        <!-- /question type specific to template -->
+
+        <!-- identifier -->
+        <ng-container *ngIf="isTaggedQuestion">
+          <div class="label is-rounded is-tag is-sm m-no m-right-20">
+            #{{question.identifier}}
+          </div>
+        </ng-container>
+        <!-- /identifier -->
+
+      </ng-container>
+      <!-- /not edit mode -->
+
+      <!-- edit mode -->
+      <ng-container *ngIf="editMode">
+
+        <!-- type -->
+        <ng-container *ngIf="(!isTaggedQuestion && isEditable) || canAccess(['edit', 'type']) || isEditable">
+          <label class="m-right-20">
+            <select
+              (ngModelChange)="onChangeQuestionType($event)"
+              [(ngModel)]="question.controlType"
+              class="form-select is-sm">
+              <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+              <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+              <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+              <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+              <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+              <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+            </select>
+          </label>
+        </ng-container>
+        <!-- /type -->
+
+        <!-- identifier -->
+        <ng-container *ngIf="isEditable || canAccess(['edit', 'identifier'])">
+          <label class="m-right-20">
+            <select
+              (ngModelChange)="onChangeIdentifier($event)"
+              [(ngModel)]="question.identifier"
+              class="form-select is-sm">
+              <option *ngIf="isTaggedQuestion" [value]="question.identifier">#{{question.identifier}}</option>
+              <option *ngFor="let question of getNonUsedQuestions()" [value]="question">#{{question}}</option>
+              <option [value]="customId">{{ 'COMMON.LABEL.CUSTOM' | translate }}</option>
+            </select>
+          </label>
+        </ng-container>
+        <!-- /identifier -->
+
+        <!-- question type specific to template -->
+        <ng-container *ngIf="isLibraryView && canAccess(['typeInUseCase'])">
+          <label class="m-right-20">
+            <select
+              (ngModelChange)="onChangeTemplateQuestion($event)"
+              [(ngModel)]="isEssential"
+              class="form-select is-sm">
+              <option [ngValue]="true">Essential</option>
+              <option [ngValue]="false">Secondary</option>
+            </select>
+          </label>
+        </ng-container>
+        <!-- /question type specific to template -->
+
+      </ng-container>
+      <!-- /edit mode -->
+
+    </div>
+    <!-- /move / select / type / label-->
+
+    <!-- buttons -->
+    <div class="buttons-wrapper">
+
+      <!-- delete -->
+      <div
+        (click)="removeQuestion($event)"
+        *ngIf="editMode && (isEditable || canAccess(['delete']))"
+        [id]="'sharedQuestionnaireQuestion-btn-delete-question'"
+        class="icon-container is-overlay m-right-15">
+        <span data-tooltip="Delete" class="tooltip">
+          <i class="icon icon-delete text-white"></i>
+        </span>
+      </div>
+      <!-- /delete -->
+
+      <!-- clone -->
+      <div
+        (click)="cloneQuestion($event)"
+        *ngIf="editMode && isEditable"
+        [id]="'sharedQuestionnaireQuestion-btn-clone-question'"
+        class="icon-container is-overlay m-right-15">
+        <span data-tooltip="Clone" class="tooltip">
+          <i class="icon icon-copy text-white"></i>
+        </span>
+      </div>
+      <!-- /clone -->
+
+      <!-- edit -->
+      <div
+        (click)="editMode = !editMode"
+        *ngIf="isEditable || canAccess(['edit'])"
+        [id]="'sharedQuestionnaireQuestion-btn-edit-section'"
+        class="icon-container is-overlay">
+        <span
+          [attr.data-tooltip]="isEditable || canAccess(['edit']) ? editMode ? 'Stop editing' : 'Edit' : 'View'"
+          class="tooltip">
+          <img [src]="picto.edit.white" alt=" " class="img-responsive">
+        </span>
+      </div>
+      <!-- /edit -->
+
+    </div>
+    <!-- /buttons -->
+
+  </div>
+  <!-- /header -->
+
+  <!-- question edition -->
+  <div *ngIf="editMode" class="question-body">
+
+    <!-- toolbar -->
+    <div class="question-toolbar m-bottom-10">
+      <div class="d-flex align-center">
+
+        <!-- add comment -->
+        <label *ngIf="question.controlType !== 'textarea'" class="form-switch text-sm m-right-50">
+          <input
+            (ngModelChange)="updateValue($event, 'COMMENT')"
+            [ngModel]="question.canComment"
+            [disabled]="!isEditable && !canAccess(['edit', 'canComment'])"
+            type="checkbox">
+          <i class="form-icon"></i> Allow to add comment
+        </label>
+        <!-- /add comment -->
+
+        <!-- randomization -->
+        <label *ngIf="question.controlType === 'ranking'" class="form-switch text-sm m-right-50">
+          <input
+            (ngModelChange)="updateValue($event, 'RANDOMIZATION')"
+            [ngModel]="question.randomization"
+            [disabled]="!isEditable && !canAccess(['edit', 'randomization'])"
+            type="checkbox">
+          <i class="form-icon"></i> Randomization
+        </label>
+        <!-- /randomization -->
+
+        <!-- is sensitive data -->
+        <span
+          *ngIf="question.controlType === 'textarea'"
+          [attr.data-tooltip]="'For anonymous shared link. To \n hide answers that may contain \n phone numbers, mails...'"
+          class="tooltip is-multiline">
+          <label class="form-switch text-sm m-right-50">
+          <input
+            (ngModelChange)="updateValue($event, 'SENSITIVE_DATA')"
+            [ngModel]="question.sensitiveAnswerData"
+            [disabled]="!isEditable && !canAccess(['edit', 'sensitiveAnswerData'])"
+            type="checkbox">
+            <i class="form-icon"></i> Visibility of sensitive answer
+          </label>
+        </span>
+        <!-- /is sensitive data -->
+
+        <!-- max options select -->
+        <ng-container *ngIf="question.controlType === 'checkbox'">
+          <div class="d-flex align-center">
+            <label class="form-label m-no-bottom m-right-2 text-normal" [for]="'question-maxOption'">
+              Maximum options to select:
+            </label>
+            <ng-template #showMaxOptions>
+              <p class="text-sm m-no-bottom">{{ question.maxOptionsSelect || 'NA' }}</p>
+            </ng-template>
+            <input
+              (ngModelChange)="onChangeMaxOptions($event)"
+              *ngIf="isEditable || canAccess(['edit', 'maxOptionsSelect']); else showMaxOptions"
+              [(ngModel)]="question.maxOptionsSelect"
+              [attr.placeholder]="question.options.length"
+              [id]="'question-maxOption'"
+              [max]="question.options.length"
+              [ngStyle]="{'max-width': '80px'}"
+              class="form-input is-sm text-center"
+              min="1"
+              type="number">
+          </div>
+        </ng-container>
+        <!-- /max options select -->
+
+      </div>
+    </div>
+    <!-- /toolbar -->
+
+    <!-- question content -->
+    <div class="d-flex">
+      <div
+        *ngFor="let lang of questionnaireLangs; let i = index;"
+        [ngClass]="{'has-border': questionnaireLangs.length > 1 && i > 0,
+        'has-more-content': questionnaireLangs.length > 1}"
+        class="question-content">
+
+        <!-- language -->
+        <div [ngClass]="questionnaireLangs.length === 1 ? 'text-center' : 'text-left'" class="m-bottom-20">
+          <div class="label m-no lang-label relative">
+            {{ 'COMMON.LANG.' + lang | uppercase | translate }}
+          </div>
+        </div>
+        <!-- /language -->
+
+        <!-- objective -->
+        <div *ngIf="isLibraryView" class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Objectif' : 'Objective' }}</label>
+          <ng-template #showObjective>
+            <p class="text-sm">{{ questionEntry(lang).objective || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'objective')"
+            *ngIf="canAccess(['edit', 'objective']); else showObjective"
+            [ngModel]="questionEntry(lang).objective || 'NA'"
+            [id]="'question-objective-'+lang"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /objective -->
+
+        <!-- title -->
+        <div *ngIf="isLibraryView" class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Titre synthèse' : 'Synthesis title' }}</label>
+          <ng-template #showTitle>
+            <p class="text-sm">{{ questionEntry(lang).title || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'title')"
+            *ngIf="canAccess(['edit', 'title']); else showTitle"
+            [ngModel]="questionEntry(lang).title || 'NA'"
+            [id]="'question-title-'+lang"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /title -->
+
+        <!-- subtitle -->
+        <div *ngIf="isLibraryView" class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Sous-titre synthèse' : 'Synthesis subtitle' }}</label>
+          <ng-template #showSubtitle>
+            <p class="text-sm">{{ questionEntry(lang).subtitle || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'subtitle')"
+            *ngIf="canAccess(['edit', 'subtitle']); else showSubtitle"
+            [ngModel]="questionEntry(lang).subtitle || 'NA'"
+            [id]="'question-subtitle-'+lang"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /subtitle -->
+
+        <!-- label -->
+        <div class="m-bottom-15">
+          <label class="form-label">Question</label>
+          <ng-template #showLabel>
+            <p class="text-sm">{{ questionEntry(lang).label || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'label')"
+            *ngIf="isEditable || canAccess(['edit', 'label']); else showLabel"
+            [ngModel]="questionEntry(lang).label || 'NA'"
+            [id]="'question-label-'+lang"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input auto-expand"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /label -->
+
+        <!-- instruction -->
+        <div class="m-bottom-15">
+          <label class="form-label">{{ lang === 'fr' ? 'Consigne' : 'Instruction' }}</label>
+          <ng-template #showInstruction>
+            <p class="text-sm">{{ questionEntry(lang).instruction || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'instruction')"
+            *ngIf="isEditable || canAccess(['edit', 'instruction']); else showInstruction"
+            [id]="'question-instruction-'+lang"
+            [ngModel]="questionEntry(lang).instruction || ''"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /instruction -->
+
+        <!-- question types -->
+        <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
+          || question.controlType === 'stars' || question.controlType === 'ranking'">
+
+          <!-- options -->
+          <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
+            <div
+              *ngFor="let option of question.options; let optionIndex = index;"
+              [ngClass]="{'is-editable': isEditable || canAccess(['edit', 'options'])}"
+              class="card">
+
+              <ng-template #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}</ng-template>
+
+              <!-- move option -->
+              <div
+                *ngIf="isEditable || canAccess(['edit', 'options', 'order'])"
+                class="flex-centered m-top-10 m-bottom-10">
+                <div
+                  [ngClass]="{'is-horizontal': questionnaireLangs.length === 1}"
+                  data-tooltip="Move"
+                  class="move-arrows m-no-right tooltip is-bottom">
+                  <i
+                    (click)="moveQuestionOption($event, optionIndex, -1)"
+                    [ngClass]="{'disabled': optionIndex == 0, 'icon-arrow-up': questionnaireLangs.length > 1,
+                    'icon-arrow-left': questionnaireLangs.length === 1}"
+                    class="icon">
+                  </i>
+                  <i
+                    (click)="moveQuestionOption($event, optionIndex, 1)"
+                    [ngClass]="{'disabled': (optionIndex + 1) == question.options.length,
+                    'icon-arrow-down': questionnaireLangs.length > 1, 'icon-arrow-right':
+                    questionnaireLangs.length === 1}"
+                    class="icon">
+                  </i>
+                </div>
+              </div>
+              <!-- /move option -->
+
+              <!-- input -->
+              <textarea
+                #textAreaElement
+                (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
+                *ngIf="isEditable || canAccess(['edit', 'options', 'label']); else showOptionLabel"
+                [ngModel]="optionEntry(option, lang).label || 'NA'"
+                [id]="'option-label-'+lang"
+                [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+                class="form-input"
+                type="text">
+              </textarea>
+              <!-- /input -->
+
+              <!-- delete icon -->
+              <div class="text-center m-top-10">
+                <div
+                  (click)="deleteOption($event, optionIndex)"
+                  *ngIf="isEditable || canAccess(['edit', 'options', 'delete'])"
+                  [id]="'sharedQuestionnaireQuestion-btn-delete-option-' + optionIndex"
+                  class="icon-container is-overlay">
+                  <span data-tooltip="Delete option" class="tooltip">
+                    <i class="icon icon-delete text-alert"></i>
+                  </span>
+                </div>
+              </div>
+              <!-- /delete icon -->
+
+            </div>
+          </div>
+          <!-- /options -->
+
+        </ng-container>
+        <!-- /question types -->
+
+      </div>
+    </div>
+    <!-- /question content -->
+
+    <!-- add item -->
+    <ng-container *ngIf="(isEditable || canAccess(['edit', 'options', 'add']))
+    && (question.controlType === 'radio' || question.controlType === 'checkbox'
+     || question.controlType === 'stars'|| question.controlType === 'ranking')">
+      <div [ngClass]="questionnaireLangs.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
+        <button
+          (click)="addNewOption($event)"
+          [id]="'sharedQuestionnaireQuestion-btn-add-item'"
+          class="button is-outlined is-info text-bold is-xs"
+          type="button">
+          <span class="icon-container is-overlay is-sm active m-right-10">
+            <i class="icon icon-plus text-xs"></i>
+          </span>
+          Add item
+        </button>
+      </div>
+    </ng-container>
+    <!-- /add item -->
+
+  </div>
+  <!-- /question edition -->
+
+</div>

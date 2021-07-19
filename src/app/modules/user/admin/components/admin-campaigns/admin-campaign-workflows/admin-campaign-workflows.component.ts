@@ -307,7 +307,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
           displayName: this._authService.user.name || '',
           firstName: this._authService.user.firstName || '',
           lastName: this._authService.user.lastName || '',
-          languages: this._innovationCardLanguages
+          language: this._authService.user.language || ''
         };
         this._campaignService
           .sendTestEmails(this._campaign._id, i, userInfo)

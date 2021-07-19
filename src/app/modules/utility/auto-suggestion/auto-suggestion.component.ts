@@ -310,11 +310,11 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   addNewValue() {
     if (this.inputNewValue) {
       this._itemSelected = this.inputNewValue;
-      this._searchKeyword.setValue('');
       this.valueAdded.emit({
         type: this.type,
         value: this.searchKeyword.value
       });
+      this._searchKeyword.setValue('');
       this._inputNewValue = '';
       this._width = '100%';
       this.hideAutoSuggestionDropdown();

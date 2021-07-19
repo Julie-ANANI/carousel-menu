@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
@@ -13,6 +13,20 @@ import { ConfigService } from '../../../services/config/config.service';
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
+import { DatePipe } from '@angular/common';
+import { UserSuggestion } from '../../user/admin/components/admin-project/admin-project-settings/admin-project-settings.component';
+
+/**
+ * editable cell
+ */
+interface InputGrid {
+  index: number; // which row
+  column: Column; // which column
+  disabled: boolean; // input disabled?
+  value: any; // content value
+  className: string; // class => input style
+  input: any; // input ngModel
+}
 
 @Component({
   selector: 'app-shared-table',
@@ -131,7 +145,22 @@ export class TableComponent {
   // copy an original table
   private _isOrginal = false;
 
+  _enterpriseSizeSelectConfig = {
+    minChars: 0,
+    placeholder: 'Enter the enterprise size',
+    type: 'enterpriseSize',
+    identifier: '',
+    suggestionList: ['123', '456', '789'],
+    isShowAddButton: false,
+    requestType: 'local',
+    showSuggestionFirst: true,
+    default: '',
+  };
+
+  private _inputGrids: Array<InputGrid> = [];
+
   constructor(
+    @Inject(LOCALE_ID) private _locale: string,
     private _translateService: TranslateService,
     private _configService: ConfigService,
     private _localStorageService: LocalStorageService
@@ -194,8 +223,8 @@ export class TableComponent {
   private _getFilteredContent(rows: Array<any>) {
     this._pagination.parPage = this._table._isPaginable
       ? parseInt(this._configService.configLimit(this._table._selector)) ||
-        Number(this._config.limit) ||
-        10
+      Number(this._config.limit) ||
+      10
       : rows.length;
 
     this._table._total =
@@ -328,9 +357,9 @@ export class TableComponent {
    */
   private _onSelectRow() {
     if (this._massSelection) {
-      this.selectRows.emit({ _rows: this._getAllContent() });
+      this.selectRows.emit({_rows: this._getAllContent()});
     } else {
-      this.selectRows.emit({ _rows: this._getSelectedRowsContent() });
+      this.selectRows.emit({_rows: this._getSelectedRowsContent()});
     }
   }
 
@@ -439,7 +468,7 @@ export class TableComponent {
   }
 
   /**
-   * Gte the title of a cell
+   * Gte the title of a grid
    * @param row
    * @param column
    */
@@ -449,7 +478,7 @@ export class TableComponent {
         return (this.getContentValue(row, attr) || ' - ').toString();
       })
       .join(' ');
-    if (title.length > 23) {
+    if (title.length > 20) {
       return title;
     } else {
       return '';
@@ -647,7 +676,7 @@ export class TableComponent {
       if (this._table._isLocal) {
         this._filteredContent[rowKey]._isSelected = !this._filteredContent[
           rowKey
-        ]._isSelected;
+          ]._isSelected;
       } else {
         this._table._content[rowKey]._isSelected = !this._table._content[rowKey]
           ._isSelected;
@@ -774,7 +803,7 @@ export class TableComponent {
   }
 
   public onClickDropdownItem(content: any, item: Choice) {
-    this.dropdownAction.emit({ content: content, item: item });
+    this.dropdownAction.emit({content: content, item: item});
   }
 
   public getTime(content: string): string {
@@ -889,7 +918,7 @@ export class TableComponent {
           searchValue &&
           content[searchKey] &&
           content[searchKey].toString().toLowerCase() ===
-            searchValue.toLowerCase()
+          searchValue.toLowerCase()
         ) {
           return true;
         }
@@ -911,14 +940,14 @@ export class TableComponent {
       this._setFilteredContent();
 
       if (this._table._hasCustomFilters) {
-        this.customFilter.emit({ key: '', value: '' });
+        this.customFilter.emit({key: '', value: ''});
         for (const key of Object.keys(this._config)) {
           if (
             this._table._columns.find(
               (col) => col._isCustomFilter && col._attrs[0] === key
             )
           ) {
-            this.customFilter.emit({ key: key, value: this._config[key] });
+            this.customFilter.emit({key: key, value: this._config[key]});
           }
         }
       }
@@ -1031,7 +1060,7 @@ export class TableComponent {
   }
 
   getPerformedAction(action: string, context: any) {
-    this.performAction.emit({ _action: action, _context: context });
+    this.performAction.emit({_action: action, _context: context});
   }
 
   selectAllTheData() {
@@ -1039,7 +1068,7 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = true;
     });
-    this.performAction.emit({ _action: 'Select all', _context: true });
+    this.performAction.emit({_action: 'Select all', _context: true});
   }
 
   clearAllTheSelections() {
@@ -1047,12 +1076,150 @@ export class TableComponent {
     this._table._content.forEach((value) => {
       value._isSelected = false;
     });
-    this.performAction.emit({ _action: 'Select all', _context: false });
+    this.performAction.emit({_action: 'Select all', _context: false});
   }
 
   performFilters(event: any) {
     if (event) {
-      this.performAction.emit({ _action: 'Filter' });
+      this.performAction.emit({_action: 'Filter'});
+    }
+  }
+
+  /**
+   * click to edit
+   * @param event
+   * @param row
+   * @param column
+   */
+  enableInput(event: Event, row: any, column: Column) {
+    event.preventDefault();
+    const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    if (gridInput) {
+      gridInput.disabled = false;
+      gridInput.className = 'editable-grid';
+    }
+  }
+
+  /**
+   * for one cell, get object
+   * @param row
+   * @param column
+   */
+  getInputGrid(row: any, column: Column) {
+    if (column._isEditable) {
+      const gridInputToAdd: InputGrid = {
+        index: row,
+        disabled: true,
+        column: column,
+        value: this._table._content[row],
+        className: 'no-editable-grid',
+        input: '',
+      };
+      switch (column._editType) {
+        case 'DATE':
+          if (this.getContentValue(row, column._attrs[0])) {
+            gridInputToAdd.input = new DatePipe(this._locale)
+              .transform(new Date(this.getContentValue(row, column._attrs[0])), 'yyyy-MM-dd');
+          } else {
+            gridInputToAdd.input = '-';
+          }
+          break;
+        case 'MULTI-CHOICES':
+          gridInputToAdd.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
+          break;
+        case 'USER-INPUT':
+          let name = '';
+          for (const _attr of column._attrs) {
+            name += this.getContentValue(row, _attr) + ' ';
+          }
+          gridInputToAdd.input = {name: name};
+          break;
+        default:
+          gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
+          break;
+      }
+      if (!this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs)) {
+        this._inputGrids.push(gridInputToAdd);
+      }
+      return this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    }
+  }
+
+  /**
+   * validate input => send values
+   * @param event
+   * @param row
+   * @param column
+   */
+  sendEditedGrid(event: Event, row: any, column: Column) {
+    event.preventDefault();
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    if (_dataToUpdate) {
+      const _attrs = column._attrs.toString().split('.');
+      switch (column._editType) {
+        case 'MULTI-CHOICES':
+          const choiceItem = column._choices.find(item => item._alias.toLowerCase() === _dataToUpdate.input.toLowerCase());
+          if (choiceItem) {
+            lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
+          }
+          _dataToUpdate.input = choiceItem._name;
+          break;
+        default:
+          lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
+          break;
+      }
+      this.performAction.emit({
+        _action: 'Update grid',
+        _context: _dataToUpdate.value,
+        _value: _dataToUpdate.input,
+        _column: column
+      });
+      _dataToUpdate.disabled = true;
+      _dataToUpdate.className = 'no-editable-grid';
+    }
+  }
+
+  /**
+   * cancel edit in table => reset original value
+   * @param event
+   * @param row
+   * @param column
+   */
+  cancelEditedGrid(event: Event, row: any, column: Column) {
+    event.preventDefault();
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    if (_dataToUpdate) {
+      switch (column._editType) {
+        case 'DATE':
+          if (this.getContentValue(row, column._attrs[0])) {
+            _dataToUpdate.input = new DatePipe(this._locale).transform(new Date(this.getContentValue(row, column._attrs[0])), 'yyyy-MM-dd');
+          } else {
+            _dataToUpdate.input = '-';
+          }
+          break;
+        case 'MULTI-CHOICES':
+          _dataToUpdate.input = this.getChoiceAlias(this.getChoice(column, this.getContentValue(row, this.getAttrs(column)[0])));
+          break;
+        case 'USER-INPUT':
+          let name = '';
+          for (const _attr of column._attrs) {
+            name += this.getContentValue(row, _attr) + ' ';
+          }
+          _dataToUpdate.input = {name: name};
+          break;
+        default:
+          _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+          break;
+      }
+      _dataToUpdate.disabled = true;
+      _dataToUpdate.className = 'no-editable-grid';
+    }
+  }
+
+  getUserSelected(value: UserSuggestion, row: any, column: Column) {
+    const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    if (_dataToUpdate && value && value._id) {
+      _dataToUpdate.input = value;
     }
   }
 }

@@ -1,0 +1,45 @@
+@import "../../../../../../style/framework/src/variables";
+
+#market-test-objectives-complementary {
+
+  .template-2-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .objectives-option {
+      max-width: 400px !important;
+      width: 100%;
+      min-height: 60px;
+      margin: 0 10px;
+    }
+
+  }
+
+  .objectives-option {
+    padding: 12px 30px;
+    background-color: #437194;
+    box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+    transition: all 0.2s;
+    border-radius: 6px;
+
+    &.checked {
+      background-color: $success-color;
+    }
+
+    &:not(.checked):hover {
+      box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+      transform: translateY(-1px);
+    }
+
+  }
+
+  textarea {
+    padding: 14.5px;
+    line-height: 1.3;
+  }
+
+}

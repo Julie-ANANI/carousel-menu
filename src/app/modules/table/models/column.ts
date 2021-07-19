@@ -1,5 +1,5 @@
-import {Choice} from './choice';
-import {MultiLabel} from './multi-label';
+import { Choice } from './choice';
+import { MultiLabel } from './multi-label';
 
 export interface Column {
   _isSelected?: boolean;
@@ -10,8 +10,10 @@ export interface Column {
   _isFilled?: boolean;
   _isOldValue?: boolean;
   _color?: string;
+  _isEditable?: boolean;
   readonly _attrs: string[];
   readonly _type: types;
+  readonly _editType?: types;
   readonly _name?: string;
   readonly _isSortable?: boolean;
   readonly _choices?: Choice[];
@@ -48,6 +50,8 @@ export type types =
   | 'DROPDOWN'
   | 'DATE_TIME'
   | 'NUMBER'
+  | 'USER-INPUT'
+  | 'TAG'
   | 'PATTERNS-OBJECT-LIST'
   | 'NAME-LABEL-LIST'
   | 'LABEL-OBJECT-LIST';

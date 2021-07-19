@@ -7,12 +7,13 @@ import { Innovation } from '../../../../../../models/innovation';
 import { environment } from '../../../../../../../environments/environment';
 import { Preset } from '../../../../../../models/preset';
 import {Observable, Subject} from 'rxjs';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import {first, takeUntil} from 'rxjs/operators';
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import { HttpErrorResponse } from '@angular/common/http';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import {isPlatformBrowser} from '@angular/common';
+import {Mission, MissionTemplate} from '../../../../../../models/mission';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -22,6 +23,8 @@ import {isPlatformBrowser} from '@angular/common';
 export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
+
+  private _mission: Mission = <Mission>{};
 
   private _quizLink = '';
 
@@ -47,6 +50,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         this._innovation = innovation || <Innovation>{};
+        this._mission = <Mission>this._innovation.mission || <Mission>{};
         this._cardsLanguages = this._innovation.innovationCards.map((card) => card.lang);
         this._setQuizLink();
         this._setSectionsNames();
@@ -103,7 +107,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The preset is updated.');
     }, (err: HttpErrorResponse) => {
-     this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+     this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
      console.error(err);
     });
   }
@@ -114,13 +118,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    */
   public generateQuiz(event: Event) {
     event.preventDefault();
+
     this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
       this._innovation = innovation;
       this._innovationFrontService.setInnovation(innovation);
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
       console.error(err);
     });
   }
@@ -137,18 +142,18 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   public presetSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
     return this._autocompleteService.get({query: searchString, type: 'preset'});
-  };
+  }
 
   public autocompletePresetListFormatter = (data: Preset): string => {
     return data.name;
-  };
+  }
 
   public choosePreset(event: {name: string, _id: string}) {
     this._chosenPreset = null;
     this._presetService.get(event._id).pipe(first()).subscribe((preset) => {
       this._chosenPreset = preset;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
       console.error(err);
     });
   }
@@ -161,15 +166,26 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * when the users updates the existing preset.
-   * @param preset
+   * when the users makes the changes in the existing preset or template sections.
+   * @param event
+   * @param type
    */
-  public updatePreset(preset: Preset): void {
+  public updatePreset(event: Preset | MissionTemplate, type: 'TEMPLATE' | 'PRESET'): void {
     if (this.canAccess(['edit'])) {
-      this._innovation.preset = preset;
+      if (type === 'TEMPLATE') {
+        this._mission.template = <MissionTemplate>event;
+        this._innovation.mission = this._mission;
+        this._innovationFrontService.setNotifyChanges({key: 'mission', state: true});
+      } else if (type === 'PRESET') {
+        this._innovation.preset = <Preset>event;
+        this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
+      }
       this._innovationFrontService.setInnovation(this._innovation);
-      this._innovationFrontService.setNotifyChanges({key: 'preset', state: true});
     }
+  }
+
+  get hasMissionTemplate(): boolean {
+    return this._mission.template && this._mission.template.sections && this._mission.template.sections.length > 0;
   }
 
   get innovation(): Innovation {
@@ -198,6 +214,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   get cardsLanguages(): Array<string> {
     return this._cardsLanguages;
+  }
+
+  get mission(): Mission {
+    return this._mission;
   }
 
   ngOnDestroy(): void {

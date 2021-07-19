@@ -108,7 +108,8 @@ export const PRESETS = {
       'stars': 'Notes étoiles',
       'textarea': 'Texte',
       'toggle': 'Toggle',
-      'checkbox': 'Choix multiples'
+      'checkbox': 'Choix multiples',
+      'ranking': 'Classement'
     },
     'EDIT': {
       'TITLE': 'Titre dans l\'infographie',

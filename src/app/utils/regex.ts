@@ -12,3 +12,5 @@ export const youtubeVideoId = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)
 export const specialCharRegEx = /[^a-zA-Z0-9 ]/g;
 export const emptyHtmlRegex = /<!DOCTYPE HTML><html><body>(<br>)+<\/body><\/html>/g;
 export const htmlTagsRegex = /<.+?>/g;
+
+export const replaceNumberRegex = /(?<=\s)[\d]+(?=\s)/gm;

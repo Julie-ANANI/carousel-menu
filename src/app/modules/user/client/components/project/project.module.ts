@@ -35,35 +35,43 @@ import { InnovCardTitlePipeModule } from '../../../../../pipe/InnovCardTitle/inn
 import { SynthesisComponent } from './components/synthesis/synthesis.component';
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
 import {CleanHtmlModule} from '../../../../../pipe/cleanHtml/cleanHtml.module';
+import {MarketTestMethodologyModule} from '../market-test-methodology/market-test-methodology.module';
+import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
+import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
+import {MarketTestObjectivesComplementaryModule} from '../market-test-objectives-complementary/market-test-objectives-complementary.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ProjectRoutingModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        SidebarModule,
-        SharedProjectSettingsModule,
-        TableModule,
-        SharedWorldmapModule,
-        SidebarUserAnswerModule,
-        SharedMarketReportModule,
-        MessageTemplateModule,
-        ModalModule,
-        FormsModule,
-        SharedEditorTinymceModule,
-        ObjectivesSecondaryModule,
-        ModalEmptyModule,
-        ObjectivesPrimaryModule,
-        AngularMyDatePickerModule,
-        AutoSuggestionModule,
-        NgxPageScrollModule,
-        BannerModule,
-        SidebarProjectPitchModule,
-        InnovCardTitlePipeModule,
-        MessageErrorModule,
-        CleanHtmlModule
-    ],
+  imports: [
+    CommonModule,
+    ProjectRoutingModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    SidebarModule,
+    SharedProjectSettingsModule,
+    TableModule,
+    SharedWorldmapModule,
+    SidebarUserAnswerModule,
+    SharedMarketReportModule,
+    MessageTemplateModule,
+    ModalModule,
+    FormsModule,
+    SharedEditorTinymceModule,
+    ObjectivesSecondaryModule,
+    ModalEmptyModule,
+    ObjectivesPrimaryModule,
+    AngularMyDatePickerModule,
+    AutoSuggestionModule,
+    NgxPageScrollModule,
+    BannerModule,
+    SidebarProjectPitchModule,
+    InnovCardTitlePipeModule,
+    MessageErrorModule,
+    CleanHtmlModule,
+    MarketTestMethodologyModule,
+    MarketTestObjectivesModule,
+    DatePickerModule,
+    MarketTestObjectivesComplementaryModule
+  ],
   declarations: [
     ProjectComponent,
     SetupComponent,

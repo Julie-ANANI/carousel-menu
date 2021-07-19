@@ -1,14 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Mission } from '../../models/mission';
+import {Mission, MissionTemplate} from '../../models/mission';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Multiling } from '../../models/multiling';
+import {Response} from '../../models/response';
+import {Config} from '../../models/config';
 
 @Injectable({providedIn: 'root'})
 export class MissionService {
 
   constructor(private _http: HttpClient) { }
+
+  /**
+   * will return the list of all the questions.
+   * @param config
+   */
+  public getAllQuestions(config?: Config): Observable<Response> {
+    return this._http.get<Response>('/mission/questions/all', {params: config});
+  }
+
+  /**
+   * will return the template based on the id
+   * @param templateId
+   */
+  public getTemplate(templateId: string): Observable<MissionTemplate> {
+    return this._http.get<MissionTemplate>(`/mission/templates/${templateId}`);
+  }
+
+  /**
+   * this function is to save the actual use case Mission Template i.e. global one.
+   * @param templateId
+   * @param template
+   */
+  public saveTemplate(templateId: string, template: MissionTemplate): Observable<MissionTemplate> {
+    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}`, template);
+  }
+
+  /**
+   * this route is to save the changes in the questions and also template
+   * under the Library page use case.
+   * http://localhost:4200/user/admin/libraries/use-cases/60ae157190499526ef804c7d
+   * @param templateId
+   * @param data
+   */
+  public saveLibraryTemplate(templateId: string, data: {}): Observable<MissionTemplate> {
+    return this._http.put<MissionTemplate>(`/mission/templates/${templateId}/library`, data);
+  }
+
+  /**
+   * will return all the use cases templates we have defined for a mission.
+   * @param config
+   */
+  public getAllTemplates(config?: Config): Observable<Response> {
+    return this._http.get<Response>('/mission/templates/all', {params: config});
+  }
 
   public create(missionObj: Mission): Observable<Mission> {
     return this._http.post<Mission>('/mission', missionObj);
@@ -34,6 +80,15 @@ export class MissionService {
     missionId: string,
     objective: { principal: Multiling; secondary: Array<Multiling>; comment: string }): Observable<Innovation> {
     return this._http.put<Innovation>(`/mission/${missionId}/updateMainObjective`, {objective: objective});
+  }
+
+  /**
+   * this function is to update the template inside the mission.
+   * @param missionId
+   * @param data
+   */
+  public updateTemplate(missionId: string, data: {template: MissionTemplate, comment: string}): Observable<Innovation> {
+    return this._http.put<Innovation>(`/mission/${missionId}/updateTemplate`, {data: data});
   }
 
 }

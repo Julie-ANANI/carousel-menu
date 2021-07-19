@@ -20,6 +20,9 @@ import { RolesFrontService } from '../../../../../services/roles/roles-front.ser
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
 import { Column } from '../../../../table/models/column';
+import {Mission, MissionTemplate} from '../../../../../models/mission';
+import { MissionService } from '../../../../../services/mission/mission.service';
+import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -27,6 +30,7 @@ import { Column } from '../../../../table/models/column';
 })
 
 export class AdminProjectsComponent implements OnInit {
+
   private _projects: Array<any> = [];
 
   private _totalProjects = -1;
@@ -50,13 +54,12 @@ export class AdminProjectsComponent implements OnInit {
 
   private _currentLang = this._translateService.currentLang;
 
-  private _mainObjective = this._currentLang === 'en' ?
-    'mission.objective.principal.en' : 'mission.objective.principal.fr';
-
   private _objectiveSearchKey = this._currentLang === 'en' ?
     'objective.principal.en' : 'objective.principal.fr';
 
   private _fetchingError = false;
+
+  private _missionTemplates: Array<MissionTemplate> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
@@ -66,12 +69,14 @@ export class AdminProjectsComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
               private _translateTitleService: TranslateTitleService,
+              private _missionService: MissionService,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
   }
 
   ngOnInit(): void {
     this._initializeTable();
+    this._getMissionTemplates();
 
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
@@ -87,6 +92,16 @@ export class AdminProjectsComponent implements OnInit {
       });
     }
 
+  }
+
+  private _getMissionTemplates() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
+        this._missionTemplates = response && response.result || [];
+      }, error => {
+        console.error(error);
+      });
+    }
   }
 
   /**
@@ -122,20 +137,29 @@ export class AdminProjectsComponent implements OnInit {
             _isSortable: true,
             _isSearchable: this.canAccess(['filterBy', 'status']),
             _isHidden: !this.canAccess(['tableColumns', 'status']),
-            _width: '150px',
+            _width: '200px',
             _choices: [
               {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-            ]
+            ],
+            _isEditable: this.canAccess(['canEdit', 'status']),
+            _editType: 'MULTI-CHOICES'
           },
           {
-            _attrs: [this._mainObjective],
+            _attrs: ['mainObjective'],
             _name: 'Objective',
             _type: 'TEXT',
             _isHidden: !this.canAccess(['tableColumns', 'objective']),
             _width: '200px'
+          },
+          {
+            _attrs: ['emailSent'],
+            _name: 'Email sent',
+            _type: 'TEXT',
+            _isSortable: true,
+            _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
           },
           {
             _attrs: ['stats.validatedAnswers'],
@@ -148,8 +172,10 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['owner.firstName', 'owner.lastName'],
             _name: 'Owner',
             _type: 'TEXT',
-            _width: '180px',
-            _isHidden: !this.canAccess(['tableColumns', 'owner'])
+            _width: '230px',
+            _isHidden: !this.canAccess(['tableColumns', 'owner']),
+            _isEditable: this.canAccess(['canEdit', 'owner']),
+            _editType: 'USER-INPUT'
           },
           {
             _attrs: ['innovationCards.title'],
@@ -173,7 +199,15 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
-            _width: '100px'
+            _width: '200px',
+            _isEditable: this.canAccess(['canEdit', 'type']),
+            _editType: 'MULTI-CHOICES',
+            _choices: [
+              {_name: 'USER', _alias: 'User'},
+              {_name: 'CLIENT', _alias: 'Client'},
+              {_name: 'DEMO', _alias: 'Demo'},
+              {_name: 'TEST', _alias: 'Test'},
+            ]
           },
           {
             _attrs: ['type'],
@@ -188,7 +222,21 @@ export class AdminProjectsComponent implements OnInit {
               {_name: 'DEMO', _alias: 'Demo'},
               {_name: 'TEST', _alias: 'Test'},
             ]
-          }, // Using _searchConfig for advanced search
+          },
+          // Using _searchConfig for advanced search
+          {
+            _attrs: ['template.entry.objective'],
+            _name: 'Use case',
+            _type: 'MULTI-CHOICES',
+            _isSearchable: this.canAccess(['filterBy', 'objective']),
+            _isHidden: true,
+            _searchConfig: {_collection: 'mission', _searchKey: 'template.entry.objective'},
+            _choices: this._missionTemplates.map((_template) => {
+              const label = MissionFrontService.objectiveName(_template, this._currentLang);
+              return {_name: label, _alias: label};
+            })
+          },
+          // Using _searchConfig for advanced search
           {
             _attrs: [this._objectiveSearchKey],
             _name: 'Objective',
@@ -217,13 +265,6 @@ export class AdminProjectsComponent implements OnInit {
             _isSortable: true,
             _width: '130px',
             _isHidden: !this.canAccess(['tableColumns', 'created'])
-          },
-          {
-            _attrs: ['emailSent'],
-            _name: 'Email sent',
-            _type: 'TEXT',
-            _isSortable: true,
-            _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
           },
         ];
       case 'market-test-manager-umi-back':
@@ -258,7 +299,14 @@ export class AdminProjectsComponent implements OnInit {
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-            ]
+            ],
+          },
+          {
+            _attrs: ['emailSent'],
+            _name: 'Email sent',
+            _type: 'TEXT',
+            _isSortable: true,
+            _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
           },
           {
             _attrs: ['stats.emailsOK'],
@@ -280,7 +328,15 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
-            _width: '100px'
+            _width: '200px',
+            _isEditable: this.canAccess(['canEdit', 'type']),
+            _editType: 'MULTI-CHOICES',
+            _choices: [
+              {_name: 'USER', _alias: 'User'},
+              {_name: 'CLIENT', _alias: 'Client'},
+              {_name: 'DEMO', _alias: 'Demo'},
+              {_name: 'TEST', _alias: 'Test'},
+            ]
           },
           {
             _attrs: ['type'],
@@ -313,13 +369,6 @@ export class AdminProjectsComponent implements OnInit {
             _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
           },
           {
-            _attrs: ['emailSent'],
-            _name: 'Email sent',
-            _type: 'TEXT',
-            _isSortable: true,
-            _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
-          },
-          {
             _attrs: ['operator'],
             _name: 'Operator',
             _type: 'MULTI-CHOICES',
@@ -328,17 +377,6 @@ export class AdminProjectsComponent implements OnInit {
             _choices: this._operators && this._operators.length ? this._operators.map(oper => {
               return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
             }) : []
-          },
-          {
-            _attrs: [this._objectiveSearchKey],
-            _name: 'Objective',
-            _type: 'MULTI-CHOICES',
-            _isSearchable: this.canAccess(['filterBy', 'objective']),
-            _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: this._objectiveSearchKey},
-            _choices: ObjectivesPrincipal.map((objective) => {
-              return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
-            })
           },
         ];
       default:
@@ -413,8 +451,10 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['owner.firstName', 'owner.lastName'],
             _name: 'Owner',
             _type: 'TEXT',
-            _width: '180px',
-            _isHidden: !this.canAccess(['tableColumns', 'owner'])
+            _width: '230px',
+            _isHidden: !this.canAccess(['tableColumns', 'owner']),
+            _isEditable: this.canAccess(['canEdit', 'owner']),
+            _editType: 'USER-INPUT'
           },
           {
             _attrs: ['owner.company.name'],
@@ -431,10 +471,18 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
-            _width: '100px'
+            _width: '180px',
+            _isEditable: this.canAccess(['canEdit', 'type']),
+            _editType: 'MULTI-CHOICES',
+            _choices: [
+              {_name: 'USER', _alias: 'User'},
+              {_name: 'CLIENT', _alias: 'Client'},
+              {_name: 'DEMO', _alias: 'Demo'},
+              {_name: 'TEST', _alias: 'Test'},
+            ]
           },
           {
-            _attrs: [this._mainObjective],
+            _attrs: ['mainObjective'],
             _name: 'Objective',
             _type: 'TEXT',
             _isHidden: !this.canAccess(['tableColumns', 'objective']),
@@ -461,7 +509,21 @@ export class AdminProjectsComponent implements OnInit {
               {_name: 'DEMO', _alias: 'Demo'},
               {_name: 'TEST', _alias: 'Test'},
             ]
-          }, // Using _searchConfig for advanced search
+          },
+          // Using _searchConfig for advanced search
+          {
+            _attrs: ['template.entry.objective'],
+            _name: 'Use case',
+            _type: 'MULTI-CHOICES',
+            _isSearchable: this.canAccess(['filterBy', 'objective']),
+            _isHidden: true,
+            _searchConfig: {_collection: 'mission', _searchKey: 'template.entry.objective'},
+            _choices: this._missionTemplates.map((_template) => {
+              const label = MissionFrontService.objectiveName(_template, this._currentLang);
+              return {_name: label, _alias: label};
+            })
+          },
+          // Using _searchConfig for advanced search
           {
             _attrs: [this._objectiveSearchKey],
             _name: 'Objective',
@@ -480,13 +542,15 @@ export class AdminProjectsComponent implements OnInit {
             _isSortable: true,
             _isSearchable: this.canAccess(['filterBy', 'status']),
             _isHidden: !this.canAccess(['tableColumns', 'status']),
-            _width: '150px',
+            _width: '200px',
             _choices: [
               {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
-            ]
+            ],
+            _isEditable: this.canAccess(['canEdit', 'status']),
+            _editType: 'MULTI-CHOICES'
           },
           {
             _attrs: ['operator'],
@@ -658,6 +722,16 @@ export class AdminProjectsComponent implements OnInit {
         project.innovationCards =
           InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
+      if (MissionFrontService.hasMissionTemplate(project.mission)) {
+        project['mainObjective'] = MissionFrontService.objectiveName(project.mission.template, this._currentLang);
+      } else {
+        project['mainObjective'] = project.mission.objective.principal[this._currentLang];
+      }
+      if (project.stats && project.stats.received && project.stats.received > 0) {
+        project['emailSent'] = 'Yes';
+      } else {
+        project['emailSent'] = 'No';
+      }
       return project;
     });
   }
@@ -709,5 +783,77 @@ export class AdminProjectsComponent implements OnInit {
       return this._rolesFrontService.hasAccessAdminSide(['projects']);
     }
   }
+
+  getPerformedAction(event: any) {
+    if (event) {
+      switch (event._action) {
+        case 'Update grid':
+          this._update(event._context, event._column, event._value);
+          break;
+      }
+    }
+  }
+
+  private _update(context: any, column: any, value: any) {
+    switch (column._attrs[0]) {
+      case 'status':
+        const saveObject = {
+          status: value
+        };
+        this._updateInnovation('The project has been updated.', saveObject, context._id);
+        break;
+      case 'mission.type':
+        const missionObject = {
+          type: value
+        };
+        this._updateMission(missionObject, context.mission._id);
+        break;
+      case 'owner.firstName':
+        const ownerObject = {
+          owner: value
+        };
+        if (ownerObject.owner && ownerObject.owner._id) {
+          this._updateInnovation('The project has been updated.', ownerObject, context._id);
+        }
+    }
+  }
+
+  private _updateMission(missionObj: { [P in keyof Mission]?: Mission[P] }, missionId: any,
+                         notifyMessage = 'The project has been updated.') {
+    this._missionService
+      .save(missionId, missionObj)
+      .pipe(first())
+      .subscribe(
+        (mission) => {
+          this._translateNotificationsService.success('Success', notifyMessage);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'Mission Error...',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
+  }
+
+  private _updateInnovation(notifyMessage = 'The project has been updated.', saveObject: any, _innovationId: any) {
+    this._innovationService
+      .save(_innovationId, saveObject)
+      .pipe(first())
+      .subscribe(
+        (res) => {
+          this._translateNotificationsService.success('Success', notifyMessage);
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'Project Error...',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          console.error(err);
+        }
+      );
+  }
+
 
 }

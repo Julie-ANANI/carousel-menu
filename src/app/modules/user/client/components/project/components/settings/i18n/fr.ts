@@ -10,6 +10,8 @@ export const PROJECT_SETTINGS = {
 
   'RESTITUTION_DATE': 'Date de livraison',
 
+  'REPORTING_LANG': 'Résultat langue',
+
   'OWNER': 'Propriétaire',
 
   'COLLABORATORS': 'Collaborateurs',
@@ -30,6 +32,7 @@ export const PROJECT_SETTINGS = {
     'PRINCIPAL_OBJECTIVE': 'Objectif principal',
     'SECONDARY_OBJECTIVE': 'Objectifs secondaires',
     'ROADMAP': 'Roadmap prévisionnelle',
+    'REPORTING_LANG': 'Langue des résultats du Test Marché',
     'RESTITUTION_DATE': 'Date de livraison souhaitée',
     'OWNER': 'Propriétaire',
     'COLLABORATORS': 'Collaborateurs',
@@ -40,6 +43,10 @@ export const PROJECT_SETTINGS = {
   },
 
   'NOT_ASSIGNED': 'Non assigné.',
+
+  'NO_COLLABORATORS': 'Pas de collaborateurs.',
+
+  'NO_SECONDARY': 'Pas d\'objectifs secondaires.',
 
   'PROJECT_IN': 'Projet en ',
 
@@ -60,6 +67,10 @@ export const PROJECT_SETTINGS = {
 
   'SELECT_OPERATOR': 'Sélectionnez un market test manager',
 
-  'RESTITUTION_DATE_COMMENT': 'Avez-vous des précisions à donner sur cette date ?',
+  'RESTITUTION_DATE_COMMENT': 'Avez-vous des précisions à apporter ?',
+
+  'PRIMARY_OBJECTIVE_CONSENT': 'Une modification de votre cas d\'usage impacter votre questionnaire. Voulez vous continuer ?',
+
+  'SECONDARY_OBJECTIVE_CONSENT': 'Une modification de vos objectifs complémentaires impactera votre questionnaire. Voulez-vous continuer ?',
 
 };

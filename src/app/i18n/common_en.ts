@@ -120,6 +120,7 @@ export const COMMON = {
 
   'LABEL': {
     'TENTATIVE_LEFT': 'attempt(s) left',
+    'ADD': 'Add',
     'FEEDBACK_COLLECTION': 'Feedback collection',
     'RSETITUTION': 'Restitution',
     'ACTIVITY_FIELDS': 'Activity Fields',
@@ -181,6 +182,7 @@ export const COMMON = {
   },
 
   'PLACEHOLDER': {
+    'TITLE': 'Add the title here...',
     'PROS_CONTACT': 'Enter the number of pros to contact',
     'PASSWORD_SIGNUP': '9+ characters',
     'JOBTITLE': 'Enter your job title',
@@ -231,6 +233,7 @@ export const COMMON = {
   },
 
   'BUTTON': {
+    'OUR_METHODOLOGY': 'Our methodology',
     'CONTINUE': 'Continue',
     'ADD': 'Add',
     'SAVE': 'Save',
@@ -483,6 +486,19 @@ export const COMMON = {
     'WRONG_SIZE': 'Could not upload image, the size is invalid.',
     'UPLOADING': 'Uploading picture, please be patient.',
     'UPLOADING_VIDEO': 'Uploading video, please be patient.'
+  },
+
+  'QUESTIONNAIRE_TYPE': {
+    'CHOOSE': 'Choose the type of question',
+    'list': 'List of items',
+    'clearbit': 'List of companies',
+    'radio': 'Unique choice',
+    'scale': 'Rating',
+    'stars': 'Stars rating',
+    'textarea': 'Text',
+    'toggle': 'Toggle',
+    'checkbox': 'Multiple choice',
+    'ranking': 'Ranking'
   }
 
 };

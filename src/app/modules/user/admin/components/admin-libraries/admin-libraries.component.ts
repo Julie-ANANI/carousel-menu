@@ -5,14 +5,20 @@ import { PresetService } from '../../../../../services/preset/preset.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
-import { RolesFrontService } from "../../../../../services/roles/roles-front.service";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../services/error/error-front.service";
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 
 interface ActionOption {
   functionality: string;
   optionName: string;
   activePage: string;
+}
+
+interface Tab {
+  name: string;
+  path: string;
+  link: string;
 }
 
 @Component({
@@ -22,7 +28,13 @@ interface ActionOption {
 
 export class AdminLibrariesComponent {
 
-  private _tabs: Array<string> = ['workflows', 'emails', 'questionnaire', 'signatures'];
+  private _tabs: Array<Tab> = [
+    {name: 'Workflows', path: 'workflows', link: 'workflows'},
+    {name: 'Emails', path: 'emails', link: 'emails'},
+    {name: 'Signatures', path: 'signatures', link: 'signatures'},
+    {name: 'Use cases', path: 'useCases', link: 'use-cases'},
+    {name: 'Questions', path: 'questions', link: 'questions'}
+  ];
 
   private _options: Array<ActionOption> = [];
 
@@ -39,28 +51,35 @@ export class AdminLibrariesComponent {
       if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
         const url = this._router.routerState.snapshot.url.split('/');
         if (url.length > 4 && url[3] === 'libraries') {
-          this.setPageTitle(url[4]);
-          this._setOptions(url[4]);
+          const tab = this._tabs.find((_tab) => _tab.link === url[4]);
+          const name = (tab && tab.name) || url[4];
+          this.setPageTitle(name);
+          this._setOptions(name.toLowerCase());
         }
       }
     });
-
   }
 
   public setPageTitle(title?: string) {
     if (title) {
-      this._translateTitleService.setTitle( title.slice(0,1).toUpperCase() + title.slice(1) + ' | Libraries');
+      this._translateTitleService.setTitle( title.slice(0, 1).toUpperCase() + title.slice(1) + ' | Libraries');
     } else {
       this._translateTitleService.setTitle('Libraries');
     }
   }
 
+  /**
+   * for the moment commenting the functionality of importing the preset.
+   * on 2 July, 2021
+   * @param page
+   * @private
+   */
   private _setOptions(page: string) {
     switch (page) {
 
       case 'questionnaire':
         this._options = [
-          { functionality: 'IMPORT', optionName: 'Import questionnaire', activePage: 'questionnaire' },
+          /*{ functionality: 'IMPORT', optionName: 'Import questionnaire', activePage: 'questionnaire' },*/
           { functionality: 'EXPORT', optionName: 'Export questionnaires', activePage: 'questionnaire' },
           ];
         break;
@@ -150,7 +169,7 @@ export class AdminLibrariesComponent {
     return this._rolesFrontService.isTechRole();
   }
 
-  get tabs(): Array<string> {
+  get tabs(): Array<Tab> {
     return this._tabs;
   }
 

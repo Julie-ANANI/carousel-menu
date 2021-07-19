@@ -1,0 +1,11 @@
+<div [id]="'date-picker'" class="date-picker">
+  <label>
+    <input
+      (dateChanged)="onDateChanged($event)"
+      [defaultMonth]="defaultMonth"
+      [locale]="currentLang"
+      [options]="datePickerOptions"
+      angular-mydatepicker
+      type="hidden">
+  </label>
+</div>
