@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Mission, MissionTemplate} from '../../models/mission';
+import {Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Multiling } from '../../models/multiling';
@@ -18,6 +18,25 @@ export class MissionService {
    */
   public getAllQuestions(config?: Config): Observable<Response> {
     return this._http.get<Response>('/mission/questions/all', {params: config});
+  }
+
+  /**
+   * will return the question based on the id. It will work with the new use case questions.
+   *
+   * @param questionId
+   */
+  public getQuestion(questionId: string): Observable<MissionQuestion> {
+    return this._http.get<MissionQuestion>(`/mission/questions/${questionId}`);
+  }
+
+  /**
+   * this function is to update the question in the back. It will work with the new use case questions.
+   *
+   * @param questionId
+   * @param question
+   */
+  public updateQuestion(questionId: string, question: MissionQuestion): Observable<MissionQuestion> {
+    return this._http.put<MissionQuestion>(`/mission/questions/${questionId}`, question);
   }
 
   /**

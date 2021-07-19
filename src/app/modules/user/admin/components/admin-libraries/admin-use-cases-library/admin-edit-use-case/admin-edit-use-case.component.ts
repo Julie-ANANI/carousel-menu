@@ -10,6 +10,7 @@ import {ErrorFrontService} from '../../../../../../../services/error/error-front
 import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
 import {TranslateService} from '@ngx-translate/core';
+import {TranslateTitleService} from '../../../../../../../services/title/title.service';
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -103,6 +104,7 @@ export class AdminEditUseCaseComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
+              private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _missionQuestionService: MissionQuestionService) { }
 
@@ -212,6 +214,11 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _useCaseName() {
     this._templateName = MissionFrontService.objectiveName(this._missionTemplate, this.currentLang);
+    this._setTitle();
+  }
+
+  private _setTitle() {
+    this._translateTitleService.setTitle(`${this._templateName} | Use cases | Libraries`);
   }
 
   public onClickSave(event: Event) {

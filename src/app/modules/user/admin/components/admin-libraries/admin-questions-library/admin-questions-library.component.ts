@@ -83,7 +83,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getAllQuestions(this._config).pipe(first()).subscribe((response) => {
         this._questions = response && response.result || [];
-        this._missionQuestionService.setAllQuestions(response.result);
+        this._missionQuestionService.setAllQuestions(JSON.parse(JSON.stringify(response.result)));
         this._total = response && response._metadata && response._metadata.totalCount || 0;
         this._questions.map((_question) => {
           _question.entry = MissionQuestionService.entryInfo(_question, this.currentLang);
@@ -176,7 +176,9 @@ export class AdminQuestionsLibraryComponent implements OnInit {
    * @param event
    */
   public navigateTo(event: MissionQuestion) {
-    this._missionQuestionService.setQuestion(event);
+    this._missionQuestionService.setQuestion(this._missionQuestionService.allQuestions.find((_question) => {
+      return _question._id === event._id;
+    }));
     this._router.navigate([`${this._router.url}/${event._id}`]);
   }
 
