@@ -18,7 +18,6 @@ interface ConfirmUpdate {
 }
 
 @Component({
-  selector: 'app-admin-edit-use-case',
   templateUrl: './admin-edit-use-case.component.html',
   styleUrls: ['./admin-edit-use-case.component.scss']
 })

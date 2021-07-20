@@ -110,15 +110,15 @@
             <div class="buttons-wrapper">
 
               <!-- delete -->
-              <div
+              <!--<div
                 (click)="remove($event)"
-                *ngIf="canAccess(['delete'])"
+                *ngIf="canAccess(['delete']) && editMode"
                 [id]="'adminEditQuestion-btn-delete-question'"
                 class="icon-container is-overlay m-right-15">
                 <span data-tooltip="Delete" class="tooltip">
                   <i class="icon icon-delete text-white"></i>
                 </span>
-              </div>
+              </div>-->
               <!-- /delete -->
 
               <!-- edit -->
@@ -142,7 +142,7 @@
           <!-- /header -->
 
           <!-- question edition -->
-          <div *ngIf="editMode" class="question-body">
+          <div class="question-body">
 
             <!-- toolbar -->
             <div class="question-toolbar m-bottom-10">
@@ -153,7 +153,7 @@
                   <input
                     (ngModelChange)="updateValue($event, 'COMMENT')"
                     [ngModel]="question.canComment"
-                    [disabled]="!canAccess(['edit', 'canComment'])"
+                    [disabled]="!canAccess(['edit', 'canComment']) || editMode"
                     type="checkbox">
                   <i class="form-icon"></i> Allow to add comment
                 </label>
@@ -164,7 +164,7 @@
                   <input
                     (ngModelChange)="updateValue($event, 'RANDOMIZATION')"
                     [ngModel]="question.randomization"
-                    [disabled]="!canAccess(['edit', 'randomization'])"
+                    [disabled]="!canAccess(['edit', 'randomization']) || !editMode"
                     type="checkbox">
                   <i class="form-icon"></i> Randomization
                 </label>
@@ -179,7 +179,7 @@
                   <input
                     (ngModelChange)="updateValue($event, 'SENSITIVE_DATA')"
                     [ngModel]="question.sensitiveAnswerData"
-                    [disabled]="!canAccess(['edit', 'sensitiveAnswerData'])"
+                    [disabled]="!canAccess(['edit', 'sensitiveAnswerData']) || !editMode"
                     type="checkbox">
                     <i class="form-icon"></i> Visibility of sensitive answer
                   </label>
@@ -197,7 +197,7 @@
                     </ng-template>
                     <input
                       (ngModelChange)="onChangeMaxOptions($event)"
-                      *ngIf="canAccess(['edit', 'maxOptionsSelect']); else showMaxOptions"
+                      *ngIf="canAccess(['edit', 'maxOptionsSelect']) || editMode; else showMaxOptions"
                       [(ngModel)]="question.maxOptionsSelect"
                       [attr.placeholder]="question.options.length"
                       [id]="'question-maxOption'"
@@ -239,7 +239,7 @@
                   <textarea
                     #textAreaElement
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'objective')"
-                    *ngIf="canAccess(['edit', 'objective']); else showObjective"
+                    *ngIf="canAccess(['edit', 'objective']) && editMode; else showObjective"
                     [ngModel]="questionEntry(lang).objective || 'NA'"
                     [id]="'question-objective-'+lang"
                     [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
@@ -258,7 +258,7 @@
                   <textarea
                     #textAreaElement
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'title')"
-                    *ngIf="canAccess(['edit', 'title']); else showTitle"
+                    *ngIf="canAccess(['edit', 'title']) && editMode; else showTitle"
                     [ngModel]="questionEntry(lang).title || 'NA'"
                     [id]="'question-title-'+lang"
                     [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
@@ -277,7 +277,7 @@
                   <textarea
                     #textAreaElement
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'subtitle')"
-                    *ngIf="canAccess(['edit', 'subtitle']); else showSubtitle"
+                    *ngIf="canAccess(['edit', 'subtitle']) && editMode; else showSubtitle"
                     [ngModel]="questionEntry(lang).subtitle || 'NA'"
                     [id]="'question-subtitle-'+lang"
                     [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
@@ -296,7 +296,7 @@
                   <textarea
                     #textAreaElement
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'label')"
-                    *ngIf="canAccess(['edit', 'label']); else showLabel"
+                    *ngIf="canAccess(['edit', 'label']) && editMode; else showLabel"
                     [ngModel]="questionEntry(lang).label || 'NA'"
                     [id]="'question-label-'+lang"
                     [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
@@ -315,7 +315,7 @@
                   <textarea
                     #textAreaElement
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'instruction')"
-                    *ngIf="canAccess(['edit', 'instruction']); else showInstruction"
+                    *ngIf="canAccess(['edit', 'instruction']) && editMode; else showInstruction"
                     [id]="'question-instruction-'+lang"
                     [ngModel]="questionEntry(lang).instruction || ''"
                     [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
@@ -340,7 +340,7 @@
 
                       <!-- move option -->
                       <div
-                        *ngIf="canAccess(['edit', 'options', 'order'])"
+                        *ngIf="canAccess(['edit', 'options', 'order']) && editMode"
                         class="flex-centered m-top-10 m-bottom-10">
                         <div
                           [ngClass]="{'is-horizontal': questionnaireLangs.length === 1}"
@@ -367,7 +367,7 @@
                       <textarea
                         #textAreaElement
                         (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
-                        *ngIf="canAccess(['edit', 'options', 'label']); else showOptionLabel"
+                        *ngIf="canAccess(['edit', 'options', 'label']) && editMode; else showOptionLabel"
                         [ngModel]="optionEntry(option, lang).label || 'NA'"
                         [id]="'option-label-'+lang"
                         [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
@@ -380,7 +380,7 @@
                       <div class="text-center m-top-10">
                         <div
                           (click)="deleteOption($event, optionIndex)"
-                          *ngIf="canAccess(['edit', 'options', 'delete'])"
+                          *ngIf="canAccess(['edit', 'options', 'delete']) && editMode"
                           [id]="'adminEditQuestion-btn-delete-option-' + optionIndex"
                           class="icon-container is-overlay">
                           <span data-tooltip="Delete option" class="tooltip">
@@ -400,6 +400,25 @@
               </div>
             </div>
             <!-- /question content -->
+
+            <!-- add item -->
+            <ng-container *ngIf="(canAccess(['edit', 'options', 'add'])) && (question.controlType === 'radio' ||
+            question.controlType === 'checkbox' || question.controlType === 'stars'|| question.controlType ===
+            'ranking')">
+              <div [ngClass]="questionnaireLangs.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
+                <button
+                  (click)="addNewOption($event)"
+                  [id]="'adminEditQuestion-btn-add-item'"
+                  class="button is-outlined is-info text-bold is-xs"
+                  type="button">
+                  <span class="icon-container is-overlay is-sm active m-right-10">
+                    <i class="icon icon-plus text-xs"></i>
+                  </span>
+                  Add item
+                </button>
+              </div>
+            </ng-container>
+            <!-- /add item -->
 
           </div>
           <!-- /question edition -->
