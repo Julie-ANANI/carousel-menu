@@ -22,6 +22,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
 
   set config(value: Config) {
     this._config = value;
+    this._getAllTemplates();
   }
 
   get fetchingError(): boolean {
@@ -122,40 +123,49 @@ export class AdminUseCasesLibraryComponent implements OnInit {
           _type: 'TEXT',
         },
         {
+          _attrs: ['category'],
+          _name: 'Category',
+          _type: 'TEXT',
+          _width: '130px',
+          _isSortable: true
+        },
+        {
           _attrs: ['sections'],
           _name: 'Total Sections',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '140px'
         },
         {
           _attrs: ['essentialsQuestions'],
           _name: 'Essentials',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '140px'
         },
         {
           _attrs: ['complementaryQuestions'],
           _name: 'Complementary',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '150px'
         },
         {
           _attrs: ['totalQuestions'],
           _name: 'Total Questions',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '150px'
         },
         {
           _attrs: ['updated'],
           _name: 'Updated',
           _type: 'DATE',
-          _width: '150px'
+          _width: '150px',
+          _isSortable: true
         },
         {
           _attrs: ['created'],
           _name: 'Created',
           _type: 'DATE',
-          _width: '150px'
+          _width: '150px',
+          _isSortable: true
         }
       ]
     };
