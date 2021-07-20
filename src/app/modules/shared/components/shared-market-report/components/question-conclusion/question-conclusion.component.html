@@ -13,7 +13,7 @@
   <!-- conclusion -->
   <div class="conclusion-wrapper" [hidden]="!question.identifier">
 
-    <h3 *ngIf="questionTitle()" [ngClass]="{'m-no-bottom': !questionLabel()}" class="title is-main d-flex align-center">
+    <h3 [ngClass]="{'m-no-bottom': !questionLabel()}" class="title is-main d-flex align-center">
       <span *ngIf="!editTitle"> {{ questionTitle() }} </span>
       <input
         #title
@@ -111,7 +111,7 @@
           [pieChart]="pieChart"
           [readonly]="readonly"
           [reportingLang]="reportingLang"
-          [showFavorable]="question.visibility"
+          [showFavorable]="showPositiveAnswers"
           [positiveSections]="positivesAnswers"
           [favorableAnswersLabel]="positiveAnswerLabels()"
         ></app-utility-piechart>
