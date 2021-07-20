@@ -101,7 +101,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
   private _initializeTable() {
     this._tableData = {
       _selector: 'admin-questions-limit',
-      _title: 'questions(s)',
+      _title: 'question(s)',
       _content: this._questions,
       _total: this._total,
       _isEditable: this.canAccess(['edit']),
