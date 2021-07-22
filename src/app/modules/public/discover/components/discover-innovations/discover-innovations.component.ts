@@ -10,6 +10,7 @@ import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { Response } from '../../../../../models/response';
+import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
 
 @Component({
   templateUrl: './discover-innovations.component.html',
@@ -20,7 +21,7 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'created principalMedia innovationCards tags status projectStatus',
-    limit: '25',
+    limit: this._localStorage.getItem('discover-limit') || '25',
     offset: '0',
     isPublic: '1',
     search: '{}',
@@ -58,6 +59,7 @@ export class DiscoverInnovationsComponent implements OnInit {
               private _translateService: TranslateService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
+              private _localStorage: LocalStorageService,
               private _filterService: DiscoverService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
