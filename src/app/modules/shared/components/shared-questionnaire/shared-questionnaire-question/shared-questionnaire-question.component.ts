@@ -35,9 +35,9 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     return this._missionQuestionService.questionnaireLangs || [];
   }
 
-  get customId(): string {
+  /*get customId(): string {
     return this._customId;
-  }
+  }*/
 
   get question(): MissionQuestion {
     return this._question;
@@ -102,11 +102,11 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
       }
     }
 
-    if (this._question.identifier && this._isTaggedQuestion) {
+    /*if (this._question.identifier && this._isTaggedQuestion) {
       this._customId = this._missionQuestionService.generateId();
     } else {
       this._customId = this._question.identifier;
-    }
+    }*/
 
     if (!this._question.maxOptionsSelect && this._question.controlType === 'checkbox') {
       this._question.maxOptionsSelect = (this._question.options && this._question.options.length);
@@ -137,7 +137,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   private _isTaggedQuestion = false;
 
-  private _customId = '';
+  // private _customId = '';
 
   private _picto: Picto = picto;
 
@@ -196,14 +196,18 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     }
   }
 
-  public onChangeIdentifier(identifier: string) {
+  /**
+   * discussion going on how to use this functionality and explain to the operators
+   * Commented on 22nd july, 2021
+   */
+  /*public onChangeIdentifier(identifier: string) {
     this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(identifier);
     if (this._isTaggedQuestion) {
       this._question.controlType = this._missionQuestionService.getQuestionType(identifier);
     }
     this.notifyChanges();
     this._emitValueToSave(['edit', 'identifier']);
-  }
+  }*/
 
   public onChangeTemplateQuestion(event: boolean) {
     if (this.canAccess(['typeInUseCase'])) {
@@ -212,9 +216,9 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     }
   }
 
-  public getNonUsedQuestions() {
+  /*public getNonUsedQuestions() {
     return this._missionQuestionService.getNonUsedQuestions();
-  }
+  }*/
 
   public cloneQuestion(event: Event) {
     event.preventDefault();

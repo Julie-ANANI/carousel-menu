@@ -86,13 +86,13 @@ export class AdminEditQuestionComponent implements OnInit {
     this._editMode = value;
   }
 
-  get customId(): string {
+  /*get customId(): string {
     return this._customId;
-  }
+  }*/
 
-  get nonUsedQuestions(): Array<string> {
+  /*get nonUsedQuestions(): Array<string> {
     return this._nonUsedQuestions;
-  }
+  }*/
 
   get isTaggedQuestion(): boolean {
     return this._isTaggedQuestion;
@@ -124,9 +124,9 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _editMode = true;
 
-  private _customId = '';
+  // private _customId = '';
 
-  private _nonUsedQuestions: Array<string> = [];
+  // private _nonUsedQuestions: Array<string> = [];
 
   private _isTaggedQuestion = false;
 
@@ -187,8 +187,8 @@ export class AdminEditQuestionComponent implements OnInit {
     this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(this._question.identifier);
     this._questionName();
     this._setTitle();
-    this._initCustomId();
-    this._initNonUsedQuestions();
+    // this._initCustomId();
+    // this._initNonUsedQuestions();
     this._initSensitive();
   }
 
@@ -216,19 +216,23 @@ export class AdminEditQuestionComponent implements OnInit {
     this._translateTitleService.setTitle(`${this._name} | Questions | Libraries`);
   }
 
-  private _initCustomId() {
+  /**
+   * discussion going on how to use this functionality and explain to the operators
+   * Commented on 22nd july, 2021
+   */
+  /*private _initCustomId() {
     if (this._question.identifier && this._isTaggedQuestion) {
       this._customId = this._missionQuestionService.generateId();
     } else {
       this._customId = this._question.identifier;
     }
-  }
+  }*/
 
-  private _initNonUsedQuestions() {
+  /*private _initNonUsedQuestions() {
     this._nonUsedQuestions = Object.keys(this._missionQuestionService.taggedQuestionsTypes).filter((_type) => {
       return _type !== this._question.identifier;
     }).sort();
-  }
+  }*/
 
   /**
    * to check the user has access to the defined functionality on the page or not.
