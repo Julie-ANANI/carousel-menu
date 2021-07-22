@@ -19,6 +19,7 @@ import { ModalModule } from "../../../../utility/modals/modal/modal.module";
 import { AdminSearchScrapingComponent } from './admin-search-scraping/admin-search-scraping.component';
 import {SidebarModule} from '../../../../sidebars/templates/sidebar/sidebar.module';
 import {SidebarScrapingModule} from '../../../../sidebars/components/sidebar-scraping/sidebar-scraping.module';
+import {SharedScrapingModule} from '../../../../shared/components/shared-scraping/shared-scraping.module';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {SidebarScrapingModule} from '../../../../sidebars/components/sidebar-scr
     ModalModule,
     AdminSearchRoutingModule,
     SidebarModule,
-    SidebarScrapingModule
+    SidebarScrapingModule,
+    SharedScrapingModule
   ],
   declarations: [
     AdminSearchComponent,

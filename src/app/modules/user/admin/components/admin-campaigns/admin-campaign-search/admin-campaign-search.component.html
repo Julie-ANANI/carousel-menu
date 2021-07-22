@@ -1,8 +1,13 @@
 <div class="container fluid grid-2xl p-top-30 p-bottom-30" id="admin-campaign-search">
   <div class="column col-sm-12 col-11 col-mx-auto">
-    <app-shared-search-pros
-      [campaign]="campaign"
-      [accessPath]="accessPath">
-    </app-shared-search-pros>
+    <div id="modules-search">
+      <app-shared-search-pros class="module"
+        [campaign]="campaign"
+        [accessPath]="accessPath">
+      </app-shared-search-pros>
+
+      <app-shared-scraping class="module">
+      </app-shared-scraping>
+    </div>
   </div>
 </div>

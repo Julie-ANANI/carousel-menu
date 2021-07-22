@@ -7,11 +7,11 @@
 }
 
 #shared-search-pros {
-  display: flex;
+  //display: flex;
 
   .search-wrapper {
-    flex: 0 1 50%;
-    padding-right: 5%;
+    //flex: 0 1 50%;
+    //padding-right: 5%;
 
     .popover {
 
@@ -259,34 +259,5 @@
 
   }
 
-
-}
-
-
-@media (max-width: $size-md) {
-
-  #shared-search-pros {
-    flex-direction: column;
-
-    .search-wrapper {
-      flex: 1 !important;
-      padding-bottom: 25px;
-      padding-right: 15% !important;
-    }
-
-  }
-
-}
-
-
-@media (max-width: $size-sm) {
-
-  #shared-search-pros {
-
-    .search-wrapper {
-      padding-right: 0 !important;
-    }
-
-  }
 
 }

@@ -1,0 +1,40 @@
+@import "../../../../../../../style/framework/src/variables";
+@import "../../../../../../../style/framework/src/mixins";
+
+#modules-search {
+  display: flex;
+
+  .module {
+    flex: 0 1 50%;
+    padding-right: 5%;
+  }
+}
+
+
+@media (max-width: $size-md) {
+
+  #modules-search {
+    flex-direction: column;
+
+    .module {
+      flex: 1 !important;
+      padding-bottom: 25px;
+      padding-right: 15% !important;
+    }
+
+  }
+
+}
+
+
+@media (max-width: $size-sm) {
+
+  #modules-search {
+
+    .module {
+      padding-right: 0 !important;
+    }
+
+  }
+
+}
