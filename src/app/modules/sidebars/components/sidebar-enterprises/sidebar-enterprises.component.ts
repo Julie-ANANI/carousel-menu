@@ -6,14 +6,14 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Enterprise, Industry, Pattern } from '../../../../models/enterprise';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
-import { Clearbit } from '../../../../models/clearbit';
-import { AutoSuggestionConfig } from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import {Enterprise, Industry, Pattern} from '../../../../models/enterprise';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
+import {Clearbit} from '../../../../models/clearbit';
+import {AutoSuggestionConfig} from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import {
   EnterpriseSizeList,
   EnterpriseTypes,
@@ -52,8 +52,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
     if (value === 'active') {
       this.fillTheForm();
-      this.initAutoSuggestionConfig();
     }
+    this.initAutoSuggestionConfig();
   }
 
   // provide this value when you want to update the existing enterprise, not while creating new one.
@@ -99,12 +99,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _inputGeoZone: Array<any> = [];
 
-  private _isGeoConfig = false;
-
-  private _isBrandConfig = false;
-
-  private _isPatternConfig = false;
-
   private _newPatterns: Array<Pattern> = [];
 
   private _newIndustry: Array<Industry> = [];
@@ -115,19 +109,19 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _industrySelectConfig: AutoSuggestionConfig = <
     AutoSuggestionConfig
-  >{};
+    >{};
 
   private _valueChainSelectConfig: AutoSuggestionConfig = <
     AutoSuggestionConfig
-  >{};
+    >{};
 
   private _enterpriseSizeSelectConfig: AutoSuggestionConfig = <
     AutoSuggestionConfig
-  >{};
+    >{};
 
   private _enterpriseTypeSelectConfig: AutoSuggestionConfig = <
     AutoSuggestionConfig
-  >{};
+    >{};
 
   private initAutoSuggestionConfig() {
     this._industrySelectConfig = {
@@ -178,7 +172,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _autoCompleteService: AutocompleteService,
     private _domSanitizer: DomSanitizer
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this._form.valueChanges
@@ -235,9 +230,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._inputPatterns = this._enterprise.patterns || [];
     this._inputGeoZone = this._enterprise.geographicalZone || [];
     this._inputBrands = this._enterprise.brands || [];
-    this._isGeoConfig = false;
-    this._isBrandConfig = false;
-    this._isPatternConfig = false;
     this._logo = (this._enterprise.logo && this._enterprise.logo.uri) || '';
   }
 
@@ -302,9 +294,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   public enterpriseSuggestions = (
     searchString: string
-  ): Observable<
-    Array<{ name: string; logo: any; domain: string; _id: string }>
-  > => {
+  ): Observable<Array<{ name: string; logo: any; domain: string; _id: string }>> => {
     return this._autoCompleteService.get({
       query: searchString,
       type: 'enterprise',
@@ -400,7 +390,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             }
         }
       });
-      this.finalOutput.emit({ enterprise: _newEnterprise, opType: this.type });
+      this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
+      this.initAutoSuggestionConfig();
     }
   }
 
@@ -426,7 +417,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   public industryUpdate(event: any) {
     if (this.isEditable) {
-      this._newIndustry.push({ label: event, code: event });
+      this._newIndustry.push({label: event, code: event});
       this._saveChanges();
     }
   }
@@ -442,7 +433,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newBrands = [];
       event.value.map((text) => {
-        this._newBrands.push({ label: text.text || text.label, url: '' });
+        this._newBrands.push({label: text.text || text.label, url: ''});
       });
       this._saveChanges();
     }
@@ -452,40 +443,31 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newGeoZone = [];
       this._newGeoZone = event.value.map((text) => {
-        return { scope: 'country', name: text.text || text.name };
+        return {scope: 'country', name: text.text || text.name};
       });
       this._saveChanges();
     }
   }
 
   get patternConfig(): any {
-    if (!this._isPatternConfig) {
-      this._isPatternConfig = true;
-      return {
-        placeholder: 'Enter the enterprise pattern',
-        initialData: this._inputPatterns,
-      };
-    }
+    return {
+      placeholder: 'Enter the enterprise pattern',
+      initialData: this._inputPatterns,
+    };
   }
 
   get brandConfig(): any {
-    if (!this._isBrandConfig) {
-      this._isBrandConfig = true;
       return {
         placeholder: 'Enter the enterprise brand',
         initialData: this._inputBrands,
       };
-    }
   }
 
   get geoConfig(): any {
-    if (!this._isGeoConfig) {
-      this._isGeoConfig = true;
       return {
         placeholder: 'Enter the geographical zone',
         initialData: this._inputGeoZone,
       };
-    }
   }
 
   get form(): FormGroup {
@@ -528,7 +510,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           if (
             this._newIndustry.length === 0 ||
             this._newIndustry.find((item) => item.label === $event.value) ===
-              undefined
+            undefined
           ) {
             this.industryUpdate($event.value);
           }
