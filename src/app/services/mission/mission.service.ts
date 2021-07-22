@@ -21,6 +21,17 @@ export class MissionService {
   }
 
   /**
+   * will create a new question of type MissionQuestion. It should be only used
+   * for the Questions or Use cases under Library page because it will add the question
+   * directly in the collection MissionQuestions
+   *
+   * @param questionObj
+   */
+  public createQuestion(questionObj: MissionQuestion): Observable<MissionQuestion> {
+    return this._http.post<MissionQuestion>('/mission/questions/create', questionObj);
+  }
+
+  /**
    * will return the question based on the id. It will work with the new use case questions.
    *
    * @param questionId
