@@ -352,7 +352,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
         patterns: this.newPatterns,
-        parentEnterprise: this._parentEnterprise
+        parentEnterprise: this._parentEnterprise.name
           ? this._parentEnterprise['id']
           : null,
         industries: this.newIndustry,
@@ -361,7 +361,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
         subsidiaries: this.getSubsidiaries(),
         valueChain: this._newValueChains,
         subsidiariesList: this._newSubsidiary,
-        parentEnterpriseObject: this._enterprise.parentEnterpriseObject,
+        parentEnterpriseObject: this._parentEnterprise.name
+          ? this._enterprise.parentEnterpriseObject : [],
       };
 
       Object.keys(this._form.controls).forEach((key) => {
