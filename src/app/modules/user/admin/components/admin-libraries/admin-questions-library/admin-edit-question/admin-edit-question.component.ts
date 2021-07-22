@@ -18,6 +18,7 @@ import {picto, Picto} from '../../../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslateTitleService} from '../../../../../../../services/title/title.service';
 import {CommonService} from '../../../../../../../services/common/common.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -29,6 +30,10 @@ interface ConfirmUpdate {
   styleUrls: ['./admin-edit-question.component.scss']
 })
 export class AdminEditQuestionComponent implements OnInit {
+
+  get isPartUseCase(): boolean {
+    return this._isPartUseCase;
+  }
 
   get fetchingError(): boolean {
     return this._fetchingError;
@@ -130,6 +135,8 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _isTaggedQuestion = false;
 
+  private _isPartUseCase = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _missionService: MissionService,
@@ -141,6 +148,7 @@ export class AdminEditQuestionComponent implements OnInit {
 
   ngOnInit() {
     this._question = this._missionQuestionService.question;
+    this._getTemplate(this._question._id);
     this._initVariables();
 
     /**
@@ -151,6 +159,7 @@ export class AdminEditQuestionComponent implements OnInit {
       const id = params['questionId'] || '';
       if (!!id && (id !== this._question._id) || !this._question._id ) {
         this._getQuestion(id);
+        this._getTemplate(id);
       }
     });
   }
@@ -169,12 +178,39 @@ export class AdminEditQuestionComponent implements OnInit {
     CommonService.calcTextareaHeight(textarea, _event);
   }
 
+  /**
+   * we are checking if the question belongs to any use case.
+   * If we get error then we make the isPartUseCase = true, just in case.
+   *
+   * @param id
+   * @private
+   */
+  private _getTemplate(id: string) {
+    if (isPlatformBrowser(this._platformId) && !!id) {
+      const config = {
+        fields: '',
+        limit: '1',
+        offset: '0',
+        search: '{}',
+        'sections.questions.question': id,
+        sort: '{"created":-1}'
+      };
+      this._missionService.getAllTemplates(config).pipe(first()).subscribe((response) => {
+        this._isPartUseCase = response && response.result && response.result.length > 0;
+      }, (error: HttpErrorResponse) => {
+        this._isPartUseCase = true;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        console.error(error);
+      });
+    }
+  }
+
   private _getQuestion(id: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getQuestion(id).pipe(first()).subscribe((response) => {
         this._question = response;
         this._initVariables();
-      }, error => {
+      }, (error: HttpErrorResponse) => {
         this._fetchingError = true;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
         console.error(error);
@@ -247,11 +283,22 @@ export class AdminEditQuestionComponent implements OnInit {
     }
   }
 
+  /**
+   * if the question is not part of the use case them we don't show the modal.
+   * We just simply Save it.
+   *
+   * @param event
+   */
   public onClickSave(event: Event) {
     event.preventDefault();
     if (this.canAccess(['edit']) && this._toBeSaved && !this._isSaving) {
-      this._showModal = true;
-      this._validate = <ConfirmUpdate>{};
+      if (!this._isPartUseCase) {
+        this._isSaving = true;
+        this._updateQuestion();
+      } else {
+        this._showModal = true;
+        this._validate = <ConfirmUpdate>{};
+      }
     }
   }
 
@@ -279,7 +326,7 @@ export class AdminEditQuestionComponent implements OnInit {
       this._isSaving = false;
       this._toBeSaved = false;
       this._translateNotificationsService.success('Success', 'The question has been updated successfully.');
-    }, error => {
+    }, (error: HttpErrorResponse) => {
       this._isSaving = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
       console.error(error);
