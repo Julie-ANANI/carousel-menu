@@ -17,7 +17,7 @@
     <div class="input-wrapper content">
       <label class="form-label">URL to scrape</label>
       <input
-        [(ngModel)]="_params['url']"
+        [(ngModel)]="params['url']"
         class="form-input"
         placeholder="ex: https://portal.research.lu.se/portal/en/persons/search.html"
         type="text">
@@ -27,12 +27,13 @@
     <!-- buttons -->
     <div class="form-group m-top-10">
       <button class="button is-primary is-md"
-              (click)="onClickSearch($event)"
+              (click)="onClickSearch()"
               [disabled]="isScraping">
         Scrape
       </button>
       <button class="button is-primary is-md float-right"
-              (click)="onClickCancel($event)">
+              (click)="onClickCancel()"
+              [disabled]="!isScraping">
         Cancel
       </button>
     </div>
@@ -77,7 +78,6 @@
 <!-- sidebars to set settings -->
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-scraping
-    (paramsChange)="updateSettings($event)"
     [params]="params"
     [sidebarState]="sidebarValue.animate_state">
   </app-sidebar-scraping>

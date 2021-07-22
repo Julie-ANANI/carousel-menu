@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {RolesFrontService} from '../../../../services/roles/roles-front.service';
 import {ScrapingService} from '../../../../services/scraping/scraping.service';
 import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-scraping',
@@ -21,9 +20,7 @@ export class SharedScrapingComponent implements OnInit {
 
   private _result: any = null;
 
-  private _attributes = new Array();
-
-  private _pros = new Array();
+  private _attributes: Array<string> = [];
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
@@ -35,9 +32,10 @@ export class SharedScrapingComponent implements OnInit {
 
   private _error = '';
 
+  private _refreshIntervalId: any = null;
+
   constructor(private _rolesFrontService: RolesFrontService,
-              private _scrapingService: ScrapingService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _scrapingService: ScrapingService) { }
 
   public canAccess(path: Array<string>) {
     return this._rolesFrontService.hasAccessAdminSide(
@@ -61,7 +59,7 @@ export class SharedScrapingComponent implements OnInit {
     return this._error;
   }
 
-  onClickSearch(event: Event): void {
+  onClickSearch(): void {
     this._showResultScraping = false;
     this._showKeepInformed = true;
     this._isScraping = true;
@@ -69,42 +67,49 @@ export class SharedScrapingComponent implements OnInit {
     const scrapeParams = this._params;
     console.log('url :', scrapeParams['url']);
     console.log(scrapeParams);
-    const refreshIntervalId = setInterval (() => {
-      this.autoKeepInformed();
-    }, 1000);
+    this.startKeepInformed();
     this._scrapingService.getScraping(scrapeParams).subscribe(
       (value) => {
         this._showKeepInformed = false;
         this._isScraping = false;
         this._result = value;
-        console.log('Resultat : ', this._result);
+        console.log('Result : ', this._result);
         if ('error' in this._result) {
           this._isError = true;
           this._error = this._result['error'];
         } else {
           this._isError = false;
-          this.updateMails();
           this.updateAttributes();
           this._showResultScraping = true;
         }
       },
       (error) => {
         console.log('Uh-oh, an error occurred! : ', error);
-        clearInterval(refreshIntervalId);
       },
       () => {
         console.log('Observable complete!');
-        clearInterval(refreshIntervalId);
+        this.stopKeepInformed();
       }
     );
     this.autoKeepInformed();
   }
 
-  onClickCancel(event: Event): void {
+  public startKeepInformed() {
+    this._refreshIntervalId = setInterval(() => {
+      this.autoKeepInformed();
+    }, 1000);
+  }
+
+  public stopKeepInformed() {
+    clearInterval(this._refreshIntervalId);
+  }
+
+  onClickCancel(): void {
     console.log('send Cancel to ', this.getJsonId());
+    this.stopKeepInformed();
     this._scrapingService.cancelScraping(this.getJsonId()).subscribe(
       (value) => {
-        console.log('Resultat : ', value);
+        console.log('Result : ', value);
       },
       (error) => {
         console.log('Uh-oh, an error occurred! : ', error);
@@ -134,17 +139,6 @@ export class SharedScrapingComponent implements OnInit {
       }
     );
     console.log('Hello from autoKeepInformed');
-  }
-
-  // private updateKeepInformed(value: string): void {
-  //   this._keepInformed = value['info'];
-  // }
-
-  private updateMails(): void {
-    this._pros = [];
-    for (const key of Object.keys(this._result)) {
-      this._pros.push(key);
-    }
   }
 
   public activateSidebar() {
@@ -212,16 +206,6 @@ export class SharedScrapingComponent implements OnInit {
     return arrayValue;
   }
 
-  public updateSettings(value: any) {
-    this._params = value;
-    console.log(this._params);
-    // this._localStorageService.setItem('searchSettings', JSON.stringify(value));
-    this._translateNotificationsService.success(
-      'Success',
-      'The settings has been updated.'
-    );
-  }
-
   ngOnInit(): void {
     this._initParams();
   }
@@ -237,15 +221,12 @@ export class SharedScrapingComponent implements OnInit {
       // loadMore: '',
       // numberLoadMore: 1,
       // waitTimeLoadMore: 0,
-      // skipMails: '',
-      // isSpecificData: false,
+      // skipMails: ''
       numberSpecificData: 0,
       specificData: [{}, {}, {}, {}, {}],
       isCrawling: false,
-      // isField: false,
       numberFields: 0,
       fields: [{}, {}, {}, {}, {}],
-      // maxRequest: 300,
       isSingle: false,
       linkPro: '',
       id: Math.floor(Math.random() * 1000000)
