@@ -20,6 +20,10 @@ import {ConfigService} from '../../../../../../services/config/config.service';
 })
 export class AdminQuestionsLibraryComponent implements OnInit {
 
+  get questionChoices(): Array<any> {
+    return this._questionChoices;
+  }
+
   get questions(): Array<MissionQuestion> {
     return this._questions;
   }
@@ -64,6 +68,15 @@ export class AdminQuestionsLibraryComponent implements OnInit {
   private _fetchingError = false;
 
   private _questions: Array<MissionQuestion> = [];
+
+  private _questionChoices: Array<any> = [
+    {_name: 'radio', _alias: 'Unique choice', _class: 'label bg-white p-no text-13 text-normal w-auto'},
+    {_name: 'checkbox', _alias: 'Multiple choice', _class: 'label bg-white p-no text-13 text-normal w-auto'},
+    {_name: 'stars', _alias: 'Stars rating', _class: 'label bg-white p-no text-13 text-normal w-auto'},
+    {_name: 'textarea', _alias: 'Text', _class: 'label bg-white p-no text-13 text-normal w-auto'},
+    {_name: 'ranking', _alias: 'Ranking', _class: 'label bg-white p-no text-13 text-normal w-auto'},
+    {_name: 'scale', _alias: 'Rating', _class: 'label bg-white p-no text-13 text-normal w-auto'},
+  ];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
@@ -132,8 +145,9 @@ export class AdminQuestionsLibraryComponent implements OnInit {
         {
           _attrs: ['controlType'],
           _name: 'Type',
-          _type: 'TEXT',
-          _width: '120px'
+          _type: 'MULTI-CHOICES',
+          _width: '150px',
+          _choices: this._questionChoices
         },
         {
           _attrs: ['identifier'],
@@ -144,13 +158,15 @@ export class AdminQuestionsLibraryComponent implements OnInit {
           _attrs: ['updated'],
           _name: 'Updated',
           _type: 'DATE',
-          _width: '150px'
+          _width: '150px',
+          _isSortable: true
         },
         {
           _attrs: ['created'],
           _name: 'Created',
           _type: 'DATE',
-          _width: '150px'
+          _width: '150px',
+          _isSortable: true
         }
       ]
     };
