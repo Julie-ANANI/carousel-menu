@@ -3,6 +3,10 @@
 #sidebar-setting-scraping {
   padding-bottom: 30px;
 
+  .form-input {
+    width: auto;
+  }
+
   .settings-wrapper {
     display: flex;
     justify-content: space-between;

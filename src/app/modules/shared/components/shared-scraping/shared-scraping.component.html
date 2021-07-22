@@ -1,0 +1,86 @@
+<div id="shared-scraping">
+  <!-- search wrapper -->
+  <div class="search-wrapper">
+
+    <!-- heading -->
+    <div class="heading-wrapper">
+      <h2 class="title-secondary">Scraping</h2>
+      <span
+        (click)="activateSidebar()"
+        class="text-link text-sm">
+          Settings
+        </span>
+    </div>
+    <!-- /heading -->
+
+    <!-- url field -->
+    <div class="input-wrapper content">
+      <label class="form-label">URL to scrape</label>
+      <input
+        [(ngModel)]="_params['url']"
+        class="form-input"
+        placeholder="ex: https://portal.research.lu.se/portal/en/persons/search.html"
+        type="text">
+    </div>
+    <!-- /url field -->
+
+    <!-- buttons -->
+    <div class="form-group m-top-10">
+      <button class="button is-primary is-md"
+              (click)="onClickSearch($event)"
+              [disabled]="isScraping">
+        Scrape
+      </button>
+      <button class="button is-primary is-md float-right"
+              (click)="onClickCancel($event)">
+        Cancel
+      </button>
+    </div>
+    <!-- /buttons -->
+
+    <!-- /search wrapper -->
+
+    <!-- display error -->
+    <div *ngIf="isError" [ngClass]="isError ? 'd-block' : 'd-none'" class="text-error">
+      {{error}}
+    </div>
+
+    <!-- keep informed -->
+    <div *ngIf="showKeepInformed" [ngClass]="showKeepInformed ? 'd-block' : 'd-none'" class="m-top-25">
+      <h2>{{keepInformed}}</h2>
+    </div>
+    <!-- /keep informed -->
+
+    <!-- display result -->
+    <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="m-top-25">
+      <div id="result">
+        <table>
+          <caption>Result</caption>
+          <thead>
+          <tr>
+            <th *ngFor="let key_attribute of attributes" class="display-key">{{key_attribute}}</th>
+          <tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let pro of result | keyvalue">
+            <th *ngFor="let data of values(pro.key)" class="display-value">{{data}}</th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /display result -->
+  </div>
+</div>
+
+
+<!-- sidebars to set settings -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-scraping
+    (paramsChange)="updateSettings($event)"
+    [params]="params"
+    [sidebarState]="sidebarValue.animate_state">
+  </app-sidebar-scraping>
+</app-sidebar>
+<!-- /sidebars to set settings  -->
+

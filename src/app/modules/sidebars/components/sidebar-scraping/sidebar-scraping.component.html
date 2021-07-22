@@ -34,59 +34,58 @@
 
         <div *ngIf="params['isCrawling']" [ngClass]="params['isCrawling'] ? 'd-block' : 'd-none'" class="m-left-4">
 
+          <!-- field -->
+          <div class="m-bottom-30">
+            <!-- number of field-->
+            <div class="content">
+              <label>{{getLabel('numberFields')}}<br>
+                <input
+                  [(ngModel)]="params['numberFields']"
+                  name="is-specific-data"
+                  id="number-fields"
+                  type="number"
+                  min="0"
+                  max="5">
+              </label>
+            </div>
+            <!-- /number of field-->
 
-        <!-- field -->
-        <div class="m-bottom-30">
-          <!-- number of field-->
-          <div class="content">
-            <label>{{getLabel('numberFields')}}
-              <input
-                [(ngModel)]="params['numberFields']"
-                name="is-specific-data"
-                id="number-fields"
-                type="number"
-                min="0"
-                max="5">
-            </label>
-          </div>
-          <!-- /number of field-->
+            <div *ngFor="let field of params['fields']; let index = index;">
+              <div *ngIf="showField(index)" [ngClass]="showField(index) ? 'd-block' : 'd-none'"
+                   class="m-left-4 m-bottom-1">
 
-          <div *ngFor="let field of params['fields']; let index = index;">
-            <div *ngIf="showField(index)" [ngClass]="showField(index) ? 'd-block' : 'd-none'"
-                 class="m-left-4 m-bottom-1">
+                <div class="content">
+                  <span
+                    class="tooltip is-multiline"
+                    [attr.data-tooltip]="getToolTip('fieldData')">
+                  <label>{{ index + 1 }} - {{getLabel('fieldData')}}
+                    <input
+                      [(ngModel)]="params['fields'][index]['data']"
+                      class="form-input"
+                      placeholder="ex: 3800,4500,1200"
+                      type="text">
+                    </label>
+                    </span>
+                </div>
 
-              <div class="content">
-                <span
-                  class="tooltip is-multiline"
-                  [attr.data-tooltip]="getToolTip('fieldData')">
-                <label>{{ index + 1 }} - {{getLabel('fieldData')}}
-                  <input
-                    [(ngModel)]="params['fields'][index]['data']"
-                    class="form-input"
-                    placeholder="ex: 3800,4500,1200"
-                    type="text">
-                  </label>
-                  </span>
+                <div class="content">
+                  <span
+                    class="tooltip is-multiline"
+                    [attr.data-tooltip]="getToolTip('fieldLocator')">
+                  <label>{{ index + 1 }} - {{getLabel('fieldLocator')}}
+                    <input
+                      [(ngModel)]="params['fields'][index]['locator']"
+                      class="form-input"
+                      placeholder="ex: zipcode"
+                      type="text">
+                    </label>
+                    </span>
+                </div>
+
               </div>
-
-              <div class="content">
-                <span
-                  class="tooltip is-multiline"
-                  [attr.data-tooltip]="getToolTip('fieldLocator')">
-                <label>{{ index + 1 }} - {{getLabel('fieldLocator')}}
-                  <input
-                    [(ngModel)]="params['fields'][index]['locator']"
-                    class="form-input"
-                    placeholder="ex: zipcode"
-                    type="text">
-                  </label>
-                  </span>
-              </div>
-
             </div>
           </div>
-        </div>
-        <!-- /field -->
+          <!-- /field -->
 
 
         <!-- single pro -->
@@ -173,7 +172,7 @@
 <!--             class="m-left-4">-->
 
           <div class="content" id="number-specific-data">
-              <label> {{getLabel('numberSpecificData')}}
+              <label> {{getLabel('numberSpecificData')}}<br>
                 <input
                   [(ngModel)]="params['numberSpecificData']"
                   name="is-specific-data"
