@@ -111,6 +111,7 @@
         [list-formatter]="autocompleteEnterpriseListFormatter"
         [min-chars]="2"
         [source]="enterpriseSuggestions"
+        (ngModelChange)="checkParentInput($event)"
         auto-complete
         class="form-input is-shadowed"
         formControlName="parentEnterprise"

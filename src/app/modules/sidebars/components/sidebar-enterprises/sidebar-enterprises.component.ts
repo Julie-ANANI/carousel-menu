@@ -457,17 +457,17 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   }
 
   get brandConfig(): any {
-      return {
-        placeholder: 'Enter the enterprise brand',
-        initialData: this._inputBrands,
-      };
+    return {
+      placeholder: 'Enter the enterprise brand',
+      initialData: this._inputBrands,
+    };
   }
 
   get geoConfig(): any {
-      return {
-        placeholder: 'Enter the geographical zone',
-        initialData: this._inputGeoZone,
-      };
+    return {
+      placeholder: 'Enter the geographical zone',
+      initialData: this._inputGeoZone,
+    };
   }
 
   get form(): FormGroup {
@@ -612,5 +612,15 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   showSyntaxInfo() {
     this._isShowSyntax = true;
+  }
+
+  checkParentInput(value: any) {
+    if (!value && this._parentEnterprise.name) {
+      this._parentEnterprise = <Enterprise>{};
+      this._enterprise.parentEnterpriseObject = [];
+      this._form
+        .get('parentEnterprise')
+        .setValue('');
+    }
   }
 }
