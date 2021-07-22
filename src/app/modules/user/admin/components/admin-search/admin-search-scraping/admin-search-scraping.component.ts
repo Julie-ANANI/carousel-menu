@@ -67,6 +67,7 @@ export class AdminSearchScrapingComponent implements OnInit {
     this._showResultScraping = false;
     this._showKeepInformed = true;
     this._isScraping = true;
+    this._isError = false;
     const scrapeParams = this._params;
     console.log('url :', scrapeParams['url']);
     console.log(scrapeParams);
@@ -230,22 +231,22 @@ export class AdminSearchScrapingComponent implements OnInit {
     this._params = {
       url: '',
       rawData: false,
-      formattedAddress: false,
-      whereFormattedAddress: '',
+      // formattedAddress: false,
+      // whereFormattedAddress: '',
       dynamicHTML: false,
-      isLoadMore: false,
-      loadMore: '',
-      numberLoadMore: 1,
-      waitTimeLoadMore: 0,
-      skipMails: '',
-      isSpecificData: false,
-      numberSpecificData: 1,
+      // isLoadMore: false,
+      // loadMore: '',
+      // numberLoadMore: 1,
+      // waitTimeLoadMore: 0,
+      // skipMails: '',
+      // isSpecificData: false,
+      numberSpecificData: 0,
       specificData: [{}, {}, {}, {}, {}],
       isCrawling: false,
-      isField: false,
-      numberFields: 1,
+      // isField: false,
+      numberFields: 0,
       fields: [{}, {}, {}, {}, {}],
-      maxRequest: 300,
+      // maxRequest: 300,
       isSingle: false,
       linkPro: '',
       id: Math.floor(Math.random() * 1000000)

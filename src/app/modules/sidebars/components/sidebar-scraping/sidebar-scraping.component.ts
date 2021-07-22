@@ -19,6 +19,7 @@ export class SidebarScrapingComponent implements OnChanges {
 
   private _hideInput = false;
 
+  private _showToggleMoreData = false;
   // private _possibleFormattedAddress = new Array<string>();
 
   private _fields: any = {
@@ -26,17 +27,18 @@ export class SidebarScrapingComponent implements OnChanges {
       label: 'Info supplémentaire brute par rapport au pro',
       toolTip: 'Extrait les infos rattachées au pro mais peut prendre plus de temps.'
     },
-    formattedAddress: {
-      label: 'Formatage de l’adresse postale (Payant)',
-      toolTip: 'Fonctionne sur des infos brutes ou sur une catégorie d’info lié à l’adresse postale. Utilise l’API geocode de Google (coût: 4$ pour 1000 formatages).'
-    },
-    whereFormattedAddress: {
-      label: 'Sur quelles données voulez-vous formater l’adresse ?',
-      toolTip: null
-    },
+    // formattedAddress: {
+    //   label: 'Formatage de l’adresse postale (Payant)',
+    //   toolTip: 'Fonctionne sur des infos brutes ou sur une catégorie d’info lié à l’adresse postale. Utilise l’API geocode de Google
+    //   (coût: 4$ pour 1000 formatages).'
+    // },
+    // whereFormattedAddress: {
+    //   label: 'Sur quelles données voulez-vous formater l’adresse ?',
+    //   toolTip: null
+    // },
     dynamicHTML: {
-      label: 'Dynamic HTML',
-      toolTip: 'TODO exemples et explications.'
+      label: 'Dernier recours',
+      toolTip: 'Checkbox à cocher si rien ne semble marcher comme il le faudrait. Prend plus de temps.'
     },
     skipsMails: {
       label: 'Emails à exclure',
@@ -48,7 +50,7 @@ export class SidebarScrapingComponent implements OnChanges {
     },
     specificDataName: {
       label: 'Créer un intitulé',
-      toolTip: null
+      toolTip: 'Correspond au nom de la futur colonne dans l‘affichage des résultats.'
     },
     specificDataXPath: {
       label: 'Emplacement de l’information (Xpath)',
@@ -64,10 +66,13 @@ export class SidebarScrapingComponent implements OnChanges {
       label: 'Scraper plusieurs pages',
       toolTip: 'Notamment pour les sites à plusieurs pages de résultats'
     },
-    maxRequest: {
-      label: 'Nombre limite de pages à scraper',
-      toolTip: 'Si le nombre limite est dépassé, le module s\'arrête et renvoie ce qu\'il a trouvé. [Si le champ est vide, il n\'y aura pas de limite.] Dans un premier temps, le mettre bas (quelques dizaines) pour faire des tests rapides et ajuster les paramètres en fonction des résultats. Puis, une fois que tout semble bon, le laisser vide/mettre une surestimation du nombre de page à scraper en tout.'
-    },
+    // maxRequest: {
+    //   label: 'Nombre limite de pages à scraper',
+    //   toolTip: 'Si le nombre limite est dépassé, le module s\'arrête et renvoie ce qu\'il a trouvé. [Si le champ est vide, il n\'y
+    //   aura pas de limite.] Dans un premier temps, le mettre bas (quelques dizaines) pour faire des tests rapides et ajuster les
+    //   paramètres en fonction des résultats. Puis, une fois que tout semble bon, le laisser vide/mettre une surestimation du nombre de
+    //   page à scraper en tout.'
+    // },
     isSingle: {
       label: 'Nécessité de cliquer sur le profil pour trouver le mail',
       toolTip: null,
@@ -92,7 +97,7 @@ export class SidebarScrapingComponent implements OnChanges {
                 '3/Clic droit sur la ligne bleu dans l’inspecteur : Copier > Xpath.]'
     },
     fieldData: {
-      label: 'indiquez les valeurs à chercher',
+      label: 'Valeurs à chercher',
       toolTip: 'Séparées par une virgule.'
     }
   };
@@ -136,40 +141,29 @@ export class SidebarScrapingComponent implements OnChanges {
   public getToolTip(name: string): string {
     return this._fields[name].toolTip;
   }
-  /*
-  public updatePossibleFormattedAddress(): boolean {
-    // Return true if there is a data on which it can apply formatted address
-    // Update the _possibleFormattedAddress value
-    this._possibleFormattedAddress = [];
-    if (this.params['isSpecificData']) {
-      for (let index = 0; index < this.params['numberSpecificData']; index++) {
-        const name = this.params['specificData'][index]['name'];
-        if (name !== '') {
-          this._possibleFormattedAddress.push(name);
-        }
-      }
-    }
-    if (this.params['rawData']) {
-      this._possibleFormattedAddress.push('raw data');
-    }
-    return (this._possibleFormattedAddress !== []);
-  }
-   */
 
-  public possibleFormattedAddress(): Array<string> {
-    const possible = [];
-    if (this.params['isSpecificData']) {
-      for (let index = 0; index < this.params['numberSpecificData']; index++) {
-        const name = this.params['specificData'][index]['name'];
-        if (name !== '' && typeof name !== 'undefined') {
-          possible.push(name);
-        }
-      }
-    }
-    if (this.params['rawData']) {
-      possible.push('raw data');
-    }
-    return possible;
+  get showToggleMoreData(): boolean {
+    return this._showToggleMoreData;
   }
+
+  onClickToggleMoreData() {
+    this._showToggleMoreData = !this._showToggleMoreData;
+  }
+
+  // public possibleFormattedAddress(): Array<string> {
+  //   const possible = [];
+  //   if (this.params['isSpecificData']) {
+  //     for (let index = 0; index < this.params['numberSpecificData']; index++) {
+  //       const name = this.params['specificData'][index]['name'];
+  //       if (name !== '' && typeof name !== 'undefined') {
+  //         possible.push(name);
+  //       }
+  //     }
+  //   }
+  //   if (this.params['rawData']) {
+  //     possible.push('raw data');
+  //   }
+  //   return possible;
+  // }
 
 }
