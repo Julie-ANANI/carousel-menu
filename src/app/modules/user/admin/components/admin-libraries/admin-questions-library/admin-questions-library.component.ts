@@ -20,6 +20,25 @@ import {ConfigService} from '../../../../../../services/config/config.service';
 })
 export class AdminQuestionsLibraryComponent implements OnInit {
 
+  get newQuestion(): any {
+    return this._newQuestion;
+  }
+
+  set newQuestion(value: any) {
+    this._newQuestion = value;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+  get isAdding(): boolean {
+    return this._isAdding;
+  }
+
   get questionChoices(): Array<any> {
     return this._questionChoices;
   }
@@ -78,6 +97,12 @@ export class AdminQuestionsLibraryComponent implements OnInit {
     {_name: 'scale', _alias: 'Rating', _class: 'label bg-white p-no text-13 text-normal w-auto'},
   ];
 
+  private _isAdding = false;
+
+  private _showModal = false;
+
+  private _newQuestion: any = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
               private _translateService: TranslateService,
@@ -93,7 +118,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
   }
 
   private _getAllQuestions() {
-    if (isPlatformBrowser(this._platformId)) {
+    if (isPlatformBrowser(this._platformId) && this.canAccess()) {
       this._missionService.getAllQuestions(this._config).pipe(first()).subscribe((response) => {
         this._questions = response && response.result || [];
         this._missionQuestionService.setAllQuestions(JSON.parse(JSON.stringify(response.result)));
@@ -191,11 +216,40 @@ export class AdminQuestionsLibraryComponent implements OnInit {
    *
    * @param event
    */
-  public navigateTo(event: MissionQuestion) {
+  public onNavigateTo(event: MissionQuestion) {
     this._missionQuestionService.setQuestion(this._missionQuestionService.allQuestions.find((_question) => {
       return _question._id === event._id;
     }));
     this._router.navigate([`${this._router.url}/${event._id}`]);
+  }
+
+  public onAddQuestion(event: Event) {
+    event.preventDefault();
+    if (this.canAccess(['add']) && !this._isAdding) {
+      this._newQuestion = '';
+      this._showModal = true;
+    }
+  }
+
+  public onCreate(event: Event) {
+    event.preventDefault();
+    if (!this._isAdding) {
+      this._isAdding = true;
+      const question = this._missionQuestionService.createQuestion(this._newQuestion);
+
+      this._missionService.createQuestion(question).pipe(first()).subscribe((response) => {
+        this._router.navigate([`${this._router.url}/${response._id}`]);
+        this.onCloseModal();
+      }, error => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._isAdding = false;
+        console.error(error);
+      });
+    }
+  }
+
+  public onCloseModal() {
+    this._showModal = false;
   }
 
 }

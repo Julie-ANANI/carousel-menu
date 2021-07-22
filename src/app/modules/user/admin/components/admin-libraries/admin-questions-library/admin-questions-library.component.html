@@ -11,10 +11,30 @@
     <ng-template #noError>
       <div class="p-top-30 p-bottom-50">
 
+        <!-- add question -->
+        <div class="text-right p-bottom-30">
+          <span
+            [attr.data-tooltip]="'You are not authorized. If it\'s a mistake, please contact you manager.'"
+            [ngClass]="{'tooltip is-multiline': !canAccess(['add'])}">
+            <button
+              (click)="onAddQuestion($event)"
+              [disabled]="!canAccess(['add']) || isAdding"
+              [id]="'adminQuestionsLibrary-btn-add-question'"
+              class="button is-primary is-sm"
+              type="button">
+              <ng-container *ngIf="!isAdding else addQuestion">
+                <i class="icon icon-plus icon-left"></i> Add a new question
+              </ng-container>
+              <ng-template #addQuestion>is adding a question...</ng-template>
+            </button>
+          </span>
+        </div>
+        <!-- /add question -->
+
         <!-- table -->
         <section>
           <app-shared-table
-            (editRow)="navigateTo($event)"
+            (editRow)="onNavigateTo($event)"
             [(config)]="config"
             [data]="tableData">
           </app-shared-table>
@@ -27,3 +47,45 @@
 
   </div>
 </div>
+
+<app-utility-modal-empty *ngIf="canAccess(['add'])" [(showModal)]="showModal">
+
+  <section class="modal-body">
+    <h2 class="title is-4 text-center text-bold m-bottom-30">Add a question from Scratch</h2>
+    <div class="form-group mxw-400 m-left-auto m-right-auto p-top-20 p-bottom-20">
+      <label>
+        <select [(ngModel)]="newQuestion" class="form-select is-sm">
+          <option [ngValue]="''" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
+          <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+          <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+          <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+          <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+          <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+          <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <footer class="modal-footer justify-center">
+
+    <button
+      (click)="onCloseModal()"
+      [id]="'btn-cancel'"
+      class="button modal-cancel"
+      type="button">
+      Cancel
+    </button>
+
+    <button
+      (click)="onCreate($event)"
+      [disabled]="!newQuestion"
+      [id]="'adminQuestionsLibrary-btn-modal-create'"
+      class="button is-community"
+      type="button">
+      Create
+    </button>
+
+  </footer>
+
+</app-utility-modal-empty>
