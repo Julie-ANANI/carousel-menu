@@ -461,6 +461,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               if (event.enterprise.parentEnterpriseObject && event.enterprise.parentEnterpriseObject.length) {
                 this.addSubsidiariesList(event.enterprise);
               }
+
+              if (event.enterprise.subsidiariesList && event.enterprise.subsidiariesList.length) {
+                this.addParentEnterprise(event.enterprise);
+              }
             },
             (err: HttpErrorResponse) => {
               this._translateNotificationsService.error(
@@ -475,6 +479,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
+  /**
+   * when remove subs
+   * @param subsidiaryId
+   */
   removeSubsidiariesList(subsidiaryId: string) {
     this._resultTableConfiguration._content.map(enterprise => {
       if (enterprise.subsidiariesList && enterprise.subsidiariesList.length) {
@@ -483,6 +491,36 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     });
   }
 
+  /**
+   * when delete a company, remove others' parentEnterprise if needed
+   * @param parent
+   */
+  removeParentEnterprise(parent: Enterprise) {
+    this._resultTableConfiguration._content.map(enterprise => {
+      if (enterprise.parentEnterprise && parent._id) {
+        enterprise.parentEnterprise = null;
+        enterprise.parentEnterpriseObject = [];
+      }
+    });
+  }
+
+  /**
+   * when create/update a company, company choose some subs, find subs and add parent
+   * @param parent
+   */
+  addParentEnterprise(parent: Enterprise) {
+    this._resultTableConfiguration._content.map(enterprise => {
+      if (enterprise._id && parent.subsidiariesList.find(sub => sub._id === enterprise._id)) {
+        enterprise.parentEnterprise = parent._id;
+        enterprise.parentEnterpriseObject = [parent];
+      }
+    });
+  }
+
+  /**
+   * when create/update a company, company choose a parent enterprise, push subsidiary into this parentEnterprise
+   * @param subsidiary
+   */
   addSubsidiariesList(subsidiary: Enterprise) {
     this._resultTableConfiguration._content.map(enterprise => {
       if (enterprise._id === subsidiary.parentEnterprise) {
@@ -498,6 +536,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         if (result) {
           requests++;
           this._resultTableConfiguration._content = this._resultTableConfiguration._content.filter(enterprise => enterprise._id !== evt._id);
+          this.removeSubsidiariesList(evt._id);
+          this.removeParentEnterprise(evt);
         }
         if (requests === event.length) {
           this._translateNotificationsService.success('Success', 'Delete companies');
