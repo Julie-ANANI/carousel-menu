@@ -152,16 +152,19 @@ export class AdminQuestionsLibraryComponent implements OnInit {
       _isTitle: true,
       _clickIndex: 1,
       _isPaginable: true,
+      _isSearchable: true,
       _columns: [
         {
           _attrs: ['entry.label'],
-          _name: 'Name',
+          _name: 'Label',
           _type: 'TEXT',
+          _isSearchable: true
         },
         {
           _attrs: ['entry.objective'],
           _name: 'Objective',
           _type: 'TEXT',
+          _isSearchable: true
         },
         {
           _attrs: ['entry.title'],
@@ -178,7 +181,8 @@ export class AdminQuestionsLibraryComponent implements OnInit {
           _name: 'Type',
           _type: 'MULTI-CHOICES',
           _width: '150px',
-          _choices: this._questionChoices
+          _choices: this._questionChoices,
+          _isSearchable: true
         },
         {
           _attrs: ['identifier'],
