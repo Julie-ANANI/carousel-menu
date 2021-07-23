@@ -6,7 +6,6 @@ import {
 } from '@angular/forms';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {Enterprise /*, Pattern*/} from '../../../../../../models/enterprise';
-import { /*Observable,*/ combineLatest} from 'rxjs';
 // import {Clearbit} from '../../../../../../models/clearbit';
 // import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 /*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
@@ -492,100 +491,24 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     });
   }
 
-  /*public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'company'});
-  }*/
-
-  /*public enterpriseSuggestions = (searchString: string): Observable<Array<{name: string, logo: any, domain: string, _id: string}>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
-  }*/
-
-  /*public selectCompany(c: string | Clearbit) {
-    if (typeof c === 'object') {
-      // Maybe there's a logo...
-      this._newEnterpriseForm.get('name').reset(c.name);
-      this._newEnterpriseForm.get('topLevelDomain').reset(c.domain);
-      this._newEnterpriseForm.get('logo').reset(c.logo);
-    } // If typeof c === string, leave the thing alone.
-  }*/
-
-  /*public selectEnterprise(c: string | Enterprise) {
-    if (typeof c === 'object') {
-      this._parentEntreprise = c;
-    }
-    this._newEnterpriseForm.get('parentEnterprise').reset('');
-  }*/
-
-  /*public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
-    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
-  }*/
-
-  /*public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
-    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo.uri}" height="35" alt=" "/><span>${data.name}</span>`);
-  }*/
-
-  /*public newPattern(event: Event) {
-    event.preventDefault();
-    if (this._newEnterpriseForm.get('patterns').value) {
-      this._enterpriseSidebarPatterns.push({pattern: {expression: this._newEnterpriseForm.get('patterns').value}, avg: 0});
-      this._newEnterpriseForm.get('patterns').reset('');
-    }
-  }*/
-
   public removeCompanies(event: any) {
-    const requests = event.map((evt: any) => {
-      return this._enterpriseService.remove(evt._id).pipe(first());
-    });
-    const combined = combineLatest(requests);
-    combined.subscribe((latestValues) => {
-      latestValues.forEach((result) => {
-        // TODO see how I can update the table after deletion
-        /*if (result && result['n'] > 0) {
-          const idx = this.resultTableConfiguration._content.findIndex((value) => {
-            return value._id === result['_id'];
-          });
-          if (idx > -1) {
-            this.resultTableConfiguration._content.splice(idx, 1);
-          }
-        }*/
-      });
-    });
-    /*this._enterpriseService.remove(event._id).pipe(first())
-      .subscribe(result => {
+    let requests = 0;
+    event.map((evt: any) => {
+      this._enterpriseService.remove(evt._id).pipe(first()).subscribe(result => {
         if (result) {
-          const idx = this.resultTableConfiguration._content.findIndex((value) => {
-            return value._id === result['_id'];
-          });
-          if (idx > -1) {
-            this.resultTableConfiguration._content.splice(idx, 1);
-          }
+          requests++;
+          this._resultTableConfiguration._content = this._resultTableConfiguration._content.filter(enterprise => enterprise._id !== evt._id);
+        }
+        if (requests === event.length) {
+          this._translateNotificationsService.success('Success', 'Delete companies');
         }
       }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
         console.error(err);
-      });*/
+      });
+    });
   }
 
-  /*public changeLogo(event: Event) {
-    event.preventDefault();
-    this._uploadLogoModal = true;
-  }*/
-
-  /*public removePattern(event: Event, index: number) {
-    event.preventDefault();
-    this._enterpriseSidebarPatterns.splice(index, 1);
-  }*/
-
-  /*public uploadImage(event: any) {
-    if (event && event.url) {
-      this._newEnterpriseForm.get('logo').reset(event.url);
-    }
-    this._uploadLogoModal = false;
-  }
-*/
-
-  /*get logoUploadUri(): string {
-    return `/media/companyLogo`;
-  }*/
 
   get results(): boolean {
     return this._results;
@@ -594,10 +517,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   get searchForm(): FormGroup {
     return this._searchForm;
   }
-
-  /*get newEnterpriseForm(): FormGroup {
-    return this._newEnterpriseForm;
-  }*/
 
   get isSearching(): boolean {
     return this._isSearching;
@@ -610,24 +529,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
   }
-
-  /*get patterns(): FormArray {
-    return this._newEnterpriseForm.get('patterns') as FormArray;
-  }*/
-
-  /*get logoUrl(): string {
-    let logoValue = this._newEnterpriseForm.get('logo').value;
-    logoValue = logoValue && typeof logoValue === 'object' ?  logoValue.uri || this._defaultLogoURI : logoValue;
-    return  logoValue || this._defaultLogoURI;
-  }*/
-
-  /*get uploadLogoModal(): boolean {
-    return this._uploadLogoModal;
-  }*/
-
-  // set uploadLogoModal(value: boolean) {
-  //   this._uploadLogoModal = value;
-  // }
 
   get resultTableConfiguration(): Table {
     return this._resultTableConfiguration;
@@ -649,14 +550,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   get nothingFound(): boolean {
     return this._nothingFound;
   }
-
-  /*get activePatterns(): Array<Pattern> {
-    return this._enterpriseSidebarPatterns;
-  }*/
-
-  /*get parentEnterprise(): Enterprise {
-    return this._parentEntreprise;
-  }*/
 
   get isLoading(): boolean {
     return this._isLoading;
