@@ -134,7 +134,7 @@
 
               <button
                 *ngIf="canAccess(['generatePdf'])"
-                [disabled]="isGeneratingReport || executiveReport.completion !== 100"
+                [disabled]="isGeneratingReport || executiveReport.completion.rate !== 100"
                 (click)="generatePdf($event)"
                 class="button is-primary is-outlined m-bottom-15">
                 <ng-container *ngIf="!isGeneratingReport; else genCSV">
@@ -144,6 +144,14 @@
                   {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
                 </ng-template>
               </button>
+              <div *ngIf="executiveReport.completion.missingFields.length" class="text-error text-sm">
+                {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.INTRO' | translate }}
+                <ul>
+                  <li *ngFor="let field of executiveReport.completion.missingFields">
+                    {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.' + field.toUpperCase() | translate }}
+                  </li>
+                </ul>
+              </div>
 
             </div>
             <!-- /pdf -->
