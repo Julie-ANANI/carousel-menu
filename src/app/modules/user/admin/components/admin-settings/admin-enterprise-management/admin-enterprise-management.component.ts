@@ -459,7 +459,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               }
 
               if (event.enterprise.parentEnterpriseObject && event.enterprise.parentEnterpriseObject.length) {
-                this.addSubsidiariesList(event.enterprise);
+                this.addSubsidiariesList(event.enterprise, this._selectedEnterprise._id);
               }
 
               if (event.enterprise.subsidiariesList && event.enterprise.subsidiariesList.length) {
@@ -520,10 +520,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   /**
    * when create/update a company, company choose a parent enterprise, push subsidiary into this parentEnterprise
    * @param subsidiary
+   * @param subsidiaryId
    */
-  addSubsidiariesList(subsidiary: Enterprise) {
+  addSubsidiariesList(subsidiary: Enterprise, subsidiaryId: string) {
     this._resultTableConfiguration._content.map(enterprise => {
       if (enterprise._id === subsidiary.parentEnterprise) {
+        subsidiary['_id'] = subsidiaryId;
         enterprise.subsidiariesList.push(subsidiary);
       }
     });
