@@ -20,7 +20,7 @@
 
           <button
             (click)="onClickSave($event)"
-            [disabled]="isSaving || !toBeSaved"
+            [disabled]="isSaving || !toBeSaved || isRemoving"
             [ngClass]="{'is-outlined': !toBeSaved}"
             class="button is-primary is-sm m-bottom-15"
             type="button">
@@ -110,15 +110,15 @@
             <div class="buttons-wrapper">
 
               <!-- delete -->
-              <!--<div
-                (click)="remove($event)"
-                *ngIf="canAccess(['delete']) && editMode"
+              <div
+                (click)="onRemove($event)"
+                *ngIf="canAccess(['delete']) && editMode && canBeDeleted"
                 [id]="'adminEditQuestion-btn-delete-question'"
                 class="icon-container is-overlay m-right-15">
                 <span data-tooltip="Delete" class="tooltip">
                   <i class="icon icon-delete text-white"></i>
                 </span>
-              </div>-->
+              </div>
               <!-- /delete -->
 
               <!-- edit -->

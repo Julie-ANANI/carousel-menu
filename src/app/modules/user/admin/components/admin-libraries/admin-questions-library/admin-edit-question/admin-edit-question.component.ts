@@ -7,7 +7,7 @@ import {
   OptionEntry
 } from '../../../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../../../services/mission/mission-question.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {isPlatformBrowser} from '@angular/common';
 import {MissionService} from '../../../../../../../services/mission/mission.service';
 import {first} from 'rxjs/operators';
@@ -30,6 +30,14 @@ interface ConfirmUpdate {
   styleUrls: ['./admin-edit-question.component.scss']
 })
 export class AdminEditQuestionComponent implements OnInit {
+
+  get isRemoving(): boolean {
+    return this._isRemoving;
+  }
+
+  get canBeDeleted(): boolean {
+    return this._canBeDeleted;
+  }
 
   get isPartUseCase(): boolean {
     return this._isPartUseCase;
@@ -137,8 +145,13 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _isPartUseCase = false;
 
+  private _isRemoving = false;
+
+  private _canBeDeleted = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
+              private _router: Router,
               private _missionService: MissionService,
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
@@ -197,6 +210,7 @@ export class AdminEditQuestionComponent implements OnInit {
       };
       this._missionService.getAllTemplates(config).pipe(first()).subscribe((response) => {
         this._isPartUseCase = response && response.result && response.result.length > 0;
+        this._canBeDeleted = response && response.result && response.result.length === 0;
       }, (error: HttpErrorResponse) => {
         this._isPartUseCase = true;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
@@ -280,6 +294,26 @@ export class AdminEditQuestionComponent implements OnInit {
       return this._rolesFrontService.hasAccessAdminSide(this._accessPath.concat(path));
     } else {
       return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
+    }
+  }
+
+  /**
+   * delete the question.
+   *
+   * @param event
+   */
+  public onRemove(event: Event) {
+    event.preventDefault();
+    if (!this._isRemoving && this.canAccess(['delete'])) {
+      this._isRemoving = true;
+      this._missionService.removeQuestion(this._question._id).pipe(first()).subscribe((_) => {
+        this._translateNotificationsService.success('Success', 'The question has been deleted successfully.');
+        this._router.navigate(['/user/admin/libraries/questions']);
+      }, (error: HttpErrorResponse) => {
+        this._isRemoving = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        console.error(error);
+      });
     }
   }
 

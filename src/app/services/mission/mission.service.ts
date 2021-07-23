@@ -32,6 +32,16 @@ export class MissionService {
   }
 
   /**
+   * will delete the question from the Mission Question collection. Be careful
+   * using this. It will also delete the question from the Use cases too.
+   *
+   * @param questionId
+   */
+  public removeQuestion(questionId: string): Observable<MissionQuestion> {
+    return this._http.delete<MissionQuestion>(`/mission/questions/${questionId}`);
+  }
+
+  /**
    * will return the question based on the id. It will work with the new use case questions.
    *
    * @param questionId
