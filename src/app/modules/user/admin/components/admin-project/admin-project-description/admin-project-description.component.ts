@@ -10,9 +10,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {CommonService} from '../../../../../../services/common/common.service';
-import {TranslationService} from '../../../../../../services/translation/translation.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
-import {ScrapeHTMLTags} from '../../../../../../pipe/pipes/ScrapeHTMLTags';
 import {EtherpadFrontService} from '../../../../../../services/etherpad/etherpad-front.service';
 import {MediaFrontService} from '../../../../../../services/media/media-front.service';
 
@@ -21,6 +19,7 @@ type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 interface Toggle {
   title: boolean;
   summary: boolean;
+
   [property: string]: boolean;
 }
 
@@ -71,9 +70,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
               private _etherpadFrontService: EtherpadFrontService,
-              private _translationService: TranslationService,
+              /**private _translationService: TranslationService,*/
               private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
 
@@ -111,14 +111,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       case 'SOLUTION':
       case 'CONTEXT':
       case 'OTHER':
-        return CommonService.getLimitColor(<string> this.activeInnovCard.sections[index].content, 1000);
+        return CommonService.getLimitColor(<string>this.activeInnovCard.sections[index].content, 1000);
 
     }
 
     return '';
   }
 
-  public importTranslation(event: Event, model: CardSectionTypes, index?: number) {
+  /**
+   public importTranslation(event: Event, model: CardSectionTypes, index?: number) {
     const htmlScraper = new ScrapeHTMLTags();
     event.preventDefault();
     const from_card = this._innovation.innovationCards[this._activeCardIndex === 0 ? 1 : 0];
@@ -158,7 +159,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
 
   }
-
+   */
   private _initToggle() {
     this._toggleComment = {
       title: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title.comment),
@@ -189,11 +190,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   public zoneData(property: string, type: 'comment' | 'suggestion', index?: number) {
     if (property !== 'sections') {
       return this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment[property]
-        && this.activeInnovCard.operatorComment[property][type] ? this.activeInnovCard.operatorComment[property][type] : '';
+      && this.activeInnovCard.operatorComment[property][type] ? this.activeInnovCard.operatorComment[property][type] : '';
     } else {
       return this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections
-        && this.activeInnovCard.operatorComment.sections.length && this.activeInnovCard.operatorComment.sections[index]
-        && this.activeInnovCard.operatorComment.sections[index][type] ? this.activeInnovCard.operatorComment.sections[index][type] : '';
+      && this.activeInnovCard.operatorComment.sections.length && this.activeInnovCard.operatorComment.sections[index]
+      && this.activeInnovCard.operatorComment.sections[index][type] ? this.activeInnovCard.operatorComment.sections[index][type] : '';
     }
   }
 
@@ -353,7 +354,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
           this._setInnovation();
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
-          }, (err: HttpErrorResponse) => {
+        }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this._isSavingMedia = false;
           console.error(err);
@@ -377,11 +378,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._isSavingMedia = false;
           this._verifyPrincipal(media);
           this._translateNotificationsService.success('Success', 'The media has been deleted.');
-          }, (err: HttpErrorResponse) => {
+        }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this._isSavingMedia = false;
           console.error(err);
-      });
+        });
     }
   }
 
