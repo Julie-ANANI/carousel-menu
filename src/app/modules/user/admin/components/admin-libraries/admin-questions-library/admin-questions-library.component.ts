@@ -20,6 +20,10 @@ import {ConfigService} from '../../../../../../services/config/config.service';
 })
 export class AdminQuestionsLibraryComponent implements OnInit {
 
+  get choiceClass(): string {
+    return this._choiceClass;
+  }
+
   get newQuestion(): any {
     return this._newQuestion;
   }
@@ -88,13 +92,15 @@ export class AdminQuestionsLibraryComponent implements OnInit {
 
   private _questions: Array<MissionQuestion> = [];
 
+  private _choiceClass = 'label bg-transparent p-no text-13 text-normal w-auto';
+
   private _questionChoices: Array<any> = [
-    {_name: 'radio', _alias: 'Unique choice', _class: 'label bg-white p-no text-13 text-normal w-auto'},
-    {_name: 'checkbox', _alias: 'Multiple choice', _class: 'label bg-white p-no text-13 text-normal w-auto'},
-    {_name: 'stars', _alias: 'Stars rating', _class: 'label bg-white p-no text-13 text-normal w-auto'},
-    {_name: 'textarea', _alias: 'Text', _class: 'label bg-white p-no text-13 text-normal w-auto'},
-    {_name: 'ranking', _alias: 'Ranking', _class: 'label bg-white p-no text-13 text-normal w-auto'},
-    {_name: 'scale', _alias: 'Rating', _class: 'label bg-white p-no text-13 text-normal w-auto'},
+    {_name: 'radio', _alias: 'Unique choice', _class: this._choiceClass},
+    {_name: 'checkbox', _alias: 'Multiple choice', _class: this._choiceClass},
+    {_name: 'stars', _alias: 'Stars rating', _class: this._choiceClass},
+    {_name: 'textarea', _alias: 'Text', _class: this._choiceClass},
+    {_name: 'ranking', _alias: 'Ranking', _class: this._choiceClass},
+    {_name: 'scale', _alias: 'Rating', _class: this._choiceClass},
   ];
 
   private _isAdding = false;
@@ -146,16 +152,19 @@ export class AdminQuestionsLibraryComponent implements OnInit {
       _isTitle: true,
       _clickIndex: 1,
       _isPaginable: true,
+      _isSearchable: true,
       _columns: [
         {
           _attrs: ['entry.label'],
-          _name: 'Name',
+          _name: 'Label',
           _type: 'TEXT',
+          _isSearchable: true
         },
         {
           _attrs: ['entry.objective'],
           _name: 'Objective',
           _type: 'TEXT',
+          _isSearchable: true
         },
         {
           _attrs: ['entry.title'],
@@ -172,7 +181,8 @@ export class AdminQuestionsLibraryComponent implements OnInit {
           _name: 'Type',
           _type: 'MULTI-CHOICES',
           _width: '150px',
-          _choices: this._questionChoices
+          _choices: this._questionChoices,
+          _isSearchable: true
         },
         {
           _attrs: ['identifier'],
