@@ -1,6 +1,9 @@
 export interface ExecutiveReport {
   readonly _id: string;
-  readonly completion: number;
+  readonly completion: {
+    rate: number,
+    missingFields: Array<string>
+  };
   lang: 'en' | 'fr';
   summary: string;
   sale: string;

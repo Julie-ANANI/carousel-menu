@@ -124,6 +124,7 @@ export class DiscoverInnovationsComponent implements OnInit {
     this._selectedFilters = filters;
     if (filters && filters.length) {
       this._config.tags = JSON.stringify({$in: filters.map((filter: Tag) => filter._id)});
+      this._config.offset = '0';
     } else {
       delete this._config.filters;
     }
@@ -134,6 +135,7 @@ export class DiscoverInnovationsComponent implements OnInit {
   public onInputField(value: string) {
     this._searchKey = value;
     if (value) {
+      this._config.offset = '0';
       this._config.fromCollection = {
         model: 'innovationcard',
         title: value
@@ -151,7 +153,8 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _getFilteredInnovations() {
     this._stopLoading = false;
-    if (this._config.offset === '0' && !this.filterActivated) {
+    const oldOffset = this._config.offset;
+    if (oldOffset === '0' && !this.filterActivated) {
       this._config.offset = '4';
     }
     if (this._config.fromCollection && this._config.fromCollection.model) {
@@ -160,6 +163,7 @@ export class DiscoverInnovationsComponent implements OnInit {
       }).pipe(first()).subscribe(response => {
         this._filteredInnovations = response.result;
         this._totalFilteredInnovations = response._metadata.totalCount;
+        this._config.offset = oldOffset;
         this._stopLoading = true;
       }, err => {
         this._fetchingError = true;
@@ -168,6 +172,7 @@ export class DiscoverInnovationsComponent implements OnInit {
       this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
         this._filteredInnovations = response.result;
         this._totalFilteredInnovations = response._metadata.totalCount;
+        this._config.offset = oldOffset;
         this._stopLoading = true;
       }, () => {
         this._fetchingError = true;
