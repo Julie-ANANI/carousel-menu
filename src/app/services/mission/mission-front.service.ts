@@ -21,6 +21,17 @@ export class MissionFrontService {
   }
 
   /**
+   * check template has the question or not in it.
+   *
+   * @param template
+   * @param questionId
+   */
+  public static hasMissionQuestion(template: MissionTemplate, questionId: string): boolean {
+    const questions = MissionFrontService.totalTemplateQuestions(template);
+    return questions.some((_ques) => _ques['question']._id === questionId);
+  }
+
+  /**
    * based on the lang it will return the index of that entry;
    *
    * @param value
