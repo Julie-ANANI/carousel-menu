@@ -181,17 +181,8 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     const res = confirm(_msg);
 
     if (res) {
-      if (this.isEditable) {
+      if (this.isEditable || (this.isLibraryView && this.canAccess(['delete']))) {
         this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex);
-      } else if (this.isLibraryView && this.canAccess(['delete'])) {
-        const question = this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex, true);
-        this.valueToSave.emit({
-          key: 'QUESTION_REMOVE',
-          value: {
-            sectionIndex: this._sectionIndex,
-            quesId: question.question._id
-          }
-        });
       }
     }
   }

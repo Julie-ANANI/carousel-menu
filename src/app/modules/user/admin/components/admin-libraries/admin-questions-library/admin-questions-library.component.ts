@@ -12,6 +12,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {ConfigService} from '../../../../../../services/config/config.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-questions-library',
@@ -39,6 +40,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
   set showModal(value: boolean) {
     this._showModal = value;
   }
+
   get isAdding(): boolean {
     return this._isAdding;
   }
@@ -134,7 +136,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
           return _question;
         });
         this._initializeTable();
-      }, error => {
+      }, (error: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
         this._fetchingError = true;
         console.error(error);
@@ -250,7 +252,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
       this._missionService.createQuestion(question).pipe(first()).subscribe((response) => {
         this._router.navigate([`${this._router.url}/${response._id}`]);
         this.onCloseModal();
-      }, error => {
+      }, (error: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
         this._isAdding = false;
         console.error(error);

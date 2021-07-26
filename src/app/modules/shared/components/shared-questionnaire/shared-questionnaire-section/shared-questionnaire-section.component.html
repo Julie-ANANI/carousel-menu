@@ -173,7 +173,7 @@
   <!-- /questions -->
 
   <!-- add question -->
-  <ng-container *ngIf="isEditable">
+  <ng-container *ngIf="isEditable || (canAccess(['question', 'add']) && isLibraryView)">
     <div *ngIf="!isCollapsed" class="text-center m-top-25 m-bottom-50">
       <button
         (click)="addNewQuestion($event)"
@@ -192,7 +192,7 @@
 </div>
 
 
-<!--<app-utility-modal-empty [(showModal)]="showModal" *ngIf="isLibraryView">
+<app-utility-modal-empty *ngIf="isLibraryView" [(showModal)]="showModal" [maxWidth]="'840px'">
 
   <section class="modal-body">
 
@@ -200,20 +200,59 @@
 
     <p class="m-bottom-15">Select the way you would like to add the question.</p>
 
-    &lt;!&ndash; from scratch &ndash;&gt;
+    <!-- from library -->
     <div class="form-group">
       <label class="form-radio">
-        <input (change)="onChangeAddQuestion('SCRATCH')" type="radio" name="addQuestion">
-        <i class="form-icon"></i> From Scratch
+        <input
+          (change)="onChangeAddQuestion('LIBRARY')"
+          [checked]="questionToAdd.from === 'LIBRARY'"
+          name="addQuestion"
+          type="radio"
+          value="LIBRARY">
+        <i class="form-icon"></i> From Library
       </label>
     </div>
+
+    <ng-container *ngIf="questionToAdd.from === 'LIBRARY'">
+      <div [ngStyle]="{'min-height': '180px'}" class="m-top-10 m-bottom-30">
+        <div class="mxw-450 m-left-auto m-right-auto">
+          <app-utility-auto-suggestion
+            (valueSelected)="questionSelected($event)"
+            [config]="searchConfig"
+            [isSmallInput]="true">
+          </app-utility-auto-suggestion>
+        </div>
+        <div
+          *ngFor="let value of questionToAdd.value"
+          [attr.data-tooltip]="value.label"
+          class="label is-community is-rounded is-sm m-top-15 m-right-10 m-left-10 tooltip is-multiline">
+          <span class="text-ellipsis w-120 m-right-2">{{ value.label }}</span>
+          <span class="icon-container is-xs is-overlay text-white">
+            <i (click)="onRemoveFromList(value['ques']['question']['_id'])" class="icon icon-cross"></i>
+          </span>
+        </div>
+      </div>
+    </ng-container>
+    <!-- /from library -->
+
+    <!-- from scratch -->
+    <!--<div class="form-group">
+      <label class="form-radio">
+        <input
+          (change)="onChangeAddQuestion('SCRATCH')"
+          [checked]="questionToAdd.from === 'SCRATCH'"
+          name="addQuestion"
+          type="radio"
+          value="SCRATCH">
+        <i class="form-icon"></i> From Scratch
+      </label>
+    </div>-->
 
     <ng-container *ngIf="questionToAdd.from === 'SCRATCH'">
       <div class="mxw-300 m-left-auto m-right-auto m-top-10 m-bottom-10">
         <label>
           <select
-            (ngModelChange)="questionToAdd.value = $event"
-            [ngModel]="questionToAdd.value || ''"
+            [(ngModel)]="questionToAdd.value"
             class="form-select is-sm">
             <option value="" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
             <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
@@ -226,19 +265,7 @@
         </label>
       </div>
     </ng-container>
-    &lt;!&ndash; /from scratch &ndash;&gt;
-
-    &lt;!&ndash; from library &ndash;&gt;
-    <div class="form-group">
-      <label class="form-radio">
-        <input (change)="onChangeAddQuestion('LIBRARY')" type="radio" name="addQuestion">
-        <i class="form-icon"></i> From Library
-      </label>
-    </div>
-
-    <ng-container *ngIf="questionToAdd.from === 'LIBRARY'">
-    </ng-container>
-    &lt;!&ndash; /from library &ndash;&gt;
+    <!-- /from scratch -->
 
   </section>
 
@@ -253,7 +280,7 @@
     </button>
 
     <button
-      (click)="onClicAdd($event)"
+      (click)="onAddQuestion($event)"
       [disabled]="!questionToAdd.from || !questionToAdd.value"
       class="button is-community"
       type="button">
@@ -262,4 +289,4 @@
 
   </footer>
 
-</app-utility-modal-empty>-->
+</app-utility-modal-empty>

@@ -1,14 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MissionTemplateSection} from '../../../../../models/mission';
+import {MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
+import {AutoSuggestionConfig} from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
-/*interface AddQuestion {
+interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
   value: any;
-}*/
+}
 
 @Component({
   selector: 'app-shared-questionnaire-section',
@@ -17,7 +19,11 @@ import {RolesFrontService} from '../../../../../services/roles/roles-front.servi
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
 
-  /*get questionToAdd(): AddQuestion {
+  get searchConfig(): AutoSuggestionConfig {
+    return this._searchConfig;
+  }
+
+  get questionToAdd(): AddQuestion {
     return this._questionToAdd;
   }
 
@@ -27,7 +33,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   set showModal(value: boolean) {
     this._showModal = value;
-  }*/
+  }
 
   get sectionTypes(): Array<string> {
     return this._sectionTypes;
@@ -120,9 +126,16 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   private _sectionTypes: Array<string> = ['ISSUE', 'SOLUTION', 'CONTEXT', 'NOTHING'];
 
-  // private _showModal = false;
+  private _showModal = false;
 
-  // private _questionToAdd: AddQuestion = <AddQuestion>{};
+  private _questionToAdd: AddQuestion = <AddQuestion>{};
+
+  private _searchConfig: AutoSuggestionConfig = {
+    minChars: 3,
+    type: 'questions',
+    identifier: 'label',
+    placeholder: 'Start typing question label here...',
+  };
 
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
@@ -133,7 +146,12 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
-    this._missionQuestionService.addQuestion(this._sectionIndex);
+    if (this.canAccess(['question', 'add']) && this.isLibraryView) {
+      this._questionToAdd = <AddQuestion>{};
+      this._showModal = true;
+    } else if (this.isEditable) {
+      this._missionQuestionService.addQuestion(this._sectionIndex);
+    }
   }
 
   public up(event: Event) {
@@ -189,32 +207,86 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     }
   }
 
-  /*public onClicAdd(event: Event) {
+  public onAddQuestion(event: Event) {
     event.preventDefault();
 
     if (this._questionToAdd.from && !!this._questionToAdd.value) {
       switch (this._questionToAdd.from) {
 
-        case 'SCRATCH':
-          this._missionQuestionService.addQuestion(this._sectionIndex, this._questionToAdd.value, true);
+        /*case 'SCRATCH':
+          const value = {
+            question: this._missionQuestionService.createQuestion(this._questionToAdd.value),
+            essential: false
+          };
+          this._missionQuestionService.template.sections[this._sectionIndex].questions.push(value);
           this.closeModal();
-          break;
+          break;*/
 
         case 'LIBRARY':
+          this._missionQuestionService.template.sections[this._sectionIndex].questions = [
+            ...this._missionQuestionService.template.sections[this._sectionIndex].questions,
+            ...this._questionToAdd.value.map((_value: any) => _value.ques)
+          ];
+          this.notifyChanges();
+          this.closeModal();
           break;
 
       }
     }
-  }*/
+  }
 
-  /*public closeModal() {
+  /**
+   * when select the question from the suggestion list in the modal.
+   *
+   * @param event
+   */
+  public questionSelected(event: {label: string, question: MissionQuestion}) {
+    const questionId = event.question && event.question._id;
+    if (!!questionId
+      && !MissionFrontService.hasMissionQuestion(this._missionQuestionService.template, (event.question && event.question._id))
+      && !this._alreadyInList(questionId)) {
+      const value = {
+        question: event.question,
+        essential: false
+      };
+      this._questionToAdd.value.push({label: event.label, ques: value});
+    }
+  }
+
+  /**
+   * verify the question exists or not in the list.
+   *
+   * @param questionId
+   * @private
+   */
+  private _alreadyInList(questionId = ''): boolean {
+    if (this._questionToAdd.value && this._questionToAdd.value.length && !!questionId) {
+      return this._questionToAdd.value.some((_value: any) => {
+        return (_value.ques && _value.ques.question && _value.ques.question._id) === questionId;
+      });
+    }
+    this._questionToAdd.value = [];
+    return false;
+  }
+
+  /**
+   * remove the question from the list when click on the cross btn.
+   *
+   * @param event
+   */
+  public onRemoveFromList(event: string) {
+    this._questionToAdd.value = this._questionToAdd.value.filter((_value: any) => {
+      return (_value.ques && _value.ques.question && _value.ques.question._id) !== event;
+    });
+  }
+
+  public closeModal() {
     this._showModal = false;
-    this._questionToAdd = <AddQuestion>{};
-  }*/
+  }
 
-  /*public onChangeAddQuestion(event: any) {
+  public onChangeAddQuestion(event: any) {
     this._questionToAdd.from = event;
     this._questionToAdd.value = '';
-  }*/
+  }
 
 }

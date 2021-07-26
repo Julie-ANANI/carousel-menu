@@ -237,9 +237,6 @@ export class AdminEditUseCaseComponent implements OnInit {
     if (!!event && this.canAccess(['question', 'edit'])) {
 
       switch (event.key) {
-        case 'QUESTION_REMOVE':
-          this._addAction(event);
-          break;
 
         case 'QUESTION_EDIT':
           this._addAction(event);
