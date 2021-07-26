@@ -16,7 +16,9 @@
           [ngStyle]="{ 'height': '160px' }"
           maxlength="270"
           class="form-input"
-          type="text">
+          type="text"
+          [ngClass]="config.conclusion ? 'is-success': 'is-error'"
+          required>
         </textarea>
 
         <span [ngStyle]="{ 'color': conclusionColor }" class="text-limit-wrapper">
@@ -33,6 +35,9 @@
 
       <!-- insert snippet button -->
       <div class="insert-snippet">
+        <span class="text-error">
+          <span *ngIf="!config.conclusion"> {{ 'COMMON.REQUIRED.FIELD' | translate }} </span>
+        </span>
         <span (click)="onClickSnippet($event)">
           {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
         </span>
@@ -50,7 +55,9 @@
           [ngModel]="operator._id ? operator._id : ''"
           [ngModelOptions]="{ standalone: true }"
           (change)="selectOperator($event)"
-          class="form-select">
+          class="form-select"
+          [ngClass]="operator && operator._id ? 'is-success': 'is-error'"
+          required>
 
           <option [value]="''">{{ 'ADMIN_EXECUTIVE_REPORT.CONCLUSION.OPERATOR' | translate }}</option>
 
@@ -60,6 +67,9 @@
 
         </select>
       </label>
+      <span class="text-error form-input-hint" *ngIf="!operator || !operator._id">
+          {{ 'COMMON.REQUIRED.FIELD' | translate }}
+      </span>
     </div>
     <!-- /operator -->
 

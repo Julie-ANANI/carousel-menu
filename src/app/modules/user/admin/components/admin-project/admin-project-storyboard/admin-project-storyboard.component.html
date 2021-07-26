@@ -144,15 +144,20 @@
                   {{ 'COMMON.BUTTON.GENERATING_FILE' | translate }}
                 </ng-template>
               </button>
-              <div *ngIf="executiveReport.completion.missingFields.length" class="text-error text-sm">
+              <div class="popover text-error text-sm" *ngIf="executiveReport.completion.missingFields.length || !innovation.principalMedia">
+                <i class="fas fa-exclamation-triangle"></i>
                 {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.INTRO' | translate }}
-                <ul>
-                  <li *ngFor="let field of executiveReport.completion.missingFields">
-                    {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.' + field.toUpperCase() | translate }}
-                  </li>
-                </ul>
+                <div class="popover-container">
+                  <div class="card">
+                    <span *ngIf="!innovation.principalMedia">
+                      {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.MEDIA' | translate }}
+                     </span>
+                    <span *ngFor="let field of executiveReport.completion.missingFields">
+                      {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.' + field.toUpperCase() | translate }}
+                    </span>
+                  </div>
+                </div>
               </div>
-
             </div>
             <!-- /pdf -->
 

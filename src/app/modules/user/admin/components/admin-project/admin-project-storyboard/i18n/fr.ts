@@ -44,7 +44,7 @@ export const ADMIN_STORYBOARD = {
   },
 
   'MISSING_FIELDS': {
-    'INTRO': 'Il manque des informations pour générer le fichier :',
+    'INTRO': 'Il manque des informations pour générer le fichier',
     'LANG': 'Il faut sélectionner une langue',
     'ANSWERS': 'Il faut des réponses validées',
     'CONCLUSION': 'Il faut une conclusion',
@@ -57,6 +57,8 @@ export const ADMIN_STORYBOARD = {
     'EMAIL': 'Il faut l\'email du client',
     'ABSTRACT': 'Il faut le texte de présentation des profils',
     'LIST': 'Il faut au moins trois profils de pros',
+    'COUNTRY': 'Country is missing, adjust in the synthesis',
+    'MEDIA': 'Il faut un média principal'
   }
 
 };

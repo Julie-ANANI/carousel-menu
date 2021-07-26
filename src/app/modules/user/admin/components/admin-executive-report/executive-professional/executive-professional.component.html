@@ -16,7 +16,9 @@
           [ngStyle]="{ 'height': '150px' }"
           maxlength="258"
           class="form-input"
-          type="text">
+          type="text"
+          [ngClass]="config.abstract ? 'is-success': 'is-error'"
+          required>
         </textarea>
 
         <span [ngStyle]="{ 'color': professionalAbstractColor }" class="text-limit-wrapper">
@@ -33,6 +35,9 @@
 
       <!-- insert snippet button -->
       <div class="insert-snippet">
+        <span class="text-error">
+          <span *ngIf="!config.abstract"> {{ 'COMMON.REQUIRED.FIELD' | translate }} </span>
+        </span>
         <span (click)="onClickSnippet($event)">
           {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
         </span>
@@ -56,6 +61,9 @@
         </label>
       </div>
     </div>
+    <span class="text-error text-sm">
+      <span *ngIf="!config.list || !config.list.length"> {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.LIST' | translate }} </span>
+    </span>
     <!-- /select pro -->
 
   </div>
@@ -76,6 +84,14 @@
           <ng-container *ngIf="pro.country">
             <app-utility-country-flag [country]="pro.country" [width]="22" [height]="15"></app-utility-country-flag>
           </ng-container>
+        </div>
+        <div *ngIf="!pro.country" class="popover" [ngStyle]="{'border': 'none'}">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div class="popover-container">
+            <div class="card">
+              {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.COUNTRY' | translate }}
+            </div>
+          </div>
         </div>
         <!-- /flag -->
 
