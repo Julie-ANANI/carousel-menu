@@ -103,6 +103,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
           _columns: [
             {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+            {_attrs: ['professional.country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
           ]
