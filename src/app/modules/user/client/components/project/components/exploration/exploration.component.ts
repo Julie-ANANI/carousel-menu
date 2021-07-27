@@ -167,6 +167,9 @@ export class ExplorationComponent implements OnInit, OnDestroy {
     if (!answer.country && answer.professional && answer.professional.country) {
       answer.country = {flag: answer.professional.country};
     }
+    if (answer.country && typeof answer.country === 'string') {
+      answer.country = {flag: answer.country};
+    }
   }
 
 
