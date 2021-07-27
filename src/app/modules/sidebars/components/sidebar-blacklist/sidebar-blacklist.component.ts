@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailQueueModel } from '../../../../models/mail.queue.model';
 import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
-import { _do } from 'rxjs-compat/operator/do';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
