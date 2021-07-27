@@ -99,6 +99,8 @@ export class AutoCompleteInputComponent implements OnInit {
 
   @Input() multiLangObjects = false;
 
+  @Input() onlyDomain = false;
+
   @Input() isHideAnswerList = false; // true: to hide the answer list.
 
   @Output() update: EventEmitter<any> = new EventEmitter<any>(); // sends the updated list.

@@ -31,17 +31,14 @@
         </div>
         <!-- /emails to blacklist -->
 
-        <!-- domains to blacklist -->
         <div class="form-group">
           <label class="form-label">Domains to exclude</label>
-          <app-utility-input-list
-            (update)="addDomain($event)"
-            [config]="{initialData: formData.get('domain').value,
-            placeholder: '*@catco.com'}"
-            [isDomain]="true">
-          </app-utility-input-list>
+          <app-utility-auto-complete-input
+            [onlyDomain]="true"
+            (update)="addDomains($event)"
+            [config]="getConfig('excludedCompanies')">
+          </app-utility-auto-complete-input>
         </div>
-        <!-- domains to blacklist -->
 
       </div>
       <!-- /type === 'EXCLUDE_EMAILS_DOMAINS' -->

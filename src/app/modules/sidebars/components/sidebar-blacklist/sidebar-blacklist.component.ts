@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {EmailQueueModel} from '../../../../models/mail.queue.model';
-import {Table} from '../../../table/models/table';
-import {Config} from '../../../../models/config';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailQueueModel } from '../../../../models/mail.queue.model';
+import { Table } from '../../../table/models/table';
+import { Config } from '../../../../models/config';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
@@ -18,7 +18,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   @Input() set initialDomains(value: string[]) {
     const domains: any[] = [];
-    value.forEach(value1 => domains.push({text: '*@' + value1}));
+    value.forEach(value1 => domains.push({domain: '*@' + value1}));
     this._initialDomains = domains;
   };
 
@@ -52,7 +52,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   @Output() editBlacklist = new EventEmitter<any>(); // updated blacklist email information
 
-  @Output() toBlacklists = new EventEmitter<{emails: Array<string>, domains: Array<string>}>();
+  @Output() toBlacklists = new EventEmitter<{ emails: Array<string>, domains: Array<string> }>();
 
   @Output() countryToFilter = new EventEmitter<any>(); // country to exclude.
 
@@ -82,11 +82,12 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _initialEmails: any[] = [];
 
-  private _country: {flag: string, domain: string, name: string} = null;
+  private _country: { flag: string, domain: string, name: string } = null;
 
   private _toBeSaved = false;
 
-  constructor (private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this._buildForm();
@@ -94,9 +95,8 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   private _buildForm() {
-    this._formData = this._formBuilder.group( {
+    this._formData = this._formBuilder.group({
       email: [[], [Validators.required, Validators.email]],
-      domain: [[], Validators.required],
       expiration: '',
       acceptation: [80, [Validators.required, Validators.max(100), Validators.min(0)]]
     });
@@ -110,7 +110,6 @@ export class SidebarBlacklistComponent implements OnInit {
 
       case 'EXCLUDE_EMAILS_DOMAINS':
         this._formData.get('email').patchValue([...this._initialEmails]);
-        this._formData.get('domain').patchValue([...this._initialDomains]);
         break;
 
       case 'EXCLUDE_COUNTRY':
@@ -164,8 +163,8 @@ export class SidebarBlacklistComponent implements OnInit {
         _isLocal: true,
         _isPaginable: this._campaignInfosToShow.payload.recipients.length > 10,
         _columns: [
-          { _attrs: ['firstName', 'lastName'], _name: 'Name', _type: 'TEXT' },
-          { _attrs: ['company'], _name: 'Company', _type: 'TEXT' },
+          {_attrs: ['firstName', 'lastName'], _name: 'Name', _type: 'TEXT'},
+          {_attrs: ['company'], _name: 'Company', _type: 'TEXT'},
         ]
       };
     }
@@ -185,7 +184,7 @@ export class SidebarBlacklistComponent implements OnInit {
         case 'EXCLUDE_EMAILS_DOMAINS':
           this.toBlacklists.emit({
             emails: this._formData.value && this._formData.value.email || [],
-            domains: this._formData.value && this._formData.value.domain || []
+            domains: this._initialDomains || []
           });
           break;
 
@@ -216,6 +215,13 @@ export class SidebarBlacklistComponent implements OnInit {
           initialData: this._country || null,
           type: 'countries',
         };
+      case 'excludedCompanies':
+        return {
+          placeholder: 'Domains to be excluded',
+          initialData: this._initialDomains,
+          type: 'company',
+          showDomain: true
+        };
       default:
         return {
           placeholder: 'Input',
@@ -233,17 +239,12 @@ export class SidebarBlacklistComponent implements OnInit {
     this.saveChanges();
   }
 
-  public addEmail(event: {value: Array<any>}) {
+  public addEmail(event: { value: Array<any> }) {
     this._formData.get('email')!.setValue(event.value);
     this.saveChanges();
   }
 
-  public addDomain(event: {value: Array<any>}) {
-    this._formData.get('domain')!.setValue(event.value);
-    this.saveChanges();
-  }
-
-  public updateCountry(event: {value: Array<any>}) {
+  public updateCountry(event: { value: Array<any> }) {
     this._country = event.value[0] || null;
     this.saveChanges();
   }
@@ -284,4 +285,15 @@ export class SidebarBlacklistComponent implements OnInit {
     return this._toBeSaved;
   }
 
+  addDomains(value: any) {
+    if (value.value && value.value.length) {
+      value.value.forEach((_domain: any) => {
+        if (_domain.domain && _domain.domain.indexOf('*@') === -1) {
+          _domain.domain = '*@' + _domain.domain;
+        }
+      });
+      this.saveChanges();
+      this._initialDomains = value.value;
+    }
+  }
 }
