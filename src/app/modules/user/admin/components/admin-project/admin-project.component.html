@@ -1,187 +1,202 @@
-<!-- error message while fetching -->
-<section *ngIf="fetchingError" class="container fluid grid-2xl">
-  <div class="column col-sm-12 col-11 col-mx-auto">
+<div [hidden]="!canAccess()" [id]="'admin-project'">
+
+  <!-- isLoading -->
+  <ng-container *ngIf="isLoading">
+    <div class="m-top-20">
+      <div class="loading is-primary is-md"></div>
+    </div>
+  </ng-container>
+  <!-- /isLoading -->
+
+  <!-- error message while fetching -->
+  <ng-container *ngIf="fetchingError">
     <app-utility-message-error></app-utility-message-error>
-  </div>
-</section>
-<!-- /error message while fetching -->
+  </ng-container>
+  <!-- /error message while fetching -->
 
-<!-- no error -->
-<div [hidden]="fetchingError" id="admin-project">
+  <!-- no error -->
+  <ng-container *ngIf="!isLoading && project._id">
 
-  <!-- banner project message  -->
-  <app-utility-banner [(showBanner)]="!!showBanner" [background]="'bg-progress'" [position]="'relative'">
-    <span class="text-normal">
-      This project has been updated by
-      <span class="text-medium">{{ showBanner }}</span>
-      at
-      <span class="text-medium">{{ updateTime | date: 'H:mm' }}.</span>
-    </span>
-  </app-utility-banner>
-  <!-- banner project message  -->
+    <!-- banner project message  -->
+    <app-utility-banner [(showBanner)]="!!showBanner" [background]="'bg-progress'" [position]="'relative'">
+      <span class="text-normal">
+        This project has been updated by
+        <span class="text-medium">{{ showBanner }}</span>
+        at
+        <span class="text-medium">{{ updateTime | date: 'H:mm' }}.</span>
+      </span>
+    </app-utility-banner>
+    <!-- banner project message  -->
 
-  <!-- section header -->
-  <section class="section-header p-top-25">
-    <div class="container fluid grid-2xl">
-      <div class="column col-sm-12 col-11 col-mx-auto">
+    <!-- section header -->
+    <section class="section-header p-top-25">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
 
-        <!-- heading / actions button -->
-        <div class="flex-between flex-wrap m-bottom-10">
+          <!-- heading / actions button -->
+          <div class="flex-between flex-wrap m-bottom-10">
 
-          <!-- heading / view like client / objective / activity -->
-          <div class="m-right-15 m-bottom-15">
+            <!-- heading / view like client / objective / activity -->
+            <div class="m-right-15 m-bottom-15">
 
-            <div class="d-flex align-center flex-wrap m-bottom-1">
-              <h1 class="title is-4 text-white m-bottom-1">{{ title }}</h1>
-              <a
-                [routerLink]="['/user/projects/', project._id]"
-                class="button is-link text-white is-xs"
-                target="_blank">
-                View like client
-              </a>
-            </div>
+              <div class="d-flex align-center flex-wrap m-bottom-1">
+                <h1 class="title is-4 text-white m-bottom-1">{{ title }}</h1>
+                <a
+                  [routerLink]="['/user/projects/', project._id]"
+                  class="button is-link text-white is-xs"
+                  target="_blank">
+                  View like client
+                </a>
+              </div>
 
-            <!-- mission objective / activity -->
-            <div class="flex-start flex-wrap">
+              <!-- mission objective / activity -->
+              <div class="flex-start flex-wrap">
 
-              <!-- use cases on 1st June, 2021 -->
-              <ng-container *ngIf="hasMissionTemplate; else oldObjective">
-                <h3 class="op-7 text-sm text-medium text-white m-bottom-1 m-right-20">{{ objectiveName() }}</h3>
-              </ng-container>
-              <!-- /use cases on 1st June, 2021 -->
-
-              <!-- old project -->
-              <ng-template #oldObjective>
-                <ng-container *ngIf="hasMissionObjective">
-                  <div class="op-7 text-sm text-medium text-white m-bottom-1 m-right-20">
-                    <i [ngClass]="iconClass" class="text-md m-right-10"></i>
-                    {{ mission.objective.principal[currentLang] }}
-                  </div>
+                <!-- use cases on 1st June, 2021 -->
+                <ng-container *ngIf="hasMissionTemplate; else oldObjective">
+                  <h3 class="op-7 text-sm text-medium text-white m-bottom-1 m-right-20">{{ objectiveName() }}</h3>
                 </ng-container>
-              </ng-template>
-              <!-- /old project -->
+                <!-- /use cases on 1st June, 2021 -->
 
-              <app-shared-activity-modal [innovationId]="project._id"></app-shared-activity-modal>
+                <!-- old project -->
+                <ng-template #oldObjective>
+                  <ng-container *ngIf="hasMissionObjective">
+                    <div class="op-7 text-sm text-medium text-white m-bottom-1 m-right-20">
+                      <i [ngClass]="iconClass" class="text-md m-right-10"></i>
+                      {{ mission.objective.principal[currentLang] }}
+                    </div>
+                  </ng-container>
+                </ng-template>
+                <!-- /old project -->
+
+                <app-shared-activity-modal [innovationId]="project._id"></app-shared-activity-modal>
+
+              </div>
+              <!-- /mission objective / activity -->
 
             </div>
-            <!-- /mission objective / activity -->
+            <!-- /heading / view like client / objective / activity -->
+
+            <!-- actions button -->
+            <ng-container *ngIf="canImport">
+              <div class="dropdown is-right m-bottom-15">
+
+                <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
+                  Actions <i class="icon icon-caret icon-right"></i>
+                </a>
+
+                <ul class="menu is-md">
+                  <ng-container *ngIf="isTech || isOperSupervisor">
+                    <li (click)="openModal($event, 'PROJECT')" class="menu-item">
+                      Export project
+                    </li>
+                  </ng-container>
+                  <li (click)="onClickImportFollowUp($event)" class="menu-item">
+                    Import follow up emails
+                  </li>
+                </ul>
+
+              </div>
+            </ng-container>
+            <!-- /actions button -->
 
           </div>
-          <!-- /heading / view like client / objective / activity -->
+          <!-- /heading / actions button -->
 
-          <!-- actions button -->
-          <div *ngIf="canImport" class="dropdown is-right m-bottom-15">
-
-            <a class="button is-white is-sm is-outlined dropdown-toggle" tabindex="0">
-              Actions <i class="icon icon-caret icon-right"></i>
-            </a>
-
-            <ul class="menu is-md">
-              <li
-                *ngIf="isTech || isOperSupervisor"
-                (click)="openModal($event, 'PROJECT')"
-                class="menu-item">
-                Export project
-              </li>
-              <li (click)="onClickImportFollowUp($event)" class="menu-item">
-                Import follow up emails
-              </li>
-            </ul>
-
-          </div>
-          <!-- /actions button -->
+          <!-- tabs -->
+          <ul class="tab is-fullwidth">
+            <ng-container *ngFor="let tab of tabs">
+              <ng-container *ngIf="canAccess(['tabs', tab.key])">
+                <li class="tab-item text-white">
+                  <a
+                    (click)="onClickTab($event, tab.name, tab.route, tab.key)"
+                    [id]="tab.route"
+                    [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
+                    class="text-medium text-md"
+                    routerLinkActive="active">
+                    <i [ngClass]="tab.icon"></i>
+                    {{ tab.name }}
+                  </a>
+                </li>
+              </ng-container>
+            </ng-container>
+          </ul>
+          <!-- /tabs -->
 
         </div>
-        <!-- /heading / actions button -->
-
-        <!-- tabs -->
-        <ul class="tab is-fullwidth">
-          <ng-container *ngFor="let tab of tabs">
-            <li *ngIf="canAccess(['tabs', tab.key])" class="tab-item text-white">
-              <a
-                (click)="onClickTab($event, tab.name, tab.route, tab.key)"
-                [id]="tab.route"
-                [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
-                class="text-medium text-md"
-                routerLinkActive="active">
-                <i [ngClass]="tab.icon"></i>
-                {{ tab.name }}
-              </a>
-            </li>
-          </ng-container>
-        </ul>
-        <!-- /tabs -->
-
       </div>
-    </div>
-  </section>
-  <!-- /section header -->
+    </section>
+    <!-- /section header -->
 
-  <!-- different pages -->
-  <router-outlet></router-outlet>
-  <!-- /different pages -->
+    <!-- different pages -->
+    <router-outlet></router-outlet>
+    <!-- /different pages -->
+
+  </ng-container>
+  <!-- /no error -->
 
 </div>
-<!-- /no error -->
 
 <!-- modals for different actions -->
-<app-utility-modal *ngIf="canImport" [(showModal)]="showModal" [enableCloseButton]="true">
-  <section class="modal-body">
+<ng-container *ngIf="canImport">
+  <app-utility-modal [(showModal)]="showModal" [enableCloseButton]="true">
+    <section class="modal-body">
 
-    <!-- project modal -->
-    <div *ngIf="isProjectModal">
+      <!-- project modal -->
+      <div *ngIf="isProjectModal">
 
-      <div class="text-center m-bottom-25">
-        <h3 [innerText]="'PROJECT.MODAL.SELECT_FIELD'" class="text-background text-normal" translate></h3>
+        <div class="text-center m-bottom-25">
+          <h3 [innerText]="'PROJECT.MODAL.SELECT_FIELD'" class="text-background text-normal" translate></h3>
+        </div>
+
+        <div class="form-group">
+
+          <label class="form-checkbox">
+            <input type="checkbox" checked disabled>
+            <i class="form-icon"></i> {{ 'PROJECT.MODAL.BASE' | translate }}
+          </label>
+
+          <label
+            *ngFor="let status of status"
+            class="form-checkbox">
+            <input
+              (change)="projectExportConfig['answers'][status] = !projectExportConfig['answers'][status]"
+              [checked]="projectExportConfig['answers'][status]"
+              type="checkbox">
+            <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
+          </label>
+
+          <label class="form-checkbox">
+            <input
+              (change)="projectExportConfig.campaigns = !projectExportConfig['campaigns']"
+              [checked]="projectExportConfig['campaigns']"
+              type="checkbox">
+            <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
+          </label>
+
+          <label class="form-checkbox">
+            <input
+              (change)="projectExportConfig.anonymous = !projectExportConfig['anonymous']"
+              [checked]="projectExportConfig['anonymous']"
+              type="checkbox">
+            <i class="form-icon"></i> {{ 'PROJECT.MODAL.ANON' | translate }}
+          </label>
+
+        </div>
+
       </div>
+      <!-- /project modal -->
 
-      <div class="form-group">
-
-        <label class="form-checkbox">
-          <input type="checkbox" checked disabled>
-          <i class="form-icon"></i> {{ 'PROJECT.MODAL.BASE' | translate }}
-        </label>
-
-        <label
-          *ngFor="let status of status"
-          class="form-checkbox">
-          <input
-            (change)="projectExportConfig['answers'][status] = !projectExportConfig['answers'][status]"
-            [checked]="projectExportConfig['answers'][status]"
-            type="checkbox">
-          <i class="form-icon"></i> {{ 'CAMPAIGNS.' + status | translate }}
-        </label>
-
-        <label class="form-checkbox">
-          <input
-            (change)="projectExportConfig.campaigns = !projectExportConfig['campaigns']"
-            [checked]="projectExportConfig['campaigns']"
-            type="checkbox">
-          <i class="form-icon"></i> {{ 'PROJECT.CAMPAIGNS' | translate }}
-        </label>
-
-        <label class="form-checkbox">
-          <input
-            (change)="projectExportConfig.anonymous = !projectExportConfig['anonymous']"
-            [checked]="projectExportConfig['anonymous']"
-            type="checkbox">
-          <i class="form-icon"></i> {{ 'PROJECT.MODAL.ANON' | translate }}
-        </label>
-
+      <!-- export button -->
+      <div class="m-top-40 m-bottom-15 text-center">
+        <button (click)="onClickExport($event)" class="button is-primary is-lg" type="button">
+          <ng-container *ngIf="isProjectModal">{{ 'COMMON.BUTTON.EXPORT_PROJECT' | translate }}</ng-container>
+        </button>
       </div>
+      <!-- /export button -->
 
-    </div>
-    <!-- /project modal -->
-
-    <!-- export button -->
-    <div class="m-top-40 m-bottom-15 text-center">
-      <button (click)="onClickExport($event)" class="button is-primary is-lg" type="button">
-        <ng-container *ngIf="isProjectModal">{{ 'COMMON.BUTTON.EXPORT_PROJECT' | translate }}</ng-container>
-      </button>
-    </div>
-    <!-- /export button -->
-
-  </section>
-</app-utility-modal>
+    </section>
+  </app-utility-modal>
+</ng-container>
 <!-- /modals for different actions -->
 
