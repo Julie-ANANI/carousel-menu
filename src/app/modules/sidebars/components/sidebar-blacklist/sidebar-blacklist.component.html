@@ -43,6 +43,14 @@
         </div>
         <!-- domains to blacklist -->
 
+        <div class="form-group">
+          <label class="form-label">Companies/Domains to exclude</label>
+          <app-utility-auto-complete-input
+           [config]="getConfig('excludedCompanies')">
+
+          </app-utility-auto-complete-input>
+        </div>
+
       </div>
       <!-- /type === 'EXCLUDE_EMAILS_DOMAINS' -->
 

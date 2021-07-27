@@ -216,6 +216,13 @@ export class SidebarBlacklistComponent implements OnInit {
           initialData: this._country || null,
           type: 'countries',
         };
+      case 'excludedCompanies':
+        return {
+          placeholder: 'Companies/Domains to be excluded',
+          initialData:  [],
+          type: 'company',
+          showDomain: true
+        };
       default:
         return {
           placeholder: 'Input',
