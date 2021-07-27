@@ -245,11 +245,6 @@ export class SidebarBlacklistComponent implements OnInit {
     this.saveChanges();
   }
 
-  public addDomain(event: { value: Array<any> }) {
-    this._formData.get('domain')!.setValue(event.value);
-    this.saveChanges();
-  }
-
   public updateCountry(event: { value: Array<any> }) {
     this._country = event.value[0] || null;
     this.saveChanges();
@@ -298,6 +293,7 @@ export class SidebarBlacklistComponent implements OnInit {
           _domain.domain = '*@' + _domain.domain;
         }
       });
+      this.saveChanges();
       this._initialDomains = value.value;
     }
   }
