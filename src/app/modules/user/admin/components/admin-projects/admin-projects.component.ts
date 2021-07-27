@@ -738,7 +738,7 @@ export class AdminProjectsComponent implements OnInit {
       }
       if (MissionFrontService.hasMissionTemplate(project.mission)) {
         project['mainObjective'] = MissionFrontService.objectiveName(project.mission.template, this._currentLang);
-      } else {
+      } else if (project.mission && project.mission.objective && project.mission.objective.principal) {
         project['mainObjective'] = project.mission.objective.principal[this._currentLang];
       }
       if (project.stats && project.stats.received && project.stats.received > 0) {
