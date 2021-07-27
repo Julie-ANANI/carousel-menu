@@ -17,7 +17,7 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
 import {
   Milestone,
-  Mission,
+  Mission, MissionQuestion,
   MissionType,
 } from '../../../../../../models/mission';
 import { User } from '../../../../../../models/user.model';
@@ -58,6 +58,19 @@ export interface UserSuggestion {
   styleUrls: ['./admin-project-settings.component.scss'],
 })
 export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
+
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(this._mission);
+  }
+
+  get templateComplementary(): Array<MissionQuestion> {
+    return this.hasMissionTemplate && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections) || [];
+  }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
+
   private _isLoading = true;
 
   private _innovation: Innovation = <Innovation>{};
@@ -84,8 +97,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  private _dateFormat =
-    this._translateService.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
+  private _dateFormat = this.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
 
   private _innovationStatus: Array<InnovationStatus> = [
     'EDITING',
@@ -809,6 +821,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public name(value: User): string {
     return UserFrontService.fullName(value);
+  }
+
+  public objectiveName(value: any): string {
+    return MissionFrontService.objectiveName(value, this.currentLang);
   }
 
   get innovTags(): Array<Tag> {

@@ -80,6 +80,27 @@
             </div>
             <!-- /domain -->
 
+            <!-- secondary objective -->
+            <div *ngIf="canAccess(['view', 'secondaryObjective'])" class="content">
+              <label for="admin-project-domain">Secondary Objectives</label>
+              <span class="is-text">
+                <ng-container *ngIf="(hasMissionTemplate || !!mission.objective.secondary.length); else noSecObj">
+                  <ng-container *ngIf="templateComplementary.length > 0; else oldSecondary;">
+                    <ng-container *ngFor="let objective of templateComplementary">
+                      <span class="label is-rounded is-sm">{{ objectiveName(objective) }}</span>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #oldSecondary>
+                    <ng-container *ngFor="let objective of mission.objective.secondary">
+                      <span class="label is-rounded is-sm">{{ objective[currentLang] }}</span>
+                    </ng-container>
+                  </ng-template>
+                </ng-container>
+                <ng-template #noSecObj>NA</ng-template>
+              </span>
+            </div>
+            <!-- /secondary objective -->
+
             <!-- enterprise client -->
             <div
               *ngIf="canAccess(['view', 'enterprise']) && innovation.owner && innovation.owner.company && innovation.owner.company.name"
