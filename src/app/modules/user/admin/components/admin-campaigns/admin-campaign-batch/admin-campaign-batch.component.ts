@@ -320,7 +320,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         .pipe(first())
         .subscribe(
           (stats) => {
-            console.log(stats);
             this._stats = stats;
             this._batchesTable = [];
             if (this._stats.batches) {
