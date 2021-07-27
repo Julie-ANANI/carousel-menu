@@ -703,7 +703,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       const _domainExp = domainRegEx;
       const _emailExp = emailRegEx;
 
-      if (values.domains.length) {
+      if (values.domains) {
         this._innovation.settings.blacklist.domains = [];
         values.domains.forEach((value: any) => {
           if (_domainExp.test(value.domain)) {
@@ -714,7 +714,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         });
       }
 
-      if (values.emails.length) {
+      if (values.emails) {
         this._innovation.settings.blacklist.emails = [];
         values.emails.forEach((value: any) => {
           if (_emailExp.test(value.text)) {
