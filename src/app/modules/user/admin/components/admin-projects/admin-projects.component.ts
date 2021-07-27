@@ -82,7 +82,7 @@ export class AdminProjectsComponent implements OnInit {
       this._isLoading = false;
       this._setConfigForUmiBack();
       this._getOperators().then(_ => {
-        // this._configOperator();
+        this._configOperator();
         this._getInnovations();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -654,16 +654,15 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   /**
-   * Todo will be activated later when we have the functionality to search in mission team also.
    * @private
    */
 
-  /*private _configOperator() {
+  private _configOperator() {
     const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
     if (!!operator) {
       this._config.operator = operator['_id'];
     }
-  }*/
+  }
 
   /***
    * this is to get the projects from the server.
