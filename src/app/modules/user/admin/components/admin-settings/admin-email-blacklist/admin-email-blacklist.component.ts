@@ -110,6 +110,13 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
           _isHidden: !this.canAccess(['tableColumns', 'emailAddress'])
         },
         {
+          _attrs: ['domain'],
+          _name: 'Domain',
+          _type: 'TEXT',
+          _isSearchable: this.canAccess(['searchBy', 'domain']),
+          _isHidden: !this.canAccess(['tableColumns', 'domain'])
+        },
+        {
           _attrs: ['created'],
           _name: 'Created On',
           _type: 'DATE',
