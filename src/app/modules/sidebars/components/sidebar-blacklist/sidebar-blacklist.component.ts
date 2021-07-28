@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailQueueModel } from '../../../../models/mail.queue.model';
 import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
+import { EnterpriseService } from '../../../../services/enterprise/enterprise.service';
+import { first } from 'rxjs/operators';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
@@ -13,6 +15,9 @@ type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | '
 })
 
 export class SidebarBlacklistComponent implements OnInit {
+  @Input() set innovationId(value: string) {
+    this._innovationId = value;
+  }
 
   @Input() isEditable = false; // make true to save the changes.
 
@@ -20,18 +25,18 @@ export class SidebarBlacklistComponent implements OnInit {
     const domains: any[] = [];
     value.forEach(value1 => domains.push({domain: '*@' + value1}));
     this._initialDomains = domains;
-  };
+  }
 
   @Input() set initialEmails(value: string[]) {
     const emails: any[] = [];
     value.forEach(value1 => emails.push({text: value1}));
     this._initialEmails = emails;
-  };
+  }
 
   @Input() set editBlacklistEmail(value: any) {
     this._emailToEdit = value;
     this._loadBlacklist();
-  };
+  }
 
   @Input() set campaignInfos(value: EmailQueueModel) {
     this._campaignInfosToShow = value;
@@ -68,6 +73,8 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _type: Template = 'EDIT_EMAILS';
 
+  private _innovationId: string = null;
+
   private _tableInfos: Table = <Table>{};
 
   private _formData: FormGroup;
@@ -86,7 +93,8 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _toBeSaved = false;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder,
+              private _enterpriseService: EnterpriseService) {
   }
 
   ngOnInit() {
@@ -295,5 +303,13 @@ export class SidebarBlacklistComponent implements OnInit {
       this.saveChanges();
       this._initialDomains = value.value;
     }
+  }
+
+  autoBlacklist() {
+    this._enterpriseService.getFamilyEnterprises(this._innovationId).pipe(first()).subscribe(results => {
+      console.log(results);
+    }, err => {
+      console.error(err);
+    });
   }
 }
