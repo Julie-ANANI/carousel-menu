@@ -6,6 +6,12 @@ import { Config } from '../../../../models/config';
 import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 
+interface DomainOption {
+  checked: boolean;
+  option: string;
+  value: string;
+}
+
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
 @Component({
@@ -95,7 +101,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _showToggleSearch = false;
 
-  private _autoBlacklistOption = [
+  private _autoBlacklistOption: Array<DomainOption> = [
     {
       option: 'Select all',
       value: 'selectAll',
@@ -352,7 +358,12 @@ export class SidebarBlacklistComponent implements OnInit {
     this._showToggleSearch = !this._showToggleSearch;
   }
 
-  optionOnChange(option: any) {
-    console.log(option);
+  optionOnChange(option: DomainOption) {
+    option.checked = !option.checked;
+    switch (option.value) {
+      case 'selectAll':
+        this._autoBlacklistOption.map(_option => _option.checked = option.checked);
+        break;
+    }
   }
 }
