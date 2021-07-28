@@ -1,10 +1,4 @@
 <div class="column col-11 col-sm-12 p-top-30 col-mx-auto" id="sidebar-blacklist">
-<!--  <button-->
-<!--    class="button is-community is-sm"-->
-<!--    (click)="autoBlacklist()"-->
-<!--    id="btn-auto-blacklist">-->
-<!--    Auto-Blacklist-->
-<!--  </button>-->
   <form novalidate [formGroup]="formData" autocomplete="off" (ngSubmit)="onSubmit()">
 
     <!-- save button -->
@@ -34,7 +28,7 @@
 
         <!-- use -->
         <h6 class="title is-6 m-bottom-15">Select the domains to exclude</h6>
-        <div class="form-group m-bottom-30">
+        <div class="form-group m-bottom-2">
           <ng-container *ngFor="let option of autoBlacklistOption">
             <label class="form-checkbox is-inline">
               <input
@@ -43,6 +37,16 @@
               <i class="form-icon"></i> {{option.option}}
             </label>
           </ng-container>
+        </div>
+
+        <div>
+            <button
+              class="button is-community is-xs"
+              [disabled]="enableValidateBnt()"
+              (click)="autoBlacklist()"
+              id="btn-auto-blacklist">
+              Validate
+            </button>
         </div>
         <!-- /use -->
 

@@ -108,17 +108,17 @@ export class SidebarBlacklistComponent implements OnInit {
       checked: false
     },
     {
-      option: 'Parent',
+      option: 'Parent\'s domain',
       value: 'parent',
       checked: false
     },
     {
-      option: 'Subsidiaries',
+      option: 'Subsidiaries\' domains',
       value: 'subsidiaries',
       checked: false
     },
     {
-      option: 'Parent\'s subsidiaries',
+      option: 'Parent\'s subsidiaries\' domains',
       value: 'parentSubsidiaries',
       checked: false
     },
@@ -365,5 +365,9 @@ export class SidebarBlacklistComponent implements OnInit {
         this._autoBlacklistOption.map(_option => _option.checked = option.checked);
         break;
     }
+  }
+
+  enableValidateBnt() {
+    return this._autoBlacklistOption.filter(_option => _option.checked === true).length <= 0;
   }
 }
