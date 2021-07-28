@@ -1,0 +1,649 @@
+@import "variables";
+@import "mixins";
+
+.form-group {
+  margin-bottom: $layout-spacing;
+}
+
+fieldset {
+  margin-bottom: $unit-4;
+}
+
+legend {
+  font-size: $font-size-lg;
+  font-weight: 500;
+  margin-bottom: $unit-4;
+}
+
+// Form element: Label
+.form-label {
+  display: block;
+  line-height: $line-height-sm;
+  color: $form-label-color;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-xs;
+  padding: 8px 0;
+}
+
+// Form element: Input
+.form-input {
+  @include control-transition();
+  appearance: none;
+  border: $border-width solid $form-border-color;
+  font-size: 14px;
+  color: $form-input-color;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: none;
+  position: relative;
+  background-color: $form-white-color;
+  max-width: 100%;
+  line-height: $line-height-sm;
+  padding: 12.5px;
+
+  &:focus {
+    border-color: $form-border-color;
+  }
+
+  &::placeholder {
+    color: $form-placeholder-color;
+  }
+
+  // Input types
+  &[type="file"] {
+    height: auto;
+  }
+
+}
+
+// Form element: Textarea
+textarea {
+
+  &.form-input {
+    height: auto;
+    resize: none;
+    line-height: $line-height;
+    padding: 8px 12.5px;
+
+    &.is-resize {
+      resize: both;
+    }
+
+  }
+
+}
+
+// Form element: Select
+.form-select {
+  @include control-transition();
+  appearance: none;
+  border: $border-width solid $form-border-color;
+  font-size: 14px;
+  color: $form-input-color;
+  border-radius: $border-radius;
+  display: flex;
+  width: 100%;
+  outline: none;
+  position: relative;
+  background: $form-white-color none;
+  max-width: 100%;
+  align-items: center;
+  line-height: $line-height;
+  padding: 11.5px;
+
+  &[size], &[multiple] {
+    height: auto;
+
+    option {
+      padding: $unit-h $unit-1;
+    }
+
+  }
+
+  &:not([multiple]):not([size]) {
+    background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right 12px center/8px 10px;
+    background-size: 13px;
+    padding-right: 40px;
+  }
+
+  &:focus {
+    border-color: $form-border-color;
+  }
+
+  &::-ms-expand {
+    display: none;
+  }
+
+}
+
+// Form element: form-select, form-input
+.form-input, .form-select {
+
+  &.is-shadowed {
+    box-shadow: $box-shadow-form;
+  }
+
+  &.is-sm {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 12px;
+
+    &:not([multiple]):not([size]) {
+      background-size: 10px !important;
+    }
+
+  }
+
+  &.is-xs {
+    padding-top: $unit-1;
+    padding-bottom: $unit-1;
+    height: auto;
+    font-size: 10px;
+
+    &:not([multiple]):not([size]) {
+      background-size: 9px !important;
+    }
+
+  }
+
+}
+
+// Form element: Checkbox and Radio
+.form-checkbox, .form-radio, .form-switch {
+  display: flex;
+  line-height: $line-height-sm;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-sm;
+  align-items: center;
+  text-align: left;
+  padding:  $layout-spacing 1rem $layout-spacing 30px;
+  position: relative;
+
+  input {
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+  }
+
+  .form-icon {
+    @include control-transition();
+    border: $border-width-lg solid $form-meta-color;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    border-radius: $border-radius;
+  }
+
+}
+
+// Form element: Switch
+.form-switch {
+  padding-left: 50px;
+  padding-right: 0;
+
+  .form-icon {
+    background: $form-light-color none;
+    border-color: $form-border-color;
+    background-clip: padding-box;
+    border-radius: 16px;
+    height: 15px;
+    left: 0;
+    width: 34px;
+
+    &::before {
+      @include control-transition();
+      background: $form-meta-color none;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      height: 21px;
+      position: absolute;
+      left: -4px;
+      top: -5px;
+      width: $unit-5;
+      border-color: $form-meta-color;
+    }
+
+  }
+
+  input {
+
+    &:checked + .form-icon, &.active + .form-icon {
+      border-color: rgba(46,204,113,0.45);
+      background: rgba(46,204,113,0.45) none;
+
+      &::before {
+        left: 14px;
+        border-color: $form-success-color;
+        background: $form-success-color none;
+      }
+
+    }
+
+  }
+}
+
+.form-checkbox, .form-radio {
+
+  &.is-inline {
+    display: inline-flex;
+    padding-top: $unit-1;
+    padding-bottom: $unit-1;
+  }
+
+  .form-icon {
+    background: $form-white-color none;
+    height: 22px;
+    left: 0;
+    width: 22px;
+  }
+
+  &.is-sm {
+
+    .form-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+  }
+
+  input {
+
+    &:checked  + .form-icon, &.active + .form-icon {
+      border-color: $form-success-color;
+    }
+
+  }
+
+}
+
+.form-radio {
+
+  .form-icon {
+    border-radius: 50%;
+  }
+
+  input {
+
+    &:checked + .form-icon, &.active + .form-icon {
+
+      &::before {
+        background: $form-success-color none;
+        border-radius: 50%;
+        content: "";
+        height: 12px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 12px;
+      }
+    }
+
+  }
+
+}
+
+.form-checkbox {
+
+  input {
+
+    &:checked + .form-icon {
+
+      &::before {
+        background-clip: padding-box;
+        border: $border-width-lg solid $form-success-color;
+        border-left-width: 0;
+        border-top-width: 0;
+        content: "";
+        height: 12px;
+        left: 50%;
+        margin-left: -4px;
+        margin-top: -8px;
+        position: absolute;
+        top: 50%;
+        transform: rotate(45deg);
+        width: 8px;
+      }
+    }
+
+    &:indeterminate + .form-icon {
+      border-color: $form-warning-color;
+
+      &::before {
+        background: $form-white-color none;
+        content: "";
+        height: 2px;
+        left: 50%;
+        margin-left: -5px;
+        margin-top: -1px;
+        position: absolute;
+        top: 50%;
+        width: 10px;
+      }
+    }
+
+  }
+
+}
+
+.has-icon-left, .has-icon-right {
+  position: relative;
+
+  .icon {
+    @include flex-position(center);
+    position: absolute;
+    pointer-events: none;
+    top: 8px;
+
+    img {
+      height: 20px;
+      width: 20px;
+    }
+
+    &.is-left {
+      left: 10px;
+    }
+
+    &.is-right {
+      right: 10px;
+    }
+
+    &.loading {
+      top: 14px;
+
+      &.is-sm {
+        top: 9px;
+      }
+
+      &.is-xs {
+        top: 4px;
+      }
+
+    }
+
+  }
+
+}
+
+.has-icon-left {
+
+  .form-input {
+    padding-left: 40px;
+  }
+
+}
+
+.has-icon-right {
+
+  .form-input {
+    padding-right: 40px;
+  }
+
+}
+
+// Form inline group
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+
+  .form-group {
+    flex: 1;
+    padding-right: 30px;
+
+    .form-input {
+      min-width: 242px;
+    }
+
+  }
+
+}
+
+// Form element: Input hint && validation styles
+.form-input-hint {
+  color: $form-input-color;
+  font-size: $font-size-xs;
+  padding: $unit-1 0;
+  margin: 0;
+
+  .has-success &, .is-success + & {
+    color: $form-success-color;
+  }
+
+  .has-error &, .is-error + & {
+    color: $form-alert-color;
+  }
+
+}
+
+.form-input, .form-select {
+
+  .has-success & {
+
+    &.form-input, &.form-select {
+
+      &.ng-touched.ng-valid, &.ng-dirty.ng-touched.ng-valid, &.ng-pristine.ng-touched.ng-valid  {
+        border-color: $form-success-color;
+      }
+
+    }
+
+    &.is-success {
+      border-color: $form-success-color;
+    }
+
+  }
+
+  .has-error &  {
+
+    &.form-input, &.form-select {
+
+      &.ng-touched.ng-invalid, &.ng-dirty.ng-touched.ng-invalid, &.ng-pristine.ng-touched.ng-invalid  {
+        border-color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+  &.is-error {
+    border-color: $form-alert-color;
+  }
+
+}
+
+.form-checkbox, .form-radio {
+
+  .has-error & {
+
+    :not(.ng-untouched) + .form-icon {
+      border-color: $form-alert-color;
+    }
+
+    input {
+
+      &:checked:not(.ng-valid) + .form-icon {
+        border-color: $form-alert-color;
+      }
+
+      &:checked:not(.ng-invalid) + .form-icon {
+        border-color: $form-success-color;
+      }
+
+    }
+
+  }
+
+  &.is-error {
+
+    .form-icon {
+      border-color: $form-alert-color !important;
+
+      &::before {
+        border-color: $form-alert-color !important;
+      }
+
+    }
+  }
+
+}
+
+.form-checkbox {
+
+  .has-error & {
+
+    input {
+
+      &:indeterminate + .form-icon {
+        border-color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+}
+
+.form-switch {
+
+  .has-error & {
+
+    .form-icon {
+      background: $form-light-color none;
+      border-color: $form-alert-color;
+
+      &::before {
+        border-color: $form-alert-color;
+        background: $form-alert-color none;
+      }
+
+    }
+
+    input {
+
+      &:checked + .form-icon {
+        background: #f5afaf none;
+        border-color: $form-alert-color;
+
+        &::before {
+          border-color: $form-alert-color;
+          background: $form-alert-color none;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+// validation based on :placeholder-shown (Edge doesn't support it yet)
+.form-input {
+
+  &:not(:placeholder-shown) {
+
+    &:invalid, &.ng-touched.ng-invalid {
+      border-color: $form-alert-color;
+
+      & + .form-input-hint {
+        color: $form-alert-color;
+      }
+
+    }
+
+  }
+
+}
+
+// Form disabled and readonly
+.form-input, .form-select {
+
+  &:disabled, &.disabled {
+    background: $form-disabled-color none;
+    color: $form-disabled-text-color;
+    border-color: $form-border-color;
+    cursor: not-allowed;
+    opacity: .5;
+  }
+
+}
+
+input {
+
+  &:disabled, &.disabled {
+
+    &:not(:checked) + .form-icon, &:checked + .form-icon {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+
+    &:not(:checked) + .form-icon {
+      background: $form-disabled-color none;
+    }
+
+    &:checked + .form-icon {
+      background: inherit none;
+    }
+
+  }
+
+}
+
+.form-switch {
+
+  input {
+
+    &:disabled, &.disabled {
+
+      &:not(:checked) + .form-icon::before , &:checked + .form-icon::before  {
+        cursor: not-allowed;
+        opacity: .8;
+      }
+
+      &:checked + .form-icon::before {
+        background: inherit none;
+      }
+
+    }
+
+  }
+
+}
+
+.form-input {
+
+  &[readonly] {
+    background: $form-disabled-color none;
+    border-color: $form-border-color;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

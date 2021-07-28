@@ -55,22 +55,24 @@ $form-label-color: $dark-color !default;
 $form-border-color: #CED4E2 !default;
 $form-disabled-color: #eef0f3 !default;
 $form-disabled-text-color: #A9A9A9 !default;
+$form-white-color: $white-color !default;
+$form-meta-color: $meta-color !default;
+$form-dark-color: $dark-color !default;
+$form-light-color: $light-color !default;
+$form-success-color: $success-color !default;
+$form-warning-color: $warning-color !default;
+$form-alert-color: $alert-color !default;
 
 
 // button variables
 $button-disabled-text-color: #A9A9A9 !default;
 $button-disabled-bg-color: #eef0f3 !default;
-$button-border-color: #CED4E2 !default;
+$button-disabled-border-color: #CED4E2 !default;
 
 
 // box shadow variables
 $box-shadow-menu: 0 4px 16px rgba(20,23,28,0.25) !default;
 $box-shadow-form: 0 4px 10px 0 rgba(189,199,222,0.23) !default;
-$box-shadow-toast: 0 0 25px 0 rgba(0,0,0,0.15) !default;
-$box-shadow-publication: 4px 4px 16px 0 #CDCDCD !default;
-$box-shadow-comment: 0 4px 10px 0 rgba(30,55,90,.25) !default;
-$box-shadow-settings-menu: $box-shadow-form !default;;
-
 
 // Fonts
 $base-font-family: 'Open Sans' !default;
