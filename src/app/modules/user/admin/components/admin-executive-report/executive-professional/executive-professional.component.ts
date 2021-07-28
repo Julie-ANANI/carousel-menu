@@ -1,21 +1,10 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-// import { first } from 'rxjs/operators';
-// import { HttpErrorResponse } from '@angular/common/http';
 import { ExecutiveProfessional } from '../../../../../../models/executive-report';
-// import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
+import { Answer } from '../../../../../../models/answer';
 
-interface Professional {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  company: string;
-  country: string;
-  jobTitle: string;
-}
 
 @Component({
   selector: 'app-admin-executive-professional',
@@ -29,8 +18,14 @@ export class ExecutiveProfessionalComponent implements OnInit {
 
   @Input() lang = 'en';
 
+  @Input() set allAnswers(value: Array<Answer>) {
+    this._allAnswers = value;
+    this._sortAnswers();
+  }
+
   @Input() set config(value: ExecutiveProfessional) {
     this._config = value;
+    this._sortAnswers();
   }
 
   @Input() set anonymous(value: boolean) {
@@ -46,88 +41,29 @@ export class ExecutiveProfessionalComponent implements OnInit {
 
   private _professionalAbstractColor = '';
 
-  private _allProfessionals: Array<Professional> = [];
+  private _top4Answers: Array<Answer> = [<Answer>{}, <Answer>{}, <Answer>{}, <Answer>{}];
 
-  private _top4Pro: Array<Professional> = [<Professional>{}, <Professional>{}, <Professional>{}, <Professional>{}];
-
-  private _restPro: Array<Professional> = [];
+  private _allAnswers: Array<Answer> = [];
 
   private _anonymous = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _executiveReportFrontService: ExecutiveReportFrontService,
-              /*private _professionalsService: ProfessionalsService*/) { }
+              private _executiveReportFrontService: ExecutiveReportFrontService) { }
 
   ngOnInit(): void {
-    this._populateProfessionals();
     this.textColor();
   }
 
-  private _populateProfessionals() {
-    if (isPlatformBrowser(this._platformId)) {
-      // Populate should happen in the back! not in the front
-      // Here we should just do the slicing and sorting if needed
-      this._allProfessionals = <Array<Professional>><unknown>this._config.list;
-      this._top4Pro = this._allProfessionals.slice(0, 4);
-      this._populateRestPro();
-      /*const config = {
-        fields: '_id firstName lastName jobTitle company country',
-        _id: JSON.stringify({ $in: this._config.list })
-      };
-      this._professionalsService.getAll(config).pipe(first()).subscribe((response) => {
-        this._allProfessionals = response && response.result || [];
-
-        if (this._allProfessionals.length >= 4) {
-          const pros: Array<Professional> = [];
-
-          this._config.list.forEach((id) => {
-            const index = this._allProfessionals.findIndex((pro) => pro._id === id);
-            if (index !== -1) {
-              pros.push(this._allProfessionals[index]);
-            }
-          });
-
-          this._top4Pro = pros.slice(0, 4);
-
-        } else {
-          for (let i = 0; i <= this._allProfessionals.length; i++) {
-            if (this._allProfessionals[i]) {
-              this._top4Pro[i] = this._allProfessionals[i];
-            } else {
-              this._top4Pro[i] = <Professional>{};
-            }
-          }
-        }
-
-        this._populateRestPro();
-        this._allProfessionals = ExecutiveProfessionalComponent._sortPro(this._allProfessionals);
-        }, (err: HttpErrorResponse) => {
-          console.error(err);
-        });*/
-    }
+  private _sortAnswers() {
+    this._top4Answers = this._config.list.map(answerId => {
+      return this._allAnswers.find(answer => answer._id === answerId);
+    });
+    this._allAnswers.sort((a, b) => {
+      const nameA = (a.professional.firstName + a.professional.lastName).toLowerCase();
+      const nameB = (b.professional.firstName + b.professional.lastName).toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
   }
-
-  private static _sortPro(proList: Array<Professional>) {
-    if (proList.length > 0) {
-      return proList.sort((a, b) => {
-        const nameA = (a.firstName + a.lastName).toLowerCase();
-        const nameB =  (b.firstName + b.lastName).toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-    } else {
-      return []
-    }
-  }
-
-  private _populateRestPro() {
-    this._restPro = ExecutiveProfessionalComponent._sortPro(this._allProfessionals.filter((pro) => {
-      const index = this._top4Pro.findIndex((value) => value._id === pro._id);
-      if (index === -1) {
-        return true;
-      }
-    }));
-  }
-
   public textColor() {
     this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract, 258);
   }
@@ -150,22 +86,15 @@ export class ExecutiveProfessionalComponent implements OnInit {
     }
   }
 
-  public selectPro(event: Event, index: number) {
-    this._top4Pro[index] = this._getPro(event && event.target && (event.target as HTMLSelectElement).value);
-    this._populateRestPro();
-
-    this._config.list = this._top4Pro.concat(this._restPro).map((value) => {
-      return value._id;
+  public selectAnswer(event: Event, index: number) {
+    const answerId = event && event.target && (event.target as HTMLSelectElement).value;
+    this._top4Answers[index] = this._allAnswers.find(answer => answer._id === answerId);
+    this._top4Answers.forEach((answer, i) => {
+      if (answer) {
+        this.config.list[i] = answer._id;
+      }
     });
-
     this.emitChanges();
-  }
-
-  private _getPro(id: string): Professional {
-    const index = this._allProfessionals.findIndex((pro) => pro._id === id);
-    if (index !== -1) {
-      return this._allProfessionals[index];
-    }
   }
 
   get config(): ExecutiveProfessional {
@@ -176,12 +105,12 @@ export class ExecutiveProfessionalComponent implements OnInit {
     return this._professionalAbstractColor;
   }
 
-  get top4Pro(): Array<Professional> {
-    return this._top4Pro;
+  get top4Answers(): Array<Answer> {
+    return this._top4Answers;
   }
 
-  get restPro(): Array<Professional> {
-    return this._restPro;
+  get allAnswers(): Array<Answer> {
+    return this._allAnswers;
   }
 
   get anonymous(): boolean {
