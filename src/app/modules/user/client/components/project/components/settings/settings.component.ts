@@ -589,10 +589,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   private _updateTemplate(data: any) {
     this._missionService.updateTemplate(this._mission._id, data).pipe(first()).subscribe((innovation) => {
-      innovation.owner = this._innovation.owner;
-      innovation.clientProject = this._innovation.clientProject;
-      innovation.operator = this._innovation.operator;
-      this._innovationFrontService.setInnovation(innovation);
+      this._innovation.mission = innovation.mission;
+      this._innovationFrontService.setInnovation(this._innovation);
       this.closeModal();
       this._initDefinedTemplate();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
@@ -609,8 +607,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _updateInnovation(innovObject: { [P in keyof Innovation]?: Innovation[P]; }, closeModal = true) {
-    this._innovationService.save(this._innovation._id, innovObject).pipe(first()).subscribe((innovation) => {
-      this._innovationFrontService.setInnovation(innovation);
+    this._innovationService.save(this._innovation._id, innovObject).pipe(first()).subscribe((_) => {
       if (closeModal) {
         this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
@@ -642,7 +639,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _updateMainObjective(objective: any) {
     this._missionService.updateMainObjective(this._mission._id, objective).pipe(first()).subscribe((innovation) => {
-      this._innovationFrontService.setInnovation(innovation);
+      this._innovation.mission = innovation.mission;
+      this._innovationFrontService.setInnovation(this._innovation);
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
@@ -662,28 +660,30 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (this._selectedValue.email && emailRegEx.test(this._selectedValue.email)) {
       this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue.email)
         .pipe(first()).subscribe((collaborator: Collaborator = <Collaborator>{}) => {
-        this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
+          this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
 
-        const collaboratorToList = collaborator.invitationsToSend.concat(collaborator.invitationsToSendAgain);
-        collaboratorToList.map((col) => {
-          const newCollaborator = <User>{};
-          newCollaborator.email = col;
-          this._innovation.collaborators.push(newCollaborator);
+          const collaboratorToList = collaborator.invitationsToSend.concat(collaborator.invitationsToSendAgain);
+          collaboratorToList.map((_invite) => {
+            const find = this._innovation.collaborators.some((_collab) => _collab.email === _invite);
+            if (!find) {
+              const newCollaborator = <User>{};
+              newCollaborator.email = _invite;
+              this._innovation.collaborators.push(newCollaborator);
+            }
+          });
+          this._innovationFrontService.setInnovation(this._innovation);
+          this.closeModal();
+
+          if (collaboratorToList && collaboratorToList.length) {
+            this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+          } else {
+            this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATORS_ADDED');
+          }
+          }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._isSaving = false;
+          console.error(err);
         });
-
-        this._innovationFrontService.setInnovation(this._innovation);
-        this.closeModal();
-
-        if (collaboratorToList && collaboratorToList.length) {
-          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
-        } else {
-          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATORS_ADDED');
-        }
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-        this._isSaving = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      });
     } else {
       this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
     }
