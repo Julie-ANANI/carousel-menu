@@ -210,4 +210,8 @@ export class InnovationService {
     return this._http.get(`/innovation/${innovationId}/prosRepartition`, {params: config});
   }
 
+  public autoBlacklist(innovationId: string): Observable<any> {
+    return this._http.get(`/innovation/${innovationId}/autoBlacklist`);
+  }
+
 }

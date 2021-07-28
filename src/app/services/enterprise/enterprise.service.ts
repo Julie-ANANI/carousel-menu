@@ -36,8 +36,4 @@ export class EnterpriseService {
   public remove(enterpriseId: string): Observable<any> {
     return this._http.delete(`/enterprise/${enterpriseId}`);
   }
-
-  public getFamilyEnterprises(enterpriseId: string): Observable<any> {
-    return this._http.get(`/enterprise/${enterpriseId}/family`);
-  }
 }

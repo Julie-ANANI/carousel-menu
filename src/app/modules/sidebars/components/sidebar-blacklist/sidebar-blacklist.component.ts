@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailQueueModel } from '../../../../models/mail.queue.model';
 import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
-import { EnterpriseService } from '../../../../services/enterprise/enterprise.service';
 import { first } from 'rxjs/operators';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
@@ -93,8 +93,33 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _toBeSaved = false;
 
+  private _showToggleSearch = false;
+
+  private _autoBlacklistOption = [
+    {
+      option: 'Select all',
+      value: 'selectAll',
+      checked: false
+    },
+    {
+      option: 'Parent',
+      value: 'parent',
+      checked: false
+    },
+    {
+      option: 'Subsidiaries',
+      value: 'subsidiaries',
+      checked: false
+    },
+    {
+      option: 'Parent\'s subsidiaries',
+      value: 'parentSubsidiaries',
+      checked: false
+    },
+  ];
+
   constructor(private _formBuilder: FormBuilder,
-              private _enterpriseService: EnterpriseService) {
+              private _innovationService: InnovationService) {
   }
 
   ngOnInit() {
@@ -141,6 +166,11 @@ export class SidebarBlacklistComponent implements OnInit {
         : this._emailToEdit.expiration = new Date(this._emailToEdit.expiration);
       this._formData.patchValue(this._emailToEdit);
     }
+  }
+
+
+  get autoBlacklistOption() {
+    return this._autoBlacklistOption;
   }
 
   public saveChanges() {
@@ -293,6 +323,11 @@ export class SidebarBlacklistComponent implements OnInit {
     return this._toBeSaved;
   }
 
+
+  get showToggleSearch(): boolean {
+    return this._showToggleSearch;
+  }
+
   addDomains(value: any) {
     if (value.value && value.value.length) {
       value.value.forEach((_domain: any) => {
@@ -306,10 +341,18 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   autoBlacklist() {
-    this._enterpriseService.getFamilyEnterprises(this._innovationId).pipe(first()).subscribe(results => {
+    this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe(results => {
       console.log(results);
     }, err => {
       console.error(err);
     });
+  }
+
+  onClickToggle() {
+    this._showToggleSearch = !this._showToggleSearch;
+  }
+
+  optionOnChange(option: any) {
+    console.log(option);
   }
 }
