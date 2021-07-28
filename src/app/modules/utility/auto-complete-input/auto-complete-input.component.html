@@ -74,8 +74,14 @@
       <!-- /can order -->
 
       <!-- text -->
-      <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2">
+      <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2" *ngIf="!onlyDomain">
         <span [innerHTML]="answerFormatter(answer)"></span>
+      </div>
+      <!-- text -->
+
+      <!-- text -->
+      <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2" *ngIf="onlyDomain">
+        <span>{{answer.domain || ''}}</span>
       </div>
       <!-- text -->
 

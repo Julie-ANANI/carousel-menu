@@ -42,7 +42,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _tableInfos: Table = <Table>{};
 
-  private _anonymousAnswers: boolean = false;
+  private _anonymousAnswers = false;
 
   private _config: Config = {
     fields: '',
@@ -58,7 +58,8 @@ export class ExplorationComponent implements OnInit, OnDestroy {
               private answerService: AnswerService,
               private _innovationFrontService: InnovationFrontService,
               private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService) { }
+              private translateNotificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
@@ -77,6 +78,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         if (!answer.job) {
           answer.job = answer.professional.jobTitle;
         }
+        this.setCountryFlag(answer);
         return answer;
       });
       if (this._anonymousAnswers) {
@@ -103,7 +105,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
           _columns: [
             {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
             {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-            {_attrs: ['professional.country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
+            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
           ]
@@ -124,27 +126,27 @@ export class ExplorationComponent implements OnInit, OnDestroy {
     });
 
     this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((results: any) => {
-        if (results && Array.isArray(results.result)) {
-          this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
-              if (campaign.stats) {
-                if (campaign.stats.campaign) {
-                  acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
-                  acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
-                }
-                if (campaign.stats.mail) {
-                  acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
-                  if (campaign.stats.mail.statuses) {
-                    acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
-                    acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
-                  }
-                }
+      if (results && Array.isArray(results.result)) {
+        this._campaignsStats = results.result.reduce(function (acc: any, campaign: Campaign) {
+          if (campaign.stats) {
+            if (campaign.stats.campaign) {
+              acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
+              acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
+            }
+            if (campaign.stats.mail) {
+              acc.nbProsSent += (campaign.stats.mail.totalPros || 0);
+              if (campaign.stats.mail.statuses) {
+                acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
+                acc.nbProsClicked += (campaign.stats.mail.statuses.clicked || 0);
               }
-              return acc;
-            }, { nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0 });
-        }
-      }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-      });
+            }
+          }
+          return acc;
+        }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
+      }
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    });
 
     this._questions = InnovationFrontService.questionsList(this._innovation);
   }
@@ -159,6 +161,15 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       size: '726px'
     };
 
+  }
+
+  setCountryFlag(answer: Answer) {
+    if (!answer.country && answer.professional && answer.professional.country) {
+      answer.country = {flag: answer.professional.country};
+    }
+    if (answer.country && typeof answer.country === 'string') {
+      answer.country = {flag: answer.country};
+    }
   }
 
 
