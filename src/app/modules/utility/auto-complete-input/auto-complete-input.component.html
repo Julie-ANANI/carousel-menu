@@ -81,7 +81,7 @@
 
       <!-- text -->
       <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2" *ngIf="onlyDomain">
-        <span>{{answer.domain || ''}}</span>
+        <span>{{answer.name || ''}}</span>
       </div>
       <!-- text -->
 
@@ -207,10 +207,10 @@
 
                 <div class="card-body">
                   <div class="form-group">
-                    <label class="form-label" [for]="answer['domain']">Answer</label>
+                    <label class="form-label" [for]="answer[identifier]">Answer</label>
                     <input
-                      [(ngModel)]="answer['domain']"
-                      [id]="answer['domain']"
+                      [(ngModel)]="answer[identifier]"
+                      [id]="answer[identifier]"
                       autocomplete="off"
                       class="form-input is-sm is-shadowed"
                       name="answer"
@@ -221,7 +221,7 @@
                 <div class="card-footer text-center">
                   <button
                     (click)="updateItem($event)"
-                    [disabled]="!answer['domain']"
+                    [disabled]="!answer[identifier]"
                     class="button is-secondary is-outlined is-xs"
                     type="submit">
                     Update

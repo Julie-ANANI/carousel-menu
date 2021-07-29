@@ -32,7 +32,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   @Input() set initialDomains(value: string[]) {
     const domains: any[] = [];
-    value.forEach(value1 => domains.push({domain: '*@' + value1}));
+    value.forEach(value1 => domains.push({name: '*@' + value1}));
     this._initialDomains = domains;
   }
 
@@ -104,7 +104,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _showToggleSearch = false;
 
-  private _familyEnterpries: FamilyEnterprises = <FamilyEnterprises>{};
+  private _familyEnterprises: FamilyEnterprises = <FamilyEnterprises>{};
 
   private _autoBlacklistOption: Array<DomainOption> = [
     {
@@ -344,8 +344,9 @@ export class SidebarBlacklistComponent implements OnInit {
     console.log(value);
     if (value.value && value.value.length) {
       value.value.forEach((_domain: any) => {
-        if (_domain.domain && _domain.domain.indexOf('*@') === -1) {
-          _domain.domain = '*@' + _domain.domain;
+        const domain = _domain.domain || _domain.name;
+        if (domain && domain.indexOf('*@') === -1) {
+          _domain.name = '*@' + domain;
         }
       });
       this.saveChanges();
@@ -357,7 +358,7 @@ export class SidebarBlacklistComponent implements OnInit {
     this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
       console.log(result);
       if (result) {
-        this._familyEnterpries = result;
+        this._familyEnterprises = result;
         const _blackList = this.blacklistOnChange();
         console.log(_blackList);
         this.addEnterpriseDomainIntoBlacklist(_blackList);
@@ -389,22 +390,22 @@ export class SidebarBlacklistComponent implements OnInit {
     this._autoBlacklistOption.filter(el => el.checked === true).map(_option => {
       switch (_option.value) {
         case 'selectAll':
-          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterpries.mySubsidiaries || [],
-            this._familyEnterpries.subsidiariesOfParent || []);
-          if (this._familyEnterpries.parent) {
-            enterprisesToAdd.push(this._familyEnterpries.parent);
+          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterprises.mySubsidiaries || [],
+            this._familyEnterprises.subsidiariesOfParent || []);
+          if (this._familyEnterprises.parent) {
+            enterprisesToAdd.push(this._familyEnterprises.parent);
           }
           return enterprisesToAdd;
         case 'parent':
-          if (this._familyEnterpries.parent) {
-            enterprisesToAdd.push(this._familyEnterpries.parent);
+          if (this._familyEnterprises.parent) {
+            enterprisesToAdd.push(this._familyEnterprises.parent);
           }
           break;
         case 'subsidiaries':
-          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterpries.mySubsidiaries || []);
+          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterprises.mySubsidiaries || []);
           break;
         case 'parentSubsidiaries':
-          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterpries.subsidiariesOfParent || []);
+          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterprises.subsidiariesOfParent || []);
           break;
       }
     });
@@ -414,9 +415,9 @@ export class SidebarBlacklistComponent implements OnInit {
   addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<Enterprise>) {
     if (enterprisesToAdd && enterprisesToAdd.length) {
       enterprisesToAdd.map(_enterprise => {
-        const _canAdd = this._initialDomains.find(domain => domain.domain === '*@' + _enterprise.topLevelDomain);
+        const _canAdd = this._initialDomains.find(domain => domain.name === '*@' + _enterprise.topLevelDomain);
         if (!_canAdd && _enterprise.topLevelDomain) {
-          this._initialDomains.push({domain: '*@' + _enterprise.topLevelDomain});
+          this._initialDomains.push({name: '*@' + _enterprise.topLevelDomain});
         }
       });
     }
