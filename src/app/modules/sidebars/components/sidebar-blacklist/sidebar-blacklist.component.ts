@@ -5,6 +5,9 @@ import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
 import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { FamilyEnterprises } from '../../../../models/enterprise';
 
 interface DomainOption {
   checked: boolean;
@@ -125,7 +128,8 @@ export class SidebarBlacklistComponent implements OnInit {
   ];
 
   constructor(private _formBuilder: FormBuilder,
-              private _innovationService: InnovationService) {
+              private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
@@ -347,10 +351,14 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   autoBlacklist() {
-    this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe(results => {
-      console.log(results);
+    this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
+      console.log(result);
     }, err => {
       console.error(err);
+      this._translateNotificationsService.error(
+        'ERROR.ERROR',
+        ErrorFrontService.getErrorMessage(err.status)
+      );
     });
   }
 
