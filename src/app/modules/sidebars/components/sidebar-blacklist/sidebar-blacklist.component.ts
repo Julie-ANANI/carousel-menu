@@ -119,12 +119,12 @@ export class SidebarBlacklistComponent implements OnInit {
     },
     {
       option: 'Subsidiaries\' domains',
-      value: 'subsidiaries',
+      value: 'mySubsidiaries',
       checked: false
     },
     {
       option: 'Parent\'s subsidiaries\' domains',
-      value: 'parentSubsidiaries',
+      value: 'subsidiariesOfParent',
       checked: false
     },
   ];
@@ -375,12 +375,17 @@ export class SidebarBlacklistComponent implements OnInit {
   updateBlackList() {
     const _blackListToAdd = this.blacklistOnChange(true);
     this.addEnterpriseDomainIntoBlacklist(_blackListToAdd);
+    this.saveChanges();
   }
 
   onClickToggle() {
     this._showToggleSearch = !this._showToggleSearch;
   }
 
+  /**
+   *
+   * @param option
+   */
   optionOnChange(option: DomainOption) {
     option.checked = !option.checked;
     switch (option.value) {
@@ -399,6 +404,10 @@ export class SidebarBlacklistComponent implements OnInit {
     }
   }
 
+  /**
+   * according to the selections, add enterprises related
+   * @param isAdd: true - add enterprises
+   */
   blacklistOnChange(isAdd: boolean) {
     let enterprises: Array<Enterprise> = [];
     this._autoBlacklistOption.filter(el => el.checked === isAdd).map(_option => {
@@ -415,17 +424,18 @@ export class SidebarBlacklistComponent implements OnInit {
             enterprises.push(this._familyEnterprises.parent);
           }
           break;
-        case 'subsidiaries':
-          enterprises = enterprises.concat(this._familyEnterprises.mySubsidiaries || []);
-          break;
-        case 'parentSubsidiaries':
-          enterprises = enterprises.concat(this._familyEnterprises.subsidiariesOfParent || []);
+        default:
+          enterprises = enterprises.concat(this._familyEnterprises[_option.value] || []);
           break;
       }
     });
     return enterprises;
   }
 
+  /**
+   * add enterprises' domains
+   * @param enterprisesToAdd
+   */
   addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<Enterprise>) {
     if (enterprisesToAdd && enterprisesToAdd.length) {
       enterprisesToAdd.map(_enterprise => {
@@ -437,6 +447,9 @@ export class SidebarBlacklistComponent implements OnInit {
     }
   }
 
+  /**
+   * validate: if can send request to get enterprises from backend
+   */
   enableValidateBnt() {
     return this._autoBlacklistOption.filter(_option => _option.checked === true).length <= 0;
   }
