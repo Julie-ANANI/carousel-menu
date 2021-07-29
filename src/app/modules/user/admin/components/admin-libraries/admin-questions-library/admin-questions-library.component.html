@@ -108,7 +108,7 @@
 
     <button
       (click)="onCreate($event)"
-      [disabled]="!newQuestion.identifier && !newQuestion.controlType && !identifierError.letter && !identifierError.exist"
+      [disabled]="!newQuestion.identifier || !newQuestion.controlType"
       [id]="'adminQuestionsLibrary-btn-modal-create'"
       class="button is-community"
       type="button">
