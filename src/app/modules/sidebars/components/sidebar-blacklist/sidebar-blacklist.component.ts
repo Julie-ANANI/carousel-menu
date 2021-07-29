@@ -7,7 +7,7 @@ import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { FamilyEnterprises } from '../../../../models/enterprise';
+import { Enterprise, FamilyEnterprises } from '../../../../models/enterprise';
 
 interface DomainOption {
   checked: boolean;
@@ -103,6 +103,8 @@ export class SidebarBlacklistComponent implements OnInit {
   private _toBeSaved = false;
 
   private _showToggleSearch = false;
+
+  private _familyEnterpries: FamilyEnterprises = <FamilyEnterprises>{};
 
   private _autoBlacklistOption: Array<DomainOption> = [
     {
@@ -353,6 +355,9 @@ export class SidebarBlacklistComponent implements OnInit {
   autoBlacklist() {
     this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
       console.log(result);
+      if (result) {
+        this._familyEnterpries = result;
+      }
     }, err => {
       console.error(err);
       this._translateNotificationsService.error(
@@ -373,6 +378,47 @@ export class SidebarBlacklistComponent implements OnInit {
         this._autoBlacklistOption.map(_option => _option.checked = option.checked);
         break;
     }
+    const _blackList = this.blacklistOnChange();
+    this.addEnterpriseDomainIntoBlacklist(_blackList);
+  }
+
+  blacklistOnChange() {
+    let enterprisesToAdd: Array<Enterprise> = [];
+    this._autoBlacklistOption.filter(el => el.checked === true).map(_option => {
+      switch (_option.value) {
+        case 'selectAll':
+          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterpries.mySubsidiaries || [],
+            this._familyEnterpries.subsidiariesOfParent || []);
+          if (this._familyEnterpries.parent) {
+            enterprisesToAdd.push(this._familyEnterpries.parent);
+          }
+          return enterprisesToAdd;
+        case 'parent':
+          if (this._familyEnterpries.parent) {
+            enterprisesToAdd.push(this._familyEnterpries.parent);
+          }
+          break;
+        case 'subsidiaries':
+          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterpries.mySubsidiaries || []);
+          break;
+        case 'parentSubsidiaries':
+          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterpries.subsidiariesOfParent || []);
+          break;
+      }
+    });
+    return enterprisesToAdd;
+  }
+
+  addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<Enterprise>) {
+    if (enterprisesToAdd && enterprisesToAdd.length) {
+      enterprisesToAdd.map(_enterprise => {
+        const _canAdd = this._initialDomains.find(domain => domain.domain === '*@' + _enterprise.topLevelDomain);
+        if (_canAdd && _enterprise.topLevelDomain) {
+          this._initialDomains.push('*@' + _enterprise.topLevelDomain);
+        }
+      });
+    }
+    console.log(this._initialDomains);
   }
 
   enableValidateBnt() {
