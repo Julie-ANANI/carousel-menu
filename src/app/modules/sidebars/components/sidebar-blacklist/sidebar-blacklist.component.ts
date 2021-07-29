@@ -341,7 +341,6 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   addDomains(value: any) {
-    console.log(value);
     if (value.value && value.value.length) {
       value.value.forEach((_domain: any) => {
         const domain = _domain.domain || _domain.name;
@@ -355,21 +354,27 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   autoBlacklist() {
-    this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
-      console.log(result);
-      if (result) {
-        this._familyEnterprises = result;
-        const _blackList = this.blacklistOnChange();
-        console.log(_blackList);
-        this.addEnterpriseDomainIntoBlacklist(_blackList);
-      }
-    }, err => {
-      console.error(err);
-      this._translateNotificationsService.error(
-        'ERROR.ERROR',
-        ErrorFrontService.getErrorMessage(err.status)
-      );
-    });
+    if (!this._familyEnterprises.subsidiariesOfParent && !this._familyEnterprises.parent && !this._familyEnterprises.mySubsidiaries) {
+      this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
+        if (result) {
+          this._familyEnterprises = result;
+          this.updateBlackList();
+        }
+      }, err => {
+        console.error(err);
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          ErrorFrontService.getErrorMessage(err.status)
+        );
+      });
+    } else {
+      this.updateBlackList();
+    }
+  }
+
+  updateBlackList() {
+    const _blackListToAdd = this.blacklistOnChange(true);
+    this.addEnterpriseDomainIntoBlacklist(_blackListToAdd);
   }
 
   onClickToggle() {
@@ -385,31 +390,31 @@ export class SidebarBlacklistComponent implements OnInit {
     }
   }
 
-  blacklistOnChange() {
-    let enterprisesToAdd: Array<Enterprise> = [];
-    this._autoBlacklistOption.filter(el => el.checked === true).map(_option => {
+  blacklistOnChange(isAdd: boolean) {
+    let enterprises: Array<Enterprise> = [];
+    this._autoBlacklistOption.filter(el => el.checked === isAdd).map(_option => {
       switch (_option.value) {
         case 'selectAll':
-          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterprises.mySubsidiaries || [],
+          enterprises = enterprises.concat(this._familyEnterprises.mySubsidiaries || [],
             this._familyEnterprises.subsidiariesOfParent || []);
           if (this._familyEnterprises.parent) {
-            enterprisesToAdd.push(this._familyEnterprises.parent);
+            enterprises.push(this._familyEnterprises.parent);
           }
-          return enterprisesToAdd;
+          return enterprises;
         case 'parent':
           if (this._familyEnterprises.parent) {
-            enterprisesToAdd.push(this._familyEnterprises.parent);
+            enterprises.push(this._familyEnterprises.parent);
           }
           break;
         case 'subsidiaries':
-          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterprises.mySubsidiaries || []);
+          enterprises = enterprises.concat(this._familyEnterprises.mySubsidiaries || []);
           break;
         case 'parentSubsidiaries':
-          enterprisesToAdd = enterprisesToAdd.concat(this._familyEnterprises.subsidiariesOfParent || []);
+          enterprises = enterprises.concat(this._familyEnterprises.subsidiariesOfParent || []);
           break;
       }
     });
-    return enterprisesToAdd;
+    return enterprises;
   }
 
   addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<Enterprise>) {
@@ -421,7 +426,6 @@ export class SidebarBlacklistComponent implements OnInit {
         }
       });
     }
-    console.log(this._initialDomains);
   }
 
   enableValidateBnt() {
