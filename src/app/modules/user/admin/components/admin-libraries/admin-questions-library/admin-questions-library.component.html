@@ -48,23 +48,52 @@
   </div>
 </div>
 
-<app-utility-modal-empty *ngIf="canAccess(['add'])" [(showModal)]="showModal">
+<app-utility-modal-empty *ngIf="canAccess(['add']) && showModal" [(showModal)]="showModal">
 
   <section class="modal-body">
     <h2 class="title is-4 text-center text-bold m-bottom-30">Add a question from Scratch</h2>
-    <div class="form-group mxw-400 m-left-auto m-right-auto p-top-20 p-bottom-20">
-      <label>
-        <select [(ngModel)]="newQuestion" class="form-select is-sm">
-          <option [ngValue]="''" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
-          <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
-          <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
-          <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
-          <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
-          <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
-          <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-        </select>
-      </label>
+
+    <div class="form-group mxw-400 m-left-auto m-right-auto p-top-20">
+      <label class="form-label">Type*</label>
+      <select [(ngModel)]="newQuestion.controlType" class="form-select is-sm" required>
+        <option [ngValue]="''" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
+        <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+        <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+        <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+        <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+        <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+        <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+      </select>
     </div>
+
+    <div class="form-group mxw-400 m-left-auto m-right-auto p-top-20 p-bottom-20">
+      <label class="form-label">Identifier*</label>
+      <input
+        (ngModelChange)="onChangeIdentifier($event)"
+        [ngModel]="newQuestion.identifier"
+        class="form-input is-sm"
+        maxlength="23"
+        placeholder="Enter the unique identifier"
+        required>
+      <ng-container *ngIf="!identifierError.letter && !identifierError.exist; else identError">
+        <p class="text-xs text-alert text-medium m-top-2 m-bottom-h">Note:</p>
+        <ul class="text-xs text-notify text-medium m-left-2 m-no">
+          <li class="m-top-h">Should be less then or equal to 23.</li>
+          <li class="m-top-h">Should only have characters ex: abABCD.</li>
+          <li class="m-top-h">Should be an unique.</li>
+          <li class="m-top-h">Not case sensitive means Radio or radio is same.</li>
+          <li class="m-top-h">Two question can not have same identifier.</li>
+          <li class="m-top-h">Once defined can not be changed later.</li>
+        </ul>
+      </ng-container>
+      <ng-template #identError>
+        <p class="form-error">
+          <ng-container *ngIf="identifierError.exist">The identifier is already assigned to a question.</ng-container>
+          <ng-container *ngIf="identifierError.letter">The identifier should only contains characters.</ng-container>
+        </p>
+      </ng-template>
+    </div>
+
   </section>
 
   <footer class="modal-footer justify-center">
@@ -79,7 +108,7 @@
 
     <button
       (click)="onCreate($event)"
-      [disabled]="!newQuestion"
+      [disabled]="!newQuestion.identifier && !newQuestion.controlType && !identifierError.letter && !identifierError.exist"
       [id]="'adminQuestionsLibrary-btn-modal-create'"
       class="button is-community"
       type="button">
