@@ -13,8 +13,9 @@ export class AdminSearchComponent {
 
   private _tabs: Array<{key: string, name: string, route: string}> = [
     {key: 'pros', name: 'Professionals', route: 'pros'},
-    {key: 'history', name: 'History', route: 'history'},
-    {key: 'queue', name: 'File d\'attente', route: 'queue'}
+    {key: 'history', name: 'Historique', route: 'history'},
+    {key: 'queue', name: 'File d\'attente', route: 'queue'},
+    {key: 'scraping', name: 'Scraping', route: 'scraping'}
   ];
 
   private _heading = '';
@@ -51,6 +52,9 @@ export class AdminSearchComponent {
 
       case 'queue':
         return 'Queue';
+
+      case 'scraping':
+        return 'Scraping';
 
     }
   }

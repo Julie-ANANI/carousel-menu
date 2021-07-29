@@ -11,6 +11,7 @@ import { AdminSearchResultsComponent } from './admin-search-results/admin-search
 import { AdminSearchComponent } from './admin-search.component';
 
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
+import {AdminSearchScrapingComponent} from './admin-search-scraping/admin-search-scraping.component';
 
 export const routes: Routes = [
   {
@@ -45,7 +46,14 @@ export const routes: Routes = [
         resolve: { request : RequestResolver },
         runGuardsAndResolvers: 'always',
         pathMatch: 'full'
-      }
+      },
+      {
+        path: 'scraping',
+        component: AdminSearchScrapingComponent,
+        pathMatch: 'full',
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['search', 'scraping'] }
+      },
     ]
   }
 ];

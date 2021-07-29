@@ -158,6 +158,7 @@ export class AuthService {
       this._setAdminTo(res.adminLevel);
       this._setConfirmedTo(res.isConfirmed);
       this._user = res.user || null;
+      console.log(this._user);
       // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
       this._setIsOperatorTo(this._user ? this._user.isOperator : false );
       this._setEtherpadAccessesTo(res.etherpad);
