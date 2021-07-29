@@ -1,5 +1,5 @@
 <div class="column col-11 col-sm-12 p-top-30 col-mx-auto" id="sidebar-blacklist">
-  <form novalidate [formGroup]="formData" autocomplete="off" (ngSubmit)="onSubmit()">
+  <form novalidate [formGroup]="formData" autocomplete="off">
 
     <!-- save button -->
     <div *ngIf="isEditable" class="text-right p-bottom-30">
@@ -7,7 +7,7 @@
         [disabled]="!toBeSaved"
         class="button is-community is-sm"
         id="btn-save"
-        type="submit">
+        (click)="onSubmit()">
         Save
       </button>
     </div>
@@ -40,13 +40,13 @@
         </div>
 
         <div>
-            <button
-              class="button is-community is-xs"
-              [disabled]="enableValidateBnt()"
-              (click)="autoBlacklist()"
-              id="btn-auto-blacklist">
-              Validate
-            </button>
+          <button
+            class="button is-community is-xs"
+            [disabled]="enableValidateBnt()"
+            (click)="autoBlacklist()"
+            id="btn-auto-blacklist">
+            Validate
+          </button>
         </div>
         <!-- /use -->
 
@@ -78,6 +78,7 @@
           <label class="form-label">Domains to exclude</label>
           <app-utility-auto-complete-input
             [onlyDomain]="true"
+            [isEditable]="isEditable"
             (update)="addDomains($event)"
             [config]="getConfig('excludedCompanies')">
           </app-utility-auto-complete-input>

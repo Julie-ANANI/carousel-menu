@@ -341,6 +341,7 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   addDomains(value: any) {
+    console.log(value);
     if (value.value && value.value.length) {
       value.value.forEach((_domain: any) => {
         if (_domain.domain && _domain.domain.indexOf('*@') === -1) {
@@ -357,6 +358,9 @@ export class SidebarBlacklistComponent implements OnInit {
       console.log(result);
       if (result) {
         this._familyEnterpries = result;
+        const _blackList = this.blacklistOnChange();
+        console.log(_blackList);
+        this.addEnterpriseDomainIntoBlacklist(_blackList);
       }
     }, err => {
       console.error(err);
@@ -378,8 +382,6 @@ export class SidebarBlacklistComponent implements OnInit {
         this._autoBlacklistOption.map(_option => _option.checked = option.checked);
         break;
     }
-    const _blackList = this.blacklistOnChange();
-    this.addEnterpriseDomainIntoBlacklist(_blackList);
   }
 
   blacklistOnChange() {
@@ -413,8 +415,8 @@ export class SidebarBlacklistComponent implements OnInit {
     if (enterprisesToAdd && enterprisesToAdd.length) {
       enterprisesToAdd.map(_enterprise => {
         const _canAdd = this._initialDomains.find(domain => domain.domain === '*@' + _enterprise.topLevelDomain);
-        if (_canAdd && _enterprise.topLevelDomain) {
-          this._initialDomains.push('*@' + _enterprise.topLevelDomain);
+        if (!_canAdd && _enterprise.topLevelDomain) {
+          this._initialDomains.push({domain: '*@' + _enterprise.topLevelDomain});
         }
       });
     }
