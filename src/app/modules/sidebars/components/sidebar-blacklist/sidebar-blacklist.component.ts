@@ -387,6 +387,15 @@ export class SidebarBlacklistComponent implements OnInit {
       case 'selectAll':
         this._autoBlacklistOption.map(_option => _option.checked = option.checked);
         break;
+      default:
+        if (!option.checked) {
+          this._autoBlacklistOption.map(_option => {
+            if (_option.value === 'selectAll') {
+              _option.checked = false;
+            }
+          });
+        }
+        break;
     }
   }
 
