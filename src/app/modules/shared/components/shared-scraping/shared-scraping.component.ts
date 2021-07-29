@@ -66,7 +66,7 @@ export class SharedScrapingComponent implements OnInit {
     this._isError = false;
     const scrapeParams = this._params;
     console.log('url :', scrapeParams['url']);
-    console.log(scrapeParams);
+    console.log('scrape options :', scrapeParams);
     this.startKeepInformed();
     this._scrapingService.getScraping(scrapeParams).subscribe(
       (value) => {
@@ -127,18 +127,14 @@ export class SharedScrapingComponent implements OnInit {
   private autoKeepInformed(): void {
     this._scrapingService.checkScraping(this.getJsonId()).subscribe(
       (value) => {
-        console.log('id : ', this._params['id']);
-        console.log('Check result : ', value);
         this._keepInformed = value['info'];
       },
       (error) => {
         console.log('Uh-oh, an error occurred! : ', error);
       },
       () => {
-        console.log('Observable complete!');
       }
     );
-    console.log('Hello from autoKeepInformed');
   }
 
   public activateSidebar() {
@@ -206,6 +202,17 @@ export class SharedScrapingComponent implements OnInit {
     return arrayValue;
   }
 
+  public onClickCopy(): void {
+    console.log('Click Copy!');
+    const range = document.createRange();
+    range.selectNodeContents(document.getElementById('result'));
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy');
+    selection.removeAllRanges();
+  }
+
   ngOnInit(): void {
     this._initParams();
   }
@@ -217,10 +224,7 @@ export class SharedScrapingComponent implements OnInit {
       // formattedAddress: false,
       // whereFormattedAddress: '',
       dynamicHTML: false,
-      // isLoadMore: false,
-      // loadMore: '',
-      // numberLoadMore: 1,
-      // waitTimeLoadMore: 0,
+      loadMore: '',
       // skipMails: ''
       numberSpecificData: 0,
       specificData: [{}, {}, {}, {}, {}],

@@ -37,6 +37,19 @@
         Cancel
       </button>
     </div>
+
+    <!-- copy button -->
+    <div class="input-wrapper">
+      <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="remaining-wrapper">
+        <a
+          (click)="onClickCopy()"
+          class="text-link">
+          Copy result in the clipboard
+        </a>
+      </div>
+    </div>
+    <!-- /copy button -->
+
     <!-- /buttons -->
 
     <!-- /search wrapper -->
@@ -78,8 +91,7 @@
 <!-- sidebars to set settings -->
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-scraping
-    [params]="params"
-    [sidebarState]="sidebarValue.animate_state">
+    [params]="params">
   </app-sidebar-scraping>
 </app-sidebar>
 <!-- /sidebars to set settings  -->
