@@ -3,6 +3,10 @@
 #sidebar-setting-scraping {
   padding-bottom: 30px;
 
+  .tooltip::before {
+    max-width: none;
+  }
+
   .form-input {
     width: auto;
   }

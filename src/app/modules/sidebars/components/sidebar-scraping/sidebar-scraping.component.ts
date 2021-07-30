@@ -14,18 +14,19 @@ export class SidebarScrapingComponent implements OnChanges {
   private _showToggleMoreData = false;
   // private _possibleFormattedAddress = new Array<string>();
 
+  private _tooltipXPath: string =
+    '1/ Faites Shift + cmd + c pour ouvrir l’inspecteur de code\n' +
+    '2/ Sur la page Web, cliquez sur l’information à extraire du 1er mail\n' +
+    '3/ Clic droit sur la ligne bleu dans l’inspecteur : Copier > Xpath';
+
   private _fields: any = {
     rawData: {
-      label: 'Info supplémentaire brute par rapport au pro',
+      label: 'Extraction automatique d\'informations brutes',
       toolTip: 'Extrait toutes les infos rattachées au pro mais peut prendre plus de temps.'
     },
     dynamicHTML: {
       label: 'Dernier recours',
       toolTip: 'Checkbox à cocher si rien ne semble marcher comme il le faudrait. Prend plus de temps.'
-    },
-    specificData: {
-      label: 'Extraction d’une catégorie d’information pour chaque pro',
-      toolTip: null
     },
     specificDataName: {
       label: 'Créer un intitulé',
@@ -33,20 +34,18 @@ export class SidebarScrapingComponent implements OnChanges {
     },
     specificDataXPath: {
       label: 'Emplacement de l’information (Xpath)',
-      toolTip: '1/ Faites Shift + cmd + c pour ouvrir l’inspecteur de code                ' +
-               '2/ Sur la page Web, cliquez sur l’information à extraire du 1er mail      ' +
-               '3/ Clic droit sur la ligne bleu dans l’inspecteur : Copier > Xpath        '
+      toolTip: this._tooltipXPath,
     },
     numberSpecificData: {
-      label: 'Nombre de catégorie d’informations à extraire',
+      label: 'J\'ai besoin d\'extraire combien de catégorie d’informations ?',
       toolTip: null
     },
     isCrawling: {
-      label: 'Scraper plusieurs pages',
+      label: 'J\'ai besoin de scraper plusieurs pages',
       toolTip: 'Notamment pour les sites à plusieurs pages de résultats'
     },
     isSingle: {
-      label: 'Nécessité de cliquer sur le profil pour trouver le mail',
+      label: 'J\'ai besoin de cliquer sur le profil pour trouver le mail',
       toolTip: null,
     },
     linkPro: {
@@ -54,26 +53,25 @@ export class SidebarScrapingComponent implements OnChanges {
       toolTip: 'regardez l’URL d’au moins deux profils et sélectionnez la partie de l’URL en commun.'
     },
     numberFields: {
-      label: 'Nombre de champs à remplir',
+      label: 'J\'ai besoin de remplir combien de champ pour charger la page à scraper ?',
       toolTip: 'ex : champ avec un code postal à remplir'
     },
     fieldLocator: {
       label: 'Emplacement du champ texte (Xpath)',
-      toolTip: '1/ Faites Shift + cmd + c pour ouvrir l’inspecteur de code                ' +
-        '2/ Sur la page Web, cliquez sur l’information à extraire du 1er mail      ' +
-        '3/ Clic droit sur la ligne bleu dans l’inspecteur : Copier > Xpath        '
+      toolTip: this._tooltipXPath,
     },
     fieldData: {
-      label: 'Valeurs à chercher',
-      toolTip: 'Séparées par une virgule.'
+      label: 'Valeurs à remplir',
+      toolTip: 'Séparées les valeurs par une virgule.'
     },
     loadMore: {
       label: 'Emplacement d\'un bouton permettant de charger plus de pros (Xpath)',
-      toolTip: 'Rentrer le XPath lié à ce bouton: ' +
-        '1/ Faites Shift + cmd + c pour ouvrir l’inspecteur de code                 ' +
-        '2/ Sur la page Web, cliquez sur l’information à extraire du 1er mail       ' +
-        '3/ Clic droit sur la ligne bleu dans l’inspecteur : Copier > Xpath         '
+      toolTip: 'Rentrer le XPath lié à ce bouton: \n' + this._tooltipXPath,
     }
+    // specificData: {
+    //   label: 'Extraction d’une catégorie d’information pour chaque pro',
+    //   toolTip: null
+    // },
     // formattedAddress: {
     //   label: 'Formatage de l’adresse postale (Payant)',
     //   toolTip: 'Fonctionne sur des infos brutes ou sur une catégorie d’info lié à l’adresse postale. Utilise l’API geocode de Google
