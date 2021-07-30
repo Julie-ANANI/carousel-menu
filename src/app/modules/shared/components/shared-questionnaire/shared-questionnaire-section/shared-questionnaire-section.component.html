@@ -6,7 +6,10 @@
     <!-- move button / description -->
     <div class="d-flex align-center m-bottom-10">
 
-      <div *ngIf="isEditable" data-tooltip="Move section" class="move-arrows tooltip">
+      <div
+        *ngIf="isEditable || canAccess(['section', 'order'])"
+        data-tooltip="Move section"
+        class="move-arrows tooltip">
         <i (click)="up($event)" [ngClass]="{'disabled': sectionIndex === 0}" class="icon icon-arrow-up"></i>
         <i
           (click)="down($event)"
