@@ -81,7 +81,7 @@
 
       <!-- text -->
       <div class="aci-answer-wrapper text-sm text-primary-dark m-right-2" *ngIf="onlyDomain">
-        <span>{{answer.domain || ''}}</span>
+        <span>{{answer.name || ''}}</span>
       </div>
       <!-- text -->
 
@@ -191,6 +191,51 @@
 
         </div>
         <!-- /if admin mode -->
+
+        <!-- if domain edit mode -->
+        <div *ngIf="isEditable && onlyDomain" class="d-flex">
+
+          <!-- edit-icon -->
+          <div [ngClass]="{'popover': isEditable}">
+
+            <div [ngClass]="{'disabled': !isEditable, 'c-default': isEditable}" class="icon-container is-overlay">
+              <i class="fas fa-pencil-alt text-notify"></i>
+            </div>
+
+            <div *ngIf="isEditable" class="popover-container" style="width: 180px; z-index: 999">
+              <div class="card p-no">
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label" [for]="answer[identifier]">Answer</label>
+                    <input
+                      [(ngModel)]="answer[identifier]"
+                      [id]="answer[identifier]"
+                      autocomplete="off"
+                      class="form-input is-sm is-shadowed"
+                      name="answer"
+                      type="text">
+                  </div>
+                </div>
+
+                <div class="card-footer text-center">
+                  <button
+                    (click)="updateItem($event)"
+                    [disabled]="!answer[identifier]"
+                    class="button is-secondary is-outlined is-xs"
+                    type="submit">
+                    Update
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <!-- /edit-icon -->
+
+        </div>
+        <!-- /if domain edit mode -->
 
         <!-- delete icon -->
         <div
