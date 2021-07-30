@@ -439,7 +439,7 @@ export class SidebarBlacklistComponent implements OnInit {
     if (this._familyEnterprises.parent) {
       return [this._familyEnterprises.parent];
     } else {
-      this._messageForEmptyFamilyEnterprises.add('Owner\' enterprise doesn\'t have parent enterprise');
+      this._messageForEmptyFamilyEnterprises.add('Owner\'s enterprise doesn\'t have parent enterprise');
       return [];
     }
   }
@@ -448,7 +448,7 @@ export class SidebarBlacklistComponent implements OnInit {
     if (this._familyEnterprises.mySubsidiaries && this._familyEnterprises.mySubsidiaries.length) {
       return this._familyEnterprises.mySubsidiaries;
     } else {
-      this._messageForEmptyFamilyEnterprises.add('Owner\' enterprise doesn\'t have any subsidiary');
+      this._messageForEmptyFamilyEnterprises.add('Owner\'s enterprise doesn\'t have any subsidiary');
       return [];
     }
   }
@@ -457,7 +457,7 @@ export class SidebarBlacklistComponent implements OnInit {
     if (this._familyEnterprises.subsidiariesOfParent && this._familyEnterprises.subsidiariesOfParent.length) {
       return this._familyEnterprises.subsidiariesOfParent;
     } else {
-      this._messageForEmptyFamilyEnterprises.add('Owner\' parent enterprise doesn\'t have any subsidiary');
+      this._messageForEmptyFamilyEnterprises.add('Owner\'s parent enterprise doesn\'t have any subsidiary');
       return [];
     }
   }
