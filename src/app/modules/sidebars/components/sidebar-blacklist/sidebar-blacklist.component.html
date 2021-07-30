@@ -23,6 +23,12 @@
       </button>
       <!-- /toggle button -->
 
+      <div class="flex-d-column m-top-3" style="line-height: 1" *ngIf="messageForEmptyFamilyEnterprises && messageForEmptyFamilyEnterprises.size">
+        <p class="text-error text-13" *ngFor="let message of messageForEmptyFamilyEnterprises">
+           - {{message}}
+        </p>
+      </div>
+
       <!-- toggle options -->
       <div *ngIf="showToggleSearch" [ngClass]="showToggleSearch ? 'd-block' : 'd-none'" class="m-top-25">
 

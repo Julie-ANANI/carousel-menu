@@ -106,6 +106,8 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _familyEnterprises: FamilyEnterprises = <FamilyEnterprises>{};
 
+  private _messageForEmptyFamilyEnterprises = new Set();
+
   private _autoBlacklistOption: Array<DomainOption> = [
     {
       option: 'Select all',
@@ -410,26 +412,54 @@ export class SidebarBlacklistComponent implements OnInit {
    */
   blacklistOnChange(isAdd: boolean) {
     let enterprises: Array<Enterprise> = [];
+    this._messageForEmptyFamilyEnterprises.clear();
     this._autoBlacklistOption.filter(el => el.checked === isAdd).map(_option => {
       switch (_option.value) {
         case 'selectAll':
-          enterprises = enterprises.concat(this._familyEnterprises.mySubsidiaries || [],
-            this._familyEnterprises.subsidiariesOfParent || []);
-          if (this._familyEnterprises.parent) {
-            enterprises.push(this._familyEnterprises.parent);
-          }
+          enterprises = enterprises.concat(this.addParenEnterpriseMessage(),
+            this.addSubsidiariesMessage(),
+            this.addParentSubsidiariesMessage());
           return enterprises;
         case 'parent':
-          if (this._familyEnterprises.parent) {
-            enterprises.push(this._familyEnterprises.parent);
-          }
+          enterprises = enterprises.concat(this.addParenEnterpriseMessage());
           break;
-        default:
-          enterprises = enterprises.concat(this._familyEnterprises[_option.value] || []);
+        case 'mySubsidiaries':
+          enterprises = enterprises.concat(this.addSubsidiariesMessage());
           break;
+        case 'subsidiariesOfParent':
+          enterprises = enterprises.concat(this.addParentSubsidiariesMessage());
+          break;
+
       }
     });
     return enterprises;
+  }
+
+  addParenEnterpriseMessage() {
+    if (this._familyEnterprises.parent) {
+      return [this._familyEnterprises.parent];
+    } else {
+      this._messageForEmptyFamilyEnterprises.add('Owner\' enterprise doesn\'t have parent enterprise');
+      return [];
+    }
+  }
+
+  addSubsidiariesMessage() {
+    if (this._familyEnterprises.mySubsidiaries && this._familyEnterprises.mySubsidiaries.length) {
+      return this._familyEnterprises.mySubsidiaries;
+    } else {
+      this._messageForEmptyFamilyEnterprises.add('Owner\' enterprise doesn\'t have any subsidiary');
+      return [];
+    }
+  }
+
+  addParentSubsidiariesMessage() {
+    if (this._familyEnterprises.subsidiariesOfParent && this._familyEnterprises.subsidiariesOfParent.length) {
+      return this._familyEnterprises.subsidiariesOfParent;
+    } else {
+      this._messageForEmptyFamilyEnterprises.add('Owner\' parent enterprise doesn\'t have any subsidiary');
+      return [];
+    }
   }
 
   /**
@@ -452,5 +482,10 @@ export class SidebarBlacklistComponent implements OnInit {
    */
   enableValidateBnt() {
     return this._autoBlacklistOption.filter(_option => _option.checked === true).length <= 0;
+  }
+
+
+  get messageForEmptyFamilyEnterprises(){
+    return this._messageForEmptyFamilyEnterprises;
   }
 }
