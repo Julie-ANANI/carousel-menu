@@ -238,6 +238,10 @@ export class AdminEditUseCaseComponent implements OnInit {
 
       switch (event.key) {
 
+        case 'QUESTION_REMOVE_SCRATCH':
+          this._removeAction(event);
+          break;
+
         case 'QUESTION_ADD':
           this._valuesToSave.unshift(event);
           break;
@@ -250,6 +254,22 @@ export class AdminEditUseCaseComponent implements OnInit {
       this._toSaveQuestion = true;
       this._toBeSaved = true;
 
+    }
+  }
+
+  /**
+   * if the remove question has not creted in the back yet we delete it from the
+   * actions list.
+   *
+   * @param event
+   * @private
+   */
+  private _removeAction(event: {key: string, value: any}) {
+    const index = this._valuesToSave.findIndex((_value) => {
+      return (_value.value.identifier === event.value.identifier && _value.key === 'QUESTION_ADD');
+    });
+    if (index !== -1) {
+      this._valuesToSave.splice(index, 1);
     }
   }
 
