@@ -1,0 +1,164 @@
+@import "variables";
+@import "mixins";
+
+.card-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$unit-5;
+
+  .card {
+    margin-right: $unit-5;
+    margin-bottom: $unit-5;
+    max-width: calc(25% - 20px);
+  }
+
+}
+
+.card-3 {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$unit-5;
+
+  .card {
+    margin-right: $unit-5;
+    margin-bottom: $unit-5;
+    max-width: calc(33% - 20px);
+  }
+
+}
+
+.card {
+  @include control-transition();
+  display: flex;
+  flex-direction: column;
+  background-color: $white-color;
+  border-radius: $border-radius;
+  border: $border-width solid $border-default-color;
+
+  &.is-shadow, &.is-hover-effect {
+    border: 0;
+    box-shadow: 0 5px 20px rgba(48,55,66,.15);
+  }
+
+  &.is-hover-effect:hover {
+    @include control-transition(0.5s);
+    transform: translateY(-8px);
+  }
+
+  .card-image {
+    display: block;
+    padding-top: $unit-3;
+    margin-left: auto;
+    margin-right: auto;
+
+    img {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      object-fit: cover;
+    }
+
+    &:first-child {
+      padding-top: 0;
+
+      img {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+      }
+
+    }
+
+    &:last-child {
+
+      img {
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+
+    }
+
+  }
+
+  .card-header, .card-body, .card-footer {
+    padding: $unit-3 10px 0;
+    font-size: $font-size-md;
+
+    &:last-child {
+      padding-bottom: $unit-3;
+    }
+
+  }
+
+  .card-header {
+
+    .card-title {
+      font-weight: $font-weight-medium;
+      font-size: $unit-5;
+    }
+
+    .card-subtitle {
+      font-size: $font-size-md;
+    }
+
+  }
+
+  .card-body {
+    flex: 1 1 auto;
+    font-size: 15px;
+  }
+
+}
+
+@media screen and (max-width: $size-xl) {
+
+  .card-responsive .card {
+    max-width: calc(33% - 20px) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-lg) {
+
+  .card-responsive .card {
+    max-width: calc(40% - 20px) !important;
+  }
+
+  .card-3 .card {
+    max-width: calc(50% - 20px) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-md) {
+
+  .card-responsive .card {
+    max-width: calc(50% - 20px) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-sm) {
+
+  .card-3 {
+    margin-right: unset;
+  }
+
+  .card-3 .card {
+    margin-right: 0 !important;
+    max-width: calc(100% - 20px) !important;
+  }
+
+}
+
+@media screen and (max-width: $size-xs) {
+
+  .card-responsive {
+    margin-right: unset;
+  }
+
+  .card-responsive .card.is-mobile {
+    max-width: 100% !important;
+    margin-right: 0 !important;
+  }
+
+}

@@ -1,6 +1,6 @@
 // control transition
-@mixin control-transition() {
-  transition: all 0.2s ease;
+@mixin control-transition($time: 0.2s) {
+  transition: all $time ease;
 }
 
 @mixin button-transition() {
