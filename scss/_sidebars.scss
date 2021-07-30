@@ -4,7 +4,7 @@
 // Sidebar backdrop
 .sidebar-backdrop {
   @include full-page(fixed);
-  z-index: 7997;
+  z-index: $z-index-overlay;
 
   &.inactive {
     display: none;
@@ -59,7 +59,7 @@
 
 .sidebar {
   min-height: 100vh;
-  z-index: 7999;
+  z-index: $z-index-sidebar;
   position: fixed;
   width: 400px;
   bottom: 0;

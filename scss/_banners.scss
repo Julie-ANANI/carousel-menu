@@ -1,0 +1,19 @@
+@import "variables";
+@import "mixins";
+
+.banner-sticky {
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+}
+
+.banner {
+  @include flex-position(center);
+  padding: $unit-3;
+  text-align: center;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  background: inherit;
+  color: inherit;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+}
