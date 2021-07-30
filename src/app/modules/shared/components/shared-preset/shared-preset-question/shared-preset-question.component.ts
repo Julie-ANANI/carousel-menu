@@ -95,7 +95,7 @@ export class SharedPresetQuestionComponent {
       total = total || this._question.maxOptionsSelect;
       this.presetLanguages.forEach((lang) => {
         if (this._question.instruction && this._question.instruction[lang]) {
-          this._question.instruction[lang] = this._question.instruction[lang].replace(replaceNumberRegex, (total.toString(10)));
+          this._question.instruction[lang] = this._question.instruction[lang].replace(replaceNumberRegex, (' ' + total.toString(10)));
         }
       });
     }
