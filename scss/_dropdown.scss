@@ -1,0 +1,95 @@
+@import "variables";
+@import "mixins";
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+
+  .menu {
+    animation: menu-slide-down .2s ease 1;
+    display: none;
+    left: 0;
+    position: absolute;
+    max-height: 500px;
+    top: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .menu-item {
+      width: 100%;
+
+      .fullspace {
+        margin: (-$unit-2) -12px;
+        padding: $unit-2 12px;
+        display: block;
+        cursor: pointer;
+      }
+
+    }
+
+    &.is-header {
+      animation: unset;
+      box-shadow: 0 4px 8px rgba(0,0,0,.15);
+      border-radius: $border-width-lg;
+      top: 108.5%;
+      max-height: calc(100vh - 70px);
+
+      .menu-item {
+        padding: 3px 20px;
+
+        & > a {
+          display: flex;
+          align-items: center;
+          margin: -3px -20px;
+          padding: 3px 20px;
+        }
+
+      }
+
+    }
+
+  }
+
+  &.is-right {
+
+    .menu {
+      left: auto;
+      right: 0;
+    }
+
+  }
+
+  .dropdown-toggle.button {
+    text-decoration: none;
+
+    i {
+      font-size: 26px;
+      margin-left: 15px;
+    }
+
+    &.is-sm i {
+      font-size: 20px;
+    }
+
+    &.is-xs i {
+      font-size: 16px;
+    }
+
+    &.is-link {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+  }
+
+  &.active .menu:not(.is-header), .dropdown-toggle:not(.disabled):focus + .menu:not(.is-header), .menu:not(.is-header):hover,
+  &.active .menu.is-notification.is-header, .dropdown-toggle:not(.disabled):focus + .menu.is-notification.is-header, .menu.is-notification.is-header:hover,
+  &.active .menu.is-profile.is-header, .dropdown-toggle:not(.disabled):focus + .menu.is-profile.is-header, .menu.is-profile.is-header:hover {
+    display: block;
+  }
+
+  &.inactive .menu {
+    display: none !important;
+  }
+
+}
