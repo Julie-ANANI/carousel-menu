@@ -73,15 +73,15 @@
         [ngModel]="newQuestion.identifier"
         class="form-input is-sm"
         maxlength="23"
-        placeholder="Enter the unique identifier"
+        placeholder="Enter the unique identifier. Like: ContactOwner"
         required>
       <ng-container *ngIf="!identifierError.letter && !identifierError.exist; else identError">
         <p class="text-xs text-alert text-medium m-top-2 m-bottom-h">Note:</p>
         <ul class="text-xs text-notify text-medium m-left-2 m-no">
-          <li class="m-top-h">Should be less then or equal to 23.</li>
-          <li class="m-top-h">Should only have characters ex: abABCD.</li>
+          <li class="m-top-h">Should be less than or equal to 23.</li>
+          <li class="m-top-h">Try to have only characters ex: ContactOwner.</li>
           <li class="m-top-h">Should be an unique.</li>
-          <li class="m-top-h">Not case sensitive means Radio or radio is same.</li>
+          <li class="m-top-h">Not case sensitive means ContactOwner or contactOwner is same.</li>
           <li class="m-top-h">Two question can not have same identifier.</li>
           <li class="m-top-h">Once defined can not be changed later.</li>
         </ul>

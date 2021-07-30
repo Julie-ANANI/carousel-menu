@@ -204,7 +204,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   }
 
   private _emitValueToSave(access: Array<string>) {
-    if (this.isLibraryView && this.canAccess(access)) {
+    if (this.isLibraryView && this.canAccess(access) && !!this._question._id) {
       this.valueToSave.emit({
         key: 'QUESTION_EDIT',
         value: {
