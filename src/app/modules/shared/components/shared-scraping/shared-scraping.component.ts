@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {RolesFrontService} from '../../../../services/roles/roles-front.service';
 import {ScrapingService} from '../../../../services/scraping/scraping.service';
 import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-scraping',
@@ -35,7 +36,8 @@ export class SharedScrapingComponent implements OnInit {
   private _refreshIntervalId: any = null;
 
   constructor(private _rolesFrontService: RolesFrontService,
-              private _scrapingService: ScrapingService) { }
+              private _scrapingService: ScrapingService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   public canAccess(path: Array<string>) {
     return this._rolesFrontService.hasAccessAdminSide(
@@ -211,6 +213,10 @@ export class SharedScrapingComponent implements OnInit {
     selection.addRange(range);
     document.execCommand('copy');
     selection.removeAllRanges();
+    this._translateNotificationsService.success(
+      'Success',
+      'The result has been copy to the clipboard'
+    );
   }
 
   ngOnInit(): void {

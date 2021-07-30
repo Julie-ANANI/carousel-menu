@@ -41,11 +41,10 @@
     <!-- copy button -->
     <div class="input-wrapper">
       <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="remaining-wrapper">
-        <a
-          (click)="onClickCopy()"
-          class="text-link">
-          Copy result in the clipboard
-        </a>
+        <label class="button is-primary is-sm is-outlined">
+          <input (click)="onClickCopy()" [hidden]="true">
+          <i class="fas fa-copy icon-left"></i> Copy result to the clipboard
+        </label>
       </div>
     </div>
     <!-- /copy button -->
@@ -62,14 +61,15 @@
     <!-- keep informed -->
     <div *ngIf="showKeepInformed" [ngClass]="showKeepInformed ? 'd-block' : 'd-none'" class="m-top-25">
       <h2>{{keepInformed}}</h2>
+      <div class="loading"></div>
     </div>
     <!-- /keep informed -->
 
     <!-- display result -->
     <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="m-top-25">
-      <div id="result">
-        <table>
-          <caption>Result</caption>
+      <div id="result" class="table-responsive is-max-height">
+        <table class="table">
+<!--          <caption>Result</caption>-->
           <thead>
           <tr>
             <th *ngFor="let key_attribute of attributes" class="display-key">{{key_attribute}}</th>
