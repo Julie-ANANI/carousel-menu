@@ -207,7 +207,8 @@ export class AdminQuestionsLibraryComponent implements OnInit {
         {
           _attrs: ['identifier'],
           _name: 'Identifier',
-          _type: 'TAG'
+          _type: 'TAG',
+          _isSearchable: true,
         },
         {
           _attrs: ['updated'],
@@ -296,7 +297,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
       if (find) {
         this._identifierError.exist = true;
       } else {
-        this._newQuestion.identifier = event.toLocaleLowerCase();
+        this._newQuestion.identifier = event;
       }
     } else if (event.length) {
       this._identifierError.letter = true;

@@ -3,6 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmailQueueModel } from '../../../../models/mail.queue.model';
 import { Table } from '../../../table/models/table';
 import { Config } from '../../../../models/config';
+import { first } from 'rxjs/operators';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Enterprise, FamilyEnterprises } from '../../../../models/enterprise';
+
+interface DomainOption {
+  checked: boolean;
+  option: string;
+  value: string;
+}
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
@@ -13,25 +24,28 @@ type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | '
 })
 
 export class SidebarBlacklistComponent implements OnInit {
+  @Input() set innovationId(value: string) {
+    this._innovationId = value;
+  }
 
   @Input() isEditable = false; // make true to save the changes.
 
   @Input() set initialDomains(value: string[]) {
     const domains: any[] = [];
-    value.forEach(value1 => domains.push({domain: '*@' + value1}));
+    value.forEach(value1 => domains.push({name: '*@' + value1}));
     this._initialDomains = domains;
-  };
+  }
 
   @Input() set initialEmails(value: string[]) {
     const emails: any[] = [];
     value.forEach(value1 => emails.push({text: value1}));
     this._initialEmails = emails;
-  };
+  }
 
   @Input() set editBlacklistEmail(value: any) {
     this._emailToEdit = value;
     this._loadBlacklist();
-  };
+  }
 
   @Input() set campaignInfos(value: EmailQueueModel) {
     this._campaignInfosToShow = value;
@@ -68,6 +82,8 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _type: Template = 'EDIT_EMAILS';
 
+  private _innovationId: string = null;
+
   private _tableInfos: Table = <Table>{};
 
   private _formData: FormGroup;
@@ -86,7 +102,38 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _toBeSaved = false;
 
-  constructor(private _formBuilder: FormBuilder) {
+  private _showToggleSearch = false;
+
+  private _familyEnterprises: FamilyEnterprises = <FamilyEnterprises>{};
+
+  private _messageForEmptyFamilyEnterprises = new Set();
+
+  private _autoBlacklistOption: Array<DomainOption> = [
+    {
+      option: 'Select all',
+      value: 'selectAll',
+      checked: false
+    },
+    {
+      option: 'Parent\'s domain',
+      value: 'parent',
+      checked: false
+    },
+    {
+      option: 'Subsidiaries\' domains',
+      value: 'mySubsidiaries',
+      checked: false
+    },
+    {
+      option: 'Parent\'s subsidiaries\' domains',
+      value: 'subsidiariesOfParent',
+      checked: false
+    },
+  ];
+
+  constructor(private _formBuilder: FormBuilder,
+              private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
@@ -133,6 +180,11 @@ export class SidebarBlacklistComponent implements OnInit {
         : this._emailToEdit.expiration = new Date(this._emailToEdit.expiration);
       this._formData.patchValue(this._emailToEdit);
     }
+  }
+
+
+  get autoBlacklistOption() {
+    return this._autoBlacklistOption;
   }
 
   public saveChanges() {
@@ -285,15 +337,155 @@ export class SidebarBlacklistComponent implements OnInit {
     return this._toBeSaved;
   }
 
+
+  get showToggleSearch(): boolean {
+    return this._showToggleSearch;
+  }
+
   addDomains(value: any) {
     if (value.value && value.value.length) {
       value.value.forEach((_domain: any) => {
-        if (_domain.domain && _domain.domain.indexOf('*@') === -1) {
-          _domain.domain = '*@' + _domain.domain;
+        const domain = _domain.domain || _domain.name;
+        if (domain && domain.indexOf('*@') === -1) {
+          _domain.name = '*@' + domain;
         }
       });
       this.saveChanges();
       this._initialDomains = value.value;
     }
+  }
+
+  autoBlacklist() {
+    if (!this._familyEnterprises.subsidiariesOfParent && !this._familyEnterprises.parent && !this._familyEnterprises.mySubsidiaries) {
+      this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
+        if (result) {
+          this._familyEnterprises = result;
+          this.updateBlackList();
+        }
+      }, err => {
+        console.error(err);
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          ErrorFrontService.getErrorMessage(err.status)
+        );
+      });
+    } else {
+      this.updateBlackList();
+    }
+  }
+
+  updateBlackList() {
+    const _blackListToAdd = this.blacklistOnChange(true);
+    this.addEnterpriseDomainIntoBlacklist(_blackListToAdd);
+    this.saveChanges();
+  }
+
+  onClickToggle() {
+    this._showToggleSearch = !this._showToggleSearch;
+  }
+
+  /**
+   *
+   * @param option
+   */
+  optionOnChange(option: DomainOption) {
+    option.checked = !option.checked;
+    switch (option.value) {
+      case 'selectAll':
+        this._autoBlacklistOption.map(_option => _option.checked = option.checked);
+        break;
+      default:
+        if (!option.checked) {
+          this._autoBlacklistOption.map(_option => {
+            if (_option.value === 'selectAll') {
+              _option.checked = false;
+            }
+          });
+        }
+        break;
+    }
+  }
+
+  /**
+   * according to the selections, add enterprises related
+   * @param isAdd: true - add enterprises
+   */
+  blacklistOnChange(isAdd: boolean) {
+    let enterprises: Array<Enterprise> = [];
+    this._messageForEmptyFamilyEnterprises.clear();
+    this._autoBlacklistOption.filter(el => el.checked === isAdd).map(_option => {
+      switch (_option.value) {
+        case 'selectAll':
+          enterprises = enterprises.concat(this.addParenEnterpriseMessage(),
+            this.addSubsidiariesMessage(),
+            this.addParentSubsidiariesMessage());
+          return enterprises;
+        case 'parent':
+          enterprises = enterprises.concat(this.addParenEnterpriseMessage());
+          break;
+        case 'mySubsidiaries':
+          enterprises = enterprises.concat(this.addSubsidiariesMessage());
+          break;
+        case 'subsidiariesOfParent':
+          enterprises = enterprises.concat(this.addParentSubsidiariesMessage());
+          break;
+
+      }
+    });
+    return enterprises;
+  }
+
+  addParenEnterpriseMessage() {
+    if (this._familyEnterprises.parent) {
+      return [this._familyEnterprises.parent];
+    } else {
+      this._messageForEmptyFamilyEnterprises.add('Owner\'s enterprise doesn\'t have parent enterprise');
+      return [];
+    }
+  }
+
+  addSubsidiariesMessage() {
+    if (this._familyEnterprises.mySubsidiaries && this._familyEnterprises.mySubsidiaries.length) {
+      return this._familyEnterprises.mySubsidiaries;
+    } else {
+      this._messageForEmptyFamilyEnterprises.add('Owner\'s enterprise doesn\'t have any subsidiary');
+      return [];
+    }
+  }
+
+  addParentSubsidiariesMessage() {
+    if (this._familyEnterprises.subsidiariesOfParent && this._familyEnterprises.subsidiariesOfParent.length) {
+      return this._familyEnterprises.subsidiariesOfParent;
+    } else {
+      this._messageForEmptyFamilyEnterprises.add('Owner\'s parent enterprise doesn\'t have any subsidiary');
+      return [];
+    }
+  }
+
+  /**
+   * add enterprises' domains
+   * @param enterprisesToAdd
+   */
+  addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<Enterprise>) {
+    if (enterprisesToAdd && enterprisesToAdd.length) {
+      enterprisesToAdd.map(_enterprise => {
+        const _canAdd = this._initialDomains.find(domain => domain.name === '*@' + _enterprise.topLevelDomain);
+        if (!_canAdd && _enterprise.topLevelDomain) {
+          this._initialDomains.push({name: '*@' + _enterprise.topLevelDomain});
+        }
+      });
+    }
+  }
+
+  /**
+   * validate: if can send request to get enterprises from backend
+   */
+  enableValidateBnt() {
+    return this._autoBlacklistOption.filter(_option => _option.checked === true).length <= 0;
+  }
+
+
+  get messageForEmptyFamilyEnterprises(){
+    return this._messageForEmptyFamilyEnterprises;
   }
 }

@@ -238,6 +238,10 @@ export class AdminEditUseCaseComponent implements OnInit {
 
       switch (event.key) {
 
+        case 'QUESTION_ADD':
+          this._valuesToSave.unshift(event);
+          break;
+
         case 'QUESTION_EDIT':
           this._addAction(event);
           break;

@@ -706,9 +706,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       if (values.domains) {
         this._innovation.settings.blacklist.domains = [];
         values.domains.forEach((value: any) => {
-          if (_domainExp.test(value.domain)) {
+          if (_domainExp.test(value.name)) {
             this._innovation.settings.blacklist.domains.push(
-              value.domain.split('@')[1]
+              value.name.split('@')[1]
             );
           }
         });

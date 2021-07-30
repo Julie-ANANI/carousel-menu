@@ -13,6 +13,7 @@ import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
 import {Community} from '../../models/community';
+import { FamilyEnterprises } from '../../models/enterprise';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -208,6 +209,10 @@ export class InnovationService {
 
   public repartition(innovationId: string, config: any): Observable<any> {
     return this._http.get(`/innovation/${innovationId}/prosRepartition`, {params: config});
+  }
+
+  public autoBlacklist(innovationId: string): Observable<FamilyEnterprises> {
+    return this._http.get<FamilyEnterprises>(`/innovation/${innovationId}/autoBlacklist`);
   }
 
 }
