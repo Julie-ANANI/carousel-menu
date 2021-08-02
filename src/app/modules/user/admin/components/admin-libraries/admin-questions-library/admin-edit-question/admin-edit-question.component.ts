@@ -19,6 +19,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {TranslateTitleService} from '../../../../../../../services/title/title.service';
 import {CommonService} from '../../../../../../../services/common/common.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Config} from '../../../../../../../models/config';
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -30,6 +31,10 @@ interface ConfirmUpdate {
   styleUrls: ['./admin-edit-question.component.scss']
 })
 export class AdminEditQuestionComponent implements OnInit {
+
+  get questions(): Array<MissionQuestion> {
+    return this._questions;
+  }
 
   get isRemoving(): boolean {
     return this._isRemoving;
@@ -137,6 +142,16 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _canBeDeleted = false;
 
+  private _questions: Array<MissionQuestion> = [];
+
+  private _questionsConfig: Config = {
+    fields: '',
+    limit: '-1',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
+  };
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _router: Router,
@@ -149,6 +164,8 @@ export class AdminEditQuestionComponent implements OnInit {
 
   ngOnInit() {
     this._question = this._missionQuestionService.question;
+    this._questions = this._missionQuestionService.allQuestions;
+    this._jsonParse();
     this._getTemplate(this._question._id);
     this._initVariables();
 
@@ -163,6 +180,26 @@ export class AdminEditQuestionComponent implements OnInit {
         this._getTemplate(id);
       }
     });
+
+    if (!this._questions.length) {
+      this._getAllQuestions();
+    }
+  }
+
+  private _getAllQuestions() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._missionService.getAllQuestions(this._questionsConfig).pipe(first()).subscribe((response) => {
+        this._questions = response && response.result || [];
+        this._jsonParse();
+      }, (error: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        console.error(error);
+      });
+    }
+  }
+
+  private _jsonParse() {
+    this._questions = JSON.parse(JSON.stringify(this._questions));
   }
 
   /**
@@ -223,7 +260,6 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _initVariables() {
     this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(this._question.identifier);
-    this._questionName();
     this._setTitle();
     this._initSensitive();
   }
@@ -244,12 +280,12 @@ export class AdminEditQuestionComponent implements OnInit {
     return <OptionEntry>MissionQuestionService.entryInfo(option, lang) || <OptionEntry>{};
   }
 
-  private _questionName() {
-    this._name = MissionQuestionService.label(this._question, 'label', this.platformLang);
+  public questionLabel(question: MissionQuestion) {
+    return MissionQuestionService.label(question, 'label', this.platformLang);
   }
 
   private _setTitle() {
-    this._translateTitleService.setTitle(`${this._name} | Questions | Libraries`);
+    this._translateTitleService.setTitle(`${this.questionLabel(this._question)} | Questions | Libraries`);
   }
 
   /**
@@ -415,6 +451,12 @@ export class AdminEditQuestionComponent implements OnInit {
     event.preventDefault();
     this._question = this._missionQuestionService.addNewOption(this._question, false);
     this._notifyChanges();
+  }
+
+  public onChangeQuestion(event: string) {
+    if (!this._toBeSaved) {
+      this._question = this._questions.find((_question) => _question._id === event);
+    }
   }
 
 }

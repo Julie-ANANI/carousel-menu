@@ -111,6 +111,7 @@ export class AdminEditUseCaseComponent implements OnInit {
   ngOnInit() {
     this._missionTemplate = this._missionQuestionService.template;
     this._templates = this._missionQuestionService.allTemplates;
+    this._jsonParse();
     this._setTitle();
 
     /**
@@ -130,10 +131,15 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   }
 
+  private _jsonParse() {
+    this._templates = JSON.parse(JSON.stringify(this._templates));
+  }
+
   private _getAllTemplates() {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
         this._templates = response && response.result || [];
+        this._jsonParse();
       }, (error: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
         console.error(error);

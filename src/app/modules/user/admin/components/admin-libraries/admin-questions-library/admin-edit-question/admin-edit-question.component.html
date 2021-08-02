@@ -14,9 +14,21 @@
         <!-- save question / name -->
         <section [hidden]="!canAccess(['edit'])" class="flex-between m-bottom-20 flex-wrap">
 
-          <h2 class="title is-6 text-background m-bottom-15">
-            Question: <span class="text-notify">{{ name }}</span>
-          </h2>
+          <div class="d-flex align-center">
+            <h2 class="title is-6 text-background m-bottom-15 m-right-10">Question:</h2>
+            <label
+              [attr.data-tooltip]="'COMMON.CHANGE_WITHOUT_SAVE' | translate"
+              [ngClass]="{'tooltip is-multiline': toBeSaved}">
+              <select
+                (ngModelChange)="onChangeQuestion($event)"
+                [ngModel]="question._id"
+                class="form-select is-sm m-bottom-15 mxw-250 text-ellipsis">
+                <option *ngFor="let ques of questions" [value]="ques._id">
+                  {{ questionLabel(ques) }}
+                </option>
+              </select>
+            </label>
+          </div>
 
           <button
             (click)="onClickSave($event)"
