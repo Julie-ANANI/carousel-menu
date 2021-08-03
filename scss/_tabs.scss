@@ -1,0 +1,75 @@
+@import "variables";
+@import "mixins";
+
+.tab {
+  display: flex;
+  align-items: center;
+  border-bottom: $border-width solid $border-default-color;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 -15px;
+  padding: 0;
+
+  .tab-item {
+    color: $dark-color;
+    margin: 0;
+    padding: 0 15px;
+
+    a {
+      @include tab-transition();
+      @include flex-position(center);
+      font-size: 15px;
+      font-weight: normal;
+      margin: 0;
+      padding: 10px 0;
+      text-decoration: none;
+      color: inherit;
+      border-bottom: $border-width-lg solid transparent;
+
+      i {
+        margin-right: $unit-2;
+        font-size: inherit;
+      }
+
+      &:focus, &:hover {
+        color: $primary-color;
+        cursor: pointer;
+      }
+
+    }
+
+    &.active a, a.active {
+      border-bottom-color: $primary-color;
+      color: $primary-color !important;
+    }
+
+  }
+
+  &.is-fullwidth {
+
+    .tab-item {
+      flex: 1 0 auto;
+      text-align: center;
+    }
+
+  }
+
+  &.has-no-border {
+    border: none;
+  }
+
+}
+
+
+@media screen and (max-width: $size-sm) {
+
+  .tab.tab-responsive {
+
+    .tab-item {
+      flex-basis: 100% !important;
+      border-bottom: $border-width solid $border-default-color;
+    }
+
+  }
+
+}
