@@ -170,6 +170,14 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
     if (res) {
       if (this.isEditable || (this.isLibraryView && this.canAccess(['delete']))) {
+
+        if (!this._question._id) {
+          this.valueToSave.emit({
+            key: 'QUESTION_REMOVE_SCRATCH',
+            value: {identifier: this._question.identifier}
+          });
+        }
+
         this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex);
       }
     }

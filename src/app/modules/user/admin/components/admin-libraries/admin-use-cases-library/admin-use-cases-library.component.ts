@@ -87,6 +87,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getAllTemplates(this._config).pipe(first()).subscribe((response) => {
         this._templates = response && response.result || [];
+        this._missionQuestionService.setAllTemplates(JSON.parse(JSON.stringify(this._templates)));
         this._total = response && response._metadata && response._metadata.totalCount || 0;
         this._templates.map((_template) => {
           _template['name'] = MissionFrontService.objectiveName(_template, this.currentLang);
@@ -95,7 +96,6 @@ export class AdminUseCasesLibraryComponent implements OnInit {
           _template['complementaryQuestions'] = MissionFrontService.complementaryObjectives(_template['totalQuestions']);
           return _template;
         });
-        this._missionQuestionService.setAllTemplates(this._templates);
         this._initializeTable();
       }, error => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
@@ -191,7 +191,9 @@ export class AdminUseCasesLibraryComponent implements OnInit {
    * @param event
    */
   public navigateTo(event: MissionTemplate) {
-    this._missionQuestionService.setTemplate(event);
+    this._missionQuestionService.setTemplate(this._missionQuestionService.allTemplates.find((_template) => {
+      return _template._id === event._id;
+    }));
     this._router.navigate([`${this._router.url}/${event._id}`]);
   }
 

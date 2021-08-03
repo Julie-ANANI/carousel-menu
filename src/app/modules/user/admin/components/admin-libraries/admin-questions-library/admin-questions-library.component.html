@@ -53,7 +53,7 @@
   <section class="modal-body">
     <h2 class="title is-4 text-center text-bold m-bottom-30">Add a question from Scratch</h2>
 
-    <div class="form-group mxw-400 m-left-auto m-right-auto p-top-20">
+    <div class="form-group mxw-450 m-left-auto m-right-auto p-top-20">
       <label class="form-label">Type*</label>
       <select [(ngModel)]="newQuestion.controlType" class="form-select is-sm" required>
         <option [ngValue]="''" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
@@ -66,7 +66,7 @@
       </select>
     </div>
 
-    <div class="form-group mxw-400 m-left-auto m-right-auto p-top-20 p-bottom-20">
+    <div class="form-group mxw-450 m-left-auto m-right-auto p-top-20 p-bottom-20">
       <label class="form-label">Identifier*</label>
       <input
         (ngModelChange)="onChangeIdentifier($event)"

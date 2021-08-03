@@ -158,7 +158,6 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['emailSent'],
             _name: 'Email sent',
             _type: 'MULTI-CHOICES',
-            _isSortable: true,
             _width: '150px',
             _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
             _choices: [
@@ -310,7 +309,6 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['emailSent'],
             _name: 'Email sent',
             _type: 'MULTI-CHOICES',
-            _isSortable: true,
             _width: '150px',
             _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
             _choices: [
@@ -432,7 +430,6 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['emailSent'],
             _name: 'Email sent',
             _type: 'MULTI-CHOICES',
-            _isSortable: true,
             _width: '150px',
             _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
             _choices: [
