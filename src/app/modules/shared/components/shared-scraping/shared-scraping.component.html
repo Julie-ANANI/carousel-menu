@@ -10,6 +10,14 @@
         class="text-link text-sm">
           Settings
         </span>
+      <!-- import button -->
+      <div class="m-left-auto">
+        <label class="button is-primary is-sm is-outlined">
+          <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
+          <i class="fas fa-file-import icon-left"></i> Import and scrape a pdf file
+        </label>
+      </div>
+      <!-- /import button -->
     </div>
     <!-- /heading -->
 
@@ -57,13 +65,25 @@
     <div *ngIf="isError" [ngClass]="isError ? 'd-block' : 'd-none'" class="text-error">
       {{error}}
     </div>
+    <!-- /display error -->
+
+    <!-- display warning -->
+    <div *ngIf="isWarning" [ngClass]="isWarning ? 'd-block' : 'd-none'" class="text-error">
+      {{warning}}
+    </div>
+    <!-- /display warning -->
 
     <!-- keep informed -->
     <div *ngIf="showKeepInformed" [ngClass]="showKeepInformed ? 'd-block' : 'd-none'" class="m-top-25">
       <h2>{{keepInformed}}</h2>
-      <div class="loading"></div>
     </div>
     <!-- /keep informed -->
+
+    <!-- loading -->
+    <div *ngIf="isScraping" [ngClass]="isScraping ? 'd-block' : 'd-none'" class="m-top-25">
+      <div class="loading"></div>
+    </div>
+    <!-- /loading -->
 
     <!-- display result -->
     <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="m-top-25">
@@ -76,7 +96,7 @@
           <tr>
           </thead>
           <tbody>
-          <tr *ngFor="let pro of result | keyvalue">
+          <tr *ngFor="let pro of result_pros | keyvalue">
             <th *ngFor="let data of values(pro.key)" class="display-value">{{data}}</th>
           </tr>
           </tbody>

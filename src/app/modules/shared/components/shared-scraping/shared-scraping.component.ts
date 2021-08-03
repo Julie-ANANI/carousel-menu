@@ -31,7 +31,11 @@ export class SharedScrapingComponent implements OnInit {
 
   private _isError = false;
 
+  private _isWarning = false;
+
   private _error = '';
+
+  private _warning = '';
 
   private _refreshIntervalId: any = null;
 
@@ -61,11 +65,58 @@ export class SharedScrapingComponent implements OnInit {
     return this._error;
   }
 
+  get isWarning(): boolean {
+    return this._isWarning;
+  }
+
+  get warning(): string {
+    return this._warning;
+  }
+
+  public onClickImport(file: File) {
+    this._isScraping = true;
+    this._isError = false;
+    this._isWarning = false;
+    this._translateNotificationsService.success(
+      'Success',
+      'The file is imported'
+    );
+    this._scrapingService.scrapePdf(file).subscribe(
+      (value) => {
+        this._isScraping = false;
+        this._result = value;
+        console.log('Result : ', this._result);
+        if ('error' in this._result) {
+          this._isError = true;
+          this._error = this._result['error'];
+        } else {
+          this._isError = false;
+          if ('warning' in this._result) {
+            this._isWarning = true;
+            this._warning = this._result['warning'];
+          } else {
+            this._isWarning = false;
+          }
+          this.updateAttributes();
+          this._showResultScraping = true;
+        }
+      },
+      (error) => {
+        console.log('Uh-oh, an error occurred! : ', error);
+      },
+      () => {
+        console.log('Observable complete!');
+        this.stopKeepInformed();
+      });
+  }
+
+
   onClickSearch(): void {
     this._showResultScraping = false;
     this._showKeepInformed = true;
     this._isScraping = true;
     this._isError = false;
+    this._isWarning = false;
     const scrapeParams = this._params;
     console.log('url :', scrapeParams['url']);
     console.log('scrape options :', scrapeParams);
@@ -81,9 +132,16 @@ export class SharedScrapingComponent implements OnInit {
           this._error = this._result['error'];
         } else {
           this._isError = false;
+          if ('warning' in this._result) {
+            this._isWarning = true;
+            this._warning = this._result['warning'];
+          } else {
+            this._isWarning = false;
+          }
           this.updateAttributes();
           this._showResultScraping = true;
         }
+
       },
       (error) => {
         console.log('Uh-oh, an error occurred! : ', error);
@@ -167,13 +225,13 @@ export class SharedScrapingComponent implements OnInit {
     return this._params;
   }
 
-  get result(): any {
-    return this._result;
+  get result_pros(): any {
+    return this._result.pros;
   }
 
   public updateAttributes(): void {
     this._attributes = ['email'];
-    const pros = Object.values(this._result);
+    const pros = Object.values(this._result.pros);
     if (pros.length !== 0) {
       let isRawData = false;
       for (const key of Object.keys(pros[0])) {
@@ -198,7 +256,7 @@ export class SharedScrapingComponent implements OnInit {
     const arrayValue = [string];
     for (const key of this._attributes) {
       if (key !== 'email') {
-        arrayValue.push(this._result[string][key]);
+        arrayValue.push(this._result.pros[string][key]);
       }
     }
     return arrayValue;

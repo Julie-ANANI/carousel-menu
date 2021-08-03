@@ -19,4 +19,11 @@ export class ScrapingService {
   public cancelScraping(params: any): Observable<any> {
     return this._http.post('/scraping/cancelScraping', params);
   }
+
+  public scrapePdf(file: File): Observable<any> {
+    const formData = new FormData();
+    const fileName = 'Recherche de mails';
+    formData.append('file', file, fileName);
+    return this._http.post('/scraping/scrapePdf', formData);
+  }
 }

@@ -15,9 +15,9 @@ export class SidebarScrapingComponent implements OnChanges {
   // private _possibleFormattedAddress = new Array<string>();
 
   private _tooltipXPath: string =
-    '1/ Faites Shift + cmd + c pour ouvrir l’inspecteur de code\n' +
+    '1/ Sous Chrome : faites Shift + cmd + c pour pouvoir selectionner un élément\n' +
     '2/ Sur la page Web, cliquez sur l’information à extraire du 1er mail\n' +
-    '3/ Clic droit sur la ligne bleu dans l’inspecteur : Copier > Xpath';
+    '3/ Clic droit sur la ligne bleu dans l’inspecteur : Copier > Copy full XPath\n';
 
   private _fields: any = {
     rawData: {
@@ -37,7 +37,7 @@ export class SidebarScrapingComponent implements OnChanges {
       toolTip: this._tooltipXPath,
     },
     numberSpecificData: {
-      label: 'J\'ai besoin d\'extraire combien de catégorie d’informations ?',
+      label: 'J\'ai besoin d\'extraire des catégories d\'information, quantité : ',
       toolTip: null
     },
     isCrawling: {
@@ -53,7 +53,7 @@ export class SidebarScrapingComponent implements OnChanges {
       toolTip: 'regardez l’URL d’au moins deux profils et sélectionnez la partie de l’URL en commun.'
     },
     numberFields: {
-      label: 'J\'ai besoin de remplir combien de champ pour charger la page à scraper ?',
+      label: 'J\'ai besoin de remplir des champs pour charger la page à scraper, quantité : ',
       toolTip: 'ex : champ avec un code postal à remplir'
     },
     fieldLocator: {
