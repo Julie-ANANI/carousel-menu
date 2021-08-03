@@ -1,0 +1,139 @@
+@import "variables";
+@import "mixins";
+
+.modal {
+  @include full-page(fixed);
+  display: none;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 8997;
+
+  &.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  &.inactive {
+    display: none;
+    opacity: 0;
+  }
+
+  .modal-overlay {
+    @include full-page(absolute);
+    background: $bg-overlay-dark-color;
+  }
+
+  .modal-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    opacity: 1;
+    overflow: hidden;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 1;
+    animation: .3s modal-slide-down;
+    max-height: calc(100vh - 50px);
+
+    .modal-header {
+      @include flex-position(flex-start);
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      background: $bg-modal-header;
+      padding: $unit-5;
+      position: relative;
+      flex-shrink: 0;
+      font-size: $font-size;
+
+      .modal-title {
+        color: $white-color;
+        flex-grow: 1;
+        flex-shrink: 0;
+        line-height: $line-height-sm;
+        font-weight: $font-weight-medium;
+        margin: 0;
+        font-size: 24px;
+      }
+
+    }
+
+    .modal-body {
+      display: block;
+      background-color: $white-color;
+      flex-grow: 1;
+      flex-shrink: 1;
+      padding: 35px 30px 30px 30px;
+      font-size: $font-size-md;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      @include flex-position(center);
+      padding: 10px $unit-5 30px $unit-5;
+      position: relative;
+      flex-shrink: 0;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      background-color: $white-color;
+
+      .modal-cancel {
+        color: $meta-color;
+        border: 1px solid $meta-color;
+        background: transparent;
+
+        &:hover {
+          background-color: lighten($meta-color, 31%);
+        }
+
+        &:disabled {
+          background-color: $white-color;
+        }
+
+      }
+
+      .button:not(:last-child) {
+        margin-right: 25px;
+      }
+
+    }
+
+  }
+
+  .modal-close {
+    transition: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: $white-color;
+
+    &:hover {
+
+      &::before {
+        background-color: rgba(10,10,10,.3);
+      }
+
+    }
+
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+
+  .modal {
+
+    .modal-container {
+      max-width: 90% !important;
+    }
+
+  }
+
+}
+
+
+
+
