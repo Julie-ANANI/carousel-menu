@@ -67,6 +67,10 @@ export class SidebarScrapingComponent implements OnChanges {
     loadMore: {
       label: 'Emplacement d\'un bouton permettant de charger plus de pros (Xpath)',
       toolTip: 'Rentrer le XPath lié à ce bouton: \n' + this._tooltipXPath,
+    },
+    isSpider: {
+      label: 'Spider crawl',
+      toolTip: null,
     }
     // specificData: {
     //   label: 'Extraction d’une catégorie d’information pour chaque pro',

@@ -139,7 +139,21 @@
             <!-- /link pro -->
           </div>
           <!-- /single pro -->
+
+          <!-- is spider -->
+          <div class="content" id="is-spider">
+            <label class="form-switch">
+              <input
+                [(ngModel)]="params['isSpider']"
+                name="is-spider"
+                type="checkbox">
+              <i class="form-icon"></i><span class="text-md">{{getLabel('isSpider')}}</span>
+            </label>
+          </div>
+          <!-- /is spider-->
+
         </div>
+
         <!-- /crawling option -->
 
         <div class="divider m-top-40 m-bottom-40"></div>

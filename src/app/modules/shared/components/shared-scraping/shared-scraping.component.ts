@@ -293,6 +293,7 @@ export class SharedScrapingComponent implements OnInit {
       numberSpecificData: 0,
       specificData: [{}, {}, {}, {}, {}],
       isCrawling: false,
+      isSpider: false,
       numberFields: 0,
       fields: [{}, {}, {}, {}, {}],
       isSingle: false,
