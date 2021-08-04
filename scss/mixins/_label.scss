@@ -1,4 +1,6 @@
-@mixin label($bg-color, $color: #ffffff) {
+@import "../variables";
+
+@mixin label($bg-color, $color: $white-color) {
   background-color: $bg-color;
   color: $color;
 }

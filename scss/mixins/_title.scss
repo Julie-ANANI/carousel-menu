@@ -13,7 +13,7 @@
 
 // Subtitle mixin
 @mixin subtitle-variant($size: 18px) {
-  color: #9E9E9E;
+  color: $subtitle-color;
   font-size: $size;
   font-weight: $font-weight-normal;
   margin-top: 0;

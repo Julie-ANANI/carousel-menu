@@ -44,7 +44,7 @@
 @mixin button-outline-variant($color: $primary-color) {
   color: $color;
   border-color: $color;
-  border-width: 2px;
+  border-width: $border-width-lg;
   background-color: transparent;
 
   &:focus, &.active, &:active  {
@@ -55,35 +55,35 @@
   &:hover, &:focus, &.active, &:active {
 
     @if $color == $primary-color {
-      background-color: lighten($color, 45%);
+      background-color: $primary-light-color;
     }
 
     @if $color == $white-color {
-      background-color: darken($color, 5%);
+      background-color: $white-dark-color;
     }
 
     @if $color == $dark-color {
-      background-color: lighten($color, 70%);
+      background-color: $dark-light-color
     }
 
     @if $color == $warning-color {
-      background-color: lighten($color, 42%);
+      background-color: $warning-light-color;
     }
 
     @if $color == $draft-color {
-      background-color: lighten($color, 57%);
+      background-color: $draft-light-color;
     }
 
     @if $color == $meta-color {
-      background-color: lighten($color, 30%);
+      background-color: $meta-light-color;
     }
 
     @if $color == $alert-color {
-      background-color: lighten($color, 32%);
+      background-color: $alert-light-color;
     }
 
     @if $color == $success-color {
-      background-color: lighten($color, 46%);
+      background-color: $success-light-color;
     }
 
   }

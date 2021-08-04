@@ -15,9 +15,32 @@ $highlight-color: #FFB300 !default;
 $alert-dark-color: #a94442 !default;
 
 
+// common variables
+$subtitle-color: #9E9E9E !default;
+$bg-default-color: #E0E0E0 !default;
+
+
+// lighten variables
+$primary-light-color: lighten($primary-color, 45%) !default;
+$dark-light-color: lighten($dark-color, 70%) !default;
+$warning-light-color: lighten($warning-color, 42%) !default;
+$draft-light-color: lighten($draft-color, 57%) !default;
+$meta-light-color: lighten($meta-color, 30%) !default;
+$alert-light-color: lighten($alert-color, 32%) !default;
+$success-light-color: lighten($success-color, 46%) !default;
+
+
+// darken variables
+$white-dark-color: darken($white-color, 5%) !default;
+
+
 // gradient variables
 $primary-gradient-color: linear-gradient(90deg, #2897CE 0%, #2AB2E3 100%) !default;
 $dark-gradient-color: linear-gradient(90deg, #23303C 0%, #4F5D6B 100%) !default;
+
+
+// avatar variables
+$avatar-bg-color: $bg-default-color;
 
 
 // notification variables
@@ -35,7 +58,7 @@ $table-tr-border-color: #DFE3EB !default;
 
 
 //border variables
-$border-default-color: #E0E0E0 !default;
+$border-default-color: $bg-default-color;
 $border-card-color: #EAEAEA !default;
 
 

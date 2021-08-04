@@ -4,7 +4,7 @@
 .avatar {
   @include flex-position(center);
   @include avatar-base();
-  @include avatar-variant(rgba($white-color, .85), #E0E0E0);
+  @include avatar-variant(rgba($white-color, .85), $avatar-bg-color);
   border-radius: 50%;
   font-weight: 300;
   line-height: 1.25;
