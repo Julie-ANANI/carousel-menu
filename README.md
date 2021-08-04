@@ -8,6 +8,14 @@ applications:
 - umi-community-front
 - umi-quiz-application-front
 
+### Installation
+`npm i umi-style-framework --save`
+
+Then, you can import it in style.scss or angular.json under assets. 
+
+### Import path
+node_modules/umi-style-framework/scss/umi.scss
+
 ### Please be careful not to change the files directly of this repository when added as a sub-project.
 
 ###To add this repository to another repository as a clone run the following commands from the root path:
