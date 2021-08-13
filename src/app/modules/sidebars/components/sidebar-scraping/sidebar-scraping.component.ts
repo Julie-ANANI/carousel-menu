@@ -12,6 +12,7 @@ export class SidebarScrapingComponent implements OnChanges {
   @Input() params: any = null;
 
   private _showToggleMoreData = false;
+  private _showToggleCrawlingSetting = false;
   // private _possibleFormattedAddress = new Array<string>();
 
   private _tooltipXPath: string =
@@ -40,9 +41,10 @@ export class SidebarScrapingComponent implements OnChanges {
       label: 'J\'ai besoin d\'extraire des catégories d\'information, quantité : ',
       toolTip: null
     },
-    isCrawling: {
-      label: 'J\'ai besoin de scraper plusieurs pages',
-      toolTip: 'Notamment pour les sites à plusieurs pages de résultats'
+    isCatalog: {
+      label: 'J\'ai besoin de scraper plusieurs pages agencées comme un catalogue',
+      toolTip: 'Correspond aux sites avec par exemple une pagination en bas 1 - 2 - ... 34 - 35 ' +
+               'et ou l\'on peut cliquer dessus pour naviguer entre ces pages.'
     },
     isSingle: {
       label: 'J\'ai besoin de cliquer sur le profil pour trouver le mail',
@@ -57,7 +59,7 @@ export class SidebarScrapingComponent implements OnChanges {
       toolTip: 'ex : champ avec un code postal à remplir'
     },
     fieldLocator: {
-      label: 'Emplacement du champ texte (Xpath)',
+      label: 'Emplacement du champ texte (XPath)',
       toolTip: this._tooltipXPath,
     },
     fieldData: {
@@ -65,13 +67,20 @@ export class SidebarScrapingComponent implements OnChanges {
       toolTip: 'Séparées les valeurs par une virgule.'
     },
     loadMore: {
-      label: 'Emplacement d\'un bouton permettant de charger plus de pros (Xpath)',
+      label: 'Emplacement d\'un bouton permettant de charger plus de pros (XPath)',
       toolTip: 'Rentrer le XPath lié à ce bouton: \n' + this._tooltipXPath,
     },
     isSpider: {
       label: 'Spider crawl',
-      toolTip: null,
-    }
+      toolTip: 'Le spider crawl, tel une araignée sur sa toile, parcourt entièrement le site web en en cherchant et en allant sur tous ses liens.' +
+               'Il s\'agit de la méthode la moins efficace.'
+    },
+    specificMail: {
+      label: 'Emplacement de l\'email associé (XPath)',
+      toolTip: 'Rentrer le XPath de l\'emplacement de l\'email associé à l\'information.\n' +
+               'Si il n\'est pas renseigné, le premier email du site le remplacera automatiquement.\n' +
+               '\n' + this._tooltipXPath,
+    },
     // specificData: {
     //   label: 'Extraction d’une catégorie d’information pour chaque pro',
     //   toolTip: null
@@ -85,10 +94,10 @@ export class SidebarScrapingComponent implements OnChanges {
     //   label: 'Sur quelles données voulez-vous formater l’adresse ?',
     //   toolTip: null
     // },
-    // skipsMails: {
-    //   label: 'Emails à exclure',
-    //   toolTip: 'Pensez à rentrer l’email du site lui-même.'
-    // },
+    skipMails: {
+      label: 'Emails à exclure',
+      toolTip: 'Séparer les différents mails par une virgule. Rentrer l’email du site lui-même par exemple.'
+    }
     // maxRequest: {
     //   label: 'Nombre limite de pages à scraper',
     //   toolTip: 'Si le nombre limite est dépassé, le module s\'arrête et renvoie ce qu\'il a trouvé. [Si le champ est vide, il n\'y
@@ -149,6 +158,14 @@ export class SidebarScrapingComponent implements OnChanges {
 
   onClickToggleMoreData() {
     this._showToggleMoreData = !this._showToggleMoreData;
+  }
+
+  get showToggleCrawlingSetting(): boolean {
+    return this._showToggleCrawlingSetting;
+  }
+
+  onClickToggleCrawlingSetting() {
+    this._showToggleCrawlingSetting = !this._showToggleCrawlingSetting;
   }
 
   // public possibleFormattedAddress(): Array<string> {

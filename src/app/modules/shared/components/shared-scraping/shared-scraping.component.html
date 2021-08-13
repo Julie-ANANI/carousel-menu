@@ -63,13 +63,13 @@
 
     <!-- display error -->
     <div *ngIf="isError" [ngClass]="isError ? 'd-block' : 'd-none'" class="text-error">
-      {{error}}
+      <span style="white-space: pre-line">{{error}} </span>
     </div>
     <!-- /display error -->
 
     <!-- display warning -->
     <div *ngIf="isWarning" [ngClass]="isWarning ? 'd-block' : 'd-none'" class="text-error">
-      {{warning}}
+      <span style="white-space: pre-line">{{warning}} </span>
     </div>
     <!-- /display warning -->
 

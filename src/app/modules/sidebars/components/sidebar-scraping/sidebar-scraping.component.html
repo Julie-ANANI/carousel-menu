@@ -6,33 +6,55 @@
       <!-- right content -->
       <div class="content-wrapper m-top-30">
 
-        <!--        <div class="d-none">-->
-        <!--          <label class="form-label">Emails to skip (separate with coma)</label>-->
-        <!--          <input-->
-        <!--            [(ngModel)]="params['skipMails']"-->
-        <!--            class="form-input"-->
-        <!--            placeholder="ex: contact@site.com,contactbis@site.fr"-->
-        <!--            type="text">-->
-        <!--        </div>-->
+        <!-- skip mails -->
+        <div class="content">
+          <span
+            [attr.data-tooltip]="getToolTip('skipMails')"
+            class="tooltip is-multiline">
+            <span class="text-md">{{getLabel('skipMails')}}</span>
+            <input
+              [(ngModel)]="params['skipMails']"
+              class="form-input is-sm"
+              placeholder="ex: contact@site.com,info@site.com"
+              type="text">
+            </span>
+        </div>
+        <!-- /skip mails -->
 
-        <!-- crawling option -->
-        <!-- is crawling -->
-        <div class="content" id="is-crawling">
+        <div class="divider m-bottom-30 m-top-30"></div>
+
+        <!-- toggle button crawling setting -->
+        <div class="content">
+          <button (click)="onClickToggleCrawlingSetting()" class="button is-link p-no" type="button">
+            {{'Options de navigation entre les pages'}}
+            <i [ngClass]="showToggleCrawlingSetting ? 'icon-arrow-down' : 'icon-arrow-right' "
+               class="icon icon-right"></i>
+          </button>
+        </div>
+        <!-- /toggle button extract more data -->
+
+        <!-- toggle options extract more data-->
+        <div *ngIf="showToggleCrawlingSetting" [ngClass]="showToggleCrawlingSetting ? 'd-block' : 'd-none m-bottom-25'"
+             class="m-top-10 m-left-50">
+
+          <!-- crawling option -->
+          <!-- is crawling -->
+          <div class="content m-top-30" id="is-crawling">
         <span
-          [attr.data-tooltip]="getToolTip('isCrawling')"
+          [attr.data-tooltip]="getToolTip('isCatalog')"
           class="tooltip is-multiline">
           <label class="form-switch">
             <input
-              [(ngModel)]="params['isCrawling']"
-              name="is-crawling"
+              [(ngModel)]="params['isCatalog']"
+              name="is-catalog"
               type="checkbox">
-            <i class="form-icon"></i><span class="text-lg">{{getLabel('isCrawling')}}</span>
+            <i class="form-icon"></i><span class="text-md">{{getLabel('isCatalog')}}</span>
           </label>
           </span>
-        </div>
-        <!-- /is crawling -->
+          </div>
+          <!-- /is crawling -->
 
-        <div *ngIf="params['isCrawling']" [ngClass]="params['isCrawling'] ? 'd-block' : 'd-none'" class="m-left-50">
+          <div class="divider m-bottom-30 m-top-30"></div>
 
           <div class="content m-top-20">
             <span
@@ -140,34 +162,39 @@
           </div>
           <!-- /single pro -->
 
+          <div class="divider m-bottom-30 m-top-30"></div>
+
           <!-- is spider -->
           <div class="content" id="is-spider">
-            <label class="form-switch">
-              <input
-                [(ngModel)]="params['isSpider']"
-                name="is-spider"
-                type="checkbox">
-              <i class="form-icon"></i><span class="text-md">{{getLabel('isSpider')}}</span>
-            </label>
+            <span
+              [attr.data-tooltip]="getToolTip('isSpider')"
+              class="tooltip is-multiline">
+              <label class="form-switch">
+                <input
+                  [(ngModel)]="params['isSpider']"
+                  name="is-catalog"
+                  type="checkbox">
+                <i class="form-icon"></i><span class="text-md">{{getLabel('isSpider')}}</span>
+              </label>
+              </span>
           </div>
           <!-- /is spider-->
-
+          <!-- /crawling option -->
         </div>
-
-        <!-- /crawling option -->
+        <!-- toggle options extract more data-->
 
         <div class="divider m-top-40 m-bottom-40"></div>
 
-        <!-- toggle button -->
+        <!-- toggle button extract more data -->
         <div class="content">
           <button (click)="onClickToggleMoreData()" class="button is-link p-no" type="button">
             {{'Extraction d‘informations supplémentaires'}}
             <i [ngClass]="showToggleMoreData ? 'icon-arrow-down' : 'icon-arrow-right' " class="icon icon-right"></i>
           </button>
         </div>
-        <!-- /toggle button -->
+        <!-- /toggle button extract more data -->
 
-        <!-- toggle options -->
+        <!-- toggle options extract more data-->
         <div *ngIf="showToggleMoreData" [ngClass]="showToggleMoreData ? 'd-block' : 'd-none m-bottom-25'"
              class="m-top-10 m-left-50">
 
@@ -222,7 +249,9 @@
             <div *ngIf="showSpecificData(index)" [ngClass]="showSpecificData(index) ? 'd-block' : 'd-none'">
 
               <div class="m-left-50">
+
                 <div class="divider"></div>
+
                 <div class="content">
                 <span
                   [attr.data-tooltip]="getToolTip('specificDataName')"
@@ -236,13 +265,26 @@
                   </span>
                 </div>
 
-                <div class="content m-bottom-4">
+                <div class="content">
                 <span
                   [attr.data-tooltip]="getToolTip('specificDataXPath')"
                   class="tooltip">
                   <span class="text-sm">{{ index + 1 }} - {{getLabel('specificDataXPath')}}</span>
                   <input
                     [(ngModel)]="params['specificData'][index]['xPath1']"
+                    class="form-input is-sm"
+                    placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
+                    type="text">
+                  </span>
+                </div>
+
+                <div class="content m-bottom-4">
+                <span
+                  [attr.data-tooltip]="getToolTip('specificMail')"
+                  class="tooltip">
+                  <span class="text-sm">{{ index + 1 }} - {{getLabel('specificMail')}}</span>
+                  <input
+                    [(ngModel)]="params['specificData'][index]['mail']"
                     class="form-input is-sm"
                     placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
                     type="text">
@@ -256,7 +298,7 @@
           <!--    /set specific data-->
         </div>
         <!--    /specific data-->
-        <!-- /toggle options -->
+        <!-- /toggle options extract more data -->
 
         <div class="divider m-top-40 m-bottom-40"></div>
 

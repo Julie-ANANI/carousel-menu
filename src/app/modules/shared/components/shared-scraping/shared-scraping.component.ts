@@ -289,10 +289,10 @@ export class SharedScrapingComponent implements OnInit {
       // whereFormattedAddress: '',
       dynamicHTML: false,
       loadMore: '',
-      // skipMails: ''
+      skipMails: '',
       numberSpecificData: 0,
       specificData: [{}, {}, {}, {}, {}],
-      isCrawling: false,
+      isCatalog: false,
       isSpider: false,
       numberFields: 0,
       fields: [{}, {}, {}, {}, {}],
