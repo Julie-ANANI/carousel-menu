@@ -132,9 +132,9 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     });
   }
 
-  private _getSeniorityLevelsClassification(congif: any) {
+  private _getSeniorityLevelsClassification(config: any) {
     return new Promise(((resolve, reject) => {
-      this._classificationService.seniorityLevels(congif).subscribe((res: { classification: any }) => {
+      this._classificationService.seniorityLevels(config).subscribe((res: { classification: any }) => {
         this._seniorityLevelsClassification = res.classification;
         resolve();
       }, (error) => {
@@ -167,11 +167,10 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
       if (dates.length) {
         _firstYear = Number(new Date(dates[0]).getFullYear());
       }
-      if (_firstYear !== _currentYear) {
-        for (let i = _currentYear; i >= _firstYear; i--) {
-          this._dropdownYears.push((i).toString(10));
-        }
+      for (let i = _currentYear; i >= _firstYear; i--) {
+        this._dropdownYears.push((i).toString(10));
       }
+      this._selectedYear = _currentYear.toString(10);
 
     }, (err: HttpErrorResponse) => {
       console.error(err);
