@@ -336,7 +336,7 @@ export class AdminCampaignProsComponent implements OnInit {
       const _config: any = {
         fields:
           'language firstName lastName email emailConfidence profileUrl company companyOriginalName keywords country ' +
-          'jobTitle messages',
+          'jobTitle messages tags',
         professionals: [],
         campaignId: this._campaign._id,
         query: {
