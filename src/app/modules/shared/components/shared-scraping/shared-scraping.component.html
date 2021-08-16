@@ -91,14 +91,14 @@
         <table class="table">
 <!--          <caption>Result</caption>-->
           <thead>
-          <tr>
-            <th *ngFor="let key_attribute of attributes" class="display-key">{{key_attribute}}</th>
-          <tr>
+            <tr>
+              <th *ngFor="let key_attribute of attributes" class="display-key">{{key_attribute}}</th>
+            <tr>
           </thead>
           <tbody>
-          <tr *ngFor="let pro of result_pros | keyvalue">
-            <th *ngFor="let data of values(pro.key)" class="display-value">{{data}}</th>
-          </tr>
+            <tr *ngFor="let pro of result_pros | keyvalue">
+              <th *ngFor="let data of values(pro.key)" class="display-value">{{data}}</th>
+            </tr>
           </tbody>
         </table>
       </div>

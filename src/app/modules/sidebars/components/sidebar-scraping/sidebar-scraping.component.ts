@@ -33,7 +33,7 @@ export class SidebarScrapingComponent implements OnChanges {
       label: 'Créer un intitulé',
       toolTip: 'Correspond au nom de la futur colonne dans l‘affichage des résultats.'
     },
-    specificDataXPath: {
+    xPathData: {
       label: 'Emplacement de l’information (Xpath)',
       toolTip: this._tooltipXPath,
     },
@@ -46,11 +46,11 @@ export class SidebarScrapingComponent implements OnChanges {
       toolTip: 'Correspond aux sites avec par exemple une pagination en bas 1 - 2 - ... 34 - 35 ' +
                'et ou l\'on peut cliquer dessus pour naviguer entre ces pages.'
     },
-    isSingle: {
+    isDeep: {
       label: 'J\'ai besoin de cliquer sur le profil pour trouver le mail',
       toolTip: null,
     },
-    linkPro: {
+    crawlDeeperOn: {
       label: 'Veuillez entrer l’URL commun à tous les profils',
       toolTip: 'regardez l’URL d’au moins deux profils et sélectionnez la partie de l’URL en commun.'
     },
@@ -58,7 +58,7 @@ export class SidebarScrapingComponent implements OnChanges {
       label: 'J\'ai besoin de remplir des champs pour charger la page à scraper, quantité : ',
       toolTip: 'ex : champ avec un code postal à remplir'
     },
-    fieldLocator: {
+    xPathInput: {
       label: 'Emplacement du champ texte (XPath)',
       toolTip: this._tooltipXPath,
     },
@@ -75,7 +75,7 @@ export class SidebarScrapingComponent implements OnChanges {
       toolTip: 'Le spider crawl, tel une araignée sur sa toile, parcourt entièrement le site web en en cherchant et en allant sur tous ses liens.' +
                'Il s\'agit de la méthode la moins efficace.'
     },
-    specificMail: {
+    xPathMail: {
       label: 'Emplacement de l\'email associé (XPath)',
       toolTip: 'Rentrer le XPath de l\'emplacement de l\'email associé à l\'information.\n' +
                'Si il n\'est pas renseigné, le premier email du site le remplacera automatiquement.\n' +

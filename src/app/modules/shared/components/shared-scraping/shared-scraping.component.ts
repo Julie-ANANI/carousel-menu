@@ -296,8 +296,8 @@ export class SharedScrapingComponent implements OnInit {
       isSpider: false,
       numberFields: 0,
       fields: [{}, {}, {}, {}, {}],
-      isSingle: false,
-      linkPro: '',
+      isDeep: false,
+      crawlDeeperOn: '',
       id: Math.floor(Math.random() * 1000000)
     };
   }

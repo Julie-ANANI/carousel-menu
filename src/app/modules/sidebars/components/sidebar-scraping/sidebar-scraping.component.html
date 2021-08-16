@@ -112,11 +112,11 @@
 
                 <div class="content">
                   <span
-                    [attr.data-tooltip]="getToolTip('fieldLocator')"
+                    [attr.data-tooltip]="getToolTip('xPathInput')"
                     class="tooltip">
-                    <span class="text-sm">{{ index + 1 }} - {{getLabel('fieldLocator')}}</span>
+                    <span class="text-sm">{{ index + 1 }} - {{getLabel('xPathInput')}}</span>
                     <input
-                      [(ngModel)]="params['fields'][index]['locator']"
+                      [(ngModel)]="params['fields'][index]['xPathInput']"
                       class="form-input is-sm"
                       placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
                       type="text">
@@ -135,24 +135,24 @@
           <div class="content" id="is-single">
             <label class="form-switch">
               <input
-                [(ngModel)]="params['isSingle']"
-                name="is-single"
+                [(ngModel)]="params['isDeep']"
+                name="is-deep"
                 type="checkbox">
-              <i class="form-icon"></i><span class="text-md">{{getLabel('isSingle')}}</span>
+              <i class="form-icon"></i><span class="text-md">{{getLabel('isDeep')}}</span>
             </label>
           </div>
           <!-- /is single pro by page-->
 
-          <div *ngIf="params['isSingle']" [ngClass]="params['isSingle'] ? 'd-block' : 'd-none'" class="m-left-50">
+          <div *ngIf="params['isDeep']" [ngClass]="params['isDeep'] ? 'd-block' : 'd-none'" class="m-left-50">
 
             <!-- link pro -->
-            <div class="content m-top-4" id="link-pro">
+            <div class="content m-top-4" id="crawl-deeper-on">
             <span
-              [attr.data-tooltip]="getToolTip('linkPro')"
+              [attr.data-tooltip]="getToolTip('crawlDeeperOn')"
               class="tooltip is-multiline">
-                <span class="text-sm">{{getLabel('linkPro')}}</span>
+                <span class="text-sm">{{getLabel('crawlDeeperOn')}}</span>
                 <input
-                  [(ngModel)]="params['linkPro']"
+                  [(ngModel)]="params['crawlDeeperOn']"
                   class="form-input is-sm"
                   placeholder="ex: https://www.crnl.fr/fr/user/"
                   type="text">
@@ -267,11 +267,11 @@
 
                 <div class="content">
                 <span
-                  [attr.data-tooltip]="getToolTip('specificDataXPath')"
+                  [attr.data-tooltip]="getToolTip('xPathData')"
                   class="tooltip">
-                  <span class="text-sm">{{ index + 1 }} - {{getLabel('specificDataXPath')}}</span>
+                  <span class="text-sm">{{ index + 1 }} - {{getLabel('xPathData')}}</span>
                   <input
-                    [(ngModel)]="params['specificData'][index]['xPath1']"
+                    [(ngModel)]="params['specificData'][index]['xPathData']"
                     class="form-input is-sm"
                     placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
                     type="text">
@@ -280,11 +280,11 @@
 
                 <div class="content m-bottom-4">
                 <span
-                  [attr.data-tooltip]="getToolTip('specificMail')"
+                  [attr.data-tooltip]="getToolTip('xPathMail')"
                   class="tooltip">
-                  <span class="text-sm">{{ index + 1 }} - {{getLabel('specificMail')}}</span>
+                  <span class="text-sm">{{ index + 1 }} - {{getLabel('xPathMail')}}</span>
                   <input
-                    [(ngModel)]="params['specificData'][index]['mail']"
+                    [(ngModel)]="params['specificData'][index]['xPathMail']"
                     class="form-input is-sm"
                     placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
                     type="text">
