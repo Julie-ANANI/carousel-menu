@@ -12,14 +12,14 @@ export class DataService {
   public answersTagsLists: {[questionId: string]: Array<Tag>} = {};
 
   public getAnswers(question: any): Observable<Array<Answer>> {
-    return this.answersToShow[question._id].asObservable();
+    return this.answersToShow[question.identifier].asObservable();
   }
 
   public setAnswers(question: any, answers: Array<Answer>): void {
-    if (!this.answersToShow[question._id]) {
-      this.answersToShow[question._id] = new BehaviorSubject(answers);
+    if (!this.answersToShow[question.identifier]) {
+      this.answersToShow[question.identifier] = new BehaviorSubject(answers);
     } else {
-      this.answersToShow[question._id].next(answers);
+      this.answersToShow[question.identifier].next(answers);
     }
 
     /* Update tags */
@@ -27,8 +27,8 @@ export class DataService {
   }
 
   public updateTagsList(question: any) {
-    const answers = this.answersToShow[question._id].getValue();
-    this.answersTagsLists[question._id] = ResponseService.tagsList(answers, question);
+    const answers = this.answersToShow[question.identifier].getValue();
+    this.answersTagsLists[question.identifier] = ResponseService.tagsList(answers, question);
   }
 
 }
