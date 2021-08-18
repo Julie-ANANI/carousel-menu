@@ -20,10 +20,10 @@
       <!-- /import button -->
     </div>
     <!-- /heading -->
-
+<!--    [(ngModel)]="setCanScrape"-->
     <!-- url field -->
     <div class="input-wrapper content">
-      <label class="form-label">URL to scrape</label>
+      <label class="form-label">URL to scrape (can be more than one if separate by comma)</label>
       <input
         [(ngModel)]="params['url']"
         class="form-input"
@@ -36,12 +36,12 @@
     <div class="form-group m-top-10">
       <button class="button is-primary is-md"
               (click)="onClickSearch()"
-              [disabled]="isScraping">
+              [disabled]="isScraping || (params['url'].length == 0)">
         Scrape
       </button>
       <button class="button is-primary is-md float-right"
               (click)="onClickCancel()"
-              [disabled]="!isScraping">
+              [disabled]="(!isScraping) || isCancel">
         Cancel
       </button>
     </div>
@@ -78,6 +78,12 @@
       <span style="white-space: pre-line">{{keepInformed}} </span>
     </div>
     <!-- /keep informed -->
+
+    <!-- display cancel -->
+    <div *ngIf="isCancel" [ngClass]="isCancel ? 'd-block' : 'd-none'" class="text-error">
+      <span style="white-space: pre-line">Cancel</span>
+    </div>
+    <!-- /display cancel -->
 
     <!-- loading -->
     <div *ngIf="isScraping" [ngClass]="isScraping ? 'd-block' : 'd-none'" class="m-top-25">

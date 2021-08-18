@@ -25,7 +25,7 @@ export class SharedScrapingComponent implements OnInit {
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
 
-  private _keepInformed = '';
+  private _keepInformed = 'Starting a crawling';
 
   private _isScraping = false;
 
@@ -38,6 +38,8 @@ export class SharedScrapingComponent implements OnInit {
   private _warning = '';
 
   private _refreshIntervalId: any = null;
+
+  private _isCancel = false;
 
   constructor(private _rolesFrontService: RolesFrontService,
               private _scrapingService: ScrapingService,
@@ -71,6 +73,10 @@ export class SharedScrapingComponent implements OnInit {
 
   get warning(): string {
     return this._warning;
+  }
+
+  get isCancel(): boolean {
+    return this._isCancel;
   }
 
   public onClickImport(file: File) {
@@ -149,9 +155,10 @@ export class SharedScrapingComponent implements OnInit {
       () => {
         console.log('Observable complete!');
         this.stopKeepInformed();
+        this._isCancel = false;
       }
     );
-    this.autoKeepInformed();
+    // this.autoKeepInformed();
   }
 
   public startKeepInformed() {
@@ -162,11 +169,14 @@ export class SharedScrapingComponent implements OnInit {
 
   public stopKeepInformed() {
     clearInterval(this._refreshIntervalId);
+    this._keepInformed = 'Starting a crawling';
   }
 
   onClickCancel(): void {
     console.log('send Cancel to ', this.getJsonId());
+    this._isCancel = true;
     this.stopKeepInformed();
+    this._showKeepInformed = false;
     this._scrapingService.cancelScraping(this.getJsonId()).subscribe(
       (value) => {
         console.log('Result : ', value);
