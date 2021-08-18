@@ -219,9 +219,13 @@ export class ResponseService {
       });
 
       // Then calcul percentages
-      const maxAnswersCount = barsData.reduce((acc, bd) => {
-        return (acc < bd.count) ? bd.count : acc;
-      }, 0);
+      const maxAnswersCount = question.controlType === 'checkbox' ?
+        barsData.reduce((acc, bd) => {
+          return (acc < bd.count) ? bd.count : acc;
+        }, 0) :
+        barsData.reduce((acc, bd) => {
+          return (acc + bd.count);
+        }, 0);
 
       const relativePercentages: {difference: Array<number>, rounded: Array<number>} = {
         difference: [],
@@ -244,17 +248,16 @@ export class ResponseService {
             const index = diff < 0 ?
               values.difference.findIndex((value: number) => value === Math.min(...values.difference)) :
               values.difference.findIndex((value: number) => value === Math.max(...values.difference));
-            values.rounded[index] += diff / Math.abs(diff);
+            values.rounded[index] -= diff / Math.abs(diff);
             values.difference[index] = 1 + values.difference[index];
             diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0) - 100;
           }
+          barsData.forEach((bd, i) => {
+            bd.relativePercentage = `${relativePercentages.rounded[i]}%`;
+          });
         }
-        fixPercentagesSum(relativePercentages, question.controlType);
-
-        barsData.forEach((bd, i) => {
-          bd.relativePercentage = `${relativePercentages.rounded[i]}%`;
-        });
       };
+      fixPercentagesSum(relativePercentages, question.controlType);
 
       if (question.controlType === 'checkbox') {
         barsData.sort((a, b) => {
