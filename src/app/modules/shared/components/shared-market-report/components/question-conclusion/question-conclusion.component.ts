@@ -177,6 +177,10 @@ export class QuestionConclusionComponent implements OnInit {
     return (<any>this._question).options.map((q: any) => q.positive);
   }
 
+  get showPositiveAnswers(): boolean {
+    return (<any>this._question).options.filter((q: any) => q.positive).length > 0;
+  }
+
   get tags(): Array<Tag> {
     return this._dataService.answersTagsLists[this._question._id];
   }
