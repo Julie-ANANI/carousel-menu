@@ -2,11 +2,20 @@
 @import "../../../../../../../style/framework/src/mixins";
 
 #modules-search {
-  display: flex;
+  //display: flex;
 
   .module {
-    flex: 0 1 50%;
+    width: 50%;
+  }
+
+  .module-search {
+    padding-right: 2.5%;
+    padding-left: 5%;
+  }
+
+  .module-scraping {
     padding-right: 5%;
+    padding-left: 2.5%;
   }
 }
 
@@ -17,9 +26,20 @@
     flex-direction: column;
 
     .module {
+      width: 100%;
       flex: 1 !important;
       padding-bottom: 25px;
-      padding-right: 15% !important;
+      //padding-right: 15% !important;
+    }
+
+    .module-search {
+      padding-right: 5%;
+      padding-left: 5%;
+    }
+
+    .module-scraping {
+      padding-right: 5%;
+      padding-left: 5%;
     }
 
   }
@@ -33,6 +53,16 @@
 
     .module {
       padding-right: 0 !important;
+    }
+
+    .module-search {
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .module-scraping {
+      padding-right: 0;
+      padding-left: 0;
     }
 
   }
