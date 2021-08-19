@@ -109,6 +109,28 @@ export class ProfessionalsService {
     );
   }
 
+  public updateEmailConfidence(
+    file: File
+  ): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post(
+      '/professional/updateConfidence',
+      formData
+    );
+  }
+
+  public updateEmailConfidenceConfirm(
+    file: File
+  ): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post(
+      '/professional/updateConfidenceConfirm',
+      formData
+    );
+  }
+
   public createAmbassadors(
     professionalArray: Array<Professional>
   ): Observable<any> {

@@ -48,6 +48,10 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _modalExport = false;
 
+  private _modalUpdate = false;
+
+  private _updatePreview = {};
+
   private _exportConfidence = 80;
 
   private _exportCountries = '';
@@ -74,6 +78,8 @@ export class AdminCampaignProsComponent implements OnInit {
   private _isExporting = false;
 
   private _isCreating = false;
+
+  private _confidenceFile: File;
 
   private _accessPath: Array<string> = [
     'projects',
@@ -196,6 +202,10 @@ export class AdminCampaignProsComponent implements OnInit {
     this._modalImport = true;
   }
 
+  public onClickUpdate() {
+    this._modalUpdate = true;
+  }
+
   public updateCampaign(event: any) {
     this._originCampaign = event.value;
   }
@@ -241,6 +251,83 @@ export class AdminCampaignProsComponent implements OnInit {
         }
       }
     }
+  }
+
+  public onClickUpdateConfidence(file: File) {
+    if (!this._isImporting) {
+      this._isImporting = true;
+      this._csvImportError = '';
+      // Verify the size here...
+      if (file) {
+        if (file.size <= SIZE_LIMIT) {
+          this._confidenceFile = file;
+          this._professionalsService
+            .updateEmailConfidence(file)
+            .pipe(first())
+            .subscribe(
+              (res: any) => {
+                this._isImporting = false;
+                this._updatePreview = res;
+                this._translateNotificationsService.success(
+                  'Success',
+                  'Please confirm the import'
+                );
+              },
+              (err: HttpErrorResponse) => {
+                this._translateNotificationsService.error(
+                  'ERROR.ERROR',
+                  ErrorFrontService.getErrorMessage(err.status)
+                );
+                this._isImporting = false;
+                this._csvImportError = err.error.message;
+              }
+            );
+        } else {
+          this._isImporting = false;
+          this._csvImportError = `Le fichier est trop grand (${Bytes2Human.convert(
+            file.size
+          )} mb). Max : ${Bytes2Human.convert(SIZE_LIMIT)} mb`;
+        }
+      }
+    }
+  }
+
+  public onClickConfirmConfidence() {
+    if (!this._isImporting) {
+      this._isImporting = true;
+      this._csvImportError = '';
+      // Verify the size here...
+      this._professionalsService
+        .updateEmailConfidenceConfirm(this._confidenceFile)
+        .pipe(first())
+        .subscribe(
+          (res: any) => {
+            this._modalUpdate = false;
+            this._isImporting = false;
+            this._updatePreview = null;
+            this._confidenceFile = null;
+            this._translateNotificationsService.success(
+              'Success',
+              'Pros have been updated!'
+            );
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              ErrorFrontService.getErrorMessage(err.status)
+            );
+            this._isImporting = false;
+            this._csvImportError = err.error.message;
+          }
+        );
+    }
+  }
+
+  public onClickCancelConfidence() {
+    this._modalUpdate = false;
+    this._isImporting = false;
+    this._updatePreview = null;
+    this._confidenceFile = null;
   }
 
   public onClickConfirm() {
@@ -421,6 +508,14 @@ export class AdminCampaignProsComponent implements OnInit {
     this._modalExport = value;
   }
 
+  get modalUpdate(): boolean {
+    return this._modalUpdate;
+  }
+
+  set modalUpdate(value: boolean) {
+    this._modalUpdate = value;
+  }
+
   get exportConfidence(): number {
     return this._exportConfidence;
   }
@@ -467,6 +562,10 @@ export class AdminCampaignProsComponent implements OnInit {
 
   get csvImportError(): string {
     return this._csvImportError;
+  }
+
+  get updatePreview(): any {
+    return this._updatePreview;
   }
 
 }
