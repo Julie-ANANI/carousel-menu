@@ -17,7 +17,7 @@ export class SidebarScrapingComponent implements OnChanges {
 
   private _tooltipXPath: string =
     '1/ Sous Chrome : faites Shift + cmd + c pour pouvoir selectionner un élément\n' +
-    '2/ Sur la page Web, cliquez sur l’information à extraire du 1er mail\n' +
+    '2/ Sur la page Web, cliquez sur l’élément dont il faut l\'xPath\n' +
     '3/ Clic droit sur la ligne bleu dans l’inspecteur : Copier > Copy full XPath\n';
 
   private _fields: any = {
