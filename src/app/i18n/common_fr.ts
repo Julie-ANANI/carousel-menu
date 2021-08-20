@@ -1,4 +1,6 @@
 export const COMMON = {
+  'CHANGE_WITHOUT_SAVE': 'Souhaitez vous vraiment changer sans sauvegarder? Tous vos changements seront perdus.',
+  'QUIT_WITHOUT_SAVE': 'Souhaitez vous vraiment quitter sans sauvegarder? Tous vos changements seront perdus.',
   'SAVE': 'Sauvegarder',
   'DOWNLOAD': 'Télécharger',
   'UPLOAD': 'Uploader',
@@ -221,7 +223,8 @@ export const COMMON = {
     'URL': 'Le profil est requis.',
     'PROS_CONTACT': 'La valeur doit être supérieure à 0.',
     'BATCH_IMMEDIATE': 'Laissez ce champ vide pour envoyer le batch immédiatement.',
-    'BATCH_DELAY': 'L\'heure choisie doit être au minimum dans 7 minutes, sinon le batch risque de ne pas être envoyé'
+    'BATCH_DELAY': 'L\'heure choisie doit être au minimum dans 7 minutes, sinon le batch risque de ne pas être envoyé',
+    'FIELD': 'Ce champ est requis'
   },
 
   'INVALID': {

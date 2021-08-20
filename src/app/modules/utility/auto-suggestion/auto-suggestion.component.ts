@@ -244,8 +244,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   public onValueSelect(value: any) {
     this._itemSelected = value;
     if (this._requestType === 'remote') {
-      this._searchKeyword.setValue(value[this._identifier]);
       this._emitValue(value);
+      this._searchKeyword.reset();
     } else {
       this._emitValue({
         type: this._type,

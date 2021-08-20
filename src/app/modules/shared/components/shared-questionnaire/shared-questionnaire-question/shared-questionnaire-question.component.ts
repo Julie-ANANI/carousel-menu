@@ -35,10 +35,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     return this._missionQuestionService.questionnaireLangs || [];
   }
 
-  get customId(): string {
-    return this._customId;
-  }
-
   get question(): MissionQuestion {
     return this._question;
   }
@@ -102,12 +98,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
       }
     }
 
-    if (this._question.identifier && this._isTaggedQuestion) {
-      this._customId = this._missionQuestionService.generateId();
-    } else {
-      this._customId = this._question.identifier;
-    }
-
     if (!this._question.maxOptionsSelect && this._question.controlType === 'checkbox') {
       this._question.maxOptionsSelect = (this._question.options && this._question.options.length);
     }
@@ -136,8 +126,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   private _editMode = false;
 
   private _isTaggedQuestion = false;
-
-  private _customId = '';
 
   private _picto: Picto = picto;
 
@@ -181,28 +169,18 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     const res = confirm(_msg);
 
     if (res) {
-      if (this.isEditable) {
+      if (this.isEditable || (this.isLibraryView && this.canAccess(['delete']))) {
+
+        if (!this._question._id) {
+          this.valueToSave.emit({
+            key: 'QUESTION_REMOVE_SCRATCH',
+            value: {identifier: this._question.identifier}
+          });
+        }
+
         this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex);
-      } else if (this.isLibraryView && this.canAccess(['delete'])) {
-        const question = this._missionQuestionService.removeQuestion(this._questionIndex, this._sectionIndex, true);
-        this.valueToSave.emit({
-          key: 'QUESTION_REMOVE',
-          value: {
-            sectionIndex: this._sectionIndex,
-            quesId: question.question._id
-          }
-        });
       }
     }
-  }
-
-  public onChangeIdentifier(identifier: string) {
-    this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(identifier);
-    if (this._isTaggedQuestion) {
-      this._question.controlType = this._missionQuestionService.getQuestionType(identifier);
-    }
-    this.notifyChanges();
-    this._emitValueToSave(['edit', 'identifier']);
   }
 
   public onChangeTemplateQuestion(event: boolean) {
@@ -212,9 +190,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     }
   }
 
-  public getNonUsedQuestions() {
-    return this._missionQuestionService.getNonUsedQuestions();
-  }
 
   public cloneQuestion(event: Event) {
     event.preventDefault();
@@ -237,7 +212,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   }
 
   private _emitValueToSave(access: Array<string>) {
-    if (this.isLibraryView && this.canAccess(access)) {
+    if (this.isLibraryView && this.canAccess(access) && !!this._question._id) {
       this.valueToSave.emit({
         key: 'QUESTION_EDIT',
         value: {

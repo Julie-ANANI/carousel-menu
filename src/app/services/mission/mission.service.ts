@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Mission, MissionTemplate} from '../../models/mission';
+import {Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Multiling } from '../../models/multiling';
@@ -18,6 +18,55 @@ export class MissionService {
    */
   public getAllQuestions(config?: Config): Observable<Response> {
     return this._http.get<Response>('/mission/questions/all', {params: config});
+  }
+
+  /**
+   * returns the lists of the questions matched based on the identifier.
+   *
+   * @param identifier
+   */
+  public checkIdentifierAvailability(identifier: string): Observable<Array<MissionQuestion>> {
+    return this._http.get<Array<MissionQuestion>>(`/mission/questions/checkIdentifier/${identifier}`);
+  }
+
+  /**
+   * will create a new question of type MissionQuestion. It should be only used
+   * for the Questions or Use cases under Library page because it will add the question
+   * directly in the collection MissionQuestions
+   *
+   * @param questionObj
+   */
+  public createQuestion(questionObj: MissionQuestion): Observable<MissionQuestion> {
+    return this._http.post<MissionQuestion>('/mission/questions/create', questionObj);
+  }
+
+  /**
+   * will delete the question from the Mission Question collection. Be careful
+   * using this. It will also delete the question from the Use cases too.
+   *
+   * @param questionId
+   */
+  public removeQuestion(questionId: string): Observable<MissionQuestion> {
+    return this._http.delete<MissionQuestion>(`/mission/questions/${questionId}`);
+  }
+
+  /**
+   * will return the question based on the id. It will work with the new use case questions.
+   *
+   * @param questionId
+   */
+  public getQuestion(questionId: string): Observable<MissionQuestion> {
+    return this._http.get<MissionQuestion>(`/mission/questions/${questionId}`);
+  }
+
+  /**
+   * this function is to update the question in the back. It will work with the new use case questions.
+   *
+   * @param questionId
+   * @param question
+   */
+  public updateQuestion(questionId: string, question: MissionQuestion): Observable<MissionQuestion> {
+    return this._http.put<MissionQuestion>(`/mission/questions/${questionId}`, question);
   }
 
   /**

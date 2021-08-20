@@ -48,6 +48,8 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _answers: Array<Answer> = [];
 
+  private _topAnswers: Array<Answer> = [];
+
   private _questions: Array<Question | MissionQuestion> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
@@ -81,6 +83,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
         this._answers = response.answers.sort((a, b) => {
           return b.profileQuality - a.profileQuality;
         });
+        this._topAnswers = this.answers.filter(ans => ans.profileQuality === 2);
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -252,6 +255,10 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   get anonymous(): boolean {
     return this._anonymous;
+  }
+
+  get topAnswers(): Array<Answer> {
+    return this._topAnswers;
   }
 
   ngOnDestroy(): void {

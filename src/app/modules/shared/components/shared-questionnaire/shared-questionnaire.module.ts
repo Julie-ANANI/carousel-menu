@@ -8,6 +8,7 @@ import {SharedQuestionnaireComponent} from './shared-questionnaire.component';
 import { SharedQuestionnaireSectionComponent } from './shared-questionnaire-section/shared-questionnaire-section.component';
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import {SharedQuestionnaireQuestionComponent} from './shared-questionnaire-question/shared-questionnaire-question.component';
+import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-suggestion.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {SharedQuestionnaireQuestionComponent} from './shared-questionnaire-quest
     TranslateModule.forChild(),
     RouterModule,
     FormsModule,
-    ModalEmptyModule
+    ModalEmptyModule,
+    AutoSuggestionModule
   ],
   declarations: [
     SharedQuestionnaireComponent,

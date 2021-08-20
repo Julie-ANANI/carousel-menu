@@ -41,6 +41,24 @@ export const ADMIN_STORYBOARD = {
   'VIDEO_TYPE': {
     'TEST': 'Test',
     'FINAL': 'Final'
+  },
+
+  'MISSING_FIELDS': {
+    'INTRO': 'We miss some information to generate the file',
+    'LANG': 'You need to select a language',
+    'ANSWERS': 'Some validated answers are needed',
+    'CONCLUSION': 'We need the conclusion',
+    'OBJECTIVE': 'We need the objective',
+    'SUMMARY': 'We need the summary',
+    'SALE': 'A sale must be associated to the project',
+    'OPERATOR': 'An operator must be associated to the project',
+    'SECTIONS': 'We need some sections',
+    'NAME': 'We need the client\'s name',
+    'EMAIL': 'We need the client\'s email',
+    'ABSTRACT': 'We need the professionals abstract',
+    'LIST': 'We need at least three profiles of respondents',
+    'COUNTRY': 'Le pays est manquant, corriger dans la synthèse',
+    'MEDIA': 'We need a principal media'
   }
 
 };

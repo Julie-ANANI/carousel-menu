@@ -35,18 +35,6 @@
                   </ng-container>
                 </label>
 
-                <!-- translation button -->
-                <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
-                  <button
-                    (click)="importTranslation($event, section.type, i)"
-                    [disabled]="section.content"
-                    class="button is-link is-sm m-right-10"
-                    type="button">
-                    Translate content
-                  </button>
-                </div>
-                <!-- /translation button -->
-
                 <!-- edit-preview button -->
                 <button
                   *ngIf=" isEditable"
@@ -230,18 +218,6 @@
                 <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 1}}</span>Title
               </label>
 
-              <!-- translation button -->
-              <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
-                <button
-                  (click)="importTranslation($event, 'TITLE')"
-                  [disabled]="activeInnovCard.title"
-                  class="button is-link is-sm"
-                  type="button">
-                  Translate content
-                </button>
-              </div>
-              <!-- /translation button -->
-
               <!-- edit-preview button -->
               <button
                 *ngIf=" isEditable"
@@ -372,18 +348,6 @@
                 for="project-summary">
                 <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 2}}</span>Summary
               </label>
-
-              <!-- translation button -->
-              <div *ngIf="innovation.innovationCards.length > 1 && isEditable">
-                <button
-                  (click)="importTranslation($event, 'SUMMARY')"
-                  [disabled]="activeInnovCard.summary"
-                  class="button is-link is-sm"
-                  type="button">
-                  Translate content
-                </button>
-              </div>
-              <!-- /translation button -->
 
               <!-- edit-preview button -->
               <button

@@ -77,7 +77,7 @@ export class SharedQuestionnaireComponent implements OnInit {
 
   public addSection(event: Event) {
     event.preventDefault();
-    if (this.isEditable) {
+    if (this.isEditable || this.canAccess(['section', 'add'])) {
       this._missionQuestionService.addSection();
     }
   }

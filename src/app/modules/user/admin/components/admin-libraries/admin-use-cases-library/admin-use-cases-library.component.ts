@@ -22,6 +22,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
 
   set config(value: Config) {
     this._config = value;
+    this._getAllTemplates();
   }
 
   get fetchingError(): boolean {
@@ -86,6 +87,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getAllTemplates(this._config).pipe(first()).subscribe((response) => {
         this._templates = response && response.result || [];
+        this._missionQuestionService.setAllTemplates(JSON.parse(JSON.stringify(this._templates)));
         this._total = response && response._metadata && response._metadata.totalCount || 0;
         this._templates.map((_template) => {
           _template['name'] = MissionFrontService.objectiveName(_template, this.currentLang);
@@ -94,7 +96,6 @@ export class AdminUseCasesLibraryComponent implements OnInit {
           _template['complementaryQuestions'] = MissionFrontService.complementaryObjectives(_template['totalQuestions']);
           return _template;
         });
-        this._missionQuestionService.setAllTemplates(this._templates);
         this._initializeTable();
       }, error => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
@@ -122,40 +123,49 @@ export class AdminUseCasesLibraryComponent implements OnInit {
           _type: 'TEXT',
         },
         {
+          _attrs: ['category'],
+          _name: 'Category',
+          _type: 'TEXT',
+          _width: '130px',
+          _isSortable: true
+        },
+        {
           _attrs: ['sections'],
           _name: 'Total Sections',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '140px'
         },
         {
           _attrs: ['essentialsQuestions'],
           _name: 'Essentials',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '140px'
         },
         {
           _attrs: ['complementaryQuestions'],
           _name: 'Complementary',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '150px'
         },
         {
           _attrs: ['totalQuestions'],
           _name: 'Total Questions',
           _type: 'LENGTH',
-          _width: '180px'
+          _width: '150px'
         },
         {
           _attrs: ['updated'],
           _name: 'Updated',
           _type: 'DATE',
-          _width: '150px'
+          _width: '150px',
+          _isSortable: true
         },
         {
           _attrs: ['created'],
           _name: 'Created',
           _type: 'DATE',
-          _width: '150px'
+          _width: '150px',
+          _isSortable: true
         }
       ]
     };
@@ -181,7 +191,9 @@ export class AdminUseCasesLibraryComponent implements OnInit {
    * @param event
    */
   public navigateTo(event: MissionTemplate) {
-    this._missionQuestionService.setTemplate(event);
+    this._missionQuestionService.setTemplate(this._missionQuestionService.allTemplates.find((_template) => {
+      return _template._id === event._id;
+    }));
     this._router.navigate([`${this._router.url}/${event._id}`]);
   }
 

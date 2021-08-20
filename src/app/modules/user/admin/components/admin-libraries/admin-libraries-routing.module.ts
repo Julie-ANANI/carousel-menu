@@ -16,6 +16,7 @@ import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 import {AdminUseCasesLibraryComponent} from './admin-use-cases-library/admin-use-cases-library.component';
 import {AdminEditUseCaseComponent} from './admin-use-cases-library/admin-edit-use-case/admin-edit-use-case.component';
 import {AdminQuestionsLibraryComponent} from './admin-questions-library/admin-questions-library.component';
+import {AdminEditQuestionComponent} from './admin-questions-library/admin-edit-question/admin-edit-question.component';
 
 export const routes: Routes = [
   {
@@ -88,6 +89,13 @@ export const routes: Routes = [
         data: { accessPath: ['libraries', 'questions'] },
         pathMatch: 'full'
       },
+      {
+        path: 'questions/:questionId',
+        component: AdminEditQuestionComponent,
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['libraries', 'questions'] },
+        pathMatch: 'full'
+      }
     ]
   }
 ];

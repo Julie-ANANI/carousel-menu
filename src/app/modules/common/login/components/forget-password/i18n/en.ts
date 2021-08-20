@@ -4,9 +4,9 @@ export const FORGET_PASSWORD = {
   'HEADING_A': 'Forgot your password?',
   'HEADING_B': 'Enter your email address below and we\'ll get you back on track.',
 
-  'BUTTON_TEXT': 'Request Reset Link',
+  'BUTTON_TEXT': 'Request reset link',
 
-  'SIGN_IN_TEXT': 'Back to sign in',
+  'SIGN_IN_TEXT': 'Back to Sign in',
 
   'SUCCESS_TEXT': {
     'A': 'If there\'s a',

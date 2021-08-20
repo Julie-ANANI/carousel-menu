@@ -341,10 +341,6 @@ export class FiltersComponent {
   }
 
   public onInputField(value: string) {
-    this._selectedTags = [];
-    this._selectedSimilarTags = [];
-    this._suggestedTags = [];
-    this._sendSelectedFilters();
     this.searchFieldOutput.emit(value);
   }
 

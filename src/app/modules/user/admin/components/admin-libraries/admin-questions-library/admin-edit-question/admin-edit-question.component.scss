@@ -1,0 +1,172 @@
+@import "../../../../../../../../style/framework/src/variables";
+
+#admin-edit-question {
+
+  .header-wrapper {
+    background-color: $draft-color;
+    border-radius: 6px;
+    padding: 10px 25px 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $white-color;
+    position: relative;
+
+    &.is-edit-mode {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .form-input {
+      min-width: 200px;
+    }
+
+    .form-select {
+      min-width: 156px;
+    }
+
+    .buttons-wrapper {
+      position: absolute;
+      background-color: $draft-color;
+      padding: 10px 14px 10px 20px;
+      right: 12px;
+    }
+
+  }
+
+  .move-arrows {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    margin-right: 15px;
+
+    i {
+      cursor: pointer;
+
+      &:not(.is-disabled):hover {
+        color: $primary-color;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        color: $meta-color;
+      }
+
+    }
+
+    &.is-horizontal {
+      flex-direction: row;
+    }
+
+  }
+
+  .question-body {
+    background-color: $white-color;
+    padding: 20px 50px 10px 50px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+
+    .question-content {
+      flex: 1;
+
+      .lang-label {
+        min-width: 125px;
+        border-radius: 4px;
+        font-size: 13px;
+
+        .label {
+          width: 21px;
+          height: 21px;
+          margin-left: 15px;
+        }
+
+      }
+
+      textarea {
+        font-size: 13px;
+        min-height: 60px;
+        padding: 10px;
+      }
+
+      .options-wrapper {
+        display: flex;
+        flex-direction: column;
+        overflow-x: auto;
+
+        .card {
+          flex: 1;
+          border-radius: 5px;
+          border-width: 2px;
+          margin-bottom: 15px;
+          padding: 10px;
+          font-size: 14px;
+          background-color: #F2F2F2;
+
+          &.is-editable {
+            padding: 5px 10px 2px 10px;
+            min-height: 100px;
+          }
+
+        }
+
+        &.has-single-option {
+          flex-direction: row;
+          flex-wrap: wrap;
+          margin-right: -20px;
+
+          .card {
+            min-width: 240px;
+            max-width: calc(25% - 20px);
+            margin-right: 20px;
+          }
+
+        }
+
+      }
+
+      &.has-border {
+        border-left: 1px solid $border-default-color;
+        padding-left: 50px;
+      }
+
+      &.has-more-content {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        textarea, .options-wrapper .card {
+          max-width: 90%;
+        }
+
+        .options-wrapper .card textarea {
+          max-width: 100%;
+        }
+
+      }
+
+    }
+
+    .question-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .button {
+        position: relative;
+
+        .label {
+          position: absolute;
+          top: -15px;
+          right: -15px;
+        }
+
+      }
+
+    }
+
+    #adminEditQuestion-btn-add-item {
+      border-color: transparent;
+    }
+
+  }
+
+}

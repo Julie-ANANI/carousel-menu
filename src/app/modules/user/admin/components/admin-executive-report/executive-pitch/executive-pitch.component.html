@@ -13,7 +13,9 @@
           [innerHTML]="pitch"
           [ngStyle]="{ 'height': '150px' }"
           class="form-input"
-          maxlength="216">
+          [ngClass]="pitch ? 'has-success' : 'has-error'"
+          maxlength="216"
+          required>
         </textarea>
 
         <span [ngStyle]="{ 'color': pitchColor }" class="text-limit-wrapper">
@@ -30,9 +32,12 @@
 
     <!-- insert snippet button -->
     <div class="insert-snippet">
-      <span (click)="onClickSnippet($event)">
-        {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
-      </span>
+        <span class="text-error">
+          <span *ngIf="!pitch"> {{ 'COMMON.REQUIRED.FIELD' | translate }} </span>
+        </span>
+      <span class="c-hand" (click)="onClickSnippet($event)">
+          {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
+        </span>
     </div>
     <!-- /insert snippet button -->
 

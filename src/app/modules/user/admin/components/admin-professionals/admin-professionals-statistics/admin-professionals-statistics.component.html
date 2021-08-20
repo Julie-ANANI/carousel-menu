@@ -1,0 +1,175 @@
+<div id="showcase">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- when fetching error -->
+    <ng-container *ngIf="fetchingError">
+      <div class="d-flex s-error-wrapper align-center">
+        <app-utility-error-template-1 [ngStyle]="{ 'width': '100%' }"
+                                      [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
+      </div>
+    </ng-container>
+    <!-- /when fetching error -->
+
+    <!-- isLoading -->
+    <ng-container *ngIf="isLoading">
+      <div class="m-top-20">
+        <div class="loading is-primary is-md"></div>
+      </div>
+    </ng-container>
+    <!-- /isLoading -->
+
+    <!-- section statistics -->
+    <div *ngIf="!fetchingError && !isLoading" class="p-top-30 p-bottom-30 d-flex flex-d-column">
+
+      <div class="d-flex align-self-end">
+
+        <!-- years -->
+        <div class="dropdown is-year animate-fade is-5 m-10">
+          <a class="button is-sm is-outlined is-draft dropdown-toggle" tabindex="0">
+            {{ selectedYear ? selectedYear : 'Year' }}
+            <i class="fas m-left-10 fa-caret-down"></i>
+          </a>
+          <ul class="menu">
+            <li (click)="onChangeDate('YEAR','')" *ngIf="'' !== selectedYear" class="menu-item"
+                id="btn-dropdown-all-year">
+              All years
+            </li>
+            <ng-container *ngFor="let year of dropdownYears">
+              <li (click)="onChangeDate('YEAR',year)" *ngIf="year !== selectedYear" [id]="'btn-dropdown-'+year+'year'"
+                  class="menu-item">
+                {{ year }}
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <!-- /years -->
+
+        <!-- months -->
+        <div class="dropdown is-year animate-fade is-5 m-10">
+          <a class="button is-sm is-outlined is-draft dropdown-toggle" tabindex="0">
+            {{ selectedMonth ? selectedMonth : 'Month' }}
+            <i class="fas m-left-10 fa-caret-down"></i>
+          </a>
+          <ul class="menu">
+            <li (click)="onChangeDate('MONTH','')" *ngIf="'' !== selectedMonth" class="menu-item"
+                id="btn-dropdown-all-month">
+              All months
+            </li>
+            <ng-container *ngFor="let month of dropdownMonths">
+              <li (click)="onChangeDate('MONTH', month)" *ngIf="month !== selectedMonth"
+                  [id]="'btn-dropdown-'+month+'month'"
+                  class="menu-item">
+                {{ month }}
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <!-- /months -->
+
+        <!-- week -->
+        <div *ngIf="!!selectedYear && !!selectedMonth" class="dropdown is-year animate-fade is-5 m-10">
+          <a class="button is-sm is-outlined is-draft dropdown-toggle" tabindex="0">
+            {{ selectedWeek ? selectedWeek + ' week' : 'Week' }}
+            <i class="fas m-left-10 fa-caret-down"></i>
+          </a>
+          <ul class="menu">
+            <li (click)="onChangeDate('WEEK','')" *ngIf="'' !== selectedWeek" class="menu-item"
+                id="btn-dropdown-all-weeks">
+              All weeks
+            </li>
+            <ng-container *ngFor="let week of dropdownWeeks">
+              <li (click)="onChangeDate('WEEK', week)" *ngIf="week !== selectedWeek"
+                  [id]="'btn-dropdown-'+week+'week'"
+                  class="menu-item">
+                {{ week }}
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <!-- /months -->
+      </div>
+
+
+      <!-- section seniority levels -->
+      <section
+        class="d-flex flex-d-column align-start m-bottom-10">
+        <h2> Seniority levels </h2>
+
+        <ng-container
+          *ngIf="seniorityLevelsClassification && seniorityLevelsClassification.seniorityLevels.length; else noSeniorityData">
+          <p class="text-sm">{{ seniorityLevelsClassification.timestamp | date }}</p>
+          <div class="responsive-scroll d-flex justify-evenly m-10">
+            <div class="table-responsive p-top-10 d-flex">
+              <table
+                class="table" style="width: fit-content;margin: auto; max-width: 100%;">
+                <thead>
+                <tr>
+                  <th [ngStyle]="{'min-width': '40px'}">Total</th>
+                  <th *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels"
+                      [ngStyle]="{'min-width': '40px'}">
+                    <div [ngStyle]="{'width': 'fit-content'}">
+                      {{ seniorityLevel.name || 'Not classified yet' }}
+                    </div>
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>{{seniorityLevelsClassification.total}}</td>
+                  <td *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels"
+                      [ngStyle]="{'min-width': '40px'}">
+                    {{ seniorityLevel.count }}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noSeniorityData>No classification found for those dates</ng-template>
+      </section>
+      <!-- /section seniority levels -->
+
+      <!-- section jobs -->
+      <section class="d-flex flex-d-column align-start">
+        <h2> Typology of jobs </h2>
+        <ng-container *ngIf="jobsClassification && jobsClassification.categories; else noJobsData">
+          <p class="text-sm">{{ jobsClassification.timestamp | date }}</p>
+          <div *ngFor="let category of jobsClassification.categories"
+               class="responsive-scroll d-flex justify-evenly m-10">
+            <div class="table-responsive p-top-10 d-flex">
+              <table *ngIf="category.jobs.length" class="table"
+                     style="width: fit-content;margin: auto; max-width: 100%;">
+                <thead>
+                <tr>
+                  <th class="bg-draft"
+                      [ngStyle]="{'min-width': '40px'}">{{ (category.label || {en: 'Not classified yet'}).en }}</th>
+                  <th *ngFor="let job of category.jobs"
+                      [ngStyle]="{'min-width': '40px'}">
+                    <div [ngStyle]="{'width': 'fit-content'}">
+                      {{ (job.label || {en: 'Not classified yet'}).en }}
+                    </div>
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>{{category.count}}</td>
+                  <td *ngFor="let job of category.jobs"
+                      [ngStyle]="{'min-width': '40px'}">
+                    {{ job.count }}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noJobsData>No classification found for those dates</ng-template>
+
+      </section>
+      <!-- /section jobs -->
+    </div>
+  </div>
+</div>
+

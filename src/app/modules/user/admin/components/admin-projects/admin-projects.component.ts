@@ -1,27 +1,27 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { Innovation } from '../../../../../models/innovation';
-import { Table } from '../../../../table/models/table';
-import { first } from 'rxjs/operators';
-import { Config } from '../../../../../models/config';
-import { Response } from '../../../../../models/response';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ConfigService } from '../../../../../services/config/config.service';
-import { isPlatformBrowser } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorFrontService } from '../../../../../services/error/error-front.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { UserService } from '../../../../../services/user/user.service';
-import { environment } from '../../../../../../environments/environment';
-import { User } from '../../../../../models/user.model';
-import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
-import { AuthService } from '../../../../../services/auth/auth.service';
-import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
-import { Column } from '../../../../table/models/column';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {TranslateTitleService} from '../../../../../services/title/title.service';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
+import {Innovation} from '../../../../../models/innovation';
+import {Table} from '../../../../table/models/table';
+import {first} from 'rxjs/operators';
+import {Config} from '../../../../../models/config';
+import {Response} from '../../../../../models/response';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {ConfigService} from '../../../../../services/config/config.service';
+import {isPlatformBrowser} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {UserService} from '../../../../../services/user/user.service';
+import {environment} from '../../../../../../environments/environment';
+import {User} from '../../../../../models/user.model';
+import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
+import {AuthService} from '../../../../../services/auth/auth.service';
+import {ObjectivesPrincipal} from '../../../../../models/static-data/missionObjectives';
+import {Column} from '../../../../table/models/column';
 import {Mission, MissionTemplate} from '../../../../../models/mission';
-import { MissionService } from '../../../../../services/mission/mission.service';
+import {MissionService} from '../../../../../services/mission/mission.service';
 import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
 
 @Component({
@@ -82,7 +82,7 @@ export class AdminProjectsComponent implements OnInit {
       this._isLoading = false;
       this._setConfigForUmiBack();
       this._getOperators().then(_ => {
-        // this._configOperator();
+        this._configOperator();
         this._getInnovations();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -157,9 +157,13 @@ export class AdminProjectsComponent implements OnInit {
           {
             _attrs: ['emailSent'],
             _name: 'Email sent',
-            _type: 'TEXT',
-            _isSortable: true,
-            _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+            _type: 'MULTI-CHOICES',
+            _width: '150px',
+            _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
+            _choices: [
+              {_name: 'Yes', _alias: 'Yes', _class: 'label is-success'},
+              {_name: 'No', _alias: 'No', _class: 'label is-danger'},
+            ]
           },
           {
             _attrs: ['stats.validatedAnswers'],
@@ -304,9 +308,13 @@ export class AdminProjectsComponent implements OnInit {
           {
             _attrs: ['emailSent'],
             _name: 'Email sent',
-            _type: 'TEXT',
-            _isSortable: true,
-            _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+            _type: 'MULTI-CHOICES',
+            _width: '150px',
+            _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
+            _choices: [
+              {_name: 'Yes', _alias: 'Yes', _class: 'label is-success'},
+              {_name: 'No', _alias: 'No', _class: 'label is-danger'},
+            ]
           },
           {
             _attrs: ['stats.emailsOK'],
@@ -421,9 +429,13 @@ export class AdminProjectsComponent implements OnInit {
           {
             _attrs: ['emailSent'],
             _name: 'Email sent',
-            _type: 'TEXT',
-            _isSortable: true,
-            _isHidden: !this.canAccess(['tableColumns', 'emailSent'])
+            _type: 'MULTI-CHOICES',
+            _width: '150px',
+            _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
+            _choices: [
+              {_name: 'Yes', _alias: 'Yes', _class: 'label is-success'},
+              {_name: 'No', _alias: 'No', _class: 'label is-danger'},
+            ]
           },
           {
             _attrs: ['stats.emailsOK'],
@@ -639,16 +651,15 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   /**
-   * Todo will be activated later when we have the functionality to search in mission team also.
    * @private
    */
 
-  /*private _configOperator() {
+  private _configOperator() {
     const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
     if (!!operator) {
       this._config.operator = operator['_id'];
     }
-  }*/
+  }
 
   /***
    * this is to get the projects from the server.
@@ -724,7 +735,7 @@ export class AdminProjectsComponent implements OnInit {
       }
       if (MissionFrontService.hasMissionTemplate(project.mission)) {
         project['mainObjective'] = MissionFrontService.objectiveName(project.mission.template, this._currentLang);
-      } else {
+      } else if (project.mission && project.mission.objective && project.mission.objective.principal) {
         project['mainObjective'] = project.mission.objective.principal[this._currentLang];
       }
       if (project.stats && project.stats.received && project.stats.received > 0) {

@@ -1,0 +1,21 @@
+<div *ngIf="canAccess()" class="container fluid grid-2xl" id="admin-professionals">
+  <div class="column col-sm-12 col-11 col-mx-auto">
+
+    <!-- error message while fetching -->
+    <app-utility-message-error *ngIf="!isLoading && fetchingError"></app-utility-message-error>
+    <!-- /error message while fetching -->
+
+    <!-- no fetching error -->
+    <section [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
+      <app-shared-professionals-list
+        [(config)]="config"
+        [professionals]="professionals"
+        [accessPath]="['professionals']"
+        [tableSelector]="'admin-pros-limit'"
+        [total]="total">
+      </app-shared-professionals-list>
+    </section>
+    <!-- /no fetching error -->
+
+  </div>
+</div>

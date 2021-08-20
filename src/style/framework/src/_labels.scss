@@ -29,6 +29,10 @@
     @include label-color-variant($bg-secondary-color);
   }
 
+  &.is-community {
+    @include label-color-variant($community-color);
+  }
+
   &.is-progress {
     @include label-color-variant($bg-progress-color);
   }

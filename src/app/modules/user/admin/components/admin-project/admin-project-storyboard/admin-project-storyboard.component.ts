@@ -71,6 +71,8 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   private _fetchingError = false;
 
+  private _hasPrincipalMedia = false;
+
   private _isChargingReport = true;
 
   private _showBannerUpdate = '';
@@ -158,6 +160,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._executiveReport = response;
       this._isLoading = false;
       this._isChargingReport = false;
+      this._setPrincipalMediaBoolean();
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
@@ -292,6 +295,11 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   }
 
+  private _setPrincipalMediaBoolean() {
+    const innovationCard = this._innovation.innovationCards.find(card => card.lang === this._executiveReport.lang);
+    this._hasPrincipalMedia = !!innovationCard.principalMedia;
+  }
+
   public onChangeDiffusion(event: Event) {
     event.preventDefault();
     this._executiveReport.externalDiffusion = (event.target as HTMLInputElement).checked;
@@ -336,6 +344,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._isLoading = false;
         this._isChargingReport = false;
         this._realtimeUpdate(response._id);
+        this._setPrincipalMediaBoolean();
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
@@ -468,7 +477,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   get isVideoDisabled(): boolean {
-    return this._executiveReport.completion !== 100 || !this._executiveReport.externalDiffusion;
+    return this._executiveReport.completion.rate !== 100 || !this._executiveReport.externalDiffusion;
   }
 
   get currentLang(): string {
@@ -549,6 +558,10 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   get isChargingReport(): boolean {
     return this._isChargingReport;
+  }
+
+  get hasPrincipalMedia(): boolean {
+    return this._hasPrincipalMedia;
   }
 
   get showBannerUpdate(): string {

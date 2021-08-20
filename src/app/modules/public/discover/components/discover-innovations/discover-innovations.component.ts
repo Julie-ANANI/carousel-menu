@@ -10,6 +10,7 @@ import { Config } from '../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { Response } from '../../../../../models/response';
+import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
 
 @Component({
   templateUrl: './discover-innovations.component.html',
@@ -20,7 +21,7 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _config: Config = {
     fields: 'created principalMedia innovationCards tags status projectStatus',
-    limit: '25',
+    limit: this._localStorage.getItem('discover-limit') || '25',
     offset: '0',
     isPublic: '1',
     search: '{}',
@@ -58,6 +59,7 @@ export class DiscoverInnovationsComponent implements OnInit {
               private _translateService: TranslateService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
+              private _localStorage: LocalStorageService,
               private _filterService: DiscoverService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
@@ -122,6 +124,7 @@ export class DiscoverInnovationsComponent implements OnInit {
     this._selectedFilters = filters;
     if (filters && filters.length) {
       this._config.tags = JSON.stringify({$in: filters.map((filter: Tag) => filter._id)});
+      this._config.offset = '0';
     } else {
       delete this._config.filters;
     }
@@ -132,6 +135,7 @@ export class DiscoverInnovationsComponent implements OnInit {
   public onInputField(value: string) {
     this._searchKey = value;
     if (value) {
+      this._config.offset = '0';
       this._config.fromCollection = {
         model: 'innovationcard',
         title: value
@@ -149,7 +153,8 @@ export class DiscoverInnovationsComponent implements OnInit {
 
   private _getFilteredInnovations() {
     this._stopLoading = false;
-    if (this._config.offset === '0' && !this.filterActivated) {
+    const oldOffset = this._config.offset;
+    if (oldOffset === '0' && !this.filterActivated) {
       this._config.offset = '4';
     }
     if (this._config.fromCollection && this._config.fromCollection.model) {
@@ -158,6 +163,7 @@ export class DiscoverInnovationsComponent implements OnInit {
       }).pipe(first()).subscribe(response => {
         this._filteredInnovations = response.result;
         this._totalFilteredInnovations = response._metadata.totalCount;
+        this._config.offset = oldOffset;
         this._stopLoading = true;
       }, err => {
         this._fetchingError = true;
@@ -166,6 +172,7 @@ export class DiscoverInnovationsComponent implements OnInit {
       this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
         this._filteredInnovations = response.result;
         this._totalFilteredInnovations = response._metadata.totalCount;
+        this._config.offset = oldOffset;
         this._stopLoading = true;
       }, () => {
         this._fetchingError = true;

@@ -317,8 +317,9 @@ export class MissionQuestionService {
    * based on the control type we configure question
    * maxOptionsSelect, options and instructions
    * @param question
+   * @param emitChanges
    */
-  public configureQuestion(question: MissionQuestion) {
+  public configureQuestion(question: MissionQuestion, emitChanges = true): MissionQuestion {
     if (question && question.controlType) {
 
       question.entry.forEach((_entry) => {
@@ -336,9 +337,12 @@ export class MissionQuestionService {
         question.randomization = true;
       }
 
-      this._emitTemplate();
+      if (emitChanges) {
+        this._emitTemplate();
+      }
     }
 
+    return question;
   }
 
   /**
@@ -392,7 +396,14 @@ export class MissionQuestionService {
     return <MissionQuestionOption>{};
   }
 
-  public deleteOption(question: MissionQuestion = <MissionQuestion>{}, optionIndex: number) {
+  /**
+   * to delete the option from the question.
+   *
+   * @param question
+   * @param optionIndex
+   * @param emitChanges
+   */
+  public deleteOption(question: MissionQuestion = <MissionQuestion>{}, optionIndex: number, emitChanges = true) {
     if (question.options && question.options.length) {
       const options = question.options;
       options.splice(optionIndex, 1);
@@ -404,8 +415,12 @@ export class MissionQuestionService {
         MissionQuestionService.setOptionsPositiveAnswer(question);
       }
 
-      this._emitTemplate();
+      if (emitChanges) {
+        this._emitTemplate();
+      }
     }
+
+    return question;
   }
 
   /**
@@ -429,8 +444,9 @@ export class MissionQuestionService {
   /**
    * add the new option in the list of options.
    * @param question
+   * @param emitChanges
    */
-  public addNewOption(question: MissionQuestion = <MissionQuestion>{}) {
+  public addNewOption(question: MissionQuestion = <MissionQuestion>{}, emitChanges = true) {
     const option = this.addOption(question);
 
     if (option && !!option.identifier) {
@@ -440,7 +456,11 @@ export class MissionQuestionService {
       this.configureCheckbox(question);
     }
 
-    this._emitTemplate();
+    if (emitChanges) {
+      this._emitTemplate();
+    }
+
+    return question;
   }
 
   /**
@@ -493,31 +513,32 @@ export class MissionQuestionService {
    * add a new question in the section complementary list with the predefined value.
    * @param sectionIndex
    * @param type
-   * @param returnValue - when true return the question not add it in section
    */
-  public addQuestion(sectionIndex: number, type: MissionQuestionType = 'radio', returnValue = false) {
+  public addQuestion(sectionIndex: number, type: MissionQuestionType = 'radio') {
     if (this._template && this._template.sections[sectionIndex] && this._template.sections[sectionIndex].questions) {
-
-      let question: MissionQuestion = {
-        type: 'COMPLEMENTARY',
-        controlType: type,
-        visibility: true,
-        canComment: true,
-        randomization: false,
-        sensitiveAnswerData: false,
-        identifier: this.generateId(),
-        entry: this.createQuestionEntry(type),
-      };
-
-      if (!returnValue) {
-        question = this.configureQuestionOptions(question);
-        this._template.sections[sectionIndex].questions.push(question);
-        this._emitTemplate();
-      } else {
-        this.configureQuestion(question);
-        return { essential: false, question: question };
-      }
+      this._template.sections[sectionIndex].questions.push(this.createQuestion(type));
+      this._emitTemplate();
     }
+  }
+
+  /**
+   * create a question with default values
+   *
+   * @param type
+   */
+  public createQuestion(type: MissionQuestionType = 'radio'): MissionQuestion {
+    let question: MissionQuestion = {
+      type: 'COMPLEMENTARY',
+      controlType: type,
+      visibility: true,
+      canComment: true,
+      randomization: false,
+      sensitiveAnswerData: false,
+      identifier: this.generateId(),
+      entry: this.createQuestionEntry(type),
+    };
+    question = this.configureQuestion(question);
+    return question;
   }
 
   /**
@@ -569,16 +590,21 @@ export class MissionQuestionService {
    * @param question
    * @param optionIndex
    * @param move - 1 (down) | -1 (up)
+   * @param emitChanges
    */
-  public moveQuestionOption(question: MissionQuestion, optionIndex: number, move: number) {
+  public moveQuestionOption(question: MissionQuestion, optionIndex: number, move: number, emitChanges = true) {
     const new_place = optionIndex + move;
     const options = question.options;
 
     if (new_place >= 0 && new_place < options.length) {
       options[new_place] = options.splice(optionIndex, 1, options[new_place])[0];
       MissionQuestionService.reConfigureOptionsIdentifier(options);
-      this._emitTemplate();
+      if (emitChanges) {
+        this._emitTemplate();
+      }
     }
+
+    return question;
   }
 
   /**
@@ -614,15 +640,20 @@ export class MissionQuestionService {
    * @param lang
    * @param question
    * @param attr - should be the attribute of the model MissionQuestion
+   * @param emitChanges
    */
-  public changeQuestionEntry(newValue: any, lang: string, question: MissionQuestion, attr: string) {
+  public changeQuestionEntry(newValue: any, lang: string, question: MissionQuestion, attr: string, emitChanges = true) {
     if (question && question.entry && question.entry.length) {
       const index = question.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         question.entry[index][attr] = newValue;
-        this._emitTemplate();
+        if (emitChanges) {
+          this._emitTemplate();
+        }
       }
     }
+
+    return question;
   }
 
   /**
@@ -631,16 +662,22 @@ export class MissionQuestionService {
    * @param lang
    * @param question
    * @param optionIndex
+   * @param emitChanges
    */
-  public changeQuestionOptionEntry(newValue: string, lang: string, question: MissionQuestion, optionIndex: number) {
+  public changeQuestionOptionEntry(newValue: string, lang: string, question: MissionQuestion,
+                                   optionIndex: number, emitChanges = true) {
     if (question && question.options && question.options[optionIndex]) {
       const option = question.options[optionIndex];
       const index = option.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         option.entry[index].label = newValue;
-        this._emitTemplate();
+        if (emitChanges) {
+          this._emitTemplate();
+        }
       }
     }
+
+    return question;
   }
 
   /**

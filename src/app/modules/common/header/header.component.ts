@@ -76,7 +76,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { pageName: 'Market Tests', pageLink: '/user/admin/projects', key: 'projects' },
     { pageName: 'Users', pageLink: '/user/admin/users', key: 'users' },
     { pageName: 'Community', pageLink: '/user/admin/community', key: 'community' },
-    { pageName: 'Professionals', pageLink: '/user/admin/professionals', key: 'professionals' },
+    { pageName: 'Professionals', pageLink: '/user/admin/professionals', key: 'professionals',
+      subRoutes: ['list', 'statistics']
+    },
     {
       pageName: 'Libraries',
       pageLink: '/user/admin/libraries',
@@ -93,7 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       pageName: 'Search',
       pageLink: '/user/admin/search',
       key: 'search',
-      subRoutes: ['pros', 'history', 'queue']
+      subRoutes: ['pros', 'history', 'queue', 'scraping']
     },
   ];
 

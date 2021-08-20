@@ -110,6 +110,18 @@
   align-items: flex-end !important;
 }
 
+.align-start {
+  align-items: flex-start !important;
+}
+
+.align-self-end {
+  align-self: flex-end !important;
+}
+
+.align-self-start {
+  align-self: flex-start !important;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
 }

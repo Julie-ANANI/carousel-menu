@@ -1,14 +1,26 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MissionTemplateSection} from '../../../../../models/mission';
+import {MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
+import {AutoSuggestionConfig} from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
+import {MissionService} from '../../../../../services/mission/mission.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 
-/*interface AddQuestion {
+interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
   value: any;
-}*/
+}
+
+interface IdentifierError {
+  letter: boolean;
+  exist: boolean;
+}
 
 @Component({
   selector: 'app-shared-questionnaire-section',
@@ -17,7 +29,33 @@ import {RolesFrontService} from '../../../../../services/roles/roles-front.servi
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
 
-  /*get questionToAdd(): AddQuestion {
+  get isCheckingAvailability(): boolean {
+    return this._isCheckingAvailability;
+  }
+
+  get isAvailableIdentifier(): boolean {
+    return this._isAvailableIdentifier;
+  }
+
+  get isDisabled(): boolean {
+    if (this._questionToAdd.from === 'LIBRARY') {
+      return this._questionToAdd.value.length === 0;
+    } else if (this._questionToAdd.from === 'SCRATCH') {
+      return !this._questionToAdd.value['identifier'] || !this._questionToAdd.value['controlType']
+        || !this._isAvailableIdentifier;
+    }
+    return true;
+  }
+
+  get identifierError(): IdentifierError {
+    return this._identifierError;
+  }
+
+  get searchConfig(): AutoSuggestionConfig {
+    return this._searchConfig;
+  }
+
+  get questionToAdd(): AddQuestion {
     return this._questionToAdd;
   }
 
@@ -27,7 +65,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   set showModal(value: boolean) {
     this._showModal = value;
-  }*/
+  }
 
   get sectionTypes(): Array<string> {
     return this._sectionTypes;
@@ -120,12 +158,27 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   private _sectionTypes: Array<string> = ['ISSUE', 'SOLUTION', 'CONTEXT', 'NOTHING'];
 
-  // private _showModal = false;
+  private _showModal = false;
 
-  // private _questionToAdd: AddQuestion = <AddQuestion>{};
+  private _questionToAdd: AddQuestion = <AddQuestion>{};
+
+  private _searchConfig: AutoSuggestionConfig = {
+    minChars: 3,
+    type: 'questions',
+    identifier: 'label',
+    placeholder: 'Start typing question label here...',
+  };
+
+  private _identifierError: IdentifierError = <IdentifierError>{};
+
+  private _isAvailableIdentifier = false;
+
+  private _isCheckingAvailability = false;
 
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
+              private _missionService: MissionService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _missionQuestionService: MissionQuestionService) { }
 
   ngOnInit() {
@@ -133,7 +186,12 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
-    this._missionQuestionService.addQuestion(this._sectionIndex);
+    if (this.canAccess(['question', 'add']) && this.isLibraryView) {
+      this._questionToAdd = <AddQuestion>{};
+      this._showModal = true;
+    } else if (this.isEditable) {
+      this._missionQuestionService.addQuestion(this._sectionIndex);
+    }
   }
 
   public up(event: Event) {
@@ -189,32 +247,143 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     }
   }
 
-  /*public onClicAdd(event: Event) {
+  public onAddQuestion(event: Event) {
     event.preventDefault();
 
     if (this._questionToAdd.from && !!this._questionToAdd.value) {
       switch (this._questionToAdd.from) {
 
         case 'SCRATCH':
-          this._missionQuestionService.addQuestion(this._sectionIndex, this._questionToAdd.value, true);
+          const question = this._missionQuestionService.createQuestion(this._questionToAdd.value.controlType);
+          question.identifier = this._questionToAdd.value.identifier;
+          const value = {question: question, essential: false};
+          this._missionQuestionService.template.sections[this._sectionIndex].questions.push(value);
+          this.valueToSave.emit({
+            key: 'QUESTION_ADD',
+            value: {
+              ques: question,
+              identifier: question.identifier
+            }
+          });
+          this.notifyChanges();
           this.closeModal();
           break;
 
         case 'LIBRARY':
+          this._missionQuestionService.template.sections[this._sectionIndex].questions = [
+            ...this._missionQuestionService.template.sections[this._sectionIndex].questions,
+            ...this._questionToAdd.value.map((_value: any) => _value.ques)
+          ];
+          this.notifyChanges();
+          this.closeModal();
           break;
 
       }
     }
-  }*/
+  }
 
-  /*public closeModal() {
+  /**
+   * when select the question from the suggestion list in the modal.
+   *
+   * @param event
+   */
+  public questionSelected(event: {label: string, question: MissionQuestion}) {
+    const questionId = event.question && event.question._id;
+    if (!!questionId
+      && !MissionFrontService.hasMissionQuestion(this._missionQuestionService.template, (event.question && event.question._id))
+      && !this._alreadyInList(questionId)) {
+      const value = {
+        question: event.question,
+        essential: false
+      };
+      this._questionToAdd.value.push({label: event.label, ques: value});
+    }
+  }
+
+  /**
+   * verify the question exists or not in the list.
+   *
+   * @param questionId
+   * @private
+   */
+  private _alreadyInList(questionId = ''): boolean {
+    if (this._questionToAdd.value && this._questionToAdd.value.length && !!questionId) {
+      return this._questionToAdd.value.some((_value: any) => {
+        return (_value.ques && _value.ques.question && _value.ques.question._id) === questionId;
+      });
+    }
+    return false;
+  }
+
+  /**
+   * remove the question from the list when click on the cross btn.
+   *
+   * @param event
+   */
+  public onRemoveFromList(event: string) {
+    this._questionToAdd.value = this._questionToAdd.value.filter((_value: any) => {
+      return (_value.ques && _value.ques.question && _value.ques.question._id) !== event;
+    });
+  }
+
+  public closeModal() {
     this._showModal = false;
-    this._questionToAdd = <AddQuestion>{};
-  }*/
+  }
 
-  /*public onChangeAddQuestion(event: any) {
+  public onChangeAddQuestion(event: any) {
     this._questionToAdd.from = event;
-    this._questionToAdd.value = '';
-  }*/
+    this._questionToAdd.value = [];
+    this._isAvailableIdentifier = false;
+
+    if (event === 'SCRATCH') {
+      this._questionToAdd.value = {
+        controlType: '',
+        identifier: ''
+      };
+    }
+  }
+
+  public onChangeIdentifier(event: string) {
+    event = event.trim();
+    this._identifierError = <IdentifierError>{};
+    this._questionToAdd.value.identifier = '';
+    this._isAvailableIdentifier = false;
+
+    if (!!event.match(/[A-Za-z]/g)) {
+      this._questionToAdd.value.identifier = event;
+    } else if (event.length) {
+      this._identifierError.letter = true;
+    }
+  }
+
+  public onCheckAvailability(event: Event) {
+    event.preventDefault();
+
+    if (!this._isAvailableIdentifier) {
+      this._isCheckingAvailability = true;
+
+      const find = MissionFrontService.totalTemplateQuestions(this._missionQuestionService.template).some((_ques) => {
+        return _ques['question'].identifier.toLocaleLowerCase() === this._questionToAdd.value.identifier.toLocaleLowerCase();
+      });
+
+      if (!find) {
+        this._missionService.checkIdentifierAvailability(this._questionToAdd.value.identifier)
+          .pipe(first())
+          .subscribe((response) => {
+            this._isCheckingAvailability = false;
+            this._identifierError.exist = !!(response && response.length);
+            this._isAvailableIdentifier = !(response && response.length);
+          }, (error: HttpErrorResponse) => {
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+            this._isCheckingAvailability = false;
+            console.error(error);
+          });
+      } else {
+        this._identifierError.exist = true;
+        this._isAvailableIdentifier = false;
+        this._isCheckingAvailability = false;
+      }
+    }
+  }
 
 }

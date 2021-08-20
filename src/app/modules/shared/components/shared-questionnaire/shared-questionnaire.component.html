@@ -16,7 +16,7 @@
   <!-- /sections -->
 
   <!-- add section -->
-  <ng-container *ngIf="isEditable">
+  <ng-container *ngIf="isEditable || canAccess(['section', 'add'])">
     <section class="p-bottom-20 text-center">
       <div class="divider m-bottom-50"></div>
       <button
@@ -24,7 +24,7 @@
         [id]="'sharedQuestionnaire-btn-add-section'"
         class="button is-lg is-primary is-outlined"
         type="button">
-        Add section
+        Add a new section
       </button>
     </section>
   </ng-container>

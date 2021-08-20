@@ -7,26 +7,29 @@ import { environment } from '../../../../../../environments/environment';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'forget-password',
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.scss']
 })
 
 export class ForgetPasswordComponent implements OnInit {
 
-  private _formData: FormGroup;
+  get companyLogo(): string {
+    return this._companyLogo;
+  }
 
-  private _companyName: string = environment.companyShortName;
+  private _formData: FormGroup = this.formBuilder.group({});
+
+  private _companyName = environment.companyShortName || 'umi';
 
   private _emailSent = false;
+
+  private _companyLogo = environment.logoURL;
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private translateNotificationsService: TranslateNotificationsService,
               private userService: UserService) {
-
     this.translateTitleService.setTitle('COMMON.PAGE_TITLE.FORGET');
-
   }
 
   ngOnInit() {
@@ -65,12 +68,8 @@ export class ForgetPasswordComponent implements OnInit {
     return this._emailSent;
   }
 
-  getLogo(): string {
-    return environment.logoURL;
-  }
-
-  get companyName(){
-    return (this._companyName || 'umi').toLocaleUpperCase();
+  get companyName(): string {
+    return this._companyName;
   }
 
 }

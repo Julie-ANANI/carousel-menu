@@ -10,6 +10,8 @@ import {ErrorFrontService} from '../../../../../../../services/error/error-front
 import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
 import {TranslateService} from '@ngx-translate/core';
+import {TranslateTitleService} from '../../../../../../../services/title/title.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -17,14 +19,13 @@ interface ConfirmUpdate {
 }
 
 @Component({
-  selector: 'app-admin-edit-use-case',
   templateUrl: './admin-edit-use-case.component.html',
   styleUrls: ['./admin-edit-use-case.component.scss']
 })
 export class AdminEditUseCaseComponent implements OnInit {
 
-  get templateName(): string {
-    return this._templateName;
+  get templates(): Array<MissionTemplate> {
+    return this._templates;
   }
 
   get validate(): ConfirmUpdate {
@@ -96,19 +97,22 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _toSaveQuestion = false;
 
-  private _templateName = '';
+  private _templates: Array<MissionTemplate> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _missionService: MissionService,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
+              private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _missionQuestionService: MissionQuestionService) { }
 
   ngOnInit() {
     this._missionTemplate = this._missionQuestionService.template;
-    this._useCaseName();
+    this._templates = this._missionQuestionService.allTemplates;
+    this._jsonParse();
+    this._setTitle();
 
     /**
      * if the user refresh the page in that case we do not have the value in the
@@ -120,14 +124,35 @@ export class AdminEditUseCaseComponent implements OnInit {
         this._getTemplate(id);
       }
     });
+
+    if (!this._templates.length) {
+      this._getAllTemplates();
+    }
+
+  }
+
+  private _jsonParse() {
+    this._templates = JSON.parse(JSON.stringify(this._templates));
+  }
+
+  private _getAllTemplates() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
+        this._templates = response && response.result || [];
+        this._jsonParse();
+      }, (error: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        console.error(error);
+      });
+    }
   }
 
   private _getTemplate(id: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getTemplate(id).pipe(first()).subscribe((response) => {
         this._missionTemplate = response;
-        this._useCaseName();
-      }, error => {
+        this._setTitle();
+      }, (error: HttpErrorResponse) => {
         this._fetchingError = true;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
         console.error(error);
@@ -203,15 +228,19 @@ export class AdminEditUseCaseComponent implements OnInit {
         this._isSaving = false;
         this._toBeSaved = false;
         this._translateNotificationsService.success('Success', 'The use case has been updated successfully.');
-      }, error => {
+      }, (error: HttpErrorResponse) => {
         this._isSaving = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
         console.error(error);
       });
   }
 
-  private _useCaseName() {
-    this._templateName = MissionFrontService.objectiveName(this._missionTemplate, this.currentLang);
+  public objectiveName(template: MissionTemplate) {
+    return MissionFrontService.objectiveName(template, this.currentLang);
+  }
+
+  private _setTitle() {
+    this._translateTitleService.setTitle(`${this.objectiveName(this._missionTemplate)} | Use cases | Libraries`);
   }
 
   public onClickSave(event: Event) {
@@ -231,8 +260,13 @@ export class AdminEditUseCaseComponent implements OnInit {
     if (!!event && this.canAccess(['question', 'edit'])) {
 
       switch (event.key) {
-        case 'QUESTION_REMOVE':
-          this._addAction(event);
+
+        case 'QUESTION_REMOVE_SCRATCH':
+          this._removeAction(event);
+          break;
+
+        case 'QUESTION_ADD':
+          this._valuesToSave.unshift(event);
           break;
 
         case 'QUESTION_EDIT':
@@ -243,6 +277,22 @@ export class AdminEditUseCaseComponent implements OnInit {
       this._toSaveQuestion = true;
       this._toBeSaved = true;
 
+    }
+  }
+
+  /**
+   * if the remove question has not creted in the back yet we delete it from the
+   * actions list.
+   *
+   * @param event
+   * @private
+   */
+  private _removeAction(event: {key: string, value: any}) {
+    const index = this._valuesToSave.findIndex((_value) => {
+      return (_value.value.identifier === event.value.identifier && _value.key === 'QUESTION_ADD');
+    });
+    if (index !== -1) {
+      this._valuesToSave.splice(index, 1);
     }
   }
 
@@ -259,6 +309,12 @@ export class AdminEditUseCaseComponent implements OnInit {
       this._valuesToSave.splice(index, 1);
     }
     this._valuesToSave.push(event);
+  }
+
+  public onChangeUseCase(event: string) {
+    if (!this._toBeSaved) {
+      this._missionTemplate = this._templates.find((_template) => _template._id === event);
+    }
   }
 
 }

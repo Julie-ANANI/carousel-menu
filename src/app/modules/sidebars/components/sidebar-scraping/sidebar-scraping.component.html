@@ -1,0 +1,363 @@
+<div class="column col-sm-12 col-11 col-mx-auto p-top-25" id="sidebar-setting-scraping">
+
+  <div class="animate-fade is-5" id="admin-project-settings">
+    <!-- settings -->
+    <section class="settings-wrapper">
+      <!-- right content -->
+      <div class="content-wrapper m-top-30">
+
+        <!-- skip mails -->
+        <div class="content">
+          <span
+            [attr.data-tooltip]="getToolTip('skipMails')"
+            class="tooltip is-multiline">
+            <span class="text-md">{{getLabel('skipMails')}}</span>
+            <input
+              [(ngModel)]="params['skipMails']"
+              class="form-input is-sm"
+              placeholder="ex: contact@site.com,info@site.com"
+              type="text">
+            </span>
+        </div>
+        <!-- /skip mails -->
+
+        <div class="divider m-bottom-30 m-top-30"></div>
+
+        <!-- toggle button crawling setting -->
+        <div class="content">
+          <button (click)="onClickToggleCrawlingSetting()" class="button is-link p-no" type="button">
+            {{'Options de navigation entre les pages'}}
+            <i [ngClass]="showToggleCrawlingSetting ? 'icon-arrow-down' : 'icon-arrow-right' "
+               class="icon icon-right"></i>
+          </button>
+        </div>
+        <!-- /toggle button extract more data -->
+
+        <!-- toggle options extract more data-->
+        <div *ngIf="showToggleCrawlingSetting" [ngClass]="showToggleCrawlingSetting ? 'd-block' : 'd-none m-bottom-25'"
+             class="m-top-10 m-left-50">
+
+          <!-- crawling option -->
+          <!-- is crawling -->
+          <div class="content m-top-30" id="is-crawling">
+        <span
+          [attr.data-tooltip]="getToolTip('isCatalog')"
+          class="tooltip is-multiline">
+          <label class="form-switch">
+            <input
+              [(ngModel)]="params['isCatalog']"
+              name="is-catalog"
+              type="checkbox">
+            <i class="form-icon"></i><span class="text-md">{{getLabel('isCatalog')}}</span>
+          </label>
+          </span>
+          </div>
+          <!-- /is crawling -->
+
+          <div class="divider m-bottom-30 m-top-30"></div>
+
+          <div class="content m-top-20">
+            <span
+              [attr.data-tooltip]="getToolTip('loadMore')"
+              class="tooltip">
+              <span class="text-md">{{getLabel('loadMore')}}</span>
+                <input
+                  [(ngModel)]="params['loadMore']"
+                  class="form-input"
+                  placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
+                  type="text">
+            </span>
+          </div>
+
+          <div class="divider m-bottom-30 m-top-30"></div>
+
+          <!-- field -->
+          <!-- number of field-->
+          <div class="content m-bottom-3">
+              <span
+                [attr.data-tooltip]="getToolTip('numberFields')"
+                class="tooltip is-multiline">
+                  <span class="text-md">{{getLabel('numberFields')}}
+                    <input
+                      [(ngModel)]="params['numberFields']"
+                      id="number-fields"
+                      max="5"
+                      min="0"
+                      name="is-specific-data"
+                      type="number">
+                    </span>
+              </span>
+          </div>
+          <!-- /number of field-->
+
+          <div *ngFor="let field of params['fields']; let index = index;">
+            <div *ngIf="showField(index)" [ngClass]="showField(index) ? 'd-block' : 'd-none'">
+
+              <div class="m-left-50 m-bottom-1">
+
+                <div class="divider"></div>
+
+                <div class="content m-bottom-3">
+                  <span
+                    [attr.data-tooltip]="getToolTip('fieldData')"
+                    class="tooltip is-multiline">
+                    <span class="text-sm">{{ index + 1 }} - {{getLabel('fieldData')}}</span>
+                    <input
+                      [(ngModel)]="params['fields'][index]['data']"
+                      class="form-input is-sm"
+                      placeholder="ex: 3800,4500,1200"
+                      type="text">
+                    </span>
+                </div>
+
+                <div class="content">
+                  <span
+                    [attr.data-tooltip]="getToolTip('xPathInput')"
+                    class="tooltip">
+                    <span class="text-sm">{{ index + 1 }} - {{getLabel('xPathInput')}}</span>
+                    <input
+                      [(ngModel)]="params['fields'][index]['xPathInput']"
+                      class="form-input is-sm"
+                      placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
+                      type="text">
+                    </span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- /field -->
+
+          <div class="divider m-bottom-30 m-top-30"></div>
+
+          <!-- single pro -->
+          <!-- is single pro by page -->
+          <div class="content" id="is-single">
+            <label class="form-switch">
+              <input
+                [(ngModel)]="params['isDeep']"
+                name="is-deep"
+                type="checkbox">
+              <i class="form-icon"></i><span class="text-md">{{getLabel('isDeep')}}</span>
+            </label>
+          </div>
+          <!-- /is single pro by page-->
+
+          <div *ngIf="params['isDeep']" [ngClass]="params['isDeep'] ? 'd-block' : 'd-none'" class="m-left-50">
+
+            <!-- link pro -->
+            <div class="content m-top-4" id="crawl-deeper-on">
+            <span
+              [attr.data-tooltip]="getToolTip('crawlDeeperOn')"
+              class="tooltip is-multiline">
+                <span class="text-sm">{{getLabel('crawlDeeperOn')}}</span>
+                <input
+                  [(ngModel)]="params['crawlDeeperOn']"
+                  class="form-input is-sm"
+                  placeholder="ex: https://www.crnl.fr/fr/user/"
+                  type="text">
+             </span>
+            </div>
+            <!-- /link pro -->
+          </div>
+          <!-- /single pro -->
+
+          <div class="divider m-bottom-30 m-top-30"></div>
+
+          <!-- is spider -->
+          <div class="content" id="is-spider">
+            <span
+              [attr.data-tooltip]="getToolTip('isSpider')"
+              class="tooltip is-multiline">
+              <label class="form-switch">
+                <input
+                  [(ngModel)]="params['isSpider']"
+                  name="is-catalog"
+                  type="checkbox">
+                <i class="form-icon"></i><span class="text-md">{{getLabel('isSpider')}}</span>
+              </label>
+              </span>
+          </div>
+          <!-- /is spider-->
+          <!-- /crawling option -->
+        </div>
+        <!-- toggle options extract more data-->
+
+        <div class="divider m-top-40 m-bottom-40"></div>
+
+        <!-- toggle button extract more data -->
+        <div class="content">
+          <button (click)="onClickToggleMoreData()" class="button is-link p-no" type="button">
+            {{'Extraction d‘informations supplémentaires'}}
+            <i [ngClass]="showToggleMoreData ? 'icon-arrow-down' : 'icon-arrow-right' " class="icon icon-right"></i>
+          </button>
+        </div>
+        <!-- /toggle button extract more data -->
+
+        <!-- toggle options extract more data-->
+        <div *ngIf="showToggleMoreData" [ngClass]="showToggleMoreData ? 'd-block' : 'd-none m-bottom-25'"
+             class="m-top-10 m-left-50">
+
+          <!-- raw data -->
+          <div class="content m-top-30" id="raw-data">
+            <span
+              [attr.data-tooltip]="getToolTip('rawData')"
+              class="tooltip is-multiline">
+              <label class="form-switch">
+              <input
+                [(ngModel)]="params['rawData']"
+                name="raw-data"
+                type="checkbox">
+              <i class="form-icon"></i><span class="text-md">{{getLabel('rawData')}}</span>            </label>
+            </span>
+          </div>
+          <!-- /raw data -->
+
+          <div class="divider m-bottom-30 m-top-30"></div>
+
+          <!-- specific data -->
+          <!-- number specific data -->
+          <div class="content" id="number-specific-data">
+            <span class="text-md">{{getLabel('numberSpecificData')}}
+              <input
+                [(ngModel)]="params['numberSpecificData']"
+                id="is-specific-data"
+                max="5"
+                min="0"
+                name="is-specific-data"
+                type="number">
+              </span>
+          </div>
+          <!--          <div class="content m-bottom-3">-->
+          <!--              <span-->
+          <!--                class="tooltip is-multiline"-->
+          <!--                [attr.data-tooltip]="getToolTip('numberFields')">-->
+          <!--                  <span class="text-md">{{getLabel('numberFields')}}   </span>-->
+          <!--                  <input-->
+          <!--                    [(ngModel)]="params['numberFields']"-->
+          <!--                    name="is-specific-data"-->
+          <!--                    id="number-fields"-->
+          <!--                    type="number"-->
+          <!--                    min="0"-->
+          <!--                    max="5">-->
+          <!--              </span>-->
+          <!--          </div>-->
+          <!-- /number specific data -->
+
+          <!-- set specific data -->
+          <div *ngFor="let sd of params['specificData']; let index = index;">
+            <div *ngIf="showSpecificData(index)" [ngClass]="showSpecificData(index) ? 'd-block' : 'd-none'">
+
+              <div class="m-left-50">
+
+                <div class="divider"></div>
+
+                <div class="content">
+                <span
+                  [attr.data-tooltip]="getToolTip('specificDataName')"
+                  class="tooltip is-multiline">
+                  <span class="text-sm">{{ index + 1 }} - {{getLabel('specificDataName')}}</span>
+                  <input
+                    [(ngModel)]="params['specificData'][index]['name']"
+                    class="form-input is-sm"
+                    placeholder="ex: phone number"
+                    type="text">
+                  </span>
+                </div>
+
+                <div class="content">
+                <span
+                  [attr.data-tooltip]="getToolTip('xPathData')"
+                  class="tooltip">
+                  <span class="text-sm">{{ index + 1 }} - {{getLabel('xPathData')}}</span>
+                  <input
+                    [(ngModel)]="params['specificData'][index]['xPathData']"
+                    class="form-input is-sm"
+                    placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
+                    type="text">
+                  </span>
+                </div>
+
+                <div class="content m-bottom-4">
+                <span
+                  [attr.data-tooltip]="getToolTip('xPathMail')"
+                  class="tooltip">
+                  <span class="text-sm">{{ index + 1 }} - {{getLabel('xPathMail')}}</span>
+                  <input
+                    [(ngModel)]="params['specificData'][index]['xPathMail']"
+                    class="form-input is-sm"
+                    placeholder="ex: /html/body/div[5]/form/li[1]/div/li[1]/a/span"
+                    type="text">
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <!--    /set specific data-->
+        </div>
+        <!--    /specific data-->
+        <!-- /toggle options extract more data -->
+
+        <div class="divider m-top-40 m-bottom-40"></div>
+
+        <!--        &lt;!&ndash; formatted address &ndash;&gt;-->
+        <!--        <div class="content" id="formatted-address">-->
+        <!--            <span-->
+        <!--              class="tooltip is-multiline"-->
+        <!--              [attr.data-tooltip]="getToolTip('formattedAddress')">-->
+        <!--                <label class="form-switch">-->
+        <!--                <input-->
+        <!--                  [(ngModel)]="params['formattedAddress']"-->
+        <!--                  name="sidebar-smart"-->
+        <!--                  type="checkbox">-->
+        <!--                  <i class="form-icon"></i> {{getLabel('formattedAddress')}}-->
+        <!--              </label>-->
+        <!--             </span>-->
+        <!--        </div>-->
+
+        <!--        <div *ngIf="params['formattedAddress']" [ngClass]="params['formattedAddress'] ? 'd-block' : 'd-none'"-->
+        <!--             class="m-left-4">-->
+
+        <!--          &lt;!&ndash; where formatted address &ndash;&gt;-->
+        <!--          <div class="form-group align-center m-bottom-30">-->
+        <!--            <label class="title is-6 m-no-bottom m-right-20" for="sidebar-pros-number">-->
+        <!--              {{getLabel('whereFormattedAddress')}}-->
+        <!--            </label>-->
+        <!--            <select-->
+        <!--              [(ngModel)]="params['whereFormattedAddress']"-->
+        <!--              class="form-select is-sm mxw-250"-->
+        <!--              id="sidebar-pros-number"-->
+        <!--              name="sidebar-pros-count">-->
+        <!--              <option *ngFor="let name of possibleFormattedAddress()" [value]="name">-->
+        <!--                {{ name }}-->
+        <!--              </option>-->
+        <!--            </select>-->
+        <!--          </div>-->
+        <!--          &lt;!&ndash; /where formatted address &ndash;&gt;-->
+        <!--        </div>-->
+        <!--        &lt;!&ndash; /formatted address &ndash;&gt;-->
+
+        <!-- dynamic html -->
+        <div class="content" id="dynamic-html">
+            <span
+              [attr.data-tooltip]="getToolTip('dynamicHTML')"
+              class="tooltip is-multiline">
+                <label class="form-switch">
+                <input
+                  [(ngModel)]="params['dynamicHTML']"
+                  name="sidebar-smart"
+                  type="checkbox">
+                  <i class="form-icon"></i> <span class="text-md">{{getLabel('dynamicHTML')}}</span>
+              </label>
+             </span>
+        </div>
+      </div>
+    </section>
+    <!-- /settings -->
+
+  </div>
+
+</div>
+

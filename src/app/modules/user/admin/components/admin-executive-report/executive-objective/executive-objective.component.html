@@ -14,9 +14,11 @@
           [(ngModel)]="config.objective"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
           [ngStyle]="{ 'height': '100px' }"
+          [ngClass]="config.objective ? 'has-success' : 'has-error'"
           maxlength="120"
           class="form-input"
-          type="text">
+          type="text"
+          required>
         </textarea>
 
         <span [ngStyle]="{ 'color': objectiveColor }" class="text-limit-wrapper">
@@ -33,7 +35,10 @@
 
       <!-- insert snippet button -->
       <div class="insert-snippet">
-        <span (click)="onClickSnippet($event)">
+        <span class="text-error">
+          <span *ngIf="!config.objective"> {{ 'COMMON.REQUIRED.FIELD' | translate }} </span>
+        </span>
+        <span class="c-hand" (click)="onClickSnippet($event)">
           {{ 'ADMIN_EXECUTIVE_REPORT.INSERT_SNIPPET' | translate }}
         </span>
       </div>
@@ -56,13 +61,18 @@
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_NAME' | translate"
             maxlength="58"
             class="form-input"
-            type="text">
+            type="text"
+            [ngClass]="config.client.name ? 'has-success' : 'has-error'"
+            required>
 
           <span [ngStyle]="{ 'color': clientNameColor }" class="text-limit-wrapper">
             {{ 58 - config.client.name.length }}
           </span>
 
         </label>
+        <span class="text-error form-input-hint" *ngIf="!config.client.name">
+          {{ 'COMMON.REQUIRED.FIELD' | translate }}
+        </span>
       </div>
 
       <div class="m-bottom-10">
@@ -75,13 +85,18 @@
             [attr.placeholder]="'COMMON.PLACEHOLDER.CLIENT_EMAIL' | translate"
             maxlength="58"
             class="form-input"
-            type="text">
+            type="text"
+            [ngClass]="config.client.email ? 'has-success' : 'has-error'"
+            required>
 
           <span [ngStyle]="{ 'color': clientEmailColor }" class="text-limit-wrapper">
             {{ 58 - config.client.email.length }}
           </span>
 
         </label>
+        <span class="text-error form-input-hint" *ngIf="!config.client.email">
+          {{ 'COMMON.REQUIRED.FIELD' | translate }}
+        </span>
       </div>
 
       <div>
@@ -97,8 +112,13 @@
             [list-formatter]="autocompleteCompanyListFormatter"
             [source]="companiesSuggestions"
             (valueChanged)="selectCompany($event)"
-            [(ngModel)]="company">
+            [(ngModel)]="company"
+            [ngClass]="company ? 'has-success' : 'has-error'"
+            required>
         </label>
+        <span class="text-error form-input-hint" *ngIf="!company">
+          {{ 'COMMON.REQUIRED.FIELD' | translate }}
+        </span>
       </div>
 
     </div>
@@ -112,7 +132,9 @@
           [ngModel]="commercial._id ? commercial._id : ''"
           [ngModelOptions]="{ standalone: true }"
           (change)="selectCommercial($event)"
-          class="form-select">
+          class="form-select"
+          [ngClass]="commercial && commercial._id ? 'has-success' : 'has-error'"
+          required>
 
           <option [value]="''">
             {{ 'COMMON.PLACEHOLDER.CHOOSE_SALE' | translate }}
@@ -124,6 +146,9 @@
 
         </select>
       </label>
+      <span class="text-error form-input-hint" *ngIf="!commercial || !commercial._id">
+          {{ 'COMMON.REQUIRED.FIELD' | translate }}
+      </span>
     </div>
     <!-- /commercial -->
 

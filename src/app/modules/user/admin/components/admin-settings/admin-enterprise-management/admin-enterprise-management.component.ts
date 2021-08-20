@@ -1,24 +1,23 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { EnterpriseService } from '../../../../../../services/enterprise/enterprise.service';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {EnterpriseService} from '../../../../../../services/enterprise/enterprise.service';
 import {
   /*FormArray,*/ FormBuilder,
   FormGroup /*, Validators*/,
 } from '@angular/forms';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
-import { Enterprise /*, Pattern*/ } from '../../../../../../models/enterprise';
-import { /*Observable,*/ combineLatest } from 'rxjs';
+import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
+import {Enterprise /*, Pattern*/} from '../../../../../../models/enterprise';
 // import {Clearbit} from '../../../../../../models/clearbit';
 // import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 /*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
-import { Table } from '../../../../../table/models/table';
-import { first } from 'rxjs/operators';
-import { Config } from '../../../../../../models/config';
-import { isPlatformBrowser } from '@angular/common';
-import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import { Router } from '@angular/router';
+import {Table} from '../../../../../table/models/table';
+import {first} from 'rxjs/operators';
+import {Config} from '../../../../../../models/config';
+import {isPlatformBrowser} from '@angular/common';
+import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -97,7 +96,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     private _rolesFrontService: RolesFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _route: Router /*private _autoCompleteService: AutocompleteService,*/
-  ) /*private _sanitizer: DomSanitizer*/ {}
+  ) /*private _sanitizer: DomSanitizer*/ {
+  }
 
   private _buildForm() {
     // New company form
@@ -190,131 +190,131 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _columns:
         [
           {
-          _attrs: ['logo.uri'],
-          _name: 'Logo',
-          _type: 'PICTURE',
-          _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'logo']),
-        },
-        {
-          _attrs: ['name'],
-          _name: 'Name',
-          _type: 'TEXT',
-          _isSortable: true,
-          _isSearchable: this.canAccess(['searchBy', 'name']),
-          _isHidden: !this.canAccess(['tableColumns', 'name']),
-        },
-        {
-          _attrs: ['topLevelDomain'],
-          _name: 'Domain',
-          _type: 'TEXT',
-          _enableTooltip: true,
-          _isSortable: true,
-          _isSearchable: this.canAccess(['searchBy', 'domain']),
-          _isHidden: !this.canAccess(['tableColumns', 'domain']),
-        },
-        {
-          _attrs: ['patterns'],
-          _name: 'Patterns',
-          _type: 'LENGTH',
-          _width: '120px',
-          _enableTooltip: true,
-          _isHidden: !this.canAccess(['tableColumns', 'patterns']),
-        },
-        {
-          _attrs: ['enterpriseURL'],
-          _name: 'Enterprise Url',
-          _type: 'TEXT',
-          _isSortable: true,
-          _enableTooltip: true,
-          _isHidden: !this.canAccess(['tableColumns', 'url']),
-        },
-        {
-          _attrs: ['subsidiariesList'],
-          _name: 'Subsidiaries',
-          _type: 'LENGTH',
-          _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'subsidiary']),
-        },
-        {
-          _attrs: ['parentEnterprise'],
-          _name: 'Parent Enterprise',
-          _type: 'TEXT',
-          _isHidden: true,
-        },
-        {
-          _attrs: ['parentEnterpriseObject'],
-          _name: 'Parent Enterprise',
-          _type: 'NAME-LABEL-LIST',
-          _width: '170px',
-          _isHidden: !this.canAccess(['tableColumns', 'parent']),
-        },
-        {
-          _attrs: ['goodEmails'],
-          _name: 'Good emails',
-          _type: 'NUMBER',
-          _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
-        },
-        {
-          _attrs: ['bouncedEmails'],
-          _name: 'Deduced emails',
-          _type: 'NUMBER',
-          _width: '170px',
-          _isHidden: !this.canAccess(['tableColumns', 'deducedEmails']),
-        },
-        {
-          _attrs: ['shieldEmails'],
-          _name: 'Shield emails',
-          _type: 'NUMBER',
-          _isHidden: !this.canAccess(['tableColumns', 'shieldEmails']),
-        },
-        {
-          _attrs: ['industries'],
-          _name: 'Industry',
-          _type: 'LABEL-OBJECT-LIST',
-          _enableTooltip: true,
-          _isHidden: !this.canAccess(['tableColumns', 'industry']),
-        },
-        {
-          _attrs: ['brands'],
-          _name: 'Brand',
-          _type: 'LABEL-OBJECT-LIST',
-          _enableTooltip: true,
-          _isHidden: !this.canAccess(['tableColumns', 'brand']),
-        },
-        {
-          _attrs: ['enterpriseType'],
-          _name: 'Type',
-          _type: 'TEXT',
-          _isSearchable: this.canAccess(['searchBy', 'type']),
-          _isSortable: true,
-          _enableTooltip: true,
-          _isHidden: !this.canAccess(['tableColumns', 'type']),
-        },
-        {
-          _attrs: ['geographicalZone'],
-          _name: 'Geographical Zone',
-          _type: 'NAME-LABEL-LIST',
-          _width: '190px',
-          _enableTooltip: true,
-          _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
-        },
-        {
-          _attrs: ['enterpriseSize'],
-          _name: 'Company size',
-          _type: 'TEXT',
-          _isSortable: true,
-          _isHidden: !this.canAccess(['tableColumns', 'size']),
-        },
-        {
-          _attrs: ['valueChain'],
-          _name: 'Value chain',
-          _type: 'TEXT',
-          _isSortable: true,
-          _enableTooltip: true,
-          _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
-        },
-      ],
+            _attrs: ['logo.uri'],
+            _name: 'Logo',
+            _type: 'PICTURE',
+            _width: '120px',
+            _isHidden: !this.canAccess(['tableColumns', 'logo']),
+          },
+          {
+            _attrs: ['name'],
+            _name: 'Name',
+            _type: 'TEXT',
+            _isSortable: true,
+            _isSearchable: this.canAccess(['searchBy', 'name']),
+            _isHidden: !this.canAccess(['tableColumns', 'name']),
+          },
+          {
+            _attrs: ['topLevelDomain'],
+            _name: 'Domain',
+            _type: 'TEXT',
+            _enableTooltip: true,
+            _isSortable: true,
+            _isSearchable: this.canAccess(['searchBy', 'domain']),
+            _isHidden: !this.canAccess(['tableColumns', 'domain']),
+          },
+          {
+            _attrs: ['patterns'],
+            _name: 'Patterns',
+            _type: 'LENGTH',
+            _width: '120px',
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'patterns']),
+          },
+          {
+            _attrs: ['enterpriseURL'],
+            _name: 'Enterprise Url',
+            _type: 'TEXT',
+            _isSortable: true,
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'url']),
+          },
+          {
+            _attrs: ['subsidiariesList'],
+            _name: 'Subsidiaries',
+            _type: 'LENGTH',
+            _width: '120px',
+            _isHidden: !this.canAccess(['tableColumns', 'subsidiary']),
+          },
+          {
+            _attrs: ['parentEnterprise'],
+            _name: 'Parent Enterprise',
+            _type: 'TEXT',
+            _isHidden: true,
+          },
+          {
+            _attrs: ['parentEnterpriseObject'],
+            _name: 'Parent Enterprise',
+            _type: 'NAME-LABEL-LIST',
+            _width: '170px',
+            _isHidden: !this.canAccess(['tableColumns', 'parent']),
+          },
+          {
+            _attrs: ['goodEmails'],
+            _name: 'Good emails',
+            _type: 'NUMBER',
+            _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
+          },
+          {
+            _attrs: ['bouncedEmails'],
+            _name: 'Deduced emails',
+            _type: 'NUMBER',
+            _width: '170px',
+            _isHidden: !this.canAccess(['tableColumns', 'deducedEmails']),
+          },
+          {
+            _attrs: ['shieldEmails'],
+            _name: 'Shield emails',
+            _type: 'NUMBER',
+            _isHidden: !this.canAccess(['tableColumns', 'shieldEmails']),
+          },
+          {
+            _attrs: ['industries'],
+            _name: 'Industry',
+            _type: 'LABEL-OBJECT-LIST',
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'industry']),
+          },
+          {
+            _attrs: ['brands'],
+            _name: 'Brand',
+            _type: 'LABEL-OBJECT-LIST',
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'brand']),
+          },
+          {
+            _attrs: ['enterpriseType'],
+            _name: 'Type',
+            _type: 'TEXT',
+            _isSearchable: this.canAccess(['searchBy', 'type']),
+            _isSortable: true,
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'type']),
+          },
+          {
+            _attrs: ['geographicalZone'],
+            _name: 'Geographical Zone',
+            _type: 'NAME-LABEL-LIST',
+            _width: '190px',
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
+          },
+          {
+            _attrs: ['enterpriseSize'],
+            _name: 'Company size',
+            _type: 'TEXT',
+            _isSortable: true,
+            _isHidden: !this.canAccess(['tableColumns', 'size']),
+          },
+          {
+            _attrs: ['valueChain'],
+            _name: 'Value chain',
+            _type: 'TEXT',
+            _isSortable: true,
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
+          },
+        ],
     };
     if (total > 0 && this._companiesSelected.length > 0) {
       this._resultTableConfiguration._total = -1;
@@ -453,6 +453,18 @@ export class AdminEnterpriseManagementComponent implements OnInit {
                 this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = event.enterprise.parentEnterpriseObject;
                 this._resultTableConfiguration._content[idx]['subsidiariesList'] = event.enterprise.subsidiariesList;
               }
+
+              if (!event.enterprise.parentEnterpriseObject || !event.enterprise.parentEnterpriseObject.length) {
+                this.removeSubsidiariesList(this._selectedEnterprise._id);
+              }
+
+              if (event.enterprise.parentEnterpriseObject && event.enterprise.parentEnterpriseObject.length) {
+                this.addSubsidiariesList(event.enterprise, this._selectedEnterprise._id);
+              }
+
+              if (event.enterprise.subsidiariesList && event.enterprise.subsidiariesList.length) {
+                this.addParentEnterprise(event.enterprise);
+              }
             },
             (err: HttpErrorResponse) => {
               this._translateNotificationsService.error(
@@ -467,100 +479,78 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
-  /*public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'company'});
-  }*/
+  /**
+   * when remove subs
+   * @param subsidiaryId
+   */
+  removeSubsidiariesList(subsidiaryId: string) {
+    this._resultTableConfiguration._content.map(enterprise => {
+      if (enterprise.subsidiariesList && enterprise.subsidiariesList.length) {
+        enterprise.subsidiariesList = enterprise.subsidiariesList.filter((sub: any) => sub._id !== subsidiaryId);
+      }
+    });
+  }
 
-  /*public enterpriseSuggestions = (searchString: string): Observable<Array<{name: string, logo: any, domain: string, _id: string}>> => {
-    return this._autoCompleteService.get({query: searchString, type: 'enterprise'});
-  }*/
+  /**
+   * when delete a company, remove others' parentEnterprise if needed
+   * @param parent
+   */
+  removeParentEnterprise(parent: Enterprise) {
+    this._resultTableConfiguration._content.map(enterprise => {
+      if (enterprise.parentEnterprise && parent._id) {
+        enterprise.parentEnterprise = null;
+        enterprise.parentEnterpriseObject = [];
+      }
+    });
+  }
 
-  /*public selectCompany(c: string | Clearbit) {
-    if (typeof c === 'object') {
-      // Maybe there's a logo...
-      this._newEnterpriseForm.get('name').reset(c.name);
-      this._newEnterpriseForm.get('topLevelDomain').reset(c.domain);
-      this._newEnterpriseForm.get('logo').reset(c.logo);
-    } // If typeof c === string, leave the thing alone.
-  }*/
+  /**
+   * when create/update a company, company choose some subs, find subs and add parent
+   * @param parent
+   */
+  addParentEnterprise(parent: Enterprise) {
+    this._resultTableConfiguration._content.map(enterprise => {
+      if (enterprise._id && parent.subsidiariesList.find(sub => sub._id === enterprise._id)) {
+        enterprise.parentEnterprise = parent._id;
+        enterprise.parentEnterpriseObject = [parent];
+      }
+    });
+  }
 
-  /*public selectEnterprise(c: string | Enterprise) {
-    if (typeof c === 'object') {
-      this._parentEntreprise = c;
-    }
-    this._newEnterpriseForm.get('parentEnterprise').reset('');
-  }*/
-
-  /*public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
-    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
-  }*/
-
-  /*public autocompleteEnterpriseListFormatter = (data: any): SafeHtml => {
-    return this._sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo.uri}" height="35" alt=" "/><span>${data.name}</span>`);
-  }*/
-
-  /*public newPattern(event: Event) {
-    event.preventDefault();
-    if (this._newEnterpriseForm.get('patterns').value) {
-      this._enterpriseSidebarPatterns.push({pattern: {expression: this._newEnterpriseForm.get('patterns').value}, avg: 0});
-      this._newEnterpriseForm.get('patterns').reset('');
-    }
-  }*/
+  /**
+   * when create/update a company, company choose a parent enterprise, push subsidiary into this parentEnterprise
+   * @param subsidiary
+   * @param subsidiaryId
+   */
+  addSubsidiariesList(subsidiary: Enterprise, subsidiaryId: string) {
+    this._resultTableConfiguration._content.map(enterprise => {
+      if (enterprise._id === subsidiary.parentEnterprise) {
+        subsidiary['_id'] = subsidiaryId;
+        enterprise.subsidiariesList.push(subsidiary);
+      }
+    });
+  }
 
   public removeCompanies(event: any) {
-    const requests = event.map((evt: any) => {
-      return this._enterpriseService.remove(evt._id).pipe(first());
-    });
-    const combined = combineLatest(requests);
-    combined.subscribe((latestValues) => {
-      latestValues.forEach((result) => {
-        // TODO see how I can update the table after deletion
-        /*if (result && result['n'] > 0) {
-          const idx = this.resultTableConfiguration._content.findIndex((value) => {
-            return value._id === result['_id'];
-          });
-          if (idx > -1) {
-            this.resultTableConfiguration._content.splice(idx, 1);
-          }
-        }*/
-      });
-    });
-    /*this._enterpriseService.remove(event._id).pipe(first())
-      .subscribe(result => {
+    let requests = 0;
+    event.map((evt: any) => {
+      this._enterpriseService.remove(evt._id).pipe(first()).subscribe(result => {
         if (result) {
-          const idx = this.resultTableConfiguration._content.findIndex((value) => {
-            return value._id === result['_id'];
-          });
-          if (idx > -1) {
-            this.resultTableConfiguration._content.splice(idx, 1);
-          }
+          requests++;
+          this._resultTableConfiguration._content = this._resultTableConfiguration._content.filter(enterprise => enterprise._id !== evt._id);
+          this.removeSubsidiariesList(evt._id);
+          this.removeParentEnterprise(evt);
+        }
+        if (requests === event.length) {
+          this._translateNotificationsService.success('Success', 'Delete companies');
         }
       }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
         console.error(err);
-      });*/
+      });
+    });
   }
 
-  /*public changeLogo(event: Event) {
-    event.preventDefault();
-    this._uploadLogoModal = true;
-  }*/
-
-  /*public removePattern(event: Event, index: number) {
-    event.preventDefault();
-    this._enterpriseSidebarPatterns.splice(index, 1);
-  }*/
-
-  /*public uploadImage(event: any) {
-    if (event && event.url) {
-      this._newEnterpriseForm.get('logo').reset(event.url);
-    }
-    this._uploadLogoModal = false;
-  }
-*/
-
-  /*get logoUploadUri(): string {
-    return `/media/companyLogo`;
-  }*/
 
   get results(): boolean {
     return this._results;
@@ -569,10 +559,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   get searchForm(): FormGroup {
     return this._searchForm;
   }
-
-  /*get newEnterpriseForm(): FormGroup {
-    return this._newEnterpriseForm;
-  }*/
 
   get isSearching(): boolean {
     return this._isSearching;
@@ -585,24 +571,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
   }
-
-  /*get patterns(): FormArray {
-    return this._newEnterpriseForm.get('patterns') as FormArray;
-  }*/
-
-  /*get logoUrl(): string {
-    let logoValue = this._newEnterpriseForm.get('logo').value;
-    logoValue = logoValue && typeof logoValue === 'object' ?  logoValue.uri || this._defaultLogoURI : logoValue;
-    return  logoValue || this._defaultLogoURI;
-  }*/
-
-  /*get uploadLogoModal(): boolean {
-    return this._uploadLogoModal;
-  }*/
-
-  // set uploadLogoModal(value: boolean) {
-  //   this._uploadLogoModal = value;
-  // }
 
   get resultTableConfiguration(): Table {
     return this._resultTableConfiguration;
@@ -624,14 +592,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   get nothingFound(): boolean {
     return this._nothingFound;
   }
-
-  /*get activePatterns(): Array<Pattern> {
-    return this._enterpriseSidebarPatterns;
-  }*/
-
-  /*get parentEnterprise(): Enterprise {
-    return this._parentEntreprise;
-  }*/
 
   get isLoading(): boolean {
     return this._isLoading;
