@@ -214,15 +214,11 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param event
    */
   addCompanyToInclude(event: { value: Array<string> }): void {
-    console.log('value of parent from input component');
-    console.log(event);
     this._entrepriseService
       .get(event.value[0]['id'])
       .pipe(first())
       .subscribe(
         (res) => {
-          console.log('parent company is');
-          console.log(res);
           this._parentCompany = res;
           this.replaceChildrenWithParentValue();
         },
@@ -266,9 +262,25 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
               }
               break;
             case 'valueChain':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
             case 'industries':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
             case 'patterns':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
             case 'brands':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
             case 'geographicalZone':
               if (item.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
