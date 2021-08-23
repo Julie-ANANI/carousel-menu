@@ -2,6 +2,14 @@
 
 #executive-objective {
 
+  .has-error {
+    border-color: $alert-color !important;
+  }
+
+  .has-success {
+    border-color: $success-color !important;
+  }
+
   .content-wrapper.has-border {
 
     h4 {

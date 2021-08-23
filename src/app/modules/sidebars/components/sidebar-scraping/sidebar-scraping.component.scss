@@ -1,0 +1,52 @@
+@import "../../../../../style/framework/src/variables";
+
+#sidebar-setting-scraping {
+  padding-bottom: 30px;
+
+  .tooltip::before {
+    max-width: none;
+  }
+
+  .form-input {
+    width: auto;
+  }
+
+  .settings-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .content-wrapper {
+      flex: 1;
+
+        .content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          // margin-bottom: 25px;
+
+          label:not(.form-switch) {
+            //max-width: 200px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            color: $text-draft-color;
+            // margin-right: 20px;
+          }
+
+          .is-text {
+            width: 100%;
+            font-size: 15px;
+            text-align: right;
+          }
+
+          .form-select {
+            max-width: 300px;
+          }
+
+        }
+
+    }
+
+  }
+
+}

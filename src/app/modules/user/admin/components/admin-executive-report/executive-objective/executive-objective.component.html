@@ -14,7 +14,7 @@
           [(ngModel)]="config.objective"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.OBJECTIVE.OBJECTIVE' | translate"
           [ngStyle]="{ 'height': '100px' }"
-          [ngClass]="config.objective ? 'is-success' : 'is-error'"
+          [ngClass]="config.objective ? 'has-success' : 'has-error'"
           maxlength="120"
           class="form-input"
           type="text"
@@ -62,7 +62,7 @@
             maxlength="58"
             class="form-input"
             type="text"
-            [ngClass]="config.client.name ? 'is-success' : 'is-error'"
+            [ngClass]="config.client.name ? 'has-success' : 'has-error'"
             required>
 
           <span [ngStyle]="{ 'color': clientNameColor }" class="text-limit-wrapper">
@@ -86,7 +86,7 @@
             maxlength="58"
             class="form-input"
             type="text"
-            [ngClass]="config.client.email ? 'is-success' : 'is-error'"
+            [ngClass]="config.client.email ? 'has-success' : 'has-error'"
             required>
 
           <span [ngStyle]="{ 'color': clientEmailColor }" class="text-limit-wrapper">
@@ -113,7 +113,7 @@
             [source]="companiesSuggestions"
             (valueChanged)="selectCompany($event)"
             [(ngModel)]="company"
-            [ngClass]="company ? 'is-success' : 'is-error'"
+            [ngClass]="company ? 'has-success' : 'has-error'"
             required>
         </label>
         <span class="text-error form-input-hint" *ngIf="!company">
@@ -133,7 +133,7 @@
           [ngModelOptions]="{ standalone: true }"
           (change)="selectCommercial($event)"
           class="form-select"
-          [ngClass]="commercial && commercial._id ? 'is-success' : 'is-error'"
+          [ngClass]="commercial && commercial._id ? 'has-success' : 'has-error'"
           required>
 
           <option [value]="''">

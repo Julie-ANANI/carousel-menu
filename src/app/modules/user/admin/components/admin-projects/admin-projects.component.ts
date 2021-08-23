@@ -82,7 +82,7 @@ export class AdminProjectsComponent implements OnInit {
       this._isLoading = false;
       this._setConfigForUmiBack();
       this._getOperators().then(_ => {
-        // this._configOperator();
+        this._configOperator();
         this._getInnovations();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -158,7 +158,6 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['emailSent'],
             _name: 'Email sent',
             _type: 'MULTI-CHOICES',
-            _isSortable: true,
             _width: '150px',
             _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
             _choices: [
@@ -310,7 +309,6 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['emailSent'],
             _name: 'Email sent',
             _type: 'MULTI-CHOICES',
-            _isSortable: true,
             _width: '150px',
             _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
             _choices: [
@@ -432,7 +430,6 @@ export class AdminProjectsComponent implements OnInit {
             _attrs: ['emailSent'],
             _name: 'Email sent',
             _type: 'MULTI-CHOICES',
-            _isSortable: true,
             _width: '150px',
             _isHidden: !this.canAccess(['tableColumns', 'emailSent']),
             _choices: [
@@ -654,16 +651,15 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   /**
-   * Todo will be activated later when we have the functionality to search in mission team also.
    * @private
    */
 
-  /*private _configOperator() {
+  private _configOperator() {
     const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
     if (!!operator) {
       this._config.operator = operator['_id'];
     }
-  }*/
+  }
 
   /***
    * this is to get the projects from the server.
@@ -739,7 +735,7 @@ export class AdminProjectsComponent implements OnInit {
       }
       if (MissionFrontService.hasMissionTemplate(project.mission)) {
         project['mainObjective'] = MissionFrontService.objectiveName(project.mission.template, this._currentLang);
-      } else {
+      } else if (project.mission && project.mission.objective && project.mission.objective.principal) {
         project['mainObjective'] = project.mission.objective.principal[this._currentLang];
       }
       if (project.stats && project.stats.received && project.stats.received > 0) {

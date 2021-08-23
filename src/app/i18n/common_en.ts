@@ -1,4 +1,6 @@
 export const COMMON = {
+  'CHANGE_WITHOUT_SAVE': 'Do you really want to change without saving? All the changes will be lost.',
+  'QUIT_WITHOUT_SAVE': 'Do you really want to quit without saving? All the changes will be lost.',
   'SAVE': 'Save',
   'DOWNLOAD': 'Download',
   'UPLOAD': 'Upload',

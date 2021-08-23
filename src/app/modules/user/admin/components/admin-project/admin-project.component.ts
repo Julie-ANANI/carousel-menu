@@ -62,11 +62,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
   ];
 
-  private _isLoading = false;
+  private _isLoading = true;
 
   private _activatedTab = '';
 
-  private _currentLang = this._translateService.currentLang || 'en';
+  private _currentLang = this._translateService.currentLang;
 
   private _showBanner = '';
 
@@ -77,7 +77,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _updateTime: number;
 
-  private _innovTitle: string;
+  private _innovTitle = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -90,17 +90,17 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
-              private _socketService: SocketService) { }
+              private _socketService: SocketService) {
+    this._project = this._activatedRoute.snapshot.data['innovation'];
+    this._setInnoTitle();
+    this._setInnovation();
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      if (this._activatedRoute.snapshot.data['innovation']
-        && typeof this._activatedRoute.snapshot.data['innovation'] !== undefined) {
-        this._project = this._activatedRoute.snapshot.data['innovation'];
-        this._setInnoTitle();
-        this._setInnovation();
-        this._isLoading = false;
+      if (this._project && !!this._project._id) {
         this._initPageTitle();
+        this._isLoading = false;
 
         this._socketService.getProjectUpdates(this._project._id)
           .pipe(takeUntil(this._ngUnsubscribe))
@@ -170,7 +170,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _initPageTitle() {
     const _url = this._router.routerState.snapshot.url.split('/');
-    if (_url.length === 7) {
+    if (!!_url && _url.length && _url.length === 7) {
       const _params = _url[6].indexOf('?');
       this._activatedTab = _params > 0 ? _url[6].substring(0, _params) : _url[6];
       this._setPageTitle();

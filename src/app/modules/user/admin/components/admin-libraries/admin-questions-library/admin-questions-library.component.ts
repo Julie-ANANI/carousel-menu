@@ -14,22 +14,35 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 import {ConfigService} from '../../../../../../services/config/config.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
+interface NewQuestion {
+  controlType: any;
+  identifier: string;
+}
+
+interface IdentifierError {
+  letter: boolean;
+  exist: boolean;
+}
+
 @Component({
-  selector: 'app-admin-questions-library',
   templateUrl: './admin-questions-library.component.html',
   styleUrls: ['./admin-questions-library.component.scss']
 })
 export class AdminQuestionsLibraryComponent implements OnInit {
 
+  get identifierError(): IdentifierError {
+    return this._identifierError;
+  }
+
   get choiceClass(): string {
     return this._choiceClass;
   }
 
-  get newQuestion(): any {
+  get newQuestion(): NewQuestion {
     return this._newQuestion;
   }
 
-  set newQuestion(value: any) {
+  set newQuestion(value: NewQuestion) {
     this._newQuestion = value;
   }
 
@@ -109,7 +122,12 @@ export class AdminQuestionsLibraryComponent implements OnInit {
 
   private _showModal = false;
 
-  private _newQuestion: any = '';
+  private _newQuestion: NewQuestion = {
+    controlType: '',
+    identifier: ''
+  };
+
+  private _identifierError: IdentifierError = <IdentifierError>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
@@ -189,7 +207,8 @@ export class AdminQuestionsLibraryComponent implements OnInit {
         {
           _attrs: ['identifier'],
           _name: 'Identifier',
-          _type: 'TAG'
+          _type: 'TAG',
+          _isSearchable: true,
         },
         {
           _attrs: ['updated'],
@@ -238,7 +257,10 @@ export class AdminQuestionsLibraryComponent implements OnInit {
   public onAddQuestion(event: Event) {
     event.preventDefault();
     if (this.canAccess(['add']) && !this._isAdding) {
-      this._newQuestion = '';
+      this._newQuestion = {
+        controlType: '',
+        identifier: ''
+      };
       this._showModal = true;
     }
   }
@@ -247,7 +269,8 @@ export class AdminQuestionsLibraryComponent implements OnInit {
     event.preventDefault();
     if (!this._isAdding) {
       this._isAdding = true;
-      const question = this._missionQuestionService.createQuestion(this._newQuestion);
+      const question = this._missionQuestionService.createQuestion(this._newQuestion.controlType);
+      question.identifier = this._newQuestion.identifier;
 
       this._missionService.createQuestion(question).pipe(first()).subscribe((response) => {
         this._router.navigate([`${this._router.url}/${response._id}`]);
@@ -262,6 +285,23 @@ export class AdminQuestionsLibraryComponent implements OnInit {
 
   public onCloseModal() {
     this._showModal = false;
+  }
+
+  public onChangeIdentifier(event: string) {
+    event = event.trim();
+    this._identifierError = <IdentifierError>{};
+    this._newQuestion.identifier = '';
+
+    if (!!event.match(/[A-Za-z]/g)) {
+      const find = this._questions.some((_ques) => _ques.identifier.toLocaleLowerCase() === event.toLocaleLowerCase());
+      if (find) {
+        this._identifierError.exist = true;
+      } else {
+        this._newQuestion.identifier = event;
+      }
+    } else if (event.length) {
+      this._identifierError.letter = true;
+    }
   }
 
 }

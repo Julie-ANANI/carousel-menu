@@ -17,7 +17,7 @@
           maxlength="258"
           class="form-input"
           type="text"
-          [ngClass]="config.abstract ? 'is-success': 'is-error'"
+          [ngClass]="config.abstract ? 'has-success': 'has-error'"
           required>
         </textarea>
 
@@ -50,12 +50,13 @@
 
     <!-- select pro -->
     <div class="p-top-40 d-flex justify-space flex-wrap">
-      <div *ngFor="let top of top4Pro; let i = index;" class="select-wrapper">
+      <div *ngFor="let top of ['', '', '', '']; let i = index;" class="select-wrapper">
         <label>
-          <select (change)="selectPro($event, i)" class="form-select">
+          <select (change)="selectAnswer($event, i)" class="form-select">
             <option [value]="''">{{ 'ADMIN_EXECUTIVE_REPORT.PROFESSIONAL.CHOOSE_PRO' | translate }}</option>
-            <option *ngFor="let pro of restPro" [value]="pro._id">
-              {{ pro.firstName }} {{ pro.lastName }}
+            <option *ngFor="let answer of allAnswers" [value]="answer._id"
+                    [ngClass]="{'text-success': config.list.indexOf(answer._id) >= 0}">
+              {{ answer.professional.firstName }} {{ answer.professional.lastName }}
             </option>
           </select>
         </label>
@@ -77,45 +78,45 @@
 
     <!-- pro display -->
     <div class="d-flex flex-wrap justify-space">
-      <div *ngFor="let pro of top4Pro; let i = index;" class="pro-wrapper relative text-center text-sm">
-
-        <!-- flag -->
-        <div [ngStyle]="{ 'height': '26px' }" class="m-bottom-1">
-          <ng-container *ngIf="pro.country">
-            <app-utility-country-flag [country]="pro.country" [width]="22" [height]="15"></app-utility-country-flag>
-          </ng-container>
-        </div>
-        <div *ngIf="!pro.country" class="popover" [ngStyle]="{'border': 'none'}">
-          <i class="fas fa-exclamation-triangle"></i>
-          <div class="popover-container">
-            <div class="card">
-              {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.COUNTRY' | translate }}
+      <div *ngFor="let answer of top4Answers; let i = index;" class="pro-wrapper relative text-center text-sm">
+        <ng-container *ngIf="answer">
+          <!-- flag -->
+          <div [ngStyle]="{ 'height': '26px' }" class="m-bottom-1">
+            <ng-container *ngIf="answer.country">
+              <app-utility-country-flag [country]="answer.country" [width]="22" [height]="15"></app-utility-country-flag>
+            </ng-container>
+          </div>
+          <div *ngIf="!answer.country" class="popover" [ngStyle]="{'border': 'none'}">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="popover-container">
+              <div class="card">
+                {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.COUNTRY' | translate }}
+              </div>
             </div>
           </div>
-        </div>
-        <!-- /flag -->
+          <!-- /flag -->
 
 
-        <!-- jobTitle -->
-        <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
-          {{ pro.jobTitle }}
-        </div>
-        <!-- /jobTitle -->
+          <!-- jobTitle -->
+          <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
+            {{ answer.job }}
+          </div>
+          <!-- /jobTitle -->
 
 
-        <!-- company -->
-        <div *ngIf="!anonymous" [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
-          {{ pro.company }}
-        </div>
-        <!-- /company -->
+          <!-- company -->
+          <div *ngIf="!anonymous" [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
+            {{ answer.company ? answer.company.name : '' }}
+          </div>
+          <!-- /company -->
 
 
-        <!-- user icon -->
-        <div [ngStyle]="{ 'top': '7px', 'right': '15px' }" class="absolute">
-          <i class="fas fa-user text-md text-background"></i>
-        </div>
-        <!-- /user icon -->
-
+          <!-- user icon -->
+          <div [ngStyle]="{ 'top': '7px', 'right': '15px' }" class="absolute">
+            <i class="fas fa-user text-md text-background"></i>
+          </div>
+          <!-- /user icon -->
+        </ng-container>
       </div>
     </div>
     <!-- /pro display -->

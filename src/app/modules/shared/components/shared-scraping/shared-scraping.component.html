@@ -1,0 +1,124 @@
+<div id="shared-scraping">
+  <!-- search wrapper -->
+  <div class="search-wrapper">
+
+    <!-- heading -->
+    <div class="heading-wrapper">
+      <h2 class="title-secondary">Scraping</h2>
+      <span
+        (click)="activateSidebar()"
+        class="text-link text-sm">
+          Settings
+        </span>
+      <!-- import button -->
+      <div class="m-left-auto">
+        <label class="button is-primary is-sm is-outlined">
+          <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
+          <i class="fas fa-file-import icon-left"></i> Import and scrape a pdf file
+        </label>
+      </div>
+      <!-- /import button -->
+    </div>
+    <!-- /heading -->
+<!--    [(ngModel)]="setCanScrape"-->
+    <!-- url field -->
+    <div class="input-wrapper content">
+      <label class="form-label">URL to scrape (can be more than one if separate by comma)</label>
+      <input
+        [(ngModel)]="params['url']"
+        class="form-input"
+        placeholder="ex: https://portal.research.lu.se/portal/en/persons/search.html"
+        type="text">
+    </div>
+    <!-- /url field -->
+
+    <!-- buttons -->
+    <div class="form-group m-top-10">
+      <button class="button is-primary is-md"
+              (click)="onClickSearch()"
+              [disabled]="isScraping || (params['url'].length == 0)">
+        Scrape
+      </button>
+      <button class="button is-primary is-md float-right"
+              (click)="onClickCancel()"
+              [disabled]="(!isScraping) || isCancel">
+        Cancel
+      </button>
+    </div>
+
+    <!-- copy button -->
+    <div class="input-wrapper">
+      <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="remaining-wrapper">
+        <label class="button is-primary is-sm is-outlined">
+          <input (click)="onClickCopy()" [hidden]="true">
+          <i class="fas fa-copy icon-left"></i> Copy result to the clipboard
+        </label>
+      </div>
+    </div>
+    <!-- /copy button -->
+
+    <!-- /buttons -->
+
+    <!-- /search wrapper -->
+
+    <!-- display error -->
+    <div *ngIf="isError" [ngClass]="isError ? 'd-block' : 'd-none'" class="text-error">
+      <span style="white-space: pre-line">{{error}} </span>
+    </div>
+    <!-- /display error -->
+
+    <!-- display warning -->
+    <div *ngIf="isWarning" [ngClass]="isWarning ? 'd-block' : 'd-none'" class="text-error">
+      <span style="white-space: pre-line">{{warning}} </span>
+    </div>
+    <!-- /display warning -->
+
+    <!-- keep informed -->
+    <div *ngIf="showKeepInformed" [ngClass]="showKeepInformed ? 'd-block' : 'd-none'" class="m-top-25">
+      <span style="white-space: pre-line">{{keepInformed}} </span>
+    </div>
+    <!-- /keep informed -->
+
+    <!-- display cancel -->
+    <div *ngIf="isCancel" [ngClass]="isCancel ? 'd-block' : 'd-none'" class="text-error">
+      <span style="white-space: pre-line">Cancel</span>
+    </div>
+    <!-- /display cancel -->
+
+    <!-- loading -->
+    <div *ngIf="isScraping" [ngClass]="isScraping ? 'd-block' : 'd-none'" class="m-top-25">
+      <div class="loading"></div>
+    </div>
+    <!-- /loading -->
+
+    <!-- display result -->
+    <div *ngIf="showResultScraping" [ngClass]="showResultScraping ? 'd-block' : 'd-none'" class="m-top-25">
+      <div id="result" class="table-responsive is-max-height">
+        <table class="table">
+<!--          <caption>Result</caption>-->
+          <thead>
+            <tr>
+              <th *ngFor="let key_attribute of attributes" class="display-key">{{key_attribute}}</th>
+            <tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pro of result_pros | keyvalue">
+              <th *ngFor="let data of values(pro.key)" class="display-value">{{data}}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /display result -->
+  </div>
+</div>
+
+
+<!-- sidebars to set settings -->
+<app-sidebar [(template)]="sidebarValue">
+  <app-sidebar-scraping
+    [params]="params">
+  </app-sidebar-scraping>
+</app-sidebar>
+<!-- /sidebars to set settings  -->
+

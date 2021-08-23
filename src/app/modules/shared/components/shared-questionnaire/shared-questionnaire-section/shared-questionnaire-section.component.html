@@ -6,7 +6,10 @@
     <!-- move button / description -->
     <div class="d-flex align-center m-bottom-10">
 
-      <div *ngIf="isEditable" data-tooltip="Move section" class="move-arrows tooltip">
+      <div
+        *ngIf="isEditable || canAccess(['section', 'order'])"
+        data-tooltip="Move section"
+        class="move-arrows tooltip">
         <i (click)="up($event)" [ngClass]="{'disabled': sectionIndex === 0}" class="icon icon-arrow-up"></i>
         <i
           (click)="down($event)"
@@ -178,12 +181,12 @@
       <button
         (click)="addNewQuestion($event)"
         [id]="'sharedQuestionnaireSection-btn-add-question'"
-        class="button is-outlined is-draft text-bold is-sm"
+        class="button is-outlined is-draft text-bold is-sm p-2"
         type="button">
         <span class="icon-container is-sm is-overlay active m-right-10">
           <i class="icon icon-plus"></i>
         </span>
-        Add question
+        Add a new question
       </button>
     </div>
   </ng-container>
@@ -192,13 +195,92 @@
 </div>
 
 
-<app-utility-modal-empty *ngIf="isLibraryView" [(showModal)]="showModal" [maxWidth]="'840px'">
+<app-utility-modal-empty *ngIf="isLibraryView && showModal" [(showModal)]="showModal" [maxWidth]="'840px'">
 
   <section class="modal-body">
 
     <h2 class="title is-4 text-center text-bold m-bottom-30">Add question</h2>
 
     <p class="m-bottom-15">Select the way you would like to add the question.</p>
+
+    <!-- from scratch -->
+    <div class="form-group">
+      <label class="form-radio">
+        <input
+          (change)="onChangeAddQuestion('SCRATCH')"
+          [checked]="questionToAdd.from === 'SCRATCH'"
+          name="addQuestion"
+          type="radio"
+          value="SCRATCH">
+        <i class="form-icon"></i> From Scratch
+      </label>
+    </div>
+
+    <div *ngIf="questionToAdd.from === 'SCRATCH'" class="mxw-600 m-left-auto m-right-auto">
+
+      <div class="form-group mxw-400 m-right-auto p-top-20">
+        <label class="form-label">Type*</label>
+        <select [(ngModel)]="questionToAdd.value['controlType']" class="form-select is-sm " required>
+          <option [ngValue]="''" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
+          <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+          <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+          <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+          <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+          <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+          <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+        </select>
+      </div>
+
+      <div class="form-group p-top-20 p-bottom-20">
+        <label class="form-label">Identifier*</label>
+        <div class="flex-between w-full">
+          <div class="mxw-400 w-full">
+            <input
+              (ngModelChange)="onChangeIdentifier($event)"
+              [ngModel]="questionToAdd.value['identifier']"
+              class="form-input is-sm"
+              maxlength="23"
+              placeholder="Enter the unique identifier. Like: ContactOwner"
+              required
+              type="text">
+          </div>
+          <div>
+            <button
+              (click)="onCheckAvailability($event)"
+              [disabled]="!questionToAdd.value['identifier'] || isCheckingAvailability || isAvailableIdentifier"
+              class="button is-outlined is-sm m-left-25">
+              <ng-container *ngIf="!isCheckingAvailability">Check availability</ng-container>
+              <ng-container *ngIf="isCheckingAvailability"><span class="loading is-primary"></span></ng-container>
+            </button>
+          </div>
+        </div>
+        <ng-container
+          *ngIf="!identifierError.letter && !identifierError.exist && !isAvailableIdentifier; else showIdentText">
+          <p class="text-xs text-alert text-medium m-top-2 m-bottom-h">Note:</p>
+          <ul class="text-xs text-notify text-medium m-left-2 m-no">
+            <li class="m-top-h">Should be less than or equal to 23.</li>
+            <li class="m-top-h">Try to have only characters ex: ContactOwner.</li>
+            <li class="m-top-h">Should be an unique.</li>
+            <li class="m-top-h">Not case sensitive means ContactOwner or contactOwner is same.</li>
+            <li class="m-top-h">Two question can not have same identifier.</li>
+            <li class="m-top-h">Once defined can not be changed later.</li>
+          </ul>
+        </ng-container>
+        <ng-template #showIdentText>
+          <ng-container *ngIf="isAvailableIdentifier; else identError">
+            <p class="form-error text-success">The identifier is available.</p>
+          </ng-container>
+          <ng-template #identError>
+            <p class="form-error">
+              <ng-container *ngIf="identifierError.exist">The identifier is already assigned to a question.</ng-container>
+              <ng-container *ngIf="identifierError.letter">The identifier should only contains characters.</ng-container>
+            </p>
+          </ng-template>
+        </ng-template>
+      </div>
+
+    </div>
+    <!-- /from scratch -->
 
     <!-- from library -->
     <div class="form-group">
@@ -235,38 +317,6 @@
     </ng-container>
     <!-- /from library -->
 
-    <!-- from scratch -->
-    <!--<div class="form-group">
-      <label class="form-radio">
-        <input
-          (change)="onChangeAddQuestion('SCRATCH')"
-          [checked]="questionToAdd.from === 'SCRATCH'"
-          name="addQuestion"
-          type="radio"
-          value="SCRATCH">
-        <i class="form-icon"></i> From Scratch
-      </label>
-    </div>-->
-
-    <ng-container *ngIf="questionToAdd.from === 'SCRATCH'">
-      <div class="mxw-300 m-left-auto m-right-auto m-top-10 m-bottom-10">
-        <label>
-          <select
-            [(ngModel)]="questionToAdd.value"
-            class="form-select is-sm">
-            <option value="" selected>{{ 'COMMON.QUESTIONNAIRE_TYPE.CHOOSE' | translate }}</option>
-            <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
-            <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
-            <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
-            <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
-            <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
-            <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-          </select>
-        </label>
-      </div>
-    </ng-container>
-    <!-- /from scratch -->
-
   </section>
 
   <footer class="modal-footer justify-center">
@@ -281,7 +331,7 @@
 
     <button
       (click)="onAddQuestion($event)"
-      [disabled]="!questionToAdd.from || !questionToAdd.value"
+      [disabled]="isDisabled"
       class="button is-community"
       type="button">
       Add

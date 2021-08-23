@@ -6,10 +6,20 @@ import {MissionQuestionService} from '../../../../../services/mission/mission-qu
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 import {AutoSuggestionConfig} from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
+import {MissionService} from '../../../../../services/mission/mission.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 
 interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
   value: any;
+}
+
+interface IdentifierError {
+  letter: boolean;
+  exist: boolean;
 }
 
 @Component({
@@ -18,6 +28,28 @@ interface AddQuestion {
   styleUrls: ['./shared-questionnaire-section.component.scss']
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
+
+  get isCheckingAvailability(): boolean {
+    return this._isCheckingAvailability;
+  }
+
+  get isAvailableIdentifier(): boolean {
+    return this._isAvailableIdentifier;
+  }
+
+  get isDisabled(): boolean {
+    if (this._questionToAdd.from === 'LIBRARY') {
+      return this._questionToAdd.value.length === 0;
+    } else if (this._questionToAdd.from === 'SCRATCH') {
+      return !this._questionToAdd.value['identifier'] || !this._questionToAdd.value['controlType']
+        || !this._isAvailableIdentifier;
+    }
+    return true;
+  }
+
+  get identifierError(): IdentifierError {
+    return this._identifierError;
+  }
 
   get searchConfig(): AutoSuggestionConfig {
     return this._searchConfig;
@@ -137,8 +169,16 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     placeholder: 'Start typing question label here...',
   };
 
+  private _identifierError: IdentifierError = <IdentifierError>{};
+
+  private _isAvailableIdentifier = false;
+
+  private _isCheckingAvailability = false;
+
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
+              private _missionService: MissionService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _missionQuestionService: MissionQuestionService) { }
 
   ngOnInit() {
@@ -213,14 +253,21 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     if (this._questionToAdd.from && !!this._questionToAdd.value) {
       switch (this._questionToAdd.from) {
 
-        /*case 'SCRATCH':
-          const value = {
-            question: this._missionQuestionService.createQuestion(this._questionToAdd.value),
-            essential: false
-          };
+        case 'SCRATCH':
+          const question = this._missionQuestionService.createQuestion(this._questionToAdd.value.controlType);
+          question.identifier = this._questionToAdd.value.identifier;
+          const value = {question: question, essential: false};
           this._missionQuestionService.template.sections[this._sectionIndex].questions.push(value);
+          this.valueToSave.emit({
+            key: 'QUESTION_ADD',
+            value: {
+              ques: question,
+              identifier: question.identifier
+            }
+          });
+          this.notifyChanges();
           this.closeModal();
-          break;*/
+          break;
 
         case 'LIBRARY':
           this._missionQuestionService.template.sections[this._sectionIndex].questions = [
@@ -265,7 +312,6 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
         return (_value.ques && _value.ques.question && _value.ques.question._id) === questionId;
       });
     }
-    this._questionToAdd.value = [];
     return false;
   }
 
@@ -286,7 +332,58 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   public onChangeAddQuestion(event: any) {
     this._questionToAdd.from = event;
-    this._questionToAdd.value = '';
+    this._questionToAdd.value = [];
+    this._isAvailableIdentifier = false;
+
+    if (event === 'SCRATCH') {
+      this._questionToAdd.value = {
+        controlType: '',
+        identifier: ''
+      };
+    }
+  }
+
+  public onChangeIdentifier(event: string) {
+    event = event.trim();
+    this._identifierError = <IdentifierError>{};
+    this._questionToAdd.value.identifier = '';
+    this._isAvailableIdentifier = false;
+
+    if (!!event.match(/[A-Za-z]/g)) {
+      this._questionToAdd.value.identifier = event;
+    } else if (event.length) {
+      this._identifierError.letter = true;
+    }
+  }
+
+  public onCheckAvailability(event: Event) {
+    event.preventDefault();
+
+    if (!this._isAvailableIdentifier) {
+      this._isCheckingAvailability = true;
+
+      const find = MissionFrontService.totalTemplateQuestions(this._missionQuestionService.template).some((_ques) => {
+        return _ques['question'].identifier.toLocaleLowerCase() === this._questionToAdd.value.identifier.toLocaleLowerCase();
+      });
+
+      if (!find) {
+        this._missionService.checkIdentifierAvailability(this._questionToAdd.value.identifier)
+          .pipe(first())
+          .subscribe((response) => {
+            this._isCheckingAvailability = false;
+            this._identifierError.exist = !!(response && response.length);
+            this._isAvailableIdentifier = !(response && response.length);
+          }, (error: HttpErrorResponse) => {
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+            this._isCheckingAvailability = false;
+            console.error(error);
+          });
+      } else {
+        this._identifierError.exist = true;
+        this._isAvailableIdentifier = false;
+        this._isCheckingAvailability = false;
+      }
+    }
   }
 
 }

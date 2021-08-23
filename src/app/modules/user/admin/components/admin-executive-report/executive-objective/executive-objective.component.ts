@@ -27,6 +27,10 @@ interface Commercial {
 
 export class ExecutiveObjectiveComponent implements OnInit {
 
+  get borderClass(): string {
+    return this._config.objective && this._config.objective.length ? 'is-success' : 'is-error';
+  }
+
   @Input() isEditable = false;
 
   @Input() lang = 'en';

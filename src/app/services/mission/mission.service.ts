@@ -21,6 +21,15 @@ export class MissionService {
   }
 
   /**
+   * returns the lists of the questions matched based on the identifier.
+   *
+   * @param identifier
+   */
+  public checkIdentifierAvailability(identifier: string): Observable<Array<MissionQuestion>> {
+    return this._http.get<Array<MissionQuestion>>(`/mission/questions/checkIdentifier/${identifier}`);
+  }
+
+  /**
    * will create a new question of type MissionQuestion. It should be only used
    * for the Questions or Use cases under Library page because it will add the question
    * directly in the collection MissionQuestions
