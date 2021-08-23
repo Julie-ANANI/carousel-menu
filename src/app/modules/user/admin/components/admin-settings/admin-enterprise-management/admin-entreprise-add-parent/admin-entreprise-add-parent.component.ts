@@ -214,11 +214,15 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param event
    */
   addCompanyToInclude(event: { value: Array<string> }): void {
+    console.log('value of parent from input component');
+    console.log(event);
     this._entrepriseService
       .get(event.value[0]['id'])
       .pipe(first())
       .subscribe(
         (res) => {
+          console.log('parent company is');
+          console.log(res);
           this._parentCompany = res;
           this.replaceChildrenWithParentValue();
         },
