@@ -242,45 +242,17 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         .map((c) => {
           switch (c._attrs.toString()) {
             case 'topLevelDomain':
-              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
-                this.compareChildValueToFillReplace(item, c);
-              }
-              break;
             case 'enterpriseType':
-              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
-                this.compareChildValueToFillReplace(item, c);
-              }
-              break;
             case 'enterpriseSize':
-              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
-                this.compareChildValueToFillReplace(item, c);
-              }
-              break;
             case 'enterpriseURL':
               if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'valueChain':
-              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
-                this.compareChildValueToFillReplace(item, c);
-              }
-              break;
             case 'industries':
-              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
-                this.compareChildValueToFillReplace(item, c);
-              }
-              break;
             case 'patterns':
-              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
-                this.compareChildValueToFillReplace(item, c);
-              }
-              break;
             case 'brands':
-              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
-                this.compareChildValueToFillReplace(item, c);
-              }
-              break;
             case 'geographicalZone':
               if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
@@ -315,11 +287,16 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param attr
    */
   toBeFilled(child: any, attr: string) {
-    if (typeof child[attr] === 'string') {
-      return child[attr] === '' && this.parentCompany[attr] !== '';
+    if (child.hasOwnProperty(attr)) {
+      if (typeof child[attr] === 'string') {
+        return child[attr] === '' && this.parentCompany[attr] !== '';
+      } else {
+        return child[attr].length === 0 && this.parentCompany[attr].length > 0;
+      }
     } else {
-      return child[attr].length === 0 && this.parentCompany[attr].length > 0;
+      return true;
     }
+
   }
 
   /**
@@ -328,10 +305,14 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param attr
    */
   toBeReplaced(child: any, attr: string) {
-    if (typeof child[attr] === 'string') {
-      return child[attr] !== '' && this.parentCompany[attr] !== '';
+    if (child.hasOwnProperty(attr)) {
+      if (typeof child[attr] === 'string') {
+        return child[attr] !== '' && this.parentCompany[attr] !== '';
+      } else {
+        return child[attr].length > 0 && this.parentCompany[attr].length > 0;
+      }
     } else {
-      return child[attr].length > 0 && this.parentCompany[attr].length > 0;
+      return false;
     }
   }
 
