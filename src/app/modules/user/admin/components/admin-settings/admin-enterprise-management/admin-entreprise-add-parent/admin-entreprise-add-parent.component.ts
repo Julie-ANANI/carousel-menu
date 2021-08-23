@@ -315,6 +315,9 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param attr
    */
   toBeFilled(child: any, attr: string) {
+    if (attr === 'enterpriseSize' || attr === 'enterpriseType') {
+      console.log(child, attr);
+    }
     if (typeof child[attr] === 'string') {
       return child[attr] === '' && this.parentCompany[attr] !== '';
     } else {
@@ -341,6 +344,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param child
    */
   replaceChildValues(attr: any, child: any) {
+    if (attr === 'enterpriseSize' || attr === 'enterpriseType') {
+      console.log('replace values');
+      console.log(child, attr);
+      console.log(this._parentCompany[attr]);
+      console.log(child[attr]);
+    }
     child[attr] = this._parentCompany[attr];
   }
 
