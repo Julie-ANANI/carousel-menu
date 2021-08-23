@@ -302,6 +302,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param c
    */
   compareChildValueToFillReplace(item: any, c: Column) {
+    console.log('weird ******');
+    console.log(c._attrs[0]);
     const isFilled = this.toBeFilled(item, c._attrs[0]);
     const isReplaced = this.toBeReplaced(item, c._attrs[0]);
     if (isFilled) {
