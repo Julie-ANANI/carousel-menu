@@ -237,57 +237,52 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   replaceChildrenWithParentValue() {
     this._companiesTable._content.map((item) => {
       item.parentEnterprise = this._parentCompany._id || '';
-      console.log('this._parentCompany');
-      console.log(this._parentCompany);
-      console.log(this._companiesTable._columns.length);
-      console.log(this._companiesTable._columns
-        .slice(2, this._companiesTable._columns.length));
       this._companiesTable._columns
         .slice(2, this._companiesTable._columns.length)
         .map((c) => {
           switch (c._attrs.toString()) {
             case 'topLevelDomain':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'enterpriseType':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'enterpriseSize':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'enterpriseURL':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'valueChain':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'industries':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'patterns':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'brands':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
             case 'geographicalZone':
-              if (item.hasOwnProperty(c._attrs[0])) {
+              if (this._parentCompany.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
               }
               break;
@@ -302,8 +297,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param c
    */
   compareChildValueToFillReplace(item: any, c: Column) {
-    console.log('weird ******');
-    console.log(c._attrs[0]);
     const isFilled = this.toBeFilled(item, c._attrs[0]);
     const isReplaced = this.toBeReplaced(item, c._attrs[0]);
     if (isFilled) {
@@ -322,9 +315,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param attr
    */
   toBeFilled(child: any, attr: string) {
-    if (attr === 'enterpriseSize' || attr === 'enterpriseType') {
-      console.log(child, attr);
-    }
     if (typeof child[attr] === 'string') {
       return child[attr] === '' && this.parentCompany[attr] !== '';
     } else {
@@ -351,12 +341,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
    * @param child
    */
   replaceChildValues(attr: any, child: any) {
-    if (attr === 'enterpriseSize' || attr === 'enterpriseType') {
-      console.log('replace values');
-      console.log(child, attr);
-      console.log(this._parentCompany[attr]);
-      console.log(child[attr]);
-    }
     child[attr] = this._parentCompany[attr];
   }
 
