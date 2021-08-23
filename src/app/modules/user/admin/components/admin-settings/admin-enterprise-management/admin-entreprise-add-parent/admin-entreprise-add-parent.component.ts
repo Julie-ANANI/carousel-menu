@@ -237,6 +237,11 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   replaceChildrenWithParentValue() {
     this._companiesTable._content.map((item) => {
       item.parentEnterprise = this._parentCompany._id || '';
+      console.log('this._parentCompany');
+      console.log(this._parentCompany);
+      console.log(this._companiesTable._columns.length);
+      console.log(this._companiesTable._columns
+        .slice(2, this._companiesTable._columns.length));
       this._companiesTable._columns
         .slice(2, this._companiesTable._columns.length)
         .map((c) => {
