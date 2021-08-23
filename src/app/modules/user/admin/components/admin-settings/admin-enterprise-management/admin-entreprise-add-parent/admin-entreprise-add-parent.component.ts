@@ -242,8 +242,20 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         .map((c) => {
           switch (c._attrs.toString()) {
             case 'topLevelDomain':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
             case 'enterpriseType':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
             case 'enterpriseSize':
+              if (item.hasOwnProperty(c._attrs[0])) {
+                this.compareChildValueToFillReplace(item, c);
+              }
+              break;
             case 'enterpriseURL':
               if (item.hasOwnProperty(c._attrs[0])) {
                 this.compareChildValueToFillReplace(item, c);
