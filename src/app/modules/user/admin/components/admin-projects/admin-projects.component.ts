@@ -38,13 +38,10 @@ export class AdminProjectsComponent implements OnInit {
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
+    fields: '',
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
-    fromCollection: {
-      model: ''
-    },
     sort: '{"created":-1}'
   };
 
@@ -54,8 +51,8 @@ export class AdminProjectsComponent implements OnInit {
 
   private _currentLang = this._translateService.currentLang;
 
-  private _objectiveSearchKey = this._currentLang === 'en' ?
-    'objective.principal.en' : 'objective.principal.fr';
+  private _objectiveSearchKey = this._currentLang === 'en' ? 'objective.en' : 'objective.fr';
+  private _useCaseSearchKey = this._currentLang === 'en' ? 'useCase.en' : 'useCase.fr';
 
   private _fetchingError = false;
 
@@ -122,13 +119,12 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'name'])
           },
           {
-            _attrs: ['owner.company.name'],
+            _attrs: ['company'],
             _name: 'Company',
             _type: 'TEXT',
             _width: '180px',
             _isSearchable: this.canAccess(['searchBy', 'company']),
             _isHidden: !this.canAccess(['tableColumns', 'company']),
-            _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
           },
           {
             _attrs: ['status'],
@@ -166,7 +162,7 @@ export class AdminProjectsComponent implements OnInit {
             ]
           },
           {
-            _attrs: ['stats.validatedAnswers'],
+            _attrs: ['validatedAnswers'],
             _name: 'Validated Answers',
             _type: 'NUMBER',
             _width: '170px',
@@ -187,7 +183,6 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
             _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
-            _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
           }, // Using _searchConfig for advanced search
           {
             _attrs: ['updated'],
@@ -214,40 +209,22 @@ export class AdminProjectsComponent implements OnInit {
             ]
           },
           {
-            _attrs: ['type'],
-            _name: 'Type',
-            _type: 'MULTI-CHOICES',
-            _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
-            _isSearchable: this.canAccess(['filterBy', 'type']),
-            _choices: [
-              {_name: 'USER', _alias: 'User'},
-              {_name: 'CLIENT', _alias: 'Client'},
-              {_name: 'DEMO', _alias: 'Demo'},
-              {_name: 'TEST', _alias: 'Test'},
-            ]
-          },
-          // Using _searchConfig for advanced search
-          {
-            _attrs: ['template.entry.objective'],
+            _attrs: [this._useCaseSearchKey],
             _name: 'Use case',
             _type: 'MULTI-CHOICES',
             _isSearchable: this.canAccess(['filterBy', 'objective']),
             _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'template.entry.objective'},
             _choices: this._missionTemplates.map((_template) => {
               const label = MissionFrontService.objectiveName(_template, this._currentLang);
               return {_name: label, _alias: label};
             })
           },
-          // Using _searchConfig for advanced search
           {
             _attrs: [this._objectiveSearchKey],
             _name: 'Objective',
             _type: 'MULTI-CHOICES',
             _isSearchable: this.canAccess(['filterBy', 'objective']),
             _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: this._objectiveSearchKey},
             _choices: ObjectivesPrincipal.map((objective) => {
               return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
             })
@@ -259,7 +236,7 @@ export class AdminProjectsComponent implements OnInit {
             _isSearchable: this.canAccess(['filterBy', 'operator']),
             _isHidden: true,
             _choices: this._operators && this._operators.length ? this._operators.map(oper => {
-              return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+              return {_name: `${oper.firstName} ${oper.lastName}`, _alias: `${oper.firstName} ${oper.lastName}`};
             }) : []
           },
           {
@@ -282,13 +259,12 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'name'])
           },
           {
-            _attrs: ['owner.company.name'],
+            _attrs: ['company'],
             _name: 'Company',
             _type: 'TEXT',
             _width: '180px',
             _isSearchable: this.canAccess(['searchBy', 'company']),
             _isHidden: !this.canAccess(['tableColumns', 'company']),
-            _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
           },
           {
             _attrs: ['status'],
@@ -317,14 +293,14 @@ export class AdminProjectsComponent implements OnInit {
             ]
           },
           {
-            _attrs: ['stats.emailsOK'],
+            _attrs: ['emailsOK'],
             _name: 'Good Emails',
             _type: 'NUMBER',
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
           },
           {
-            _attrs: ['stats.validatedAnswers'],
+            _attrs: ['validatedAnswers'],
             _name: 'Validated Answers',
             _type: 'NUMBER',
             _width: '170px',
@@ -347,20 +323,6 @@ export class AdminProjectsComponent implements OnInit {
             ]
           },
           {
-            _attrs: ['type'],
-            _name: 'Type',
-            _type: 'MULTI-CHOICES',
-            _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
-            _isSearchable: this.canAccess(['filterBy', 'type']),
-            _choices: [
-              {_name: 'USER', _alias: 'User'},
-              {_name: 'CLIENT', _alias: 'Client'},
-              {_name: 'DEMO', _alias: 'Demo'},
-              {_name: 'TEST', _alias: 'Test'},
-            ]
-          },
-          {
             _attrs: ['created'],
             _name: 'Created',
             _type: 'DATE',
@@ -374,7 +336,6 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
             _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
-            _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
           },
           {
             _attrs: ['operator'],
@@ -383,7 +344,7 @@ export class AdminProjectsComponent implements OnInit {
             _isSearchable: this.canAccess(['filterBy', 'operator']),
             _isHidden: true,
             _choices: this._operators && this._operators.length ? this._operators.map(oper => {
-              return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+              return {_name: `${oper.firstName} ${oper.lastName}`, _alias: `${oper.firstName} ${oper.lastName}`};
             }) : []
           },
         ];
@@ -403,24 +364,23 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _isSearchable: this.canAccess(['searchBy', 'innovationCard']),
             _isHidden: !this.canAccess(['tableColumns', 'innovationCard']),
-            _searchConfig: {_collection: 'innovationcard', _searchKey: 'title'}
           }, // Using _searchConfig for advanced search
           {
-            _attrs: ['mission.externalDiffusion.community'],
+            _attrs: ['community'],
             _name: 'Community',
             _width: '120px',
             _type: 'CHECK',
             _isHidden: !this.canAccess(['tableColumns', 'community']),
           },
           {
-            _attrs: ['mission.externalDiffusion.social'],
+            _attrs: ['social'],
             _name: 'Social',
             _width: '100px',
             _type: 'CHECK',
             _isHidden: !this.canAccess(['tableColumns', 'social']),
           },
           {
-            _attrs: ['mission.externalDiffusion.umi'],
+            _attrs: ['website'],
             _name: 'Website',
             _width: '100px',
             _type: 'CHECK',
@@ -438,14 +398,14 @@ export class AdminProjectsComponent implements OnInit {
             ]
           },
           {
-            _attrs: ['stats.emailsOK'],
+            _attrs: ['emailsOK'],
             _name: 'Good Emails',
             _type: 'NUMBER',
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'goodEmails']),
           },
           {
-            _attrs: ['stats.validatedAnswers'],
+            _attrs: ['validatedAnswers'],
             _name: 'Validated Answers',
             _type: 'NUMBER',
             _width: '170px',
@@ -469,13 +429,12 @@ export class AdminProjectsComponent implements OnInit {
             _editType: 'USER-INPUT'
           },
           {
-            _attrs: ['owner.company.name'],
+            _attrs: ['company'],
             _name: 'Company',
             _type: 'TEXT',
             _width: '180px',
             _isSearchable: this.canAccess(['searchBy', 'company']),
             _isHidden: !this.canAccess(['tableColumns', 'company']),
-            _searchConfig: {_collection: 'user', _searchKey: 'company.name'}
           },
           {
             _attrs: ['mission.type'],
@@ -508,28 +467,13 @@ export class AdminProjectsComponent implements OnInit {
             _width: '130px',
             _isHidden: !this.canAccess(['tableColumns', 'created'])
           },
-          {
-            _attrs: ['type'],
-            _name: 'Type',
-            _type: 'MULTI-CHOICES',
-            _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
-            _isSearchable: this.canAccess(['filterBy', 'type']),
-            _choices: [
-              {_name: 'USER', _alias: 'User'},
-              {_name: 'CLIENT', _alias: 'Client'},
-              {_name: 'DEMO', _alias: 'Demo'},
-              {_name: 'TEST', _alias: 'Test'},
-            ]
-          },
           // Using _searchConfig for advanced search
           {
-            _attrs: ['template.entry.objective'],
+            _attrs: [this._useCaseSearchKey],
             _name: 'Use case',
             _type: 'MULTI-CHOICES',
             _isSearchable: this.canAccess(['filterBy', 'objective']),
             _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'template.entry.objective'},
             _choices: this._missionTemplates.map((_template) => {
               const label = MissionFrontService.objectiveName(_template, this._currentLang);
               return {_name: label, _alias: label};
@@ -542,7 +486,6 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'MULTI-CHOICES',
             _isSearchable: this.canAccess(['filterBy', 'objective']),
             _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: this._objectiveSearchKey},
             _choices: ObjectivesPrincipal.map((objective) => {
               return {_name: objective[this._currentLang].label, _alias: objective[this._currentLang].label};
             })
@@ -571,7 +514,7 @@ export class AdminProjectsComponent implements OnInit {
             _isSearchable: this.canAccess(['filterBy', 'operator']),
             _isHidden: true,
             _choices: this._operators && this._operators.length ? this._operators.map(oper => {
-              return {_name: oper['_id'], _alias: `${oper.firstName} ${oper.lastName}`};
+              return {_name: `${oper.firstName} ${oper.lastName}`, _alias: `${oper.firstName} ${oper.lastName}`};
             }) : []
           }
         ];
@@ -586,13 +529,9 @@ export class AdminProjectsComponent implements OnInit {
     switch (this._authService.user.roles) {
       case 'market-test-manager-umi-back':
         this._config = {
-          fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
+          fields: '',
           limit: '10',
           offset: '0',
-          fromCollection: {
-            model: 'mission',
-            type: 'CLIENT'
-          },
           search: '{}',
           sort: '{"created":-1}',
         };
@@ -615,11 +554,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   private _getInnovations() {
-    if (this._config.fromCollection.model) {
-      this._searchMissionsByOther(this._config);
-    } else {
-      this._getProjects();
-    }
+    this._getProjects();
   }
 
   get canImport(): boolean {
@@ -657,7 +592,7 @@ export class AdminProjectsComponent implements OnInit {
   private _configOperator() {
     const operator = this._operators.find((oper) => oper['_id'] === this.authUserId);
     if (!!operator) {
-      this._config.operator = operator['_id'];
+      this._config.operator = `${operator['firstName']} ${operator['lastName']}`;
     }
   }
 
@@ -666,7 +601,7 @@ export class AdminProjectsComponent implements OnInit {
    * @private
    */
   private _getProjects() {
-    this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+    this._innovationService.getMarketTests(this._config).pipe(first()).subscribe((response: Response) => {
       this._projects = response && response.result;
       this._initProjects();
       this._totalProjects = response && response._metadata && response._metadata.totalCount;
@@ -704,45 +639,19 @@ export class AdminProjectsComponent implements OnInit {
     });
   }
 
-  /**
-   * Sends a request to cross search innovations using external collections, e.g., innovations x missions or
-   * innovations x innovation card title
-   * @param config
-   * @private
-   */
-  private _searchMissionsByOther(config: Config) {
-    // Change here the fields. This will hit an aggregate on the back
-    /* Warning: Juan is experimenting with this encoding. The idea is to encode the query params (not a crypto thing)
-     * to avoid send thing in clear text. The endpoint in the back is prepared to parse this*/
-    this._innovationService.advancedSearch({
-      config: encodeURI(Buffer.from(JSON.stringify(config)).toString('base64'))
-    }).pipe(first()).subscribe(innovations => {
-      this._projects = innovations.result;
-      this._initProjects();
-      this._totalProjects = innovations._metadata.totalCount;
-      this._initializeTable();
-    }, err => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-  }
-
   private _initProjects() {
     this._projects = this._projects.map((project) => {
       if (project.innovationCards && project.innovationCards.length) {
-        project.innovationCards =
-          InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
+        project.innovationCards = InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
-      if (MissionFrontService.hasMissionTemplate(project.mission)) {
-        project['mainObjective'] = MissionFrontService.objectiveName(project.mission.template, this._currentLang);
-      } else if (project.mission && project.mission.objective && project.mission.objective.principal) {
-        project['mainObjective'] = project.mission.objective.principal[this._currentLang];
+
+      if (!!project.useCase) {
+        project.mainObjective = project.useCase[this._currentLang];
+      } else if (project.objective) {
+        project.mainObjective = project.objective[this._currentLang];
       }
-      if (project.stats && project.stats.received && project.stats.received > 0) {
-        project['emailSent'] = 'Yes';
-      } else {
-        project['emailSent'] = 'No';
-      }
+
+      project.emailSent = (project.emailSent) ? 'Yes' : 'No';
       return project;
     });
   }
