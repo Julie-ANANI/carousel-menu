@@ -38,10 +38,13 @@ export class AdminProjectsComponent implements OnInit {
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: '',
+    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
+    fromCollection: {
+      model: ''
+    },
     sort: '{"created":-1}'
   };
 
@@ -247,6 +250,20 @@ export class AdminProjectsComponent implements OnInit {
             _width: '130px',
             _isHidden: !this.canAccess(['tableColumns', 'created'])
           },
+          {
+            _attrs: ['type'],
+            _name: 'Type',
+            _type: 'MULTI-CHOICES',
+            _isHidden: true,
+            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+            _isSearchable: this.canAccess(['filterBy', 'type']),
+            _choices: [
+              {_name: 'USER', _alias: 'User'},
+              {_name: 'CLIENT', _alias: 'Client'},
+              {_name: 'DEMO', _alias: 'Demo'},
+              {_name: 'TEST', _alias: 'Test'},
+            ]
+          },
         ];
       case 'market-test-manager-umi-back':
         return [
@@ -346,6 +363,20 @@ export class AdminProjectsComponent implements OnInit {
             _choices: this._operators && this._operators.length ? this._operators.map(oper => {
               return {_name: `${oper.firstName} ${oper.lastName}`, _alias: `${oper.firstName} ${oper.lastName}`};
             }) : []
+          },
+          {
+            _attrs: ['type'],
+            _name: 'Type',
+            _type: 'MULTI-CHOICES',
+            _isHidden: true,
+            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+            _isSearchable: this.canAccess(['filterBy', 'type']),
+            _choices: [
+              {_name: 'USER', _alias: 'User'},
+              {_name: 'CLIENT', _alias: 'Client'},
+              {_name: 'DEMO', _alias: 'Demo'},
+              {_name: 'TEST', _alias: 'Test'},
+            ]
           },
         ];
       default:
@@ -516,7 +547,21 @@ export class AdminProjectsComponent implements OnInit {
             _choices: this._operators && this._operators.length ? this._operators.map(oper => {
               return {_name: `${oper.firstName} ${oper.lastName}`, _alias: `${oper.firstName} ${oper.lastName}`};
             }) : []
-          }
+          },
+          {
+            _attrs: ['type'],
+            _name: 'Type',
+            _type: 'MULTI-CHOICES',
+            _isHidden: true,
+            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
+            _isSearchable: this.canAccess(['filterBy', 'type']),
+            _choices: [
+              {_name: 'USER', _alias: 'User'},
+              {_name: 'CLIENT', _alias: 'Client'},
+              {_name: 'DEMO', _alias: 'Demo'},
+              {_name: 'TEST', _alias: 'Test'},
+            ]
+          },
         ];
     }
   }
@@ -554,8 +599,39 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   private _getInnovations() {
+    if (this._config.fromCollection.model) {
+      this._searchMissionsByOther(this._config);
+    } else {
+      this._getProjects();
+    }
     this._getProjects();
   }
+
+  /**
+   * Sends a request to cross search innovations using external collections, e.g., innovations x missions or
+   * innovations x innovation card title
+   * @param config
+   * @private
+   */
+  private _searchMissionsByOther(config: Config) {
+    // Change here the fields. This will hit an aggregate on the back
+    /* Warning: Juan is experimenting with this encoding. The idea is to encode the query params (not a crypto thing)
+     * to avoid send thing in clear text. The endpoint in the back is prepared to parse this*/
+    this._innovationService.advancedSearch({
+      config: encodeURI(Buffer.from(JSON.stringify(config)).toString('base64'))
+    }).pipe(first()).subscribe(innovations => {
+      this._projects = innovations.result;
+      this._initProjects();
+      this._totalProjects = innovations._metadata.totalCount;
+      this._initializeTable();
+    }, err => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+  }
+  // private _getInnovations() {
+  //   this._getProjects();
+  // }
 
   get canImport(): boolean {
     return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
@@ -644,14 +720,19 @@ export class AdminProjectsComponent implements OnInit {
       if (project.innovationCards && project.innovationCards.length) {
         project.innovationCards = InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
-
       if (!!project.useCase) {
         project.mainObjective = project.useCase[this._currentLang];
       } else if (project.objective) {
         project.mainObjective = project.objective[this._currentLang];
       }
 
-      project.emailSent = (project.emailSent) ? 'Yes' : 'No';
+      if (project.stats && project.stats.received && project.stats.received > 0) {
+        project['emailSent'] = 'Yes';
+      } else {
+        project['emailSent'] = 'No';
+      }
+
+      // project.emailSent = (project.emailSent) ? 'Yes' : 'No';
       return project;
     });
   }
