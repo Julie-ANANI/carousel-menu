@@ -152,6 +152,16 @@
                 </ng-container>
                 <!-- /sortable text -->
 
+                <!-- tooltip for column -->
+                <ng-container *ngIf="hasTooltip(column)">
+                  <button class="button is-circled tooltip is-bottom is-sm"
+                          style="z-index: 9999"
+                          [attr.data-tooltip]="column._tooltip">
+                    <i class="fas fa-info"></i>
+                  </button>
+                </ng-container>
+                <!-- /tooltip for column -->
+
               </div>
             </th>
           </ng-container>

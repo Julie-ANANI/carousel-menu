@@ -719,6 +719,16 @@ export class TableComponent {
     return column._isSortable;
   }
 
+  /***
+   * This function returns if a column has a tooltip or not
+   * @param {Column} column
+   * @returns {boolean}
+   */
+  public hasTooltip(column: Column) {
+    return column._tooltip;
+  }
+
+
   /**
    * This function counts the number of days/months/years to some future date.
    * The format of the column must be like this:
