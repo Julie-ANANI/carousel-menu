@@ -90,6 +90,12 @@
       </div>
 
 
+      <div class="m-bottom-4 m-top-4 align-self-center">
+        <div class="label is-rounded is-draft">Total : {{total}}</div>
+        <div class="label is-rounded is-info">Unclassified : {{ notClassified }} ({{(notClassified / total * 100) | number: '1.0-2' }}%)</div>
+        <div class="label is-rounded is-success">Classified : {{ total - notClassified }} ({{((total - notClassified) / total * 100) | number: '1.0-2' }}%)</div>
+      </div>
+
       <!-- section seniority levels -->
       <section
         class="d-flex flex-d-column align-start m-bottom-10">
@@ -104,7 +110,7 @@
                 class="table" style="width: fit-content;margin: auto; max-width: 100%;">
                 <thead>
                 <tr>
-                  <th [ngStyle]="{'min-width': '40px'}">Total</th>
+                  <th class="bg-draft" [ngStyle]="{'min-width': '40px'}">Total</th>
                   <th *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels"
                       [ngStyle]="{'min-width': '40px'}">
                     <div [ngStyle]="{'width': 'fit-content'}">
@@ -115,10 +121,17 @@
                 </thead>
                 <tbody>
                 <tr>
-                  <td>{{seniorityLevelsClassification.total}}</td>
+                  <td class="text-bold">{{seniorityLevelsClassification.total - notClassified}}</td>
                   <td *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels"
                       [ngStyle]="{'min-width': '40px'}">
                     {{ seniorityLevel.count }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-bold">{{ ((seniorityLevelsClassification.total - notClassified)/ total * 100) | number: '1.0-2'}}%</td>
+                  <td *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels"
+                      [ngStyle]="{'min-width': '40px'}">
+                    {{ (seniorityLevel.count / seniorityLevelsClassification.total * 100) | number: '1.0-2' }}%
                   </td>
                 </tr>
                 </tbody>
@@ -132,7 +145,10 @@
 
       <!-- section jobs -->
       <section class="d-flex flex-d-column align-start">
-        <h2> Typology of jobs </h2>
+        <div class="d-flex align-center">
+          <h2> Typology of jobs </h2>
+          <div class="label is-rounded is-info is-sm m-no m-10">{{ jobsClassification && jobsClassification.categories.length }}</div>
+        </div>
         <ng-container *ngIf="jobsClassification && jobsClassification.categories; else noJobsData">
           <p class="text-sm">{{ jobsClassification.timestamp | date }}</p>
           <div *ngFor="let category of jobsClassification.categories"
@@ -154,10 +170,17 @@
                 </thead>
                 <tbody>
                 <tr>
-                  <td>{{category.count}}</td>
+                  <td class="text-bold">{{category.count}}</td>
                   <td *ngFor="let job of category.jobs"
                       [ngStyle]="{'min-width': '40px'}">
                     {{ job.count }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-bold">{{ (category.count / total * 100) | number: '1.0-2'}}%</td>
+                  <td *ngFor="let job of category.jobs"
+                      [ngStyle]="{'min-width': '40px'}">
+                    {{ (job.count / category.count * 100) | number: '1.0-2' }}%
                   </td>
                 </tr>
                 </tbody>

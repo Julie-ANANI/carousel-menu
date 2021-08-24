@@ -83,6 +83,17 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     return this._isLoading;
   }
 
+  private _total = 0;
+  private _notClassified = 0;
+
+  get total(): number {
+    return this._total;
+  }
+
+  get notClassified(): number {
+    return this._notClassified;
+  }
+
   ngOnInit() {
     this._initYears();
     Promise.all([this._getSeniorityLevelsClassification({}), this._getJobsClassification({})]).then((values) => {
@@ -135,7 +146,13 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
   private _getSeniorityLevelsClassification(config: any) {
     return new Promise(((resolve, reject) => {
       this._classificationService.seniorityLevels(config).subscribe((res: { classification: any }) => {
-        this._seniorityLevelsClassification = res.classification;
+
+        if (res.classification) {
+          this._seniorityLevelsClassification = res.classification;
+          this._total = this._seniorityLevelsClassification.total;
+          this._notClassified = (this._seniorityLevelsClassification.seniorityLevels.find(c => !c._id) || {count: 0}).count;
+        }
+
         resolve();
       }, (error) => {
         console.log(error);
