@@ -12,6 +12,7 @@ import {CommentListModule} from '../../../../../sidebars/components/comment-list
 import {SharedEditorsModule} from '../../../../../shared/components/shared-editors/shared-editors.module';
 import { CleanHtmlModule } from '../../../../../../pipe/cleanHtml/cleanHtml.module';
 import {PipeModule} from '../../../../../../pipe/pipe.module';
+import { ModalMediaModule } from '../../../../../utility/modals/modal-media/modal-media.module';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import {PipeModule} from '../../../../../../pipe/pipe.module';
     CommentListModule,
     CleanHtmlModule,
     PipeModule,
+    ModalMediaModule,
   ],
   declarations: [
     AdminProjectDescriptionComponent,

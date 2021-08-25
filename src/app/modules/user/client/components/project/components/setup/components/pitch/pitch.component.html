@@ -118,7 +118,9 @@
               <figure>
                 <img
                   [src]="mediaSrc(activeInnovCard.principalMedia)"
+                  (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia))"
                   alt=" "
+                  style="cursor: pointer"
                   class="img-responsive"
                   height="79.5"
                   width="120">
@@ -136,7 +138,9 @@
                   class="media-wrapper">
                   <figure>
                     <img
+                      style="cursor: pointer"
                       [src]="mediaSrc(media)"
+                      (click)="mediaToShow(mediaSrc(media))"
                       alt=" "
                       class="img-responsive"
                       height="79.5"
@@ -356,3 +360,7 @@
   </app-sidebar-project-pitch>
 </app-sidebar>
 <!-- /sidebar to edit innovation card field -->
+
+<!-- modal to view image -->
+<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
+<!-- /modal to view image-->
