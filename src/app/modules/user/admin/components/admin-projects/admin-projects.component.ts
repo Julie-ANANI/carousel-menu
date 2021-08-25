@@ -42,9 +42,6 @@ export class AdminProjectsComponent implements OnInit {
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
-    fromCollection: {
-      model: ''
-    },
     sort: '{"created":-1}'
   };
 
@@ -253,11 +250,10 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'created'])
           },
           {
-            _attrs: ['type'],
+            _attrs: ['mission.type'],
             _name: 'Type',
             _type: 'MULTI-CHOICES',
             _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
             _isSearchable: this.canAccess(['filterBy', 'type']),
             _choices: [
               {_name: 'USER', _alias: 'User'},
@@ -367,11 +363,10 @@ export class AdminProjectsComponent implements OnInit {
             }) : []
           },
           {
-            _attrs: ['type'],
+            _attrs: ['mission.type'],
             _name: 'Type',
             _type: 'MULTI-CHOICES',
             _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
             _isSearchable: this.canAccess(['filterBy', 'type']),
             _choices: [
               {_name: 'USER', _alias: 'User'},
@@ -572,11 +567,10 @@ export class AdminProjectsComponent implements OnInit {
             }) : []
           },
           {
-            _attrs: ['type'],
+            _attrs: ['mission.type'],
             _name: 'Type',
             _type: 'MULTI-CHOICES',
             _isHidden: true,
-            _searchConfig: {_collection: 'mission', _searchKey: 'type'},
             _isSearchable: this.canAccess(['filterBy', 'type']),
             _choices: [
               {_name: 'USER', _alias: 'User'},
@@ -600,10 +594,7 @@ export class AdminProjectsComponent implements OnInit {
           fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
           limit: '10',
           offset: '0',
-          fromCollection: {
-            model: 'mission',
-            type: 'CLIENT'
-          },
+          'mission.type': 'CLIENT',
           search: '{}',
           sort: '{"created":-1}',
         };
@@ -626,35 +617,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   private _getInnovations() {
-    if (this._config.fromCollection.model) {
-      this._searchMissionsByOther(this._config);
-    } else {
-      this._getProjects();
-    }
     this._getProjects();
-  }
-
-  /**
-   * Sends a request to cross search innovations using external collections, e.g., innovations x missions or
-   * innovations x innovation card title
-   * @param config
-   * @private
-   */
-  private _searchMissionsByOther(config: Config) {
-    // Change here the fields. This will hit an aggregate on the back
-    /* Warning: Juan is experimenting with this encoding. The idea is to encode the query params (not a crypto thing)
-     * to avoid send thing in clear text. The endpoint in the back is prepared to parse this*/
-    this._innovationService.advancedSearch({
-      config: encodeURI(Buffer.from(JSON.stringify(config)).toString('base64'))
-    }).pipe(first()).subscribe(innovations => {
-      this._projects = innovations.result;
-      this._initProjects();
-      this._totalProjects = innovations._metadata.totalCount;
-      this._initializeTable();
-    }, err => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
   }
 
   get canImport(): boolean {
