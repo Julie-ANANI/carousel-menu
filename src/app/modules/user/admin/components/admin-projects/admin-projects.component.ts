@@ -38,7 +38,7 @@ export class AdminProjectsComponent implements OnInit {
   private _table: Table = <Table>{};
 
   private _config: Config = {
-    fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
+    fields: '',
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
     search: '{}',
