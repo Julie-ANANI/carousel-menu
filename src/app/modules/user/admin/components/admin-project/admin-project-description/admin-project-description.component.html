@@ -521,6 +521,7 @@
           <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
           && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')">
             <img
+              style="cursor: pointer"
               (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
               [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE')"
               alt=" "
@@ -567,6 +568,7 @@
               <!-- if type === 'PHOTO' -->
               <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
                 <img
+                  style="cursor: pointer"
                   (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
