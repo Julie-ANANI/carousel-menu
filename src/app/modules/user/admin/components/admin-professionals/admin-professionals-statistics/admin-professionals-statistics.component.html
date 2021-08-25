@@ -92,8 +92,8 @@
 
       <div class="m-bottom-4 m-top-4 align-self-center">
         <div class="label is-rounded is-draft">Total : {{total}}</div>
-        <div class="label is-rounded is-info">Unclassified : {{ notClassified }} ({{(notClassified / total * 100) | number: '1.0-2' }}%)</div>
-        <div class="label is-rounded is-success">Classified : {{ total - notClassified }} ({{((total - notClassified) / total * 100) | number: '1.0-2' }}%)</div>
+        <div class="label is-rounded is-info">Unclassified : {{ notClassified }} ({{(notClassified / total * 100) | number: '1.0-0' }}%)</div>
+        <div class="label is-rounded is-success">Classified : {{ total - notClassified }} ({{((total - notClassified) / total * 100) | number: '1.0-0' }}%)</div>
       </div>
 
       <!-- section seniority levels -->
@@ -128,10 +128,10 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="text-bold">{{ ((seniorityLevelsClassification.total - notClassified)/ total * 100) | number: '1.0-2'}}%</td>
+                  <td class="text-bold">{{ ((seniorityLevelsClassification.total - notClassified)/ total * 100) | number: '1.0-0'}}%</td>
                   <td *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels"
                       [ngStyle]="{'min-width': '40px'}">
-                    {{ (seniorityLevel.count / seniorityLevelsClassification.total * 100) | number: '1.0-2' }}%
+                    {{ (seniorityLevel.count / seniorityLevelsClassification.total * 100) | number: '1.0-0' }}%
                   </td>
                 </tr>
                 </tbody>
@@ -177,10 +177,10 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="text-bold">{{ (category.count / total * 100) | number: '1.0-2'}}%</td>
+                  <td class="text-bold">{{ (category.count / total * 100) | number: '1.0-0'}}%</td>
                   <td *ngFor="let job of category.jobs"
                       [ngStyle]="{'min-width': '40px'}">
-                    {{ (job.count / category.count * 100) | number: '1.0-2' }}%
+                    {{ (job.count / category.count * 100) | number: '1.0-0' }}%
                   </td>
                 </tr>
                 </tbody>

@@ -166,6 +166,15 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     return new Promise(((resolve, reject) => {
       this._classificationService.categoriesAndJobs(config).subscribe((res: { classification: any }) => {
         this._jobsClassification = res.classification;
+        this._jobsClassification.categories = this._jobsClassification.categories.sort((a, b) => {
+          const aLabel = (a.label || {en: 'Not classified yet'}).en;
+          const bLabel = (b.label || {en: 'Not classified yet'}).en;
+          return aLabel.localeCompare(bLabel);
+        });
+
+        this._jobsClassification.categories.forEach(category => {
+          category.jobs = category.jobs.sort((a, b) => a.label.en.localeCompare(b.label.en));
+        });
         resolve();
       }, (error) => {
         console.log(error);
