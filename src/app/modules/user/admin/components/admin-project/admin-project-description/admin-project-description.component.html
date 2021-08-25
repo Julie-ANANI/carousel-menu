@@ -521,6 +521,7 @@
           <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
           && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')">
             <img
+              (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
               [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE')"
               alt=" "
               class="img-responsive"
@@ -566,6 +567,7 @@
               <!-- if type === 'PHOTO' -->
               <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
                 <img
+                  (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
                   class="img-responsive"
@@ -717,3 +719,7 @@
 
 </app-utility-modal-empty>
 <!-- /modal to add New section | Delete section -->
+
+<!-- modal to view image -->
+<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
+<!-- /modal to view image-->

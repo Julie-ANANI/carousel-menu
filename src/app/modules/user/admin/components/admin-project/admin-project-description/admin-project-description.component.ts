@@ -67,6 +67,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _isUploadingVideo = false;
 
+  private _modalMedia = false;
+
+  private _selectedMedia: string;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
               private _etherpadFrontService: EtherpadFrontService,
@@ -472,6 +476,20 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this.activeInnovCard.lang;
   }
 
+
+  get modalMedia(): boolean {
+    return this._modalMedia;
+  }
+
+  set modalMedia(value: boolean) {
+    this._modalMedia = value;
+  }
+
+
+  get selectedMedia(): string {
+    return this._selectedMedia;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
@@ -479,5 +497,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   padPreviewModeOnChange(title: string) {
     this._togglePreviewMode[title] = !this._togglePreviewMode[title];
+  }
+
+  mediaToShow(mediaSrc: any) {
+    this._modalMedia = true;
+    this._selectedMedia = mediaSrc;
   }
 }
