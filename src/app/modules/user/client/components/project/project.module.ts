@@ -39,6 +39,7 @@ import {MarketTestMethodologyModule} from '../market-test-methodology/market-tes
 import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
 import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
 import {MarketTestObjectivesComplementaryModule} from '../market-test-objectives-complementary/market-test-objectives-complementary.module';
+import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-media.module';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import {MarketTestObjectivesComplementaryModule} from '../market-test-objectives
     MarketTestMethodologyModule,
     MarketTestObjectivesModule,
     DatePickerModule,
-    MarketTestObjectivesComplementaryModule
+    MarketTestObjectivesComplementaryModule,
+    ModalMediaModule
   ],
   declarations: [
     ProjectComponent,
