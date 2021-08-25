@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
-import {PitchHelpFields} from '../../../../models/static-data/project-pitch';
-import {CommonService} from '../../../../services/common/common.service';
-import {Media, Video} from '../../../../models/media';
-import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
-import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
-import {CollaborativeComment} from '../../../../models/collaborative-comment';
-import {picto} from '../../../../models/static-data/picto';
-import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {SocketService} from '../../../../services/socket/socket.service';
-import {EtherpadFrontService} from '../../../../services/etherpad/etherpad-front.service';
-import {MediaFrontService} from '../../../../services/media/media-front.service';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { PitchHelpFields } from '../../../../models/static-data/project-pitch';
+import { CommonService } from '../../../../services/common/common.service';
+import { Media, Video } from '../../../../models/media';
+import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
+import { CardComment, CardSectionTypes } from '../../../../models/innov-card';
+import { CollaborativeComment } from '../../../../models/collaborative-comment';
+import { picto } from '../../../../models/static-data/picto';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { SocketService } from '../../../../services/socket/socket.service';
+import { EtherpadFrontService } from '../../../../services/etherpad/etherpad-front.service';
+import { MediaFrontService } from '../../../../services/media/media-front.service';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -88,7 +88,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | 'CONTEXT'
   @Input() type: CardSectionTypes = '';
 
-  @Output() saveProject: EventEmitter<{type: string, content: any}> = new EventEmitter<{type: string, content: any}>();
+  @Output() saveProject: EventEmitter<{ type: string, content: any }> = new EventEmitter<{ type: string, content: any }>();
 
   @Output() isSavingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -116,9 +116,14 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
+  private _modalMedia = false;
+
+  private _selectedMedia: string;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _etherpadFrontService: EtherpadFrontService,
-              private _socketService: SocketService) { }
+              private _socketService: SocketService) {
+  }
 
   ngOnInit(): void {
     // Listen on save from another user
@@ -391,8 +396,27 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
     return this._padID;
   }
 
+
+  get modalMedia(): boolean {
+    return this._modalMedia;
+  }
+
+  set modalMedia(value: boolean) {
+    this._modalMedia = value;
+  }
+
+
+  get selectedMedia(): string {
+    return this._selectedMedia;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+  }
+
+  mediaToShow(mediaSrc: any) {
+    this._modalMedia = true;
+    this._selectedMedia = mediaSrc;
   }
 }

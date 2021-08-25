@@ -91,6 +91,8 @@
       <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
         <img
           [src]="mediaSrc(media, 'IMAGE')"
+          style="cursor: pointer"
+          (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
           alt=" "
           class="img-responsive"
           height="159"
@@ -199,3 +201,7 @@
   <!-- /example -->
 
 </div>
+
+<!-- modal to view image -->
+<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
+<!-- /modal to view image-->
