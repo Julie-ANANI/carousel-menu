@@ -254,7 +254,6 @@ export class SharedSearchHistoryComponent implements OnInit {
           _attrs: ['pros'],
           _name: 'Pros',
           _type: 'TEXT',
-          _tooltip: 'The module is identifying' + '\n' + 'pros thanks to google scraping',
           _isHidden: !this.canAccess(['tableColumns', 'pros'])
         },
         {
@@ -276,6 +275,7 @@ export class SharedSearchHistoryComponent implements OnInit {
           _name: 'Pro identification',
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'status']),
+          _tooltip: 'The module is identifying' + '\n' + 'pros thanks to google scraping',
           _choices: [
             {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
             {_name: 'PROCESSING', _alias: 'Processing', _class: 'label is-progress'},
