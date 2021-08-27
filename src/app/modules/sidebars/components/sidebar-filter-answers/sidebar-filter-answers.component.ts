@@ -216,11 +216,16 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     const _find = this._sharedFiltersList.find((filter) =>
       filter.name.toLowerCase() === this._filterName.toLowerCase()
     );
+    console.log('registerNewFilter - component');
+    console.log(_find);
+    console.log(this.answers);
     if (!_find) {
       const _data = {
         name: this._filterName,
         answers: this._filterService.filter(this.answers).map((answer) => answer._id)
       };
+      console.log('_data - component');
+      console.log(_data);
       this._innovationService.saveFilter(this._innovation._id, _data).pipe(first()).subscribe((res) => {
         this._sharedFiltersList.push(res);
         this._filterName = '';
@@ -323,11 +328,16 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   }
 
   public loadFilter(name: string) {
+    console.log('load filter- component');
+    console.log(name);
+    console.log(this._sharedFiltersList);
     const _find = this._activatedCustomFilters.find((filter) => filter.toLowerCase() === name.toLowerCase());
+    console.log(_find);
     if (!_find) {
       this._innovationService.getFilter(this._innovation._id, encodeURIComponent(name))
         .pipe(first()).subscribe((result) => {
           if (result) {
+            console.log(result);
             this._filterService.addFilter({
               status: 'CUSTOM',
               questionId: name,

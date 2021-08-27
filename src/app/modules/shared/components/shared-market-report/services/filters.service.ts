@@ -30,15 +30,22 @@ export class FilterService {
   }
 
   public filter(answers: Array<Answer>): Array<Answer> {
+    console.log('filter service');
+    console.log(answers);
     let filteredAnswers = answers;
+    console.log(this._filters);
     Object.keys(this._filters).forEach((filterKey) => {
+      console.log('filter key filter service: ' + filterKey);
       const filter = this._filters[filterKey];
+      console.log(filter);
       switch (filter.status) {
         case 'TAG':
           if (filter.questionId === 'tags') {
             filteredAnswers = filteredAnswers.filter((answer) => {
               return answer.tags.some((t: Tag) => filter.value[t._id]);
             });
+            console.log('after filter tags filter service');
+            console.log(filteredAnswers);
           } else {
             filteredAnswers = filteredAnswers.filter((answer) => {
               return Array.isArray(answer.answerTags[filter.questionId])
@@ -72,6 +79,8 @@ export class FilterService {
           filteredAnswers = filteredAnswers.filter((answer) => {
             return filter.value.indexOf(answer._id) !== -1;
           });
+          console.log('after filter tags custom filter service');
+          console.log(filteredAnswers);
           break;
         case 'LIST':
           filteredAnswers = filteredAnswers.filter((answer) => {
@@ -84,8 +93,12 @@ export class FilterService {
           break;
         case 'RADIO':
           filteredAnswers = filteredAnswers.filter((answer) => {
+            console.log('answer.answers filter service');
+            console.log(answer.answers);
+            console.log(filter.value);
             return filter.value[answer.answers[filter.questionId]];
           });
+          console.log(filteredAnswers);
           break;
         default:
           console.log(`Unknown filter type: ${filter.status}.`);
