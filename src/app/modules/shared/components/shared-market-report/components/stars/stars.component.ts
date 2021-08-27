@@ -38,7 +38,7 @@ export class StarsComponent implements OnInit, OnDestroy {
   }
 
   public noteLabel(note: any): string {
-    return MissionQuestionService.label(note, 'label', this._currentLang);
+    return MissionQuestionService.label(note, 'label', this.reportingLang);
   }
 
   get currentLang(): string {
