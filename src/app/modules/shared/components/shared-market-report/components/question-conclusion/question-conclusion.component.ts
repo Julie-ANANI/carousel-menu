@@ -182,7 +182,7 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   get tags(): Array<Tag> {
-    return this._dataService.answersTagsLists[this._question._id];
+    return this._dataService.answersTagsLists[this._question.identifier];
   }
 
   get isMainDomain(): boolean {

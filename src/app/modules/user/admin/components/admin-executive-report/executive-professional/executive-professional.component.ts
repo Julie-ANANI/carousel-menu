@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { ExecutiveProfessional } from '../../../../../../models/executive-report';
-import { CommonService } from '../../../../../../services/common/common.service';
-import { SnippetService } from '../../../../../../services/snippet/snippet.service';
-import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
-import { Answer } from '../../../../../../models/answer';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID} from '@angular/core';
+import {ExecutiveProfessional} from '../../../../../../models/executive-report';
+import {CommonService} from '../../../../../../services/common/common.service';
+import {SnippetService} from '../../../../../../services/snippet/snippet.service';
+import {ExecutiveReportFrontService} from '../../../../../../services/executive-report/executive-report-front.service';
+import {Answer} from '../../../../../../models/answer';
+import {Professional} from '../../../../../../models/professional';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class ExecutiveProfessionalComponent implements OnInit {
 
   private _professionalAbstractColor = '';
 
-  private _top4Answers: Array<Answer> = [<Answer>{}, <Answer>{}, <Answer>{}, <Answer>{}];
+  private _top4Pros: Array<Professional> = [<Professional>{}, <Professional>{}, <Professional>{}, <Professional>{}];
 
   private _allAnswers: Array<Answer> = [];
 
@@ -55,14 +56,21 @@ export class ExecutiveProfessionalComponent implements OnInit {
   }
 
   private _sortAnswers() {
-    this._top4Answers = this._config.list.map(answerId => {
-      return this._allAnswers.find(answer => answer._id === answerId);
-    });
-    this._allAnswers.sort((a, b) => {
-      const nameA = (a.professional.firstName + a.professional.lastName).toLowerCase();
-      const nameB = (b.professional.firstName + b.professional.lastName).toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
+    if (this._allAnswers && this._allAnswers.length) {
+      for (let i = 0; i < this._config.list.length; i++) {
+        const proId = this._config.list[i];
+        const topAnswer = this._allAnswers.find(answer => answer.professional._id === proId);
+        if (topAnswer) {
+          this._top4Pros[i] = topAnswer.professional;
+        }
+      }
+
+      this._allAnswers.sort((a, b) => {
+        const nameA = (a.professional.firstName + a.professional.lastName).toLowerCase();
+        const nameB = (b.professional.firstName + b.professional.lastName).toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    }
   }
   public textColor() {
     this._professionalAbstractColor = CommonService.getLimitColor(this._config.abstract, 258);
@@ -88,10 +96,10 @@ export class ExecutiveProfessionalComponent implements OnInit {
 
   public selectAnswer(event: Event, index: number) {
     const answerId = event && event.target && (event.target as HTMLSelectElement).value;
-    this._top4Answers[index] = this._allAnswers.find(answer => answer._id === answerId);
-    this._top4Answers.forEach((answer, i) => {
-      if (answer) {
-        this.config.list[i] = answer._id;
+    this._top4Pros[index] = this._allAnswers.find(answer => answer._id === answerId).professional;
+    this._top4Pros.forEach((professional, i) => {
+      if (professional) {
+        this.config.list[i] = professional._id;
       }
     });
     this.emitChanges();
@@ -105,8 +113,8 @@ export class ExecutiveProfessionalComponent implements OnInit {
     return this._professionalAbstractColor;
   }
 
-  get top4Answers(): Array<Answer> {
-    return this._top4Answers;
+  get top4Pros(): Array<Professional> {
+    return this._top4Pros;
   }
 
   get allAnswers(): Array<Answer> {
