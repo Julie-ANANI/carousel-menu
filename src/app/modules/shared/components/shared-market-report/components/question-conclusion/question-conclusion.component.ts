@@ -136,6 +136,7 @@ export class QuestionConclusionComponent implements OnInit {
   chartSectionColorChanged(event: {index: number, color: string}) {
     if (this.hasMissionTemplate) {
       this._missionQuestionService.changeQuestionOption(event.color, <MissionQuestion>this._question, event.index, 'color');
+      this._emit();
     } else {
       this._question.options[event.index].color = event.color;
       this._emit();
