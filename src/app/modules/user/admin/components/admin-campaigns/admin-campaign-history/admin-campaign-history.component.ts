@@ -8,10 +8,9 @@ import {StatsInterface} from '../../admin-stats-banner/admin-stats-banner.compon
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {Config} from '../../../../../../models/config';
-import {SearchService} from '../../../../../../services/search/search.service';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {CommonService} from '../../../../../../services/common/common.service';
+import {CampaignService} from '../../../../../../services/campaign/campaign.service';
 
 export interface ProMailsStats {
   uniqueGoodEmails: number;
@@ -37,21 +36,13 @@ export interface ProMailsIndicators {
 
 export class AdminCampaignHistoryComponent implements OnInit {
 
-  private _configStats: Config = {
-    fields: 'created status campaign innovation motherRequest totalResults metadata results',
-    limit: '0',
-    offset: '0',
-    search: '{}',
-    sort: '',
-  };
-
   private _indicators: ProMailsIndicators;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
               private _rolesFrontService: RolesFrontService,
               private _statsReferentsService: StatsReferentsService,
-              private _searchService: SearchService,
+              private _campaignService: CampaignService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
 
@@ -91,7 +82,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
         this._statsReferentsService.get().subscribe((referents) => {
           this._referents = referents.campaigns;
-          this._stats = this.campaign.stats.pro;
+          this._stats = (this.campaign.stats || {pro: {}}).pro;
           this.setIndicators();
           this._setStats();
         });
@@ -104,8 +95,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
   }
 
   public loadStats() {
-    this._configStats.campaign = this.campaign._id;
-    this._searchService.getRequestsStats(this._configStats).pipe(first()).subscribe((result: any) => {
+    this._campaignService.getUpdatedHistoryStats(this.campaign._id).pipe(first()).subscribe((result: any) => {
       if (result.stats) {
         this._stats = result.stats;
         this.setIndicators();

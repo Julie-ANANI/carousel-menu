@@ -48,6 +48,10 @@ export class CampaignService {
     return this._http.put(`/campaign/${campaignId}/stats`, {});
   }
 
+  public getUpdatedHistoryStats(campaignId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/historyStats`);
+  }
+
   public messagesStats(campaignId: string): Observable<Array<Batch>> {
     return this._http.get<Array<Batch>>(`/campaign/${campaignId}/messagesStats`);
   }
