@@ -168,6 +168,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _currentSectionComments: CollaborativeComment[] = [];
 
+  private _modalMedia = false;
+
+  private _selectedMedia: string;
+
   get currentSectionComments(): any[] {
     return this._currentSectionComments;
   }
@@ -648,4 +652,22 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._isUploadingVideo;
   }
 
+
+  get selectedMedia(): string {
+    return this._selectedMedia;
+  }
+
+
+  set modalMedia(value: boolean) {
+    this._modalMedia = value;
+  }
+
+  get modalMedia(): boolean {
+    return this._modalMedia;
+  }
+
+  public mediaToShow(src: string) {
+    this._modalMedia = true;
+    this._selectedMedia = src;
+  }
 }

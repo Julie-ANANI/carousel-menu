@@ -14,22 +14,24 @@ import {CommentListModule} from '../comment-list/comment-list.module';
 import {SharedEditorsModule} from '../../../shared/components/shared-editors/shared-editors.module';
 import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 import {PipeModule} from '../../../../pipe/pipe.module';
+import { ModalMediaModule } from '../../../utility/modals/modal-media/modal-media.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        SidebarModule,
-        FormsModule,
-        SharedEditorTinymceModule,
-        SharedUploadZonePhotoModule,
-        SharedUploadZoneVideoModule,
-        CommentCardModule,
-        CommentListModule,
-        SharedEditorsModule,
-        CleanHtmlModule,
-        PipeModule,
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    SidebarModule,
+    FormsModule,
+    SharedEditorTinymceModule,
+    SharedUploadZonePhotoModule,
+    SharedUploadZoneVideoModule,
+    CommentCardModule,
+    CommentListModule,
+    SharedEditorsModule,
+    CleanHtmlModule,
+    PipeModule,
+    ModalMediaModule,
+  ],
   declarations: [
     SidebarProjectPitchComponent
   ],

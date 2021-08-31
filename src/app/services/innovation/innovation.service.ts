@@ -36,6 +36,10 @@ export class InnovationService {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
   }
 
+  public getMarketTests(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
+    return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/queryable', {params: params});
+  }
+
   public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {
     return this._http.post<InnovCard>('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
   }
