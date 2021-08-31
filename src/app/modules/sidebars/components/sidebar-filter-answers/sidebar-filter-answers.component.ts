@@ -109,6 +109,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _picto: Picto = picto;
 
+  @Output() updateAnswers = new EventEmitter();
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -122,6 +124,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
       this._filterNumber = this.answers.length;
       this._professionalsTags = AnswerFrontService.tagsOccurrence(this.answers);
       this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+        this.updateAnswers.emit(this._filterService.filter(this.answers));
         this._filterNumber = this._filterService.filter(this.answers).length;
       });
     }
