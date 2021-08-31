@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+
+export interface SearchModule {
+  option: string;
+  context: string;
+}
 
 @Component({
   templateUrl: './admin-campaign-search.component.html',
@@ -14,6 +19,26 @@ export class AdminCampaignSearchComponent implements OnInit {
   private _campaign: Campaign = <Campaign>{};
 
   private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'search'];
+
+  private _searchModules: Array<SearchModule> = [
+    {
+      option: 'scraping',
+      context: 'use the scraping module',
+    },
+    {
+      option: 'research',
+      context: 'use the research module',
+    },
+    {
+      option: 'import',
+      context: 'import a list of pros',
+    }
+  ];
+
+  private _moduleSelected: SearchModule = {
+    option: 'scraping',
+    context: 'Use the scraping module',
+  };
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
@@ -42,4 +67,19 @@ export class AdminCampaignSearchComponent implements OnInit {
     return this._accessPath;
   }
 
+  get moduleSelected(): SearchModule {
+    return this._moduleSelected;
+  }
+
+  set moduleSelected(value: SearchModule) {
+    this._moduleSelected = value;
+  }
+
+  get searchModules(): Array<SearchModule> {
+    return this._searchModules;
+  }
+
+  moduleOnChange() {
+    console.log(this._moduleSelected);
+  }
 }

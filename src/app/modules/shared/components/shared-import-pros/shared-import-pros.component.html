@@ -1,0 +1,32 @@
+<div class="w-full" id="shared-import-pros">
+
+  <div class="form-group m-bottom-30">
+    <label class="form-label" for="shared-search-modal-name">
+      Name to be given to the request
+    </label>
+    <input
+      [(ngModel)]="importRequestKeywords"
+      class="form-input"
+      id="shared-search-modal-name"
+      placeholder="Give a name to the import file"
+      type="text">
+  </div>
+
+  <!-- import button -->
+  <div class="text-center p-bottom-30">
+    <label class="button is-primary is-sm is-outlined">
+      <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
+      <i class="fas fa-file-import icon-left"></i> Import pros
+    </label>
+  </div>
+  <!-- /import button -->
+
+  <p class="text-center text-sm">The file must use these <b>exact names</b> for the columns:
+    <b>First Name UMI, Last Name UMI, Company UMI, Country UMI</b>
+    , Language, Email UMI, emailConfidence, Linkedin,
+    Company Site, Job UMI</p>
+
+  <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
+    not matter</p>
+
+</div>
