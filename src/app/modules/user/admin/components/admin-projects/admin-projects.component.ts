@@ -712,7 +712,7 @@ export class AdminProjectsComponent implements OnInit {
         project.mainObjective = project.objective[this._currentLang];
       }
 
-      if (project.stats && project.stats.received && project.stats.received > 0) {
+      if (project.emailSent ) {
         project['emailSent'] = 'Yes';
       } else {
         project['emailSent'] = 'No';
