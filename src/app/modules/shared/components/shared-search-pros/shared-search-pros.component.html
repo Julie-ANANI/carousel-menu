@@ -1,10 +1,11 @@
-<div id="shared-search-pros">
+<div id="shared-search-pros" class="w-full">
 
   <!-- search wrapper -->
   <div *ngIf="canAccess(['launch', 'cat'])" class="search-wrapper">
 
     <!-- heading -->
     <div class="heading-wrapper">
+
 
       <h2 class="title-secondary">Rocket Testing</h2>
 
@@ -46,6 +47,12 @@
 
     </div>
     <!-- /heading -->
+
+    <!-- request -->
+    <div class="">
+
+    </div>
+    <!-- /request -->
 
     <!-- input -->
     <div class="input-wrapper">
@@ -179,20 +186,15 @@
   <!-- search wrapper -->
   <div *ngIf="canAccess(['launch', 'search'])" class="search-wrapper">
 
-    <!-- heading -->
-    <div class="heading-wrapper">
-      <h2 class="title-secondary">Rocket Launching</h2>
-      <span
-        (click)="onClickSettings()"
-        *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])"
-        class="text-link text-sm">
-          Settings
-        </span>
+    <!-- requests -->
+    <div class="w-full d-flex align-center">
+      <span class="text-pre text-15 text-bold">Requests</span>
+      <div class="line m-left-4"></div>
     </div>
-    <!-- /heading -->
+    <!-- /requests -->
 
     <!-- input -->
-    <div class="input-wrapper">
+    <div class="input-wrapper w-half">
 
       <div class="form-group">
         <label>
@@ -235,6 +237,40 @@
 
     </div>
     <!-- /input -->
+
+    <!-- settings -->
+    <div class="w-full d-flex align-center" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+      <span class="text-pre text-15 text-bold">Settings</span>
+      <div class="line m-left-4"></div>
+    </div>
+    <!-- /settings -->
+
+    <div class="settings w-full">
+      <app-shared-search-settings
+       (paramsChange)="updateSettings($event)"
+       [isEditable]="canAccess(['edit', 'settings'])"
+       [params]="params">
+      </app-shared-search-settings>
+    </div>
+
+    <!-- geographic targeting -->
+    <div class="w-full d-flex align-center" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+      <span class="text-pre text-15 text-bold">Geographic targeting</span>
+      <div class="line m-left-4"></div>
+    </div>
+    <!-- /geographic targeting  -->
+
+    <div class="geographic-targeting w-full">
+      <!-- targeting -->
+      <div class="p-30">
+        <app-shared-targeting-world
+          [(geography)]="geography"
+          [isShowSearch]="true"
+          [isEditable]="canAccess(['edit', 'settings'])">
+        </app-shared-targeting-world>
+      </div>
+      <!-- /targeting -->
+    </div>
 
   </div>
   <!-- /search wrapper -->

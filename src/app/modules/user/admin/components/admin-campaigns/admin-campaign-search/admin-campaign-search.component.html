@@ -20,7 +20,7 @@
 
           <!-- module research -->
           <ng-container *ngSwitchCase="'research'">
-            <div class="module-search module p-20 m-bottom-25">
+            <div class="module-search w-full p-20 m-bottom-25">
               <app-shared-search-pros
                 [campaign]="campaign"
                 [accessPath]="accessPath">
@@ -31,7 +31,7 @@
 
           <!-- module import -->
           <ng-container *ngSwitchCase="'import'">
-            <div class="module-import module p-20 m-bottom-25 m-auto" style="width: 80%">
+            <div class="module-import p-20 m-bottom-25 m-auto" style="width: 80%">
               <app-shared-import-pros [campaign]="campaign">
               </app-shared-import-pros>
             </div>
@@ -40,7 +40,7 @@
 
           <!-- module default - scraping -->
           <ng-container *ngSwitchDefault>
-            <div class="module-scraping module p-20 m-bottom-25">
+            <div class="module-scraping w-full p-20 m-bottom-25">
               <app-shared-scraping>
               </app-shared-scraping>
             </div>

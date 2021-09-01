@@ -522,6 +522,11 @@ export class SharedSearchProsComponent implements OnInit {
     return this._geography;
   }
 
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
+  }
+
   get campaign(): Campaign {
     return this._campaign;
   }

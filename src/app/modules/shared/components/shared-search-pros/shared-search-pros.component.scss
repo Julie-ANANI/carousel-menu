@@ -34,6 +34,19 @@
 
     }
 
+    .text-pre{
+      white-space: pre;
+    }
+
+
+    .line {
+      width: 100%;
+      height: 0;
+      border: 1px solid #C4C4C4;
+      margin: 3px;
+      display:inline-block;
+    }
+
     .heading-wrapper {
       display: flex;
       align-items: center;
