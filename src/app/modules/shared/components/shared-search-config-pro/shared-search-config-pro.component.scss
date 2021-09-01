@@ -1,0 +1,39 @@
+@import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
+
+.pro-select-wrapper {
+  height: 40px;
+  background-color: #2E6188;
+  border-radius: 8px;
+}
+
+.job-select-wrapper{
+  border-radius: 8px;
+  height: 40px;
+}
+
+.button-checker {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .state-full-check {
+    border: 10px solid #2fff9e;
+  }
+
+  .state-partially-check {
+    border: 10px solid antiquewhite;
+  }
+
+  .state-exclude {
+    border: 10px solid $alert-color;
+  }
+
+  .state-none-check {
+    border: 10px solid antiquewhite;
+  }
+}
+

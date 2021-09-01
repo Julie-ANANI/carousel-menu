@@ -35,6 +35,8 @@ export class AdminCampaignSearchComponent implements OnInit {
     }
   ];
 
+  private _isLoading = false;
+
   private _moduleSelected: SearchModule = {
     option: 'scraping',
     context: 'Use the scraping module',
@@ -42,7 +44,8 @@ export class AdminCampaignSearchComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
-              private _rolesFrontService: RolesFrontService) { }
+              private _rolesFrontService: RolesFrontService) {
+  }
 
   ngOnInit(): void {
     this._activatedRoute.data.subscribe((data) => {
@@ -71,6 +74,11 @@ export class AdminCampaignSearchComponent implements OnInit {
     return this._moduleSelected;
   }
 
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
   set moduleSelected(value: SearchModule) {
     this._moduleSelected = value;
   }
@@ -80,6 +88,6 @@ export class AdminCampaignSearchComponent implements OnInit {
   }
 
   moduleOnChange() {
-    console.log(this._moduleSelected);
+    this._isLoading = true;
   }
 }

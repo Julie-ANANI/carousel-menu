@@ -247,9 +247,9 @@
 
     <div class="settings w-full">
       <app-shared-search-settings
-       (paramsChange)="updateSettings($event)"
-       [isEditable]="canAccess(['edit', 'settings'])"
-       [params]="params">
+        (paramsChange)="updateSettings($event)"
+        [isEditable]="canAccess(['edit', 'settings'])"
+        [params]="params">
       </app-shared-search-settings>
     </div>
 
@@ -271,6 +271,20 @@
       </div>
       <!-- /targeting -->
     </div>
+
+    <!-- professional targeting -->
+    <div class="w-full d-flex align-center">
+      <span class="text-pre text-15 text-bold">Professional targeting</span>
+      <div class="line m-left-4"></div>
+    </div>
+
+    <div class="w-full">
+      <app-shared-professional-targeting
+        [campaign]="campaign">
+      </app-shared-professional-targeting>
+
+    </div>
+    <!-- /professional targeting  -->
 
   </div>
   <!-- /search wrapper -->
@@ -327,7 +341,8 @@
       , Language, Email UMI, emailConfidence, Linkedin,
       Company Site, Job UMI</p>
 
-    <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
+    <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns
+      does
       not matter</p>
 
   </section>

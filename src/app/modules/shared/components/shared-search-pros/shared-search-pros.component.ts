@@ -73,7 +73,8 @@ export class SharedSearchProsComponent implements OnInit {
     private _rolesFrontService: RolesFrontService,
     private _authService: AuthService,
     private _localStorageService: LocalStorageService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -153,7 +154,7 @@ export class SharedSearchProsComponent implements OnInit {
       }
     }
 
-    this._catResult = { duplicate_status: 'ok' };
+    this._catResult = {duplicate_status: 'ok'};
     this.estimateNumberOfGoogleRequests();
     this._suggestions = [];
   }
@@ -229,7 +230,7 @@ export class SharedSearchProsComponent implements OnInit {
    * delete the previous Computer Aided Targeting result
    */
   public onReset() {
-    this._catResult = { duplicate_status: 'ok' };
+    this._catResult = {duplicate_status: 'ok'};
     this._suggestions = [];
     this.estimateNumberOfGoogleRequests();
   }
@@ -256,7 +257,8 @@ export class SharedSearchProsComponent implements OnInit {
     this._searchService
       .updateCatStats(this._params.catKeywords.split('\n').length)
       .pipe(first())
-      .subscribe((response: any) => {});
+      .subscribe((response: any) => {
+      });
 
     this._searchService
       .computerAidedTargeting(this._params.catKeywords.split('\n'))
@@ -370,7 +372,7 @@ export class SharedSearchProsComponent implements OnInit {
 
     const searchParams = this._params;
 
-    searchParams.metadata = { user: this._authService.getUserInfo() };
+    searchParams.metadata = {user: this._authService.getUserInfo()};
 
     searchParams.websites = Object.keys(searchParams.websites)
       .filter((key) => searchParams.websites[key])
@@ -401,16 +403,16 @@ export class SharedSearchProsComponent implements OnInit {
     return this._catQuota > 50
       ? 'bg-success'
       : this._catQuota > 10 && this._catQuota <= 50
-      ? 'bg-progress'
-      : 'bg-alert';
+        ? 'bg-progress'
+        : 'bg-alert';
   }
 
   public getCircleClass(): string {
     return this._googleQuota > 10000
       ? 'bg-success'
       : this._googleQuota < 10000 && this._googleQuota > 5000
-      ? 'bg-progress'
-      : 'bg-alert';
+        ? 'bg-progress'
+        : 'bg-alert';
   }
 
   public updateSettings(value: any) {
@@ -530,4 +532,5 @@ export class SharedSearchProsComponent implements OnInit {
   get campaign(): Campaign {
     return this._campaign;
   }
+
 }

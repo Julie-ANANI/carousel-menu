@@ -16,39 +16,38 @@
 
       <!-- module page -->
       <section class="d-flex w-full p-10">
-        <ng-container [ngSwitch]="moduleSelected.option">
+          <ng-container [ngSwitch]="moduleSelected.option">
 
-          <!-- module research -->
-          <ng-container *ngSwitchCase="'research'">
-            <div class="module-search w-full p-20 m-bottom-25">
-              <app-shared-search-pros
-                [campaign]="campaign"
-                [accessPath]="accessPath">
-              </app-shared-search-pros>
-            </div>
+            <!-- module research -->
+            <ng-container *ngSwitchCase="'research'">
+              <div class="module-search w-full p-20 m-bottom-25">
+                <app-shared-search-pros
+                  [campaign]="campaign"
+                  [accessPath]="accessPath">
+                </app-shared-search-pros>
+              </div>
+            </ng-container>
+            <!-- /module research -->
+
+            <!-- module import -->
+            <ng-container *ngSwitchCase="'import'">
+              <div class="module-import p-20 m-bottom-25 m-auto" style="width: 80%">
+                <app-shared-import-pros [campaign]="campaign">
+                </app-shared-import-pros>
+              </div>
+            </ng-container>
+            <!-- /module import -->
+
+            <!-- module default - scraping -->
+            <ng-container *ngSwitchDefault>
+              <div class="module-scraping w-full p-20 m-bottom-25">
+                <app-shared-scraping>
+                </app-shared-scraping>
+              </div>
+            </ng-container>
+            <!-- /module default - scraping -->
+
           </ng-container>
-          <!-- /module research -->
-
-          <!-- module import -->
-          <ng-container *ngSwitchCase="'import'">
-            <div class="module-import p-20 m-bottom-25 m-auto" style="width: 80%">
-              <app-shared-import-pros [campaign]="campaign">
-              </app-shared-import-pros>
-            </div>
-          </ng-container>
-          <!-- /module import -->
-
-          <!-- module default - scraping -->
-          <ng-container *ngSwitchDefault>
-            <div class="module-scraping w-full p-20 m-bottom-25">
-              <app-shared-scraping>
-              </app-shared-scraping>
-            </div>
-          </ng-container>
-          <!-- /module default - scraping -->
-
-        </ng-container>
-
       </section>
       <!-- /module page -->
 

@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Answer } from '../../models/answer';
-import { Batch } from '../../models/batch';
-import { Campaign } from '../../models/campaign';
-import { Professional } from '../../models/professional';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Answer} from '../../models/answer';
+import {Batch} from '../../models/batch';
+import {Campaign} from '../../models/campaign';
+import {Professional} from '../../models/professional';
+import {TargetPros} from '../../models/targetPros';
 
 @Injectable({providedIn: 'root'})
 export class CampaignService {
@@ -38,6 +39,10 @@ export class CampaignService {
     return this._http
       .get<{ answers: { draftAnswers: Array<Answer>, localAnswers: Array<Answer> } }>
       ('/campaign/' + campaignId + '/answer');
+  }
+
+  public getTargetedPros(campaignId: string): Observable<TargetPros> {
+    return this._http.get<TargetPros>('/campaign/' + campaignId + '/targetedPros');
   }
 
   public remove(campaignId: string) {

@@ -1,0 +1,65 @@
+<div id="shared-professional-targeting" class="w-full">
+
+  <section class="button-group d-flex justify-between m-auto m-top-4" style="width: 60%">
+    <button class="button is-sm is-outlined">
+      Save
+    </button>
+
+    <button class="button is-sm is-outlined">
+      Preview
+    </button>
+
+    <button class="button is-sm is-outlined">
+      Reset
+    </button>
+  </section>
+
+  <section class="config-wrapper w-full d-flex m-top-4">
+    <div class="flex-d-column align-center text-center" style="width: 45%">
+      <h5>Seniority Levels</h5>
+      <div class="card">
+        <div class="card-body">
+          <ng-container *ngFor="let seniorityLevel of seniorityLevels">
+            <app-shared-search-config-pro
+              (sendStateOnChange)="seniorityLevelsOnChange($event)"
+              [option]="seniorityLevel">
+            </app-shared-search-config-pro>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div style="width: 10%">
+      or/and
+    </div>
+
+    <div class="flex-d-column align-center text-center" style="width: 45%">
+      <h5>Job Typologies</h5>
+      <div class="card">
+        <div class="card-body">
+          <div *ngIf="isLoading">
+            <app-message-template>
+              <div class="flex-centered">
+                <div class="loading is-white" style="margin-right: 0.8rem"></div>
+                <span [innerText]="'Loading typologies'"></span>
+              </div>
+            </app-message-template>
+          </div>
+
+          <ng-container *ngIf="!isLoading">
+            <ng-container *ngFor="let jobTypo of allCategoriesAndJobs">
+              <app-shared-search-config-pro
+                (sendStateOnChange)="jobTypoOnChange($event)"
+                [option]="{name: jobsTypologies[jobTypo.identifier].name.en, state: jobsTypologies[jobTypo.identifier].state}"
+                [jobs]="jobsTypologies[jobTypo.identifier].jobs"
+                [isJobTypo]="true">
+              </app-shared-search-config-pro>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+</div>

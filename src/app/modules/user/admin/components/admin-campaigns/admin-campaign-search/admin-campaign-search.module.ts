@@ -6,6 +6,7 @@ import {SharedSearchProsModule} from '../../../../../shared/components/shared-se
 import {SharedScrapingModule} from '../../../../../shared/components/shared-scraping/shared-scraping.module';
 import { FormsModule } from '@angular/forms';
 import { SharedImportProsModule } from '../../../../../shared/components/shared-import-pros/shared-import-pros.module';
+import { MessageTemplateModule } from '../../../../../utility/messages/message-template/message-template.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { SharedImportProsModule } from '../../../../../shared/components/shared-
     SharedSearchProsModule,
     SharedScrapingModule,
     FormsModule,
-    SharedImportProsModule
+    SharedImportProsModule,
+    MessageTemplateModule
   ],
   declarations: [
     AdminCampaignSearchComponent
