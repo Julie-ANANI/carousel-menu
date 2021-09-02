@@ -29,8 +29,18 @@
       </div>
     </div>
 
-    <div style="width: 10%">
-      or/and
+    <div class="d-flex flex-d-column align-center" style="width: 10%; margin-top: 10%">
+      <button class="button m-top-10 text-bold text-20"
+              [ngStyle]="{color: searchOperator==='OR'? '#2ECC71' : '#333333'}"
+              (click)="searchOperatorOnChange('OR')">
+        OR
+      </button>
+
+      <button class="button m-top-10 text-bold text-20"
+              [ngStyle]="{color: searchOperator==='AND'? '#2ECC71' : '#333333'}"
+              (click)="searchOperatorOnChange('AND')">
+        AND
+      </button>
     </div>
 
     <div class="flex-d-column align-center text-center" style="width: 45%">

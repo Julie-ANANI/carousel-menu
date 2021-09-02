@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { JobsTypologies, TargetPros } from '../../../../models/targetPros';
 import { first } from 'rxjs/operators';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
@@ -92,5 +92,9 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   jobTypoOnChange(event: any) {
     console.log(event);
+  }
+
+  searchOperatorOnChange(searchOp: string) {
+    this._searchOperator = searchOp;
   }
 }
