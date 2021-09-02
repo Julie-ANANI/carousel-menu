@@ -4,10 +4,18 @@ export interface JobConfig {
   _id: string;
 }
 
+
 export interface JobsTypologies {
   state: number;
-  jobs: Array<{ state: number, job: JobConfig }>;
+  jobs: Array<JobConfig>;
   name: { en: string, fr: string };
+}
+
+export interface JobsCategory {
+  _id: string;
+  identifier: string;
+  label: { en: string, fr: string };
+  jobs: Array<JobConfig>;
 }
 
 export interface TargetPros {

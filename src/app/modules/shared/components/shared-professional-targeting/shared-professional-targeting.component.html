@@ -59,6 +59,7 @@
           <ng-container *ngIf="!isLoading">
             <ng-container *ngFor="let jobTypo of allCategoriesAndJobs">
               <app-shared-search-config-pro
+                [identifier]="jobTypo.identifier"
                 (sendStateOnChange)="jobTypoOnChange($event)"
                 [option]="{name: jobsTypologies[jobTypo.identifier].name.en, state: jobsTypologies[jobTypo.identifier].state}"
                 [jobs]="jobsTypologies[jobTypo.identifier].jobs"

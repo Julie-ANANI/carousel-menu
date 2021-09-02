@@ -18,6 +18,10 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._context = this._option.name;
   }
 
+  @Input() set identifier(value: string) {
+    this._identifier = value;
+  }
+
   @Input() set jobs(jobs: Array<JobConfig>) {
     this._jobConfigs = jobs;
     console.log(this._jobConfigs);
@@ -28,6 +32,8 @@ export class SharedSearchConfigProComponent implements OnInit {
   @Output() sendStateOnChange: EventEmitter<any> = new EventEmitter();
 
   private _context = '';
+
+  private _identifier = '';
 
   private _jobConfigs: Array<JobConfig> = [];
 
@@ -175,9 +181,13 @@ export class SharedSearchConfigProComponent implements OnInit {
         job.state = 1;
         break;
     }
-    this.sendStateOnChange.emit({actions: 'jobTypos', value: this.jobConfigs});
+    // this._jobsTypologies[this._identifier] = {
+    //   state: this._currentState,
+    //   jobs: this.jobConfigs,
+    //   name: {en: this.context, fr: this.context},
+    // };
+    this.sendStateOnChange.emit({actions: 'jobTypos', value: this.jobConfigs, identifier: this._identifier});
     this._currentState = this.checkTypoState();
-
   }
 
   checkTypoState() {

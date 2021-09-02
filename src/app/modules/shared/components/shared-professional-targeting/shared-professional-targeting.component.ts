@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { JobsTypologies, TargetPros } from '../../../../models/targetPros';
+import { JobsCategory, JobsTypologies, TargetPros } from '../../../../models/targetPros';
 import { first } from 'rxjs/operators';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { Campaign } from '../../../../models/campaign';
@@ -22,7 +22,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _seniorityLevels: Array<any> = [];
 
-  private _allCategoriesAndJobs: Array<any> = [];
+  private _allCategoriesAndJobs: Array<JobsCategory> = [];
 
   private _targetedPros: TargetPros;
 
@@ -70,7 +70,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return this._seniorityLevels;
   }
 
-  get allCategoriesAndJobs(): Array<any> {
+  get allCategoriesAndJobs(): Array<JobsCategory> {
     return this._allCategoriesAndJobs;
   }
 
