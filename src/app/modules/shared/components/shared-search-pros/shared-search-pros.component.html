@@ -280,20 +280,31 @@
 
     <div class="w-full">
       <section class="button-group d-flex justify-between m-auto m-top-4" style="width: 60%">
-        <button class="button is-sm is-outlined" (click)="saveProTargeting()">
+        <button class="button is-primary is-sm is-outlined badge is-icon" *ngIf="!toSave">
+          <i class="fas fa-save"></i>
           Save
         </button>
+
+        <button class="button is-primary is-sm is-outlined badge is-icon is-active"
+                (click)="saveProTargeting()"
+                *ngIf="toSave">
+          <i class="fas fa-save"></i>
+          Save
+        </button>
+
 
         <button class="button is-sm is-outlined" (click)="previewSearchConfig()">
           Preview
         </button>
 
-        <button class="button is-sm is-outlined">
+        <button class="button is-sm is-outlined" (click)="resetTargetedPros()">
           Reset
         </button>
       </section>
 
       <app-shared-professional-targeting
+        [isReset]="toReset"
+        (targetedProsOnChange)="getUpdatedTargetedPros($event)"
         [campaign]="campaign">
       </app-shared-professional-targeting>
 

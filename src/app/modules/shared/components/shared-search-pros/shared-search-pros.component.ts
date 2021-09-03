@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -11,7 +11,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
-import { SharedProfessionalTargetingComponent } from '../shared-professional-targeting/shared-professional-targeting.component';
+import { CampaignService } from '../../../../services/campaign/campaign.service';
+import { TargetPros } from '../../../../models/targetPros';
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -25,8 +26,6 @@ export class SharedSearchProsComponent implements OnInit {
     this._campaign = value;
     this._initParams();
   }
-
-  @ViewChild(SharedProfessionalTargetingComponent, {static: true}) professionalTargetingComponent: SharedProfessionalTargetingComponent;
 
   private _suggestions: Array<{
     expected_result: number;
@@ -71,12 +70,19 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _isPreview: Boolean = false;
 
+  private _targetedProsToUpdate: TargetPros;
+
+  private _toSave = false;
+
+  private _toReset = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
     private _searchService: SearchService,
     private _rolesFrontService: RolesFrontService,
     private _authService: AuthService,
+    private _campaignService: CampaignService,
     private _localStorageService: LocalStorageService
   ) {
   }
@@ -555,7 +561,36 @@ export class SharedSearchProsComponent implements OnInit {
     this._isPreview = false;
   }
 
+  get toSave(): boolean {
+    return this._toSave;
+  }
+
   saveProTargeting() {
-      this.professionalTargetingComponent.saveTargetedPros();
+    console.log(this._targetedProsToUpdate);
+    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
+      .subscribe(() => {
+        this._toSave = false;
+        this._translateNotificationsService.success('Success', 'Targeting saved');
+      }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
+        this._toSave = false;
+        console.error(err);
+      });
+  }
+
+  getUpdatedTargetedPros(targetPros: TargetPros) {
+    this._targetedProsToUpdate = targetPros;
+    this._toSave = true;
+  }
+
+
+  get toReset(): boolean {
+    return this._toReset;
+  }
+
+  resetTargetedPros() {
+    this._toSave = true;
+    this._toReset = true;
+    this._targetedProsToUpdate = <TargetPros>{};
   }
 }

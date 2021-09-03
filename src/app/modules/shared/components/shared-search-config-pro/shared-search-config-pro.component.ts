@@ -24,7 +24,6 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   @Input() set jobs(jobs: Array<JobConfig>) {
     this._jobConfigs = jobs;
-    console.log(this._jobConfigs);
   }
 
   @Input() set isPreview(preview: Boolean) {
@@ -133,7 +132,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
-  setSenoirLevelState() {
+  setSeniorityLevelState() {
     switch (this._currentState) {
       case 0:
         this._currentState = 1;
@@ -155,12 +154,11 @@ export class SharedSearchConfigProComponent implements OnInit {
     event.preventDefault();
     if (this.isJobTypo) {
       this.setJobStates();
-      this.sendStateOnChange.emit({actions: 'jobTypos', value: this.jobConfigs, identifier: this._identifier});
+      this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
     } else {
-      this.setSenoirLevelState();
-      this.sendStateOnChange.emit({action: 'seniorLevels', value: {name: this._context, state: this._currentState, identifier: this._identifier}});
+      this.setSeniorityLevelState();
+      this.sendStateOnChange.emit({action: 'seniorLevels', state: this._currentState, identifier: this._identifier});
     }
-
     this._countStates();
   }
 

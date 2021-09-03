@@ -3,7 +3,6 @@ import { JobsCategory, JobsTypologies, TargetPros } from '../../../../models/tar
 import { first } from 'rxjs/operators';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { Campaign } from '../../../../models/campaign';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -20,29 +19,37 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     this._isPreview = value;
   }
 
+  @Input() set isReset(value: Boolean) {
+    if (value) {
+      this.getTargetedProsAndJobs();
+    }
+  }
+
+  @Output() targetedProsOnChange: EventEmitter<TargetPros> = new EventEmitter<TargetPros>();
   @Output() isPreviewChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   // @ViewChild()
 
   private _campaign: Campaign = <Campaign>{};
 
-  private _seniorityLevels: any;
+  private _seniorityLevels: any = {};
 
   private _allCategoriesAndJobs: Array<JobsCategory> = [];
 
   private _targetedPros: TargetPros;
 
-  private _jobsTypologies: { [property: string]: JobsTypologies };
+  private _targetedProsToUpdate: TargetPros;
 
-  private _searchOperator: string;
+  private _jobsTypologies: { [property: string]: JobsTypologies } = {};
+
+  private _searchOperator = 'OR' || 'AND';
 
   private _isLoading = false;
 
   private _isPreview: Boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _campaignService: CampaignService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _campaignService: CampaignService) {
   }
 
   ngOnInit() {
@@ -54,6 +61,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
         this._targetedPros = res;
+        this._targetedProsToUpdate = res;
         this._jobsTypologies = this._targetedPros.jobsTypologies;
         this._searchOperator = this._targetedPros.searchOperator;
         this._seniorityLevels = this._targetedPros.seniorityLevels;
@@ -63,28 +71,16 @@ export class SharedProfessionalTargetingComponent implements OnInit {
       });
   }
 
-  saveTargetedPros() {
-    console.log(this._targetedPros);
-    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedPros).pipe(first())
-      .subscribe(() => {
-        this._translateNotificationsService.success('Success', 'Targeting saved');
-      }, err => {
-        this._translateNotificationsService.error('Error', 'An error occurred');
-        console.error(err);
-      });
-  }
-
-
   get isLoading(): boolean {
     return this._isLoading;
   }
 
   getSeniorityLevelsKeys() {
-    return Object.keys(this._seniorityLevels);
+    return Object.keys(this._seniorityLevels) || [];
   }
 
   getJobsTypologiesKeys() {
-    return Object.keys(this._jobsTypologies);
+    return Object.keys(this._jobsTypologies) || [];
   }
 
   get seniorityLevels(): any {
@@ -109,14 +105,30 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   seniorityLevelsOnChange(event: any) {
     console.log(event);
+    if (event.action === 'seniorLevels') {
+      const _identifier = event.identifier;
+      console.log(_identifier);
+      console.log(this._targetedProsToUpdate.seniorityLevels[_identifier]);
+      this._targetedProsToUpdate.seniorityLevels[_identifier].state = event.state;
+    }
+    console.log(this._targetedProsToUpdate);
+    this.targetedProsOnChange.emit(this._targetedProsToUpdate);
   }
 
   jobTypoOnChange(event: any) {
     console.log(event);
+    if (event.action === 'jobTypos') {
+      const _identifier: string = event.identifier;
+      this._targetedProsToUpdate.jobsTypologies[_identifier].state = event.state;
+      this._targetedProsToUpdate.jobsTypologies[_identifier].jobs = event.jobs;
+      this.targetedProsOnChange.emit(this._targetedProsToUpdate);
+    }
   }
 
   searchOperatorOnChange(searchOp: string) {
     this._searchOperator = searchOp;
+    this._targetedProsToUpdate.searchOperator = searchOp === 'OR' ? 'OR' : 'AND';
+    this.targetedProsOnChange.emit(this._targetedProsToUpdate);
   }
 
   previewSearchConfig() {

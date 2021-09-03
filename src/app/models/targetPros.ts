@@ -17,10 +17,15 @@ export interface JobsCategory {
   jobs: Array<JobConfig>;
 }
 
+export interface SeniorityLevel {
+  name: string;
+  state: number;
+}
+
 export interface TargetPros {
   searchOperator: 'OR' | 'AND';
   seniorityLevels: {
-    [property: string]: number;
+    [property: string]: SeniorityLevel;
   };
   jobsTypologies: {
     [property: string]: JobsTypologies;
