@@ -242,7 +242,8 @@ export class ResponseService {
       const fixPercentagesSum = (values: {difference: Array<number>, rounded: Array<number>}, questionType: string) => {
         if (questionType === 'radio') {
           // first we check if the sum of rounded values is equal to 100
-          let diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0) - 100;
+          let diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0);
+          diff = diff === 0 ? diff : diff - 100;
           // if there is a difference, we need to fix it!
           while (diff) {
             const index = diff < 0 ?
