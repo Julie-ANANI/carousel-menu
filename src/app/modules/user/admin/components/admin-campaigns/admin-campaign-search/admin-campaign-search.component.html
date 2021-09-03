@@ -18,16 +18,14 @@
       <section class="d-flex w-full p-10">
           <ng-container [ngSwitch]="moduleSelected.option">
 
-            <!-- module research -->
-            <ng-container *ngSwitchCase="'research'">
-              <div class="module-search w-full p-20 m-bottom-25">
-                <app-shared-search-pros
-                  [campaign]="campaign"
-                  [accessPath]="accessPath">
-                </app-shared-search-pros>
+            <!-- module scraping -->
+            <ng-container *ngSwitchCase="'scraping'">
+              <div class="module-scraping w-full p-20 m-bottom-25">
+                <app-shared-scraping>
+                </app-shared-scraping>
               </div>
             </ng-container>
-            <!-- /module research -->
+            <!-- /module scraping -->
 
             <!-- module import -->
             <ng-container *ngSwitchCase="'import'">
@@ -38,14 +36,16 @@
             </ng-container>
             <!-- /module import -->
 
-            <!-- module default - scraping -->
+            <!-- module default - research -->
             <ng-container *ngSwitchDefault>
-              <div class="module-scraping w-full p-20 m-bottom-25">
-                <app-shared-scraping>
-                </app-shared-scraping>
+              <div class="module-search w-full p-20 m-bottom-25">
+                <app-shared-search-pros
+                  [campaign]="campaign"
+                  [accessPath]="accessPath">
+                </app-shared-search-pros>
               </div>
             </ng-container>
-            <!-- /module default - scraping -->
+            <!-- /module default - research -->
 
           </ng-container>
       </section>

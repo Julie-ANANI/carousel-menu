@@ -280,7 +280,7 @@
 
     <div class="w-full">
       <section class="button-group d-flex justify-between m-auto m-top-4" style="width: 60%">
-        <button class="button is-sm is-outlined">
+        <button class="button is-sm is-outlined" (click)="saveProTargeting()">
           Save
         </button>
 
@@ -313,7 +313,6 @@
 
   <section class="modal-body">
     <app-shared-professional-targeting
-      [(isPreview)]="isPreview"
       [campaign]="campaign">
     </app-shared-professional-targeting>
   </section>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Input, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -11,6 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
+import { SharedProfessionalTargetingComponent } from '../shared-professional-targeting/shared-professional-targeting.component';
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -24,6 +25,8 @@ export class SharedSearchProsComponent implements OnInit {
     this._campaign = value;
     this._initParams();
   }
+
+  @ViewChild(SharedProfessionalTargetingComponent, {static: true}) professionalTargetingComponent: SharedProfessionalTargetingComponent;
 
   private _suggestions: Array<{
     expected_result: number;
@@ -550,5 +553,9 @@ export class SharedSearchProsComponent implements OnInit {
 
   closePreview() {
     this._isPreview = false;
+  }
+
+  saveProTargeting() {
+      this.professionalTargetingComponent.saveTargetedPros();
   }
 }

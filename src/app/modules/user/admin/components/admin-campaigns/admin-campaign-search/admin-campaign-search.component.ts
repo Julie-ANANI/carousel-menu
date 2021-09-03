@@ -38,8 +38,8 @@ export class AdminCampaignSearchComponent implements OnInit {
   private _isLoading = false;
 
   private _moduleSelected: SearchModule = {
-    option: 'scraping',
-    context: 'Use the scraping module',
+    option: 'research',
+    context: 'use the research module'
   };
 
   constructor(private _activatedRoute: ActivatedRoute,

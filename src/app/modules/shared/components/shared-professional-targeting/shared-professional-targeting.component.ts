@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID} from '@angular/core';
-import {JobsCategory,JobsTypologies, TargetPros} from '../../../../models/targetPros';
-import {first} from 'rxjs/operators';
-import {CampaignService} from '../../../../services/campaign/campaign.service';
-import {Campaign} from '../../../../models/campaign';
-import {JobsService} from '../../../../services/jobs/jobs.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { JobsCategory, JobsTypologies, TargetPros } from '../../../../models/targetPros';
+import { first } from 'rxjs/operators';
+import { CampaignService } from '../../../../services/campaign/campaign.service';
+import { Campaign } from '../../../../models/campaign';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -17,7 +16,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     this.getTargetedProsAndJobs();
   }
 
-  @Input() set isPreview(value){
+  @Input() set isPreview(value) {
     this._isPreview = value;
   }
 
@@ -27,7 +26,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _campaign: Campaign = <Campaign>{};
 
-  private _seniorityLevels: Array<any> = [];
+  private _seniorityLevels: any;
 
   private _allCategoriesAndJobs: Array<JobsCategory> = [];
 
@@ -43,7 +42,6 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _campaignService: CampaignService,
-              private _jobService: JobsService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
 
@@ -58,20 +56,15 @@ export class SharedProfessionalTargetingComponent implements OnInit {
         this._targetedPros = res;
         this._jobsTypologies = this._targetedPros.jobsTypologies;
         this._searchOperator = this._targetedPros.searchOperator;
-        Object.keys(this._targetedPros.seniorityLevels).forEach(level => {
-          this._seniorityLevels.push(this._targetedPros.seniorityLevels[level]);
-        });
-        this._jobService.getAllCategoriesAndJobs({}).pipe(first())
-          .subscribe(result => {
-            this._allCategoriesAndJobs = result;
-            setTimeout(() => {
-              this._isLoading = false;
-            }, 1500);
-          });
+        this._seniorityLevels = this._targetedPros.seniorityLevels;
+        setTimeout(() => {
+          this._isLoading = false;
+        }, 500);
       });
   }
 
   saveTargetedPros() {
+    console.log(this._targetedPros);
     this._campaignService.saveTargetedPros(this._campaign._id, this._targetedPros).pipe(first())
       .subscribe(() => {
         this._translateNotificationsService.success('Success', 'Targeting saved');
@@ -86,7 +79,15 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return this._isLoading;
   }
 
-  get seniorityLevels(): Array<any> {
+  getSeniorityLevelsKeys() {
+    return Object.keys(this._seniorityLevels);
+  }
+
+  getJobsTypologiesKeys() {
+    return Object.keys(this._jobsTypologies);
+  }
+
+  get seniorityLevels(): any {
     return this._seniorityLevels;
   }
 

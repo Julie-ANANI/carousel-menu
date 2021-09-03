@@ -52,10 +52,14 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   private _showToggleSearch = false;
 
+  private _nbIncluded: number;
+  private _nbExcluded: number;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {
   }
 
   ngOnInit() {
+    this._countStates();
   }
 
 
@@ -90,6 +94,14 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   get context(): string {
     return this._context;
+  }
+
+  get nbIncluded(): number {
+    return this._nbIncluded;
+  }
+
+  get nbExcluded(): number {
+    return this._nbExcluded;
   }
 
   setJobStates() {
@@ -132,16 +144,24 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
+  private _countStates() {
+    if (this.isJobTypo) {
+      this._nbIncluded = this.jobConfigs.filter(_job => _job.state === 1).length;
+      this._nbExcluded = this.jobConfigs.filter(_job => _job.state === 0).length;
+    }
+  }
+
   stateOnChange(event: Event) {
     event.preventDefault();
     if (this.isJobTypo) {
       this.setJobStates();
-      this.sendStateOnChange.emit({actions: 'jobTypos', value: this.jobConfigs});
+      this.sendStateOnChange.emit({actions: 'jobTypos', value: this.jobConfigs, identifier: this._identifier});
     } else {
       this.setSenoirLevelState();
-      this.sendStateOnChange.emit({action: 'seniorLevels', value: {name: this._context, state: this._currentState}});
+      this.sendStateOnChange.emit({action: 'seniorLevels', value: {name: this._context, state: this._currentState, identifier: this._identifier}});
     }
 
+    this._countStates();
   }
 
 
@@ -195,6 +215,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     //   jobs: this.jobConfigs,
     //   name: {en: this.context, fr: this.context},
     // };
+    this._countStates();
     this.sendStateOnChange.emit({actions: 'jobTypos', value: this.jobConfigs, identifier: this._identifier});
     this._currentState = this.checkTypoState();
   }

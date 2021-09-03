@@ -5,11 +5,12 @@
       <h5>Seniority Levels</h5>
       <div class="card">
         <div class="card-body">
-          <ng-container *ngFor="let seniorityLevel of seniorityLevels">
+          <ng-container *ngFor="let seniorityKey of getSeniorityLevelsKeys()">
             <app-shared-search-config-pro
               [isPreview]="isPreview"
+              [identifier]="seniorityKey"
               (sendStateOnChange)="seniorityLevelsOnChange($event)"
-              [option]="seniorityLevel">
+              [option]="seniorityLevels[seniorityKey]">
             </app-shared-search-config-pro>
           </ng-container>
         </div>
@@ -44,13 +45,13 @@
           </div>
 
           <ng-container *ngIf="!isLoading">
-            <ng-container *ngFor="let jobTypo of allCategoriesAndJobs">
+            <ng-container *ngFor="let jobTypoKey of getJobsTypologiesKeys()">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
-                [identifier]="jobTypo.identifier"
+                [identifier]="jobTypoKey"
                 (sendStateOnChange)="jobTypoOnChange($event)"
-                [option]="{name: jobsTypologies[jobTypo.identifier].name.en, state: jobsTypologies[jobTypo.identifier].state}"
-                [jobs]="jobsTypologies[jobTypo.identifier].jobs"
+                [option]="{name: jobsTypologies[jobTypoKey].name.en, state: jobsTypologies[jobTypoKey].state}"
+                [jobs]="jobsTypologies[jobTypoKey].jobs"
                 [isJobTypo]="true">
               </app-shared-search-config-pro>
             </ng-container>

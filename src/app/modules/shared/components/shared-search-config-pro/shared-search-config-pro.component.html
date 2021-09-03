@@ -17,8 +17,12 @@
       </ng-container>
     </div>
 
-    <div class="text-white m-left-4">
+    <div class="text-white m-left-4 d-flex align-center width-100">
       {{context}}
+      <div class="d-flex flex-end flex-grow">
+        <span class="shape bg-success is-circle is-sm text-13" *ngIf="nbIncluded"> {{nbIncluded}} </span>
+        <span class="shape bg-alert is-circle is-sm text-13" *ngIf="nbExcluded"> {{nbExcluded}} </span>
+      </div>
     </div>
 
     <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" [attr.aria-disabled]="isPreview" (click)="onClickToggle()">
