@@ -46,7 +46,8 @@
   <!-- Jobs' list-->
   <div class="flex-d-column justify-center m-left-15" *ngIf="showToggleSearch">
     <ng-container *ngFor="let job of jobConfigs">
-      <div class="job-select-wrapper d-flex align-center">
+      <ng-container *ngIf="showJob(job)">
+        <div class="job-select-wrapper d-flex align-center">
 
         <!-- Job's checkbox-->
         <div class="button-checker m-left-3" [ngStyle]="getJobCurrentState(job)" (click)="stateJobOnChange($event, job)">
@@ -63,13 +64,14 @@
         </div>
         <!-- /Job's checkbox-->
 
-        <!-- Job's label-->
-        <div class="m-left-4">
-          {{job.label.en}}
-        </div>
-        <!-- Job's label-->
+          <!-- Job's label-->
+          <div class="m-left-4">
+            {{job.label.en}}
+          </div>
+          <!-- Job's label-->
 
-      </div>
+        </div>
+      </ng-container>
     </ng-container>
   </div>
   <!-- /Jobs' list -->

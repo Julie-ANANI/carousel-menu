@@ -53,13 +53,21 @@
           <!-- /get time to load Job Categories -->
 
           <ng-container *ngIf="!isLoading">
-            <ng-container *ngFor="let jobTypoKey of getJobsTypologiesKeys()">
+            <section class="section-search">
+              <app-utility-search-input-2
+                [searchPlaceholder]="'Type to search'"
+                (searchFieldOutput)="onClickSearch($event)">
+              </app-utility-search-input-2>
+            </section>
+
+            <ng-container *ngFor="let jobTypoKey of getFilteredJobsTypologiesKeys()">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
                 [identifier]="jobTypoKey"
                 (sendStateOnChange)="jobTypoOnChange($event)"
                 [option]="{name: jobsTypologies[jobTypoKey].name.en, state: jobsTypologies[jobTypoKey].state}"
                 [jobs]="jobsTypologies[jobTypoKey].jobs"
+                [filteredJobs]="filteredJobsTypologies[jobTypoKey].jobs"
                 [isJobTypo]="true">
               </app-shared-search-config-pro>
             </ng-container>

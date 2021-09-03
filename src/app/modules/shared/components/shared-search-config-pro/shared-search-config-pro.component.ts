@@ -12,6 +12,7 @@ import { JobConfig } from '../../../../models/targetPros';
   styleUrls: ['./shared-search-config-pro.component.scss']
 })
 export class SharedSearchConfigProComponent implements OnInit {
+
   /**
    * one category: seniority level/ job category
    * @param value
@@ -31,6 +32,10 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   @Input() set jobs(jobs: Array<JobConfig>) {
     this._jobConfigs = jobs;
+  }
+
+  @Input() set filteredJobs(jobs: Array<JobConfig>) {
+    this._filteredIds = jobs.map(_j => _j._id);
   }
 
   /**
@@ -55,6 +60,8 @@ export class SharedSearchConfigProComponent implements OnInit {
   private _isPreview: Boolean = false;
 
   private _jobConfigs: Array<JobConfig> = [];
+
+  private _filteredIds: Array<String> = [];
 
   private _currentState = 0;
 
@@ -276,6 +283,10 @@ export class SharedSearchConfigProComponent implements OnInit {
     } else {
       return 3;
     }
+  }
+
+  showJob(job: JobConfig) {
+    return this._filteredIds.includes(job._id);
   }
 
   get isPreview(): Boolean {

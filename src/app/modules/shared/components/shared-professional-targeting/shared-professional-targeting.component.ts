@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { JobsCategory, JobsTypologies, TargetPros } from '../../../../models/targetPros';
+import { JobsTypologies, TargetPros } from '../../../../models/targetPros';
 import { first } from 'rxjs/operators';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { Campaign } from '../../../../models/campaign';
@@ -10,6 +10,7 @@ import { Campaign } from '../../../../models/campaign';
   styleUrls: ['./shared-professional-targeting.component.scss'],
 })
 export class SharedProfessionalTargetingComponent implements OnInit {
+
   @Input() set campaign(campaign: Campaign) {
     this._campaign = campaign;
     this.getTargetedProsAndJobs();
@@ -37,7 +38,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _seniorityLevels: any = {};
 
-  private _allCategoriesAndJobs: Array<JobsCategory> = [];
+  private _filteredJobsTypologies: { [property: string]: JobsTypologies } = {};
 
   private _targetedPros: TargetPros;
 
@@ -50,6 +51,8 @@ export class SharedProfessionalTargetingComponent implements OnInit {
   private _isLoading = false;
 
   private _isPreview: Boolean = false;
+
+  private _keyword = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _campaignService: CampaignService) {
@@ -71,6 +74,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
         this._jobsTypologies = this._targetedPros.jobsTypologies;
         this._searchOperator = this._targetedPros.searchOperator;
         this._seniorityLevels = this._targetedPros.seniorityLevels;
+        this._filteredJobsTypologies = this._jobsTypologies;
         setTimeout(() => {
           this._isLoading = false;
         }, 500);
@@ -89,12 +93,12 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return Object.keys(this._jobsTypologies) || [];
   }
 
-  get seniorityLevels(): any {
-    return this._seniorityLevels;
+  getFilteredJobsTypologiesKeys() {
+    return Object.keys(this._filteredJobsTypologies) || Object.keys(this._jobsTypologies);
   }
 
-  get allCategoriesAndJobs(): Array<JobsCategory> {
-    return this._allCategoriesAndJobs;
+  get seniorityLevels(): any {
+    return this._seniorityLevels;
   }
 
   get targetedPros(): TargetPros {
@@ -113,6 +117,14 @@ export class SharedProfessionalTargetingComponent implements OnInit {
    * update seniorityLevels
    * @param event
    */
+  get keyword(): string {
+    return this._keyword;
+  }
+
+  set keyword(value: string) {
+    this._keyword = value;
+  }
+
   seniorityLevelsOnChange(event: any) {
     if (event.action === 'seniorLevels') {
       const _identifier = event.identifier;
@@ -151,5 +163,33 @@ export class SharedProfessionalTargetingComponent implements OnInit {
   closePreviewMode() {
     this._isPreview = false;
     this.isPreviewChange.emit(false);
+  }
+
+  get filteredJobsTypologies(): { [p: string]: JobsTypologies } {
+    return this._filteredJobsTypologies;
+  }
+
+  set filteredJobsTypologies(value: { [p: string]: JobsTypologies }) {
+    this._filteredJobsTypologies = value;
+  }
+
+  public onClickSearch(keyword: string) {
+    if (!!keyword) {
+      this._filteredJobsTypologies = {};
+      const keys = Object.keys(this._jobsTypologies);
+      for (let i = 0; i < keys.length; i++) {
+        const category = this._jobsTypologies[keys[i]];
+        const filteredJobs = category.jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase()));
+        if (filteredJobs.length) {
+          this._filteredJobsTypologies[keys[i]] = {
+            state: category.state,
+            name: category.name,
+            jobs: filteredJobs
+          };
+        }
+      }
+    } else {
+      this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
+    }
   }
 }
