@@ -261,7 +261,7 @@
     <!-- /geographic targeting  -->
 
     <div class="geographic-targeting w-full">
-      <!-- targeting -->
+      <!-- targeting countries -->
       <div class="p-30">
         <app-shared-targeting-world
           [(geography)]="geography"
@@ -269,7 +269,7 @@
           [isEditable]="canAccess(['edit', 'settings'])">
         </app-shared-targeting-world>
       </div>
-      <!-- /targeting -->
+      <!-- /targeting countries-->
     </div>
 
     <!-- professional targeting -->
@@ -279,7 +279,10 @@
     </div>
 
     <div class="w-full">
+      <!--       Professional targeting - buttons  -->
       <section class="button-group d-flex justify-between m-auto m-top-4" style="width: 60%">
+
+        <!-- Saved targetedPro  -->
         <button class="button is-primary is-sm is-outlined badge is-icon" *ngIf="!toSave">
           <i class="fas fa-save"></i>
           Save
@@ -291,16 +294,22 @@
           <i class="fas fa-save"></i>
           Save
         </button>
+        <!-- /Saved targetedPro  -->
 
-
+        <!-- Preview saved targetedPro  -->
         <button class="button is-sm is-outlined" (click)="previewSearchConfig()">
           Preview
         </button>
+        <!-- /Preview saved targetedPro  -->
 
+        <!-- Reset targetedPro  -->
         <button class="button is-sm is-outlined" (click)="resetTargetedPros()">
           Reset
         </button>
+        <!-- /Reset targetedPro  -->
+
       </section>
+      <!-- /Professional targeting - buttons  -->
 
       <app-shared-professional-targeting
         [isReset]="toReset"
@@ -316,7 +325,7 @@
 
 </div>
 
-<!-- MODAL : import a professionals list -->
+<!-- MODAL : preview saved targetedPro -->
 <app-utility-modal
   [(showModal)]="isPreview"
   [maxWidth]="'80%'"

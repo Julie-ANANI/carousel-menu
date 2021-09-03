@@ -56,6 +56,9 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   }
 
+  /**
+   * initialise targetedPro
+   */
   getTargetedProsAndJobs() {
     this._isLoading = true;
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
@@ -103,6 +106,10 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return this._searchOperator;
   }
 
+  /**
+   * update seniorityLevels
+   * @param event
+   */
   seniorityLevelsOnChange(event: any) {
     console.log(event);
     if (event.action === 'seniorLevels') {
@@ -115,6 +122,10 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     this.targetedProsOnChange.emit(this._targetedProsToUpdate);
   }
 
+  /**
+   * update JobCategories
+   * @param event
+   */
   jobTypoOnChange(event: any) {
     console.log(event);
     if (event.action === 'jobTypos') {

@@ -1,6 +1,9 @@
 <div id="shared-search-config-pros" class="m-10">
 
+  <!-- Seniority level / Job category level -->
   <div class="pro-select-wrapper d-flex align-center">
+
+    <!-- check box-->
     <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview" (click)="stateOnChange($event)">
       <ng-container [ngSwitch]="currentState">
         <ng-container *ngSwitchCase="0">
@@ -16,23 +19,36 @@
         </ng-container>
       </ng-container>
     </div>
+    <!-- /check box-->
 
+    <!-- Seniority Level's name or Job category-->
     <div class="text-white m-left-4 d-flex align-center width-100">
       {{context}}
+
+      <!-- nb of included/excluded jobs-->
       <div class="d-flex flex-end flex-grow">
         <span class="shape bg-success is-circle is-sm text-13" *ngIf="nbIncluded"> {{nbIncluded}} </span>
         <span class="shape bg-alert is-circle is-sm text-13" *ngIf="nbExcluded"> {{nbExcluded}} </span>
       </div>
-    </div>
+      <!-- /nb of included/excluded jobs-->
 
+    </div>
+    <!-- /Seniority Level's name or Job category-->
+
+    <!-- Job category expand item-->
     <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" [attr.aria-disabled]="isPreview" (click)="onClickToggle()">
       <i class="icon" [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-up' "></i>
     </div>
+    <!-- /Job category expand item -->
   </div>
+  <!-- /Seniority level / Job category level-->
 
+  <!-- Jobs' list-->
   <div class="flex-d-column justify-center m-left-15" *ngIf="showToggleSearch">
     <ng-container *ngFor="let job of jobConfigs">
       <div class="job-select-wrapper d-flex align-center">
+
+        <!-- Job's checkbox-->
         <div class="button-checker m-left-3"  [attr.aria-disabled]="isPreview"  [ngStyle]="getJobCurrentState(job)" (click)="stateJobOnChange($event, job)">
           <ng-container [ngSwitch]="job.state">
             <ng-container *ngSwitchCase="0">
@@ -45,10 +61,17 @@
             </ng-container>
           </ng-container>
         </div>
+        <!-- /Job's checkbox-->
+
+        <!-- Job's label-->
         <div class="m-left-4">
           {{job.label.en}}
         </div>
+        <!-- Job's label-->
+
       </div>
     </ng-container>
   </div>
+  <!-- /Jobs' list -->
+
 </div>

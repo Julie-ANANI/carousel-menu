@@ -12,12 +12,19 @@ import { JobConfig } from '../../../../models/targetPros';
   styleUrls: ['./shared-search-config-pro.component.scss']
 })
 export class SharedSearchConfigProComponent implements OnInit {
+  /**
+   * one category: seniority level/ job category
+   * @param value
+   */
   @Input() set option(value: any) {
-    this._option = value;
-    this._currentState = this._option.state;
-    this._context = this._option.name;
+    this._currentState = value.state;
+    this._context = value.name;
   }
 
+  /**
+   * identifier in jobConfig
+   * @param value
+   */
   @Input() set identifier(value: string) {
     this._identifier = value;
   }
@@ -26,6 +33,10 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._jobConfigs = jobs;
   }
 
+  /**
+   * preview mode
+   * @param preview
+   */
   @Input() set isPreview(preview: Boolean) {
     this._isPreview = preview;
     if (preview) {
@@ -33,11 +44,14 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
+  /**
+   * if it's a job cotegory
+   */
   @Input() isJobTypo = false;
 
   @Output() sendStateOnChange: EventEmitter<any> = new EventEmitter();
 
-  private _context = '';
+  private _context = ''; // SeniorityLevel's name / Job Category's name
 
   private _identifier = '';
 
@@ -45,13 +59,12 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   private _jobConfigs: Array<JobConfig> = [];
 
-  private _option: any;
-
   private _currentState = 0;
 
   private _showToggleSearch = false;
 
   private _nbIncluded: number;
+
   private _nbExcluded: number;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {
@@ -103,6 +116,9 @@ export class SharedSearchConfigProComponent implements OnInit {
     return this._nbExcluded;
   }
 
+  /**
+   * job state
+   */
   setJobStates() {
     switch (this._currentState) {
       case 0:
@@ -132,6 +148,9 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
+  /**
+   * seniority level: 0/1
+   */
   setSeniorityLevelState() {
     switch (this._currentState) {
       case 0:
@@ -143,6 +162,10 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
+  /**
+   * count: included/excluded in one job category
+   * @private
+   */
   private _countStates() {
     if (this.isJobTypo) {
       this._nbIncluded = this.jobConfigs.filter(_job => _job.state === 1).length;
@@ -150,6 +173,11 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
+  /**
+   * state on change: job/job category/seniority level
+   * change states, send results
+   * @param event
+   */
   stateOnChange(event: Event) {
     event.preventDefault();
     if (this.isJobTypo) {
@@ -175,6 +203,10 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._showToggleSearch = !this._showToggleSearch;
   }
 
+  /**
+   * get color + border style according to job's state
+   * @param job
+   */
   getJobCurrentState(job: any) {
     switch (job.state) {
       case 0:
@@ -195,6 +227,11 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
+  /**
+   * job state change
+   * @param event
+   * @param job
+   */
   stateJobOnChange(event: Event, job: any) {
     event.preventDefault();
     switch (job.state) {
@@ -208,16 +245,14 @@ export class SharedSearchConfigProComponent implements OnInit {
         job.state = 1;
         break;
     }
-    // this._jobsTypologies[this._identifier] = {
-    //   state: this._currentState,
-    //   jobs: this.jobConfigs,
-    //   name: {en: this.context, fr: this.context},
-    // };
     this._countStates();
-    this.sendStateOnChange.emit({actions: 'jobTypos', value: this.jobConfigs, identifier: this._identifier});
+    this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
     this._currentState = this.checkTypoState();
   }
 
+  /**
+   * check Job category state, it will change the state in jobs of the job category
+   */
   checkTypoState() {
     const _stateNeutral = this._jobConfigs.filter((_job: any) => {
       return _job.state === 2;
