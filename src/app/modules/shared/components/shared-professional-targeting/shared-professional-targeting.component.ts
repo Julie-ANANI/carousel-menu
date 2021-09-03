@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { JobsCategory, JobsTypologies, TargetPros } from '../../../../models/targetPros';
-import { first } from 'rxjs/operators';
-import { CampaignService } from '../../../../services/campaign/campaign.service';
-import { Campaign } from '../../../../models/campaign';
-import { JobsService } from '../../../../services/jobs/jobs.service';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID} from '@angular/core';
+import {JobsCategory,JobsTypologies, TargetPros} from '../../../../models/targetPros';
+import {first} from 'rxjs/operators';
+import {CampaignService} from '../../../../services/campaign/campaign.service';
+import {Campaign} from '../../../../models/campaign';
+import {JobsService} from '../../../../services/jobs/jobs.service';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -42,7 +43,8 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _campaignService: CampaignService,
-              private _jobService: JobsService) {
+              private _jobService: JobsService,
+              private _translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
@@ -66,6 +68,16 @@ export class SharedProfessionalTargetingComponent implements OnInit {
               this._isLoading = false;
             }, 1500);
           });
+      });
+  }
+
+  saveTargetedPros() {
+    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedPros).pipe(first())
+      .subscribe(() => {
+        this._translateNotificationsService.success('Success', 'Targeting saved');
+      }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
+        console.error(err);
       });
   }
 

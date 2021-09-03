@@ -4,7 +4,6 @@ export interface JobConfig {
   _id: string;
 }
 
-
 export interface JobsTypologies {
   state: number;
   jobs: Array<JobConfig>;

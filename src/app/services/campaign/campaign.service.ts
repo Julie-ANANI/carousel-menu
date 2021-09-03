@@ -45,6 +45,10 @@ export class CampaignService {
     return this._http.get<TargetPros>('/campaign/' + campaignId + '/targetedPros');
   }
 
+  public saveTargetedPros(campaignId: string, targetedPros: TargetPros): Observable<TargetPros> {
+    return this._http.post<TargetPros>('/campaign/' + campaignId + '/targetedPros', targetedPros);
+  }
+
   public remove(campaignId: string) {
     return this._http.delete('/campaign/' + campaignId);
   }
