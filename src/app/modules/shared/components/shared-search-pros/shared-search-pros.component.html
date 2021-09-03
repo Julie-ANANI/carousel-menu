@@ -279,6 +279,20 @@
     </div>
 
     <div class="w-full">
+      <section class="button-group d-flex justify-between m-auto m-top-4" style="width: 60%">
+        <button class="button is-sm is-outlined">
+          Save
+        </button>
+
+        <button class="button is-sm is-outlined" (click)="previewSearchConfig()">
+          Preview
+        </button>
+
+        <button class="button is-sm is-outlined">
+          Reset
+        </button>
+      </section>
+
       <app-shared-professional-targeting
         [campaign]="campaign">
       </app-shared-professional-targeting>
@@ -291,106 +305,21 @@
 
 </div>
 
-
-<!-- sidebar to advanced search -->
-<app-sidebar
-  *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])"
-  [(template)]="sidebarValue">
-  <app-sidebar-search
-    (geographyChange)="onGeographyChange($event)"
-    (paramsChange)="updateSettings($event)"
-    [geography]="geography"
-    [isEditable]="canAccess(['edit', 'settings'])"
-    [params]="params">
-  </app-sidebar-search>
-</app-sidebar>
-<!-- /sidebar to advanced search -->
-
-
 <!-- MODAL : import a professionals list -->
 <app-utility-modal
-  *ngIf="canAccess(['import', 'pros'])"
-  [(showModal)]="showModal"
-  [title]="'Import Board'">
+  [(showModal)]="isPreview"
+  [maxWidth]="'80%'"
+  [title]="'Preview - Professional targeting'">
 
   <section class="modal-body">
-
-    <div class="form-group m-bottom-30">
-      <label class="form-label" for="shared-search-modal-name">
-        Name to be given to the request
-      </label>
-      <input
-        [(ngModel)]="importRequestKeywords"
-        class="form-input"
-        id="shared-search-modal-name"
-        placeholder="Give a name to the import file"
-        type="text">
-    </div>
-
-    <!-- import button -->
-    <div class="text-center p-bottom-30">
-      <label class="button is-primary is-sm is-outlined">
-        <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
-        <i class="fas fa-file-import icon-left"></i> Import pros
-      </label>
-    </div>
-    <!-- /import button -->
-
-    <p class="text-center text-sm">The file must use these <b>exact names</b> for the columns:
-      <b>First Name UMI, Last Name UMI, Company UMI, Country UMI</b>
-      , Language, Email UMI, emailConfidence, Linkedin,
-      Company Site, Job UMI</p>
-
-    <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns
-      does
-      not matter</p>
-
+    <app-shared-professional-targeting
+      [(isPreview)]="isPreview"
+      [campaign]="campaign">
+    </app-shared-professional-targeting>
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">Cancel</button>
+    <button class="button modal-cancel" (close)="closePreview()">Close</button>
   </footer>
 
 </app-utility-modal>
-
-<!--<div class="columns">
-  <div class="column col-5 col-ml-auto">
-
-  <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.duplicate_status">
-    <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
-      <span class="bot-rect">
-        <span *ngIf="estimatedNumberOfGoogleRequests">
-          {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
-          <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span
-            *ngIf="catResult.total_result">max</span></strong>.
-        <a *ngIf="!catResult.keywords_analysis && campaign" (click)="cat($event)">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
-        </span>
-        <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
-      </span>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-advice.svg" width=""
-                height="120">
-      </div>
-    </div>
-
-    <div class="bot-wrapper text-center" *ngSwitchCase="'not ok'">
-      <span class="bot-rect">{{ 'SEARCH.ROBOT.NOT_OK' | translate }}<br/>
-        <span *ngIf="estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.SEARCH_USE' | translate }} <strong>{{ 'SEARCH.ROBOT.APPROX' | translate }} {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }}</strong>.</span>
-      </span>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120">
-      </div>
-    </div>
-
-    <div class="bot-wrapper text-center" *ngSwitchCase="'error'">
-      <span class="bot-rect"> {{ 'SEARCH.ROBOT.ERROR' | translate }}</span>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width=""
-                height="120">
-      </div>
-    </div>
-  </div>
-</div>-->

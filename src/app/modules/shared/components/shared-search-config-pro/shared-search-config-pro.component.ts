@@ -27,6 +27,13 @@ export class SharedSearchConfigProComponent implements OnInit {
     console.log(this._jobConfigs);
   }
 
+  @Input() set isPreview(preview: Boolean) {
+    this._isPreview = preview;
+    if (preview) {
+      this._showToggleSearch = true;
+    }
+  }
+
   @Input() isJobTypo = false;
 
   @Output() sendStateOnChange: EventEmitter<any> = new EventEmitter();
@@ -34,6 +41,8 @@ export class SharedSearchConfigProComponent implements OnInit {
   private _context = '';
 
   private _identifier = '';
+
+  private _isPreview: Boolean = false;
 
   private _jobConfigs: Array<JobConfig> = [];
 
@@ -214,4 +223,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
   }
 
+  get isPreview(): Boolean {
+    return this._isPreview;
+  }
 }

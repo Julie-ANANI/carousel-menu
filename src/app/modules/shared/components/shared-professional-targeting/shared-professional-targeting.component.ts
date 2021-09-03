@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { JobsCategory, JobsTypologies, TargetPros } from '../../../../models/targetPros';
 import { first } from 'rxjs/operators';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
@@ -16,6 +16,12 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     this.getTargetedProsAndJobs();
   }
 
+  @Input() set isPreview(value){
+    this._isPreview = value;
+  }
+
+  @Output() isPreviewChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
   // @ViewChild()
 
   private _campaign: Campaign = <Campaign>{};
@@ -31,6 +37,8 @@ export class SharedProfessionalTargetingComponent implements OnInit {
   private _searchOperator: string;
 
   private _isLoading = false;
+
+  private _isPreview: Boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _campaignService: CampaignService,
@@ -96,5 +104,18 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   searchOperatorOnChange(searchOp: string) {
     this._searchOperator = searchOp;
+  }
+
+  previewSearchConfig() {
+    this._isPreview = true;
+  }
+
+  get isPreview(): Boolean {
+    return this._isPreview;
+  }
+
+  closePreviewMode() {
+    this._isPreview = false;
+    this.isPreviewChange.emit(false);
   }
 }

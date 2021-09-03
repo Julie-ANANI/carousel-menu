@@ -66,6 +66,8 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _importRequestKeywords = '';
 
+  private _isPreview: Boolean = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
@@ -533,4 +535,20 @@ export class SharedSearchProsComponent implements OnInit {
     return this._campaign;
   }
 
+
+  get isPreview(): Boolean {
+    return this._isPreview;
+  }
+
+  set isPreview(value: Boolean) {
+    this._isPreview = value;
+  }
+
+  previewSearchConfig() {
+    this._isPreview = true;
+  }
+
+  closePreview() {
+    this._isPreview = false;
+  }
 }
