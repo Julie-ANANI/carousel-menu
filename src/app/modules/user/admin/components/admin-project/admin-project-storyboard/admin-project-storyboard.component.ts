@@ -477,7 +477,8 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   get isVideoDisabled(): boolean {
-    return this._executiveReport.completion.rate !== 100 || !this._executiveReport.externalDiffusion;
+    return this._executiveReport.completion.rate !== 100 || !this._executiveReport.externalDiffusion
+      || this._executiveReport.summary.length > 216;
   }
 
   get currentLang(): string {
