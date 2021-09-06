@@ -23,6 +23,58 @@
 
   <h6 *ngIf="request.elapsedTime" class="text-normal">Time: {{ request.elapsedTime  | date:'mm:ss' }}</h6>
 
+  <!-- Geographical targeting -->
+  <h6 class="p-top-4">Geographical targeting:</h6>
+
+  <div class="text-sm text-normal">
+    {{request.targetting}}
+  </div>
+  <!-- /Geographical targeting -->
+
+
+  <!-- Professional targeting -->
+  <h6 class="p-top-4">Professional targeting:</h6>
+
+  <div class="text-sm text-normal">
+    <div>
+      Seniority levels:
+      <span class="text-success" *ngIf="seniorityLevels.included">{{seniorityLevels.included}}</span>
+      <span *ngIf="seniorityLevels.included && seniorityLevels.excluded">/</span>
+      <span class="text-alert" *ngIf="seniorityLevels.excluded">{{seniorityLevels.excluded}}</span>
+    </div>
+
+    <div>
+      Job typologies:
+      <span class="text-success" *ngIf="includedJobCate.length">
+        <ng-container *ngFor="let includedJob of includedJobCate; index as i">
+          {{includedJob.jobName}}({{includedJob.included}})
+          <ng-container *ngIf="i !== includedJobCate.length - 1">,</ng-container>
+        </ng-container>
+      </span>
+
+      <span *ngIf="mixedJobCate.length && includedJobCate.length">/</span>
+
+      <span class="text-normal" *ngIf="mixedJobCate.length">
+        <ng-container *ngFor="let mixedJob of mixedJobCate; index as i">
+          {{mixedJob.jobName}}(<span class="text-success">{{mixedJob.included}}</span>/<span
+          class="text-alert">{{mixedJob.excluded}}</span>)
+          <ng-container *ngIf="i !== mixedJobCate.length - 1">,</ng-container>
+        </ng-container>
+      </span>
+
+      <span *ngIf="excludedJobCate.length && mixedJobCate.length">/</span>
+
+      <span class="text-alert" *ngIf="excludedJobCate.length">
+        <ng-container *ngFor="let excludedJob of excludedJobCate; index as i">
+          {{excludedJob.jobName}}({{excludedJob.excluded}})
+          <ng-container *ngIf="i !== excludedJobCate.length - 1">,</ng-container>
+        </ng-container>
+      </span>
+    </div>
+  </div>
+
+  <!-- /Professional targeting -->
+
   <div
     *ngIf="canAccess(['view', 'results']) || canAccess(['view', 'campaign'])
     || canAccess(['view', 'project'])"

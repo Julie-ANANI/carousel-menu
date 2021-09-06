@@ -1,16 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Campaign} from '../../../../../../models/campaign';
-import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
-import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
-import {StatsReferentsService} from '../../../../../../services/stats-referents/stats-referents.service';
-import {StatsInterface} from '../../admin-stats-banner/admin-stats-banner.component';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {CommonService} from '../../../../../../services/common/common.service';
-import {CampaignService} from '../../../../../../services/campaign/campaign.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Campaign } from '../../../../../../models/campaign';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
+import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import {  TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { CommonService } from '../../../../../../services/common/common.service';import {CampaignService} from '../../../../../../services/campaign/campaign.service';
 
 export interface ProMailsStats {
   uniqueGoodEmails: number;
@@ -175,7 +174,8 @@ export class AdminCampaignHistoryComponent implements OnInit {
             inverted: true,
             referent: this._referents.inabilityToValidate || 50,
             delimitersLabels: ['Strong inability to validate, to be alerted', 'Moderate inability to validate, to be checked',
-              'Inability to validate low', 'Inability to validate very low']            }
+              'Inability to validate low', 'Inability to validate very low']
+          }
         },
         {
           subHeading: 'Redundancy',

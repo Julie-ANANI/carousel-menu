@@ -1,5 +1,6 @@
 import { CampaignSettings } from './camp-settings';
 import { Innovation } from './innovation';
+import { TargetPros } from './targetPros';
 
 export interface CampaignStats {
   campaign: {
@@ -9,7 +10,7 @@ export interface CampaignStats {
     nbResp: number,
     nbValidatedResp: number,
     nbToValidateResp: number
-  },
+  };
   pro: {
     uniqueGoodEmails: number;
     uniqueBadEmails: number;
@@ -17,18 +18,18 @@ export interface CampaignStats {
     uniqueShielded: number;
     uniqueIdentified: number;
     identified: number;
-  },
-  nbPros90: number,
-  mail: any,
-  nbProsSent: number,
-  nbStartedAnswer: number,
-  nbValidatedAnswers: number,
-  nbProsReceived: number,
-  nbProsOpened: number,
-  nbProsClicked: number,
-  nbAnswers: number,
-  nbPros: number,
-  nbTotalMails: number,
+  };
+  nbPros90: number;
+  mail: any;
+  nbProsSent: number;
+  nbStartedAnswer: number;
+  nbValidatedAnswers: number;
+  nbProsReceived: number;
+  nbProsOpened: number;
+  nbProsClicked: number;
+  nbAnswers: number;
+  nbPros: number;
+  nbTotalMails: number;
 }
 
 export interface Campaign {
@@ -45,5 +46,6 @@ export interface Campaign {
   targetCountries?: Array<string>;
   type?: string;
   status?: string;
+  targetPros?: TargetPros;
 }
 

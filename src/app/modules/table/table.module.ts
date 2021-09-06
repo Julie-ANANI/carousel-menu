@@ -19,6 +19,7 @@ import {CheckBoxFilterModule} from '../utility/check-box-filter/check-box-filter
 import { AutoCompleteInputModule } from '../utility/auto-complete-input/auto-complete-input.module';
 import { SearchInputModule } from '../utility/search-inputs/search-template-1/search-input.module';
 import { AutoSuggestionModule } from '../utility/auto-suggestion/auto-suggestion.module';
+import { CleanHtmlModule } from '../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { AutoSuggestionModule } from '../utility/auto-suggestion/auto-suggestion
     AutoCompleteInputModule,
     SearchInputModule,
     AutoSuggestionModule,
+    CleanHtmlModule,
   ],
   declarations: [TableComponent],
   exports: [TableComponent],

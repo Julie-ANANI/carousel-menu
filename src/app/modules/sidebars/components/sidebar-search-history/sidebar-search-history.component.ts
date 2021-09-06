@@ -7,6 +7,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { JobConfig } from '../../../../models/targetPros';
 
 @Component({
   selector: 'app-sidebar-search-history',
@@ -21,6 +22,8 @@ export class SidebarSearchHistoryComponent {
     this._requests = [];
     this._showChildren = false;
     if (value) {
+      this.prepareSeniorityLevels();
+      this.prepareJobsTypologies();
       this._searchService
         .getRecycleData(value._id)
         .pipe(first())
@@ -46,6 +49,18 @@ export class SidebarSearchHistoryComponent {
 
   private _tableInfos: Table = <Table>{};
 
+  private _seniorityLevels: any = {
+    included: '',
+    excluded: ''
+  };
+
+  private _includedJobCate: Array<any> = [];
+
+  private _excludedJobCate: Array<any> = [];
+
+  private _mixedJobCate: Array<any> = [];
+
+
   private _config: Config = {
     fields: 'created country status countries flag totalResults results',
     limit: '10',
@@ -58,7 +73,8 @@ export class SidebarSearchHistoryComponent {
     private _searchService: SearchService,
     private _rolesFrontService: RolesFrontService,
     private _translateNotificationsService: TranslateNotificationsService
-  ) {}
+  ) {
+  }
 
   public getChildren() {
     this._showChildren = !this._showChildren;
@@ -149,13 +165,13 @@ export class SidebarSearchHistoryComponent {
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'status']),
           _choices: [
-            { _name: 'DONE', _alias: 'Done', _class: 'label is-success' },
+            {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
             {
               _name: 'PROCESSING',
               _alias: 'Processing',
               _class: 'label is-progress',
             },
-            { _name: 'QUEUED', _alias: 'Queued', _class: 'label is-danger' },
+            {_name: 'QUEUED', _alias: 'Queued', _class: 'label is-danger'},
             {
               _name: 'CANCELED',
               _alias: 'Canceled',
@@ -227,7 +243,7 @@ export class SidebarSearchHistoryComponent {
                   requestId,
                   this._requests
                 )
-              ].status = 'CANCELED';
+                ].status = 'CANCELED';
             });
             this._translateNotificationsService.success(
               'Success',
@@ -254,8 +270,10 @@ export class SidebarSearchHistoryComponent {
                   requestId,
                   this._requests
                 )
-              ];
-              if (request.status != 'DONE') request.status = 'QUEUED';
+                ];
+              if (request.status !== 'DONE') {
+                request.status = 'QUEUED';
+              }
             });
             this._translateNotificationsService.success(
               'Success',
@@ -282,7 +300,7 @@ export class SidebarSearchHistoryComponent {
                   requestId,
                   this._requests
                 )
-              ];
+                ];
               request.status = 'DONE';
             });
             this._translateNotificationsService.success(
@@ -299,6 +317,61 @@ export class SidebarSearchHistoryComponent {
           }
         );
     }
+  }
+
+  /**
+   * prepare SeniorityLevels in side bar
+   */
+  prepareSeniorityLevels() {
+    const included: any[] = [];
+    const excluded: any[] = [];
+    Object.keys(this._request.targetedPros.seniorityLevels).forEach(key => {
+      if (this._request.targetedPros.seniorityLevels[key].state === 0) {
+        excluded.push(this._request.targetedPros.seniorityLevels[key].name);
+      } else if (this._request.targetedPros.seniorityLevels[key].state === 1) {
+        included.push(this._request.targetedPros.seniorityLevels[key].name);
+      }
+    });
+    this._seniorityLevels = {
+      included: included.toString(),
+      excluded: excluded.toString()
+    };
+  }
+
+  /**
+   * prepare to list job typologies in side bar
+   */
+  prepareJobsTypologies() {
+    this._includedJobCate = [];
+    this._excludedJobCate = [];
+    this._mixedJobCate = [];
+    Object.keys(this._request.targetedPros.jobsTypologies).forEach(key => {
+      const jobToAdd = {
+        jobName: '',
+        included: 0,
+        excluded: 0
+      };
+      if (this._request.targetedPros.jobsTypologies[key].state === 0) {
+        jobToAdd.excluded = this._request.targetedPros.jobsTypologies[key].jobs.length;
+        jobToAdd.jobName = this._request.targetedPros.jobsTypologies[key].name.en;
+        this._excludedJobCate.push(jobToAdd);
+      } else if (this._request.targetedPros.jobsTypologies[key].state === 1) {
+        jobToAdd.included = this._request.targetedPros.jobsTypologies[key].jobs.length;
+        jobToAdd.jobName = this._request.targetedPros.jobsTypologies[key].name.en;
+        this._includedJobCate.push(jobToAdd);
+      } else if (this._request.targetedPros.jobsTypologies[key].state === 3) {
+        jobToAdd.included =
+          this._request.targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 1).length;
+        jobToAdd.excluded =
+          this._request.targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 0).length;
+        jobToAdd.jobName = this._request.targetedPros.jobsTypologies[key].name.en;
+        this._mixedJobCate.push(jobToAdd);
+      }
+    });
+  }
+
+  professionalTargeting() {
+
   }
 
   public goToRequest(request: any) {
@@ -333,5 +406,22 @@ export class SidebarSearchHistoryComponent {
 
   get lastTimeUsed(): string {
     return this._lastTimeUsed;
+  }
+
+
+  get includedJobCate(): Array<any> {
+    return this._includedJobCate;
+  }
+
+  get excludedJobCate(): Array<any> {
+    return this._excludedJobCate;
+  }
+
+  get mixedJobCate(): Array<any> {
+    return this._mixedJobCate;
+  }
+
+  get seniorityLevels(): any {
+    return this._seniorityLevels;
   }
 }

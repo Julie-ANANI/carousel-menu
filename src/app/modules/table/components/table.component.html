@@ -304,6 +304,13 @@
                 </ng-container>
                 <!-- /type DATE_TIME -->
 
+                <!-- type PRO-TARGET -->
+                <ng-container *ngSwitchCase="'PRO-TARGET'">
+                  <div class="text-ellipsis" [innerHTML]="getContentValue(row, getAttrs(column)[0]) | cleanHtml">
+                  </div>
+                </ng-container>
+                <!-- /type PRO-TARGET -->
+
 
                 <!-- type MULTI-CHOICES -->
                 <ng-container *ngSwitchCase="'MULTI-CHOICES'">
