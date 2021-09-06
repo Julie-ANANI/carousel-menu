@@ -237,6 +237,11 @@ export interface MissionTemplate {
    */
   category: 'INNOVATE' | 'INNOVATION';
 
+  /**
+   * defines the methodology (description to show)
+   */
+  methodology: string;
+
   entry: Array<{
     lang: string;
 

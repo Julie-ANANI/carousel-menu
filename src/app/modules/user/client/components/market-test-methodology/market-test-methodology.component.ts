@@ -12,41 +12,64 @@ export class MarketTestMethodologyComponent {
 
   private _image = '';
 
+  /**
+   *
+   * @param value
+   */
+  @Input() set methodology(value: string) {
+    this._initValue(value);
+  }
+
+  /**
+   * we are using this for the old mission template. For the new
+   * one we have the methodology value.
+   * @param value
+   */
   @Input() set objective(value: string) {
+    this._initValue(value);
+  }
+
+  constructor(private _translateService: TranslateService) { }
+
+  private _initValue(value: string) {
     switch (value) {
       case 'Detecting market needs':
+      case 'DETECTING_MARKET':
         this._case = 'DETECTING_MARKET';
         this._image = 'detecting-';
         break;
 
       case 'Validating market needs':
+      case 'VALIDATING_MARKET':
         this._case = 'VALIDATING_MARKET';
         this._image = 'validating-market-';
         break;
 
       case 'Sourcing solutions / suppliers':
+      case 'SOURCING_SOLUTIONS':
         this._case = 'SOURCING_SOLUTIONS';
         this._image = 'sourcing-';
         break;
 
       case 'Identifying receptive markets':
+      case 'IDENTIFYING_RECEPTIVE':
         this._case = 'IDENTIFYING_RECEPTIVE';
         this._image = 'identifying-';
         break;
 
       case 'Validating the interest in my project':
+      case 'VALIDATING_INTEREST':
         this._case = 'VALIDATING_INTEREST';
         this._image = 'validating-interest-';
         break;
 
       case 'Optimizing my value proposition':
+      case 'OPTIMIZING_VALUE':
         this._case = 'OPTIMIZING';
         this._image = 'optimizing-';
         break;
     }
   }
-
-  constructor(private _translateService: TranslateService) { }
 
   get caseImage(): string {
     if (!!this._image) {
