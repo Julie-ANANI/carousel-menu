@@ -208,31 +208,20 @@
               type="text">
             </textarea>
         </label>
-        <span
-          (click)="onClickSearch($event)"
-          *ngIf="params['keywords']"
-          [attr.data-tooltip]="'Search'"
-          class="search-button-wrapper tooltip">
-              <i class="fas fa-search"></i>
-            </span>
+<!--        <span-->
+<!--          (click)="onClickSearch($event)"-->
+<!--          *ngIf="params['keywords']"-->
+<!--          [attr.data-tooltip]="'Search'"-->
+<!--          class="search-button-wrapper tooltip">-->
+<!--              <i class="fas fa-search"></i>-->
+<!--            </span>-->
       </div>
 
       <div class="remaining-wrapper">
-        <a
-          *ngIf="canAccess(['import', 'pros'])"
-          (click)="showModal = true"
-          class="text-link">
-          Import a list of pros
-        </a>
         <div class="d-flex align-center">
           <span [ngClass]="getCircleClass()" class="shape is-circle is-xs"></span>
           <span>Remaining requests: {{ googleQuota }}</span>
         </div>
-      </div>
-
-      <div class="form-group m-top-10"
-           (click)="onClickSearch($event)">
-        <button class="button is-primary is-md" [disabled]="!params['keywords']">Launch</button>
       </div>
 
     </div>
@@ -320,6 +309,11 @@
     </div>
     <!-- /professional targeting  -->
 
+    <div class="form-group m-top-20 d-flex"
+         (click)="onClickSearch($event)">
+      <button class="button is-primary is-lg m-auto" [disabled]="!params['keywords']">Launch</button>
+    </div>
+
   </div>
   <!-- /search wrapper -->
 
@@ -333,6 +327,7 @@
 
   <section class="modal-body">
     <app-shared-professional-targeting
+      [isPreview]="isPreview"
       [campaign]="campaign">
     </app-shared-professional-targeting>
   </section>

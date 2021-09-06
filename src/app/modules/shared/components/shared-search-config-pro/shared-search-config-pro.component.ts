@@ -39,9 +39,6 @@ export class SharedSearchConfigProComponent implements OnInit {
    */
   @Input() set isPreview(preview: Boolean) {
     this._isPreview = preview;
-    if (preview) {
-      this._showToggleSearch = true;
-    }
   }
 
   /**
@@ -180,14 +177,16 @@ export class SharedSearchConfigProComponent implements OnInit {
    */
   stateOnChange(event: Event) {
     event.preventDefault();
-    if (this.isJobTypo) {
-      this.setJobStates();
-      this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
-    } else {
-      this.setSeniorityLevelState();
-      this.sendStateOnChange.emit({action: 'seniorLevels', state: this._currentState, identifier: this._identifier});
+    if (!this.isPreview) {
+      if (this.isJobTypo) {
+        this.setJobStates();
+        this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
+      } else {
+        this.setSeniorityLevelState();
+        this.sendStateOnChange.emit({action: 'seniorLevels', state: this._currentState, identifier: this._identifier});
+      }
+      this._countStates();
     }
-    this._countStates();
   }
 
 
@@ -233,21 +232,23 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param job
    */
   stateJobOnChange(event: Event, job: any) {
-    event.preventDefault();
-    switch (job.state) {
-      case 0:
-        job.state = 2;
-        break;
-      case 1:
-        job.state = 0;
-        break;
-      case 2:
-        job.state = 1;
-        break;
+    if (!this.isPreview) {
+      event.preventDefault();
+      switch (job.state) {
+        case 0:
+          job.state = 2;
+          break;
+        case 1:
+          job.state = 0;
+          break;
+        case 2:
+          job.state = 1;
+          break;
+      }
+      this._countStates();
+      this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
+      this._currentState = this.checkTypoState();
     }
-    this._countStates();
-    this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
-    this._currentState = this.checkTypoState();
   }
 
   /**

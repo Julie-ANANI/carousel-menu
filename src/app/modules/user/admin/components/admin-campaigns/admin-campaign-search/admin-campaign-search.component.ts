@@ -22,12 +22,12 @@ export class AdminCampaignSearchComponent implements OnInit {
 
   private _searchModules: Array<SearchModule> = [
     {
-      option: 'scraping',
-      context: 'use the scraping module',
-    },
-    {
       option: 'research',
       context: 'use the research module',
+    },
+    {
+      option: 'scraping',
+      context: 'use the scraping module',
     },
     {
       option: 'import',

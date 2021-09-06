@@ -76,6 +76,8 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _toReset = false;
 
+  private _isSaved = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
@@ -566,7 +568,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   saveProTargeting() {
-    console.log(this._targetedProsToUpdate);
+    this._isSaved = true;
     this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
       .subscribe(() => {
         this._toSave = false;
@@ -586,6 +588,11 @@ export class SharedSearchProsComponent implements OnInit {
 
   get toReset(): boolean {
     return this._toReset;
+  }
+
+
+  get isSaved(): boolean {
+    return this._isSaved;
   }
 
   resetTargetedPros() {

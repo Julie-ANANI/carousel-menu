@@ -17,6 +17,9 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   @Input() set isPreview(value) {
     this._isPreview = value;
+    if (value) {
+      this.getTargetedProsAndJobs();
+    }
   }
 
   @Input() set isReset(value: Boolean) {
@@ -111,14 +114,10 @@ export class SharedProfessionalTargetingComponent implements OnInit {
    * @param event
    */
   seniorityLevelsOnChange(event: any) {
-    console.log(event);
     if (event.action === 'seniorLevels') {
       const _identifier = event.identifier;
-      console.log(_identifier);
-      console.log(this._targetedProsToUpdate.seniorityLevels[_identifier]);
       this._targetedProsToUpdate.seniorityLevels[_identifier].state = event.state;
     }
-    console.log(this._targetedProsToUpdate);
     this.targetedProsOnChange.emit(this._targetedProsToUpdate);
   }
 
@@ -127,7 +126,6 @@ export class SharedProfessionalTargetingComponent implements OnInit {
    * @param event
    */
   jobTypoOnChange(event: any) {
-    console.log(event);
     if (event.action === 'jobTypos') {
       const _identifier: string = event.identifier;
       this._targetedProsToUpdate.jobsTypologies[_identifier].state = event.state;
