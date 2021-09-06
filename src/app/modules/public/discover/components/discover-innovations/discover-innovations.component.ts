@@ -126,7 +126,7 @@ export class DiscoverInnovationsComponent implements OnInit {
       this._config.tags = JSON.stringify({$in: filters.map((filter: Tag) => filter._id)});
       this._config.offset = '0';
     } else {
-      delete this._config.filters;
+      delete this._config.tags;
     }
     this._checkFilterActivation();
     this._getFilteredInnovations();
