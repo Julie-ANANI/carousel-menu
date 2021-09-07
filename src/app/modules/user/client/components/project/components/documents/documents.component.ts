@@ -13,7 +13,7 @@ import {CommonService} from '../../../../../../../services/common/common.service
 import {environment} from '../../../../../../../../environments/environment';
 import {AnswerService} from '../../../../../../../services/answer/answer.service';
 import {TranslateService} from '@ngx-translate/core';
-import FileSaver from "file-saver";
+import FileSaver from 'file-saver';
 import {isPlatformBrowser} from '@angular/common';
 import {ExecutiveReportService} from '../../../../../../../services/executive-report/executive-report.service';
 import {ContactFrontService} from '../../../../../../../services/contact/contact-front.service';
@@ -62,8 +62,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       img: 'https://res.cloudinary.com/umi/image/upload/app/default-images/storyboard/video-synthesis.png'
     }
   ];
-
-  private _userLang = this._translateService.currentLang || 'en';
 
   private _isLinkCopied = false;
 
@@ -206,7 +204,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isGeneratingPDF && this.isOwner && this.ownerConsent) {
       this._isGeneratingPDF = true;
-      const url = this._answerService.exportAsPDF(this._innovation._id, this._userLang);
+      const url = this._answerService.exportAsPDF(this._innovation._id, this.userLang);
       setTimeout(() => {
         window.open(url);
         this._isGeneratingPDF = false;
@@ -244,7 +242,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     if (this.isOwner && this.ownerConsent) {
       const clientProject = <ClientProject>this._innovation.clientProject;
       const email = clientProject && clientProject.commercial && clientProject.commercial.email || 'achampagne@umi.us';
-      window.open(ContactFrontService.commercialVideo(this._innovation, email, this._userLang), '_blank');
+      window.open(ContactFrontService.commercialVideo(this._innovation, email, this.userLang), '_blank');
     }
   }
 
@@ -277,10 +275,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     return this._documents;
   }
 
-  get userLang(): string {
-    return this._userLang;
-  }
-
   get isLinkCopied(): boolean {
     return this._isLinkCopied;
   }
@@ -299,6 +293,10 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   get isGeneratingReport(): boolean {
     return this._isGeneratingReport;
+  }
+
+  get userLang(): string {
+    return this._translateService.currentLang;
   }
 
   ngOnDestroy(): void {
