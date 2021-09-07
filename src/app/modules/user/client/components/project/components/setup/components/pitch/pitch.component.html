@@ -180,7 +180,7 @@
           [ngClass]="{'p-top-20': i !== 0 && section.type !== 'NOTHING' }"
           class="preset-wrapper">
 
-          <p *ngIf="section.type !== 'NOTHING'">SECTION {{ section.type | uppercase }}</p>
+          <p *ngIf="section.type !== 'NOTHING'">{{ sectionName(section) | uppercase }}</p>
 
           <ng-container *ngFor="let question of section.questions; let j = index;">
             <div
