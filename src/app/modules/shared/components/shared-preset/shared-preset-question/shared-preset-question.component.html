@@ -151,7 +151,10 @@
         <!-- max options select -->
         <ng-container *ngIf="question.controlType === 'checkbox'">
           <div class="d-flex align-center">
-            <label class="form-label m-no-bottom m-right-2 text-normal" [for]="'question-maxOption'">
+            <label
+              [for]="'question-maxOption'"
+              [ngStyle]="{'width': '215px'}"
+              class="form-label m-no-bottom m-right-2 text-normal">
               Maximum options to select:
             </label>
             <p *ngIf="!isEditable" class="text-sm">{{ question.maxOptionsSelect || 'NA' }}</p>
@@ -162,7 +165,7 @@
               [attr.placeholder]="question.options.length"
               [id]="'question-maxOption'"
               [max]="question.options.length"
-              [ngStyle]="{'max-width': '40px'}"
+              [ngStyle]="{'max-width': '80px'}"
               class="form-input is-sm text-center"
               min="1"
               type="number">
