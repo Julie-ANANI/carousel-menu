@@ -12,9 +12,9 @@
       <div class="p-top-30 p-bottom-50">
 
         <!-- save template / name -->
-        <section [hidden]="!canAccess(['edit'])" class="flex-between m-bottom-20 flex-wrap">
+        <section [hidden]="!canAccess(['edit'])" class="flex-end m-bottom-20">
 
-          <div class="d-flex align-center">
+          <!--<div class="d-flex align-center">
             <h2 class="title is-6 text-background m-bottom-15 m-right-10">Use case:</h2>
             <label
               [attr.data-tooltip]="'COMMON.CHANGE_WITHOUT_SAVE' | translate"
@@ -28,7 +28,7 @@
                 </option>
               </select>
             </label>
-          </div>
+          </div>-->
 
           <button
             (click)="onClickSave($event)"
