@@ -25,9 +25,6 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-*.css
-*.css.map
-/css
 
 # System Files
 .DS_Store
