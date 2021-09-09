@@ -13,7 +13,8 @@
 }
 
 .button-checker {
-  width: 30px;
+  min-width: 30px;
+  max-width: 30px;
   height: 30px;
   border-radius: 8px;
   display: flex;
@@ -21,7 +22,8 @@
   align-items: center;
 
   .state-full-check {
-    border: 10px solid #2fff9e;
+    border: 5px solid #2ECC71;
+    color: #2ECC71;
   }
 
   .state-partially-check {
@@ -29,7 +31,8 @@
   }
 
   .state-exclude {
-    border: 10px solid $alert-color;
+    border: 5px solid $alert-color;
+    color: $alert-color
   }
 
   .state-none-check {

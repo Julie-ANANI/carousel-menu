@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { JobConfig } from '../../../../models/targetPros';
+import { JobConfig, SeniorityLevel } from '../../../../models/targetPros';
 
 /**
  * SL - 0: excluded, 1: included
@@ -12,14 +12,30 @@ import { JobConfig } from '../../../../models/targetPros';
   styleUrls: ['./shared-search-config-pro.component.scss']
 })
 export class SharedSearchConfigProComponent implements OnInit {
+  /**
+   * if it's a job cotegory
+   */
+  @Input() isJobTypo = false;
 
   /**
    * one category: seniority level/ job category
    * @param value
    */
-  @Input() set option(value: any) {
+  @Input() set option(value: { name: string, state: number }) {
     this._currentState = value.state;
     this._context = value.name;
+    if (this.isJobTypo) {
+      this.initJobStates();
+      this._countStates();
+    }
+  }
+
+  /**
+   * filtered seniority level
+   * @param value
+   */
+  @Input() set filteredSeniorityLevel(value: any) {
+    this._filteredLevelsIdentifiers = Object.values(value).map((v: SeniorityLevel) => v.name);
   }
 
   /**
@@ -35,7 +51,7 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   @Input() set filteredJobs(jobs: Array<JobConfig>) {
-    this._filteredIds = jobs.map(_j => _j._id);
+    this._filteredJobsIds = jobs.map(_j => _j._id);
   }
 
   /**
@@ -45,11 +61,6 @@ export class SharedSearchConfigProComponent implements OnInit {
   @Input() set isPreview(preview: Boolean) {
     this._isPreview = preview;
   }
-
-  /**
-   * if it's a job cotegory
-   */
-  @Input() isJobTypo = false;
 
   @Output() sendStateOnChange: EventEmitter<any> = new EventEmitter();
 
@@ -61,7 +72,9 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   private _jobConfigs: Array<JobConfig> = [];
 
-  private _filteredIds: Array<String> = [];
+  private _filteredJobsIds: Array<String> = [];
+
+  private _filteredLevelsIdentifiers: Array<String> = [];
 
   private _currentState = 0;
 
@@ -147,6 +160,29 @@ export class SharedSearchConfigProComponent implements OnInit {
         this._currentState = 1;
         this.jobConfigs.map(_job => {
           _job.state = 1;
+        });
+        break;
+    }
+  }
+
+  /**
+   * job state
+   */
+  initJobStates() {
+    switch (this._currentState) {
+      case 0:
+        this.jobConfigs.map(_job => {
+          _job.state = 0;
+        });
+        break;
+      case 1:
+        this.jobConfigs.map(_job => {
+          _job.state = 1;
+        });
+        break;
+      case 2:
+        this.jobConfigs.map(_job => {
+          _job.state = 2;
         });
         break;
     }
@@ -286,7 +322,11 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   showJob(job: JobConfig) {
-    return this._filteredIds.includes(job._id);
+    return this._filteredJobsIds.includes(job._id);
+  }
+
+  showOption(option: string) {
+    return this.isJobTypo || this._filteredLevelsIdentifiers.includes(option);
   }
 
   get isPreview(): Boolean {

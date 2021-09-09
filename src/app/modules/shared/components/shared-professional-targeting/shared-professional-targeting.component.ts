@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { JobsTypologies, TargetPros } from '../../../../models/targetPros';
+import { JobsTypologies, SeniorityLevel, TargetPros } from '../../../../models/targetPros';
 import { first } from 'rxjs/operators';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { Campaign } from '../../../../models/campaign';
@@ -36,11 +36,11 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _campaign: Campaign = <Campaign>{};
 
-  private _seniorityLevels: any = {};
+  private _seniorityLevels: { [property: string]: SeniorityLevel } = {};
 
   private _filteredJobsTypologies: { [property: string]: JobsTypologies } = {};
 
-  private _targetedPros: TargetPros;
+  private _filteredSeniorityLevels: any = {};
 
   private _targetedProsToUpdate: TargetPros;
 
@@ -52,7 +52,9 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _isPreview: Boolean = false;
 
-  private _keyword = '';
+  private _selectAllSeniorityLevels = false;
+
+  private _selectAllJobs = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _campaignService: CampaignService) {
@@ -69,60 +71,16 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     this._isLoading = true;
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
-        this._targetedPros = res;
         this._targetedProsToUpdate = res;
-        this._jobsTypologies = this._targetedPros.jobsTypologies;
-        this._searchOperator = this._targetedPros.searchOperator;
-        this._seniorityLevels = this._targetedPros.seniorityLevels;
-        this._filteredJobsTypologies = this._jobsTypologies;
+        this._jobsTypologies = res.jobsTypologies;
+        this._searchOperator = res.searchOperator;
+        this._seniorityLevels = res.seniorityLevels;
+        this._filteredJobsTypologies = res.jobsTypologies;
+        this._filteredSeniorityLevels = res.seniorityLevels;
         setTimeout(() => {
           this._isLoading = false;
         }, 500);
       });
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
-  getSeniorityLevelsKeys() {
-    return Object.keys(this._seniorityLevels) || [];
-  }
-
-  getJobsTypologiesKeys() {
-    return Object.keys(this._jobsTypologies) || [];
-  }
-
-  getFilteredJobsTypologiesKeys() {
-    return Object.keys(this._filteredJobsTypologies) || Object.keys(this._jobsTypologies);
-  }
-
-  get seniorityLevels(): any {
-    return this._seniorityLevels;
-  }
-
-  get targetedPros(): TargetPros {
-    return this._targetedPros;
-  }
-
-  get jobsTypologies(): { [p: string]: JobsTypologies } {
-    return this._jobsTypologies;
-  }
-
-  get searchOperator(): string {
-    return this._searchOperator;
-  }
-
-  /**
-   * update seniorityLevels
-   * @param event
-   */
-  get keyword(): string {
-    return this._keyword;
-  }
-
-  set keyword(value: string) {
-    this._keyword = value;
   }
 
   seniorityLevelsOnChange(event: any) {
@@ -169,27 +127,141 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return this._filteredJobsTypologies;
   }
 
-  set filteredJobsTypologies(value: { [p: string]: JobsTypologies }) {
-    this._filteredJobsTypologies = value;
+  get filteredSeniorityLevels(): { [p: string]: JobsTypologies } {
+    return this._filteredSeniorityLevels;
   }
 
-  public onClickSearch(keyword: string) {
+  public onClickSearchJob(keyword: string) {
     if (!!keyword) {
       this._filteredJobsTypologies = {};
       const keys = Object.keys(this._jobsTypologies);
       for (let i = 0; i < keys.length; i++) {
         const category = this._jobsTypologies[keys[i]];
-        const filteredJobs = category.jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase()));
-        if (filteredJobs.length) {
+
+        if (category.name.en.toLowerCase().includes(keyword.toLowerCase())
+          || category.name.fr.toLowerCase().includes(keyword.toLowerCase())) {
           this._filteredJobsTypologies[keys[i]] = {
             state: category.state,
             name: category.name,
-            jobs: filteredJobs
+            jobs: category.jobs
           };
+        } else {
+          const filteredJobs = category.jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
+            || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
+          if (filteredJobs.length) {
+            this._filteredJobsTypologies[keys[i]] = {
+              state: category.state,
+              name: category.name,
+              jobs: filteredJobs
+            };
+          }
         }
       }
     } else {
       this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
     }
   }
+
+  public onClickSearchSeniorityLevel(keyword: string) {
+    if (!!keyword) {
+      this._filteredSeniorityLevels = {};
+      const keys = Object.keys(this._seniorityLevels);
+      for (let i = 0; i < keys.length; i++) {
+        const level = this._seniorityLevels[keys[i]];
+
+        if (level.name.toLowerCase().includes(keyword.toLowerCase())) {
+          this._filteredSeniorityLevels[keys[i]] = {
+            state: level.state,
+            name: level.name,
+          };
+        }
+      }
+    } else {
+      this._filteredSeniorityLevels = this._seniorityLevels;
+    }
+  }
+
+  selectAllOnChange(event: Event, type: 'SENIORITY_LEVEL' | 'JOB_TYPOLOGY') {
+    switch (type) {
+      case 'JOB_TYPOLOGY':
+        this._selectAllJobs = !this._selectAllJobs;
+          const keys = Object.keys(this._jobsTypologies);
+          keys.forEach(key => {
+            this._jobsTypologies[key].state = (this._selectAllJobs) ? 1 : 2;
+            this._jobsTypologies[key].jobs.forEach(job => job.state = ((this._selectAllJobs) ? 1 : 2));
+          });
+          this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
+          this.targetedProsOnChange.emit(this._targetedProsToUpdate);
+        break;
+      case 'SENIORITY_LEVEL':
+        this._selectAllSeniorityLevels = !this._selectAllSeniorityLevels;
+        Object.keys(this._seniorityLevels).map(key => {
+          this._seniorityLevels[key].state = (this._selectAllSeniorityLevels) ? 1 : 0;
+        });
+        this._targetedProsToUpdate.seniorityLevels = this._seniorityLevels;
+        this.targetedProsOnChange.emit(this._targetedProsToUpdate);
+        break;
+    }
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get getSeniorityLevelsKeys() {
+    return Object.keys(this._seniorityLevels) || [];
+  }
+
+  get getFilteredJobsTypologiesKeys() {
+    return Object.keys(this._filteredJobsTypologies) || Object.keys(this._jobsTypologies);
+  }
+
+  get seniorityLevels(): { [p: string]: SeniorityLevel } {
+    return this._seniorityLevels;
+  }
+
+  get jobsTypologies(): { [p: string]: JobsTypologies } {
+    return this._jobsTypologies;
+  }
+
+  get searchOperator(): string {
+    return this._searchOperator;
+  }
+
+  get selectAllJobs(): boolean {
+    return this._selectAllJobs;
+  }
+
+  get selectAllSeniorityLevels(): boolean {
+    return this._selectAllSeniorityLevels;
+  }
+
+  get nbAllJobSelected(): number {
+    let _total = 0;
+    Object.keys(this._jobsTypologies).forEach(key => {
+      _total += this._jobsTypologies[key].jobs.filter(job => job.state === 1).length;
+    });
+    return _total;
+  }
+
+  get nbAllJobExcluded(): number {
+    let _total = 0;
+    Object.keys(this._jobsTypologies).forEach(key => {
+      _total += this._jobsTypologies[key].jobs.filter(job => job.state === 0).length;
+    });
+    return _total;
+  }
+
+  get nbAllSeniorityLevelSelected(): number {
+    let _total = 0;
+    Object.keys(this._seniorityLevels).forEach(key => {
+      _total += this._seniorityLevels[key].state;
+    });
+    return _total;
+  }
+
+  get nbAllSeniorityLevelExcluded(): number {
+    return Object.keys(this.seniorityLevels).length - this.nbAllSeniorityLevelSelected;
+  }
+
 }

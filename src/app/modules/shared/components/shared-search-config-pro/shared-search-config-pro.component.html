@@ -1,79 +1,79 @@
-<div id="shared-search-config-pros" class="m-10">
+<div id="shared-search-config-pros">
 
-  <!-- Seniority level / Job category level -->
-  <div class="pro-select-wrapper d-flex align-center">
-
-    <!-- check box-->
-    <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" (click)="stateOnChange($event)">
-      <ng-container [ngSwitch]="currentState">
-        <ng-container *ngSwitchCase="0">
-          <i class="fas fa-times"></i>
-        </ng-container>
-        <ng-container *ngSwitchCase="2">
-        </ng-container>
-        <ng-container *ngSwitchCase="3">
-          <i class="fas fa-circle"></i>
-        </ng-container>
-        <ng-container *ngSwitchCase="1">
-          <i class="fas fa-check"></i>
-        </ng-container>
-      </ng-container>
-    </div>
-    <!-- /check box-->
-
-    <!-- Seniority Level's name or Job category-->
-    <div class="text-white m-left-4 d-flex align-center width-100">
-      {{context}}
-
-      <!-- nb of included/excluded jobs-->
-      <div class="d-flex flex-end flex-grow">
-        <span class="shape bg-success is-circle is-sm text-13" *ngIf="nbIncluded"> {{nbIncluded}} </span>
-        <span class="shape bg-alert is-circle is-sm text-13" *ngIf="nbExcluded"> {{nbExcluded}} </span>
-      </div>
-      <!-- /nb of included/excluded jobs-->
-
-    </div>
-    <!-- /Seniority Level's name or Job category-->
-
-    <!-- Job category expand item-->
-    <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" (click)="onClickToggle()">
-      <i class="icon" [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-up' "></i>
-    </div>
-    <!-- /Job category expand item -->
-  </div>
-  <!-- /Seniority level / Job category level-->
-
-  <!-- Jobs' list-->
-  <div class="flex-d-column justify-center m-left-15" *ngIf="showToggleSearch">
-    <ng-container *ngFor="let job of jobConfigs">
-      <ng-container *ngIf="showJob(job)">
-        <div class="job-select-wrapper d-flex align-center">
-
-        <!-- Job's checkbox-->
-        <div class="button-checker m-left-3" [ngStyle]="getJobCurrentState(job)" (click)="stateJobOnChange($event, job)">
-          <ng-container [ngSwitch]="job.state">
-            <ng-container *ngSwitchCase="0">
-              <i class="fas fa-times"></i>
-            </ng-container>
-            <ng-container *ngSwitchCase="2">
-            </ng-container>
-            <ng-container *ngSwitchCase="1">
-              <i class="fas fa-check"></i>
-            </ng-container>
+  <div class="d-flex flex-d-column align-start justify-start">
+    <!-- Seniority level / Job category level -->
+    <div *ngIf="showOption(context)"
+         class="pro-select-wrapper d-flex align-center w-full m-top-10">
+      <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
+           (click)="stateOnChange($event)">
+        <ng-container [ngSwitch]="currentState">
+          <ng-container *ngSwitchCase="0">
+            <i class="fas fa-times"></i>
           </ng-container>
+          <ng-container *ngSwitchCase="2">
+          </ng-container>
+          <ng-container *ngSwitchCase="3">
+            <i class="fas fa-circle"></i>
+          </ng-container>
+          <ng-container *ngSwitchCase="1">
+            <i class="fas fa-check"></i>
+          </ng-container>
+        </ng-container>
+      </div>
+      <!-- /check box-->
+
+      <!-- Seniority Level's name or Job category-->
+      <div class="text-white m-left-4 d-flex align-center width-100" style="min-width: fit-content">
+        {{context}}
+      </div>
+      <!-- /Seniority Level's name or Job category-->
+
+      <!-- Job category expand item-->
+      <div class="d-flex m-left-auto text-white m-right-3 w-full" *ngIf="isJobTypo" (click)="onClickToggle()">
+        <!-- nb of included/excluded jobs-->
+        <div class="d-flex flex-end flex-grow" style="width: 40%">
+          <span class="shape bg-success is-circle is-sm text-13" *ngIf="nbIncluded"> {{nbIncluded}} </span>
+          <span class="shape bg-alert is-circle is-sm text-13" *ngIf="nbExcluded"> {{nbExcluded}} </span>
         </div>
-        <!-- /Job's checkbox-->
+        <!-- /nb of included/excluded jobs-->
+        <i class="icon" [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-up' "></i>
+      </div>
+    </div>
+    <!-- /Seniority level / Job category level-->
+
+    <!-- Jobs' list-->
+    <div class="dropdown-toggle flex-d-column w-full m-left-15" *ngIf="showToggleSearch">
+      <ng-container *ngFor="let job of jobConfigs">
+        <div class="d-flex p-1" *ngIf="showJob(job)">
+          <!-- Job's checkbox-->
+          <div class="button-checker m-left-3" [ngStyle]="getJobCurrentState(job)"
+               (click)="stateJobOnChange($event, job)">
+            <ng-container [ngSwitch]="job.state">
+              <ng-container *ngSwitchCase="0">
+                <i class="fas fa-times"></i>
+              </ng-container>
+              <ng-container *ngSwitchCase="2">
+              </ng-container>
+              <ng-container *ngSwitchCase="1">
+                <i class="fas fa-check"></i>
+              </ng-container>
+            </ng-container>
+            <div>
+            </div>
+            <!-- /Job's checkbox-->
+          </div>
 
           <!-- Job's label-->
           <div class="m-left-4">
             {{job.label.en}}
           </div>
           <!-- Job's label-->
-
         </div>
       </ng-container>
-    </ng-container>
+
+    </div>
+    <!-- /Jobs' list -->
+
   </div>
-  <!-- /Jobs' list -->
 
 </div>

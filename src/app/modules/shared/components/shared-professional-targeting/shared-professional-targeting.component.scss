@@ -1,3 +1,6 @@
+@import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
+
 .activity {
 
   :not(.inactive) {
@@ -13,6 +16,31 @@
 
     #inactive_label {
       display: block;
+    }
+  }
+}
+
+.select-wrapper{
+  border-radius: 8px;
+  height: 40px;
+
+  .button-checker {
+    min-width: 30px;
+    max-width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.state-full-check {
+      border: 5px solid #2ECC71;
+      color: #2ECC71;
+    }
+
+    &.state-none-check {
+      border: 5px solid #97A4B1;
+      color: #97A4B1;
     }
   }
 }
