@@ -12,7 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 import { UserService } from '../../../services/user/user.service';
-import {MediaFrontService} from '../../../services/media/media-front.service';
+import { MediaFrontService } from '../../../services/media/media-front.service';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +31,12 @@ export class LoginComponent implements OnInit {
   });
 
   private _linkedInLink = '';
+
+  private _baseApi = environment.apiUrl;
+
+  private _clientUrl = environment.clientUrl;
+
+  private _domain = environment.domain;
 
   private _linkedInState = Date.now().toString();
 
@@ -129,8 +135,8 @@ export class LoginComponent implements OnInit {
               const redirect = this._authService.redirectUrl
                 ? this._authService.redirectUrl
                 : this._authService.isAdmin
-                ? this._routeFrontService.adminDefaultRoute()
-                : '/';
+                  ? this._routeFrontService.adminDefaultRoute()
+                  : '/';
 
               this._authService.redirectUrl = '';
 
@@ -250,5 +256,105 @@ export class LoginComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+
+  get baseApi(): string {
+    return this._baseApi;
+  }
+
+  get clientUrl(): string {
+    return this._clientUrl;
+  }
+
+  get domain(): string {
+    return this._domain;
+  }
+
+  loginOnChange(event: any) {
+    if (event && event.status) {
+      const user = new User(event.message);
+      this._authService
+        .login(user)
+        .pipe(first())
+        .subscribe(
+          () => {
+            if (this._authService.isAuthenticated) {
+              // Get the redirect URL from our auth service. If no redirect has been set, use the default.
+              const redirect = this._authService.redirectUrl
+                ? this._authService.redirectUrl
+                : this._authService.isAdmin
+                  ? this._routeFrontService.adminDefaultRoute()
+                  : '/';
+
+              this._authService.redirectUrl = '';
+
+              // Set our navigation extras object that passes on our global query params and fragment
+              const navigationExtras: NavigationExtras = {
+                queryParamsHandling: 'merge',
+                preserveFragment: true,
+              };
+
+              // Redirect the user
+              this._router.navigate([redirect], navigationExtras);
+            }
+          },
+          () => {
+            this._nbTentatives -= 1;
+            this._translateNotificationsService.error(
+              'ERROR.ERROR',
+              'ERROR.INVALID_FORM_DATA'
+            );
+          }
+        );
+    }
+  }
+
+  loginWithLinkedin(event: any) {
+    if (event && event.status) {
+      const data = {
+        domain: environment.domain,
+        state: this._linkedInState,
+      };
+      this._authService
+        .preRegisterDataOAuth2('linkedin', data)
+        .pipe(first())
+        .subscribe(
+          (_) => {
+            console.log(_);
+          },
+          (err: HttpErrorResponse) => {
+            this._displayLoadingLinkedIn = false;
+            console.error(err);
+          },
+          () => {
+            window.open(this._linkedInLink, '_self');
+          }
+        );
+    }
+  }
+
+  contactUMIOnChange(event: any) {
+    if (event && event.status) {
+      this._translateNotificationsService.success(
+        'Success',
+        'We received your email, we will contact you soon.'
+      );
+    } else {
+      this._translateNotificationsService.error(
+        'ERROR.ERROR',
+        'An error occurred'
+      );
+    }
+  }
+
+  forgetPasswordEventOnChange(event: any) {
+    if (event) {
+      switch (event.action) {
+        case 'signUp':
+          this._router.navigate(['/register']);
+          break;
+      }
+    }
   }
 }
