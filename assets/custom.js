@@ -2,7 +2,7 @@ $(document).ready(function() {
     const allDocsAccordian = document.querySelectorAll('.docs-accordion');
 
     // first time page load
-    $("#docContent").load('./documentation/elements/close.html');
+    $("#docContent").load('./documentation/overview.html');
 
     $(".docs-accordion").click(function(e) {
         let page = '';
