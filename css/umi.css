@@ -2118,13 +2118,14 @@ code {
   font-size: 14px;
 }
 
-.close, .modal-close {
+.close,
+.modal-close {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   user-select: none;
   white-space: nowrap;
-  text-decoration: none;
+  text-decoration: none !important;
   background-color: transparent;
   border: 0;
   color: #333333;
@@ -2139,7 +2140,8 @@ code {
   line-height: 1;
   font-size: 20px;
 }
-.close::before, .modal-close::before {
+.close::before,
+.modal-close::before {
   display: none;
   content: "";
   width: 100%;
@@ -2147,51 +2149,63 @@ code {
   border-radius: 50%;
   position: absolute;
 }
-.close::after, .modal-close::after {
+.close::after,
+.modal-close::after {
   display: block;
   content: "✕";
   z-index: 2;
 }
-.close:hover, .modal-close:hover {
+.close:hover,
+.modal-close:hover {
   cursor: pointer;
   color: #333333;
 }
-.close:hover::before, .modal-close:hover::before {
+.close:hover::before,
+.modal-close:hover::before {
   display: block;
   background-color: rgba(58, 66, 77, 0.1);
 }
-.close.is-white, .modal-close.is-white {
+.close.is-white,
+.modal-close.is-white {
   color: #FFFFFF;
 }
-.close.is-white:hover, .modal-close.is-white:hover {
+.close.is-white:hover,
+.modal-close.is-white:hover {
   color: #FFFFFF;
 }
-.close.has-hover-white:hover::before, .modal-close.has-hover-white:hover::before {
+.close.has-hover-white:hover::before,
+.modal-close.has-hover-white:hover::before {
   background-color: rgba(255, 255, 255, 0.1);
 }
-.close.has-background::before, .modal-close.has-background::before {
+.close.has-background::before,
+.modal-close.has-background::before {
   display: block;
   background-color: rgba(10, 10, 10, 0.2);
 }
-.close.has-background:hover::before, .modal-close.has-background:hover::before {
+.close.has-background:hover::before,
+.modal-close.has-background:hover::before {
   background-color: rgba(10, 10, 10, 0.3);
 }
-.close.is-xs, .modal-close.is-xs {
+.close.is-xs,
+.modal-close.is-xs {
   width: 20px;
   height: 20px;
   font-size: 12px;
 }
-.close.is-sm, .modal-close.is-sm {
+.close.is-sm,
+.modal-close.is-sm {
   width: 30px;
   height: 30px;
   font-size: 16px;
 }
-.close.is-md, .modal-close.is-md {
+.close.is-md,
+.modal-close.is-md {
   width: 45px;
   height: 45px;
   font-size: 20px;
 }
-.close.is-lg, .modal-close.is-lg {
+.close.is-lg,
+.modal-close.is-lg {
   width: 50px;
   height: 50px;
   font-size: 26px;

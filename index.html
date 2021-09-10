@@ -1,22 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <title>Style Framework - 2021 | UMI</title>
+    <title>Style Framework - 2021 | UMI</title>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <link href="https://res.cloudinary.com/umi/image/upload/app/favicon.ico" rel="icon" type="image/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://res.cloudinary.com/umi/image/upload/app/favicon.ico" rel="icon" type="image/x-icon" />
 
-  <link type="text/css" href="./css/umi.css" rel="stylesheet">
+    <link type="text/css" href="css/umi.css" rel="stylesheet">
+    <link type="text/css" href="assets/style.css" rel="stylesheet">
 
-  <!-- font awesome icons -->
-  <link href="assets/fontawesome/css/all.css" rel="stylesheet">
-  <!-- /font awesome icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="assets/custom.js"></script>
+
+    <!-- font awesome icons -->
+    <link href="assets/fontawesome/css/all.css" rel="stylesheet">
+    <!-- /font awesome icons -->
 
 </head>
-<body>UMI Style Framework 2021</body>
+
+<body>
+    <div class="container fluid grid-2xl">
+        <div class="columns col-gapless">
+
+            <div class="column col-sm-12 col-2" id="documentation">
+                <aside class="sidebar-inline">
+                    <div class="accordion-wrapper">
+
+                        <!-- overview -->
+                        <div class="accordion docs-accordion">
+                            <input type="checkbox" hidden name="docs-accordion-checkbox">
+                            <label class="accordion-header c-hand" for="accordion-overview">
+                            <a id="accordion-overview" data-page="overview" class="active">Overview</a>
+                          </label>
+                        </div>
+                        <!-- /overview -->
+
+                        <!-- variables -->
+                        <div class="accordion docs-accordion">
+                            <input type="checkbox" hidden name="docs-accordion-checkbox">
+                            <label class="accordion-header c-hand" for="accordion-variables">
+                            <a data-page="variables" id="accordion-variables">Variables</a>
+                          </label>
+                        </div>
+                        <!-- /variables -->
+
+                        <!-- elements -->
+                        <div class="accordion docs-accordion">
+                            <input id="accordion-elements" hidden name="docs-accordion-checkbox" type="checkbox">
+                            <label class="accordion-header c-hand op-6" for="accordion-elements">
+                              Elements
+                            </label>
+                            <div class="accordion-body">
+                                <ul class="menu menu-nav">
+                                    <li class="menu-item">
+                                        <a data-page="elements/typography" id="accordion-typography">Typography</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/buttons" id="accordion-buttons">Buttons</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/close" id="accordion-close">Close</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/code" id="accordion-code">Code</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/form" id="accordion-form">Form</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/icons" id="accordion-icons">Icons</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/table" id="accordion-table">Table</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/labels" id="accordion-labels">Labels</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="elements/media" id="accordion-media">Media</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /elements -->
+
+                        <!-- layouts -->
+                        <div class="accordion docs-accordion">
+                            <input id="accordion-layouts" hidden name="docs-accordion-checkbox" type="checkbox">
+                            <label class="accordion-header c-hand op-6" for="accordion-layouts">
+                              Layouts
+                            </label>
+                            <div class="accordion-body">
+                                <ul class="menu menu-nav">
+                                    <li class="menu-item">
+                                        <a data-page="layouts/flexbox" id="accordion-flexbox">Flexbox</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="layouts/responsive" id="accordion-responsive">Responsive</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /layouts -->
+
+                        <!-- components -->
+                        <div class="accordion docs-accordion">
+                            <input id="accordion-components" hidden name="docs-accordion-checkbox" type="checkbox">
+                            <label class="accordion-header c-hand op-6" for="accordion-components">
+                              Components
+                            </label>
+                            <div class="accordion-body">
+                                <ul class="menu menu-nav">
+                                    <li class="menu-item">
+                                        <a data-page="components/accordions" id="accordion-accordions">Accordions</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/avatars" id="accordion-avatars">Avatars</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/badges" id="accordion-badges">Badges</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/banners" id="accordion-banners">Banners</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/bars" id="accordion-bars">Bars</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/cards" id="accordion-cards">Cards</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/dropdown" id="accordion-dropdown">Dropdown</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/menu" id="accordion-menu">Menu</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/modal" id="accordion-modal">Modal</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/navbar" id="accordion-navbar">Navbar</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/pagination" id="accordion-pagination">Pagination</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/popovers" id="accordion-popovers">Popovers</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/sidebar" id="accordion-sidebar">Sidebar</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/tabs" id="accordion-tabs">Tabs</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="components/tooltips" id="accordion-tooltips">Tooltips</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /components -->
+
+                        <!-- utilities -->
+                        <div class="accordion docs-accordion">
+                            <input id="accordion-utilities" hidden name="docs-accordion-checkbox" type="checkbox">
+                            <label class="accordion-header c-hand op-6" for="accordion-utilities">
+                              Utilities
+                            </label>
+                            <div class="accordion-body">
+                                <ul class="menu menu-nav">
+                                    <li class="menu-item">
+                                        <a data-page="utilities/borders" id="accordion-borders">Borders</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/colors" id="accordion-colors">Colors</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/cursors" id="accordion-cursors">Cursors</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/display" id="accordion-display">Display</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/divider" id="accordion-divider">Divider</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/loading" id="accordion-loading">Loading</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/margin" id="accordion-margin">Margin</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/padding" id="accordion-padding">Padding</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/position" id="accordion-position">Position</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/ratings" id="accordion-ratings">Ratings</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/shape" id="accordion-shape">Shape</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/text" id="accordion-text">Text</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a data-page="utilities/title" id="accordion-title">Title</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /layouts -->
+
+                    </div>
+                </aside>
+            </div>
+
+            <div class="column col-sm-12 col-9">
+                <div class="p-top-30 p-right-20 p-bottom-50 p-left-50">
+                    <div id="docContent"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
 </html>
