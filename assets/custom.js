@@ -36,8 +36,12 @@ $(document).ready(function() {
 
     removeClass = function() {
         allDocsAccordian.forEach((_accordian) => {
-            const element = $(_accordian).find('a') || [];
-            if (element && element.length) element[0].classList.remove('active');
+            const elements = $(_accordian).find('a') || [];
+            if (elements && elements.length) {
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove('active')
+                }
+            }
         });
     }
 
