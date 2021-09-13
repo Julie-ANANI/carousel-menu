@@ -81,7 +81,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId) && !!this._element) {
+    if (isPlatformBrowser(this.platformId) && !!this._element && !!document) {
       document.body.removeChild(this._element);
     }
   }
