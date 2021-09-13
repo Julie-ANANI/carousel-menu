@@ -35,12 +35,14 @@ export class AdminCampaignSearchComponent implements OnInit {
     }
   ];
 
-  private _isLoading = false;
-
   private _moduleSelected: SearchModule = {
     option: 'research',
     context: 'use the research module'
   };
+
+  private _optionSelected = 'research';
+
+  private _showModal = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
@@ -74,11 +76,6 @@ export class AdminCampaignSearchComponent implements OnInit {
     return this._moduleSelected;
   }
 
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
   set moduleSelected(value: SearchModule) {
     this._moduleSelected = value;
   }
@@ -87,7 +84,30 @@ export class AdminCampaignSearchComponent implements OnInit {
     return this._searchModules;
   }
 
-  moduleOnChange() {
-    this._isLoading = true;
+  moduleOnChange(value: string) {
+    this._optionSelected = value;
+    if (this._moduleSelected.option === 'research') {
+      this._showModal = true;
+    } else {
+      this._moduleSelected = this._searchModules.find(search => search.option === value);
+    }
+  }
+
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  confirmChangePage() {
+    this._moduleSelected = this._searchModules.find(search => search.option === this._optionSelected);
+    this._showModal = false;
+  }
+
+  closeModal() {
+    this._showModal = false;
   }
 }

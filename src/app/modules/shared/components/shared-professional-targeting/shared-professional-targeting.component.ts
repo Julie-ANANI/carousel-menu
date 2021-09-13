@@ -204,6 +204,15 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     }
   }
 
+
+  get targetedProsToUpdate(): TargetPros {
+    return this._targetedProsToUpdate;
+  }
+
+  get targetedPros(): TargetPros {
+    return this._targetedPros;
+  }
+
   get isLoading(): boolean {
     return this._isLoading;
   }

@@ -7,6 +7,7 @@ import {SharedScrapingModule} from '../../../../../shared/components/shared-scra
 import { FormsModule } from '@angular/forms';
 import { SharedImportProsModule } from '../../../../../shared/components/shared-import-pros/shared-import-pros.module';
 import { MessageTemplateModule } from '../../../../../utility/messages/message-template/message-template.module';
+import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { MessageTemplateModule } from '../../../../../utility/messages/message-t
     SharedScrapingModule,
     FormsModule,
     SharedImportProsModule,
-    MessageTemplateModule
+    MessageTemplateModule,
+    ModalModule
   ],
   declarations: [
     AdminCampaignSearchComponent
