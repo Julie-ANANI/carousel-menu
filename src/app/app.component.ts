@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private _mouseService: MouseService,
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
-    this._setFavicon();
+    // this._setFavicon();
     initTranslation(this._translateService);
     this._initializeSession();
   }
