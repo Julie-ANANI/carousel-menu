@@ -59,15 +59,15 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private readonly _element: any = null;
+  private _element: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _elementRef: ElementRef) {
-    this._element = this._elementRef.nativeElement;
   }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      this._element = this._elementRef.nativeElement;
       document.body.appendChild(this._element);
     }
   }
@@ -81,7 +81,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && !!this._element) {
       document.body.removeChild(this._element);
     }
   }

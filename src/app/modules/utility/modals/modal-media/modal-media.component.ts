@@ -19,7 +19,7 @@ export class ModalMediaComponent implements OnInit, OnDestroy {
 
   @Output() showModalChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private readonly _element: any;
+  private _element: any = null;
 
   private show: boolean;
 
@@ -27,12 +27,11 @@ export class ModalMediaComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private _elementRef: ElementRef) {
-    this._element = this._elementRef.nativeElement;
   }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      // move element to bottom of page (just before </body>) so it can be displayed above everything else
+      this._element = this._elementRef.nativeElement;
       document.body.appendChild(this._element);
     }
   }
@@ -54,7 +53,7 @@ export class ModalMediaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && !!this._element) {
       document.body.removeChild(this._element);
     }
   }
