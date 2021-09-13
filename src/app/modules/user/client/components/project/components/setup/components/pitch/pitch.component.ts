@@ -576,9 +576,16 @@ export class PitchComponent implements OnInit, OnDestroy {
         this._isUploadingVideo = false;
         this._innovation.innovationCards[this._activeCardIndex].media.push(_video);
         this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media;
+
+        if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
+          this._innovation.innovationCards[this._activeCardIndex].principalMedia = _video;
+          this._setMainMedia(_video);
+        } else {
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
+          this._resetVariables();
+        }
+
         this._innovationFrontService.setInnovation(this._innovation);
-        this._resetVariables();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
