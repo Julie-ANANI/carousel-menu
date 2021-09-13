@@ -187,7 +187,7 @@
   <div *ngIf="canAccess(['launch', 'search'])" class="search-wrapper">
 
     <!-- requests -->
-    <div class="w-full d-flex align-center">
+    <div class="w-full d-flex align-center m-top-20">
       <span class="text-pre text-15 text-bold">Requests</span>
       <div class="line m-left-4"></div>
     </div>
@@ -221,7 +221,7 @@
     <!-- /input -->
 
     <!-- settings -->
-    <div class="w-full d-flex align-center" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+    <div class="w-full d-flex align-center m-top-20" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
       <span class="text-pre text-15 text-bold">Settings</span>
       <div class="line m-left-4"></div>
     </div>
@@ -236,7 +236,7 @@
     </div>
 
     <!-- geographic targeting -->
-    <div class="w-full d-flex align-center" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+    <div class="w-full d-flex align-center m-top-20" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
       <span class="text-pre text-15 text-bold">Geographic targeting</span>
       <div class="line m-left-4"></div>
     </div>
@@ -255,22 +255,22 @@
     </div>
 
     <!-- professional targeting -->
-    <div class="w-full d-flex align-center">
+    <div class="w-full d-flex align-center m-top-20">
       <span class="text-pre text-15 text-bold">Professional targeting</span>
       <div class="line m-left-4"></div>
     </div>
 
     <div class="w-full">
       <!--       Professional targeting - buttons  -->
-      <section class="button-group d-flex justify-between m-auto m-top-4" style="width: 60%">
+      <div class="button-group d-flex justify-center align-center m-auto m-top-4">
 
         <!-- Saved targetedPro  -->
-        <button class="button is-primary is-sm is-outlined badge is-icon" *ngIf="!toSave">
+        <button class="button is-primary is-sm is-outlined badge is-icon m-10" *ngIf="!toSave">
           <i class="fas fa-save"></i>
           Save
         </button>
 
-        <button class="button is-primary is-sm is-outlined badge is-icon is-active"
+        <button class="button is-primary is-sm is-outlined badge is-icon is-active m-10"
                 (click)="saveProTargeting()"
                 *ngIf="toSave">
           <i class="fas fa-save"></i>
@@ -279,18 +279,28 @@
         <!-- /Saved targetedPro  -->
 
         <!-- Preview saved targetedPro  -->
-        <button class="button is-sm is-outlined" (click)="previewSearchConfig()">
+        <button class="button is-sm is-outlined m-10" (click)="previewSearchConfig()">
           Preview
         </button>
         <!-- /Preview saved targetedPro  -->
 
         <!-- Reset targetedPro  -->
-        <button class="button is-sm is-outlined" (click)="resetTargetedPros()">
+        <button class="button is-sm is-outlined m-10" (click)="resetTargetedPros()">
           Reset
         </button>
         <!-- /Reset targetedPro  -->
 
-      </section>
+        <button class="button how-it-works text-underline tooltip is-multiline is-left"
+                [attr.data-tooltip]="'1. A SL tag has 2 different states : include and exclude.\n' +
+    'Click on a tag to change its state by the other state\n' +
+    '2. A TJ tag has 3 different states: include, exclude and neutral\n' +
+    'Click on a tag to change its state according to the following cycle:\n' +
+    'Neutral -> Include -> Exclude ->Neutral -> ...'">
+          How it works?
+        </button>
+
+
+      </div>
       <!-- /Professional targeting - buttons  -->
 
       <app-shared-professional-targeting

@@ -78,6 +78,8 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _isSaved = false;
 
+  private _howItWorks = '';
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
@@ -590,6 +592,10 @@ export class SharedSearchProsComponent implements OnInit {
     return this._toReset;
   }
 
+
+  get howItWorks(): string {
+    return this._howItWorks;
+  }
 
   get isSaved(): boolean {
     return this._isSaved;

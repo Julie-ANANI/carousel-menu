@@ -162,6 +162,22 @@
 
   }
 
+  .how-it-works{
+    position: absolute;
+    right: 30px;
+    font-size: 13px;
+  }
+
+  .tooltip {
+
+    &.is-multiline::before {
+      max-width: 320px;
+      min-width: 320px;
+      text-align: left;
+    }
+
+  }
+
   .analysis-content, .suggested-content, .profile-content {
     font-size: 14px;
     font-weight: 600;
