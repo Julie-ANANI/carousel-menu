@@ -32,6 +32,23 @@
 
   .search-wrapper {
 
+    .heading-wrapper-pdf{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .title-secondary{
+        margin-right: 8px;
+        margin-bottom: 15px;
+      }
+
+      .title-secondary {
+        color: $text-meta-color;
+        font-size: 16px;
+        margin-right: 10px;
+      }
+    }
+
     .heading-wrapper {
       display: flex;
       align-items: center;
