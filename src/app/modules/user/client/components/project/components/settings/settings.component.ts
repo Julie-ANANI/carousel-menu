@@ -54,7 +54,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   get templateComplementary(): Array<MissionQuestion> {
-    return this.hasMissionTemplate && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections) || [];
+    return this.hasMissionTemplate
+      && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections)
+        .filter((_objective) => !!this.objectiveName(_objective)) || [];
   }
 
   get definedTemplate(): MissionTemplate {
