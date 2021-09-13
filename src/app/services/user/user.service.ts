@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
-
-import { environment } from '../../../environments/environment';
 import { Tag } from '../../models/tag';
 import { Config } from '../../models/config';
 
@@ -29,13 +27,6 @@ export class UserService {
 
   public create(user: User): Observable<any> {
     return this._http.post('/user', user.toJSON());
-  }
-
-  public resetPassword(email?: string): Observable<any> {
-    return this._http.post('/user/resetPassword', {
-      email: email,
-      callback: environment.clientUrl,
-    });
   }
 
   public changePassword(data: {
@@ -111,9 +102,5 @@ export class UserService {
 
   public createSwellUsers(): Observable<any> {
     return this._http.post('/misc/swellrt/synchronizeUsers', {});
-  }
-
-  public contactUMISupport(data: any): Observable<any> {
-    return this._http.post('/user/contactUMI', data);
   }
 }

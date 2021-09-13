@@ -34,196 +34,26 @@
       </div>
       <!-- /sign up  -->
 
-      <!-- body -->
+      <!-- login body -->
       <section class="content-login flex-centered">
-        <div class="login-form">
-
-          <h1 class="title text-center">{{'LOG_IN.HEADING' | translate}}</h1>
-
-          <form (submit)="onClickLogin()" [formGroup]="formData" autocomplete="off">
-
-            <div class="form-group m-bottom-20 has-error">
-              <label class="form-label text-xs" for="login-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
-              <input
-                class="form-input"
-                formControlName="email"
-                id="login-email"
-                placeholder="john@catco.com"
-                type="email">
-              <ng-container *ngIf="formData.get('email').touched">
-                <span *ngIf="formData.get('email').hasError('required')" class="form-input-hint">
-                  {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-                </span>
-                <span
-                  *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''"
-                  class="form-input-hint">
-                  {{ 'COMMON.INVALID.EMAIL' | translate }}
-                </span>
-              </ng-container>
-            </div>
-
-            <div class="form-group has-error">
-
-              <div class="flex-between">
-                <label class="form-label text-xs" for="login-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
-                <a
-                  [id]="'login-btn-forgot-password'"
-                  [routerLink]="'forgetpassword'"
-                  class="gtm-change-password text-xs text-underline text-link">
-                  {{ 'COMMON.LABEL.FORGOT_PASSWORD' | translate }}
-                </a>
-              </div>
-
-              <input
-                [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate "
-                class="form-input"
-                formControlName="password"
-                id="login-password"
-                type="password">
-
-              <ng-container *ngIf="formData.get('password').touched">
-                <span *ngIf="formData.get('password').hasError('required')" class="form-input-hint">
-                  {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-                </span>
-              </ng-container>
-
-            </div>
-            <!-- tentatives + contact UMI  -->
-            <ng-container *ngIf="nbTentatives<3">
-              <div class="m-bottom-15 text-alert text-sm d-flex">
-                <span>{{ nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate) }}</span>
-                <span
-                  (click)="showContactUMIModal()"
-                  *ngIf="nbTentatives ===0"
-                  [id]="'login-btn-modal-contact'"
-                  class="text-link text-normal text-underline m-left-auto">
-                Contact UMI support
-              </span>
-              </div>
-            </ng-container>
-            <!-- /tentatives + contact UMI-->
-
-            <!-- login button -->
-            <div class="p-top-30">
-              <button
-                [id]="'login-btn-submit'"
-                [ngStyle]="{'height': '50px'}"
-                class="button is-primary text-sm w-full gtm-signin-email"
-                type="submit"
-                [disabled]="formData.invalid || displayLoading || displayLoadingLinkedIn || nbTentatives < 1">
-                <ng-container *ngIf="!displayLoading">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</ng-container>
-                <span *ngIf="displayLoading" class="loading is-white"></span>
-              </button>
-            </div>
-            <!-- /login button  -->
-
-            <!-- domain UMI -->
-            <ng-container *ngIf="isDomainUMI">
-
-              <div class="text-center p-top-25 p-bottom-30">
-                <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
-              </div>
-
-              <!-- linkedin -->
-              <div class="text-center">
-                <button
-                  (click)="onClickLinkedIn()"
-                  [disabled]="displayLoading || displayLoadingLinkedIn"
-                  [id]="'login-btn-linkedin'"
-                  class="button is-secondary icon-left text-sm is-lg gtm-signin-linkedin">
-                  <span *ngIf="displayLoadingLinkedIn" class="loading is-white"></span>
-                  <ng-container *ngIf="!displayLoadingLinkedIn">
-                    <i class="fab fa-1x fa-linkedin-in"></i> {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
-                  </ng-container>
-                </button>
-              </div>
-              <!-- /linkedin -->
-
-            </ng-container>
-            <!-- /domain UMI -->
-
-          </form>
-
-        </div>
+          <umius-login
+            style="width: 480px;"
+            [baseUrl]="baseApi"
+            [displayLoading]="displayLoading"
+            [linkedInLoading]="linkedInLoading"
+            [clientUrl]="clientUrl"
+            [domain]="domain"
+            [nbTentatives]="nbTentatives"
+            (contactUMIOnChange)="contactUMIOnChange($event)"
+            (linkedInEventOnChange)="loginWithLinkedin($event)"
+            (forgetPasswordEventOnChange)="forgetPasswordEventOnChange($event)"
+            (loginEventOnChange)="loginOnChange($event)">
+          </umius-login>
       </section>
-      <!-- /body -->
+      <!-- /login body -->
 
     </div>
     <!-- /right side -->
 
   </div>
 </div>
-
-<app-utility-modal [title]="'Contact UMI support'" [(showModal)]="isShowModal" [maxWidth]="'550px'">
-  <section class="modal-body p-top-15 p-bottom-15 p-left-25 p-right-25">
-    <!-- info -->
-    <div class="text text-center">
-      <p class="title m-top-10">We are here to help</p>
-      <p class="text text-sm">Having trouble logging into the platform?
-        Let us know what happened and we'll do our best to help!</p>
-    </div>
-    <!-- /info -->
-
-    <!-- send message form -->
-    <div class="form section-light-pad flex-centered">
-      <div class="w-full p-30">
-        <form [formGroup]="helpMessageForm" (ngSubmit)="sendMessageToUMISupport()">
-          <!-- message form -->
-          <div class="form-group">
-            <textarea id="textarea"
-                      class="form-input"
-                      formControlName="message"
-                      placeholder="Write your message here" rows="3">
-            </textarea>
-          </div>
-          <!-- /message form -->
-
-          <!-- email form -->
-          <div class="form-group has-error m-top-4">
-            <label class="form-label" for="contact-email">{{ 'COMMON.LABEL.EMAIL' | translate }}</label>
-            <input
-              type="email"
-              id="contact-email"
-              class="form-input"
-              formControlName="contactEmail"
-              placeholder="john@catco.com">
-            <span *ngIf="helpMessageForm.get('contactEmail').touched">
-                <span *ngIf="helpMessageForm.get('contactEmail').hasError('required')" class="form-input-hint">
-                  {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-                </span>
-                <span
-                  *ngIf="helpMessageForm.get('contactEmail').hasError('contactEmail') && helpMessageForm.get('contactEmail').value !== ''"
-                  class="form-input-hint">
-                  {{ 'COMMON.INVALID.EMAIL' | translate }}
-                </span>
-              </span>
-          </div>
-          <!-- /email form -->
-
-          <!-- send+cancel buttons -->
-          <div class="d-flex m-top-10 m-bottom-4">
-            <div class="btn-cancel" style="margin-right: auto">
-              <button
-                (click)="cancelMessage()"
-                class="button is-outlined is-md">
-                Cancel
-              </button>
-            </div>
-
-            <div class="login-button" style="margin-left: auto">
-              <button
-                id="message-submit"
-                class="button is-primary is-md"
-                type="submit"
-                [disabled]="helpMessageForm.invalid">
-                Send
-              </button>
-            </div>
-          </div>
-          <!-- /send+cancel buttons -->
-        </form>
-      </div>
-    </div>
-    <!-- /send message form -->
-  </section>
-</app-utility-modal>
