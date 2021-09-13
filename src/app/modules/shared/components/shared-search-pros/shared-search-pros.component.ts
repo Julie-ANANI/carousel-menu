@@ -74,11 +74,15 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _toSave = false;
 
-  private _toReset = false;
+  private _isReset = false;
 
   private _isSaved = false;
 
-  private _howItWorks = '';
+  private _saveApplyModalContext = '';
+
+  private _saveApplyModalTitle = '';
+
+  private _isShowModal = false;
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
@@ -570,16 +574,9 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   saveProTargeting() {
-    this._isSaved = true;
-    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
-      .subscribe(() => {
-        this._toSave = false;
-        this._translateNotificationsService.success('Success', 'Targeting saved');
-      }, err => {
-        this._translateNotificationsService.error('Error', 'An error occurred');
-        this._toSave = false;
-        console.error(err);
-      });
+    this._saveApplyModalContext = 'Save this professional targeting?';
+    this._saveApplyModalTitle = 'Save';
+    this._isShowModal = true;
   }
 
   getUpdatedTargetedPros(targetPros: TargetPros) {
@@ -588,13 +585,12 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
 
-  get toReset(): boolean {
-    return this._toReset;
+  get isReset(): boolean {
+    return this._isReset;
   }
 
-
-  get howItWorks(): string {
-    return this._howItWorks;
+  set isReset(value: boolean) {
+    this._isReset = value;
   }
 
   get isSaved(): boolean {
@@ -602,8 +598,48 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   resetTargetedPros() {
-    this._toSave = true;
-    this._toReset = true;
-    this._targetedProsToUpdate = <TargetPros>{};
+    this._saveApplyModalContext = 'Apply the saved professional targeting?';
+    this._saveApplyModalTitle = 'Restore';
+    this._isShowModal = true;
+  }
+
+
+  get saveApplyModalTitle(): string {
+    return this._saveApplyModalTitle;
+  }
+
+  get isShowModal(): boolean {
+    return this._isShowModal;
+  }
+
+  set isShowModal(value: boolean) {
+    this._isShowModal = value;
+  }
+
+  get saveApplyModalContext(): string {
+    return this._saveApplyModalContext;
+  }
+
+  cancelSaveReset() {
+    this._isShowModal = false;
+  }
+
+  confirmSaveReset() {
+    this._isShowModal = false;
+    if (this._saveApplyModalTitle === 'Restore') {
+      this._toSave = false;
+      this._isReset = true;
+    } else {
+      this._isReset = false;
+      this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
+        .subscribe(() => {
+          this._toSave = false;
+          this._translateNotificationsService.success('Success', 'Targeting saved');
+        }, err => {
+          this._translateNotificationsService.error('Error', 'An error occurred');
+          this._toSave = false;
+          console.error(err);
+        });
+    }
   }
 }

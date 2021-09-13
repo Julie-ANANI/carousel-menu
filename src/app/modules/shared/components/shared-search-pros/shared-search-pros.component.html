@@ -265,12 +265,12 @@
       <div class="button-group d-flex justify-center align-center m-auto m-top-4">
 
         <!-- Saved targetedPro  -->
-        <button class="button is-primary is-sm is-outlined badge is-icon m-10" *ngIf="!toSave">
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon m-10" *ngIf="!toSave">
           <i class="fas fa-save"></i>
           Save
         </button>
 
-        <button class="button is-primary is-sm is-outlined badge is-icon is-active m-10"
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon is-active m-10"
                 (click)="saveProTargeting()"
                 *ngIf="toSave">
           <i class="fas fa-save"></i>
@@ -279,14 +279,14 @@
         <!-- /Saved targetedPro  -->
 
         <!-- Preview saved targetedPro  -->
-        <button class="button is-sm is-outlined m-10" (click)="previewSearchConfig()">
+        <button class="button br-6 is-sm is-outlined m-10" (click)="previewSearchConfig()">
           Preview
         </button>
         <!-- /Preview saved targetedPro  -->
 
         <!-- Reset targetedPro  -->
-        <button class="button is-sm is-outlined m-10" (click)="resetTargetedPros()">
-          Reset
+        <button class="button br-6 is-sm is-outlined m-10" (click)="resetTargetedPros()">
+          Apply
         </button>
         <!-- /Reset targetedPro  -->
 
@@ -304,7 +304,7 @@
       <!-- /Professional targeting - buttons  -->
 
       <app-shared-professional-targeting
-        [isReset]="toReset"
+        [(isReset)]="isReset"
         (targetedProsOnChange)="getUpdatedTargetedPros($event)"
         [campaign]="campaign">
       </app-shared-professional-targeting>
@@ -340,3 +340,25 @@
   </footer>
 
 </app-utility-modal>
+<!-- /MODAL : preview saved targetedPro -->
+
+<!-- MODAL : save/apply -->
+<app-utility-modal
+  [(showModal)]="isShowModal">
+  <header class="p-top-20 text-center text-primary-dark text-bold bg-white">
+    {{saveApplyModalTitle}}
+  </header>
+
+  <section class="modal-body text-center">
+    {{saveApplyModalContext}}
+  </section>
+
+  <footer class="modal-footer d-flex justify-center">
+    <button class="button modal-cancel p-10" (click)="cancelSaveReset()">Cancel</button>
+    <button class="button is-community p-10" (click)="confirmSaveReset()">Confirm</button>
+  </footer>
+
+</app-utility-modal>
+<!-- MODAL : save/apply -->
+
+

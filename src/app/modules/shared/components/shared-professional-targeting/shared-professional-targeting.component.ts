@@ -26,8 +26,11 @@ export class SharedProfessionalTargetingComponent implements OnInit {
   @Input() set isReset(value: Boolean) {
     if (value) {
       this.getTargetedProsAndJobs();
+      this.isResetChange.emit(false);
     }
   }
+
+  @Output() isResetChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output() targetedProsOnChange: EventEmitter<TargetPros> = new EventEmitter<TargetPros>();
   @Output() isPreviewChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();

@@ -56,17 +56,20 @@
   </div>
 </div>
 
-<!-- modal to delete -->
-<app-utility-modal [(showModal)]="showModal" [title]="'Change page'">
+<!-- modal to change -->
+<app-utility-modal [(showModal)]="showModal">
+  <header class="p-top-20 text-center text-primary-dark text-bold bg-white">
+    Change page
+  </header>
 
-  <section class="modal-body">
+  <section class="modal-body text-center">
     You will loss your settings. Continue?
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel" (click)="closeModal()">Cancel</button>
-    <button (click)="confirmChangePage()" class="button is-primary">Confirm</button>
+    <button class="button modal-cancel p-10" (click)="closeModal()">Cancel</button>
+    <button (click)="confirmChangePage()" class="button is-community p-10">Confirm</button>
   </footer>
 
 </app-utility-modal>
-<!-- /modal to delete -->
+<!-- /modal to change -->
