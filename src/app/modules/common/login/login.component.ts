@@ -127,6 +127,7 @@ export class LoginComponent implements OnInit {
 
   loginOnChange(event: any) {
     if (event && event.status) {
+      this._displayLoading = true;
       const user = new User(event.message);
       this._authService
         .login(user)
@@ -153,6 +154,7 @@ export class LoginComponent implements OnInit {
               // Redirect the user
               this._router.navigate([redirect], navigationExtras);
             }
+            this._displayLoading = false;
           },
           () => {
             this._displayLoading = false;
@@ -168,6 +170,7 @@ export class LoginComponent implements OnInit {
 
   loginWithLinkedin(event: any) {
     if (event && event.status) {
+      this._linkedInLoading = true;
       const data = {
         domain: environment.domain,
         state: this._linkedInState,
