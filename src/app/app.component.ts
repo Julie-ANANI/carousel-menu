@@ -85,7 +85,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   // Favicon
-  private _setFavicon() {
+  /*private _setFavicon() {
     if (isPlatformBrowser(this._platformId)) {
       const linkElement = document.createElement('link');
       linkElement.setAttribute('id', 'theicon');
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
       document.head.appendChild( linkElement );
     }
-  }
+  }*/
 
   /*private _setSwellRTScript() {
     let SWELL_CONTEXT = "swellrt_beta";
