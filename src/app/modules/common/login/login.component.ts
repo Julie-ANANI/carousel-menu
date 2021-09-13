@@ -41,6 +41,10 @@ export class LoginComponent implements OnInit {
 
   private _isDomainUMI = environment.domain === 'umi';
 
+  private _displayLoading = false;
+
+  private _linkedInLoading = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateTitleService: TranslateTitleService,
@@ -130,6 +134,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           () => {
             if (this._authService.isAuthenticated) {
+              this._displayLoading = false;
               // Get the redirect URL from our auth service. If no redirect has been set, use the default.
               const redirect = this._authService.redirectUrl
                 ? this._authService.redirectUrl
@@ -150,6 +155,7 @@ export class LoginComponent implements OnInit {
             }
           },
           () => {
+            this._displayLoading = false;
             this._nbTentatives -= 1;
             this._translateNotificationsService.error(
               'ERROR.ERROR',
@@ -171,12 +177,15 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
           (_) => {
+            this._linkedInLoading = false;
             console.log(_);
           },
           (err: HttpErrorResponse) => {
+            this._linkedInLoading = false;
             console.error(err);
           },
           () => {
+            this._linkedInLoading = false;
             window.open(this._linkedInLink, '_self');
           }
         );
@@ -195,6 +204,15 @@ export class LoginComponent implements OnInit {
         'An error occurred'
       );
     }
+  }
+
+
+  get linkedInLoading(): boolean {
+    return this._linkedInLoading;
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
   }
 
   forgetPasswordEventOnChange(event: any) {

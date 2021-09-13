@@ -15,7 +15,6 @@ import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/disco
 import { SIDEBAR_USER_ANSWER } from '../modules/sidebars/components/sidebar-user-answer/i18n/fr';
 import { LOG_IN } from '../modules/common/login/i18n/fr';
 import { SIGN_UP } from '../modules/common/signup/i18n/fr';
-import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/fr';
 import { WELCOME } from '../modules/common/welcome/i18n/fr';
 import { PAGINATION } from '../modules/utility/paginations/i18n/fr';
 import { SHARE } from '../modules/public/share/i18n/fr';
@@ -59,7 +58,6 @@ export const fr = {
   'LOG_IN': LOG_IN,
   'MY_ACCOUNT': MY_ACCOUNT,
   'SIGN_UP': SIGN_UP,
-  'FORGET_PASSWORD': FORGET_PASSWORD,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
   'PAGINATION': PAGINATION,
