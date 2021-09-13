@@ -9,7 +9,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { ResetPasswordModule } from './components/reset-password/reset-password.module';
 import { SpinnerLoaderModule } from '../../utility/spinner-loader/spinner-loader.module';
 import { ModalModule } from '../../utility/modals/modal/modal.module';
-// import { UmiusCommonComponentsModule } from '@umius/umi-common-component';
+import { UmiusCommonComponentsModule } from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { ModalModule } from '../../utility/modals/modal/modal.module';
     ResetPasswordModule,
     SpinnerLoaderModule,
     ModalModule,
-    // UmiusCommonComponentsModule,
+    UmiusCommonComponentsModule,
   ],
   declarations: [LoginComponent],
 })
