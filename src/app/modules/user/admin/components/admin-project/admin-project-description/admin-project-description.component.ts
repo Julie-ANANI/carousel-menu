@@ -339,7 +339,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this._isUploadingVideo = false;
         this.activeInnovCard.media.push(res);
-        this._setInnovation();
+
+        if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
+          this.onSetPrincipal(res);
+        } else {
+          this._setInnovation();
+        }
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
