@@ -131,7 +131,7 @@
                 <img [src]="getFlagSrc(country.code)" alt=" ">
               </figure>
 
-              <span class="text-xs">{{ country.names | multiling:currentLang }}</span>
+              <span class="text-xs" [innerHTML]="(country.names | multiling:currentLang)"></span>
 
             </div>
           </div>

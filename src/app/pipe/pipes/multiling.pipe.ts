@@ -19,7 +19,7 @@ export class MultilingPipe implements PipeTransform {
         if (lang !== this.translate.defaultLang && value[this.translate.defaultLang]) {
           return value[this.translate.defaultLang];
         } else {
-          for (const a in value) return value[a];
+          for (const a in value) { return value[a]; }
         }
       }
     } else {
