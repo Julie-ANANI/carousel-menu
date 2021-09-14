@@ -2,7 +2,7 @@ $(document).ready(function() {
     const allDocsAccordian = document.querySelectorAll('.docs-accordion');
 
     // first time page load
-    $("#docContent").load('./documentation/overview.html');
+    $("#docContent").load('./documentation/elements/code.html');
 
     $(".docs-accordion").click(function(e) {
         let page = '';
@@ -27,7 +27,10 @@ $(document).ready(function() {
             page = e.target.dataset && e.target.dataset['page'] || '';
         }
 
-        if (!!page) $("#docContent").load('./documentation/' + page + '.html');
+        if (!!page) {
+            $("#docContent").load('./documentation/' + page + '.html');
+            window.scrollTo(0, 0);
+        };
     });
 
     addClass = function(id) {
