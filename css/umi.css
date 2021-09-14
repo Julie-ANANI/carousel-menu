@@ -2476,13 +2476,8 @@ textarea.form-input.is-resize {
   right: 10px;
 }
 .has-icon-left .icon.loading, .has-icon-right .icon.loading {
-  top: 14px;
-}
-.has-icon-left .icon.loading.is-sm, .has-icon-right .icon.loading.is-sm {
-  top: 9px;
-}
-.has-icon-left .icon.loading.is-xs, .has-icon-right .icon.loading.is-xs {
-  top: 4px;
+  top: 0;
+  height: 100%;
 }
 
 .has-icon-left .form-input {
@@ -2496,6 +2491,7 @@ textarea.form-input.is-resize {
 .input-group {
   display: flex;
   flex-wrap: wrap;
+  margin-right: -30px;
 }
 .input-group .form-group {
   flex: 1;
@@ -2521,7 +2517,7 @@ textarea.form-input.is-resize {
 .has-success .form-input.form-input.ng-touched.ng-valid, .has-success .form-input.form-input.ng-dirty.ng-touched.ng-valid, .has-success .form-input.form-input.ng-pristine.ng-touched.ng-valid, .has-success .form-input.form-select.ng-touched.ng-valid, .has-success .form-input.form-select.ng-dirty.ng-touched.ng-valid, .has-success .form-input.form-select.ng-pristine.ng-touched.ng-valid, .has-success .form-select.form-input.ng-touched.ng-valid, .has-success .form-select.form-input.ng-dirty.ng-touched.ng-valid, .has-success .form-select.form-input.ng-pristine.ng-touched.ng-valid, .has-success .form-select.form-select.ng-touched.ng-valid, .has-success .form-select.form-select.ng-dirty.ng-touched.ng-valid, .has-success .form-select.form-select.ng-pristine.ng-touched.ng-valid {
   border-color: #2ECC71;
 }
-.has-success .form-input.is-success, .has-success .form-select.is-success {
+.form-input.is-success, .form-select.is-success {
   border-color: #2ECC71;
 }
 .has-error .form-input.form-input.ng-touched.ng-invalid, .has-error .form-input.form-input.ng-dirty.ng-touched.ng-invalid, .has-error .form-input.form-input.ng-pristine.ng-touched.ng-invalid, .has-error .form-input.form-select.ng-touched.ng-invalid, .has-error .form-input.form-select.ng-dirty.ng-touched.ng-invalid, .has-error .form-input.form-select.ng-pristine.ng-touched.ng-invalid, .has-error .form-select.form-input.ng-touched.ng-invalid, .has-error .form-select.form-input.ng-dirty.ng-touched.ng-invalid, .has-error .form-select.form-input.ng-pristine.ng-touched.ng-invalid, .has-error .form-select.form-select.ng-touched.ng-invalid, .has-error .form-select.form-select.ng-dirty.ng-touched.ng-invalid, .has-error .form-select.form-select.ng-pristine.ng-touched.ng-invalid {
@@ -2537,6 +2533,9 @@ textarea.form-input.is-resize {
 .has-error .form-checkbox input:checked:not(.ng-valid) + .form-icon, .has-error .form-radio input:checked:not(.ng-valid) + .form-icon {
   border-color: #EA5858;
 }
+.has-error .form-checkbox input:checked:not(.ng-valid) + .form-icon::before, .has-error .form-radio input:checked:not(.ng-valid) + .form-icon::before {
+  background: #EA5858 none;
+}
 .has-error .form-checkbox input:checked:not(.ng-invalid) + .form-icon, .has-error .form-radio input:checked:not(.ng-invalid) + .form-icon {
   border-color: #2ECC71;
 }
@@ -2545,6 +2544,7 @@ textarea.form-input.is-resize {
 }
 .form-checkbox.is-error .form-icon::before, .form-radio.is-error .form-icon::before {
   border-color: #EA5858 !important;
+  background: #EA5858 !important;
 }
 
 .has-error .form-checkbox input:indeterminate + .form-icon {
@@ -6720,7 +6720,7 @@ defined the border
 .title {
   color: #333333;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -6729,7 +6729,7 @@ defined the border
 .title.is-1 {
   color: #333333;
   font-size: 48px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -6738,7 +6738,7 @@ defined the border
 .title.is-2 {
   color: #333333;
   font-size: 40px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -6747,7 +6747,7 @@ defined the border
 .title.is-3 {
   color: #333333;
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -6756,7 +6756,7 @@ defined the border
 .title.is-4 {
   color: #333333;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -6765,7 +6765,7 @@ defined the border
 .title.is-5 {
   color: #333333;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -6774,7 +6774,7 @@ defined the border
 .title.is-6 {
   color: #333333;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5;

@@ -355,16 +355,8 @@ textarea {
     }
 
     &.loading {
-      top: 14px;
-
-      &.is-sm {
-        top: 9px;
-      }
-
-      &.is-xs {
-        top: 4px;
-      }
-
+      top: 0;
+      height: 100%;
     }
 
   }
@@ -391,6 +383,7 @@ textarea {
 .input-group {
   display: flex;
   flex-wrap: wrap;
+  margin-right: -30px;
 
   .form-group {
     flex: 1;
@@ -433,10 +426,10 @@ textarea {
 
     }
 
-    &.is-success {
-      border-color: $form-success-color;
-    }
+  }
 
+  &.is-success {
+    border-color: $form-success-color;
   }
 
   .has-error &  {
@@ -469,6 +462,11 @@ textarea {
 
       &:checked:not(.ng-valid) + .form-icon {
         border-color: $form-alert-color;
+
+        &::before {
+          background: $form-alert-color none;
+        }
+
       }
 
       &:checked:not(.ng-invalid) + .form-icon {
@@ -486,6 +484,7 @@ textarea {
 
       &::before {
         border-color: $form-alert-color !important;
+        background: $form-alert-color !important;
       }
 
     }

@@ -4,7 +4,7 @@
 @mixin title-variant($size: 24px) {
   color: $dark-color;
   font-size: $size;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-medium;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: $line-height;
