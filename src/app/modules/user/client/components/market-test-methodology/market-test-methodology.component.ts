@@ -8,6 +8,11 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class MarketTestMethodologyComponent {
 
+  /**
+   * title of the methodology
+   */
+  @Input() title = '';
+
   private _case = '';
 
   private _image = '';

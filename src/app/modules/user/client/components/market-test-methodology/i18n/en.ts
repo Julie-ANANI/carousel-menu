@@ -1,12 +1,6 @@
 export const MARKET_TEST_METHODOLOGY = {
 
   'HEADING': {
-    'DETECTING_MARKET': 'Detecting market needs',
-    'VALIDATING_MARKET': 'Validating market needs',
-    'SOURCING_SOLUTIONS': 'Sourcing solutions / suppliers',
-    'IDENTIFYING_RECEPTIVE': 'Identifying receptive markets',
-    'VALIDATING_INTEREST': 'Validating the interest in my project',
-    'OPTIMIZING': 'Optimizing my value proposition',
     'CONTEXT': 'Context',
     'METHODOLOGY': 'Methodology',
     'RESULT': 'Results'

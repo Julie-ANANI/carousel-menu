@@ -100,10 +100,16 @@
   [(showModal)]="openModal">
   <section [ngStyle]="{'border-radius': '6px'}" class="modal-body p-no">
     <ng-container *ngIf="!!mission.template.methodology else objName">
-      <app-market-test-methodology [methodology]="mission.template.methodology"></app-market-test-methodology>
+      <app-market-test-methodology
+        [methodology]="mission.template.methodology"
+        [title]="objectiveName()">
+      </app-market-test-methodology>
     </ng-container>
     <ng-template #objName>
-      <app-market-test-methodology [objective]="objectiveName('en')"></app-market-test-methodology>
+      <app-market-test-methodology
+        [objective]="objectiveName('en')"
+        [title]="objectiveName()">
+      </app-market-test-methodology>
     </ng-template>
   </section>
 </app-utility-modal-empty>
