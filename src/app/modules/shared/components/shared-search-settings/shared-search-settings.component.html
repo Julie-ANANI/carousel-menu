@@ -1,0 +1,114 @@
+<div class="column col-sm-12 col-11 p-30" id="sidebar-search">
+  <!-- smart search -->
+  <div class="form-group">
+    <label class="form-switch">
+      <input
+        [(ngModel)]="params && params.options && params.options['smart']"
+        [disabled]="!isEditable"
+        name="sidebar-smart"
+        type="checkbox">
+      <i class="form-icon"></i> Smart search
+    </label>
+  </div>
+  <!-- /smart search -->
+
+  <!-- toggle advanced search -->
+  <div class="stw-toggle-list-wrapper">
+
+    <!-- toggle button -->
+    <button (click)="onClickToggle()" class="button is-link p-no" type="button">
+      {{ 'Advanced Settings' }}
+      <i class="icon icon-right" [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-right' "></i>
+    </button>
+    <!-- /toggle button -->
+
+    <!-- toggle options -->
+    <div *ngIf="showToggleSearch" [ngClass]="showToggleSearch ? 'd-block' : 'd-none'" class="m-top-25">
+
+      <!-- save button -->
+      <div *ngIf="isEditable" class="p-bottom-10">
+        <button
+          (click)="saveParams($event)"
+          class="button is-sm is-community"
+          id="btn-save"
+          type="button">
+          Save
+        </button>
+      </div>
+      <!-- /save button -->
+
+      <!-- number of pros -->
+      <div class="form-group align-center m-bottom-30">
+        <label class="title is-6 m-no-bottom m-right-20" for="sidebar-pros-number">Search</label>
+        <select
+          [(ngModel)]="params && params.count"
+          [disabled]="!isEditable"
+          class="form-select is-sm mxw-250"
+          id="sidebar-pros-number"
+          name="sidebar-pros-count">
+          <option value="''">Select</option>
+          <option *ngFor="let count of prosCount" [value]="count">
+            {{ count }} pros
+          </option>
+        </select>
+      </div>
+      <!-- /number of pros -->
+
+      <!-- regions -->
+      <div class="form-group">
+        <label class="form-switch">
+          <input
+            [(ngModel)]="params && params.options && params.options['regions']"
+            [disabled]="!isEditable"
+            name="sidebar-regions"
+            type="checkbox">
+          <i class="form-icon"></i> Regions
+        </label>
+      </div>
+      <!-- /regions -->
+
+      <!-- automated -->
+      <div class="form-group m-bottom-25">
+        <label class="form-switch">
+          <input
+            [(ngModel)]="params && params.options && params.options['automated']"
+            [disabled]="!isEditable"
+            name="sidebar-automated"
+            type="checkbox">
+          <i class="form-icon"></i> Search emails
+        </label>
+      </div>
+      <!-- /automated -->
+
+      <!-- use -->
+      <h6 class="title is-6 m-bottom-15">Select the options</h6>
+      <div class="form-group m-bottom-30">
+        <label class="form-checkbox is-inline">
+          <input
+            [(ngModel)]="params && params['websites'] && params['websites']['linkedin']"
+            [disabled]="!isEditable"
+            name="sidebar-use-linkedin"
+            type="checkbox"
+            value="linkedin">
+          <i class="form-icon"></i> LinkedIn
+        </label>
+
+        <label class="form-checkbox is-inline">
+          <input
+            [(ngModel)]="params && params['websites'] && params['websites']['xing']"
+            [disabled]="!isEditable"
+            name="sidebar-use-xing"
+            type="checkbox"
+            value="xing">
+          <i class="form-icon"></i> Xing
+        </label>
+      </div>
+      <!-- /use -->
+
+    </div>
+    <!-- toggle options -->
+
+  </div>
+  <!-- /toggle advanced search -->
+</div>
+

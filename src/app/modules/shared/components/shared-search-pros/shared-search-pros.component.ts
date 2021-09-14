@@ -11,6 +11,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
+import { CampaignService } from '../../../../services/campaign/campaign.service';
+import { TargetPros } from '../../../../models/targetPros';
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -66,14 +68,32 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _importRequestKeywords = '';
 
+  private _isPreview: Boolean = false;
+
+  private _targetedProsToUpdate: TargetPros;
+
+  private _toSave = false;
+
+  private _isReset = false;
+
+  private _isSaved = false;
+
+  private _saveApplyModalContext = '';
+
+  private _saveApplyModalTitle = '';
+
+  private _isShowModal = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
     private _searchService: SearchService,
     private _rolesFrontService: RolesFrontService,
     private _authService: AuthService,
+    private _campaignService: CampaignService,
     private _localStorageService: LocalStorageService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -153,7 +173,7 @@ export class SharedSearchProsComponent implements OnInit {
       }
     }
 
-    this._catResult = { duplicate_status: 'ok' };
+    this._catResult = {duplicate_status: 'ok'};
     this.estimateNumberOfGoogleRequests();
     this._suggestions = [];
   }
@@ -229,7 +249,7 @@ export class SharedSearchProsComponent implements OnInit {
    * delete the previous Computer Aided Targeting result
    */
   public onReset() {
-    this._catResult = { duplicate_status: 'ok' };
+    this._catResult = {duplicate_status: 'ok'};
     this._suggestions = [];
     this.estimateNumberOfGoogleRequests();
   }
@@ -256,7 +276,8 @@ export class SharedSearchProsComponent implements OnInit {
     this._searchService
       .updateCatStats(this._params.catKeywords.split('\n').length)
       .pipe(first())
-      .subscribe((response: any) => {});
+      .subscribe((response: any) => {
+      });
 
     this._searchService
       .computerAidedTargeting(this._params.catKeywords.split('\n'))
@@ -370,11 +391,13 @@ export class SharedSearchProsComponent implements OnInit {
 
     const searchParams = this._params;
 
-    searchParams.metadata = { user: this._authService.getUserInfo() };
+    searchParams.metadata = {user: this._authService.getUserInfo()};
 
     searchParams.websites = Object.keys(searchParams.websites)
       .filter((key) => searchParams.websites[key])
       .join(' ');
+
+    searchParams.targetPros = (!!this._targetedProsToUpdate) ? this._targetedProsToUpdate : this._campaign.targetPros;
 
     this._searchService
       .search(searchParams)
@@ -401,16 +424,16 @@ export class SharedSearchProsComponent implements OnInit {
     return this._catQuota > 50
       ? 'bg-success'
       : this._catQuota > 10 && this._catQuota <= 50
-      ? 'bg-progress'
-      : 'bg-alert';
+        ? 'bg-progress'
+        : 'bg-alert';
   }
 
   public getCircleClass(): string {
     return this._googleQuota > 10000
       ? 'bg-success'
       : this._googleQuota < 10000 && this._googleQuota > 5000
-      ? 'bg-progress'
-      : 'bg-alert';
+        ? 'bg-progress'
+        : 'bg-alert';
   }
 
   public updateSettings(value: any) {
@@ -522,7 +545,105 @@ export class SharedSearchProsComponent implements OnInit {
     return this._geography;
   }
 
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
+  }
+
   get campaign(): Campaign {
     return this._campaign;
+  }
+
+
+  get isPreview(): Boolean {
+    return this._isPreview;
+  }
+
+  set isPreview(value: Boolean) {
+    this._isPreview = value;
+  }
+
+  previewSearchConfig() {
+    this._isPreview = true;
+  }
+
+  closePreview() {
+    this._isPreview = false;
+  }
+
+  get toSave(): boolean {
+    return this._toSave;
+  }
+
+  saveProTargeting() {
+    this._saveApplyModalContext = 'Save this professional targeting?';
+    this._saveApplyModalTitle = 'Save';
+    this._isShowModal = true;
+  }
+
+  getUpdatedTargetedPros(targetPros: TargetPros) {
+    this._targetedProsToUpdate = targetPros;
+    this._toSave = true;
+  }
+
+
+  get isReset(): boolean {
+    return this._isReset;
+  }
+
+  set isReset(value: boolean) {
+    this._isReset = value;
+  }
+
+  get isSaved(): boolean {
+    return this._isSaved;
+  }
+
+  resetTargetedPros() {
+    this._saveApplyModalContext = 'Apply the saved professional targeting?';
+    this._saveApplyModalTitle = 'Restore';
+    this._isShowModal = true;
+  }
+
+
+  get saveApplyModalTitle(): string {
+    return this._saveApplyModalTitle;
+  }
+
+  get isShowModal(): boolean {
+    return this._isShowModal;
+  }
+
+  set isShowModal(value: boolean) {
+    this._isShowModal = value;
+  }
+
+  get saveApplyModalContext(): string {
+    return this._saveApplyModalContext;
+  }
+
+  cancelSaveReset() {
+    this._isShowModal = false;
+  }
+
+  confirmSaveReset() {
+    this._isShowModal = false;
+    if (this._saveApplyModalTitle === 'Restore') {
+      this._toSave = false;
+      this._isReset = true;
+      setTimeout(() => {
+        this._isReset = false;
+      }, 100);
+    } else {
+      this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
+        .subscribe(() => {
+          this._toSave = false;
+          this._translateNotificationsService.success('Success', 'Targeting saved');
+        }, err => {
+          this._translateNotificationsService.error('Error', 'An error occurred');
+          this._toSave = false;
+          console.error(err);
+        });
+    }
   }
 }

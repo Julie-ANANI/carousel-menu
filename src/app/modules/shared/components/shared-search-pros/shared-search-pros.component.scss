@@ -34,6 +34,19 @@
 
     }
 
+    .text-pre{
+      white-space: pre;
+    }
+
+
+    .line {
+      width: 100%;
+      height: 0;
+      border: 1px solid #C4C4C4;
+      margin: 3px;
+      display:inline-block;
+    }
+
     .heading-wrapper {
       display: flex;
       align-items: center;
@@ -145,6 +158,22 @@
       border-color: $text-primary-color;
       border-right-color: transparent;
       border-top-color: transparent;
+    }
+
+  }
+
+  .how-it-works{
+    position: absolute;
+    right: 30px;
+    font-size: 13px;
+  }
+
+  .tooltip {
+
+    &.is-multiline::before {
+      max-width: 320px;
+      min-width: 320px;
+      text-align: left;
     }
 
   }
