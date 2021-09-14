@@ -9,12 +9,12 @@
   <!-- banner project message  -->
 
   <!-- header -->
-  <section class="container grid-2xl fluid p-top-25">
+  <section class="container grid-2xl fluid p-top-10">
     <div class="column col-sm-12 col-11 col-mx-auto">
       <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
 
         <!-- title -->
-        <h2 class="title is-4 m-bottom-15">
+        <h2 [ngStyle]="{'font-size': '22px'}" class="title m-bottom-15">
           {{ 'PROJECT_SETUP.TITLE' | translate }}
         </h2>
         <!-- /title -->
@@ -29,9 +29,10 @@
             class="button is-link is-sm m-bottom-15 p-no"
             id="btn-quiz-example">
             <img
-              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg"
+              [ngStyle]="{'width': '18px'}"
               alt=""
-              class="icon-left">
+              class="icon-left"
+              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg">
             {{ 'COMMON.BUTTON.EXAMPLE' | translate }}
           </button>
           <!-- card example -->
@@ -45,6 +46,7 @@
             id="btn-preview"
             target="_blank">
             <img
+              [ngStyle]="{'width': '20px'}"
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
               alt=""
               class="icon-left">
