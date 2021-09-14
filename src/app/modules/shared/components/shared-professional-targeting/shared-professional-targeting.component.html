@@ -6,6 +6,14 @@
       <h5>Seniority Levels</h5>
       <div class="card">
         <div class="card-body">
+          <section *ngIf="!isPreview" class="section-search">
+            <app-utility-search-input-2
+              [inputWidth]="{width: '100%'}"
+              [searchPlaceholder]="'Type to search'"
+              (searchFieldOutput)="onClickSearchSeniorityLevel($event)">
+            </app-utility-search-input-2>
+          </section>
+
           <section class="section-all" *ngIf="!isPreview">
 
             <div class="select-wrapper d-flex align-center">
@@ -34,12 +42,6 @@
               </div>
             </div>
 
-          </section>
-          <section *ngIf="!isPreview" class="section-search m-left-4">
-            <app-utility-search-input-2
-              [searchPlaceholder]="'Type to search'"
-              (searchFieldOutput)="onClickSearchSeniorityLevel($event)">
-            </app-utility-search-input-2>
           </section>
           <ng-container *ngFor="let seniorityKey of getSeniorityLevelsKeys">
             <app-shared-search-config-pro
@@ -78,9 +80,18 @@
       <h5>Job Typologies</h5>
       <div class="card">
         <div class="card-body">
+          <!-- search jobs -->
+          <section class="section-search" *ngIf="!isPreview">
+            <app-utility-search-input-2
+              [inputWidth]="{width: '100%'}"
+              [searchPlaceholder]="'Type to search'"
+              (searchFieldOutput)="onClickSearchJob($event)">
+            </app-utility-search-input-2>
+          </section>
+          <!-- /search jobs -->
 
+          <!-- select all -->
           <section class="section-all" *ngIf="!isPreview">
-
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
                    [ngClass]="{'state-full-check': selectAllJobs, 'state-none-check': !selectAllJobs}"
@@ -109,6 +120,7 @@
             </div>
 
           </section>
+          <!-- /select all -->
 
           <!-- get time to load Job Categories -->
           <div *ngIf="isLoading">
@@ -122,13 +134,6 @@
           <!-- /get time to load Job Categories -->
 
           <ng-container *ngIf="!isLoading">
-            <section class="section-search m-left-4" *ngIf="!isPreview">
-              <app-utility-search-input-2
-                [searchPlaceholder]="'Type to search'"
-                (searchFieldOutput)="onClickSearchJob($event)">
-              </app-utility-search-input-2>
-            </section>
-
             <ng-container *ngFor="let jobTypoKey of getFilteredJobsTypologiesKeys">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"

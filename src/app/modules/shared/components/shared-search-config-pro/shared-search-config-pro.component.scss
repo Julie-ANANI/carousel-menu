@@ -3,7 +3,7 @@
 
 .pro-select-wrapper {
   height: 40px;
-  background-color: #2E6188;
+  background-color: #edf1f5;
   border-radius: 8px;
 }
 
@@ -20,6 +20,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   .state-full-check {
     border: 5px solid #2ECC71;
@@ -27,7 +28,7 @@
   }
 
   .state-partially-check {
-    border: 10px solid antiquewhite;
+    border: 10px solid $dark-color;
   }
 
   .state-exclude {
@@ -36,7 +37,7 @@
   }
 
   .state-none-check {
-    border: 10px solid antiquewhite;
+    border: 10px solid $dark-color;
   }
 }
 

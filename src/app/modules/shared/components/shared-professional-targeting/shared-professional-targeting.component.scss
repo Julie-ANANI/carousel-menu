@@ -20,6 +20,18 @@
   }
 }
 
+.section-all{
+  margin: 10px 0;
+}
+
+.section-search{
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid $border-default-color;
+  padding: 6px;
+  margin: auto;
+}
+
 .select-wrapper{
   border-radius: 8px;
   height: 40px;

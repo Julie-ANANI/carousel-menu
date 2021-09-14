@@ -397,6 +397,8 @@ export class SharedSearchProsComponent implements OnInit {
       .filter((key) => searchParams.websites[key])
       .join(' ');
 
+    searchParams.targetPros = (!!this._targetedProsToUpdate) ? this._targetedProsToUpdate : this._campaign.targetPros;
+
     this._searchService
       .search(searchParams)
       .pipe(first())
@@ -629,8 +631,10 @@ export class SharedSearchProsComponent implements OnInit {
     if (this._saveApplyModalTitle === 'Restore') {
       this._toSave = false;
       this._isReset = true;
+      setTimeout(() => {
+        this._isReset = false;
+      }, 100);
     } else {
-      this._isReset = false;
       this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
         .subscribe(() => {
           this._toSave = false;

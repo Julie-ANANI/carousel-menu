@@ -5,7 +5,7 @@
       <!-- module select -->
       <section class="d-flex justify-center w-full m-auto">
         <div class="form-group d-flex align-center" style="width: 50%">
-          <label class="form-label text-20" for="select" style="width: 20%">I want to</label>
+          <div class="d-flex align-center text-primary text-bold text-20 m-auto" style="width: 20%; height: 100%; border-bottom: 2px solid #FFB300"><p>I want to:</p></div>
           <select class="form-select" id="select" style="width:80%" [ngModel]="moduleSelected.option"
                   (ngModelChange)="moduleOnChange($event)">
             <option *ngFor="let module of searchModules" [ngValue]="module.option">{{module.context}}</option>
@@ -66,7 +66,7 @@
     You will loss your settings. Continue?
   </section>
 
-  <footer class="modal-footer">
+  <footer class="modal-footer justify-center">
     <button class="button modal-cancel p-10" (click)="closeModal()">Cancel</button>
     <button (click)="confirmChangePage()" class="button is-community p-10">Confirm</button>
   </footer>

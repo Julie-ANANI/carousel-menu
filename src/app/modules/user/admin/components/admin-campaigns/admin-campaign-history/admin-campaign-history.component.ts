@@ -81,7 +81,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
         this._statsReferentsService.get().subscribe((referents) => {
           this._referents = referents.campaigns;
-          this._stats = (this.campaign.stats.pro) ? this.campaign.stats.pro : {
+          this._stats = (this.campaign.stats && !!this.campaign.stats.pro) ? this.campaign.stats.pro : {
             uniqueGoodEmails: 0,
             uniqueBadEmails: 0,
             uniqueUncertain: 0,

@@ -23,10 +23,11 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     }
   }
 
-  @Input() set isReset(value: Boolean) {
-    if (value) {
+  @Input() set isReset(value: boolean) {
+    this._isReset = value;
+    if (this._isReset) {
       this.getTargetedProsAndJobs();
-      this.isResetChange.emit(false);
+      this._isReset = false;
     }
   }
 
@@ -55,9 +56,13 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _isPreview: Boolean = false;
 
+  private _isReset = false;
+
   private _selectAllSeniorityLevels = false;
 
   private _selectAllJobs = false;
+
+  private _targetedPros: TargetPros;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _campaignService: CampaignService) {
@@ -74,6 +79,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     this._isLoading = true;
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
+        this._targetedPros = res;
         this._targetedProsToUpdate = res;
         this._jobsTypologies = res.jobsTypologies;
         this._searchOperator = res.searchOperator;
@@ -188,13 +194,13 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     switch (type) {
       case 'JOB_TYPOLOGY':
         this._selectAllJobs = !this._selectAllJobs;
-          const keys = Object.keys(this._jobsTypologies);
-          keys.forEach(key => {
-            this._jobsTypologies[key].state = (this._selectAllJobs) ? 1 : 2;
-            this._jobsTypologies[key].jobs.forEach(job => job.state = ((this._selectAllJobs) ? 1 : 2));
-          });
-          this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
-          this.targetedProsOnChange.emit(this._targetedProsToUpdate);
+        const keys = Object.keys(this._jobsTypologies);
+        keys.forEach(key => {
+          this._jobsTypologies[key].state = (this._selectAllJobs) ? 1 : 2;
+          this._jobsTypologies[key].jobs.forEach(job => job.state = ((this._selectAllJobs) ? 1 : 2));
+        });
+        this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
+        this.targetedProsOnChange.emit(this._targetedProsToUpdate);
         break;
       case 'SENIORITY_LEVEL':
         this._selectAllSeniorityLevels = !this._selectAllSeniorityLevels;
