@@ -176,7 +176,6 @@ export class SidebarUserAnswerComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res) => {
-          console.log(res);
           this._translateNotificationsService.success(
             'Success',
             'The answer is updated.'
