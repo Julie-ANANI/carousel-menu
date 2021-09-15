@@ -112,15 +112,12 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
               .pipe(takeUntil(this._ngUnsubscribe))
               .subscribe(
                 (update: any) => {
-                  console.log('update');
-                  console.log(update);
                   const answer = update.data;
                   answer._id = answer.id;
                   const index = this._answers.findIndex(
                     (a) => a._id.toString() === answer._id.toString()
                   );
                   this._answers[index] = answer;
-                  console.log(answer);
                   this._initAnswers();
                 },
                 (error) => {
@@ -472,7 +469,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   }
 
   set localConfig(value: Config) {
-    console.log(value);
     this._localConfig = value;
   }
 
@@ -553,8 +549,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   }
 
   updateAnswersTable(value: boolean) {
-    console.log(value);
-    console.log(this._tableData._content);
+    this._initAnswers();
   }
 
   ngOnDestroy(): void {
