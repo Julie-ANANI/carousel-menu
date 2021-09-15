@@ -37,7 +37,7 @@ export class AdminCampaignSearchComponent implements OnInit {
 
   private _moduleSelected: SearchModule = {
     option: 'research',
-    context: 'use the research module'
+    context: 'Use the research module'
   };
 
   private _optionSelected = 'research';
@@ -108,6 +108,11 @@ export class AdminCampaignSearchComponent implements OnInit {
   }
 
   closeModal() {
+    const option = this._moduleSelected.option;
+    this._moduleSelected.option = '';
+    setTimeout(() => {
+      this._moduleSelected.option = option;
+    }, 0);
     this._showModal = false;
   }
 }
