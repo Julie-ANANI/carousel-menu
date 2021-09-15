@@ -221,7 +221,8 @@
     <!-- /input -->
 
     <!-- settings -->
-    <div class="w-full d-flex align-center m-top-20" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+    <div class="w-full d-flex align-center m-top-20"
+         *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
       <span class="text-pre text-15 text-bold">Settings</span>
       <div class="line m-left-4"></div>
     </div>
@@ -236,7 +237,8 @@
     </div>
 
     <!-- geographic targeting -->
-    <div class="w-full d-flex align-center m-top-20" *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+    <div class="w-full d-flex align-center m-top-20"
+         *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
       <span class="text-pre text-15 text-bold">Geographic targeting</span>
       <div class="line m-left-4"></div>
     </div>
@@ -292,9 +294,9 @@
 
         <button class="button how-it-works text-underline tooltip is-multiline is-left"
                 [attr.data-tooltip]="'1. A SL tag has 2 different states : include and exclude.\n' +
-    'Click on a tag to change its state by the other state\n' +
-    '2. A TJ tag has 3 different states: include, exclude and neutral\n' +
-    'Click on a tag to change its state according to the following cycle:\n' +
+    ' - Click on a tag to change its state by the other state\n' +
+    '2. A TJ tag has 3 different states : include, exclude and neutral\n' +
+    ' - Click on a tag to change its state according to the following cycle : ' +
     'Neutral -> Include -> Exclude ->Neutral -> ...'">
           How it works?
         </button>
