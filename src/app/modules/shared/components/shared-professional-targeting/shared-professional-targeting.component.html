@@ -6,14 +6,6 @@
       <h5>Seniority Levels</h5>
       <div class="card">
         <div class="card-body">
-          <section *ngIf="!isPreview" class="section-search">
-            <app-utility-search-input-2
-              [inputWidth]="{width: '100%'}"
-              [searchPlaceholder]="'Type to search'"
-              (searchFieldOutput)="onClickSearchSeniorityLevel($event)">
-            </app-utility-search-input-2>
-          </section>
-
           <section class="section-all" *ngIf="!isPreview">
 
             <div class="select-wrapper d-flex align-center">
