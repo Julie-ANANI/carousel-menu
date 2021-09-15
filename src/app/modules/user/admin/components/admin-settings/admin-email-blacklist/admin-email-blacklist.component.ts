@@ -201,22 +201,31 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
       this._addToBlacklist(values.emails);
     }
     if (values.domains && values.domains.length) {
-      this._addToBlacklist(values.domains);
+      this._addToBlacklist(values.domains, 'DOMAIN');
     }
   }
 
-  private _addToBlacklist(values: Array<string>) {
-    values.forEach((value: any, index) => {
-      this._emailService.addToBlacklist({email: value.text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-        this._refreshList(index, values.length - 1);
-        this._translateNotificationsService.success('Success',
-          `The address ${value.text} has been added to the blacklist.`);
-      }, (error: HttpErrorResponse) => {
-        this._refreshList(index, values.length - 1);
-        this._translateNotificationsService.error('Error', error.message);
-        console.error(error);
-      });
-    });
+  private _addToBlacklist(values: Array<any>, type: 'EMAIL' | 'DOMAIN' = 'EMAIL') {
+    for (let i = 0; i < values.length; i++) {
+      const _text = type === 'DOMAIN' ? values[i].domain : values[i].text;
+
+      if (!!_text) {
+        this._emailService.addToBlacklist({email: _text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+          this._refreshList(i, values.length - 1);
+          this._translateNotificationsService.success('Success',
+            `The address ${_text} has been added to the blacklist.`);
+        }, (error: HttpErrorResponse) => {
+          this._refreshList(i, values.length - 1);
+          this._translateNotificationsService.error('Error', error.message);
+          console.error(error);
+        });
+      } else if (type === 'DOMAIN' && !_text) {
+        this._translateNotificationsService.error(
+          'Error', `We do not have the domain value for this ${values[i].name}.`
+        );
+      }
+
+    }
   }
 
   private _refreshList(index: number, total: number) {
