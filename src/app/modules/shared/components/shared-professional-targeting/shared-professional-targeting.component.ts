@@ -191,25 +191,27 @@ export class SharedProfessionalTargetingComponent implements OnInit {
   }
 
   selectAllOnChange(event: Event, type: 'SENIORITY_LEVEL' | 'JOB_TYPOLOGY') {
-    switch (type) {
-      case 'JOB_TYPOLOGY':
-        this._selectAllJobs = !this._selectAllJobs;
-        const keys = Object.keys(this._jobsTypologies);
-        keys.forEach(key => {
-          this._jobsTypologies[key].state = (this._selectAllJobs) ? 1 : 2;
-          this._jobsTypologies[key].jobs.forEach(job => job.state = ((this._selectAllJobs) ? 1 : 2));
-        });
-        this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
-        this.targetedProsOnChange.emit(this._targetedProsToUpdate);
-        break;
-      case 'SENIORITY_LEVEL':
-        this._selectAllSeniorityLevels = !this._selectAllSeniorityLevels;
-        Object.keys(this._seniorityLevels).map(key => {
-          this._seniorityLevels[key].state = (this._selectAllSeniorityLevels) ? 1 : 0;
-        });
-        this._targetedProsToUpdate.seniorityLevels = this._seniorityLevels;
-        this.targetedProsOnChange.emit(this._targetedProsToUpdate);
-        break;
+    if (!this._isPreview) {
+      switch (type) {
+        case 'JOB_TYPOLOGY':
+          this._selectAllJobs = !this._selectAllJobs;
+          const keys = Object.keys(this._jobsTypologies);
+          keys.forEach(key => {
+            this._jobsTypologies[key].state = (this._selectAllJobs) ? 1 : 2;
+            this._jobsTypologies[key].jobs.forEach(job => job.state = ((this._selectAllJobs) ? 1 : 2));
+          });
+          this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
+          this.targetedProsOnChange.emit(this._targetedProsToUpdate);
+          break;
+        case 'SENIORITY_LEVEL':
+          this._selectAllSeniorityLevels = !this._selectAllSeniorityLevels;
+          Object.keys(this._seniorityLevels).map(key => {
+            this._seniorityLevels[key].state = (this._selectAllSeniorityLevels) ? 1 : 0;
+          });
+          this._targetedProsToUpdate.seniorityLevels = this._seniorityLevels;
+          this.targetedProsOnChange.emit(this._targetedProsToUpdate);
+          break;
+      }
     }
   }
 

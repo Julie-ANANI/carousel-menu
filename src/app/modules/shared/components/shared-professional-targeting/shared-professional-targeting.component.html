@@ -6,7 +6,7 @@
       <h5>Seniority Levels</h5>
       <div class="card">
         <div class="card-body">
-          <section class="section-all" *ngIf="!isPreview">
+          <section class="section-all">
 
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
@@ -85,7 +85,7 @@
           <!-- /search jobs -->
 
           <!-- select all -->
-          <section class="section-all" *ngIf="!isPreview">
+          <section class="section-all">
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
                    [ngClass]="{'state-full-check': selectAllJobs, 'state-none-check': !selectAllJobs}"
