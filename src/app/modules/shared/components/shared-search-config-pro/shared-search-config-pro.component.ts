@@ -100,18 +100,18 @@ export class SharedSearchConfigProComponent implements OnInit {
     switch (this._currentState) {
       case 0:
         return {
-          border: '5px solid #EA5858',
+          border: '4px solid #EA5858',
           color: '#EA5858'
         };
       case 3:
       case 2:
         return {
-          border: '5px solid #FFFFFF',
-          color: '#FFFFFF'
+          border: '4px solid #333333',
+          color: '#333333'
         };
       case 1:
         return {
-          border: '5px solid #2ECC71',
+          border: '4px solid #2ECC71',
           color: '#2ECC71'
         };
     }
@@ -253,17 +253,17 @@ export class SharedSearchConfigProComponent implements OnInit {
     switch (job.state) {
       case 0:
         return {
-          border: '5px solid #EA5858',
+          border: '4px solid #EA5858',
           color: '#EA5858'
         };
       case 2:
         return {
-          border: '5px solid #333333',
+          border: '4px solid #333333',
           color: '#333333'
         };
       case 1:
         return {
-          border: '5px solid #2ECC71',
+          border: '4px solid #2ECC71',
           color: '#2ECC71'
         };
     }
