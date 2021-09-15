@@ -53,15 +53,16 @@
       margin-bottom: -15px;
       min-height: 45px;
 
-      .title-secondary, .text-link, .line {
+      .title-secondary-scraping, .text-link, .line {
         margin-right: 8px;
         margin-bottom: 15px;
       }
 
-      .title-secondary {
-        color: $text-meta-color;
-        font-size: 16px;
+      .title-secondary-scraping {
+        color: $text-secondary-dark-color;
+        font-size: 18px;
         margin-right: 10px;
+        font-weight: bold;
       }
 
       .line {
