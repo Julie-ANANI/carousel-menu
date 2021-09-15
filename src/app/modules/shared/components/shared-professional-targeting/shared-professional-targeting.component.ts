@@ -226,8 +226,8 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return this._isLoading;
   }
 
-  get getSeniorityLevelsKeys() {
-    return Object.keys(this._seniorityLevels) || [];
+  getSeniorityLevelsKeys() {
+    return Object.keys(this._seniorityLevels).filter(key => key !== 'excluding').concat('excluding') || [];
   }
 
   get getFilteredJobsTypologiesKeys() {
