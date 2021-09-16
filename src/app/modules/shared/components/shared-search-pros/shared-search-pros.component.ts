@@ -148,6 +148,7 @@ export class SharedSearchProsComponent implements OnInit {
         smart: false,
         regions: false,
         indexSearch: false,
+        rgpd: false,
       },
     };
 

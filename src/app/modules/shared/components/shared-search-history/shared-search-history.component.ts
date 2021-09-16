@@ -185,7 +185,8 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._searchService.getRequests(this._config).pipe(first()).subscribe((result: any) => {
       if (result.requests) {
         this._requests = result.requests.map((request: any) => {
-          request.pros = (request.results.person.length || request.totalResults || 0) + ' pros';
+          request.pros = ((request.results.person.length || 0) + (request.results.limbo && request.results.limbo.length || 0) ||
+            request.totalResults || 0) + ' pros';
           if (request.region) {
             request.targetting = request.region;
             request.keywords = request.keywords.replace(`"${request.region}"`, '');
