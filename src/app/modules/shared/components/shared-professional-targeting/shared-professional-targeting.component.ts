@@ -4,6 +4,8 @@ import { first } from 'rxjs/operators';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { Campaign } from '../../../../models/campaign';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-shared-professional-targeting',
   templateUrl: './shared-professional-targeting.component.html',
@@ -58,7 +60,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _isReset = false;
 
-  private _selectAllSeniorityLevels = false;
+  private _selectAllSeniorityLevels = 0;
 
   private _selectAllJobs = false;
 
@@ -86,16 +88,30 @@ export class SharedProfessionalTargetingComponent implements OnInit {
         this._seniorityLevels = res.seniorityLevels;
         this._filteredJobsTypologies = res.jobsTypologies;
         this._filteredSeniorityLevels = res.seniorityLevels;
+        this.initialiseSelectAllSeniorityLevel(this._seniorityLevels);
         setTimeout(() => {
           this._isLoading = false;
         }, 500);
       });
   }
 
+  initialiseSelectAllSeniorityLevel(_seniorityLevels: any) {
+    const stateExcluded = _.find(_seniorityLevels, {state: 0});
+    const stateIncluded = _.find(_seniorityLevels, {state: 1});
+    if (stateExcluded && stateIncluded) {
+      this._selectAllSeniorityLevels = 2;
+    } else if (stateExcluded) {
+      this._selectAllSeniorityLevels = 0;
+    } else {
+      this._selectAllSeniorityLevels = 1;
+    }
+  }
+
   seniorityLevelsOnChange(event: any) {
     if (event.action === 'seniorLevels') {
       const _identifier = event.identifier;
       this._targetedProsToUpdate.seniorityLevels[_identifier].state = event.state;
+      this.initialiseSelectAllSeniorityLevel(this._targetedProsToUpdate.seniorityLevels);
     }
     this.targetedProsOnChange.emit(this._targetedProsToUpdate);
   }
@@ -204,10 +220,22 @@ export class SharedProfessionalTargetingComponent implements OnInit {
           this.targetedProsOnChange.emit(this._targetedProsToUpdate);
           break;
         case 'SENIORITY_LEVEL':
-          this._selectAllSeniorityLevels = !this._selectAllSeniorityLevels;
-          Object.keys(this._seniorityLevels).map(key => {
-            this._seniorityLevels[key].state = (this._selectAllSeniorityLevels) ? 1 : 0;
-          });
+          if (this._selectAllSeniorityLevels === 0) {
+            Object.keys(this._seniorityLevels).map(key => {
+              this._seniorityLevels[key].state = 1;
+            });
+            this._selectAllSeniorityLevels = 1;
+          } else if (this._selectAllSeniorityLevels === 1) {
+            Object.keys(this._seniorityLevels).map(key => {
+              this._seniorityLevels[key].state = 0;
+            });
+            this._selectAllSeniorityLevels = 0;
+          } else {
+            Object.keys(this._seniorityLevels).map(key => {
+              this._seniorityLevels[key].state = 1;
+            });
+            this._selectAllSeniorityLevels = 1;
+          }
           this._targetedProsToUpdate.seniorityLevels = this._seniorityLevels;
           this.targetedProsOnChange.emit(this._targetedProsToUpdate);
           break;
@@ -252,7 +280,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return this._selectAllJobs;
   }
 
-  get selectAllSeniorityLevels(): boolean {
+  get selectAllSeniorityLevels(): number {
     return this._selectAllSeniorityLevels;
   }
 

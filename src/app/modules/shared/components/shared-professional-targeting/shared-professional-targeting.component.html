@@ -10,13 +10,18 @@
 
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
-                   [ngClass]="{'state-full-check': selectAllSeniorityLevels, 'state-none-check': !selectAllSeniorityLevels}"
+                   [ngClass]="{'state-full-check': selectAllSeniorityLevels === 1,
+                   'state-none-check': selectAllSeniorityLevels===0, 'state-mixed': selectAllSeniorityLevels === 2}"
                    (click)="selectAllOnChange($event, 'SENIORITY_LEVEL')">
                 <ng-container [ngSwitch]="selectAllSeniorityLevels">
-                  <ng-container *ngSwitchCase="false">
+                  <ng-container *ngSwitchCase="0">
+                    <i class="fas fa-times"></i>
                   </ng-container>
-                  <ng-container *ngSwitchCase="true">
+                  <ng-container *ngSwitchCase="1">
                     <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="2">
+                    <i class="fas fa-circle"></i>
                   </ng-container>
                 </ng-container>
               </div>

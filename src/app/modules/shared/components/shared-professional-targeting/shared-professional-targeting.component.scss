@@ -51,6 +51,11 @@
     }
 
     &.state-none-check {
+      border: 5px solid $alert-color;
+      color: $alert-color
+    }
+
+    &.state-mixed {
       border: 5px solid #97A4B1;
       color: #97A4B1;
     }
