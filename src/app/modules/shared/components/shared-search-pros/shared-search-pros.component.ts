@@ -633,7 +633,8 @@ export class SharedSearchProsComponent implements OnInit {
       this._isReset = true;
       setTimeout(() => {
         this._isReset = false;
-      }, 100);
+        this._translateNotificationsService.success('Success', 'Applied saved targeting');
+      }, 1500);
     } else {
       this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
         .subscribe(() => {
