@@ -94,7 +94,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
   private _initTable() {
     this._tableInfos = {
       _selector: 'admin-blacklisted-emails',
-      _title: 'Blacklisted e-mails',
+      _title: 'Blacklisted e-mails / domains',
       _content: this._emailDataset.blacklists,
       _total: this._emailDataset._metadata.totalCount,
       _isTitle: true,
@@ -201,13 +201,14 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
       this._addToBlacklist(values.emails);
     }
     if (values.domains && values.domains.length) {
+      console.log(values.domains);
       this._addToBlacklist(values.domains, 'DOMAIN');
     }
   }
 
   private _addToBlacklist(values: Array<any>, type: 'EMAIL' | 'DOMAIN' = 'EMAIL') {
     for (let i = 0; i < values.length; i++) {
-      const _text = type === 'DOMAIN' ? values[i].domain : values[i].text;
+      const _text = type === 'DOMAIN' ? `@${values[i].domain}` : values[i].text;
 
       if (!!_text) {
         this._emailService.addToBlacklist({email: _text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
