@@ -25,18 +25,6 @@
     <!-- toggle options -->
     <div *ngIf="showToggleSearch" [ngClass]="showToggleSearch ? 'd-block' : 'd-none'" class="m-top-25">
 
-      <!-- save button -->
-      <div *ngIf="isEditable" class="p-bottom-10">
-        <button
-          (click)="saveParams($event)"
-          class="button is-sm is-community"
-          id="btn-save"
-          type="button">
-          Save
-        </button>
-      </div>
-      <!-- /save button -->
-
       <!-- number of pros -->
       <div class="form-group align-center m-bottom-30">
         <label class="title is-6 m-no-bottom m-right-20" for="sidebar-pros-number">Search</label>
@@ -104,6 +92,18 @@
         </label>
       </div>
       <!-- /use -->
+
+      <!-- save button -->
+      <div *ngIf="isEditable" class="p-bottom-10">
+        <button
+          (click)="saveParams($event)"
+          class="button is-sm is-community"
+          id="btn-save"
+          type="button">
+          Save
+        </button>
+      </div>
+      <!-- /save button -->
 
     </div>
     <!-- toggle options -->
