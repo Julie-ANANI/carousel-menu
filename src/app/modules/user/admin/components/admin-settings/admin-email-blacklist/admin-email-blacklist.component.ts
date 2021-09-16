@@ -208,23 +208,17 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
 
   private _addToBlacklist(values: Array<any>, type: 'EMAIL' | 'DOMAIN' = 'EMAIL') {
     for (let i = 0; i < values.length; i++) {
-      const _text = type === 'DOMAIN' ? `@${values[i].domain}` : values[i].text;
+      const _text = type === 'DOMAIN' ? `${values[i].name}` : values[i].text;
 
-      if (!!_text) {
-        this._emailService.addToBlacklist({email: _text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-          this._refreshList(i, values.length - 1);
-          this._translateNotificationsService.success('Success',
-            `The address ${_text} has been added to the blacklist.`);
-        }, (error: HttpErrorResponse) => {
-          this._refreshList(i, values.length - 1);
-          this._translateNotificationsService.error('Error', error.message);
-          console.error(error);
-        });
-      } else if (type === 'DOMAIN' && !_text) {
-        this._translateNotificationsService.error(
-          'Error', `We do not have the domain value for this ${values[i].name}.`
-        );
-      }
+      this._emailService.addToBlacklist({email: _text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+        this._refreshList(i, values.length - 1);
+        this._translateNotificationsService.success('Success',
+          `The address ${_text} has been added to the blacklist.`);
+      }, (error: HttpErrorResponse) => {
+        this._refreshList(i, values.length - 1);
+        this._translateNotificationsService.error('Error', error.message);
+        console.error(error);
+      });
 
     }
   }
