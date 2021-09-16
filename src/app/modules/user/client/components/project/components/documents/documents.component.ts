@@ -189,7 +189,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isGeneratingXLSX && this.isOwner && this.ownerConsent) {
       this._isGeneratingXLSX = true;
-      const url = this._answerService.getExportUrl(this._innovation._id, true, this.anonymousXLSX);
+      const url = this._answerService.getExportUrl(this._innovation._id, true, this.userLang, this.anonymousXLSX);
       setTimeout(() => {
         window.open(url);
         this._isGeneratingXLSX = false;

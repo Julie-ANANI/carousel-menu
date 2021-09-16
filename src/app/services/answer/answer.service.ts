@@ -68,8 +68,8 @@ export class AnswerService {
     window.open(url);
   }
 
-  public getExportUrl(innovationId: string, client: boolean, anonymous?: boolean): string {
-    const query = [];
+  public getExportUrl(innovationId: string, client: boolean, lang: string, anonymous?: boolean): string {
+    const query = [`lang=${lang}`];
     if (client !== undefined) {
       query.push(`client=${!!client}`);
     }
