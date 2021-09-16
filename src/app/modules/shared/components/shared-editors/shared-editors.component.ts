@@ -130,7 +130,7 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
   }
 
   get showToggle(): boolean {
-    return this._isEditable && !this.isEtherpadUp && (!this.limitEtherpadAccess || this.isEtherpadAuthorizedForInnovation());
+    return true; // this._isEditable && !this.isEtherpadUp && (!this.limitEtherpadAccess || this.isEtherpadAuthorizedForInnovation());
   }
 
   ngOnDestroy(): void {
