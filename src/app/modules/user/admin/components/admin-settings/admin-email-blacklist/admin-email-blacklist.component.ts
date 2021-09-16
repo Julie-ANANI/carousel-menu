@@ -201,7 +201,6 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
       this._addToBlacklist(values.emails);
     }
     if (values.domains && values.domains.length) {
-      console.log(values.domains);
       this._addToBlacklist(values.domains, 'DOMAIN');
     }
   }
