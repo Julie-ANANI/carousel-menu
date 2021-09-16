@@ -62,7 +62,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
 
   private _selectAllSeniorityLevels = 0;
 
-  private _selectAllJobs = false;
+  private _selectAllJobs = 0;
 
   private _targetedPros: TargetPros;
 
@@ -89,21 +89,36 @@ export class SharedProfessionalTargetingComponent implements OnInit {
         this._filteredJobsTypologies = res.jobsTypologies;
         this._filteredSeniorityLevels = res.seniorityLevels;
         this.initialiseSelectAllSeniorityLevel(this._seniorityLevels);
+        this.initialiseSelectAllJobs(this._jobsTypologies);
         setTimeout(() => {
           this._isLoading = false;
         }, 500);
       });
   }
 
-  initialiseSelectAllSeniorityLevel(_seniorityLevels: any) {
-    const stateExcluded = _.find(_seniorityLevels, {state: 0});
-    const stateIncluded = _.find(_seniorityLevels, {state: 1});
+  initialiseSelectAllSeniorityLevel(seniorityLevels: any) {
+    const stateExcluded = _.find(seniorityLevels, {state: 0});
+    const stateIncluded = _.find(seniorityLevels, {state: 1});
     if (stateExcluded && stateIncluded) {
-      this._selectAllSeniorityLevels = 2;
+      this._selectAllSeniorityLevels = 3;
     } else if (stateExcluded) {
       this._selectAllSeniorityLevels = 0;
     } else {
       this._selectAllSeniorityLevels = 1;
+    }
+  }
+
+  initialiseSelectAllJobs(jobsTypologies: any) {
+    const stateExcluded = _.find(jobsTypologies, {state: 0});
+    const stateIncluded = _.find(jobsTypologies, {state: 1});
+    const stateNeutral = _.find(jobsTypologies, {state: 2});
+    const stateMixed = _.find(jobsTypologies, {state: 3});
+    if (stateExcluded && !stateIncluded && !stateNeutral && !stateMixed) {
+      this._selectAllJobs = 0;
+    } else if (!stateExcluded && stateIncluded && !stateNeutral && !stateMixed) {
+      this._selectAllJobs = 1;
+    } else {
+      this._selectAllJobs = 3;
     }
   }
 
@@ -125,6 +140,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
       const _identifier: string = event.identifier;
       this._targetedProsToUpdate.jobsTypologies[_identifier].state = event.state;
       this._targetedProsToUpdate.jobsTypologies[_identifier].jobs = event.jobs;
+      this.initialiseSelectAllJobs(this._targetedProsToUpdate.jobsTypologies);
       this.targetedProsOnChange.emit(this._targetedProsToUpdate);
     }
   }
@@ -210,22 +226,24 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     if (!this._isPreview) {
       switch (type) {
         case 'JOB_TYPOLOGY':
-          this._selectAllJobs = !this._selectAllJobs;
-          const keys = Object.keys(this._jobsTypologies);
-          keys.forEach(key => {
-            this._jobsTypologies[key].state = (this._selectAllJobs) ? 1 : 2;
-            this._jobsTypologies[key].jobs.forEach(job => job.state = ((this._selectAllJobs) ? 1 : 2));
-          });
+          if (this._selectAllJobs === 1) {
+            Object.keys(this._jobsTypologies).map(key => {
+              this._jobsTypologies[key].state = 0;
+              this._jobsTypologies[key].jobs.forEach(job => job.state = 0);
+            });
+            this._selectAllJobs = 0;
+          } else {
+            Object.keys(this._jobsTypologies).map(key => {
+              this._jobsTypologies[key].state = 1;
+              this._jobsTypologies[key].jobs.forEach(job => job.state = 1);
+            });
+            this._selectAllJobs = 1;
+          }
           this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
           this.targetedProsOnChange.emit(this._targetedProsToUpdate);
           break;
         case 'SENIORITY_LEVEL':
-          if (this._selectAllSeniorityLevels === 0) {
-            Object.keys(this._seniorityLevels).map(key => {
-              this._seniorityLevels[key].state = 1;
-            });
-            this._selectAllSeniorityLevels = 1;
-          } else if (this._selectAllSeniorityLevels === 1) {
+          if (this._selectAllSeniorityLevels === 1) {
             Object.keys(this._seniorityLevels).map(key => {
               this._seniorityLevels[key].state = 0;
             });
@@ -276,7 +294,7 @@ export class SharedProfessionalTargetingComponent implements OnInit {
     return this._searchOperator;
   }
 
-  get selectAllJobs(): boolean {
+  get selectAllJobs(): number {
     return this._selectAllJobs;
   }
 

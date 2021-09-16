@@ -11,7 +11,7 @@
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
                    [ngClass]="{'state-full-check': selectAllSeniorityLevels === 1,
-                   'state-none-check': selectAllSeniorityLevels===0, 'state-mixed': selectAllSeniorityLevels === 2}"
+                   'state-none-check': selectAllSeniorityLevels===0, 'state-mixed': selectAllSeniorityLevels === 3}"
                    (click)="selectAllOnChange($event, 'SENIORITY_LEVEL')">
                 <ng-container [ngSwitch]="selectAllSeniorityLevels">
                   <ng-container *ngSwitchCase="0">
@@ -20,7 +20,7 @@
                   <ng-container *ngSwitchCase="1">
                     <i class="fas fa-check"></i>
                   </ng-container>
-                  <ng-container *ngSwitchCase="2">
+                  <ng-container *ngSwitchCase="3">
                     <i class="fas fa-circle"></i>
                   </ng-container>
                 </ng-container>
@@ -93,13 +93,18 @@
           <section class="section-all">
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
-                   [ngClass]="{'state-full-check': selectAllJobs, 'state-none-check': !selectAllJobs}"
+                   [ngClass]="{'state-full-check': selectAllJobs === 1,
+                   'state-none-check': selectAllJobs===0, 'state-mixed': selectAllJobs === 3}"
                    (click)="selectAllOnChange($event, 'JOB_TYPOLOGY')">
                 <ng-container [ngSwitch]="selectAllJobs">
-                  <ng-container *ngSwitchCase="false">
+                  <ng-container *ngSwitchCase="0">
+                    <i class="fas fa-times"></i>
                   </ng-container>
-                  <ng-container *ngSwitchCase="true">
+                  <ng-container *ngSwitchCase="1">
                     <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="3">
+                    <i class="fas fa-circle"></i>
                   </ng-container>
                 </ng-container>
               </div>
