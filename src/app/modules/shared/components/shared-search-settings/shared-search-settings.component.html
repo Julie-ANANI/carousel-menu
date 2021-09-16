@@ -80,6 +80,19 @@
       </div>
       <!-- /automated -->
 
+      <!-- rgpd -->
+      <div class="form-group m-bottom-25">
+        <label class="form-switch">
+          <input
+            [(ngModel)]="params && params.options && params.options['rgpd']"
+            [disabled]="!isEditable"
+            name="sidebar-automated"
+            type="checkbox">
+          <i class="form-icon"></i> RGPD
+        </label>
+      </div>
+      <!-- /rgpd -->
+
       <!-- use -->
       <h6 class="title is-6 m-bottom-15">Select the options</h6>
       <div class="form-group m-bottom-30">
