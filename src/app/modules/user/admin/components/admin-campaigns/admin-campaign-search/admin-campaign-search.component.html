@@ -5,8 +5,8 @@
       <!-- module select -->
       <section class="d-flex justify-center w-full m-auto">
         <div class="form-group d-flex align-center" style="width: 50%; border-bottom: 2px solid #FFB300">
-          <div class="d-flex align-center text-primary text-bold text-20 m-auto" style="height: 100%;">I want to :</div>
-          <select class="form-select" id="select" style="width:80%" [ngModel]="moduleSelected.option"
+          <div class="d-flex align-center text-primary text-bold text-20 m-auto" style="height: 100%;">I want to:</div>
+          <select class="form-select m-bottom-2" id="select" style="width:80%" [ngModel]="moduleSelected.option"
                   (ngModelChange)="moduleOnChange($event)">
             <option *ngFor="let module of searchModules" [ngValue]="module.option">{{module.context}}</option>
           </select>

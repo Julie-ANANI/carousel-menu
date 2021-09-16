@@ -46,7 +46,6 @@
             <app-shared-search-config-pro
               [isPreview]="isPreview"
               [identifier]="seniorityKey"
-              (sendStateOnChange)="seniorityLevelsOnChange($event)"
               [option]="{name: seniorityLevels[seniorityKey].name, state:seniorityLevels[seniorityKey].state}"
               [filteredSeniorityLevel]="filteredSeniorityLevels">
             </app-shared-search-config-pro>
@@ -144,7 +143,6 @@
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
                 [identifier]="jobTypoKey"
-                (sendStateOnChange)="jobTypoOnChange($event)"
                 [option]="{name: jobsTypologies[jobTypoKey].name.en, state: jobsTypologies[jobTypoKey].state}"
                 [jobs]="jobsTypologies[jobTypoKey].jobs"
                 [filteredJobs]="filteredJobsTypologies[jobTypoKey].jobs"

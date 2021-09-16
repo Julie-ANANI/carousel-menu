@@ -288,7 +288,7 @@
 
         <!-- Reset targetedPro  -->
         <button class="button br-6 is-sm is-outlined m-10" (click)="resetTargetedPros()">
-          Apply
+          Restore
         </button>
         <!-- /Reset targetedPro  -->
 
@@ -305,10 +305,7 @@
       </div>
       <!-- /Professional targeting - buttons  -->
 
-      <app-shared-professional-targeting
-        [isReset]="isReset"
-        (targetedProsOnChange)="getUpdatedTargetedPros($event)"
-        [campaign]="campaign">
+      <app-shared-professional-targeting>
       </app-shared-professional-targeting>
 
     </div>
@@ -332,8 +329,8 @@
 
   <section class="modal-body">
     <app-shared-professional-targeting
-      [isPreview]="isPreview"
-      [campaign]="campaign">
+      [isPreview]="true"
+      [targetedProsToUpdate]="initialTargetedPro">
     </app-shared-professional-targeting>
   </section>
 

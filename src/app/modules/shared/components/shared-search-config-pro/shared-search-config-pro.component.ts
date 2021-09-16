@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { JobConfig, SeniorityLevel } from '../../../../models/targetPros';
+import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
 /**
  * SL - 0: excluded, 1: included
@@ -62,8 +63,6 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._isPreview = preview;
   }
 
-  @Output() sendStateOnChange: EventEmitter<any> = new EventEmitter();
-
   private _context = ''; // SeniorityLevel's name / Job Category's name
 
   private _identifier = '';
@@ -84,7 +83,8 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   private _nbExcluded: number;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _jobFrontService: JobsFrontService) {
   }
 
   ngOnInit() {
@@ -223,10 +223,21 @@ export class SharedSearchConfigProComponent implements OnInit {
     if (!this.isPreview) {
       if (this.isJobTypo) {
         this.setJobStates();
-        this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
+        this._jobFrontService.targetedProsUpdatedOnChange(
+          {
+            action: 'jobTypos',
+            jobs: this.jobConfigs,
+            identifier: this._identifier,
+            state: this._currentState
+          });
       } else {
         this.setSeniorityLevelState();
-        this.sendStateOnChange.emit({action: 'seniorLevels', state: this._currentState, identifier: this._identifier});
+        this._jobFrontService.targetedProsUpdatedOnChange(
+          {
+            action: 'seniorLevels',
+            state: this._currentState,
+            identifier: this._identifier
+          });
       }
       this._countStates();
     }
@@ -289,7 +300,13 @@ export class SharedSearchConfigProComponent implements OnInit {
           break;
       }
       this._countStates();
-      this.sendStateOnChange.emit({action: 'jobTypos', jobs: this.jobConfigs, identifier: this._identifier, state: this._currentState});
+      this._jobFrontService.targetedProsUpdatedOnChange(
+        {
+          action: 'jobTypos',
+          jobs: this.jobConfigs,
+          identifier: this._identifier,
+          state: this._currentState
+        });
       this._currentState = this.checkTypoState();
     }
   }
