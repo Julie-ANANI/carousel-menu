@@ -93,6 +93,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   private _initialTargetedPro: TargetPros;
 
+  private _errorMessageLaunch = '';
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
@@ -121,6 +123,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
             .subscribe((targetedPros) => {
               this._toSave = !_.isEqual(targetedPros, this._initialTargetedPro);
               this._targetedProsToUpdate = targetedPros || <TargetPros>{};
+              this._checkProsTargetingValid();
             });
         });
     }
@@ -403,6 +406,38 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       : 'visible';
   }
 
+  public _checkProsTargetingValid() {
+    this._errorMessageLaunch = '';
+
+    const targetPros = this._targetedProsToUpdate || this._initialTargetedPro;
+
+    const seniorityIncluded = [];
+    const seniorityLevelsKeys = Object.keys(targetPros.seniorityLevels);
+    seniorityLevelsKeys.forEach((key) => {
+      const level = targetPros.seniorityLevels[key];
+      if (level.state === 1) {
+        seniorityIncluded.push(level);
+      }
+    });
+
+    const jobs = [].concat(...Object.keys(targetPros.jobsTypologies).map(key => targetPros.jobsTypologies[key].jobs));
+    const jobsIncluded = jobs.filter(j => j.state === 1).map(j => j._id);
+    const jobsExcluded = jobs.filter(j => j.state === 0).map(j => j._id);
+    const jobsNeutral = jobs.filter(j => j.state === 2).map(j => j._id);
+
+    if ((jobsExcluded.length + jobsNeutral.length) === 1) {
+      this._errorMessageLaunch = 'Too heavy to handle : only 1 tag is not included. Include all TJ tags or make a new config';
+    } else if (jobsExcluded.length === jobs.length && seniorityIncluded.length < seniorityLevelsKeys.length) {
+      this._errorMessageLaunch = 'You must include at least one TJ tag';
+    } else if (jobsIncluded.length && !seniorityIncluded.length) {
+      this._errorMessageLaunch = 'You must include at least one SL tag';
+    } else if (jobsExcluded.length === jobs.length || !seniorityIncluded.length) {
+      this._errorMessageLaunch = 'You must have at least one non-excluded tag on each box';
+    } else {
+      this._errorMessageLaunch = '';
+    }
+  }
+
   public onClickSearch(event: Event): void {
     event.preventDefault();
     this._localStorageService.setItem('searchSettings', JSON.stringify(this._params));
@@ -668,7 +703,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       });
   }
 
-
   confirmSaveReset() {
     this._isShowModal = false;
     if (this._saveApplyModalTitle === 'Restore') {
@@ -678,9 +712,12 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     }
   }
 
-
   get initialTargetedPro(): TargetPros {
     return this._initialTargetedPro;
+  }
+
+  get errorMessageLaunch(): string {
+    return this._errorMessageLaunch;
   }
 
   ngOnDestroy(): void {
