@@ -48,6 +48,7 @@ export class SidebarCampaignComponent implements OnInit {
   private buildForm() {
     this._campaignForm = this.formBuilder.group( {
       title: [''],
+      rgpd: [{value: false}]
     });
   }
 
@@ -74,6 +75,7 @@ export class SidebarCampaignComponent implements OnInit {
   private patchValue() {
     if (this.campaign && this.campaign._id && this._campaignForm) {
       this._campaignForm.get('title').setValue(this.campaign.title);
+      this._campaignForm.get('rgpd').setValue(!!this.campaign.rgpd);
     }
   }
 
@@ -90,6 +92,10 @@ export class SidebarCampaignComponent implements OnInit {
 
       }
     }
+  }
+
+  get isGDPRMode(): boolean {
+    return this._campaignForm.get('rgpd').value && !!this.campaign.rgpd;
   }
 
   get campaignForm(): FormGroup {

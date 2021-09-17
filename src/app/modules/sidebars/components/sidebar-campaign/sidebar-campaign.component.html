@@ -25,5 +25,18 @@
     </div>
     <!-- /campaign name -->
 
+    <div *ngIf="isEditName" class="form-group">
+      <label class="form-label" for="sidebar-campaign-title">GDPR mode for the campaign:
+        <input
+          formControlName="rgpd"
+          id="sidebar-campaign-mode"
+          type="checkbox">
+        <i class="form-icon"></i>
+        {{ isGDPRMode ? 'Activated' : 'Deactivated' }}
+      </label>
+      <div>
+      </div>
+    </div>
+
   </form>
 </div>
