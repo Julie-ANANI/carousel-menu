@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Input, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { GeographySettings } from '../../../../models/innov-settings';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -13,13 +13,18 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TargetPros } from '../../../../models/targetPros';
+import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
+import { Subject } from 'rxjs';
+
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-shared-search-pros',
   templateUrl: './shared-search-pros.component.html',
   styleUrls: ['./shared-search-pros.component.scss'],
 })
-export class SharedSearchProsComponent implements OnInit {
+export class SharedSearchProsComponent implements OnInit, OnDestroy {
   @Input() accessPath: Array<string> = [];
 
   @Input() set campaign(value: Campaign) {
@@ -84,6 +89,10 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _isShowModal = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _initialTargetedPro: TargetPros;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
@@ -91,7 +100,8 @@ export class SharedSearchProsComponent implements OnInit {
     private _rolesFrontService: RolesFrontService,
     private _authService: AuthService,
     private _campaignService: CampaignService,
-    private _localStorageService: LocalStorageService
+    private _localStorageService: LocalStorageService,
+    private _jobFrontService: JobsFrontService
   ) {
   }
 
@@ -99,6 +109,21 @@ export class SharedSearchProsComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._getCountries();
       this._initParams();
+
+      this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
+        .subscribe(res => {
+          this._targetedProsToUpdate = res;
+          this._initialTargetedPro = JSON.parse(JSON.stringify(res));
+          this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
+
+          this._jobFrontService
+            .targetedProsToUpdate()
+            .pipe(takeUntil(this._ngUnsubscribe))
+            .subscribe((targetedPros) => {
+              this._toSave = !_.isEqual(targetedPros, this._initialTargetedPro);
+              this._targetedProsToUpdate = targetedPros || <TargetPros>{};
+            });
+        });
     }
   }
 
@@ -255,14 +280,6 @@ export class SharedSearchProsComponent implements OnInit {
     this.estimateNumberOfGoogleRequests();
   }
 
-  public onClickSettings() {
-    this._sidebarValue = {
-      animate_state: 'active',
-      title: 'Advanced Search',
-      size: '726px',
-    };
-  }
-
   /***
    *
    * @param {Event} event: pressed button
@@ -404,7 +421,7 @@ export class SharedSearchProsComponent implements OnInit {
       .search(searchParams)
       .pipe(first())
       .subscribe(
-        (_: any) => {
+        (res: any) => {
           this._initParams();
           this._translateNotificationsService.success(
             'Success',
@@ -627,24 +644,54 @@ export class SharedSearchProsComponent implements OnInit {
     this._isShowModal = false;
   }
 
+  saveTargetedPros() {
+    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
+      .subscribe(() => {
+        this._toSave = false;
+        this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
+        this._translateNotificationsService.success('Success', 'Targeting saved');
+      }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
+        this._toSave = false;
+        this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
+        console.error(err);
+      });
+  }
+
+  restoreTargetedPros() {
+    this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
+      .subscribe(res => {
+        this._targetedProsToUpdate = res;
+        this._initialTargetedPro = JSON.parse(JSON.stringify(res));
+        this._isReset = false;
+        this._toSave = false;
+        this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
+        this._translateNotificationsService.success('Success', 'Applied saved targeting');
+      }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
+        this._toSave = true;
+        this._isReset = false;
+        console.error(err);
+      });
+  }
+
+
   confirmSaveReset() {
     this._isShowModal = false;
     if (this._saveApplyModalTitle === 'Restore') {
-      this._toSave = false;
-      this._isReset = true;
-      setTimeout(() => {
-        this._isReset = false;
-      }, 100);
+      this.restoreTargetedPros();
     } else {
-      this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
-        .subscribe(() => {
-          this._toSave = false;
-          this._translateNotificationsService.success('Success', 'Targeting saved');
-        }, err => {
-          this._translateNotificationsService.error('Error', 'An error occurred');
-          this._toSave = false;
-          console.error(err);
-        });
+      this.saveTargetedPros();
     }
+  }
+
+
+  get initialTargetedPro(): TargetPros {
+    return this._initialTargetedPro;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 }
