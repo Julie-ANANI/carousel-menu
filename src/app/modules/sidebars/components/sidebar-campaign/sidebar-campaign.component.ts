@@ -47,7 +47,7 @@ export class SidebarCampaignComponent implements OnInit {
 
   private buildForm() {
     this._campaignForm = this.formBuilder.group( {
-      title: [''],
+      title: [{value: ''}],
       rgpd: [{value: false}]
     });
   }
@@ -95,7 +95,7 @@ export class SidebarCampaignComponent implements OnInit {
   }
 
   get isGDPRMode(): boolean {
-    return this._campaignForm.get('rgpd').value && !!this.campaign.rgpd;
+    return this._campaignForm.get('rgpd').value;
   }
 
   get campaignForm(): FormGroup {
