@@ -46,8 +46,7 @@
             <app-shared-search-config-pro
               [isPreview]="isPreview"
               [identifier]="seniorityKey"
-              [option]="{name: seniorityLevels[seniorityKey].name, state:seniorityLevels[seniorityKey].state}"
-              [filteredSeniorityLevel]="filteredSeniorityLevels">
+              [option]="{name: seniorityLevels[seniorityKey].name, state:seniorityLevels[seniorityKey].state}">
             </app-shared-search-config-pro>
           </ng-container>
         </div>
@@ -139,13 +138,13 @@
           <!-- /get time to load Job Categories -->
 
           <ng-container *ngIf="!isLoading">
-            <ng-container *ngFor="let jobTypoKey of getFilteredJobsTypologiesKeys">
+            <ng-container *ngFor="let jobTypo of sortedFilteredJobsTypologies">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
-                [identifier]="jobTypoKey"
-                [option]="{name: jobsTypologies[jobTypoKey].name.en, state: jobsTypologies[jobTypoKey].state}"
-                [jobs]="jobsTypologies[jobTypoKey].jobs"
-                [filteredJobs]="filteredJobsTypologies[jobTypoKey].jobs"
+                [identifier]="jobTypo.identifier"
+                [option]="{name: jobTypo.name.en, state: jobTypo.state}"
+                [jobs]="jobTypo.jobs"
+                [filteredJobs]="filteredJobsTypologies[jobTypo.identifier].jobs"
                 [isJobTypo]="true">
               </app-shared-search-config-pro>
             </ng-container>

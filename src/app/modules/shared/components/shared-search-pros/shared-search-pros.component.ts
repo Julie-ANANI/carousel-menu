@@ -112,9 +112,9 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
-          this._targetedProsToUpdate = res;
+          this._jobFrontService.setTargetedProsToUpdate(res);
+          // this._targetedProsToUpdate = res;
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-          this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
 
           this._jobFrontService
             .targetedProsToUpdate()
@@ -649,7 +649,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this._toSave = false;
         this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
-        this._translateNotificationsService.success('Success', 'Targeting saved');
+        this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
       }, err => {
         this._translateNotificationsService.error('Error', 'An error occurred');
         this._toSave = false;
@@ -661,12 +661,12 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   restoreTargetedPros() {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
-        this._targetedProsToUpdate = res;
+        this._jobFrontService.setTargetedProsToUpdate(res);
+        // this._targetedProsToUpdate = res;
         this._initialTargetedPro = JSON.parse(JSON.stringify(res));
         this._isReset = false;
         this._toSave = false;
-        this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
-        this._translateNotificationsService.success('Success', 'Applied saved targeting');
+        this._translateNotificationsService.success('Success', 'The saved professional targeting has been restored.');
       }, err => {
         this._translateNotificationsService.error('Error', 'An error occurred');
         this._toSave = true;
