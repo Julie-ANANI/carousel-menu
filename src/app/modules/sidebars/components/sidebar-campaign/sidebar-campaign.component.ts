@@ -47,8 +47,8 @@ export class SidebarCampaignComponent implements OnInit {
 
   private buildForm() {
     this._campaignForm = this.formBuilder.group( {
-      title: [{value: ''}],
-      rgpd: [{value: false}]
+      title: [{value: '', disabled: !this.isEditable}],
+      rgpd: [{value: false, disabled: !this.isEditable}]
     });
   }
 
