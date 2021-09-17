@@ -113,7 +113,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
           this._jobFrontService.setTargetedProsToUpdate(res);
-          // this._targetedProsToUpdate = res;
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
 
           this._jobFrontService
@@ -566,6 +565,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   set geography(value: GeographySettings) {
     this._geography = value;
+    this.onGeographyChange(value);
   }
 
   get campaign(): Campaign {
@@ -662,7 +662,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
         this._jobFrontService.setTargetedProsToUpdate(res);
-        // this._targetedProsToUpdate = res;
         this._initialTargetedPro = JSON.parse(JSON.stringify(res));
         this._isReset = false;
         this._toSave = false;
