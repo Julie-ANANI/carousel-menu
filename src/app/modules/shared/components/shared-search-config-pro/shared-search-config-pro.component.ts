@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { JobConfig, SeniorityLevel } from '../../../../models/targetPros';
+import { JobConfig } from '../../../../models/targetPros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
 /**
@@ -29,14 +29,6 @@ export class SharedSearchConfigProComponent implements OnInit {
       this.initJobStates();
       this._countStates();
     }
-  }
-
-  /**
-   * filtered seniority level
-   * @param value
-   */
-  @Input() set filteredSeniorityLevel(value: any) {
-    this._filteredLevelsIdentifiers = Object.values(value).map((v: SeniorityLevel) => v.name);
   }
 
   /**
@@ -72,8 +64,6 @@ export class SharedSearchConfigProComponent implements OnInit {
   private _jobConfigs: Array<JobConfig> = [];
 
   private _filteredJobsIds: Array<String> = [];
-
-  private _filteredLevelsIdentifiers: Array<String> = [];
 
   private _currentState = 0;
 
@@ -340,10 +330,6 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   showJob(job: JobConfig) {
     return this._filteredJobsIds.includes(job._id);
-  }
-
-  showOption(option: string) {
-    return this.isJobTypo || this._filteredLevelsIdentifiers.includes(option);
   }
 
   get isPreview(): Boolean {

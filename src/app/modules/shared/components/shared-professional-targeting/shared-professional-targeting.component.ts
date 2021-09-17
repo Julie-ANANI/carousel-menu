@@ -27,8 +27,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _filteredJobsTypologies: { [property: string]: JobsTypologies } = {};
 
-  private _filteredSeniorityLevels: any = {};
-
   private _jobsTypologies: { [property: string]: JobsTypologies } = {};
 
   private _searchOperator = 'OR' || 'AND';
@@ -43,7 +41,11 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _selectAllJobs = 0;
 
+  private _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _searchJobKey = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
@@ -61,12 +63,28 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
       });
   }
 
+  sortJobTypologies(jobsTypologies: { [property: string]: JobsTypologies }) {
+    if (!_.isEmpty(jobsTypologies)) {
+      let _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
+      Object.keys(jobsTypologies).forEach(key => {
+        jobsTypologies[key].totalCount = jobsTypologies[key].jobs.filter((job: any) => job.state === 1).length +
+          jobsTypologies[key].jobs.filter((job: any) => job.state === 0).length;
+        jobsTypologies[key].identifier = key;
+        _sortedFilteredJobsTypologies.push(jobsTypologies[key]);
+      });
+      _sortedFilteredJobsTypologies = _.orderBy(_sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+      return _sortedFilteredJobsTypologies;
+    } else {
+      return [];
+    }
+  }
+
   initialiseTargetedPros(targetedPros: TargetPros) {
     this._jobsTypologies = targetedPros.jobsTypologies;
     this._searchOperator = targetedPros.searchOperator;
     this._seniorityLevels = targetedPros.seniorityLevels;
     this._filteredJobsTypologies = targetedPros.jobsTypologies;
-    this._filteredSeniorityLevels = targetedPros.seniorityLevels;
+    this.onClickSearchJob(this._searchJobKey);
     this.initialiseSelectAllSeniorityLevel(this._seniorityLevels);
     this.initialiseSelectAllJobs(this._jobsTypologies);
   }
@@ -119,12 +137,9 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     return this._filteredJobsTypologies;
   }
 
-  get filteredSeniorityLevels(): { [p: string]: JobsTypologies } {
-    return this._filteredSeniorityLevels;
-  }
-
   public onClickSearchJob(keyword: string) {
     if (!!keyword) {
+      this._searchJobKey = keyword;
       this._filteredJobsTypologies = {};
       const keys = Object.keys(this._jobsTypologies);
       for (let i = 0; i < keys.length; i++) {
@@ -148,9 +163,11 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             };
           }
         }
+        this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
       }
     } else {
       this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
+      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
     }
   }
 
@@ -281,9 +298,11 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     } else {
       return 0;
     }
-
   }
 
+  get sortedFilteredJobsTypologies(): Array<JobsTypologies> {
+    return this._sortedFilteredJobsTypologies;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

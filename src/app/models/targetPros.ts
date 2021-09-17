@@ -8,6 +8,8 @@ export interface JobsTypologies {
   state: number;
   jobs: Array<JobConfig>;
   name: { en: string, fr: string };
+  totalCount?: number;
+  identifier?: string;
 }
 
 export interface JobsCategory {

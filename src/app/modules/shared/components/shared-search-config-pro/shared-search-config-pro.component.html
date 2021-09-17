@@ -2,8 +2,7 @@
 
   <div class="d-flex flex-d-column align-start justify-start">
     <!-- Seniority level / Job category level -->
-    <div *ngIf="showOption(context)"
-         class="pro-select-wrapper d-flex align-center w-full m-top-10">
+    <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
       <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
            (click)="stateOnChange($event)">
         <ng-container [ngSwitch]="currentState">
