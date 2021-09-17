@@ -18,8 +18,7 @@ export class SharedSearchSettingsComponent {
 
   constructor() {}
 
-  public saveParams(event: any) {
-    event.preventDefault();
+  public saveParams() {
     if (this.isEditable) {
       this.paramsChange.emit(this.params);
     }

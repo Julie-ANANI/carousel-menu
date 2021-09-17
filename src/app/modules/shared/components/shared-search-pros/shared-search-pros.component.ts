@@ -405,6 +405,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   public onClickSearch(event: Event): void {
     event.preventDefault();
+    this._localStorageService.setItem('searchSettings', JSON.stringify(this._params));
 
     const searchParams = this._params;
 
@@ -455,13 +456,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   public updateSettings(value: any) {
     this._params = value;
-    console.log(this._params);
-    this._localStorageService.setItem('searchSettings', JSON.stringify(value));
-    // this.estimateNumberOfGoogleRequests();
-    this._translateNotificationsService.success(
-      'Success',
-      'The settings has been updated.'
-    );
   }
 
   public onClickImport(file: File) {
