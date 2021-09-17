@@ -612,7 +612,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   }
 
   resetTargetedPros() {
-    this._saveApplyModalContext = 'Apply the saved professional targeting?';
+    this._saveApplyModalContext = 'Restore the saved professional targeting?';
     this._saveApplyModalTitle = 'Restore';
     this._isShowModal = true;
   }
