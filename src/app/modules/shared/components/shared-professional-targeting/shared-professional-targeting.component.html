@@ -6,25 +6,22 @@
       <h5>Seniority Levels</h5>
       <div class="card">
         <div class="card-body">
-          <section *ngIf="!isPreview" class="section-search">
-            <app-utility-search-input-2
-              [inputWidth]="{width: '100%'}"
-              [searchPlaceholder]="'Type to search'"
-              (searchFieldOutput)="onClickSearchSeniorityLevel($event)">
-            </app-utility-search-input-2>
-          </section>
-
-          <section class="section-all" *ngIf="!isPreview">
+          <section class="section-all">
 
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
-                   [ngClass]="{'state-full-check': selectAllSeniorityLevels, 'state-none-check': !selectAllSeniorityLevels}"
+                   [ngClass]="{'state-full-check': selectAllSeniorityLevels === 1,
+                   'state-none-check': selectAllSeniorityLevels===0, 'state-mixed': selectAllSeniorityLevels === 3}"
                    (click)="selectAllOnChange($event, 'SENIORITY_LEVEL')">
                 <ng-container [ngSwitch]="selectAllSeniorityLevels">
-                  <ng-container *ngSwitchCase="false">
+                  <ng-container *ngSwitchCase="0">
+                    <i class="fas fa-times"></i>
                   </ng-container>
-                  <ng-container *ngSwitchCase="true">
+                  <ng-container *ngSwitchCase="1">
                     <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="3">
+                    <i class="fas fa-circle"></i>
                   </ng-container>
                 </ng-container>
               </div>
@@ -34,8 +31,10 @@
 
                 <!-- nb of included/excluded jobs-->
                 <div class="d-flex flex-end flex-grow">
-                  <span *ngIf="nbAllSeniorityLevelSelected" class="shape bg-success is-circle is-md text-13"> {{nbAllSeniorityLevelSelected}} </span>
-                  <span *ngIf="nbAllSeniorityLevelExcluded" class="shape bg-alert is-circle is-md text-13"> {{nbAllSeniorityLevelExcluded}} </span>
+                  <span *ngIf="nbAllSeniorityLevelSelected"
+                        class="shape bg-success is-circle is-md text-13"> {{nbAllSeniorityLevelSelected}} </span>
+                  <span *ngIf="nbAllSeniorityLevelExcluded"
+                        class="shape bg-alert is-circle is-md text-13"> {{nbAllSeniorityLevelExcluded}} </span>
                 </div>
                 <!-- /nb of included/excluded jobs-->
 
@@ -43,11 +42,10 @@
             </div>
 
           </section>
-          <ng-container *ngFor="let seniorityKey of getSeniorityLevelsKeys">
+          <ng-container *ngFor="let seniorityKey of getSeniorityLevelsKeys()">
             <app-shared-search-config-pro
               [isPreview]="isPreview"
               [identifier]="seniorityKey"
-              (sendStateOnChange)="seniorityLevelsOnChange($event)"
               [option]="{name: seniorityLevels[seniorityKey].name, state:seniorityLevels[seniorityKey].state}"
               [filteredSeniorityLevel]="filteredSeniorityLevels">
             </app-shared-search-config-pro>
@@ -91,16 +89,21 @@
           <!-- /search jobs -->
 
           <!-- select all -->
-          <section class="section-all" *ngIf="!isPreview">
+          <section class="section-all">
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
-                   [ngClass]="{'state-full-check': selectAllJobs, 'state-none-check': !selectAllJobs}"
+                   [ngClass]="{'state-full-check': selectAllJobs === 1,
+                   'state-none-check': selectAllJobs===0, 'state-mixed': selectAllJobs === 3}"
                    (click)="selectAllOnChange($event, 'JOB_TYPOLOGY')">
                 <ng-container [ngSwitch]="selectAllJobs">
-                  <ng-container *ngSwitchCase="false">
+                  <ng-container *ngSwitchCase="0">
+                    <i class="fas fa-times"></i>
                   </ng-container>
-                  <ng-container *ngSwitchCase="true">
+                  <ng-container *ngSwitchCase="1">
                     <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="3">
+                    <i class="fas fa-circle"></i>
                   </ng-container>
                 </ng-container>
               </div>
@@ -110,8 +113,10 @@
 
                 <!-- nb of included/excluded jobs-->
                 <div class="d-flex flex-end flex-grow">
-                  <span *ngIf="nbAllJobSelected" class="shape bg-success is-circle is-md text-13"> {{nbAllJobSelected}} </span>
-                  <span *ngIf="nbAllJobExcluded" class="shape bg-alert is-circle is-md text-13"> {{nbAllJobExcluded}} </span>
+                  <span *ngIf="nbAllJobSelected"
+                        class="shape bg-success is-circle is-md text-13"> {{nbAllJobSelected}} </span>
+                  <span *ngIf="nbAllJobExcluded"
+                        class="shape bg-alert is-circle is-md text-13"> {{nbAllJobExcluded}} </span>
 
                 </div>
                 <!-- /nb of included/excluded jobs-->
@@ -138,7 +143,6 @@
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
                 [identifier]="jobTypoKey"
-                (sendStateOnChange)="jobTypoOnChange($event)"
                 [option]="{name: jobsTypologies[jobTypoKey].name.en, state: jobsTypologies[jobTypoKey].state}"
                 [jobs]="jobsTypologies[jobTypoKey].jobs"
                 [filteredJobs]="filteredJobsTypologies[jobTypoKey].jobs"
