@@ -55,7 +55,9 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._isPreview = preview;
   }
 
-  @Input() openToggle: boolean;
+  @Input() set showToggleSearch(value) {
+    this._showToggleSearch = value;
+  }
 
   private _context = ''; // SeniorityLevel's name / Job Category's name
 
@@ -220,7 +222,9 @@ export class SharedSearchConfigProComponent implements OnInit {
             action: 'jobTypos',
             jobs: this.jobConfigs,
             identifier: this._identifier,
-            state: this._currentState
+            state: this._currentState,
+            isToggle: this._showToggleSearch,
+            isAll: true
           });
       } else {
         this.setSeniorityLevelState();
@@ -237,15 +241,20 @@ export class SharedSearchConfigProComponent implements OnInit {
 
 
   get showToggleSearch(): boolean {
-    return this._showToggleSearch || this.openToggle;
-  }
-
-  set showToggleSearch(value: boolean) {
-    this._showToggleSearch = value;
+    return this._showToggleSearch;
   }
 
   onClickToggle() {
     this._showToggleSearch = !this._showToggleSearch;
+    this._jobFrontService.targetedProsUpdatedOnChange(
+      {
+        action: 'jobTypos',
+        jobs: this.jobConfigs,
+        identifier: this._identifier,
+        state: this._currentState,
+        isToggle: this._showToggleSearch,
+        isAll: true,
+      });
   }
 
   /**
@@ -297,7 +306,9 @@ export class SharedSearchConfigProComponent implements OnInit {
           action: 'jobTypos',
           jobs: this.jobConfigs,
           identifier: this._identifier,
-          state: this._currentState
+          state: this._currentState,
+          isToggle: this._showToggleSearch,
+          isAll: false
         });
       this._currentState = this.checkTypoState();
     }

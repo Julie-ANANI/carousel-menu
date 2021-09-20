@@ -117,15 +117,18 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
-          this._jobFrontService.setTargetedProsToUpdate(res);
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
 
+          /**
+           * subscribe: get recent targetPros, not saved, current one
+           * */
           this._jobFrontService
             .targetedProsToUpdate()
             .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((targetedPros) => {
-              this._toSave = !_.isEqual(targetedPros, this._initialTargetedPro);
-              this._targetedProsToUpdate = targetedPros || <TargetPros>{};
+            .subscribe((result: { targetPros: TargetPros}) => {
+              this._toSave = !_.isEqual(result.targetPros, this._initialTargetedPro);
+              this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
               this._checkProsTargetingValid();
             });
         });
@@ -441,6 +444,10 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * launch all
+   * @param event
+   */
   public onClickSearch(event: Event): void {
     event.preventDefault();
     this._localStorageService.setItem('searchSettings', JSON.stringify(this._params));
@@ -524,6 +531,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   public onGeographyChange(value: GeographySettings) {
     this._geography = value;
     this._params.countries = value.include.map((c) => c.code);
+    console.log(this._params.countries);
   }
 
   get suggestions(): Array<{
@@ -679,6 +687,9 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._isShowModal = false;
   }
 
+  /**
+   * confirm: save targeted pros in the campaign
+   */
   saveTargetedPros() {
     this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
       .subscribe(() => {
@@ -693,10 +704,13 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * confirm: restore target pros
+   */
   restoreTargetedPros() {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
-        this._jobFrontService.setTargetedProsToUpdate(res);
+        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
         this._initialTargetedPro = JSON.parse(JSON.stringify(res));
         this._isReset = false;
         this._toSave = false;
