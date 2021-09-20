@@ -179,12 +179,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
         case 'JOB_TYPOLOGY':
           if (this._selectAllJobs === 1) {
             Object.keys(this._jobsTypologies).map(key => {
-              this._jobsTypologies[key].state = 0;
-              this._jobsTypologies[key].jobs.forEach(job => job.state = 0);
-            });
-            this._selectAllJobs = 0;
-          } else if (this._selectAllJobs === 0) {
-            Object.keys(this._jobsTypologies).map(key => {
               this._jobsTypologies[key].state = 2;
               this._jobsTypologies[key].jobs.forEach(job => job.state = 2);
             });
