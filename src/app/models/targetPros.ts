@@ -10,6 +10,7 @@ export interface JobsTypologies {
   name: { en: string, fr: string };
   totalCount?: number;
   identifier?: string;
+  isToggle?: boolean;
 }
 
 export interface JobsCategory {

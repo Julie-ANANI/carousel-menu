@@ -144,6 +144,8 @@
             <ng-container *ngFor="let jobTypo of sortedFilteredJobsTypologies">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
+                [showToggleSearch]="jobTypo.isToggle"
+                (onToggleChange)="setToggleStatus($event,jobTypo.identifier)"
                 [identifier]="jobTypo.identifier"
                 [option]="{name: jobTypo.name.en, state: jobTypo.state}"
                 [jobs]="jobTypo.jobs"

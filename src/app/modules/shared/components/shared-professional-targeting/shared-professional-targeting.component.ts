@@ -20,6 +20,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     if (value && this._isPreview) {
       this._targetedProsToUpdate = value;
       this.initialiseTargetedPros(value);
+      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
     }
   }
 
@@ -47,6 +48,8 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _searchJobKey = '';
 
+  private _isSort = true;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
@@ -55,24 +58,29 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._jobFrontService
       .targetedProsToUpdate()
       .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((targetedPros) => {
+      .subscribe((result: { targetPros: TargetPros, toSort: boolean }) => {
         if (!this._isPreview) {
-          this._targetedProsToUpdate = targetedPros || <TargetPros>{};
-          this.initialiseTargetedPros(targetedPros);
+          this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+          this.initialiseTargetedPros(result.targetPros);
+          this.onClickSearchJob(this._searchJobKey);
+          if (result.toSort) {
+            this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+            this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+          }
         }
       });
   }
 
   sortJobTypologies(jobsTypologies: { [property: string]: JobsTypologies }) {
     if (!_.isEmpty(jobsTypologies)) {
-      let _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
+      const _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
       Object.keys(jobsTypologies).forEach(key => {
         jobsTypologies[key].totalCount = jobsTypologies[key].jobs.filter((job: any) => job.state === 1).length +
           jobsTypologies[key].jobs.filter((job: any) => job.state === 0).length;
         jobsTypologies[key].identifier = key;
+        jobsTypologies[key].isToggle = jobsTypologies[key].isToggle ? jobsTypologies[key].isToggle : false;
         _sortedFilteredJobsTypologies.push(jobsTypologies[key]);
       });
-      _sortedFilteredJobsTypologies = _.orderBy(_sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
       return _sortedFilteredJobsTypologies;
     } else {
       return [];
@@ -84,7 +92,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._searchOperator = targetedPros.searchOperator;
     this._seniorityLevels = targetedPros.seniorityLevels;
     this._filteredJobsTypologies = targetedPros.jobsTypologies;
-    this.onClickSearchJob(this._searchJobKey);
     this.initialiseSelectAllSeniorityLevel(this._seniorityLevels);
     this.initialiseSelectAllJobs(this._jobsTypologies);
   }
@@ -165,11 +172,9 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             };
           }
         }
-        this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
       }
     } else {
       this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
-      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
     }
   }
 
@@ -197,7 +202,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             this._selectAllJobs = 1;
           }
           this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
-          this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: this._targetedProsToUpdate, toSort: true});
           break;
         case 'SENIORITY_LEVEL':
           if (this._selectAllSeniorityLevels === 1) {
@@ -212,7 +217,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             this._selectAllSeniorityLevels = 1;
           }
           this._targetedProsToUpdate.seniorityLevels = this._seniorityLevels;
-          this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: this._targetedProsToUpdate, toSort: false});
           break;
       }
     }
@@ -317,4 +322,13 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  setToggleStatus(isToggle: boolean, identifier: string) {
+    if (isToggle) {
+      this._sortedFilteredJobsTypologies.map(jobTypo => {
+        jobTypo.isToggle = jobTypo.identifier === identifier;
+      });
+    } else {
+      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+    }
+  }
 }
