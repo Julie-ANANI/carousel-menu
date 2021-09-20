@@ -112,27 +112,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this._initTable();
-    this._getTargetedPros().then(resolve => {
-      this._initData();
-    }, err => {
-      console.error(err);
-      this._initData();
-    });
-  }
-
-
-  private _getTargetedPros() {
-    return new Promise((resolve, reject) => {
-      this._campaignService.getTargetedPros(this._campaignId).pipe(first()).subscribe(targetPros => {
-        this._targetedPros = targetPros;
-        resolve(1);
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-        this._targetedPros = null;
-        reject(err);
-      });
-    });
+    this._initData();
   }
 
   private _initData() {
@@ -239,27 +219,27 @@ export class SharedSearchHistoryComponent implements OnInit {
    * pro targeting column
    * @private
    */
-  private _proTargeting() {
-    if (this._targetedPros && !_.isEmpty(this._targetedPros)) {
+  private _proTargeting(targetedPros: TargetPros) {
+    if (targetedPros && !_.isEmpty(targetedPros)) {
       let slIncluded = 0;
       let slExcluded = 0;
       let tjIncluded = 0;
       let tjExcluded = 0;
-      Object.keys(this._targetedPros.seniorityLevels).forEach((key, index) => {
-        if (this._targetedPros.seniorityLevels[key].state === 1) {
+      Object.keys(targetedPros.seniorityLevels).forEach((key, index) => {
+        if (targetedPros.seniorityLevels[key].state === 1) {
           slIncluded++;
-        } else if (this._targetedPros.seniorityLevels[key].state === 0) {
+        } else if (targetedPros.seniorityLevels[key].state === 0) {
           slExcluded++;
         }
       });
-      Object.keys(this._targetedPros.jobsTypologies).forEach(key => {
-        if (this._targetedPros.jobsTypologies[key].state === 1) {
-          tjIncluded += this._targetedPros.jobsTypologies[key].jobs.length;
-        } else if (this._targetedPros.jobsTypologies[key].state === 3) {
-          tjIncluded += this._targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 1).length;
-          tjExcluded += this._targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 0).length;
-        } else if (this._targetedPros.jobsTypologies[key].state === 0) {
-          tjExcluded += this._targetedPros.jobsTypologies[key].jobs.length;
+      Object.keys(targetedPros.jobsTypologies).forEach(key => {
+        if (targetedPros.jobsTypologies[key].state === 1) {
+          tjIncluded += targetedPros.jobsTypologies[key].jobs.length;
+        } else if (targetedPros.jobsTypologies[key].state === 3) {
+          tjIncluded += targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 1).length;
+          tjExcluded += targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 0).length;
+        } else if (targetedPros.jobsTypologies[key].state === 0) {
+          tjExcluded += targetedPros.jobsTypologies[key].jobs.length;
         }
       });
       return ` SL:<span style="color: #2ECC71">${slIncluded}</span>/

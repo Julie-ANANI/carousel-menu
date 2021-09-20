@@ -452,6 +452,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
     searchParams.targetPros = (!!this._targetedProsToUpdate) ? this._targetedProsToUpdate : this._campaign.targetPros;
 
+    console.log(searchParams);
     this._searchService
       .search(searchParams)
       .pipe(first())
@@ -521,6 +522,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   public onGeographyChange(value: GeographySettings) {
     this._geography = value;
     this._params.countries = value.include.map((c) => c.code);
+    console.log(this._params.countries);
   }
 
   get suggestions(): Array<{

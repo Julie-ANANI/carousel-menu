@@ -56,8 +56,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _currentIndex = 0;
 
-  private _count = 0;
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
