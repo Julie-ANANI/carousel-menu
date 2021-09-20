@@ -5,6 +5,7 @@
       <input
         [(ngModel)]="params && params.options && params.options['smart']"
         [disabled]="!isEditable"
+        (ngModelChange)="saveParams()"
         name="sidebar-smart"
         type="checkbox">
       <i class="form-icon"></i> Smart search
@@ -31,6 +32,7 @@
         <select
           [(ngModel)]="params && params.count"
           [disabled]="!isEditable"
+          (ngModelChange)="saveParams()"
           class="form-select is-sm mxw-250"
           id="sidebar-pros-number"
           name="sidebar-pros-count">
@@ -48,6 +50,7 @@
           <input
             [(ngModel)]="params && params.options && params.options['regions']"
             [disabled]="!isEditable"
+            (ngModelChange)="saveParams()"
             name="sidebar-regions"
             type="checkbox">
           <i class="form-icon"></i> Regions
@@ -61,6 +64,7 @@
           <input
             [(ngModel)]="params && params.options && params.options['automated']"
             [disabled]="!isEditable"
+            (ngModelChange)="saveParams()"
             name="sidebar-automated"
             type="checkbox">
           <i class="form-icon"></i> Search emails
@@ -74,6 +78,7 @@
           <input
             [(ngModel)]="params && params.options && params.options['rgpd']"
             [disabled]="!isEditable"
+            (ngModelChange)="saveParams()"
             name="sidebar-automated"
             type="checkbox">
           <i class="form-icon"></i> RGPD
@@ -88,6 +93,7 @@
           <input
             [(ngModel)]="params && params['websites'] && params['websites']['linkedin']"
             [disabled]="!isEditable"
+            (ngModelChange)="saveParams()"
             name="sidebar-use-linkedin"
             type="checkbox"
             value="linkedin">
@@ -97,6 +103,7 @@
         <label class="form-checkbox is-inline">
           <input
             [(ngModel)]="params && params['websites'] && params['websites']['xing']"
+            (ngModelChange)="saveParams()"
             [disabled]="!isEditable"
             name="sidebar-use-xing"
             type="checkbox"
@@ -105,18 +112,6 @@
         </label>
       </div>
       <!-- /use -->
-
-      <!-- save button -->
-      <div *ngIf="isEditable" class="p-bottom-10">
-        <button
-          (click)="saveParams($event)"
-          class="button is-sm is-community"
-          id="btn-save"
-          type="button">
-          Save
-        </button>
-      </div>
-      <!-- /save button -->
 
     </div>
     <!-- toggle options -->

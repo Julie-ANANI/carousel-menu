@@ -78,18 +78,21 @@ export class DiscoverInnovationsComponent implements OnInit {
   ngOnInit() {
 
     if (isPlatformBrowser(this._platformId)) {
-      this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-        this._totalFilteredInnovations = response._metadata.totalCount;
-        this._filteredInnovations = response.result.slice(4);
-        if (this._recommendedInnovationId) {
-          this._applyInnoRecommendation();
-        }
-        this._getLatestInnovations(response.result);
-        this._stopLoading = true;
-        this._stopLoadingLatest = true;
-      }, () => {
-        this._fetchingError = true;
-      });
+      const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
+      if (!sessionValues.length) {
+        this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+          this._totalFilteredInnovations = response._metadata.totalCount;
+          this._filteredInnovations = response.result.slice(4);
+          if (this._recommendedInnovationId) {
+            this._applyInnoRecommendation();
+          }
+          this._getLatestInnovations(response.result);
+          this._stopLoading = true;
+          this._stopLoadingLatest = true;
+        }, () => {
+          this._fetchingError = true;
+        });
+      }
     }
 
   }

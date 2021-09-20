@@ -92,6 +92,7 @@
             <div class="select-wrapper d-flex align-center">
               <div class="button-checker m-left-3"
                    [ngClass]="{'state-full-check': selectAllJobs === 1,
+                   'state-neutral-check': selectAllJobs === 2,
                    'state-none-check': selectAllJobs===0, 'state-mixed': selectAllJobs === 3}"
                    (click)="selectAllOnChange($event, 'JOB_TYPOLOGY')">
                 <ng-container [ngSwitch]="selectAllJobs">
@@ -100,6 +101,8 @@
                   </ng-container>
                   <ng-container *ngSwitchCase="1">
                     <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="2">
                   </ng-container>
                   <ng-container *ngSwitchCase="3">
                     <i class="fas fa-circle"></i>
@@ -141,6 +144,7 @@
             <ng-container *ngFor="let jobTypo of sortedFilteredJobsTypologies">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
+                [openToggle]="searchJobKey"
                 [identifier]="jobTypo.identifier"
                 [option]="{name: jobTypo.name.en, state: jobTypo.state}"
                 [jobs]="jobTypo.jobs"
