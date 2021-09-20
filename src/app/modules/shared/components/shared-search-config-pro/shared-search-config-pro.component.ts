@@ -224,7 +224,6 @@ export class SharedSearchConfigProComponent implements OnInit {
             identifier: this._identifier,
             state: this._currentState,
             isToggle: this._showToggleSearch,
-            isAll: true
           });
       } else {
         this.setSeniorityLevelState();
@@ -253,7 +252,6 @@ export class SharedSearchConfigProComponent implements OnInit {
         identifier: this._identifier,
         state: this._currentState,
         isToggle: this._showToggleSearch,
-        isAll: true,
       });
   }
 
@@ -308,7 +306,6 @@ export class SharedSearchConfigProComponent implements OnInit {
           identifier: this._identifier,
           state: this._currentState,
           isToggle: this._showToggleSearch,
-          isAll: false
         });
       this._currentState = this.checkTypoState();
     }

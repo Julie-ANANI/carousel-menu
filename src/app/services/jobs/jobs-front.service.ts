@@ -11,7 +11,7 @@ export class JobsFrontService {
     new BehaviorSubject<{ targetPros: TargetPros, isToggle?: boolean, identifier?: string }>({
       targetPros: <TargetPros>{},
       isToggle: false,
-      identifier: 'x'
+      identifier: ''
     });
 
   /***
