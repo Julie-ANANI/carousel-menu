@@ -56,10 +56,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _currentJobIdentifier = '';
 
-  private _currentJobTypo: JobsTypologies = <JobsTypologies>{};
-
-  private _currentIndex = 0;
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
@@ -93,18 +89,21 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   /**
    * sort jobTyo
+   * clicked on A: A won't move, sort other jobs
    * @param identifier
    */
   getCurrentJobTypo(identifier: string) {
+    let currentIndex = 0;
+    let currentJobTypo: JobsTypologies;
     for (let i = 0; i < this._sortedFilteredJobsTypologies.length; i++) {
       if (this._sortedFilteredJobsTypologies[i].identifier === identifier) {
-        this._currentIndex = i;
-        this._currentJobTypo = this._jobsTypologies[identifier];
+        currentIndex = i;
+        currentJobTypo = this._jobsTypologies[identifier];
       }
     }
     this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
     this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
-    this._sortedFilteredJobsTypologies.splice(this._currentIndex, 0, this._currentJobTypo);
+    this._sortedFilteredJobsTypologies.splice(currentIndex, 0, currentJobTypo);
   }
 
   /**
