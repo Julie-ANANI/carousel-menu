@@ -49,8 +49,6 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _tableInfos: Table = <Table>{};
 
-  private _targetedPros: TargetPros = <TargetPros>{};
-
   private _selectedRequest: any = null;
 
   private _requestsToImport: Array<any> = [];
@@ -163,56 +161,56 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _loadHistory() {
     this._suggestedKeywords = [];
     this._searchService.getRequests(this._config).pipe(first()).subscribe((result: any) => {
-      if (result.requests) {
-        this._requests = result.requests.map((request: any) => {
-          request.pros = ((request.results.person.length || 0) + (request.results.limbo && request.results.limbo.length || 0) ||
-            request.totalResults || 0) + ' pros';
-          if (request.region) {
-            request.targetting = request.region;
-            request.keywords = request.keywords.replace(`"${request.region}"`, '');
-          } else if (request.country) {
-            request.targetting = countries[request.country];
-          } else if (request.countries && request.countries.length) {
-            request.targetting = '';
-            const counter: { [c: string]: number } = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
-            request.countries.forEach((country: string) => {
-              if (COUNTRIES.europe.indexOf(country) !== -1) {
-                counter.EU++;
-              } else if (COUNTRIES.americaNord.indexOf(country) !== -1) {
-                counter.NA++;
-              } else if (COUNTRIES.americaSud.indexOf(country) !== -1) {
-                counter.SA++;
-              } else if (COUNTRIES.asia.indexOf(country) !== -1) {
-                counter.AS++;
-              } else if (COUNTRIES.africa.indexOf(country) !== -1) {
-                counter.AF++;
-              } else if (COUNTRIES.oceania.indexOf(country) !== -1) {
-                counter.OC++;
-              }
-            });
-            for (const key of Object.keys(counter)) {
-              if (counter[key]) {
-                request.targetting += ` ${key}(${counter[key]})`;
+        if (result.requests) {
+          this._requests = result.requests.map((request: any) => {
+            request.pros = ((request.results.person.length || 0) + (request.results.limbo && request.results.limbo.length || 0) ||
+              request.totalResults || 0) + ' pros';
+            if (request.region) {
+              request.targetting = request.region;
+              request.keywords = request.keywords.replace(`"${request.region}"`, '');
+            } else if (request.country) {
+              request.targetting = countries[request.country];
+            } else if (request.countries && request.countries.length) {
+              request.targetting = '';
+              const counter: { [c: string]: number } = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
+              request.countries.forEach((country: string) => {
+                if (COUNTRIES.europe.indexOf(country) !== -1) {
+                  counter.EU++;
+                } else if (COUNTRIES.americaNord.indexOf(country) !== -1) {
+                  counter.NA++;
+                } else if (COUNTRIES.americaSud.indexOf(country) !== -1) {
+                  counter.SA++;
+                } else if (COUNTRIES.asia.indexOf(country) !== -1) {
+                  counter.AS++;
+                } else if (COUNTRIES.africa.indexOf(country) !== -1) {
+                  counter.AF++;
+                } else if (COUNTRIES.oceania.indexOf(country) !== -1) {
+                  counter.OC++;
+                }
+              });
+              for (const key of Object.keys(counter)) {
+                if (counter[key]) {
+                  request.targetting += ` ${key}(${counter[key]})`;
+                }
               }
             }
-          }
-          request.prosTarget = this._proTargeting();
-          request.targetedPros = this._targetedPros;
-          return request;
-        });
-      }
-      if (result._metadata) {
-        this._total = result._metadata.totalCount;
-        this._paused = result._metadata.paused;
-      } else {
-        this._total = 0;
-      }
-      this._initTable();
+            request.prosTarget = this._proTargeting(request.targetPros);
+            return request;
+          });
+        }
+        if (result._metadata) {
+          this._total = result._metadata.totalCount;
+          this._paused = result._metadata.paused;
+        } else {
+          this._total = 0;
+        }
+        this._initTable();
 
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+      }
+      , (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
   }
 
   /**

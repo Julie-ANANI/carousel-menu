@@ -16,6 +16,10 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._isPreview = value;
   }
 
+  /**
+   * only when is preview mode
+   * @param value
+   */
   @Input() set targetedProsToUpdate(value: TargetPros) {
     if (value && this._isPreview) {
       this._targetedProsToUpdate = value;
@@ -65,6 +69,10 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
       .targetedProsToUpdate()
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string }) => {
+        // when is not preview + has targetPros
+        // 1. prepare targetPros
+        // 2. search if there is a keyword
+        // 3. sort
         if (!this._isPreview && !_.isEmpty(result.targetPros)) {
           this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
           this.initialiseTargetedPros(result.targetPros);
