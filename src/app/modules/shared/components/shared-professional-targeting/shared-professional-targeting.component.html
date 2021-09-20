@@ -82,7 +82,7 @@
             <app-utility-search-input-2
               [inputWidth]="{width: '100%'}"
               [searchPlaceholder]="'Type to search'"
-              (searchFieldOutput)="onClickSearchJob($event)">
+              (searchFieldOutput)="onClickSearchJobs($event)">
             </app-utility-search-input-2>
           </section>
           <!-- /search jobs -->
@@ -144,7 +144,7 @@
             <ng-container *ngFor="let jobTypo of sortedFilteredJobsTypologies">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
-                [openToggle]="searchJobKey"
+                [showToggleSearch]="jobTypo.isToggle"
                 [identifier]="jobTypo.identifier"
                 [option]="{name: jobTypo.name.en, state: jobTypo.state}"
                 [jobs]="jobTypo.jobs"
