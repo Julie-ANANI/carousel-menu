@@ -54,6 +54,9 @@ export class JobsFrontService {
         const toSort = this.setIsSortJobTypologiesList(_identifier);
         this._targetedProsUpdated.jobsTypologies[_identifier].state = value.state;
         this._targetedProsUpdated.jobsTypologies[_identifier].jobs = value.jobs;
+        this._targetedProsUpdated.jobsTypologies[_identifier].totalCount = this._targetedProsUpdated.jobsTypologies[_identifier].jobs.filter((job: any) => job.state === 1).length +
+          this._targetedProsUpdated.jobsTypologies[_identifier].jobs.filter((job: any) => job.state === 0).length;
+        this._targetedProsUpdated.jobsTypologies[_identifier].isToggle = value.isToggle;
         this.setTargetedProsToUpdate({
           targetPros: this._targetedProsUpdated,
           toSort: toSort,
@@ -70,15 +73,6 @@ export class JobsFrontService {
         this._targetedProsUpdated.searchOperator = value.searchOp === 'OR' ? 'OR' : 'AND';
         this.setTargetedProsToUpdate({targetPros: this._targetedProsUpdated, toSort: false});
         break;
-    }
-  }
-
-  setSortValue(value: any) {
-    let sort = false;
-    if (value.isAll) {
-      if (this._currentJobTypologieIdentifier === value.identifier) {
-
-      }
     }
   }
 

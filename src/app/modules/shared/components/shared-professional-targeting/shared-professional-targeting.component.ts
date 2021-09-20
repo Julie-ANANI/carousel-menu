@@ -44,15 +44,17 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
 
-  private _allJobsTypologies: Array<JobsTypologies> = [];
-
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _searchJobKey = '';
 
-  private _currentJobIdentifier = 'x';
+  private _currentJobIdentifier = '';
 
-  private _initialise = 0;
+  private _currentJobTypo: JobsTypologies = <JobsTypologies>{};
+
+  private _currentIndex = 0;
+
+  private _count = 0;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
@@ -64,51 +66,37 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((result: { targetPros: TargetPros, toSort: boolean, isToggle?: boolean, identifier?: string }) => {
         if (!this._isPreview) {
-          console.log(result);
-          console.log(this._currentJobIdentifier);
           this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
           this.initialiseTargetedPros(result.targetPros);
-          this._allJobsTypologies = this.sortJobTypologies(result.targetPros.jobsTypologies);
-          this.onClickSearchJob(this._searchJobKey);
-          this.setSortedFilteredJobsTypologies();
-          if (result.isToggle) {
-            this.toggleStatus(result.isToggle, result.identifier);
-            if (result.identifier !== this._currentJobIdentifier) {
-              this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
-            }
+          this.searchJob(this._searchJobKey);
+          if (this._count === 0 || this._count === 1) {
+            this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+            this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+            this._count++;
           } else {
-            if (result.identifier === this._currentJobIdentifier) {
-              this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+            this.toggleStatus(result.isToggle, result.identifier);
+            if (this._currentJobIdentifier) {
+              if (result.identifier !== this._currentJobIdentifier) {
+                this.getCurrentJobTypo(result.identifier);
+              }
             }
+            this._currentJobIdentifier = result.identifier;
           }
-          this._currentJobIdentifier = result.identifier;
-          // this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
-          //
-          // if (!result.isToggle) {
-          //   if (this._currentJobIdentifier === result.identifier) {
-          //     result.toSort = true;
-          //   }
-          // } else { // isToggle is true
-          //   if (this._currentJobIdentifier === result.identifier) {
-          //     result.toSort = false;
-          //   }
-          // }
-          // if (result.toSort) {
-          //   this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
-          // }
         }
       });
   }
 
-  setSortedFilteredJobsTypologies() {
-    this._sortedFilteredJobsTypologies = [];
-    Object.keys(this._filteredJobsTypologies).forEach(key => {
-      if (this._allJobsTypologies.find(job => job.identifier === key)) {
-        this._sortedFilteredJobsTypologies.push(this._allJobsTypologies.find(job => job.identifier === key));
+  getCurrentJobTypo(identifier: string) {
+    for (let i = 0; i < this._sortedFilteredJobsTypologies.length; i++) {
+      if (this._sortedFilteredJobsTypologies[i].identifier === identifier) {
+        this._currentIndex = i;
+        this._currentJobTypo = this._jobsTypologies[identifier];
       }
-    });
+    }
+    this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
+    this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+    this._sortedFilteredJobsTypologies.splice(this._currentIndex, 0, this._currentJobTypo);
   }
-
 
   sortJobTypologies(jobsTypologies: { [property: string]: JobsTypologies }) {
     if (!_.isEmpty(jobsTypologies)) {
@@ -130,7 +118,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._jobsTypologies = targetedPros.jobsTypologies;
     this._searchOperator = targetedPros.searchOperator;
     this._seniorityLevels = targetedPros.seniorityLevels;
-    this._filteredJobsTypologies = targetedPros.jobsTypologies;
     this.initialiseSelectAllSeniorityLevel(this._seniorityLevels);
     this.initialiseSelectAllJobs(this._jobsTypologies);
   }
@@ -185,36 +172,31 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     return this._filteredJobsTypologies;
   }
 
-  public onClickSearchJob(keyword: string) {
+  public searchJob(keyword: string) {
     if (!!keyword) {
       this._searchJobKey = keyword;
       this._filteredJobsTypologies = {};
-      const keys = Object.keys(this._jobsTypologies);
-      for (let i = 0; i < keys.length; i++) {
-        const category = this._jobsTypologies[keys[i]];
-
-        if (category.name.en.toLowerCase().includes(keyword.toLowerCase())
-          || category.name.fr.toLowerCase().includes(keyword.toLowerCase())) {
-          this._filteredJobsTypologies[keys[i]] = {
-            state: category.state,
-            name: category.name,
-            jobs: category.jobs
-          };
+      Object.keys(this._jobsTypologies).forEach(jobTypoKey => {
+        if (this._jobsTypologies[jobTypoKey].name.en.toLowerCase().includes(keyword.toLowerCase())
+          || this._jobsTypologies[jobTypoKey].name.fr.toLowerCase().includes(keyword.toLowerCase())) {
+          this._filteredJobsTypologies[jobTypoKey] = this._jobsTypologies[jobTypoKey];
         } else {
-          const filteredJobs = category.jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
+          const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
             || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
           if (filteredJobs.length) {
-            this._filteredJobsTypologies[keys[i]] = {
-              state: category.state,
-              name: category.name,
-              jobs: filteredJobs
-            };
+            this._filteredJobsTypologies[jobTypoKey] = this._jobsTypologies[jobTypoKey];
           }
         }
-      }
+      });
     } else {
       this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
     }
+  }
+
+  public onClickSearchJobs(keyword: string) {
+    this.searchJob(keyword);
+    this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+    this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
   }
 
   selectAllOnChange(event: Event, type: 'SENIORITY_LEVEL' | 'JOB_TYPOLOGY') {
