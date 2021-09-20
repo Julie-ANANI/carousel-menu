@@ -26,31 +26,6 @@
         <!-- navigation -->
         <div class="navbar-menu">
 
-          <!-- example page -->
-          <a
-            (click)="onClickLink()"
-            *ngIf="user && user.state === 'confirmed' && !backOfficeValue && !isMainDomain"
-            [routerLinkActiveOptions]="{ exact: true }"
-            [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
-            class="gtm-menu-sample-synthesis navbar-item"
-            routerLinkActive="active"
-            target="_blank">
-            <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
-          </a>
-          <!-- /example page -->
-
-          <!-- discover page -->
-          <a
-            (click)="onClickLink()"
-            *ngIf="!backOfficeValue"
-            [routerLinkActiveOptions]="{ exact: true }"
-            [routerLink]="'/discover'"
-            class="gtm-menu-discover navbar-item"
-            routerLinkActive="active">
-            <span>{{ 'HEADER.DISCOVER' | translate }}</span>
-          </a>
-          <!-- /discover page -->
-
           <!-- client my projects -->
           <a
             (click)="onClickLink()"
@@ -74,6 +49,31 @@
             <span>{{ 'HEADER.SHARED_REPORTS' | translate }}</span>
           </a>
           <!-- /client shared reports -->
+
+          <!-- discover page -->
+          <a
+            (click)="onClickLink()"
+            *ngIf="!backOfficeValue"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLink]="'/discover'"
+            class="gtm-menu-discover navbar-item"
+            routerLinkActive="active">
+            <span>{{ 'HEADER.DISCOVER' | translate }}</span>
+          </a>
+          <!-- /discover page -->
+
+          <!-- example page -->
+          <a
+            (click)="onClickLink()"
+            *ngIf="user && user.state === 'confirmed' && !backOfficeValue && !isMainDomain"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+            class="gtm-menu-sample-synthesis navbar-item"
+            routerLinkActive="active"
+            target="_blank">
+            <span>{{ 'HEADER.EXAMPLE' | translate }}</span>
+          </a>
+          <!-- /example page -->
 
           <!-- admin routes -->
           <ng-container *ngIf="user && user.state === 'confirmed' && backOfficeValue">
@@ -154,6 +154,17 @@
 
               </a>
 
+              <!-- account page -->
+              <a
+                (click)="onClickLink(); onClickAccount();"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/user/account'"
+                class="gtm-menu-my-account navbar-item"
+                routerLinkActive="active">
+                {{ 'HEADER.MY_ACCOUNT' | translate }}
+              </a>
+              <!-- account page -->
+
               <!-- admin side -->
               <a
                 (click)="toggleBackOfficeState(); onClickLink();"
@@ -176,17 +187,6 @@
                 {{ 'HEADER.CLIENT_SIDE' | translate }}
               </a>
               <!-- client side -->
-
-              <!-- account page -->
-              <a
-                (click)="onClickLink(); onClickAccount();"
-                [routerLinkActiveOptions]="{ exact: true }"
-                [routerLink]="'/user/account'"
-                class="gtm-menu-my-account navbar-item"
-                routerLinkActive="active">
-                {{ 'HEADER.MY_ACCOUNT' | translate }}
-              </a>
-              <!-- account page -->
 
               <div class="navbar-divider"></div>
 
@@ -243,31 +243,6 @@
         </a>
         <!-- /account and pic -->
 
-        <!-- example page -->
-        <a
-          (click)="onClickLink()"
-          *ngIf="user && user.state === 'confirmed' && !backOfficeValue && !isMainDomain"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
-          class="gtm-menu-sample-synthesis navbar-item"
-          routerLinkActive="active"
-          target="_blank">
-          {{ 'HEADER.EXAMPLE' | translate }}
-        </a>
-        <!-- /example page -->
-
-        <!-- discover page -->
-        <a
-          (click)="onClickLink()"
-          *ngIf="!backOfficeValue"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [routerLink]="'/discover'"
-          class="gtm-menu-discover navbar-item"
-          routerLinkActive="active">
-          {{ 'HEADER.DISCOVER' | translate }}
-        </a>
-        <!-- /discover page -->
-
         <!-- client my projects -->
         <a
           (click)="onClickLink()"
@@ -291,6 +266,31 @@
           {{ 'HEADER.SHARED_REPORTS' | translate }}
         </a>
         <!-- /client shared reports -->
+
+        <!-- discover page -->
+        <a
+          (click)="onClickLink()"
+          *ngIf="!backOfficeValue"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLink]="'/discover'"
+          class="gtm-menu-discover navbar-item"
+          routerLinkActive="active">
+          {{ 'HEADER.DISCOVER' | translate }}
+        </a>
+        <!-- /discover page -->
+
+        <!-- example page -->
+        <a
+          (click)="onClickLink()"
+          *ngIf="user && user.state === 'confirmed' && !backOfficeValue && !isMainDomain"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLink]="'/sample/synthesis/5bdc16754fee81110e4d509b/8b56a140263e9faf8765207da396a8a0'"
+          class="gtm-menu-sample-synthesis navbar-item"
+          routerLinkActive="active"
+          target="_blank">
+          {{ 'HEADER.EXAMPLE' | translate }}
+        </a>
+        <!-- /example page -->
 
         <!-- admin routes -->
         <ng-container *ngIf="user && user.state === 'confirmed' && backOfficeValue">
