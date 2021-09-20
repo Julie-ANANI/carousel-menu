@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { JobConfig } from '../../../../models/targetPros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
@@ -58,8 +58,6 @@ export class SharedSearchConfigProComponent implements OnInit {
   @Input() set showToggleSearch(value) {
     this._showToggleSearch = value;
   }
-
-  @Output() onToggleChange: EventEmitter<boolean> = new EventEmitter();
 
   private _context = ''; // SeniorityLevel's name / Job Category's name
 
