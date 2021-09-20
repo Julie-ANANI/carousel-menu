@@ -218,7 +218,6 @@ export class SharedSearchConfigProComponent implements OnInit {
     event.preventDefault();
     if (!this.isPreview) {
       if (this.isJobTypo) {
-        this._jobFrontService.setCurrentIdentifierObj(this._identifier);
         this.setJobStates();
         this._jobFrontService.targetedProsUpdatedOnChange(
           {
@@ -249,7 +248,6 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   onClickToggle() {
     this._showToggleSearch = !this._showToggleSearch;
-    this._jobFrontService.setCurrentIdentifierObj(this._identifier);
     this._jobFrontService.targetedProsUpdatedOnChange(
       {
         action: 'jobTypos',
@@ -293,7 +291,6 @@ export class SharedSearchConfigProComponent implements OnInit {
   stateJobOnChange(event: Event, job: any) {
     if (!this.isPreview) {
       event.preventDefault();
-      this._jobFrontService.setCurrentIdentifierObj(this._identifier);
       switch (job.state) {
         case 0:
           job.state = 2;

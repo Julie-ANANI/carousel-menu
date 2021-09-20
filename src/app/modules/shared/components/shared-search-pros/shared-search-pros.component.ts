@@ -114,13 +114,13 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
-          this._jobFrontService.setTargetedProsToUpdate({targetPros: res, toSort: true, isToggle: false, identifier: 'x'});
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: 'x'});
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
 
           this._jobFrontService
             .targetedProsToUpdate()
             .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((result: { targetPros: TargetPros, toSort: boolean }) => {
+            .subscribe((result: { targetPros: TargetPros}) => {
               this._toSave = !_.isEqual(result.targetPros, this._initialTargetedPro);
               this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
               this._checkProsTargetingValid();
@@ -690,7 +690,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   restoreTargetedPros() {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
-        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, toSort: false, isToggle: false, identifier: 'x'});
+        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: 'x'});
         this._initialTargetedPro = JSON.parse(JSON.stringify(res));
         this._isReset = false;
         this._toSave = false;
