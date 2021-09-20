@@ -144,6 +144,7 @@
             <ng-container *ngFor="let jobTypo of sortedFilteredJobsTypologies">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"
+                [openToggle]="searchJobKey"
                 [identifier]="jobTypo.identifier"
                 [option]="{name: jobTypo.name.en, state: jobTypo.state}"
                 [jobs]="jobTypo.jobs"

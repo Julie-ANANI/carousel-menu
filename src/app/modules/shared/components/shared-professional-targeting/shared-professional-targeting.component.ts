@@ -168,6 +168,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
         this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
       }
     } else {
+      this._searchJobKey = '';
       this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
       this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
     }
@@ -178,12 +179,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
       switch (type) {
         case 'JOB_TYPOLOGY':
           if (this._selectAllJobs === 1) {
-            Object.keys(this._jobsTypologies).map(key => {
-              this._jobsTypologies[key].state = 0;
-              this._jobsTypologies[key].jobs.forEach(job => job.state = 0);
-            });
-            this._selectAllJobs = 0;
-          } else if (this._selectAllJobs === 0) {
             Object.keys(this._jobsTypologies).map(key => {
               this._jobsTypologies[key].state = 2;
               this._jobsTypologies[key].jobs.forEach(job => job.state = 2);
@@ -310,6 +305,10 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   get sortedFilteredJobsTypologies(): Array<JobsTypologies> {
     return this._sortedFilteredJobsTypologies;
+  }
+
+  get searchJobKey(): string {
+    return this._searchJobKey;
   }
 
   ngOnDestroy(): void {
