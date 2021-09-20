@@ -26,6 +26,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
 import {MissionQuestionService} from '../../../../../../../../../services/mission/mission-question.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -61,6 +62,7 @@ export class PitchComponent implements OnInit, OnDestroy {
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,
               private _missionService: MissionService,
+              private _translateService: TranslateService,
               private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) {
@@ -265,16 +267,28 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _editText() {
+    return this._translateService.currentLang === 'fr' ? 'Éditer' : 'Edit';
+  }
+
   public openSidebar(section: InnovCardSection, index: number) {
     if (!this._toBeSaved) {
       this._activeSectionIndex = index;
       this._activeSection = section;
       this._cardContent = section.content;
-      const _title = section.type === 'OTHER'
-        ? section.title
-        : 'SIDEBAR.PROJECT_PITCH.' + (this.isEditable ? 'EDIT.' : 'VIEW.') + section.type;
-
       this._getPadAllComments();
+
+      let _title = '';
+
+      if (section.type !== 'TITLE' && section.type !== 'SUMMARY' && section.type !== 'MEDIA') {
+        if (section.title) {
+          _title = this.isEditable ? `${this._editText()} ${section.title.toLowerCase()}` : section.title;
+        } else {
+          _title = this.isEditable ? `${this._editText()} ${section.type.toLocaleLowerCase()}` : section.type;
+        }
+      } else {
+        _title = 'SIDEBAR.PROJECT_PITCH.' + (this.isEditable ? 'EDIT.' : 'VIEW.') + section.type;
+      }
 
       this._sidebarValue = {
         animate_state: 'active',
