@@ -1,48 +1,68 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivateChild } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { RouteFrontService } from '../services/route/route-front.service';
+import {Observable, of, Subject} from 'rxjs';
+import {catchError, map, takeUntil} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
 
 /**
  * Ensure User is authenticated
  */
 
 @Injectable({providedIn: 'root'})
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private _authService: AuthService,
               private _routeFrontService: RouteFrontService,
               private _router: Router) {}
 
-  canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
+  canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot):
+    boolean | Observable<boolean> {
     return this._checkLogin(routerStateSnapshot.url);
   }
 
-  canActivateChild(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
+  canActivateChild(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot):
+    boolean | Observable<boolean> {
     return this._checkLogin(routerStateSnapshot.url);
   }
 
-  private _checkLogin(url: string): boolean {
+  private _checkLogin(url: string): boolean | Observable<boolean> {
 
     // Store the attempted URL for redirecting
     this._authService.redirectUrl = this._routeFrontService.redirectRoute(url);
 
-    if (this._authService.isAuthenticated ) {
-
-      if (this._authService.isConfirmed || url === '/logout') {
-        return true;
+    if (this._authService.isAuthenticated) {
+      if (this._authService.isConfirmed) {
+        if (url === '/logout' || !!this._authService.user) {
+          return true;
+        } else {
+          return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map (() => {
+            return true;
+          }), catchError((err: HttpErrorResponse) => {
+            console.error(err);
+            this._router.navigate(['/login']);
+            return of(false);
+          }));
+        }
       } else {
-          this._authService.redirectUrl = url;
-          this._router.navigate(['/welcome']);
-          return false;
+        this._authService.redirectUrl = url;
+        this._router.navigate(['/welcome']);
+        return false;
       }
-
     }
 
     // Navigate to the login page with extras
     this._router.navigate(['/login']);
     return false;
 
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

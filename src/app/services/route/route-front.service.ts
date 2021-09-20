@@ -40,7 +40,7 @@ export class RouteFrontService {
   }
 
   public redirectRoute(url: string): any {
-    return url === environment.clientUrl + '/not-authorized' ? '/user' : url;
+    return url === (environment.clientUrl + '/not-authorized') ? '/user' : url;
   }
 
   /***
