@@ -168,6 +168,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
         this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
       }
     } else {
+      this._searchJobKey = '';
       this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
       this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
     }
@@ -304,6 +305,10 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   get sortedFilteredJobsTypologies(): Array<JobsTypologies> {
     return this._sortedFilteredJobsTypologies;
+  }
+
+  get searchJobKey(): string {
+    return this._searchJobKey;
   }
 
   ngOnDestroy(): void {

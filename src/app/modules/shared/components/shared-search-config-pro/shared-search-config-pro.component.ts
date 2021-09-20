@@ -55,6 +55,8 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._isPreview = preview;
   }
 
+  @Input() openToggle: boolean;
+
   private _context = ''; // SeniorityLevel's name / Job Category's name
 
   private _identifier = '';
@@ -235,7 +237,7 @@ export class SharedSearchConfigProComponent implements OnInit {
 
 
   get showToggleSearch(): boolean {
-    return this._showToggleSearch;
+    return this._showToggleSearch || this.openToggle;
   }
 
   set showToggleSearch(value: boolean) {
