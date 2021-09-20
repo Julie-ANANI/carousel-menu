@@ -218,7 +218,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
         this._emailService.addToBlacklist({email: _text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
           this._refreshList(i, values.length - 1);
           this._translateNotificationsService.success('Success',
-            `The address ${_text} has been added to the blacklist.`);
+            `The address ${_text} will be added to the blacklist. It will take sometime.`);
         }, (error: HttpErrorResponse) => {
           this._refreshList(i, values.length - 1);
           this._translateNotificationsService.error('Error', error.message);
