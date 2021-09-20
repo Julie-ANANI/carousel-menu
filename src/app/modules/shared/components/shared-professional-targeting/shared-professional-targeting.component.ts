@@ -44,11 +44,15 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
 
+  private _allJobsTypologies: Array<JobsTypologies> = [];
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _searchJobKey = '';
 
-  private _isSort = true;
+  private _currentJobIdentifier = 'x';
+
+  private _initialise = 0;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
@@ -58,18 +62,53 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._jobFrontService
       .targetedProsToUpdate()
       .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((result: { targetPros: TargetPros, toSort: boolean }) => {
+      .subscribe((result: { targetPros: TargetPros, toSort: boolean, isToggle?: boolean, identifier?: string }) => {
         if (!this._isPreview) {
+          console.log(result);
+          console.log(this._currentJobIdentifier);
           this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
           this.initialiseTargetedPros(result.targetPros);
+          this._allJobsTypologies = this.sortJobTypologies(result.targetPros.jobsTypologies);
           this.onClickSearchJob(this._searchJobKey);
-          if (result.toSort) {
-            this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
-            this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+          this.setSortedFilteredJobsTypologies();
+          if (result.isToggle) {
+            this.toggleStatus(result.isToggle, result.identifier);
+            if (result.identifier !== this._currentJobIdentifier) {
+              this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+            }
+          } else {
+            if (result.identifier === this._currentJobIdentifier) {
+              this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+            }
           }
+          this._currentJobIdentifier = result.identifier;
+          // this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+          //
+          // if (!result.isToggle) {
+          //   if (this._currentJobIdentifier === result.identifier) {
+          //     result.toSort = true;
+          //   }
+          // } else { // isToggle is true
+          //   if (this._currentJobIdentifier === result.identifier) {
+          //     result.toSort = false;
+          //   }
+          // }
+          // if (result.toSort) {
+          //   this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+          // }
         }
       });
   }
+
+  setSortedFilteredJobsTypologies() {
+    this._sortedFilteredJobsTypologies = [];
+    Object.keys(this._filteredJobsTypologies).forEach(key => {
+      if (this._allJobsTypologies.find(job => job.identifier === key)) {
+        this._sortedFilteredJobsTypologies.push(this._allJobsTypologies.find(job => job.identifier === key));
+      }
+    });
+  }
+
 
   sortJobTypologies(jobsTypologies: { [property: string]: JobsTypologies }) {
     if (!_.isEmpty(jobsTypologies)) {
@@ -322,13 +361,11 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
-  setToggleStatus(isToggle: boolean, identifier: string) {
+  toggleStatus(isToggle: boolean = false, identifier: string = '') {
     if (isToggle) {
       this._sortedFilteredJobsTypologies.map(jobTypo => {
         jobTypo.isToggle = jobTypo.identifier === identifier;
       });
-    } else {
-      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
     }
   }
 }

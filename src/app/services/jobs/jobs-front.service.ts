@@ -7,22 +7,29 @@ export class JobsFrontService {
 
   private _targetedProsUpdated: TargetPros = <TargetPros>{};
 
-  private _targetedProsToUpdate: BehaviorSubject<{ targetPros: TargetPros, toSort: boolean }> = new BehaviorSubject<{ targetPros: TargetPros, toSort: boolean }>({
-    targetPros: <TargetPros>{},
-    toSort: true
-  });
+  private _targetedProsToUpdate: BehaviorSubject<{ targetPros: TargetPros, toSort: boolean, isToggle?: boolean, identifier?: string }> =
+    new BehaviorSubject<{ targetPros: TargetPros, toSort: boolean, isToggle?: boolean, identifier?: string }>({
+      targetPros: <TargetPros>{},
+      toSort: true,
+      isToggle: false,
+      identifier: 'x'
+    });
 
   private _currentJobTypologieIdentifier = '';
 
-  private _isSortJobTypologiesList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private _currentIdentifierObj: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   /***
    * set the TargetPros value using this function.
    * @param value
    */
-  public setTargetedProsToUpdate(value: { targetPros: TargetPros, toSort: boolean }) {
+  public setTargetedProsToUpdate(value: { targetPros: TargetPros, toSort: boolean, isToggle?: boolean, identifier?: string }) {
     this._targetedProsUpdated = value.targetPros;
     this._targetedProsToUpdate.next(value);
+  }
+
+  public setCurrentIdentifierObj(value: string) {
+    this._currentIdentifierObj.next(value);
   }
 
   public setIsSortJobTypologiesList(identifier: string) {
@@ -47,7 +54,12 @@ export class JobsFrontService {
         const toSort = this.setIsSortJobTypologiesList(_identifier);
         this._targetedProsUpdated.jobsTypologies[_identifier].state = value.state;
         this._targetedProsUpdated.jobsTypologies[_identifier].jobs = value.jobs;
-        this.setTargetedProsToUpdate({targetPros: this._targetedProsUpdated, toSort: toSort});
+        this.setTargetedProsToUpdate({
+          targetPros: this._targetedProsUpdated,
+          toSort: toSort,
+          identifier: _identifier,
+          isToggle: value.isToggle
+        });
         break;
       case 'seniorLevels':
         _identifier = value.identifier;
@@ -61,6 +73,15 @@ export class JobsFrontService {
     }
   }
 
+  setSortValue(value: any) {
+    let sort = false;
+    if (value.isAll) {
+      if (this._currentJobTypologieIdentifier === value.identifier) {
+
+      }
+    }
+  }
+
   /***
    * use this to listen the value in the components that
    * we set.
@@ -69,7 +90,7 @@ export class JobsFrontService {
     return this._targetedProsToUpdate;
   }
 
-  public isSortJobTypologiesList(): BehaviorSubject<boolean> {
-    return this._isSortJobTypologiesList;
+  public currentIdentifierObj(): BehaviorSubject<string> {
+    return this._currentIdentifierObj;
   }
 }

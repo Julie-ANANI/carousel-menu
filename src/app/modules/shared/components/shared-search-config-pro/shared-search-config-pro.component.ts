@@ -55,7 +55,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._isPreview = preview;
   }
 
-  @Input() set showToggleSearch(value){
+  @Input() set showToggleSearch(value) {
     this._showToggleSearch = value;
   }
 
@@ -218,13 +218,16 @@ export class SharedSearchConfigProComponent implements OnInit {
     event.preventDefault();
     if (!this.isPreview) {
       if (this.isJobTypo) {
+        this._jobFrontService.setCurrentIdentifierObj(this._identifier);
         this.setJobStates();
         this._jobFrontService.targetedProsUpdatedOnChange(
           {
             action: 'jobTypos',
             jobs: this.jobConfigs,
             identifier: this._identifier,
-            state: this._currentState
+            state: this._currentState,
+            isToggle: this._showToggleSearch,
+            isAll: true
           });
       } else {
         this.setSeniorityLevelState();
@@ -246,6 +249,16 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   onClickToggle() {
     this._showToggleSearch = !this._showToggleSearch;
+    this._jobFrontService.setCurrentIdentifierObj(this._identifier);
+    this._jobFrontService.targetedProsUpdatedOnChange(
+      {
+        action: 'jobTypos',
+        jobs: this.jobConfigs,
+        identifier: this._identifier,
+        state: this._currentState,
+        isToggle: this._showToggleSearch,
+        isAll: true,
+      });
   }
 
   /**
@@ -280,6 +293,7 @@ export class SharedSearchConfigProComponent implements OnInit {
   stateJobOnChange(event: Event, job: any) {
     if (!this.isPreview) {
       event.preventDefault();
+      this._jobFrontService.setCurrentIdentifierObj(this._identifier);
       switch (job.state) {
         case 0:
           job.state = 2;
@@ -297,7 +311,9 @@ export class SharedSearchConfigProComponent implements OnInit {
           action: 'jobTypos',
           jobs: this.jobConfigs,
           identifier: this._identifier,
-          state: this._currentState
+          state: this._currentState,
+          isToggle: this._showToggleSearch,
+          isAll: false
         });
       this._currentState = this.checkTypoState();
     }
