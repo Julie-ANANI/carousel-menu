@@ -32,14 +32,15 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
   private _checkLogin(url: string): boolean | Observable<boolean> {
 
     // Store the attempted URL for redirecting
-    this._authService.redirectUrl = this._routeFrontService.redirectRoute(url);
+    this._authService.redirectUrl = !!this._authService.redirectUrl
+      ? this._authService.redirectUrl : this._routeFrontService.redirectRoute(url);
 
     if (this._authService.isAuthenticated) {
       if (this._authService.isConfirmed) {
         if (url === '/logout' || !!this._authService.user) {
           return true;
         } else {
-          return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map (() => {
+          return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map ((_) => {
             return true;
           }), catchError((err: HttpErrorResponse) => {
             console.error(err);

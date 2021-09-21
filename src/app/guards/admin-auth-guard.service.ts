@@ -11,19 +11,19 @@ export class AdminAuthGuard implements CanActivate, CanActivateChild {
               private _router: Router) { }
 
   canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
-    const url: string = routerStateSnapshot.url;
-    return this.checkAdmin(url);
+    return this.checkAdmin(routerStateSnapshot.url);
   }
 
   canActivateChild(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
-    const url: string = routerStateSnapshot.url;
-    return this.checkAdmin(url);
+    return this.checkAdmin(routerStateSnapshot.url);
   }
 
   checkAdmin(url: string): boolean {
 
+    // Store the attempted URL for redirecting
+    this._authService.redirectUrl = this._routeFrontService.redirectRoute(url);
+
     if (!this._authService.isAuthenticated) {
-      this._authService.redirectUrl = this._routeFrontService.redirectRoute(url);
       this._router.navigate(['/login']);
     } else if (this._authService.adminLevel > 1) {
       return true;
