@@ -36,7 +36,8 @@ export class PrintExecutiveReportComponent implements OnInit {
       this._data = <ExecutiveReport>this._activatedRoute.snapshot.data.report;
       this._userLang = this.data['lang'];
       this._initData();
-    } else if (this._activatedRoute.snapshot.parent.data.innovation && this._activatedRoute.snapshot.parent.data.innovation.executiveReport) {
+    } else if (this._activatedRoute.snapshot.parent.data.innovation
+      && this._activatedRoute.snapshot.parent.data.innovation.executiveReport) {
       this._data = <Innovation>this._activatedRoute.snapshot.parent.data.innovation;
       this._anonymous = this._data._metadata && this._data._metadata.campaign ? !!this._data._metadata.campaign.anonymous_answers : false;
       this._data.executiveReport.lang = InnovationFrontService.currentLangInnovationCard(<Innovation>this.data, this._userLang, 'LANG');
@@ -88,7 +89,7 @@ export class PrintExecutiveReportComponent implements OnInit {
    */
   public get introSrc(): string {
     return this._userLang === 'fr' ? 'https://res.cloudinary.com/umi/image/upload/app/default-images/intro/UMI-fr.png'
-      : 'https://res.cloudinary.com/umi/image/upload/app/default-images/intro/UMI-en.png'
+      : 'https://res.cloudinary.com/umi/image/upload/app/default-images/intro/UMI-en.png';
   }
 
   get isUMI(): boolean {

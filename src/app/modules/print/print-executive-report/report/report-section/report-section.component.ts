@@ -32,7 +32,7 @@ export class ReportSectionComponent implements OnChanges {
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
   private _content: SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar
-    = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>{}
+    = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>{};
 
   private _pieChart: ExecutivePieChart = {
     data: [],
@@ -140,7 +140,7 @@ export class ReportSectionComponent implements OnChanges {
     _content.values = [];
     if (barData.length > 0) {
       _content.showExamples = true;
-      for (let i=0; i<3; i++) {
+      for (let i = 0; i < 3; i++) {
         const _percentage = (Number)(barData[i] && barData[i].absolutePercentage.substring(0, barData[i].absolutePercentage.length - 1))
           || 0;
         _content.values.push({
@@ -162,7 +162,7 @@ export class ReportSectionComponent implements OnChanges {
   private _barLegend(answers: Array<Answer>): string {
     let _string = '';
     if (answers.length > 0) {
-      for (let i=0; i<2; i++) {
+      for (let i = 0; i < 2; i++) {
         if (answers[i].professional && answers[i].professional.company) {
           _string += answers[i].professional.company;
           if (i === 0 && _string) {
@@ -184,7 +184,7 @@ export class ReportSectionComponent implements OnChanges {
     _content.showExamples = false;
     _content.values = [];
     if (notesData.length > 0) {
-      for (let i=0; i<3; i++) {
+      for (let i = 0; i < 3; i++) {
         const _percentage = (Number)(notesData[i] && notesData[i].percentage.substring(0, notesData[i].percentage.length - 1))
           || 0;
         _content.values.push({
@@ -211,7 +211,7 @@ export class ReportSectionComponent implements OnChanges {
       visibility: pieData.percentage !== 0
     };
     if (pieData.data) {
-      for (let i=0; i<pieData.data.length; i++) {
+      for (let i = 0; i < pieData.data.length; i++) {
         _content.values[i] = {
           percentage: (Number)(pieData.labelPercentage[i].substring(0, pieData.labelPercentage[i].length - 1))
             || 0,
@@ -234,13 +234,13 @@ export class ReportSectionComponent implements OnChanges {
     const _content = <SectionRanking>{};
     _content.values = [];
     if (tagsData.length > 0) {
-      for (let i=0; i<3; i++) {
+      for (let i = 0; i < 3; i++) {
         _content.values[i] = {
           name: tagsData[i].label[this.report.lang] || '',
           visibility: true,
           legend: tagsData[i].count > 1 ? tagsData[i].count + 'X' : '',
           color: this._getRankingColor(title)
-        }
+        };
       }
     }
     return _content;

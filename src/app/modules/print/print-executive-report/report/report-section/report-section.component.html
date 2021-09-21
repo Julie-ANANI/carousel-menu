@@ -6,7 +6,7 @@
 
   <!-- body -->
   <div class="section-body">
-    <ng-container *ngIf="section.questionId && section.questionType && section.content">
+    <ng-container *ngIf="(section.questionId || section.questionIdentifier) && section.questionType && section.content">
       <ng-container [ngSwitch]="section.questionType">
 
         <!-- type KPI -->
