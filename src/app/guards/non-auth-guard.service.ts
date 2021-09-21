@@ -12,21 +12,17 @@ export class NonAuthGuard implements CanActivate {
   constructor(private authService: AuthService,
               private router: Router) {}
 
-  canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const url: string = state.url;
-    return this._checkLogin(url);
+  canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
+    return this._checkLogin();
   }
 
-  private _checkLogin(url: string): boolean {
+  private _checkLogin(): boolean {
 
     if (!this.authService.isAuthenticated) {
       return true;
     }
 
-    // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
-
-    // Navigate to the login page with extras
+    // Navigate to the default first auth page
     this.router.navigate(['/']);
     return false;
   }

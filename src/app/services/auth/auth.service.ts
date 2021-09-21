@@ -332,7 +332,7 @@ export class AuthService {
   }
 
   set redirectUrl (redirectUrl: string) {
-    let url = `${environment.clientUrl}${redirectUrl}`;
+    const url = `${environment.clientUrl}${redirectUrl}`;
 
     if (urlRegEx.test(url)) {
       this._redirectUrl = redirectUrl;

@@ -48,7 +48,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
           }));
         }
       } else {
-        this._authService.redirectUrl = url;
         this._router.navigate(['/welcome']);
         return false;
       }
