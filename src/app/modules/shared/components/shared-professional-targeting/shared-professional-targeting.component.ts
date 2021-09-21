@@ -204,7 +204,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
    * @param keyword
    */
   public searchJob(keyword: string) {
-    this._searchJobKey = keyword;
     if (!!keyword) {
       this._filteredJobsTypologies = {};
       Object.keys(this._jobsTypologies).forEach(jobTypoKey => {
@@ -240,10 +239,20 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
    * @param keyword
    */
   public onClickSearchJobs(keyword: string) {
+    this._searchJobKey = keyword;
     this._filteredJobsTypologies = {};
     this.searchJob(keyword);
     this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
     this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+    if (!!keyword) {
+      this._sortedFilteredJobsTypologies.map((job, index) => {
+        job.isToggle = index === 0;
+      });
+    } else {
+      this._sortedFilteredJobsTypologies.map((job, index) => {
+        job.isToggle = false;
+      });
+    }
   }
 
   /**
