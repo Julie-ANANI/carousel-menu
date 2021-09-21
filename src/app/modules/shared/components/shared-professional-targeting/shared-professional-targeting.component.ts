@@ -16,10 +16,17 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._isPreview = value;
   }
 
+  /**
+   * only when is preview mode
+   * @param value
+   */
   @Input() set targetedProsToUpdate(value: TargetPros) {
     if (value && this._isPreview) {
       this._targetedProsToUpdate = value;
       this.initialiseTargetedPros(value);
+      this.searchJob('');
+      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._jobsTypologies);
+      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
     }
   }
 
@@ -47,6 +54,8 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _searchJobKey = '';
 
+  private _currentJobIdentifier = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
@@ -55,40 +64,85 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._jobFrontService
       .targetedProsToUpdate()
       .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((targetedPros) => {
-        if (!this._isPreview) {
-          this._targetedProsToUpdate = targetedPros || <TargetPros>{};
-          this.initialiseTargetedPros(targetedPros);
+      .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string }) => {
+        // when is not preview + has targetPros
+        // 1. prepare targetPros
+        // 2. search if there is a keyword
+        // 3. sort
+        if (!this._isPreview && !_.isEmpty(result.targetPros)) {
+          this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+          this.initialiseTargetedPros(result.targetPros);
+          this.searchJob(this._searchJobKey);
+          this.toggleStatus(result.isToggle, result.identifier);
+          if (!result.identifier) {
+            this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+            this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+          } else {
+            if (result.identifier !== this._currentJobIdentifier) {
+              this.getCurrentJobTypo(result.identifier);
+            }
+          }
+          this._currentJobIdentifier = result.identifier;
         }
       });
   }
 
+  /**
+   * sort jobTyo
+   * clicked on A: A won't move, sort other jobs
+   * @param identifier
+   */
+  getCurrentJobTypo(identifier: string) {
+    let currentIndex = 0;
+    let currentJobTypo: JobsTypologies;
+    for (let i = 0; i < this._sortedFilteredJobsTypologies.length; i++) {
+      if (this._sortedFilteredJobsTypologies[i].identifier === identifier) {
+        currentIndex = i;
+        currentJobTypo = this._jobsTypologies[identifier];
+      }
+    }
+    this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
+    this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+    this._sortedFilteredJobsTypologies.splice(currentIndex, 0, currentJobTypo);
+  }
+
+  /**
+   * prepare a list of jobsTypologies, ready to sort
+   * @param jobsTypologies
+   */
   sortJobTypologies(jobsTypologies: { [property: string]: JobsTypologies }) {
     if (!_.isEmpty(jobsTypologies)) {
-      let _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
+      const _sortedFilteredJobsTypologies: Array<JobsTypologies> = [];
       Object.keys(jobsTypologies).forEach(key => {
         jobsTypologies[key].totalCount = jobsTypologies[key].jobs.filter((job: any) => job.state === 1).length +
           jobsTypologies[key].jobs.filter((job: any) => job.state === 0).length;
         jobsTypologies[key].identifier = key;
+        jobsTypologies[key].isToggle = jobsTypologies[key].isToggle ? jobsTypologies[key].isToggle : false;
         _sortedFilteredJobsTypologies.push(jobsTypologies[key]);
       });
-      _sortedFilteredJobsTypologies = _.orderBy(_sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
       return _sortedFilteredJobsTypologies;
     } else {
       return [];
     }
   }
 
+  /**
+   * prepare targetedPros
+   * @param targetedPros
+   */
   initialiseTargetedPros(targetedPros: TargetPros) {
     this._jobsTypologies = targetedPros.jobsTypologies;
+    this._filteredJobsTypologies = targetedPros.jobsTypologies;
     this._searchOperator = targetedPros.searchOperator;
     this._seniorityLevels = targetedPros.seniorityLevels;
-    this._filteredJobsTypologies = targetedPros.jobsTypologies;
-    this.onClickSearchJob(this._searchJobKey);
     this.initialiseSelectAllSeniorityLevel(this._seniorityLevels);
     this.initialiseSelectAllJobs(this._jobsTypologies);
   }
 
+  /**
+   * selectAll button state
+   * @param seniorityLevels
+   */
   initialiseSelectAllSeniorityLevel(seniorityLevels: any) {
     const stateExcluded = _.find(seniorityLevels, {state: 0});
     const stateIncluded = _.find(seniorityLevels, {state: 1});
@@ -101,6 +155,10 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * selectAll button state
+   * @param jobsTypologies
+   */
   initialiseSelectAllJobs(jobsTypologies: any) {
     const stateExcluded = _.find(jobsTypologies, {state: 0});
     const stateIncluded = _.find(jobsTypologies, {state: 1});
@@ -136,49 +194,74 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   }
 
   get filteredJobsTypologies(): { [p: string]: JobsTypologies } {
-    return this._filteredJobsTypologies;
-  }
-
-  public onClickSearchJob(keyword: string) {
-    if (!!keyword) {
-      this._searchJobKey = keyword;
-      this._filteredJobsTypologies = {};
-      const keys = Object.keys(this._jobsTypologies);
-      for (let i = 0; i < keys.length; i++) {
-        const category = this._jobsTypologies[keys[i]];
-
-        if (category.name.en.toLowerCase().includes(keyword.toLowerCase())
-          || category.name.fr.toLowerCase().includes(keyword.toLowerCase())) {
-          this._filteredJobsTypologies[keys[i]] = {
-            state: category.state,
-            name: category.name,
-            jobs: category.jobs
-          };
-        } else {
-          const filteredJobs = category.jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
-            || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
-          if (filteredJobs.length) {
-            this._filteredJobsTypologies[keys[i]] = {
-              state: category.state,
-              name: category.name,
-              jobs: filteredJobs
-            };
-          }
-        }
-        this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
-      }
-    } else {
-      this._searchJobKey = '';
-      this._filteredJobsTypologies = Object.assign({}, this._jobsTypologies);
-      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+    if (!_.isEmpty(this._filteredJobsTypologies)) {
+      return this._filteredJobsTypologies;
     }
   }
 
+  /**
+   * search jobs by keyword
+   * @param keyword
+   */
+  public searchJob(keyword: string) {
+    this._searchJobKey = keyword;
+    if (!!keyword) {
+      this._filteredJobsTypologies = {};
+      Object.keys(this._jobsTypologies).forEach(jobTypoKey => {
+        if (this._jobsTypologies[jobTypoKey].name.en.toLowerCase().includes(keyword.toLowerCase())
+          || this._jobsTypologies[jobTypoKey].name.fr.toLowerCase().includes(keyword.toLowerCase())) {
+          this._filteredJobsTypologies[jobTypoKey] = this._jobsTypologies[jobTypoKey];
+          this._filteredJobsTypologies[jobTypoKey].identifier = jobTypoKey;
+          this._filteredJobsTypologies[jobTypoKey].isToggle = this._jobsTypologies[jobTypoKey].isToggle || false;
+          this._filteredJobsTypologies[jobTypoKey].totalCount =
+            this._jobsTypologies[jobTypoKey].jobs.filter((job: any) => job.state === 1).length +
+            this._jobsTypologies[jobTypoKey].jobs.filter((job: any) => job.state === 0).length;
+        } else {
+          const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
+            || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
+          if (filteredJobs.length) {
+            this._filteredJobsTypologies[jobTypoKey] = this._jobsTypologies[jobTypoKey];
+            this._filteredJobsTypologies[jobTypoKey].jobs = filteredJobs;
+            this._filteredJobsTypologies[jobTypoKey].identifier = jobTypoKey;
+            this._filteredJobsTypologies[jobTypoKey].isToggle = this._jobsTypologies[jobTypoKey].isToggle || false;
+            this._filteredJobsTypologies[jobTypoKey].totalCount =
+              this._jobsTypologies[jobTypoKey].jobs.filter((job: any) => job.state === 1).length +
+              this._jobsTypologies[jobTypoKey].jobs.filter((job: any) => job.state === 0).length;
+          }
+        }
+      });
+    } else {
+      this._filteredJobsTypologies = JSON.parse(JSON.stringify(this._jobsTypologies));
+    }
+  }
+
+  /**
+   * click: search job + sort
+   * @param keyword
+   */
+  public onClickSearchJobs(keyword: string) {
+    this._filteredJobsTypologies = {};
+    this.searchJob(keyword);
+    this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+    this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+  }
+
+  /**
+   * select all
+   * @param event
+   * @param type
+   */
   selectAllOnChange(event: Event, type: 'SENIORITY_LEVEL' | 'JOB_TYPOLOGY') {
     if (!this._isPreview) {
       switch (type) {
         case 'JOB_TYPOLOGY':
           if (this._selectAllJobs === 1) {
+            Object.keys(this._jobsTypologies).map(key => {
+              this._jobsTypologies[key].state = 0;
+              this._jobsTypologies[key].jobs.forEach(job => job.state = 0);
+            });
+            this._selectAllJobs = 0;
+          } else if (this._selectAllJobs === 0) {
             Object.keys(this._jobsTypologies).map(key => {
               this._jobsTypologies[key].state = 2;
               this._jobsTypologies[key].jobs.forEach(job => job.state = 2);
@@ -192,7 +275,11 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             this._selectAllJobs = 1;
           }
           this._targetedProsToUpdate.jobsTypologies = this._jobsTypologies;
-          this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
+          this._jobFrontService.setTargetedProsToUpdate({
+            targetPros: this._targetedProsToUpdate,
+            identifier: this._currentJobIdentifier,
+            isToggle: false
+          });
           break;
         case 'SENIORITY_LEVEL':
           if (this._selectAllSeniorityLevels === 1) {
@@ -207,7 +294,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             this._selectAllSeniorityLevels = 1;
           }
           this._targetedProsToUpdate.seniorityLevels = this._seniorityLevels;
-          this._jobFrontService.setTargetedProsToUpdate(this._targetedProsToUpdate);
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: this._targetedProsToUpdate});
           break;
       }
     }
@@ -225,14 +312,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   getSeniorityLevelsKeys() {
     if (!_.isEmpty(this._seniorityLevels)) {
       return Object.keys(this._seniorityLevels).filter(key => key !== 'excluding').concat('excluding') || [];
-    } else {
-      return [];
-    }
-  }
-
-  get getFilteredJobsTypologiesKeys() {
-    if (!_.isEmpty(this._filteredJobsTypologies)) {
-      return Object.keys(this._filteredJobsTypologies) || Object.keys(this._jobsTypologies);
     } else {
       return [];
     }
@@ -307,13 +386,21 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     return this._sortedFilteredJobsTypologies;
   }
 
-  get searchJobKey(): string {
-    return this._searchJobKey;
-  }
-
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
+  /**
+   * keep one job typo toggle show
+   * @param isToggle
+   * @param identifier
+   */
+  toggleStatus(isToggle: boolean = false, identifier: string = '') {
+    if (isToggle) {
+      this._sortedFilteredJobsTypologies.map(jobTypo => {
+        jobTypo.isToggle = jobTypo.identifier === identifier;
+      });
+    }
+  }
 }

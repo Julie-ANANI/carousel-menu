@@ -281,7 +281,9 @@
         <!-- /Saved targetedPro  -->
 
         <!-- Preview saved targetedPro  -->
-        <button class="button br-6 is-sm is-outlined m-10" (click)="previewSearchConfig()">
+        <button class="button br-6 is-sm is-outlined m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to preview the saved professional targeting without changing your current.'"
+                (click)="previewSearchConfig()">
           Preview
         </button>
         <!-- /Preview saved targetedPro  -->

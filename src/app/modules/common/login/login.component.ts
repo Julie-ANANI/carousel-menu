@@ -135,7 +135,6 @@ export class LoginComponent implements OnInit {
         .subscribe(
           () => {
             if (this._authService.isAuthenticated) {
-              this._displayLoading = false;
               // Get the redirect URL from our auth service. If no redirect has been set, use the default.
               const redirect = this._authService.redirectUrl
                 ? this._authService.redirectUrl

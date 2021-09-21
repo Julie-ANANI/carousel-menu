@@ -4,7 +4,7 @@ import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {CookieOptions, CookieService} from 'ngx-cookie';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, first, map, tap} from 'rxjs/operators';
 import {User} from '../../models/user.model';
 import {urlRegEx} from '../../utils/regex';
 import {environment} from '../../../environments/environment';
@@ -20,7 +20,7 @@ export class AuthService {
 
   private _authenticated = false;
 
-  private _admin: number = 0; // based on the value of adminLevel
+  private _admin = 0; // based on the value of adminLevel
 
   private _confirmed = false;
 
@@ -63,12 +63,12 @@ export class AuthService {
 
   public startCookieObservator() {
     if (this._cookieObserver === null) {
-      console.time('cookieObs');
+      // console.time('cookieObs');
       this._cookieObserver = setInterval(() => {
         if (!this._cookieService.get('hasBeenAuthenticated')) {
           // this._cookieService.get('user')
-          console.timeEnd('cookieObs');
-          this.logout().subscribe(() => {
+          // console.timeEnd('cookieObs');
+          this.logout().pipe(first()).subscribe(() => {
             // this._router.navigate(['/logout']);
           }, (err: any) => {
             console.error(err);
@@ -81,7 +81,7 @@ export class AuthService {
   public stopSwellRTSession() {
     this._swellRtService.logout()
       .then( result => {
-        console.log("On the bay, bye bye bye!");
+        console.log('On the bay, bye bye bye!');
       }, err => {
         console.error(`Hmmm I'm having problems logging out from swell: ${err.message}`);
       });
@@ -99,7 +99,7 @@ export class AuthService {
           this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
-            //this.startCookieObservator();
+            // this.startCookieObservator();
             this._setMHash(res.email);
           }
           return res;
@@ -120,7 +120,7 @@ export class AuthService {
           this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
           if (res.isAuthenticated) {
-            //this.startCookieObservator();
+            // this.startCookieObservator();
             this._setMHash(res.email);
           }
           return res;
@@ -141,7 +141,7 @@ export class AuthService {
           this._redirectUrl = '';
           this._user = null;
           // this._setAdminAccess(null);
-          //this.stopSwellRTSession();
+          // this.stopSwellRTSession();
           clearInterval(this._cookieObserver);
           return res;
         }),
