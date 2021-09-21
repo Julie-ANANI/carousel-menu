@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
 import { AdminAnswersGmailComponent } from './admin-answers-gmail/admin-answers-gmail.component';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
-import { AdminProfessionalShieldComponent } from "./admin-professional-shield/admin-professional-shield.component";
+import { AdminProfessionalShieldComponent } from './admin-professional-shield/admin-professional-shield.component';
 import { AdminMonitoringComponent } from './admin-monitoring.component';
 
 export const routes: Routes = [

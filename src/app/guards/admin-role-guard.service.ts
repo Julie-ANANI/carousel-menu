@@ -18,7 +18,7 @@ export class AdminRoleGuard implements CanActivate, OnDestroy {
   canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean | Observable<boolean> {
     const _path = activatedRouteSnapshot.data['accessPath'] as Array<string> || [];
 
-    if (!this._authService.adminAccess && this._authService.isAcceptingCookies) {
+    if (!this._authService.adminAccess) {
       return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map ((_) => {
         return this._navigateTo(_path);
       }), catchError((err: HttpErrorResponse) => {
