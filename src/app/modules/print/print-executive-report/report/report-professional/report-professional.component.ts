@@ -3,7 +3,7 @@ import { Answer } from '../../../../../models/answer';
 import { OldExecutiveReport } from '../../../../../models/innovation';
 import { ExecutiveReport } from '../../../../../models/executive-report';
 import { Professional } from '../../../../../models/professional';
-import { ProfessionalsService } from '../../../../../services/professionals/professionals.service';
+import { AnswerService } from '../../../../../services/answer/answer.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
@@ -38,7 +38,7 @@ export class ReportProfessionalComponent implements OnChanges {
   private _anonymous = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _professionalsService: ProfessionalsService) { }
+              private _answerService: AnswerService) { }
 
   ngOnChanges(): void {
     if (this.report['totalSections'] && this.answers.length > 0 && !this.report['_id']) {
@@ -71,7 +71,7 @@ export class ReportProfessionalComponent implements OnChanges {
     const data: ExecutiveReport = <ExecutiveReport>this.report;
 
     if (data.professionals.list.length > 0) {
-      this._getProfessionals(data.professionals.list);
+      this._getAnswers(data.professionals.list);
     }
 
     this._professional = {
@@ -95,7 +95,7 @@ export class ReportProfessionalComponent implements OnChanges {
       }
       return acc;
     }, []);
-  };
+  }
 
   /***
    * getting the top professionals
@@ -137,19 +137,19 @@ export class ReportProfessionalComponent implements OnChanges {
    * based on that we get the pros from the back.
    * @private
    */
-  private _getProfessionals(list: Array<string>) {
+  private _getAnswers(list: Array<string>) {
     if (isPlatformBrowser(this._platformId)) {
       const config = {
-        fields: '_id firstName lastName jobTitle company country',
+        fields: '_id job company country',
         _id: JSON.stringify({ $in: list.slice(0, 4) })
       };
 
-      this._professionalsService.getAll(config).pipe(first()).subscribe((professionals) => {
-        if (professionals && professionals.result) {
-          this._pros = professionals.result.map((value: any) => {
+      this._answerService.getAll(config).pipe(first()).subscribe((answers) => {
+        if (answers && answers.result) {
+          this._pros = answers.result.map((value: any) => {
             return {
               country: value.country,
-              jobTitle: value.jobTitle,
+              jobTitle: value.job,
               company: value.company
             };
           });
