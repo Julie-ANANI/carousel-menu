@@ -259,18 +259,30 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             Object.keys(this._jobsTypologies).map(key => {
               this._jobsTypologies[key].state = 0;
               this._jobsTypologies[key].jobs.forEach(job => job.state = 0);
+              this._jobsTypologies[key].totalCount = this._jobsTypologies[key].jobs.length;
+              this._filteredJobsTypologies[key].state = 0;
+              this._filteredJobsTypologies[key].jobs.forEach(job => job.state = 0);
+              this._filteredJobsTypologies[key].totalCount = this._jobsTypologies[key].jobs.length;
             });
             this._selectAllJobs = 0;
           } else if (this._selectAllJobs === 0) {
             Object.keys(this._jobsTypologies).map(key => {
               this._jobsTypologies[key].state = 2;
               this._jobsTypologies[key].jobs.forEach(job => job.state = 2);
+              this._jobsTypologies[key].totalCount = 0;
+              this._filteredJobsTypologies[key].state = 2;
+              this._filteredJobsTypologies[key].jobs.forEach(job => job.state = 2);
+              this._filteredJobsTypologies[key].totalCount = 0;
             });
             this._selectAllJobs = 2;
           } else {
             Object.keys(this._jobsTypologies).map(key => {
               this._jobsTypologies[key].state = 1;
               this._jobsTypologies[key].jobs.forEach(job => job.state = 1);
+              this._jobsTypologies[key].totalCount = this._jobsTypologies[key].jobs.length;
+              this._filteredJobsTypologies[key].state = 1;
+              this._filteredJobsTypologies[key].jobs.forEach(job => job.state = 1);
+              this._filteredJobsTypologies[key].totalCount = this._jobsTypologies[key].jobs.length;
             });
             this._selectAllJobs = 1;
           }
@@ -297,6 +309,8 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
           this._jobFrontService.setTargetedProsToUpdate({targetPros: this._targetedProsToUpdate});
           break;
       }
+      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
     }
   }
 
