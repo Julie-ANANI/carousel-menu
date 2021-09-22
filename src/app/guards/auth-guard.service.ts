@@ -31,6 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
 
   private _checkLogin(url: string): boolean | Observable<boolean> {
 
+
     console.log(this._authService);
     console.log(url);
 

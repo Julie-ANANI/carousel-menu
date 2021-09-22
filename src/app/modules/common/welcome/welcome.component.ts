@@ -15,7 +15,7 @@ import { TranslateTitleService } from '../../../services/title/title.service';
 
 export class WelcomeComponent implements OnInit {
 
-  private _user: User = this.authService.user || <User>{};
+  private _user: User = this.authService.user || null;
 
   private _tokenEmail: string;
 
@@ -23,7 +23,7 @@ export class WelcomeComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               private translateService: TranslateService,
-              private translateTitleService: TranslateTitleService,) {
+              private translateTitleService: TranslateTitleService) {
 
     this.translateTitleService.setTitle('COMMON.PAGE_TITLE.WELCOME');
 
