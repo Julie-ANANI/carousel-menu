@@ -115,7 +115,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
           this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
-          this._initialTargetedPro = this._jobFrontService.prepareTargetPros(res);
+          this._initialTargetedPro = JSON.parse(JSON.stringify(res));
 
           /**
            * subscribe: get recent targetPros, not saved, current one
@@ -667,7 +667,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this._toSave = false;
         this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
-        this._initialTargetedPro = this._jobFrontService.prepareTargetPros(this._initialTargetedPro);
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
       }, err => {
         this._translateNotificationsService.error('Error', 'An error occurred');
@@ -685,7 +684,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
         this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
-        this._initialTargetedPro = this._jobFrontService.prepareTargetPros(res);
+        this._initialTargetedPro = JSON.parse(JSON.stringify(res));
         this._isReset = false;
         this._toSave = false;
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');

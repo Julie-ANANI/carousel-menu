@@ -22,11 +22,10 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
    * @param value
    */
   @Input() set targetedProsToUpdate(value: TargetPros) {
-    if (value && this._isPreview) {
-      this._targetedProsToUpdate = value;
+    if (!_.isEmpty(value) && this._isPreview) {
       this.initialiseTargetedPros(value);
-      this.searchJob('');
-      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._jobsTypologies);
+      this._filteredJobsTypologies = value.jobsTypologies;
+      this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
       this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
     }
   }
