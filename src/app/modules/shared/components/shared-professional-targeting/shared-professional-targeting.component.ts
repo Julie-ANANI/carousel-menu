@@ -1,10 +1,12 @@
 import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { JobsTypologies, SeniorityLevel, TargetPros } from '../../../../models/targetPros';
+import { JobConfig, JobsTypologies, SeniorityLevel, TargetPros } from '../../../../models/targetPros';
 import { takeUntil } from 'rxjs/operators';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 import { Subject } from 'rxjs';
 
 import * as _ from 'lodash';
+import { isPlatformBrowser } from '@angular/common';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -54,35 +56,42 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _currentJobIdentifier = '';
 
+  private _currentLang = 'en';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _cookieService: CookieService,
               private _jobFrontService: JobsFrontService) {
   }
 
   ngOnInit() {
-    this._jobFrontService
-      .targetedProsToUpdate()
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string }) => {
-        // when is not preview + has targetPros
-        // 1. prepare targetPros
-        // 2. search if there is a keyword
-        // 3. sort
-        if (!this._isPreview && !_.isEmpty(result.targetPros)) {
-          this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
-          this.initialiseTargetedPros(result.targetPros);
-          this.searchJob(this._searchJobKey);
-          this.toggleStatus(result.isToggle, result.identifier);
-          if (!result.identifier) {
-            this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
-            this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
-          } else {
-            if (result.identifier !== this._currentJobIdentifier) {
-              this.getCurrentJobTypo(result.identifier);
+    if (isPlatformBrowser(this._platformId)) {
+      this._currentLang = this._cookieService.get('user_lang') || 'en';
+
+      this._jobFrontService
+        .targetedProsToUpdate()
+        .pipe(takeUntil(this._ngUnsubscribe))
+        .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string }) => {
+          // when is not preview + has targetPros
+          // 1. prepare targetPros
+          // 2. search if there is a keyword
+          // 3. sort
+          if (!this._isPreview && !_.isEmpty(result.targetPros)) {
+            this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+            this.initialiseTargetedPros(result.targetPros);
+            this.searchJob(this._searchJobKey);
+            this.toggleStatus(result.isToggle, result.identifier);
+            if (!result.identifier) {
+              this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
+              this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+            } else {
+              if (result.identifier !== this._currentJobIdentifier) {
+                this.getCurrentJobTypo(result.identifier);
+              }
             }
+            this._currentJobIdentifier = result.identifier;
           }
-          this._currentJobIdentifier = result.identifier;
-        }
-      });
+        });
+    }
   }
 
   /**
@@ -96,7 +105,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this._sortedFilteredJobsTypologies.length; i++) {
       if (this._sortedFilteredJobsTypologies[i].identifier === identifier) {
         currentIndex = i;
-        currentJobTypo = this._jobsTypologies[identifier];
+        currentJobTypo = this._filteredJobsTypologies[identifier];
       }
     }
     if (currentIndex === 0) {
@@ -425,6 +434,13 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
       this._sortedFilteredJobsTypologies.map(jobTypo => {
         jobTypo.isToggle = jobTypo.identifier === identifier;
       });
+    }
+  }
+
+  sortJobs(jobs: Array<JobConfig>) {
+    if (jobs && jobs.length) {
+      const sortLang = 'label.' + this._currentLang;
+      return _.sortBy(jobs, [sortLang]);
     }
   }
 }

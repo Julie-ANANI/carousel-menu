@@ -106,7 +106,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _campaignService: CampaignService,
     private _localStorageService: LocalStorageService,
-    private _jobFrontService: JobsFrontService
+    private _jobFrontService: JobsFrontService,
   ) {
   }
 
