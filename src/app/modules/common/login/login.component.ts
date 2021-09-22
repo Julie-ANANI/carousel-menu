@@ -126,7 +126,6 @@ export class LoginComponent implements OnInit {
         .subscribe(
           () => {
             console.log('sdkshkd');
-            console.log(this._authService);
             if (this._authService.isAuthenticated) {
               // Get the redirect URL from our auth service. If no redirect has been set, use the default.
               const redirect = this._authService.redirectUrl
@@ -135,8 +134,6 @@ export class LoginComponent implements OnInit {
                   ? this._routeFrontService.adminDefaultRoute()
                   : '/';
 
-              console.log(this._authService);
-              console.log(redirect);
               console.log('redirect');
 
               this._authService.redirectUrl = '';

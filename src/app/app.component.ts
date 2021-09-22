@@ -42,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     if (isPlatformServer(this._platformId)) {
       console.log('The server has made connection with the UMI Front Application.');
     } else {

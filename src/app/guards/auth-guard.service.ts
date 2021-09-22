@@ -31,23 +31,18 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
 
   private _checkLogin(url: string): boolean | Observable<boolean> {
 
-
-    console.log('ssgjscbcbbcbbcgza');
-    console.log(this._authService);
-    console.log(url);
-
     // Store the attempted URL for redirecting
     this._authService.redirectUrl = !!this._authService.redirectUrl
       ? this._authService.redirectUrl : this._routeFrontService.redirectRoute(url);
 
-    console.log(this._authService.redirectUrl);
-
     if (this._authService.isAuthenticated) {
       if (this._authService.isConfirmed) {
         if (url === '/logout' || !!this._authService.user) {
+          console.log('is Authenticated');
           return true;
         } else if (!this._authService.user) {
           return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map ((_) => {
+            console.log('uess');
             return true;
           }), catchError((err: HttpErrorResponse) => {
             console.error(err);
@@ -55,15 +50,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
             return of(false);
           }));
         }
+        console.log('is confirmed');
       } else {
-        console.log('ssgjsgzadzqsdsq');
-        /**
-         * this below case is for the printer user.
-         */
-        /*if (this._authService.adminLevel === 4) {
-          return true;
-        }*/
-        console.log('ssgjsgza');
+        console.log('welcome');
         this._router.navigate(['/welcome']);
         return false;
       }
