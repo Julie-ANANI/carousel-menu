@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from './user.component';
 
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
+import {AuthGuard} from '../../guards/auth-guard.service';
 
 const userRoutes: Routes = [
   {
@@ -14,6 +15,7 @@ const userRoutes: Routes = [
       { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
       {
         path: 'projects/:projectId/print/executive-report',
+        canActivate: [AuthGuard],
         loadChildren: '../.././modules/print/print-executive-report/print-executive-report.module#PrintExecutiveReportModule',
         resolve: { innovation : InnovationResolver },
         runGuardsAndResolvers: 'always',

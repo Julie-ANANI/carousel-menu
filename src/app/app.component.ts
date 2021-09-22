@@ -1,5 +1,5 @@
 import { Component, OnInit, PLATFORM_ID, Inject, HostListener, OnDestroy } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
@@ -42,7 +42,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('The application has been started.');
+    if (isPlatformServer(this._platformId)) {
+      console.log('The server has made connection with the UMI Front Application.');
+    } else {
+      console.log('The application has been started.');
+    }
+
     this._socketEvent();
     this._mouseEvent();
     // this._setSwellRTScript();

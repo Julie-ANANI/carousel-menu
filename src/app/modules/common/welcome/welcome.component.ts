@@ -15,7 +15,7 @@ import { TranslateTitleService } from '../../../services/title/title.service';
 
 export class WelcomeComponent implements OnInit {
 
-  private _user: User = this.authService.user || null;
+  private _user: User = this.authService.user;
 
   private _tokenEmail: string;
 
@@ -32,6 +32,7 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
     console.log('welecome');
     console.log(this._user);
+    console.log(!this._user);
     if (!this._user) {
       this.router.navigate(['/logout']);
     } else if (this._user.emailVerified) {

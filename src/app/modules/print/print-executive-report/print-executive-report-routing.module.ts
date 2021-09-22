@@ -3,13 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PrintExecutiveReportComponent } from './print-executive-report.component';
 
-import { AuthGuard } from '../../../guards/auth-guard.service';
 import { ExecutiveReportResolver } from '../../../resolvers/executive-report.resolver';
 
 const reportRoutes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
     component: PrintExecutiveReportComponent,
     resolve: { report: ExecutiveReportResolver },
     runGuardsAndResolvers: 'always',
