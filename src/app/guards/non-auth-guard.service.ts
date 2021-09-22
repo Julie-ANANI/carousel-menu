@@ -18,9 +18,13 @@ export class NonAuthGuard implements CanActivate {
 
   private _checkLogin(): boolean {
 
+    console.log('non auth');
+
     if (!this.authService.isAuthenticated) {
       return true;
     }
+
+    console.log('non auth2');
 
     // Navigate to the default first auth page
     this.router.navigate(['/']);
