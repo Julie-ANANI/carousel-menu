@@ -36,6 +36,10 @@
   border-radius: 8px;
   height: 40px;
 
+  .my-disable{
+    pointer-events:none;
+  }
+
   .button-checker {
     min-width: 30px;
     max-width: 30px;

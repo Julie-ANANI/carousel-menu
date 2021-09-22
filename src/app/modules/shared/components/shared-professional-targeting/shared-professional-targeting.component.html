@@ -93,7 +93,8 @@
               <div class="button-checker m-left-3"
                    [ngClass]="{'state-full-check': selectAllJobs === 1,
                    'state-neutral-check': selectAllJobs === 2,
-                   'state-none-check': selectAllJobs===0, 'state-mixed': selectAllJobs === 3}"
+                   'state-none-check': selectAllJobs===0, 'state-mixed': selectAllJobs === 3,
+                   'my-disable': searchJobKey !== ''}"
                    (click)="selectAllOnChange($event, 'JOB_TYPOLOGY')">
                 <ng-container [ngSwitch]="selectAllJobs">
                   <ng-container *ngSwitchCase="0">
@@ -130,17 +131,16 @@
           <!-- /select all -->
 
           <!-- get time to load Job Categories -->
-          <div *ngIf="isLoading">
-            <app-message-template>
-              <div class="flex-centered">
-                <div class="loading is-white" style="margin-right: 0.8rem"></div>
-                <span [innerText]="'Loading typologies'"></span>
-              </div>
+          <div class="section-light-pad" *ngIf="sortedFilteredJobsTypologies.length === 0">
+            <app-message-template
+              [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
+              [widthMax]="'362px'">
+              <span [innerText]="'No corresponding tags'"></span>
             </app-message-template>
           </div>
           <!-- /get time to load Job Categories -->
 
-          <ng-container *ngIf="!isLoading">
+          <ng-container *ngIf="sortedFilteredJobsTypologies && sortedFilteredJobsTypologies.length">
             <ng-container *ngFor="let jobTypo of sortedFilteredJobsTypologies">
               <app-shared-search-config-pro
                 [isPreview]="isPreview"

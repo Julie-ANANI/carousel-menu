@@ -38,8 +38,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _searchOperator = 'OR' || 'AND';
 
-  private _isLoading = false;
-
   private _isPreview: Boolean = false;
 
   private _targetedProsToUpdate: TargetPros = <TargetPros>{};
@@ -101,9 +99,14 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
         currentJobTypo = this._jobsTypologies[identifier];
       }
     }
-    this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
-    this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
-    this._sortedFilteredJobsTypologies.splice(currentIndex, 0, currentJobTypo);
+    if (currentIndex === 0) {
+      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+    } else {
+      this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
+      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+      this._sortedFilteredJobsTypologies.splice(currentIndex, 0, currentJobTypo);
+    }
+
   }
 
   /**
@@ -242,12 +245,18 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  get searchJobKey(): string {
+    return this._searchJobKey;
+  }
+
   /**
    * select all
    * @param event
    * @param type
    */
   selectAllOnChange(event: Event, type: 'SENIORITY_LEVEL' | 'JOB_TYPOLOGY') {
+    event.preventDefault();
     if (!this._isPreview) {
       switch (type) {
         case 'JOB_TYPOLOGY':
@@ -322,10 +331,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   get targetedProsToUpdate(): TargetPros {
     return this._targetedProsToUpdate;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
   }
 
   getSeniorityLevelsKeys() {
