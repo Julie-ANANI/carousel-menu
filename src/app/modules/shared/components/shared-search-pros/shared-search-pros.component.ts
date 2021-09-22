@@ -465,14 +465,18 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     const jobsExcluded = jobs.filter(j => j.state === 0).map(j => j._id);
     const jobsNeutral = jobs.filter(j => j.state === 2).map(j => j._id);
 
-    if ((jobsExcluded.length + jobsNeutral.length) === 1) {
-      this._errorMessageLaunch = 'Too heavy to handle : only 1 tag is not included. Include all TJ tags or make a new config';
-    } else if (jobsExcluded.length === jobs.length && seniorityIncluded.length < seniorityLevelsKeys.length) {
+    if (jobsExcluded.length === jobs.length && !seniorityIncluded.length) {
+      // jt, sl, all excluded
+      this._errorMessageLaunch = 'You must have at least one non-excluded tag on each box';
+    } else if (!jobsIncluded.length && seniorityIncluded.length) {
+      // sl included, jt all excluded
       this._errorMessageLaunch = 'You must include at least one TJ tag';
     } else if (jobsIncluded.length && !seniorityIncluded.length) {
+      // jt included, sl all excluded
       this._errorMessageLaunch = 'You must include at least one SL tag';
-    } else if (jobsExcluded.length === jobs.length || !seniorityIncluded.length) {
-      this._errorMessageLaunch = 'You must have at least one non-excluded tag on each box';
+    } else if ((jobsExcluded.length + jobsNeutral.length) === 1) {
+      // heavy handle
+      this._errorMessageLaunch = 'Too heavy to handle : only 1 tag is not included. Include all TJ tags or make a new config';
     } else {
       this._errorMessageLaunch = '';
     }
