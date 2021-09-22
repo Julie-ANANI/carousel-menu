@@ -1,41 +1,64 @@
 <div id="shared-search-config-pros">
 
-  <div class="d-flex flex-d-column align-start justify-start">
+  <div class="d-flex flex-d-column align-start justify-start w-full">
     <!-- Seniority level / Job category level -->
     <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
-      <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
-           (click)="stateOnChange($event)">
-        <ng-container [ngSwitch]="currentState">
-          <ng-container *ngSwitchCase="0">
-            <i class="fas fa-times"></i>
+      <div class="d-flex w-full" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
+        <!-- check box-->
+        <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
+             (click)="stateOnChange($event)">
+          <ng-container *ngIf="!isHovered">
+            <ng-container [ngSwitch]="currentState">
+              <ng-container *ngSwitchCase="0">
+                <i class="fas fa-times"></i>
+              </ng-container>
+              <ng-container *ngSwitchCase="2">
+              </ng-container>
+              <ng-container *ngSwitchCase="3">
+                <i class="fas fa-circle"></i>
+              </ng-container>
+              <ng-container *ngSwitchCase="1">
+                <i class="fas fa-check"></i>
+              </ng-container>
+            </ng-container>
           </ng-container>
-          <ng-container *ngSwitchCase="2">
-          </ng-container>
-          <ng-container *ngSwitchCase="3">
-            <i class="fas fa-circle"></i>
-          </ng-container>
-          <ng-container *ngSwitchCase="1">
-            <i class="fas fa-check"></i>
-          </ng-container>
-        </ng-container>
-      </div>
-      <!-- /check box-->
 
-      <!-- Seniority Level's name or Job category-->
-      <div class="text-primary-dark m-left-4 d-flex align-center width-100" style="min-width: fit-content">
-        {{context}}
+          <ng-container *ngIf="isHovered">
+            <ng-container [ngSwitch]="hoverState">
+              <ng-container *ngSwitchCase="0">
+                <i class="fas fa-times"></i>
+              </ng-container>
+              <ng-container *ngSwitchCase="2">
+              </ng-container>
+              <ng-container *ngSwitchCase="3">
+                <i class="fas fa-circle"></i>
+              </ng-container>
+              <ng-container *ngSwitchCase="1">
+                <i class="fas fa-check"></i>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+
+        </div>
+        <!-- /check box-->
+
+        <!-- Seniority Level's name or Job category-->
+        <div class="text-primary-dark m-left-4 d-flex align-center width-100" style="min-width: fit-content">
+          {{context}}
+        </div>
+        <!-- /Seniority Level's name or Job category-->
       </div>
-      <!-- /Seniority Level's name or Job category-->
 
       <!-- Job category expand item-->
-      <div class="d-flex m-left-auto text-white m-right-3 w-full" *ngIf="isJobTypo" (click)="onClickToggle()">
+      <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" (click)="onClickToggle()">
         <!-- nb of included/excluded jobs-->
         <div class="d-flex flex-end flex-grow" style="width: 40%">
           <span class="shape bg-success is-circle is-sm text-13" *ngIf="nbIncluded"> {{nbIncluded}} </span>
           <span class="shape bg-alert is-circle is-sm text-13" *ngIf="nbExcluded"> {{nbExcluded}} </span>
         </div>
         <!-- /nb of included/excluded jobs-->
-        <i class="text-link icon" style="color: #00B0FF" [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-up' "></i>
+        <i class="text-link icon" style="color: #00B0FF"
+           [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-up' "></i>
       </div>
     </div>
     <!-- /Seniority level / Job category level-->
@@ -43,18 +66,34 @@
     <!-- Jobs' list-->
     <div class="dropdown-toggle flex-d-column w-full m-left-15" *ngIf="showToggleSearch">
       <ng-container *ngFor="let job of jobConfigs">
-        <div class="d-flex p-1" *ngIf="showJob(job)">
+        <div class="d-flex p-1" *ngIf="showJob(job)" (mouseenter)="showJobNextState($event, job)"
+             (mouseleave)="closeJobHoverState(job)">
           <!-- Job's checkbox-->
           <div class="button-checker m-left-3" [ngStyle]="getJobCurrentState(job)"
                (click)="stateJobOnChange($event, job)">
-            <ng-container [ngSwitch]="job.state">
-              <ng-container *ngSwitchCase="0">
-                <i class="fas fa-times"></i>
+            <ng-container *ngIf="!job.hovered">
+              <ng-container [ngSwitch]="job.state">
+                <ng-container *ngSwitchCase="0">
+                  <i class="fas fa-times"></i>
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  <i class="fas fa-check"></i>
+                </ng-container>
               </ng-container>
-              <ng-container *ngSwitchCase="2">
-              </ng-container>
-              <ng-container *ngSwitchCase="1">
-                <i class="fas fa-check"></i>
+            </ng-container>
+
+            <ng-container *ngIf="job.hovered">
+              <ng-container [ngSwitch]="job.hoveredState">
+                <ng-container *ngSwitchCase="0">
+                  <i class="fas fa-times"></i>
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  <i class="fas fa-check"></i>
+                </ng-container>
               </ng-container>
             </ng-container>
             <div>

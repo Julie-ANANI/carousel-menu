@@ -2,6 +2,8 @@ export interface JobConfig {
   label: { en: string, fr: string };
   state: number;
   _id: string;
+  hovered?: boolean;
+  hoveredState?: number;
 }
 
 export interface JobsTypologies {
