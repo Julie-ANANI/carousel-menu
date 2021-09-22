@@ -56,6 +56,7 @@ export interface ExecutiveConclusion {
 }
 
 export interface ExecutiveSection {
+  questionIdentifier?: string;
   questionId: string;
   title: string;
   abstract: string;

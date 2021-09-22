@@ -53,7 +53,7 @@ export class ReportConclusionComponent implements OnChanges {
     this._setDefSale();
 
     if (data.operator && data.operator.id) {
-      this._operator = data.operator
+      this._operator = data.operator;
     } else {
       this._setDefOp();
     }
@@ -67,13 +67,13 @@ export class ReportConclusionComponent implements OnChanges {
     const data: ExecutiveReport = <ExecutiveReport>this.report;
 
     if (data.operator) {
-      this._getUser(data.operator, 'OPERATOR')
+      this._getUser(data.operator, 'OPERATOR');
     } else {
       this._setDefOp();
     }
 
     if (data.sale) {
-      this._getUser(data.sale, 'SALE')
+      this._getUser(data.sale, 'SALE');
     } else {
       this._setDefSale();
     }
@@ -127,7 +127,7 @@ export class ReportConclusionComponent implements OnChanges {
   }
 
   get isUMI(): boolean {
-    return environment.domain === 'umi'
+    return environment.domain === 'umi';
   }
 
   get sale(): User {

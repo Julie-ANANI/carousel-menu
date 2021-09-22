@@ -32,6 +32,7 @@ export class ExecutiveSectionComponent {
     this._section = {
       questionId: value.questionId || '',
       questionType: value.questionType || '',
+      questionIdentifier: value.questionIdentifier || '',
       abstract: value.abstract || '',
       title: value.title || '',
       content: value.content || <any>{}
@@ -66,11 +67,11 @@ export class ExecutiveSectionComponent {
   /***
    * assign the question id to the section and based on the question
    * controlType active the different visualization.
-   * @param id
+   * @param identifier
    */
-  public selectQuestion(id: string) {
-    this._section.questionId = id;
-    const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
+  public selectQuestion(identifier: string) {
+    this._section.questionIdentifier = identifier;
+    const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
     this._resetVisuals();
 
     if (question && question.controlType) {
@@ -89,7 +90,7 @@ export class ExecutiveSectionComponent {
           this._enableVisualRanking = true;
           break;
       }
-    } else if (id === `quesCustom_${this.sectionIndex}`) {
+    } else if (identifier === `quesCustom_${this.sectionIndex}`) {
       this._enableVisualPie = true;
       this._enableVisualBar = true;
       this._enableVisualBar = true;
@@ -99,7 +100,7 @@ export class ExecutiveSectionComponent {
   }
 
   public selectQuestionType(type: any) {
-    if (this._section.questionId) {
+    if (this._section.questionIdentifier) {
       switch (type) {
 
         case 'PIE':
@@ -172,11 +173,11 @@ export class ExecutiveSectionComponent {
    * @private
    */
   private _setKpiData() {
-    if (this._section.questionId === `quesCustom_${this.sectionIndex}`) {
+    if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom KPI ';
       this._section.content = ExecutiveReportFrontService.kpiSection([], '0');
     } else {
-      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const professionals: Array<Professional> = ResponseService.answersProfessionals(answers);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
@@ -189,11 +190,11 @@ export class ExecutiveSectionComponent {
    * @private
    */
   private _setQuoteData() {
-    if (this._section.questionId === `quesCustom_${this.sectionIndex}`) {
+    if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom quotation';
       this._section.content = ExecutiveReportFrontService.quoteSection();
     } else {
-      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       this._section.content = ExecutiveReportFrontService.quoteSection();
     }
@@ -204,11 +205,11 @@ export class ExecutiveSectionComponent {
    * @private
    */
   private _setBarData() {
-    if (this._section.questionId === `quesCustom_${this.sectionIndex}`) {
+    if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom progress bars';
       this._section.content = this._executiveReportFrontService.barSection([], this.reportLang);
     } else {
-      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const barsData: Array<BarData> = ResponseService.barsData(question, answers);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
@@ -221,11 +222,11 @@ export class ExecutiveSectionComponent {
    * @private
    */
   private _setRankingData() {
-    if (this._section.questionId === `quesCustom_${this.sectionIndex}`) {
+    if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom ranking';
       this._section.content = this._executiveReportFrontService.rankingTagsSection([], this.reportLang);
     } else {
-      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       let data;
@@ -244,11 +245,11 @@ export class ExecutiveSectionComponent {
    * @private
    */
   private _setPieData() {
-    if (this._section.questionId === `quesCustom_${this.sectionIndex}`) {
+    if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom pie';
       this._section.content = ExecutiveReportFrontService.pieChartSection(null, this.reportLang);
     } else {
-      const question: Question | MissionQuestion = this._getQuestion(this._section.questionId);
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const barsData: Array<BarData> = ResponseService.barsData(question, answers);
       const pieChartData: PieChart = ResponseService.pieChartData(barsData, answers);
@@ -257,8 +258,8 @@ export class ExecutiveSectionComponent {
     }
   }
 
-  private _getQuestion(id: string): Question | MissionQuestion {
-    const index = this.questions.findIndex((ques) => ques._id === id);
+  private _getQuestion(identifier: string): Question | MissionQuestion {
+    const index = this.questions.findIndex((ques) => ques.identifier === identifier);
     if (index !== -1) {
       return this.questions[index];
     }

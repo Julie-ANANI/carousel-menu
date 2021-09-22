@@ -117,7 +117,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
-          this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: this.prepareTargetPros(res), isToggle: false, identifier: ''});
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
 
           /**
@@ -126,13 +126,47 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
           this._jobFrontService
             .targetedProsToUpdate()
             .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((result: { targetPros: TargetPros}) => {
+            .subscribe((result: { targetPros: TargetPros }) => {
               this._toSave = !_.isEqual(result.targetPros, this._initialTargetedPro);
               this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
               this._checkProsTargetingValid();
             });
         });
     }
+  }
+
+  prepareTargetPros(targetPros: TargetPros) {
+    Object.keys(targetPros.jobsTypologies).forEach(key => {
+      targetPros.jobsTypologies[key].identifier = key;
+      targetPros.jobsTypologies[key].isToggle = false;
+      switch (targetPros.jobsTypologies[key].state) {
+        case 0:
+          targetPros.jobsTypologies[key].jobs.map(_job => {
+            _job.state = 0;
+          });
+          targetPros.jobsTypologies[key].totalCount = targetPros.jobsTypologies[key].jobs.length;
+          break;
+        case 1:
+          targetPros.jobsTypologies[key].jobs.map(_job => {
+            _job.state = 1;
+          });
+          targetPros.jobsTypologies[key].totalCount = targetPros.jobsTypologies[key].jobs.length;
+          break;
+        case 2:
+          targetPros.jobsTypologies[key].jobs.map(_job => {
+            _job.state = 2;
+          });
+          targetPros.jobsTypologies[key].totalCount = 0;
+          break;
+        case 3:
+          targetPros.jobsTypologies[key].totalCount = targetPros.jobsTypologies[key].jobs.filter(_job =>
+            _job.state === 1
+          ).length + targetPros.jobsTypologies[key].jobs.filter(_job =>
+            _job.state === 0
+          ).length;
+      }
+    });
+    return targetPros;
   }
 
   private _getCountries() {
@@ -658,8 +692,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   }
 
   resetTargetedPros() {
-    this._saveApplyModalContext = 'Restore the saved professional targeting?';
-    this._saveApplyModalTitle = 'Restore';
+    this._saveApplyModalContext = 'Apply the saved professional targeting?';
+    this._saveApplyModalTitle = 'Apply';
     this._isShowModal = true;
   }
 
@@ -695,6 +729,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this._toSave = false;
         this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
+        this._initialTargetedPro = this.prepareTargetPros(this._initialTargetedPro);
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
       }, err => {
         this._translateNotificationsService.error('Error', 'An error occurred');
@@ -710,11 +745,12 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   restoreTargetedPros() {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
-        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
+        this._jobFrontService.setTargetedProsToUpdate({targetPros: this.prepareTargetPros(res), isToggle: false, identifier: ''});
         this._initialTargetedPro = JSON.parse(JSON.stringify(res));
+        this._initialTargetedPro = this.prepareTargetPros(this._initialTargetedPro);
         this._isReset = false;
         this._toSave = false;
-        this._translateNotificationsService.success('Success', 'The saved professional targeting has been restored.');
+        this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
       }, err => {
         this._translateNotificationsService.error('Error', 'An error occurred');
         this._toSave = true;

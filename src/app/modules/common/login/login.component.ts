@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../services/title/title.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
 import { User } from '../../../models/user.model';
@@ -10,7 +11,8 @@ import { RandomUtil } from '../../../utils/randomUtil';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouteFrontService } from '../../../services/route/route-front.service';
-import { MediaFrontService } from '../../../services/media/media-front.service';
+import { UserService } from '../../../services/user/user.service';
+import {MediaFrontService} from '../../../services/media/media-front.service';
 
 @Component({
   selector: 'app-login',
@@ -18,16 +20,23 @@ import { MediaFrontService } from '../../../services/media/media-front.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  private _formData: FormGroup = this._formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  });
+
+  private _helpMessageForm: FormGroup = this._formBuilder.group({
+    contactEmail: ['', [Validators.required, Validators.email]],
+    message: ['', [Validators.required]],
+  });
 
   private _linkedInLink = '';
 
-  private _baseApi = environment.apiUrl;
-
-  private _clientUrl = environment.clientUrl;
-
-  private _domain = environment.domain;
-
   private _linkedInState = Date.now().toString();
+
+  private _displayLoading = false;
+
+  private _displayLoadingLinkedIn = false;
 
   private _backgroundImage = '';
 
@@ -41,17 +50,15 @@ export class LoginComponent implements OnInit {
 
   private _isDomainUMI = environment.domain === 'umi';
 
-  private _displayLoading = false;
-
-  private _linkedInLoading = false;
-
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateTitleService: TranslateTitleService,
+    private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _routeFrontService: RouteFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
-    private _router: Router
+    private _router: Router,
+    private _userService: UserService
   ) {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
   }
@@ -81,54 +88,37 @@ export class LoginComponent implements OnInit {
     }&client_id=${linkedinConfig.clientID}`;
   }
 
-  get logo(): string {
-    return this._logo;
+  public onClickLinkedIn() {
+    this._displayLoadingLinkedIn = true;
+
+    const data = {
+      domain: environment.domain,
+      state: this._linkedInState,
+    };
+
+    this._authService
+      .preRegisterDataOAuth2('linkedin', data)
+      .pipe(first())
+      .subscribe(
+        (_) => {
+          console.log(_);
+        },
+        (err: HttpErrorResponse) => {
+          this._displayLoadingLinkedIn = false;
+          console.error(err);
+        },
+        () => {
+          window.open(this._linkedInLink, '_self');
+        }
+      );
   }
 
-  get isDomainUMI(): boolean {
-    return this._isDomainUMI;
-  }
-
-  get backgroundImage(): string {
-    return this._backgroundImage;
-  }
-
-  get nbTentatives(): number {
-    return this._nbTentatives;
-  }
-
-  showContactUMIModal() {
-    this._isShowModal = true;
-  }
-
-  get isShowModal(): boolean {
-    return this._isShowModal;
-  }
-
-  set isShowModal(value: boolean) {
-    this._isShowModal = value;
-  }
-
-  get companyUrl(): string {
-    return this._companyUrl;
-  }
-
-  get baseApi(): string {
-    return this._baseApi;
-  }
-
-  get clientUrl(): string {
-    return this._clientUrl;
-  }
-
-  get domain(): string {
-    return this._domain;
-  }
-
-  loginOnChange(event: any) {
-    if (event && event.status) {
+  public onClickLogin() {
+    if (this._formData.valid) {
       this._displayLoading = true;
-      const user = new User(event.message);
+      const user = new User(this._formData.value);
+      user.domain = environment.domain;
+
       this._authService
         .login(user)
         .pipe(first())
@@ -153,77 +143,112 @@ export class LoginComponent implements OnInit {
               // Redirect the user
               this._router.navigate([redirect], navigationExtras);
             }
-            this._displayLoading = false;
           },
           () => {
-            this._displayLoading = false;
             this._nbTentatives -= 1;
+            this._displayLoading = false;
             this._translateNotificationsService.error(
               'ERROR.ERROR',
               'ERROR.INVALID_FORM_DATA'
             );
+            this._formData.get('password').reset();
           }
         );
-    }
-  }
-
-  loginWithLinkedin(event: any) {
-    if (event && event.status) {
-      this._linkedInLoading = true;
-      const data = {
-        domain: environment.domain,
-        state: this._linkedInState,
-      };
-      this._authService
-        .preRegisterDataOAuth2('linkedin', data)
-        .pipe(first())
-        .subscribe(
-          (_) => {
-            this._linkedInLoading = false;
-            console.log(_);
-          },
-          (err: HttpErrorResponse) => {
-            this._linkedInLoading = false;
-            console.error(err);
-          },
-          () => {
-            this._linkedInLoading = false;
-            window.open(this._linkedInLink, '_self');
-          }
-        );
-    }
-  }
-
-  contactUMIOnChange(event: any) {
-    if (event && event.status) {
-      this._translateNotificationsService.success(
-        'Success',
-        'We received your email, we will contact you soon.'
-      );
     } else {
-      this._translateNotificationsService.error(
-        'ERROR.ERROR',
-        'An error occurred'
-      );
+      if (this._formData.untouched && this._formData.pristine) {
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          'ERROR.INVALID_FORM_DATA'
+        );
+      }
     }
   }
 
+  get logo(): string {
+    return this._logo;
+  }
 
-  get linkedInLoading(): boolean {
-    return this._linkedInLoading;
+  get isDomainUMI(): boolean {
+    return this._isDomainUMI;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
   }
 
   get displayLoading(): boolean {
     return this._displayLoading;
   }
 
-  forgetPasswordEventOnChange(event: any) {
-    if (event) {
-      switch (event.action) {
-        case 'signUp':
-          this._router.navigate(['/register']);
-          break;
+  get displayLoadingLinkedIn(): boolean {
+    return this._displayLoadingLinkedIn;
+  }
+
+  get backgroundImage(): string {
+    return this._backgroundImage;
+  }
+
+  get nbTentatives(): number {
+    return this._nbTentatives;
+  }
+
+  showContactUMIModal() {
+    this._isShowModal = true;
+  }
+
+  get isShowModal(): boolean {
+    return this._isShowModal;
+  }
+
+  set isShowModal(value: boolean) {
+    this._isShowModal = value;
+  }
+
+  get helpMessageForm(): FormGroup {
+    return this._helpMessageForm;
+  }
+
+  get companyUrl(): string {
+    return this._companyUrl;
+  }
+
+  cancelMessage() {
+    this._isShowModal = false;
+    this._helpMessageForm.reset();
+  }
+
+  sendMessageToUMISupport() {
+    const data = {
+      umi: {
+        email: 'support@umi.us',
+      },
+      user: {
+        email: this._helpMessageForm.get('contactEmail').value,
+        message: this._helpMessageForm.get('message').value,
+      },
+    };
+    this._userService.contactUMISupport(data).subscribe(
+      (next) => {
+        this._isShowModal = false;
+        if (next.status === 200) {
+          this._translateNotificationsService.success(
+            'Success',
+            'We received your email, we will contact you soon.'
+          );
+        } else {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            'Sorry, an error occurred.'
+          );
+        }
+      },
+      (error) => {
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          'An error occurred'
+        );
+        console.error(error);
       }
-    }
+    );
   }
 }

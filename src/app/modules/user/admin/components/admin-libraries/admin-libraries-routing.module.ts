@@ -65,6 +65,8 @@ export const routes: Routes = [
         path: 'questionnaire/:presetId',
         component: AdminPresetsEditComponent,
         resolve: { preset: PresetResolver },
+        canActivate: [AdminRoleGuard],
+        data: { accessPath: ['libraries', 'questionnaire'] },
         runGuardsAndResolvers: 'always',
         pathMatch: 'full',
       },
