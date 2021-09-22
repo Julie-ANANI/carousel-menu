@@ -35,17 +35,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
     this._authService.redirectUrl = !!this._authService.redirectUrl
       ? this._authService.redirectUrl : this._routeFrontService.redirectRoute(url);
 
-    console.log(this._authService);
-
     if (this._authService.isAuthenticated) {
       if (this._authService.isConfirmed) {
         if (url === '/logout' || !!this._authService.user) {
-          console.log('is Authenticated');
           return true;
         } else if (!this._authService.user) {
-          console.log('not user');
           return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map ((_) => {
-            console.log('uess');
             return true;
           }), catchError((err: HttpErrorResponse) => {
             console.error(err);
@@ -53,15 +48,11 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
             return of(false);
           }));
         }
-        console.log('is confirmed');
       } else {
-        console.log('welcome');
         this._router.navigate(['/welcome']);
         return false;
       }
     }
-
-    console.log('login page');
 
     // Navigate to the login page with extras
     this._router.navigate(['/login']);

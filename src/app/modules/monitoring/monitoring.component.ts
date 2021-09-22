@@ -30,7 +30,6 @@ export class MonitoringComponent implements OnInit {
 
   ngOnInit(): void {
     this._monitoringService.getService().pipe(first()).subscribe((response) => {
-      console.log(response);
       response.forEach( (serviceName: string) => {
         this._status[serviceName] = 'ok';
       });

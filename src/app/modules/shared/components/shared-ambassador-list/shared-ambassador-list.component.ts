@@ -215,7 +215,6 @@ export class SharedAmbassadorListComponent {
         } else {
           console.error("What? empty rows? How did you do that?");
         }*/
-        console.log(action);
         break;
 
     }

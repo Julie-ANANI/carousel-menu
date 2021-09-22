@@ -30,8 +30,6 @@ export class WelcomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('welecome');
-    console.log(!this._user);
     if (!this._user) {
       this.router.navigate(['/logout']);
     } else if (this._user.emailVerified) {

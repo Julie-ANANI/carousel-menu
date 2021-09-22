@@ -50,7 +50,6 @@ export class ProjectFrontPageComponent implements OnChanges {
   constructor(private _translateService: TranslateService) { }
 
   ngOnChanges(): void {
-    console.log('front page');
     if (!this.title && !this.media && this.data && this.data['executiveReport']) {
       this._typeInnovation();
     } else if (this.title && this.media && this.data && this.data['summary']) {

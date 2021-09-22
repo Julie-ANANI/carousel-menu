@@ -31,9 +31,6 @@ export class PrintExecutiveReportComponent implements OnInit {
               private _translateService: TranslateService) { }
 
   ngOnInit() {
-
-    console.log('print');
-
     if (this._activatedRoute.snapshot.data.report && this._activatedRoute.snapshot.data.report._id) {
       this._data = <ExecutiveReport>this._activatedRoute.snapshot.data.report;
       this._userLang = this.data['lang'];
@@ -48,9 +45,6 @@ export class PrintExecutiveReportComponent implements OnInit {
         && this._data.marketReport.finalConclusion.conclusion || '';
       this._data.executiveReport.questions = this._initInnoQuestions(this._data);
     }
-
-    console.log(this._data);
-
   }
 
   /***

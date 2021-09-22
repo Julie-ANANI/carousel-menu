@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
     private _userService: UserService
   ) {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
-    console.log('login page');
   }
 
   ngOnInit() {
@@ -125,8 +124,6 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
           () => {
-            console.log('sdkshkd');
-            console.log(this._authService);
             if (this._authService.isAuthenticated) {
               // Get the redirect URL from our auth service. If no redirect has been set, use the default.
               const redirect = this._authService.redirectUrl
@@ -134,10 +131,6 @@ export class LoginComponent implements OnInit {
                 : this._authService.isAdmin
                   ? this._routeFrontService.adminDefaultRoute()
                   : '/';
-
-              console.log('redirect');
-              console.log(this._authService.isAdmin);
-              console.log(redirect);
 
               this._authService.redirectUrl = '';
 
