@@ -70,7 +70,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
         // 2. search if there is a keyword
         // 3. sort
         if (!this._isPreview && !_.isEmpty(result.targetPros)) {
-          console.log(result.targetPros);
           this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
           this.initialiseTargetedPros(result.targetPros);
           this.searchJob(this._searchJobKey);
