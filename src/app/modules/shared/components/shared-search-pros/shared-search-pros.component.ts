@@ -692,8 +692,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   }
 
   resetTargetedPros() {
-    this._saveApplyModalContext = 'Restore the saved professional targeting?';
-    this._saveApplyModalTitle = 'Restore';
+    this._saveApplyModalContext = 'Apply the saved professional targeting?';
+    this._saveApplyModalTitle = 'Apply';
     this._isShowModal = true;
   }
 
@@ -750,7 +750,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
         this._initialTargetedPro = this.prepareTargetPros(this._initialTargetedPro);
         this._isReset = false;
         this._toSave = false;
-        this._translateNotificationsService.success('Success', 'The saved professional targeting has been restored.');
+        this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
       }, err => {
         this._translateNotificationsService.error('Error', 'An error occurred');
         this._toSave = true;

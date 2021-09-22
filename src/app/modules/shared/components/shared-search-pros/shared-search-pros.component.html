@@ -267,12 +267,15 @@
       <div class="button-group d-flex justify-center align-center m-auto m-top-4">
 
         <!-- Saved targetedPro  -->
-        <button class="button br-6 is-primary is-sm is-outlined badge is-icon m-10" *ngIf="!toSave">
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
+                *ngIf="!toSave">
           <i class="fas fa-save"></i>
           Save
         </button>
 
-        <button class="button br-6 is-primary is-sm is-outlined badge is-icon is-active m-10"
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon is-active m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
                 (click)="saveProTargeting()"
                 *ngIf="toSave">
           <i class="fas fa-save"></i>
@@ -290,7 +293,7 @@
 
         <!-- Reset targetedPro  -->
         <button class="button br-6 is-sm is-outlined m-10" (click)="resetTargetedPros()">
-          Restore
+          Apply
         </button>
         <!-- /Reset targetedPro  -->
 
