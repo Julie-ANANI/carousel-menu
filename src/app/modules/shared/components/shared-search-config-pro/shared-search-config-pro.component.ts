@@ -77,6 +77,10 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   private _nbExcluded: number;
 
+  private _isHovered = false;
+
+  private _hoverState = 0;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
@@ -91,23 +95,44 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   getCurrentState() {
-    switch (this._currentState) {
-      case 0:
-        return {
-          border: '4px solid #EA5858',
-          color: '#EA5858'
-        };
-      case 3:
-      case 2:
-        return {
-          border: '4px solid #333333',
-          color: '#333333'
-        };
-      case 1:
-        return {
-          border: '4px solid #2ECC71',
-          color: '#2ECC71'
-        };
+    if (!this._isHovered) {
+      switch (this._currentState) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 3:
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
+    } else {
+      switch (this._hoverState) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 3:
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
     }
   }
 
@@ -167,16 +192,22 @@ export class SharedSearchConfigProComponent implements OnInit {
       case 0:
         this.jobConfigs.map(_job => {
           _job.state = 0;
+          _job.hovered = false;
+          _job.hoveredState = 0;
         });
         break;
       case 1:
         this.jobConfigs.map(_job => {
           _job.state = 1;
+          _job.hovered = false;
+          _job.hoveredState = 0;
         });
         break;
       case 2:
         this.jobConfigs.map(_job => {
           _job.state = 2;
+          _job.hovered = false;
+          _job.hoveredState = 0;
         });
         break;
     }
@@ -260,23 +291,44 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param job
    */
   getJobCurrentState(job: any) {
-    switch (job.state) {
-      case 0:
-        return {
-          border: '4px solid #EA5858',
-          color: '#EA5858'
-        };
-      case 2:
-        return {
-          border: '4px solid #333333',
-          color: '#333333'
-        };
-      case 1:
-        return {
-          border: '4px solid #2ECC71',
-          color: '#2ECC71'
-        };
+    if (!job.hovered) {
+      switch (job.state) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
+    } else {
+      switch (job.hoveredState) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
     }
+
   }
 
   /**
@@ -344,5 +396,67 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   get isPreview(): Boolean {
     return this._isPreview;
+  }
+
+  showNextState(event: Event) {
+    event.preventDefault();
+    if (this.isJobTypo) {
+      switch (this._currentState) {
+        case 0:
+          this._hoverState = 2;
+          break;
+        case 1:
+          this._hoverState = 0;
+          break;
+        case 2:
+          this._hoverState = 1;
+          break;
+        case 3:
+          this._hoverState = 1;
+          break;
+      }
+    } else {
+      switch (this._currentState) {
+        case 0:
+          this._hoverState = 1;
+          break;
+        case 1:
+          this._hoverState = 0;
+          break;
+      }
+    }
+    this._isHovered = true;
+  }
+
+  get hoverState(): number {
+    return this._hoverState;
+  }
+
+  get isHovered(): boolean {
+    return this._isHovered;
+  }
+
+  closeHoverState() {
+    this._isHovered = false;
+  }
+
+  closeJobHoverState(job: JobConfig) {
+    job.hovered = false;
+  }
+
+  showJobNextState(event: Event, job: JobConfig) {
+    event.preventDefault();
+    switch (job.state) {
+      case 0:
+        job.hoveredState = 2;
+        break;
+      case 1:
+        job.hoveredState = 0;
+        break;
+      case 2:
+        job.hoveredState = 1;
+        break;
+    }
+    job.hovered = true;
   }
 }
