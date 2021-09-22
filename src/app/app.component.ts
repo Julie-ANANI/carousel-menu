@@ -3,9 +3,11 @@ import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
+import { AuthService } from './services/auth/auth.service';
+import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
-import {takeUntil} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -35,20 +37,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
+              private _authService: AuthService,
               private _mouseService: MouseService,
-              private _socketService: SocketService) {
+              private _socketService: SocketService,
+              private _translateNotificationsService: TranslateNotificationsService) {
+
     this._setFavicon();
     initTranslation(this._translateService);
-  }
-
-  ngOnInit(): void {
 
     if (isPlatformServer(this._platformId)) {
       console.log('The server has made connection with the UMI Front Application.');
-    } else {
-      console.log('The application has been started.');
+    } else if (isPlatformBrowser(this._platformId)) {
+      this._initializeSession();
     }
+  }
 
+  ngOnInit(): void {
     this._socketEvent();
     this._mouseEvent();
     // this._setSwellRTScript();
@@ -58,6 +62,23 @@ export class AppComponent implements OnInit, OnDestroy {
   onMouseUp(event: MouseEvent) {
     if (this._startMouseEvent) {
       this._mouseService.setClickEvent(event);
+    }
+  }
+
+  /**
+   * we initialize session if we haven't use the guard for the page.
+   * @private
+   */
+  private _initializeSession() {
+    if (!this._authService.user && this._authService.isAuthenticated) {
+      this._authService.initializeSession().pipe(first()).subscribe(() => {
+        console.log('The application has been started.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+        console.error(err);
+      });
+    } else {
+      console.log('The application has been started.');
     }
   }
 
