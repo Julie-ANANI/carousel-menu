@@ -1,6 +1,6 @@
 <div id="shared-search-config-pros">
 
-  <div class="d-flex flex-d-column align-start justify-start">
+  <div class="d-flex flex-d-column align-start justify-start w-full">
     <!-- Seniority level / Job category level -->
     <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
       <div class="d-flex w-full" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
@@ -50,7 +50,7 @@
       </div>
 
       <!-- Job category expand item-->
-      <div class="d-flex m-left-auto text-white m-right-3 w-full" *ngIf="isJobTypo" (click)="onClickToggle()">
+      <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" (click)="onClickToggle()">
         <!-- nb of included/excluded jobs-->
         <div class="d-flex flex-end flex-grow" style="width: 40%">
           <span class="shape bg-success is-circle is-sm text-13" *ngIf="nbIncluded"> {{nbIncluded}} </span>
