@@ -292,7 +292,9 @@
         <!-- /Preview saved targetedPro  -->
 
         <!-- Reset targetedPro  -->
-        <button class="button br-6 is-sm is-outlined m-10" (click)="resetTargetedPros()">
+        <button class="button br-6 is-sm is-outlined m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to replace your current professional targeting with the saved one.'"
+                (click)="resetTargetedPros()">
           Apply
         </button>
         <!-- /Reset targetedPro  -->
