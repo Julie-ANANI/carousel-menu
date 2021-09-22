@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { TargetPros } from '../../models/targetPros';
+import { JobConfig, TargetPros } from '../../models/targetPros';
 
 @Injectable({providedIn: 'root'})
 export class JobsFrontService {
@@ -28,8 +28,8 @@ export class JobsFrontService {
     switch (value.action) {
       case 'jobTypos':
         _identifier = value.identifier;
+        this.updateJobs(_identifier, value.jobs);
         this._targetedProsUpdated.jobsTypologies[_identifier].state = value.state;
-        this._targetedProsUpdated.jobsTypologies[_identifier].jobs = value.jobs;
         this._targetedProsUpdated.jobsTypologies[_identifier].totalCount = this._targetedProsUpdated.jobsTypologies[_identifier].jobs.filter((job: any) => job.state === 1).length +
           this._targetedProsUpdated.jobsTypologies[_identifier].jobs.filter((job: any) => job.state === 0).length;
         this._targetedProsUpdated.jobsTypologies[_identifier].isToggle = value.isToggle;
@@ -49,6 +49,15 @@ export class JobsFrontService {
         this.setTargetedProsToUpdate({targetPros: this._targetedProsUpdated});
         break;
     }
+  }
+
+  private updateJobs(identifier: string, jobsToUpdate: Array<JobConfig>) {
+    this._targetedProsUpdated.jobsTypologies[identifier].jobs.map(job => {
+      const jobToUpdate = jobsToUpdate.find(jobUpdate => jobUpdate._id === job._id);
+      if (jobToUpdate) {
+        job.state = jobToUpdate.state;
+      }
+    });
   }
 
   /***
