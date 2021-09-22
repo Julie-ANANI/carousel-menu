@@ -147,7 +147,7 @@
                 [showToggleSearch]="jobTypo.isToggle"
                 [identifier]="jobTypo.identifier"
                 [option]="{name: jobTypo.name.en, state: jobTypo.state}"
-                [jobs]="jobTypo.jobs"
+                [jobs]="sortJobs(jobTypo.jobs)"
                 [filteredJobs]="filteredJobsTypologies[jobTypo.identifier].jobs"
                 [isJobTypo]="true">
               </app-shared-search-config-pro>
