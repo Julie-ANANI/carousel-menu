@@ -73,7 +73,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
             this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
             this.initialiseTargetedPros(result.targetPros);
             this.searchJob(this._searchJobKey);
-            this.toggleStatus(result.isToggle, result.identifier);
             if (!result.identifier) {
               this._sortedFilteredJobsTypologies = this.sortJobTypologies(this._filteredJobsTypologies);
               this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
@@ -82,6 +81,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
                 this.getCurrentJobTypo(result.identifier);
               }
             }
+            this.toggleStatus(result.isToggle, result.identifier);
             this._currentJobIdentifier = result.identifier;
           }
         });
@@ -95,21 +95,27 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
    */
   getCurrentJobTypo(identifier: string) {
     let currentIndex = 0;
+    let before = 1;
     let currentJobTypo: JobsTypologies;
     for (let i = 0; i < this._sortedFilteredJobsTypologies.length; i++) {
       if (this._sortedFilteredJobsTypologies[i].identifier === identifier) {
         currentIndex = i;
         currentJobTypo = this._filteredJobsTypologies[identifier];
       }
-    }
-    if (currentIndex === 0) {
-      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
-    } else {
-      this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
-      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
-      this._sortedFilteredJobsTypologies.splice(currentIndex, 0, currentJobTypo);
+
+      if (this._sortedFilteredJobsTypologies[i].identifier === this._currentJobIdentifier) {
+        this._sortedFilteredJobsTypologies[i].totalCount = this._jobsTypologies[this._currentJobIdentifier].totalCount;
+        before = i;
+      }
     }
 
+    if (currentIndex === 1 && before === 0) {
+      this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+    } else {
+    this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
+    this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+    this._sortedFilteredJobsTypologies.splice(currentIndex, 0, currentJobTypo);
+    }
   }
 
   /**
@@ -304,7 +310,8 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
           this._jobFrontService.setTargetedProsToUpdate({
             targetPros: this._targetedProsToUpdate,
             identifier: this._currentJobIdentifier,
-            isToggle: false
+            isToggle: false,
+            toSave: true,
           });
           break;
         case 'SENIORITY_LEVEL':
@@ -322,7 +329,8 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
           this._targetedProsToUpdate.seniorityLevels = this._seniorityLevels;
           this._jobFrontService.setTargetedProsToUpdate({
             targetPros: this._targetedProsToUpdate, identifier: this._currentJobIdentifier,
-            isToggle: false
+            isToggle: false,
+            toSave: true,
           });
           break;
       }
@@ -432,6 +440,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   }
 
   sortJobs(jobs: Array<JobConfig>) {
+    // return jobs;
     if (jobs && jobs.length) {
       return _.sortBy(jobs, ['label.en']);
     }

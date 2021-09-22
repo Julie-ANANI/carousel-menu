@@ -14,9 +14,9 @@ import { LocalStorageService } from '../../../../services/localStorage/localStor
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TargetPros } from '../../../../models/targetPros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
-import { Subject } from 'rxjs';
 
 import * as _ from 'lodash';
+import { Subject } from 'rxjs/Subject';
 
 
 @Component({
@@ -95,9 +95,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   private _errorMessageLaunch = '';
 
-  // isEqual({ foo: 'bar' }, { foo: 'bar' });
-  private _isEqual = (...objects: any[]) => objects.every(obj => JSON.stringify(obj) === JSON.stringify(objects[0]));
-
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
@@ -117,8 +114,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
-          this._jobFrontService.setTargetedProsToUpdate({targetPros: this.prepareTargetPros(res), isToggle: false, identifier: ''});
-          this._initialTargetedPro = JSON.parse(JSON.stringify(res));
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
+          this._initialTargetedPro = this._jobFrontService.prepareTargetPros(res);
 
           /**
            * subscribe: get recent targetPros, not saved, current one
@@ -126,47 +123,13 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
           this._jobFrontService
             .targetedProsToUpdate()
             .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((result: { targetPros: TargetPros }) => {
-              this._toSave = !_.isEqual(result.targetPros, this._initialTargetedPro);
+            .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
+              this._toSave = result.toSave;
               this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
               this._checkProsTargetingValid();
             });
         });
     }
-  }
-
-  prepareTargetPros(targetPros: TargetPros) {
-    Object.keys(targetPros.jobsTypologies).forEach(key => {
-      targetPros.jobsTypologies[key].identifier = key;
-      targetPros.jobsTypologies[key].isToggle = false;
-      switch (targetPros.jobsTypologies[key].state) {
-        case 0:
-          targetPros.jobsTypologies[key].jobs.map(_job => {
-            _job.state = 0;
-          });
-          targetPros.jobsTypologies[key].totalCount = targetPros.jobsTypologies[key].jobs.length;
-          break;
-        case 1:
-          targetPros.jobsTypologies[key].jobs.map(_job => {
-            _job.state = 1;
-          });
-          targetPros.jobsTypologies[key].totalCount = targetPros.jobsTypologies[key].jobs.length;
-          break;
-        case 2:
-          targetPros.jobsTypologies[key].jobs.map(_job => {
-            _job.state = 2;
-          });
-          targetPros.jobsTypologies[key].totalCount = 0;
-          break;
-        case 3:
-          targetPros.jobsTypologies[key].totalCount = targetPros.jobsTypologies[key].jobs.filter(_job =>
-            _job.state === 1
-          ).length + targetPros.jobsTypologies[key].jobs.filter(_job =>
-            _job.state === 0
-          ).length;
-      }
-    });
-    return targetPros;
   }
 
   private _getCountries() {
@@ -471,7 +434,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     } else if (!jobsIncluded.length && seniorityIncluded.length) {
       // sl included, jt all excluded
       this._errorMessageLaunch = 'You must include at least one TJ tag';
-    } else if (jobsIncluded.length && !seniorityIncluded.length) {
+    } else if (!seniorityIncluded.length) {
       // jt included, sl all excluded
       this._errorMessageLaunch = 'You must include at least one SL tag';
     } else if ((jobsExcluded.length + jobsNeutral.length) === 1) {
@@ -643,7 +606,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   }
 
   get toSave(): boolean {
-    return this._toSave && !this._isSameDataToSave();
+    return this._toSave;
   }
 
   saveProTargeting() {
@@ -676,10 +639,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._isShowModal = true;
   }
 
-  private _isSameDataToSave(): boolean {
-    return this._isEqual(this._initialTargetedPro, this._targetedProsToUpdate);
-  }
-
   get saveApplyModalTitle(): string {
     return this._saveApplyModalTitle;
   }
@@ -708,7 +667,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this._toSave = false;
         this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
-        this._initialTargetedPro = this.prepareTargetPros(this._initialTargetedPro);
+        this._initialTargetedPro = this._jobFrontService.prepareTargetPros(this._initialTargetedPro);
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
       }, err => {
         this._translateNotificationsService.error('Error', 'An error occurred');
@@ -718,15 +677,15 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       });
   }
 
+
   /**
    * confirm: restore target pros
    */
   restoreTargetedPros() {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
-        this._jobFrontService.setTargetedProsToUpdate({targetPros: this.prepareTargetPros(res), isToggle: false, identifier: ''});
-        this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-        this._initialTargetedPro = this.prepareTargetPros(this._initialTargetedPro);
+        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
+        this._initialTargetedPro = this._jobFrontService.prepareTargetPros(res);
         this._isReset = false;
         this._toSave = false;
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
@@ -740,7 +699,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   confirmSaveReset() {
     this._isShowModal = false;
-    if (this._saveApplyModalTitle === 'Restore') {
+    if (this._saveApplyModalTitle === 'Apply') {
       this.restoreTargetedPros();
     } else {
       this.saveTargetedPros();
