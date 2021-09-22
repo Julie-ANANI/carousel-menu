@@ -6,7 +6,6 @@ import { Subject } from 'rxjs';
 
 import * as _ from 'lodash';
 import { isPlatformBrowser } from '@angular/common';
-import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -56,17 +55,12 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   private _currentJobIdentifier = '';
 
-  private _currentLang = 'en';
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _cookieService: CookieService,
               private _jobFrontService: JobsFrontService) {
   }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._currentLang = this._cookieService.get('user_lang') || 'en';
-
       this._jobFrontService
         .targetedProsToUpdate()
         .pipe(takeUntil(this._ngUnsubscribe))
@@ -439,8 +433,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
   sortJobs(jobs: Array<JobConfig>) {
     if (jobs && jobs.length) {
-      const sortLang = 'label.' + this._currentLang;
-      return _.sortBy(jobs, [sortLang]);
+      return _.sortBy(jobs, ['label.en']);
     }
   }
 }

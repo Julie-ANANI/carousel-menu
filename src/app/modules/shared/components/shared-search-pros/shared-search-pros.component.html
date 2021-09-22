@@ -312,7 +312,7 @@
       </div>
       <!-- /Professional targeting - buttons  -->
 
-      <app-shared-professional-targeting>
+      <app-shared-professional-targeting *ngIf="canAccess(['edit', 'targetPros'])">
       </app-shared-professional-targeting>
 
     </div>
@@ -340,7 +340,7 @@
   [maxWidth]="'90%'"
   [title]="'Preview - Professional targeting'">
 
-  <section class="modal-body">
+  <section class="modal-body" *ngIf="canAccess(['edit', 'targetPros'])">
     <app-shared-professional-targeting
       [isPreview]="true"
       [targetedProsToUpdate]="initialTargetedPro">
