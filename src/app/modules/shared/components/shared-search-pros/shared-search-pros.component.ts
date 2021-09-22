@@ -537,31 +537,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._params = value;
   }
 
-  public onClickImport(file: File) {
-    let fileName = this._importRequestKeywords;
-    if (this.campaign) {
-      fileName += `,${this.campaign._id},${this.campaign.innovation._id}`;
-    }
-    this._searchService
-      .importList(file, fileName)
-      .pipe(first())
-      .subscribe(
-        () => {
-          this._translateNotificationsService.success(
-            'Success',
-            'The file is imported.'
-          );
-        },
-        (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'ERROR.ERROR',
-            err.error.message
-          );
-          console.error(err);
-        }
-      );
-  }
-
   public onGeographyChange(value: GeographySettings) {
     this._geography = value;
     this._params.countries = value.include.map((c) => c.code);
