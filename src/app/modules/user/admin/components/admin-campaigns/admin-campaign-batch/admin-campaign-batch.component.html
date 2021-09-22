@@ -112,7 +112,7 @@
         <div class="card-header">
 
           <div class="card-title">
-            <span class="m-right-2">Batch for {{ batch.size }} pros</span>
+            <span class="m-right-2">Batch for {{ batch.size }} pros - {{ batch.type }}</span>
             <span *ngIf="batch?.childBatch.length > 1" class="m-right-2"> ({{batch?.childBatch.length * 5 - 5}} minutes to send)</span>
             <span *ngIf="batch.error" class="text-error m-right-2 m-top-1 text-xs text-normal">
               There has been an error while sending this batch!
