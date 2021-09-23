@@ -29,7 +29,10 @@ export class SharedSearchConfigProComponent implements OnInit {
       this.initJobStates();
       this._countStates();
     }
+    this.setNextState();
   }
+
+  count = 1;
 
   /**
    * identifier in jobConfig
@@ -84,6 +87,7 @@ export class SharedSearchConfigProComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
+
 
   ngOnInit() {
     this._countStates();
@@ -245,28 +249,27 @@ export class SharedSearchConfigProComponent implements OnInit {
    */
   stateOnChange(event: Event) {
     event.preventDefault();
-    if (!this.isPreview) {
-      if (this.isJobTypo) {
-        this.setJobStates();
-        this._jobFrontService.targetedProsUpdatedOnChange(
-          {
-            action: 'jobTypos',
-            jobs: this.jobConfigs,
-            identifier: this._identifier,
-            state: this._currentState,
-            isToggle: this._showToggleSearch,
-          });
-      } else {
-        this.setSeniorityLevelState();
-        this._jobFrontService.targetedProsUpdatedOnChange(
-          {
-            action: 'seniorLevels',
-            state: this._currentState,
-            identifier: this._identifier
-          });
-      }
-      this._countStates();
+    this.setNextState();
+    if (this.isJobTypo) {
+      this.setJobStates();
+      this._jobFrontService.targetedProsUpdatedOnChange(
+        {
+          action: 'jobTypos',
+          jobs: this.jobConfigs,
+          identifier: this._identifier,
+          state: this._currentState,
+          isToggle: this._showToggleSearch,
+        });
+    } else {
+      this.setSeniorityLevelState();
+      this._jobFrontService.targetedProsUpdatedOnChange(
+        {
+          action: 'seniorLevels',
+          state: this._currentState,
+          identifier: this._identifier
+        });
     }
+    this._countStates();
   }
 
 
@@ -337,30 +340,30 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param job
    */
   stateJobOnChange(event: Event, job: any) {
-    if (!this.isPreview) {
-      event.preventDefault();
-      switch (job.state) {
-        case 0:
-          job.state = 2;
-          break;
-        case 1:
-          job.state = 0;
-          break;
-        case 2:
-          job.state = 1;
-          break;
-      }
-      this._countStates();
-      this._jobFrontService.targetedProsUpdatedOnChange(
-        {
-          action: 'jobTypos',
-          jobs: this.jobConfigs,
-          identifier: this._identifier,
-          state: this._currentState,
-          isToggle: this._showToggleSearch,
-        });
-      this._currentState = this.checkTypoState();
+    event.preventDefault();
+    event.preventDefault();
+    switch (job.state) {
+      case 0:
+        job.state = 2;
+        break;
+      case 1:
+        job.state = 0;
+        break;
+      case 2:
+        job.state = 1;
+        break;
     }
+    this.jobNextState(job);
+    this._countStates();
+    this._jobFrontService.targetedProsUpdatedOnChange(
+      {
+        action: 'jobTypos',
+        jobs: this.jobConfigs,
+        identifier: this._identifier,
+        state: this._currentState,
+        isToggle: this._showToggleSearch,
+      });
+    this._currentState = this.checkTypoState();
   }
 
   /**
@@ -398,8 +401,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     return this._isPreview;
   }
 
-  showNextState(event: Event) {
-    event.preventDefault();
+  setNextState() {
     if (this.isJobTypo) {
       switch (this._currentState) {
         case 0:
@@ -425,6 +427,11 @@ export class SharedSearchConfigProComponent implements OnInit {
           break;
       }
     }
+  }
+
+  showNextState(event: Event) {
+    event.stopPropagation();
+    this.setNextState();
     this._isHovered = true;
   }
 
@@ -444,8 +451,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     job.hovered = false;
   }
 
-  showJobNextState(event: Event, job: JobConfig) {
-    event.preventDefault();
+  jobNextState(job: JobConfig) {
     switch (job.state) {
       case 0:
         job.hoveredState = 2;
@@ -457,6 +463,11 @@ export class SharedSearchConfigProComponent implements OnInit {
         job.hoveredState = 1;
         break;
     }
+  }
+
+  showJobNextState(event: Event, job: JobConfig) {
+    event.preventDefault();
+    this.jobNextState(job);
     job.hovered = true;
   }
 }

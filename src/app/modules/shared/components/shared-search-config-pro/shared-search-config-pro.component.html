@@ -3,9 +3,10 @@
   <div class="d-flex flex-d-column align-start justify-start w-full">
     <!-- Seniority level / Job category level -->
     <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
-      <div class="d-flex w-full" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
+      <div  class="d-flex w-full">
         <!-- check box-->
-        <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
+        <div class="button-checker m-left-3" [ngStyle]="getCurrentState()"
+             [ngClass]="{'prevent-event': isPreview}"
              (click)="stateOnChange($event)">
           <ng-container *ngIf="!isHovered">
             <ng-container [ngSwitch]="currentState">
@@ -43,8 +44,11 @@
         <!-- /check box-->
 
         <!-- Seniority Level's name or Job category-->
-        <div class="text-primary-dark m-left-4 d-flex align-center width-100" style="min-width: fit-content">
-          {{context}}
+        <div class="text-primary-dark m-left-4 d-flex align-center width-100"
+             [ngClass]="{'prevent-event': isPreview}"
+             (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()"
+             style="min-width: fit-content">
+          {{context | titlecase}}
         </div>
         <!-- /Seniority Level's name or Job category-->
       </div>
@@ -52,7 +56,7 @@
       <!-- Job category expand item-->
       <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" (click)="onClickToggle()">
         <!-- nb of included/excluded jobs-->
-        <div class="d-flex flex-end flex-grow" style="width: 40%">
+        <div class="d-flex flex-end flex-grow" style="width: 40%" [ngClass]="{'prevent-event': isPreview}" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
           <span class="shape bg-success is-circle is-sm text-13" *ngIf="nbIncluded"> {{nbIncluded}} </span>
           <span class="shape bg-alert is-circle is-sm text-13" *ngIf="nbExcluded"> {{nbExcluded}} </span>
         </div>
@@ -66,10 +70,11 @@
     <!-- Jobs' list-->
     <div class="dropdown-toggle flex-d-column w-full m-left-15" *ngIf="showToggleSearch">
       <ng-container *ngFor="let job of jobConfigs">
-        <div class="d-flex p-1" *ngIf="showJob(job)" (mouseenter)="showJobNextState($event, job)"
-             (mouseleave)="closeJobHoverState(job)">
+        <div class="d-flex p-1" *ngIf="showJob(job)">
           <!-- Job's checkbox-->
-          <div class="button-checker m-left-3" [ngStyle]="getJobCurrentState(job)"
+          <div class="button-checker m-left-3"
+               [ngClass]="{'prevent-event': isPreview}"
+               [ngStyle]="getJobCurrentState(job)"
                (click)="stateJobOnChange($event, job)">
             <ng-container *ngIf="!job.hovered">
               <ng-container [ngSwitch]="job.state">
@@ -102,7 +107,10 @@
           </div>
 
           <!-- Job's label-->
-          <div class="text-primary-dark m-left-4">
+          <div class="text-primary-dark m-left-4"
+               [ngClass]="{'prevent-event': isPreview}"
+               (mouseenter)="showJobNextState($event, job)"
+               (mouseleave)="closeJobHoverState(job)">
             {{job.label.en | titlecase}}
           </div>
           <!-- Job's label-->
