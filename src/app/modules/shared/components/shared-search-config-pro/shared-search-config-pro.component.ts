@@ -244,7 +244,7 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param event
    */
   stateOnChange(event: Event) {
-    event.preventDefault();
+    event.stopPropagation();
     if (!this.isPreview) {
       if (this.isJobTypo) {
         this.setJobStates();
@@ -339,6 +339,7 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param job
    */
   stateJobOnChange(event: Event, job: any) {
+    event.stopPropagation();
     if (!this.isPreview) {
       event.preventDefault();
       switch (job.state) {
@@ -352,6 +353,8 @@ export class SharedSearchConfigProComponent implements OnInit {
           job.state = 1;
           break;
       }
+      this.jobNextState(job);
+      job.hovered = false;
       this._countStates();
       this._jobFrontService.targetedProsUpdatedOnChange(
         {
@@ -450,8 +453,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     job.hovered = false;
   }
 
-  showJobNextState(event: Event, job: JobConfig) {
-    event.preventDefault();
+  jobNextState(job: JobConfig) {
     switch (job.state) {
       case 0:
         job.hoveredState = 2;
@@ -463,6 +465,11 @@ export class SharedSearchConfigProComponent implements OnInit {
         job.hoveredState = 1;
         break;
     }
+  }
+
+  showJobNextState(event: Event, job: JobConfig) {
+    event.preventDefault();
+    this.jobNextState(job);
     job.hovered = true;
   }
 }
