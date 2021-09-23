@@ -248,12 +248,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       if (this.activeInnovCard.operatorComment.sections && this.activeInnovCard.operatorComment.sections.length
         && (!!etherpadId || !!sectionType)) {
         const index = this._getOperatorCommentIndex(sectionType, etherpadId);
+        console.log(index);
+        console.log(this.activeInnovCard.operatorComment.sections[index]);
         if (index !== -1) {
           this.activeInnovCard.operatorComment.sections[index][type] = event.content;
           this.activeInnovCard.operatorComment.sections[index].sectionId =
             this.activeInnovCard.operatorComment.sections[index].sectionId
             || this._etherpadFrontService.buildPadIdOldInnovation(
               this.activeInnovCard.sections[sectionIndex].type, sectionIndex, this.currentLang);
+          console.log('this.activeInnovCard.operatorComment.sections[index]');
+          console.log(this.activeInnovCard.operatorComment.sections[index]);
         }
       }
     }
