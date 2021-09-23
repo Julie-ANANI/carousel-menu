@@ -95,6 +95,9 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   private _errorMessageLaunch = '';
 
+  // isEqual({ foo: 'bar' }, { foo: 'bar' });
+  private _isEqual = (...objects: any[]) => objects.every(obj => JSON.stringify(obj) === JSON.stringify(objects[0]));
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateNotificationsService: TranslateNotificationsService,
@@ -606,7 +609,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   }
 
   get toSave(): boolean {
-    return this._toSave;
+    return this._toSave && !this._isSameDataToSave();
   }
 
   saveProTargeting() {
@@ -637,6 +640,10 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._saveApplyModalContext = 'Apply the saved professional targeting?';
     this._saveApplyModalTitle = 'Apply';
     this._isShowModal = true;
+  }
+
+  private _isSameDataToSave(): boolean {
+    return this._isEqual(this._initialTargetedPro, this._targetedProsToUpdate);
   }
 
   get saveApplyModalTitle(): string {

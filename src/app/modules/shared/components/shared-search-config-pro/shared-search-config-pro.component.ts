@@ -391,7 +391,7 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   showJob(job: JobConfig) {
-    return this._filteredJobsIds.includes(job._id);
+    return !job.hidden && this._filteredJobsIds.includes(job._id);
   }
 
   get isPreview(): Boolean {
