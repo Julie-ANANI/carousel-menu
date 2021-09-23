@@ -1,5 +1,6 @@
 export interface JobConfig {
   label: { en: string, fr: string };
+  hidden?: boolean;
   state: number;
   _id: string;
   hovered?: boolean;
