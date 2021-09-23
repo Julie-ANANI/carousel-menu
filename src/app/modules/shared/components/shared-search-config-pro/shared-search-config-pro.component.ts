@@ -29,7 +29,10 @@ export class SharedSearchConfigProComponent implements OnInit {
       this.initJobStates();
       this._countStates();
     }
+    this.setNextState();
   }
+
+  count = 1;
 
   /**
    * identifier in jobConfig
@@ -84,6 +87,7 @@ export class SharedSearchConfigProComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
+
 
   ngOnInit() {
     this._countStates();
@@ -244,11 +248,11 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param event
    */
   stateOnChange(event: Event) {
-    event.stopPropagation();
+    event.preventDefault();
+    this.setNextState();
     if (!this.isPreview) {
       if (this.isJobTypo) {
         this.setJobStates();
-        this.setNextState();
         this._jobFrontService.targetedProsUpdatedOnChange(
           {
             action: 'jobTypos',
@@ -259,7 +263,6 @@ export class SharedSearchConfigProComponent implements OnInit {
           });
       } else {
         this.setSeniorityLevelState();
-        this.setNextState();
         this._jobFrontService.targetedProsUpdatedOnChange(
           {
             action: 'seniorLevels',
@@ -339,7 +342,7 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param job
    */
   stateJobOnChange(event: Event, job: any) {
-    event.stopPropagation();
+    event.preventDefault();
     if (!this.isPreview) {
       event.preventDefault();
       switch (job.state) {
@@ -432,7 +435,7 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   showNextState(event: Event) {
-    event.preventDefault();
+    event.stopPropagation();
     this.setNextState();
     this._isHovered = true;
   }

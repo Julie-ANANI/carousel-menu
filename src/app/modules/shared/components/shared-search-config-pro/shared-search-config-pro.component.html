@@ -3,7 +3,8 @@
   <div class="d-flex flex-d-column align-start justify-start w-full">
     <!-- Seniority level / Job category level -->
     <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
-      <div  class="d-flex w-full" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
+      <div  class="d-flex w-full"
+            [ngClass]="{'test': isClicked}">
         <!-- check box-->
         <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
              (click)="stateOnChange($event)">
@@ -29,6 +30,7 @@
                 <i class="fas fa-times"></i>
               </ng-container>
               <ng-container *ngSwitchCase="2">
+                <i class="fas fa-circle"></i>
               </ng-container>
               <ng-container *ngSwitchCase="3">
                 <i class="fas fa-circle"></i>
@@ -43,7 +45,9 @@
         <!-- /check box-->
 
         <!-- Seniority Level's name or Job category-->
-        <div class="text-primary-dark m-left-4 d-flex align-center width-100" style="min-width: fit-content">
+        <div class="text-primary-dark m-left-4 d-flex align-center width-100"
+             (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()"
+             style="min-width: fit-content">
           {{context}}
         </div>
         <!-- /Seniority Level's name or Job category-->
@@ -69,8 +73,6 @@
         <div class="d-flex p-1" *ngIf="showJob(job)">
           <!-- Job's checkbox-->
           <div class="button-checker m-left-3"
-               (mouseenter)="showJobNextState($event, job)"
-               (mouseleave)="closeJobHoverState(job)"
                [ngStyle]="getJobCurrentState(job)"
                (click)="stateJobOnChange($event, job)">
             <ng-container *ngIf="!job.hovered">
