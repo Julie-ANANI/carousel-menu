@@ -343,7 +343,7 @@ export class SharedSearchConfigProComponent implements OnInit {
    */
   stateJobOnChange(event: Event, job: any) {
     event.preventDefault();
-    if (!this.isPreview) {
+    if (!this._isPreview) {
       event.preventDefault();
       switch (job.state) {
         case 0:
@@ -357,7 +357,6 @@ export class SharedSearchConfigProComponent implements OnInit {
           break;
       }
       this.jobNextState(job);
-      job.hovered = false;
       this._countStates();
       this._jobFrontService.targetedProsUpdatedOnChange(
         {
