@@ -154,17 +154,6 @@
 
               </a>
 
-              <!-- account page -->
-              <a
-                (click)="onClickLink(); onClickAccount();"
-                [routerLinkActiveOptions]="{ exact: true }"
-                [routerLink]="'/user/account'"
-                class="gtm-menu-my-account navbar-item"
-                routerLinkActive="active">
-                {{ 'HEADER.MY_ACCOUNT' | translate }}
-              </a>
-              <!-- account page -->
-
               <!-- admin side -->
               <a
                 (click)="toggleBackOfficeState(); onClickLink();"
@@ -187,6 +176,17 @@
                 {{ 'HEADER.CLIENT_SIDE' | translate }}
               </a>
               <!-- client side -->
+
+              <!-- account page -->
+              <a
+                (click)="onClickLink(); onClickAccount();"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLink]="'/user/account'"
+                class="gtm-menu-my-account navbar-item"
+                routerLinkActive="active">
+                {{ 'HEADER.MY_ACCOUNT' | translate }}
+              </a>
+              <!-- account page -->
 
               <div class="navbar-divider"></div>
 

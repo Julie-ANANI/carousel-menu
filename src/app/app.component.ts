@@ -70,8 +70,8 @@ export class AppComponent implements OnInit, OnDestroy {
    * @private
    */
   private _initializeSession() {
-    if (!this._authService.user && this._authService.isAuthenticated) {
-      this._authService.initializeSession().pipe(first()).subscribe(() => {
+    if (!this._authService.user) {
+      this._authService.initializeSession().pipe(first()).subscribe((_) => {
         console.log('The application has been started.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
