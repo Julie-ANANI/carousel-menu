@@ -166,6 +166,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
 
+      console.log(this._innovation);
+
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
         if (this._mission.milestoneDates.length > 1) {
