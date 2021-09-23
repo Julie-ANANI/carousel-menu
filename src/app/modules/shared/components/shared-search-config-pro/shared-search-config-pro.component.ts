@@ -248,6 +248,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     if (!this.isPreview) {
       if (this.isJobTypo) {
         this.setJobStates();
+        this.setNextState();
         this._jobFrontService.targetedProsUpdatedOnChange(
           {
             action: 'jobTypos',
@@ -258,6 +259,7 @@ export class SharedSearchConfigProComponent implements OnInit {
           });
       } else {
         this.setSeniorityLevelState();
+        this.setNextState();
         this._jobFrontService.targetedProsUpdatedOnChange(
           {
             action: 'seniorLevels',
@@ -398,8 +400,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     return this._isPreview;
   }
 
-  showNextState(event: Event) {
-    event.preventDefault();
+  setNextState() {
     if (this.isJobTypo) {
       switch (this._currentState) {
         case 0:
@@ -425,6 +426,11 @@ export class SharedSearchConfigProComponent implements OnInit {
           break;
       }
     }
+  }
+
+  showNextState(event: Event) {
+    event.preventDefault();
+    this.setNextState();
     this._isHovered = true;
   }
 

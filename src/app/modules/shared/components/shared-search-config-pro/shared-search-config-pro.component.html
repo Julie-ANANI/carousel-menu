@@ -2,8 +2,8 @@
 
   <div class="d-flex flex-d-column align-start justify-start w-full">
     <!-- Seniority level / Job category level -->
-    <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
-      <div class="d-flex w-full" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
+    <div class="pro-select-wrapper d-flex align-center w-full m-top-10" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
+      <div class="d-flex w-full">
         <!-- check box-->
         <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
              (click)="stateOnChange($event)">
