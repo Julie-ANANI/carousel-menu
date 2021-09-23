@@ -250,28 +250,26 @@ export class SharedSearchConfigProComponent implements OnInit {
   stateOnChange(event: Event) {
     event.preventDefault();
     this.setNextState();
-    if (!this.isPreview) {
-      if (this.isJobTypo) {
-        this.setJobStates();
-        this._jobFrontService.targetedProsUpdatedOnChange(
-          {
-            action: 'jobTypos',
-            jobs: this.jobConfigs,
-            identifier: this._identifier,
-            state: this._currentState,
-            isToggle: this._showToggleSearch,
-          });
-      } else {
-        this.setSeniorityLevelState();
-        this._jobFrontService.targetedProsUpdatedOnChange(
-          {
-            action: 'seniorLevels',
-            state: this._currentState,
-            identifier: this._identifier
-          });
-      }
-      this._countStates();
+    if (this.isJobTypo) {
+      this.setJobStates();
+      this._jobFrontService.targetedProsUpdatedOnChange(
+        {
+          action: 'jobTypos',
+          jobs: this.jobConfigs,
+          identifier: this._identifier,
+          state: this._currentState,
+          isToggle: this._showToggleSearch,
+        });
+    } else {
+      this.setSeniorityLevelState();
+      this._jobFrontService.targetedProsUpdatedOnChange(
+        {
+          action: 'seniorLevels',
+          state: this._currentState,
+          identifier: this._identifier
+        });
     }
+    this._countStates();
   }
 
 
@@ -343,31 +341,29 @@ export class SharedSearchConfigProComponent implements OnInit {
    */
   stateJobOnChange(event: Event, job: any) {
     event.preventDefault();
-    if (!this._isPreview) {
-      event.preventDefault();
-      switch (job.state) {
-        case 0:
-          job.state = 2;
-          break;
-        case 1:
-          job.state = 0;
-          break;
-        case 2:
-          job.state = 1;
-          break;
-      }
-      this.jobNextState(job);
-      this._countStates();
-      this._jobFrontService.targetedProsUpdatedOnChange(
-        {
-          action: 'jobTypos',
-          jobs: this.jobConfigs,
-          identifier: this._identifier,
-          state: this._currentState,
-          isToggle: this._showToggleSearch,
-        });
-      this._currentState = this.checkTypoState();
+    event.preventDefault();
+    switch (job.state) {
+      case 0:
+        job.state = 2;
+        break;
+      case 1:
+        job.state = 0;
+        break;
+      case 2:
+        job.state = 1;
+        break;
     }
+    this.jobNextState(job);
+    this._countStates();
+    this._jobFrontService.targetedProsUpdatedOnChange(
+      {
+        action: 'jobTypos',
+        jobs: this.jobConfigs,
+        identifier: this._identifier,
+        state: this._currentState,
+        isToggle: this._showToggleSearch,
+      });
+    this._currentState = this.checkTypoState();
   }
 
   /**
