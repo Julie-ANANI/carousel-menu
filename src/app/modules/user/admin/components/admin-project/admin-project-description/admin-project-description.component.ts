@@ -211,14 +211,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _getOperatorComment(sectionType?: string, etherpadId?: string) {
     return this.activeInnovCard.operatorComment.sections.find((_comment) => {
-      return !!etherpadId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
+      return !!etherpadId && !!_comment.sectionId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
         : (sectionType === _comment.type);
     });
   }
 
   private _getOperatorCommentIndex(sectionType?: string, etherpadId?: string) {
     return this.activeInnovCard.operatorComment.sections.findIndex((_comment) => {
-      return !!etherpadId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
+      return !!etherpadId && !!_comment.sectionId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
         : (sectionType === _comment.type);
     });
   }
