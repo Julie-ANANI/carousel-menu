@@ -3,8 +3,7 @@
   <div class="d-flex flex-d-column align-start justify-start w-full">
     <!-- Seniority level / Job category level -->
     <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
-      <div  class="d-flex w-full"
-            [ngClass]="{'test': isClicked}">
+      <div  class="d-flex w-full">
         <!-- check box-->
         <div class="button-checker m-left-3" [ngStyle]="getCurrentState()" [attr.aria-disabled]="isPreview"
              (click)="stateOnChange($event)">
@@ -30,7 +29,6 @@
                 <i class="fas fa-times"></i>
               </ng-container>
               <ng-container *ngSwitchCase="2">
-                <i class="fas fa-circle"></i>
               </ng-container>
               <ng-container *ngSwitchCase="3">
                 <i class="fas fa-circle"></i>
@@ -48,7 +46,7 @@
         <div class="text-primary-dark m-left-4 d-flex align-center width-100"
              (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()"
              style="min-width: fit-content">
-          {{context}}
+          {{context | titlecase}}
         </div>
         <!-- /Seniority Level's name or Job category-->
       </div>
