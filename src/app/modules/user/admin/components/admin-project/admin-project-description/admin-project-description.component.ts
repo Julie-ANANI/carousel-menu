@@ -251,8 +251,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this.activeInnovCard.operatorComment.sections[index][type] = event.content;
           this.activeInnovCard.operatorComment.sections[index].sectionId =
             this.activeInnovCard.operatorComment.sections[index].sectionId
-            || this._etherpadFrontService.buildPadIdOldInnovation(
-              this.activeInnovCard.sections[sectionIndex].type, sectionIndex, this.currentLang);
+            || this._etherpadFrontService.generateElementId(this.activeInnovCard.sections[index].type,
+              this.activeInnovCard.lang);
         }
       }
     }
@@ -262,7 +262,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   /**
    * now for the new custom section we use etherpadElementId property.
-   * If it doesn't exists with use the old one.
+   * If it doesn't exists with use the old one we create one and assign to it..
    *
    * @param event
    * @param property
@@ -274,7 +274,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     } else {
       this.activeInnovCard.sections[index].content = event.content;
       this.activeInnovCard.sections[index].etherpadElementId = this.activeInnovCard.sections[index].etherpadElementId
-        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
+        || this._etherpadFrontService.generateElementId(this.activeInnovCard.sections[index].type,
+          this.activeInnovCard.lang);
     }
     this.updateInnovation();
   }
@@ -304,7 +305,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           content: '',
           visibility: true,
           type: 'OTHER',
-          etherpadElementId: this._etherpadFrontService.generateElementId('OTHER', this.currentLang)
+          etherpadElementId: this._etherpadFrontService.generateElementId('OTHER', this.activeInnovCard.lang)
         };
         this._showModal = true;
         break;

@@ -512,6 +512,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._initEtherpadElementId();
   }
 
+  /**
+   * we are still using it for the old innovation.
+   * @private
+   */
   private _initEtherpadElementId() {
     this._sections.forEach((section, index) => {
       if (!section.etherpadElementId) {
