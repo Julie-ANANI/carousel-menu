@@ -251,7 +251,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this.activeInnovCard.operatorComment.sections[index][type] = event.content;
           this.activeInnovCard.operatorComment.sections[index].sectionId =
             this.activeInnovCard.operatorComment.sections[index].sectionId
-            || this._etherpadFrontService.buildPadIdOldInnovation(
+            || this._etherpadFrontService.buildElementIdOldSection(
               this.activeInnovCard.sections[sectionIndex].type, sectionIndex, this.currentLang);
         }
       }
@@ -274,7 +274,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     } else {
       this.activeInnovCard.sections[index].content = event.content;
       this.activeInnovCard.sections[index].etherpadElementId = this.activeInnovCard.sections[index].etherpadElementId
-        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
+        || this._etherpadFrontService.buildElementIdOldSection(this.activeInnovCard.sections[index].type, index, this.currentLang);
     }
     this.updateInnovation();
   }
@@ -304,7 +304,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           content: '',
           visibility: true,
           type: 'OTHER',
-          etherpadElementId: this._etherpadFrontService.generateElementId('OTHER', this.currentLang)
+          etherpadElementId: this._etherpadFrontService.buildElementIdNewSection('OTHER', this.currentLang)
         };
         this._showModal = true;
         break;

@@ -64,7 +64,7 @@ export class EtherpadFrontService {
    * @param index
    * @param lang
    */
-  public buildPadIdOldInnovation(sectionType: CardSectionTypes, index: number, lang: string): string {
+  public buildElementIdOldSection(sectionType: CardSectionTypes, index: number, lang: string): string {
     if (sectionType && lang && index >= 0) {
       if (index) {
         return `${sectionType.toLowerCase()}-${index}3-${lang}`;
@@ -82,7 +82,7 @@ export class EtherpadFrontService {
    * @param sectionType
    * @param lang - card language
    */
-  public generateElementId(sectionType: CardSectionTypes, lang: string): string {
+  public buildElementIdNewSection(sectionType: CardSectionTypes, lang: string): string {
     let _elementId = '';
 
     if (sectionType && lang) {

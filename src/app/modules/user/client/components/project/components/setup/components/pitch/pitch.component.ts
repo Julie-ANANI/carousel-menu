@@ -384,7 +384,7 @@ export class PitchComponent implements OnInit, OnDestroy {
         break;
     }
 
-    return this._etherpadFrontService.buildPadIdOldInnovation(sectionType, _sectionIndex, this.activeInnovCard.lang);
+    return this._etherpadFrontService.buildElementIdNewSection(sectionType, this.activeInnovCard.lang);
   }
 
   public onSaveProject(event: { type: string, content: any }) {
