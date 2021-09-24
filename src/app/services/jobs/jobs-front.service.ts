@@ -24,10 +24,35 @@ export class JobsFrontService {
     this._targetedProsToUpdate.next(value);
   }
 
+  public checkJobTypoState(jobs: Array<JobConfig>): number {
+    const _stateNeutral = jobs.filter((_job: any) => {
+      return _job.state === 2;
+    }).length;
+
+    const _stateExcluded = jobs.filter((_job: any) => {
+      return _job.state === 0;
+    }).length;
+
+    const _stateIncluded = jobs.filter((_job: any) => {
+      return _job.state === 1;
+    }).length;
+
+    if (_stateNeutral === jobs.length) {
+      return 2;
+    } else if (_stateExcluded === jobs.length) {
+      return 0;
+    } else if (_stateIncluded === jobs.length) {
+      return 1;
+    } else {
+      return 3;
+    }
+  }
+
   public prepareTargetPros(targetPros: TargetPros) {
     Object.keys(targetPros.jobsTypologies).forEach(key => {
       targetPros.jobsTypologies[key].identifier = key;
       targetPros.jobsTypologies[key].isToggle = false;
+      targetPros.jobsTypologies[key].state = this.checkJobTypoState(targetPros.jobsTypologies[key].jobs);
       switch (targetPros.jobsTypologies[key].state) {
         case 0:
           targetPros.jobsTypologies[key].jobs.map(_job => {
@@ -64,7 +89,7 @@ export class JobsFrontService {
       case 'jobTypos':
         _identifier = value.identifier;
         this.updateJobs(_identifier, value.jobs);
-        this._targetedProsUpdated.jobsTypologies[_identifier].state = value.state;
+        // this._targetedProsUpdated.jobsTypologies[_identifier].state = value.state;
         this._targetedProsUpdated.jobsTypologies[_identifier].isToggle = value.isToggle;
         this.setTargetedProsToUpdate({
           targetPros: this._targetedProsUpdated,
