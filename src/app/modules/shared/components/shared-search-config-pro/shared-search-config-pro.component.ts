@@ -44,6 +44,7 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   @Input() set jobs(jobs: Array<JobConfig>) {
     this._jobConfigs = jobs;
+    this._currentState = this._jobFrontService.checkJobTypoState(jobs);
   }
 
   @Input() set filteredJobs(jobs: Array<JobConfig>) {
