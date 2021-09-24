@@ -89,7 +89,6 @@ export class JobsFrontService {
       case 'jobTypos':
         _identifier = value.identifier;
         this.updateJobs(_identifier, value.jobs);
-        // this._targetedProsUpdated.jobsTypologies[_identifier].state = value.state;
         this._targetedProsUpdated.jobsTypologies[_identifier].isToggle = value.isToggle;
         this.setTargetedProsToUpdate({
           targetPros: this._targetedProsUpdated,

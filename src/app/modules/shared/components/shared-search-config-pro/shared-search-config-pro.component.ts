@@ -355,7 +355,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
     this.jobNextState(job);
     this._countStates();
-    this._currentState = this.checkTypoState();
+    this._currentState = this._jobFrontService.checkJobTypoState(this.jobConfigs);
     this._jobFrontService.targetedProsUpdatedOnChange(
       {
         action: 'jobTypos',
@@ -364,33 +364,6 @@ export class SharedSearchConfigProComponent implements OnInit {
         state: this._currentState,
         isToggle: this._showToggleSearch,
       });
-  }
-
-  /**
-   * check Job category state, it will change the state in jobs of the job category
-   */
-  checkTypoState() {
-    const _stateNeutral = this._jobConfigs.filter((_job: any) => {
-      return _job.state === 2;
-    }).length;
-
-    const _stateExcluded = this._jobConfigs.filter((_job: any) => {
-      return _job.state === 0;
-    }).length;
-
-    const _stateIncluded = this._jobConfigs.filter((_job: any) => {
-      return _job.state === 1;
-    }).length;
-
-    if (_stateNeutral === this._jobConfigs.length) {
-      return 2;
-    } else if (_stateExcluded === this._jobConfigs.length) {
-      return 0;
-    } else if (_stateIncluded === this._jobConfigs.length) {
-      return 1;
-    } else {
-      return 3;
-    }
   }
 
   showJob(job: JobConfig) {
