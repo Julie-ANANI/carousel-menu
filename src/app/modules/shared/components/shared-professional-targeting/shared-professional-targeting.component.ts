@@ -112,13 +112,13 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
 
     if (currentIndex === 1 && before === 0) {
       this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+      this.finalSortJobTypo();
     } else {
       this._sortedFilteredJobsTypologies = this._sortedFilteredJobsTypologies.filter(jobTypo => jobTypo.identifier !== identifier);
       this._sortedFilteredJobsTypologies = _.orderBy(this._sortedFilteredJobsTypologies, ['totalCount'], ['desc']);
+      this.finalSortJobTypo();
       this._sortedFilteredJobsTypologies.splice(currentIndex, 0, currentJobTypo);
     }
-
-    this.finalSortJobTypo();
   }
 
   /**
