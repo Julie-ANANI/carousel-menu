@@ -355,6 +355,7 @@ export class SharedSearchConfigProComponent implements OnInit {
     }
     this.jobNextState(job);
     this._countStates();
+    this._currentState = this.checkTypoState();
     this._jobFrontService.targetedProsUpdatedOnChange(
       {
         action: 'jobTypos',
@@ -363,7 +364,6 @@ export class SharedSearchConfigProComponent implements OnInit {
         state: this._currentState,
         isToggle: this._showToggleSearch,
       });
-    this._currentState = this.checkTypoState();
   }
 
   /**
