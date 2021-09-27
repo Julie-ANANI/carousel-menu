@@ -263,8 +263,22 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         fields.forEach(field => {
           saveObject[field] = this._project[field];
         });
-        this._saveProject(saveObject);
-        this._saveComment();
+
+        if (this._toBeSavedComment) {
+          this._saveComment().then((value) => {
+            if (value && !!saveObject) {
+              this._saveProject(saveObject);
+            }
+          }).catch((err: HttpErrorResponse) => {
+            this._isSaving = false;
+            this._toBeSavedComment = true;
+            this._translateNotificationsService.error(
+              'Comment Saving Error...', ErrorFrontService.adminErrorMessage(err));
+            console.error(err);
+          });
+        } else if (!!saveObject) {
+          this._saveProject(saveObject);
+        }
       }
     }
   }
@@ -302,22 +316,20 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   private _saveComment() {
-    if (this._toBeSavedComment) {
-      this._toBeSavedComment = false;
-
-      this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id,
-        this.activeCard.operatorComment).pipe(first()).subscribe((_) => {
+    return new Promise((resolve, reject) => {
+      if (this._toBeSavedComment) {
+        this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id,
+          this.activeCard.operatorComment).pipe(first()).subscribe((_) => {
           this._isSaving = false;
-          if (!this._toBeSaved) {
-            this._translateNotificationsService.success('Success', 'The comment has been updated.');
-          }
+          this._translateNotificationsService.success('Success', 'The comments/suggestions have been updated.');
+          resolve(true);
         }, (err: HttpErrorResponse) => {
-          this._isSaving = false;
-          this._toBeSavedComment = true;
-          this._translateNotificationsService.error('Comment Saving Error...', ErrorFrontService.adminErrorMessage(err));
-          console.error(err);
+            reject(err);
         });
-    }
+      } else {
+        resolve(true);
+      }
+    });
   }
 
   private _setActiveCardIndex() {
