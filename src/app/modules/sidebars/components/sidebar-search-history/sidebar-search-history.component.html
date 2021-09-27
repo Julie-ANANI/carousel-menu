@@ -71,6 +71,11 @@
         </ng-container>
       </span>
     </div>
+
+    <div class="m-top-2">
+      Logical operator:
+      <span *ngIf="request.targetPros">{{request.targetPros.searchOperator | uppercase}}</span>
+    </div>
   </div>
 
   <!-- /Professional targeting -->
