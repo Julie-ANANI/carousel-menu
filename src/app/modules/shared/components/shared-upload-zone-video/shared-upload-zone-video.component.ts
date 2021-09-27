@@ -47,6 +47,10 @@ export class SharedUploadZoneVideoComponent implements OnInit {
       const videoProvider = videoProviderReg ? videoProviderReg[0] : null; // vimeo || youtube
       const givenUrl = this._videoUrlInput; // URL donnée par l'utilisateur
       this._videoUrlInput = ''; // On vide le formulaire
+      let params = givenUrl.split('?');
+      if (params[1]) {
+        params = params[1].split('&');
+      }
 
       if (videoProvider) {
         this.isUploading = true;
@@ -54,7 +58,7 @@ export class SharedUploadZoneVideoComponent implements OnInit {
         switch (videoProvider) {
           case 'vimeo': {
             const videoKey = vimeoVideoId.exec(givenUrl)[0]; // ID de la vidéo chez le provider
-            const embeddableUrl = 'https://player.vimeo.com/video/' + videoKey + this._getUrlArgs();
+            const embeddableUrl = 'https://player.vimeo.com/video/' + videoKey + this._getUrlArgs(params);
             this.cbFn.emit({
               url: givenUrl,
               public_id: videoKey,
@@ -66,7 +70,7 @@ export class SharedUploadZoneVideoComponent implements OnInit {
           break;
           case 'youtube': {
             const videoKey = youtubeVideoId.exec(givenUrl)[1]; // ID de la vidéo chez le provider
-            const embeddableUrl = 'https://www.youtube.com/embed/' + videoKey + this._getUrlArgs();
+            const embeddableUrl = 'https://www.youtube.com/embed/' + videoKey + this._getUrlArgs(params);
             this.cbFn.emit({
               url: givenUrl,
               public_id: videoKey,
@@ -84,8 +88,11 @@ export class SharedUploadZoneVideoComponent implements OnInit {
     }
   }
 
-  private _getUrlArgs(): string { // Transform params to a string ?options=value&....
+  private _getUrlArgs(urlParams: Array<string>): string { // Transform params to a string ?options=value&....
     let paramsString = '?';
+    for (const parameters of urlParams) {
+      paramsString += parameters + '&';
+    }
     for (const parameters of this._videoParameters) {
       paramsString += parameters + '&';
     }
