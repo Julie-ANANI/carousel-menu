@@ -1,23 +1,26 @@
-import {Component, Inject, Input, OnInit, PLATFORM_ID} from '@angular/core';
-import {SearchService} from '../../../../services/search/search.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {first} from 'rxjs/operators';
-import {Config} from '../../../../models/config';
-import {Table} from '../../../table/models/table';
-import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
-import {COUNTRIES} from '../shared-search-pros/COUNTRIES';
-import {countries} from '../../../../models/static-data/country';
-import {Campaign} from '../../../../models/campaign';
-import {ProfessionalsService} from '../../../../services/professionals/professionals.service';
-import {Router} from '@angular/router';
-import {ConfigService} from '../../../../services/config/config.service';
-import {CampaignService} from '../../../../services/campaign/campaign.service';
-import {GeographySettings} from '../../../../models/innov-settings';
-import {IndexService} from '../../../../services/index/index.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {isPlatformBrowser} from '@angular/common';
-import {RolesFrontService} from '../../../../services/roles/roles-front.service';
-import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { SearchService } from '../../../../services/search/search.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
+import { Config } from '../../../../models/config';
+import { Table } from '../../../table/models/table';
+import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
+import { COUNTRIES } from '../shared-search-pros/COUNTRIES';
+import { countries } from '../../../../models/static-data/country';
+import { Campaign } from '../../../../models/campaign';
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { Router } from '@angular/router';
+import { ConfigService } from '../../../../services/config/config.service';
+import { CampaignService } from '../../../../services/campaign/campaign.service';
+import { GeographySettings } from '../../../../models/innov-settings';
+import { IndexService } from '../../../../services/index/index.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { JobConfig, TargetPros } from '../../../../models/targetPros';
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -67,7 +70,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _config: Config = {
     fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
-      'innovation motherRequest totalResults metadata results',
+      'innovation motherRequest totalResults metadata results targetPros',
     limit: this._configService.configLimit('admin-search-history-limit'),
     offset: '0',
     search: '{}',
@@ -102,7 +105,8 @@ export class SharedSearchHistoryComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _professionalsService: ProfessionalsService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _indexService: IndexService) { }
+              private _indexService: IndexService) {
+  }
 
   ngOnInit(): void {
     this._initTable();
@@ -148,50 +152,101 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _loadWaitingTime() {
     this._searchService.getRequests(this._configQueue).pipe(first()).subscribe((result: any) => {
       // 610 = average processing time in ms for one request, we set it so we doesnt have to compute it each time this page load
-      this._waitingTime =  ((610 * result._metadata.totalCount) / 60000).toFixed(3);
+      if (result && result._metadata && result._metadata.totalCount) {
+        this._waitingTime = ((610 * result._metadata.totalCount) / 60000).toFixed(3);
+      }
     });
   }
 
   private _loadHistory() {
     this._suggestedKeywords = [];
     this._searchService.getRequests(this._config).pipe(first()).subscribe((result: any) => {
-
-      if (result.requests) {
-        this._requests = result.requests.map((request: any) => {
-          request.pros = (request.results.person.length || request.totalResults || 0) + ' pros';
-          if (request.region) {
-            request.targetting = request.region;
-            request.keywords = request.keywords.replace(`"${request.region}"`, '');
-          } else if (request.country) {
-            request.targetting = countries[request.country];
-          } else if (request.countries && request.countries.length) {
-            request.targetting = '';
-            const counter: {[c: string]: number} = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
-            request.countries.forEach((country: string) => {
-              if (COUNTRIES.europe.indexOf(country) !== - 1) { counter.EU++; }
-              else if (COUNTRIES.americaNord.indexOf(country) !== - 1) { counter.NA++; }
-              else if (COUNTRIES.americaSud.indexOf(country) !== - 1) { counter.SA++; }
-              else if (COUNTRIES.asia.indexOf(country) !== - 1) { counter.AS++; }
-              else if (COUNTRIES.africa.indexOf(country) !== - 1) { counter.AF++; }
-              else if (COUNTRIES.oceania.indexOf(country) !== - 1) { counter.OC++; }
-            });
-            for (const key of Object.keys(counter)) {
-              if (counter[key]) { request.targetting += ` ${key}(${counter[key]})`; }
+        if (result.requests) {
+          this._requests = result.requests.map((request: any) => {
+            request.pros = ((request.results.person.length || 0) + (request.results.limbo && request.results.limbo.length || 0) ||
+              request.totalResults || 0) + ' pros';
+            if (request.region) {
+              request.targetting = request.region;
+              request.keywords = request.keywords.replace(`"${request.region}"`, '');
+            } else if (request.country) {
+              request.targetting = countries[request.country];
+            } else if (request.countries && request.countries.length) {
+              request.targetting = '';
+              const counter: { [c: string]: number } = {EU: 0, NA: 0, SA: 0, AS: 0, AF: 0, OC: 0};
+              request.countries.forEach((country: string) => {
+                if (COUNTRIES.europe.indexOf(country) !== -1) {
+                  counter.EU++;
+                } else if (COUNTRIES.americaNord.indexOf(country) !== -1) {
+                  counter.NA++;
+                } else if (COUNTRIES.americaSud.indexOf(country) !== -1) {
+                  counter.SA++;
+                } else if (COUNTRIES.asia.indexOf(country) !== -1) {
+                  counter.AS++;
+                } else if (COUNTRIES.africa.indexOf(country) !== -1) {
+                  counter.AF++;
+                } else if (COUNTRIES.oceania.indexOf(country) !== -1) {
+                  counter.OC++;
+                }
+              });
+              for (const key of Object.keys(counter)) {
+                if (counter[key]) {
+                  request.targetting += ` ${key}(${counter[key]})`;
+                }
+              }
             }
-          }
-          return request;
-        });
-      }
+            request.prosTarget = this._proTargeting(request.targetPros);
+            return request;
+          });
+        }
         if (result._metadata) {
           this._total = result._metadata.totalCount;
           this._paused = result._metadata.paused;
+        } else {
+          this._total = 0;
         }
         this._initTable();
 
-      }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+      }
+      , (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
+  }
+
+  /**
+   * pro targeting column
+   * @private
+   */
+  private _proTargeting(targetedPros: TargetPros) {
+    if (targetedPros && !_.isEmpty(targetedPros)) {
+      let slIncluded = 0;
+      let slExcluded = 0;
+      let tjIncluded = 0;
+      let tjExcluded = 0;
+      Object.keys(targetedPros.seniorityLevels).forEach((key, index) => {
+        if (targetedPros.seniorityLevels[key].state === 1) {
+          slIncluded++;
+        } else if (targetedPros.seniorityLevels[key].state === 0) {
+          slExcluded++;
+        }
+      });
+      Object.keys(targetedPros.jobsTypologies).forEach(key => {
+        if (targetedPros.jobsTypologies[key].state === 1) {
+          tjIncluded += targetedPros.jobsTypologies[key].jobs.length;
+        } else if (targetedPros.jobsTypologies[key].state === 3) {
+          tjIncluded += targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 1).length;
+          tjExcluded += targetedPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 0).length;
+        } else if (targetedPros.jobsTypologies[key].state === 0) {
+          tjExcluded += targetedPros.jobsTypologies[key].jobs.length;
+        }
+      });
+      return ` SL:<span style="color: #2ECC71">${slIncluded}</span>/
+ <span style="color: #EA5858">${slExcluded}</span>;
+ TJ:<span style="color: #2ECC71">${tjIncluded}</span>/
+ <span style="color: #EA5858">${tjExcluded}</span>`;
+    } else {
+      return '-';
+    }
   }
 
   private _initTable() {
@@ -263,6 +318,12 @@ export class SharedSearchHistoryComponent implements OnInit {
           _isHidden: !this.canAccess(['tableColumns', 'targeting'])
         },
         {
+          _attrs: ['prosTarget'],
+          _name: 'Professional Targeting',
+          _type: 'PRO-TARGET',
+          // _isHidden: !this.canAccess(['tableColumns', 'pros'])
+        },
+        {
           _attrs: ['created'],
           _name: 'Created',
           _type: 'DATE',
@@ -295,7 +356,8 @@ export class SharedSearchHistoryComponent implements OnInit {
             {_name: 'EMAILS_FOUND', _alias: 'Found', _class: 'label is-success'},
             {_name: 'EMAILS_SEARCHING', _alias: 'Searching', _class: 'label is-progress'},
             {_name: 'EMAILS_QUEUED', _alias: 'Queued', _class: 'label is-danger'}
-          ]},
+          ]
+        },
         {
           _attrs: ['metadata.shield'],
           _name: 'Under shield',
@@ -359,7 +421,9 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._searchService.queueManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         requestsIds.forEach((requestId: string) => {
           const request = this._requests[SharedSearchHistoryComponent._getRequestIndex(requestId, this._requests)];
-          if (request.status !== 'DONE') { request.status = 'QUEUED'; }
+          if (request.status !== 'DONE') {
+            request.status = 'QUEUED';
+          }
         });
         this._translateNotificationsService.success('Success', 'The queries have been put on hold.');
       }, (err: HttpErrorResponse) => {
@@ -388,7 +452,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         console.error(err);
       });
 
-    }  else if (value._action === 'Search emails') {
+    } else if (value._action === 'Search emails') {
       requestsIds.forEach((requestId: string, index: number) => {
         const params: any = {
           requestId: requestId,
@@ -479,15 +543,23 @@ export class SharedSearchHistoryComponent implements OnInit {
   }
 
   private _keywordsSuggestion(query: string) {
-    const byCount = function(array: Array<any>) {
+    const byCount = function (array: Array<any>) {
       let itm, a = [], L = array.length, o = {};
       for (let i = 0; i < L; i++) {
         itm = array[i];
-        if (!itm) {continue; }
-        if (o[itm] === undefined) {o[itm] = 1; } else {++o[itm]; }
+        if (!itm) {
+          continue;
+        }
+        if (o[itm] === undefined) {
+          o[itm] = 1;
+        } else {
+          ++o[itm];
+        }
       }
-      for (const p in o) {a[a.length] = p; }
-      return a.sort(function(a, b) {
+      for (const p in o) {
+        a[a.length] = p;
+      }
+      return a.sort(function (a, b) {
         return o[b] - o[a];
       });
     };

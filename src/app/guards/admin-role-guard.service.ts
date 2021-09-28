@@ -4,6 +4,7 @@ import { RolesFrontService } from '../services/roles/roles-front.service';
 import { AuthService } from '../services/auth/auth.service';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AdminRoleGuard implements CanActivate, OnDestroy {
@@ -17,10 +18,11 @@ export class AdminRoleGuard implements CanActivate, OnDestroy {
   canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean | Observable<boolean> {
     const _path = activatedRouteSnapshot.data['accessPath'] as Array<string> || [];
 
-    if (!this._authService.adminAccess && this._authService.isAcceptingCookies) {
-      return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map (() => {
+    if (!this._authService.adminAccess) {
+      return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map ((_) => {
         return this._navigateTo(_path);
-      }), catchError((err) => {
+      }), catchError((err: HttpErrorResponse) => {
+        console.error(err);
         this._router.navigate(['/user']);
         return of(false);
       }));

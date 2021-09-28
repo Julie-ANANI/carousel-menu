@@ -129,8 +129,9 @@
                 [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
                 class="box-shadow">
                 <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'sections', 'comment', i)"
-                  [data]="zoneData('sections', 'comment', i)"
+                  (onTextChange)="onCommentChange($event, 'sections', 'comment', i,
+                  section.type, section.etherpadElementId)"
+                  [data]="zoneData('sections', 'comment', section.type, section.etherpadElementId)"
                   [id]="section.type.toLowerCase()+'-'+i + 1+'-comment'">
                 </app-shared-editor-tinymce>
               </div>
@@ -138,7 +139,10 @@
                 *ngIf="!isEditableComment"
                 [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
                 class="message">
-                <p [innerHTML]="zoneData('sections', 'comment', i)" class="message-body"></p>
+                <p
+                  [innerHTML]="zoneData('sections', 'comment', section.type, section.etherpadElementId)"
+                  class="message-body">
+                </p>
               </div>
             </div>
           </div>
@@ -164,8 +168,9 @@
                 [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}">
                 <app-shared-editors
                   [isEditable]="isEditableComment"
-                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i)"
-                  [text]="zoneData('sections', 'suggestion', i)"
+                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i,
+                  section.type, section.etherpadElementId)"
+                  [text]="zoneData('sections', 'suggestion', section.type, section.etherpadElementId)"
                   [innovationId]="innovation._id"
                   [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
                   [type]="'suggestion'">
@@ -175,7 +180,10 @@
                 *ngIf="!isEditableComment"
                 [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
                 class="message">
-                <p [innerHTML]="zoneData('sections', 'suggestion', i)" class="message-body"></p>
+                <p
+                  [innerHTML]="zoneData('sections', 'suggestion', section.type, section.etherpadElementId)"
+                  class="message-body">
+                </p>
               </div>
             </div>
           </div>

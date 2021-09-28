@@ -129,8 +129,8 @@ export class LoginComponent implements OnInit {
               const redirect = this._authService.redirectUrl
                 ? this._authService.redirectUrl
                 : this._authService.isAdmin
-                ? this._routeFrontService.adminDefaultRoute()
-                : '/';
+                  ? this._routeFrontService.adminDefaultRoute()
+                  : '/';
 
               this._authService.redirectUrl = '';
 

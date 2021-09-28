@@ -10,6 +10,9 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 
 export class SearchInput2Component implements OnInit, OnDestroy {
+  @Input() set inputWidth(value: any) {
+    this._inputWidth = value;
+  }
 
   @Input() set searchPlaceholder(value: string) {
     this._placeholder = value;
@@ -20,6 +23,8 @@ export class SearchInput2Component implements OnInit, OnDestroy {
   private _placeholder = 'COMMON.SEARCH_INPUT_PLACEHOLDER';
 
   private _searchField: FormControl;
+
+  private _inputWidth: any = {};
 
   private _searchActive: boolean = false;
 
@@ -62,6 +67,10 @@ export class SearchInput2Component implements OnInit, OnDestroy {
 
   get ngUnsubscribe(): Subject<any> {
     return this._ngUnsubscribe;
+  }
+
+  get inputWidth(): any {
+    return this._inputWidth;
   }
 
   ngOnDestroy(): void {

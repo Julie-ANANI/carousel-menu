@@ -1,0 +1,73 @@
+@import "../../../../../style/framework/src/variables";
+@import "../../../../../style/framework/src/mixins";
+
+.activity {
+
+  :not(.inactive) {
+    opacity: 1;
+
+    #inactive_label {
+      display: none;
+    }
+  }
+
+  .inactive {
+    opacity: 0.5;
+
+    #inactive_label {
+      display: block;
+    }
+  }
+}
+
+.section-all{
+  margin: 10px 0;
+}
+
+.section-search{
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid $border-default-color;
+  padding: 6px;
+  margin: auto;
+}
+
+.select-wrapper{
+  border-radius: 8px;
+  height: 40px;
+
+  .my-disable{
+    pointer-events:none;
+  }
+
+  .button-checker {
+    min-width: 30px;
+    max-width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &.state-full-check {
+      border: 4px solid #2ECC71;
+      color: #2ECC71;
+    }
+
+    &.state-neutral-check{
+      border: 4px solid #97A4B1;
+      color: #97A4B1;
+    }
+
+    &.state-none-check {
+      border: 4px solid $alert-color;
+      color: $alert-color
+    }
+
+    &.state-mixed {
+      border: 4px solid #97A4B1;
+      color: #97A4B1;
+    }
+  }
+}

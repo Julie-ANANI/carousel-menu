@@ -14,13 +14,13 @@ import { DISCOVERDESCRIPTION } from '../modules/public/discover/components/disco
 import { SIDEBAR_USER_ANSWER } from '../modules/sidebars/components/sidebar-user-answer/i18n/en';
 import { LOG_IN } from '../modules/common/login/i18n/en';
 import { SIGN_UP } from '../modules/common/signup/i18n/en';
-import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
 import { WELCOME } from '../modules/common/welcome/i18n/en';
 import { PAGINATION } from '../modules/utility/paginations/i18n/en';
 import { SHARE } from '../modules/public/share/i18n/en';
 import { FOOTER } from '../modules/common/footer/i18n/en';
 import { HEADER } from '../modules/common/header/i18n/en';
 import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/en';
+import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
 import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/en';
 import { TABLE } from '../modules/table/i18n/en';
 import { SIDEBAR } from '../modules/sidebars/i18n/en';
@@ -30,7 +30,7 @@ import { SEARCH_DEMO } from '../modules/demo/components/search-tool/i18n/en';
 import { COMMUNITY } from '../modules/user/admin/components/admin-community/i18n/en';
 import { PROJECT } from '../modules/user/admin/components/admin-project/i18n/en';
 import { SHARED_TARGETING_WORLD } from '../modules/shared/components/shared-targeting-world/i18n/en';
-import {CONTINENTS} from '../modules/shared/components/shared-worldmap/i18n/en';
+import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/en';
 import { SHARED_FOLLOW_UP } from '../modules/shared/components/shared-follow-up/i18n/en';
 import { SIDEBAR_MARKET_REPORT } from '../modules/sidebars/components/sidebar-filter-answers/i18n/en';
 import { SHARED_MAIL_EDITOR } from '../modules/shared/components/shared-mail-editor/i18n/en';
@@ -41,10 +41,10 @@ import { PROJECT_SETTINGS } from '../modules/user/client/components/project/comp
 import { PROJECT_DOCUMENTS } from '../modules/user/client/components/project/components/documents/i18n/en';
 import { PROJECT_PITCH } from '../modules/user/client/components/project/components/setup/components/pitch/i18n/en';
 import { PROJECT_SETUP } from '../modules/user/client/components/project/components/setup/i18n/en';
-import {COMMENT_CARD} from '../modules/sidebars/components/comment-card/i18n/en';
-import {SHARED_TEXT_ZONE} from '../modules/shared/components/shared-editors/i18n/en';
-import {MARKET_TEST_OBJECTIVES} from '../modules/user/client/components/market-test-objectives/i18n/en';
-import {MARKET_TEST_METHODOLOGY} from '../modules/user/client/components/market-test-methodology/i18n/en';
+import { COMMENT_CARD } from '../modules/sidebars/components/comment-card/i18n/en';
+import { SHARED_TEXT_ZONE } from '../modules/shared/components/shared-editors/i18n/en';
+import { MARKET_TEST_OBJECTIVES } from '../modules/user/client/components/market-test-objectives/i18n/en';
+import { MARKET_TEST_METHODOLOGY } from '../modules/user/client/components/market-test-methodology/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -59,7 +59,6 @@ export const en = {
   'LOG_IN': LOG_IN,
   'MY_ACCOUNT': MY_ACCOUNT,
   'SIGN_UP': SIGN_UP,
-  'FORGET_PASSWORD': FORGET_PASSWORD,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
   'PAGINATION': PAGINATION,
@@ -72,6 +71,7 @@ export const en = {
   'PROJECT_MODULE': PROJECT_MODULE,
   'SHARE': SHARE,
   'RESET_PASSWORD': RESET_PASSWORD,
+  'FORGET_PASSWORD': FORGET_PASSWORD,
   'EDIT_WORKFLOW': EDIT_WORKFLOW,
   'TABLE': TABLE,
   'SIDEBAR': SIDEBAR,

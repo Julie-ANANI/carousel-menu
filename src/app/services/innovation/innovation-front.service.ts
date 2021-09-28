@@ -142,11 +142,6 @@ export class InnovationFrontService {
       });
     }
 
-    //FIXME: this is a quick ugly hack for custom questions that don't have any _id. We should fix this at the root of the problem
-    questions.forEach(question => {
-      if (!question._id) { question._id = question.identifier; }
-    });
-
     return questions;
   }
 

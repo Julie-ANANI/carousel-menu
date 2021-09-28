@@ -346,7 +346,9 @@ export class SidebarBlacklistComponent implements OnInit {
     if (value.value && value.value.length) {
       value.value.forEach((_domain: any) => {
         const domain = _domain.domain || _domain.name;
-        if (domain && domain.indexOf('*@') === -1) {
+        if (domain && domain.indexOf('@') === -1) {
+          _domain.name = '*' + domain;
+        } else if (domain && domain.indexOf('*@') === -1) {
           _domain.name = '*@' + domain;
         }
       });

@@ -136,9 +136,18 @@
     [ngClass]="selectedTemplate._id ? 'wrapper-expand' : 'wrapper-collapse'"
     class="section-methodology m-left-auto m-right-auto">
     <ng-container *ngIf="!!selectedTemplate._id">
-      <app-market-test-methodology
-        [objective]="templateName(selectedTemplate, 'en')">
-      </app-market-test-methodology>
+      <ng-container *ngIf="selectedTemplate.methodology else objName">
+        <app-market-test-methodology
+          [methodology]="selectedTemplate.methodology"
+          [title]="templateName(selectedTemplate)">
+        </app-market-test-methodology>
+      </ng-container>
+      <ng-template #objName>
+        <app-market-test-methodology
+          [objective]="templateName(selectedTemplate, 'en')"
+          [title]="templateName(selectedTemplate)">
+        </app-market-test-methodology>
+      </ng-template>
     </ng-container>
   </div>
   <!-- /methodology -->

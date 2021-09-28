@@ -24,6 +24,10 @@ interface ConfirmUpdate {
 })
 export class AdminEditUseCaseComponent implements OnInit {
 
+  get templateName(): string {
+    return this._templateName;
+  }
+
   get templates(): Array<MissionTemplate> {
     return this._templates;
   }
@@ -99,6 +103,8 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _templates: Array<MissionTemplate> = [];
 
+  private _templateName = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _missionService: MissionService,
               private _activatedRoute: ActivatedRoute,
@@ -151,6 +157,7 @@ export class AdminEditUseCaseComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getTemplate(id).pipe(first()).subscribe((response) => {
         this._missionTemplate = response;
+        this._templateName = MissionFrontService.objectiveName(this._missionTemplate, this.currentLang);
         this._setTitle();
       }, (error: HttpErrorResponse) => {
         this._fetchingError = true;
@@ -240,7 +247,7 @@ export class AdminEditUseCaseComponent implements OnInit {
   }
 
   private _setTitle() {
-    this._translateTitleService.setTitle(`${this.objectiveName(this._missionTemplate)} | Use cases | Libraries`);
+    this._translateTitleService.setTitle(`${this._templateName} | Use cases | Libraries`);
   }
 
   public onClickSave(event: Event) {

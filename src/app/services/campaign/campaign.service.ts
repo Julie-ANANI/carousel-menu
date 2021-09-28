@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Answer } from '../../models/answer';
-import { Batch } from '../../models/batch';
-import { Campaign } from '../../models/campaign';
-import { Professional } from '../../models/professional';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Answer} from '../../models/answer';
+import {Batch} from '../../models/batch';
+import {Campaign} from '../../models/campaign';
+import {Professional} from '../../models/professional';
+import {TargetPros} from '../../models/targetPros';
 
 @Injectable({providedIn: 'root'})
 export class CampaignService {
@@ -40,12 +41,24 @@ export class CampaignService {
       ('/campaign/' + campaignId + '/answer');
   }
 
+  public getTargetedPros(campaignId: string): Observable<TargetPros> {
+    return this._http.get<TargetPros>('/campaign/' + campaignId + '/targetedPros');
+  }
+
+  public saveTargetedPros(campaignId: string, targetedPros: TargetPros): Observable<TargetPros> {
+    return this._http.post<TargetPros>('/campaign/' + campaignId + '/targetedPros', targetedPros);
+  }
+
   public remove(campaignId: string) {
     return this._http.delete('/campaign/' + campaignId);
   }
 
   public updateStats(campaignId: string): Observable<any> {
     return this._http.put(`/campaign/${campaignId}/stats`, {});
+  }
+
+  public getUpdatedHistoryStats(campaignId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/historyStats`);
   }
 
   public messagesStats(campaignId: string): Observable<Array<Batch>> {

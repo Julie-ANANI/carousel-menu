@@ -1,26 +1,13 @@
-<div id="shared-scraping">
+<div class="w-half" id="shared-scraping" *ngIf="canAccess(['scraping'])">
   <!-- search wrapper -->
   <div class="search-wrapper">
 
     <!-- heading -->
     <div class="heading-wrapper">
-      <h2 class="title-secondary">Scraping</h2>
-      <span
-        (click)="activateSidebar()"
-        class="text-link text-sm">
-          Settings
-        </span>
-      <!-- import button -->
-      <div class="m-left-auto">
-        <label class="button is-primary is-sm is-outlined">
-          <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
-          <i class="fas fa-file-import icon-left"></i> Import and scrape a pdf file
-        </label>
-      </div>
-      <!-- /import button -->
+      <p class="title-secondary-scraping text-bold">Scraping by URL</p>
     </div>
     <!-- /heading -->
-<!--    [(ngModel)]="setCanScrape"-->
+
     <!-- url field -->
     <div class="input-wrapper content">
       <label class="form-label">URL to scrape (can be more than one if separate by comma)</label>
@@ -31,6 +18,12 @@
         type="text">
     </div>
     <!-- /url field -->
+
+    <p
+      (click)="activateSidebar()"
+      class="text-link text-sm">
+          Settings
+    </p>
 
     <!-- buttons -->
     <div class="form-group m-top-10">
@@ -110,7 +103,18 @@
       </div>
     </div>
     <!-- /display result -->
+
+    <!-- import button -->
+    <div class="heading-wrapper-pdf m-top-4">
+      <p class="title-secondary-scraping text-bold">Scraping by PDF</p>
+      <label class="button is-primary is-sm is-outlined">
+        <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
+        <i class="fas fa-file-import icon-left"></i> Import and scrape a pdf file
+      </label>
+    </div>
+    <!-- /import button -->
   </div>
+
 </div>
 
 

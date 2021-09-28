@@ -82,7 +82,9 @@
     <!-- /section -->
 
     <!-- reset button -->
-    <div *ngIf="section.questionId && section.questionType && isEditable" class="p-top-40 text-center">
+    <div
+      *ngIf="(section.questionId || section.questionIdentifier) && section.questionType && isEditable"
+      class="p-top-40 text-center">
       <button (click)="resetModal($event, i)" class="button is-sm is-outlined is-info" type="button">
         {{ 'ADMIN_EXECUTIVE_REPORT.RESET_SECTION' | translate }}
       </button>

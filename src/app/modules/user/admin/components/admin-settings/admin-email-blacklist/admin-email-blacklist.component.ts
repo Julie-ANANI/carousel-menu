@@ -10,6 +10,7 @@ import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import {domainRegEx} from '../../../../../../utils/regex';
 
 @Component({
   templateUrl: 'admin-email-blacklist.component.html',
@@ -94,7 +95,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
   private _initTable() {
     this._tableInfos = {
       _selector: 'admin-blacklisted-emails',
-      _title: 'Blacklisted e-mails',
+      _title: 'Blacklisted e-mails / domains',
       _content: this._emailDataset.blacklists,
       _total: this._emailDataset._metadata.totalCount,
       _isTitle: true,
@@ -201,22 +202,33 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
       this._addToBlacklist(values.emails);
     }
     if (values.domains && values.domains.length) {
-      this._addToBlacklist(values.domains);
+      this._addToBlacklist(values.domains, 'DOMAIN');
     }
   }
 
-  private _addToBlacklist(values: Array<string>) {
-    values.forEach((value: any, index) => {
-      this._emailService.addToBlacklist({email: value.text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-        this._refreshList(index, values.length - 1);
-        this._translateNotificationsService.success('Success',
-          `The address ${value.text} has been added to the blacklist.`);
-      }, (error: HttpErrorResponse) => {
-        this._refreshList(index, values.length - 1);
-        this._translateNotificationsService.error('Error', error.message);
-        console.error(error);
-      });
-    });
+  private _addToBlacklist(values: Array<any>, type: 'EMAIL' | 'DOMAIN' = 'EMAIL') {
+    for (let i = 0; i < values.length; i++) {
+      let _text = type === 'DOMAIN' ? `${values[i].name}` : values[i].text;
+
+      if (!!values[i].domain) {
+        _text = `*@${values[i].domain}`;
+      }
+
+      if ((type === 'DOMAIN' && domainRegEx.test(_text) || type === 'EMAIL')) {
+        this._emailService.addToBlacklist({email: _text}).pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+          this._refreshList(i, values.length - 1);
+          this._translateNotificationsService.success('Success',
+            `The address ${_text} will be added to the blacklist. It will take sometime to get reflected.`);
+        }, (error: HttpErrorResponse) => {
+          this._refreshList(i, values.length - 1);
+          this._translateNotificationsService.error('Error', error.message);
+          console.error(error);
+        });
+      } else if (type === 'DOMAIN' && !domainRegEx.test(_text)) {
+        this._translateNotificationsService.success('Error', `The domain ${_text} format is not correct.`);
+      }
+
+    }
   }
 
   private _refreshList(index: number, total: number) {

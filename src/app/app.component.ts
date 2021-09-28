@@ -1,5 +1,5 @@
 import { Component, OnInit, PLATFORM_ID, Inject, HostListener, OnDestroy } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
@@ -41,9 +41,15 @@ export class AppComponent implements OnInit, OnDestroy {
               private _mouseService: MouseService,
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
+
     this._setFavicon();
     initTranslation(this._translateService);
-    this._initializeSession();
+
+    if (isPlatformServer(this._platformId)) {
+      console.log('The server has made connection with the UMI Front Application.');
+    } else if (isPlatformBrowser(this._platformId)) {
+      this._initializeSession();
+    }
   }
 
   ngOnInit(): void {
@@ -59,14 +65,20 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * we initialize session if we haven't use the guard for the page.
+   * @private
+   */
   private _initializeSession() {
-    if (this._authService.isAcceptingCookies) {
-      this._authService.initializeSession().pipe(first()).subscribe(() => {
+    if (!this._authService.user) {
+      this._authService.initializeSession().pipe(first()).subscribe((_) => {
         console.log('The application has been started.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
         console.error(err);
       });
+    } else {
+      console.log('The application has been started.');
     }
   }
 

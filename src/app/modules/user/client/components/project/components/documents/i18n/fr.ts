@@ -1,6 +1,6 @@
 export const PROJECT_DOCUMENTS = {
 
-  'MESSAGE_BOT': 'Sur cette page, vous retrouverez les documents de cotre Test Marché, une fois lancé.',
+  'MESSAGE_BOT': 'Sur cette page, vous retrouverez les documents de votre Test Marché, une fois lancé.',
 
   'NAME': {
     'REPORT': 'Executive Report',

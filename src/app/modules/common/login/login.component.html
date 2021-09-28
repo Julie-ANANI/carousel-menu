@@ -91,12 +91,12 @@
             <!-- tentatives + contact UMI  -->
             <ng-container *ngIf="nbTentatives<3">
               <div class="m-bottom-15 text-alert text-sm d-flex">
-                <span>{{ nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate) }}</span>
+                <span class="text-xs">{{ nbTentatives + ' ' + ('COMMON.LABEL.TENTATIVE_LEFT' | translate) }}</span>
                 <span
                   (click)="showContactUMIModal()"
                   *ngIf="nbTentatives ===0"
                   [id]="'login-btn-modal-contact'"
-                  class="text-link text-normal text-underline m-left-auto">
+                  class="text-link text-underline m-left-auto text-xs">
                 Contact UMI support
               </span>
               </div>

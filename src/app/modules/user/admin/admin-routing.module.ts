@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminAuthGuard } from '../../../guards/admin-auth-guard.service';
-import { AdminRoleGuard } from '../../../guards/admin-role-guard.service';
 
 const adminRoutes: Routes = [
   {
@@ -10,42 +9,32 @@ const adminRoutes: Routes = [
     children: [
       {
         path: 'projects',
-        canActivateChild: [AdminAuthGuard],
-        canActivate: [AdminRoleGuard],
-        data: { accessPath: ['projects'] },
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-projects/admin-projects.module#AdminProjectsModule'
       },
       {
         path: 'users',
-        canActivate: [AdminRoleGuard],
-        data: { accessPath: ['users'] },
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-users/admin-users.module#AdminUsersModule'
       },
       {
         path: 'professionals',
-        canActivate: [AdminRoleGuard],
-        data: { accessPath: ['professionals'] },
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-professionals/admin-professionals.module#AdminProfessionalsModule'
       },
       {
         path: 'libraries',
-        canActivateChild: [AdminAuthGuard],
-        canActivate: [AdminRoleGuard],
-        data: { accessPath: ['libraries'] },
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-libraries/admin-libraries.module#AdminLibrariesModule'
       },
       {
         path: 'settings',
-        canActivateChild: [AdminAuthGuard],
-        canActivate: [AdminRoleGuard],
-        data: { accessPath: ['settings'] },
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-settings/admin-settings.module#AdminSettingsModule'
       },
       {
         path: 'search',
-        canActivateChild: [AdminAuthGuard],
-        canActivate: [AdminRoleGuard],
-        data: { accessPath: ['search'] },
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-search/admin-search.module#AdminSearchModule'
       },
       {
@@ -55,12 +44,12 @@ const adminRoutes: Routes = [
       },
       {
         path: 'monitoring',
-        canActivateChild: [AdminAuthGuard],
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-monitoring/admin-monitoring.module#AdminMonitoringModule'
       },
       {
         path: 'community',
-        canActivateChild: [AdminAuthGuard],
+        canActivate: [AdminAuthGuard],
         loadChildren: './components/admin-community/admin-community.module#AdminCommunityModule'
       }
     ]

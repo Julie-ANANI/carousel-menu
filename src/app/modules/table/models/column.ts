@@ -55,4 +55,5 @@ export type types =
   | 'TAG'
   | 'PATTERNS-OBJECT-LIST'
   | 'NAME-LABEL-LIST'
+  | 'PRO-TARGET'
   | 'LABEL-OBJECT-LIST';

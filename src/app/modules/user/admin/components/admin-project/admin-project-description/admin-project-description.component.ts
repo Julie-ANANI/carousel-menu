@@ -191,15 +191,35 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   }
 
-  public zoneData(property: string, type: 'comment' | 'suggestion', index?: number) {
+  public zoneData(property: string, type: 'comment' | 'suggestion', sectionType?: string, etherpadId?: string) {
     if (property !== 'sections') {
       return this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment[property]
       && this.activeInnovCard.operatorComment[property][type] ? this.activeInnovCard.operatorComment[property][type] : '';
     } else {
-      return this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections
-      && this.activeInnovCard.operatorComment.sections.length && this.activeInnovCard.operatorComment.sections[index]
-      && this.activeInnovCard.operatorComment.sections[index][type] ? this.activeInnovCard.operatorComment.sections[index][type] : '';
+      if (this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.sections
+        && this.activeInnovCard.operatorComment.sections.length && (!!etherpadId || !!sectionType)) {
+        const find = this._getOperatorComment(sectionType, etherpadId);
+        if (!!find) {
+          return find[type];
+        }
+      }
+
+      return '';
     }
+  }
+
+  private _getOperatorComment(sectionType?: string, etherpadId?: string) {
+    return this.activeInnovCard.operatorComment.sections.find((_comment) => {
+      return !!etherpadId && !!_comment.sectionId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
+        : (sectionType === _comment.type);
+    });
+  }
+
+  private _getOperatorCommentIndex(sectionType?: string, etherpadId?: string) {
+    return this.activeInnovCard.operatorComment.sections.findIndex((_comment) => {
+      return !!etherpadId && !!_comment.sectionId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
+        : (sectionType === _comment.type);
+    });
   }
 
   public onToggleComment(event: Event, property: string) {
@@ -215,23 +235,34 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
    * @param event
    * @param property
    * @param type
-   * @param index
+   * @param sectionIndex
+   * @param sectionType
+   * @param etherpadId
    */
-  public onCommentChange(event: { content: string }, property: string, type: 'comment' | 'suggestion', index?: number) {
+  public onCommentChange(event: { content: string }, property: string, type: 'comment' | 'suggestion',
+                         sectionIndex?: number, sectionType?: string, etherpadId?: string) {
     if (property !== 'sections') {
       this.activeInnovCard.operatorComment[property][type] = event.content;
     } else {
-      this.activeInnovCard.operatorComment.sections[index][type] = event.content;
-      this.activeInnovCard.operatorComment.sections[index].sectionId =
-        this.activeInnovCard.operatorComment.sections[index].sectionId
-        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
+      if (this.activeInnovCard.operatorComment.sections && this.activeInnovCard.operatorComment.sections.length
+        && (!!etherpadId || !!sectionType)) {
+        const index = this._getOperatorCommentIndex(sectionType, etherpadId);
+        if (index !== -1) {
+          this.activeInnovCard.operatorComment.sections[index][type] = event.content;
+          this.activeInnovCard.operatorComment.sections[index].sectionId =
+            this.activeInnovCard.operatorComment.sections[index].sectionId
+            || this._etherpadFrontService.generateElementId(this.activeInnovCard.sections[index].type,
+              this.activeInnovCard.lang);
+        }
+      }
     }
+
     this.updateComment();
   }
 
   /**
    * now for the new custom section we use etherpadElementId property.
-   * If it doesn't exists with use the old one.
+   * If it doesn't exists with use the old one we create one and assign to it..
    *
    * @param event
    * @param property
@@ -243,7 +274,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     } else {
       this.activeInnovCard.sections[index].content = event.content;
       this.activeInnovCard.sections[index].etherpadElementId = this.activeInnovCard.sections[index].etherpadElementId
-        || this._etherpadFrontService.buildPadIdOldInnovation(this.activeInnovCard.sections[index].type, index, this.currentLang);
+        || this._etherpadFrontService.generateElementId(this.activeInnovCard.sections[index].type,
+          this.activeInnovCard.lang);
     }
     this.updateInnovation();
   }
@@ -273,7 +305,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           content: '',
           visibility: true,
           type: 'OTHER',
-          etherpadElementId: this._etherpadFrontService.generateElementId('OTHER', this.currentLang)
+          etherpadElementId: this._etherpadFrontService.generateElementId('OTHER', this.activeInnovCard.lang)
         };
         this._showModal = true;
         break;

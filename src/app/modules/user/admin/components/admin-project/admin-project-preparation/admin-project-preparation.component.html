@@ -97,7 +97,7 @@
             <!-- /lang change -->
 
             <!-- quiz preview -->
-            <ng-container *ngIf="activeTab === 'questionnaire'">
+            <ng-container *ngIf="activeTab === 'questionnaire' || activeTab === 'description'">
               <a
                 [href]="quizPreviewLink"
                 [id]="'admin-btn-preview-quiz'"

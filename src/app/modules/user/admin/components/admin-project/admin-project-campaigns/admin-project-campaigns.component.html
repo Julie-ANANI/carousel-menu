@@ -36,6 +36,9 @@
               <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-sm text-bold is-success m-left-10">
                 {{ campaign.type }}
               </div>
+              <div *ngIf="!!campaign.rgpd" class="label is-sm text-bold is-success m-left-10">
+                GDPR MODE ON
+              </div>
               <div
                 *ngIf="canAccess(['edit'])"
                 class="text-link text-sm m-left-20 m-top-1"

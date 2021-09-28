@@ -7,11 +7,14 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./admin-community-search.component.scss']
 })
 
-//FormsModule
-
 export class AdminCommunitySearchComponent implements OnInit {
 
+  get config(): any {
+    return this._config;
+  }
+
   private _config: any;
+
   public advSearchForm: FormGroup;
 
   constructor() {}
@@ -24,7 +27,6 @@ export class AdminCommunitySearchComponent implements OnInit {
       search: '{"ambassador.is":true}',
       sort: '{"created":-1}'
     };
-    console.log(this._config);
   }
 
   public search() {

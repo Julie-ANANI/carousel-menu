@@ -1,10 +1,11 @@
-<div id="shared-search-pros">
+<div id="shared-search-pros" class="w-full">
 
   <!-- search wrapper -->
   <div *ngIf="canAccess(['launch', 'cat'])" class="search-wrapper">
 
     <!-- heading -->
     <div class="heading-wrapper">
+
 
       <h2 class="title-secondary">Rocket Testing</h2>
 
@@ -46,6 +47,12 @@
 
     </div>
     <!-- /heading -->
+
+    <!-- request -->
+    <div class="">
+
+    </div>
+    <!-- /request -->
 
     <!-- input -->
     <div class="input-wrapper">
@@ -179,20 +186,15 @@
   <!-- search wrapper -->
   <div *ngIf="canAccess(['launch', 'search'])" class="search-wrapper">
 
-    <!-- heading -->
-    <div class="heading-wrapper">
-      <h2 class="title-secondary">Rocket Launching</h2>
-      <span
-        (click)="onClickSettings()"
-        *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])"
-        class="text-link text-sm">
-          Settings
-        </span>
+    <!-- requests -->
+    <div class="w-full d-flex align-center m-top-20">
+      <span class="text-pre text-15 text-bold">Requests</span>
+      <div class="line m-left-4"></div>
     </div>
-    <!-- /heading -->
+    <!-- /requests -->
 
     <!-- input -->
-    <div class="input-wrapper">
+    <div class="input-wrapper w-half">
 
       <div class="form-group">
         <label>
@@ -206,140 +208,169 @@
               type="text">
             </textarea>
         </label>
-        <span
-          (click)="onClickSearch($event)"
-          *ngIf="params['keywords']"
-          [attr.data-tooltip]="'Search'"
-          class="search-button-wrapper tooltip">
-              <i class="fas fa-search"></i>
-            </span>
       </div>
 
       <div class="remaining-wrapper">
-        <a
-          *ngIf="canAccess(['import', 'pros'])"
-          (click)="showModal = true"
-          class="text-link">
-          Import a list of pros
-        </a>
         <div class="d-flex align-center">
           <span [ngClass]="getCircleClass()" class="shape is-circle is-xs"></span>
           <span>Remaining requests: {{ googleQuota }}</span>
         </div>
       </div>
 
-      <div class="form-group m-top-10"
-           (click)="onClickSearch($event)">
-        <button class="button is-primary is-md" [disabled]="!params['keywords']">Launch</button>
-      </div>
-
     </div>
     <!-- /input -->
+
+    <!-- settings -->
+    <div class="w-full d-flex align-center m-top-20"
+         *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+      <span class="text-pre text-15 text-bold">Settings</span>
+      <div class="line m-left-4"></div>
+    </div>
+    <!-- /settings -->
+
+    <div class="settings w-full">
+      <app-shared-search-settings
+        (paramsChange)="updateSettings($event)"
+        [isEditable]="canAccess(['edit', 'settings'])"
+        [params]="params">
+      </app-shared-search-settings>
+    </div>
+
+    <!-- geographic targeting -->
+    <div class="w-full d-flex align-center m-top-20"
+         *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])">
+      <span class="text-pre text-15 text-bold">Geographic targeting</span>
+      <div class="line m-left-4"></div>
+    </div>
+    <!-- /geographic targeting  -->
+
+    <div class="geographic-targeting w-full">
+      <!-- targeting countries -->
+      <div class="p-30">
+        <app-shared-targeting-world
+          [(geography)]="geography"
+          [isShowSearch]="true"
+          [isEditable]="canAccess(['edit', 'settings'])">
+        </app-shared-targeting-world>
+      </div>
+      <!-- /targeting countries-->
+    </div>
+
+    <!-- professional targeting -->
+    <div class="w-full d-flex align-center m-top-20">
+      <span class="text-pre text-15 text-bold">Professional targeting</span>
+      <div class="line m-left-4"></div>
+    </div>
+
+    <div class="w-full">
+      <!--       Professional targeting - buttons  -->
+      <div class="button-group d-flex justify-center align-center m-auto m-top-4">
+
+        <!-- Saved targetedPro  -->
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
+                *ngIf="!toSave">
+          <i class="fas fa-save"></i>
+          Save
+        </button>
+
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon is-active m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
+                (click)="saveProTargeting()"
+                *ngIf="toSave">
+          <i class="fas fa-save"></i>
+          Save
+        </button>
+        <!-- /Saved targetedPro  -->
+
+        <!-- Preview saved targetedPro  -->
+        <button class="button br-6 is-sm is-outlined m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to preview the saved professional targeting without changing your current.'"
+                (click)="previewSearchConfig()">
+          Preview
+        </button>
+        <!-- /Preview saved targetedPro  -->
+
+        <!-- Reset targetedPro  -->
+        <button class="button br-6 is-sm is-outlined m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to replace your current professional targeting with the saved one.'"
+                (click)="resetTargetedPros()">
+          Apply
+        </button>
+        <!-- /Reset targetedPro  -->
+
+        <button class="button how-it-works text-underline tooltip is-multiline is-left"
+                [attr.data-tooltip]="'1. A SL tag has 2 different states : include and exclude.\n' +
+    ' - Click on a tag to change its state by the other state\n' +
+    '2. A TJ tag has 3 different states : include, exclude and neutral\n' +
+    ' - Click on a tag to change its state according to the following cycle : ' +
+    'Neutral -> Include -> Exclude ->Neutral -> ...'">
+          How it works?
+        </button>
+
+
+      </div>
+      <!-- /Professional targeting - buttons  -->
+
+      <app-shared-professional-targeting *ngIf="canAccess(['edit', 'targetPros'])">
+      </app-shared-professional-targeting>
+
+    </div>
+    <!-- /professional targeting  -->
+
+    <div class="m-top-3 text-center">
+      <span class="text-alert text-sm">
+        <span *ngIf="errorMessageLaunch"> {{ errorMessageLaunch }} </span>
+      </span>
+    </div>
+
+    <div class="form-group m-top-20 d-flex"
+         (click)="onClickSearch($event)">
+      <button class="button is-primary is-lg m-auto" [disabled]="errorMessageLaunch || !params['keywords']">Launch</button>
+    </div>
 
   </div>
   <!-- /search wrapper -->
 
 </div>
 
-
-<!-- sidebar to advanced search -->
-<app-sidebar
-  *ngIf="canAccess(['view', 'settings']) || canAccess(['edit', 'settings'])"
-  [(template)]="sidebarValue">
-  <app-sidebar-search
-    (geographyChange)="onGeographyChange($event)"
-    (paramsChange)="updateSettings($event)"
-    [geography]="geography"
-    [isEditable]="canAccess(['edit', 'settings'])"
-    [params]="params">
-  </app-sidebar-search>
-</app-sidebar>
-<!-- /sidebar to advanced search -->
-
-
-<!-- MODAL : import a professionals list -->
+<!-- MODAL : preview saved targetedPro -->
 <app-utility-modal
-  *ngIf="canAccess(['import', 'pros'])"
-  [(showModal)]="showModal"
-  [title]="'Import Board'">
+  [(showModal)]="isPreview"
+  [maxWidth]="'90%'"
+  [title]="'Preview - Professional targeting'">
 
-  <section class="modal-body">
-
-    <div class="form-group m-bottom-30">
-      <label class="form-label" for="shared-search-modal-name">
-        Name to be given to the request
-      </label>
-      <input
-        [(ngModel)]="importRequestKeywords"
-        class="form-input"
-        id="shared-search-modal-name"
-        placeholder="Give a name to the import file"
-        type="text">
-    </div>
-
-    <!-- import button -->
-    <div class="text-center p-bottom-30">
-      <label class="button is-primary is-sm is-outlined">
-        <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
-        <i class="fas fa-file-import icon-left"></i> Import pros
-      </label>
-    </div>
-    <!-- /import button -->
-
-    <p class="text-center text-sm">The file must use these <b>exact names</b> for the columns:
-      <b>First Name UMI, Last Name UMI, Company UMI, Country UMI</b>
-      , Language, Email UMI, emailConfidence, Linkedin,
-      Company Site, Job UMI</p>
-
-    <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
-      not matter</p>
-
+  <section class="modal-body" *ngIf="canAccess(['edit', 'targetPros'])">
+    <app-shared-professional-targeting
+      [isPreview]="true"
+      [targetedProsToUpdate]="initialTargetedPro">
+    </app-shared-professional-targeting>
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">Cancel</button>
+    <button class="button modal-cancel" (close)="closePreview()">Close</button>
   </footer>
 
 </app-utility-modal>
+<!-- /MODAL : preview saved targetedPro -->
 
-<!--<div class="columns">
-  <div class="column col-5 col-ml-auto">
+<!-- MODAL : save/apply -->
+<app-utility-modal
+  [(showModal)]="isShowModal">
+  <header class="p-top-20 text-center text-primary-dark text-bold bg-white">
+    {{saveApplyModalTitle}}
+  </header>
 
-  <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.duplicate_status">
-    <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
-      <span class="bot-rect">
-        <span *ngIf="estimatedNumberOfGoogleRequests">
-          {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
-          <strong> <span *ngIf="catResult.total_result">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span
-            *ngIf="catResult.total_result">max</span></strong>.
-        <a *ngIf="!catResult.keywords_analysis && campaign" (click)="cat($event)">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
-        </span>
-        <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
-      </span>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-advice.svg" width=""
-                height="120">
-      </div>
-    </div>
+  <section class="modal-body text-center">
+    {{saveApplyModalContext}}
+  </section>
 
-    <div class="bot-wrapper text-center" *ngSwitchCase="'not ok'">
-      <span class="bot-rect">{{ 'SEARCH.ROBOT.NOT_OK' | translate }}<br/>
-        <span *ngIf="estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.SEARCH_USE' | translate }} <strong>{{ 'SEARCH.ROBOT.APPROX' | translate }} {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }}</strong>.</span>
-      </span>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120">
-      </div>
-    </div>
+  <footer class="modal-footer d-flex justify-center">
+    <button class="button modal-cancel p-10" (click)="cancelSaveReset()">Cancel</button>
+    <button class="button is-community p-10" (click)="confirmSaveReset()">Confirm</button>
+  </footer>
 
-    <div class="bot-wrapper text-center" *ngSwitchCase="'error'">
-      <span class="bot-rect"> {{ 'SEARCH.ROBOT.ERROR' | translate }}</span>
-      <br>
-      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width=""
-                height="120">
-      </div>
-    </div>
-  </div>
-</div>-->
+</app-utility-modal>
+<!-- MODAL : save/apply -->
+
+

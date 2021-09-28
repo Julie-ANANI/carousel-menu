@@ -244,15 +244,17 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         sections[index] = {
           questionId: '',
           questionType: '',
+          questionIdentifier: '',
           title: '',
           abstract: '',
           content: <any>{}
         };
 
-        if (this._executiveReport.sections[index].questionId) {
+        if (this._executiveReport.sections[index].questionIdentifier) {
           sections[index] = this._executiveReport.sections[index];
         } else {
           sections[index].questionId = question._id;
+          sections[index].questionIdentifier = question.identifier;
           sections[index].title = MissionQuestionService.label(question, 'title', this._executiveReport.lang);
           const answersToShow: Array<Answer> = this._responseService.answersToShow(answers, question);
           const barsData: Array<BarData> = ResponseService.barsData(question, answersToShow);
@@ -477,7 +479,8 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   get isVideoDisabled(): boolean {
-    return this._executiveReport.completion.rate !== 100 || !this._executiveReport.externalDiffusion;
+    return this._executiveReport.completion.rate !== 100 || !this._executiveReport.externalDiffusion
+      || this._executiveReport.summary.length > 216;
   }
 
   get currentLang(): string {

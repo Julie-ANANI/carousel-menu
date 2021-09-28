@@ -13,5 +13,4 @@ export const FORGET_PASSWORD = {
     'B': 'account linked to this email address,',
     'C': 'we\'ll send over instructions to reset your password.'
   }
-
 };

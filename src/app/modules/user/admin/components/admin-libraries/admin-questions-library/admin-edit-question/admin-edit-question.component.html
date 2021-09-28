@@ -12,9 +12,9 @@
       <div class="p-top-30 p-bottom-50">
 
         <!-- save question / name -->
-        <section [hidden]="!canAccess(['edit'])" class="flex-between m-bottom-20 flex-wrap">
+        <section [hidden]="!canAccess(['edit'])" class="flex-end m-bottom-20">
 
-          <div class="d-flex align-center">
+          <!--<div class="d-flex align-center">
             <h2 class="title is-6 text-background m-bottom-15 m-right-10">Question:</h2>
             <label
               [attr.data-tooltip]="'COMMON.CHANGE_WITHOUT_SAVE' | translate"
@@ -28,7 +28,7 @@
                 </option>
               </select>
             </label>
-          </div>
+          </div>-->
 
           <button
             (click)="onClickSave($event)"
@@ -312,7 +312,7 @@
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'instruction')"
                     *ngIf="canAccess(['edit', 'instruction']) && editMode; else showInstruction"
                     [id]="'question-instruction-'+lang"
-                    [ngModel]="questionEntry(lang).instruction || ''"
+                    [ngModel]="questionEntry(lang).instruction || 'NA'"
                     [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
                     class="form-input"
                     type="text">

@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedProsListModule } from '../../../../../shared/components/shared-pros-list/shared-pros-list.module';
 import { PipeModule } from '../../../../../../pipe/pipe.module';
-import { AdminCommunitySearchComponent } from "./admin-community-search.component";
+import { AdminCommunitySearchComponent } from './admin-community-search.component';
 
 
 

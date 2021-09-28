@@ -1,0 +1,163 @@
+<div id="shared-professional-targeting" class="w-full">
+
+  <section class="config-wrapper w-full d-flex m-top-4">
+    <!-- Seniority level -->
+    <div class="flex-d-column align-center text-center" style="width: 45%">
+      <h5>Seniority Levels</h5>
+      <div class="card">
+        <div class="card-body">
+          <section class="section-all">
+
+            <div class="select-wrapper d-flex align-center">
+              <div class="button-checker m-left-3"
+                   [ngClass]="{'state-full-check': selectAllSeniorityLevels === 1,
+                   'state-none-check': selectAllSeniorityLevels===0, 'state-mixed': selectAllSeniorityLevels === 3}"
+                   (click)="selectAllOnChange($event, 'SENIORITY_LEVEL')">
+                <ng-container [ngSwitch]="selectAllSeniorityLevels">
+                  <ng-container *ngSwitchCase="0">
+                    <i class="fas fa-times"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="1">
+                    <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="3">
+                    <i class="fas fa-circle"></i>
+                  </ng-container>
+                </ng-container>
+              </div>
+
+              <div class="m-left-4 d-flex align-center width-100">
+                All
+
+                <!-- nb of included/excluded jobs-->
+                <div class="d-flex flex-end flex-grow">
+                  <span *ngIf="nbAllSeniorityLevelSelected"
+                        class="shape bg-success is-circle is-md text-13"> {{nbAllSeniorityLevelSelected}} </span>
+                  <span *ngIf="nbAllSeniorityLevelExcluded"
+                        class="shape bg-alert is-circle is-md text-13"> {{nbAllSeniorityLevelExcluded}} </span>
+                </div>
+                <!-- /nb of included/excluded jobs-->
+
+              </div>
+            </div>
+
+          </section>
+          <ng-container *ngFor="let seniorityKey of getSeniorityLevelsKeys()">
+            <app-shared-search-config-pro
+              [isPreview]="isPreview"
+              [identifier]="seniorityKey"
+              [option]="{name: seniorityLevels[seniorityKey].name, state:seniorityLevels[seniorityKey].state}">
+            </app-shared-search-config-pro>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <!-- /Seniority level -->
+
+    <!-- Search operator -->
+    <div class="d-flex flex-d-column align-center" style="width: 10%; margin-top: 10%">
+      <button class="button m-top-10 text-bold text-20"
+              [disabled]="isPreview"
+              [ngStyle]="{color: searchOperator==='OR'? '#EA5858' : '#333333'}"
+              (click)="searchOperatorOnChange('OR')">
+        OR
+      </button>
+
+      <button class="button m-top-10 text-bold text-20"
+              [disabled]="isPreview"
+              [ngStyle]="{color: searchOperator==='AND'? '#EA5858' : '#333333'}"
+              (click)="searchOperatorOnChange('AND')">
+        AND
+      </button>
+    </div>
+    <!-- /Search operator -->
+
+    <!-- Job Category -->
+    <div class="flex-d-column align-center text-center" style="width: 45%">
+      <h5>Job Typologies</h5>
+      <div class="card">
+        <div class="card-body">
+          <!-- search jobs -->
+          <section class="section-search" *ngIf="!isPreview">
+            <app-utility-search-input-2
+              [inputWidth]="{width: '100%'}"
+              [searchPlaceholder]="'Type to search'"
+              (searchFieldOutput)="onClickSearchJobs($event)">
+            </app-utility-search-input-2>
+          </section>
+          <!-- /search jobs -->
+
+          <!-- select all -->
+          <section class="section-all">
+            <div class="select-wrapper d-flex align-center">
+              <div class="button-checker m-left-3"
+                   [ngClass]="{'state-full-check': selectAllJobs === 1,
+                   'state-neutral-check': selectAllJobs === 2,
+                   'state-none-check': selectAllJobs===0, 'state-mixed': selectAllJobs === 3,
+                   'my-disable': searchJobKey !== ''}"
+                   (click)="selectAllOnChange($event, 'JOB_TYPOLOGY')">
+                <ng-container [ngSwitch]="selectAllJobs">
+                  <ng-container *ngSwitchCase="0">
+                    <i class="fas fa-times"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="1">
+                    <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="2">
+                  </ng-container>
+                  <ng-container *ngSwitchCase="3">
+                    <i class="fas fa-circle"></i>
+                  </ng-container>
+                </ng-container>
+              </div>
+
+              <div class="m-left-4 d-flex align-center width-100">
+                All
+
+                <!-- nb of included/excluded jobs-->
+                <div class="d-flex flex-end flex-grow">
+                  <span *ngIf="nbAllJobSelected"
+                        class="shape bg-success is-circle is-md text-13"> {{nbAllJobSelected}} </span>
+                  <span *ngIf="nbAllJobExcluded"
+                        class="shape bg-alert is-circle is-md text-13"> {{nbAllJobExcluded}} </span>
+
+                </div>
+                <!-- /nb of included/excluded jobs-->
+
+              </div>
+            </div>
+
+          </section>
+          <!-- /select all -->
+
+          <!-- get time to load Job Categories -->
+          <div class="section-light-pad" *ngIf="sortedFilteredJobsTypologies.length === 0">
+            <app-message-template
+              [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
+              [widthMax]="'362px'">
+              <span [innerText]="'No corresponding tags'"></span>
+            </app-message-template>
+          </div>
+          <!-- /get time to load Job Categories -->
+
+          <ng-container *ngIf="sortedFilteredJobsTypologies && sortedFilteredJobsTypologies.length">
+            <ng-container *ngFor="let jobTypo of sortedFilteredJobsTypologies">
+              <app-shared-search-config-pro
+                [isPreview]="isPreview"
+                [showToggleSearch]="jobTypo.isToggle"
+                [identifier]="jobTypo.identifier"
+                [option]="{name: jobTypo.name.en, state: jobTypo.state}"
+                [jobs]="sortJobs(jobTypo.jobs)"
+                [filteredJobs]="filteredJobsTypologies[jobTypo.identifier].jobs"
+                [isJobTypo]="true">
+              </app-shared-search-config-pro>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <!-- /Job Category  -->
+
+  </section>
+
+</div>

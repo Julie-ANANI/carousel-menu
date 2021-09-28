@@ -147,6 +147,7 @@
     [innovation]="project"
     [isViewsEditable]="canAccess(['edit', 'views'])"
     [questions]="questions"
+    (updateAnswers)="updateAnswers($event)"
     [templateType]="sidebarTemplate.type">
   </app-sidebar-filter-answers>
 </sidebar-left>

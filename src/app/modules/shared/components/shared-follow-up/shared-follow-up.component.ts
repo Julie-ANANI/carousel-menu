@@ -61,10 +61,10 @@ export class SharedFollowUpComponent implements OnInit {
   private _pendingAction: {
     answersIds?: Array<string>,
     objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW'
-    assignedAnswers?: Array<{name: string, objective: string}>
+    assignedAnswers?: Array<{ name: string, objective: string }>
   } = {};
 
-  private _customFields: { fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} = {
+  private _customFields: { fr: Array<{ label: string, value: string }>, en: Array<{ label: string, value: string }> } = {
     en: [],
     fr: []
   };
@@ -92,10 +92,11 @@ export class SharedFollowUpComponent implements OnInit {
               private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
               private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit(): void {
-    this._initializeTable();
+    this._initializeTable(this.answers);
     if (this._project && this._project._id) {
       this._project.followUpEmails = this._project.followUpEmails || {};
       this._questions = InnovationFrontService.questionsList(this._project);
@@ -103,11 +104,11 @@ export class SharedFollowUpComponent implements OnInit {
     }
   }
 
-  private _initializeTable() {
+  private _initializeTable(answers: Array<Answer>) {
     this._tableInfos = {
       _selector: 'follow-up-answers',
-      _content: this._answers,
-      _total: this._total,
+      _content: answers,
+      _total: answers.length,
       _isSelectable: this.canAccess(['edit', 'objective']),
       _isRowDisabled: (answer: Answer) => {
         return this.canAccess(['edit', 'objective']) ? answer.followUp && answer.followUp.date
@@ -118,10 +119,10 @@ export class SharedFollowUpComponent implements OnInit {
       _isLocal: true,
       _isNoMinHeight: this._total < 11,
       _buttons: [
-        { _label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
-        { _label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
-        { _label: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW'},
-        { _label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW'},
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
       ],
       _columns: [
         {
@@ -187,7 +188,7 @@ export class SharedFollowUpComponent implements OnInit {
               _class: ''
             }
           ],
-        _disabledState: { _attrs: 'followUp.date', _type: 'DATE' }
+          _disabledState: {_attrs: 'followUp.date', _type: 'DATE'}
         },
       ]
     };
@@ -212,7 +213,7 @@ export class SharedFollowUpComponent implements OnInit {
           }) || [];
 
           this._total = this._answers.length;
-          this._initializeTable();
+          this._initializeTable(this._answers);
 
           this._filterService.filtersUpdate.pipe(first()).subscribe(() => {
             this._selectContacts();
@@ -228,7 +229,7 @@ export class SharedFollowUpComponent implements OnInit {
               }
             });
             return acc;
-          }, {} as {[id: string]: Tag});
+          }, {} as { [id: string]: Tag });
           this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
 
           /*
@@ -261,28 +262,32 @@ export class SharedFollowUpComponent implements OnInit {
   private _initializeMailCustomFields() {
     this._customFields = {
       fr: [
-        { value: '*|FIRSTNAME|*', label: 'Prénom du pro' },
-        { value: '*|LASTNAME|*', label: 'Nom du pro' },
+        {value: '*|FIRSTNAME|*', label: 'Prénom du pro'},
+        {value: '*|LASTNAME|*', label: 'Nom du pro'},
         {
           value: '*|TITLE|*',
           label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'TITLE')
-            || 'TITLE'},
+            || 'TITLE'
+        },
         {
           value: '*|COMPANY_NAME|*',
-          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
-        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
+          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME'
+        },
+        {value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME'}
       ],
       en: [
-        { value: '*|FIRSTNAME|*', label: 'First name' },
-        { value: '*|LASTNAME|*', label: 'Last name' },
+        {value: '*|FIRSTNAME|*', label: 'First name'},
+        {value: '*|LASTNAME|*', label: 'Last name'},
         {
           value: '*|TITLE|*',
           label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'TITLE')
-            || 'TITLE'},
+            || 'TITLE'
+        },
         {
           value: '*|COMPANY_NAME|*',
-          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME' },
-        { value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME' }
+          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME'
+        },
+        {value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME'}
       ]
     };
   }
@@ -392,8 +397,10 @@ export class SharedFollowUpComponent implements OnInit {
     const assignedAnswers = action._rows
       .filter((answer: any) => answer.followUp.objective && answer.followUp.objective !== objective)
       .map((answer: any) => {
-        return {name: `${answer.professional.firstName} ${answer.professional.lastName}`,
-          objective: answer.followUp.objective};
+        return {
+          name: `${answer.professional.firstName} ${answer.professional.lastName}`,
+          objective: answer.followUp.objective
+        };
       });
 
     if (assignedAnswers.length) {
@@ -433,15 +440,17 @@ export class SharedFollowUpComponent implements OnInit {
   }
 
   get emailsObject(): any {
-    return this._project.followUpEmails[this._modalTemplateType] || { en: {content: '', subject: ''},
-      fr: {content: '', subject: ''} };
+    return this._project.followUpEmails[this._modalTemplateType] || {
+      en: {content: '', subject: ''},
+      fr: {content: '', subject: ''}
+    };
   }
 
   get project(): Innovation {
     return this._project;
   }
 
-  get customFields(): {fr: Array<{label: string, value: string}>, en: Array<{label: string, value: string}>} {
+  get customFields(): { fr: Array<{ label: string, value: string }>, en: Array<{ label: string, value: string }> } {
     return this._customFields;
   }
 
@@ -540,8 +549,10 @@ export class SharedFollowUpComponent implements OnInit {
     return this._total;
   }
 
-  get pendingAction(): { answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
-    assignedAnswers?: Array<{name: string, objective: string}>} {
+  get pendingAction(): {
+    answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
+    assignedAnswers?: Array<{ name: string, objective: string }>
+  } {
     return this._pendingAction;
   }
 
@@ -573,4 +584,9 @@ export class SharedFollowUpComponent implements OnInit {
     this._project.followUpEmails.ccEmail = value;
   }
 
+  updateAnswers(answers: Array<any>) {
+    if (answers && answers.length) {
+      this._initializeTable(answers);
+    }
+  }
 }

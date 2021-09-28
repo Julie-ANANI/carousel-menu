@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+
+export interface SearchModule {
+  option: string;
+  context: string;
+}
 
 @Component({
   templateUrl: './admin-campaign-search.component.html',
@@ -15,9 +20,34 @@ export class AdminCampaignSearchComponent implements OnInit {
 
   private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'search'];
 
+  private _searchModules: Array<SearchModule> = [
+    {
+      option: 'research',
+      context: 'Use the research module',
+    },
+    {
+      option: 'scraping',
+      context: 'Use the scraping module',
+    },
+    {
+      option: 'import',
+      context: 'Import a list of pros',
+    }
+  ];
+
+  private _moduleSelected: SearchModule = {
+    option: 'research',
+    context: 'Use the research module'
+  };
+
+  private _optionSelected = 'research';
+
+  private _showModal = false;
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
-              private _rolesFrontService: RolesFrontService) { }
+              private _rolesFrontService: RolesFrontService) {
+  }
 
   ngOnInit(): void {
     this._activatedRoute.data.subscribe((data) => {
@@ -42,4 +72,47 @@ export class AdminCampaignSearchComponent implements OnInit {
     return this._accessPath;
   }
 
+  get moduleSelected(): SearchModule {
+    return this._moduleSelected;
+  }
+
+  set moduleSelected(value: SearchModule) {
+    this._moduleSelected = value;
+  }
+
+  get searchModules(): Array<SearchModule> {
+    return this._searchModules;
+  }
+
+  moduleOnChange(value: string) {
+    this._optionSelected = value;
+    if (this._moduleSelected.option === 'research') {
+      this._showModal = true;
+    } else {
+      this._moduleSelected = this._searchModules.find(search => search.option === value);
+    }
+  }
+
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  confirmChangePage() {
+    this._moduleSelected = this._searchModules.find(search => search.option === this._optionSelected);
+    this._showModal = false;
+  }
+
+  closeModal() {
+    const option = this._moduleSelected.option;
+    this._moduleSelected.option = '';
+    setTimeout(() => {
+      this._moduleSelected.option = option;
+    }, 0);
+    this._showModal = false;
+  }
 }

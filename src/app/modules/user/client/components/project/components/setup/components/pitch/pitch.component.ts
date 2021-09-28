@@ -4,7 +4,12 @@ import {PitchHelpFields} from '../../../../../../../../../models/static-data/pro
 import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
 import {first, takeUntil} from 'rxjs/operators';
 import {MissionFrontService} from '../../../../../../../../../services/mission/mission-front.service';
-import {Mission, MissionQuestion, MissionQuestionOption} from '../../../../../../../../../models/mission';
+import {
+  Mission,
+  MissionQuestion,
+  MissionQuestionOption,
+  MissionTemplateSection
+} from '../../../../../../../../../models/mission';
 import {Subject} from 'rxjs';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
 import {SidebarInterface} from '../../../../../../../../sidebars/interfaces/sidebar-interface';
@@ -21,6 +26,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
 import {MissionQuestionService} from '../../../../../../../../../services/mission/mission-question.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -56,6 +62,7 @@ export class PitchComponent implements OnInit, OnDestroy {
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,
               private _missionService: MissionService,
+              private _translateService: TranslateService,
               private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) {
@@ -260,16 +267,28 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _editText() {
+    return this._translateService.currentLang === 'fr' ? 'Éditer' : 'Edit';
+  }
+
   public openSidebar(section: InnovCardSection, index: number) {
     if (!this._toBeSaved) {
       this._activeSectionIndex = index;
       this._activeSection = section;
       this._cardContent = section.content;
-      const _title = section.type === 'OTHER'
-        ? section.title
-        : 'SIDEBAR.PROJECT_PITCH.' + (this.isEditable ? 'EDIT.' : 'VIEW.') + section.type;
-
       this._getPadAllComments();
+
+      let _title = '';
+
+      if (section.type !== 'TITLE' && section.type !== 'SUMMARY' && section.type !== 'MEDIA') {
+        if (section.title) {
+          _title = this.isEditable ? `${this._editText()} ${section.title.toLowerCase()}` : section.title;
+        } else {
+          _title = this.isEditable ? `${this._editText()} ${section.type.toLocaleLowerCase()}` : section.type;
+        }
+      } else {
+        _title = 'SIDEBAR.PROJECT_PITCH.' + (this.isEditable ? 'EDIT.' : 'VIEW.') + section.type;
+      }
 
       this._sidebarValue = {
         animate_state: 'active',
@@ -296,6 +315,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: Media) {
     return MediaFrontService.getMedia(media);
+  }
+
+  public sectionName(value: MissionTemplateSection): string {
+    return MissionQuestionService.entryInfo(value, this.activeInnovCard.lang)['name'];
   }
 
   public questionName(value: MissionQuestion): string {
@@ -489,6 +512,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._initEtherpadElementId();
   }
 
+  /**
+   * we are still using it for the old innovation.
+   * @private
+   */
   private _initEtherpadElementId() {
     this._sections.forEach((section, index) => {
       if (!section.etherpadElementId) {
