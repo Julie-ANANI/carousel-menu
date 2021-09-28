@@ -356,7 +356,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           this._updateFeedbackDate(m, fcDate);
         },
         (error) => {
-          console.log(error);
+          console.error(error);
         }
       );
     }
@@ -475,7 +475,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       ];
     }
 
-    console.log(content);
     return {
       _selector: batch._id,
       _clickIndex:
@@ -875,7 +874,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe(
         (batch) => {
-          console.log(batch);
           if (needToUpdateTable) {
             this._stats.batches[this._getBatchIndex(batch._id)] = batch;
             this._batchesTable.every((table, index) => {

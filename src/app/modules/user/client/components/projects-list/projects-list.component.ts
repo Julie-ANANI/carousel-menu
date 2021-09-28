@@ -46,8 +46,6 @@ export class ProjectsListComponent implements OnInit {
 
   private _isError = false;
 
-  private _dateFormat = '';
-
   private _config: Config = {
     fields: 'name created updated status collaborators principalMedia innovationCards',
     limit: '10',
@@ -74,7 +72,6 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._dateFormat = this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
       this._getProjects();
     }
   }
@@ -85,12 +82,13 @@ export class ProjectsListComponent implements OnInit {
    */
   private _getProjects() {
     this._userService.getMyInnovations(this._config).pipe(first()).subscribe((response) => {
+      this._isError = false;
       this._innovations = response.result;
       this._total = Math.max(response._metadata.totalCount, response.result.length);
     }, (err: HttpErrorResponse) => {
-      console.log(err);
-      this._isError = true;
       this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._isError = true;
+      console.error(err);
     });
   }
 
@@ -124,7 +122,7 @@ export class ProjectsListComponent implements OnInit {
    * @param innovation
    */
   public getImage(innovation: Innovation): string {
-    return InnovationFrontService.principalMedia(innovation, this._translateService.currentLang, '120', '100');
+    return InnovationFrontService.principalMedia(innovation, this._translateService.currentLang);
   }
 
   public onClickDelete(event: Event, innovationId: string) {
@@ -142,20 +140,20 @@ export class ProjectsListComponent implements OnInit {
     event.preventDefault();
 
     this._innovationService.remove(this._removeInnovationId).pipe(first()).subscribe(() => {
-      this._translateNotificationService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
       this._innovations = this._innovations.filter((innovation) => innovation._id !== this._removeInnovationId);
+      this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
       this.closeModal(event);
-    }, (err: any) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
+      console.error(err);
     });
-
   }
 
-  set config(value: any) {
+  set config(value: Config) {
     this._config = value;
   }
 
-  get config(): any {
+  get config(): Config {
     return this._config;
   }
 
@@ -170,11 +168,11 @@ export class ProjectsListComponent implements OnInit {
     this._getProjects();
   }
 
-  get total () {
+  get total(): number {
     return this._total;
   }
 
-  get innovations () {
+  get innovations(): Array<Innovation> {
     return this._innovations;
   }
 
@@ -191,7 +189,7 @@ export class ProjectsListComponent implements OnInit {
   }
 
   get dateFormat(): string {
-    return this._dateFormat;
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
 }

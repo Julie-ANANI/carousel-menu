@@ -12,6 +12,10 @@
   height: 40px;
 }
 
+.prevent-event{
+  pointer-events: none;
+}
+
 .button-checker {
   min-width: 30px;
   max-width: 30px;

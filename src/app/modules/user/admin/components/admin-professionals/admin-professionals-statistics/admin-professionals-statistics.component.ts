@@ -155,7 +155,7 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
         resolve();
       }, (error) => {
-        console.log(error);
+        console.error(error);
         this._fetchingError = true;
         reject();
       });
@@ -177,7 +177,7 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
         });
         resolve();
       }, (error) => {
-        console.log(error);
+        console.error(error);
         this._fetchingError = true;
         reject();
       });

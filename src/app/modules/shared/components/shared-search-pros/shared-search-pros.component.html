@@ -267,12 +267,15 @@
       <div class="button-group d-flex justify-center align-center m-auto m-top-4">
 
         <!-- Saved targetedPro  -->
-        <button class="button br-6 is-primary is-sm is-outlined badge is-icon m-10" *ngIf="!toSave">
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
+                *ngIf="!toSave">
           <i class="fas fa-save"></i>
           Save
         </button>
 
-        <button class="button br-6 is-primary is-sm is-outlined badge is-icon is-active m-10"
+        <button class="button br-6 is-primary is-sm is-outlined badge is-icon is-active m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
                 (click)="saveProTargeting()"
                 *ngIf="toSave">
           <i class="fas fa-save"></i>
@@ -281,14 +284,18 @@
         <!-- /Saved targetedPro  -->
 
         <!-- Preview saved targetedPro  -->
-        <button class="button br-6 is-sm is-outlined m-10" (click)="previewSearchConfig()">
+        <button class="button br-6 is-sm is-outlined m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to preview the saved professional targeting without changing your current.'"
+                (click)="previewSearchConfig()">
           Preview
         </button>
         <!-- /Preview saved targetedPro  -->
 
         <!-- Reset targetedPro  -->
-        <button class="button br-6 is-sm is-outlined m-10" (click)="resetTargetedPros()">
-          Restore
+        <button class="button br-6 is-sm is-outlined m-10 tooltip is-multiline is-right"
+                [attr.data-tooltip] = "'Allow to replace your current professional targeting with the saved one.'"
+                (click)="resetTargetedPros()">
+          Apply
         </button>
         <!-- /Reset targetedPro  -->
 
@@ -305,7 +312,7 @@
       </div>
       <!-- /Professional targeting - buttons  -->
 
-      <app-shared-professional-targeting>
+      <app-shared-professional-targeting *ngIf="canAccess(['edit', 'targetPros'])">
       </app-shared-professional-targeting>
 
     </div>
@@ -333,7 +340,7 @@
   [maxWidth]="'90%'"
   [title]="'Preview - Professional targeting'">
 
-  <section class="modal-body">
+  <section class="modal-body" *ngIf="canAccess(['edit', 'targetPros'])">
     <app-shared-professional-targeting
       [isPreview]="true"
       [targetedProsToUpdate]="initialTargetedPro">

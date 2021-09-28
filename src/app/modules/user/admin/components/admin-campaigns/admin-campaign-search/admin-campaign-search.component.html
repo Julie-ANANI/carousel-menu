@@ -21,7 +21,7 @@
             <!-- module scraping -->
             <ng-container *ngSwitchCase="'scraping'">
               <div class="module-scraping w-full p-20 m-bottom-25">
-                <app-shared-scraping>
+                <app-shared-scraping [accessPath]="accessPath">
                 </app-shared-scraping>
               </div>
             </ng-container>
@@ -30,7 +30,9 @@
             <!-- module import -->
             <ng-container *ngSwitchCase="'import'">
               <div class="module-import p-20 m-bottom-25 m-auto" style="width: 90%">
-                <app-shared-import-pros [campaign]="campaign">
+                <app-shared-import-pros
+                  [accessPath]="accessPath"
+                  [campaign]="campaign">
                 </app-shared-import-pros>
               </div>
             </ng-container>

@@ -1,7 +1,10 @@
-<div [ngClass]="{ 'inactive flex-centered': !section.questionId || !section.questionType }" id="executive-section">
+<div
+  [ngClass]="{ 'inactive flex-centered': (!section.questionId && !section.questionIdentifier)
+  || !section.questionType }"
+  id="executive-section">
 
   <!-- no question selected -->
-  <div *ngIf="isEditable && (!section.questionId || !section.questionType)">
+  <div *ngIf="isEditable && ((!section.questionId && !section.questionIdentifier)|| !section.questionType)">
 
     <!-- title -->
     <h4>{{ 'ADMIN_EXECUTIVE_REPORT.WANT_TO_DISPLAY' | translate }}</h4>
@@ -16,16 +19,16 @@
         <h5 class="text-lg">{{ 'ADMIN_EXECUTIVE_REPORT.SYNTHESIS_SECTIONS' | translate }}</h5>
         <ul>
           <li
-            (click)="selectQuestion(question._id)"
+            (click)="selectQuestion(question.identifier)"
             *ngFor="let question of questions"
             [id]="question._id"
-            [ngClass]="{ 'text-primary': question._id === section.questionId }">
+            [ngClass]="{ 'text-primary': question.identifier === section.questionIdentifier}">
             {{ questionTitle(question) }}
           </li>
           <li
             (click)="selectQuestion('quesCustom_'+sectionIndex)"
             [id]="'quesCustom_'+sectionIndex"
-            [ngClass]="('quesCustom_'+sectionIndex) === section.questionId ? 'text-primary' : 'text-notify'"
+            [ngClass]="('quesCustom_'+sectionIndex) === section.questionIdentifier ? 'text-primary' : 'text-notify'"
             class="text-medium m-top-10">
             <i class="fas fa-plus-circle m-right-1"></i>
             {{ 'ADMIN_EXECUTIVE_REPORT.CUSTOM_SECTION' | translate }}
@@ -48,10 +51,10 @@
           <li (click)="selectQuestionType('BAR')" [ngClass]="{ 'inactive': !enableVisualBar }">
             Progress bars
           </li>
-          <li (click)="selectQuestionType('QUOTE')" [ngClass]="{ 'inactive': !section.questionId }">
+          <li (click)="selectQuestionType('QUOTE')" [ngClass]="{ 'inactive': !section.questionIdentifier }">
             Quotation
           </li>
-          <li (click)="selectQuestionType('KPI')" [ngClass]="{ 'inactive': !section.questionId }">
+          <li (click)="selectQuestionType('KPI')" [ngClass]="{ 'inactive': !section.questionIdentifier }">
             KPI
           </li>
         </ul>
@@ -66,7 +69,7 @@
 
 
   <!-- question selected -->
-  <div *ngIf="section.questionId && section.questionType">
+  <div *ngIf="(section.questionId || section.questionIdentifier) && section.questionType">
     <div [ngSwitch]="section.questionType">
 
       <!-- type KPI -->

@@ -29,7 +29,10 @@ export class SharedSearchConfigProComponent implements OnInit {
       this.initJobStates();
       this._countStates();
     }
+    this.setNextState();
   }
+
+  count = 1;
 
   /**
    * identifier in jobConfig
@@ -41,6 +44,7 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   @Input() set jobs(jobs: Array<JobConfig>) {
     this._jobConfigs = jobs;
+    this._currentState = this._jobFrontService.checkJobTypoState(jobs);
   }
 
   @Input() set filteredJobs(jobs: Array<JobConfig>) {
@@ -55,7 +59,9 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._isPreview = preview;
   }
 
-  @Input() openToggle: boolean;
+  @Input() set showToggleSearch(value) {
+    this._showToggleSearch = value;
+  }
 
   private _context = ''; // SeniorityLevel's name / Job Category's name
 
@@ -75,9 +81,14 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   private _nbExcluded: number;
 
+  private _isHovered = false;
+
+  private _hoverState = 0;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
+
 
   ngOnInit() {
     this._countStates();
@@ -89,23 +100,44 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   getCurrentState() {
-    switch (this._currentState) {
-      case 0:
-        return {
-          border: '4px solid #EA5858',
-          color: '#EA5858'
-        };
-      case 3:
-      case 2:
-        return {
-          border: '4px solid #333333',
-          color: '#333333'
-        };
-      case 1:
-        return {
-          border: '4px solid #2ECC71',
-          color: '#2ECC71'
-        };
+    if (!this._isHovered) {
+      switch (this._currentState) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 3:
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
+    } else {
+      switch (this._hoverState) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 3:
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
     }
   }
 
@@ -165,16 +197,22 @@ export class SharedSearchConfigProComponent implements OnInit {
       case 0:
         this.jobConfigs.map(_job => {
           _job.state = 0;
+          _job.hovered = false;
+          _job.hoveredState = 0;
         });
         break;
       case 1:
         this.jobConfigs.map(_job => {
           _job.state = 1;
+          _job.hovered = false;
+          _job.hoveredState = 0;
         });
         break;
       case 2:
         this.jobConfigs.map(_job => {
           _job.state = 2;
+          _job.hovered = false;
+          _job.hoveredState = 0;
         });
         break;
     }
@@ -212,40 +250,44 @@ export class SharedSearchConfigProComponent implements OnInit {
    */
   stateOnChange(event: Event) {
     event.preventDefault();
-    if (!this.isPreview) {
-      if (this.isJobTypo) {
-        this.setJobStates();
-        this._jobFrontService.targetedProsUpdatedOnChange(
-          {
-            action: 'jobTypos',
-            jobs: this.jobConfigs,
-            identifier: this._identifier,
-            state: this._currentState
-          });
-      } else {
-        this.setSeniorityLevelState();
-        this._jobFrontService.targetedProsUpdatedOnChange(
-          {
-            action: 'seniorLevels',
-            state: this._currentState,
-            identifier: this._identifier
-          });
-      }
-      this._countStates();
+    this.setNextState();
+    if (this.isJobTypo) {
+      this.setJobStates();
+      this._jobFrontService.targetedProsUpdatedOnChange(
+        {
+          action: 'jobTypos',
+          jobs: this.jobConfigs,
+          identifier: this._identifier,
+          state: this._currentState,
+          isToggle: this._showToggleSearch,
+        });
+    } else {
+      this.setSeniorityLevelState();
+      this._jobFrontService.targetedProsUpdatedOnChange(
+        {
+          action: 'seniorLevels',
+          state: this._currentState,
+          identifier: this._identifier
+        });
     }
+    this._countStates();
   }
 
 
   get showToggleSearch(): boolean {
-    return this._showToggleSearch || this.openToggle;
-  }
-
-  set showToggleSearch(value: boolean) {
-    this._showToggleSearch = value;
+    return this._showToggleSearch;
   }
 
   onClickToggle() {
     this._showToggleSearch = !this._showToggleSearch;
+    this._jobFrontService.targetedProsUpdatedOnChange(
+      {
+        action: 'jobTypos',
+        jobs: this.jobConfigs,
+        identifier: this._identifier,
+        state: this._currentState,
+        isToggle: this._showToggleSearch,
+      });
   }
 
   /**
@@ -253,23 +295,44 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param job
    */
   getJobCurrentState(job: any) {
-    switch (job.state) {
-      case 0:
-        return {
-          border: '4px solid #EA5858',
-          color: '#EA5858'
-        };
-      case 2:
-        return {
-          border: '4px solid #333333',
-          color: '#333333'
-        };
-      case 1:
-        return {
-          border: '4px solid #2ECC71',
-          color: '#2ECC71'
-        };
+    if (!job.hovered) {
+      switch (job.state) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
+    } else {
+      switch (job.hoveredState) {
+        case 0:
+          return {
+            border: '4px solid #EA5858',
+            color: '#EA5858'
+          };
+        case 2:
+          return {
+            border: '4px solid #333333',
+            color: '#333333'
+          };
+        case 1:
+          return {
+            border: '4px solid #2ECC71',
+            color: '#2ECC71'
+          };
+      }
     }
+
   }
 
   /**
@@ -278,63 +341,107 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param job
    */
   stateJobOnChange(event: Event, job: any) {
-    if (!this.isPreview) {
-      event.preventDefault();
-      switch (job.state) {
-        case 0:
-          job.state = 2;
-          break;
-        case 1:
-          job.state = 0;
-          break;
-        case 2:
-          job.state = 1;
-          break;
-      }
-      this._countStates();
-      this._jobFrontService.targetedProsUpdatedOnChange(
-        {
-          action: 'jobTypos',
-          jobs: this.jobConfigs,
-          identifier: this._identifier,
-          state: this._currentState
-        });
-      this._currentState = this.checkTypoState();
+    event.preventDefault();
+    event.preventDefault();
+    switch (job.state) {
+      case 0:
+        job.state = 2;
+        break;
+      case 1:
+        job.state = 0;
+        break;
+      case 2:
+        job.state = 1;
+        break;
     }
-  }
-
-  /**
-   * check Job category state, it will change the state in jobs of the job category
-   */
-  checkTypoState() {
-    const _stateNeutral = this._jobConfigs.filter((_job: any) => {
-      return _job.state === 2;
-    }).length;
-
-    const _stateExcluded = this._jobConfigs.filter((_job: any) => {
-      return _job.state === 0;
-    }).length;
-
-    const _stateIncluded = this._jobConfigs.filter((_job: any) => {
-      return _job.state === 1;
-    }).length;
-
-    if (_stateNeutral === this._jobConfigs.length) {
-      return 2;
-    } else if (_stateExcluded === this._jobConfigs.length) {
-      return 0;
-    } else if (_stateIncluded === this._jobConfigs.length) {
-      return 1;
-    } else {
-      return 3;
-    }
+    this.jobNextState(job);
+    this._countStates();
+    this._currentState = this._jobFrontService.checkJobTypoState(this.jobConfigs);
+    this._jobFrontService.targetedProsUpdatedOnChange(
+      {
+        action: 'jobTypos',
+        jobs: this.jobConfigs,
+        identifier: this._identifier,
+        state: this._currentState,
+        isToggle: this._showToggleSearch,
+      });
   }
 
   showJob(job: JobConfig) {
-    return this._filteredJobsIds.includes(job._id);
+    return !job.hidden && this._filteredJobsIds.includes(job._id);
   }
 
   get isPreview(): Boolean {
     return this._isPreview;
+  }
+
+  setNextState() {
+    if (this.isJobTypo) {
+      switch (this._currentState) {
+        case 0:
+          this._hoverState = 2;
+          break;
+        case 1:
+          this._hoverState = 0;
+          break;
+        case 2:
+          this._hoverState = 1;
+          break;
+        case 3:
+          this._hoverState = 1;
+          break;
+      }
+    } else {
+      switch (this._currentState) {
+        case 0:
+          this._hoverState = 1;
+          break;
+        case 1:
+          this._hoverState = 0;
+          break;
+      }
+    }
+  }
+
+  showNextState(event: Event) {
+    event.stopPropagation();
+    this.setNextState();
+    this._isHovered = true;
+  }
+
+  get hoverState(): number {
+    return this._hoverState;
+  }
+
+  get isHovered(): boolean {
+    return this._isHovered;
+  }
+
+  closeHoverState() {
+    this._isHovered = false;
+  }
+
+  closeJobHoverState(job: JobConfig) {
+    job.hovered = false;
+  }
+
+  jobNextState(job: JobConfig) {
+    switch (job.state) {
+      case 0:
+        job.hoveredState = 2;
+        break;
+      case 1:
+        job.hoveredState = 0;
+        break;
+      case 2:
+        job.hoveredState = 1;
+        break;
+    }
+  }
+
+  showJobNextState(event: Event, job: JobConfig) {
+    event.preventDefault();
+    this.jobNextState(job);
+    job.hovered = true;
   }
 }

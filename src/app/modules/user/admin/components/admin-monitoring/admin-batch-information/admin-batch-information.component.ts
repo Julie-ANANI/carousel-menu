@@ -30,7 +30,7 @@ export class AdminBatchInformationComponent implements OnInit {
           this._recipients = this._batch.payload.recipients;
           this._campaignService.get(this._batch.payload.metadata.campaign_id)
             .pipe(first())
-            .subscribe((campaign: Campaign) => this._campaign = campaign, (error: any) => { console.log(error); });
+            .subscribe((campaign: Campaign) => this._campaign = campaign, (error: any) => { console.error(error); });
         }, (error: any) => {
           console.error(error); // notify error
         });

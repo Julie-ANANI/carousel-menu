@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Campaign } from '../../../../models/campaign';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-shared-import-pros',
@@ -12,13 +13,22 @@ import { TranslateNotificationsService } from '../../../../services/notification
 })
 
 export class SharedImportProsComponent {
+  @Input() accessPath: Array<string> = [];
+
   @Input() campaign: Campaign = <Campaign>{};
 
   private _importRequestKeywords = '';
 
 
   constructor(private _searchService: SearchService,
+              private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
+  }
+
+  public canAccess(path: Array<string>) {
+    return this._rolesFrontService.hasAccessAdminSide(
+      this.accessPath.concat(path)
+    );
   }
 
 
@@ -29,7 +39,7 @@ export class SharedImportProsComponent {
   set importRequestKeywords(value: string) {
     this._importRequestKeywords = value;
   }
-  
+
 
   public onClickImport(file: File) {
     let fileName = this._importRequestKeywords;

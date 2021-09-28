@@ -1,7 +1,10 @@
 export interface JobConfig {
   label: { en: string, fr: string };
+  hidden?: boolean;
   state: number;
   _id: string;
+  hovered?: boolean;
+  hoveredState?: number;
 }
 
 export interface JobsTypologies {
@@ -10,6 +13,7 @@ export interface JobsTypologies {
   name: { en: string, fr: string };
   totalCount?: number;
   identifier?: string;
+  isToggle?: boolean;
 }
 
 export interface JobsCategory {

@@ -244,15 +244,17 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         sections[index] = {
           questionId: '',
           questionType: '',
+          questionIdentifier: '',
           title: '',
           abstract: '',
           content: <any>{}
         };
 
-        if (this._executiveReport.sections[index].questionId) {
+        if (this._executiveReport.sections[index].questionIdentifier) {
           sections[index] = this._executiveReport.sections[index];
         } else {
           sections[index].questionId = question._id;
+          sections[index].questionIdentifier = question.identifier;
           sections[index].title = MissionQuestionService.label(question, 'title', this._executiveReport.lang);
           const answersToShow: Array<Answer> = this._responseService.answersToShow(answers, question);
           const barsData: Array<BarData> = ResponseService.barsData(question, answersToShow);

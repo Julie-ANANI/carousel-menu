@@ -1,16 +1,16 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Innovation } from '../../../../../models/innovation';
-import { Tag } from '../../../../../models/tag';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { TranslateService } from '@ngx-translate/core';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { DiscoverService } from '../../../../../services/discover/discover.service';
-import { Config } from '../../../../../models/config';
-import { isPlatformBrowser } from '@angular/common';
-import { first } from 'rxjs/operators';
-import { Response } from '../../../../../models/response';
-import { LocalStorageService } from '../../../../../services/localStorage/localStorage.service';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Innovation} from '../../../../../models/innovation';
+import {Tag} from '../../../../../models/tag';
+import {TranslateTitleService} from '../../../../../services/title/title.service';
+import {TranslateService} from '@ngx-translate/core';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
+import {DiscoverService} from '../../../../../services/discover/discover.service';
+import {Config} from '../../../../../models/config';
+import {isPlatformBrowser} from '@angular/common';
+import {first} from 'rxjs/operators';
+import {Response} from '../../../../../models/response';
+import {LocalStorageService} from '../../../../../services/localStorage/localStorage.service';
 
 @Component({
   templateUrl: './discover-innovations.component.html',
@@ -78,21 +78,24 @@ export class DiscoverInnovationsComponent implements OnInit {
   ngOnInit() {
 
     if (isPlatformBrowser(this._platformId)) {
-      const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
-      if (!sessionValues.length) {
-        this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
-          this._totalFilteredInnovations = response._metadata.totalCount;
-          this._filteredInnovations = response.result.slice(4);
-          if (this._recommendedInnovationId) {
-            this._applyInnoRecommendation();
-          }
-          this._getLatestInnovations(response.result);
-          this._stopLoading = true;
-          this._stopLoadingLatest = true;
-        }, () => {
-          this._fetchingError = true;
-        });
-      }
+      setTimeout(() => {
+        const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
+        if (!sessionValues.length) {
+          this._innovationService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
+            this._totalFilteredInnovations = response._metadata.totalCount;
+            this._filteredInnovations = response.result.slice(4);
+            if (this._recommendedInnovationId) {
+              this._applyInnoRecommendation();
+            }
+            this._getLatestInnovations(response.result);
+            this._stopLoading = true;
+            this._stopLoadingLatest = true;
+          }, () => {
+            this._fetchingError = true;
+          });
+        }
+      }, 1000);
+
     }
 
   }
@@ -117,7 +120,7 @@ export class DiscoverInnovationsComponent implements OnInit {
     this._latestInnovations = innovations.length > 0 ? innovations.slice(0, 4) : [];
   }
 
-  onChangePage(event: {offset: number; limit: number}) {
+  onChangePage(event: { offset: number; limit: number }) {
     this._config.limit = event.limit.toString();
     this._config.offset = event.offset.toString();
     this._getFilteredInnovations();

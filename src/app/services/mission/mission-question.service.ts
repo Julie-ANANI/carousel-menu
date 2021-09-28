@@ -10,7 +10,6 @@ import {
 } from '../../models/mission';
 import {Subject} from 'rxjs/Subject';
 import {colors} from '../../utils/chartColors';
-import {TranslateService} from '@ngx-translate/core';
 import {replaceNumberRegex} from '../../utils/regex';
 
 @Injectable({providedIn: 'root'})
@@ -164,7 +163,7 @@ export class MissionQuestionService {
    */
   private _generalMarketQuestionsTypes: Array<string> = ['finalConclusion', 'professionals', 'keyLearning'];
 
-  constructor(private _translateService: TranslateService) {
+  constructor() {
   }
 
   /**
@@ -706,19 +705,14 @@ export class MissionQuestionService {
   }
 
   /**
-   * first we search the entry by the lang passed if not found then
-   * based on the languages will search the entry of the question and if not found then return first entry based
-   * on the questionnaireLangs
+   * based on the questionnaireLangs will search the entry of the question and if not found then
+   * return first entry of the questionnaireLangs
    * @param question
    * @param lang
    */
   public questionEntry(question: MissionQuestion = <MissionQuestion>{}, lang: string): MissionQuestionEntry {
-    const find = MissionQuestionService.entryInfo(question, lang);
-
-    if (!!find) {
-      return find;
-    } else if (this._questionnaireLangs.length) {
-      const quesLang = this._questionnaireLangs.find((_lang) => _lang === this._translateService.currentLang);
+   if (this._questionnaireLangs.length) {
+      const quesLang = this._questionnaireLangs.find((_lang) => _lang === lang);
       if (!!quesLang) {
         return MissionQuestionService.entryInfo(question, quesLang);
       } else {

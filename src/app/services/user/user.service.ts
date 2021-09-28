@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { Tag } from '../../models/tag';
 import { Config } from '../../models/config';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -88,6 +89,14 @@ export class UserService {
     return this._http.get<Array<User>>('/user', { params: _config });
   }
 
+  public resetPassword(email?: string): Observable<any> {
+    return this._http.post('/user/resetPassword', {
+      email: email,
+      callback: environment.clientUrl,
+    });
+  }
+
+
   public delete(): Observable<any> {
     return this._http.delete('/user/me');
   }
@@ -102,5 +111,9 @@ export class UserService {
 
   public createSwellUsers(): Observable<any> {
     return this._http.post('/misc/swellrt/synchronizeUsers', {});
+  }
+
+  public contactUMISupport(data: any): Observable<any> {
+    return this._http.post('/user/contactUMI', data);
   }
 }
