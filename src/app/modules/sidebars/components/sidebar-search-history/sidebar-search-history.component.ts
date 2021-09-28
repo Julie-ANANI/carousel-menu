@@ -325,7 +325,7 @@ export class SidebarSearchHistoryComponent {
   prepareSeniorityLevels() {
     const included: any[] = [];
     const excluded: any[] = [];
-    if (this._request.targetPros) {
+    if (this._request.targetPros && this._request.targetPros.seniorityLevels) {
       Object.keys(this._request.targetPros.seniorityLevels).forEach(key => {
         if (this._request.targetPros.seniorityLevels[key].state === 0) {
           excluded.push(this._request.targetPros.seniorityLevels[key].name);
@@ -347,7 +347,7 @@ export class SidebarSearchHistoryComponent {
     this._includedJobCate = [];
     this._excludedJobCate = [];
     this._mixedJobCate = [];
-    if (this._request.targetPros) {
+    if (this._request.targetPros && this._request.targetPros.jobsTypologies) {
       Object.keys(this._request.targetPros.jobsTypologies).forEach(key => {
         const jobToAdd = {
           jobName: '',
