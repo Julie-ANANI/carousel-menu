@@ -45,7 +45,7 @@ import { MissionFrontService } from '../../../../../../services/mission/mission-
 import { picto, Picto } from '../../../../../../models/static-data/picto';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
 import { Community } from '../../../../../../models/community';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 
 export interface UserSuggestion {
   name: string;
@@ -107,14 +107,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   ];
 
   private _domains: Array<{ name: string }> = [
-    { name: 'umi' },
-    { name: 'dynergie' },
-    { name: 'novanexia' },
-    { name: 'inomer' },
-    { name: 'multivalente' },
-    { name: 'salveo' },
-    { name: 'schneider' },
-    { name: 'bnpparibas' },
+    {name: 'umi'},
+    {name: 'dynergie'},
+    {name: 'novanexia'},
+    {name: 'inomer'},
+    {name: 'multivalente'},
+    {name: 'salveo'},
+    {name: 'schneider'},
+    {name: 'bnpparibas'},
   ];
 
   private _statsConfig: Array<StatsInterface> = [];
@@ -129,6 +129,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _isPublishingCommunity = false;
 
+  private _blacklistDomains: Array<string> = [];
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _rolesFrontService: RolesFrontService,
@@ -142,7 +144,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     private _translateNotificationsService: TranslateNotificationsService,
     private _innovationFrontService: InnovationFrontService,
     private _statsReferentsService: StatsReferentsService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -168,6 +171,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           if (!!this._innovation.clientProject) {
             this._clientProject = <ClientProject>this._innovation.clientProject;
           }
+
+          this.getInitialDomains();
         });
     }
   }
@@ -412,7 +417,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public onMissionTypeChange(type: MissionType) {
     this._mission.type = type;
     this._saveMission(
-      { type: this._mission.type },
+      {type: this._mission.type},
       'The market test type has been updated.'
     );
   }
@@ -429,7 +434,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._missionTeam.push(operator['_id']);
     }
     this._saveMission(
-      { team: this._mission.team },
+      {team: this._mission.team},
       'The team members have been updated.'
     );
   }
@@ -636,6 +641,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
    * Only client is allowed to update the objective.
    * commented on 8th June, 2021
    */
+
   /*public onMainObjectiveChange(objective: string) {
     const _index = this._missionObjectives.findIndex(
       (value) => value['en']['label'] === objective
@@ -757,17 +763,17 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     ) {
       this._innovation._metadata['campaign'][
         'anonymous_answers'
-      ] = (event.target as HTMLInputElement).checked;
+        ] = (event.target as HTMLInputElement).checked;
     } else {
       this._innovation._metadata = this._innovation._metadata['campaign'][
         'anonymous_answers'
-      ] = (event.target as HTMLInputElement).checked;
+        ] = (event.target as HTMLInputElement).checked;
     }
     this._saveProject(
       (event.target as HTMLInputElement).checked
         ? 'The answers will be anonymous.'
         : 'The answers won\'t be anonymous.',
-      { _metadata: this._innovation._metadata }
+      {_metadata: this._innovation._metadata}
     );
   }
 
@@ -784,7 +790,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._innovation.isPublic
         ? 'The project is published to the Innovation Showroom.'
         : 'The project is not published to the Innovation Showroom.',
-      { isPublic: this._innovation.isPublic }
+      {isPublic: this._innovation.isPublic}
     );
   }
 
@@ -797,8 +803,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._innovation.status = 'EDITING';
       this._saveProject(
         'The project has been placed in revision status, ' +
-          'please notify the owner of the changes to be made.',
-        { status: this._innovation.status }
+        'please notify the owner of the changes to be made.',
+        {status: this._innovation.status}
       );
     }
   }
@@ -810,7 +816,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._innovation.status === 'SUBMITTED'
     ) {
       this._innovation.status = 'EVALUATING';
-      const saveObject: any = { status: this._innovation.status };
+      const saveObject: any = {status: this._innovation.status};
       if (this._mission._id && this._mission.type === 'USER') {
         this._mission.type = 'CLIENT';
         saveObject.mission = this._mission;
@@ -914,6 +920,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._statsConfig;
   }
 
+  get blacklistDomains(): Array<string> {
+    return this._blacklistDomains;
+  }
+
   get picto(): Picto {
     return this._picto;
   }
@@ -932,6 +942,16 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   set isPublishingCommunity(value: boolean) {
     this._isPublishingCommunity = value;
+  }
+
+  getInitialDomains() {
+    this._blacklistDomains = [];
+    if (this._innovation.settings && this._innovation.settings.blacklist) {
+      this._blacklistDomains = this._blacklistDomains.concat(this._innovation.settings.blacklist.domains);
+    }
+    if (this._innovation.owner && this._innovation.owner.company && this._innovation.owner.company.domain) {
+      this._blacklistDomains.push(this._innovation.owner.company.domain);
+    }
   }
 
   ngOnDestroy(): void {
