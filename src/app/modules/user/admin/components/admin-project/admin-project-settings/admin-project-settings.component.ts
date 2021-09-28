@@ -171,8 +171,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           if (!!this._innovation.clientProject) {
             this._clientProject = <ClientProject>this._innovation.clientProject;
           }
-
-          this.getInitialDomains();
         });
     }
   }
@@ -942,16 +940,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   set isPublishingCommunity(value: boolean) {
     this._isPublishingCommunity = value;
-  }
-
-  getInitialDomains() {
-    this._blacklistDomains = [];
-    if (this._innovation.settings && this._innovation.settings.blacklist) {
-      this._blacklistDomains = this._blacklistDomains.concat(this._innovation.settings.blacklist.domains);
-    }
-    if (this._innovation.owner && this._innovation.owner.company && this._innovation.owner.company.domain) {
-      this._blacklistDomains.push(this._innovation.owner.company.domain);
-    }
   }
 
   ngOnDestroy(): void {

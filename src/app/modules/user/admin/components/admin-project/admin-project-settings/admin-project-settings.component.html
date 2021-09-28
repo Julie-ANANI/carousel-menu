@@ -634,7 +634,7 @@
     (toBlacklists)="addBlocklist($event)"
     [innovationId]="innovation._id"
     *ngIf="sidebarValue.type === 'EXCLUDE_EMAILS_DOMAINS'"
-    [initialDomains]="blacklistDomains"
+    [initialDomains]="innovation.settings?.blacklist?.domains"
     [initialEmails]="innovation.settings?.blacklist?.emails"
     [isEditable]="canAccess(['edit', 'blocklist'])"
     [type]="sidebarValue.type">
