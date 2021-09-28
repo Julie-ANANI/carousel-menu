@@ -237,6 +237,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
    */
   public updateCampaign(formGroup: FormGroup) {
     this._selectCampaign.title = formGroup.value['title'];
+    this._selectCampaign.rgpd = formGroup.value['rgpd'];
     this._campaignService
       .put(this._selectCampaign)
       .pipe(first())

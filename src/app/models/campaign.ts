@@ -47,5 +47,6 @@ export interface Campaign {
   type?: string;
   status?: string;
   targetPros?: TargetPros;
+  rgpd?: boolean;
 }
 
