@@ -305,9 +305,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._isSaving = false;
         this._toBeSaved = '';
         this._setInnovation();
-        if (!this._toBeSavedComment) {
-          this._translateNotificationsService.success('Success', 'The project has been updated.');
-        }
+        this._translateNotificationsService.success('Success', 'The project has been updated.');
       }, (err: HttpErrorResponse) => {
         this._isSaving = false;
         this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
@@ -321,6 +319,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id,
           this.activeCard.operatorComment).pipe(first()).subscribe((_) => {
           this._isSaving = false;
+          this._toBeSavedComment = false;
           this._translateNotificationsService.success('Success', 'The comments/suggestions have been updated.');
           resolve(true);
         }, (err: HttpErrorResponse) => {
