@@ -13,54 +13,14 @@
     </div>
     <!-- /save button -->
 
-    <!-- toggle advanced search -->
-    <div class="stw-toggle-list-wrapper">
-
-      <!-- toggle button -->
-      <button (click)="onClickToggle()" class="button is-link p-no" type="button">
-        {{ 'Automatise blacklist' }}
-        <i class="icon icon-right" [ngClass]="showToggleSearch ? 'icon-arrow-down' : 'icon-arrow-right' "></i>
-      </button>
-      <!-- /toggle button -->
-
-      <div class="flex-d-column m-top-3" style="line-height: 1" *ngIf="messageForEmptyFamilyEnterprises && messageForEmptyFamilyEnterprises.size">
-        <p class="text-error text-13" *ngFor="let message of messageForEmptyFamilyEnterprises">
-           - {{message}}
-        </p>
-      </div>
-
-      <!-- toggle options -->
-      <div *ngIf="showToggleSearch" [ngClass]="showToggleSearch ? 'd-block' : 'd-none'" class="m-top-25">
-
-        <!-- use -->
-        <h6 class="title is-6 m-bottom-15">Select the domains to exclude</h6>
-        <div class="form-group m-bottom-2">
-          <ng-container *ngFor="let option of autoBlacklistOption">
-            <label class="form-checkbox is-inline">
-              <input
-                (click)="optionOnChange(option)"
-                type="checkbox" [value]="option.value" [checked]="option.checked">
-              <i class="form-icon"></i> {{option.option}}
-            </label>
-          </ng-container>
-        </div>
-
-        <div>
-          <button
-            class="button is-community is-xs"
-            [disabled]="enableValidateBnt()"
-            (click)="autoBlacklist()"
-            id="btn-auto-blacklist">
-            Validate
-          </button>
-        </div>
-        <!-- /use -->
-
-      </div>
-      <!-- toggle options -->
-
+    <!-- auto blacklist message -->
+    <div class="flex-d-column m-top-3" style="line-height: 1"
+         *ngIf="messageForEmptyFamilyEnterprises && messageForEmptyFamilyEnterprises.size">
+      <p class="text-error text-13" *ngFor="let message of messageForEmptyFamilyEnterprises">
+        - {{message}}
+      </p>
     </div>
-    <!-- /toggle advanced search -->
+    <!-- /auto blacklist message -->
 
     <!-- templates -->
     <div class="m-top-4">
