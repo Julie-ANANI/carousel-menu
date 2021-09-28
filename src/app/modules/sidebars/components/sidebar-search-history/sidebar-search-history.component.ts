@@ -325,13 +325,15 @@ export class SidebarSearchHistoryComponent {
   prepareSeniorityLevels() {
     const included: any[] = [];
     const excluded: any[] = [];
-    Object.keys(this._request.targetPros.seniorityLevels).forEach(key => {
-      if (this._request.targetPros.seniorityLevels[key].state === 0) {
-        excluded.push(this._request.targetPros.seniorityLevels[key].name);
-      } else if (this._request.targetPros.seniorityLevels[key].state === 1) {
-        included.push(this._request.targetPros.seniorityLevels[key].name);
-      }
-    });
+    if (this._request.targetPros) {
+      Object.keys(this._request.targetPros.seniorityLevels).forEach(key => {
+        if (this._request.targetPros.seniorityLevels[key].state === 0) {
+          excluded.push(this._request.targetPros.seniorityLevels[key].name);
+        } else if (this._request.targetPros.seniorityLevels[key].state === 1) {
+          included.push(this._request.targetPros.seniorityLevels[key].name);
+        }
+      });
+    }
     this._seniorityLevels = {
       included: included.toString(),
       excluded: excluded.toString()
@@ -345,29 +347,31 @@ export class SidebarSearchHistoryComponent {
     this._includedJobCate = [];
     this._excludedJobCate = [];
     this._mixedJobCate = [];
-    Object.keys(this._request.targetPros.jobsTypologies).forEach(key => {
-      const jobToAdd = {
-        jobName: '',
-        included: 0,
-        excluded: 0
-      };
-      if (this._request.targetPros.jobsTypologies[key].state === 0) {
-        jobToAdd.excluded = this._request.targetPros.jobsTypologies[key].jobs.length;
-        jobToAdd.jobName = this._request.targetPros.jobsTypologies[key].name.en;
-        this._excludedJobCate.push(jobToAdd);
-      } else if (this._request.targetPros.jobsTypologies[key].state === 1) {
-        jobToAdd.included = this._request.targetPros.jobsTypologies[key].jobs.length;
-        jobToAdd.jobName = this._request.targetPros.jobsTypologies[key].name.en;
-        this._includedJobCate.push(jobToAdd);
-      } else if (this._request.targetPros.jobsTypologies[key].state === 3) {
-        jobToAdd.included =
-          this._request.targetPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 1).length;
-        jobToAdd.excluded =
-          this._request.targetPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 0).length;
-        jobToAdd.jobName = this._request.targetPros.jobsTypologies[key].name.en;
-        this._mixedJobCate.push(jobToAdd);
-      }
-    });
+    if (this._request.targetPros) {
+      Object.keys(this._request.targetPros.jobsTypologies).forEach(key => {
+        const jobToAdd = {
+          jobName: '',
+          included: 0,
+          excluded: 0
+        };
+        if (this._request.targetPros.jobsTypologies[key].state === 0) {
+          jobToAdd.excluded = this._request.targetPros.jobsTypologies[key].jobs.length;
+          jobToAdd.jobName = this._request.targetPros.jobsTypologies[key].name.en;
+          this._excludedJobCate.push(jobToAdd);
+        } else if (this._request.targetPros.jobsTypologies[key].state === 1) {
+          jobToAdd.included = this._request.targetPros.jobsTypologies[key].jobs.length;
+          jobToAdd.jobName = this._request.targetPros.jobsTypologies[key].name.en;
+          this._includedJobCate.push(jobToAdd);
+        } else if (this._request.targetPros.jobsTypologies[key].state === 3) {
+          jobToAdd.included =
+            this._request.targetPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 1).length;
+          jobToAdd.excluded =
+            this._request.targetPros.jobsTypologies[key].jobs.filter((job: JobConfig) => job.state === 0).length;
+          jobToAdd.jobName = this._request.targetPros.jobsTypologies[key].name.en;
+          this._mixedJobCate.push(jobToAdd);
+        }
+      });
+    }
   }
 
   professionalTargeting() {
