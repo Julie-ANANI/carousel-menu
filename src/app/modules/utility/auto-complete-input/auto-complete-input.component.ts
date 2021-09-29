@@ -131,7 +131,7 @@ export class AutoCompleteInputComponent implements OnInit {
 
   ngOnInit(): void {
     this._autoCompleteInputForm = this._formBuilder.group({
-      answer: '',
+      answer: [{value: '', disabled: !this.isEditable}],
     });
   }
 
