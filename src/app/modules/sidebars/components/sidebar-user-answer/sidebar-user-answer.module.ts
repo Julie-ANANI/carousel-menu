@@ -14,6 +14,7 @@ import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
 import { ReassignAnswerComponent } from './reassign-answer/reassign-answer.component';
+import {BannerModule} from '../../../utility/banner/banner.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ReassignAnswerComponent } from './reassign-answer/reassign-answer.compo
     AutoCompleteInputModule,
     SharedTagsModule,
     PipeModule,
-    InputListModule
+    InputListModule,
+    BannerModule
   ],
   declarations: [
     SidebarUserAnswerComponent,

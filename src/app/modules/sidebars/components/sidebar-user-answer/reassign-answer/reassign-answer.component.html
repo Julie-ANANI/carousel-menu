@@ -1,5 +1,16 @@
 <div id="reassign-answer">
 
+  <div *ngIf="isSearchingPro" class="m-bottom-20">
+    <app-utility-banner
+      [background]="'bg-progress'"
+      [position]="'relative'"
+      [showBanner]="true"
+      [showCloseBtn]="false">
+      <span class="loading is-sm is-white"></span>
+      <span class="p-left-20">Searching pro associated to this Email address, please be patient.</span>
+    </app-utility-banner>
+  </div>
+
   <!-- firstName | lastName -->
   <div class="input-group m-bottom-20">
 
@@ -8,6 +19,7 @@
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.firstName"
+        [disabled]="isSearchingPro"
         class="form-input is-sm is-shadowed"
         id="reassign-answer-firstName"
         placeholder="Enter the first name"
@@ -19,6 +31,7 @@
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.lastName"
+        [disabled]="isSearchingPro"
         class="form-input is-sm is-shadowed"
         id="reassign-answer-lastName"
         placeholder="Enter the last name"
@@ -34,8 +47,9 @@
     <div class="form-group">
       <label class="form-label" for="reassign-answer-email">Email Address</label>
       <input
-        (change)="emitPro()"
+        (change)="emitPro('EMAIL')"
         [(ngModel)]="newPro.email"
+        [disabled]="isSearchingPro"
         class="form-input is-sm is-shadowed"
         id="reassign-answer-email"
         placeholder="Enter the email address"
@@ -47,6 +61,7 @@
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.jobTitle"
+        [disabled]="isSearchingPro"
         class="form-input is-sm is-shadowed"
         id="reassign-answer-job"
         placeholder="Enter the job"
@@ -64,6 +79,7 @@
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.company"
+        [disabled]="isSearchingPro"
         class="form-input is-sm is-shadowed"
         id="reassign-answer-company"
         placeholder="Enter the company"
@@ -74,8 +90,9 @@
       <label class="form-label">Country</label>
       <app-utility-auto-complete-input
         (update)="updateCountry($event)"
+        [config]="countryConfig"
+        [isEditable]="!isSearchingPro"
         [isSmall]="true"
-        [config]="{ placeholder: 'Enter the country', type: 'countries' }"
         [onlyOne]="true">
       </app-utility-auto-complete-input>
     </div>
