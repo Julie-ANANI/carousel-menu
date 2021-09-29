@@ -90,6 +90,7 @@ export class ReassignAnswerComponent {
           this._country = (_pro.country && _pro.country.name) ? _pro.country :
             {name: (countries[_pro.country] || _pro.country)};
           this._company = _pro.company;
+
           this._newPro = {
             firstName: _pro.firstName,
             lastName: _pro.lastName,
@@ -98,6 +99,7 @@ export class ReassignAnswerComponent {
             company: (this._company && this._company.name) || '',
             country: (this._country && this._country.name) || ''
           };
+          this._emit();
         }
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
@@ -105,8 +107,12 @@ export class ReassignAnswerComponent {
         console.error(err);
       });
     } else {
-      this.proToAssign.emit(this._newPro);
+      this._emit();
     }
+  }
+
+  private _emit() {
+    this.proToAssign.emit(this._newPro);
   }
 
   public onCountrySelect(event: Country) {
