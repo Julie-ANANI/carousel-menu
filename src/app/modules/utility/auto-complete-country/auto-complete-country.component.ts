@@ -28,7 +28,7 @@ export class AutoCompleteCountryComponent implements OnInit, OnDestroy {
   }
 
   @Input() set country(value: Country) {
-    this._country = value;
+    this._country = value || <Country>{};
   }
 
   /**

@@ -47,7 +47,7 @@ export class AutoCompleteCompanyComponent implements OnInit, OnDestroy {
   @Input() placeholder = 'COMMON.PLACEHOLDER.COMPANY';
 
   @Input() set company(value: Company | Enterprise) {
-    this._company = value;
+    this._company = value || <Company | Enterprise>{};
   }
 
   @Output() companyChange: EventEmitter<Company | Enterprise> = new EventEmitter<Company | Enterprise>();
