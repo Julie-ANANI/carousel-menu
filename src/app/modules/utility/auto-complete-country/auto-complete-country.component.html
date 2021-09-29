@@ -1,7 +1,7 @@
-<div id="auto-complete-country">
+<div class="relative" id="auto-complete-country">
   <input
     (keypress)="onSuggestCountries()"
-    [(ngModel)]="country"
+    [(ngModel)]="country.name"
     [attr.placeholder]="placeholder | translate"
     [disabled]="isDisabled"
     [id]="inputId"
@@ -9,13 +9,11 @@
     class="form-input"
     type="text">
   <ul
-    *ngIf="!!country"
+    *ngIf="!!country.name"
     [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }"
     class="input-suggestion">
-    <li
-      (click)="onCountrySelect(suggestion)"
-      *ngFor="let suggestion of countriesSuggestion.sort()">
-      {{ suggestion }}
+    <li (click)="onCountrySelect(suggestion)" *ngFor="let suggestion of countriesSuggestion">
+      {{ suggestion.name | titlecase }}
     </li>
   </ul>
 </div>

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {AutocompleteService} from '../../../services/autocomplete/autocomplete.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {Country} from '../../../models/country';
 
 @Component({
   selector: 'app-auto-complete-country',
@@ -14,7 +15,7 @@ export class AutoCompleteCountryComponent implements OnInit, OnDestroy {
     return this._subscribe;
   }
 
-  get countriesSuggestion(): Array<string> {
+  get countriesSuggestion(): Array<Country> {
     return this._countriesSuggestion;
   }
 
@@ -22,11 +23,11 @@ export class AutoCompleteCountryComponent implements OnInit, OnDestroy {
     return this._displayCountrySuggestion;
   }
 
-  get country(): string {
+  get country(): Country {
     return this._country;
   }
 
-  @Input() set country(value: string) {
+  @Input() set country(value: Country) {
     this._country = value;
   }
 
@@ -52,44 +53,51 @@ export class AutoCompleteCountryComponent implements OnInit, OnDestroy {
 
   @Input() placeholder = 'Enter the country';
 
-  @Output() countryChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() countryChange: EventEmitter<Country> = new EventEmitter<Country>();
 
-  private _country = '';
+  private _country: Country = <Country>{};
 
   private _displayCountrySuggestion = false;
 
-  private _countriesSuggestion: Array<string> = [];
+  private _countriesSuggestion: Array<Country> = [];
 
   private _subscribe: Subject<any> = new Subject<any>();
 
-  constructor(private _autoCompleteService: AutocompleteService,) { }
+  constructor(private _autoCompleteService: AutocompleteService) { }
 
   ngOnInit() {
   }
 
   public onSuggestCountries() {
-    if (this._country && this._country.length > 2 && !this.isDisabled) {
+    if (this._country.name && this._country.name.length > 2 && !this.isDisabled) {
       this._displayCountrySuggestion = true;
       this._countriesSuggestion = [];
-      const _query = {query: this._country, type: 'countries'};
-      this._autoCompleteService.get(_query).pipe(takeUntil(this._subscribe)).subscribe((res: any) => {
-        console.log(res);
+      const _query = {query: this._country.name, type: 'countries'};
+
+      this._autoCompleteService.get(_query).pipe(takeUntil(this._subscribe)).subscribe((res: Array<Country>) => {
         if (res.length === 0) {
           this._displayCountrySuggestion = false;
         } else {
-          res.forEach((items: any) => {
-            const valueIndex = this._countriesSuggestion.indexOf(items.name);
-            if (valueIndex === -1) {
-              this._countriesSuggestion.push(items.name);
+          res.forEach((_item: Country) => {
+            const index = this._countriesSuggestion.findIndex((_country) => {
+              return _country.flag.toLowerCase() === _item.flag.toLowerCase();
+            });
+            if (index === -1) {
+              this._countriesSuggestion.push(_item);
             }
           });
         }
+
+        this._countriesSuggestion = this._countriesSuggestion.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+
       });
     }
   }
 
-  public onCountrySelect(value: string) {
-    this._country = value;
+  public onCountrySelect(event: Country) {
+    this._country = event;
     this._displayCountrySuggestion = false;
     this.countryChange.emit(this._country);
   }
