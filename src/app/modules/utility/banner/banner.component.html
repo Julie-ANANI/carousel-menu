@@ -5,6 +5,11 @@
     class="banner animate-fade is-7"
     id="banner">
     <div class="m-right-15 text-white"><ng-content></ng-content></div>
-    <button (click)="onCloseBanner($event)" class="close is-background is-xs" id="banner-btn-close"></button>
+    <button
+      (click)="onCloseBanner($event)"
+      *ngIf="showCloseBtn"
+      class="close is-background is-xs"
+      id="banner-btn-close">
+    </button>
   </div>
 </ng-container>
