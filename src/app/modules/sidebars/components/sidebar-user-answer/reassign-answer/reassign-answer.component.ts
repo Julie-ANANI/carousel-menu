@@ -87,16 +87,16 @@ export class ReassignAnswerComponent {
         if (response && response.result && response.result.length) {
           this._proFound = 1;
           const _pro = response.result[0];
+          this._country = (_pro.country && _pro.country.name) ? _pro.country : {name: countries[_pro.country] || _pro.country};
+          this._company = _pro._company;
           this._newPro = {
             firstName: _pro.firstName,
             lastName: _pro.lastName,
             email: _pro.email,
             jobTitle: _pro.jobTitle,
-            company: _pro.company && _pro.company.name || '',
-            country: _pro.country
+            company: (this._company && this._company.name) || '',
+            country: (this._country && this._country.name) || ''
           };
-          this._country = _pro.country.name ? _pro.country : {name: countries[_pro.country] || _pro.country};
-          this._company = _pro._company;
         }
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
