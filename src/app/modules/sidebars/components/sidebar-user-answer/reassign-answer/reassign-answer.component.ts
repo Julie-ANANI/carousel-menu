@@ -7,6 +7,7 @@ import {ErrorFrontService} from '../../../../../services/error/error-front.servi
 import {Config} from '../../../../../models/config';
 import {Company} from '../../../../../models/company';
 import {Country} from '../../../../../models/country';
+import {countries} from '../../../../../models/static-data/country';
 
 export interface NewPro {
   firstName: string;
@@ -83,22 +84,20 @@ export class ReassignAnswerComponent {
 
       this._professionalService.getAll(this._proConfig).pipe(first()).subscribe((response) => {
         this._isSearchingPro = false;
-        console.log(response);
         if (response && response.result && response.result.length) {
           this._proFound = 1;
           const _pro = response.result[0];
-          this._country = _pro._country;
-          this._company = _pro._company;
           this._newPro = {
             firstName: _pro.firstName,
             lastName: _pro.lastName,
             email: _pro.email,
             jobTitle: _pro.jobTitle,
-            company: this._company.name,
-            country: this._country.name
+            company: _pro.company.name,
+            country: _pro.country
           };
+          this._country = _pro.country.name ? _pro.country : {name: countries[_pro.country] || _pro.country};
+          this._company = _pro._company;
         }
-        console.log(this._newPro);
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
         this._isSearchingPro = false;
