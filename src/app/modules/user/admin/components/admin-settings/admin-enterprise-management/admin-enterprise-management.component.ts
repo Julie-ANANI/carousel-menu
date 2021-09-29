@@ -406,7 +406,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       });
   }*/
 
-  public updateEnterprise(event: { enterprise: Enterprise; opType: string }) {
+  public updateEnterprise(event: { enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise}) {
     switch (event.opType) {
       case 'CREATE':
         this._enterpriseService
@@ -433,8 +433,13 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         break;
 
       case 'EDIT':
+        const enterpriseBeforeUpdateDataForm = {
+          domain: event.enterpriseBeforeUpdate.topLevelDomain || '',
+          name: event.enterpriseBeforeUpdate.name || '',
+          logo: event.enterpriseBeforeUpdate.logo || ''
+        };
         this._enterpriseService
-          .save(this._selectedEnterprise._id, event.enterprise)
+          .save(this._selectedEnterprise._id, event.enterprise, enterpriseBeforeUpdateDataForm)
           .pipe(first())
           .subscribe(
             (result) => {
