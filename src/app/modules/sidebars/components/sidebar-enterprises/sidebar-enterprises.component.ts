@@ -6,14 +6,14 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {Enterprise, Industry, Pattern} from '../../../../models/enterprise';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
-import {Clearbit} from '../../../../models/clearbit';
-import {AutoSuggestionConfig} from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import { Enterprise, Industry, Pattern } from '../../../../models/enterprise';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
+import { Clearbit } from '../../../../models/clearbit';
+import { AutoSuggestionConfig } from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import {
   EnterpriseSizeList,
   EnterpriseTypes,
@@ -68,7 +68,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   @Output() finalOutput: EventEmitter<{
     enterprise: Enterprise;
     opType: string;
-  }> = new EventEmitter<{ enterprise: Enterprise; opType: string }>();
+    enterpriseBeforeUpdate?: Enterprise
+  }> = new EventEmitter<{ enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise }>();
 
   private _enterprise: Enterprise = <Enterprise>{};
 
@@ -391,7 +392,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             }
         }
       });
-      this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
+      this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type, enterpriseBeforeUpdate: this._enterprise});
       this.initAutoSuggestionConfig();
     }
   }
