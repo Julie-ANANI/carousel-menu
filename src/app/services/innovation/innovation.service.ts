@@ -13,7 +13,7 @@ import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
 import {Community} from '../../models/community';
-import { FamilyEnterprises } from '../../models/enterprise';
+import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-blacklist/sidebar-blacklist.component';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {

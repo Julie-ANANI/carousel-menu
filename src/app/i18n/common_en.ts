@@ -121,6 +121,7 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'CLIENT_COMMENTS': 'Clients\' comments',
     'TENTATIVE_LEFT': 'attempt(s) left',
     'ADD': 'Add',
     'FEEDBACK_COLLECTION': 'Feedback collection',

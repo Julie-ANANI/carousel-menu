@@ -62,9 +62,6 @@
                 [(ngModel)]="innovation.settings.market.comments"
                 (change)="updateSettings()">
                 </textarea>
-              <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.market.comments.length | characterCountdown:500)}">
-                {{ innovation.settings.market.comments.length | characterCountdown:500 }}
-              </div>
             </div>
           </ng-container>
 
@@ -177,9 +174,6 @@
                   [(ngModel)]="innovation.settings.companies.description"
                   (change)="updateSettings()">
                   </textarea>
-                <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.companies.description.length | characterCountdown:500)}">
-                  {{ innovation.settings.companies.description.length | characterCountdown:500 }}
-                </div>
               </div>
             </ng-container>
 
@@ -219,9 +213,6 @@
                 [(ngModel)]="innovation.settings.professionals.description"
                 (change)="updateSettings()">
                 </textarea>
-              <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.professionals.description.length | characterCountdown:500)}">
-                {{ innovation.settings.professionals.description.length | characterCountdown:500 }}
-              </div>
             </div>
           </ng-container>
           <!-- /Description -->
@@ -317,9 +308,6 @@
                 [(ngModel)]="innovation.settings.comments"
                 (change)="updateSettings()">
                 </textarea>
-              <div class="char-remaining" [ngStyle]="{'color': getColor(innovation.settings.comments.length | characterCountdown:500)}">
-                {{ innovation.settings.comments.length | characterCountdown:500 }}
-              </div>
             </div>
           </ng-container>
 

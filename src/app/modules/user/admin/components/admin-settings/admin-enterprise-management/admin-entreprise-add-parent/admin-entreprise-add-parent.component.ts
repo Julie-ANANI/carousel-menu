@@ -353,9 +353,12 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   updateChange() {
     // add subsidiaries in parent company
     this.updateParentCompany();
-    this.companiesTable._content.map((item) => {
+    this.companiesTable._content.map((item, index) => {
       this._entrepriseService
-        .save(item._id, item)
+        .save(item._id, item, {
+          name: this._companiesOriginalTable._content[index].name,
+          domain: this._companiesOriginalTable._content[index].topLevelDomain,
+        })
         .pipe(first())
         .subscribe(
           (result) => {
