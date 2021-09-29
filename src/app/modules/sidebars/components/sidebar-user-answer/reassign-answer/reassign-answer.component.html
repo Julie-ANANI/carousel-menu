@@ -1,13 +1,18 @@
 <div id="reassign-answer">
 
-  <div *ngIf="isSearchingPro" class="m-bottom-20">
+  <div *ngIf="showBanner" class="m-bottom-20">
     <app-utility-banner
-      [background]="'bg-progress'"
+      [background]="isSearchingPro ? 'bg-progress' : proFound ? 'bg-success' : 'bg-alert'"
       [position]="'relative'"
       [showBanner]="true"
       [showCloseBtn]="false">
-      <span class="loading is-sm is-white"></span>
-      <span class="p-left-20">Searching pro associated to this Email address, please be patient.</span>
+      <ng-container *ngIf="isSearchingPro">
+        <span class="loading is-sm is-white"></span>
+        <span class="p-left-20">Searching pro associated to this Email address, please be patient.</span>
+      </ng-container>
+      <ng-container *ngIf="!isSearchingPro">
+        {{ proFound }} pro has been found associated to this Email address.
+      </ng-container>
     </app-utility-banner>
   </div>
 
@@ -75,26 +80,27 @@
   <div class="input-group m-bottom-20">
 
     <div class="form-group">
-      <label class="form-label" for="reassign-answer-company">Company</label>
-      <input
-        (change)="emitPro()"
-        [(ngModel)]="newPro.company"
-        [disabled]="isSearchingPro"
-        class="form-input is-sm is-shadowed"
-        id="reassign-answer-company"
-        placeholder="Enter the company"
-        type="text">
+      <label [for]="'reassign-answer-company'" class="form-label">Company</label>
+      <app-auto-complete-company
+        (companyChange)="onCompanySelect($event)"
+        [inputId]="'reassign-answer-company'"
+        [hasShadowed]="true"
+        [company]="company"
+        [isDisabled]="isSearchingPro"
+        [isSmall]="true">
+      </app-auto-complete-company>
     </div>
 
     <div class="form-group">
-      <label class="form-label">Country</label>
-      <app-utility-auto-complete-input
-        (update)="updateCountry($event)"
-        [config]="countryConfig"
-        [isEditable]="!isSearchingPro"
-        [isSmall]="true"
-        [onlyOne]="true">
-      </app-utility-auto-complete-input>
+      <label [for]="'reassign-answer-country'" class="form-label">Country</label>
+      <app-auto-complete-country
+        (countryChange)="onCountrySelect($event)"
+        [country]="country"
+        [hasShadowed]="true"
+        [inputId]="'reassign-answer-country'"
+        [isDisabled]="isSearchingPro"
+        [isSmall]="true">
+      </app-auto-complete-country>
     </div>
 
   </div>

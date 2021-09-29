@@ -5,7 +5,8 @@ import {TranslateNotificationsService} from '../../../../../services/notificatio
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
 import {Config} from '../../../../../models/config';
-import {AutoCompleteInputConfigInterface} from '../../../../utility/auto-complete-input/interfaces/auto-complete-input-config-interface';
+import {Company} from '../../../../../models/company';
+import {Country} from '../../../../../models/country';
 
 export interface NewPro {
   firstName: string;
@@ -24,8 +25,20 @@ export interface NewPro {
 
 export class ReassignAnswerComponent {
 
-  get countryConfig(): AutoCompleteInputConfigInterface {
-    return this._countryConfig;
+  get company(): Company {
+    return this._company;
+  }
+
+  get country(): Country {
+    return this._country;
+  }
+
+  get showBanner(): boolean {
+    return this._showBanner;
+  }
+
+  get proFound(): number {
+    return this._proFound;
   }
 
   get isSearchingPro(): boolean {
@@ -51,35 +64,41 @@ export class ReassignAnswerComponent {
 
   private _isSearchingPro = false;
 
-  private _countryConfig: AutoCompleteInputConfigInterface = {
-    placeholder: 'Enter the country',
-    type: 'countries',
-    initialData: []
-  };
+  private _proFound = 0;
+
+  private _showBanner = false;
+
+  private _country: Country = <Country>{};
+
+  private _company: Company = <Company>{};
 
   constructor(private _professionalService: ProfessionalsService,
-              private _translateNotificationsService: TranslateNotificationsService,) { }
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   public emitPro(type = '') {
     if (type === 'EMAIL' && !!this._newPro.email) {
-      this._isSearchingPro = true;
+      this._showBanner = this._isSearchingPro = true;
+      this._proFound = 0;
       this._proConfig.email = this._newPro.email;
 
       this._professionalService.getAll(this._proConfig).pipe(first()).subscribe((response) => {
         this._isSearchingPro = false;
         console.log(response);
         if (response && response.result && response.result.length) {
+          this._proFound = 1;
           const _pro = response.result[0];
+          this._country = _pro._country;
+          this._company = _pro._company;
           this._newPro = {
             firstName: _pro.firstName,
             lastName: _pro.lastName,
             email: _pro.email,
             jobTitle: _pro.jobTitle,
-            company: _pro.company,
-            country: _pro.country
+            company: this._company.name,
+            country: this._country.name
           };
-          this._countryConfig.initialData[0] = _pro.country;
         }
+        console.log(this._newPro);
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
         this._isSearchingPro = false;
@@ -90,8 +109,15 @@ export class ReassignAnswerComponent {
     }
   }
 
-  public updateCountry(event: {value: Array<any>}) {
-    this._newPro.country = event.value[0];
+  public onCountrySelect(event: Country) {
+    this._country = event;
+    this._newPro.country = this._country.name;
+    this.emitPro();
+  }
+
+  public onCompanySelect(event: Company) {
+    this._company = event;
+    this._newPro.company = this._company.name;
     this.emitPro();
   }
 

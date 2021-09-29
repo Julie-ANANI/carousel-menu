@@ -15,6 +15,8 @@ import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
 import { ReassignAnswerComponent } from './reassign-answer/reassign-answer.component';
 import {BannerModule} from '../../../utility/banner/banner.module';
+import {AutoCompleteCountryModule} from '../../../utility/auto-complete-country/auto-complete-country.module';
+import {AutoCompleteCompanyModule} from '../../../utility/auto-complete-company/auto-complete-company.module';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import {BannerModule} from '../../../utility/banner/banner.module';
     SharedTagsModule,
     PipeModule,
     InputListModule,
-    BannerModule
+    BannerModule,
+    AutoCompleteCountryModule,
+    AutoCompleteCompanyModule
   ],
   declarations: [
     SidebarUserAnswerComponent,
