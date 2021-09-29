@@ -699,7 +699,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  public addBlocklist(values: {
+  public addBlacklist(values: {
     emails: Array<string>;
     domains: Array<string>;
   }) {
@@ -938,9 +938,24 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._isPublishingCommunity;
   }
 
+  getInitialDomains() {
+    this._blacklistDomains = [];
+    if (this._innovation.settings && this._innovation.settings.blacklist) {
+      this._blacklistDomains = this._innovation.settings.blacklist.domains;
+    }
+    if (this._innovation.owner && this._innovation.owner.company && this._innovation.owner.company.domain) {
+      if (this._blacklistDomains.indexOf(this._innovation.owner.company.domain) === -1) {
+        this._blacklistDomains.push(this._innovation.owner.company.domain);
+      }
+    }
+    this._innovation.settings.blacklist.domains = JSON.parse(JSON.stringify(this._blacklistDomains));
+    console.log(this._innovation.settings.blacklist.domains);
+  }
+
   set isPublishingCommunity(value: boolean) {
     this._isPublishingCommunity = value;
   }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

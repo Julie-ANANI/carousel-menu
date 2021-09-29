@@ -48,10 +48,3 @@ export interface Enterprise {
   enterpriseSize?: string;
   valueChain?: Array<string>;
 }
-
-
-export interface FamilyEnterprises {
-  mySubsidiaries?: Array<Enterprise>;
-  parent?: Enterprise;
-  subsidiariesOfParent?: Array<Enterprise>;
-}

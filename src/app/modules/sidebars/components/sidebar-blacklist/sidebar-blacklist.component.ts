@@ -7,9 +7,17 @@ import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Enterprise, FamilyEnterprises } from '../../../../models/enterprise';
+import { Enterprise } from '../../../../models/enterprise';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
+
+export interface FamilyEnterprises {
+  mySubsidiaries?: Array<Enterprise>;
+  parent?: Enterprise;
+  subsidiariesOfParent?: Array<Enterprise>;
+  myDomain?: string;
+}
+
 
 @Component({
   selector: 'app-sidebar-blacklist',
@@ -349,7 +357,7 @@ export class SidebarBlacklistComponent implements OnInit {
     enterprises = enterprises.concat(
       this.addParenEnterpriseMessage(),
       this.addSubsidiariesMessage(),
-      this.addParentSubsidiariesMessage()
+      this.addParentSubsidiariesMessage(),
     );
     return enterprises;
   }
@@ -360,6 +368,15 @@ export class SidebarBlacklistComponent implements OnInit {
     } else {
       this._messageForEmptyFamilyEnterprises.add('Owner\'s enterprise doesn\'t have parent enterprise');
       return [];
+    }
+  }
+
+  addMyDomainMessage() {
+    if (this._familyEnterprises.myDomain) {
+      return this._familyEnterprises.myDomain;
+    } else {
+      this._messageForEmptyFamilyEnterprises.add('Owner\'s enterprise doesn\'t have a domain');
+      return '';
     }
   }
 
@@ -386,13 +403,22 @@ export class SidebarBlacklistComponent implements OnInit {
    * @param enterprisesToAdd
    */
   addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<Enterprise>) {
+    const myDomain = this.addMyDomainMessage();
+    if (myDomain && !this._initialDomains.find(d => d.name === '*@' + myDomain)) {
+      this._initialDomains.push({name: '*@' + myDomain});
+    }
     if (enterprisesToAdd && enterprisesToAdd.length) {
-      enterprisesToAdd.map(_enterprise => {
-        const _canAdd = this._initialDomains.find(domain => domain.name === '*@' + _enterprise.topLevelDomain);
-        if (!_canAdd && _enterprise.topLevelDomain) {
-          this._initialDomains.push({name: '*@' + _enterprise.topLevelDomain});
-        }
-      });
+      const domainsToAdd = enterprisesToAdd.filter(enterprise =>
+        !this._initialDomains.find(d => d.name === '*@' + enterprise.topLevelDomain));
+      if (domainsToAdd && domainsToAdd.length) {
+        domainsToAdd.map(el => {
+          this._initialDomains.push({name: '*@' + el.topLevelDomain});
+        });
+        this._translateNotificationsService.success(
+          'Success',
+          'Auto-blacklist succeed!',
+        );
+      }
     }
   }
 

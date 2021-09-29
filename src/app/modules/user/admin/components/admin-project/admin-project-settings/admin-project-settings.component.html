@@ -631,7 +631,7 @@
 
   <!-- blocklist -->
   <app-sidebar-blacklist
-    (toBlacklists)="addBlocklist($event)"
+    (toBlacklists)="addBlacklist($event)"
     [innovationId]="innovation._id"
     *ngIf="sidebarValue.type === 'EXCLUDE_EMAILS_DOMAINS'"
     [initialDomains]="innovation.settings?.blacklist?.domains"
