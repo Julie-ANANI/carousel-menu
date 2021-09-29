@@ -91,14 +91,14 @@
                  class="width-100 mce-tinymce pad-preview-mode text-15"
                  [innerHTML]="activeInnovCard.sections[i].content | cleanHtml">
             </div>
-            <!-- remaining text -->
-            <div
-              *ngIf="isEditable"
-              [ngStyle]="{'color': remaining(section.type, i)}"
-              class="text-right text-medium p-top-1 text-xs">
-              {{ section.content | characterCountdown:1000 }} characters remaining
-            </div>
-            <!-- /remaining text -->
+<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
+<!--            <div-->
+<!--              *ngIf="isEditable"-->
+<!--              [ngStyle]="{'color': remaining(section.type, i)}"-->
+<!--              class="text-right text-medium p-top-1 text-xs">-->
+<!--              {{ section.content | characterCountdown:1000 }} characters remaining-->
+<!--            </div>-->
+<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
 
             <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
 
@@ -256,14 +256,14 @@
                  class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
             </div>
 
-            <!-- remaining text -->
-            <div
-              *ngIf="isEditable"
-              [ngStyle]="{'color': remaining('TITLE')}"
-              class="text-right text-medium p-top-1 text-xs">
-              {{ activeInnovCard.title | characterCountdown:100 }} characters remaining
-            </div>
-            <!-- /remaining text -->
+<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
+<!--            <div-->
+<!--              *ngIf="isEditable"-->
+<!--              [ngStyle]="{'color': remaining('TITLE')}"-->
+<!--              class="text-right text-medium p-top-1 text-xs">-->
+<!--              {{ activeInnovCard.title | characterCountdown:100 }} characters remaining-->
+<!--            </div>-->
+<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
 
             <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.title" class="text-15"></p>
 
@@ -389,14 +389,14 @@
                  [innerHTML]="activeInnovCard.summary | cleanHtml">
             </div>
 
-            <!-- remaining text -->
-            <div
-              *ngIf="isEditable"
-              [ngStyle]="{'color': remaining('SUMMARY')}"
-              class="text-right text-medium p-top-1 text-xs">
-              {{ activeInnovCard.summary | characterCountdown:500 }} characters remaining
-            </div>
-            <!-- /remaining text -->
+<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
+<!--            <div-->
+<!--              *ngIf="isEditable"-->
+<!--              [ngStyle]="{'color': remaining('SUMMARY')}"-->
+<!--              class="text-right text-medium p-top-1 text-xs">-->
+<!--              {{ activeInnovCard.summary | characterCountdown:500 }} characters remaining-->
+<!--            </div>-->
+<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
 
             <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
 
