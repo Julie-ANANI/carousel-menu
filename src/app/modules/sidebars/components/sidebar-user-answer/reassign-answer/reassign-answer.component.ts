@@ -89,9 +89,7 @@ export class ReassignAnswerComponent {
           const _pro = response.result[0];
           this._country = (_pro.country && _pro.country.name) ? _pro.country :
             {name: (countries[_pro.country] || _pro.country)};
-          this._company = _pro._company;
-          console.log(this._country);
-          console.log(this._company);
+          this._company = _pro.company;
           this._newPro = {
             firstName: _pro.firstName,
             lastName: _pro.lastName,
@@ -100,7 +98,6 @@ export class ReassignAnswerComponent {
             company: (this._company && this._company.name) || '',
             country: (this._country && this._country.name) || ''
           };
-          console.log(this._newPro);
         }
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
