@@ -92,7 +92,7 @@ export class ReassignAnswerComponent {
             lastName: _pro.lastName,
             email: _pro.email,
             jobTitle: _pro.jobTitle,
-            company: _pro.company.name,
+            company: _pro.company && _pro.company.name || '',
             country: _pro.country
           };
           this._country = _pro.country.name ? _pro.country : {name: countries[_pro.country] || _pro.country};
