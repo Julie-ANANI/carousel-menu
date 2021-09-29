@@ -12,9 +12,7 @@
     *ngIf="!!company.name"
     [ngStyle]="{ 'display': displayCompanySuggestion ? 'block' : 'none' }"
     class="input-suggestion">
-    <li
-      (click)="onSelectCompany(suggestion)"
-      *ngFor="let suggestion of companiesSuggestion">
+    <li (click)="onSelectCompany(suggestion)" *ngFor="let suggestion of companiesSuggestion">
       {{ suggestion.name | titlecase }}
     </li>
   </ul>

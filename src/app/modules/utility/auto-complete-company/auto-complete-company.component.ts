@@ -71,24 +71,26 @@ export class AutoCompleteCompanyComponent implements OnInit, OnDestroy {
       this._companiesSuggestion = [];
       const _query = {query: this._company.name, type: 'company'};
 
-      this._autoCompleteService.get(_query).pipe(takeUntil(this._subscribe)).subscribe((res: any) => {
+      this._autoCompleteService.get(_query)
+        .pipe(takeUntil(this._subscribe))
+        .subscribe((res: Array<Company | Enterprise>) => {
 
-        if (res.length === 0) {
-          this._displayCompanySuggestion = false;
-        } else {
-          res.forEach((_item: Company | Enterprise) => {
-            const index = this._companiesSuggestion.findIndex((_company) => {
-              return _company.name.toLowerCase() === _item.name.toLowerCase();
+          if (res.length === 0) {
+            this._displayCompanySuggestion = false;
+          } else {
+            res.forEach((_item: Company | Enterprise) => {
+              const index = this._companiesSuggestion.findIndex((_company) => {
+                return _company.name.toLowerCase() === _item.name.toLowerCase();
+              });
+              if (index === -1) {
+                this._companiesSuggestion.push(_item);
+              }
             });
-            if (index === -1) {
-              this._companiesSuggestion.push(_item);
-            }
-          });
-        }
+          }
 
-        this._companiesSuggestion = this._companiesSuggestion.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        });
+          this._companiesSuggestion = this._companiesSuggestion.sort((a, b) => {
+            return a.name.localeCompare(b.name);
+          });
       });
     }
   }
