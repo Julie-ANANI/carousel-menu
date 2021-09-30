@@ -314,8 +314,17 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _attrs: ['enterpriseSize'],
             _name: 'Company size',
             _type: 'TEXT',
+            _width: '190px',
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'size']),
+            _isEditable: true,
+            _choices: [
+              {_name: 'TPE', _alias: 'Tpe'},
+              {_name: 'PME', _alias: 'Pme'},
+              {_name: 'ETI', _alias: 'Eti'},
+              {_name: 'GE', _alias: 'Ge'},
+            ],
+            _editType: 'MULTI-CHOICES'
           },
           {
             _attrs: ['valueChain'],
