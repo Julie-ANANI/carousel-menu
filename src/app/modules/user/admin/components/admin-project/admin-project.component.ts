@@ -415,6 +415,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return this._status;
   }
 
+  get innovTitle(): string {
+    return this._innovTitle;
+  }
+
   get updateTime(): number {
     return this._updateTime;
   }
