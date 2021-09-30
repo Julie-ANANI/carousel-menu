@@ -8,10 +8,10 @@
       [showCloseBtn]="false">
       <ng-container *ngIf="isSearchingPro">
         <span class="loading is-sm is-white"></span>
-        <span class="p-left-20">Searching pro associated to this Email address, please be patient.</span>
+        <span class="p-left-20">Searching pro, please be patient.</span>
       </ng-container>
       <ng-container *ngIf="!isSearchingPro">
-        {{ proFound }} pro has been found associated to this Email address.
+        {{ proFound }} pro has been found.
       </ng-container>
     </app-utility-banner>
   </div>
