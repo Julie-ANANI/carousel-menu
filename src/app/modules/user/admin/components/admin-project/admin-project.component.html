@@ -41,6 +41,16 @@
 
               <div class="d-flex align-center flex-wrap m-bottom-1">
                 <h1 class="title is-4 text-white m-bottom-1">{{ title }}</h1>
+                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="openQuiz($event)">
+                  Open quiz
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+
+                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="onCopyQuizLink($event)">
+                  Copy quiz link
+                  <i class="far fa-copy"></i>
+                </a>
+
                 <a
                   [routerLink]="['/user/projects/', project._id]"
                   class="button is-link text-white is-xs"
