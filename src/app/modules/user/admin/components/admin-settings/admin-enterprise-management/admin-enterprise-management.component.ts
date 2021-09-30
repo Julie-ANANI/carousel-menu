@@ -1,23 +1,23 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {EnterpriseService} from '../../../../../../services/enterprise/enterprise.service';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { EnterpriseService } from '../../../../../../services/enterprise/enterprise.service';
 import {
   /*FormArray,*/ FormBuilder,
   FormGroup /*, Validators*/,
 } from '@angular/forms';
-import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
-import {Enterprise /*, Pattern*/} from '../../../../../../models/enterprise';
+import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
+import { Enterprise /*, Pattern*/ } from '../../../../../../models/enterprise';
 // import {Clearbit} from '../../../../../../models/clearbit';
 // import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 /*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
-import {Table} from '../../../../../table/models/table';
-import {first} from 'rxjs/operators';
-import {Config} from '../../../../../../models/config';
-import {isPlatformBrowser} from '@angular/common';
-import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {Router} from '@angular/router';
+import { Table } from '../../../../../table/models/table';
+import { first } from 'rxjs/operators';
+import { Config } from '../../../../../../models/config';
+import { isPlatformBrowser } from '@angular/common';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -225,9 +225,12 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _attrs: ['enterpriseURL'],
             _name: 'Enterprise Url',
             _type: 'TEXT',
+            _width: '250px',
             _isSortable: true,
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'url']),
+            _isEditable: true,
+            _editType: 'TEXT',
           },
           {
             _attrs: ['subsidiariesList'],
@@ -406,7 +409,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       });
   }*/
 
-  public updateEnterprise(event: { enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise}) {
+  public updateEnterprise(event: { enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise }) {
     switch (event.opType) {
       case 'CREATE':
         this._enterpriseService
@@ -457,18 +460,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
                 this._resultTableConfiguration._content[idx] = result;
                 this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = event.enterprise.parentEnterpriseObject;
                 this._resultTableConfiguration._content[idx]['subsidiariesList'] = event.enterprise.subsidiariesList;
-              }
-
-              if (!event.enterprise.parentEnterpriseObject || !event.enterprise.parentEnterpriseObject.length) {
-                this.removeSubsidiariesList(this._selectedEnterprise._id);
-              }
-
-              if (event.enterprise.parentEnterpriseObject && event.enterprise.parentEnterpriseObject.length) {
-                this.addSubsidiariesList(event.enterprise, this._selectedEnterprise._id);
-              }
-
-              if (event.enterprise.subsidiariesList && event.enterprise.subsidiariesList.length) {
-                this.addParentEnterprise(event.enterprise);
               }
             },
             (err: HttpErrorResponse) => {
@@ -542,7 +533,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       this._enterpriseService.remove(evt._id).pipe(first()).subscribe(result => {
         if (result) {
           requests++;
-          this._resultTableConfiguration._content = this._resultTableConfiguration._content.filter(enterprise => enterprise._id !== evt._id);
+          this._resultTableConfiguration._content = this._resultTableConfiguration
+            ._content.filter(enterprise => enterprise._id !== evt._id);
           this.removeSubsidiariesList(evt._id);
           this.removeParentEnterprise(evt);
         }
@@ -617,11 +609,53 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   performAction($event: any) {
     this._enterpriseService.setQueryConfig(this._queryConfig);
     this._enterpriseService.setEnterprisesSelected($event._rows);
-    if ($event._action === 'Add parent') {
-      this._route.navigate(['/user/admin/settings/enterprises/addparent']);
+    switch ($event._action) {
+      case 'Update grid':
+        const context = $event._context;
+        if (context) {
+          console.log(context);
+          this.saveEnterprise(context);
+        }
+        break;
+      case 'Add parent':
+        this._route.navigate(['/user/admin/settings/enterprises/addparent']);
+        break;
+      case 'Bulk edit':
+        this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+        break;
     }
-    if ($event._action === 'Bulk edit') {
-      this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
-    }
+  }
+
+  private saveEnterprise(enterprise: Enterprise) {
+    this._enterpriseService
+      .save(enterprise._id, enterprise)
+      .pipe(first())
+      .subscribe(
+        (result) => {
+          this._isSaving = false;
+          this._translateNotificationsService.success(
+            'Success',
+            'The enterprise is updated.'
+          );
+          const idx = this._resultTableConfiguration._content.findIndex(
+            (value) => {
+              return value._id === result['_id'];
+            }
+          );
+          if (idx > -1) {
+            this._resultTableConfiguration._content[idx] = result;
+            this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = enterprise.parentEnterpriseObject;
+            this._resultTableConfiguration._content[idx]['subsidiariesList'] = enterprise.subsidiariesList;
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          this._isSaving = false;
+          console.error(err);
+        }
+      );
   }
 }
