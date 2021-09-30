@@ -289,10 +289,18 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _attrs: ['enterpriseType'],
             _name: 'Type',
             _type: 'TEXT',
+            _width: '180px',
             _isSearchable: this.canAccess(['searchBy', 'type']),
             _isSortable: true,
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
+            _isEditable: true,
+            _choices: [
+              {_name: 'Publique', _alias: 'Publique'},
+              {_name: 'Privée', _alias: 'Privée'},
+              {_name: 'Association', _alias: 'Association'},
+            ],
+            _editType: 'MULTI-CHOICES'
           },
           {
             _attrs: ['geographicalZone'],
