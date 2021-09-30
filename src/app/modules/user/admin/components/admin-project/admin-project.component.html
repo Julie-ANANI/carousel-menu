@@ -38,9 +38,8 @@
 
             <!-- heading / view like client / objective / activity -->
             <div class="m-right-15 m-bottom-15">
-
+              <h1 class="title is-4 text-white m-bottom-1" *ngIf="project.name">{{ project.name }}</h1>
               <div class="d-flex align-center flex-wrap m-bottom-1">
-                <h1 class="title is-4 text-white m-bottom-1" *ngIf="project.name">{{ project.name }}</h1>
                 <h2 class="title is-6 text-white m-bottom-1" *ngIf="innovTitle">{{ title }}</h2>
                 <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="openQuiz($event)">
                   Open quiz
