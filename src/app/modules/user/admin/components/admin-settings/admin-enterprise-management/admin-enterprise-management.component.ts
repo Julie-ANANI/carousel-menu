@@ -30,6 +30,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     searchString: [''],
   });
 
+  loading = false;
+
   // private _newEnterpriseForm: FormGroup;
 
   // private _newEnterprise: Enterprise;
@@ -62,13 +64,13 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _resultTableConfiguration: Table = <Table>{};
 
-  private _isLoading = true;
+  private _isSaving = false;
+
+  private _isLoading = false;
 
   private _selectedEnterprise: Enterprise = <Enterprise>{};
 
   private _isEditable = false;
-
-  private _isSaving = false;
 
   private _customButtons: Array<{
     _label: string;
@@ -127,6 +129,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       }
     }
   }
+
+
 
   public canAccess(path?: Array<string>) {
     if (path) {
@@ -279,7 +283,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _name: 'Industry',
             _type: 'LABEL-OBJECT-LIST',
             _enableTooltip: true,
+            _width: '280px',
             _isHidden: !this.canAccess(['tableColumns', 'industry']),
+            _isEditable: true,
+            _editType: 'MULTI-INPUT'
           },
           {
             _attrs: ['brands'],

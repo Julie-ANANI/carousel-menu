@@ -44,6 +44,7 @@ export type types =
   | 'ARRAY'
   | 'MULTI-LABEL'
   | 'MULTILING'
+  | 'MULTI-INPUT'
   | 'TAG-LIST'
   | 'COUNTRY-NAME'
   | 'LENGTH'
