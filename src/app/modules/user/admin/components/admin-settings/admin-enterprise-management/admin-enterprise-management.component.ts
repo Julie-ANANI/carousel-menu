@@ -208,10 +208,13 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _attrs: ['topLevelDomain'],
             _name: 'Domain',
             _type: 'TEXT',
+            _width: '180px',
             _enableTooltip: true,
             _isSortable: true,
             _isSearchable: this.canAccess(['searchBy', 'domain']),
             _isHidden: !this.canAccess(['tableColumns', 'domain']),
+            _isEditable: true,
+            _editType: 'TEXT',
           },
           {
             _attrs: ['patterns'],
