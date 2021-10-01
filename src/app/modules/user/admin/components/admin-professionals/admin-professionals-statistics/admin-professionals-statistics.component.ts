@@ -155,7 +155,7 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
           this._classified = this._seniorityLevelsClassification.total - this._notClassified;
         }
 
-        const seniorityLevelsOrder = [ 'Top executive', 'Top manager', 'Manager', 'Expert', 'Other', 'Excluding', 'Irregular'];
+        const seniorityLevelsOrder = [ 'Top executive', 'Top manager', 'Manager', 'Expert', 'Other', 'Excluding', 'Irregular', 'No jobs'];
         this._seniorityLevelsClassification.seniorityLevels.sort(function (a, b) {
           return seniorityLevelsOrder.indexOf(a.name) - seniorityLevelsOrder.indexOf(b.name);
         });
