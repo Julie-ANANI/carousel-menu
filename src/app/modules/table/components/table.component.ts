@@ -18,7 +18,7 @@ import { UserSuggestion } from '../../user/admin/components/admin-project/admin-
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { EnterpriseValueChains } from '../../../models/static-data/enterprise';
+import { EnterpriseValueChains } from "../../../models/static-data/enterprise";
 
 /**
  * editable cell
@@ -315,12 +315,6 @@ export class TableComponent implements OnInit, OnDestroy {
 
   get isLoading(): boolean {
     return this._isLoading;
-  }
-
-  public onKeyboardPress(event: KeyboardEvent) {
-    if (event.code === 'Comma') {
-      this._isSearching = true;
-    }
   }
 
   /***
@@ -1145,6 +1139,10 @@ export class TableComponent implements OnInit, OnDestroy {
       gridInput.disabled = false;
       gridInput.className = 'editable-grid';
     }
+    if (gridInput.searchControl) {
+      gridInput.searchControl.enable();
+      gridInput.className = 'editable-grid';
+    }
   }
 
   /**
@@ -1187,6 +1185,8 @@ export class TableComponent implements OnInit, OnDestroy {
           } else {
             gridInputToAdd.input = this.getStringForColumn(row, column, 'label');
           }
+          gridInputToAdd.searchControl = new FormControl({value: gridInputToAdd.input, disabled: true});
+          this.multiInputOnChange(gridInputToAdd);
           break;
         default:
           gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
@@ -1196,6 +1196,13 @@ export class TableComponent implements OnInit, OnDestroy {
         this._inputGrids.push(gridInputToAdd);
       }
       return this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    }
+  }
+
+  public onKeyboardPress(event: KeyboardEvent, row: any, column: Column) {
+    if (event.code === 'Comma') {
+      const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+      gridInput.isSearching = true;
     }
   }
 
@@ -1212,7 +1219,7 @@ export class TableComponent implements OnInit, OnDestroy {
         console.log(lastSearchKeyWord);
         if (!lastSearchKeyWord.match(/^[ ]*$/)) {
           lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
-          gridInputToAdd.suggestions = gridInputToAdd.sourceList.filter((value: string) =>
+          gridInputToAdd.suggestions = EnterpriseValueChains.filter((value: string) =>
             value.replace(/\s/g, '').toLowerCase().indexOf(lastSearchKeyWord.toLowerCase()) !== -1 ||
             lastSearchKeyWord.toLowerCase().indexOf(value.replace(/\s/g, '').toLowerCase()) !== -1
           );

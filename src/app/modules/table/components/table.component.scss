@@ -81,6 +81,45 @@
     cursor: pointer
   }
 
+  .input-wrapper{
+
+    .popover-test {
+      display: inline-flex;
+      position: relative;
+
+      .popover-container-test {
+        top: 0;
+        border-radius: 5px;
+        width: $control-width-sm;
+        color: $text-dark-color;
+        font-weight: $font-weight-normal;
+        background-color: $bg-white-color;
+        z-index: $zindex-4;
+        font-size: $font-size-sm;
+        box-shadow: $box-shadow-menu;
+
+        &.is-xs {
+          width: $control-width-xs;
+        }
+
+        &.is-sm {
+          width: 230px;
+        }
+
+      }
+
+      &.is-bottom-test {
+
+        .popover-container-test {
+          left: 50%;
+          top: calc(100% + 11px);
+        }
+      }
+
+    }
+
+  }
+
   .table {
 
     .flex-wrapper {

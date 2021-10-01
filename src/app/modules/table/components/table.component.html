@@ -865,43 +865,41 @@
 
 <ng-template #gridEditMultipleInputTemplate let-context>
   <div class="form-group d-flex align-center" *ngIf="!getInputGrid(context.row, context.column).disabled">
-    <div (click)="enableInput($event, context.row, context.column)">
-      <form>
+      <form (click)="enableInput($event, context.row, context.column)" autocomplete="off" class="relative" novalidate>
         <!-- input area -->
         <div class="input-wrapper">
-          <label style="display: flex">
+          <label>
             <input
-              [disabled]="getInputGrid(context.row, context.column).disabled"
-              (keydown)="onKeyboardPress($event)"
+              (keydown)="onKeyboardPress($event, context.row, context.column)"
               [attr.placeholder]="'placeholder'"
-              [(ngModel)]="getInputGrid(context.row, context.column).input"
-              [formControl]="searchKeyword"
+              [formControl]="getInputGrid(context.row, context.column).searchControl"
               [ngClass]="getInputGrid(context.row, context.column).className"
               autocomplete="off"
               class="form-input is-shadowed is-sm"
-              name="suggestion"
               type="search">
           </label>
         </div>
         <!-- /input area -->
-
-        <!-- suggestions list -->
-        <ul *ngIf="isSearching && suggestionsSource && suggestionsSource.length" class="menu" style="z-index: 999">
-
-          <!-- when suggestions -->
-          <li
-            (mousedown)="onValueSelect(suggestion);"
-            *ngFor="let suggestion of suggestionsSource; let i = index;"
-            class="menu-item">
-            {{ suggestion }}
-          </li>
-          <!-- /when suggestions -->
-
-        </ul>
-        <!-- /suggestions list -->
-
       </form>
-    </div>
+
+    <!-- suggestions list -->
+    <ul
+      *ngIf="getInputGrid(context.row, context.column).isSearching
+          && getInputGrid(context.row, context.column).suggestions
+          && getInputGrid(context.row, context.column).suggestions.length"
+      class="menu" style="z-index: 999; margin-top: 13%; position: absolute; width: 250px">
+      <!-- when suggestions -->
+      <li
+        (mousedown)="onValueSelect(suggestion);"
+        *ngFor="let suggestion of getInputGrid(context.row, context.column).suggestions; let i = index;"
+        class="menu-item">
+        {{ suggestion }}
+      </li>
+      <!-- /when suggestions -->
+
+    </ul>
+    <!-- /suggestions list -->
+
 
     <div class="d-flex flex-d-column justify-center">
                       <span class="icon is-md is-primary icon-check m-bottom-1"
