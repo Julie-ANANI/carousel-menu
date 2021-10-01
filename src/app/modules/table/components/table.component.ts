@@ -1210,13 +1210,11 @@ export class TableComponent implements OnInit, OnDestroy {
     gridInputToAdd.searchControl.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
       .subscribe((input: any) => {
-        console.log(input);
         const inputSplit = input.split(',');
         let lastSearchKeyWord = '';
         if (inputSplit && inputSplit.length) {
           lastSearchKeyWord = inputSplit[inputSplit.length - 1];
         }
-        console.log(lastSearchKeyWord);
         if (!lastSearchKeyWord.match(/^[ ]*$/)) {
           lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
           gridInputToAdd.suggestions = EnterpriseValueChains.filter((value: string) =>
@@ -1308,12 +1306,12 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
 
-  onValueSelect(suggestion: string) {
-    this._isSearching = false;
-    const splits = this.searchKeyword.value.split(',');
+  onValueSelect(suggestion: string, row: any, column: Column) {
+    const gridToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    const splits = gridToUpdate.searchControl.value.split(',');
     splits[splits.length - 1] = suggestion;
-    this.searchKeyword.setValue(splits.toString());
-    console.log(this.searchKeyword.value);
+    gridToUpdate.searchControl.patchValue(splits.toString());
+    gridToUpdate.isSearching = false;
   }
 
   ngOnDestroy(): void {

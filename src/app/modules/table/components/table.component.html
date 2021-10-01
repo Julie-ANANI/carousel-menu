@@ -890,7 +890,7 @@
       class="menu" style="z-index: 999; margin-top: 13%; position: absolute; width: 250px">
       <!-- when suggestions -->
       <li
-        (mousedown)="onValueSelect(suggestion);"
+        (mousedown)="onValueSelect(suggestion, context.row, context.column);"
         *ngFor="let suggestion of getInputGrid(context.row, context.column).suggestions; let i = index;"
         class="menu-item">
         {{ suggestion }}
