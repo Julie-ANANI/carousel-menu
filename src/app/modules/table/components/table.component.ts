@@ -18,7 +18,6 @@ import { UserSuggestion } from '../../user/admin/components/admin-project/admin-
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { EnterpriseValueChains } from "../../../models/static-data/enterprise";
 
 /**
  * editable cell
@@ -1143,6 +1142,7 @@ export class TableComponent implements OnInit, OnDestroy {
       gridInput.searchControl.enable();
       gridInput.className = 'editable-grid';
     }
+    console.log(gridInput.searchControl.value);
   }
 
   /**
@@ -1180,10 +1180,17 @@ export class TableComponent implements OnInit, OnDestroy {
           gridInputToAdd.input = {name: name};
           break;
         case 'MULTI-INPUT':
+          gridInputToAdd.sourceList = column._multiInput.sourceList || [];
           if (this.getContentValue(row, this.getAttrs(column)[0]).length === 0) {
             gridInputToAdd.input = '-';
           } else {
-            gridInputToAdd.input = this.getStringForColumn(row, column, 'label');
+            switch (column._type) {
+              case 'LABEL-OBJECT-LIST':
+                gridInputToAdd.input = this.getStringForColumn(row, column, 'label');
+                break;
+              default:
+                gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
+            }
           }
           gridInputToAdd.searchControl = new FormControl({value: gridInputToAdd.input, disabled: true});
           this.multiInputOnChange(gridInputToAdd);
@@ -1210,19 +1217,21 @@ export class TableComponent implements OnInit, OnDestroy {
     gridInputToAdd.searchControl.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
       .subscribe((input: any) => {
-        const inputSplit = input.split(',');
-        let lastSearchKeyWord = '';
-        if (inputSplit && inputSplit.length) {
-          lastSearchKeyWord = inputSplit[inputSplit.length - 1];
-        }
-        if (!lastSearchKeyWord.match(/^[ ]*$/)) {
-          lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
-          gridInputToAdd.suggestions = EnterpriseValueChains.filter((value: string) =>
-            value.replace(/\s/g, '').toLowerCase().indexOf(lastSearchKeyWord.toLowerCase()) !== -1 ||
-            lastSearchKeyWord.toLowerCase().indexOf(value.replace(/\s/g, '').toLowerCase()) !== -1
-          );
-        } else {
-          gridInputToAdd.suggestions = [];
+        if (input) {
+          const inputSplit = input.split(',');
+          let lastSearchKeyWord = '';
+          if (inputSplit && inputSplit.length) {
+            lastSearchKeyWord = inputSplit[inputSplit.length - 1];
+          }
+          if (!lastSearchKeyWord.match(/^[ ]*$/)) {
+            lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
+            gridInputToAdd.suggestions = gridInputToAdd.sourceList.filter((value: string) =>
+              value.replace(/\s/g, '').toLowerCase().indexOf(lastSearchKeyWord.toLowerCase()) !== -1 ||
+              lastSearchKeyWord.toLowerCase().indexOf(value.replace(/\s/g, '').toLowerCase()) !== -1
+            );
+          } else {
+            gridInputToAdd.suggestions = [];
+          }
         }
       });
   }
@@ -1245,6 +1254,31 @@ export class TableComponent implements OnInit, OnDestroy {
             lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
           }
           _dataToUpdate.input = choiceItem._name;
+          break;
+        case 'MULTI-INPUT':
+          const valueToReplace: any[] = [];
+          let valueList: any[] = [];
+          let newEle = {};
+          if (_dataToUpdate.searchControl.value) {
+            valueList = _dataToUpdate.searchControl.value.split(',');
+          }
+          if (valueList && valueList.length) {
+            valueList.map(value => {
+              if (column._multiInput.property && column._multiInput.property.length) {
+                newEle = {};
+                for (let i = 0; i < column._multiInput.property.length; i++) {
+                  newEle[column._multiInput.property[i]] = value;
+                }
+                console.log(newEle);
+                valueToReplace.push(newEle);
+              } else {
+                valueToReplace.push(value);
+              }
+            });
+          }
+          _dataToUpdate.searchControl.disable();
+          console.log(_dataToUpdate.searchControl.value);
+          lodash.set(_dataToUpdate.value, _attrs, valueToReplace);
           break;
         default:
           lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
@@ -1288,6 +1322,21 @@ export class TableComponent implements OnInit, OnDestroy {
             name += this.getContentValue(row, _attr) + ' ';
           }
           _dataToUpdate.input = {name: name};
+          break;
+        case 'MULTI-INPUT':
+          if (this.getContentValue(row, this.getAttrs(column)[0]).length === 0) {
+            _dataToUpdate.input = '-';
+          } else {
+            switch (column._type) {
+              case 'LABEL-OBJECT-LIST':
+                _dataToUpdate.input = this.getStringForColumn(row, column, 'label');
+                break;
+              default:
+                _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+            }
+          }
+          _dataToUpdate.searchControl.patchValue(_dataToUpdate.input);
+          _dataToUpdate.searchControl.disable();
           break;
         default:
           _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);

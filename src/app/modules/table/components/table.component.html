@@ -496,7 +496,7 @@
                   <!-- editable-->
                   <ng-container *ngIf="column._isEditable">
                     <ng-container [ngSwitch]="column._editType">
-                      <!-- type MULTI-CHOICES editable-->
+                      <!-- type MULTI-INPUT editable-->
                       <ng-container *ngSwitchCase="'MULTI-INPUT'">
                         <div
                           *ngIf="getInputGrid(row, column).disabled"
@@ -510,7 +510,7 @@
                           *ngTemplateOutlet="gridEditMultipleInputTemplate; context: {$implicit: {column: column, row:row}}">
                         </ng-container>
                       </ng-container>
-                      <!-- /type MULTI-CHOICES editable -->
+                      <!-- /type MULTI-INPUT editable -->
                     </ng-container>
                   </ng-container>
                   <!-- /editable-->
@@ -773,6 +773,22 @@
                         </ng-container>
                         <!-- /user input  editable-->
 
+                        <!-- type MULTI-INPUT editable-->
+                        <ng-container *ngSwitchCase="'MULTI-INPUT'">
+                          <div
+                            *ngIf="getInputGrid(row, column).disabled"
+                            (click)="enableInput($event, row, column)"
+                            class="text-ellipsis no-editable-grid d-flex align-center">
+                            <ng-container *ngFor="let attr of getAttrs(column)">
+                              {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                            </ng-container>
+                          </div>
+                          <ng-container
+                            *ngTemplateOutlet="gridEditMultipleInputTemplate; context: {$implicit: {column: column, row:row}}">
+                          </ng-container>
+                        </ng-container>
+                        <!-- /type MULTI-INPUT editable -->
+
                       </ng-container>
                     </ng-container>
                     <!-- /editable-->
@@ -865,41 +881,22 @@
 
 <ng-template #gridEditMultipleInputTemplate let-context>
   <div class="form-group d-flex align-center" *ngIf="!getInputGrid(context.row, context.column).disabled">
-      <form (click)="enableInput($event, context.row, context.column)" autocomplete="off" class="relative" novalidate>
-        <!-- input area -->
-        <div class="input-wrapper">
-          <label>
-            <input
-              (keydown)="onKeyboardPress($event, context.row, context.column)"
-              [attr.placeholder]="'placeholder'"
-              [formControl]="getInputGrid(context.row, context.column).searchControl"
-              [ngClass]="getInputGrid(context.row, context.column).className"
-              autocomplete="off"
-              class="form-input is-shadowed is-sm"
-              type="search">
-          </label>
-        </div>
-        <!-- /input area -->
-      </form>
-
-    <!-- suggestions list -->
-    <ul
-      *ngIf="getInputGrid(context.row, context.column).isSearching
-          && getInputGrid(context.row, context.column).suggestions
-          && getInputGrid(context.row, context.column).suggestions.length"
-      class="menu" style="z-index: 999; margin-top: 13%; position: absolute; width: 250px">
-      <!-- when suggestions -->
-      <li
-        (mousedown)="onValueSelect(suggestion, context.row, context.column);"
-        *ngFor="let suggestion of getInputGrid(context.row, context.column).suggestions; let i = index;"
-        class="menu-item">
-        {{ suggestion }}
-      </li>
-      <!-- /when suggestions -->
-
-    </ul>
-    <!-- /suggestions list -->
-
+    <form (click)="enableInput($event, context.row, context.column)" autocomplete="off" class="relative" novalidate>
+      <!-- input area -->
+      <div class="input-wrapper">
+        <label>
+          <input
+            (keydown)="onKeyboardPress($event, context.row, context.column)"
+            [attr.placeholder]="'placeholder'"
+            [formControl]="getInputGrid(context.row, context.column).searchControl"
+            [ngClass]="getInputGrid(context.row, context.column).className"
+            autocomplete="off"
+            class="form-input is-shadowed is-sm"
+            type="search">
+        </label>
+      </div>
+      <!-- /input area -->
+    </form>
 
     <div class="d-flex flex-d-column justify-center">
                       <span class="icon is-md is-primary icon-check m-bottom-1"
@@ -913,6 +910,25 @@
                           </span>
     </div>
   </div>
+
+  <!-- suggestions list -->
+  <ul
+    *ngIf="getInputGrid(context.row, context.column).isSearching
+          && getInputGrid(context.row, context.column).suggestions
+          && getInputGrid(context.row, context.column).suggestions.length"
+    class="menu" style="z-index: 999; margin-top: 22%; position: absolute; width: 250px; max-height: 200px; overflow: auto; min-height: 200px;">
+    <!-- when suggestions -->
+    <li
+      (mousedown)="onValueSelect(suggestion, context.row, context.column);"
+      *ngFor="let suggestion of getInputGrid(context.row, context.column).suggestions; let i = index;"
+      class="menu-item">
+      {{ suggestion }}
+    </li>
+    <!-- /when suggestions -->
+
+  </ul>
+  <!-- /suggestions list -->
+
 </ng-template>
 
 <!-- type TEXT / DEFAULT edit template-->

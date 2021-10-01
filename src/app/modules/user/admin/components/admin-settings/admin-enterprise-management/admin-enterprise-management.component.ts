@@ -18,6 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
+import { EnterpriseValueChains, Industries } from "../../../../../../models/static-data/enterprise";
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -286,7 +287,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _width: '280px',
             _isHidden: !this.canAccess(['tableColumns', 'industry']),
             _isEditable: true,
-            _editType: 'MULTI-INPUT'
+            _editType: 'MULTI-INPUT',
+            _multiInput: {
+              sourceList: Industries,
+              property: ['label', 'code']
+            }
           },
           {
             _attrs: ['brands'],
@@ -340,9 +345,15 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _attrs: ['valueChain'],
             _name: 'Value chain',
             _type: 'TEXT',
+            _width: '280px',
             _isSortable: true,
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
+            _isEditable: true,
+            _editType: 'MULTI-INPUT',
+            _multiInput: {
+              sourceList: EnterpriseValueChains,
+            }
           },
         ],
     };
@@ -674,6 +685,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = enterprise.parentEnterpriseObject;
             this._resultTableConfiguration._content[idx]['subsidiariesList'] = enterprise.subsidiariesList;
           }
+          console.log(this._resultTableConfiguration._content[idx]);
+          console.log(result);
         },
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(

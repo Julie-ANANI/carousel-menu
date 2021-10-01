@@ -30,6 +30,13 @@ export interface Column {
     _collection: string,
     _searchKey: string
   };
+
+  readonly _multiInput?: MultiInput;
+}
+
+export interface MultiInput {
+  sourceList: Array<any>;
+  property?: Array<string>;
 }
 
 export type types =
