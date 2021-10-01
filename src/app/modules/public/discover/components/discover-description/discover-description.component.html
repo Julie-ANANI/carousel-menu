@@ -43,7 +43,7 @@
 
             <!-- innovation summary -->
             <div *ngIf="innovationCard.summary" class="d-d-summary-wrapper p-top-10">
-              <div [innerHTML]="innovationCard.summary"></div>
+              <div [innerHTML]="innovationCard.summary | cleanHtml"></div>
             </div>
 
           </section>
@@ -97,7 +97,7 @@
           <section *ngIf="sectionInfo('ISSUE')" class="p-bottom-20">
             <h2 class="d-d-title-secondary" [innerText]="'DISCOVERDESCRIPTION.ISSUE'" translate></h2>
             <div class="d-d-issue-wrapper">
-              <div [innerHTML]="sectionInfo('ISSUE')"></div>
+              <div [innerHTML]="sectionInfo('ISSUE') | cleanHtml"></div>
             </div>
           </section>
           <!-- /issue -->
@@ -107,7 +107,7 @@
           <section *ngIf="sectionInfo('SOLUTION')" class="p-bottom-20">
             <h2 class="d-d-title-secondary" [innerText]="'DISCOVERDESCRIPTION.SOLUTION'" translate></h2>
             <div class="d-d-solution-wrapper">
-              <div [innerHTML]="sectionInfo('SOLUTION')"></div>
+              <div [innerHTML]="sectionInfo('SOLUTION') | cleanHtml"></div>
             </div>
           </section>
           <!-- /solution -->
