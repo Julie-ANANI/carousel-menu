@@ -229,7 +229,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           {
             _attrs: ['patterns'],
             _name: 'Patterns',
-            _type: 'PATTERNS-OBJECT-LIST',
+            _type: 'LABEL-OBJECT-LIST',
+            _label: 'expression',
             _width: '120px',
             _isHidden: !this.canAccess(['tableColumns', 'patterns']),
           },
@@ -243,12 +244,14 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
             _attrs: ['industries'],
             _name: 'Industry',
             _type: 'LABEL-OBJECT-LIST',
+            _label: 'label',
             _isHidden: !this.canAccess(['tableColumns', 'industry']),
           },
           {
             _attrs: ['brands'],
             _name: 'Brand',
             _type: 'LABEL-OBJECT-LIST',
+            _label: 'label',
             _isHidden: !this.canAccess(['tableColumns', 'brand']),
           },
           {
@@ -260,7 +263,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
           {
             _attrs: ['geographicalZone'],
             _name: 'Geographical Zone',
-            _type: 'NAME-LABEL-LIST',
+            _type: 'LABEL-OBJECT-LIST',
+            _label: 'name',
             _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
             _width: '190px',
           },

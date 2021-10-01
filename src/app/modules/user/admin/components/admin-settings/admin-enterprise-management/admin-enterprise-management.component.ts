@@ -256,7 +256,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           {
             _attrs: ['parentEnterpriseObject'],
             _name: 'Parent Enterprise',
-            _type: 'NAME-LABEL-LIST',
+            _type: 'LABEL-OBJECT-LIST',
+            _label: 'name',
             _width: '170px',
             _isHidden: !this.canAccess(['tableColumns', 'parent']),
           },
@@ -288,6 +289,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'industry']),
             _isEditable: true,
             _editType: 'MULTI-INPUT',
+            _label: 'label',
             _multiInput: {
               sourceList: Industries,
               property: ['label', 'code']
@@ -299,6 +301,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _type: 'LABEL-OBJECT-LIST',
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'brand']),
+            _label: 'label'
           },
           {
             _attrs: ['enterpriseType'],
@@ -320,10 +323,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
           {
             _attrs: ['geographicalZone'],
             _name: 'Geographical Zone',
-            _type: 'NAME-LABEL-LIST',
+            _type: 'LABEL-OBJECT-LIST',
             _width: '190px',
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
+            _label: 'name'
           },
           {
             _attrs: ['enterpriseSize'],
@@ -648,10 +652,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._enterpriseService.setQueryConfig(this._queryConfig);
     this._enterpriseService.setEnterprisesSelected($event._rows);
     switch ($event._action) {
+      // cell edit
       case 'Update grid':
         const context = $event._context;
         if (context) {
-          console.log(context);
           this.saveEnterprise(context);
         }
         break;

@@ -481,10 +481,10 @@
 
                 <!-- type LABEL-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
-                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'label')"
+                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, column._label)"
                        *ngIf="!column._isEditable"
                        [ngStyle]="getTextColor(row, column)">
-                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'label')| titlecase) }}
+                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, column._label)| titlecase) }}
                   </div>
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
                     <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
@@ -517,42 +517,6 @@
 
                 </ng-container>
                 <!-- /type LABEL-OBJECT-LIST -->
-
-                <!-- type PATTERNS-OBJECT-LIST -->
-                <ng-container *ngSwitchCase="'PATTERNS-OBJECT-LIST'">
-
-                  <div class="text-ellipsis"
-                       [ngStyle]="getTextColor(row, column)"
-                       [title]="getStringForColumn(row, column, 'expression')">
-                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'expression').toString() | titlecase) }}
-                  </div>
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                  </ng-container>
-
-                </ng-container>
-                <!-- /type PATTERNS-OBJECT-LIST-->
-
-                <!-- type NAME-LABEL-LIST -->
-                <ng-container *ngSwitchCase="'NAME-LABEL-LIST'">
-                  <div class="text-ellipsis"
-                       [ngStyle]="getTextColor(row, column)"
-                       [title]="getStringForColumn(row, column, 'name')">
-                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'name').toString() | titlecase) }}
-                  </div>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                  </ng-container>
-
-                </ng-container>
-                <!-- /type NAME-LABEL-LIST-->
 
                 <!-- type LENGTH -->
                 <ng-container *ngSwitchCase="'LENGTH'">
@@ -879,6 +843,7 @@
 </ng-template>
 <!-- /type MULTI-CHOICES template -->
 
+<!-- type MULTI-INPUT template -->
 <ng-template #gridEditMultipleInputTemplate let-context>
   <div class="form-group d-flex align-center" *ngIf="!getInputGrid(context.row, context.column).disabled">
     <form (click)="enableInput($event, context.row, context.column)" autocomplete="off" class="relative" novalidate>
@@ -897,7 +862,6 @@
       </div>
       <!-- /input area -->
     </form>
-
     <div class="d-flex flex-d-column justify-center">
                       <span class="icon is-md is-primary icon-check m-bottom-1"
                             (click)="sendEditedGrid($event, context.row, context.column)"
@@ -925,11 +889,10 @@
       {{ suggestion }}
     </li>
     <!-- /when suggestions -->
-
   </ul>
   <!-- /suggestions list -->
-
 </ng-template>
+<!-- /type MULTI-INPUT template -->
 
 <!-- type TEXT / DEFAULT edit template-->
 <ng-template #gridEditTextTemplate let-context>

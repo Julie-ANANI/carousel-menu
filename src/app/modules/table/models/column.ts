@@ -22,6 +22,7 @@ export interface Column {
   readonly _multiLabels?: MultiLabel[];
   readonly _width?: string;
   readonly _enableTooltip?: boolean;
+  readonly _label?: string; // property key to read value
   readonly _isCustomFilter?: boolean; // when pass emits the value of it to the parent component.
   /**
    * This is the expected configuration when we want to search using a collection other than the one which is active
@@ -61,7 +62,5 @@ export type types =
   | 'NUMBER'
   | 'USER-INPUT'
   | 'TAG'
-  | 'PATTERNS-OBJECT-LIST'
-  | 'NAME-LABEL-LIST'
   | 'PRO-TARGET'
   | 'LABEL-OBJECT-LIST';
