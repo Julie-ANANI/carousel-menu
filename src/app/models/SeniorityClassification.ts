@@ -3,7 +3,7 @@ export interface SeniorityClassification {
   seniorityLevels: [
     {
       _id: string;
-      name: String;
+      name: string;
       count: number;
     }
   ];
