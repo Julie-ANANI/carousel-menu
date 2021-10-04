@@ -882,7 +882,6 @@
       <div class="input-wrapper">
         <label>
           <input
-            (keydown)="onKeyboardPress($event, context.row, context.column)"
             [formControl]="getInputGrid(context.row, context.column).searchControl"
             [ngClass]="getInputGrid(context.row, context.column).className"
             autocomplete="off"
@@ -894,8 +893,7 @@
 
       <!-- suggestions list -->
       <ul
-        *ngIf="getInputGrid(context.row, context.column).isSearching
-          && getInputGrid(context.row, context.column).suggestions
+        *ngIf="getInputGrid(context.row, context.column).suggestions
           && getInputGrid(context.row, context.column).suggestions.length"
         class="menu" style="z-index: 999; position: absolute; width: 250px; max-height: 200px; overflow: auto;">
         <!-- when suggestions -->

@@ -1202,20 +1202,6 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * when user enter ,
-   * searching starts
-   * @param event
-   * @param row
-   * @param column
-   */
-  public onKeyboardPress(event: KeyboardEvent, row: any, column: Column) {
-    if (event.code === 'Comma') {
-      const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
-      gridInput.isSearching = true;
-    }
-  }
-
-  /**
    * multiple input
    * @param gridInputToAdd
    */
@@ -1225,10 +1211,7 @@ export class TableComponent implements OnInit, OnDestroy {
       .subscribe((input: any) => {
         if (input) {
           const inputSplit = input.split(',');
-          let lastSearchKeyWord = '';
-          if (inputSplit && inputSplit.length) {
-            lastSearchKeyWord = inputSplit[inputSplit.length - 1];
-          }
+          let lastSearchKeyWord = inputSplit[inputSplit.length - 1];
           // trim spaces
           if (!lastSearchKeyWord.match(/^[ ]*$/)) {
             lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
@@ -1284,6 +1267,7 @@ export class TableComponent implements OnInit, OnDestroy {
               }
             });
           }
+          _dataToUpdate.input = _dataToUpdate.searchControl.value;
           _dataToUpdate.searchControl.disable();
           lodash.set(_dataToUpdate.value, _attrs, valueToReplace);
           break;
@@ -1331,12 +1315,12 @@ export class TableComponent implements OnInit, OnDestroy {
           _dataToUpdate.input = {name: name};
           break;
         case 'MULTI-INPUT':
-            switch (column._type) {
-              case 'LABEL-OBJECT-LIST':
-                _dataToUpdate.input = this.getStringForColumn(row, column, column._label);
-                break;
-              default:
-                _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+          switch (column._type) {
+            case 'LABEL-OBJECT-LIST':
+              _dataToUpdate.input = this.getStringForColumn(row, column, column._label);
+              break;
+            default:
+              _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
           }
           _dataToUpdate.searchControl.disable();
           break;
