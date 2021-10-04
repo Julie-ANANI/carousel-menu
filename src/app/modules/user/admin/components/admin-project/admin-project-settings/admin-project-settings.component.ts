@@ -513,8 +513,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   private _saveClientProject(notifyMessage = 'The project has been updated.') {
+    // Ugly hack: commercial needs to be an _id to be saved on the back-end
+    const tmpProject: any = this._clientProject;
+    tmpProject.commercial = tmpProject.commercial._id;
     this._clientProjectService
-      .save(this._clientProject._id, this._clientProject)
+      .save(this._clientProject._id, tmpProject)
       .pipe(first())
       .subscribe(
         (clientProject: ClientProject) => {
