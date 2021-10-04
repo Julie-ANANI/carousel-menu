@@ -861,6 +861,23 @@
         </label>
       </div>
       <!-- /input area -->
+
+      <!-- suggestions list -->
+      <ul
+        *ngIf="getInputGrid(context.row, context.column).isSearching
+          && getInputGrid(context.row, context.column).suggestions
+          && getInputGrid(context.row, context.column).suggestions.length"
+        class="menu" style="z-index: 999; position: absolute; width: 250px; max-height: 200px; overflow: auto;">
+        <!-- when suggestions -->
+        <li
+          (mousedown)="onValueSelect(suggestion, context.row, context.column);"
+          *ngFor="let suggestion of getInputGrid(context.row, context.column).suggestions; let i = index;"
+          class="menu-item">
+          {{ suggestion }}
+        </li>
+        <!-- /when suggestions -->
+      </ul>
+      <!-- /suggestions list -->
     </form>
     <div class="d-flex flex-d-column justify-center">
                       <span class="icon is-md is-primary icon-check m-bottom-1"
@@ -874,23 +891,6 @@
                           </span>
     </div>
   </div>
-
-  <!-- suggestions list -->
-  <ul
-    *ngIf="getInputGrid(context.row, context.column).isSearching
-          && getInputGrid(context.row, context.column).suggestions
-          && getInputGrid(context.row, context.column).suggestions.length"
-    class="menu" style="z-index: 999; margin-top: 22%; position: absolute; width: 250px; max-height: 200px; overflow: auto; min-height: 200px;">
-    <!-- when suggestions -->
-    <li
-      (mousedown)="onValueSelect(suggestion, context.row, context.column);"
-      *ngFor="let suggestion of getInputGrid(context.row, context.column).suggestions; let i = index;"
-      class="menu-item">
-      {{ suggestion }}
-    </li>
-    <!-- /when suggestions -->
-  </ul>
-  <!-- /suggestions list -->
 </ng-template>
 <!-- /type MULTI-INPUT template -->
 

@@ -1186,7 +1186,7 @@ export class TableComponent implements OnInit, OnDestroy {
           } else {
             switch (column._type) {
               case 'LABEL-OBJECT-LIST':
-                gridInputToAdd.input = this.getStringForColumn(row, column, 'label');
+                gridInputToAdd.input = this.getStringForColumn(row, column, column._label);
                 break;
               default:
                 gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
@@ -1206,6 +1206,13 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * when user enter ,
+   * searching starts
+   * @param event
+   * @param row
+   * @param column
+   */
   public onKeyboardPress(event: KeyboardEvent, row: any, column: Column) {
     if (event.code === 'Comma') {
       const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
@@ -1213,6 +1220,10 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * multiple input
+   * @param gridInputToAdd
+   */
   multiInputOnChange(gridInputToAdd: InputGrid) {
     gridInputToAdd.searchControl.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
@@ -1223,6 +1234,7 @@ export class TableComponent implements OnInit, OnDestroy {
           if (inputSplit && inputSplit.length) {
             lastSearchKeyWord = inputSplit[inputSplit.length - 1];
           }
+          // trim spaces
           if (!lastSearchKeyWord.match(/^[ ]*$/)) {
             lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
             gridInputToAdd.suggestions = gridInputToAdd.sourceList.filter((value: string) =>
@@ -1262,6 +1274,8 @@ export class TableComponent implements OnInit, OnDestroy {
           if (_dataToUpdate.searchControl.value) {
             valueList = _dataToUpdate.searchControl.value.split(',');
           }
+          // check if the list should be a list of object
+          // property: key of the object
           if (valueList && valueList.length) {
             valueList.map(value => {
               if (column._multiInput.property && column._multiInput.property.length) {
@@ -1269,7 +1283,6 @@ export class TableComponent implements OnInit, OnDestroy {
                 for (let i = 0; i < column._multiInput.property.length; i++) {
                   newEle[column._multiInput.property[i]] = value;
                 }
-                console.log(newEle);
                 valueToReplace.push(newEle);
               } else {
                 valueToReplace.push(value);
@@ -1277,7 +1290,6 @@ export class TableComponent implements OnInit, OnDestroy {
             });
           }
           _dataToUpdate.searchControl.disable();
-          console.log(_dataToUpdate.searchControl.value);
           lodash.set(_dataToUpdate.value, _attrs, valueToReplace);
           break;
         default:
@@ -1347,6 +1359,13 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * User input
+   * When user select from users list
+   * @param value
+   * @param row
+   * @param column
+   */
   getUserSelected(value: UserSuggestion, row: any, column: Column) {
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (_dataToUpdate && value && value._id) {
@@ -1354,7 +1373,13 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  /**
+   * Multiple input
+   * when user select from suggestion list
+   * @param suggestion
+   * @param row
+   * @param column
+   */
   onValueSelect(suggestion: string, row: any, column: Column) {
     const gridToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     const splits = gridToUpdate.searchControl.value.split(',');
