@@ -1187,7 +1187,7 @@ export class TableComponent implements OnInit, OnDestroy {
             default:
               gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
           }
-          gridInputToAdd.searchControl = new FormControl({value: gridInputToAdd.input, disabled: true});
+          gridInputToAdd.searchControl = new FormControl({value: gridInputToAdd.input + ',', disabled: true});
           this.multiInputOnChange(gridInputToAdd);
           break;
         default:
@@ -1358,8 +1358,7 @@ export class TableComponent implements OnInit, OnDestroy {
     const gridToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     const splits = gridToUpdate.searchControl.value.split(',');
     splits[splits.length - 1] = suggestion;
-    gridToUpdate.searchControl.patchValue(splits.toString());
-    gridToUpdate.isSearching = false;
+    gridToUpdate.searchControl.patchValue(splits.toString() + ',');
   }
 
   ngOnDestroy(): void {

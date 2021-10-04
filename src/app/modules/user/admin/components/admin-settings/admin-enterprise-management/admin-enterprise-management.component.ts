@@ -689,8 +689,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = enterprise.parentEnterpriseObject;
             this._resultTableConfiguration._content[idx]['subsidiariesList'] = enterprise.subsidiariesList;
           }
-          console.log(this._resultTableConfiguration._content[idx]);
-          console.log(result);
         },
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
