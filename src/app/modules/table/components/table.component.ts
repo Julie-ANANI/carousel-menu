@@ -27,11 +27,9 @@ interface InputGrid {
   column: Column; // which column
   disabled: boolean; // input disabled?
   value: any; // content value
-  className: string; // class => input style
   input: any; // input ngModel,
   searchControl?: FormControl;
   suggestions?: Array<any>;
-  isSearching?: boolean;
   sourceList?: Array<any>;
 }
 
@@ -1136,11 +1134,9 @@ export class TableComponent implements OnInit, OnDestroy {
     const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (gridInput) {
       gridInput.disabled = false;
-      gridInput.className = 'editable-grid';
     }
     if (gridInput.searchControl) {
       gridInput.searchControl.enable();
-      gridInput.className = 'editable-grid';
     }
   }
 
@@ -1156,7 +1152,6 @@ export class TableComponent implements OnInit, OnDestroy {
         disabled: true,
         column: column,
         value: this._table._content[row],
-        className: 'no-editable-grid',
         input: '',
       };
       switch (column._editType) {
@@ -1282,7 +1277,6 @@ export class TableComponent implements OnInit, OnDestroy {
         _column: column
       });
       _dataToUpdate.disabled = true;
-      _dataToUpdate.className = 'no-editable-grid';
     }
   }
 
@@ -1329,7 +1323,6 @@ export class TableComponent implements OnInit, OnDestroy {
           break;
       }
       _dataToUpdate.disabled = true;
-      _dataToUpdate.className = 'no-editable-grid';
     }
   }
 

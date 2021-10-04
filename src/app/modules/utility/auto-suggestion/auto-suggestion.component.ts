@@ -62,6 +62,8 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   @Input() isSmallInput = false;
 
+  @Input() isSmallerInput = false;
+
   @Output() valueSelected: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() valueAdded = new EventEmitter();
