@@ -18,7 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
-import { EnterpriseValueChains, Industries } from "../../../../../../models/static-data/enterprise";
+import { EnterpriseValueChains, Industries } from '../../../../../../models/static-data/enterprise';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -293,7 +293,8 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _multiInput: {
               sourceList: Industries,
               property: ['label', 'code']
-            }
+            },
+            _tooltip: 'When editing, enter a comma (,)' + '\n' + ' to enable the search',
           },
           {
             _attrs: ['brands'],
@@ -330,6 +331,21 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _label: 'name'
           },
           {
+            _attrs: ['valueChain'],
+            _name: 'Value chain',
+            _type: 'TEXT',
+            _width: '280px',
+            _isSortable: true,
+            _enableTooltip: true,
+            _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
+            _isEditable: true,
+            _editType: 'MULTI-INPUT',
+            _tooltip: 'When editing, enter a comma (,)' + '\n' + ' to enable the search',
+            _multiInput: {
+              sourceList: EnterpriseValueChains,
+            }
+          },
+          {
             _attrs: ['enterpriseSize'],
             _name: 'Company size',
             _type: 'TEXT',
@@ -344,20 +360,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
               {_name: 'GE', _alias: 'Ge'},
             ],
             _editType: 'MULTI-CHOICES'
-          },
-          {
-            _attrs: ['valueChain'],
-            _name: 'Value chain',
-            _type: 'TEXT',
-            _width: '280px',
-            _isSortable: true,
-            _enableTooltip: true,
-            _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
-            _isEditable: true,
-            _editType: 'MULTI-INPUT',
-            _multiInput: {
-              sourceList: EnterpriseValueChains,
-            }
           },
         ],
     };
