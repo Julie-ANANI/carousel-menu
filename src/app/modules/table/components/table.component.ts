@@ -1142,7 +1142,6 @@ export class TableComponent implements OnInit, OnDestroy {
       gridInput.searchControl.enable();
       gridInput.className = 'editable-grid';
     }
-    console.log(gridInput.searchControl.value);
   }
 
   /**
@@ -1181,16 +1180,12 @@ export class TableComponent implements OnInit, OnDestroy {
           break;
         case 'MULTI-INPUT':
           gridInputToAdd.sourceList = column._multiInput.sourceList || [];
-          if (this.getContentValue(row, this.getAttrs(column)[0]).length === 0) {
-            gridInputToAdd.input = '-';
-          } else {
-            switch (column._type) {
-              case 'LABEL-OBJECT-LIST':
-                gridInputToAdd.input = this.getStringForColumn(row, column, column._label);
-                break;
-              default:
-                gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
-            }
+          switch (column._type) {
+            case 'LABEL-OBJECT-LIST':
+              gridInputToAdd.input = this.getStringForColumn(row, column, column._label);
+              break;
+            default:
+              gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
           }
           gridInputToAdd.searchControl = new FormControl({value: gridInputToAdd.input, disabled: true});
           this.multiInputOnChange(gridInputToAdd);
@@ -1336,18 +1331,13 @@ export class TableComponent implements OnInit, OnDestroy {
           _dataToUpdate.input = {name: name};
           break;
         case 'MULTI-INPUT':
-          if (this.getContentValue(row, this.getAttrs(column)[0]).length === 0) {
-            _dataToUpdate.input = '-';
-          } else {
             switch (column._type) {
               case 'LABEL-OBJECT-LIST':
-                _dataToUpdate.input = this.getStringForColumn(row, column, 'label');
+                _dataToUpdate.input = this.getStringForColumn(row, column, column._label);
                 break;
               default:
                 _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
-            }
           }
-          _dataToUpdate.searchControl.patchValue(_dataToUpdate.input);
           _dataToUpdate.searchControl.disable();
           break;
         default:
