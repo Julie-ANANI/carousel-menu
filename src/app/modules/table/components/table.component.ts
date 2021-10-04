@@ -1182,7 +1182,11 @@ export class TableComponent implements OnInit, OnDestroy {
             default:
               gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
           }
-          gridInputToAdd.searchControl = new FormControl({value: gridInputToAdd.input + ',', disabled: true});
+
+          gridInputToAdd.searchControl = new FormControl({
+            value: gridInputToAdd.input ? gridInputToAdd.input + ',' : '',
+            disabled: true
+          });
           this.multiInputOnChange(gridInputToAdd);
           break;
         default:
