@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { first, takeUntil} from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
@@ -12,6 +12,7 @@ import { ErrorFrontService } from '../../../../../../../services/error/error-fro
 import { Mission } from '../../../../../../../models/mission';
 import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
 import { environment } from '../../../../../../../../environments/environment';
+import { CanComponentDeactivate } from '../../../../../../../guards/can-deactivate-guard.service';
 
 interface Banner {
   message: string;
@@ -34,8 +35,7 @@ interface Save {
   styleUrls: ['setup.component.scss']
 })
 
-export class SetupComponent implements OnInit, OnDestroy {
-
+export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   private _innovation: Innovation = <Innovation>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject();
@@ -43,6 +43,8 @@ export class SetupComponent implements OnInit, OnDestroy {
   private _currentPage = '';
 
   private _saveChanges: Save = <Save>{};
+
+  private _activeSaveBadge = false;
 
   private _banner: Banner = <Banner>{};
 
@@ -97,6 +99,9 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
       this._saveChanges = response;
+      if (response && response.key === 'settings') {
+        this._activeSaveBadge = response && response.state;
+      }
     });
 
   }
@@ -289,6 +294,15 @@ export class SetupComponent implements OnInit, OnDestroy {
 
   get previewLink(): string {
     return this._previewLink;
+  }
+
+
+  get activeSaveBadge(): boolean {
+    return this._activeSaveBadge;
+  }
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    return !this._activeSaveBadge;
   }
 
   ngOnDestroy(): void {
