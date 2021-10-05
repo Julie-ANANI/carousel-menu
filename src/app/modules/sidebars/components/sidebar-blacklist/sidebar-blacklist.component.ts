@@ -8,7 +8,8 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Enterprise } from '../../../../models/enterprise';
-import {Blacklist} from '../../../../models/blacklist';
+import { Blacklist } from '../../../../models/blacklist';
+import { emailRegEx } from '../../../../utils/regex';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
@@ -121,7 +122,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _buildForm() {
     this._formData = this._formBuilder.group({
-      email: [[], [Validators.required, Validators.email]],
+      email: [[], [Validators.required, Validators.pattern(emailRegEx)]],
       expiration: '',
       acceptation: [80, [Validators.required, Validators.max(100), Validators.min(0)]]
     });
