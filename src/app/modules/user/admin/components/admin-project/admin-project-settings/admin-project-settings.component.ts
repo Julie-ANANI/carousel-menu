@@ -46,6 +46,7 @@ import { picto, Picto } from '../../../../../../models/static-data/picto';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
 import { Community } from '../../../../../../models/community';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {Blacklist, BlacklistDomain} from '../../../../../../models/blacklist';
 
 export interface UserSuggestion {
   name: string;
@@ -698,21 +699,20 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  public addBlocklist(values: {
-    emails: Array<string>;
-    domains: Array<string>;
-  }) {
+  public addBlocklist(values: Blacklist) {
     if (values.emails.length || values.domains.length) {
       const _domainExp = domainRegEx;
       const _emailExp = emailRegEx;
 
       if (values.domains) {
         this._innovation.settings.blacklist.domains = [];
-        values.domains.forEach((value: any) => {
-          if (_domainExp.test(value.name)) {
-            this._innovation.settings.blacklist.domains.push(
-              value.name.split('@')[1]
-            );
+
+        values.domains.forEach((value: BlacklistDomain) => {
+          const _domain = !!value.domain ? `*@${value.domain}` : value.name;
+          if (_domainExp.test(_domain)) {
+            this._innovation.settings.blacklist.domains.push(_domain.split('@')[1]);
+          } else {
+            this._translateNotificationsService.success('Error', `The domain ${_domain} format is not correct.`);
           }
         });
       }
@@ -726,7 +726,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         });
       }
 
-      this._saveProject('The blocklist have been updated.', {
+      this._saveProject('The blacklists have been updated.', {
         settings: this._innovation.settings,
       });
     }
