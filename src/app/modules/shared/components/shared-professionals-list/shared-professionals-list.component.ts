@@ -224,6 +224,13 @@ export class SharedProfessionalsListComponent {
           _isHidden: !this.canAccess(['tableColumns', 'contact']),
           _width: '120px',
         },
+        {
+          _attrs: ['unshield'],
+          _name: 'Unshield',
+          _type: 'DATE',
+          _width: '140px',
+          _isHidden: !this.canAccess(['tableColumns', 'unshield']),
+        },
       ],
     };
   }
