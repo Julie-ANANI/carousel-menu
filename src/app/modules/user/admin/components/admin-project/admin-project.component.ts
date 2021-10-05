@@ -18,6 +18,8 @@ import {Subject} from 'rxjs';
 import {CampaignFrontService} from '../../../../../services/campaign/campaign-front.service';
 import {AuthService} from '../../../../../services/auth/auth.service';
 import {InnovCard} from '../../../../../models/innov-card';
+import {environment} from '../../../../../../environments/environment';
+import {CommonService} from '../../../../../services/common/common.service';
 
 interface Tab {
   route: string;
@@ -79,6 +81,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _innovTitle = '';
 
+  private _quizLink = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -90,10 +94,12 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
+              private _commonService: CommonService,
               private _socketService: SocketService) {
     this._project = this._activatedRoute.snapshot.data['innovation'];
     this._setInnoTitle();
     this._setInnovation();
+    this._setQuizLink();
   }
 
   ngOnInit() {
@@ -283,6 +289,34 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this.closeModal();
   }
 
+  private _setQuizLink() {
+    if (
+      this._project.quizId &&
+      Array.isArray(this._project.campaigns) &&
+      this._project.campaigns.length > 0
+    ) {
+      this._quizLink =
+        `${environment.quizUrl}/quiz/${this._project.quizId}/${this._project.campaigns[0]._id}` ||
+        '';
+    }
+  }
+
+  openQuiz($event: Event) {
+    $event.preventDefault();
+    if (this.quizLink) {
+      window.open(this.quizLink, '_blank');
+    }
+  }
+
+  public onCopyQuizLink(event: Event) {
+    event.preventDefault();
+    if (this._quizLink) {
+      this._commonService.copyToClipboard(this._quizLink);
+      this._translateNotificationsService.success('Success',
+        'Copy quiz link succeed!');
+    }
+  }
+
   public onClickExport(event: Event) {
     event.preventDefault();
 
@@ -301,7 +335,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   }
 
   get title(): string {
-    return  this._innovTitle ? this._innovTitle : this._project.name;
+    return this._innovTitle ? this._innovTitle : this._project.name;
   }
 
   get mission(): Mission {
@@ -381,8 +415,16 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     return this._status;
   }
 
+  get innovTitle(): string {
+    return this._innovTitle;
+  }
+
   get updateTime(): number {
     return this._updateTime;
+  }
+
+  get quizLink(): string {
+    return this._quizLink;
   }
 
   ngOnDestroy(): void {

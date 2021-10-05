@@ -436,6 +436,28 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'website']),
           },
           {
+            _attrs: ['isPublic'],
+            _name: 'Published Showroom',
+            _type: 'MULTI-CHOICES',
+            _width: '200px',
+            _isHidden: !this.canAccess(['tableColumns', 'isPublic']),
+            _choices: [
+              {_name: 'Yes', _alias: 'Yes', _class: 'label is-success'},
+              {_name: 'No', _alias: 'No', _class: 'label is-danger'},
+            ]
+          },
+          {
+            _attrs: ['published'],
+            _name: 'Published Community',
+            _type: 'MULTI-CHOICES',
+            _width: '200px',
+            _isHidden: !this.canAccess(['tableColumns', 'published']),
+            _choices: [
+              {_name: 'Yes', _alias: 'Yes', _class: 'label is-success'},
+              {_name: 'No', _alias: 'No', _class: 'label is-danger'},
+            ]
+          },
+          {
             _attrs: ['emailSent'],
             _name: 'Email sent',
             _type: 'MULTI-CHOICES',
@@ -591,7 +613,7 @@ export class AdminProjectsComponent implements OnInit {
     switch (this._authService.user.roles) {
       case 'market-test-manager-umi-back':
         this._config = {
-          fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
+          fields: '',
           limit: '10',
           offset: '0',
           'mission.type': 'CLIENT',
@@ -712,11 +734,25 @@ export class AdminProjectsComponent implements OnInit {
         project.mainObjective = project.objective[this._currentLang];
       }
 
-      if (project.emailSent ) {
+      if (project.emailSent) {
         project['emailSent'] = 'Yes';
       } else {
         project['emailSent'] = 'No';
       }
+
+      if (project.published) {
+        project['published'] = 'Yes';
+      } else {
+        project['published'] = 'No';
+      }
+
+      if (project.isPublic) {
+        project['isPublic'] = 'Yes';
+      } else {
+        project['isPublic'] = 'No';
+      }
+
+
 
       // project.emailSent = (project.emailSent) ? 'Yes' : 'No';
       return project;

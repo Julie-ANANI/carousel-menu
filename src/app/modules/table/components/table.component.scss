@@ -39,7 +39,7 @@
       background: inherit;
       color: inherit;
       border-color: inherit;
-      cursor: pointer;
+      cursor: inherit;
     }
   }
 
@@ -78,7 +78,10 @@
     border: none;
     width: 100%;
     height: 100%;
-    cursor: pointer
+  }
+
+  .edit-cursor{
+    cursor: url("https://res.cloudinary.com/umi/image/upload/v1633337817/app/draw.png"), auto;
   }
 
   .table {

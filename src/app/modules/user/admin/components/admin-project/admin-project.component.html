@@ -38,14 +38,25 @@
 
             <!-- heading / view like client / objective / activity -->
             <div class="m-right-15 m-bottom-15">
-
+              <h1 class="title is-4 text-white m-bottom-1" *ngIf="project.name">{{ project.name }}</h1>
               <div class="d-flex align-center flex-wrap m-bottom-1">
-                <h1 class="title is-4 text-white m-bottom-1">{{ title }}</h1>
+                <h2 class="title is-6 text-white m-bottom-1" *ngIf="innovTitle">{{ title }}</h2>
+                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="openQuiz($event)">
+                  Open quiz
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+
+                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="onCopyQuizLink($event)">
+                  Copy quiz link
+                  <i class="far fa-copy"></i>
+                </a>
+
                 <a
                   [routerLink]="['/user/projects/', project._id]"
                   class="button is-link text-white is-xs"
                   target="_blank">
                   View like client
+                  <i class="far fa-eye"></i>
                 </a>
               </div>
 

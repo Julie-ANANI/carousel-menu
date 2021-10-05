@@ -310,32 +310,6 @@
             </div>-->
             <!-- /main objective -->
 
-            <!-- questionnaire -->
-            <div *ngIf="quizLink" class="content">
-
-              <label>Questionnaire</label>
-
-              <button
-                (click)="openQuiz($event)"
-                [ngClass]="'is-info'"
-                class="button is-outlined is-sm"
-                id="btn-quiz-link-open"
-                type="button">
-                {{ 'Open quiz' }}
-              </button>
-
-              <button
-                (click)="onCopyQuizLink($event)"
-                [ngClass]="quizUrlCopied ? 'is-success' : 'is-info'"
-                class="button is-outlined is-sm"
-                id="btn-quiz-link"
-                type="button">
-                {{ quizUrlCopied ? 'Copied to clipboard' : 'Click to copy quiz link' }}
-              </button>
-
-            </div>
-            <!-- /questionnaire -->
-
             <!-- project tags -->
             <div
               *ngIf="canAccess(['view', 'projectTags']) || canAccess(['edit', 'projectTags'])"
@@ -630,15 +604,16 @@
   <!-- /roadmap -->
 
   <!-- blocklist -->
-  <app-sidebar-blacklist
-    (toBlacklists)="addBlacklist($event)"
-    [innovationId]="innovation._id"
-    *ngIf="sidebarValue.type === 'EXCLUDE_EMAILS_DOMAINS'"
-    [initialDomains]="innovation.settings?.blacklist?.domains"
-    [initialEmails]="innovation.settings?.blacklist?.emails"
-    [isEditable]="canAccess(['edit', 'blocklist'])"
-    [type]="sidebarValue.type">
-  </app-sidebar-blacklist>
+  <ng-container *ngIf="sidebarValue.type === 'EXCLUDE_EMAILS_DOMAINS'">
+    <app-sidebar-blacklist
+      (toBlacklists)="addBlocklist($event)"
+      [initialDomains]="innovation.settings?.blacklist?.domains"
+      [initialEmails]="innovation.settings?.blacklist?.emails"
+      [innovationId]="innovation._id"
+      [isEditable]="canAccess(['edit', 'blocklist'])"
+      [type]="sidebarValue.type">
+    </app-sidebar-blacklist>
+  </ng-container>
   <!-- /blocklist -->
 
 </app-sidebar>

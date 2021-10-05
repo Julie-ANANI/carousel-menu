@@ -19,6 +19,7 @@ import { HeaderModule } from '../../common/header/header.module';
 import { SearchInput2Module } from '../../utility/search-inputs/search-template-2/search-input-2.module';
 import { ErrorTemplate1Module } from '../../utility/errors/error-template-1/error-template-1.module';
 import { PaginationTemplate2Module } from '../../utility/paginations/pagination-template-2/pagination-template-2.module';
+import {CleanHtmlModule} from '../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { PaginationTemplate2Module } from '../../utility/paginations/pagination-
     HeaderModule,
     SearchInput2Module,
     ErrorTemplate1Module,
-    PaginationTemplate2Module
+    PaginationTemplate2Module,
+    CleanHtmlModule
   ],
   declarations: [
     DiscoverComponent,

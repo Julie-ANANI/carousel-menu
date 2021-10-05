@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, LOCALE_ID, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnDestroy, OnInit, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
@@ -15,6 +15,9 @@ import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
 import { DatePipe } from '@angular/common';
 import { UserSuggestion } from '../../user/admin/components/admin-project/admin-project-settings/admin-project-settings.component';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 /**
  * editable cell
@@ -24,8 +27,10 @@ interface InputGrid {
   column: Column; // which column
   disabled: boolean; // input disabled?
   value: any; // content value
-  className: string; // class => input style
-  input: any; // input ngModel
+  input: any; // input ngModel,
+  searchControl?: FormControl;
+  suggestions?: Array<any>;
+  sourceList?: Array<any>;
 }
 
 @Component({
@@ -33,8 +38,7 @@ interface InputGrid {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent {
-  @Output() sendAddParentNavigator = new EventEmitter();
+export class TableComponent implements OnInit, OnDestroy {
 
   /***
    * Input use to set the config for the tables linked with the back office
@@ -43,8 +47,6 @@ export class TableComponent {
   @Input() set config(value: Config) {
     this._config = value;
   }
-
-  private _originalTable: Table = <Table>{};
 
   /***
    * Input use to set the data
@@ -62,6 +64,130 @@ export class TableComponent {
   @Input() set loading(value: boolean) {
     this._isLoadingData = !!value;
   }
+
+  constructor(
+    @Inject(LOCALE_ID) private _locale: string,
+    private _translateService: TranslateService,
+    private _configService: ConfigService,
+    private _localStorageService: LocalStorageService
+  ) {
+    this._initializeTable();
+  }
+
+
+  get searchKeyword(): FormControl {
+    return this._searchKeyword;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get selectedRows(): number {
+    return this._getSelectedRowsNumber();
+  }
+
+  get sortConfig(): string {
+    return this._config.sort;
+  }
+
+  set sortConfig(value: string) {
+    this._config.sort = value;
+
+    if (!this._table._isLocal) {
+      this._emitConfigChange();
+    }
+  }
+
+  get pagination(): Pagination {
+    return this._pagination;
+  }
+
+  set pagination(value: Pagination) {
+    this._pagination = value;
+    this._config.limit = this._pagination.parPage.toString(10);
+    this._config.offset = this._pagination.offset.toString(10);
+
+    if (this._table._isLocal) {
+      this._setFilteredContent();
+    } else {
+      this._emitConfigChange();
+    }
+  }
+
+  get searchConfig(): Config {
+    return this._config;
+  }
+
+  set searchConfig(value: Config) {
+    this._config = value;
+
+    if (this._table._isLocal) {
+      this._localStorageService.setItem('table-search', 'active');
+      this._setFilteredContent();
+
+      if (this._table._hasCustomFilters) {
+        this.customFilter.emit({key: '', value: ''});
+        for (const key of Object.keys(this._config)) {
+          if (
+            this._table._columns.find(
+              (col) => col._isCustomFilter && col._attrs[0] === key
+            )
+          ) {
+            this.customFilter.emit({key: key, value: this._config[key]});
+          }
+        }
+      }
+    } else {
+      this._emitConfigChange();
+    }
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get dateFormat(): string {
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  }
+
+  get userLang(): string {
+    return this._translateService.currentLang;
+  }
+
+  get massSelection(): boolean {
+    return this._massSelection;
+  }
+
+  get isSearching(): boolean {
+    return this._isSearching;
+  }
+
+  get isLoadingData(): boolean {
+    return this._isLoadingData;
+  }
+
+  get filteredContent(): Array<any> {
+    return this._filteredContent;
+  }
+
+  get visibleColumns(): Array<Column> {
+    return this._table._columns.filter((col) => {
+      return !col._isHidden;
+    });
+  }
+
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
+
+  get isSelectAll(): boolean {
+    return this._isSelectAll;
+  }
+
+  @Output() sendAddParentNavigator = new EventEmitter();
+
+  private _originalTable: Table = <Table>{};
 
   /***
    * Output call when the config change
@@ -159,13 +285,33 @@ export class TableComponent {
 
   private _inputGrids: Array<InputGrid> = [];
 
-  constructor(
-    @Inject(LOCALE_ID) private _locale: string,
-    private _translateService: TranslateService,
-    private _configService: ConfigService,
-    private _localStorageService: LocalStorageService
-  ) {
-    this._initializeTable();
+  private _searchKeyword: FormControl = new FormControl();
+
+  suggestionsSource: any [] = [];
+
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _isLoading = true;
+
+  /***
+   * This function returns if a rows is selected or not
+   * @param content
+   * @returns {boolean}
+   */
+  public static isSelected(content: any): boolean {
+    return !!content && !!content._isSelected;
+  }
+
+  private static _getRowKey(key: string): number {
+    return parseInt(key, 10);
+  }
+
+  ngOnInit(): void {
+  }
+
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   /***
@@ -182,6 +328,7 @@ export class TableComponent {
       _content: [],
     };
   }
+
 
   /***
    * This function load and initialise the data send by the user
@@ -702,15 +849,6 @@ export class TableComponent {
   }
 
   /***
-   * This function returns if a rows is selected or not
-   * @param content
-   * @returns {boolean}
-   */
-  public static isSelected(content: any): boolean {
-    return !!content && !!content._isSelected;
-  }
-
-  /***
    * This function returns if a column is sortable or not
    * @param {Column} column
    * @returns {boolean}
@@ -739,10 +877,10 @@ export class TableComponent {
    * @param key
    */
   public countDaysTo(row: any, key: string) {
-    let _skey = key.split('-');
-    let _time = _skey.length > 1 ? _skey[1] : 0;
-    let _key: string = _skey[0];
-    let value = moment(this.getContentValue(row, _key));
+    const _skey = key.split('-');
+    const _time = _skey.length > 1 ? _skey[1] : 0;
+    const _key: string = _skey[0];
+    const value = moment(this.getContentValue(row, _key));
     return value.add(_time, 'days').fromNow();
   }
 
@@ -768,10 +906,6 @@ export class TableComponent {
     } else {
       return 'NA';
     }
-  }
-
-  private static _getRowKey(key: string): number {
-    return parseInt(key, 10);
   }
 
   private _getAllContent(): Array<any> {
@@ -820,42 +954,6 @@ export class TableComponent {
     return momentTimeZone(content).tz('Europe/Paris').format('h:mm a');
   }
 
-  get table(): Table {
-    return this._table;
-  }
-
-  get selectedRows(): number {
-    return this._getSelectedRowsNumber();
-  }
-
-  get sortConfig(): string {
-    return this._config.sort;
-  }
-
-  set sortConfig(value: string) {
-    this._config.sort = value;
-
-    if (!this._table._isLocal) {
-      this._emitConfigChange();
-    }
-  }
-
-  get pagination(): Pagination {
-    return this._pagination;
-  }
-
-  set pagination(value: Pagination) {
-    this._pagination = value;
-    this._config.limit = this._pagination.parPage.toString(10);
-    this._config.offset = this._pagination.offset.toString(10);
-
-    if (this._table._isLocal) {
-      this._setFilteredContent();
-    } else {
-      this._emitConfigChange();
-    }
-  }
-
   private _searchLocally(): Array<any> {
     let rows: Array<any> = this._table._content;
     this._localStorageService.setItem('table-search', '');
@@ -866,7 +964,7 @@ export class TableComponent {
         this._config.search.length > 2
       ) {
         if (this._config.search.length > 2) {
-          for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
+          for (const searchKey of Object.keys(JSON.parse(this._config.search))) {
             const searchValue = JSON.parse(this._config.search)[searchKey];
             rows = this._searchContent(
               rows,
@@ -938,72 +1036,6 @@ export class TableComponent {
     });
   }
 
-  get searchConfig(): Config {
-    return this._config;
-  }
-
-  set searchConfig(value: Config) {
-    this._config = value;
-
-    if (this._table._isLocal) {
-      this._localStorageService.setItem('table-search', 'active');
-      this._setFilteredContent();
-
-      if (this._table._hasCustomFilters) {
-        this.customFilter.emit({key: '', value: ''});
-        for (const key of Object.keys(this._config)) {
-          if (
-            this._table._columns.find(
-              (col) => col._isCustomFilter && col._attrs[0] === key
-            )
-          ) {
-            this.customFilter.emit({key: key, value: this._config[key]});
-          }
-        }
-      }
-    } else {
-      this._emitConfigChange();
-    }
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-  get userLang(): string {
-    return this._translateService.currentLang;
-  }
-
-  get massSelection(): boolean {
-    return this._massSelection;
-  }
-
-  get isSearching(): boolean {
-    return this._isSearching;
-  }
-
-  get isLoadingData(): boolean {
-    return this._isLoadingData;
-  }
-
-  get filteredContent(): Array<any> {
-    return this._filteredContent;
-  }
-
-  get visibleColumns(): Array<Column> {
-    return this._table._columns.filter((col) => {
-      return !col._isHidden;
-    });
-  }
-
-  get selectedIndex(): number {
-    return this._selectedIndex;
-  }
-
   public getContext(row: any, column: any) {
     return {
       row: row,
@@ -1057,10 +1089,6 @@ export class TableComponent {
     }
   }
 
-  get isSelectAll(): boolean {
-    return this._isSelectAll;
-  }
-
   isToAddColor(column: Column) {
     return (
       (column.hasOwnProperty('_isFilled') ||
@@ -1106,7 +1134,9 @@ export class TableComponent {
     const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (gridInput) {
       gridInput.disabled = false;
-      gridInput.className = 'editable-grid';
+    }
+    if (gridInput.searchControl) {
+      gridInput.searchControl.enable();
     }
   }
 
@@ -1122,7 +1152,6 @@ export class TableComponent {
         disabled: true,
         column: column,
         value: this._table._content[row],
-        className: 'no-editable-grid',
         input: '',
       };
       switch (column._editType) {
@@ -1144,6 +1173,22 @@ export class TableComponent {
           }
           gridInputToAdd.input = {name: name};
           break;
+        case 'MULTI-INPUT':
+          gridInputToAdd.sourceList = column._multiInput.sourceList || [];
+          switch (column._type) {
+            case 'LABEL-OBJECT-LIST':
+              gridInputToAdd.input = this.getStringForColumn(row, column, column._label);
+              break;
+            default:
+              gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
+          }
+
+          gridInputToAdd.searchControl = new FormControl({
+            value: gridInputToAdd.input ? gridInputToAdd.input + ',' : '',
+            disabled: true
+          });
+          this.multiInputOnChange(gridInputToAdd);
+          break;
         default:
           gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
           break;
@@ -1153,6 +1198,31 @@ export class TableComponent {
       }
       return this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     }
+  }
+
+  /**
+   * multiple input
+   * @param gridInputToAdd
+   */
+  multiInputOnChange(gridInputToAdd: InputGrid) {
+    gridInputToAdd.searchControl.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
+      .subscribe((input: any) => {
+        if (input) {
+          const inputSplit = input.split(',');
+          let lastSearchKeyWord = inputSplit[inputSplit.length - 1];
+          // trim spaces
+          if (!lastSearchKeyWord.match(/^[ ]*$/)) {
+            lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
+            gridInputToAdd.suggestions = gridInputToAdd.sourceList.filter((value: string) =>
+              value.replace(/\s/g, '').toLowerCase().indexOf(lastSearchKeyWord.toLowerCase()) !== -1 ||
+              lastSearchKeyWord.toLowerCase().indexOf(value.replace(/\s/g, '').toLowerCase()) !== -1
+            );
+          } else {
+            gridInputToAdd.suggestions = [];
+          }
+        }
+      });
   }
 
   /**
@@ -1174,6 +1244,32 @@ export class TableComponent {
           }
           _dataToUpdate.input = choiceItem._name;
           break;
+        case 'MULTI-INPUT':
+          const valueToReplace: any[] = [];
+          let valueList: any[] = [];
+          let newEle = {};
+          if (_dataToUpdate.searchControl.value) {
+            valueList = _dataToUpdate.searchControl.value.split(',');
+          }
+          // check if the list should be a list of object
+          // property: key of the object
+          if (valueList && valueList.length) {
+            valueList.map(value => {
+              if (column._multiInput.property && column._multiInput.property.length) {
+                newEle = {};
+                for (let i = 0; i < column._multiInput.property.length; i++) {
+                  newEle[column._multiInput.property[i]] = value;
+                }
+                valueToReplace.push(newEle);
+              } else {
+                valueToReplace.push(value);
+              }
+            });
+          }
+          _dataToUpdate.input = _dataToUpdate.searchControl.value;
+          _dataToUpdate.searchControl.disable();
+          lodash.set(_dataToUpdate.value, _attrs, valueToReplace);
+          break;
         default:
           lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
           break;
@@ -1185,7 +1281,6 @@ export class TableComponent {
         _column: column
       });
       _dataToUpdate.disabled = true;
-      _dataToUpdate.className = 'no-editable-grid';
     }
   }
 
@@ -1217,19 +1312,55 @@ export class TableComponent {
           }
           _dataToUpdate.input = {name: name};
           break;
+        case 'MULTI-INPUT':
+          switch (column._type) {
+            case 'LABEL-OBJECT-LIST':
+              _dataToUpdate.input = this.getStringForColumn(row, column, column._label);
+              break;
+            default:
+              _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+          }
+          _dataToUpdate.searchControl.disable();
+          break;
         default:
           _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
           break;
       }
       _dataToUpdate.disabled = true;
-      _dataToUpdate.className = 'no-editable-grid';
     }
   }
 
+  /**
+   * User input
+   * When user select from users list
+   * @param value
+   * @param row
+   * @param column
+   */
   getUserSelected(value: UserSuggestion, row: any, column: Column) {
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (_dataToUpdate && value && value._id) {
       _dataToUpdate.input = value;
     }
   }
+
+  /**
+   * Multiple input
+   * when user select from suggestion list
+   * @param suggestion
+   * @param row
+   * @param column
+   */
+  onValueSelect(suggestion: string, row: any, column: Column) {
+    const gridToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    const splits = gridToUpdate.searchControl.value.split(',');
+    splits[splits.length - 1] = suggestion;
+    gridToUpdate.searchControl.patchValue(splits.toString() + ',');
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
 }

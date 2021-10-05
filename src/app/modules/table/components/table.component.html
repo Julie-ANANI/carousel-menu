@@ -1,5 +1,4 @@
 <div id="table-wrapper">
-
   <!-- section title and search -->
   <ng-container *ngIf="table._isTitle || table._isSearchable">
     <div class="flex-wrap p-bottom-10 flex-start">
@@ -282,8 +281,13 @@
                     <ng-container [ngSwitch]="column._editType">
                       <!-- type DATE editable-->
                       <ng-container *ngSwitchCase="'DATE'">
+                        <div class="text-ellipsis edit-cursor"
+                             (click)="enableInput($event, row, column)"
+                             *ngIf="getInputGrid(row, column).disabled">
+                          <span>{{ (getContentValue(row, getAttrs(column)[0])?.toString() | date:dateFormat) }}</span>
+                        </div>
                         <ng-container
-                          *ngTemplateOutlet="gridEditDateTemplate; context: {$implicit: {column: column, row:row}}">
+                          *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
                         </ng-container>
                       </ng-container>
                       <!-- /type DATE editable-->
@@ -332,14 +336,14 @@
                         <div
                           *ngIf="getInputGrid(row, column).disabled"
                           (click)="enableInput($event, row, column)"
-                          [ngClass]="getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))"
-                          class="td-multi-choice-label text-ellipsis editable-grid">
+                          [ngClass]="[getChoiceClass(getChoice(column, (getContentValue(row, getAttrs(column)[0]))))]"
+                          class="td-multi-choice-label text-ellipsis edit-cursor">
                           <ng-container>
                             <span>{{ (getChoiceAlias(getChoice(column, getContentValue(row, getAttrs(column)[0]) || " - "))) | translate }}</span>
                           </ng-container>
                         </div>
                         <ng-container
-                          *ngTemplateOutlet="gridEditMultipleTemplate; context: {$implicit: {column: column, row:row}}">
+                          *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
                         </ng-container>
                       </ng-container>
                       <!-- /type MULTI-CHOICES editable -->
@@ -482,10 +486,10 @@
 
                 <!-- type LABEL-OBJECT-LIST -->
                 <ng-container *ngSwitchCase="'LABEL-OBJECT-LIST'">
-
-                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, 'label')"
+                  <div class="text-ellipsis" [title]="getStringForColumn(row, column, column._label)"
+                       *ngIf="!column._isEditable"
                        [ngStyle]="getTextColor(row, column)">
-                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'label')| titlecase) }}
+                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, column._label)| titlecase) }}
                   </div>
                   <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
                     <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
@@ -493,44 +497,31 @@
                     <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                     </ng-container>
                   </ng-container>
+
+                  <!-- editable-->
+                  <ng-container *ngIf="column._isEditable">
+                    <ng-container [ngSwitch]="column._editType">
+                      <!-- type MULTI-INPUT editable-->
+                      <ng-container *ngSwitchCase="'MULTI-INPUT'">
+                        <div
+                          *ngIf="getInputGrid(row, column).disabled"
+                          (click)="enableInput($event, row, column)"
+                          class="text-ellipsis no-editable-grid d-flex align-center edit-cursor">
+                          <ng-container>
+                            <span>{{ getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'label')| titlecase) }}</span>
+                          </ng-container>
+                        </div>
+                        <ng-container
+                          *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
+                        </ng-container>
+                      </ng-container>
+                      <!-- /type MULTI-INPUT editable -->
+                    </ng-container>
+                  </ng-container>
+                  <!-- /editable-->
+
                 </ng-container>
                 <!-- /type LABEL-OBJECT-LIST -->
-
-                <!-- type PATTERNS-OBJECT-LIST -->
-                <ng-container *ngSwitchCase="'PATTERNS-OBJECT-LIST'">
-
-                  <div class="text-ellipsis"
-                       [ngStyle]="getTextColor(row, column)"
-                       [title]="getStringForColumn(row, column, 'expression')">
-                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'expression').toString() | titlecase) }}
-                  </div>
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                  </ng-container>
-
-                </ng-container>
-                <!-- /type PATTERNS-OBJECT-LIST-->
-
-                <!-- type NAME-LABEL-LIST -->
-                <ng-container *ngSwitchCase="'NAME-LABEL-LIST'">
-                  <div class="text-ellipsis"
-                       [ngStyle]="getTextColor(row, column)"
-                       [title]="getStringForColumn(row, column, 'name')">
-                    {{getContentValue(row, getAttrs(column)[0]).length === 0 ? '-' : (getStringForColumn(row, column, 'name').toString() | titlecase) }}
-                  </div>
-
-                  <ng-container *ngIf="getContentValue(row, getAttrs(column)[0]).length >= 0">
-                    <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                    <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
-                    </ng-container>
-                  </ng-container>
-
-                </ng-container>
-                <!-- /type NAME-LABEL-LIST-->
 
                 <!-- type LENGTH -->
                 <ng-container *ngSwitchCase="'LENGTH'">
@@ -651,27 +642,41 @@
 
                 <!-- type NUMBER -->
                 <ng-container *ngSwitchCase="'NUMBER'">
-                  <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)" [title]="getTitle(row, column)">
+                  <div class="text-ellipsis" *ngIf="!column._isEditable" [ngStyle]="getTextColor(row, column)" [title]="getTitle(row, column)">
                     <ng-container *ngFor="let attr of getAttrs(column)">
-                      <!-- no-editable -->
-                      <ng-container *ngIf="!column._isEditable">
+                      <ng-container>
                         {{ (getContentValue(row, attr) || " - ") }}
                       </ng-container>
-                      <!-- /no-editable -->
 
                       <ng-container *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
                       </ng-container>
                       <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
                       </ng-container>
-
-                      <!-- editable-->
-                      <ng-container
-                        *ngTemplateOutlet="gridEditTextTemplate; context: {$implicit: {column: column, row:row,attr: attr}}">
-                      </ng-container>
-                      <!-- /editable-->
                     </ng-container>
 
                   </div>
+
+                  <ng-container *ngIf="column._isEditable">
+                    <ng-container [ngSwitch]="column._editType">
+
+                      <!-- text editable-->
+                      <ng-container *ngSwitchCase="'TEXT'">
+                        <div class="text-ellipsis edit-cursor"
+                             *ngIf="getInputGrid(row, column).disabled"
+                             (click)="enableInput($event, row, column)">
+                          <ng-container *ngFor="let attr of getAttrs(column)">
+                            {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                          </ng-container>
+                        </div>
+
+                        <ng-container *ngIf="!getInputGrid(row, column).disabled">
+                          <ng-container
+                            *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row, attr: getAttrs(column)}}">
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
                 </ng-container>
                 <!-- /type NUMBER -->
 
@@ -705,16 +710,30 @@
 
                         <!-- text editable-->
                         <ng-container *ngSwitchCase="'TEXT'">
+                          <div class="text-ellipsis edit-cursor"
+                               *ngIf="getInputGrid(row, column).disabled"
+                               (click)="enableInput($event, row, column)">
+                            <ng-container *ngFor="let attr of getAttrs(column)">
+                              {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                            </ng-container>
+                          </div>
                           <ng-container
-                            *ngTemplateOutlet="gridEditTextTemplate; context: {$implicit: {column: column, row:row}}">
+                            *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
                           </ng-container>
                         </ng-container>
                         <!-- text editable-->
 
                         <!-- time editable-->
                         <ng-container *ngSwitchCase="'DATE_TIME'">
+                          <div class="text-ellipsis edit-cursor"
+                               *ngIf="getInputGrid(row, column).disabled"
+                               (click)="enableInput($event, row, column)">
+                            <ng-container *ngFor="let attr of getAttrs(column)">
+                              {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
+                            </ng-container>
+                          </div>
                           <ng-container
-                            *ngTemplateOutlet="gridEditTimeTemplate; context: {$implicit: {column: column, row:row}}">
+                            *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
                           </ng-container>
                         </ng-container>
                         <!-- /time editable-->
@@ -724,13 +743,14 @@
                           <div
                             (click)="enableInput($event, row, column)"
                             *ngIf="getInputGrid(row, column).disabled"
-                            class="text-ellipsis no-editable-grid d-flex align-center">
+                            [ngClass]="{'no-editable-grid': getInputGrid(row, column).disabled}"
+                            class="text-ellipsis d-flex align-center edit-cursor">
                             <ng-container *ngFor="let attr of getAttrs(column)">
                               {{(getContentValue(row, attr).toString() || '-' | titlecase)}}
                             </ng-container>
                           </div>
                           <ng-container
-                            *ngTemplateOutlet="gridEditMultipleTemplate; context: {$implicit: {column: column, row:row}}">
+                            *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
                           </ng-container>
                         </ng-container>
                         <!-- /multi choices editable-->
@@ -740,16 +760,32 @@
                           <div
                             (click)="enableInput($event, row, column)"
                             *ngIf="getInputGrid(row, column).disabled"
-                            class="text-ellipsis no-editable-grid d-flex align-center">
+                            [ngClass]="{'no-editable-grid': getInputGrid(row, column).disabled}"
+                            class="text-ellipsis d-flex align-center edit-cursor">
                             <ng-container>
                               {{(getInputGrid(row, column).input.name || '-' | titlecase)}}
                             </ng-container>
                           </div>
                           <ng-container
-                            *ngTemplateOutlet="gridEditUserTemplate; context: {$implicit: {column: column, row:row}}">
+                            *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
                           </ng-container>
                         </ng-container>
                         <!-- /user input  editable-->
+
+                        <!-- type MULTI-INPUT editable-->
+                        <ng-container *ngSwitchCase="'MULTI-INPUT'">
+                          <div
+                            *ngIf="getInputGrid(row, column).disabled"
+                            (click)="enableInput($event, row, column)"
+                            [ngClass]="{'no-editable-grid': getInputGrid(row, column).disabled}"
+                            class="text-ellipsis d-flex align-center edit-cursor">
+                            {{getInputGrid(row, column).input || '-'}}
+                          </div>
+                          <ng-container
+                            *ngTemplateOutlet="inputTemplate; context: {$implicit: {column: column, row:row}}">
+                          </ng-container>
+                        </ng-container>
+                        <!-- /type MULTI-INPUT editable -->
 
                       </ng-container>
                     </ng-container>
@@ -819,118 +855,100 @@
                   </span>
 </ng-template>
 
-<!-- MULTI-CHOICES template-->
-<ng-template #gridEditMultipleTemplate let-context>
-  <div class="form-group d-flex align-center"
-       *ngIf="!getInputGrid(context.row, context.column).disabled">
-    <select class="form-select is-xs"
-            [(ngModel)]="getInputGrid(context.row, context.column).input">
-      <option *ngFor="let choice of context.column._choices">{{choice._alias | titlecase}}</option>
-    </select>
-    <div class="d-flex flex-d-column justify-center">
-                            <span
-                              (click)="sendEditedGrid($event, context.row, context.column)"
-                              class="icon is-md is-primary icon-check m-bottom-1">
-                            </span>
+<!-- editable case-->
+<ng-template #inputTemplate let-context>
+  <div class="form-group d-flex align-center" *ngIf="!getInputGrid(context.row, context.column).disabled">
+    <ng-container [ngSwitch]="context.column._editType">
 
-      <span class="icon is-md is-primary icon-cross m-top-1"
-            (click)="cancelEditedGrid($event, context.row, context.column)">
-                            </span>
-    </div>
-  </div>
-</ng-template>
-<!-- /type MULTI-CHOICES template -->
+      <!-- type DATE_TIME - ex: batch table -->
+      <ng-container *ngSwitchCase="'DATE_TIME'">
+        <input
+          [(ngModel)]="getInputGrid(context.row, context.column).input"
+          [ngClass]="{'editable-grid': !getInputGrid(context.row, context.column).disabled}"
+          [disabled]="getInputGrid(context.row, context.column).disabled"
+          class="form-input is-xs"
+          type="time">
+      </ng-container>
+      <!-- /type DATE_TIME -->
 
-<!-- type TEXT / DEFAULT edit template-->
-<ng-template #gridEditTextTemplate let-context>
-  <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
-    <div (click)="enableInput($event, context.row, context.column)">
-      <input type="text"
-             class="form-input is-sm text-ellipsis"
-             [disabled]="getInputGrid(context.row, context.column).disabled"
-             [ngClass]="getInputGrid(context.row, context.column).className"
-             [(ngModel)]="getInputGrid(context.row, context.column).input">
-    </div>
-    <div class="d-flex flex-d-column justify-center">
-                      <span class="icon is-md is-primary icon-check m-bottom-1"
-                            (click)="sendEditedGrid($event, context.row, context.column)"
-                            *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          </span>
+      <!-- type MULTI-CHOICES - ex: projects table: status, type -->
+      <ng-container *ngSwitchCase="'MULTI-CHOICES'">
+        <select class="form-select is-xs"
+                [(ngModel)]="getInputGrid(context.row, context.column).input">
+          <option *ngFor="let choice of context.column._choices">{{choice._alias | titlecase}}</option>
+        </select>
+      </ng-container>
+      <!-- /type MULTI-CHOICES - ex: projects table: status, type -->
 
-      <span class="icon is-md is-primary icon-cross m-top-1"
-            (click)="cancelEditedGrid($event, context.row, context.column)"
-            *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          </span>
-    </div>
-  </div>
-</ng-template>
-<!-- /type TEXT / DEFAULT edit template-->
+      <!-- type DATE - ex: batch table -->
+      <ng-container *ngSwitchCase="'DATE'">
+        <input
+          [(ngModel)]="getInputGrid(context.row, context.column).input"
+          [ngClass]="{'editable-grid': !getInputGrid(context.row, context.column).disabled}"
+          [disabled]="getInputGrid(context.row, context.column).disabled"
+          class="form-input is-xs"
+          type="date">
+      </ng-container>
+      <!-- type DATE -->
 
-<!-- type DATE TIME edit template-->
-<ng-template #gridEditTimeTemplate let-context>
-  <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
-    <div (click)="enableInput($event, context.row, context.column)">
-      <input
-        [(ngModel)]="getInputGrid(context.row, context.column).input"
-        [ngClass]="getInputGrid(context.row, context.column).className"
-        [disabled]="getInputGrid(context.row, context.column).disabled"
-        class="form-input is-sm"
-        type="time">
-    </div>
-    <div class="d-flex flex-d-column justify-center">
-                      <span class="icon is-md is-primary icon-check m-bottom-1"
-                            (click)="sendEditedGrid($event, context.row, context.column)"
-                            *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          </span>
+      <!-- type USER-INPUT - ex: projects table -->
+      <ng-container *ngSwitchCase="'USER-INPUT'">
+        <label class="relative m-no-right mxw-full is-xs">
+          <app-utility-auto-suggestion
+            (valueSelected)="getUserSelected($event, context.row, context.column)"
+            [config]="{default: getInputGrid(context.row, context.column).input.name}"
+            [isSmallerInput]="true">
+          </app-utility-auto-suggestion>
+        </label>
+      </ng-container>
+      <!-- /type USER-INPUT - ex: projects table -->
 
-      <span class="icon is-md is-primary icon-cross m-top-1"
-            (click)="cancelEditedGrid($event, context.row, context.column)"
-            *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          </span>
-    </div>
-  </div>
-</ng-template>
-<!-- /type DATE TIME edit template-->
+      <!-- type MULTI-INPUT - ex: enterprises table -->
+      <ng-container *ngSwitchCase="'MULTI-INPUT'">
+        <form autocomplete="off" class="relative" novalidate>
+          <!-- input area -->
+          <div class="input-wrapper">
+            <label>
+              <input
+                [formControl]="getInputGrid(context.row, context.column).searchControl"
+                [ngClass]="{'editable-grid': !getInputGrid(context.row, context.column).disabled}"
+                autocomplete="off"
+                class="form-input is-shadowed is-xs"
+                type="search">
+            </label>
+          </div>
+          <!-- /input area -->
 
-<!-- type DATE edit template-->
-<ng-template #gridEditDateTemplate let-context>
-  <div class="form-group d-flex align-center" *ngIf="context.column._isEditable">
-    <div (click)="enableInput($event, context.row, context.column)">
-      <input
-        [(ngModel)]="getInputGrid(context.row, context.column).input"
-        [ngClass]="getInputGrid(context.row, context.column).className"
-        [disabled]="getInputGrid(context.row, context.column).disabled"
-        class="form-input is-sm"
-        type="date">
-    </div>
-    <div class="d-flex flex-d-column justify-center">
-                      <span class="icon is-md is-primary icon-check m-bottom-1"
-                            (click)="sendEditedGrid($event, context.row, context.column)"
-                            *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          </span>
+          <!-- suggestions list -->
+          <ul
+            *ngIf="getInputGrid(context.row, context.column).suggestions
+          && getInputGrid(context.row, context.column).suggestions.length"
+            class="menu" style="z-index: 999; position: absolute; width: 250px; max-height: 200px; overflow: auto;">
+            <!-- when suggestions -->
+            <li
+              (mousedown)="onValueSelect(suggestion, context.row, context.column);"
+              *ngFor="let suggestion of getInputGrid(context.row, context.column).suggestions; let i = index;"
+              class="menu-item">
+              {{ suggestion }}
+            </li>
+            <!-- /when suggestions -->
+          </ul>
+          <!-- /suggestions list -->
+        </form>
+      </ng-container>
+      <!-- /type MULTI-INPUT -->
 
-      <span class="icon is-md is-primary icon-cross m-top-1"
-            (click)="cancelEditedGrid($event, context.row, context.column)"
-            *ngIf="!getInputGrid(context.row, context.column).disabled">
-                          </span>
-    </div>
-  </div>
-</ng-template>
-<!-- /type DATE edit template-->
+      <!-- type TEXT/Default - ex:text, number -->
+      <ng-container *ngSwitchDefault>
+        <input type="text"
+               class="form-input is-xs text-ellipsis"
+               [disabled]="getInputGrid(context.row, context.column).disabled"
+               [ngClass]="{'editable-grid': !getInputGrid(context.row, context.column).disabled}"
+               [(ngModel)]="getInputGrid(context.row, context.column).input">
+      </ng-container>
+      <!-- /type TEXT/Default -->
 
-<!-- user edit template-->
-<ng-template #gridEditUserTemplate let-context>
-  <div class="form-group d-flex align-center"
-       *ngIf="context.column._isEditable && !getInputGrid(context.row, context.column).disabled">
-    <div (click)="enableInput($event, context.row, context.column)">
-      <label class="relative m-no-right mxw-full is-xs">
-        <app-utility-auto-suggestion
-          (valueSelected)="getUserSelected($event, context.row, context.column)"
-          [config]="{default: getInputGrid(context.row, context.column).input.name}"
-          [isSmallInput]="true">
-        </app-utility-auto-suggestion>
-      </label>
-    </div>
+    </ng-container>
     <div class="d-flex flex-d-column justify-center">
                       <span class="icon is-md is-primary icon-check m-bottom-1"
                             (click)="sendEditedGrid($event, context.row, context.column)"
@@ -944,8 +962,7 @@
     </div>
   </div>
 </ng-template>
-<!-- /user edit template-->
-
+<!-- /editable case-->
 
 <!-- pagination -->
 <ng-container *ngIf="table._total > 10 && table._isPaginable">
