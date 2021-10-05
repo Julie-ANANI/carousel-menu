@@ -9,6 +9,7 @@ import { Clearbit } from '../../../../models/clearbit';
 import { countries } from '../../../../models/static-data/country';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import {emailRegEx} from '../../../../utils/regex';
 
 @Component({
   selector: 'app-sidebar-signup-form',
@@ -52,7 +53,7 @@ export class SidebarSignupFormComponent implements OnDestroy {
       lastName: ['', [Validators.required]],
       company: this._formBuilder.group({name: [''], domain: [''], logo: ['']}),
       jobTitle: [''],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
       password: ['', [Validators.required, Validators.minLength(9)]],
       country: ['']
     });

@@ -13,6 +13,7 @@ import { distinctUntilChanged, first } from 'rxjs/operators';
 import { countries } from '../../../../../models/static-data/country';
 import { Observable } from 'rxjs';
 import {Clearbit} from "../../../../../models/clearbit";
+import {emailRegEx} from '../../../../../utils/regex';
 
 @Component({
   templateUrl: './account.component.html',
@@ -65,7 +66,7 @@ export class AccountComponent implements OnInit {
     this._formData = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
+      email: [{value: '', disabled: true}, [Validators.required, Validators.pattern(emailRegEx)]],
       company: this.formBuilder.group({name: [''], domain: [''], logo: ['']}),
       jobTitle: [''],
       phone: [''],

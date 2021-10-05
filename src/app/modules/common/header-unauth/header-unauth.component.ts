@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie';
 import { initTranslation } from '../../../i18n/i18n';
+import {emailRegEx} from '../../../utils/regex';
 
 @Component({
   selector: 'app-header-unauth',
@@ -56,7 +57,7 @@ export class HeaderUnauthComponent implements OnInit {
     this._setFlag();
 
     this._formData = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
       password: ['', [Validators.required]]
     });
   }

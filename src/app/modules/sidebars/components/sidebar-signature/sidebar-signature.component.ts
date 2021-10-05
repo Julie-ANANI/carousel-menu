@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { lang, Language } from '../../../../models/static-data/language';
+import {emailRegEx} from '../../../../utils/regex';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class SidebarSignatureComponent {
     this._form = this._formBuilder.group({
       name: [''],
       from_name: [''],
-      email: ['', [Validators.email]],
+      email: ['', [Validators.pattern(emailRegEx)]],
       content: [''],
       language: [''],
     });

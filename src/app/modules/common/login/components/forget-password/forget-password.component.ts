@@ -5,6 +5,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { UserService } from '../../../../../services/user/user.service';
 import { environment } from '../../../../../../environments/environment';
 import { first } from 'rxjs/operators';
+import {emailRegEx} from '../../../../../utils/regex';
 
 @Component({
   templateUrl: './forget-password.component.html',
@@ -39,7 +40,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   private buildForm() {
     this._formData = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.pattern(emailRegEx)]]
     });
   }
 
