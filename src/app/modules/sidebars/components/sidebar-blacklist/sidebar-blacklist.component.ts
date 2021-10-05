@@ -324,18 +324,19 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   autoBlacklist() {
-    this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
-      if (result) {
-        this._familyEnterprises = result;
-        this.updateBlackList();
-      }
-    }, err => {
-      console.error(err);
-      this._translateNotificationsService.error(
-        'ERROR.ERROR',
-        ErrorFrontService.getErrorMessage(err.status)
-      );
-    });
+    if (!!this._innovationId) {
+      this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
+        if (result) {
+          this._familyEnterprises = result;
+          this.updateBlackList();
+        }
+      }, err => {
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          ErrorFrontService.getErrorMessage(err.status)
+        );
+      });
+    }
   }
 
   updateBlackList() {
