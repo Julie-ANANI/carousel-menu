@@ -757,18 +757,20 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onChangeAnonymous(event: Event) {
-    if (
-      this._innovation._metadata &&
-      this._innovation._metadata['campaign'] &&
-      this._innovation._metadata['campaign']['anonymous_answers']
-    ) {
-      this._innovation._metadata['campaign'][
-        'anonymous_answers'
-        ] = (event.target as HTMLInputElement).checked;
+    if ( this._innovation._metadata ) {
+      if ( this._innovation._metadata['campaign'] ) {
+        this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+      } else {
+        this._innovation._metadata['campaign'] = {
+          'anonymous_answers': (event.target as HTMLInputElement).checked
+        };
+      }
     } else {
-      this._innovation._metadata = this._innovation._metadata['campaign'][
-        'anonymous_answers'
-        ] = (event.target as HTMLInputElement).checked;
+      this._innovation._metadata = {
+        'campaign': {
+          'anonymous_answers': (event.target as HTMLInputElement).checked
+        }
+      };
     }
     this._saveProject(
       (event.target as HTMLInputElement).checked
