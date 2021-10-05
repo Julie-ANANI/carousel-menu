@@ -85,6 +85,7 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
   private _total = 0;
   private _notClassified = 0;
+  private _classified = 0;
 
   get total(): number {
     return this._total;
@@ -151,7 +152,13 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
           this._seniorityLevelsClassification = res.classification;
           this._total = this._seniorityLevelsClassification.total;
           this._notClassified = (this._seniorityLevelsClassification.seniorityLevels.find(c => !c._id) || {count: 0}).count;
+          this._classified = this._seniorityLevelsClassification.total - this._notClassified;
         }
+
+        const seniorityLevelsOrder = [ 'Top executive', 'Top manager', 'Manager', 'Expert', 'Other', 'Excluding', 'Irregular', 'No jobs'];
+        this._seniorityLevelsClassification.seniorityLevels.sort(function (a, b) {
+          return seniorityLevelsOrder.indexOf(a.name) - seniorityLevelsOrder.indexOf(b.name);
+        });
 
         resolve();
       }, (error) => {
@@ -213,5 +220,9 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     const numberOfWeeks = Math.ceil(days / 7);
 
     this._dropdownWeeks = ordinalNumbers.slice(0, numberOfWeeks);
+  }
+
+  get classified(): number {
+    return this._classified;
   }
 }

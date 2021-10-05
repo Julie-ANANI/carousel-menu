@@ -8,6 +8,7 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Enterprise, FamilyEnterprises } from '../../../../models/enterprise';
+import {Blacklist} from '../../../../models/blacklist';
 
 interface DomainOption {
   checked: boolean;
@@ -66,7 +67,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   @Output() editBlacklist = new EventEmitter<any>(); // updated blacklist email information
 
-  @Output() toBlacklists = new EventEmitter<{ emails: Array<string>, domains: Array<string> }>();
+  @Output() toBlacklists = new EventEmitter<Blacklist>();
 
   @Output() countryToFilter = new EventEmitter<any>(); // country to exclude.
 
@@ -292,6 +293,7 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   public addEmail(event: { value: Array<any> }) {
+    // tslint:disable-next-line:no-non-null-assertion
     this._formData.get('email')!.setValue(event.value);
     this.saveChanges();
   }
@@ -319,10 +321,6 @@ export class SidebarBlacklistComponent implements OnInit {
 
   get config(): Config {
     return this._config;
-  }
-
-  get emailToEdit(): any {
-    return this._emailToEdit;
   }
 
   get type(): Template {
@@ -487,7 +485,7 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
 
-  get messageForEmptyFamilyEnterprises(){
+  get messageForEmptyFamilyEnterprises() {
     return this._messageForEmptyFamilyEnterprises;
   }
 }

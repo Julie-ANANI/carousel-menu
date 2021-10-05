@@ -7,6 +7,7 @@ import { AnswerService } from '../../../../../services/answer/answer.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { Clearbit } from '../../../../../models/clearbit';
 
 interface ProfessionalColumn {
   countries: Array<string>;
@@ -31,7 +32,7 @@ export class ReportProfessionalComponent implements OnChanges {
     this._anonymous = !!value;
   }
 
-  private _pros: Array<{ company: string; jobTitle: string; country: string; }> = [];
+  private _pros: Array<{ company: Clearbit; jobTitle: string; country: {flag: string}; }> = [];
 
   private _professional: ProfessionalColumn = <ProfessionalColumn>{};
 
@@ -146,11 +147,12 @@ export class ReportProfessionalComponent implements OnChanges {
 
       this._answerService.getAll(config).pipe(first()).subscribe((answers) => {
         if (answers && answers.result) {
-          this._pros = answers.result.map((value: any) => {
+          this._pros = list.slice(0, 4).map((answerId: string) => {
+            const answer = answers.result.find((value: Answer) => value._id === answerId);
             return {
-              country: value.country,
-              jobTitle: value.job,
-              company: value.company
+              country: answer.country,
+              jobTitle: answer.job,
+              company: answer.company
             };
           });
         }
@@ -164,7 +166,7 @@ export class ReportProfessionalComponent implements OnChanges {
     return this._professional;
   }
 
-  get pros(): Array<{ company: string; jobTitle: string; country: string }> {
+  get pros(): Array<{ company: Clearbit; jobTitle: string; country: {flag: string} }> {
     return this._pros;
   }
 
