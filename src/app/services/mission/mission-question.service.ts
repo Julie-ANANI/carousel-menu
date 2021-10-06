@@ -381,8 +381,6 @@ export class MissionQuestionService {
     if (question.controlType === 'radio' || question.controlType === 'checkbox'
       || question.controlType === 'stars' || question.controlType === 'ranking') {
       const id = question.options.length;
-      console.log('new one');
-      console.log(oldOptions);
       return {
         identifier: id.toString(),
         positive: false,
