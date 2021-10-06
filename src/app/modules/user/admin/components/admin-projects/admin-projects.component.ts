@@ -591,7 +591,7 @@ export class AdminProjectsComponent implements OnInit {
     switch (this._authService.user.roles) {
       case 'market-test-manager-umi-back':
         this._config = {
-          fields: 'name,innovationCards,owner,domain,updated,created,status,mission,operator,stats',
+          fields: '',
           limit: '10',
           offset: '0',
           'mission.type': 'CLIENT',
