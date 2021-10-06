@@ -1,4 +1,4 @@
-export const emailRegEx = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/gm;
+export const emailRegEx = /^[a-zA-Z0-9][a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/g;
 export const domainRegEx = /^[*]+\@{1}(?=\w)[\w\.\-]+$/;
 export const urlRegEx = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 export const phoneRegEx = /^\+?[0-9 \.\-\(\)]+$/;
