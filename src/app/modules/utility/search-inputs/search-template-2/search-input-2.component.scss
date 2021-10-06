@@ -19,6 +19,7 @@
       line-height: $line-height;
       color: $form-input-color;
       padding: $layout-spacing;
+      background-color: unset;
       visibility: visible;
       transition: width 1s ease;
       transform: scaleX(0);
