@@ -56,7 +56,7 @@ export const ADMIN_STORYBOARD = {
     'NAME': 'We need the client\'s name',
     'EMAIL': 'We need the client\'s email',
     'ABSTRACT': 'We need the professionals abstract',
-    'LIST': 'We need at least three profiles of respondents',
+    'LIST': 'We need at least four profiles of respondents',
     'COUNTRY': 'Le pays est manquant, corriger dans la synthèse',
     'MEDIA': 'We need a principal media'
   }
