@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Preset} from '../../models/preset';
-import {Option, Question, QuestionType} from '../../models/question';
-import {Section} from '../../models/section';
-import {Subject} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
-import {colors} from '../../utils/chartColors';
+import { Injectable } from '@angular/core';
+import { Preset } from '../../models/preset';
+import { Option, Question, QuestionType } from '../../models/question';
+import { Section } from '../../models/section';
+import { Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { colors } from '../../utils/chartColors';
 
 @Injectable({providedIn: 'root'})
 export class PresetFrontService {
 
   private _savePresetSubject: Subject<boolean> = new Subject<boolean>();
 
-  private taggedQuestionsTypes: {[identifier: string]: QuestionType} = {
+  private taggedQuestionsTypes: { [identifier: string]: QuestionType } = {
     optim_context: 'radio',
     optim_issues: 'stars',
     optim_useSolution: 'radio',
@@ -103,15 +103,22 @@ export class PresetFrontService {
   /**
    * get the new option for the controlType = 'radio' | 'checkbox' | 'stars' | 'ranking'
    * @param question
+   * @param oldOptions
    */
-  public static addNewOption(question: Question): Option {
+  public static addNewOption(question: Question, oldOptions?: any[]): Option {
     if (question && !!question.options) {
-      const stringId = question.options.length.toString();
+      const id = question.options.length;
+      let en = 'Option ' + id.toString();
+      let fr = 'Option ' + id.toString();
+      if (oldOptions && oldOptions.length && oldOptions.length > id) {
+        en = oldOptions[id].label.en;
+        fr = oldOptions[id].label.fr;
+      }
       return {
-        identifier: stringId,
+        identifier: id.toString(),
         label: {
-          en: 'Option ' + stringId,
-          fr: 'Option ' + stringId
+          en: en,
+          fr: fr
         }
       };
     }
@@ -128,6 +135,7 @@ export class PresetFrontService {
     if (question && question.controlType) {
       question.instruction = PresetFrontService.questionInstruction(question.controlType);
       question.maxOptionsSelect = null;
+      const options = question.options;
       question.options = [];
 
       switch (question.controlType) {
@@ -136,7 +144,7 @@ export class PresetFrontService {
         case 'stars':
         case 'ranking':
           for (let i = 0; i < 4; i++) {
-            question.options.push(PresetFrontService.addNewOption(question));
+            question.options.push(PresetFrontService.addNewOption(question, options));
           }
           break;
 
@@ -144,7 +152,6 @@ export class PresetFrontService {
           question.canComment = false;
           break;
       }
-
       if (question.controlType === 'checkbox') {
         question.maxOptionsSelect = 4;
       }
@@ -167,7 +174,7 @@ export class PresetFrontService {
    * return the default instruction for the different questions
    * @param controlType
    */
-  public static questionInstruction(controlType: QuestionType): {en: string, fr: string} {
+  public static questionInstruction(controlType: QuestionType): { en: string, fr: string } {
     switch (controlType) {
       case 'scale':
         return {
@@ -295,7 +302,7 @@ export class PresetFrontService {
     const identifiersMap = this._preset.sections.reduce((accS, section) => {
       const subIdentifiersMap = section.questions.reduce((accQ, question) => Object.assign(accQ, {[question.identifier]: 1}), {});
       return Object.assign(accS, subIdentifiersMap);
-    }, {} as {[questionId: string]: 1});
+    }, {} as { [questionId: string]: 1 });
     return Object.keys(this.taggedQuestionsTypes).filter((tag) => !identifiersMap[tag]);
   }
 
@@ -398,20 +405,30 @@ export class PresetFrontService {
 
   public cloneQuestion(questionIndex: number, sectionIndex: number) {
     const questions: Array<Question> = this._preset.sections[sectionIndex].questions;
-    const question: Question = { ...questions[questionIndex] };
+    const question: Question = {...questions[questionIndex]};
     /* mutate question to avoid getting 2 questions with the same id */
     delete question._id;
     question.identifier = this.generateId();
     questions.push(JSON.parse(JSON.stringify(question)));
   }
 
-  public removeQuestion(questionIndex: number,  sectionIndex: number) {
+  public removeQuestion(questionIndex: number, sectionIndex: number) {
     this._preset.sections[sectionIndex].questions.splice(questionIndex, 1);
   }
 
-  get preset(): Preset { return this._preset; }
-  set preset(value: Preset) { this._preset = value; }
+  get preset(): Preset {
+    return this._preset;
+  }
 
-  get sectionsNames(): Array<string> { return this._sectionsNames; }
-  set sectionsNames(value: Array<string>) { this._sectionsNames = value; }
+  set preset(value: Preset) {
+    this._preset = value;
+  }
+
+  get sectionsNames(): Array<string> {
+    return this._sectionsNames;
+  }
+
+  set sectionsNames(value: Array<string>) {
+    this._sectionsNames = value;
+  }
 }

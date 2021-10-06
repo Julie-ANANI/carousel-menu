@@ -1,6 +1,7 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { ExecutivePieChart } from '../../../../models/pie-chart';
 import { isPlatformBrowser } from '@angular/common';
+import {oldColorsToNewMapping} from "../../../../utils/chartColors";
 
 /***
  * ex: Admin storyboard page
@@ -56,7 +57,7 @@ export class PiechartExecutiveComponent {
   private _setData() {
     if (this._pieChart) {
       this._labels = this._pieChart.labels || [];
-      this._colors = [{backgroundColor: this._pieChart.colors || []}];
+      this._colors = [{backgroundColor: this._pieChart.colors.map(c => oldColorsToNewMapping[c || ''] || c) || []}];
 
       // for the executive report we are using the percentage values not the answers values
       this._data = this._pieChart.labelPercentage || [];
