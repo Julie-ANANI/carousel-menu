@@ -631,6 +631,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public saveOwner(event: Event) {
     event.preventDefault();
     this._innovation.owner = <any>this._newOwner;
+    this._isEditingOwner = false;
 
     if (this._newOwner && this._newOwner._id) {
       this._saveProject('The owner has been updated.', {

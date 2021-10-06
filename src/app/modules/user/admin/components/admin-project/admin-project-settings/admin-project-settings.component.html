@@ -248,10 +248,10 @@
                 <span *ngIf="!isEditingOwner" class="is-text">{{ name(innovation.owner) }}</span>
 
                 <label *ngIf="isEditingOwner" class="relative m-no-right mxw-full">
-                  <app-utility-auto-suggestion
+                  <app-utility-auto-suggestion-user
                     (valueSelected)="selectOwner($event)"
                     [isSmallInput]="true">
-                  </app-utility-auto-suggestion>
+                  </app-utility-auto-suggestion-user>
                 </label>
 
                 <div
