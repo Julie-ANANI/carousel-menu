@@ -136,7 +136,6 @@ export class PresetFrontService {
       question.instruction = PresetFrontService.questionInstruction(question.controlType);
       question.maxOptionsSelect = null;
       const options = question.options;
-      console.log(options);
       question.options = [];
 
       switch (question.controlType) {

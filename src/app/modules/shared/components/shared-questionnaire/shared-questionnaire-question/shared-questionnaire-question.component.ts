@@ -225,7 +225,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   public onChangeQuestionType(type: MissionQuestionType) {
     this._question.controlType = type;
-    console.log(this._question);
     this._missionQuestionService.configureQuestion(this._question);
     this._emitValueToSave(['edit', 'type']);
   }
