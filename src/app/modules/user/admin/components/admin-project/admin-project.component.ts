@@ -20,6 +20,7 @@ import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovCard } from '../../../../../models/innov-card';
 import { environment } from '../../../../../../environments/environment';
 import { CommonService } from '../../../../../services/common/common.service';
+import { NavigationFrontService } from "../../../../../services/navigation/navigation-front.service";
 
 interface Tab {
   route: string;
@@ -59,25 +60,30 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _tabs: Array<Tab> = [
     {key: 'settings', name: 'Settings', route: 'settings', icon: 'fas fa-cog'},
-    {key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt',
-    subTabs: [
-      {name: '/Description', path: ''},
-      {name: '/Questionnaire', path: ''},
-      {name: '/Targeting', path: ''},
-      {name: '/Campaigns', path: ''},
-      {name: '/Campaign/Search', path: ''},
-      {name: '/Campaign/History', path: ''},
-      {name: '/Campaign/Pros', path: ''},
-      {name: '/Campaign/Workflows', path: ''},
-      {name: '/Campaign/Batch', path: ''},
-    ]},
-    {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
-    {key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area',
+    {
+      key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt',
       subTabs: [
-        {name: '/Synthesis', path: ''},
-        {name: '/Answer tags', path: ''},
-        {name: '/Storyboard', path: ''},
-      ]},
+        {name: '/Description', path: 'description'},
+        {name: '/Questionnaire', path: 'questionnaire'},
+        {name: '/Targeting', path: 'targeting'},
+        {name: '/Campaigns', path: 'campaigns'},
+        {name: '/Statistics', path: 'statistics'},
+        {name: '/Campaign/Search', path: ''},
+        {name: '/Campaign/History', path: ''},
+        {name: '/Campaign/Pros', path: ''},
+        {name: '/Campaign/Workflows', path: ''},
+        {name: '/Campaign/Batch', path: ''},
+      ]
+    },
+    {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
+    {
+      key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area',
+      subTabs: [
+        {name: '/Synthesis', path: 'synthesis'},
+        {name: '/Answer tags', path: 'answer-tags'},
+        {name: '/Storyboard', path: 'storyboard'},
+      ]
+    },
     {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
   ];
 
@@ -111,6 +117,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
+              private _navigationFrontService: NavigationFrontService,
               private _commonService: CommonService,
               private _socketService: SocketService) {
     this._project = this._activatedRoute.snapshot.data['innovation'];
@@ -447,6 +454,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+  }
+
+  navigateTo(event: Event, tab: Tab, item: any) {
+    this.onClickTab(event, tab.name, tab.route, tab.key);
+    this._navigationFrontService.setNavigation({tab: tab, item: item});
   }
 
 }

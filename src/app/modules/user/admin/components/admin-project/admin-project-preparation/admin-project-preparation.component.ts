@@ -1,25 +1,26 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {RouteFrontService} from '../../../../../../services/route/route-front.service';
-import {TranslateTitleService} from '../../../../../../services/title/title.service';
-import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
-import {Innovation} from '../../../../../../models/innovation';
-import {Router} from '@angular/router';
-import {InnovCard} from '../../../../../../models/innov-card';
-import {InnovationService} from '../../../../../../services/innovation/innovation.service';
-import {first, takeUntil} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {Campaign} from '../../../../../../models/campaign';
-import {Subject} from 'rxjs';
-import {CampaignFrontService} from '../../../../../../services/campaign/campaign-front.service';
-import {isPlatformBrowser} from '@angular/common';
-import {Response} from '../../../../../../models/response';
-import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
-import {SocketService} from '../../../../../../services/socket/socket.service';
-import {MissionService} from '../../../../../../services/mission/mission.service';
-import {Mission} from '../../../../../../models/mission';
-import {environment} from '../../../../../../../environments/environment';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { RouteFrontService } from '../../../../../../services/route/route-front.service';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { Innovation } from '../../../../../../models/innovation';
+import { Router } from '@angular/router';
+import { InnovCard } from '../../../../../../models/innov-card';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { Campaign } from '../../../../../../models/campaign';
+import { Subject } from 'rxjs';
+import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { Response } from '../../../../../../models/response';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { SocketService } from '../../../../../../services/socket/socket.service';
+import { MissionService } from '../../../../../../services/mission/mission.service';
+import { Mission } from '../../../../../../models/mission';
+import { environment } from '../../../../../../../environments/environment';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { NavigationFrontService } from '../../../../../../services/navigation/navigation-front.service';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -79,11 +80,12 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _navigationFrontService: NavigationFrontService,
               private _translateTitleService: TranslateTitleService,
-              private _socketService: SocketService) {}
+              private _socketService: SocketService) {
+  }
 
   ngOnInit() {
-
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._project = innovation || <Innovation>{};
       this.setPageTitle();
@@ -136,6 +138,15 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
     this._campaignFrontService.loadingCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading) => {
       this._isLoadingCampaign = loading;
+    });
+
+    this._navigationFrontService.navigation().pipe(takeUntil(this._ngUnsubscribe)).subscribe(value => {
+      console.log(value);
+      if (value && value.item && value.tab.name === 'Preparation') {
+        setTimeout(() => {
+          this.navigateTo(value.item.path);
+        }, 0);
+      }
     });
 
   }
@@ -215,7 +226,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     this._router.navigate([`/user/admin/projects/project/${this._project._id}/preparation/campaigns`]);
   }
 
-  public openModal(event: Event, type: 'ADD_LANG'| 'DELETE_LANG', deleteCard?: InnovCard) {
+  public openModal(event: Event, type: 'ADD_LANG' | 'DELETE_LANG', deleteCard?: InnovCard) {
     event.preventDefault();
     switch (type) {
 
@@ -301,16 +312,16 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   private _saveProject(objToSave: any) {
-      this._innovationService.save(this._project._id, objToSave).pipe(first()).subscribe(() => {
-        this._isSaving = false;
-        this._toBeSaved = '';
-        this._setInnovation();
-        this._translateNotificationsService.success('Success', 'The project has been updated.');
-      }, (err: HttpErrorResponse) => {
-        this._isSaving = false;
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
-        console.error(err);
-      });
+    this._innovationService.save(this._project._id, objToSave).pipe(first()).subscribe(() => {
+      this._isSaving = false;
+      this._toBeSaved = '';
+      this._setInnovation();
+      this._translateNotificationsService.success('Success', 'The project has been updated.');
+    }, (err: HttpErrorResponse) => {
+      this._isSaving = false;
+      this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
+      console.error(err);
+    });
   }
 
   private _saveComment() {
@@ -323,7 +334,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', 'The comments/suggestions have been updated.');
           resolve(true);
         }, (err: HttpErrorResponse) => {
-            reject(err);
+          reject(err);
         });
       } else {
         resolve(true);

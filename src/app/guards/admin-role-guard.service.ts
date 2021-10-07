@@ -20,6 +20,7 @@ export class AdminRoleGuard implements CanActivate, OnDestroy {
 
     if (!this._authService.adminAccess) {
       return this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe), map ((_) => {
+        console.log(_path);
         return this._navigateTo(_path);
       }), catchError((err: HttpErrorResponse) => {
         console.error(err);
@@ -27,6 +28,7 @@ export class AdminRoleGuard implements CanActivate, OnDestroy {
         return of(false);
       }));
     } else {
+      console.log(_path);
       return this._navigateTo(_path);
     }
 
