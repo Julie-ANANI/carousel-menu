@@ -1,31 +1,32 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {TranslateTitleService} from '../../../../../services/title/title.service';
-import {Innovation} from '../../../../../models/innovation';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
-import {InnovationService} from '../../../../../services/innovation/innovation.service';
-import {first, takeUntil} from 'rxjs/operators';
-import {SocketService} from '../../../../../services/socket/socket.service';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {isPlatformBrowser} from '@angular/common';
-import {Mission} from '../../../../../models/mission';
-import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Subject} from 'rxjs';
-import {CampaignFrontService} from '../../../../../services/campaign/campaign-front.service';
-import {AuthService} from '../../../../../services/auth/auth.service';
-import {InnovCard} from '../../../../../models/innov-card';
-import {environment} from '../../../../../../environments/environment';
-import {CommonService} from '../../../../../services/common/common.service';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { Innovation } from '../../../../../models/innovation';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { SocketService } from '../../../../../services/socket/socket.service';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { Mission } from '../../../../../models/mission';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { CampaignFrontService } from '../../../../../services/campaign/campaign-front.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { InnovCard } from '../../../../../models/innov-card';
+import { environment } from '../../../../../../environments/environment';
+import { CommonService } from '../../../../../services/common/common.service';
 
 interface Tab {
   route: string;
   name: string;
   key: string;
   icon: string;
+  subTabs?: Array<any>;
 }
 
 @Component({
@@ -58,9 +59,25 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _tabs: Array<Tab> = [
     {key: 'settings', name: 'Settings', route: 'settings', icon: 'fas fa-cog'},
-    {key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt'},
+    {key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt',
+    subTabs: [
+      {name: '/Description', path: ''},
+      {name: '/Questionnaire', path: ''},
+      {name: '/Targeting', path: ''},
+      {name: '/Campaigns', path: ''},
+      {name: '/Campaign/Search', path: ''},
+      {name: '/Campaign/History', path: ''},
+      {name: '/Campaign/Pros', path: ''},
+      {name: '/Campaign/Workflows', path: ''},
+      {name: '/Campaign/Batch', path: ''},
+    ]},
     {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
-    {key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area'},
+    {key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area',
+      subTabs: [
+        {name: '/Synthesis', path: ''},
+        {name: '/Answer tags', path: ''},
+        {name: '/Storyboard', path: ''},
+      ]},
     {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
   ];
 
