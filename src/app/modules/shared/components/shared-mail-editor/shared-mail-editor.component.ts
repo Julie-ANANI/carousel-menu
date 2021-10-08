@@ -5,17 +5,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {Professional} from '../../../../models/professional';
 import {FormatText} from '../../../../pipe/pipes/FormatText';
 import {RouteFrontService} from '../../../../services/route/route-front.service';
+import {EmailsObject} from '../../../../models/email';
 
 const capitalize = new FormatText();
 
 type editorTypes = 'FOLLOW-UP' | '';
-
-interface EmailsObject {
-  fr: EmailTemplate;
-  en: EmailTemplate;
-  campaignId: string;
-  step: string;
-}
 
 interface Mapping {
   en: any;

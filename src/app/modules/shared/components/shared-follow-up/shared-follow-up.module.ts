@@ -11,6 +11,11 @@ import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar
 import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from "../../../sidebars/templates/sidebar/sidebar.module";
 import { SidebarUserAnswerModule } from "../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module";
+import {SidebarInPageModule} from '../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
+import { SharedFollowUpClientComponent } from './shared-follow-up-client/shared-follow-up-client.component';
+import { SharedFollowUpAdminComponent } from './shared-follow-up-admin/shared-follow-up-admin.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 
 @NgModule({
   imports: [
@@ -22,10 +27,16 @@ import { SidebarUserAnswerModule } from "../../../sidebars/components/sidebar-us
     SidebarFilterAnswersModule,
     TableModule,
     SidebarModule,
-    SidebarUserAnswerModule
+    SidebarUserAnswerModule,
+    SidebarInPageModule,
+    FormsModule,
+    ModalEmptyModule,
+    ReactiveFormsModule
   ],
   declarations: [
-    SharedFollowUpComponent
+    SharedFollowUpComponent,
+    SharedFollowUpClientComponent,
+    SharedFollowUpAdminComponent
   ],
   exports: [
     SharedFollowUpComponent

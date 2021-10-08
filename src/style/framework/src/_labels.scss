@@ -73,6 +73,10 @@
     border-radius: 25px;
   }
 
+  &.is-mail {
+    background: #EBEBEB;
+  }
+
   &.is-tag {
     @include label-variant($text-white-color, $bg-draft-color);
     padding: 6px 12px;

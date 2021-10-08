@@ -1,0 +1,502 @@
+<div id="shared-follow-up-client">
+
+  <ng-container *ngIf="startContactProcess">
+    <div class="absolute btn_close_wrapper">
+      <div
+        (click)="toggleStartContact(false)"
+        [ngClass]="{'c-not-allowed': isSending}"
+        class="close is-background is-sm"></div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!startContactProcess">
+    <div class="container fluid grid-2xl p-top-50 p-bottom-30">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+        <div class="text-center">
+          <p [innerHTML]="'SHARED_FOLLOW_UP.DESC' | translate" class="text-desc p-bottom-20"></p>
+          <button
+            (click)="toggleStartContact(true)"
+            [disabled]="answers.length === 0"
+            class="button is-community is-lg"
+            id="sharedFollowUp-btn-contact-respondents">
+            {{ 'SHARED_FOLLOW_UP.BUTTON.CONTACT' | translate }}
+          </button>
+        </div>
+        <div class="p-top-40">
+          <app-shared-table
+            (configChange)="configChange.emit(config)"
+            (editRow)="seeAnswer($event)"
+            [config]="config"
+            [data]="tableInfos">
+          </app-shared-table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="startContactProcess">
+    <ng-container [ngSwitch]="contactFields[currentStep]">
+      <div class="container fluid grid-2xl">
+        <div class="pws-wrapper">
+
+          <!-- sidebar -->
+          <ng-container *ngSwitchCase="'STEP_SELECT'">
+            <aside *ngIf="false" [ngStyle]="{'max-width': '285px'}" class="sidebar-wrapper">
+              <app-sidebar-in-page [(sidebarTemplate)]="sidebarTemplate">
+                <app-sidebar-filter-answers
+                  (closeSidebar)="closeSidebar()"
+                  (updateAnswers)="updateAnswers($event)"
+                  [answers]="answers"
+                  [innovation]="project"
+                  [questions]="questions"
+                  [templateType]="sidebarTemplate.type">
+                </app-sidebar-filter-answers>
+              </app-sidebar-in-page>
+            </aside>
+          </ng-container>
+          <!-- /sidebar -->
+
+          <div class="content-wrapper p-top-50 p-bottom-50">
+
+            <!-- heading and subheading -->
+            <div class="text-center">
+              <h2 class="title is-4">{{ 'SHARED_FOLLOW_UP.HEADINGS.' + contactFields[currentStep] | translate }}</h2>
+              <ng-container *ngIf="contactFields[currentStep] === 'STEP_INTRO'">
+                <h3 class="subtitle sub_heading">{{ 'SHARED_FOLLOW_UP.SUB_HEADINGS.STEP_INTRO' | translate }}</h3>
+              </ng-container>
+              <ng-container *ngIf="contactFields[currentStep] === 'STEP_SELECT'">
+                <h3 class="subtitle sub_heading">
+                  {{ answers.length }} {{ 'COMMON.LABEL.RESPONDENTS' | translate | lowercase }}
+                  -
+                  {{ selectedIds.length }} {{ 'COMMON.LABEL.SELECTED' | translate | lowercase }}
+                </h3>
+              </ng-container>
+              <ng-container *ngIf="contactFields[currentStep] === 'STEP_SEND'">
+                <h3 class="subtitle sub_heading">{{ 'SHARED_FOLLOW_UP.SUB_HEADINGS.STEP_SEND' | translate }}</h3>
+              </ng-container>
+            </div>
+            <!-- /heading and subheading -->
+
+            <!-- step intro -->
+            <ng-container *ngSwitchCase="'STEP_INTRO'">
+              <div class="d-flex flex-wrap justify-center card_wrapper p-top-30">
+                <div *ngFor="let intro of introImages; let i = index;" class="card is-card-3">
+                  <div class="card-header text-center">
+                    <div class="shape is-circle is-md bg-community m-left-auto m-right-auto text-20 m-bottom-10">
+                      {{ i + 1 }}
+                    </div>
+                    <h4 class="title text-lg m-bottom-15">
+                      {{ 'SHARED_FOLLOW_UP.STEP_INTRO.TITLE.' + i | translate }}
+                    </h4>
+                  </div>
+                  <div class="card-body text-center flex-d-column">
+                    <div class="m-bottom-30 m-left-auto m-right-auto img_wrapper">
+                      <img
+                        [src]="intro"
+                        alt="image"
+                        class="img-responsive m-left-auto m-right-auto">
+                    </div>
+                    <p class="text-background text-sm text-medium mxw-150 m-left-auto m-right-auto">
+                      {{ 'SHARED_FOLLOW_UP.STEP_INTRO.DESC.' + i | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <!-- /step intro -->
+
+            <!-- step select -->
+            <div [hidden]="contactFields[currentStep] !== 'STEP_SELECT'" class="p-top-30">
+              <app-shared-table
+                (editRow)="seeAnswer($event)"
+                (configChange)="configChange.emit(config)"
+                (selectRows)="rowsSelected($event)"
+                [config]="config"
+                [data]="tableInfos">
+              </app-shared-table>
+            </div>
+            <!-- /step select -->
+
+            <!-- step send -->
+            <ng-container *ngSwitchCase="'STEP_SEND'">
+              <div class="step_send_wrapper d-flex">
+
+                <div class="step_send_left p-no-bottom">
+                  <app-shared-table [(config)]="finalConfig" [data]="finalTableInfos"></app-shared-table>
+                </div>
+
+                <div class="step_send_right relative">
+                  <div class="absolute lang_wrapper d-flex align-center">
+                    <div *ngFor="let lang of langs; let i = index" class="text-white text-md text-medium">
+                      <span (click)="onChangeLang(lang)" class="c-hand">{{ lang | uppercase }}</span>
+                      <span *ngIf="(i + 1) < langs.length " class="m-right-1">|</span>
+                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <span class="mail_label m-right-1">{{ 'COMMON.LABEL.FROM' | translate }}:</span>
+                    <span class="text-13">Karine Caulfield</span>
+                  </div>
+                  <div class="m-bottom-1">
+                    <span class="mail_label">{{ 'COMMON.LABEL.TO' | translate }}: </span>
+                    <span class="text-13">{{ 'SHARED_FOLLOW_UP.RESPONDENTS_LIST' | translate }}</span>
+                  </div>
+                  <div class="d-flex align-center flex-wrap">
+                    <span class="mail_label m-right-1">CC:</span>
+                    <span *ngFor="let cc of selectedCC; let i = index" class="text-13">
+                      {{ cc.email }}
+                      <ng-container *ngIf="(i + 1) < selectedCC.length">, </ng-container>
+                    </span>
+                  </div>
+                  <div>
+                    <span class="mail_label">{{ 'COMMON.LABEL.SUBJECT' | translate }}: </span>
+                    <span [innerHTML]="emailsObjectReplaced[selectedLang].subject" class="text-13"></span>
+                  </div>
+                  <div class="p-top-10">
+                    <div [innerHTML]="emailsObjectReplaced[selectedLang].content" class="text-13"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <!-- /step send -->
+
+            <!-- step configure -->
+            <ng-container *ngSwitchCase="'STEP_CONFIGURE'">
+              <div class="step_config_wrapper mxw-1098 d-flex">
+
+                <div class="step_config_left">
+
+                  <div class="m-bottom-20">
+                    <p class="m-bottom-15">
+                      <span class="shape is-circle is-xs bg-dark m-right-2"></span>
+                      <span class="text-bold text-md">{{ 'SHARED_FOLLOW_UP.HEADINGS.PERSON_COPY' | translate }}</span>
+                    </p>
+                    <div class="d-flex p-bottom-2">
+                      <div class="dropdown m-right-10">
+                        <a class="button dropdown-toggle is-info is-outlined flex-between" tabindex="0">
+                          <span *ngIf="ccToAdd.email" class="text-ellipsis">
+                            {{ ccToAdd.firstName | titlecase }} {{ ccToAdd.lastName | titlecase }}
+                            <span class="text-notify">- {{ ccToAdd.email }}</span>
+                          </span>
+                          <span *ngIf="!ccToAdd.email">{{ 'SHARED_FOLLOW_UP.SELECT_CC' | translate }}</span>
+                          <i class="fas fa-caret-down"></i>
+                        </a>
+                        <ul class="menu is-full">
+                          <ng-container *ngFor="let c of cc">
+                            <li (click)="onSelectCc(c)" *ngIf="!isExistCc(c)" class="menu-item">
+                              {{ c.email }}
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </div>
+                      <button
+                        (click)="addCC(ccToAdd, true)"
+                        [disabled]="!ccToAdd.email"
+                        class="button is-community is-sm btn_add"
+                        type="button">
+                        {{ 'COMMON.BUTTON.ADD' | translate }}
+                      </button>
+                    </div>
+                    <p *ngIf="!selectedCC.length" class="form-error m-no-bottom">
+                      {{ 'SHARED_FOLLOW_UP.ERROR_CC' | translate }}
+                    </p>
+                    <div
+                      (click)="openModal()"
+                      [id]="'sharedFollowUpClient-btn-add-cc'"
+                      class="text-community text-sm text-hover-underline c-hand">
+                      {{ 'SHARED_FOLLOW_UP.HEADINGS.ADD_MANUALLY' | translate }}
+                    </div>
+                  </div>
+
+                  <div class="m-bottom-20">
+                    <p class="m-bottom-1">
+                      <span class="shape is-circle is-xs bg-dark m-right-2"></span>
+                      <span class="text-bold text-md">{{ 'SHARED_FOLLOW_UP.HEADINGS.CHOOSE_PHRASE' | translate }}</span>
+                    </p>
+                    <div class="form-group">
+                      <label *ngFor="let phrase of phraseChoose" class="form-radio is-inline text-md">
+                        <input
+                          (change)="onChangePhrase(phrase)"
+                          [checked]="phrase === selectedPhrase"
+                          [id]="phrase.toLocaleLowerCase()"
+                          [value]="phrase"
+                          name="phrase"
+                          type="radio">
+                        <i class="form-icon"></i> {{ 'SHARED_FOLLOW_UP.' + phrase | translate }}
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p class="m-bottom-15">
+                      <span class="shape is-circle is-xs bg-dark m-right-2"></span>
+                      <span class="text-bold text-md">{{ 'SHARED_FOLLOW_UP.HEADINGS.COMPANY_NAME' | translate }}</span>
+                    </p>
+                    <div class="form-group">
+                      <input
+                        (change)="initEmailObject()"
+                        [(ngModel)]="companyName"
+                        [maxLength]="80"
+                        class="form-input is-shadowed is-sm"
+                        type="text">
+                      <span *ngIf="!companyName" class="form-error">
+                        {{ 'SHARED_FOLLOW_UP.REQUIRED_ENTITY' | translate }}
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="step_config_right relative">
+
+                  <div class="absolute lang_wrapper d-flex align-center">
+                    <div
+                      *ngFor="let lang of langs; let i = index"
+                      class="text-notify text-md text-medium">
+                      <span
+                        (click)="onChangeLang(lang)"
+                        [ngClass]="{'text-community': lang === selectedLang}"
+                        class="c-hand">
+                        {{ lang | uppercase }}
+                      </span>
+                      <span *ngIf="(i + 1) < langs.length " class="m-right-1">|</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex">
+                    <span class="mail_label m-right-1">{{ 'COMMON.LABEL.FROM' | translate }}:</span>
+                    <div class="popover text-13 align-center">
+                      Karine Caulfield
+                      <div class="popover-container is-sm">
+                        <div class="card-body p-10">{{ 'SHARED_FOLLOW_UP.KAREN' | translate }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="mail_label">{{ 'COMMON.LABEL.TO' | translate }}: </span>
+                    <span class="text-13">{{ 'SHARED_FOLLOW_UP.RESPONDENTS_LIST' | translate }}</span>
+                  </div>
+                  <div class="d-flex align-center flex-wrap">
+                    <span class="mail_label">CC:</span>
+                    <span
+                      *ngFor="let cc of selectedCC; let i = index"
+                      class="label is-sm text-xs is-rounded text-background">
+                      {{ cc.email }}
+                      <span (click)="removeCc(i)" class="close is-background is-xs m-left-1"></span>
+                    </span>
+                  </div>
+                  <div>
+                    <span class="mail_label">{{ 'COMMON.LABEL.SUBJECT' | translate }}: </span>
+                    <span [innerHTML]="emailsObject[selectedLang].subject" class="text-13"></span>
+                  </div>
+                  <div class="text-13 p-top-10" [innerHTML]="emailsObject[selectedLang].content"></div>
+
+                </div>
+
+              </div>
+            </ng-container>
+            <!-- /step configure -->
+
+            <!-- steps -->
+            <ng-container *ngIf="currentStep > 0">
+              <div class="flex-centered p-top-50 p-bottom-10 step_wrapper">
+                <div *ngFor="let step of steps; let i = index;" class="step_content text-center relative">
+                  <div
+                    [ngClass]="{'bg-community': (i+1) === currentStep, 'bg-success': currentStep > (i+1) }"
+                    class="shape is-circle text-sm text-medium m-left-auto m-right-auto">
+                    <ng-container *ngIf="currentStep > (i+1); else number">
+                      <i class="icon icon-check"></i>
+                    </ng-container>
+                    <ng-template #number>{{ i + 1 }}</ng-template>
+                  </div>
+                  <p class="text-sm text-background text-medium">{{ step | translate }}</p>
+                  <div *ngIf="i < 2" class="line"></div>
+                </div>
+              </div>
+            </ng-container>
+            <!-- /steps -->
+
+            <!-- buttons -->
+            <div class="text-center p-top-30">
+
+              <!-- previous -->
+              <button
+                (click)="goToBackStep($event)"
+                *ngIf="currentStep > 1"
+                [disabled]="isNextStep || isSending"
+                [id]="'sharedFollowUp-btn-step-previous'"
+                class="button is-info is-outlined is-lg m-top-20 m-left-20 m-right-20">
+                {{ 'COMMON.BUTTON.PREVIOUS' | translate }}
+              </button>
+              <!-- /previous -->
+
+              <!-- navigate next step -->
+              <button
+                (click)="goToNextStep($event)"
+                [disabled]="isNextStep || isDisabled || isSending"
+                [id]="'sharedFollowUp-btn-' + contactFields[currentStep].toLocaleLowerCase()"
+                class="button is-community is-lg m-top-20 m-left-20 m-right-20">
+                <span *ngIf="isNextStep; else btnText" class="loading is-white"></span>
+                <ng-template #btnText>
+                  <ng-container *ngIf="contactFields[currentStep] === 'STEP_INTRO'">
+                    {{ 'COMMON.BUTTON.I_UNDERSTAND' | translate }}
+                  </ng-container>
+                  <ng-container *ngIf="contactFields[currentStep] === 'STEP_SEND'">
+                    <img
+                      [ngStyle]="{'height': '17px', 'width': '19px'}"
+                      [src]="planeImage"
+                      alt=""
+                      class="m-right-2 img-responsive">
+                    {{ 'SHARED_FOLLOW_UP.BUTTON.READY_SEND' | translate }}
+                  </ng-container>
+                  <ng-container *ngIf="contactFields[currentStep] === 'STEP_CONFIGURE'
+                  || contactFields[currentStep] === 'STEP_SELECT'">
+                    {{ 'COMMON.BUTTON.NEXT' | translate }}
+                  </ng-container>
+                </ng-template>
+              </button>
+              <!-- /navigate next step -->
+
+            </div>
+            <!-- /buttons -->
+
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+</div>
+
+<!-- answer sidebar -->
+<ng-container *ngIf="project._id">
+  <app-sidebar [(template)]="sidebarAnswer">
+    <app-sidebar-user-answer
+      [innovationCards]="project.innovationCards"
+      [projectId]="project._id"
+      [questions]="questions"
+      [userAnswer]="modalAnswer">
+    </app-sidebar-user-answer>
+  </app-sidebar>
+</ng-container>
+<!-- /answer sidebar -->
+
+<!-- modal to confirm send -->
+<app-utility-modal-empty [(showModal)]="sendShowModal" [maxWidth]="'520px'">
+
+  <section class="modal-body">
+    <h2 class="title is-4 text-center text-bold m-bottom-30">
+      {{ 'SHARED_FOLLOW_UP.MODAL.READY_TO_SEND' | translate }}
+    </h2>
+    <div [ngStyle]="{'width': '280px'}" class="m-left-auto m-right-auto text-center">
+      <p [ngStyle]="{'color': '#9E9E9E'}" class="text-lg m-bottom-25">
+        {{ 'SHARED_FOLLOW_UP.MODAL.READY_TO_SEND_SUBHEADING.A' | translate }}
+        {{ selectedIds.length }}
+        {{ 'SHARED_FOLLOW_UP.MODAL.READY_TO_SEND_SUBHEADING.B' | translate }}
+      </p>
+      <img
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/follow-up/go-to-send-emails.svg"
+        class="img-responsive m-left-auto m-right-auto"
+        alt="">
+    </div>
+  </section>
+
+  <footer class="modal-footer justify-center">
+    <button
+      (click)="closeModal()"
+      [disabled]="isSending"
+      [id]="'sharedFollowUpClient-modal-btn-cancel'"
+      class="button modal-cancel"
+      type="button">
+      {{ 'COMMON.BUTTON.CANCEL' | translate }}
+    </button>
+
+    <button
+      (click)="onClickSend()"
+      [disabled]="isSending"
+      [id]="'sharedFollowUpClient-modal-btn-confirm-send'"
+      class="button is-community"
+      type="button">
+      <span *ngIf="isSending; else sendText" class="loading is-white is-sm"></span>
+      <ng-template #sendText>{{ 'COMMON.BUTTON.SEND_NOW' | translate }}</ng-template>
+    </button>
+  </footer>
+
+</app-utility-modal-empty>
+<!-- /modal to confirm send -->
+
+<!-- modal to add cc manually -->
+<app-utility-modal-empty [(showModal)]="showModal" [maxWidth]="'455px'">
+
+  <section class="modal-body">
+    <h2 class="title is-4 text-center text-bold m-bottom-30">{{ 'SHARED_FOLLOW_UP.MODAL.ADD_CC' | translate }}</h2>
+    <form [formGroup]="formData" autocomplete="off" (submit)="onClickAdd()">
+
+      <div class="form-group has-error mxw-300 m-left-auto m-right-auto m-bottom-20">
+        <input
+          class="form-input is-shadowed is-sm"
+          formControlName="firstName"
+          type="text"
+          [attr.placeholder]="'COMMON.LABEL.FIRSTNAME' | translate">
+        <div
+          *ngIf="formData.get('firstName').touched && formData.get('firstName').invalid &&
+          formData.get('firstName').hasError('required')"
+          class="form-input-hint">
+          {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
+        </div>
+      </div>
+
+      <div class="form-group has-error mxw-300 m-left-auto m-right-auto m-bottom-20">
+        <input
+          class="form-input is-shadowed is-sm"
+          formControlName="lastName"
+          type="text"
+          [attr.placeholder]="'COMMON.LABEL.LASTNAME' | translate">
+        <div
+          *ngIf="formData.get('lastName').touched && formData.get('lastName').invalid &&
+          formData.get('lastName').hasError('required')"
+          class="form-input-hint">
+          {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
+        </div>
+      </div>
+
+      <div class="form-group has-error mxw-300 m-left-auto m-right-auto">
+        <input
+          [attr.placeholder]="'COMMON.LABEL.EMAIL' | translate"
+          class="form-input is-shadowed is-sm"
+          formControlName="email"
+          type="email">
+        <div *ngIf="formData.get('email').touched && formData.get('email').invalid" class="form-input-hint">
+          <span *ngIf="formData.get('email').hasError('required')">
+            {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+          </span>
+          <span *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+            {{ 'COMMON.INVALID.EMAIL' | translate }}
+          </span>
+        </div>
+      </div>
+
+    </form>
+  </section>
+
+  <footer class="modal-footer justify-center">
+    <button
+      (click)="closeModal()"
+      [id]="'sharedFollowUpClient-modal-btn-cancel'"
+      class="button modal-cancel"
+      type="button">
+      {{ 'COMMON.BUTTON.CANCEL' | translate }}
+    </button>
+
+    <button
+      (click)="onClickAdd()"
+      [disabled]="formData.invalid"
+      [id]="'sharedFollowUpClient-modal-btn-confirm'"
+      class="button is-community"
+      type="button">
+      {{ 'COMMON.BUTTON.ADD' | translate }}
+    </button>
+  </footer>
+
+</app-utility-modal-empty>
+<!-- /modal to add cc manually -->

@@ -61,8 +61,9 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     {key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt'},
     {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
     {key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area'},
-    {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
+    {key: 'followUp', name: 'Follow-up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
   ];
+
 
   private _isLoading = true;
 
@@ -97,6 +98,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _commonService: CommonService,
               private _socketService: SocketService) {
     this._project = this._activatedRoute.snapshot.data['innovation'];
+    this._verifyFollowUpTab();
     this._setInnoTitle();
     this._setInnovation();
     this._setQuizLink();
@@ -132,6 +134,18 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * for the new projects we hide the Follow Up tab.
+   * @private
+   */
+  private _verifyFollowUpTab() {
+    if (!!this._project.followUpEmails && !!this._project.followUpEmails.status) {
+      const index = this._tabs.findIndex((_tab) => _tab.key === 'followUp');
+      if (index !== -1) {
+        this._tabs.splice(index, 1);
+      }
+    }
+  }
 
   private _realTimeUpdate(object: string, update: any) {
 

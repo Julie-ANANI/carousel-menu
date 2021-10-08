@@ -12,6 +12,7 @@ import { SynthesisComponent } from './components/synthesis/synthesis.component';
 
 import { AuthGuard } from '../../../../../guards/auth-guard.service';
 import {PendingChangesGuard} from '../../../../../guards/pending-changes-guard.service';
+import {ContactComponent} from './components/contact/contact.component';
 
 const projectRoutes: Routes = [
   {
@@ -22,6 +23,7 @@ const projectRoutes: Routes = [
       { path: '', redirectTo: 'settings', pathMatch: 'full' },
       { path: 'settings', component: SettingsComponent, pathMatch: 'full' },
       { path: 'exploration', component: ExplorationComponent, pathMatch: 'full' },
+      { path: 'contact', component: ContactComponent, pathMatch: 'full' },
       { path: 'synthesis', component: SynthesisComponent, pathMatch: 'full' },
       { path: 'documents', component: DocumentsComponent, pathMatch: 'full' },
       {

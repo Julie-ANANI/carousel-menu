@@ -14,6 +14,7 @@ import {NewPro} from './reassign-answer/reassign-answer.component';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {Professional} from '../../../../models/professional';
 import {TranslateService} from '@ngx-translate/core';
+import {MissionQuestion} from '../../../../models/mission';
 
 @Component({
   selector: 'app-sidebar-user-answer',
@@ -30,7 +31,7 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   @Input() innovationCards: any[] = [];
 
-  @Input() questions: Array<Question> = [];
+  @Input() questions: Array<Question | MissionQuestion> = [];
 
   @Input() excludedCompanies: Array<Company> = []; // companies to show in the popover when hover over Company.
 

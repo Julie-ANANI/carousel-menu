@@ -1,9 +1,12 @@
 <div [hidden]="!canAccess()" class="container fluid grid-2xl" id="admin-project-follow-up">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
-    <app-shared-follow-up
-      [accessPath]="accessPath"
-      [project]="innovation">
-    </app-shared-follow-up>
+    <ng-container *ngIf="innovation.followUpEmails && !innovation.followUpEmails.status">
+      <app-shared-follow-up
+        [template]="'ADMIN'"
+        [accessPath]="accessPath"
+        [project]="innovation">
+      </app-shared-follow-up>
+    </ng-container>
   </div>
 </div>
 

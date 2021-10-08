@@ -5,7 +5,7 @@
   background: $bg-white-color;
   position: relative;
   height: 100%;
-  border-right: 2px solid $border-primary-color;
+  border-right: 2px solid $community-color;
 
   &.is-sticky {
     position: sticky;
@@ -15,7 +15,7 @@
 
   .sidebar-border {
     width: 30px;
-    background: $bg-primary-gradient-color;
+    background: $draft-color;
     z-index: 1;
   }
 
@@ -27,15 +27,15 @@
     .button {
 
       &.is-primary {
-        background-color: $bg-white-color;
-        color: $text-primary-color;
+        background-color: $community-color;
+        color: $white-color;
         border-width: 2px;
         transition: all 0.3s ease;
-        border-color: $border-primary-color;
+        border-color: $community-color;
 
         &:hover {
-          background-color: $bg-primary-color;
-          color: $text-white-color;
+          background-color: $white-color;
+          color: $community-color;
         }
 
       }

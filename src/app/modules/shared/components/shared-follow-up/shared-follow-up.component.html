@@ -1,156 +1,180 @@
-<div id="shared-follow-up">
+<div [ngSwitch]="template" id="shared-follow-up">
 
-  <!-- emails and finish button -->
-  <section class="header-wrapper">
+  <!-- CLIENT VERSION -->
+  <div *ngSwitchCase="'CLIENT'" class="relative">
+    <app-shared-follow-up-client
+      (reinitializeAnswers)="getAnswers()"
+      (reinitializeTable)="initializeTable($event.answers, $event.total)"
+      [(config)]="localConfig"
+      [(startContactProcess)]="startContactProcess"
+      [answers]="answers"
+      [project]="project"
+      [questions]="questions"
+      [tableInfos]="tableInfos">
+    </app-shared-follow-up-client>
+  </div>
+  <!-- /CLIENT VERSION -->
 
-    <!-- emails -->
-    <div [ngClass]="{'p-right-40': canAccess(['workflow', 'send'])}" class="email-wrapper">
+  <!-- ADMIN VERSION -->
+  <ng-container *ngSwitchCase="'ADMIN'">
 
-      <!-- appointment -->
-      <div class="email-content">
-        <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
+    <!-- emails and finish button -->
+    <section class="header-wrapper">
+
+      <!-- emails -->
+      <div [ngClass]="{'p-right-40': canAccess(['workflow', 'send'])}" class="email-wrapper">
+
+        <!-- appointment -->
+        <div class="email-content">
+          <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
           <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
             {{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}
           </span>
-          <span
-            (click)="onClickSee($event, 'interview')"
-            *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
-            [ngStyle]="{ 'margin-top': '3px' }"
-            class="text-link text-xs">
+            <span
+              (click)="onClickSee($event, 'interview')"
+              *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
+              [ngStyle]="{ 'margin-top': '3px' }"
+              class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
           </span>
+          </div>
+
+          <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+            <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
+            <span>{{ prosInterviewSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
+          </div>
         </div>
+        <!-- /appointment -->
 
-        <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
-          <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
-          <span>{{ prosInterviewSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
-        </div>
-      </div>
-      <!-- /appointment -->
+        <div class="divider-vert is-lg"></div>
 
-      <div class="divider-vert is-lg"></div>
-
-      <!-- open -->
-      <div class="email-content">
-        <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
+        <!-- open -->
+        <div class="email-content">
+          <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
           <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
             {{ 'SHARED_FOLLOW_UP.OPENING' | translate }}
           </span>
-          <span
-            (click)="onClickSee($event, 'opening')"
-            *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
-            [ngStyle]="{ 'margin-top': '3px' }"
-            class="text-link text-xs">
+            <span
+              (click)="onClickSee($event, 'opening')"
+              *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
+              [ngStyle]="{ 'margin-top': '3px' }"
+              class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
           </span>
+          </div>
+
+          <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+            <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
+            <span>{{ prosOpeningSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
+          </div>
         </div>
+        <!-- /open -->
 
-        <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
-          <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
-          <span>{{ prosOpeningSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
-        </div>
-      </div>
-      <!-- /open -->
+        <div class="divider-vert is-lg"></div>
 
-      <div class="divider-vert is-lg"></div>
-
-      <!-- thank -->
-      <div class="email-content">
-        <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
+        <!-- thank -->
+        <div class="email-content">
+          <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
           <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
             {{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}
           </span>
-          <span
-            (click)="onClickSee($event, 'noFollow')"
-            *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
-            [ngStyle]="{ 'margin-top': '3px' }"
-            class="text-link text-xs">
+            <span
+              (click)="onClickSee($event, 'noFollow')"
+              *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
+              [ngStyle]="{ 'margin-top': '3px' }"
+              class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
           </span>
-        </div>
+          </div>
 
-        <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
-          <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
-          <span>{{ prosNoFollowSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
+          <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+            <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
+            <span>{{ prosNoFollowSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
+          </div>
         </div>
+        <!-- /thank -->
+
       </div>
-      <!-- /thank -->
+      <!-- /emails -->
 
-    </div>
-    <!-- /emails -->
+      <!-- button -->
+      <div *ngIf="canAccess(['workflow', 'send'])" class="text-center">
 
-    <!-- button -->
-    <div *ngIf="canAccess(['workflow', 'send'])" class="text-center">
+        <button
+          (click)="openModal($event)"
+          class="button is-primary is-lg"
+          id="btn-send-mail">
+          {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
+        </button>
 
-      <button
-        (click)="openModal($event)"
-        class="button is-primary is-lg"
-        id="btn-send-mail">
-        {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
-      </button>
+        <p class="text-notify m-top-2 m-no-bottom text-sm">
+          {{ prosWithoutObjective.length }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
+        </p>
 
-      <p class="text-notify m-top-2 m-no-bottom text-sm">
-        {{ prosWithoutObjective.length }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
-      </p>
+      </div>
+      <!-- /button -->
 
-    </div>
-    <!-- /button -->
+    </section>
+    <!-- /emails and finish button -->
 
-  </section>
-  <!-- /emails and finish button -->
+    <!-- table -->
+    <section class="p-top-30">
 
-  <!-- table -->
-  <section class="p-top-30">
+      <h6 class="text-sm text-notify m-bottom-10">
+        <span class="text-background">{{ tableInfos._total === -1 ? 0 : tableInfos._total }}</span> contacts /
+        <span class="text-background">{{ prosWithoutObjective.length }}</span>
+        {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
+      </h6>
 
-    <h6 class="text-sm text-notify m-bottom-10">
-      <span class="text-background">{{ this.tableInfos._total === -1 ? 0 : this.tableInfos._total }}</span> contacts /
-      <span class="text-background">{{ prosWithoutObjective.length }}</span>
-      {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
-    </h6>
+      <div>
+        <app-shared-table
+          (dropdownAction)="assignObjective($event)"
+          (editRow)="seeAnswer($event)"
+          (performAction)="performActions($event)"
+          [(config)]="localConfig"
+          [data]="tableInfos">
+        </app-shared-table>
+      </div>
 
-    <div>
-      <app-shared-table
-        (dropdownAction)="assignObjective($event)"
-        (editRow)="seeAnswer($event)"
-        (performAction)="performActions($event)"
-        [(config)]="localConfig"
-        [data]="tableInfos">
-      </app-shared-table>
-    </div>
+    </section>
+    <!-- /table -->
 
-  </section>
-  <!-- /table -->
+  </ng-container>
+  <!-- /ADMIN VERSION -->
 
 </div>
 
 
 <!-- answer sidebar -->
-<app-sidebar
-  *ngIf="canAccess(['view', 'answer']) || canAccess(['edit', 'answer'])"
-  [(template)]="sidebarAnswer">
-  <app-sidebar-user-answer
-    [adminMode]="canAccess(['edit', 'answer'])"
-    [userAnswer]="modalAnswer"
-    [projectId]="project._id"
-    [innovationCards]="project.innovationCards"
-    [questions]="questions">
-  </app-sidebar-user-answer>
-</app-sidebar>
+<ng-container
+  *ngIf="((canAccess(['view', 'answer']) || canAccess(['edit', 'answer'])) && template === 'ADMIN')">
+  <app-sidebar [(template)]="sidebarAnswer">
+    <app-sidebar-user-answer
+      [adminMode]="canAccess(['edit', 'answer'])"
+      [userAnswer]="modalAnswer"
+      [projectId]="project._id"
+      [innovationCards]="project.innovationCards"
+      [questions]="questions">
+    </app-sidebar-user-answer>
+  </app-sidebar>
+</ng-container>
 <!-- /answer sidebar -->
 
 
 <!-- filter sidebar -->
-<sidebar-left *ngIf="canAccess()" [(sidebarTemplate)]="sidebarTemplate">
-  <app-sidebar-filter-answers
-    (closeSidebar)="closeSidebar()"
-    [answers]="answers"
-    [innovation]="project"
-    [isViewsEditable]="canAccess(['edit', 'views'])"
-    [questions]="questions"
-    (updateAnswers)="updateAnswers($event)"
-    [templateType]="sidebarTemplate.type">
-  </app-sidebar-filter-answers>
-</sidebar-left>
+<ng-container *ngIf="canAccess() && template === 'ADMIN'">
+  <sidebar-left [(sidebarTemplate)]="sidebarTemplate">
+    <app-sidebar-filter-answers
+      (closeSidebar)="closeSidebar()"
+      [answers]="answers"
+      [innovation]="project"
+      [isViewsEditable]="canAccess(['edit', 'views'])"
+      [questions]="questions"
+      (updateAnswers)="updateAnswers($event)"
+      [templateType]="sidebarTemplate.type">
+    </app-sidebar-filter-answers>
+  </sidebar-left>
+</ng-container>
 <!-- /filter sidebar -->
 
 

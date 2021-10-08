@@ -492,6 +492,31 @@
             </div>
             <!-- /anonymous answer -->
 
+            <!-- follow up module -->
+            <div
+              *ngIf="!!innovation.followUpEmails.status && (canAccess(['edit', 'followUpModule'])
+              || canAccess(['view', 'followUpModule']))"
+              class="content">
+
+              <label class="mxw-full">Follow up Module</label>
+
+              <label class="form-switch">
+                <input
+                  (change)="onChangeFollowUp($event)"
+                  [checked]="innovation.followUpEmails.status === 'ACTIVE'"
+                  id="admin-project-followUpStatus"
+                  type="checkbox">
+                <i class="form-icon"></i>
+                {{ innovation.followUpEmails.status === 'ACTIVE' ? 'Activated' : 'Deactivated' }}
+              </label>
+
+              <span *ngIf="!canAccess(['edit', 'followUpModule'])" class="is-text">
+                {{ innovation.followUpEmails.status === 'ACTIVE' ? 'Activated' : 'Deactivated' }}
+              </span>
+
+            </div>
+            <!-- /follow up module -->
+
             <!-- public project -->
             <div
               *ngIf="canAccess(['view', 'publicProject']) || canAccess(['edit', 'publicProject'])"

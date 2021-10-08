@@ -5,6 +5,10 @@
   display: inline-block;
   position: relative;
 
+  .dropdown-toggle {
+    line-height: 1.5;
+  }
+
   .menu {
     animation: menu-slide-down .2s ease 1;
     display: none;
@@ -27,6 +31,10 @@
         cursor: pointer;
       }
 
+    }
+
+    &.is-full {
+      min-width: 100%;
     }
 
   }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
@@ -40,7 +40,7 @@ import { CleanHtmlModule } from '../../pipe/cleanHtml/cleanHtml.module';
     AutoCompleteInputModule,
     SearchInputModule,
     AutoSuggestionModule,
-    CleanHtmlModule,
+    CleanHtmlModule
   ],
   declarations: [TableComponent],
   exports: [TableComponent],

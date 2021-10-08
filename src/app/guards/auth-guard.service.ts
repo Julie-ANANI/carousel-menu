@@ -37,8 +37,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
     this._authService.redirectUrl = !!this._authService.redirectUrl
       ? this._authService.redirectUrl : this._routeFrontService.redirectRoute(url);
 
-    console.log(this._authService);
-
     if (this._authService.isAuthenticated) {
       if (this._authService.isConfirmed) {
         if (url === '/logout' || !!this._authService.user) {
