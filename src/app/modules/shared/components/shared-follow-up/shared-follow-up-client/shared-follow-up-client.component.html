@@ -233,7 +233,7 @@
                     </p>
                     <div class="form-group">
                       <input
-                        (change)="initEmailObject()"
+                        (ngModelChange)="initEmailObject()"
                         [(ngModel)]="companyName"
                         [maxLength]="80"
                         class="form-input is-shadowed is-sm"

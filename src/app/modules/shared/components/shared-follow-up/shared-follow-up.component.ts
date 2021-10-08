@@ -165,20 +165,17 @@ export class SharedFollowUpComponent implements OnInit {
             {
               _attrs: ['professional.lastName'],
               _name: 'COMMON.LABEL.LASTNAME',
-              _type: 'TEXT',
-              _isSortable: true
+              _type: 'TEXT'
             },
             {
               _attrs: ['professional.firstName'],
               _name: 'COMMON.LABEL.FIRSTNAME',
-              _type: 'TEXT',
-              _isSortable: true
+              _type: 'TEXT'
             },
             {
               _attrs: ['professional.jobTitle'],
               _name: 'COMMON.LABEL.JOBTITLE',
-              _type: 'TEXT',
-              _isSortable: true
+              _type: 'TEXT'
             },
             {
               _attrs: ['professional.company.name'],
@@ -194,8 +191,7 @@ export class SharedFollowUpComponent implements OnInit {
             {
               _attrs: ['followUp.date'],
               _name: 'COMMON.LABEL.SEND',
-              _type: 'DATE',
-              _isSortable: true
+              _type: 'DATE'
             },
           ]
         };

@@ -349,7 +349,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     if (this._project && this._project._id) {
       this._cc = this._project.followUpEmails && this._project.followUpEmails.cc || [];
       this._langs = this._project.innovationCards.map((_card) => _card.lang) || [];
-      this._langs = ['fr', 'en'];
       this._selectedLang = this._langs[0];
       this._companyName = this._project.owner && this._project.owner.company && this._project.owner.company.name || '';
       this._selectedCC = this._cc;
@@ -393,7 +392,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   public initEmailObject() {
-    this._emailsObject = this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()] || {};
+    this._emailsObject = JSON.parse(JSON.stringify(this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()]))
+      || {};
     this._emailsObjectReplaced = null;
     this._emailsObjectReplaced = JSON.parse(JSON.stringify(this._emailsObject));
     const _owner = this._project.owner && this._project.owner.name || '';
