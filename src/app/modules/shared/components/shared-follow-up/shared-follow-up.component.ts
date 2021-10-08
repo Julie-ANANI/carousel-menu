@@ -1,13 +1,10 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { Answer } from '../../../../models/answer';
 import { Table } from '../../../table/models/table';
-import { Professional } from '../../../../models/professional';
 import { Config } from '../../../../models/config';
 import {first/*, takeUntil*/} from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -27,17 +24,6 @@ import {Subject} from 'rxjs';
  * CLIENT: added on 1st oct, 2021 for the client side
  */
 type template = 'ADMIN' | 'CLIENT' | '';
-
-interface Pending {
-  answersIds?: Array<string>;
-  objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW';
-  assignedAnswers?: Array<{ name: string, objective: string }>;
-}
-
-interface Custom {
-  fr: Array<{ label: string, value: string }>;
-  en: Array<{ label: string, value: string }>;
-}
 
 @Component({
   selector: 'app-shared-follow-up',
@@ -86,44 +72,17 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _questions: Array<MissionQuestion | Question> = [];
 
-  private _modalAnswer: Answer = null;
-
-  private _sidebarAnswer: SidebarInterface = <SidebarInterface>{};
-
   private _answers: Array<Answer> = [];
 
   // private _filteredAnswers: Array<Answer> = [];
 
   private _tableInfos: Table = <Table>{};
 
-  private _pendingAction: Pending = <Pending>{};
-
-  private _customFields: Custom = {
-    en: [],
-    fr: []
-  };
-
-  private _sidebarTemplate: SidebarInterface = {
-    animate_state: 'inactive',
-    type: 'FOLLOW_UP'
-  };
-
-  private _modalTemplateType = '';
-
-  private _loadingButton = false;
-
-  private _showEmailsModal = false;
-
-  private _showWarningModal = false;
-
-  private _showSendModal = false;
-
   private _subscribe: Subject<any> = new Subject<any>();
 
   private _startContactProcess = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _innovationService: InnovationService,
               private _answerService: AnswerService,
               // private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
@@ -138,12 +97,6 @@ export class SharedFollowUpComponent implements OnInit {
       this._project.followUpEmails = this._project.followUpEmails || {};
       this._questions = InnovationFrontService.questionsList(this._project);
       this.getAnswers();
-    }
-  }
-
-  public updateAnswers(answers: Array<any>) {
-    if (answers && answers.length) {
-      // this.initializeTable(answers, answers.length);
     }
   }
 
@@ -302,6 +255,7 @@ export class SharedFollowUpComponent implements OnInit {
       this._answerService.getInnovationValidAnswers(this._project._id)
         .pipe(first())
         .subscribe((response) => {
+
           this._answers = response && response.answers && response.answers.map((answer: Answer) => {
             answer.followUp = answer.followUp || {};
             return answer;
@@ -343,130 +297,6 @@ export class SharedFollowUpComponent implements OnInit {
     }
   }
 
-  public saveProject() {
-    this._innovationService
-      .save(this._project._id, {followUpEmails: this._project.followUpEmails})
-      .pipe(first())
-      .subscribe((response: Innovation) => {
-        this._project = response;
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-        }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
-  }
-
-  private _initializeMailCustomFields() {
-    this._customFields = {
-      fr: [
-        {value: '*|FIRSTNAME|*', label: 'Prénom du pro'},
-        {value: '*|LASTNAME|*', label: 'Nom du pro'},
-        {
-          value: '*|TITLE|*',
-          label: InnovationFrontService.currentLangInnovationCard(this._project, 'fr', 'TITLE')
-            || 'TITLE'
-        },
-        {
-          value: '*|COMPANY_NAME|*',
-          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME'
-        },
-        {value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME'}
-      ],
-      en: [
-        {value: '*|FIRSTNAME|*', label: 'First name'},
-        {value: '*|LASTNAME|*', label: 'Last name'},
-        {
-          value: '*|TITLE|*',
-          label: InnovationFrontService.currentLangInnovationCard(this._project, 'en', 'TITLE')
-            || 'TITLE'
-        },
-        {
-          value: '*|COMPANY_NAME|*',
-          label: this._project.owner && this._project.owner.company ? this._project.owner.company.name : 'COMPANY_NAME'
-        },
-        {value: '*|CLIENT_NAME|*', label: this._project.owner ? this._project.owner.name : 'CLIENT_NAME'}
-      ]
-    };
-  }
-
-  public assignObjective(event: any) {
-    const answerId = event.content._id;
-    const objective = event.item._name;
-
-    this._answerService.updateLinkingStatus([answerId], objective).pipe(first()).subscribe(() => {
-      const answerToUpdate = this._answers.findIndex(answer => answer._id === answerId);
-      this._answers[answerToUpdate].followUp.objective = objective;
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-
-  }
-
-  private _prosByObjective(objective: string, sent: boolean): Array<Answer> {
-    objective = objective === 'NOFOLLOW' ? 'NO_FOLLOW' : objective;
-    return this._answers.filter(answer => !!answer.followUp.date === sent && answer.followUp.objective === objective);
-  }
-
-  private _reinitializeVariables() {
-    this._showEmailsModal = false;
-    this._showWarningModal = false;
-    this._showSendModal = false;
-    this._modalTemplateType = '';
-  }
-
-  public openModal(event: Event) {
-    event.preventDefault();
-    this.showSendModal = true;
-  }
-
-  public closeModal(event: Event) {
-    event.preventDefault();
-    this._reinitializeVariables();
-  }
-
-  public onClickSee(event: Event, type: string) {
-    event.preventDefault();
-    this._initializeMailCustomFields();
-    this._reinitializeVariables();
-    this._modalTemplateType = type;
-    this._showEmailsModal = true;
-  }
-
-
-  public onClickConfirm(event: Event) {
-    event.preventDefault();
-    this._loadingButton = true;
-    /*
-    TODO: this function is to notify Kate when we put this tab on the client side
-    this._innovationService.finishLinking(this.project._id).subscribe((value) => {
-      this._translateNotificationsService.success('ERROR.PROJECT.LINKING', 'ERROR.PROJECT.LINKING_DONE');
-    }, () => {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
-    */
-
-    this._innovationService.sendFollowUpEmails(this._project._id).subscribe((value) => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
-      this._loadingButton = false;
-    }, (err: HttpErrorResponse) => {
-      this._loadingButton = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-
-  }
-
-  public sendTestEmails() {
-    const objective = this._modalTemplateType;
-    this._innovationService.sendFollowUpEmails(this._project._id, objective).subscribe(() => {
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-  }
-
   /*private _selectContacts() {
     this._filteredAnswers = this._filterService.filter(this._answers);
     const selectedIds = this._filteredAnswers.map(answer => answer._id);
@@ -477,118 +307,8 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }*/
 
-  public seeAnswer(answer: Answer) {
-    this._modalAnswer = answer;
-    this._sidebarAnswer = {
-      animate_state: 'active',
-      title: 'SIDEBAR.TITLE.EDIT_INSIGHT',
-      size: '726px'
-    };
-  }
-
-  public performActions(action: any) {
-    const objective = action._action === 'WITHOUT_OBJECTIVE' ? '' : action._action.split('.').slice(-1)[0];
-    const answersIds = action._rows.map((answer: any) => answer._id);
-
-    // First we check if some of the selected users already have an objective
-    const assignedAnswers = action._rows
-      .filter((answer: any) => answer.followUp.objective && answer.followUp.objective !== objective)
-      .map((answer: any) => {
-        return {
-          name: `${answer.professional.firstName} ${answer.professional.lastName}`,
-          objective: answer.followUp.objective
-        };
-      });
-
-    if (assignedAnswers.length) {
-      // If so, we open the confirmation modal
-      this._showWarningModal = true;
-      this._pendingAction = {
-        answersIds: answersIds,
-        objective: objective,
-        assignedAnswers: assignedAnswers
-      };
-    } else {
-      // Otherwise, we save the objectives
-      this.updateManyObjectives(answersIds, objective);
-    }
-
-  }
-
-  public closeSidebar() {
-    this._sidebarTemplate = {
-      animate_state: 'inactive'
-    };
-  }
-
-  public updateManyObjectives(answersIds: Array<string>, objective: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW') {
-    this._pendingAction = {};
-    this._showWarningModal = false;
-    this._answerService.updateLinkingStatus(answersIds, objective).subscribe(() => {
-      answersIds.forEach((answerId: string) => {
-        const answerToUpdate = this._answers.findIndex(answer => answer._id === answerId);
-        this._answers[answerToUpdate].followUp.objective = objective;
-      });
-    });
-  }
-
-  set emailsObject(value: any) {
-    this._project.followUpEmails[this._modalTemplateType] = value;
-  }
-
-  get emailsObject(): any {
-    return this._project.followUpEmails[this._modalTemplateType] || {
-      en: {content: '', subject: ''},
-      fr: {content: '', subject: ''}
-    };
-  }
-
   get project(): Innovation {
     return this._project;
-  }
-
-  get customFields(): { fr: Array<{ label: string, value: string }>, en: Array<{ label: string, value: string }> } {
-    return this._customFields;
-  }
-
-  get sidebarTemplate(): SidebarInterface {
-    return this._sidebarTemplate;
-  }
-
-  set sidebarTemplate(value: SidebarInterface) {
-    this._sidebarTemplate = value;
-  }
-
-  get modalTemplateType(): string {
-    return this._modalTemplateType;
-  }
-
-  get showEmailsModal(): boolean {
-    return this._showEmailsModal;
-  }
-
-  set showEmailsModal(value: boolean) {
-    this._showEmailsModal = value;
-  }
-
-  get showSendModal(): boolean {
-    return this._showSendModal;
-  }
-
-  set showSendModal(value: boolean) {
-    this._showSendModal = value;
-  }
-
-  get showWarningModal(): boolean {
-    return this._showWarningModal;
-  }
-
-  get loadingButton(): boolean {
-    return this._loadingButton;
-  }
-
-  set showWarningModal(value: boolean) {
-    this._showWarningModal = value;
   }
 
   get answers(): Array<Answer> {
@@ -607,74 +327,8 @@ export class SharedFollowUpComponent implements OnInit {
     return this._localConfig;
   }
 
-  get pros(): Array<Professional> {
-    if (this._modalTemplateType) {
-      return this._prosByObjective(this._modalTemplateType.toUpperCase(), false).map(answer => answer.professional);
-    }
-    return [];
-  }
-
-  get prosWithoutObjective(): Array<Answer> {
-    return this._answers.filter(answer => !answer.followUp.objective);
-  }
-
-  get prosInterview(): Array<Answer> {
-    return this._prosByObjective('INTERVIEW', false);
-  }
-
-  get prosInterviewSent(): Array<Answer> {
-    return this._prosByObjective('INTERVIEW', true);
-  }
-
-  get prosOpening(): Array<Answer> {
-    return this._prosByObjective('OPENING', false);
-  }
-
-  get prosOpeningSent(): Array<Answer> {
-    return this._prosByObjective('OPENING', true);
-  }
-
-  get prosNoFollow(): Array<Answer> {
-    return this._prosByObjective('NO_FOLLOW', false);
-  }
-
-  get prosNoFollowSent(): Array<Answer> {
-    return this._prosByObjective('NO_FOLLOW', true);
-  }
-
-  get pendingAction(): {
-    answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
-    assignedAnswers?: Array<{ name: string, objective: string }>
-  } {
-    return this._pendingAction;
-  }
-
-  get modalAnswer(): Answer {
-    return this._modalAnswer;
-  }
-
-  set modalAnswer(modalAnswer: Answer) {
-    this._modalAnswer = modalAnswer;
-  }
-
-  get sidebarAnswer(): SidebarInterface {
-    return this._sidebarAnswer;
-  }
-
-  set sidebarAnswer(value: SidebarInterface) {
-    this._sidebarAnswer = value;
-  }
-
   get questions(): Array<any> {
     return this._questions;
-  }
-
-  get ccEmail(): string {
-    return this._project.followUpEmails.ccEmail;
-  }
-
-  set ccEmail(value: string) {
-    this._project.followUpEmails.ccEmail = value;
   }
 
 }
