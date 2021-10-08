@@ -18,7 +18,6 @@ export class TranslateTitleService implements OnDestroy {
 
   public setTitle(title: string) {
     this._translateService.get(title).pipe(takeUntil(this._ngUnsubscribe)).subscribe((translatedTitle: string) => {
-      console.log(title);
       return this._titleService.setTitle(translatedTitle + ' | ' + environment.companyShortName);
     });
   }

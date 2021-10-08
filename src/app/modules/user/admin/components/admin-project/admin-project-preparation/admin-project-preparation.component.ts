@@ -115,7 +115,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     });
 
     this._campaignFrontService.allCampaigns().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaigns) => {
-      console.log(campaigns);
       this._allCampaigns = campaigns || [];
     });
 
