@@ -3,6 +3,7 @@ import {Innovation} from '../../../../../../../models/innovation';
 import {takeUntil} from 'rxjs/operators';
 import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
 import {Subject} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './contact.component.html',
@@ -18,11 +19,15 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   private _subscribe: Subject<any> = new Subject<any>();
 
-  constructor(private _innovationFrontService: InnovationFrontService) { }
+  constructor(private _innovationFrontService: InnovationFrontService,
+              private _router: Router) { }
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._subscribe)).subscribe((innovation) => {
       this._innovation = innovation;
+      if (innovation._id && innovation.followUpEmails && !innovation.followUpEmails.status) {
+        this._router.navigate(['/not-authorized']);
+      }
     });
   }
 

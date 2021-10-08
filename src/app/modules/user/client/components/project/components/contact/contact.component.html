@@ -1,5 +1,5 @@
 <div id="project-contact">
-  <ng-container *ngIf="!!innovation._id">
+  <ng-container *ngIf="!!(innovation._id && innovation.followUpEmails && innovation.followUpEmails.status)">
     <app-shared-follow-up
       [project]="innovation"
       [template]="'CLIENT'">

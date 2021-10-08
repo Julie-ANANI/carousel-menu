@@ -26,17 +26,13 @@
       <ng-template #titleEn>Whoops - error 401</ng-template>
     </h1>
     <p class="m-bottom-30 text-md mxw-500 m-left-auto m-right-auto">
-      <ng-container *ngIf="currentLang === 'fr'; else messageEn">
-        Désolé, mais vous n'êtes pas autorisé à accéder à cette page. Veuillez contacter votre chef d'équipe.
-      </ng-container>
-      <ng-template #messageEn>
-        Sorry, but you are not authorized to access this page. Please contact your team manager.
-      </ng-template>
+      <ng-container *ngIf="isAdmin">{{ 'ERROR.NO_AUTHORIZED_ADMIN' | translate }}</ng-container>
+      <ng-container *ngIf="!isAdmin">{{ 'ERROR.NO_AUTHORIZED_PAGE' | translate }}</ng-container>
     </p>
     <button
       (click)="onClickReload()"
       [disabled]="isReloading"
-      [id]="'btn-homepage'"
+      [id]="'notAuthorized-btn-homepage'"
       class="button is-community is-xl"
       type="button">
       <span *ngIf="!isReloading">{{ 'COMMON.BUTTON.RETURN_HOMEPAGE' | translate }}</span>

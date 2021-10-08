@@ -4,6 +4,7 @@ import {environment} from '../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import {RouteFrontService} from '../../../services/route/route-front.service';
 import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Component({
   templateUrl: './not-authorized.component.html',
@@ -11,6 +12,10 @@ import {Router} from '@angular/router';
 })
 
 export class NotAuthorizedComponent {
+
+  get isAdmin(): boolean {
+    return this._authService.isAdmin;
+  }
 
   private _logo = environment.logoSynthURL;
 
@@ -20,14 +25,21 @@ export class NotAuthorizedComponent {
 
   constructor(private _translateService: TranslateService,
               private _routeFrontService: RouteFrontService,
+              private _authService: AuthService,
               private _router: Router,
               private _translateTitleService: TranslateTitleService) {
+
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.NOT_AUTHORIZED');
   }
 
   public onClickReload() {
     this.isReloading = true;
-    this._router.navigate([this._routeFrontService.adminDefaultRoute()]);
+
+    if (this.isAdmin) {
+      this._router.navigate([this._routeFrontService.adminDefaultRoute()]);
+    } else {
+      this._router.navigate(['/user/projects']);
+    }
   }
 
   get logo(): string {

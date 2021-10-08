@@ -39,6 +39,10 @@ export const ERROR = {
 
   'NO_AUTHORIZED': 'You are not authorized to perform this request.',
 
+  'NO_AUTHORIZED_ADMIN': 'Sorry, but you are not authorized to access this page. Please contact your team manager.',
+
+  'NO_AUTHORIZED_PAGE': 'Sorry, but you are not authorized to access this page. Please contact your market test manager.',
+
   'FORM': {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',
     'TARGETING_FORM': 'Please answer the fields of the targeting form.'

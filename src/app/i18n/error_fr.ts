@@ -39,6 +39,11 @@ export const ERROR = {
 
   'NO_AUTHORIZED': 'Vous n\'êtes pas autorisé à exécuter cette demande.',
 
+  'NO_AUTHORIZED_ADMIN': 'Désolé, mais vous n\'êtes pas autorisé à accéder à cette page. ' +
+    'Veuillez contacter votre chef d\'équipe.',
+
+  'NO_AUTHORIZED_PAGE': 'Désolé, mais vous n\'êtes pas autorisé à accéder à cette page. ' +
+    'Veuillez contacter votre responsable du test de marché.',
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
