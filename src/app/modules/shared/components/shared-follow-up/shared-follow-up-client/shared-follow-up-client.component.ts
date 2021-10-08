@@ -460,7 +460,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
             break;
         }
 
-        this._nextStepTimeout = setTimeout((_) => {
+        this._nextStepTimeout = setTimeout(() => {
           this._currentStep++;
           this._isNextStep = false;
         }, 250);
