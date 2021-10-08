@@ -180,7 +180,7 @@ export const ERROR = {
     'SEARCH': {
       'SETTINGS_UPDATED': 'The settings have been updated successfully.',
       'REQUEST_SAVED': 'The request has been saved successfully.',
-      'NO_REQUEST': "There is no request to save !"
+      'NO_REQUEST': 'There is no request to save !'
     }
   },
 

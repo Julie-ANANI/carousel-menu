@@ -782,6 +782,22 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onChangeFollowUp(event: Event) {
+    const followUpEmails = this._innovation.followUpEmails;
+    const newStatus = (event.target as HTMLInputElement).checked ? 'ACTIVE' : 'INACTIVE';
+
+    if (!!followUpEmails.noFollow || !!followUpEmails.opening || !!followUpEmails.interview) {
+      this._translateNotificationsService.error(
+        'Follow-up Module...', 'It can\'t be deactivated as the emails have already been sent.'
+      );
+    } else {
+      followUpEmails.status = newStatus;
+      this._innovation.followUpEmails = followUpEmails;
+      const message = `The follow-up module is ${newStatus === 'ACTIVE' ? 'activated' : 'deactivated'} at the client side.`;
+      this._saveProject(message, {followUpEmails: followUpEmails});
+    }
+  }
+
   public onChangeIsPublic(event: Event) {
     this._innovation.isPublic = (event.target as HTMLInputElement).checked;
     this._saveProject(

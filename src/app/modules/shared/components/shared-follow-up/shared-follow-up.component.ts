@@ -9,15 +9,35 @@ import { Answer } from '../../../../models/answer';
 import { Table } from '../../../table/models/table';
 import { Professional } from '../../../../models/professional';
 import { Config } from '../../../../models/config';
-import { first } from 'rxjs/operators';
+import {first/*, takeUntil*/} from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { ResponseService } from '../shared-market-report/services/response.service';
 import { Tag } from '../../../../models/tag';
 import { TagsFiltersService } from '../shared-market-report/services/tags-filter.service';
-import { FilterService } from '../shared-market-report/services/filters.service';
+// import { FilterService } from '../shared-market-report/services/filters.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
+import {MissionQuestion} from '../../../../models/mission';
+import {Question} from '../../../../models/question';
+import {Subject} from 'rxjs';
+
+/**
+ * ADMIN: old version for the admin side
+ * CLIENT: added on 1st oct, 2021 for the client side
+ */
+type template = 'ADMIN' | 'CLIENT' | '';
+
+interface Pending {
+  answersIds?: Array<string>;
+  objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW';
+  assignedAnswers?: Array<{ name: string, objective: string }>;
+}
+
+interface Custom {
+  fr: Array<{ label: string, value: string }>;
+  en: Array<{ label: string, value: string }>;
+}
 
 @Component({
   selector: 'app-shared-follow-up',
@@ -26,6 +46,24 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 })
 
 export class SharedFollowUpComponent implements OnInit {
+
+  set answers(value: Array<Answer>) {
+    this._answers = value;
+  }
+
+  get startContactProcess(): boolean {
+    return this._startContactProcess;
+  }
+
+  set startContactProcess(value: boolean) {
+    this._startContactProcess = value;
+  }
+
+  get subscribe(): Subject<any> {
+    return this._subscribe;
+  }
+
+  @Input() template: template = '';
 
   // ex: ['projects', 'project', 'followUp']
   @Input() accessPath: Array<string> = [];
@@ -46,7 +84,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _project: Innovation = <Innovation>{};
 
-  private _questions: Array<any> = [];
+  private _questions: Array<MissionQuestion | Question> = [];
 
   private _modalAnswer: Answer = null;
 
@@ -54,17 +92,13 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
-  private _filteredAnswers: Array<Answer> = [];
+  // private _filteredAnswers: Array<Answer> = [];
 
   private _tableInfos: Table = <Table>{};
 
-  private _pendingAction: {
-    answersIds?: Array<string>,
-    objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW'
-    assignedAnswers?: Array<{ name: string, objective: string }>
-  } = {};
+  private _pendingAction: Pending = <Pending>{};
 
-  private _customFields: { fr: Array<{ label: string, value: string }>, en: Array<{ label: string, value: string }> } = {
+  private _customFields: Custom = {
     en: [],
     fr: []
   };
@@ -84,114 +118,179 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _showSendModal = false;
 
-  private _total = -1;
+  private _subscribe: Subject<any> = new Subject<any>();
+
+  private _startContactProcess = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
-              private _filterService: FilterService,
+              // private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit(): void {
-    this._initializeTable(this.answers);
+    this.initializeTable(this._answers, -1);
+
     if (this._project && this._project._id) {
       this._project.followUpEmails = this._project.followUpEmails || {};
       this._questions = InnovationFrontService.questionsList(this._project);
-      this._getAnswers();
+      this.getAnswers();
     }
   }
 
-  private _initializeTable(answers: Array<Answer>) {
-    this._tableInfos = {
-      _selector: 'follow-up-answers',
-      _content: answers,
-      _total: answers.length,
-      _isSelectable: this.canAccess(['edit', 'objective']),
-      _isRowDisabled: (answer: Answer) => {
-        return this.canAccess(['edit', 'objective']) ? answer.followUp && answer.followUp.date
-          : false;
-      },
-      _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
-      _isPaginable: true,
-      _isLocal: true,
-      _isNoMinHeight: this._total < 11,
-      _buttons: [
-        {_label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
-        {_label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
-        {_label: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW'},
-        {_label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
-      ],
-      _columns: [
-        {
-          _attrs: ['professional.firstName', 'professional.lastName'],
-          _name: 'COMMON.LABEL.NAME',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'name'])
-        },
-        {
-          _attrs: ['country'],
-          _name: 'COMMON.LABEL.COUNTRY',
-          _type: 'COUNTRY',
-          _width: '100px',
-          _isHidden: !this.canAccess(['tableColumns', 'country'])
-        },
-        {
-          _attrs: ['professional.language'],
-          _name: 'COMMON.LABEL.LANGUAGE',
-          _type: 'TEXT',
-          _width: '110px',
-          _isHidden: !this.canAccess(['tableColumns', 'language'])
-        },
-        {
-          _attrs: ['professional.jobTitle'],
-          _name: 'COMMON.LABEL.JOBTITLE',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'job'])
-        },
-        {
-          _attrs: ['professional.company.name'],
-          _name: 'COMMON.LABEL.COMPANY',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'company'])
-        },
-        {
-          _attrs: ['followUp.objective'],
-          _name: 'TABLE.HEADING.OBJECTIVE',
-          _type: 'DROPDOWN',
-          _width: '200px',
-          _isHidden: !this.canAccess(['tableColumns', 'objective']),
-          _choices: [
+  public updateAnswers(answers: Array<any>) {
+    if (answers && answers.length) {
+      // this.initializeTable(answers, answers.length);
+    }
+  }
+
+  public initializeTable(answers: Array<Answer> = [], total = 0) {
+    switch (this.template) {
+
+      case 'CLIENT':
+        this._tableInfos = {
+          _selector: 'project-follow-up',
+          _content: answers,
+          _total: total,
+          _clickIndex: 1,
+          _isSelectable: this._startContactProcess,
+          _isPaginable: true,
+          _isLocal: true,
+          _isNoMinHeight: answers.length < 11,
+          _isRowDisabled: (answer: Answer) => !!(answer.followUp && answer.followUp.date),
+          _columns: [
             {
-              _name: 'INTERVIEW',
-              _alias: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW',
-              _class: 'button is-secondary',
-              _disabledClass: 'text-secondary'
+              _attrs: ['professional.lastName'],
+              _name: 'COMMON.LABEL.LASTNAME',
+              _type: 'TEXT',
+              _isSortable: true
             },
             {
-              _name: 'OPENING',
-              _alias: 'SHARED_FOLLOW_UP.BUTTON.OPENING',
-              _class: 'button is-draft',
-              _disabledClass: 'text-draft'
+              _attrs: ['professional.firstName'],
+              _name: 'COMMON.LABEL.FIRSTNAME',
+              _type: 'TEXT',
+              _isSortable: true
             },
             {
-              _name: 'NO_FOLLOW',
-              _alias: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW',
-              _class: 'button is-danger',
-              _disabledClass: 'text-alert'
+              _attrs: ['professional.jobTitle'],
+              _name: 'COMMON.LABEL.JOBTITLE',
+              _type: 'TEXT',
+              _isSortable: true
             },
             {
-              _name: 'WITHOUT_OBJECTIVE',
-              _alias: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE',
-              _class: ''
-            }
+              _attrs: ['professional.company.name'],
+              _name: 'COMMON.LABEL.COMPANY',
+              _type: 'TEXT'
+            },
+            {
+              _attrs: ['country'],
+              _name: 'COMMON.LABEL.COUNTRY',
+              _type: 'COUNTRY',
+              _width: '100px'
+            },
+            {
+              _attrs: ['followUp.date'],
+              _name: 'COMMON.LABEL.SEND',
+              _type: 'DATE',
+              _isSortable: true
+            },
+          ]
+        };
+        break;
+
+      case 'ADMIN':
+        this._tableInfos = {
+          _selector: 'follow-up-answers',
+          _content: answers,
+          _total: total,
+          _isSelectable: this.canAccess(['edit', 'objective']),
+          _isRowDisabled: (answer: Answer) => {
+            return this.canAccess(['edit', 'objective']) ? answer.followUp && answer.followUp.date
+              : false;
+          },
+          _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
+          _isPaginable: true,
+          _isLocal: true,
+          _isNoMinHeight: answers.length < 11,
+          _buttons: [
+            {_label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
+            {_label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
+            {_label: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW'},
+            {_label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
           ],
-          _disabledState: {_attrs: 'followUp.date', _type: 'DATE'}
-        },
-      ]
-    };
+          _columns: [
+            {
+              _attrs: ['professional.firstName', 'professional.lastName'],
+              _name: 'COMMON.LABEL.NAME',
+              _type: 'TEXT',
+              _isHidden: !this.canAccess(['tableColumns', 'name'])
+            },
+            {
+              _attrs: ['country'],
+              _name: 'COMMON.LABEL.COUNTRY',
+              _type: 'COUNTRY',
+              _width: '100px',
+              _isHidden: !this.canAccess(['tableColumns', 'country'])
+            },
+            {
+              _attrs: ['professional.language'],
+              _name: 'COMMON.LABEL.LANGUAGE',
+              _type: 'TEXT',
+              _width: '110px',
+              _isHidden: !this.canAccess(['tableColumns', 'language'])
+            },
+            {
+              _attrs: ['professional.jobTitle'],
+              _name: 'COMMON.LABEL.JOBTITLE',
+              _type: 'TEXT',
+              _isHidden: !this.canAccess(['tableColumns', 'job'])
+            },
+            {
+              _attrs: ['professional.company.name'],
+              _name: 'COMMON.LABEL.COMPANY',
+              _type: 'TEXT',
+              _isHidden: !this.canAccess(['tableColumns', 'company'])
+            },
+            {
+              _attrs: ['followUp.objective'],
+              _name: 'TABLE.HEADING.OBJECTIVE',
+              _type: 'DROPDOWN',
+              _width: '200px',
+              _isHidden: !this.canAccess(['tableColumns', 'objective']),
+              _choices: [
+                {
+                  _name: 'INTERVIEW',
+                  _alias: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW',
+                  _class: 'button is-secondary',
+                  _disabledClass: 'text-secondary'
+                },
+                {
+                  _name: 'OPENING',
+                  _alias: 'SHARED_FOLLOW_UP.BUTTON.OPENING',
+                  _class: 'button is-draft',
+                  _disabledClass: 'text-draft'
+                },
+                {
+                  _name: 'NO_FOLLOW',
+                  _alias: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW',
+                  _class: 'button is-danger',
+                  _disabledClass: 'text-alert'
+                },
+                {
+                  _name: 'WITHOUT_OBJECTIVE',
+                  _alias: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE',
+                  _class: ''
+                }
+              ],
+              _disabledState: {_attrs: 'followUp.date', _type: 'DATE'}
+            },
+          ]
+        };
+        break;
+    }
   }
 
   public canAccess(path?: Array<string>) {
@@ -202,22 +301,20 @@ export class SharedFollowUpComponent implements OnInit {
     }
   }
 
-  private _getAnswers() {
+  public getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this._answerService.getInnovationValidAnswers(this._project._id).pipe(first())
+      this._answerService.getInnovationValidAnswers(this._project._id)
+        .pipe(first())
         .subscribe((response) => {
-
           this._answers = response && response.answers && response.answers.map((answer: Answer) => {
             answer.followUp = answer.followUp || {};
             return answer;
           }) || [];
 
-          this._total = this._answers.length;
-          this._initializeTable(this._answers);
-
-          this._filterService.filtersUpdate.pipe(first()).subscribe(() => {
+         /* this._filterService.filtersUpdate.pipe(takeUntil(this.subscribe)).subscribe((_) => {
             this._selectContacts();
-          });
+          });*/
+          this.initializeTable(this._answers, this._answers.length);
 
           /*
            * compute tag list globally
@@ -230,6 +327,7 @@ export class SharedFollowUpComponent implements OnInit {
             });
             return acc;
           }, {} as { [id: string]: Tag });
+
           this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
 
           /*
@@ -237,26 +335,29 @@ export class SharedFollowUpComponent implements OnInit {
            */
           this._questions.forEach((question) => {
             const tags = ResponseService.tagsList(response.answers, question);
-            const identifier = (question.controlType === 'textarea')
-              ? question.identifier : question.identifier + 'Comment';
+            const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
             this._tagFiltersService.setAnswerTags(identifier, tags);
           });
 
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this.initializeTable([], 0);
           console.error(err);
         });
     }
   }
 
   public saveProject() {
-    this._innovationService.save(this._project._id, {followUpEmails: this._project.followUpEmails}).subscribe((response: Innovation) => {
-      this._project = response;
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._innovationService
+      .save(this._project._id, {followUpEmails: this._project.followUpEmails})
+      .pipe(first())
+      .subscribe((response: Innovation) => {
+        this._project = response;
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+        }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
   }
 
   private _initializeMailCustomFields() {
@@ -370,7 +471,7 @@ export class SharedFollowUpComponent implements OnInit {
     });
   }
 
-  private _selectContacts() {
+  /*private _selectContacts() {
     this._filteredAnswers = this._filterService.filter(this._answers);
     const selectedIds = this._filteredAnswers.map(answer => answer._id);
     this._answers.forEach(answer => {
@@ -378,7 +479,7 @@ export class SharedFollowUpComponent implements OnInit {
         answer._isSelected = selectedIds.indexOf(answer._id) > -1;
       }
     });
-  }
+  }*/
 
   public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
@@ -545,10 +646,6 @@ export class SharedFollowUpComponent implements OnInit {
     return this._prosByObjective('NO_FOLLOW', true);
   }
 
-  get total(): number {
-    return this._total;
-  }
-
   get pendingAction(): {
     answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
     assignedAnswers?: Array<{ name: string, objective: string }>
@@ -584,9 +681,4 @@ export class SharedFollowUpComponent implements OnInit {
     this._project.followUpEmails.ccEmail = value;
   }
 
-  updateAnswers(answers: Array<any>) {
-    if (answers && answers.length) {
-      this._initializeTable(answers);
-    }
-  }
 }

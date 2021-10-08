@@ -40,6 +40,9 @@ import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-
 import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
 import {MarketTestObjectivesComplementaryModule} from '../market-test-objectives-complementary/market-test-objectives-complementary.module';
 import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-media.module';
+import { ContactComponent } from './components/contact/contact.component';
+import {SidebarInPageModule} from '../../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
+import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 
 @NgModule({
   imports: [
@@ -72,7 +75,9 @@ import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-m
     MarketTestObjectivesModule,
     DatePickerModule,
     MarketTestObjectivesComplementaryModule,
-    ModalMediaModule
+    ModalMediaModule,
+    SidebarInPageModule,
+    SharedFollowUpModule
   ],
   declarations: [
     ProjectComponent,
@@ -83,7 +88,8 @@ import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-m
     DocumentsComponent,
     PitchComponent,
     TargetingComponent,
-    SynthesisComponent
+    SynthesisComponent,
+    ContactComponent
   ],
   exports: [
     ProjectComponent

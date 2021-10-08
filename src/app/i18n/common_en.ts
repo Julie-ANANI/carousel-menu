@@ -124,9 +124,16 @@ export const COMMON = {
     'CLIENT_COMMENTS': 'Clients\' comments',
     'TENTATIVE_LEFT': 'attempt(s) left',
     'ADD': 'Add',
+    'FROM': 'From',
+    'TO': 'To',
+    'SUBJECT': 'Subject',
     'FEEDBACK_COLLECTION': 'Feedback collection',
     'RSETITUTION': 'Restitution',
     'ACTIVITY_FIELDS': 'Activity Fields',
+    'SEND': 'Send',
+    'RESPONDENTS': 'Respondents',
+    'SELECTED': 'Selected',
+    'CONFIGURE': 'Configure',
     'FIRSTNAME': 'First Name',
     'LASTNAME': 'Last Name',
     'EMAIL': 'E-mail Address',
@@ -233,7 +240,8 @@ export const COMMON = {
     'EMAIL': 'Please enter a valid email address.',
     'PASSWORD_TOO_SHORT': 'Password must have at least 9 characters.',
     'MUST_CONTAIN': 'Password must contain one special character ($@&!#).',
-    'DOMAIN': 'Please enter a valid domain.'
+    'DOMAIN': 'Please enter a valid domain.',
+    'ALREADY_USER_EMAIL': 'The user with this email address is already exists.',
   },
 
   'BUTTON': {
@@ -255,6 +263,7 @@ export const COMMON = {
     'NEXT': 'Next',
     'SUBMIT': 'Submit',
     'SIGN_IN': 'Sign In',
+    'SEND_NOW': 'Send now',
     'SIGN_UP': 'Sign Up',
     'DELETE': 'Delete',
     'CLOSE': 'Close',
@@ -307,6 +316,7 @@ export const COMMON = {
     'LOGGING': 'is logging...',
     'UPLOAD_PICTURE': 'Upload a picture',
     'UPLOAD_VIDEO': 'Upload a video',
+    'I_UNDERSTAND': 'I understand',
   },
 
   'PROJECT': {

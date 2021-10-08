@@ -64,7 +64,7 @@
         <!-- tabs -->
         <div class="flex-centered">
           <ul class="tab">
-            <li *ngFor="let tab of tabs" class="tab-item text-white">
+            <li *ngFor="let tab of tabs; let i = index;" class="tab-item text-white">
               <a
                 (click)="navigateTo($event, tab.route)"
                 [id]="tab.route"
@@ -74,7 +74,7 @@
                 routerLinkActive="active">
                 <ng-container *ngIf="!!tab.iconClass; else number"><i [ngClass]="tab.iconClass"></i></ng-container>
                 <ng-template #number>
-                  <span class="shape is-circle is-sm text-13">{{ tab.number }}</span>
+                  <span class="shape is-circle is-sm text-13">{{ i }}</span>
                 </ng-template>
                 {{ 'PROJECT_MODULE.' + tab.name | translate }}
               </a>

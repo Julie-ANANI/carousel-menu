@@ -235,7 +235,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (!this._tabClicked) {
       const _pageOffset = window.pageYOffset;
       if (_pageOffset > 0) {
-        this._sections.forEach((section, index) => {
+        this._sections.forEach((section) => {
           const _element = document.getElementById(section.name.toLowerCase());
           if (_element) {
             const _elementOffset = _element.offsetTop;
@@ -566,6 +566,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             if (this.hasMissionTemplate) {
               const template = JSON.parse(JSON.stringify(this._mission.template));
               template.sections = this._selectedValue.sections;
+              this._verifyFollowUpStatus(template);
               this._updateMission({objectiveComment: this._selectedValue.comment, template: template});
             } else if (this.isOldObjective) {
               const objective = JSON.parse(JSON.stringify(this._mission.objective));
@@ -582,6 +583,25 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     }
 
+  }
+
+  /**
+   * here check follow up status to show or hide the follow up module.
+   * @param template
+   * @private
+   */
+  private _verifyFollowUpStatus(template: MissionTemplate) {
+    if (this._innovation.followUpEmails && this._innovation.followUpEmails.status) {
+      const newStatus = InnovationFrontService.getFollowUpStatus(template);
+      const followUpEmails = this._innovation.followUpEmails;
+      const oldStatus = followUpEmails.status;
+
+      if (oldStatus !== newStatus) {
+        followUpEmails.status = newStatus;
+        this._innovation.followUpEmails = followUpEmails;
+        this._updateInnovation({followUpEmails: followUpEmails});
+      }
+    }
   }
 
   /**

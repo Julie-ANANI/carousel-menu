@@ -20,7 +20,6 @@ interface Tab {
   iconClass?: string;
   name: string;
   tracking: string;
-  number?: string;
 }
 
 @Component({
@@ -46,9 +45,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _tabs: Array<Tab> = [
     { route: 'settings', iconClass: 'fas fa-cog', name: 'SETTINGS_TAB', tracking: 'gtm-tabs-settings' },
-    { route: 'setup', name: 'SETUP_TAB', tracking: 'gtm-tabs-description', number: '1' },
-    { route: 'exploration', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration', number: '2' },
-    { route: 'synthesis', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis', number: '3' },
+    { route: 'setup', name: 'SETUP_TAB', tracking: 'gtm-tabs-description' },
+    { route: 'exploration', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration' },
+    { route: 'synthesis', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis' },
     { route: 'documents', iconClass: 'fas fa-file-alt', name: 'DOCUMENTS_TAB', tracking: 'gtm-tabs-documents' }
   ];
 
@@ -90,6 +89,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation;
+      this._verifyFollowUp();
+
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
       } else {
@@ -116,6 +117,24 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._socketListening = true;
       }
     });
+  }
+
+  private _verifyFollowUp() {
+    if (!!this._innovation.followUpEmails && !!this._innovation.followUpEmails.status) {
+      const status = this._innovation.followUpEmails.status;
+      const index = this._tabs.findIndex((_tab) => _tab.name === 'CONTACT_TAB');
+      if (status === 'INACTIVE') {
+        if (index !== -1) {
+          this._tabs.splice(index, 1);
+        }
+      } else {
+        if (index === -1) {
+          this._tabs.splice(3, 0,
+            { route: 'contact', name: 'CONTACT_TAB', tracking: 'gtm-tabs-contact' },
+          );
+        }
+      }
+    }
   }
 
   private _realTimeUpdate(object: string, update: any) {

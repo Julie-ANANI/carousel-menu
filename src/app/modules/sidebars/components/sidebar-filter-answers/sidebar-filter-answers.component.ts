@@ -122,12 +122,12 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
               private _filterService: FilterService) { }
 
   ngOnChanges(): void {
-    if (this.answers.length) {
-      this._filterNumber = this.answers.length;
+    if (this._answers.length) {
+      this._filterNumber = this._answers.length;
       this._professionalsTags = AnswerFrontService.tagsOccurrence(this.answers);
       this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-        this._answersSelected = this._filterService.filter(this.answers);
-        this._filterNumber = this._filterService.filter(this.answers).length;
+        this._answersSelected = this._filterService.filter(this._answers);
+        this._filterNumber = this._filterService.filter(this._answers).length;
       });
     }
     this._initQuestions();

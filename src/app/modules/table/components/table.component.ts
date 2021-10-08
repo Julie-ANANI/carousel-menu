@@ -13,7 +13,7 @@ import { ConfigService } from '../../../services/config/config.service';
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 import { UserSuggestion } from '../../user/admin/components/admin-project/admin-project-settings/admin-project-settings.component';
 
 /**
@@ -159,12 +159,10 @@ export class TableComponent {
 
   private _inputGrids: Array<InputGrid> = [];
 
-  constructor(
-    @Inject(LOCALE_ID) private _locale: string,
-    private _translateService: TranslateService,
-    private _configService: ConfigService,
-    private _localStorageService: LocalStorageService
-  ) {
+  constructor(@Inject(LOCALE_ID) private _locale: string,
+              private _translateService: TranslateService,
+              private _configService: ConfigService,
+              private _localStorageService: LocalStorageService) {
     this._initializeTable();
   }
 
