@@ -233,7 +233,7 @@
                     </p>
                     <div class="form-group">
                       <input
-                        (ngModelChange)="initEmailObject()"
+                        (change)="initEmailObject()"
                         [(ngModel)]="companyName"
                         [maxLength]="80"
                         class="form-input is-shadowed is-sm"
@@ -384,7 +384,7 @@
 <!-- modal to confirm send -->
 <app-utility-modal-empty [(showModal)]="sendShowModal" [maxWidth]="'520px'">
 
-  <section class="modal-body">
+  <section class="modal-body p-top-30">
     <h2 class="title is-4 text-center text-bold m-bottom-30">
       {{ 'SHARED_FOLLOW_UP.MODAL.READY_TO_SEND' | translate }}
     </h2>
@@ -401,7 +401,7 @@
     </div>
   </section>
 
-  <footer class="modal-footer justify-center">
+  <footer class="modal-footer justify-cente p-bottom-40">
     <button
       (click)="closeModal()"
       [disabled]="isSending"
@@ -428,7 +428,7 @@
 <!-- modal to add cc manually -->
 <app-utility-modal-empty [(showModal)]="showModal" [maxWidth]="'455px'">
 
-  <section class="modal-body">
+  <section class="modal-body p-top-30">
     <h2 class="title is-4 text-center text-bold m-bottom-30">{{ 'SHARED_FOLLOW_UP.MODAL.ADD_CC' | translate }}</h2>
     <form [formGroup]="formData" autocomplete="off" (submit)="onClickAdd()">
 
@@ -479,7 +479,7 @@
     </form>
   </section>
 
-  <footer class="modal-footer justify-center">
+  <footer class="modal-footer justify-center p-bottom-40">
     <button
       (click)="closeModal()"
       [id]="'sharedFollowUpClient-modal-btn-cancel'"
