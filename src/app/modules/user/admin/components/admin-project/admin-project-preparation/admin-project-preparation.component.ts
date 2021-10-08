@@ -115,6 +115,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     });
 
     this._campaignFrontService.allCampaigns().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaigns) => {
+      console.log(campaigns);
       this._allCampaigns = campaigns || [];
     });
 
@@ -141,11 +142,25 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     });
 
     this._navigationFrontService.navigation().pipe(takeUntil(this._ngUnsubscribe)).subscribe(value => {
-      console.log(value);
-      if (value && value.item && value.tab.name === 'Preparation') {
+      if (value && value.item && value.tab.name === 'Preparation' && value.item.name.indexOf('/') === -1) {
         setTimeout(() => {
           this.navigateTo(value.item.path);
         }, 0);
+      } else if (value && value.item && value.tab.name === 'Preparation' && value.item.name.indexOf('/') !== -1) {
+        // this._campaignFrontService.setActiveCampaign(campaign);
+        // this._getAllCampaigns();
+        console.log(this._campaignFrontService.defaultCampaign);
+        if (this._campaignFrontService.defaultCampaign && this._campaignFrontService.defaultCampaign._id) {
+          const path = value.item.path.split('/');
+          this._selectedCampaign = this._campaignFrontService.defaultCampaign;
+          setTimeout(() => {
+            this._router.navigate([
+              `/user/admin/projects/project/${
+                this._project._id
+              }/preparation/campaigns/campaign/${this._selectedCampaign._id}/${path[path.length - 1]}`
+            ]);
+          }, 0);
+        }
       }
     });
 
@@ -159,6 +174,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     if (campaign._id !== this._selectedCampaign._id) {
       this._isLoadingCampaign = true;
       this._selectedCampaign = campaign;
+      console.log(this._selectedCampaign);
       this._router.navigate([this.routeToNavigate(this._activeTab)]);
     }
   }

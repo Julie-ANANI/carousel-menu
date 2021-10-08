@@ -34,6 +34,8 @@ import { CampaignFrontService } from '../../../../../../services/campaign/campai
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';
 import { CommonService } from '../../../../../../services/common/common.service';
+import { NavigationFrontService } from "../../../../../../services/navigation/navigation-front.service";
+import { Router } from "@angular/router";
 
 @Component({
   templateUrl: 'admin-project-campaigns.component.html',
@@ -41,19 +43,19 @@ import { CommonService } from '../../../../../../services/common/common.service'
   animations: [
     trigger('listAnimation', [
       transition('* => *', [
-        query(':enter', style({ opacity: 0 }), { optional: true }),
+        query(':enter', style({opacity: 0}), {optional: true}),
         query(
           ':enter',
           stagger('300ms', [
             animate(
               '300ms ease-in-out',
               keyframes([
-                style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
-                style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 }),
+                style({opacity: 0, transform: 'translateX(-20%)', offset: 0}),
+                style({opacity: 1, transform: 'translateX(0)', offset: 1.0}),
               ])
             ),
           ]),
-          { optional: true }
+          {optional: true}
         ),
       ]),
     ]),
@@ -89,8 +91,11 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
     private _commonService: CommonService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _socketService: SocketService,
-    private _campaignService: CampaignService
-  ) {}
+    private _campaignService: CampaignService,
+    private _router: Router,
+    private _navigationFrontService: NavigationFrontService,
+  ) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -120,6 +125,23 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
             this._getCampaigns();
           }
         });
+
+
+      this._navigationFrontService.navigation().pipe(takeUntil(this._ngUnsubscribe)).subscribe(value => {
+        console.log(value);
+        // if (value && value.item && value.tab.name === 'Preparation' && value.item.name.indexOf('/') !== -1) {
+        //   console.log(this._campaigns);
+        //   if (this._campaigns && this._campaigns.length) {
+        //     const path = value.item.path.split('/');
+        //     this.onNavigation(this._campaigns[0]);
+        //     this._router.navigate([
+        //       `/user/admin/projects/project/${
+        //         this._innovation._id
+        //       }/preparation/campaigns/campaign/${this._campaigns[0]._id}/${path[path.length - 1]}`
+        //     ]);
+        //   }
+        // }
+      });
     }
   }
 

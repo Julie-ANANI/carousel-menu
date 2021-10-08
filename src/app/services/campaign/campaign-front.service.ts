@@ -19,6 +19,8 @@ export class CampaignFrontService {
 
   private _filtersCountries: Subject<Array<any>> = new Subject<Array<any>>();
 
+  private _defaultCampaign: Campaign = <Campaign>{};
+
 
   /***
    * this function is to calculate the campaign stat for the answers component in the
@@ -291,4 +293,12 @@ export class CampaignFrontService {
     return this._filtersCountries.asObservable();
   }
 
+
+  get defaultCampaign(): Campaign {
+    return this._defaultCampaign;
+  }
+
+  set defaultCampaign(value: Campaign) {
+    this._defaultCampaign = value;
+  }
 }

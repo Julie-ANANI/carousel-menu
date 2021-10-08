@@ -21,6 +21,8 @@ import { InnovCard } from '../../../../../models/innov-card';
 import { environment } from '../../../../../../environments/environment';
 import { CommonService } from '../../../../../services/common/common.service';
 import { NavigationFrontService } from "../../../../../services/navigation/navigation-front.service";
+import { Response } from "../../../../../models/response";
+import { Campaign } from "../../../../../models/campaign";
 
 interface Tab {
   route: string;
@@ -63,25 +65,25 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     {
       key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt',
       subTabs: [
-        {name: '/Description', path: 'description'},
-        {name: '/Questionnaire', path: 'questionnaire'},
-        {name: '/Targeting', path: 'targeting'},
-        {name: '/Campaigns', path: 'campaigns'},
-        {name: '/Statistics', path: 'statistics'},
-        {name: '/Campaign/Search', path: ''},
-        {name: '/Campaign/History', path: ''},
-        {name: '/Campaign/Pros', path: ''},
-        {name: '/Campaign/Workflows', path: ''},
-        {name: '/Campaign/Batch', path: ''},
+        {name: 'Description', path: 'description'},
+        {name: 'Questionnaire', path: 'questionnaire'},
+        {name: 'Targeting', path: 'targeting'},
+        {name: 'Campaigns', path: 'campaigns'},
+        {name: 'Statistics', path: 'statistics'},
+        {name: 'Campaign/Search', path: 'campaigns/search'},
+        {name: 'Campaign/History', path: 'campaigns/history'},
+        {name: 'Campaign/Pros', path: 'campaigns/pros'},
+        {name: 'Campaign/Workflows', path: 'campaigns/workflows'},
+        {name: 'Campaign/Batch', path: 'campaigns/batch'},
       ]
     },
     {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
     {
       key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area',
       subTabs: [
-        {name: '/Synthesis', path: 'synthesis'},
-        {name: '/Answer tags', path: 'answer-tags'},
-        {name: '/Storyboard', path: 'storyboard'},
+        {name: 'Synthesis', path: 'synthesis'},
+        {name: 'Answer tags', path: 'answer-tags'},
+        {name: 'Storyboard', path: 'storyboard'},
       ]
     },
     {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
@@ -106,6 +108,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _quizLink = '';
 
+  private _allCampaigns: Array<Campaign> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -128,6 +132,9 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
+      this.getAllCampaigns();
+      this._campaignFrontService.setAllCampaigns(this._allCampaigns);
+
       if (this._project && !!this._project._id) {
         this._initPageTitle();
         this._isLoading = false;
@@ -266,6 +273,20 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
     }
 
+  }
+
+  /**
+   *
+   * @private
+   */
+  private getAllCampaigns() {
+    this._innovationService.campaigns(this._project._id).pipe(first()).subscribe((response: Response) => {
+      this._allCampaigns = response && response.result || [];
+      this._campaignFrontService.setAllCampaigns(this._allCampaigns);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.adminErrorMessage(err));
+      console.error(err);
+    });
   }
 
   public onClickImportFollowUp(event: Event) {
@@ -458,6 +479,13 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   navigateTo(event: Event, tab: Tab, item: any) {
     this.onClickTab(event, tab.name, tab.route, tab.key);
+    if (item.path.indexOf('/') !== -1) {
+      const path = item.path.split('/');
+      this._campaignFrontService.setActiveCampaignTab(path[path.length - 1]);
+      this._campaignFrontService.setShowCampaignTabs(true);
+      this._campaignFrontService.setActiveCampaign(this._allCampaigns[0]);
+      this._campaignFrontService.defaultCampaign = this._allCampaigns[0];
+    }
     this._navigationFrontService.setNavigation({tab: tab, item: item});
   }
 
