@@ -147,9 +147,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           this.navigateTo(value.item.path);
         }, 0);
       } else if (value && value.item && value.tab.name === 'Preparation' && value.item.name.indexOf('/') !== -1) {
-        // this._campaignFrontService.setActiveCampaign(campaign);
-        // this._getAllCampaigns();
-        console.log(this._campaignFrontService.defaultCampaign);
         if (this._campaignFrontService.defaultCampaign && this._campaignFrontService.defaultCampaign._id) {
           const path = value.item.path.split('/');
           this._selectedCampaign = this._campaignFrontService.defaultCampaign;
@@ -174,7 +171,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     if (campaign._id !== this._selectedCampaign._id) {
       this._isLoadingCampaign = true;
       this._selectedCampaign = campaign;
-      console.log(this._selectedCampaign);
       this._router.navigate([this.routeToNavigate(this._activeTab)]);
     }
   }

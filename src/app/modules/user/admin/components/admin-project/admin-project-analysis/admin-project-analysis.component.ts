@@ -52,7 +52,7 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
       console.log(value);
       if (value && value.item && value.tab.name === 'Analysis') {
         setTimeout(() => {
-          this._setPageTitle(value.tab.name);
+          this._setPageTitle(value.item.path);
           this._router.navigate([`/user/admin/projects/project/${this._project._id}/analysis/${value.item.path}`]);
         }, 0);
       }
