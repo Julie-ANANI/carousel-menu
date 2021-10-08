@@ -20,9 +20,9 @@ import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovCard } from '../../../../../models/innov-card';
 import { environment } from '../../../../../../environments/environment';
 import { CommonService } from '../../../../../services/common/common.service';
-import { NavigationFrontService } from "../../../../../services/navigation/navigation-front.service";
-import { Response } from "../../../../../models/response";
-import { Campaign } from "../../../../../models/campaign";
+import { NavigationFrontService } from '../../../../../services/navigation/navigation-front.service';
+import { Response } from '../../../../../models/response';
+import { Campaign } from '../../../../../models/campaign';
 
 interface Tab {
   route: string;
@@ -133,7 +133,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
       this.getAllCampaigns();
-      this._campaignFrontService.setAllCampaigns(this._allCampaigns);
 
       if (this._project && !!this._project._id) {
         this._initPageTitle();

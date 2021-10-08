@@ -148,6 +148,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         }, 0);
       } else if (value && value.item && value.tab.name === 'Preparation' && value.item.name.indexOf('/') !== -1) {
         if (this._campaignFrontService.defaultCampaign && this._campaignFrontService.defaultCampaign._id) {
+          this._showCampaignTabs = true;
           const path = value.item.path.split('/');
           this._activeTab = path[path.length - 1];
           this._selectedCampaign = this._campaignFrontService.defaultCampaign;
