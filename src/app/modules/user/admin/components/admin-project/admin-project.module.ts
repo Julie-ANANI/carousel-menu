@@ -15,23 +15,25 @@ import {AdminProjectAnalysisModule} from './admin-project-analysis/admin-project
 import {AdminProjectSettingsModule} from './admin-project-settings/admin-project-settings.module';
 import {AdminProjectCollectionModule} from './admin-project-collection/admin-project-collection.module';
 import {SharedActivityModalModule} from '../../../../shared/components/shared-activity-modal/shared-activity-modal.module';
+import { MessageTemplateModule } from "../../../../utility/messages/message-template/message-template.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    RouterModule,
-    MessageErrorModule,
-    BannerModule,
-    ModalModule,
-    AdminProjectFollowUpModule,
-    AdminProjectPreparationModule,
-    AdminProjectAnalysisModule,
-    AdminProjectSettingsModule,
-    AdminProjectCollectionModule,
-    AdminProjectRoutingModule,
-    SharedActivityModalModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        RouterModule,
+        MessageErrorModule,
+        BannerModule,
+        ModalModule,
+        AdminProjectFollowUpModule,
+        AdminProjectPreparationModule,
+        AdminProjectAnalysisModule,
+        AdminProjectSettingsModule,
+        AdminProjectCollectionModule,
+        AdminProjectRoutingModule,
+        SharedActivityModalModule,
+        MessageTemplateModule
+    ],
   declarations: [
     AdminProjectComponent
   ],

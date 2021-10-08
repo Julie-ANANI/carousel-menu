@@ -49,7 +49,6 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
     });
 
     this._navigationFrontService.navigation().pipe(takeUntil(this._ngUnsubscribe)).subscribe(value => {
-      console.log(value);
       if (value && value.item && value.tab.name === 'Analysis') {
         setTimeout(() => {
           this._setPageTitle(value.item.path);
