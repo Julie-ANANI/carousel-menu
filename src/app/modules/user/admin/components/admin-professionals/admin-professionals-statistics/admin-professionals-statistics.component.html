@@ -88,16 +88,27 @@
         </div>
         <!-- /months -->
       </div>
-      <div class="d-flex align-self-end">
+      <div *ngIf="jobsClassification" class="d-flex align-self-end">
         <p class="text-sm m-10">Last updated : {{ jobsClassification.timestamp | date }}</p>
       </div>
 
-      <!--
-      <div class="m-bottom-4 m-top-4 align-self-center">
-        <div class="label is-rounded is-info">Unclassified yet: ({{(notClassified / total * 100) | number: '1.0-0' }}%)</div>
-        <div class="label is-rounded is-success">Classified : ({{((total - notClassified) / total * 100) | number: '1.0-0' }}%)</div>
+      <div class="d-flex m-bottom-4 m-top-4 align-self-center">
+        <label class="form-checkbox bg-draft mxw-450 email-confidence-option m-right-3 m-right-auto m-bottom-15 text-white text-medium">
+          Total : {{ classified }}
+        </label>
+        <label [ngClass]="{'checked': selectedEmailConfidenceType === 'RISKY'}"
+          class="form-checkbox mxw-450 email-confidence-option m-right-3 m-right-auto m-bottom-15 c-hand text-white text-medium">
+          <input (change)="selectEmailConfidenceType('RISKY')" [checked]="selectedEmailConfidenceType === 'RISKY'"
+            type="checkbox">
+          Risky emails : {{(nbRiskyEmailsClassified / classified * 100) | number: '1.0-0' }}%
+        </label>
+        <label [ngClass]="{'checked': selectedEmailConfidenceType === 'GOOD'}"
+          class="form-checkbox mxw-450 email-confidence-option m-left-auto m-right-auto m-bottom-15 c-hand text-white text-medium">
+          <input (change)="selectEmailConfidenceType('GOOD')" [checked]="selectedEmailConfidenceType === 'GOOD'"
+            type="checkbox">
+          Good emails : {{((nbGoodEmailsClassified) / classified * 100) | number: '1.0-0' }}%
+        </label>
       </div>
-      -->
 
       <!-- section seniority levels -->
       <section
@@ -114,7 +125,7 @@
                 <tr>
                   <ng-container *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels">
                     <th *ngIf="seniorityLevel.name"
-                      [ngStyle]="{'min-width': '40px'}">
+                        [ngStyle]="{'min-width': '40px'}">
                       <div [ngStyle]="{'width': 'fit-content'}">
                         {{ seniorityLevel.name }}
                       </div>
@@ -134,7 +145,7 @@
                 <tr>
                   <ng-container *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels">
                     <td *ngIf="seniorityLevel.name" [ngStyle]="{'min-width': '40px'}" class="text-center">
-                      {{ (seniorityLevel.count / classified * 100) | number: '1.0-0' }}%
+                      {{ (seniorityLevel.count / repartitionStats.classified * 100) | number: '1.0-0' }}%
                     </td>
                   </ng-container>
                 </tr>
@@ -151,7 +162,8 @@
       <section class="d-flex flex-d-column align-start">
         <div class="d-flex align-center">
           <h2> Typology of jobs </h2>
-          <div class="label is-rounded is-info is-sm m-no m-10">{{ jobsClassification && jobsClassification.categories.length }}</div>
+          <div
+            class="label is-rounded is-info is-sm m-no m-10">{{ jobsClassification && jobsClassification.categories.length }}</div>
         </div>
         <ng-container *ngIf="jobsClassification && jobsClassification.categories; else noJobsData">
           <div *ngFor="let category of jobsClassification.categories"
@@ -172,15 +184,15 @@
                 </tr>
                 </thead>
                 <tbody>
-<!--                <tr>
-                  <td class="text-bold">{{category.count}}</td>
-                  <td *ngFor="let job of category.jobs"
-                      [ngStyle]="{'min-width': '40px'}">
-                    {{ job.count }}
-                  </td>
-                </tr>-->
+                <!--                <tr>
+                                  <td class="text-bold">{{category.count}}</td>
+                                  <td *ngFor="let job of category.jobs"
+                                      [ngStyle]="{'min-width': '40px'}">
+                                    {{ job.count }}
+                                  </td>
+                                </tr>-->
                 <tr>
-                  <td class="text-bold">{{ (category.count / classified * 100) | number: '1.0-0'}}%</td>
+                  <td class="text-bold">{{ (category.count / repartitionStats.classified * 100) | number: '1.0-0'}}%</td>
                   <td *ngFor="let job of category.jobs"
                       [ngStyle]="{'min-width': '40px'}">
                     {{ (job.count / category.count * 100) | number: '1.0-0' }}%

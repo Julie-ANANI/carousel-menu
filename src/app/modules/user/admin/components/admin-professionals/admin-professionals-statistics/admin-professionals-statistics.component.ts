@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {ClassificationService} from '../../../../../../services/classification/classification.service';
-import {SeniorityClassification} from '../../../../../../models/SeniorityClassification';
+import {EmailType, SeniorityClassification} from '../../../../../../models/SeniorityClassification';
 import {JobsClassification} from '../../../../../../models/jobsClassification';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as moment from 'moment';
@@ -12,6 +12,10 @@ import * as moment from 'moment';
   styleUrls: ['./admin-professionals-statistics.component.scss']
 })
 export class AdminProfessionalsStatisticsComponent implements OnInit {
+  get repartitionStats(): { emailConfidence: EmailType; total: number; notClassified: number; classified: number } {
+    return this._repartitionStats;
+  }
+
   constructor(private _rolesFrontService: RolesFrontService,
               private _classificationService: ClassificationService) {
   }
@@ -28,15 +32,27 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     return this._jobsClassification;
   }
 
+  private _seniorityLevelsClassifications: Array<SeniorityClassification> = [];
+
+  get seniorityLevelsClassifications(): Array<SeniorityClassification> {
+    return this._seniorityLevelsClassifications;
+  }
+
+  private _jobsClassifications: Array<JobsClassification> = [];
+
+  get jobsClassifications(): Array<JobsClassification> {
+    return this._jobsClassifications;
+  }
+
   private _fetchingError = false;
 
   get fetchingError(): boolean {
     return this._fetchingError;
   }
 
-  private _config: { year?: number; month?: number; week?: number } = {};
+  private _config: { emailConfidence?: EmailType; year?: number; month?: number; week?: number } = {};
 
-  get config(): { year?: number; month?: number; week?: number } {
+  get config(): { emailConfidence?: EmailType; year?: number; month?: number; week?: number } {
     return this._config;
   }
 
@@ -77,27 +93,47 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     return this._dropdownWeeks;
   }
 
-  private _isLoading = true;
+  private _isLoading = false;
 
   get isLoading(): boolean {
     return this._isLoading;
   }
 
-  private _total = 0;
+  private _allRepartitionStats: Array<{ emailConfidence: EmailType, total: number, notClassified: number, classified: number }> = [];
+  private _repartitionStats: { emailConfidence: EmailType, total: number, notClassified: number, classified: number };
   private _notClassified = 0;
   private _classified = 0;
 
-  get total(): number {
-    return this._total;
+  private _selectedEmailConfidenceType: EmailType = 'ALL';
+
+  get selectedEmailConfidenceType(): EmailType {
+    return this._selectedEmailConfidenceType;
   }
 
-  get notClassified(): number {
-    return this._notClassified;
+  private _nbRiskyEmailsClassified = 0;
+
+  private _nbGoodEmailsClassified = 0;
+
+  get nbGoodEmailsClassified(): number {
+    return this._nbGoodEmailsClassified;
+  }
+
+  get nbRiskyEmailsClassified(): number {
+    return this._nbRiskyEmailsClassified;
   }
 
   ngOnInit() {
     this._initYears();
-    Promise.all([this._getSeniorityLevelsClassification({}), this._getJobsClassification({})]).then((values) => {
+    Promise.all([
+      this._getSeniorityLevelsClassification({emailConfidence: 'RISKY'}),
+      this._getSeniorityLevelsClassification({emailConfidence: 'GOOD'}),
+      this._getSeniorityLevelsClassification({emailConfidence: 'ALL'}),
+      this._getJobsClassification({emailConfidence: 'RISKY'}),
+      this._getJobsClassification({emailConfidence: 'GOOD'}),
+      this._getJobsClassification({emailConfidence: 'ALL'})
+    ]).then((values) => {
+      this.selectEmailConfidenceType('ALL');
+      this.computeEmailConfidenceStats();
       this._isLoading = false;
     });
   }
@@ -139,26 +175,55 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     }
 
     this._isLoading = true;
+    this._config.emailConfidence = this.selectedEmailConfidenceType;
     Promise.all([this._getSeniorityLevelsClassification(this._config), this._getJobsClassification(this._config)]).then((values) => {
+      this._isLoading = false;
+    }).catch(err => {
+      console.log(err);
       this._isLoading = false;
     });
   }
 
+  public selectEmailConfidenceType(type: EmailType) {
+    this._selectedEmailConfidenceType = (type === this._selectedEmailConfidenceType) ? 'ALL' : type;
+    this._seniorityLevelsClassification = this.seniorityLevelsClassifications.find(s => s.emailConfidence === this._selectedEmailConfidenceType)
+    this._jobsClassification = this.jobsClassifications.find(j => j.emailConfidence === this._selectedEmailConfidenceType)
+    this._repartitionStats = this._allRepartitionStats.find(r => r.emailConfidence === this._selectedEmailConfidenceType)
+  }
+
+  public computeEmailConfidenceStats() {
+    this._nbRiskyEmailsClassified = this._allRepartitionStats.find(r => r.emailConfidence === 'RISKY').total;
+    this._nbGoodEmailsClassified = this._allRepartitionStats.find(r => r.emailConfidence === 'GOOD').total;
+  }
+
   private _getSeniorityLevelsClassification(config: any) {
     return new Promise(((resolve, reject) => {
-      this._classificationService.seniorityLevels(config).subscribe((res: { classification: any }) => {
+      this._classificationService.seniorityLevels(config).subscribe((res: { classification: SeniorityClassification }) => {
 
         if (res.classification) {
-          this._seniorityLevelsClassification = res.classification;
-          this._total = this._seniorityLevelsClassification.total;
-          this._notClassified = (this._seniorityLevelsClassification.seniorityLevels.find(c => !c._id) || {count: 0}).count;
-          this._classified = this._seniorityLevelsClassification.total - this._notClassified;
+          this._allRepartitionStats.push({
+            emailConfidence: config.emailConfidence,
+            total: res.classification.total,
+            notClassified: (res.classification.seniorityLevels.find(c => !c._id) || {count: 0}).count,
+            classified: res.classification.total - this._notClassified
+          });
+
+          if (config.emailConfidence === 'ALL') {
+            this._notClassified = (res.classification.seniorityLevels.find(c => !c._id) || {count: 0}).count;
+            this._classified = res.classification.total - this._notClassified;
+          }
+
+          const seniorityLevelsOrder = ['Top executive', 'Top manager', 'Manager', 'Expert', 'Other', 'Excluding', 'Irregular', 'No jobs'];
+          res.classification.seniorityLevels.sort(function (a, b) {
+            return seniorityLevelsOrder.indexOf(a.name) - seniorityLevelsOrder.indexOf(b.name);
+          });
+
+          this._seniorityLevelsClassifications.push(res.classification);
+        } else {
+          this._seniorityLevelsClassifications = [];
+          this._seniorityLevelsClassification = null;
         }
 
-        const seniorityLevelsOrder = [ 'Top executive', 'Top manager', 'Manager', 'Expert', 'Other', 'Excluding', 'Irregular', 'No jobs'];
-        this._seniorityLevelsClassification.seniorityLevels.sort(function (a, b) {
-          return seniorityLevelsOrder.indexOf(a.name) - seniorityLevelsOrder.indexOf(b.name);
-        });
 
         resolve();
       }, (error) => {
@@ -171,17 +236,24 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
   private _getJobsClassification(config: any) {
     return new Promise(((resolve, reject) => {
-      this._classificationService.categoriesAndJobs(config).subscribe((res: { classification: any }) => {
-        this._jobsClassification = res.classification;
-        this._jobsClassification.categories = this._jobsClassification.categories.sort((a, b) => {
-          const aLabel = (a.label || {en: 'Not classified yet'}).en;
-          const bLabel = (b.label || {en: 'Not classified yet'}).en;
-          return aLabel.localeCompare(bLabel);
-        });
+      this._classificationService.categoriesAndJobs(config).subscribe((res: { classification: JobsClassification }) => {
+        if (res.classification) {
+          res.classification.categories = res.classification.categories.sort((a, b) => {
+            const aLabel = (a.label || {en: 'Not classified yet'}).en;
+            const bLabel = (b.label || {en: 'Not classified yet'}).en;
+            return aLabel.localeCompare(bLabel);
+          });
 
-        this._jobsClassification.categories.forEach(category => {
-          category.jobs = category.jobs.sort((a, b) => a.label.en.localeCompare(b.label.en));
-        });
+          res.classification.categories.forEach(category => {
+            category.jobs = category.jobs.sort((a, b) => a.label.en.localeCompare(b.label.en));
+          });
+
+          this._jobsClassifications.push(res.classification);
+        } else {
+          this._jobsClassifications = [];
+          this._jobsClassification = null;
+        }
+
         resolve();
       }, (error) => {
         console.error(error);
