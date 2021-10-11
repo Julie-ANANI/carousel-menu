@@ -32,7 +32,7 @@
         <input
           (change)="OnChangeEdit($event)"
           [checked]="editMode"
-          [disabled]="isSaving || toBeSaved"
+          [disabled]="isSaving"
           id="sidebar-user-answer-editMode"
           type="checkbox">
         <i class="form-icon"></i> Edit answer
@@ -81,7 +81,7 @@
     <button
       (click)="onSaveAnswer($event)"
       *ngIf="!assignNewPro"
-      [disabled]="!editMode || isSaving || !toBeSaved"
+      [disabled]="isSaving || !toBeSaved"
       class="button is-sm is-community"
       id="btn-save"
       type="button">
@@ -217,7 +217,8 @@
     <!-- /edit job title -->
 
     <!-- company -->
-    <div *ngIf="(userAnswer.company && userAnswer.company.name) || professional.company || editMode" class="m-bottom-10">
+    <div *ngIf="(userAnswer.company && userAnswer.company.name) || professional.company || editMode"
+         class="m-bottom-10">
 
       <i class="fas fa-building text-notify m-right-10"></i>
 
@@ -316,8 +317,8 @@
     </ng-container>
     <ng-container *ngIf="adminMode && userAnswer.created && userAnswer.time_elapsed">&nbsp; • &nbsp;</ng-container>
     <ng-container *ngIf="adminMode && userAnswer.time_elapsed">
-      {{ 'SIDEBAR_USER_ANSWER.RECEIVED.C' | translate }} {{ floor(userAnswer.time_elapsed/60) }} min.
-      {{ floor(userAnswer.time_elapsed%60) }} sec.
+      {{ 'SIDEBAR_USER_ANSWER.RECEIVED.C' | translate }} {{ floor(userAnswer.time_elapsed / 60) }} min.
+      {{ floor(userAnswer.time_elapsed % 60) }} sec.
     </ng-container>
   </div>
   <!-- /received date and time, and time spent -->
@@ -341,23 +342,23 @@
   <!-- /auto tags -->
 
   <!-- tags -->
-  <div *ngIf="(userAnswer.tags && userAnswer.tags.length) || editMode" class="m-top-20">
+  <div class="m-top-20">
     <label class="form-label p-bottom-10">Tags</label>
     <app-shared-tags
       (addTag)="addTag($event)"
       (createTag)="createTag($event)"
       (removeTag)="removeTag($event)"
-      [editMode]="editMode"
+      [editMode]="true"
       [isSmall]="true"
       [projectId]="projectId"
-      [tags]="userAnswer.tags">
+      [tags]="userAnswer.tags && userAnswer.tags.length? userAnswer.tags:[]">
     </app-shared-tags>
   </div>
   <!-- /tags -->
 
   <!-- status -->
   <div
-    *ngIf="adminMode && editMode && userAnswer.status !== 'REJECTED_GMAIL' && userAnswer.localStatus !== 'draft'"
+    *ngIf="adminMode && userAnswer.status !== 'REJECTED_GMAIL' && userAnswer.localStatus !== 'draft'"
     class="m-top-25 m-bottom-10 flex-wrap flex-between status-wrapper">
     <div *ngFor="let status of answerStatus" class="d-inline-flex flex-d-column align-center text-center m-top-10">
       <div [ngClass]="status.class" class="label m-bottom-10">
