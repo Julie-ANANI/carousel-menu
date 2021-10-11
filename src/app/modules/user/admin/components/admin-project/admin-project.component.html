@@ -123,10 +123,18 @@
                     (click)="onClickTab($event, tab.name, tab.route, tab.key)"
                     [id]="tab.route"
                     [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
-                    class="text-medium text-md"
+                    class="text-medium text-md d-flex justify-center"
                     routerLinkActive="active">
                     <i [ngClass]="tab.icon"></i>
                     {{ tab.name }}
+                    <div *ngIf="tab.subTabs && tab.subTabs.length" class="popover is-bottom m-left-40">
+                      <i class="fas fa-caret-down"></i>
+                      <div class="popover-container">
+                        <ng-container
+                          *ngTemplateOutlet="subTabsList; context: {$implicit: {tab: tab}}">
+                        </ng-container>
+                      </div>
+                    </div>
                   </a>
                 </li>
               </ng-container>
@@ -147,6 +155,12 @@
   <!-- /no error -->
 
 </div>
+
+<ng-template #subTabsList let-context>
+  <ul class="menu">
+    <li class="menu-item" *ngFor="let item of context['tab'].subTabs" (click)="navigateTo($event, context['tab'], item)">{{item.name}}</li>
+  </ul>
+</ng-template>
 
 <!-- modals for different actions -->
 <ng-container *ngIf="canImport">
