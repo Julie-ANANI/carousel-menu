@@ -1,6 +1,19 @@
 @import "../../../../style/framework/src/variables";
 
 #table-wrapper {
+
+  .send_popover {
+    width: 380px;
+
+    .card-body {
+      overflow: auto;
+      white-space: pre-wrap;
+      height: 200px;
+      font-size: 12px;
+    }
+
+  }
+
   .legend-table {
     top: 6px;
     left: 6px;

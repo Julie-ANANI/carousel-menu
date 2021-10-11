@@ -418,6 +418,18 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  /*public getPopoverClass(row: string, column: Column) {
+    if (!this.getContentValue(row, this.getAttrs(column)[0]).toString()) {
+      return '';
+    } else {
+      if (row >= '0' && row <= '4') {
+        return 'popover is-bottom';
+      } else {
+        return column._popoverPosition ? 'popover ' + column._popoverPosition : 'popover is-top';
+      }
+    }
+  }*/
+
   /***
    * This function initialise the values of a column.
    */

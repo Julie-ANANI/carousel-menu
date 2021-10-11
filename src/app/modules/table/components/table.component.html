@@ -272,12 +272,15 @@
 
                 <!-- type DATE -->
                 <ng-container *ngSwitchCase="'DATE'">
+
                   <!-- not editable-->
-                  <div class="text-ellipsis" *ngIf="!column._isEditable">
+                  <ng-container *ngIf="!column._isEditable">
+                    <div class="text-ellipsis">
                     <span>
                       {{ (getContentValue(row, getAttrs(column)[0])?.toString() | date:dateFormat) || '--' }}
                     </span>
-                  </div>
+                    </div>
+                  </ng-container>
                   <!-- /not editable-->
 
                   <div class="d-flex" *ngIf="column._isEditable">
@@ -693,11 +696,14 @@
 
                   <!-- not clickable -->
                   <ng-container *ngIf="i !== table._clickIndex - 1">
-                    <div *ngIf="!column._isEditable"
-                         [attr.data-tooltip]="getTitle(row, column) | titlecase"
-                         [ngClass]="{'tooltip is-multiline': !!getTitle(row, column),
+
+                    <div
+                      *ngIf="!column._isEditable"
+                      [attr.data-tooltip]="getTitle(row, column) | titlecase"
+                      [ngClass]="{'tooltip is-multiline': !!getTitle(row, column),
                       'is-right': rowIndex < 1 && table._total >= 1}"
-                         class="w-full">
+                      class="w-full">
+
                       <div class="text-ellipsis" [ngStyle]="getTextColor(row, column)">
                         <ng-container *ngFor="let attr of getAttrs(column)">
                           {{ (getContentValue(row, attr) || " - ").toString() | titlecase }}
@@ -705,10 +711,15 @@
                       </div>
 
                       <ng-container
-                        *ngTemplateOutlet="replaceTemplate; context: {$implicit: getContext(row, column)}">
+                        *ngTemplateOutlet="replaceTemplate;
+                        context: {$implicit: getContext(row, column)}">
                       </ng-container>
-                      <ng-container *ngTemplateOutlet="undoTemplate; context: {$implicit: getContext(row, column)}">
+
+                      <ng-container
+                        *ngTemplateOutlet="undoTemplate;
+                        context: {$implicit: getContext(row, column)}">
                       </ng-container>
+
                     </div>
 
                     <!-- editable-->
