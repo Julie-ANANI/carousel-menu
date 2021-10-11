@@ -110,11 +110,10 @@
 
     <div>
       <app-shared-table
-        (configChange)="configChange.emit(config)"
         (dropdownAction)="assignObjective($event)"
         (editRow)="seeAnswer($event)"
         (performAction)="performActions($event)"
-        [config]="config"
+        [(config)]="config"
         [data]="tableInfos">
       </app-shared-table>
     </div>

@@ -18,6 +18,18 @@ import {InnovCard} from '../../../../../models/innov-card';
 })
 export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
   set sendShowModal(value: boolean) {
     this._sendShowModal = value;
   }
@@ -182,27 +194,20 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   @Input() questions: Array<MissionQuestion> = [];
 
-  @Input() tableInfos: Table = <Table>{};
-
-  @Input() config: Config = <Config>{};
-
-  @Input() set answers (value: Array<Answer>) {
-    this._answers = value;
-    this._selectedIds = this._answers.filter((_answer) => _answer._isSelected)
-      .map((_answer) => _answer._id);
-  }
-
   @Input() set project(value: Innovation) {
     this._project = value;
     this._initVariables();
   }
 
+  @Input() set answers (value: Array<Answer>) {
+    this.initEmailObject();
+    this._answers = value;
+    this._initTable(value, value.length);
+    this._selectedIds = this._answers.filter((_answer) => _answer._isSelected)
+      .map((_answer) => _answer._id);
+  }
+
   @Output() reinitializeAnswers: EventEmitter<void> = new EventEmitter<void>();
-
-  @Output() reinitializeTable: EventEmitter<{answers: Array<Answer>, total: number}> =
-    new EventEmitter<{answers: Array<Answer>, total: number}>();
-
-  @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
 
   @Output() startContactProcessChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -283,10 +288,68 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _project: Innovation = <Innovation>{};
 
+  private _tableInfos: Table = <Table>{};
+
+  private _config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{ "created": "-1" }'
+  };
+
   constructor(private _formBuilder: FormBuilder,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+    this._initTable(this._answers, -1);
+  }
+
+  private _initTable(answers: Array<Answer> = [], total = 0) {
+    this._tableInfos = {
+      _selector: 'project-follow-up',
+      _content: answers,
+      _total: total,
+      _clickIndex: 1,
+      _isSelectable: this._startContactProcess,
+      _isPaginable: true,
+      _isLocal: true,
+      _isNoMinHeight: answers.length < 11,
+      _isRowDisabled: (answer: Answer) => !!(answer.followUp && answer.followUp.date),
+      _columns: [
+        {
+          _attrs: ['professional.lastName'],
+          _name: 'COMMON.LABEL.LASTNAME',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: ['professional.firstName'],
+          _name: 'COMMON.LABEL.FIRSTNAME',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: ['professional.jobTitle'],
+          _name: 'COMMON.LABEL.JOBTITLE',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: ['professional.company.name'],
+          _name: 'COMMON.LABEL.COMPANY',
+          _type: 'TEXT'
+        },
+        {
+          _attrs: ['country'],
+          _name: 'COMMON.LABEL.COUNTRY',
+          _type: 'COUNTRY',
+          _width: '100px'
+        },
+        {
+          _attrs: ['followUp.date'],
+          _name: 'COMMON.LABEL.SEND',
+          _type: 'DATE',
+        },
+      ]
+    };
   }
 
   public onClickSend() {
@@ -450,8 +513,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         switch (this._contactFields[this._currentStep]) {
           case 'STEP_INTRO':
             this._sidebarTemplate.animate_state = 'active';
-            this.tableInfos = <Table>{};
-            this.reinitializeTable.emit({answers: this._answers, total: this._answers.length});
+            this._tableInfos = <Table>{};
+            this._initTable(this._answers, this._answers.length);
             this.initEmailObject();
             break;
           case 'STEP_CONFIGURE':
@@ -481,7 +544,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
       if (!value) {
         this._answers = [];
-        this.reinitializeTable.emit({answers: [], total: -1});
+        this._initTable([], -1);
         this.reinitializeAnswers.emit();
         this._currentStep = 0;
       }
@@ -505,7 +568,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   public updateAnswers(answers: Array<Answer>) {
     if (answers && answers.length) {
-      this.reinitializeTable.emit({answers: answers, total: answers.length});
+      this._initTable(answers, answers.length);
     }
   }
 

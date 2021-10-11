@@ -4,13 +4,10 @@
   <div *ngSwitchCase="'CLIENT'" class="relative">
     <app-shared-follow-up-client
       (reinitializeAnswers)="getAnswers()"
-      (reinitializeTable)="initializeTable($event.answers, $event.total)"
-      [(config)]="localConfig"
       [(startContactProcess)]="startContactProcess"
       [answers]="answers"
       [project]="project"
-      [questions]="questions"
-      [tableInfos]="tableInfos">
+      [questions]="questions">
     </app-shared-follow-up-client>
   </div>
   <!-- /CLIENT VERSION -->
@@ -18,13 +15,10 @@
   <!-- ADMIN VERSION -->
   <ng-container *ngSwitchCase="'ADMIN'">
     <app-shared-follow-up-admin
-      (reinitializeTable)="initializeTable($event.answers, $event.total)"
-      [(config)]="localConfig"
       [accessPath]="accessPath"
       [answers]="answers"
       [project]="project"
-      [questions]="questions"
-      [tableInfos]="tableInfos">
+      [questions]="questions">
     </app-shared-follow-up-admin>
   </ng-container>
   <!-- /ADMIN VERSION -->

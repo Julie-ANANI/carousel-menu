@@ -24,9 +24,8 @@
         </div>
         <div class="p-top-40">
           <app-shared-table
-            (configChange)="configChange.emit(config)"
             (editRow)="seeAnswer($event)"
-            [config]="config"
+            [(config)]="config"
             [data]="tableInfos">
           </app-shared-table>
         </div>
@@ -109,9 +108,8 @@
             <div [hidden]="contactFields[currentStep] !== 'STEP_SELECT'" class="p-top-30">
               <app-shared-table
                 (editRow)="seeAnswer($event)"
-                (configChange)="configChange.emit(config)"
                 (selectRows)="rowsSelected($event)"
-                [config]="config"
+                [(config)]="config"
                 [data]="tableInfos">
               </app-shared-table>
             </div>

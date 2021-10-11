@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MissionQuestion} from '../../../../../models/mission';
 import {Table} from '../../../../table/models/table';
 import {Config} from '../../../../../models/config';
@@ -32,6 +32,18 @@ interface Custom {
   styleUrls: ['./shared-follow-up-admin.component.scss']
 })
 export class SharedFollowUpAdminComponent implements OnInit {
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+  }
 
   get customFields(): { fr: Array<{ label: string, value: string }>, en: Array<{ label: string, value: string }> } {
     return this._customFields;
@@ -167,22 +179,14 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   @Input() questions: Array<MissionQuestion> = [];
 
-  @Input() tableInfos: Table = <Table>{};
-
-  @Input() config: Config = <Config>{};
-
   @Input() set answers (value: Array<Answer>) {
     this._answers = value;
+    this._initTable(value, value.length);
   }
 
   @Input() set project(value: Innovation) {
     this._project = value;
   }
-
-  @Output() reinitializeTable: EventEmitter<{answers: Array<Answer>, total: number}> =
-    new EventEmitter<{answers: Array<Answer>, total: number}>();
-
-  @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
 
   private _answers: Array<Answer> = [];
 
@@ -214,12 +218,113 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   private _showSendModal = false;
 
+  private _config: Config = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{ "created": "-1" }'
+  };
+
+  private _tableInfos: Table = <Table>{};
+
   constructor(private _rolesFrontService: RolesFrontService,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+    this._initTable(this._answers, -1);
+  }
+
+  private _initTable(answers: Array<Answer> = [], total = 0) {
+    this._tableInfos = {
+      _selector: 'follow-up-answers',
+      _content: answers,
+      _total: total,
+      _isSelectable: this.canAccess(['edit', 'objective']),
+      _isRowDisabled: (answer: Answer) => {
+        return this.canAccess(['edit', 'objective']) ? answer.followUp && answer.followUp.date
+          : false;
+      },
+      _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
+      _isPaginable: true,
+      _isLocal: true,
+      _isNoMinHeight: answers.length < 11,
+      _buttons: [
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW'},
+        {_label: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE'},
+      ],
+      _columns: [
+        {
+          _attrs: ['professional.firstName', 'professional.lastName'],
+          _name: 'COMMON.LABEL.NAME',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'name'])
+        },
+        {
+          _attrs: ['country'],
+          _name: 'COMMON.LABEL.COUNTRY',
+          _type: 'COUNTRY',
+          _width: '100px',
+          _isHidden: !this.canAccess(['tableColumns', 'country'])
+        },
+        {
+          _attrs: ['professional.language'],
+          _name: 'COMMON.LABEL.LANGUAGE',
+          _type: 'TEXT',
+          _width: '110px',
+          _isHidden: !this.canAccess(['tableColumns', 'language'])
+        },
+        {
+          _attrs: ['professional.jobTitle'],
+          _name: 'COMMON.LABEL.JOBTITLE',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'job'])
+        },
+        {
+          _attrs: ['professional.company.name'],
+          _name: 'COMMON.LABEL.COMPANY',
+          _type: 'TEXT',
+          _isHidden: !this.canAccess(['tableColumns', 'company'])
+        },
+        {
+          _attrs: ['followUp.objective'],
+          _name: 'TABLE.HEADING.OBJECTIVE',
+          _type: 'DROPDOWN',
+          _width: '200px',
+          _isHidden: !this.canAccess(['tableColumns', 'objective']),
+          _choices: [
+            {
+              _name: 'INTERVIEW',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW',
+              _class: 'button is-secondary',
+              _disabledClass: 'text-secondary'
+            },
+            {
+              _name: 'OPENING',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.OPENING',
+              _class: 'button is-draft',
+              _disabledClass: 'text-draft'
+            },
+            {
+              _name: 'NO_FOLLOW',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW',
+              _class: 'button is-danger',
+              _disabledClass: 'text-alert'
+            },
+            {
+              _name: 'WITHOUT_OBJECTIVE',
+              _alias: 'SHARED_FOLLOW_UP.BUTTON.WITHOUT_OBJECTIVE',
+              _class: ''
+            }
+          ],
+          _disabledState: {_attrs: 'followUp.date', _type: 'DATE'}
+        },
+      ]
+    };
   }
 
   private _reinitializeVariables() {
@@ -354,8 +459,8 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   public updateAnswers(answers: Array<any>) {
     if (answers && answers.length) {
-      this.tableInfos = <Table>{};
-      this.reinitializeTable.emit({answers: answers, total: answers.length});
+      this._tableInfos = <Table>{};
+      this._initTable(answers, answers.length);
     }
   }
 
