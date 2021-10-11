@@ -10,7 +10,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 import {InnovCard} from '../../../../../models/innov-card';
-// import {InnovationService} from '../../../../../services/innovation/innovation.service';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
@@ -22,6 +22,10 @@ import {AnswerService} from '../../../../../services/answer/answer.service';
   styleUrls: ['./shared-follow-up-client.component.scss']
 })
 export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
+
+  get finalAnswers(): Array<Answer> {
+    return this._finalAnswers;
+  }
 
   get config(): Config {
     return this._config;
@@ -303,8 +307,10 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     sort: '{ "created": "-1" }'
   };
 
+  private _finalAnswers: Array<Answer> = [];
+
   constructor(private _formBuilder: FormBuilder,
-              // private _innovationService: InnovationService,
+              private _innovationService: InnovationService,
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
@@ -363,18 +369,16 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     if (!this._isSending) {
       this._isSending = true;
       this._answerService.updateLinkingStatus(this._selectedIds, this._selectedPhrase).pipe(first()).subscribe(() => {
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
-        this._isSending = false;
-        this.toggleStartContact(false);
-        /*this._innovationService.sendFollowUpEmails(this._project._id, this._selectedPhrase)
-          .pipe(first()).subscribe(() => {
+        this._innovationService.sendFollowUpEmails(this._project._id, this._selectedPhrase).pipe(first()).subscribe(() => {
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
-        }, (err: HttpErrorResponse) => {
+          this._isSending = false;
+          this.toggleStartContact(false);
+          }, (err: HttpErrorResponse) => {
           this._isSending = false;
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
-        });*/
-      }, (err: HttpErrorResponse) => {
+        });
+        }, (err: HttpErrorResponse) => {
         this._isSending = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -387,7 +391,17 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   public removeCc(index: number) {
+    const value = this._selectedCC[index];
     this._selectedCC.splice(index, 1);
+    const followUp = this._project.followUpEmails;
+    followUp.cc = this._selectedCC;
+    this._saveProject(followUp).then((_value) => {
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'SHARED_FOLLOW_UP.REMOVED_CC');
+    }).catch((err: HttpErrorResponse) => {
+      this._selectedCC.push(value);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
   public onSelectCc(event: InnovationFollowUpEmailsCc) {
@@ -408,18 +422,35 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   public addCC(value: InnovationFollowUpEmailsCc, fromSelect = false) {
     if (!this.isExistCc(value)) {
       this._selectedCC.push(value);
-      this.closeModal();
-      this._formData.reset();
-      this._translateNotificationsService.success('ERROR.SUCCESS', 'SHARED_FOLLOW_UP.SUCCESSFUL_CC');
-
-      if (fromSelect) {
-        this._ccToAdd = <InnovationFollowUpEmailsCc>{};
-      } else {
-        this._cc.push(value);
-      }
+      const followUp = this._project.followUpEmails;
+      followUp.cc = this._selectedCC;
+      this._saveProject(followUp).then((_value) => {
+        this.closeModal();
+        this._formData.reset();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'SHARED_FOLLOW_UP.ADDED_CC');
+        if (fromSelect) {
+          this._ccToAdd = <InnovationFollowUpEmailsCc>{};
+        } else {
+          this._cc.push(value);
+        }
+      }).catch((err: HttpErrorResponse) => {
+        this._selectedCC.pop();
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
     } else {
       this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.ALREADY_USER_EMAIL');
     }
+  }
+
+  private _saveProject(object: any) {
+    return new Promise((resolve, reject) => {
+      this._innovationService.save(this._project._id, object).pipe(first()).subscribe(() => {
+        resolve (true);
+      }, (err) => {
+        reject (err);
+      });
+    });
   }
 
   public closeModal() {
@@ -452,8 +483,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   private _initFinaleTable() {
     this._finalTableInfos = {
       _selector: 'project-contact-send',
-      _content: JSON.parse(JSON.stringify(this._answers.filter((_answer) => !!_answer._isSelected))),
-      _total: this._selectedIds.length,
+      _content: this._finalAnswers,
+      _total: this._finalAnswers.length,
       _isLocal: true,
       _columns: [
         {
@@ -543,6 +574,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
             break;
           case 'STEP_CONFIGURE':
             this._finalTableInfos = <Table>{};
+            this._finalAnswers = JSON.parse(JSON.stringify(this._answers.filter((_answer) => !!_answer._isSelected)));
             this._initFinaleTable();
             break;
         }
@@ -571,6 +603,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         this._initTable([], -1);
         this.reinitializeAnswers.emit();
         this._currentStep = 0;
+        this._selectedCC = [];
+        this._finalAnswers = [];
       }
     }
   }

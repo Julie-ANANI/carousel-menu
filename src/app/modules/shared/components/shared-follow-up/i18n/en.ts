@@ -8,7 +8,9 @@ export const SHARED_FOLLOW_UP = {
 
   'SELECT_CC': 'Select the person',
 
-  'SUCCESSFUL_CC': 'The person has been added successfully.',
+  'ADDED_CC': 'The person has been added successfully.',
+
+  'REMOVED_CC': 'The person has been removed successfully.',
 
   'KAREN': 'The email will be sent from the address of our avatar, Karine Caulfield.',
 
