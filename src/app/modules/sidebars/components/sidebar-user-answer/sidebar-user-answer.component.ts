@@ -232,6 +232,7 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   public enableSave() {
     this._toBeSaved = true;
+    console.log(this._toBeSaved);
   }
 
   public updateProfileQuality(object: { value: number }) {
