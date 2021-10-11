@@ -23,6 +23,7 @@ import { CommonService } from '../../../../../services/common/common.service';
 import { NavigationFrontService } from '../../../../../services/navigation/navigation-front.service';
 import { Response } from '../../../../../models/response';
 import { Campaign } from '../../../../../models/campaign';
+import { analysisSubTubs, preparationSubTabs } from "../../../../../models/static-data/subtabs";
 
 interface Tab {
   route: string;
@@ -64,27 +65,12 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     {key: 'settings', name: 'Settings', route: 'settings', icon: 'fas fa-cog'},
     {
       key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt',
-      subTabs: [
-        {name: 'Description', path: 'description'},
-        {name: 'Questionnaire', path: 'questionnaire'},
-        {name: 'Targeting', path: 'targeting'},
-        {name: 'Campaigns', path: 'campaigns'},
-        {name: 'Statistics', path: 'statistics'},
-        {name: 'Campaign/Search', path: 'campaigns/search'},
-        {name: 'Campaign/History', path: 'campaigns/history'},
-        {name: 'Campaign/Pros', path: 'campaigns/pros'},
-        {name: 'Campaign/Workflows', path: 'campaigns/workflows'},
-        {name: 'Campaign/Batch', path: 'campaigns/batch'},
-      ]
+      subTabs: []
     },
     {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
     {
       key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area',
-      subTabs: [
-        {name: 'Synthesis', path: 'synthesis'},
-        {name: 'Answer tags', path: 'answer-tags'},
-        {name: 'Storyboard', path: 'storyboard'},
-      ]
+      subTabs: []
     },
     {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
   ];
@@ -132,6 +118,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
+      this._initSubTabs();
+
       this.getAllCampaigns();
 
       if (this._project && !!this._project._id) {
@@ -159,6 +147,23 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
         this._isLoading = false;
         this._fetchingError = true;
       }
+    }
+  }
+
+  private _initSubTabs() {
+    if (this.canAccess(['tabs', 'preparation'])) {
+      preparationSubTabs.map(sub => {
+        if (this.canAccess(sub.access)) {
+            this._tabs[1].subTabs.push(sub);
+        }
+      });
+    }
+    if (this.canAccess(['tabs', 'analysis'])) {
+      analysisSubTubs.map(sub => {
+        if (this.canAccess(sub.access)) {
+          this._tabs[3].subTabs.push(sub);
+        }
+      });
     }
   }
 
