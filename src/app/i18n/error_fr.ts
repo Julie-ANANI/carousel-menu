@@ -101,7 +101,7 @@ export const ERROR = {
     'LINKING': 'Mise en relation',
     'LINKING_DONE': 'Votre demande de mise en relation a été prise en compte',
     'SEND_EMAILS': 'Envoi des emails',
-    'SEND_EMAILS_OK': 'Les emails ont bien été envoyés',
+    'SEND_EMAILS_OK': 'Les emails ont bien été envoyés.',
     'SEND_MESSAGE': 'Le message a été envoyé avec succès.',
     'COLLABORATORS_ADDED': 'Les collaborateurs ont été ajoutés au projet.'
   },

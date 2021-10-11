@@ -10,6 +10,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 import {InnovCard} from '../../../../../models/innov-card';
+// import {InnovationService} from '../../../../../services/innovation/innovation.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../services/error/error-front.service';
+import {AnswerService} from '../../../../../services/answer/answer.service';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -299,6 +304,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   };
 
   constructor(private _formBuilder: FormBuilder,
+              // private _innovationService: InnovationService,
+              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -355,6 +362,23 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   public onClickSend() {
     if (!this._isSending) {
       this._isSending = true;
+      this._answerService.updateLinkingStatus(this._selectedIds, this._selectedPhrase).pipe(first()).subscribe(() => {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+        this._isSending = false;
+        this.toggleStartContact(false);
+        /*this._innovationService.sendFollowUpEmails(this._project._id, this._selectedPhrase)
+          .pipe(first()).subscribe(() => {
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+        }, (err: HttpErrorResponse) => {
+          this._isSending = false;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+        });*/
+      }, (err: HttpErrorResponse) => {
+        this._isSending = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        console.error(err);
+      });
     }
   }
 
