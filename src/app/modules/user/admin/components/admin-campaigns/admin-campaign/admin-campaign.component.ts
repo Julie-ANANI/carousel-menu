@@ -1,23 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { NavigationFrontService } from '../../../../../../services/navigation/navigation-front.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 @Component({
   templateUrl: './admin-campaign.component.html',
   styleUrls: ['./admin-campaign.component.scss']
 })
 
-export class AdminCampaignComponent implements OnInit, OnDestroy {
+export class AdminCampaignComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
               private _rolesFrontService: RolesFrontService,
-              private _navigationFrontService: NavigationFrontService,
               private _translateTitleService: TranslateTitleService) {
 
     this._initHeading();
@@ -60,8 +56,6 @@ export class AdminCampaignComponent implements OnInit, OnDestroy {
   private _isLoading = true;
 
   private _fetchingError = false;
-
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private static _initHeading(value: string): string {
     switch (value) {
@@ -107,14 +101,6 @@ export class AdminCampaignComponent implements OnInit, OnDestroy {
       this._isLoading = false;
       this._fetchingError = true;
     }
-
-    this._navigationFrontService.navigation().pipe(takeUntil(this._ngUnsubscribe)).subscribe(value => {
-      console.log(value);
-      if (value && value.item && value.item.path.indexOf('/') !== -1) {
-        setTimeout(() => {
-        }, 0);
-      }
-    });
   }
 
   private _initHeading() {
@@ -153,11 +139,6 @@ export class AdminCampaignComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._heading = AdminCampaignComponent._initHeading(key);
     this._setPageTitle();
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }
