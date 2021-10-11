@@ -41,19 +41,19 @@ import { CommonService } from '../../../../../../services/common/common.service'
   animations: [
     trigger('listAnimation', [
       transition('* => *', [
-        query(':enter', style({ opacity: 0 }), { optional: true }),
+        query(':enter', style({opacity: 0}), {optional: true}),
         query(
           ':enter',
           stagger('300ms', [
             animate(
               '300ms ease-in-out',
               keyframes([
-                style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
-                style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 }),
+                style({opacity: 0, transform: 'translateX(-20%)', offset: 0}),
+                style({opacity: 1, transform: 'translateX(0)', offset: 1.0}),
               ])
             ),
           ]),
-          { optional: true }
+          {optional: true}
         ),
       ]),
     ]),
@@ -89,8 +89,9 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
     private _commonService: CommonService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _socketService: SocketService,
-    private _campaignService: CampaignService
-  ) {}
+    private _campaignService: CampaignService,
+  ) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {

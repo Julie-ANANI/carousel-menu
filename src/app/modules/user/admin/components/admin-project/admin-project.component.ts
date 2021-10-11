@@ -1,31 +1,36 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {TranslateTitleService} from '../../../../../services/title/title.service';
-import {Innovation} from '../../../../../models/innovation';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
-import {InnovationService} from '../../../../../services/innovation/innovation.service';
-import {first, takeUntil} from 'rxjs/operators';
-import {SocketService} from '../../../../../services/socket/socket.service';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {isPlatformBrowser} from '@angular/common';
-import {Mission} from '../../../../../models/mission';
-import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Subject} from 'rxjs';
-import {CampaignFrontService} from '../../../../../services/campaign/campaign-front.service';
-import {AuthService} from '../../../../../services/auth/auth.service';
-import {InnovCard} from '../../../../../models/innov-card';
-import {environment} from '../../../../../../environments/environment';
-import {CommonService} from '../../../../../services/common/common.service';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { TranslateTitleService } from '../../../../../services/title/title.service';
+import { Innovation } from '../../../../../models/innovation';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { SocketService } from '../../../../../services/socket/socket.service';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { Mission } from '../../../../../models/mission';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { CampaignFrontService } from '../../../../../services/campaign/campaign-front.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { InnovCard } from '../../../../../models/innov-card';
+import { environment } from '../../../../../../environments/environment';
+import { CommonService } from '../../../../../services/common/common.service';
+import { NavigationFrontService } from '../../../../../services/navigation/navigation-front.service';
+import { Response } from '../../../../../models/response';
+import { Campaign } from '../../../../../models/campaign';
+import { analysisSubTubs, preparationSubTabs } from "../../../../../models/static-data/subtabs";
 
 interface Tab {
   route: string;
   name: string;
   key: string;
   icon: string;
+  subTabs?: Array<any>;
 }
 
 @Component({
@@ -58,12 +63,17 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _tabs: Array<Tab> = [
     {key: 'settings', name: 'Settings', route: 'settings', icon: 'fas fa-cog'},
-    {key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt'},
+    {
+      key: 'preparation', name: 'Preparation', route: 'preparation', icon: 'fas fa-pencil-alt',
+      subTabs: []
+    },
     {key: 'collection', name: 'Collection', route: 'collection', icon: 'fas fa-file-archive'},
-    {key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area'},
-    {key: 'followUp', name: 'Follow-up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
+    {
+      key: 'analysis', name: 'Analysis', route: 'analysis', icon: 'fas fa-chart-area',
+      subTabs: []
+    },
+    {key: 'followUp', name: 'Follow up', route: 'follow-up', icon: 'fas fa-mail-bulk'}
   ];
-
 
   private _isLoading = true;
 
@@ -84,6 +94,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _quizLink = '';
 
+  private _allCampaigns: Array<Campaign> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -95,6 +107,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
+              private _navigationFrontService: NavigationFrontService,
               private _commonService: CommonService,
               private _socketService: SocketService) {
     this._project = this._activatedRoute.snapshot.data['innovation'];
@@ -106,6 +119,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
+      this._initSubTabs();
+
+      this.getAllCampaigns();
+
       if (this._project && !!this._project._id) {
         this._initPageTitle();
         this._isLoading = false;
@@ -144,6 +161,23 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
       if (index !== -1) {
         this._tabs.splice(index, 1);
       }
+    }
+  }
+
+  private _initSubTabs() {
+    if (this.canAccess(['tabs', 'preparation'])) {
+      preparationSubTabs.map(sub => {
+        if (this.canAccess(sub.access)) {
+          this._tabs[1].subTabs.push(sub);
+        }
+      });
+    }
+    if (this.canAccess(['tabs', 'analysis'])) {
+      analysisSubTubs.map(sub => {
+        if (this.canAccess(sub.access)) {
+          this._tabs[3].subTabs.push(sub);
+        }
+      });
     }
   }
 
@@ -256,6 +290,20 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
     }
 
+  }
+
+  /**
+   *
+   * @private
+   */
+  private getAllCampaigns() {
+    this._innovationService.campaigns(this._project._id).pipe(first()).subscribe((response: Response) => {
+      this._allCampaigns = response && response.result || [];
+      this._campaignFrontService.setAllCampaigns(this._allCampaigns);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.adminErrorMessage(err));
+      console.error(err);
+    });
   }
 
   public onClickImportFollowUp(event: Event) {
@@ -444,6 +492,16 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+  }
+
+  navigateTo(event: Event, tab: Tab, item: any) {
+    if (item.path.indexOf('/') !== -1) {
+      const path = item.path.split('/');
+      this._campaignFrontService.setActiveCampaignTab(path[path.length - 1]);
+      this._campaignFrontService.setShowCampaignTabs(true);
+      this._campaignFrontService.defaultCampaign = this._allCampaigns[0];
+    }
+    this._navigationFrontService.setNavigation({tab: tab, item: item});
   }
 
 }

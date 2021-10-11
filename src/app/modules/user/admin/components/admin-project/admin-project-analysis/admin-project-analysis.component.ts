@@ -6,6 +6,8 @@ import {Subject} from 'rxjs';
 import {RouteFrontService} from '../../../../../../services/route/route-front.service';
 import {TranslateTitleService} from '../../../../../../services/title/title.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import { NavigationFrontService } from "../../../../../../services/navigation/navigation-front.service";
+import { Router } from "@angular/router";
 
 interface Tab {
   route: string;
@@ -36,6 +38,8 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
   constructor(private _innovationFrontService: InnovationFrontService,
               private _routeFrontService: RouteFrontService,
               private _rolesFrontService: RolesFrontService,
+              private _router: Router,
+              private _navigationFrontService: NavigationFrontService,
               private _translateTitleService: TranslateTitleService) { }
 
   ngOnInit() {
@@ -43,11 +47,20 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
       this._project = innovation || <Innovation>{};
       this._setPageTitle();
     });
+
+    this._navigationFrontService.navigation().pipe(takeUntil(this._ngUnsubscribe)).subscribe(value => {
+      if (value && value.item && value.tab.name === 'Analysis') {
+        setTimeout(() => {
+          this._setPageTitle(value.item.path);
+          this._router.navigate([`/user/admin/projects/project/${this._project._id}/analysis/${value.item.path}`]);
+        }, 0);
+      }
+    });
   }
 
   private _setPageTitle(tab?: string) {
     this._activeTab = tab ? tab : this._activeTab;
-    this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)} 
+    this._translateTitleService.setTitle(`${this._activeTab.slice(0,1).toUpperCase()}${this._activeTab.slice(1)}
       | Analysis | ${this._project.name}`);
   }
 
