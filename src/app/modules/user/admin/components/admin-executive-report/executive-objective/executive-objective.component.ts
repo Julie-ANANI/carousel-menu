@@ -5,11 +5,13 @@ import { first } from 'rxjs/operators';
 import { ExecutiveObjective } from '../../../../../../models/executive-report';
 import { UserService } from '../../../../../../services/user/user.service';
 import { CommonService } from '../../../../../../services/common/common.service';
-import { DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
+import { EnterpriseService } from '../../../../../../services/enterprise/enterprise.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 interface Commercial {
   _id: string;
@@ -49,7 +51,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   private _showUploadModal = false;
 
-  private _config: ExecutiveObjective = <ExecutiveObjective> {
+  private _config: ExecutiveObjective = <ExecutiveObjective>{
     objective: '',
     client: {
       name: '',
@@ -86,7 +88,10 @@ export class ExecutiveObjectiveComponent implements OnInit {
               private _executiveReportFrontService: ExecutiveReportFrontService,
               private _userService: UserService,
               private _sanitizer: DomSanitizer,
-              private _autoCompleteService: AutocompleteService) { }
+              private _enterpriseService: EnterpriseService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _autoCompleteService: AutocompleteService) {
+  }
 
   ngOnInit(): void {
     this._getCommercials();
@@ -106,19 +111,19 @@ export class ExecutiveObjectiveComponent implements OnInit {
       this._userService.getAll(config)
         .pipe(first()).subscribe((response) => {
 
-          this._allCommercials = response && response['result'] ? response['result'] : [];
+        this._allCommercials = response && response['result'] ? response['result'] : [];
 
-          if (this._allCommercials.length > 0) {  // TODO really? a sort?
-            this._allCommercials = this._allCommercials.sort((a, b) => {
-              const nameA = (a.firstName + a.lastName).toLowerCase();
-              const nameB =  (b.firstName + b.lastName).toLowerCase();
-              return nameA.localeCompare(nameB);
-            });
-          }
+        if (this._allCommercials.length > 0) {  // TODO really? a sort?
+          this._allCommercials = this._allCommercials.sort((a, b) => {
+            const nameA = (a.firstName + a.lastName).toLowerCase();
+            const nameB = (b.firstName + b.lastName).toLowerCase();
+            return nameA.localeCompare(nameB);
+          });
+        }
 
-          this._populateCommercial();
+        this._populateCommercial();
 
-        }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         console.error(err);
       });
     }
@@ -183,7 +188,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
     this.emitChanges();
   }
 
-  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+  public companiesSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
     return this._autoCompleteService.get({query: searchString, type: 'company', internalOnly: 'true'});
   }
 
@@ -272,11 +277,23 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   public uploadImage(event: any) {
     if (event && event.url) {
-      console.log(event.url);
       this._config.client.company.logo.uri = event.url;
       this._logo = event.url;
+      this.updateEnterprise();
     }
     this._showUploadModal = false;
+  }
+
+  updateEnterprise() {
+    if (this._config.client.company && this._config.client.company.id && this._config.client.company.logo) {
+      this._enterpriseService.updateLogo(this._config.client.company.id, this._config.client.company.logo).pipe(first())
+        .subscribe(res => {
+          this._translateNotificationsService.success('Success', 'Upload company logo succeed.');
+        }, err => {
+          console.error(err);
+          this._translateNotificationsService.error('ERROR.ERROR', 'Upload company logo failed.');
+        });
+    }
   }
 
   openUploadModal() {
