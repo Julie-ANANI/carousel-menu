@@ -131,4 +131,13 @@ export class SharedTagsComponent implements OnInit {
       this.onSubmit();
     }
   }
+
+  addTagSelected(event: any) {
+    if (typeof event === 'object') {
+      if (typeof this._tagForm.get('tag').value !== 'string') {
+        this.addTag.emit(this._tagForm.get('tag').value);
+        this._tagForm.get('tag').reset();
+      }
+    }
+  }
 }
