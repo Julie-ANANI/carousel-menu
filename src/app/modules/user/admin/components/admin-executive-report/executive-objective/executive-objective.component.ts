@@ -47,6 +47,8 @@ export class ExecutiveObjectiveComponent implements OnInit {
 
   @Output() configChange: EventEmitter<ExecutiveObjective> = new EventEmitter<ExecutiveObjective>();
 
+  private _showUploadModal = false;
+
   private _config: ExecutiveObjective = <ExecutiveObjective> {
     objective: '',
     client: {
@@ -209,6 +211,7 @@ export class ExecutiveObjectiveComponent implements OnInit {
         alt: c.name,
         id: ''
       };
+      console.log(c);
       this._company = c.name;
       this._logo = c.logo;
       this.emitChanges();
@@ -259,4 +262,24 @@ export class ExecutiveObjectiveComponent implements OnInit {
     return this._clientEmailColor;
   }
 
+  get showUploadModal(): boolean {
+    return this._showUploadModal;
+  }
+
+  set showUploadModal(value: boolean) {
+    this._showUploadModal = value;
+  }
+
+  public uploadImage(event: any) {
+    if (event && event.url) {
+      console.log(event.url);
+      this._config.client.company.logo.uri = event.url;
+      this._logo = event.url;
+    }
+    this._showUploadModal = false;
+  }
+
+  openUploadModal() {
+    this._showUploadModal = true;
+  }
 }
