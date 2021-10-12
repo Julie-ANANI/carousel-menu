@@ -124,7 +124,7 @@
       <!-- /client company name -->
 
 
-      <div>
+      <div *ngIf="company">
         <button class="button is-secondary is-link is-xs" (click)="openUploadModal()">
           <i class="fas fa-cloud-upload-alt icon-left"></i>Add a logo
         </button>
