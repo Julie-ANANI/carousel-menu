@@ -209,15 +209,14 @@ export class ExecutiveObjectiveComponent implements OnInit {
         };
       }
       this._config.client.company.name = c.name;
-      this._config.client.company.topLevelDomain = c.domain;
+      this._config.client.company.topLevelDomain = c.domain || '';
       this._config.client.company.id = c.id;
       this._config.client.company.logo = {
         uri: c.logo,
         alt: c.name,
         id: ''
       };
-      console.log(c);
-      this._company = c.name;
+      this._company = c.name || '';
       this._logo = c.logo;
       this.emitChanges();
     } // If typeof c === string, leave the thing alone.
@@ -279,21 +278,34 @@ export class ExecutiveObjectiveComponent implements OnInit {
     if (event && event.url) {
       this._config.client.company.logo.uri = event.url;
       this._logo = event.url;
-      this.updateEnterprise();
+      console.log(this._config.client.company);
+      if (this._config.client.company && this._config.client.company.id && this._config.client.company.logo) {
+        // company exists
+        this.updateEnterprise();
+      }
     }
     this._showUploadModal = false;
   }
 
+  // createEnterprise() {
+  //   const enterprise: Enterprise = <Enterprise>this._config.client.company;
+  //   console.log(enterprise);
+  //   this._enterpriseService.create(enterprise).pipe(first()).subscribe(res => {
+  //     console.log(res);
+  //   }, err => {
+  //     console.error(err);
+  //     this._translateNotificationsService.error('ERROR.ERROR', 'Creating a company failed.');
+  //   });
+  // }
+
   updateEnterprise() {
-    if (this._config.client.company && this._config.client.company.id && this._config.client.company.logo) {
-      this._enterpriseService.updateLogo(this._config.client.company.id, this._config.client.company.logo).pipe(first())
-        .subscribe(res => {
-          this._translateNotificationsService.success('Success', 'Upload company logo succeed.');
-        }, err => {
-          console.error(err);
-          this._translateNotificationsService.error('ERROR.ERROR', 'Upload company logo failed.');
-        });
-    }
+    this._enterpriseService.updateLogo(this._config.client.company.id, this._config.client.company.logo).pipe(first())
+      .subscribe(res => {
+        this._translateNotificationsService.success('Success', 'Upload company logo succeed.');
+      }, err => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', 'Upload company logo failed.');
+      });
   }
 
   openUploadModal() {
