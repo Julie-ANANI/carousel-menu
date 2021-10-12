@@ -128,11 +128,7 @@ export class SharedTagsComponent implements OnInit {
   addNewTags(event: KeyboardEvent) {
     event.preventDefault();
     if (event.keyCode === 13) {
-      const name = this._tagForm.get('tag').value;
-      if (typeof name === 'string') {
-        this.createTag.emit({label: {en: name, fr: name}, description: {en: '', fr: ''}});
-      }
-      this._tagForm.get('tag').reset();
+      this.onSubmit();
     }
   }
 }
