@@ -370,6 +370,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       this._isSending = true;
       this._answerService.updateLinkingStatus(this._selectedIds, this._selectedPhrase).pipe(first()).subscribe(() => {
         this._innovationService.sendFollowUpEmails(this._project._id, this._selectedPhrase).pipe(first()).subscribe(() => {
+          this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
           this._isSending = false;
           this.toggleStartContact(false);
