@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {Answer} from '../../../../../models/answer';
 import {Table} from '../../../../table/models/table';
 import {Config} from '../../../../../models/config';
-import {Innovation, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
+import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
 import {MissionQuestion} from '../../../../../models/mission';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
 import {EmailsObject} from '../../../../../models/email';
@@ -393,15 +393,19 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   public removeCc(index: number) {
     const value = this._selectedCC[index];
     this._selectedCC.splice(index, 1);
-    const followUp = this._project.followUpEmails;
-    followUp.cc = this._selectedCC;
-    this._saveProject(followUp).then((_value) => {
+    this._saveProject({followUpEmails: this._followUpObj()}).then((_value) => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'SHARED_FOLLOW_UP.REMOVED_CC');
     }).catch((err: HttpErrorResponse) => {
       this._selectedCC.push(value);
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
+  }
+
+  private _followUpObj(): InnovationFollowUpEmails {
+    const followUp = this._project.followUpEmails;
+    followUp.cc = this._selectedCC;
+    return followUp;
   }
 
   public onSelectCc(event: InnovationFollowUpEmailsCc) {
@@ -422,9 +426,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   public addCC(value: InnovationFollowUpEmailsCc, fromSelect = false) {
     if (!this.isExistCc(value)) {
       this._selectedCC.push(value);
-      const followUp = this._project.followUpEmails;
-      followUp.cc = this._selectedCC;
-      this._saveProject(followUp).then((_value) => {
+      this._saveProject({followUpEmails: this._followUpObj()}).then((_value) => {
         this.closeModal();
         this._formData.reset();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'SHARED_FOLLOW_UP.ADDED_CC');
