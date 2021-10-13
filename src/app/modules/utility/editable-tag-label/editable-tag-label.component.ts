@@ -34,7 +34,7 @@ type TagType = 'tags';
 })
 
 export class EditableTagLabelComponent implements OnInit {
-  @Input() set isEditable(value: boolean){
+  @Input() set isEditable(value: boolean) {
     this._isEditable = value;
   }
 
@@ -42,11 +42,18 @@ export class EditableTagLabelComponent implements OnInit {
 
   @Input() type: TagType = null; // 'tags';
 
-  @Input() defaultTag = '';
+  @Input() set defaultTag(value: string) {
+    this._defaultTag = value;
+    this._originalTag = value;
+  }
 
   @Output() emitValue: EventEmitter<any> = new EventEmitter();
 
   private _isEditable = false;
+
+  private _defaultTag = '';
+
+  private _originalTag = '';
 
   constructor(private _translateService: TranslateService,
               private _multilingPipe: MultilingPipe,
@@ -58,7 +65,6 @@ export class EditableTagLabelComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
 
 
   /**
@@ -92,13 +98,13 @@ export class EditableTagLabelComponent implements OnInit {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    this.emitValue.emit(this.defaultTag);
+    this.emitValue.emit(this._defaultTag);
   }
 
   addNewTags(event: KeyboardEvent) {
     event.preventDefault();
     if (event.keyCode === 13) {
-      this.emitValue.emit(this.defaultTag);
+      this.emitValue.emit(this._defaultTag);
     }
   }
 
@@ -107,6 +113,15 @@ export class EditableTagLabelComponent implements OnInit {
   }
 
   valueOnChange(value: any) {
-    this.defaultTag = value;
+    this._defaultTag = value;
+  }
+
+  get defaultTag(): string {
+    return this._defaultTag;
+  }
+
+  focusOut() {
+    this._defaultTag = this._originalTag;
+    this.emitValue.emit(this._defaultTag);
   }
 }

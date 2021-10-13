@@ -4,6 +4,7 @@
     <i class="fas fa-tag icon-left"></i>
     <label class="d-block w-full" *ngIf="isEditable">
       <input
+        (focusout)="focusOut()"
         (keyup)="addNewTags($event)"
         [disabled]="!isEditable"
         [list-formatter]="autocompleteListFormatter"
