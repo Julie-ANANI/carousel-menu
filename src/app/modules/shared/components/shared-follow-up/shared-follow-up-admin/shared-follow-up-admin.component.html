@@ -141,12 +141,11 @@
 <ng-container *ngIf="!!canAccess()">
   <sidebar-left [(sidebarTemplate)]="sidebarTemplate">
     <app-sidebar-filter-answers
-      (closeSidebar)="closeSidebar()"
       [answers]="answers"
       [innovation]="project"
       [isViewsEditable]="canAccess(['edit', 'views'])"
       [questions]="questions"
-      (updateAnswers)="updateAnswers($event)"
+      (selectedAnswers)="updateAnswers($event)"
       [templateType]="sidebarTemplate.type">
     </app-sidebar-filter-answers>
   </sidebar-left>

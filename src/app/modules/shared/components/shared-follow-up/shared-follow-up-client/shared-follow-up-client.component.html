@@ -43,7 +43,7 @@
             <aside [ngStyle]="{'max-width': '285px'}" class="sidebar-wrapper">
               <app-sidebar-in-page [(sidebarTemplate)]="sidebarTemplate">
                 <app-sidebar-filter-answers
-                  (updateAnswers)="updateAnswers($event)"
+                  (selectedAnswers)="updateAnswers($event)"
                   [answers]="answers"
                   [innovation]="project"
                   [questions]="questions"

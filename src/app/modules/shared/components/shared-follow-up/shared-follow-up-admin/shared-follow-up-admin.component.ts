@@ -6,7 +6,7 @@ import {Answer} from '../../../../../models/answer';
 import {Innovation} from '../../../../../models/innovation';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
@@ -14,6 +14,8 @@ import {TranslateNotificationsService} from '../../../../../services/notificatio
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 import {AnswerService} from '../../../../../services/answer/answer.service';
 import {Professional} from '../../../../../models/professional';
+import {FilterService} from '../../shared-market-report/services/filters.service';
+import {Subject} from 'rxjs';
 
 interface Pending {
   answersIds?: Array<string>;
@@ -181,6 +183,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   @Input() set answers (value: Array<Answer>) {
     this._answers = value;
+    this._initFilter();
     this._initTable(value, value.length);
   }
 
@@ -228,13 +231,25 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   private _tableInfos: Table = <Table>{};
 
+  private _subscribe: Subject<any> = new Subject<any>();
+
   constructor(private _rolesFrontService: RolesFrontService,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
+              private _filterService: FilterService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._initTable(this._answers, -1);
+  }
+
+  private _initFilter() {
+    if (this._answers.length) {
+      this._filterService.filtersUpdate.pipe(takeUntil(this._subscribe)).subscribe(() => {
+        const _filtered = this._filterService.filter(this._answers);
+        this._initTable(_filtered, _filtered.length);
+      });
+    }
   }
 
   private _initTable(answers: Array<Answer> = [], total = 0) {
@@ -457,11 +472,8 @@ export class SharedFollowUpAdminComponent implements OnInit {
     }
   }
 
-  public updateAnswers(answers: Array<any>) {
-    if (answers && answers.length) {
-      this._tableInfos = <Table>{};
-      this._initTable(answers, answers.length);
-    }
+  public updateAnswers(answers: Array<Answer>) {
+    answers.forEach((_answer) => _answer._isSelected = true);
   }
 
   public seeAnswer(answer: Answer) {

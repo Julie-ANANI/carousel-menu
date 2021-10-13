@@ -70,7 +70,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
    */
   @Output() closeSidebar: EventEmitter<void> = new EventEmitter<void>();
 
-  @Output() updateAnswers: EventEmitter<Array<Answer>> = new EventEmitter<Array<Answer>>();
+  @Output() selectedAnswers: EventEmitter<Array<Answer>> = new EventEmitter<Array<Answer>>();
 
   private _isModalEnd = false;
 
@@ -192,7 +192,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   public onSelectedContacts(event: Event) {
     event.preventDefault();
-    this.updateAnswers.emit(this._answersSelected);
+    this.selectedAnswers.emit(this._answersSelected);
   }
 
   public openModalPreview(event: Event) {
