@@ -1,12 +1,11 @@
-<div id="editable-tag-label" class="is-draft" tabindex="1" (blur)="focusOut()">
+<div id="editable-tag-label" class="is-draft">
 
   <div class="tag-container label is-tag is-draft is-rounded">
     <i class="fas fa-tag icon-left"></i>
     <label class="d-block w-full" *ngIf="isEditable">
       <input
-        (focusout)="focusOut()"
         (keyup)="addNewTags($event)"
-        [disabled]="!isEditable"
+        [disabled]="!isEditable && !defaultTag.label.en && !defaultTag.label.fr"
         [list-formatter]="autocompleteListFormatter"
         [source]="tagSuggestions.bind(this)"
         [value-formatter]="autocompleteValueFormatter"
@@ -21,12 +20,16 @@
         auto-complete>
     </label>
 
-    <div *ngIf="!isEditable" (click)="onEdit($event)">
+    <div *ngIf="!isEditable">
       {{defaultTag.label | multiling:currentLang}}
     </div>
     <i class="fas fa-times icon-right"
        (click)="deleteTag($event)"
        *ngIf="!isEditable && defaultTag._id"></i>
+
+    <i class="fas fa-window-close icon-right"
+       (click)="onCancel($event)"
+       *ngIf="isEditable"></i>
 
     <i class="fas fa-plus-circle icon-right"
        (click)="onSubmit($event)"

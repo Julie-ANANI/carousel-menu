@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../services/tags/tags.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
-import { Tag } from "../../../models/tag";
+import { Tag } from '../../../models/tag';
 
 type TagType = 'tags';
 
@@ -40,13 +40,10 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
   @Input() type: TagType = null; // 'tags';
 
   @Input() set defaultTag(value: Tag) {
-    console.log(value);
     if (value) {
-      console.log(1);
       this._defaultTag = value;
       this._originalTag = JSON.parse(JSON.stringify(value));
     } else {
-      console.log(2);
       this._isEditable = true;
       this._defaultTag = <Tag>{label: {en: '', fr: ''}};
       this._originalTag = JSON.parse(JSON.stringify(<Tag>{label: {en: '', fr: ''}}));
@@ -140,13 +137,6 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
     return this._defaultTag;
   }
 
-  focusOut() {
-    console.log(33);
-    this._defaultTag = JSON.parse(JSON.stringify(this._originalTag));
-    this._isEditable = false;
-    this.performAction.emit({action: 'cancel'});
-  }
-
   deleteTag(event: Event) {
     event.preventDefault();
     this.performAction.emit({action: 'delete', value: this._defaultTag});
@@ -177,5 +167,12 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
         document.getElementById('editable-tag-label-input').focus();
       });
     }
+  }
+
+  onCancel(event: Event) {
+    event.preventDefault();
+    this._defaultTag = JSON.parse(JSON.stringify(this._originalTag));
+    this._isEditable = false;
+    this.performAction.emit({action: 'cancel', value: this._defaultTag});
   }
 }

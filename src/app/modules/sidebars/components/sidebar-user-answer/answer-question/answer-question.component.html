@@ -371,7 +371,7 @@
   </div>
   <!-- /comment part not edit mode -->
 
-  <div class="p-top-20 d-flex align-center">
+  <div class="p-top-20 d-flex align-center flex-wrap" *ngIf="adminMode">
     <ng-container *ngFor="let tag of answerTags(question.identifier + 'Comment')">
       <app-utility-editable-tag-label
         [projectId]="projectId"
@@ -400,17 +400,17 @@
       </span>
     </div>
 
-    <div *ngIf="commenting" class="p-top-15 p-bottom-1 mxw-500">
-      <app-shared-tags
-        (addTag)="addTag($event, question.identifier + 'Comment')"
-        (createTag)="createTag($event, question.identifier + 'Comment')"
-        (removeTag)="removeTag($event, question.identifier + 'Comment')"
-        [editMode]="editMode"
-        [isSmall]="true"
-        [projectId]="projectId"
-        [tags]="answerTags(question.identifier + 'Comment')">
-      </app-shared-tags>
-    </div>
+<!--    <div *ngIf="commenting" class="p-top-15 p-bottom-1 mxw-500">-->
+<!--      <app-shared-tags-->
+<!--        (addTag)="addTag($event, question.identifier + 'Comment')"-->
+<!--        (createTag)="createTag($event, question.identifier + 'Comment')"-->
+<!--        (removeTag)="removeTag($event, question.identifier + 'Comment')"-->
+<!--        [editMode]="editMode"-->
+<!--        [isSmall]="true"-->
+<!--        [projectId]="projectId"-->
+<!--        [tags]="answerTags(question.identifier + 'Comment')">-->
+<!--      </app-shared-tags>-->
+<!--    </div>-->
 
     <div *ngIf="commenting" class="d-flex justify-between comment-wrapper p-top-15">
 
