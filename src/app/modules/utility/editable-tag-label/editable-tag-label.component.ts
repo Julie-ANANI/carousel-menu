@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +34,7 @@ type TagType = 'tags';
   styleUrls: ['./editable-tag-label.component.scss']
 })
 
-export class EditableTagLabelComponent implements OnInit {
+export class EditableTagLabelComponent implements OnInit, AfterViewInit {
   @Input() projectId = '';
 
   @Input() type: TagType = null; // 'tags';
@@ -141,9 +141,10 @@ export class EditableTagLabelComponent implements OnInit {
   }
 
   focusOut() {
+    console.log(33);
     this._defaultTag = JSON.parse(JSON.stringify(this._originalTag));
     this._isEditable = false;
-    // this.performAction.emit({action: 'add', value: this._defaultTag});
+    this.performAction.emit({action: 'cancel'});
   }
 
   deleteTag(event: Event) {
@@ -168,5 +169,13 @@ export class EditableTagLabelComponent implements OnInit {
   createNewTag() {
     this._isEditable = false;
     this.performAction.emit({action: 'create', value: this._defaultTag});
+  }
+
+  ngAfterViewInit() {
+    if (document && document.getElementById('editable-tag-label-input')) {
+      setTimeout(() => {
+        document.getElementById('editable-tag-label-input').focus();
+      });
+    }
   }
 }

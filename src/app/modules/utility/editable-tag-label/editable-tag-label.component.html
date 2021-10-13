@@ -1,9 +1,10 @@
-<div id="editable-tag-label" class="is-draft">
+<div id="editable-tag-label" class="is-draft" tabindex="1" (blur)="focusOut()">
 
   <div class="tag-container label is-tag is-draft is-rounded">
     <i class="fas fa-tag icon-left"></i>
     <label class="d-block w-full" *ngIf="isEditable">
       <input
+        (focusout)="focusOut()"
         (keyup)="addNewTags($event)"
         [disabled]="!isEditable"
         [list-formatter]="autocompleteListFormatter"
@@ -15,6 +16,7 @@
         (input)="valueOnChange($event.target['value'])"
         [min-chars]="2"
         type="text"
+        id="editable-tag-label-input"
         class="form-input is-xs text-white"
         auto-complete>
     </label>

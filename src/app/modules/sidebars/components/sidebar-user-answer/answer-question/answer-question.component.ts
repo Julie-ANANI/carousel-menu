@@ -270,6 +270,9 @@ export class AnswerQuestionComponent {
       case 'delete':
         this.removeTag(tag, identifier);
         break;
+      case 'cancel':
+        this._isAddTag = false;
+        break;
     }
   }
 
