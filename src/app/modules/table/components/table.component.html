@@ -1,8 +1,9 @@
-<div id="table-wrapper">
+<div [id]="'table-wrapper'">
 
   <!-- section title and search -->
   <ng-container *ngIf="table._isTitle || table._isSearchable">
     <div class="flex-wrap p-bottom-10 flex-start">
+
       <!-- number of results and title -->
       <ng-container *ngIf="table._isTitle">
         <div class="text-notify text-sm m-right-20 m-bottom-20">
@@ -37,11 +38,16 @@
       <!-- /Add parent: legend -->
 
       <!-- filter-country -->
-      <div *ngIf="table._isFilterCountry" class="filters-wrap">
-        <button class="button is-primary" style="height: inherit" (click)="performFilters($event)">
-          Filter by country
-        </button>
-      </div>
+      <ng-container *ngIf="table._isFilterCountry">
+        <div class="filters-wrap">
+          <button
+            [ngStyle]="{'height': 'inherit'}"
+            (click)="performFilters($event)"
+            class="button is-primary">
+            Filter by country
+          </button>
+        </div>
+      </ng-container>
       <!-- /filter-country -->
 
     </div>
@@ -55,7 +61,7 @@
       <app-message-template
         [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
         <div class="flex-centered">
-          <div class="loading is-white" style="margin-right: 0.8rem"></div>
+          <div class="loading is-white m-right-15"></div>
           <span [innerText]="'TABLE.MESSAGES.FETCHING'" translate></span>
         </div>
       </app-message-template>
@@ -70,8 +76,10 @@
       <app-message-template
         [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
         [widthMax]="isSearching ? '362px' : '273px'">
-        <span [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'"
-              translate></span>
+        <span
+          [innerText]="isSearching ? 'TABLE.MESSAGES.NO_RESULT_SEARCHING' : 'TABLE.MESSAGES.NO_RESULT'"
+          translate>
+        </span>
       </app-message-template>
     </div>
   </ng-container>
@@ -80,8 +88,9 @@
 
   <!-- when result -->
   <div *ngIf="table._total > 0" [ngStyle]="{ 'min-height': table._isNoMinHeight ? 'unset' : '500px' }">
-    <div class="table-responsive is-max-height"
-         [ngClass]="{ 'scroll-no': isLoadingData, 'scroll-xy': table._columns.length > 6 && !isLoadingData }">
+    <div
+      [ngClass]="{ 'scroll-no': isLoadingData, 'scroll-xy': table._columns.length > 6 && !isLoadingData }"
+      class="table-responsive is-max-height">
 
       <!-- loading style -->
       <ng-container *ngIf="isLoadingData">
@@ -101,13 +110,14 @@
             <th class="cell-checkbox">
               <div class="flex-wrapper">
                 <div class="text-ellipsis truncate-text">
-                  <label class="flex-centered" [ngClass]="{ 'active': massSelection }">
-                    <input type="checkbox" (change)="selectAll($event)">
-                    <i *ngIf="selectedRows === table._content.length" class="icon icon-check"></i>
-                    <span
-                      *ngIf="selectedRows < table._content.length && selectedRows > 0"
-                      class="icon icon-minus text-primary">
-                      </span>
+                  <label [ngClass]="{ 'active': massSelection }" class="flex-centered">
+                    <input (change)="selectAll($event)" type="checkbox">
+                    <ng-container *ngIf="selectedRows === table._content.length">
+                      <i class="icon icon-check"></i>
+                    </ng-container>
+                    <ng-container *ngIf="selectedRows < table._content.length && selectedRows > 0">
+                      <i class="icon icon-minus text-primary"></i>
+                    </ng-container>
                   </label>
                 </div>
               </div>
@@ -115,30 +125,25 @@
           </ng-container>
           <!-- /if we have selectable -->
 
-
           <!-- rest columns -->
           <ng-container *ngIf="!massSelection && selectedRows === 0">
             <th
-              *ngFor="let column of visibleColumns; let i = index;"
               (click)="selectColumn(getName(column))"
+              *ngFor="let column of visibleColumns; let i = index;"
               [ngClass]="{ 'active': column._isSelected && isSortable(column) }"
               [ngStyle]="{ 'max-width': column._width ? column._width : visibleColumns.length < 6 ? '100%' : '300px'
                 , 'min-width': column._width }">
               <div class="flex-wrapper">
 
-                <!-- not sortable text -->
-                <ng-container *ngIf="!isSortable(column)">
+                <!-- sortable -->
+                <ng-container *ngIf="!isSortable(column); else tableSortable">
                   <div class="cell-text text-ellipsis">
                     <div class="text-ellipsis">
                       <span>{{ getName(column) | translate }}</span>
                     </div>
                   </div>
                 </ng-container>
-                <!-- /not sortable text -->
-
-
-                <!-- sortable text -->
-                <ng-container *ngIf="isSortable(column)">
+                <ng-template #tableSortable>
                   <div class="cell-text text-ellipsis">
                     <div class="text-ellipsis">
                       <app-shared-sort
@@ -149,14 +154,15 @@
                       </app-shared-sort>
                     </div>
                   </div>
-                </ng-container>
-                <!-- /sortable text -->
+                </ng-template>
+                <!-- / sortable -->
 
                 <!-- tooltip for column -->
                 <ng-container *ngIf="hasTooltip(column)">
-                  <button class="button is-circled tooltip is-bottom is-sm"
-                          style="z-index: 9999"
-                          [attr.data-tooltip]="column._tooltip">
+                  <button
+                    [attr.data-tooltip]="column._tooltip | titlecase"
+                    [ngStyle]="{'z-index': '9999'}"
+                    class="button is-circled tooltip is-bottom is-sm">
                     <i class="fas fa-info"></i>
                   </button>
                 </ng-container>
@@ -167,52 +173,58 @@
           </ng-container>
           <!-- /rest columns -->
 
-
           <!-- actions -->
           <ng-container *ngIf="selectedRows > 0">
             <th [colSpan]="table._columns.length" [ngStyle]="{ 'max-width': '100%' }" class="is-no-hovered">
               <div class="cell-action">
 
                 <!-- total selected text -->
-                <div class="m-right-25 text-lowercase" *ngIf="!table._isCanSelectAll">
-                  {{ selectedRows }} {{ 'TABLE.SELECTED_ROWS' | translate }}
-                </div>
-                <!-- /total selected text -->
-
-                <!-- total selected text -->
-                <div class="m-right-25 text-lowercase" *ngIf="table._isCanSelectAll">
-                  <span class="text-lowercase text-underline" style="cursor: pointer;"
-                        *ngIf="!isSelectAll"
-                        (click)="selectAllTheData()">{{'TABLE.SELECT_ALL' | translate}}</span>
-                  <span class="text-lowercase text-underline" style="cursor: pointer; color: orangered"
-                        *ngIf="isSelectAll"
-                        (click)="clearAllTheSelections()">{{'TABLE.CLEAR_ALL' | translate}}</span>
-                  {{ isSelectAll ? table._total : 0 }}{{'/' + table._total}}
-                </div>
+                <ng-container *ngIf="!table._isCanSelectAll; else tableCanSelectAll">
+                  <div class="m-right-25 text-lowercase">
+                    {{ selectedRows }} {{ 'TABLE.SELECTED_ROWS' | translate }}
+                  </div>
+                </ng-container>
+                <ng-template #tableCanSelectAll>
+                  <div class="m-right-25 text-lowercase">
+                    <ng-container *ngIf="!isSelectAll; else tableSelectAll">
+                      <span (click)="selectAllTheData()" class="text-lowercase text-underline c-hand">
+                        {{'TABLE.SELECT_ALL' | translate}}
+                      </span>
+                    </ng-container>
+                    <ng-template #tableSelectAll>
+                      <span (click)="clearAllTheSelections()" class="text-lowercase text-underline c-hand">
+                        {{'TABLE.CLEAR_ALL' | translate}}
+                      </span>
+                    </ng-template>
+                    {{ isSelectAll ? selectedRows : 0 }}{{'/' + table._total}}
+                  </div>
+                </ng-template>
                 <!-- /total selected text -->
 
                 <!-- different buttons -->
                 <ng-container *ngIf="table._buttons && table._buttons.length > 0">
                   <ng-container *ngFor="let button of table._buttons">
-                    <div *ngIf="!button._isHidden" class="d-inline-flex m-right-25">
-                      <button
-                        (click)="onActionClick(button._label)"
-                        [ngClass]="button._colorClass"
-                        class="button is-link p-no text-sm is-sm"
-                        type="button">
-                        <i
-                          *ngIf="button._icon"
-                          [ngClass]="button._icon"
-                          [ngStyle]="{ 'font-size': button._iconSize ? button._iconSize : '14px' }"
-                          class="icon-left text-no-underline">
-                        </i>
-                        {{ button._label | translate }}
-                      </button>
-                    </div>
+                    <ng-container *ngIf="!button._isHidden">
+                      <div class="d-inline-flex m-right-25">
+                        <button
+                          (click)="onActionClick(button._label)"
+                          [ngClass]="button._colorClass"
+                          class="button is-link p-no text-sm is-sm"
+                          type="button">
+                          <ng-container *ngIf="button._icon">
+                            <i
+                              [ngClass]="button._icon"
+                              [ngStyle]="{ 'font-size': button._iconSize ? button._iconSize : '14px' }"
+                              class="icon-left text-no-underline">
+                            </i>
+                          </ng-container>
+                          {{ button._label | translate }}
+                        </button>
+                      </div>
+                    </ng-container>
                   </ng-container>
                 </ng-container>
                 <!-- /different buttons -->
-
 
                 <!-- delete button -->
                 <ng-container *ngIf="table._isDeletable">
@@ -235,12 +247,12 @@
         </thead>
         <!-- /head -->
 
-
         <!-- body -->
         <tbody>
         <tr
           *ngFor="let row of getRowsKeys(); let rowIndex = index;"
-          [ngClass]="{ 'active': table._content[row]?._isSelected, 'disabled': disabledRow(table._content[row]) }"
+          [ngClass]="{ 'active': (tableContent[row] && tableContent[row]['_isSelected']),
+          'disabled': disabledRow(tableContent[row]) }"
           class="d-flex">
 
           <!-- if we have selectable -->
@@ -249,10 +261,13 @@
               <div class="flex-wrapper">
                 <div class="text-ellipsis truncate-text">
                   <label
-                    class="flex-centered"
-                    [ngClass]="{ 'active': table._content[row]?._isSelected,
-                      'disabled': disabledRow(table._content[row]) }">
-                    <input type="checkbox" (click)="selectRow(row);" [disabled]=disabledRow(table._content[row])>
+                    [ngClass]="{ 'active': (tableContent[row] && tableContent[row]['_isSelected']),
+                    'disabled': disabledRow(tableContent[row]) }"
+                    class="flex-centered">
+                    <input
+                      (click)="selectRow(row);"
+                      [disabled]=disabledRow(tableContent[row])
+                      type="checkbox">
                     <i class="icon icon-check"></i>
                   </label>
                 </div>
@@ -260,7 +275,6 @@
             </td>
           </ng-container>
           <!-- /if we have selectable -->
-
 
           <!-- rest columns -->
           <td
@@ -460,7 +474,7 @@
                   <!-- clickable -->
                   <ng-container *ngIf="i === table._clickIndex - 1">
                     <div
-                      (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
+                      (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(tableContent[row], rowIndex)"
                       [ngClass]="{ 'active': rowIndex === selectedIndex }"
                       class="clickable-text text-ellipsis">
                       <ng-container *ngFor="let attr of getAttrs(column)">
@@ -578,7 +592,7 @@
                 <ng-container *ngSwitchCase="'DROPDOWN'">
 
                   <!-- disabled -->
-                  <ng-container *ngIf="disabledRow(table._content[row]) && getDisabledState(column)">
+                  <ng-container *ngIf="disabledRow(tableContent[row]) && getDisabledState(column)">
                     <ng-container [ngSwitch]="getDisabledState(column)._type">
 
                       <!-- type DATE -->
@@ -607,7 +621,7 @@
 
 
                   <!-- not disabled -->
-                  <ng-container *ngIf="!disabledRow(table._content[row]) || !getDisabledState(column)">
+                  <ng-container *ngIf="!disabledRow(tableContent[row]) || !getDisabledState(column)">
                     <div class="td-dropdown dropdown is-right">
 
                       <a
@@ -632,7 +646,7 @@
                       <ul class="menu">
                         <li
                           (click)="table._isLocal ? onClickDropdownItem(filteredContent[row], item)
-                            : onClickDropdownItem(table._content[row], item)"
+                            : onClickDropdownItem(tableContent[row], item)"
                           *ngFor="let item of this.getChoices(column)"
                           class="menu-item">
                           {{ item._alias | translate }}
@@ -821,7 +835,7 @@
                       'is-right': rowIndex < 1 && table._total >= 1}"
                       class="w-full">
                       <div
-                        (click)="table._isLocal ? edit(filteredContent[row], rowIndex) : edit(table._content[row], rowIndex)"
+                        (click)="edit(tableContent[row], rowIndex)"
                         [ngClass]="{ 'active': rowIndex === selectedIndex }"
                         class="clickable-text text-ellipsis"
                         [ngStyle]="getTextColor(row, column)">
@@ -987,8 +1001,8 @@
   <div class="flex-centered p-top-25">
     <app-pagination-2
       [(pagination)]="pagination"
-      [totalCount]="table._total"
-      [ngStyle]="{ 'width': '100%' }">
+      [ngStyle]="{ 'width': '100%' }"
+      [totalCount]="table._total">
     </app-pagination-2>
   </div>
 </ng-container>
