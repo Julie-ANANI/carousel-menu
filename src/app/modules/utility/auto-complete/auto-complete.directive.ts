@@ -108,6 +108,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
             this.wrapperEl.className = 'ngui-auto-complete-wrapper';
             this.wrapperEl.style.position = 'relative';
             this.wrapperEl.style.width = '100%';
+            this.wrapperEl.style.textAlign = 'left';
             this.el.parentElement.insertBefore(this.wrapperEl, this.el.nextSibling);
             this.wrapperEl.appendChild(this.el);
 
