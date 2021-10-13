@@ -1,20 +1,20 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Question} from '../../../../models/question';
-import {Answer} from '../../../../models/answer';
-import {AnswerService} from '../../../../services/answer/answer.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {Tag} from '../../../../models/tag';
-import {ProfessionalsService} from '../../../../services/professionals/professionals.service';
-import {Company} from '../../../../models/company';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Question } from '../../../../models/question';
+import { Answer } from '../../../../models/answer';
+import { AnswerService } from '../../../../services/answer/answer.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Tag } from '../../../../models/tag';
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { Company } from '../../../../models/company';
 import * as momentTimeZone from 'moment-timezone';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../services/error/error-front.service';
-import {NewPro} from './reassign-answer/reassign-answer.component';
-import {UserFrontService} from '../../../../services/user/user-front.service';
-import {Professional} from '../../../../models/professional';
-import {TranslateService} from '@ngx-translate/core';
-import {MissionQuestion} from '../../../../models/mission';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { NewPro } from './reassign-answer/reassign-answer.component';
+import { UserFrontService } from '../../../../services/user/user-front.service';
+import { Professional } from '../../../../models/professional';
+import { TranslateService } from '@ngx-translate/core';
+import { MissionQuestion } from '../../../../models/mission';
 
 @Component({
   selector: 'app-sidebar-user-answer',
@@ -76,6 +76,8 @@ export class SidebarUserAnswerComponent implements OnInit {
   private _toBeSaved = false;
 
   private _editSecondEmail = false;
+
+  private _testUp = false;
 
   private _answerStatus: Array<{ name: any; class: string }> = [
     {name: 'REJECTED', class: 'is-danger'},
@@ -432,7 +434,7 @@ export class SidebarUserAnswerComponent implements OnInit {
   }
 
   private _initCurrentLang() {
-   this._currentLang = this._innovationCardLanguages.includes(this._currentLang) ? this._currentLang : this._innovationCardLanguages[0];
+    this._currentLang = this._innovationCardLanguages.includes(this._currentLang) ? this._currentLang : this._innovationCardLanguages[0];
   }
 
   get companyLength(): number {
@@ -527,5 +529,33 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   get currentLang(): string {
     return this._currentLang;
+  }
+
+
+  get testUp(): boolean {
+    return this._testUp;
+  }
+
+  editThis() {
+    this._testUp = true;
+  }
+
+  getValueTag(event: any) {
+    if (event) {
+      console.log(event);
+    }
+    this._testUp = false;
+  }
+
+  performAction(event: any) {
+    switch (event.action) {
+      case 'add':
+        console.log(event);
+        break;
+      case 'delete':
+        console.log(event);
+        break;
+    }
+    this._testUp = false;
   }
 }
