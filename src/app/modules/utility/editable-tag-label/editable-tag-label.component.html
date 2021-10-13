@@ -18,9 +18,12 @@
         auto-complete>
     </label>
 
-    <ng-container *ngIf="!isEditable">
+    <div *ngIf="!isEditable" (click)="onEdit($event)">
       {{defaultTag}}
-    </ng-container>
+    </div>
+    <i class="fas fa-times icon-right"
+       (click)="deleteTag($event)"
+       *ngIf="!isEditable"></i>
   </div>
 
 </div>

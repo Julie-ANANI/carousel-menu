@@ -34,10 +34,6 @@ type TagType = 'tags';
 })
 
 export class EditableTagLabelComponent implements OnInit {
-  @Input() set isEditable(value: boolean) {
-    this._isEditable = value;
-  }
-
   @Input() projectId = '';
 
   @Input() type: TagType = null; // 'tags';
@@ -47,7 +43,7 @@ export class EditableTagLabelComponent implements OnInit {
     this._originalTag = value;
   }
 
-  @Output() emitValue: EventEmitter<any> = new EventEmitter();
+  @Output() performAction: EventEmitter<any> = new EventEmitter();
 
   private _isEditable = false;
 
@@ -98,13 +94,15 @@ export class EditableTagLabelComponent implements OnInit {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    this.emitValue.emit(this._defaultTag);
+    this._isEditable = false;
+    this.performAction.emit({action: 'add', value: this._defaultTag});
   }
 
   addNewTags(event: KeyboardEvent) {
     event.preventDefault();
     if (event.keyCode === 13) {
-      this.emitValue.emit(this._defaultTag);
+      this._isEditable = false;
+      this.performAction.emit({action: 'add', value: this._defaultTag});
     }
   }
 
@@ -122,6 +120,17 @@ export class EditableTagLabelComponent implements OnInit {
 
   focusOut() {
     this._defaultTag = this._originalTag;
-    this.emitValue.emit(this._defaultTag);
+    this._isEditable = false;
+    this.performAction.emit({action: 'add', value: this._defaultTag});
+  }
+
+  deleteTag(event: Event) {
+    event.preventDefault();
+    this.performAction.emit({action: 'delete', value: this._defaultTag});
+  }
+
+  onEdit(event: Event) {
+    event.preventDefault();
+    this._isEditable = true;
   }
 }

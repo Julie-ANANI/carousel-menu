@@ -546,4 +546,16 @@ export class SidebarUserAnswerComponent implements OnInit {
     }
     this._testUp = false;
   }
+
+  performAction(event: any) {
+    switch (event.action) {
+      case 'add':
+        console.log(event);
+        break;
+      case 'delete':
+        console.log(event);
+        break;
+    }
+    this._testUp = false;
+  }
 }

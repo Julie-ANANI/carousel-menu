@@ -3,8 +3,7 @@
   <div (click)="editThis()">
 
     <app-utility-editable-tag-label
-      (emitValue)="getValueTag($event)"
-      [isEditable]="testUp"
+      (performAction)="performAction($event)"
       [defaultTag]="'test'">
     </app-utility-editable-tag-label>
   </div>
