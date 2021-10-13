@@ -1,5 +1,13 @@
 <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-20 text-sm" id="sidebar-user-answer">
 
+  <div (click)="editThis()">
+
+    <app-utility-editable-tag-label
+      (emitValue)="getValueTag($event)"
+      [isEditable]="testUp"
+      [defaultTag]="'test'">
+    </app-utility-editable-tag-label>
+  </div>
   <!-- labels Status | Mail type -->
   <div *ngIf="adminMode && (!editMode || mailType)" class="m-bottom-10">
     <div

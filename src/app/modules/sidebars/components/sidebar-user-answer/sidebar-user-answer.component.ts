@@ -77,6 +77,8 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   private _editSecondEmail = false;
 
+  private _testUp = false;
+
   private _answerStatus: Array<{ name: any; class: string }> = [
     {name: 'REJECTED', class: 'is-danger'},
     {name: 'SUBMITTED', class: 'is-progress'},
@@ -527,5 +529,19 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   get currentLang(): string {
     return this._currentLang;
+  }
+
+
+  get testUp(): boolean {
+    return this._testUp;
+  }
+
+  editThis() {
+    this._testUp = true;
+  }
+
+  getValueTag($event: any) {
+    console.log($event);
+    this._testUp = false;
   }
 }

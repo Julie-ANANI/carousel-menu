@@ -1,0 +1,25 @@
+<div id="editable-tag-label" class="is-draft is-sm">
+
+  <div class="tag-container label is-draft is-rounded">
+    <i class="fas fa-tag icon-left"></i>
+    <label class="d-block w-full" *ngIf="isEditable">
+      <input
+        (keyup)="addNewTags($event)"
+        [disabled]="!isEditable"
+        [list-formatter]="autocompleteListFormatter"
+        [source]="tagSuggestions.bind(this)"
+        [value-formatter]="autocompleteValueFormatter"
+        [value]="defaultTag"
+        (input)="valueOnChange($event.target['value'])"
+        [min-chars]="2"
+        type="text"
+        class="form-input is-xs text-white"
+        auto-complete>
+    </label>
+
+    <ng-container *ngIf="!isEditable">
+      {{defaultTag}}
+    </ng-container>
+  </div>
+
+</div>
