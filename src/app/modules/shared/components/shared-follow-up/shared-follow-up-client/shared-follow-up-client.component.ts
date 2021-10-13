@@ -11,10 +11,12 @@ import {TranslateNotificationsService} from '../../../../../services/notificatio
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 import {InnovCard} from '../../../../../models/innov-card';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
 import {AnswerService} from '../../../../../services/answer/answer.service';
+import {FilterService} from '../../shared-market-report/services/filters.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -211,9 +213,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   @Input() set answers (value: Array<Answer>) {
     this.initEmailObject();
     this._answers = value;
+    this._initFilter();
     this._initTable(value, value.length);
-    this._selectedIds = this._answers.filter((_answer) => _answer._isSelected)
-      .map((_answer) => _answer._id);
   }
 
   @Output() reinitializeAnswers: EventEmitter<void> = new EventEmitter<void>();
@@ -309,13 +310,28 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _finalAnswers: Array<Answer> = [];
 
+  private _subscribe: Subject<any> = new Subject<any>();
+
   constructor(private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
+              private _filterService: FilterService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._initTable(this._answers, -1);
+  }
+
+  private _initFilter() {
+    if (this._answers.length) {
+      this._filterService.filtersUpdate.pipe(takeUntil(this._subscribe)).subscribe(() => {
+        const _filtered = this._filterService.filter(this._answers);
+        this._initTable(_filtered, _filtered.length);
+        if (_filtered.length) {
+          this._selectedIds = [];
+        }
+      });
+    }
   }
 
   private _initTable(answers: Array<Answer> = [], total = 0) {
@@ -590,7 +606,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     }
   }
 
-  public rowsSelected(event: Array<any>) {
+  public rowsSelected(event: any) {
     this._selectedIds = event['_rows'].map((_answer: Answer) => _answer._id);
     this._answers.forEach((_answer) => {
       _answer._isSelected = this._selectedIds.indexOf(_answer._id) > -1;
@@ -608,6 +624,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         this._currentStep = 0;
         this._selectedCC = [];
         this._finalAnswers = [];
+        this._filterService.reset();
+        this._selectedIds = [];
       }
     }
   }
@@ -621,20 +639,14 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     };
   }
 
-  public closeSidebar() {
-    this._sidebarTemplate = {
-      animate_state: 'inactive'
-    };
-  }
-
-  public updateAnswers(answers: Array<Answer>) {
-    if (answers && answers.length) {
-      this._initTable(answers, answers.length);
-    }
+  public updateAnswers(answers: Array<Answer> = []) {
+    this.rowsSelected({_rows: answers});
   }
 
   ngOnDestroy(): void {
     clearTimeout(this._nextStepTimeout);
+    this._subscribe.next();
+    this._subscribe.complete();
   }
 
 }

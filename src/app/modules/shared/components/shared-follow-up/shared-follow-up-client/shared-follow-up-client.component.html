@@ -40,10 +40,9 @@
 
           <!-- sidebar -->
           <ng-container *ngSwitchCase="'STEP_SELECT'">
-            <aside *ngIf="false" [ngStyle]="{'max-width': '285px'}" class="sidebar-wrapper">
+            <aside [ngStyle]="{'max-width': '285px'}" class="sidebar-wrapper">
               <app-sidebar-in-page [(sidebarTemplate)]="sidebarTemplate">
                 <app-sidebar-filter-answers
-                  (closeSidebar)="closeSidebar()"
                   (updateAnswers)="updateAnswers($event)"
                   [answers]="answers"
                   [innovation]="project"

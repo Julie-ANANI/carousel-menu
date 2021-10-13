@@ -15,7 +15,6 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import {MissionQuestion} from '../../../../models/mission';
 import {Question} from '../../../../models/question';
-import {Subject} from 'rxjs';
 
 /**
  * ADMIN: old version for the admin side
@@ -43,10 +42,6 @@ export class SharedFollowUpComponent implements OnInit {
     this._startContactProcess = value;
   }
 
-  get subscribe(): Subject<any> {
-    return this._subscribe;
-  }
-
   @Input() template: template = '';
 
   // ex: ['projects', 'project', 'followUp']
@@ -65,8 +60,6 @@ export class SharedFollowUpComponent implements OnInit {
   private _answers: Array<Answer> = [];
 
   // private _filteredAnswers: Array<Answer> = [];
-
-  private _subscribe: Subject<any> = new Subject<any>();
 
   private _startContactProcess = false;
 
