@@ -371,6 +371,26 @@
   </div>
   <!-- /comment part not edit mode -->
 
+  <div class="p-top-20 d-flex align-center">
+    <ng-container *ngFor="let tag of answerTags(question.identifier + 'Comment')">
+      <app-utility-editable-tag-label
+        [projectId]="projectId"
+        [defaultTag]="tag"
+        (performAction)="performAction($event, question.identifier + 'Comment', tag)">
+      </app-utility-editable-tag-label>
+    </ng-container>
+    <button class="button is-action is-draft is-circled is-xs" *ngIf="!isAddTag" (click)="showAddTag()">
+      <i class="fas fa-plus"></i>
+    </button>
+    <div *ngIf="isAddTag">
+      <app-utility-editable-tag-label
+        [projectId]="projectId"
+        [defaultTag]="null"
+        (performAction)="performAction($event, question.identifier + 'Comment')">
+      </app-utility-editable-tag-label>
+    </div>
+  </div>
+
   <!-- comment part edit mode -->
   <div *ngIf="editMode" class="p-top-20">
 

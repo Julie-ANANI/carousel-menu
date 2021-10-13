@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
-import {Question} from '../../../../../models/question';
-import {Answer} from '../../../../../models/answer';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {TranslationService} from '../../../../../services/translation/translation.service';
-import {AnswerService} from '../../../../../services/answer/answer.service';
-import {Tag} from '../../../../../models/tag';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
+import { Question } from '../../../../../models/question';
+import { Answer } from '../../../../../models/answer';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslationService } from '../../../../../services/translation/translation.service';
+import { AnswerService } from '../../../../../services/answer/answer.service';
+import { Tag } from '../../../../../models/tag';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-answer-question',
@@ -59,13 +59,18 @@ export class AnswerQuestionComponent {
 
   private _starCase: Array<string> = ['1', '2', '3', '4', '5'];
 
+  private _isAddTag = false;
+
+  private _tagToAdd: Tag = <Tag>{};
+
   constructor(private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _answerService: AnswerService,
-              private _deepl: TranslationService) { }
+              private _deepl: TranslationService) {
+  }
 
 
-  public updateQuality(object: {key: string, value: 0 | 1 | 2}) {
+  public updateQuality(object: { key: string, value: 0 | 1 | 2 }) {
     this.fullAnswer.answers[object.key + 'Quality'] = object.value;
     this.emitChanges();
   }
@@ -98,12 +103,14 @@ export class AnswerQuestionComponent {
     this._answerService.addTag(this.fullAnswer._id, tag._id, q_identifier)
       .pipe(first())
       .subscribe((a: any) => {
+        console.log(a);
+        console.log(tag);
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(tag);
         } else {
           this.fullAnswer.answerTags[q_identifier] = [tag];
         }
-        this._translateNotificationsService.success('Success' , 'The tag is added to the answer.');
+        this._translateNotificationsService.success('Success', 'The tag is added to the answer.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Error', 'The tag is already added to the answer.');
         console.error(err);
@@ -119,7 +126,7 @@ export class AnswerQuestionComponent {
         } else {
           this.fullAnswer.answerTags[q_identifier] = [newTag];
         }
-        this._translateNotificationsService.success('Success' , 'The tag is created and added to the answer.');
+        this._translateNotificationsService.success('Success', 'The tag is created and added to the answer.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Error', 'The tag is already created/added to the answer.');
         console.error(err);
@@ -131,7 +138,7 @@ export class AnswerQuestionComponent {
       .pipe(first())
       .subscribe((a: any) => {
         this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
-        this._translateNotificationsService.success('Success' , 'The tag is removed from the answer.');
+        this._translateNotificationsService.success('Success', 'The tag is removed from the answer.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -158,14 +165,15 @@ export class AnswerQuestionComponent {
         this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this.currentLang)
           .pipe(first())
           .subscribe((_value) => {
-          this._fullAnswer.answers_translations[this.question.identifier][this.currentLang] = _value.translation;
-          this._showQuestionTranslation = true;
-          const objToSave = {answers_translations: {[this.question.identifier]: {[this.currentLang]: _value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {});
-        }, (err: HttpErrorResponse) => {
+            this._fullAnswer.answers_translations[this.question.identifier][this.currentLang] = _value.translation;
+            this._showQuestionTranslation = true;
+            const objToSave = {answers_translations: {[this.question.identifier]: {[this.currentLang]: _value.translation}}};
+            this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {
+            });
+          }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
             console.error(err);
-        });
+          });
       }
     } else {
       this._showQuestionTranslation = false;
@@ -192,12 +200,17 @@ export class AnswerQuestionComponent {
           this.currentLang)
           .pipe(first())
           .subscribe((_value) => {
-          this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang] = _value.translation;
-          this._showCommentTranslation = true;
-          const objToSave = {answers_translations: {[this.question.identifier + 'Comment']:
-                {[this.currentLang]: _value.translation}}};
-          this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {});
-        }, (err: HttpErrorResponse) => {
+            this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang] = _value.translation;
+            this._showCommentTranslation = true;
+            const objToSave = {
+              answers_translations: {
+                [this.question.identifier + 'Comment']:
+                  {[this.currentLang]: _value.translation}
+              }
+            };
+            this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {
+            });
+          }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
             console.error(err);
           });
@@ -215,7 +228,9 @@ export class AnswerQuestionComponent {
       const keys = Object.keys(this.fullAnswer.answers[questionId]);
       const values = (emptyRanking) ? keys : Object.values(this.fullAnswer.answers[questionId]);
       values.splice(targetIndex, 0, values.splice(initialIndex, 1)[0]);
-      keys.map(x => { this.fullAnswer.answers[questionId][x] =  values[x]; });
+      keys.map(x => {
+        this.fullAnswer.answers[questionId][x] = values[x];
+      });
       this.emitChanges();
     }
   }
@@ -240,4 +255,34 @@ export class AnswerQuestionComponent {
     return this._starCase;
   }
 
+  performAction(event: any, identifier: string, tag?: any) {
+    console.log(event);
+    console.log(tag);
+    switch (event.action) {
+      case 'add':
+        this.addTag(event.value, identifier);
+        this._isAddTag = false;
+        break;
+      case 'create':
+        this.createTag(event.value, identifier);
+        this._isAddTag = false;
+        break;
+      case 'delete':
+        this.removeTag(tag, identifier);
+        break;
+    }
+  }
+
+
+  get isAddTag(): boolean {
+    return this._isAddTag;
+  }
+
+  get tagToAdd(): Tag {
+    return this._tagToAdd;
+  }
+
+  showAddTag() {
+    this._isAddTag = true;
+  }
 }

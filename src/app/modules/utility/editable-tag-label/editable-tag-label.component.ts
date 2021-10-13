@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../services/tags/tags.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
+import { Tag } from "../../../models/tag";
 
 type TagType = 'tags';
 
@@ -38,18 +39,31 @@ export class EditableTagLabelComponent implements OnInit {
 
   @Input() type: TagType = null; // 'tags';
 
-  @Input() set defaultTag(value: string) {
-    this._defaultTag = value;
-    this._originalTag = value;
+  @Input() set defaultTag(value: Tag) {
+    console.log(value);
+    if (value) {
+      console.log(1);
+      this._defaultTag = value;
+      this._originalTag = JSON.parse(JSON.stringify(value));
+    } else {
+      console.log(2);
+      this._isEditable = true;
+      this._defaultTag = <Tag>{label: {en: '', fr: ''}};
+      this._originalTag = JSON.parse(JSON.stringify(<Tag>{label: {en: '', fr: ''}}));
+    }
   }
 
   @Output() performAction: EventEmitter<any> = new EventEmitter();
 
   private _isEditable = false;
 
-  private _defaultTag = '';
+  private _defaultTag: Tag;
 
-  private _originalTag = '';
+  private _originalTag: Tag;
+
+  private _showModal = false;
+
+  private _currentLang = this._translateService.currentLang;
 
   constructor(private _translateService: TranslateService,
               private _multilingPipe: MultilingPipe,
@@ -60,6 +74,10 @@ export class EditableTagLabelComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  get currentLang(): string {
+    return this._currentLang;
   }
 
 
@@ -94,15 +112,13 @@ export class EditableTagLabelComponent implements OnInit {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    this._isEditable = false;
-    this.performAction.emit({action: 'add', value: this._defaultTag});
+    this._showModal = true;
   }
 
   addNewTags(event: KeyboardEvent) {
     event.preventDefault();
     if (event.keyCode === 13) {
-      this._isEditable = false;
-      this.performAction.emit({action: 'add', value: this._defaultTag});
+      this._showModal = true;
     }
   }
 
@@ -111,17 +127,23 @@ export class EditableTagLabelComponent implements OnInit {
   }
 
   valueOnChange(value: any) {
-    this._defaultTag = value;
+    if (typeof value === 'object') {
+      this._defaultTag = JSON.parse(JSON.stringify(value));
+      this.performAction.emit({action: 'add', value: this._defaultTag});
+      this._isEditable = false;
+    } else {
+      this._defaultTag.label[this.currentLang] = value;
+    }
   }
 
-  get defaultTag(): string {
+  get defaultTag(): Tag {
     return this._defaultTag;
   }
 
   focusOut() {
-    this._defaultTag = this._originalTag;
+    this._defaultTag = JSON.parse(JSON.stringify(this._originalTag));
     this._isEditable = false;
-    this.performAction.emit({action: 'add', value: this._defaultTag});
+    // this.performAction.emit({action: 'add', value: this._defaultTag});
   }
 
   deleteTag(event: Event) {
@@ -132,5 +154,19 @@ export class EditableTagLabelComponent implements OnInit {
   onEdit(event: Event) {
     event.preventDefault();
     this._isEditable = true;
+  }
+
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  createNewTag() {
+    this._isEditable = false;
+    this.performAction.emit({action: 'create', value: this._defaultTag});
   }
 }
