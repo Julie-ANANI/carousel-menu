@@ -1062,17 +1062,19 @@ export class TableComponent implements OnInit, OnDestroy {
   public getStringForColumn(row: any, column: any, label: string) {
     this._stringInArrayColumn = '';
     const temList = this.getContentValue(row, this.getAttrs(column)[0]);
-    temList.map((item: any, index: any) => {
-      if (index === temList.length - 1) {
-        this._stringInArrayColumn = this._stringInArrayColumn.concat(
-          item[label]
-        );
-      } else {
-        this._stringInArrayColumn = this._stringInArrayColumn.concat(
-          item[label] + ', '
-        );
-      }
-    });
+    if(temList) {
+      temList.map((item: any, index: any) => {
+        if (index === temList.length - 1) {
+          this._stringInArrayColumn = this._stringInArrayColumn.concat(
+            item[label]
+          );
+        } else {
+          this._stringInArrayColumn = this._stringInArrayColumn.concat(
+            item[label] + ', '
+          );
+        }
+      });
+    }
     return this._stringInArrayColumn;
   }
 

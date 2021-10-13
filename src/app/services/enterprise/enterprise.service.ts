@@ -25,6 +25,10 @@ export class EnterpriseService {
     return this._http.post<Enterprise>(`/enterprise/`, enterprise);
   }
 
+  public all(config?: { [header: string]: string | string[] }): Observable<any> {
+    return this._http.get(`/enterprise/all`, {params: config});
+  }
+
   public get(id?: string, config?: { [header: string]: string | string[] }): Observable<any> {
     return this._http.get(`/enterprise/${id ? id : ''}`, {params: config});
   }
