@@ -256,8 +256,6 @@ export class AnswerQuestionComponent {
   }
 
   performAction(event: any, identifier: string, tag?: any) {
-    console.log(event);
-    console.log(tag);
     switch (event.action) {
       case 'add':
         this.addTag(event.value, identifier);
