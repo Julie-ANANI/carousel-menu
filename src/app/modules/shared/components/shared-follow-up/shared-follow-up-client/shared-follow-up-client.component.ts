@@ -312,6 +312,10 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _subscribe: Subject<any> = new Subject<any>();
 
+  private static _isRowDisabled(answer: Answer): boolean {
+    return !!(answer.followUp && answer.followUp.date);
+  }
+
   constructor(private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
@@ -344,7 +348,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       _isPaginable: true,
       _isLocal: true,
       _isNoMinHeight: answers.length < 11,
-      _isRowDisabled: (answer: Answer) => !!(answer.followUp && answer.followUp.date),
+      _isRowDisabled: (answer: Answer) => SharedFollowUpClientComponent._isRowDisabled(answer),
       _columns: [
         {
           _attrs: ['professional.lastName'],
@@ -609,7 +613,9 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   public rowsSelected(event: any) {
     this._selectedIds = event['_rows'].map((_answer: Answer) => _answer._id);
     this._answers.forEach((_answer) => {
-      _answer._isSelected = this._selectedIds.indexOf(_answer._id) > -1;
+      if (!SharedFollowUpClientComponent._isRowDisabled(_answer)) {
+        _answer._isSelected = this._selectedIds.indexOf(_answer._id) > -1;
+      }
     });
   }
 

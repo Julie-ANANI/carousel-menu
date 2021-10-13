@@ -252,16 +252,17 @@ export class SharedFollowUpAdminComponent implements OnInit {
     }
   }
 
+  private _isRowDisabled(answer: Answer): boolean {
+    return this.canAccess(['edit', 'objective']) ? !!(answer.followUp && answer.followUp.date) : false;
+  }
+
   private _initTable(answers: Array<Answer> = [], total = 0) {
     this._tableInfos = {
       _selector: 'follow-up-answers',
       _content: answers,
       _total: total,
       _isSelectable: this.canAccess(['edit', 'objective']),
-      _isRowDisabled: (answer: Answer) => {
-        return this.canAccess(['edit', 'objective']) ? answer.followUp && answer.followUp.date
-          : false;
-      },
+      _isRowDisabled: (answer: Answer) => this._isRowDisabled(answer),
       _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
       _isPaginable: true,
       _isLocal: true,
@@ -473,7 +474,11 @@ export class SharedFollowUpAdminComponent implements OnInit {
   }
 
   public updateAnswers(answers: Array<Answer>) {
-    answers.forEach((_answer) => _answer._isSelected = true);
+    answers.forEach((_answer) => {
+      if (!this._isRowDisabled(_answer)) {
+        _answer._isSelected = true;
+      }
+    });
   }
 
   public seeAnswer(answer: Answer) {
