@@ -11,7 +11,7 @@
   <!-- /status EDITING || SUBMITTED -->
 
   <ng-container *ngIf="!!(innovation._id && innovation.followUpEmails && innovation.followUpEmails.status
-  && innovation.status === 'EDITING' && innovation.status === 'SUBMITTED')">
+  && innovation.status !== 'EDITING' && innovation.status !== 'SUBMITTED')">
     <app-shared-follow-up
       [project]="innovation"
       [template]="'CLIENT'">
