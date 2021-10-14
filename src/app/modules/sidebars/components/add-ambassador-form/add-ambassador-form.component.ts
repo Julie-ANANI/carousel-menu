@@ -12,6 +12,7 @@ import { environment } from '../../../../../environments/environment';
 //import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
+import {emailRegEx} from '../../../../utils/regex';
 //import { isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -119,7 +120,7 @@ export class AddAmbassadorFormComponent implements OnInit {
     this._ambassadorForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
       companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       country: [''],

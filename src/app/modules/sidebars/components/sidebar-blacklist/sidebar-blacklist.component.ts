@@ -8,6 +8,8 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Enterprise } from '../../../../models/enterprise';
+import { Blacklist } from '../../../../models/blacklist';
+import { emailRegEx } from '../../../../utils/regex';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
@@ -17,7 +19,6 @@ export interface FamilyEnterprises {
   subsidiariesOfParent?: Array<Enterprise>;
   myDomain?: string;
 }
-
 
 @Component({
   selector: 'app-sidebar-blacklist',
@@ -68,7 +69,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   @Output() editBlacklist = new EventEmitter<any>(); // updated blacklist email information
 
-  @Output() toBlacklists = new EventEmitter<{ emails: Array<string>, domains: Array<string> }>();
+  @Output() toBlacklists = new EventEmitter<Blacklist>();
 
   @Output() countryToFilter = new EventEmitter<any>(); // country to exclude.
 
@@ -121,7 +122,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   private _buildForm() {
     this._formData = this._formBuilder.group({
-      email: [[], [Validators.required, Validators.email]],
+      email: [[], [Validators.required, Validators.pattern(emailRegEx)]],
       expiration: '',
       acceptation: [80, [Validators.required, Validators.max(100), Validators.min(0)]]
     });
@@ -295,10 +296,6 @@ export class SidebarBlacklistComponent implements OnInit {
     return this._config;
   }
 
-  get emailToEdit(): any {
-    return this._emailToEdit;
-  }
-
   get type(): Template {
     return this._type;
   }
@@ -327,18 +324,19 @@ export class SidebarBlacklistComponent implements OnInit {
   }
 
   autoBlacklist() {
-    this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
-      if (result) {
-        this._familyEnterprises = result;
-        this.updateBlackList();
-      }
-    }, err => {
-      console.error(err);
-      this._translateNotificationsService.error(
-        'ERROR.ERROR',
-        ErrorFrontService.getErrorMessage(err.status)
-      );
-    });
+    if (!!this._innovationId) {
+      this._innovationService.autoBlacklist(this._innovationId).pipe(first()).subscribe((result: FamilyEnterprises) => {
+        if (result) {
+          this._familyEnterprises = result;
+          this.updateBlackList();
+        }
+      }, err => {
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          ErrorFrontService.getErrorMessage(err.status)
+        );
+      });
+    }
   }
 
   updateBlackList() {

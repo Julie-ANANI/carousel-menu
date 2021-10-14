@@ -33,6 +33,10 @@ export class EnterpriseService {
     return this._http.put<Enterprise>(`/enterprise/${enterpriseId}`, {enterprise: enterprise, before: enterpriseBeforeUpdateDataForm});
   }
 
+  public updateLogo(enterpriseId: string, logo: any): Observable<Enterprise> {
+    return this._http.post<Enterprise>(`/enterprise/${enterpriseId}/updateLogo`, {logo: logo});
+  }
+
   public remove(enterpriseId: string): Observable<any> {
     return this._http.delete(`/enterprise/${enterpriseId}`);
   }

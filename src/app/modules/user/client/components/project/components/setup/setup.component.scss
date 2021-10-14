@@ -2,6 +2,14 @@
 
 #setup {
 
+  .header_sticky {
+    transition: all 0.3s;
+    box-shadow: $box-shadow-6;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
   .dropdown {
 
     .button {

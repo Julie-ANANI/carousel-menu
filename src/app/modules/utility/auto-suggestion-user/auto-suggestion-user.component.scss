@@ -1,0 +1,20 @@
+@import "../../../../style/framework/src/variables";
+
+#auto-suggestion-user {
+
+  .menu {
+    max-height: 180px;
+    overflow: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    text-align: left;
+    right: 0;
+    animation: slideInDown 0.1s;
+  }
+
+  .form-input{
+    display: flex;
+  }
+
+}

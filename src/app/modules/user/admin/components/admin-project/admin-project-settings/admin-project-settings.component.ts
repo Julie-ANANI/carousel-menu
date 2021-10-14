@@ -46,6 +46,7 @@ import { picto, Picto } from '../../../../../../models/static-data/picto';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
 import { Community } from '../../../../../../models/community';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import {Blacklist, BlacklistDomain} from '../../../../../../models/blacklist';
 
 export interface UserSuggestion {
   name: string;
@@ -630,6 +631,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public saveOwner(event: Event) {
     event.preventDefault();
     this._innovation.owner = <any>this._newOwner;
+    this._isEditingOwner = false;
 
     if (this._newOwner && this._newOwner._id) {
       this._saveProject('The owner has been updated.', {
@@ -702,21 +704,20 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  public addBlacklist(values: {
-    emails: Array<string>;
-    domains: Array<string>;
-  }) {
+  public addBlocklist(values: Blacklist) {
     if (values.emails.length || values.domains.length) {
       const _domainExp = domainRegEx;
       const _emailExp = emailRegEx;
 
       if (values.domains) {
         this._innovation.settings.blacklist.domains = [];
-        values.domains.forEach((value: any) => {
-          if (_domainExp.test(value.name)) {
-            this._innovation.settings.blacklist.domains.push(
-              value.name.split('@')[1]
-            );
+
+        values.domains.forEach((value: BlacklistDomain) => {
+          const _domain = !!value.domain ? `*@${value.domain}` : value.name;
+          if (_domainExp.test(_domain)) {
+            this._innovation.settings.blacklist.domains.push(_domain.split('@')[1]);
+          } else {
+            this._translateNotificationsService.success('Error', `The domain ${_domain} format is not correct.`);
           }
         });
       }
@@ -730,7 +731,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         });
       }
 
-      this._saveProject('The blocklist have been updated.', {
+      this._saveProject('The blacklists have been updated.', {
         settings: this._innovation.settings,
       });
     }
@@ -757,18 +758,20 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onChangeAnonymous(event: Event) {
-    if (
-      this._innovation._metadata &&
-      this._innovation._metadata['campaign'] &&
-      this._innovation._metadata['campaign']['anonymous_answers']
-    ) {
-      this._innovation._metadata['campaign'][
-        'anonymous_answers'
-        ] = (event.target as HTMLInputElement).checked;
+    if ( this._innovation._metadata ) {
+      if ( this._innovation._metadata['campaign'] ) {
+        this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+      } else {
+        this._innovation._metadata['campaign'] = {
+          'anonymous_answers': (event.target as HTMLInputElement).checked
+        };
+      }
     } else {
-      this._innovation._metadata = this._innovation._metadata['campaign'][
-        'anonymous_answers'
-        ] = (event.target as HTMLInputElement).checked;
+      this._innovation._metadata = {
+        'campaign': {
+          'anonymous_answers': (event.target as HTMLInputElement).checked
+        }
+      };
     }
     this._saveProject(
       (event.target as HTMLInputElement).checked
@@ -783,6 +786,22 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._saveProject('The domain has been updated.', {
       domain: this._innovation.domain,
     });
+  }
+
+  public onChangeFollowUp(event: Event) {
+    const followUpEmails = this._innovation.followUpEmails;
+    const newStatus = (event.target as HTMLInputElement).checked ? 'ACTIVE' : 'INACTIVE';
+
+    if (!!followUpEmails.noFollow || !!followUpEmails.opening || !!followUpEmails.interview) {
+      this._translateNotificationsService.error(
+        'Follow-up Module...', 'It can\'t be deactivated as the emails have already been sent.'
+      );
+    } else {
+      followUpEmails.status = newStatus;
+      this._innovation.followUpEmails = followUpEmails;
+      const message = `The follow-up module is ${newStatus === 'ACTIVE' ? 'activated' : 'deactivated'} at the client side.`;
+      this._saveProject(message, {followUpEmails: followUpEmails});
+    }
   }
 
   public onChangeIsPublic(event: Event) {

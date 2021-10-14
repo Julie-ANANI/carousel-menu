@@ -40,6 +40,10 @@ interface InputGrid {
 })
 export class TableComponent implements OnInit, OnDestroy {
 
+  get tableContent(): Array<any> {
+    return !!this._table._isLocal ? this._filteredContent : this._table._content;
+  }
+
   /***
    * Input use to set the config for the tables linked with the back office
    * @param value
@@ -65,18 +69,11 @@ export class TableComponent implements OnInit, OnDestroy {
     this._isLoadingData = !!value;
   }
 
-  constructor(
-    @Inject(LOCALE_ID) private _locale: string,
-    private _translateService: TranslateService,
-    private _configService: ConfigService,
-    private _localStorageService: LocalStorageService
-  ) {
+  constructor(@Inject(LOCALE_ID) private _locale: string,
+              private _translateService: TranslateService,
+              private _configService: ConfigService,
+              private _localStorageService: LocalStorageService) {
     this._initializeTable();
-  }
-
-
-  get searchKeyword(): FormControl {
-    return this._searchKeyword;
   }
 
   get table(): Table {
@@ -105,6 +102,10 @@ export class TableComponent implements OnInit, OnDestroy {
 
   set pagination(value: Pagination) {
     this._pagination = value;
+    if (this._massSelection || this._isRowSelected) {
+      this._initializeContents();
+    }
+    this._initializeVariables();
     this._config.limit = this._pagination.parPage.toString(10);
     this._config.offset = this._pagination.offset.toString(10);
 
@@ -271,27 +272,18 @@ export class TableComponent implements OnInit, OnDestroy {
   // copy an original table
   private _isOrginal = false;
 
-  _enterpriseSizeSelectConfig = {
-    minChars: 0,
-    placeholder: 'Enter the enterprise size',
-    type: 'enterpriseSize',
-    identifier: '',
-    suggestionList: ['123', '456', '789'],
-    isShowAddButton: false,
-    requestType: 'local',
-    showSuggestionFirst: true,
-    default: '',
-  };
-
   private _inputGrids: Array<InputGrid> = [];
-
-  private _searchKeyword: FormControl = new FormControl();
-
-  suggestionsSource: any [] = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _isLoading = true;
+
+  /**
+   * it will be true when the single row is selected
+   * so that at the change in pagination we can reinitialize all the
+   * content.
+   */
+  private _isRowSelected = false;
 
   /***
    * This function returns if a rows is selected or not
@@ -357,6 +349,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   private _initializeVariables() {
     this._massSelection = false;
+    this._isRowSelected = false;
     this._isSearching = false;
     this._isLoadingData = false;
   }
@@ -369,7 +362,7 @@ export class TableComponent implements OnInit, OnDestroy {
    */
   private _getFilteredContent(rows: Array<any>) {
     this._pagination.parPage = this._table._isPaginable
-      ? parseInt(this._configService.configLimit(this._table._selector)) ||
+      ? parseInt(this._configService.configLimit(this._table._selector), 10) ||
       Number(this._config.limit) ||
       10
       : rows.length;
@@ -418,6 +411,18 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  /*public getPopoverClass(row: string, column: Column) {
+    if (!this.getContentValue(row, this.getAttrs(column)[0]).toString()) {
+      return '';
+    } else {
+      if (row >= '0' && row <= '4') {
+        return 'popover is-bottom';
+      } else {
+        return column._popoverPosition ? 'popover ' + column._popoverPosition : 'popover is-top';
+      }
+    }
+  }*/
+
   /***
    * This function initialise the values of a column.
    */
@@ -436,11 +441,11 @@ export class TableComponent implements OnInit, OnDestroy {
    */
   private _initializeContents() {
     if (this._table._isLocal) {
-      this._filteredContent.map((value, index) => {
-        this._filteredContent[index]._isSelected = false;
+      this._filteredContent.forEach((value) => {
+        value._isSelected = false;
       });
     } else {
-      this._table._content.map((value, index) => {
+      this._table._content.forEach((value) => {
         if (!value.hasOwnProperty('_isSelected')) {
           value._isSelected = false;
         }
@@ -450,13 +455,13 @@ export class TableComponent implements OnInit, OnDestroy {
 
   private _columnActive(column: Column): boolean {
     let sortKey;
-
     if (typeof this._config.sort === 'string') {
       for (const key in JSON.parse(this._config.sort)) {
-        sortKey = key;
+        if (JSON.parse(this._config.sort).hasOwnProperty(key)) {
+          sortKey = key;
+        }
       }
     }
-
     return this.getAttrs(column).indexOf(sortKey) !== -1;
   }
 
@@ -467,9 +472,13 @@ export class TableComponent implements OnInit, OnDestroy {
   private _getSelectedRowsNumber(): number {
     if (this._massSelection) {
       if (this._table._isLocal) {
-        return this._filteredContent.length;
+        return this._filteredContent.filter((_content) => {
+          return !this.disabledRow(_content);
+        }).length;
       } else {
-        return this._table._content.length;
+        return this._table._content.filter((_content) => {
+          return !this.disabledRow(_content);
+        }).length;
       }
     } else {
       return this.getSelectedRows().length;
@@ -477,19 +486,26 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * This function allows to select all the rows
+   * This function allows to select all the rows.
+   * only select those who are not disabled.
    * @param event
    */
   public selectAll(event: Event): void {
     event.preventDefault();
     this._isSelectAll = false;
+    this._isRowSelected = false;
+
     if (this._table._isLocal) {
       this._filteredContent.forEach((value) => {
-        value._isSelected = (event.target as HTMLInputElement).checked;
+        if (!this.disabledRow(value)) {
+          value._isSelected = (event.target as HTMLInputElement).checked;
+        }
       });
     } else {
       this._table._content.forEach((value) => {
-        value._isSelected = (event.target as HTMLInputElement).checked;
+        if (!this.disabledRow(value)) {
+          value._isSelected = (event.target as HTMLInputElement).checked;
+        }
       });
     }
 
@@ -583,33 +599,22 @@ export class TableComponent implements OnInit, OnDestroy {
    */
   public getContentValue(rowKey: string, columnAttr: string): any {
     const row: number = TableComponent._getRowKey(rowKey);
-    let contents: Array<any> = [];
-
-    if (this._table._isLocal) {
-      contents = this._filteredContent;
-    } else {
-      contents = this._table._content;
-    }
+    const contents: Array<any> = this._table._isLocal ? this._filteredContent : this._table._content;
 
     if (contents.length > 0) {
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
-
         let tmpContent = contents[row] ? contents[row][newColumnAttr[0]] : '';
-
         newColumnAttr = newColumnAttr.splice(1);
-
         for (const i of newColumnAttr) {
           tmpContent = tmpContent ? tmpContent[i] : '-';
         }
-
         return tmpContent || '';
       } else {
         if (contents[row] && contents[row][columnAttr]) {
           return contents[row][columnAttr];
         }
       }
-
       return '';
     }
   }
@@ -817,18 +822,15 @@ export class TableComponent implements OnInit, OnDestroy {
    */
   public selectRow(key: string): void {
     const rowKey: number = TableComponent._getRowKey(key);
-
     this._isSelectAll = false;
+
     if (this._table._isSelectable) {
       if (this._table._isLocal) {
-        this._filteredContent[rowKey]._isSelected = !this._filteredContent[
-          rowKey
-          ]._isSelected;
+        this._filteredContent[rowKey]._isSelected = !this._filteredContent[rowKey]._isSelected;
       } else {
-        this._table._content[rowKey]._isSelected = !this._table._content[rowKey]
-          ._isSelected;
+        this._table._content[rowKey]._isSelected = !this._table._content[rowKey]._isSelected;
       }
-
+      this._isRowSelected = true;
       this._massSelection = false;
     }
 
@@ -908,16 +910,24 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * only push those rows who are selected.
+   * @private
+   */
   private _getAllContent(): Array<any> {
     const rows: Array<any> = [];
 
     if (this._table._isLocal) {
       this._filteredContent.forEach((content) => {
-        rows.push(content);
+        if (content._isSelected) {
+          rows.push(content);
+        }
       });
     } else {
       this._table._content.forEach((content) => {
-        rows.push(content);
+        if (content._isSelected) {
+          rows.push(content);
+        }
       });
     }
 
@@ -1101,18 +1111,38 @@ export class TableComponent implements OnInit, OnDestroy {
     this.performAction.emit({_action: action, _context: context});
   }
 
-  selectAllTheData() {
+  /**
+   * select those columns who are not disabled.
+   */
+  public selectAllTheData() {
     this._isSelectAll = true;
-    this._table._content.forEach((value) => {
-      value._isSelected = true;
-    });
+    this._isRowSelected = false;
+
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value) => {
+        if (!this.disabledRow(value)) {
+          value._isSelected = true;
+        }
+      });
+    } else {
+      this._table._content.forEach((value) => {
+        if (!this.disabledRow(value)) {
+          value._isSelected = true;
+        }
+      });
+    }
     this.performAction.emit({_action: 'Select all', _context: true});
   }
 
-  clearAllTheSelections() {
+  /**
+   * clear the selection for not disabled rows.
+   */
+  public clearAllTheSelections() {
     this._isSelectAll = false;
     this._table._content.forEach((value) => {
-      value._isSelected = false;
+      if (!this.disabledRow(value)) {
+        value._isSelected = false;
+      }
     });
     this.performAction.emit({_action: 'Select all', _context: false});
   }

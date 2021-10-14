@@ -47,7 +47,8 @@ export class SharedTagsComponent implements OnInit {
               private _multilingPipe: MultilingPipe,
               private _domSanitizer: DomSanitizer,
               private _tagsService: TagsService,
-              private _autocompleteService: AutocompleteService) { }
+              private _autocompleteService: AutocompleteService) {
+  }
 
   ngOnInit(): void {
     this._tagForm = this._formBuilder.group({
@@ -59,7 +60,7 @@ export class SharedTagsComponent implements OnInit {
     if (this.projectId && !this.type) {
       return this._tagsService.searchTagInPool(this.projectId, query);
     } else {
-      const queryConf: any = { query: query, type: 'tags' };
+      const queryConf: any = {query: query, type: 'tags'};
       if (this.type) {
         queryConf['tagType'] = this.type;
       }
@@ -72,7 +73,7 @@ export class SharedTagsComponent implements OnInit {
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: any) : string => {
+  public autocompleValueFormatter = (data: any): string => {
     if (!this.projectId || this.type) {
       return this._multilingPipe.transform(data.name, this._translateService.currentLang);
     } else {
@@ -98,7 +99,7 @@ export class SharedTagsComponent implements OnInit {
     this._tagForm.get('tag').reset();
 
     if (typeof name === 'string') {
-      this.createTag.emit({ label: { en: name, fr: name }, description: { en: '', fr: ''} });
+      this.createTag.emit({label: {en: name, fr: name}, description: {en: '', fr: ''}});
     }
 
     this._showModal = false;
@@ -124,4 +125,19 @@ export class SharedTagsComponent implements OnInit {
     this._showModal = value;
   }
 
+  addNewTags(event: KeyboardEvent) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      this.onSubmit();
+    }
+  }
+
+  addTagSelected(event: any) {
+    if (typeof event === 'object') {
+      if (typeof this._tagForm.get('tag').value !== 'string') {
+        this.addTag.emit(this._tagForm.get('tag').value);
+        this._tagForm.get('tag').reset();
+      }
+    }
+  }
 }

@@ -39,6 +39,11 @@ export const ERROR = {
 
   'NO_AUTHORIZED': 'Vous n\'êtes pas autorisé à exécuter cette demande.',
 
+  'NO_AUTHORIZED_ADMIN': 'Désolé, mais vous n\'êtes pas autorisé à accéder à cette page. ' +
+    'Veuillez contacter votre chef d\'équipe.',
+
+  'NO_AUTHORIZED_PAGE': 'Désolé, mais vous n\'êtes pas autorisé à accéder à cette page. ' +
+    'Veuillez contacter votre responsable du test de marché.',
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
@@ -96,7 +101,7 @@ export const ERROR = {
     'LINKING': 'Mise en relation',
     'LINKING_DONE': 'Votre demande de mise en relation a été prise en compte',
     'SEND_EMAILS': 'Envoi des emails',
-    'SEND_EMAILS_OK': 'Les emails ont bien été envoyés',
+    'SEND_EMAILS_OK': 'Les emails ont bien été envoyés.',
     'SEND_MESSAGE': 'Le message a été envoyé avec succès.',
     'COLLABORATORS_ADDED': 'Les collaborateurs ont été ajoutés au projet.'
   },

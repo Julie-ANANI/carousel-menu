@@ -1,108 +1,114 @@
-<!-- fetching error -->
-<app-utility-message-error *ngIf="fetchingError"></app-utility-message-error>
-<!-- /fetching error -->
+<div id="project">
 
-<!-- no fetching error -->
-<div *ngIf="!fetchingError" id="project">
+  <!-- fetching error -->
+  <ng-container *ngIf="fetchingError">
+    <app-utility-message-error></app-utility-message-error>
+  </ng-container>
+  <!-- /fetching error -->
 
-  <!-- banner project message  -->
-  <app-utility-banner [(showBanner)]="!!showBanner" [background]="'bg-progress'" [position]="'relative'">
-    <span class="text-normal">
-      This project has been updated by
-      <span class="text-medium">{{ showBanner }}</span>
-      at
-      <span class="text-medium">{{ updateTime | date: 'H:mm' }}.</span>
-    </span>
-  </app-utility-banner>
-  <!-- banner project message  -->
+  <!-- not fetching error -->
+  <ng-container *ngIf="!fetchingError">
 
-  <!-- header -->
-  <section class="section-header p-top-25">
-    <div class="container fluid grid-2xl">
-      <div class="column col-sm-12 col-11 col-mx-auto">
+    <!-- banner project message  -->
+    <app-utility-banner [(showBanner)]="!!showBanner" [background]="'bg-progress'" [position]="'relative'">
+      <span class="text-normal">
+        This project has been updated by
+        <span class="text-medium">{{ showBanner }}</span>
+        at
+        <span class="text-medium">{{ updateTime | date: 'H:mm' }}.</span>
+      </span>
+    </app-utility-banner>
+    <!-- banner project message  -->
 
-        <!-- heading -->
-        <h1 class="title is-4 text-white text-bold m-bottom-1 text-center">
-          <ng-container *ngIf="!!innovation.name; else project">{{ innovation.name }}</ng-container>
-          <ng-template #project>{{ 'COMMON.LABEL.PROJECT' | translate }}</ng-template>
-        </h1>
-        <!-- /heading -->
+    <!-- header -->
+    <section class="section-header p-top-25">
+      <div class="container fluid grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
 
-        <!-- mission objective -->
-        <ng-container *ngIf="!!mission.objective || !!mission.template">
+          <!-- heading -->
+          <h1 class="title is-4 text-white text-bold m-bottom-1 text-center">
+            <ng-container *ngIf="!!innovation.name; else project">{{ innovation.name }}</ng-container>
+            <ng-template #project>{{ 'COMMON.LABEL.PROJECT' | translate }}</ng-template>
+          </h1>
+          <!-- /heading -->
 
-          <!-- use cases on 1st June, 2021 -->
-          <ng-container *ngIf="!!(mission.template && mission.template.entry && mission.template.entry.length);
-          else oldObjective">
-            <div class="flex-centered flex-d-column p-bottom-40">
-              <h3 class="op-8 text-lg text-normal text-white m-bottom-2">{{ objectiveName() }}</h3>
-              <button
-                (click)="showModal($event)"
-                class="button is-link is-community p-no text-underline"
-                id="project-btn-our-methodology">
-                {{ 'COMMON.BUTTON.OUR_METHODOLOGY' | translate }}
-              </button>
-            </div>
-          </ng-container>
-          <!-- /use cases on 1st June, 2021 -->
+          <!-- mission objective -->
+          <ng-container *ngIf="!!mission.objective || !!mission.template">
 
-          <!-- old project -->
-          <ng-template #oldObjective>
-            <ng-container *ngIf="!!(mission.objective.principal && mission.objective.principal['en']
-            && mission.objective.principal['en'] !== 'Other')">
-              <div class="op-8 flex-centered text-lg text-normal text-white p-bottom-40">
-                <i [ngClass]="iconClass" class="text-md m-right-10"></i>
-                {{ mission.objective.principal[currentLang] }}
+            <!-- use cases on 1st June, 2021 -->
+            <ng-container *ngIf="!!(mission.template && mission.template.entry && mission.template.entry.length);
+            else oldObjective">
+              <div class="flex-centered flex-d-column p-bottom-40">
+                <h3 class="op-8 text-lg text-normal text-white m-bottom-2">{{ objectiveName() }}</h3>
+                <button
+                  (click)="showModal($event)"
+                  class="button is-link is-community p-no text-underline"
+                  id="project-btn-our-methodology">
+                  {{ 'COMMON.BUTTON.OUR_METHODOLOGY' | translate }}
+                </button>
               </div>
             </ng-container>
-          </ng-template>
-          <!-- /old project -->
+            <!-- /use cases on 1st June, 2021 -->
 
-        </ng-container>
-        <!-- /mission objective -->
+            <!-- old project -->
+            <ng-template #oldObjective>
+              <ng-container *ngIf="!!(mission.objective.principal && mission.objective.principal['en']
+              && mission.objective.principal['en'] !== 'Other')">
+                <div class="op-8 flex-centered text-lg text-normal text-white p-bottom-40">
+                  <i [ngClass]="iconClass" class="text-md m-right-10"></i>
+                  {{ mission.objective.principal[currentLang] }}
+                </div>
+              </ng-container>
+            </ng-template>
+            <!-- /old project -->
 
-        <!-- tabs -->
-        <div class="flex-centered">
-          <ul class="tab">
-            <li *ngFor="let tab of tabs" class="tab-item text-white">
-              <a
-                (click)="navigateTo($event, tab.route)"
-                [id]="tab.route"
-                [ngClass]="tab.tracking"
-                [routerLink]="tab.route"
-                class="text-medium text-md"
-                routerLinkActive="active">
-                <ng-container *ngIf="!!tab.iconClass; else number"><i [ngClass]="tab.iconClass"></i></ng-container>
-                <ng-template #number>
-                  <span class="shape is-circle is-sm text-13">{{ tab.number }}</span>
-                </ng-template>
-                {{ 'PROJECT_MODULE.' + tab.name | translate }}
-              </a>
-            </li>
-          </ul>
+          </ng-container>
+          <!-- /mission objective -->
+
+          <!-- tabs -->
+          <div class="flex-centered">
+            <ul class="tab">
+              <li *ngFor="let tab of tabs; let i = index;" class="tab-item text-white">
+                <a
+                  (click)="navigateTo($event, tab.route)"
+                  [id]="tab.route"
+                  [ngClass]="tab.tracking"
+                  [routerLink]="tab.route"
+                  class="text-medium text-md"
+                  routerLinkActive="active">
+                  <ng-container *ngIf="!!tab.iconClass; else number"><i [ngClass]="tab.iconClass"></i></ng-container>
+                  <ng-template #number>
+                    <span class="shape is-circle is-sm text-13">{{ i }}</span>
+                  </ng-template>
+                  {{ 'PROJECT_MODULE.' + tab.name | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- /tabs -->
+
         </div>
-        <!-- /tabs -->
-
       </div>
-    </div>
-  </section>
-  <!-- /header -->
+    </section>
+    <!-- /header -->
 
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
+
+  </ng-container>
+  <!-- /not fetching error -->
 
 </div>
-<!-- /no fetching error -->
+
 
 <!-- modal methodology -->
-<app-utility-modal-empty
-  *ngIf="!fetchingError && !!mission.template"
-  [maxWidth]="'1024px'"
-  [(showModal)]="openModal">
-  <section [ngStyle]="{'border-radius': '6px'}" class="modal-body p-no">
-    <app-market-test-methodology
-      [methodology]="mission.template.methodology"
-      [title]="objectiveName()">
-    </app-market-test-methodology>
-  </section>
-</app-utility-modal-empty>
+<ng-container *ngIf="!fetchingError && !!mission.template">
+  <app-utility-modal-empty [maxWidth]="'1024px'" [(showModal)]="openModal">
+    <section class="modal-body p-no br-6">
+      <app-market-test-methodology
+        [methodology]="mission.template.methodology"
+        [title]="objectiveName()">
+      </app-market-test-methodology>
+    </section>
+  </app-utility-modal-empty>
+</ng-container>
 <!-- /modal methodology -->

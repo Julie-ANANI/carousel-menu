@@ -14,5 +14,6 @@ export const environment = {
   background: 'https://res.cloudinary.com/umi/image/upload/f_auto/app/default-images/backgrounds/umi-welcome-picture-2021.jpg',
   commercialContact: 'klegrand@umi.us',
   secureCookie: true,
-  cookieTime: 3600 * 1000
+  cookieTime: 3600 * 1000,
+  devRoutes: [{}]
 };

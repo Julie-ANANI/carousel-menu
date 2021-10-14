@@ -2,11 +2,13 @@
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- status EDITING || SUBMITTED -->
-    <section *ngIf="innovation.status && (innovation.status === 'EDITING' || innovation.status === 'SUBMITTED')">
-      <app-message-template [widthMax]="'340px'">
-        {{ 'PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}
-      </app-message-template>
-    </section>
+    <ng-container *ngIf="innovation.status === 'EDITING' || innovation.status === 'SUBMITTED'">
+      <div class="p-top-50">
+        <app-message-template-2 [animation]="true">
+          <h2 class="title is-6 text-center">{{ 'PROJECT_DOCUMENTS.MESSAGE_BOT' | translate }}</h2>
+        </app-message-template-2>
+      </div>
+    </ng-container>
     <!-- /status EDITING || SUBMITTED -->
 
     <!-- status EVALUATING || DONE -->

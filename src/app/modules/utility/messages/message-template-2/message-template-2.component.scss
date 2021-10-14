@@ -10,6 +10,7 @@
 
   .message-wrapper {
     max-width: 75%;
+    width: 100%;
   }
 
   .bot-wrapper {
@@ -27,7 +28,6 @@
   #message-template-2 {
 
     .message-wrapper {
-      order: 2;
       max-width: 100%;
     }
 

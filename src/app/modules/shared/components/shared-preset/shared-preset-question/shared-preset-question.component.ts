@@ -41,7 +41,6 @@ export class SharedPresetQuestionComponent {
     if (!this._question.maxOptionsSelect && this._question.controlType === 'checkbox') {
       this._question.maxOptionsSelect = (this._question.options && this._question.options.length);
     }
-
   }
 
   @Input() set questionIndex(value: number) {

@@ -10,3 +10,10 @@ export const colors = [
   {label: 'neutral-5', value: '#3a78a8'},
   {label: 'neutral-6', value: '#dde3ea'},
 ];
+
+export const oldColorsToNewMapping = {
+  '#C0210F': '#EA5858',
+  '#82CD30' :'#99E04B',
+  '#34AC01' : '#2ECC71',
+  '#F2C500': '#F89424',
+}

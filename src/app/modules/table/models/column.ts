@@ -20,10 +20,12 @@ export interface Column {
   readonly _choices?: Choice[];
   readonly _disabledState?: { _attrs: string, _type: types };
   readonly _multiLabels?: MultiLabel[];
+  readonly _multiInput?: MultiInput;
   readonly _width?: string;
   readonly _enableTooltip?: boolean;
   readonly _label?: string; // property key to read value
   readonly _isCustomFilter?: boolean; // when pass emits the value of it to the parent component.
+
   /**
    * This is the expected configuration when we want to search using a collection other than the one which is active
    */
@@ -32,7 +34,25 @@ export interface Column {
     _searchKey: string
   };
 
-  readonly _multiInput?: MultiInput;
+  /**
+   * pass the html/or simple string to show as a popover
+   * works for column
+   * type === 'FOLLOW-UP-SENT'
+   */
+  readonly _popoverText?: string;
+
+  /**
+   * position of the popover
+   * by default: is-top
+   * values: is-bottom | is-left | is-right
+   */
+  readonly _popoverPosition?: string;
+
+  /**
+   * provide the custom class for the popover container.
+   * Provide its definition in the table component css file
+   */
+  readonly _popoverClass?: string;
 }
 
 export interface MultiInput {
@@ -63,4 +83,5 @@ export type types =
   | 'USER-INPUT'
   | 'TAG'
   | 'PRO-TARGET'
-  | 'LABEL-OBJECT-LIST';
+  | 'LABEL-OBJECT-LIST'
+  | 'FOLLOW-UP-SENT';

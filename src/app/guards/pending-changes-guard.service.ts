@@ -15,7 +15,7 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
   private _getMessage(): string {
     switch (this._translateService.currentLang) {
       case 'fr':
-        return 'Souhaitez vous vraiment quitter sans savegarder? Tous vos changements seront perdus.';
+        return 'Souhaitez vous vraiment quitter sans sauvegarder? Tous vos changements seront perdus.';
       case 'en':
       default:
         return 'Do you really want to leave this page without saving? All your changes will be lost.';

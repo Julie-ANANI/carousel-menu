@@ -1,15 +1,15 @@
 <div id="setup" class="relative">
 
   <!-- banner project message  -->
-  <div *ngIf="showBanner">
+  <ng-container *ngIf="showBanner">
     <app-utility-banner [(showBanner)]="showBanner" [background]="banner.background" [position]="'relative'">
       {{ banner.message | translate }}
     </app-utility-banner>
-  </div>
+  </ng-container>
   <!-- banner project message  -->
 
   <!-- header -->
-  <section class="container grid-2xl fluid p-top-10">
+  <section [ngClass]="{'header_sticky': scrollOn}" class="container grid-2xl fluid p-top-10 bg-white">
     <div class="column col-sm-12 col-11 col-mx-auto">
       <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
 
@@ -101,8 +101,10 @@
             (click)="onSaveProject($event)"
             [disabled]="isSavingProject"
             [ngStyle]="{'min-width': '100px'}"
-            class="button is-primary is-sm"
+            class="button is-primary is-sm badge is-icon"
+            [ngClass]="{'is-active': activeSaveBadge}"
             id="btn-project-save">
+            <i class="fas fa-save" *ngIf="activeSaveBadge"></i>
             <ng-container *ngIf="isSavingProject; else defSaveText">
               {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
             </ng-container>

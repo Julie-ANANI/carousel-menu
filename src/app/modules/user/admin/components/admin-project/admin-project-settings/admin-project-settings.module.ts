@@ -14,21 +14,23 @@ import {ModalModule} from '../../../../../utility/modals/modal/modal.module';
 import {TextInputModule} from '../../../../../utility/text-input/text-input.module';
 import { AdminProjectSettingsModalComponent } from './admin-project-settings-modal/admin-project-settings-modal.component';
 import {SharedUploadZonePhotoModule} from '../../../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
+import { AutoSuggestionUserModule } from "../../../../../utility/auto-suggestion-user/auto-suggestion-user.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AdminStatsBannerModule,
-    FormsModule,
-    SidebarModule,
-    SidebarTagsModule,
-    MissionFormModule,
-    SidebarBlacklistModule,
-    AutoSuggestionModule,
-    ModalModule,
-    TextInputModule,
-    SharedUploadZonePhotoModule
-  ],
+    imports: [
+        CommonModule,
+        AdminStatsBannerModule,
+        FormsModule,
+        SidebarModule,
+        SidebarTagsModule,
+        MissionFormModule,
+        SidebarBlacklistModule,
+        AutoSuggestionModule,
+        ModalModule,
+        TextInputModule,
+        SharedUploadZonePhotoModule,
+        AutoSuggestionUserModule
+    ],
   declarations: [
     AdminProjectSettingsComponent,
     AdminProjectSettingsModalComponent

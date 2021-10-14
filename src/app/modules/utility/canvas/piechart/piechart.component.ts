@@ -5,6 +5,7 @@ import {PieChart} from '../../../../models/pie-chart';
 import {BaseChartDirective} from 'ng2-charts';
 import {Multiling} from '../../../../models/multiling';
 import {Picto, picto} from '../../../../models/static-data/picto';
+import {oldColorsToNewMapping} from "../../../../utils/chartColors";
 
 @Component({
   selector: 'app-utility-piechart',
@@ -79,7 +80,7 @@ export class PiechartComponent {
 
   private _loadData() {
     if (this._pieChart) {
-      this._colors = [{backgroundColor: this._pieChart.colors || []}];
+      this._colors = [{backgroundColor: this._pieChart.colors.map(c => oldColorsToNewMapping[c || ''] || c) || []}];
       this._datasets = [{data: this._pieChart.data || []}];
 
       if (this.chart) {

@@ -24,10 +24,6 @@ export class AdminProjectFollowUpComponent implements OnInit {
     }
   }
 
-  _updateProject(innovation: Innovation) {
-    this._innovation = innovation;
-  }
-
   public canAccess() {
     return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
   }

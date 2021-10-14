@@ -1,0 +1,21 @@
+@import "../../../../style/framework/src/variables";
+
+#editable-tag-label{
+    .tag-container{
+      display: flex;
+      align-items: center;
+      width: fit-content;
+
+      .form-input{
+        border: none;
+        background: $bg-draft-color;
+        font-weight: 600;
+        height: 17px;
+        min-width: 120px;
+      }
+
+      input[disabled] {
+        cursor: default;
+      }
+    }
+}
