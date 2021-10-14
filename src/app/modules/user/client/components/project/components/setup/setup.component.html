@@ -1,15 +1,15 @@
 <div id="setup" class="relative">
 
   <!-- banner project message  -->
-  <div *ngIf="showBanner">
+  <ng-container *ngIf="showBanner">
     <app-utility-banner [(showBanner)]="showBanner" [background]="banner.background" [position]="'relative'">
       {{ banner.message | translate }}
     </app-utility-banner>
-  </div>
+  </ng-container>
   <!-- banner project message  -->
 
   <!-- header -->
-  <section class="container grid-2xl fluid p-top-10 sticky bg-white" style="top:0; z-index: 999">
+  <section [ngClass]="{'header_sticky': scrollOn}" class="container grid-2xl fluid p-top-10 bg-white">
     <div class="column col-sm-12 col-11 col-mx-auto">
       <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
 

@@ -73,6 +73,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _socketService: SocketService,
               private _authService: AuthService,
               private _innovationFrontService: InnovationFrontService) {
+
     this._setSpinner(true);
     this._initPageTitle();
 
@@ -88,14 +89,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this._initCurrentTab();
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation;
+      this._innovation = innovation || <Innovation>{};
       this._verifyFollowUp();
-
-      if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
-        this._mission = <Mission>this._innovation.mission;
-      } else {
-        this._mission = <Mission>{};
-      }
+      this._mission = <Mission>this._innovation.mission || <Mission>{};
 
       // Listen to the updates only the first time we retrieve the innovation
       if (!this._socketListening && this._innovation._id) {
@@ -184,11 +180,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
         this._innovationFrontService.setInnovation(innovation);
         this._innovation = innovation;
-
-        this._authService.initializeSession().pipe(first()).subscribe(() => {
+        if (!this._authService.user) {
+          this._authService.initializeSession().pipe(first()).subscribe(() => {
+            this._initPageTitle();
+            this._setSpinner(false);
+          });
+        } else {
           this._initPageTitle();
           this._setSpinner(false);
-        });
+        }
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._fetchingError = true;

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import {Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
 import { first, takeUntil} from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -36,6 +36,11 @@ interface Save {
 })
 
 export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+
+  get scrollOn(): boolean {
+    return this._scrollOn;
+  }
+
   private _innovation: Innovation = <Innovation>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject();
@@ -71,6 +76,8 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
 
   private _previewLink = '';
 
+  private _scrollOn = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
               private _innovationService: InnovationService,
@@ -89,7 +96,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
     this._getCurrentPage();
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation;
+      this._innovation = innovation || <Innovation>{};
       this._previewLink = `${environment.quizUrl}/quiz/${innovation._id}/preview`;
       this._initBanner();
       this._initInnovCard();
@@ -104,6 +111,11 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
       }
     });
 
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this._scrollOn = window.pageYOffset > 50 || window.scrollY > 50;
   }
 
   private _getCurrentPage() {
