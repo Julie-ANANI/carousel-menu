@@ -42,7 +42,8 @@ export class SharedTargetingWorldComponent implements OnInit {
     private _indexService: IndexService,
     private _translateService: TranslateService,
     private _translateNotificationService: TranslateNotificationsService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this._getAllCountries();
@@ -56,7 +57,7 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @private
    */
   private _getAllCountries() {
-    this._indexService.getWholeSet({ type: 'countries' }).subscribe(
+    this._indexService.getWholeSet({type: 'countries'}).subscribe(
       (response: Response) => {
         this._allCountries = response.result;
         this._allContinentsCountries();
@@ -303,7 +304,7 @@ export class SharedTargetingWorldComponent implements OnInit {
         this._geography.include = [...this._geography.include, country];
         this._filterExcludedCountries(country);
       } else {
-        this.removeIncludedCountry({ value: country });
+        this.removeIncludedCountry({value: country});
       }
 
       this._emitChanges();
@@ -347,13 +348,19 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   onChangeCountrySearch(value: string) {
     this._searchCountryString = value;
+    this._searchCountries = [];
     if (this._searchCountryString === '') {
       this._searchCountries = [];
     } else if (this._searchCountryString.length > 2) {
-      this._searchCountries = this._allCountries.filter(
-        (item) =>
-          item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-          value.toLowerCase().indexOf(item.name.toLowerCase()) !== -1
+      this._allCountries.map(
+        (item) => {
+          if (item.names) {
+            if (Object.values(item.names).some(v => v.toLowerCase().indexOf(value.toLowerCase()) !== -1
+              || value.toLowerCase().indexOf(v.toLowerCase()) !== -1)) {
+              this._searchCountries.push(item);
+            }
+          }
+        }
       );
     }
   }
