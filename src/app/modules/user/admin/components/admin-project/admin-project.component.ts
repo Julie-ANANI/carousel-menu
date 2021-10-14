@@ -495,6 +495,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   }
 
   navigateTo(event: Event, tab: Tab, item: any) {
+    event.preventDefault();
     if (item.path.indexOf('/') !== -1) {
       const path = item.path.split('/');
       this._campaignFrontService.setActiveCampaignTab(path[path.length - 1]);
