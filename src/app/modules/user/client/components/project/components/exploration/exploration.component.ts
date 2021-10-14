@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../../../../services/answer/answer.service';
-import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
+// import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../../models/answer';
-import { Campaign } from '../../../../../../../models/campaign';
+// import { Campaign } from '../../../../../../../models/campaign';
 import { Innovation } from '../../../../../../../models/innovation';
 import { Table } from '../../../../../../table/models/table';
 import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
@@ -12,6 +12,8 @@ import { first, takeUntil } from 'rxjs/operators';
 import { Config } from '../../../../../../../models/config';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: 'exploration.component.html',
@@ -19,6 +21,10 @@ import { Subject } from 'rxjs';
 })
 
 export class ExplorationComponent implements OnInit, OnDestroy {
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -54,16 +60,18 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
+  private _answers: Array<Answer> = [];
+
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
               private _innovationFrontService: InnovationFrontService,
-              private innovationService: InnovationService,
+              // private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation;
+      this._innovation = innovation || <Innovation>{};
       this._anonymousAnswers = this._innovation._metadata && this._innovation._metadata.campaign
         && this._innovation._metadata.campaign.anonymous_answers;
       if (this._innovation._id) {
@@ -74,18 +82,21 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   loadAnswers() {
     this.answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first()).subscribe((response: any) => {
-      response.answers.map((answer: Answer) => {
+      this._answers = response._answers || [];
+
+      this._answers.map((answer: Answer) => {
         if (!answer.job) {
           answer.job = answer.professional.jobTitle;
         }
         this.setCountryFlag(answer);
         return answer;
       });
+
       if (this._anonymousAnswers) {
         this._tableInfos = {
           _selector: 'client-answer',
-          _content: response.answers,
-          _total: response.answers.length,
+          _content: response._answers,
+          _total: response._answers.length,
           _clickIndex: 1,
           _isLocal: true,
           _isPaginable: true,
@@ -97,8 +108,8 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       } else {
         this._tableInfos = {
           _selector: 'client-answer',
-          _content: response.answers,
-          _total: response.answers.length,
+          _content: response._answers,
+          _total: response._answers.length,
           _clickIndex: 1,
           _isLocal: true,
           _isPaginable: true,
@@ -112,7 +123,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         };
       }
 
-      this._countries = response.answers.reduce((acc: any, answer: any) => {
+      this._countries = response._answers.reduce((acc: any, answer: any) => {
         if (!!answer.country &&
           !!answer.country.flag &&
           acc.indexOf(answer.country.flag) === -1) {
@@ -121,11 +132,12 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         return acc;
       }, []);
 
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }, (err: HttpErrorResponse) => {
+      this.translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
     });
 
-    this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((results: any) => {
+    /*this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((results: any) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function (acc: any, campaign: Campaign) {
           if (campaign.stats) {
@@ -146,7 +158,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       }
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });
+    });*/
 
     this._questions = InnovationFrontService.questionsList(this._innovation);
   }

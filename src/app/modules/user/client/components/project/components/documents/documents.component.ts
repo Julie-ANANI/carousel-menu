@@ -85,7 +85,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation;
+      this._innovation = innovation || <Innovation>{};
       this._initDocuments();
     });
   }

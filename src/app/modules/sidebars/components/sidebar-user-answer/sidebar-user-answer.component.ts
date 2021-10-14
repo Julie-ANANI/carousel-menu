@@ -49,6 +49,8 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   @Output() sendNewPro: EventEmitter<any> = new EventEmitter();
 
+  @Output() userAnswerChange: EventEmitter<Answer> = new EventEmitter<Answer>();
+
   private _userAnswer: Answer = <Answer>{};
 
   private _floor: any = Math.floor;
@@ -185,6 +187,7 @@ export class SidebarUserAnswerComponent implements OnInit {
           );
           this._resetEdit();
           this._resetSaveVariables();
+          this.userAnswerChange.emit(this._userAnswer);
           this.answerUpdated.emit(true);
         },
         (err: HttpErrorResponse) => {

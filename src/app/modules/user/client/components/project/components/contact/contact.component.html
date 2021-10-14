@@ -1,8 +1,21 @@
 <div id="project-contact">
-  <ng-container *ngIf="!!(innovation._id && innovation.followUpEmails && innovation.followUpEmails.status)">
+
+  <!-- status EDITING || SUBMITTED -->
+  <ng-container *ngIf="innovation.status === 'EDITING' || innovation.status === 'SUBMITTED'">
+    <div class="p-top-100">
+      <app-message-template-2 [animation]="true">
+        <h2 class="title is-6 text-center">{{ message() }}</h2>
+      </app-message-template-2>
+    </div>
+  </ng-container>
+  <!-- /status EDITING || SUBMITTED -->
+
+  <ng-container *ngIf="!!(innovation._id && innovation.followUpEmails && innovation.followUpEmails.status
+  && innovation.status === 'EDITING' && innovation.status === 'SUBMITTED')">
     <app-shared-follow-up
       [project]="innovation"
       [template]="'CLIENT'">
     </app-shared-follow-up>
   </ng-container>
+
 </div>

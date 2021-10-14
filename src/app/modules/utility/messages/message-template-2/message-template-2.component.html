@@ -1,13 +1,10 @@
-<div id="message-template-2" class="text-md text-normal">
+<div class="text-md text-normal" id="message-template-2">
   <div class="flex-between flex-wrap">
-
     <div class="message-wrapper">
       <ng-content></ng-content>
     </div>
-
     <div [ngClass]="{ 'animate-bot-bounceIn': animation }" class="bot-wrapper">
-      <img [src]="defaultSrc" class="img-responsive" alt=" ">
+      <img [src]="srcImage" alt=" " class="img-responsive">
     </div>
-
   </div>
 </div>

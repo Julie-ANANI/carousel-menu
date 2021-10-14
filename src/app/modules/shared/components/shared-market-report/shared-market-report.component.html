@@ -1,15 +1,5 @@
 <div class="shared-market-report" id="shared-market-report">
 
-  <!-- project status not done at client side -->
-  <section
-    *ngIf="innovation.status !== 'DONE' && !adminSide && !previewMode"
-    class="p-top-100 p-bottom-30 p-left-15 p-right-15">
-    <app-message-template [widthMax]="'337px'">
-      {{ 'MARKET_REPORT.MESSAGE.EDITING' | translateIn: reportingLang }}
-    </app-message-template>
-  </section>
-  <!-- /project status not done at client side -->
-
   <!-- project status not submitted admin side -->
   <section *ngIf="innovation.status === 'EDITING' && adminSide" class="p-top-50 p-bottom-30 p-left-15 p-right-15">
     <app-message-template [widthMax]="'337px'">
