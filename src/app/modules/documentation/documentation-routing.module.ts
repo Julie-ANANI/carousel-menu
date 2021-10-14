@@ -12,15 +12,8 @@ const docsRoutes: Routes = [
     component: DocumentationComponent,
     canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'application'
-      },
-      {
-        path: 'application',
-        loadChildren: './docs-css/docs-css.module#DocsCssModule'
-      },
+      {path: '', pathMatch: 'full', redirectTo: 'application'},
+      {path: 'application', loadChildren: './docs-css/docs-css.module#DocsCssModule'}
     ]
   },
 
