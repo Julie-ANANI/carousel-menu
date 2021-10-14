@@ -53,6 +53,7 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this._setPageTitle(value.item.path);
           this._router.navigate([`/user/admin/projects/project/${this._project._id}/analysis/${value.item.path}`]);
+          this._navigationFrontService.setNavigation({});
         }, 0);
       }
     });
