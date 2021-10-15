@@ -250,9 +250,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         if (index !== -1) {
           this.activeInnovCard.operatorComment.sections[index][type] = event.content;
           this.activeInnovCard.operatorComment.sections[index].sectionId =
-            this.activeInnovCard.operatorComment.sections[index].sectionId
-            || this._etherpadFrontService.generateElementId(this.activeInnovCard.sections[index].type,
-              this.activeInnovCard.lang);
+            this.activeInnovCard.operatorComment.sections[index].sectionId || etherpadId;
         }
       }
     }
