@@ -83,9 +83,9 @@
       <label [for]="'reassign-answer-company'" class="form-label">Company</label>
       <app-auto-complete-company
         (companyChange)="onCompanySelect($event)"
-        [inputId]="'reassign-answer-company'"
-        [hasShadowed]="true"
         [company]="company"
+        [hasShadowed]="true"
+        [inputId]="'reassign-answer-company'"
         [isDisabled]="isSearchingPro"
         [isSmall]="true">
       </app-auto-complete-company>
