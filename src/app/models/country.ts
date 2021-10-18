@@ -10,4 +10,5 @@ export interface Country {
   subcontinent?: string;
   flag?: string;
   names?: Multiling;
+  domain?: string;
 }

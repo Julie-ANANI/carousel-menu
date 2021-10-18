@@ -14,8 +14,8 @@ export interface NewPro {
   lastName: string;
   email: string;
   jobTitle: string;
-  company: string;
-  country: string;
+  company: string | Company;
+  country: string | Country;
 }
 
 @Component({
@@ -90,7 +90,8 @@ export class ReassignAnswerComponent {
           this._company = _pro.company;
           this._country = (_pro.country && _pro.country.flag) ? _pro.country : {
             name: countries[_pro.country],
-            flag: _pro.country
+            flag: _pro.country,
+            domain: ''
           };
 
           this._newPro = {
@@ -98,8 +99,8 @@ export class ReassignAnswerComponent {
             lastName: _pro.lastName,
             email: _pro.email,
             jobTitle: _pro.jobTitle,
-            company: (this._company && this._company.name) || '',
-            country: (this._country && this._country.flag) || ''
+            company: this._company,
+            country: this._country
           };
           this._emit();
         }
@@ -119,13 +120,13 @@ export class ReassignAnswerComponent {
 
   public onCountrySelect(event: Country) {
     this._country = event;
-    this._newPro.country = event.flag;
+    this._newPro.country = event;
     this.emitPro();
   }
 
   public onCompanySelect(event: Company) {
     this._company = event;
-    this._newPro.company = event.name;
+    this._newPro.company = event;
     this.emitPro();
   }
 
