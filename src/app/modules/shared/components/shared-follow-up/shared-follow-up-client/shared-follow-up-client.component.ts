@@ -17,6 +17,7 @@ import {ErrorFrontService} from '../../../../../services/error/error-front.servi
 import {AnswerService} from '../../../../../services/answer/answer.service';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
+import {emailRegEx} from '../../../../../utils/regex';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -269,7 +270,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   private _formData: FormGroup = this._formBuilder.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]]
+    email: ['', [Validators.required, Validators.pattern(emailRegEx), Validators.email]]
   });
 
   private _selectedCC: Array<InnovationFollowUpEmailsCc> = [];
