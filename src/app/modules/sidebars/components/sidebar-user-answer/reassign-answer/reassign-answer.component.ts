@@ -99,8 +99,8 @@ export class ReassignAnswerComponent {
             lastName: _pro.lastName,
             email: _pro.email,
             jobTitle: _pro.jobTitle,
-            company: this._company,
-            country: this._country
+            company: '',
+            country: ''
           };
           this._emit();
         }
@@ -115,18 +115,18 @@ export class ReassignAnswerComponent {
   }
 
   private _emit() {
+    this._newPro.country = this._country;
+    this._newPro.company = this._company.name;
     this.proToAssign.emit(this._newPro);
   }
 
   public onCountrySelect(event: Country) {
     this._country = event;
-    this._newPro.country = event;
     this.emitPro();
   }
 
   public onCompanySelect(event: Company) {
     this._company = event;
-    this._newPro.company = event;
     this.emitPro();
   }
 
