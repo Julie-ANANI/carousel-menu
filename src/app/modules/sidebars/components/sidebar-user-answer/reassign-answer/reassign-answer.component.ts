@@ -7,7 +7,6 @@ import {ErrorFrontService} from '../../../../../services/error/error-front.servi
 import {Config} from '../../../../../models/config';
 import {Company} from '../../../../../models/company';
 import {Country} from '../../../../../models/country';
-import {countries} from '../../../../../models/static-data/country';
 
 export interface NewPro {
   firstName: string;
@@ -87,8 +86,7 @@ export class ReassignAnswerComponent {
         if (response && response.result && response.result.length) {
           this._proFound = 1;
           const _pro = response.result[0];
-          this._country = (_pro.country && _pro.country.name) ? _pro.country :
-            {name: (countries[_pro.country] || _pro.country)};
+          this._country = (_pro.country && _pro.country.name) ? _pro.country : {name: _pro.country};
           this._company = _pro.company;
 
           this._newPro = {
@@ -117,7 +115,7 @@ export class ReassignAnswerComponent {
 
   public onCountrySelect(event: Country) {
     this._country = event;
-    this._newPro.country = this._country.name;
+    this._newPro.country = this._country.flag;
     this.emitPro();
   }
 
