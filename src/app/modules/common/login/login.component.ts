@@ -165,6 +165,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  public strings(object: any): string {
+    // console.log(this.formData.get('email').value.match(emailRegEx));
+    return JSON.stringify(object);
+  }
+
   get logo(): string {
     return this._logo;
   }
