@@ -18,6 +18,7 @@ import {AnswerService} from '../../../../../services/answer/answer.service';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
 import {emailRegEx} from '../../../../../utils/regex';
+import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -25,6 +26,10 @@ import {emailRegEx} from '../../../../../utils/regex';
   styleUrls: ['./shared-follow-up-client.component.scss']
 })
 export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
+
+  get isValidCompany(): string {
+    return new ScrapeHTMLTags().transform(this._companyName);
+  }
 
   get finalAnswers(): Array<Answer> {
     return this._finalAnswers;
@@ -185,7 +190,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         return !this._selectedIds.length;
 
       case 'STEP_CONFIGURE':
-        return !this._companyName || !this._selectedCC.length;
+        return !this.isValidCompany || !this._selectedCC.length;
 
       default:
         return false;
@@ -555,7 +560,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
     this._emailsObject[lang].content = this._emailsObject[lang].content
       .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
-       text-background m-h m-no-right">${this._companyName}</span>`)
+       text-background m-h m-no-right">${this.isValidCompany}</span>`)
       .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${owner}</span>`)
       .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
   }
@@ -565,7 +570,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     replace(/\*\|TITLE\|\*/g, card.title);
 
     this._emailsObjectReplaced[lang].content = this._emailsObjectReplaced[lang].content
-      .replace(/\*\|COMPANY_NAME\|\*/g, this._companyName)
+      .replace(/\*\|COMPANY_NAME\|\*/g, this.isValidCompany)
       .replace(/\*\|CLIENT_NAME\|\*/g, owner)
       .replace(/\*\|TITLE\|\*/g, `${card.title}`);
   }

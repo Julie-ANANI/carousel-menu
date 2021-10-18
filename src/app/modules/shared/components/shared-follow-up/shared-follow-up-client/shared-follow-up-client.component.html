@@ -235,7 +235,7 @@
                         [maxLength]="80"
                         class="form-input is-shadowed is-sm"
                         type="text">
-                      <span *ngIf="!companyName" class="form-error">
+                      <span *ngIf="!isValidCompany" class="form-error">
                         {{ 'SHARED_FOLLOW_UP.REQUIRED_ENTITY' | translate }}
                       </span>
                     </div>
