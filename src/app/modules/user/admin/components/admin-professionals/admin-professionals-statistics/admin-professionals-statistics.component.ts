@@ -297,4 +297,24 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
   get classified(): number {
     return this._classified;
   }
+
+  numberFormatter(num: number, digits: number) {
+    if (num < 10) {
+      return '1+';
+    } else if (num < 100) {
+      return (Math.floor(num / 10) * 10) + '+';
+    } else if (num < 1000) {
+      return (Math.floor(num / 100) * 100) + '+';
+    } else {
+      const lookup = [
+        {value: 1e3, symbol: "k"},
+        {value: 1e6, symbol: "M"}
+      ];
+      const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+      const item = lookup.slice().reverse().find(function (item) {
+        return num >= item.value;
+      });
+      return (item ? Math.floor(num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0") + '+';
+    }
+  }
 }
