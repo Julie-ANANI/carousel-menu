@@ -20,8 +20,8 @@ export const SHARED_FOLLOW_UP = {
 
   'HEADINGS': {
     'STEP_INTRO': 'Pour bien commencer',
-    'STEP_SELECT': 'Select the respondents you would like to be introduced to',
-    'STEP_CONFIGURE': 'Fill in the email elements',
+    'STEP_SELECT': 'Sélectionnez les répondants avec qui vous souhaitez être mis en relation',
+    'STEP_CONFIGURE': 'Définissez les éléments de l’email',
     'STEP_SEND': 'Confirmez et envoyez',
     'PERSON_COPY': 'Ajoutez des personnes à mettre en copie',
     'CHOOSE_PHRASE': 'Choisissez la tournure de l’email',
@@ -56,7 +56,7 @@ export const SHARED_FOLLOW_UP = {
 
   'CONTACTS_WITHOUT_OBJECTIVE': 'contacts sans objectif',
 
-  'BUTTON_DONE': 'I\'m done!',
+  'BUTTON_DONE': 'J\'ai fini !',
 
   'INTERVIEW': 'Proposer un rendez-vous',
 

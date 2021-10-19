@@ -8,7 +8,7 @@
 
       <!-- no contact selected -->
       <h6 *ngIf="!filterNumber" class="m-bottom-30 text-bold">
-        Select contacts according to your criteria
+        {{ 'SIDEBAR_MARKET_REPORT.SELECT_CONTACTS' | translateIn: reportingLang }}
       </h6>
       <!-- /no contact selected -->
 
@@ -20,7 +20,8 @@
         id="btn-selected-contacts"
         type="button">
         <i class="fas fa-share icon-left"></i>
-        {{ 'COMMON.LABEL.SELECT' | translate }} {{ filterNumber }} {{ filterNumber === 1 ? 'contact' : 'contacts' }}
+        {{ 'COMMON.LABEL.SELECT' | translateIn: reportingLang }} {{ filterNumber }}
+        {{ filterNumber === 1 ? 'contact' : 'contacts' }}
       </button>
       <!-- button selected contacts -->
 
@@ -145,7 +146,7 @@
         id="select-all"
         (change)="resetFilters(!!filtersCount)"
         [checked]="!filtersCount">
-      <i class="form-icon"></i> Select all
+      <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
     </label>
   </div>
   <!-- /select/unselect all type === 'FOLLOW_UP' -->

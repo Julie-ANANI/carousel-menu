@@ -19,6 +19,7 @@ import {FilterService} from '../../shared-market-report/services/filters.service
 import {Subject} from 'rxjs';
 import {emailRegEx} from '../../../../../utils/regex';
 import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -26,6 +27,10 @@ import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
   styleUrls: ['./shared-follow-up-client.component.scss']
 })
 export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
+
+  get platformLang(): string {
+    return this._translateService.currentLang;
+  }
 
   get isValidCompany(): string {
     return new ScrapeHTMLTags().transform(this._companyName);
@@ -326,6 +331,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
               private _filterService: FilterService,
+              private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
