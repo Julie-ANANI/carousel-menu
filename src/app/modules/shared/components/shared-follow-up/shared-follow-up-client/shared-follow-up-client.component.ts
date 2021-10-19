@@ -33,10 +33,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     this._toUpdateCompany = value;
   }
 
-  get client(): InnovationFollowUpEmailsCc {
-    return this._client;
-  }
-
   get toUpdateCompany(): boolean {
     return this._toUpdateCompany;
   }
@@ -338,8 +334,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _toUpdateCompany = false;
 
-  private _client: InnovationFollowUpEmailsCc = <InnovationFollowUpEmailsCc>{};
-
   private static _isRowDisabled(answer: Answer): boolean {
     return !!(answer.followUp && answer.followUp.date);
   }
@@ -459,7 +453,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       this.initEmailObject();
     }).catch((err: HttpErrorResponse) => {
       this._selectedCC.push(value);
-      this._client = this._selectedCC[0];
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
@@ -469,8 +462,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     const followUp = this._project.followUpEmails;
     if (update === 'cc') {
       followUp.cc = this._selectedCC;
-      this._client = this._selectedCC[0];
-      followUp.client = this._client;
     }
     if (update === 'entity') {
       followUp.entity = this.isValidCompany;
@@ -537,7 +528,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _initVariables() {
     if (this._project && this._project._id) {
-      this._client = this._project.followUpEmails.client;
       this._cc = this._project.followUpEmails && this._project.followUpEmails.cc || [];
       this._langs = this._project.innovationCards.map((_card) => _card.lang) || [];
       this._selectedLang = this._langs[0];
@@ -587,7 +577,9 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       || {};
     this._emailsObjectReplaced = null;
     this._emailsObjectReplaced = JSON.parse(JSON.stringify(this._emailsObject));
-    const cc = this._client && UserFrontService.fullName(this._client) || '';
+    const cc = this._selectedCC.map((_cc) => {
+      return UserFrontService.fullName(_cc);
+    }).join(', ');
 
     this._langs.forEach((_lang) => {
       const _card = InnovationFrontService.currentLangInnovationCard(this._project, _lang, 'CARD');

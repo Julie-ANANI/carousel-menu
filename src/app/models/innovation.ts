@@ -30,11 +30,6 @@ export interface InnovationFollowUpEmails {
    */
   entity?: string;
 
-  /**
-   * holds the first value cc of list
-   */
-  client?: InnovationFollowUpEmailsCc;
-
   discussion?: {
     fr: {
       subject: string;
