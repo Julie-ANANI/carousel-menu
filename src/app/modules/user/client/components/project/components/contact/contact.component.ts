@@ -44,7 +44,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._subscribe)).subscribe((innovation) => {
       if (innovation._id && innovation.followUpEmails && (!innovation.followUpEmails.status
         || innovation.followUpEmails.status === 'INACTIVE')) {
-        this._router.navigate(['/user/projects']);
+        this._router.navigate(['/user/projects/' + innovation._id + '/settings']);
       } else if (innovation._id && innovation.followUpEmails && innovation.followUpEmails.status === 'ACTIVE') {
         this._innovation = innovation || <Innovation>{};
         this._getValidAnswers();
