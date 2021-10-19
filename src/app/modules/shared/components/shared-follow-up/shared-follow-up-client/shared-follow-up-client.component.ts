@@ -598,7 +598,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
           case 'STEP_INTRO':
             this._sidebarTemplate.animate_state = 'active';
             this._tableInfos = <Table>{};
-            this._initTable(this._answers, this._answers.length);
+            const _filter = this._answers.filter((_answer) => !SharedFollowUpClientComponent._isRowDisabled(_answer));
+            this._initTable(_filter, _filter.length);
             this.initEmailObject();
             break;
           case 'STEP_CONFIGURE':

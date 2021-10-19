@@ -133,6 +133,9 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   }
 
   private _initData(answers: Array<Answer>) {
+    if (this.templateType === 'FOLLOW_UP') {
+      answers = answers.filter((_answer) =>  !(_answer.followUp && _answer.followUp.date));
+    }
     this._answersSelected = answers;
     this._filterNumber = answers.length;
   }

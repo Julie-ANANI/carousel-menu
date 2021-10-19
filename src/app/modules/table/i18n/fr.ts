@@ -60,7 +60,7 @@ export const TABLE = {
     'NO_RESULT_SEARCHING': 'Aucun résultat trouvé. Essayez d\'ajuster votre recherche pour trouver ce que vous cherchez.'
   },
 
-  'SELECTED_ROWS': 'sélectionné(s)',
+  'SELECTED_ROWS': 'sélectionné',
 
   'SELECT_ALL': 'tout sélectionner',
 

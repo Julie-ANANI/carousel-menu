@@ -19,7 +19,8 @@
         class="button is-community"
         id="btn-selected-contacts"
         type="button">
-        <i class="fas fa-share icon-left"></i> Selected {{ filterNumber }} contacts
+        <i class="fas fa-share icon-left"></i>
+        {{ 'COMMON.LABEL.SELECT' | translate }} {{ filterNumber }} {{ filterNumber === 1 ? 'contact' : 'contacts' }}
       </button>
       <!-- button selected contacts -->
 
@@ -453,7 +454,7 @@
   <!-- /questions filters -->
 
   <!-- conclusion filters -->
-  <div *ngIf="isFinalConclusion || isAdminSide" class="scroll-wrapper">
+  <div *ngIf="templateType === 'MARKET_REPORT' && (isFinalConclusion || isAdminSide)" class="scroll-wrapper">
     <a [href]="'#conclusion'" pageScroll>
       <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.CONCLUSION' | translateIn: reportingLang }}
     </a>
