@@ -4,12 +4,11 @@ import { Innovation } from '../../../../models/innovation';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { Answer } from '../../../../models/answer';
-import {first/*, takeUntil*/} from 'rxjs/operators';
+import {first} from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { ResponseService } from '../shared-market-report/services/response.service';
 import { Tag } from '../../../../models/tag';
 import { TagsFiltersService } from '../shared-market-report/services/tags-filter.service';
-// import { FilterService } from '../shared-market-report/services/filters.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
@@ -59,13 +58,10 @@ export class SharedFollowUpComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
-  // private _filteredAnswers: Array<Answer> = [];
-
   private _startContactProcess = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _answerService: AnswerService,
-              // private _filterService: FilterService,
               private _tagFiltersService: TagsFiltersService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
@@ -98,10 +94,6 @@ export class SharedFollowUpComponent implements OnInit {
             return answer;
           }) || [];
 
-         /* this._filterService.filtersUpdate.pipe(takeUntil(this.subscribe)).subscribe((_) => {
-            this._selectContacts();
-          });*/
-
           /*
            * compute tag list globally
            */
@@ -132,16 +124,6 @@ export class SharedFollowUpComponent implements OnInit {
         });
     }
   }
-
-  /*private _selectContacts() {
-    this._filteredAnswers = this._filterService.filter(this._answers);
-    const selectedIds = this._filteredAnswers.map(answer => answer._id);
-    this._answers.forEach(answer => {
-      if (!answer.followUp || !answer.followUp.date) {
-        answer._isSelected = selectedIds.indexOf(answer._id) > -1;
-      }
-    });
-  }*/
 
   get project(): Innovation {
     return this._project;
