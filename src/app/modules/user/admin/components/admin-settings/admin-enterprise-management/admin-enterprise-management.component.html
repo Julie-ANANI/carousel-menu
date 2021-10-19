@@ -39,7 +39,7 @@
 <app-sidebar [(template)]="sidebarValue">
   <app-sidebar-enterprises
     (finalOutput)="updateEnterprise($event)"
-    [enterprise]="selectedEnterprise"
+    [enterprise]="selectedEnterprise._id"
     [isEditable]="isEditable"
     [isSaving]="isSaving"
     [sidebarState]="sidebarValue.animate_state"
