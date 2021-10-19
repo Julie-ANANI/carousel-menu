@@ -20,6 +20,7 @@ import {Subject} from 'rxjs';
 import {emailRegEx} from '../../../../../utils/regex';
 import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';
+import {UserFrontService} from '../../../../../services/user/user-front.service';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -28,12 +29,24 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
+  set toUpdateCompany(value: boolean) {
+    this._toUpdateCompany = value;
+  }
+
+  get client(): InnovationFollowUpEmailsCc {
+    return this._client;
+  }
+
+  get toUpdateCompany(): boolean {
+    return this._toUpdateCompany;
+  }
+
   get platformLang(): string {
     return this._translateService.currentLang;
   }
 
   get isValidCompany(): string {
-    return new ScrapeHTMLTags().transform(this._companyName);
+    return new ScrapeHTMLTags().transform(this._companyName.trim());
   }
 
   get finalAnswers(): Array<Answer> {
@@ -195,7 +208,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         return !this._selectedIds.length;
 
       case 'STEP_CONFIGURE':
-        return !this.isValidCompany || !this._selectedCC.length;
+        return !this.isValidCompany || this._toUpdateCompany || !this._selectedCC.length;
 
       default:
         return false;
@@ -323,6 +336,10 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _subscribe: Subject<any> = new Subject<any>();
 
+  private _toUpdateCompany = false;
+
+  private _client: InnovationFollowUpEmailsCc = <InnovationFollowUpEmailsCc>{};
+
   private static _isRowDisabled(answer: Answer): boolean {
     return !!(answer.followUp && answer.followUp.date);
   }
@@ -398,6 +415,16 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     };
   }
 
+  public updateEntity() {
+    this._saveProject({followUpEmails: this._followUpObj('entity')}).then(() => {
+      this._toUpdateCompany = false;
+      this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_COMPANY');
+    }).catch((err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
+  }
+
   public onClickSend() {
     if (!this._isSending) {
       this._isSending = true;
@@ -429,16 +456,25 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     this._selectedCC.splice(index, 1);
     this._saveProject({followUpEmails: this._followUpObj()}).then((_value) => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'SHARED_FOLLOW_UP.REMOVED_CC');
+      this.initEmailObject();
     }).catch((err: HttpErrorResponse) => {
       this._selectedCC.push(value);
+      this._client = this._selectedCC[0];
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
 
-  private _followUpObj(): InnovationFollowUpEmails {
+  private _followUpObj(update = 'cc'): InnovationFollowUpEmails {
     const followUp = this._project.followUpEmails;
-    followUp.cc = this._selectedCC;
+    if (update === 'cc') {
+      followUp.cc = this._selectedCC;
+      this._client = this._selectedCC[0];
+      followUp.client = this._client;
+    }
+    if (update === 'entity') {
+      followUp.entity = this.isValidCompany;
+    }
     return followUp;
   }
 
@@ -501,10 +537,11 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _initVariables() {
     if (this._project && this._project._id) {
+      this._client = this._project.followUpEmails.client;
       this._cc = this._project.followUpEmails && this._project.followUpEmails.cc || [];
       this._langs = this._project.innovationCards.map((_card) => _card.lang) || [];
       this._selectedLang = this._langs[0];
-      this._companyName = this._project.owner && this._project.owner.company && this._project.owner.company.name || '';
+      this._companyName = this._project.followUpEmails && this._project.followUpEmails.entity || '';
       this._selectedCC = this._cc;
       this._cc = [...this._cc, ...this._project.collaborators.map((_collaborator) => {
         return {
@@ -550,16 +587,16 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       || {};
     this._emailsObjectReplaced = null;
     this._emailsObjectReplaced = JSON.parse(JSON.stringify(this._emailsObject));
-    const _owner = this._project.owner && this._project.owner.name || '';
+    const cc = this._client && UserFrontService.fullName(this._client) || '';
 
     this._langs.forEach((_lang) => {
       const _card = InnovationFrontService.currentLangInnovationCard(this._project, _lang, 'CARD');
-      this._highlightFields(_lang, _card, _owner);
-      this._replaceVariables(_lang, _card, _owner);
+      this._highlightFields(_lang, _card, cc);
+      this._replaceVariables(_lang, _card, cc);
     });
   }
 
-  private _highlightFields(lang: string, card: InnovCard, owner: string) {
+  private _highlightFields(lang: string, card: InnovCard, cc: string) {
     this._emailsObject[lang].subject = this._emailsObject[lang].subject
       .replace(/\*\|TITLE\|\*/g,
       `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
@@ -568,17 +605,17 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     this._emailsObject[lang].content = this._emailsObject[lang].content
       .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
        text-background m-h m-no-right">${this.isValidCompany}</span>`)
-      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${owner}</span>`)
+      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
       .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
   }
 
-  private _replaceVariables(lang: string, card: InnovCard, owner: string) {
+  private _replaceVariables(lang: string, card: InnovCard, cc: string) {
     this._emailsObjectReplaced[lang].subject = this._emailsObjectReplaced[lang].subject.
     replace(/\*\|TITLE\|\*/g, card.title);
 
     this._emailsObjectReplaced[lang].content = this._emailsObjectReplaced[lang].content
       .replace(/\*\|COMPANY_NAME\|\*/g, this.isValidCompany)
-      .replace(/\*\|CLIENT_NAME\|\*/g, owner)
+      .replace(/\*\|CLIENT_NAME\|\*/g, cc)
       .replace(/\*\|TITLE\|\*/g, `${card.title}`);
   }
 

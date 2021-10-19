@@ -25,6 +25,16 @@ export interface InnovationFollowUpEmails {
    */
   status?: 'ACTIVE' | 'INACTIVE';
 
+  /**
+   * company name
+   */
+  entity?: string;
+
+  /**
+   * holds the first value cc of list
+   */
+  client?: InnovationFollowUpEmailsCc;
+
   discussion?: {
     fr: {
       subject: string;

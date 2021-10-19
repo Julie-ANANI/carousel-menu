@@ -100,7 +100,8 @@ export const ERROR = {
     'SEND_EMAILS': 'Sending the emails',
     'SEND_EMAILS_OK': 'The emails have been sent successfully.',
     'SEND_MESSAGE': 'The message has been sent successfully.',
-    'COLLABORATORS_ADDED': 'The collaborators has been added to the project.'
+    'COLLABORATORS_ADDED': 'The collaborators has been added to the project.',
+    'UPDATED_COMPANY': 'The company has been updated successfully.'
   },
 
 

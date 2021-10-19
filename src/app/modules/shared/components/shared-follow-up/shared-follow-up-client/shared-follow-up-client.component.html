@@ -231,15 +231,22 @@
                     </p>
                     <div class="form-group">
                       <input
-                        (change)="initEmailObject()"
+                        (change)="toUpdateCompany = true; initEmailObject()"
                         [(ngModel)]="companyName"
                         [maxLength]="80"
                         class="form-input is-shadowed is-sm"
                         type="text">
-                      <span *ngIf="!isValidCompany" class="form-error">
-                        {{ 'SHARED_FOLLOW_UP.REQUIRED_ENTITY' | translate }}
-                      </span>
                     </div>
+                    <div
+                      (click)="updateEntity()"
+                      *ngIf="toUpdateCompany && !!isValidCompany"
+                      [id]="'sharedFollowUpClient-btn-update-entity'"
+                      class="text-community text-sm text-hover-underline c-hand p-top-2">
+                      {{ 'COMMON.BUTTON.UPDATE' | translate }}
+                    </div>
+                    <p *ngIf="!isValidCompany" class="form-error">
+                      {{ 'SHARED_FOLLOW_UP.REQUIRED_ENTITY' | translate }}
+                    </p>
                   </div>
 
                 </div>
