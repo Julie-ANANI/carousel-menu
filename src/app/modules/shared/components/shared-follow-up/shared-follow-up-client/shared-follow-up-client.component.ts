@@ -335,7 +335,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   private _initFilter() {
     if (this._answers.length) {
       this._filterService.filtersUpdate.pipe(takeUntil(this._subscribe)).subscribe(() => {
-        const _filtered = this._filterService.filter(this._answers);
+        const _filtered = this._filterService.filter(this._answers)
+          .filter((_answer) => !SharedFollowUpClientComponent._isRowDisabled(_answer));
         this._initTable(_filtered, _filtered.length);
         if (_filtered.length) {
           this._selectedIds = [];

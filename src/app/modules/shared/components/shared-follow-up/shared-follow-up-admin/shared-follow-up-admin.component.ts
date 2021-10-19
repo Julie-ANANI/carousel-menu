@@ -233,6 +233,10 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   private _subscribe: Subject<any> = new Subject<any>();
 
+  private static _isRowDisabled(answer: Answer): boolean {
+    return !!(answer.followUp && answer.followUp.date);
+  }
+
   constructor(private _rolesFrontService: RolesFrontService,
               private _innovationService: InnovationService,
               private _answerService: AnswerService,
@@ -246,14 +250,11 @@ export class SharedFollowUpAdminComponent implements OnInit {
   private _initFilter() {
     if (this._answers.length) {
       this._filterService.filtersUpdate.pipe(takeUntil(this._subscribe)).subscribe(() => {
-        const _filtered = this._filterService.filter(this._answers);
+        const _filtered = this._filterService.filter(this._answers)
+          .filter((_answer) => !SharedFollowUpAdminComponent._isRowDisabled(_answer));
         this._initTable(_filtered, _filtered.length);
       });
     }
-  }
-
-  private _isRowDisabled(answer: Answer): boolean {
-    return this.canAccess(['edit', 'objective']) ? !!(answer.followUp && answer.followUp.date) : false;
   }
 
   private _initTable(answers: Array<Answer> = [], total = 0) {
@@ -262,7 +263,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
       _content: answers,
       _total: total,
       _isSelectable: this.canAccess(['edit', 'objective']),
-      _isRowDisabled: (answer: Answer) => this._isRowDisabled(answer),
+      _isRowDisabled: (answer: Answer) => SharedFollowUpAdminComponent._isRowDisabled(answer),
       _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
       _isPaginable: true,
       _isLocal: true,
@@ -475,7 +476,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   public updateAnswers(answers: Array<Answer>) {
     answers.forEach((_answer) => {
-      if (!this._isRowDisabled(_answer)) {
+      if (!SharedFollowUpAdminComponent._isRowDisabled(_answer)) {
         _answer._isSelected = true;
       }
     });

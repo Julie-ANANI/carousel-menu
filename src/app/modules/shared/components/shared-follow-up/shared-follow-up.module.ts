@@ -16,6 +16,7 @@ import { SharedFollowUpClientComponent } from './shared-follow-up-client/shared-
 import { SharedFollowUpAdminComponent } from './shared-follow-up-admin/shared-follow-up-admin.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
+import {SharedWorldmapModule} from '../shared-worldmap/shared-worldmap.module';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.
     SidebarInPageModule,
     FormsModule,
     ModalEmptyModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedWorldmapModule
   ],
   declarations: [
     SharedFollowUpComponent,
