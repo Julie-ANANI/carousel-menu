@@ -37,22 +37,17 @@
       </div>
       <!-- /Add parent: legend -->
 
-      <!-- filter-country -->
-      <ng-container *ngIf="table._isFilterCountry">
-        <div class="filters-wrap">
-          <button
-            [ngStyle]="{'height': 'inherit'}"
-            (click)="performFilters($event)"
-            class="button is-primary">
-            Filter by country
-          </button>
-        </div>
-      </ng-container>
-      <!-- /filter-country -->
-
     </div>
   </ng-container>
   <!-- /section title and search -->
+
+  <!-- costumed buttons -->
+  <div class="m-bottom-4 d-flex align-center" *ngIf="table._filterButtons && table._filterButtons.length > 0">
+    <ng-container *ngFor="let filter of table._filterButtons">
+      <button class="button is-primary is-sm m-left-4" (click)="sendFilterActions(filter._action)">{{filter._label}}</button>
+    </ng-container>
+  </div>
+  <!-- costumed buttons -->
 
 
   <!-- when fetching or initializing -->

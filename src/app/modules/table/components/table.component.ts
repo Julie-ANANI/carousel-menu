@@ -1388,6 +1388,10 @@ export class TableComponent implements OnInit, OnDestroy {
     gridToUpdate.searchControl.patchValue(splits.toString() + ',');
   }
 
+  sendFilterActions(action: string) {
+    this.performAction.emit({_action: action});
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();

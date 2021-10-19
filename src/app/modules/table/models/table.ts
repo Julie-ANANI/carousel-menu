@@ -13,6 +13,7 @@ export interface Table {
   readonly _isCanSelectAll?: boolean;
   readonly _isSearchable?: boolean;
   readonly _columns: Array<Column>;
+  readonly _filterButtons?: Array<{ _label: string, _action: string }>;
   readonly _clickIndex?: number;
   readonly _isPaginable?: boolean;
   readonly _editButtonLabel?: string;

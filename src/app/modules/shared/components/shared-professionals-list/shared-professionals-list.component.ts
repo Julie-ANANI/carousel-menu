@@ -126,6 +126,12 @@ export class SharedProfessionalsListComponent {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isTitle: true,
       _isPaginable: true,
+      _filterButtons: this.tableSelector === 'admin-campaign-pros-limit' ? [
+        {
+          _label: 'Filter by country',
+          _action: 'filter by country'
+        }
+      ] : [],
       _isFilterCountry: this.tableSelector === 'admin-campaign-pros-limit',
       _isCanSelectAll: this.tableSelector === 'admin-campaign-pros-limit',
       _isNoMinHeight: this.total < 11,
@@ -142,8 +148,8 @@ export class SharedProfessionalsListComponent {
       _clickIndex:
         this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit'])
           ? this.canAccess(['tableColumns', 'member'])
-          ? 2
-          : 1
+            ? 2
+            : 1
           : null,
       _columns: [
         {
@@ -404,7 +410,7 @@ export class SharedProfessionalsListComponent {
         this._professionalsToRemove = value._rows;
         break;
 
-      case 'Filter':
+      case 'filter by country':
         this._filtersByCountry();
         break;
 
