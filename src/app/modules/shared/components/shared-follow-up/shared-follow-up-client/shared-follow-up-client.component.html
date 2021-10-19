@@ -65,7 +65,7 @@
               </ng-container>
               <ng-container *ngIf="contactFields[currentStep] === 'STEP_SELECT'">
                 <h3 class="subtitle sub_heading">
-                  {{ answers.length }} {{ 'COMMON.LABEL.RESPONDENTS' | translate | lowercase }}
+                  {{ answersCanBeSelected }} {{ 'COMMON.LABEL.RESPONDENTS' | translate | lowercase }}
                   -
                   {{ selectedIds.length }} {{ 'COMMON.LABEL.SELECTED' | translate | lowercase }}
                 </h3>

@@ -29,6 +29,10 @@ import {UserFrontService} from '../../../../../services/user/user-front.service'
 })
 export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
+  get answersCanBeSelected(): number {
+    return this._answers.filter((_answer) => !SharedFollowUpClientComponent._isRowDisabled(_answer)).length;
+  }
+
   set toUpdateCompany(value: boolean) {
     this._toUpdateCompany = value;
   }
