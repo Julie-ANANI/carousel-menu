@@ -47,6 +47,8 @@ import { StatsReferentsService } from '../../../../../../services/stats-referent
 import { Community } from '../../../../../../models/community';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import {Blacklist, BlacklistDomain} from '../../../../../../models/blacklist';
+import {AnswerService} from '../../../../../../services/answer/answer.service';
+import {ActivatedRoute} from '@angular/router';
 
 export interface UserSuggestion {
   name: string;
@@ -59,6 +61,10 @@ export interface UserSuggestion {
   styleUrls: ['./admin-project-settings.component.scss'],
 })
 export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
+
+  get canDeactivateFollowUp(): boolean {
+    return this._canDeactivateFollowUp;
+  }
 
   get hasMissionTemplate(): boolean {
     return MissionFrontService.hasMissionTemplate(this._mission);
@@ -132,8 +138,12 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _blacklistDomains: Array<string> = [];
 
+  private _canDeactivateFollowUp = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _answerService: AnswerService,
+    private _activatedRoute: ActivatedRoute,
     private _rolesFrontService: RolesFrontService,
     private _missionService: MissionService,
     private _dashboardService: DashboardService,
@@ -151,6 +161,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
+      this._getValidAnswers();
       this._getOperators();
       this._getCommercials();
 
@@ -173,6 +184,22 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             this._clientProject = <ClientProject>this._innovation.clientProject;
           }
         });
+    }
+  }
+
+  private _getValidAnswers() {
+    if (isPlatformBrowser(this._platformId)) {
+      const innovation = this._activatedRoute.snapshot.parent.parent.data['innovation'];
+
+      if (innovation && innovation._id) {
+        this._answerService.getInnovationValidAnswers(innovation._id).pipe(first()).subscribe((response) => {
+          this._canDeactivateFollowUp = !(response && response.answers &&
+            response.answers.filter((_answer) => !!(_answer.followUp && _answer.followUp.date)).length);
+        }, (err: HttpErrorResponse) => {
+          this._canDeactivateFollowUp = false;
+          console.error(err);
+        });
+      }
     }
   }
 
@@ -789,18 +816,20 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onChangeFollowUp(event: Event) {
-    const followUpEmails = this._innovation.followUpEmails;
-    const newStatus = (event.target as HTMLInputElement).checked ? 'ACTIVE' : 'INACTIVE';
+    if (this._canDeactivateFollowUp) {
+      const followUpEmails = this._innovation.followUpEmails;
+      const newStatus = (event.target as HTMLInputElement).checked ? 'ACTIVE' : 'INACTIVE';
 
-    if (!!followUpEmails.noFollow || !!followUpEmails.opening || !!followUpEmails.interview) {
-      this._translateNotificationsService.error(
-        'Follow-up Module...', 'It can\'t be deactivated as the emails have already been sent.'
-      );
-    } else {
-      followUpEmails.status = newStatus;
-      this._innovation.followUpEmails = followUpEmails;
-      const message = `The follow-up module is ${newStatus === 'ACTIVE' ? 'activated' : 'deactivated'} at the client side.`;
-      this._saveProject(message, {followUpEmails: followUpEmails});
+      if (!!followUpEmails.noFollow || !!followUpEmails.opening || !!followUpEmails.interview) {
+        this._translateNotificationsService.error(
+          'Follow-up Module...', 'It can\'t be deactivated as the emails have already been sent.'
+        );
+      } else {
+        followUpEmails.status = newStatus;
+        this._innovation.followUpEmails = followUpEmails;
+        const message = `The follow-up module is ${newStatus === 'ACTIVE' ? 'activated' : 'deactivated'} at the client side.`;
+        this._saveProject(message, {followUpEmails: followUpEmails});
+      }
     }
   }
 

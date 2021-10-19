@@ -500,8 +500,12 @@
 
               <label class="mxw-full">Follow up Module</label>
 
-              <label class="form-switch">
+              <label
+                [ngClass]="{'tooltip is-multiline': !canDeactivateFollowUp}"
+                class="form-switch"
+                data-tooltip="The emails have already been sent.">
                 <input
+                  [disabled]="!canDeactivateFollowUp"
                   (change)="onChangeFollowUp($event)"
                   [checked]="innovation.followUpEmails.status === 'ACTIVE'"
                   id="admin-project-followUpStatus"
