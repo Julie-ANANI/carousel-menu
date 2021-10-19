@@ -1147,12 +1147,6 @@ export class TableComponent implements OnInit, OnDestroy {
     this.performAction.emit({_action: 'Select all', _context: false});
   }
 
-  performFilters(event: any) {
-    if (event) {
-      this.performAction.emit({_action: 'Filter'});
-    }
-  }
-
   /**
    * click to edit
    * @param event
