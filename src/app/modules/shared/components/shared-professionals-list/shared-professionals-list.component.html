@@ -1,5 +1,5 @@
 <div id="shared-professionals-list">
-  <app-shared-table
+  <umius-table
     (configChange)="onConfigChange($event)"
     (editRow)="onClickEdit($event)"
     (performAction)="onClickActions($event)"
@@ -8,7 +8,17 @@
     [config]="localConfig"
     [loading]="isLoading"
     [data]="table">
-  </app-shared-table>
+  </umius-table>
+  <!--  <app-shared-table-->
+  <!--    (configChange)="onConfigChange($event)"-->
+  <!--    (editRow)="onClickEdit($event)"-->
+  <!--    (performAction)="onClickActions($event)"-->
+  <!--    (removeRows)="onClickDelete($event)"-->
+  <!--    (selectRows)="onSelectRows($event)"-->
+  <!--    [config]="localConfig"-->
+  <!--    [loading]="isLoading"-->
+  <!--    [data]="table">-->
+  <!--  </app-shared-table>-->
 </div>
 
 

@@ -3,7 +3,7 @@ import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
 import {isPlatformBrowser, Location} from '@angular/common';
 import { User } from '../../../models/user.model';
-import { initTranslation, TranslateService } from '../../../i18n/i18n';
+import { initTranslation, TranslateService} from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';

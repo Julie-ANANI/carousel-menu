@@ -2,12 +2,9 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
-import { Table } from '../../../../table/models/table';
 import { first } from 'rxjs/operators';
-import { Config } from '../../../../../models/config';
 import { Response } from '../../../../../models/response';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { ConfigService } from '../../../../../services/config/config.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
@@ -19,10 +16,11 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
-import { Column } from '../../../../table/models/column';
 import { Mission, MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { Table, Config, Column } from '@umius/umi-common-component/src/lib/models';
+import {ConfigService} from '@umius/umi-common-component/src/lib/services/config';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -751,7 +749,6 @@ export class AdminProjectsComponent implements OnInit {
       } else {
         project['isPublic'] = 'No';
       }
-
 
 
       // project.emailSent = (project.emailSent) ? 'Yes' : 'No';
