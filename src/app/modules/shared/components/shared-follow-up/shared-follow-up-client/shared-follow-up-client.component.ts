@@ -500,6 +500,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         } else {
           this._cc.push(value);
         }
+        this.initEmailObject();
       }).catch((err: HttpErrorResponse) => {
         this._selectedCC.pop();
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
