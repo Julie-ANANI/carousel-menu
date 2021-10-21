@@ -494,13 +494,14 @@
 
             <!-- follow up module -->
             <div
-              *ngIf="!!innovation.followUpEmails.status && (canAccess(['edit', 'followUpModule'])
-              || canAccess(['view', 'followUpModule']))"
+              *ngIf="!!innovation.followUpEmails.status && ((canAccess(['edit', 'followUpModule'])
+              || canAccess(['view', 'followUpModule'])))"
               class="content">
 
               <label class="mxw-full">Follow up Module</label>
 
               <label
+                *ngIf="canAccess(['edit', 'followUpModule'])"
                 [ngClass]="{'tooltip is-multiline': !canDeactivateFollowUp}"
                 class="form-switch"
                 data-tooltip="The emails have already been sent.">
