@@ -99,6 +99,7 @@
         </span>
       </div>
 
+      <!-- client company name -->
       <div>
         <label>
 
@@ -119,6 +120,14 @@
         <span class="text-error form-input-hint" *ngIf="!company">
           {{ 'COMMON.REQUIRED.FIELD' | translate }}
         </span>
+      </div>
+      <!-- /client company name -->
+
+
+      <div *ngIf="company">
+        <button class="button is-secondary is-link is-xs" (click)="openUploadModal()">
+          <i class="fas fa-cloud-upload-alt icon-left"></i>Add a logo
+        </button>
       </div>
 
     </div>
@@ -200,3 +209,14 @@
   <!-- /view side -->
 
 </div>
+
+<!-- to upload logo -->
+<app-utility-modal [(showModal)]="showUploadModal">
+  <section class="modal-body">
+    <app-shared-upload-zone-photo
+      [uri]="'/media/companyLogo'"
+      (cbFn)="uploadImage($event)">
+    </app-shared-upload-zone-photo>
+  </section>
+</app-utility-modal>
+<!-- /to upload logo -->

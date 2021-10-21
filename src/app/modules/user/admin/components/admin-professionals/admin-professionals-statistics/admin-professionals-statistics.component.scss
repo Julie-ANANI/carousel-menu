@@ -1,4 +1,24 @@
+@import "../../../../../../../style/framework/src/variables";
+
 .responsive-scroll {
   overflow-x: auto;
   max-width: 90vw;
+}
+
+.email-confidence-option {
+  padding: 12px 30px;
+  background-color: #437194;
+  box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
+  transition: all 0.2s;
+  border-radius: 6px;
+
+  &.checked {
+    background-color: $success-color;
+  }
+
+  &:not(.checked):hover {
+    box-shadow: 0 4px 10px 0 rgba(30,55,90,.25);
+    transform: translateY(-1px);
+  }
+
 }

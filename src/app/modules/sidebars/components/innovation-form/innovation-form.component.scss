@@ -1,4 +1,4 @@
-@import "../../../../../style/variables";
+@import "../../../../../style/framework/src/variables";
 
 .text-right {
   margin: 20px;
@@ -29,7 +29,7 @@
 .satisfaction {
   input[type="radio"]:checked+label {
     .happy {
-      color: $validation-color;
+      color: $success-color;
     }
     .normal {
       color: $progress-color;

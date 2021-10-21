@@ -6,20 +6,21 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {Enterprise, Industry, Pattern} from '../../../../models/enterprise';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
-import {Clearbit} from '../../../../models/clearbit';
-import {AutoSuggestionConfig} from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import { Enterprise, Industry, Pattern } from '../../../../models/enterprise';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import {first, takeUntil} from 'rxjs/operators';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
+import { Clearbit } from '../../../../models/clearbit';
+import { AutoSuggestionConfig } from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import {
   EnterpriseSizeList,
   EnterpriseTypes,
   EnterpriseValueChains,
   Industries,
 } from '../../../../models/static-data/enterprise';
+import {EnterpriseService} from "../../../../services/enterprise/enterprise.service";
 
 type Template = 'CREATE' | 'EDIT';
 
@@ -33,9 +34,18 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
    *
    * @param value
    */
-  @Input() set enterprise(value: Enterprise) {
-    if (JSON.stringify(value) !== '{}') {
-      this._enterprise = value;
+  @Input() set enterprise(value: string) {
+    if (value) {
+      this._isLoading = true;
+      this._enterpriseService.get(value).pipe(first())
+        .subscribe(enterprise => {
+          this._enterprise = enterprise;
+          this.fillTheForm();
+          this._isLoading = false;
+        }, err => {
+          this._isLoading = false;
+          console.error(err);
+        });
     } else {
       this._enterprise = <Enterprise>{};
     }
@@ -68,7 +78,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   @Output() finalOutput: EventEmitter<{
     enterprise: Enterprise;
     opType: string;
-  }> = new EventEmitter<{ enterprise: Enterprise; opType: string }>();
+    enterpriseBeforeUpdate?: Enterprise
+  }> = new EventEmitter<{ enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise }>();
 
   private _enterprise: Enterprise = <Enterprise>{};
 
@@ -106,6 +117,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   private _newEnterpriseType: Array<any> = [];
 
   private _isShowSyntax = false;
+
+  private _isLoading = false;
 
   private _industrySelectConfig: AutoSuggestionConfig = <
     AutoSuggestionConfig
@@ -171,7 +184,8 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   constructor(
     private _formBuilder: FormBuilder,
     private _autoCompleteService: AutocompleteService,
-    private _domSanitizer: DomSanitizer
+    private _domSanitizer: DomSanitizer,
+    private _enterpriseService: EnterpriseService
   ) {
   }
 
@@ -391,7 +405,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
             }
         }
       });
-      this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type});
+      this.finalOutput.emit({enterprise: _newEnterprise, opType: this.type, enterpriseBeforeUpdate: this._enterprise});
       this.initAutoSuggestionConfig();
     }
   }
@@ -589,6 +603,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   get newEnterpriseType(): Array<Industry> {
     return this._newEnterpriseType;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   changeShowSyntax() {

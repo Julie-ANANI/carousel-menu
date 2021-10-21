@@ -13,7 +13,7 @@ import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
 import {Community} from '../../models/community';
-import { FamilyEnterprises } from '../../models/enterprise';
+import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-blacklist/sidebar-blacklist.component';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -152,7 +152,7 @@ export class InnovationService {
 
   public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
     return this._http.get(`/sharing/synthesis/${id}/${sharedKey}?fields=innovationCards,principalMedia,tags,mission,
-    owner, operator,clientProject`); //TODO I don't like hardcoded things
+    owner, operator,clientProject`); // TODO I don't like hardcoded things
   }
 
   public getRecommendation(innovationId: string): Observable<any> {

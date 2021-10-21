@@ -15,12 +15,12 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
+// tslint:disable-next-line:max-line-length
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
-import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SharedEditorTinymceModule } from '../../../../shared/components/shared-editor-tinymce/shared-editor-tinymce.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
@@ -40,6 +40,10 @@ import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-
 import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
 import {MarketTestObjectivesComplementaryModule} from '../market-test-objectives-complementary/market-test-objectives-complementary.module';
 import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-media.module';
+import { ContactComponent } from './components/contact/contact.component';
+import {SidebarInPageModule} from '../../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
+import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
+import {MessageTemplate2Module} from '../../../../utility/messages/message-template-2/message-template-2.module';
 
 @NgModule({
   imports: [
@@ -53,7 +57,6 @@ import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-m
     SharedWorldmapModule,
     SidebarUserAnswerModule,
     SharedMarketReportModule,
-    MessageTemplateModule,
     ModalModule,
     FormsModule,
     SharedEditorTinymceModule,
@@ -72,7 +75,10 @@ import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-m
     MarketTestObjectivesModule,
     DatePickerModule,
     MarketTestObjectivesComplementaryModule,
-    ModalMediaModule
+    ModalMediaModule,
+    SidebarInPageModule,
+    SharedFollowUpModule,
+    MessageTemplate2Module
   ],
   declarations: [
     ProjectComponent,
@@ -83,7 +89,8 @@ import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-m
     DocumentsComponent,
     PitchComponent,
     TargetingComponent,
-    SynthesisComponent
+    SynthesisComponent,
+    ContactComponent
   ],
   exports: [
     ProjectComponent

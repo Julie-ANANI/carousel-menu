@@ -1,6 +1,7 @@
 import {Injectable, ViewContainerRef} from '@angular/core';
 import {Country} from '../../models/country';
 import {IndexService} from '../index/index.service';
+import {first} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class WorldmapService {
@@ -80,7 +81,7 @@ export class WorldmapService {
   public async getCountriesList(): Promise<Array<Country>> {
     return new Promise(resolve => {
       if (this._countriesList.length === 0) {
-        this._indexService.getWholeSet({type: 'countries'})
+        this._indexService.getWholeSet({type: 'countries'}).pipe(first())
           .subscribe(
             (response) => {
               this._countriesList = response.result;

@@ -11,7 +11,13 @@ import {InnovationFrontService} from '../../../../../../../services/innovation/i
 
 export class SynthesisComponent implements OnInit, OnDestroy {
 
+  get previewMode(): boolean {
+    return this._previewMode;
+  }
+
   private _innovation: Innovation = <Innovation>{};
+
+  private _previewMode = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
@@ -19,7 +25,8 @@ export class SynthesisComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation;
+      this._innovation = innovation || <Innovation>{};
+      this._previewMode = !!this._innovation.previewMode;
     });
   }
 

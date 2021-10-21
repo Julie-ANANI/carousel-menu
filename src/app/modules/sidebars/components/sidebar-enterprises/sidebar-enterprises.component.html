@@ -1,276 +1,284 @@
-<div class="column col-xs-12 col-11 col-mx-auto p-top-30 p-bottom-30" id="sidebar-enterprise">
-  <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+<ng-container *ngIf="isLoading">
+  <div class="m-top-20">
+    <div class="loading is-primary is-md"></div>
+  </div>
+</ng-container>
 
-    <!-- button -->
-    <div *ngIf="isEditable" class="text-right p-bottom-30">
-      <button
-        [disabled]="form.invalid"
-        class="button is-community is-sm"
-        id="btn-save"
-        type="submit">
-        Save
-      </button>
-    </div>
-    <!-- /button -->
+<ng-container *ngIf="!isLoading">
+  <div class="column col-xs-12 col-11 col-mx-auto p-top-30 p-bottom-30" id="sidebar-enterprise">
+    <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
 
-    <!-- name -->
-    <div class="form-group has-error">
-      <label class="form-label" for="form-name">Name</label>
-      <input
-        (valueChanged)="selectCompany($event)"
-        [list-formatter]="autocompleteCompanyListFormatter"
-        [min-chars]="2"
-        [source]="companiesSuggestions"
-        auto-complete
-        class="form-input is-shadowed"
-        formControlName="name"
-        id="form-name"
-        placeholder="Enter the enterprise name"
-        type="text">
-      <div
-        *ngIf="form.get('name').touched && form.get('name').invalid && form.get('name').hasError('required')"
-        class="form-input-hint">
-        The enterprise name is required.
+      <!-- button -->
+      <div *ngIf="isEditable" class="text-right p-bottom-30">
+        <button
+          [disabled]="form.invalid"
+          class="button is-community is-sm"
+          id="btn-save"
+          type="submit">
+          Save
+        </button>
       </div>
-    </div>
-    <!-- /name -->
+      <!-- /button -->
 
-    <!-- top level domain -->
-    <div class="form-group has-error">
-      <label class="form-label" for="form-domain">Domain</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="topLevelDomain"
-        id="form-domain"
-        placeholder="enterprise.com"
-        type="text">
-      <div
-        *ngIf="form.get('topLevelDomain').touched && form.get('topLevelDomain').invalid
+      <!-- name -->
+      <div class="form-group has-error">
+        <label class="form-label" for="form-name">Name</label>
+        <input
+          (valueChanged)="selectCompany($event)"
+          [list-formatter]="autocompleteCompanyListFormatter"
+          [min-chars]="2"
+          [source]="companiesSuggestions"
+          auto-complete
+          class="form-input is-shadowed"
+          formControlName="name"
+          id="form-name"
+          placeholder="Enter the enterprise name"
+          type="text">
+        <div
+          *ngIf="form.get('name').touched && form.get('name').invalid && form.get('name').hasError('required')"
+          class="form-input-hint">
+          The enterprise name is required.
+        </div>
+      </div>
+      <!-- /name -->
+
+      <!-- top level domain -->
+      <div class="form-group has-error">
+        <label class="form-label" for="form-domain">Domain</label>
+        <input
+          class="form-input is-shadowed"
+          formControlName="topLevelDomain"
+          id="form-domain"
+          placeholder="enterprise.com"
+          type="text">
+        <div
+          *ngIf="form.get('topLevelDomain').touched && form.get('topLevelDomain').invalid
         && form.get('topLevelDomain').hasError('required')"
-        class="form-input-hint">
-        The enterprise domain is required.
+          class="form-input-hint">
+          The enterprise domain is required.
+        </div>
       </div>
-    </div>
-    <!-- /top level domain -->
+      <!-- /top level domain -->
 
-    <!-- url -->
-    <div class="form-group">
-      <label class="form-label" for="form-url">Url</label>
-      <input
-        class="form-input is-shadowed"
-        formControlName="enterpriseURL"
-        id="form-url"
-        placeholder="Enter the enterprise url"
-        type="text">
-    </div>
-    <!-- /url -->
+      <!-- url -->
+      <div class="form-group">
+        <label class="form-label" for="form-url">Url</label>
+        <input
+          class="form-input is-shadowed"
+          formControlName="enterpriseURL"
+          id="form-url"
+          placeholder="Enter the enterprise url"
+          type="text">
+      </div>
+      <!-- /url -->
 
-    <!-- logo -->
-    <div class="form-group">
-      <label class="form-label" for="form-logo">Logo</label>
-      <figure
-        [ngClass]="{'no-logo': !logo}"
-        [ngStyle]="{'width': '120px', 'height': '120px'}"
-        class="img-hover-button">
-        <img
+      <!-- logo -->
+      <div class="form-group">
+        <label class="form-label" for="form-logo">Logo</label>
+        <figure
+          [ngClass]="{'no-logo': !logo}"
           [ngStyle]="{'width': '120px', 'height': '120px'}"
-          [src]="logo ? logo : defaultLogoURI"
-          alt=" "
-          class="img-fit-cover">
-        <span (click)="changeLogo($event)" class="img-button">Edit</span>
-        <input class="form-input" formControlName="logo" type="hidden" id="form-logo">
-      </figure>
-    </div>
-    <!-- /logo -->
+          class="img-hover-button">
+          <img
+            [ngStyle]="{'width': '120px', 'height': '120px'}"
+            [src]="logo ? logo : defaultLogoURI"
+            alt=" "
+            class="img-fit-cover">
+          <span (click)="changeLogo($event)" class="img-button">Edit</span>
+          <input class="form-input" formControlName="logo" type="hidden" id="form-logo">
+        </figure>
+      </div>
+      <!-- /logo -->
 
-    <!-- subsidiaries -->
-    <div class="form-group">
-      <label class="form-label" for="form-subsidiaries">Subsidiaries</label>
-      <input
-        (valueChanged)="selectEnterprise('subsidiary', $event)"
-        [list-formatter]="autocompleteEnterpriseListFormatter"
-        [min-chars]="2"
-        [source]="enterpriseSuggestions"
-        auto-complete
-        class="form-input is-shadowed"
-        formControlName="subsidiaries"
-        id="form-subsidiaries"
-        placeholder="Enter the subsidiaries"
-        type="text">
-      <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('subsidiaries', newSubsidiary, false)}">
-      </ng-container>
-    </div>
-    <!-- /subsidiaries -->
+      <!-- subsidiaries -->
+      <div class="form-group">
+        <label class="form-label" for="form-subsidiaries">Subsidiaries</label>
+        <input
+          (valueChanged)="selectEnterprise('subsidiary', $event)"
+          [list-formatter]="autocompleteEnterpriseListFormatter"
+          [min-chars]="2"
+          [source]="enterpriseSuggestions"
+          auto-complete
+          class="form-input is-shadowed"
+          formControlName="subsidiaries"
+          id="form-subsidiaries"
+          placeholder="Enter the subsidiaries"
+          type="text">
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('subsidiaries', newSubsidiary, false)}">
+        </ng-container>
+      </div>
+      <!-- /subsidiaries -->
 
-    <!-- parent -->
-    <div class="form-group">
-      <label class="form-label" for="form-parent">Parent Enterprise</label>
-      <input
-        (valueChanged)="selectEnterprise('parent',$event)"
-        [list-formatter]="autocompleteEnterpriseListFormatter"
-        [min-chars]="2"
-        [source]="enterpriseSuggestions"
-        (ngModelChange)="checkParentInput($event)"
-        auto-complete
-        class="form-input is-shadowed"
-        formControlName="parentEnterprise"
-        id="form-parent"
-        placeholder="Enter the parent enterprise"
-        type="text">
-    </div>
-    <!-- /parent -->
+      <!-- parent -->
+      <div class="form-group">
+        <label class="form-label" for="form-parent">Parent Enterprise</label>
+        <input
+          (valueChanged)="selectEnterprise('parent',$event)"
+          [list-formatter]="autocompleteEnterpriseListFormatter"
+          [min-chars]="2"
+          [source]="enterpriseSuggestions"
+          (ngModelChange)="checkParentInput($event)"
+          auto-complete
+          class="form-input is-shadowed"
+          formControlName="parentEnterprise"
+          id="form-parent"
+          placeholder="Enter the parent enterprise"
+          type="text">
+      </div>
+      <!-- /parent -->
 
-    <!-- patterns -->
-    <div class="form-group">
-      <label class="form-label">Patterns
-        <i class="fas fa-info-circle is-primary" id="syntax-hover"
-           (mouseenter)="showSyntaxInfo()"
-           (mouseleave)="hideSyntaxInfo()"></i>
-        <span class="tooltip-info" *ngIf="isShowSyntax" style="margin-left: 70px">
+      <!-- patterns -->
+      <div class="form-group">
+        <label class="form-label">Patterns
+          <i class="fas fa-info-circle is-primary" id="syntax-hover"
+             (mouseenter)="showSyntaxInfo()"
+             (mouseleave)="hideSyntaxInfo()"></i>
+          <span class="tooltip-info" *ngIf="isShowSyntax" style="margin-left: 70px">
           <span>first_name, last_name</span>
           <span>first_initial, last_initial</span>
           <span> . or -</span>
         </span>
-      </label>
-      <app-utility-input-list
-        (update)="patternsUpdate($event)"
-        [config]="patternConfig"
-        [isEditable]="true">
-      </app-utility-input-list>
-    </div>
-    <!-- /patterns -->
+        </label>
+        <app-utility-input-list
+          (update)="patternsUpdate($event)"
+          [config]="patternConfig"
+          [isEditable]="true">
+        </app-utility-input-list>
+      </div>
+      <!-- /patterns -->
 
-    <!-- type -->
-    <div class="form-group">
-      <label class="form-label">Type
-      </label>
-      <app-utility-auto-suggestion
-        [config]="enterpriseTypeSelectConfig"
-        (valueAdded)="getValueSelected($event)"
-        (valueSelected)="getValueSelected($event)">
-      </app-utility-auto-suggestion>
-      <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', newEnterpriseType, true)}">
-      </ng-container>
-    </div>
-    <!-- /type -->
+      <!-- type -->
+      <div class="form-group">
+        <label class="form-label">Type
+        </label>
+        <app-utility-auto-suggestion
+          [config]="enterpriseTypeSelectConfig"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', newEnterpriseType, true)}">
+        </ng-container>
+      </div>
+      <!-- /type -->
 
-    <!-- industry -->
-    <div class="form-group">
-      <label class="form-label">Industry</label>
-      <app-utility-auto-suggestion
-        [config]="industrySelectConfig"
-        (valueAdded)="getValueSelected($event)"
-        (valueSelected)="getValueSelected($event)">
-      </app-utility-auto-suggestion>
-      <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry, false)}">
-      </ng-container>
-    </div>
-    <!-- industry -->
+      <!-- industry -->
+      <div class="form-group">
+        <label class="form-label">Industry</label>
+        <app-utility-auto-suggestion
+          [config]="industrySelectConfig"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry, false)}">
+        </ng-container>
+      </div>
+      <!-- industry -->
 
-    <!-- brand -->
-    <div class="form-group">
-      <label class="form-label">Brand</label>
-      <app-utility-input-list
-        (update)="brandUpdate($event)"
-        [config]="brandConfig"
-        [isEditable]="true">
-      </app-utility-input-list>
-    </div>
-    <!-- /brand -->
+      <!-- brand -->
+      <div class="form-group">
+        <label class="form-label">Brand</label>
+        <app-utility-input-list
+          (update)="brandUpdate($event)"
+          [config]="brandConfig"
+          [isEditable]="true">
+        </app-utility-input-list>
+      </div>
+      <!-- /brand -->
 
-    <!-- geographical zone -->
-    <div class="form-group">
-      <label class="form-label">Geographical Zone</label>
-      <app-utility-input-list
-        (update)="geoZoneUpdate($event)"
-        [config]="geoConfig"
-        [isEditable]="true">
-      </app-utility-input-list>
-    </div>
-    <!-- /geographical zone -->
+      <!-- geographical zone -->
+      <div class="form-group">
+        <label class="form-label">Geographical Zone</label>
+        <app-utility-input-list
+          (update)="geoZoneUpdate($event)"
+          [config]="geoConfig"
+          [isEditable]="true">
+        </app-utility-input-list>
+      </div>
+      <!-- /geographical zone -->
 
-    <!-- company size -->
-    <div class="form-group">
-      <label class="form-label">Company size
-        <i class="fas fa-info-circle is-primary" id="enterprise-type-hover"
-           (mouseenter)="showEnterpriseSizeInfo()"
-           (mouseleave)="hideEnterpriseSizeInfo()"></i>
-        <span *ngIf="isSizeInfo" class="tooltip-info">
+      <!-- company size -->
+      <div class="form-group">
+        <label class="form-label">Company size
+          <i class="fas fa-info-circle is-primary" id="enterprise-type-hover"
+             (mouseenter)="showEnterpriseSizeInfo()"
+             (mouseleave)="hideEnterpriseSizeInfo()"></i>
+          <span *ngIf="isSizeInfo" class="tooltip-info">
           <span>TPE : 0-19 employés</span>
           <span>PME : 20-249 employés</span>
           <span>ETI : 250-5000 employés</span>
           <span>GE : >5000 employés</span>
         </span>
-      </label>
-      <app-utility-auto-suggestion
-        [config]="enterpriseSizeSelectConfig"
-        (valueAdded)="getValueSelected($event)"
-        (valueSelected)="getValueSelected($event)">
-      </app-utility-auto-suggestion>
-    </div>
-    <!-- /company size -->
+        </label>
+        <app-utility-auto-suggestion
+          [config]="enterpriseSizeSelectConfig"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+      </div>
+      <!-- /company size -->
 
-    <!-- value chain -->
-    <div class="form-group">
-      <label class="form-label">Value chain</label>
-      <app-utility-auto-suggestion
-        [config]="valueChainSelectConfig"
-        (valueAdded)="getValueSelected($event)"
-        (valueSelected)="getValueSelected($event)">
-      </app-utility-auto-suggestion>
-      <ng-container
-        *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', newValueChains, true)}">
-      </ng-container>
-    </div>
-    <!-- /value chain -->
+      <!-- value chain -->
+      <div class="form-group">
+        <label class="form-label">Value chain</label>
+        <app-utility-auto-suggestion
+          [config]="valueChainSelectConfig"
+          (valueAdded)="getValueSelected($event)"
+          (valueSelected)="getValueSelected($event)">
+        </app-utility-auto-suggestion>
+        <ng-container
+          *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', newValueChains, true)}">
+        </ng-container>
+      </div>
+      <!-- /value chain -->
 
-  </form>
-</div>
-
-
-<!-- to upload logo -->
-<app-utility-modal [(showModal)]="showModal" [enableCloseButton]="true">
-  <section class="modal-body">
-    <app-shared-upload-zone-photo
-      [uri]="'/media/companyLogo'"
-      (cbFn)="uploadImage($event)">
-    </app-shared-upload-zone-photo>
-  </section>
-</app-utility-modal>
-<!-- /to upload logo -->
+    </form>
+  </div>
 
 
-<ng-template #answerArea let-context>
-  <ul class="answers-wrapper">
-    <li *ngFor="let answer of context.answerList; let i = index">
+  <!-- to upload logo -->
+  <app-utility-modal [(showModal)]="showModal" [enableCloseButton]="true">
+    <section class="modal-body">
+      <app-shared-upload-zone-photo
+        [uri]="'/media/companyLogo'"
+        (cbFn)="uploadImage($event)">
+      </app-shared-upload-zone-photo>
+    </section>
+  </app-utility-modal>
+  <!-- /to upload logo -->
 
-      <!-- text -->
-      <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+
+  <ng-template #answerArea let-context>
+    <ul class="answers-wrapper">
+      <li *ngFor="let answer of context.answerList; let i = index">
+
+        <!-- text -->
+        <div class="answer-wrapper text-sm text-primary-dark m-right-2">
         <span
           *ngIf="!context.isString">{{answer.text || answer.name || answer.label || answer.expression}}</span>
-        <span *ngIf="context.isString">{{answer}}</span>
-      </div>
-      <!-- /text -->
-      <!-- icons -->
-      <div class="icons-wrapper">
-        <!-- delete icon -->
-        <div
-          *ngIf="isEditable"
-          (click)="deleteItem(context.type, answer)"
-          [ngClass]="{ 'disabled': !isEditable }"
-          class="icon-container m-no-right is-overlay">
+          <span *ngIf="context.isString">{{answer}}</span>
+        </div>
+        <!-- /text -->
+        <!-- icons -->
+        <div class="icons-wrapper">
+          <!-- delete icon -->
+          <div
+            *ngIf="isEditable"
+            (click)="deleteItem(context.type, answer)"
+            [ngClass]="{ 'disabled': !isEditable }"
+            class="icon-container m-no-right is-overlay">
             <span [attr.data-tooltip]="'COMMON.TOOLTIP.DELETE' | translate" class="tooltip">
               <i class="icon icon-delete text-alert"></i>
             </span>
+          </div>
+          <!-- /delete icon -->
+
         </div>
-        <!-- /delete icon -->
+        <!-- /icons -->
 
-      </div>
-      <!-- /icons -->
-
-    </li>
-  </ul>
-</ng-template>
+      </li>
+    </ul>
+  </ng-template>
+</ng-container>

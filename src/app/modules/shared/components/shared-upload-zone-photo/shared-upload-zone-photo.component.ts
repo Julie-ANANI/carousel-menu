@@ -73,6 +73,8 @@ export class SharedUploadZonePhotoComponent {
         if (this.uploadCloudinary) {
           const _formData = new FormData();
           _formData.append('file', file, file.name);
+          console.log(_formData);
+          console.log(this.uri);
           this._httpClient.post(this.uri, _formData).subscribe((data: any) => {
             // Sanitized image returned from backend.
             this.cbFn.emit(data);

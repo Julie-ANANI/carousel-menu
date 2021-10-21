@@ -44,6 +44,15 @@
     </section>
     <!-- /section actions -->
 
+    <!-- section client comments -->
+    <section *ngIf="innovation.questionnaireComment">
+      <h2 class="title is-4">{{ 'COMMON.LABEL.CLIENT_COMMENTS' | translate }}</h2>
+      <p class="client-comments label justify-start text-left text-15 text-normal">
+        {{innovation.questionnaireComment}}
+      </p>
+    </section>
+    <!-- /section client comments -->
+
     <!-- section to add preset  -->
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
 

@@ -10,6 +10,82 @@ import { Question } from './question';
 import {Community} from './community';
 import {Consent} from './consent';
 
+export interface InnovationFollowUpEmailsCc {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export interface InnovationFollowUpEmails {
+  ccEmail?: string;
+  cc?: Array<InnovationFollowUpEmailsCc>;
+
+  /**
+   * to show or hide the Follow Up module at the client side
+   */
+  status?: 'ACTIVE' | 'INACTIVE';
+
+  /**
+   * company name
+   */
+  entity?: string;
+
+  discussion?: {
+    fr: {
+      subject: string;
+      content: string;
+    },
+    en: {
+      subject: string;
+      content: string;
+    }
+  };
+
+  inform?: {
+    fr: {
+      subject: string;
+      content: string;
+    },
+    en: {
+      subject: string;
+      content: string;
+    }
+  };
+
+  interview?: {
+    fr: {
+      subject: string;
+      content: string;
+    },
+    en: {
+      subject: string;
+      content: string;
+    }
+  };
+
+  opening?: {
+    fr: {
+      subject: string;
+      content: string;
+    },
+    en: {
+      subject: string;
+      content: string;
+    }
+  };
+
+  noFollow?: {
+    fr: {
+      subject: string;
+      content: string;
+    },
+    en: {
+      subject: string;
+      content: string;
+    }
+  };
+}
+
 /**
  * when creating the new project.
  */
@@ -142,43 +218,6 @@ export interface Innovation {
 
   _metadata?: any;
 
-  followUpEmails?: {
-
-    ccEmail?: string,
-
-    interview?: {
-      fr: {
-        subject: string,
-        content: string
-      },
-      en: {
-        subject: string,
-        content: string
-      }
-    },
-
-    opening?: {
-      fr: {
-        subject: string,
-        content: string
-      },
-      en: {
-        subject: string,
-        content: string
-      }
-    },
-
-    noFollow?: {
-      fr: {
-        subject: string,
-        content: string
-      },
-      en: {
-        subject: string,
-        content: string
-      }
-    }
-
-  };
+  followUpEmails?: InnovationFollowUpEmails;
 
 }

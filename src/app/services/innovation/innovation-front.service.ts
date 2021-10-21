@@ -15,7 +15,7 @@ import {Section} from '../../models/section';
 import {DomSanitizer} from '@angular/platform-browser';
 import {PublicationType} from '../../models/community';
 import {MediaFrontService} from '../media/media-front.service';
-import {Mission, MissionQuestion} from '../../models/mission';
+import {Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
 import {MissionFrontService} from '../mission/mission-front.service';
 
 export interface Values {
@@ -122,6 +122,18 @@ export class InnovationFrontService {
 
     return src === '' ? defaultSrc : src;
 
+  }
+
+  /**
+   * if the mission template has the question with the identifier 'Recontact'
+   * then at the client side we show the Follow Up module.
+   * @returns {string}
+   * @param template
+   */
+  public static getFollowUpStatus(template: MissionTemplate) {
+    const questions = MissionFrontService.totalTemplateQuestions(template);
+    return questions.length && !!questions.some((_question) => _question.identifier === 'Recontact')
+      ? 'ACTIVE' : 'INACTIVE';
   }
 
   /**

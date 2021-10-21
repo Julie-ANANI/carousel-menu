@@ -1,0 +1,19 @@
+<div class="relative" id="auto-complete-country">
+  <input
+    (keypress)="onSuggestCountries()"
+    [(ngModel)]="country.name"
+    [attr.placeholder]="placeholder | translate"
+    [disabled]="isDisabled"
+    [id]="inputId"
+    [ngClass]="{'is-sm': isSmall, 'is-shadowed': hasShadowed}"
+    class="form-input"
+    type="text">
+  <ul
+    *ngIf="!!country.name"
+    [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }"
+    class="input-suggestion">
+    <li (click)="onCountrySelect(suggestion)" *ngFor="let suggestion of countriesSuggestion">
+      {{ suggestion.name | titlecase }}
+    </li>
+  </ul>
+</div>

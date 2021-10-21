@@ -25,23 +25,25 @@ import { PiechartExecutiveModule } from '../../../../utility/canvas/piechart-exe
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { NguiAutoCompleteModule } from '../../../../utility/auto-complete/auto-complete.module';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
+import { SharedUploadZonePhotoModule } from "../../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    RouterModule,
-    SharedWorldmapModule,
-    CountryFlagModule,
-    FormsModule,
-    ProgressBarModule,
-    PiechartExecutiveModule,
-    ModalModule,
-    NguiAutoCompleteModule,
-    AutoCompleteInputModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        RouterModule,
+        SharedWorldmapModule,
+        CountryFlagModule,
+        FormsModule,
+        ProgressBarModule,
+        PiechartExecutiveModule,
+        ModalModule,
+        NguiAutoCompleteModule,
+        AutoCompleteInputModule,
+        ReactiveFormsModule,
+        SharedUploadZonePhotoModule
+    ],
   declarations: [
     ExecutiveConclusionComponent,
     ExecutiveProfessionalComponent,

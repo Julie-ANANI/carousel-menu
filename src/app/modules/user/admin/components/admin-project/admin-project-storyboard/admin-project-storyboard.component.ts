@@ -339,6 +339,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   private _createExecutiveReport() {
+    console.log(this._selectedLang, this._innovation._id);
     this._executiveReportService.create(this._selectedLang, this._innovation._id)
       .pipe(first())
       .subscribe((response) => {

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { AdvSearchService } from '../../../../services/advsearch/advsearch.service';
+import {emailRegEx} from '../../../../utils/regex';
 
 @Component({
   selector: 'advsearch-form',
@@ -31,7 +32,7 @@ export class AdvsearchFormComponent implements OnInit {
     this._advSearchForm = this._formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
       companyName: [''],
       jobTitle: [''],
       country: [''],

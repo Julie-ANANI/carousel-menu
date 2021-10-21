@@ -35,6 +35,8 @@ export class BannerComponent {
 
   @Input() position = 'absolute';
 
+  @Input() showCloseBtn = true;
+
   @Input() set showBanner(value: boolean) {
     this._showBanner = value;
   }

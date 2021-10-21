@@ -1,10 +1,11 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, PLATFORM_ID} from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivateChild } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { RouteFrontService } from '../services/route/route-front.service';
 import {Observable, of, Subject} from 'rxjs';
 import {catchError, map, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
+import {isPlatformBrowser} from '@angular/common';
 
 /**
  * Ensure User is authenticated
@@ -15,7 +16,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  constructor(private _authService: AuthService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _authService: AuthService,
               private _routeFrontService: RouteFrontService,
               private _router: Router) {}
 
@@ -48,7 +50,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, OnDestroy {
             return of(false);
           }));
         }
-      } else {
+      } else if (isPlatformBrowser(this._platformId)) {
         this._router.navigate(['/welcome']);
         return false;
       }

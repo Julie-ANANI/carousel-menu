@@ -310,32 +310,6 @@
             </div>-->
             <!-- /main objective -->
 
-            <!-- questionnaire -->
-            <div *ngIf="quizLink" class="content">
-
-              <label>Questionnaire</label>
-
-              <button
-                (click)="openQuiz($event)"
-                [ngClass]="'is-info'"
-                class="button is-outlined is-sm"
-                id="btn-quiz-link-open"
-                type="button">
-                {{ 'Open quiz' }}
-              </button>
-
-              <button
-                (click)="onCopyQuizLink($event)"
-                [ngClass]="quizUrlCopied ? 'is-success' : 'is-info'"
-                class="button is-outlined is-sm"
-                id="btn-quiz-link"
-                type="button">
-                {{ quizUrlCopied ? 'Copied to clipboard' : 'Click to copy quiz link' }}
-              </button>
-
-            </div>
-            <!-- /questionnaire -->
-
             <!-- project tags -->
             <div
               *ngIf="canAccess(['view', 'projectTags']) || canAccess(['edit', 'projectTags'])"
@@ -517,6 +491,35 @@
 
             </div>
             <!-- /anonymous answer -->
+
+            <!-- follow up module -->
+            <div
+              *ngIf="!!innovation.followUpEmails.status && (canAccess(['edit', 'followUpModule'])
+              || canAccess(['view', 'followUpModule']))"
+              class="content">
+
+              <label class="mxw-full">Follow up Module</label>
+
+              <label
+                [ngClass]="{'tooltip is-multiline': !canDeactivateFollowUp}"
+                class="form-switch"
+                data-tooltip="The emails have already been sent.">
+                <input
+                  [disabled]="!canDeactivateFollowUp"
+                  (change)="onChangeFollowUp($event)"
+                  [checked]="innovation.followUpEmails.status === 'ACTIVE'"
+                  id="admin-project-followUpStatus"
+                  type="checkbox">
+                <i class="form-icon"></i>
+                {{ innovation.followUpEmails.status === 'ACTIVE' ? 'Activated' : 'Deactivated' }}
+              </label>
+
+              <span *ngIf="!canAccess(['edit', 'followUpModule'])" class="is-text">
+                {{ innovation.followUpEmails.status === 'ACTIVE' ? 'Activated' : 'Deactivated' }}
+              </span>
+
+            </div>
+            <!-- /follow up module -->
 
             <!-- public project -->
             <div

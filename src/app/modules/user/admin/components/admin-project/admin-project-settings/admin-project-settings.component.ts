@@ -45,8 +45,10 @@ import { MissionFrontService } from '../../../../../../services/mission/mission-
 import { picto, Picto } from '../../../../../../models/static-data/picto';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
 import { Community } from '../../../../../../models/community';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import {Blacklist, BlacklistDomain} from '../../../../../../models/blacklist';
+import {AnswerService} from '../../../../../../services/answer/answer.service';
+import {ActivatedRoute} from '@angular/router';
 
 export interface UserSuggestion {
   name: string;
@@ -59,6 +61,10 @@ export interface UserSuggestion {
   styleUrls: ['./admin-project-settings.component.scss'],
 })
 export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
+
+  get canDeactivateFollowUp(): boolean {
+    return this._canDeactivateFollowUp;
+  }
 
   get hasMissionTemplate(): boolean {
     return MissionFrontService.hasMissionTemplate(this._mission);
@@ -108,14 +114,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   ];
 
   private _domains: Array<{ name: string }> = [
-    { name: 'umi' },
-    { name: 'dynergie' },
-    { name: 'novanexia' },
-    { name: 'inomer' },
-    { name: 'multivalente' },
-    { name: 'salveo' },
-    { name: 'schneider' },
-    { name: 'bnpparibas' },
+    {name: 'umi'},
+    {name: 'dynergie'},
+    {name: 'novanexia'},
+    {name: 'inomer'},
+    {name: 'multivalente'},
+    {name: 'salveo'},
+    {name: 'schneider'},
+    {name: 'bnpparibas'},
   ];
 
   private _statsConfig: Array<StatsInterface> = [];
@@ -130,8 +136,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _isPublishingCommunity = false;
 
+  private _blacklistDomains: Array<string> = [];
+
+  private _canDeactivateFollowUp = false;
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
+    private _answerService: AnswerService,
+    private _activatedRoute: ActivatedRoute,
     private _rolesFrontService: RolesFrontService,
     private _missionService: MissionService,
     private _dashboardService: DashboardService,
@@ -143,11 +155,13 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     private _translateNotificationsService: TranslateNotificationsService,
     private _innovationFrontService: InnovationFrontService,
     private _statsReferentsService: StatsReferentsService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
+      this._getValidAnswers();
       this._getOperators();
       this._getCommercials();
 
@@ -170,6 +184,22 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             this._clientProject = <ClientProject>this._innovation.clientProject;
           }
         });
+    }
+  }
+
+  private _getValidAnswers() {
+    if (isPlatformBrowser(this._platformId)) {
+      const innovation = this._activatedRoute.snapshot.parent.parent.data['innovation'];
+
+      if (innovation && innovation._id) {
+        this._answerService.getInnovationValidAnswers(innovation._id).pipe(first()).subscribe((response) => {
+          this._canDeactivateFollowUp = !(response && response.answers &&
+            response.answers.filter((_answer) => !!(_answer.followUp && _answer.followUp.date)).length);
+        }, (err: HttpErrorResponse) => {
+          this._canDeactivateFollowUp = false;
+          console.error(err);
+        });
+      }
     }
   }
 
@@ -413,7 +443,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public onMissionTypeChange(type: MissionType) {
     this._mission.type = type;
     this._saveMission(
-      { type: this._mission.type },
+      {type: this._mission.type},
       'The market test type has been updated.'
     );
   }
@@ -430,7 +460,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._missionTeam.push(operator['_id']);
     }
     this._saveMission(
-      { team: this._mission.team },
+      {team: this._mission.team},
       'The team members have been updated.'
     );
   }
@@ -641,6 +671,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
    * Only client is allowed to update the objective.
    * commented on 8th June, 2021
    */
+
   /*public onMainObjectiveChange(objective: string) {
     const _index = this._missionObjectives.findIndex(
       (value) => value['en']['label'] === objective
@@ -754,24 +785,26 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onChangeAnonymous(event: Event) {
-    if (
-      this._innovation._metadata &&
-      this._innovation._metadata['campaign'] &&
-      this._innovation._metadata['campaign']['anonymous_answers']
-    ) {
-      this._innovation._metadata['campaign'][
-        'anonymous_answers'
-      ] = (event.target as HTMLInputElement).checked;
+    if ( this._innovation._metadata ) {
+      if ( this._innovation._metadata['campaign'] ) {
+        this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
+      } else {
+        this._innovation._metadata['campaign'] = {
+          'anonymous_answers': (event.target as HTMLInputElement).checked
+        };
+      }
     } else {
-      this._innovation._metadata = this._innovation._metadata['campaign'][
-        'anonymous_answers'
-      ] = (event.target as HTMLInputElement).checked;
+      this._innovation._metadata = {
+        'campaign': {
+          'anonymous_answers': (event.target as HTMLInputElement).checked
+        }
+      };
     }
     this._saveProject(
       (event.target as HTMLInputElement).checked
         ? 'The answers will be anonymous.'
         : 'The answers won\'t be anonymous.',
-      { _metadata: this._innovation._metadata }
+      {_metadata: this._innovation._metadata}
     );
   }
 
@@ -782,13 +815,31 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onChangeFollowUp(event: Event) {
+    if (this._canDeactivateFollowUp) {
+      const followUpEmails = this._innovation.followUpEmails;
+      const newStatus = (event.target as HTMLInputElement).checked ? 'ACTIVE' : 'INACTIVE';
+
+      if (!!followUpEmails.noFollow || !!followUpEmails.opening || !!followUpEmails.interview) {
+        this._translateNotificationsService.error(
+          'Follow-up Module...', 'It can\'t be deactivated as the emails have already been sent.'
+        );
+      } else {
+        followUpEmails.status = newStatus;
+        this._innovation.followUpEmails = followUpEmails;
+        const message = `The follow-up module is ${newStatus === 'ACTIVE' ? 'activated' : 'deactivated'} at the client side.`;
+        this._saveProject(message, {followUpEmails: followUpEmails});
+      }
+    }
+  }
+
   public onChangeIsPublic(event: Event) {
     this._innovation.isPublic = (event.target as HTMLInputElement).checked;
     this._saveProject(
       this._innovation.isPublic
         ? 'The project is published to the Innovation Showroom.'
         : 'The project is not published to the Innovation Showroom.',
-      { isPublic: this._innovation.isPublic }
+      {isPublic: this._innovation.isPublic}
     );
   }
 
@@ -801,8 +852,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._innovation.status = 'EDITING';
       this._saveProject(
         'The project has been placed in revision status, ' +
-          'please notify the owner of the changes to be made.',
-        { status: this._innovation.status }
+        'please notify the owner of the changes to be made.',
+        {status: this._innovation.status}
       );
     }
   }
@@ -814,7 +865,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._innovation.status === 'SUBMITTED'
     ) {
       this._innovation.status = 'EVALUATING';
-      const saveObject: any = { status: this._innovation.status };
+      const saveObject: any = {status: this._innovation.status};
       if (this._mission._id && this._mission.type === 'USER') {
         this._mission.type = 'CLIENT';
         saveObject.mission = this._mission;
@@ -918,6 +969,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._statsConfig;
   }
 
+  get blacklistDomains(): Array<string> {
+    return this._blacklistDomains;
+  }
+
   get picto(): Picto {
     return this._picto;
   }
@@ -934,9 +989,24 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._isPublishingCommunity;
   }
 
+  getInitialDomains() {
+    this._blacklistDomains = [];
+    if (this._innovation.settings && this._innovation.settings.blacklist) {
+      this._blacklistDomains = this._innovation.settings.blacklist.domains;
+    }
+    if (this._innovation.owner && this._innovation.owner.company && this._innovation.owner.company.domain) {
+      if (this._blacklistDomains.indexOf(this._innovation.owner.company.domain) === -1) {
+        this._blacklistDomains.push(this._innovation.owner.company.domain);
+      }
+    }
+    this._innovation.settings.blacklist.domains = JSON.parse(JSON.stringify(this._blacklistDomains));
+    console.log(this._innovation.settings.blacklist.domains);
+  }
+
   set isPublishingCommunity(value: boolean) {
     this._isPublishingCommunity = value;
   }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

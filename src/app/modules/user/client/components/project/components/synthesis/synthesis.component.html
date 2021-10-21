@@ -1,3 +1,19 @@
-<div *ngIf="innovation._id" id="project-synthesis">
-  <app-shared-market-report [project]="innovation"></app-shared-market-report>
+<div id="synthesis">
+
+  <!-- project status not done -->
+  <ng-container *ngIf="innovation.status !== 'DONE' && !previewMode">
+    <div class="p-top-100 container fluid grid-2xl">
+      <div class="column col-11 col-sm-12 col-mx-auto">
+        <app-message-template-2 [animation]="true">
+          <h2 class="title is-6 text-center">{{ 'MARKET_REPORT.MESSAGE.EDITING' | translate }}</h2>
+        </app-message-template-2>
+      </div>
+    </div>
+  </ng-container>
+  <!-- /project status not done -->
+
+  <ng-container *ngIf="innovation.status === 'DONE' || previewMode">
+    <app-shared-market-report [project]="innovation"></app-shared-market-report>
+  </ng-container>
+
 </div>

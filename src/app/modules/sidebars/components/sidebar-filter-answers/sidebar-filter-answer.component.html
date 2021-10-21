@@ -8,7 +8,7 @@
 
       <!-- no contact selected -->
       <h6 *ngIf="!filterNumber" class="m-bottom-30 text-bold">
-        Select contacts according to your criteria
+        {{ 'SIDEBAR_MARKET_REPORT.SELECT_CONTACTS' | translateIn: reportingLang }}
       </h6>
       <!-- /no contact selected -->
 
@@ -16,10 +16,12 @@
       <button
         (click)="onSelectedContacts($event)"
         *ngIf="filterNumber"
-        class="button is-primary"
+        class="button is-community"
         id="btn-selected-contacts"
         type="button">
-        <i class="fas fa-share icon-left"></i> Selected {{ filterNumber }} contacts
+        <i class="fas fa-share icon-left"></i>
+        {{ 'COMMON.LABEL.SELECT' | translateIn: reportingLang }} {{ filterNumber }}
+        {{ filterNumber === 1 ? 'contact' : 'contacts' }}
       </button>
       <!-- button selected contacts -->
 
@@ -68,13 +70,13 @@
   <!-- /actions button for admin type === 'MARKET_REPORT' -->
 
   <!-- views type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
-  <div>
+  <div *ngIf="isViewsEditable">
 
     <h6>{{ 'SIDEBAR_MARKET_REPORT.MY_VIEWS' | translateIn: reportingLang }}</h6>
 
     <!-- show views -->
     <app-utility-input-list
-      [isEditable]="isViewsEditable || !isAdminSide"
+      [isEditable]="true"
       [isAddable]="false"
       [isSmall]="false"
       [isClickable]="true"
@@ -86,7 +88,7 @@
     <!-- /show views -->
 
     <!-- form to register view -->
-    <form *ngIf="isViewsEditable || !isAdminSide" (ngSubmit)="registerNewFilter()">
+    <form (ngSubmit)="registerNewFilter()">
 
       <div class="form-group p-top-1">
         <label>
@@ -112,10 +114,10 @@
     </form>
     <!-- /form to register view -->
 
+    <div class="divider"></div>
+
   </div>
   <!-- /views type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
-
-  <div class="divider"></div>
 
   <!-- view activated type === 'MARKET_REPORT' || 'FOLLOW_UP' -->
   <div *ngIf="activatedCustomFilters.length > 0">
@@ -144,7 +146,7 @@
         id="select-all"
         (change)="resetFilters(!!filtersCount)"
         [checked]="!filtersCount">
-      <i class="form-icon"></i> Select all
+      <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
     </label>
   </div>
   <!-- /select/unselect all type === 'FOLLOW_UP' -->
@@ -453,7 +455,7 @@
   <!-- /questions filters -->
 
   <!-- conclusion filters -->
-  <div *ngIf="isFinalConclusion || isAdminSide" class="scroll-wrapper">
+  <div *ngIf="templateType === 'MARKET_REPORT' && (isFinalConclusion || isAdminSide)" class="scroll-wrapper">
     <a [href]="'#conclusion'" pageScroll>
       <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.CONCLUSION' | translateIn: reportingLang }}
     </a>

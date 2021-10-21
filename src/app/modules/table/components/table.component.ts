@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, LOCALE_ID, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnDestroy, OnInit, Output } from '@angular/core';
 import { Table } from '../models/table';
 import { Row } from '../models/row';
 import { Column, types } from '../models/column';
@@ -15,6 +15,9 @@ import * as momentTimeZone from 'moment-timezone';
 import * as lodash from 'lodash';
 import { DatePipe } from '@angular/common';
 import { UserSuggestion } from '../../user/admin/components/admin-project/admin-project-settings/admin-project-settings.component';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 /**
  * editable cell
@@ -24,8 +27,10 @@ interface InputGrid {
   column: Column; // which column
   disabled: boolean; // input disabled?
   value: any; // content value
-  className: string; // class => input style
-  input: any; // input ngModel
+  input: any; // input ngModel,
+  searchControl?: FormControl;
+  suggestions?: Array<any>;
+  sourceList?: Array<any>;
 }
 
 @Component({
@@ -33,8 +38,11 @@ interface InputGrid {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent {
-  @Output() sendAddParentNavigator = new EventEmitter();
+export class TableComponent implements OnInit, OnDestroy {
+
+  get tableContent(): Array<any> {
+    return !!this._table._isLocal ? this._filteredContent : this._table._content;
+  }
 
   /***
    * Input use to set the config for the tables linked with the back office
@@ -43,8 +51,6 @@ export class TableComponent {
   @Input() set config(value: Config) {
     this._config = value;
   }
-
-  private _originalTable: Table = <Table>{};
 
   /***
    * Input use to set the data
@@ -62,6 +68,127 @@ export class TableComponent {
   @Input() set loading(value: boolean) {
     this._isLoadingData = !!value;
   }
+
+  constructor(@Inject(LOCALE_ID) private _locale: string,
+              private _translateService: TranslateService,
+              private _configService: ConfigService,
+              private _localStorageService: LocalStorageService) {
+    this._initializeTable();
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get selectedRows(): number {
+    return this._getSelectedRowsNumber();
+  }
+
+  get sortConfig(): string {
+    return this._config.sort;
+  }
+
+  set sortConfig(value: string) {
+    this._config.sort = value;
+
+    if (!this._table._isLocal) {
+      this._emitConfigChange();
+    }
+  }
+
+  get pagination(): Pagination {
+    return this._pagination;
+  }
+
+  set pagination(value: Pagination) {
+    this._pagination = value;
+    if (this._massSelection || this._isRowSelected) {
+      this._initializeContents();
+    }
+    this._initializeVariables();
+    this._config.limit = this._pagination.parPage.toString(10);
+    this._config.offset = this._pagination.offset.toString(10);
+
+    if (this._table._isLocal) {
+      this._setFilteredContent();
+    } else {
+      this._emitConfigChange();
+    }
+  }
+
+  get searchConfig(): Config {
+    return this._config;
+  }
+
+  set searchConfig(value: Config) {
+    this._config = value;
+
+    if (this._table._isLocal) {
+      this._localStorageService.setItem('table-search', 'active');
+      this._setFilteredContent();
+
+      if (this._table._hasCustomFilters) {
+        this.customFilter.emit({key: '', value: ''});
+        for (const key of Object.keys(this._config)) {
+          if (
+            this._table._columns.find(
+              (col) => col._isCustomFilter && col._attrs[0] === key
+            )
+          ) {
+            this.customFilter.emit({key: key, value: this._config[key]});
+          }
+        }
+      }
+    } else {
+      this._emitConfigChange();
+    }
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get dateFormat(): string {
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  }
+
+  get userLang(): string {
+    return this._translateService.currentLang;
+  }
+
+  get massSelection(): boolean {
+    return this._massSelection;
+  }
+
+  get isSearching(): boolean {
+    return this._isSearching;
+  }
+
+  get isLoadingData(): boolean {
+    return this._isLoadingData;
+  }
+
+  get filteredContent(): Array<any> {
+    return this._filteredContent;
+  }
+
+  get visibleColumns(): Array<Column> {
+    return this._table._columns.filter((col) => {
+      return !col._isHidden;
+    });
+  }
+
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
+
+  get isSelectAll(): boolean {
+    return this._isSelectAll;
+  }
+
+  @Output() sendAddParentNavigator = new EventEmitter();
+
+  private _originalTable: Table = <Table>{};
 
   /***
    * Output call when the config change
@@ -145,27 +272,38 @@ export class TableComponent {
   // copy an original table
   private _isOrginal = false;
 
-  _enterpriseSizeSelectConfig = {
-    minChars: 0,
-    placeholder: 'Enter the enterprise size',
-    type: 'enterpriseSize',
-    identifier: '',
-    suggestionList: ['123', '456', '789'],
-    isShowAddButton: false,
-    requestType: 'local',
-    showSuggestionFirst: true,
-    default: '',
-  };
-
   private _inputGrids: Array<InputGrid> = [];
 
-  constructor(
-    @Inject(LOCALE_ID) private _locale: string,
-    private _translateService: TranslateService,
-    private _configService: ConfigService,
-    private _localStorageService: LocalStorageService
-  ) {
-    this._initializeTable();
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _isLoading = true;
+
+  /**
+   * it will be true when the single row is selected
+   * so that at the change in pagination we can reinitialize all the
+   * content.
+   */
+  private _isRowSelected = false;
+
+  /***
+   * This function returns if a rows is selected or not
+   * @param content
+   * @returns {boolean}
+   */
+  public static isSelected(content: any): boolean {
+    return !!content && !!content._isSelected;
+  }
+
+  private static _getRowKey(key: string): number {
+    return parseInt(key, 10);
+  }
+
+  ngOnInit(): void {
+  }
+
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   /***
@@ -182,6 +320,7 @@ export class TableComponent {
       _content: [],
     };
   }
+
 
   /***
    * This function load and initialise the data send by the user
@@ -210,6 +349,7 @@ export class TableComponent {
 
   private _initializeVariables() {
     this._massSelection = false;
+    this._isRowSelected = false;
     this._isSearching = false;
     this._isLoadingData = false;
   }
@@ -222,7 +362,7 @@ export class TableComponent {
    */
   private _getFilteredContent(rows: Array<any>) {
     this._pagination.parPage = this._table._isPaginable
-      ? parseInt(this._configService.configLimit(this._table._selector)) ||
+      ? parseInt(this._configService.configLimit(this._table._selector), 10) ||
       Number(this._config.limit) ||
       10
       : rows.length;
@@ -271,6 +411,18 @@ export class TableComponent {
     }
   }
 
+  /*public getPopoverClass(row: string, column: Column) {
+    if (!this.getContentValue(row, this.getAttrs(column)[0]).toString()) {
+      return '';
+    } else {
+      if (row >= '0' && row <= '4') {
+        return 'popover is-bottom';
+      } else {
+        return column._popoverPosition ? 'popover ' + column._popoverPosition : 'popover is-top';
+      }
+    }
+  }*/
+
   /***
    * This function initialise the values of a column.
    */
@@ -289,11 +441,11 @@ export class TableComponent {
    */
   private _initializeContents() {
     if (this._table._isLocal) {
-      this._filteredContent.map((value, index) => {
-        this._filteredContent[index]._isSelected = false;
+      this._filteredContent.forEach((value) => {
+        value._isSelected = false;
       });
     } else {
-      this._table._content.map((value, index) => {
+      this._table._content.forEach((value) => {
         if (!value.hasOwnProperty('_isSelected')) {
           value._isSelected = false;
         }
@@ -303,13 +455,13 @@ export class TableComponent {
 
   private _columnActive(column: Column): boolean {
     let sortKey;
-
     if (typeof this._config.sort === 'string') {
       for (const key in JSON.parse(this._config.sort)) {
-        sortKey = key;
+        if (JSON.parse(this._config.sort).hasOwnProperty(key)) {
+          sortKey = key;
+        }
       }
     }
-
     return this.getAttrs(column).indexOf(sortKey) !== -1;
   }
 
@@ -320,9 +472,13 @@ export class TableComponent {
   private _getSelectedRowsNumber(): number {
     if (this._massSelection) {
       if (this._table._isLocal) {
-        return this._filteredContent.length;
+        return this._filteredContent.filter((_content) => {
+          return !this.disabledRow(_content);
+        }).length;
       } else {
-        return this._table._content.length;
+        return this._table._content.filter((_content) => {
+          return !this.disabledRow(_content);
+        }).length;
       }
     } else {
       return this.getSelectedRows().length;
@@ -330,19 +486,26 @@ export class TableComponent {
   }
 
   /***
-   * This function allows to select all the rows
+   * This function allows to select all the rows.
+   * only select those who are not disabled.
    * @param event
    */
   public selectAll(event: Event): void {
     event.preventDefault();
     this._isSelectAll = false;
+    this._isRowSelected = false;
+
     if (this._table._isLocal) {
       this._filteredContent.forEach((value) => {
-        value._isSelected = (event.target as HTMLInputElement).checked;
+        if (!this.disabledRow(value)) {
+          value._isSelected = (event.target as HTMLInputElement).checked;
+        }
       });
     } else {
       this._table._content.forEach((value) => {
-        value._isSelected = (event.target as HTMLInputElement).checked;
+        if (!this.disabledRow(value)) {
+          value._isSelected = (event.target as HTMLInputElement).checked;
+        }
       });
     }
 
@@ -436,33 +599,22 @@ export class TableComponent {
    */
   public getContentValue(rowKey: string, columnAttr: string): any {
     const row: number = TableComponent._getRowKey(rowKey);
-    let contents: Array<any> = [];
-
-    if (this._table._isLocal) {
-      contents = this._filteredContent;
-    } else {
-      contents = this._table._content;
-    }
+    const contents: Array<any> = this._table._isLocal ? this._filteredContent : this._table._content;
 
     if (contents.length > 0) {
       if (columnAttr.split('.').length > 1) {
         let newColumnAttr = columnAttr.split('.');
-
         let tmpContent = contents[row] ? contents[row][newColumnAttr[0]] : '';
-
         newColumnAttr = newColumnAttr.splice(1);
-
         for (const i of newColumnAttr) {
           tmpContent = tmpContent ? tmpContent[i] : '-';
         }
-
         return tmpContent || '';
       } else {
         if (contents[row] && contents[row][columnAttr]) {
           return contents[row][columnAttr];
         }
       }
-
       return '';
     }
   }
@@ -670,18 +822,15 @@ export class TableComponent {
    */
   public selectRow(key: string): void {
     const rowKey: number = TableComponent._getRowKey(key);
-
     this._isSelectAll = false;
+
     if (this._table._isSelectable) {
       if (this._table._isLocal) {
-        this._filteredContent[rowKey]._isSelected = !this._filteredContent[
-          rowKey
-          ]._isSelected;
+        this._filteredContent[rowKey]._isSelected = !this._filteredContent[rowKey]._isSelected;
       } else {
-        this._table._content[rowKey]._isSelected = !this._table._content[rowKey]
-          ._isSelected;
+        this._table._content[rowKey]._isSelected = !this._table._content[rowKey]._isSelected;
       }
-
+      this._isRowSelected = true;
       this._massSelection = false;
     }
 
@@ -699,15 +848,6 @@ export class TableComponent {
       (value) => value._name === key
     );
     this._table._columns[index]._isSelected = true;
-  }
-
-  /***
-   * This function returns if a rows is selected or not
-   * @param content
-   * @returns {boolean}
-   */
-  public static isSelected(content: any): boolean {
-    return !!content && !!content._isSelected;
   }
 
   /***
@@ -739,10 +879,10 @@ export class TableComponent {
    * @param key
    */
   public countDaysTo(row: any, key: string) {
-    let _skey = key.split('-');
-    let _time = _skey.length > 1 ? _skey[1] : 0;
-    let _key: string = _skey[0];
-    let value = moment(this.getContentValue(row, _key));
+    const _skey = key.split('-');
+    const _time = _skey.length > 1 ? _skey[1] : 0;
+    const _key: string = _skey[0];
+    const value = moment(this.getContentValue(row, _key));
     return value.add(_time, 'days').fromNow();
   }
 
@@ -770,20 +910,24 @@ export class TableComponent {
     }
   }
 
-  private static _getRowKey(key: string): number {
-    return parseInt(key, 10);
-  }
-
+  /**
+   * only push those rows who are selected.
+   * @private
+   */
   private _getAllContent(): Array<any> {
     const rows: Array<any> = [];
 
     if (this._table._isLocal) {
       this._filteredContent.forEach((content) => {
-        rows.push(content);
+        if (content._isSelected) {
+          rows.push(content);
+        }
       });
     } else {
       this._table._content.forEach((content) => {
-        rows.push(content);
+        if (content._isSelected) {
+          rows.push(content);
+        }
       });
     }
 
@@ -820,42 +964,6 @@ export class TableComponent {
     return momentTimeZone(content).tz('Europe/Paris').format('h:mm a');
   }
 
-  get table(): Table {
-    return this._table;
-  }
-
-  get selectedRows(): number {
-    return this._getSelectedRowsNumber();
-  }
-
-  get sortConfig(): string {
-    return this._config.sort;
-  }
-
-  set sortConfig(value: string) {
-    this._config.sort = value;
-
-    if (!this._table._isLocal) {
-      this._emitConfigChange();
-    }
-  }
-
-  get pagination(): Pagination {
-    return this._pagination;
-  }
-
-  set pagination(value: Pagination) {
-    this._pagination = value;
-    this._config.limit = this._pagination.parPage.toString(10);
-    this._config.offset = this._pagination.offset.toString(10);
-
-    if (this._table._isLocal) {
-      this._setFilteredContent();
-    } else {
-      this._emitConfigChange();
-    }
-  }
-
   private _searchLocally(): Array<any> {
     let rows: Array<any> = this._table._content;
     this._localStorageService.setItem('table-search', '');
@@ -866,7 +974,7 @@ export class TableComponent {
         this._config.search.length > 2
       ) {
         if (this._config.search.length > 2) {
-          for (let searchKey of Object.keys(JSON.parse(this._config.search))) {
+          for (const searchKey of Object.keys(JSON.parse(this._config.search))) {
             const searchValue = JSON.parse(this._config.search)[searchKey];
             rows = this._searchContent(
               rows,
@@ -938,72 +1046,6 @@ export class TableComponent {
     });
   }
 
-  get searchConfig(): Config {
-    return this._config;
-  }
-
-  set searchConfig(value: Config) {
-    this._config = value;
-
-    if (this._table._isLocal) {
-      this._localStorageService.setItem('table-search', 'active');
-      this._setFilteredContent();
-
-      if (this._table._hasCustomFilters) {
-        this.customFilter.emit({key: '', value: ''});
-        for (const key of Object.keys(this._config)) {
-          if (
-            this._table._columns.find(
-              (col) => col._isCustomFilter && col._attrs[0] === key
-            )
-          ) {
-            this.customFilter.emit({key: key, value: this._config[key]});
-          }
-        }
-      }
-    } else {
-      this._emitConfigChange();
-    }
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-  get userLang(): string {
-    return this._translateService.currentLang;
-  }
-
-  get massSelection(): boolean {
-    return this._massSelection;
-  }
-
-  get isSearching(): boolean {
-    return this._isSearching;
-  }
-
-  get isLoadingData(): boolean {
-    return this._isLoadingData;
-  }
-
-  get filteredContent(): Array<any> {
-    return this._filteredContent;
-  }
-
-  get visibleColumns(): Array<Column> {
-    return this._table._columns.filter((col) => {
-      return !col._isHidden;
-    });
-  }
-
-  get selectedIndex(): number {
-    return this._selectedIndex;
-  }
-
   public getContext(row: any, column: any) {
     return {
       row: row,
@@ -1020,17 +1062,19 @@ export class TableComponent {
   public getStringForColumn(row: any, column: any, label: string) {
     this._stringInArrayColumn = '';
     const temList = this.getContentValue(row, this.getAttrs(column)[0]);
-    temList.map((item: any, index: any) => {
-      if (index === temList.length - 1) {
-        this._stringInArrayColumn = this._stringInArrayColumn.concat(
-          item[label]
-        );
-      } else {
-        this._stringInArrayColumn = this._stringInArrayColumn.concat(
-          item[label] + ', '
-        );
-      }
-    });
+    if(temList) {
+      temList.map((item: any, index: any) => {
+        if (index === temList.length - 1) {
+          this._stringInArrayColumn = this._stringInArrayColumn.concat(
+            item[label]
+          );
+        } else {
+          this._stringInArrayColumn = this._stringInArrayColumn.concat(
+            item[label] + ', '
+          );
+        }
+      });
+    }
     return this._stringInArrayColumn;
   }
 
@@ -1057,10 +1101,6 @@ export class TableComponent {
     }
   }
 
-  get isSelectAll(): boolean {
-    return this._isSelectAll;
-  }
-
   isToAddColor(column: Column) {
     return (
       (column.hasOwnProperty('_isFilled') ||
@@ -1073,18 +1113,38 @@ export class TableComponent {
     this.performAction.emit({_action: action, _context: context});
   }
 
-  selectAllTheData() {
+  /**
+   * select those columns who are not disabled.
+   */
+  public selectAllTheData() {
     this._isSelectAll = true;
-    this._table._content.forEach((value) => {
-      value._isSelected = true;
-    });
+    this._isRowSelected = false;
+
+    if (this._table._isLocal) {
+      this._filteredContent.forEach((value) => {
+        if (!this.disabledRow(value)) {
+          value._isSelected = true;
+        }
+      });
+    } else {
+      this._table._content.forEach((value) => {
+        if (!this.disabledRow(value)) {
+          value._isSelected = true;
+        }
+      });
+    }
     this.performAction.emit({_action: 'Select all', _context: true});
   }
 
-  clearAllTheSelections() {
+  /**
+   * clear the selection for not disabled rows.
+   */
+  public clearAllTheSelections() {
     this._isSelectAll = false;
     this._table._content.forEach((value) => {
-      value._isSelected = false;
+      if (!this.disabledRow(value)) {
+        value._isSelected = false;
+      }
     });
     this.performAction.emit({_action: 'Select all', _context: false});
   }
@@ -1106,7 +1166,9 @@ export class TableComponent {
     const gridInput = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (gridInput) {
       gridInput.disabled = false;
-      gridInput.className = 'editable-grid';
+    }
+    if (gridInput.searchControl) {
+      gridInput.searchControl.enable();
     }
   }
 
@@ -1122,7 +1184,6 @@ export class TableComponent {
         disabled: true,
         column: column,
         value: this._table._content[row],
-        className: 'no-editable-grid',
         input: '',
       };
       switch (column._editType) {
@@ -1144,6 +1205,22 @@ export class TableComponent {
           }
           gridInputToAdd.input = {name: name};
           break;
+        case 'MULTI-INPUT':
+          gridInputToAdd.sourceList = column._multiInput.sourceList || [];
+          switch (column._type) {
+            case 'LABEL-OBJECT-LIST':
+              gridInputToAdd.input = this.getStringForColumn(row, column, column._label);
+              break;
+            default:
+              gridInputToAdd.input = this.getContentValue(row, column._attrs[0]).toString();
+          }
+
+          gridInputToAdd.searchControl = new FormControl({
+            value: gridInputToAdd.input ? gridInputToAdd.input + ',' : '',
+            disabled: true
+          });
+          this.multiInputOnChange(gridInputToAdd);
+          break;
         default:
           gridInputToAdd.input = this.getContentValue(row, column._attrs[0]);
           break;
@@ -1153,6 +1230,31 @@ export class TableComponent {
       }
       return this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     }
+  }
+
+  /**
+   * multiple input
+   * @param gridInputToAdd
+   */
+  multiInputOnChange(gridInputToAdd: InputGrid) {
+    gridInputToAdd.searchControl.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this._ngUnsubscribe))
+      .subscribe((input: any) => {
+        if (input) {
+          const inputSplit = input.split(',');
+          let lastSearchKeyWord = inputSplit[inputSplit.length - 1];
+          // trim spaces
+          if (!lastSearchKeyWord.match(/^[ ]*$/)) {
+            lastSearchKeyWord = lastSearchKeyWord.replace(/\s/g, '');
+            gridInputToAdd.suggestions = gridInputToAdd.sourceList.filter((value: string) =>
+              value.replace(/\s/g, '').toLowerCase().indexOf(lastSearchKeyWord.toLowerCase()) !== -1 ||
+              lastSearchKeyWord.toLowerCase().indexOf(value.replace(/\s/g, '').toLowerCase()) !== -1
+            );
+          } else {
+            gridInputToAdd.suggestions = [];
+          }
+        }
+      });
   }
 
   /**
@@ -1174,6 +1276,32 @@ export class TableComponent {
           }
           _dataToUpdate.input = choiceItem._name;
           break;
+        case 'MULTI-INPUT':
+          const valueToReplace: any[] = [];
+          let valueList: any[] = [];
+          let newEle = {};
+          if (_dataToUpdate.searchControl.value) {
+            valueList = _dataToUpdate.searchControl.value.split(',');
+          }
+          // check if the list should be a list of object
+          // property: key of the object
+          if (valueList && valueList.length) {
+            valueList.map(value => {
+              if (column._multiInput.property && column._multiInput.property.length) {
+                newEle = {};
+                for (let i = 0; i < column._multiInput.property.length; i++) {
+                  newEle[column._multiInput.property[i]] = value;
+                }
+                valueToReplace.push(newEle);
+              } else {
+                valueToReplace.push(value);
+              }
+            });
+          }
+          _dataToUpdate.input = _dataToUpdate.searchControl.value;
+          _dataToUpdate.searchControl.disable();
+          lodash.set(_dataToUpdate.value, _attrs, valueToReplace);
+          break;
         default:
           lodash.set(_dataToUpdate.value, _attrs, _dataToUpdate.input);
           break;
@@ -1185,7 +1313,6 @@ export class TableComponent {
         _column: column
       });
       _dataToUpdate.disabled = true;
-      _dataToUpdate.className = 'no-editable-grid';
     }
   }
 
@@ -1217,19 +1344,55 @@ export class TableComponent {
           }
           _dataToUpdate.input = {name: name};
           break;
+        case 'MULTI-INPUT':
+          switch (column._type) {
+            case 'LABEL-OBJECT-LIST':
+              _dataToUpdate.input = this.getStringForColumn(row, column, column._label);
+              break;
+            default:
+              _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
+          }
+          _dataToUpdate.searchControl.disable();
+          break;
         default:
           _dataToUpdate.input = this.getContentValue(row, column._attrs[0]);
           break;
       }
       _dataToUpdate.disabled = true;
-      _dataToUpdate.className = 'no-editable-grid';
     }
   }
 
+  /**
+   * User input
+   * When user select from users list
+   * @param value
+   * @param row
+   * @param column
+   */
   getUserSelected(value: UserSuggestion, row: any, column: Column) {
     const _dataToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
     if (_dataToUpdate && value && value._id) {
       _dataToUpdate.input = value;
     }
   }
+
+  /**
+   * Multiple input
+   * when user select from suggestion list
+   * @param suggestion
+   * @param row
+   * @param column
+   */
+  onValueSelect(suggestion: string, row: any, column: Column) {
+    const gridToUpdate = this._inputGrids.find(grid => grid.index === row && grid.column._attrs === column._attrs);
+    const splits = gridToUpdate.searchControl.value.split(',');
+    splits[splits.length - 1] = suggestion;
+    gridToUpdate.searchControl.patchValue(splits.toString() + ',');
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
 }

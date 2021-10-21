@@ -1,15 +1,15 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Router} from '@angular/router';
-import {Table} from '../../../../../../table/models/table';
-import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
-import {Config} from '../../../../../../../models/config';
-import {EnterpriseService} from '../../../../../../../services/enterprise/enterprise.service';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {NotificationsService} from 'angular2-notifications';
-import {AutoSuggestionConfig} from '../../../../../../utility/auto-suggestion/interface/auto-suggestion-config';
-import {Column} from '../../../../../../table/models/column';
-import {EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries} from '../../../../../../../models/static-data/enterprise';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
+import { Table } from '../../../../../../table/models/table';
+import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
+import { Config } from '../../../../../../../models/config';
+import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationsService } from 'angular2-notifications';
+import { AutoSuggestionConfig } from '../../../../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import { Column } from '../../../../../../table/models/column';
+import { EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries } from '../../../../../../../models/static-data/enterprise';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
 
@@ -213,69 +213,73 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       _isNoMinHeight: this.companiesToEdit.length < 11,
       _columns:
         [
-        {
-          _attrs: ['logo.uri'],
-          _name: 'Logo',
-          _type: 'PICTURE',
-          _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'logo']),
-        },
-        {
-          _attrs: ['name'],
-          _name: 'Name',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'name']),
-        },
-        {
-          _attrs: ['patterns'],
-          _name: 'Patterns',
-          _type: 'PATTERNS-OBJECT-LIST',
-          _width: '120px',
-          _isHidden: !this.canAccess(['tableColumns', 'patterns']),
-        },
-        {
-          _attrs: ['enterpriseURL'],
-          _name: 'Enterprise Url',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'url']),
-        },
-        {
-          _attrs: ['industries'],
-          _name: 'Industry',
-          _type: 'LABEL-OBJECT-LIST',
-          _isHidden: !this.canAccess(['tableColumns', 'industry']),
-        },
-        {
-          _attrs: ['brands'],
-          _name: 'Brand',
-          _type: 'LABEL-OBJECT-LIST',
-          _isHidden: !this.canAccess(['tableColumns', 'brand']),
-        },
-        {
-          _attrs: ['enterpriseType'],
-          _name: 'Type',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'type']),
-        },
-        {
-          _attrs: ['geographicalZone'],
-          _name: 'Geographical Zone',
-          _type: 'NAME-LABEL-LIST',
-          _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
-          _width: '190px',
-        },
-        {
-          _attrs: ['enterpriseSize'],
-          _name: 'Enterprise size',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'size']),
-        },
-        {
-          _attrs: ['valueChain'],
-          _name: 'Value chain',
-          _type: 'TEXT',
-          _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
-        },
+          {
+            _attrs: ['logo.uri'],
+            _name: 'Logo',
+            _type: 'PICTURE',
+            _width: '120px',
+            _isHidden: !this.canAccess(['tableColumns', 'logo']),
+          },
+          {
+            _attrs: ['name'],
+            _name: 'Name',
+            _type: 'TEXT',
+            _isHidden: !this.canAccess(['tableColumns', 'name']),
+          },
+          {
+            _attrs: ['patterns'],
+            _name: 'Patterns',
+            _type: 'LABEL-OBJECT-LIST',
+            _label: 'expression',
+            _width: '120px',
+            _isHidden: !this.canAccess(['tableColumns', 'patterns']),
+          },
+          {
+            _attrs: ['enterpriseURL'],
+            _name: 'Enterprise Url',
+            _type: 'TEXT',
+            _isHidden: !this.canAccess(['tableColumns', 'url']),
+          },
+          {
+            _attrs: ['industries'],
+            _name: 'Industry',
+            _type: 'LABEL-OBJECT-LIST',
+            _label: 'label',
+            _isHidden: !this.canAccess(['tableColumns', 'industry']),
+          },
+          {
+            _attrs: ['brands'],
+            _name: 'Brand',
+            _type: 'LABEL-OBJECT-LIST',
+            _label: 'label',
+            _isHidden: !this.canAccess(['tableColumns', 'brand']),
+          },
+          {
+            _attrs: ['enterpriseType'],
+            _name: 'Type',
+            _type: 'TEXT',
+            _isHidden: !this.canAccess(['tableColumns', 'type']),
+          },
+          {
+            _attrs: ['geographicalZone'],
+            _name: 'Geographical Zone',
+            _type: 'LABEL-OBJECT-LIST',
+            _label: 'name',
+            _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
+            _width: '190px',
+          },
+          {
+            _attrs: ['enterpriseSize'],
+            _name: 'Enterprise size',
+            _type: 'TEXT',
+            _isHidden: !this.canAccess(['tableColumns', 'size']),
+          },
+          {
+            _attrs: ['valueChain'],
+            _name: 'Value chain',
+            _type: 'TEXT',
+            _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
+          },
           {
             _attrs: ['goodEmails'],
             _name: 'Good emails',
@@ -295,7 +299,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
             _type: 'NUMBER',
             _isHidden: !this.canAccess(['tableColumns', 'shieldEmails']),
           },
-      ]
+        ]
     };
     this._companiesTable._content.map(item => {
       item._isSelected = false;
@@ -351,8 +355,12 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
    * update the changes
    */
   updateChange() {
-    this.companiesTable._content.map(item => {
-      this._enterpriseService.save(item._id, item).pipe(first()).subscribe(
+    this.companiesTable._content.map((item, index) => {
+      this._enterpriseService.save(item._id, item,
+        {
+          name: this._companiesOriginalTable._content[index].name,
+          domain: this._companiesOriginalTable._content[index].topLevelDomain,
+        }).pipe(first()).subscribe(
         (result) => {
           this._success += 1;
           if (this._success + this.failed === this.companiesTable._content.length) {

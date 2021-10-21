@@ -7,6 +7,7 @@ import { environment } from '../../../../../../environments/environment';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import {emailRegEx} from '../../../../../utils/regex';
 
 @Component({
   selector: 'forget-password',
@@ -40,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
   private buildForm() {
     this._formData = this.formBuilder.group({
       email: [{ value: this.authService.isAuthenticated ? this.authService.user.email : '', disabled: this.authService.isAuthenticated && this.authService.user.email },
-        [Validators.required, Validators.email]],
+        [Validators.required, Validators.pattern(emailRegEx)]],
       password: ['', [Validators.required, Validators.minLength(9)]],
       passwordConfirm: ['', [Validators.required, Validators.minLength(9)]]
     });

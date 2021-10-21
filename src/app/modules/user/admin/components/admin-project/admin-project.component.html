@@ -38,14 +38,25 @@
 
             <!-- heading / view like client / objective / activity -->
             <div class="m-right-15 m-bottom-15">
-
+              <h1 class="title is-4 text-white m-bottom-1" *ngIf="project.name">{{ project.name }}</h1>
               <div class="d-flex align-center flex-wrap m-bottom-1">
-                <h1 class="title is-4 text-white m-bottom-1">{{ title }}</h1>
+                <h2 class="title is-6 text-white m-bottom-1" *ngIf="innovTitle">{{ title }}</h2>
+                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="openQuiz($event)">
+                  Open quiz
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+
+                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="onCopyQuizLink($event)">
+                  Copy quiz link
+                  <i class="far fa-copy"></i>
+                </a>
+
                 <a
                   [routerLink]="['/user/projects/', project._id]"
                   class="button is-link text-white is-xs"
                   target="_blank">
                   View like client
+                  <i class="far fa-eye"></i>
                 </a>
               </div>
 
@@ -112,10 +123,18 @@
                     (click)="onClickTab($event, tab.name, tab.route, tab.key)"
                     [id]="tab.route"
                     [routerLink]="['/user/admin/projects/project', project._id, tab.route]"
-                    class="text-medium text-md"
+                    class="text-medium text-md d-flex justify-center"
                     routerLinkActive="active">
                     <i [ngClass]="tab.icon"></i>
                     {{ tab.name }}
+                    <div *ngIf="tab.subTabs && tab.subTabs.length" class="popover is-bottom m-left-40">
+                      <i class="fas fa-caret-down"></i>
+                      <div class="popover-container">
+                        <ng-container
+                          *ngTemplateOutlet="subTabsList; context: {$implicit: {tab: tab}}">
+                        </ng-container>
+                      </div>
+                    </div>
                   </a>
                 </li>
               </ng-container>
@@ -136,6 +155,12 @@
   <!-- /no error -->
 
 </div>
+
+<ng-template #subTabsList let-context>
+  <ul class="menu">
+    <li class="menu-item" *ngFor="let item of context['tab'].subTabs" (click)="navigateTo($event, context['tab'], item)">{{item.name}}</li>
+  </ul>
+</ng-template>
 
 <!-- modals for different actions -->
 <ng-container *ngIf="canImport">

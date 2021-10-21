@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import {
   MissionQuestion,
   MissionQuestionEntry,
@@ -8,9 +8,9 @@ import {
   MissionTemplate,
   MissionTemplateSection
 } from '../../models/mission';
-import {Subject} from 'rxjs/Subject';
-import {colors} from '../../utils/chartColors';
-import {replaceNumberRegex} from '../../utils/regex';
+import { Subject } from 'rxjs/Subject';
+import { colors } from '../../utils/chartColors';
+import { replaceNumberRegex } from '../../utils/regex';
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
@@ -117,7 +117,7 @@ export class MissionQuestionService {
    * Questions identifier should imperatively be less than 24 characters for etherpad purposes
    * @private
    */
-  private _taggedQuestionsTypes: {[identifier: string]: MissionQuestionType} = {
+  private _taggedQuestionsTypes: { [identifier: string]: MissionQuestionType } = {
     InnovOpp: 'radio',
     Expectations: 'textarea',
     FutureTrends: 'textarea',
@@ -225,7 +225,7 @@ export class MissionQuestionService {
    * return the default instruction for the different questions
    * @param controlType
    */
-  public static questionInstruction(controlType: MissionQuestionType): {en: string, fr: string} {
+  public static questionInstruction(controlType: MissionQuestionType): { en: string, fr: string } {
     switch (controlType) {
       case 'scale':
         return {
@@ -350,13 +350,13 @@ export class MissionQuestionService {
    */
   public configureQuestionOptions(question: MissionQuestion = <MissionQuestion>{})
     : MissionQuestion {
-
+    const oldOptions = question.options;
     question.options = [];
 
     if (question.controlType === 'checkbox' || question.controlType === 'radio'
       || question.controlType === 'stars' || question.controlType === 'ranking') {
       for (let i = 0; i < 4; i++) {
-        question.options.push(this.addOption(question));
+        question.options.push(this.addOption(question, oldOptions));
       }
     }
 
@@ -374,25 +374,50 @@ export class MissionQuestionService {
 
   /**
    * return the new option for the controlType = 'radio' | 'checkbox' | 'stars' | 'ranking'
-   * @param question
+   * @param question,
+   * @param oldOptions
    */
-  public addOption(question: MissionQuestion = <MissionQuestion>{}): MissionQuestionOption {
+  public addOption(question: MissionQuestion = <MissionQuestion>{}, oldOptions?: any[]): MissionQuestionOption {
     if (question.controlType === 'radio' || question.controlType === 'checkbox'
       || question.controlType === 'stars' || question.controlType === 'ranking') {
-      const stringId = question.options.length.toString();
+      const id = question.options.length;
       return {
-        identifier: stringId,
+        identifier: id.toString(),
         positive: false,
         entry: this._addEntryLang.map((_lang) => {
+          let option = 'Option ' + id.toString();
+          // if there are old options, we should keep the text
+          if (oldOptions && oldOptions.length && oldOptions.length > id) {
+            const optionToReplace = this.replaceOption(_lang, oldOptions[id]);
+            if (optionToReplace) {
+              option = optionToReplace;
+            }
+          }
           return {
             lang: _lang,
-            label: 'Option ' + stringId
+            label: option
           };
         })
       };
     }
 
     return <MissionQuestionOption>{};
+  }
+
+  /**
+   * find option's text in right lang
+   * @param lang
+   * @param option
+   * @private
+   */
+  private replaceOption(lang: string, option: any) {
+    if (option.entry && option.entry.length) {
+      const _entry = option.entry.find((e: any) => e.lang === lang);
+      if (_entry) {
+        return _entry.label;
+      }
+    }
+    return '';
   }
 
   /**
@@ -711,7 +736,7 @@ export class MissionQuestionService {
    * @param lang
    */
   public questionEntry(question: MissionQuestion = <MissionQuestion>{}, lang: string): MissionQuestionEntry {
-   if (this._questionnaireLangs.length) {
+    if (this._questionnaireLangs.length) {
       const quesLang = this._questionnaireLangs.find((_lang) => _lang === lang);
       if (!!quesLang) {
         return MissionQuestionService.entryInfo(question, quesLang);
@@ -729,7 +754,7 @@ export class MissionQuestionService {
    * @param sectionIndex
    * @param returnValue
    */
-  public removeQuestion(questionIndex: number,  sectionIndex: number, returnValue = false) {
+  public removeQuestion(questionIndex: number, sectionIndex: number, returnValue = false) {
     const question = this._template.sections[sectionIndex].questions[questionIndex];
     this._template.sections[sectionIndex].questions.splice(questionIndex, 1);
 
@@ -751,9 +776,9 @@ export class MissionQuestionService {
     let question: any;
 
     if (!returnValue) {
-      question = { ...questions[questionIndex] };
+      question = {...questions[questionIndex]};
     } else {
-      question = { ...questions[questionIndex]['question'] };
+      question = {...questions[questionIndex]['question']};
     }
 
     /**
@@ -793,7 +818,7 @@ export class MissionQuestionService {
     const identifiersMap = this._template.sections.reduce((accS, section) => {
       const subIdentifiersMap = section.questions.reduce((accQ, question) => Object.assign(accQ, {[question.identifier]: 1}), {});
       return Object.assign(accS, subIdentifiersMap);
-    }, {} as {[questionId: string]: 1});
+    }, {} as { [questionId: string]: 1 });
     return Object.keys(this._taggedQuestionsTypes).filter((tag) => !identifiersMap[tag]);
   }
 

@@ -4,6 +4,7 @@ import { ProfessionalsService } from '../../../../services/professionals/profess
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Router } from '@angular/router';
 import { Professional } from '../../../../models/professional';
+import {emailRegEx} from '../../../../utils/regex';
 
 @Component({
   selector: 'community-form',
@@ -69,7 +70,7 @@ export class CommunityFormComponent implements OnInit {
 
   private _buildForm() {
     this._form = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
     });
@@ -82,7 +83,7 @@ export class CommunityFormComponent implements OnInit {
       limit: '10',
       offset: '0',
       search: '',
-      "$text": `{ "$search": "${event}" }`,
+      '$text': `{ "$search": "${event}" }`,
       sort: '{"created":-1}'
     };
   }

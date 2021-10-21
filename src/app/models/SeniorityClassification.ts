@@ -1,4 +1,7 @@
+export type EmailType = 'RISKY' | 'GOOD' | 'ALL';
+
 export interface SeniorityClassification {
+  emailConfidence: EmailType;
   timestamp: Date;
   seniorityLevels: [
     {

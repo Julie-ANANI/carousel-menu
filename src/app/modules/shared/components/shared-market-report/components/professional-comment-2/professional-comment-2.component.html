@@ -9,7 +9,7 @@
           {{ 'MARKET_REPORT.ANONYMOUS' | translate }}
         </ng-container>
         <ng-template #profName>
-          {{ professionalName | FormatText }}
+          {{ professionalName | FormatText | titlecase}}
         </ng-template>
       </span>
     </p>

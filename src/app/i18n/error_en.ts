@@ -39,6 +39,10 @@ export const ERROR = {
 
   'NO_AUTHORIZED': 'You are not authorized to perform this request.',
 
+  'NO_AUTHORIZED_ADMIN': 'Sorry, but you are not authorized to access this page. Please contact your team manager.',
+
+  'NO_AUTHORIZED_PAGE': 'Sorry, but you are not authorized to access this page. Please contact your market test manager.',
+
   'FORM': {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',
     'TARGETING_FORM': 'Please answer the fields of the targeting form.'
@@ -94,9 +98,10 @@ export const ERROR = {
     'LINKING': 'Linking',
     'LINKING_DONE': 'Your request for contact has been taken into account',
     'SEND_EMAILS': 'Sending the emails',
-    'SEND_EMAILS_OK': 'The emails have been sent successfully',
+    'SEND_EMAILS_OK': 'The emails have been sent successfully.',
     'SEND_MESSAGE': 'The message has been sent successfully.',
-    'COLLABORATORS_ADDED': 'The collaborators has been added to the project.'
+    'COLLABORATORS_ADDED': 'The collaborators has been added to the project.',
+    'UPDATED_COMPANY': 'The company has been updated successfully.'
   },
 
 
@@ -180,7 +185,7 @@ export const ERROR = {
     'SEARCH': {
       'SETTINGS_UPDATED': 'The settings have been updated successfully.',
       'REQUEST_SAVED': 'The request has been saved successfully.',
-      'NO_REQUEST': "There is no request to save !"
+      'NO_REQUEST': 'There is no request to save !'
     }
   },
 

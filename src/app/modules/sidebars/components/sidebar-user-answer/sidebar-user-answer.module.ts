@@ -14,20 +14,28 @@ import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
 import { ReassignAnswerComponent } from './reassign-answer/reassign-answer.component';
+import {BannerModule} from '../../../utility/banner/banner.module';
+import {AutoCompleteCountryModule} from '../../../utility/auto-complete-country/auto-complete-country.module';
+import {AutoCompleteCompanyModule} from '../../../utility/auto-complete-company/auto-complete-company.module';
+import { EditableTagLabelModule } from "../../../utility/editable-tag-label/editable-tag-label.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild(),
-    SidebarModule,
-    CountryFlagModule,
-    AutoCompleteInputModule,
-    SharedTagsModule,
-    PipeModule,
-    InputListModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        SidebarModule,
+        CountryFlagModule,
+        AutoCompleteInputModule,
+        SharedTagsModule,
+        PipeModule,
+        InputListModule,
+        BannerModule,
+        AutoCompleteCountryModule,
+        AutoCompleteCompanyModule,
+        EditableTagLabelModule
+    ],
   declarations: [
     SidebarUserAnswerComponent,
     AnswerQuestionComponent,

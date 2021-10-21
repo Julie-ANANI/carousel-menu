@@ -32,6 +32,10 @@ type Template = 'MARKET_REPORT' | 'FOLLOW_UP';
 
 export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
+  @Input() templateType: Template = 'MARKET_REPORT';
+
+  @Input() reportingLang = this._translateService.currentLang;
+
   @Input() isViewsEditable = false;
 
   @Input() isOwner = false;
@@ -45,8 +49,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._answersCountries = value.map(answer => (answer.country && answer.country.flag)
       || (answer.professional && answer.professional.country));
   }
-
-  @Input() templateType: Template = 'MARKET_REPORT';
 
   @Input() set innovation(value: Innovation) {
     if (value && value._id) {
@@ -67,6 +69,8 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
    * sidebar.
    */
   @Output() closeSidebar: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output() selectedAnswers: EventEmitter<Array<Answer>> = new EventEmitter<Array<Answer>>();
 
   private _isModalEnd = false;
 
@@ -101,8 +105,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   private _isKeyLearning = false;
 
-  @Input() reportingLang = this._translateService.currentLang;
-
   private _isFinalConclusion = true;
 
   private _professionalsTags: Array<Tag> = [];
@@ -110,8 +112,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
   private _picto: Picto = picto;
 
   private _answersSelected: Array<Answer> = [];
-
-  @Output() updateAnswers = new EventEmitter();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationService: InnovationService,
@@ -122,15 +122,22 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
               private _filterService: FilterService) { }
 
   ngOnChanges(): void {
-    if (this.answers.length) {
-      this._filterNumber = this.answers.length;
+    if (this._answers.length) {
+      this._initData(this._answers);
       this._professionalsTags = AnswerFrontService.tagsOccurrence(this.answers);
       this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-        this._answersSelected = this._filterService.filter(this.answers);
-        this._filterNumber = this._filterService.filter(this.answers).length;
+        this._initData(this._filterService.filter(this._answers));
       });
     }
     this._initQuestions();
+  }
+
+  private _initData(answers: Array<Answer>) {
+    if (this.templateType === 'FOLLOW_UP') {
+      answers = answers.filter((_answer) =>  !(_answer.followUp && _answer.followUp.date));
+    }
+    this._answersSelected = answers;
+    this._filterNumber = answers.length;
   }
 
   public questionTitle(question: any): string {
@@ -188,8 +195,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
 
   public onSelectedContacts(event: Event) {
     event.preventDefault();
-    this.updateAnswers.emit(this._answersSelected);
-    this.closeSidebar.emit();
+    this.selectedAnswers.emit(this._answersSelected);
   }
 
   public openModalPreview(event: Event) {

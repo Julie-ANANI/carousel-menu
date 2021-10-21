@@ -19,7 +19,6 @@ const appRoutes: Routes = [
   { path: 'sample', loadChildren: './modules/public/share/share.module#ShareModule' },
   { path: 'demo', canActivate: [AuthGuard, AdHocAuthGuard], children: [ ...demoRoutes ] },
   { path: 'logout', canActivate: [AuthGuard], loadChildren: './modules/common/logout/logout.module#LogoutModule' },
-  { path: 'documentation', loadChildren: './modules/documentation/documentation.module#DocumentationModule' },
   { path: 'monitoring', loadChildren: './modules/monitoring/monitoring.module#MonitoringModule' },
   {
     path: 'not-authorized',
@@ -37,12 +36,8 @@ const config: ExtraOptions = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes, config)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(appRoutes, config)],
+  exports: [RouterModule]
 })
 
 export class AppRoutingModule {}

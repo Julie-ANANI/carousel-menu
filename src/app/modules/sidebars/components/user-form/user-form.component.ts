@@ -24,6 +24,7 @@ import {ErrorFrontService} from '../../../../services/error/error-front.service'
 import {RolesService} from '../../../../services/roles/roles.service';
 import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
 import {Enterprise} from '../../../../models/enterprise';
+import {emailRegEx} from '../../../../utils/regex';
 
 @Component({
   selector: 'app-user-form',
@@ -170,7 +171,7 @@ export class UserFormComponent implements OnInit {
       lastName: ['', [Validators.required]],
       company: this.formBuilder.group({name: [''], domain: [''], logo: ['']}),
       jobTitle: [''],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
       country: [''],
       roles: [''],
       isOperator: [false],

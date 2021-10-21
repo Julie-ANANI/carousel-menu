@@ -12,6 +12,8 @@ export const SIDEBAR_MARKET_REPORT = {
 
   'ACTIVATED_VIEW': 'Activated view',
 
+  'SELECT_CONTACTS': 'Select contacts according to your criteria',
+
   'ERRORS': {
     'VIEWS': 'We are having trouble while fetching your custom views.',
     'VIEW_ALREADY_EXIST': 'The view with this name already exists.',

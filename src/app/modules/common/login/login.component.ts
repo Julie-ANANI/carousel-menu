@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 import { UserService } from '../../../services/user/user.service';
 import {MediaFrontService} from '../../../services/media/media-front.service';
+import {emailRegEx} from '../../../utils/regex';
 
 @Component({
   selector: 'app-login',
@@ -21,12 +22,12 @@ import {MediaFrontService} from '../../../services/media/media-front.service';
 })
 export class LoginComponent implements OnInit {
   private _formData: FormGroup = this._formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
     password: ['', [Validators.required]],
   });
 
   private _helpMessageForm: FormGroup = this._formBuilder.group({
-    contactEmail: ['', [Validators.required, Validators.email]],
+    contactEmail: ['', [Validators.required, Validators.pattern(emailRegEx)]],
     message: ['', [Validators.required]],
   });
 
@@ -162,6 +163,11 @@ export class LoginComponent implements OnInit {
         );
       }
     }
+  }
+
+  public strings(object: any): string {
+    // console.log(this.formData.get('email').value.match(emailRegEx));
+    return JSON.stringify(object);
   }
 
   get logo(): string {

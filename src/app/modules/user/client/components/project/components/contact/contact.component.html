@@ -1,0 +1,27 @@
+<div id="project-contact">
+
+  <!-- fetching -->
+  <ng-container *ngIf="isFetching; else stopFetching">
+    <div class="p-top-50">
+      <div class="loading is-md"></div>
+    </div>
+  </ng-container>
+  <!-- /fetching -->
+
+  <ng-template #stopFetching>
+    <ng-container *ngIf="!showFollowUp; else followUp">
+      <div class="p-top-100">
+        <app-message-template-2 [animation]="true">
+          <h2 class="title is-6 text-center">{{ message() }}</h2>
+        </app-message-template-2>
+      </div>
+    </ng-container>
+    <ng-template #followUp>
+      <app-shared-follow-up
+        [project]="innovation"
+        [template]="'CLIENT'">
+      </app-shared-follow-up>
+    </ng-template>
+  </ng-template>
+
+</div>

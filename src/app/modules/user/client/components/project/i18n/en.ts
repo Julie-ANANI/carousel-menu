@@ -11,6 +11,8 @@ export const PROJECT_MODULE = {
 
   'SYNTHESIS_TAB': 'Analysis',
 
+  'CONTACT_TAB': 'Follow-up',
+
   'DOCUMENTS_TAB': 'Documents',
 
   'SETTINGS_TAB': 'Settings',

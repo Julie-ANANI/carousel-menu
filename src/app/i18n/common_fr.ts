@@ -120,12 +120,20 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'CLIENT_COMMENTS': 'Commentaires clients',
     'ADD': 'Ajouter',
+    'FROM': 'De',
+    'TO': 'À',
+    'SUBJECT': 'Sujet',
     'TENTATIVE_LEFT': 'tentative(s) restante(s)',
     'FEEDBACK_COLLECTION': 'Collecte de feedback',
     'RSETITUTION': 'Restitution',
     'SELECT_COLUMN_TO_EDIT': 'Sélectionnez une colonne',
     'ACTIVITY_FIELDS': 'Champs d\'activité',
+    'SEND': 'Envoi',
+    'RESPONDENTS': 'Répondants',
+    'SELECTED': 'Sélectionner',
+    'CONFIGURE': 'Configurer',
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
     'EMAIL': 'Email',
@@ -231,7 +239,8 @@ export const COMMON = {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
     'PASSWORD_TOO_SHORT': 'Le mot de passe doit avoir au minimum 9 caractères.',
     'MUST_CONTAIN': 'Le mot de passe doit contenir un symbole spécial ($@&!#).',
-    'DOMAIN': 'Veuillez entrer un domaine valide.'
+    'DOMAIN': 'Veuillez entrer un domaine valide.',
+    'ALREADY_USER_EMAIL': 'L\'utilisateur avec cette adresse e-mail existe déjà.',
   },
 
   'BUTTON': {
@@ -241,6 +250,7 @@ export const COMMON = {
     'SAVE': 'Sauvegarder',
     'CANCEL': 'Annuler',
     'CONFIRM': 'Confirmer',
+    'SEND_NOW': 'Envoyer maintenant',
     'APPLY': 'Appliquer',
     'IMPORT': 'Importer',
     'EXPORT': 'Exporter',
@@ -305,6 +315,7 @@ export const COMMON = {
     'LOGGING': 'en cours de connexion...',
     'UPLOAD_PICTURE': 'Télécharger la photo',
     'UPLOAD_VIDEO': 'Télécharger la video',
+    'I_UNDERSTAND': 'J’ai compris',
   },
 
   'PROJECT': {

@@ -348,7 +348,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
           flag = answer.country.flag;
         }
       }
-      if (!flag && !!answer.professional && !!answer.professional.country){
+      if (!flag && !!answer.professional && !!answer.professional.country) {
         flag = answer.professional.country;
       }
       if (flag) {
