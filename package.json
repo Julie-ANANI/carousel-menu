@@ -1,5 +1,5 @@
 {
-  "name": "umi-style-framework",
+  "name": "@umius/umi-style-framework",
   "version": "1.0.1",
   "description": "Contains the applications styles and its documentation.",
   "scripts": {
@@ -10,7 +10,6 @@
     "url": "git+https://github.com/unitedmotionideas/umi-style-framework.git"
   },
   "author": "United Motion Ideas",
-  "private": true,
   "license": "MIT",
   "title": "Style Framework - UMI",
   "bugs": {
