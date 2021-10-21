@@ -340,19 +340,21 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     const countriesList = this._filteredAnswers.map(function (
       answer: Answer
     ): string {
-      let answerIsAlreadyCounted = false;
-      if (!!answer.country && !!answer.country.flag) {
-        answerIsAlreadyCounted = true;
-        addAnswer(answer.country.flag);
-        return answer.country.flag;
-      }
-      if (!!answer.professional && !!answer.professional.country) {
-        if (!answerIsAlreadyCounted) {
-          addAnswer(answer.professional.country);
+      let flag = '';
+      if (!!answer.country) {
+        if (typeof answer.country === 'string') {
+          flag = answer.country;
+        } else if (answer.country.flag) {
+          flag = answer.country.flag;
         }
-        return answer.professional.country;
       }
-      return '';
+      if (!flag && !!answer.professional && !!answer.professional.country){
+        flag = answer.professional.country;
+      }
+      if (flag) {
+          addAnswer(flag);
+      }
+      return flag;
     });
 
     this._sharedWorldMapService
