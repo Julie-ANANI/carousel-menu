@@ -20,7 +20,6 @@ export const environment = {
   background: '',
   secureCookie: false,
   commercialContact: '',
-  cookieTime: 48 * 3600 * 1000,
-  devRoutes: [{}]
+  cookieTime: 48 * 3600 * 1000
 };
 

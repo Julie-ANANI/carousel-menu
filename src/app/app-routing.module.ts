@@ -7,9 +7,6 @@ import { AdHocAuthGuard } from './guards/adhoc-auth-guard.service';
 import { ShareSynthesisGuard } from './guards/share-synthesis-guard.service';
 import { NotFoundComponent } from './modules/errors/not-found/not-found.component';
 import { demoRoutes } from './modules/demo/demo-routing.module';
-import {environment} from '../environments/environment';
-
-const devRoutes = environment.devRoutes || [];
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'user' },
@@ -39,12 +36,8 @@ const config: ExtraOptions = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot([...appRoutes, ...devRoutes], config)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(appRoutes, config)],
+  exports: [RouterModule]
 })
 
 export class AppRoutingModule {}
