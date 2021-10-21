@@ -45,8 +45,8 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     return this._translateService.currentLang;
   }
 
-  get isValidCompany(): string {
-    return new ScrapeHTMLTags().transform(this._companyName.trim());
+  get isValidCompany(): boolean {
+    return !!this._companyName && !!this._companyName.trim();
   }
 
   get finalAnswers(): Array<Answer> {
@@ -468,7 +468,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       followUp.cc = this._selectedCC;
     }
     if (update === 'entity') {
-      followUp.entity = this.isValidCompany;
+      followUp.entity = this.companyName;
     }
     return followUp;
   }
@@ -601,17 +601,18 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
     this._emailsObject[lang].content = this._emailsObject[lang].content
       .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
-       text-background m-h m-no-right">${this.isValidCompany}</span>`)
+       text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
       .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
       .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
   }
 
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {
+    console.log('replacing shit');
     this._emailsObjectReplaced[lang].subject = this._emailsObjectReplaced[lang].subject.
     replace(/\*\|TITLE\|\*/g, card.title);
 
     this._emailsObjectReplaced[lang].content = this._emailsObjectReplaced[lang].content
-      .replace(/\*\|COMPANY_NAME\|\*/g, this.isValidCompany)
+      .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
       .replace(/\*\|CLIENT_NAME\|\*/g, cc)
       .replace(/\*\|TITLE\|\*/g, `${card.title}`);
   }
