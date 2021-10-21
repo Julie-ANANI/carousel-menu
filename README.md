@@ -13,28 +13,25 @@ applications:
 npm i @umius/umi-style-framework
 ```
 
-Then, you can import it in style.scss or angular.json under assets. 
+### Import it in style.scss or angular.json under assets. 
 
-### Import path for the SCSS files
+Import path for the SCSS files:
 ```
 node_modules/@umius/umi-style-framework/scss/umi.scss
 ```
 
-### Import path for the CSS files
+Import path for the CSS file:
 ```
 node_modules/@umius/umi-style-framework/css/umi.css
 ```
 
-### For debugging purpose and testing:
+### For debugging purpose, updating and testing:
+always run this command in the terminal before you start making changes. It will generate the css file for the scss.
 ```
 sass --watch scss/umi.scss:css/umi.css
 ```
 
-### Updating
-1. If someone changes this file please do forget to generate the css map file by running 
-```
-sass --watch scss/umi.scss:css/umi.css
-``` 
-2. Always do the update in the scss files not in the css files.<br>
-
-#### Do not forget to update its version and tag and then publish the package to the npm.
+### Updating the package
+1. Do forget to generate the css file.
+2. Always make changes in the scss files not in the css file.<br>
+3. Update package version and tag and then publish it to the npm.
