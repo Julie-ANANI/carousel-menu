@@ -4,8 +4,8 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
-import { Config } from '../../models/config';
-import { ConfigService } from '../../services/config/config.service';
+import { Config } from '@umius/umi-common-component/models';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
 import { ProfessionalsService } from '../../services/professionals/professionals.service';
 

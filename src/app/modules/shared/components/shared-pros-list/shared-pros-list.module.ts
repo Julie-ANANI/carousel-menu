@@ -10,18 +10,20 @@ import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.modul
 import { SidebarUserFormModule } from '../../../sidebars/components/user-form/sidebar-user-form.module';
 import { SidebarTagsModule } from '../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SidebarModule,
-    TableModule,
-    TranslateModule.forChild(),
-    SidebarUserFormModule,
-    SidebarTagsModule,
-    ModalModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SidebarModule,
+        TableModule,
+        TranslateModule.forChild(),
+        SidebarUserFormModule,
+        SidebarTagsModule,
+        ModalModule,
+        TableComponentsModule
+    ],
   declarations: [
     SharedProsListComponent
   ],

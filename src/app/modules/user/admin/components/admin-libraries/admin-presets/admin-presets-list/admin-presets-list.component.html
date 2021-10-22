@@ -35,13 +35,13 @@
 
       <!-- questionnaires -->
       <section *ngIf="!noResult">
-        <app-shared-table
+        <umius-table
           (editRow)="showPreset($event)"
           (performAction)="onClickActions($event)"
           (removeRows)="OnClickDelete($event)"
           [(config)]="config"
           [data]="table">
-        </app-shared-table>
+        </umius-table>
       </section>
       <!-- /questionnaires -->
 

@@ -1,7 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {Column, types} from '../../../table/models/column';
-import {Choice} from '../../../table/models/choice';
-import {Config} from '../../../../models/config';
+import { Choice, Column, types, Config } from '@umius/umi-common-component/models';
 
 @Component({
   selector: 'app-shared-search-filter',

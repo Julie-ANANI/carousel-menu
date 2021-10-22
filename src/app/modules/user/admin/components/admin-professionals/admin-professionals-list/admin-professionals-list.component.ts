@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Config} from '../../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import {Professional} from '../../../../../../models/professional';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {TranslateTitleService} from '../../../../../../services/title/title.service';
@@ -7,7 +7,7 @@ import {ProfessionalsService} from '../../../../../../services/professionals/pro
 import {first} from 'rxjs/operators';
 import {Response} from '../../../../../../models/response';
 import {isPlatformBrowser} from '@angular/common';
-import {ConfigService} from '../../../../../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';

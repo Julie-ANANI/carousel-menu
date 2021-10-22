@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { TranslateTitleService } from "../../../../../../services/title/title.service";
-import { Table } from '../../../../../table/models/table';
-import { Config } from '../../../../../../models/config';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { Table, Config } from '@umius/umi-common-component/models';
 import { isPlatformBrowser } from '@angular/common';
 import { first} from 'rxjs/operators';
 import { AdvSearchService } from '../../../../../../services/advsearch/advsearch.service';

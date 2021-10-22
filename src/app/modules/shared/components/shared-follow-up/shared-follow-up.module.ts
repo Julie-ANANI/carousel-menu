@@ -16,23 +16,25 @@ import { SharedFollowUpClientComponent } from './shared-follow-up-client/shared-
 import { SharedFollowUpAdminComponent } from './shared-follow-up-admin/shared-follow-up-admin.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    SidebarLeftModule,
-    ModalModule,
-    SharedMailEditorModule,
-    SidebarFilterAnswersModule,
-    TableModule,
-    SidebarModule,
-    SidebarUserAnswerModule,
-    SidebarInPageModule,
-    FormsModule,
-    ModalEmptyModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        SidebarLeftModule,
+        ModalModule,
+        SharedMailEditorModule,
+        SidebarFilterAnswersModule,
+        TableModule,
+        SidebarModule,
+        SidebarUserAnswerModule,
+        SidebarInPageModule,
+        FormsModule,
+        ModalEmptyModule,
+        ReactiveFormsModule,
+        TableComponentsModule
+    ],
   declarations: [
     SharedFollowUpComponent,
     SharedFollowUpClientComponent,

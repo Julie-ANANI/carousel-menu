@@ -2,14 +2,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Professional } from '../../../../models/professional';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import { AdvSearchService } from "../../../../services/advsearch/advsearch.service";
+import { AdvSearchService } from '../../../../services/advsearch/advsearch.service';
 import { Router } from '@angular/router';
-import { ListConfigurations } from "./list-configurations";
-import { InnovationService } from "../../../../services/innovation/innovation.service";
+import { ListConfigurations } from './list-configurations';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { ContextInterface } from '../../../user/admin/components/admin-community/interfaces/context-interface';
-import { Config } from '../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -30,7 +30,7 @@ export class SharedAmbassadorListComponent {
 
   @Input() set listType(value: string) {
 
-    switch(value) {
+    switch (value) {
 
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
@@ -113,7 +113,7 @@ export class SharedAmbassadorListComponent {
 
           pro.sent = pro.messages && pro.messages.length > 0;
 
-          if (!!pro.innovations && !!pro.innovations.find( (inno) => { return this._context['innovationId'] === inno._id; } ) ) {
+          if (!!pro.innovations && !!pro.innovations.find( (inno) => this._context['innovationId'] === inno._id ) ) {
             pro.self = 'true';
           } else {
             pro.self = 'false';
@@ -133,7 +133,7 @@ export class SharedAmbassadorListComponent {
 
 
   private _configToString() {
-    let config: any = {};
+    const config: any = {};
     Object.keys(this._config).forEach(key => {
       if (this._config[key] instanceof Object) {
         config[key] = JSON.stringify(this._config[key]);
@@ -171,10 +171,10 @@ export class SharedAmbassadorListComponent {
         // If one or more professionals already belong to the project, just add the remaining ones.
         // We need to verify in the back whether a "Kate" campaign exists, otherwise we need to create one and
         // get the id...
-        const pros = action._rows.map((pro: Professional) => { return {_id: pro._id.toString()}; });
+        const pros = action._rows.map((pro: Professional) => ({_id: pro._id.toString()}));
         const innovationId = this._context ? this._context.innovationId : null;
         const resultObj: any = {
-          origin: "AMBASSADOR-ADD"
+          origin: 'AMBASSADOR-ADD'
         };
         if (innovationId) {
           this._innovationService.addProsFromCommunity(pros, innovationId).pipe(first())
@@ -187,7 +187,7 @@ export class SharedAmbassadorListComponent {
                 resultObj.result = {status: 'success', value: result};
               } else {
                 // Inform the parent and close the sidebar
-                resultObj.result = {status: 'error', message: "Empty result!"};
+                resultObj.result = {status: 'error', message: 'Empty result!'};
               }
               this.callbackNotification.emit(resultObj);
             }, err => {
@@ -197,10 +197,10 @@ export class SharedAmbassadorListComponent {
               this.callbackNotification.emit(resultObj);
             });
         } else {
-          //Silently fail
-          console.error("Innovation id cannot be null");
+          // Silently fail
+          console.error('Innovation id cannot be null');
           // Inform the parent and close the sidebar
-          resultObj.result = {status: 'error', message: "Innovation id cannot be null"};
+          resultObj.result = {status: 'error', message: 'Innovation id cannot be null'};
           this.callbackNotification.emit(resultObj);
         }
         break;

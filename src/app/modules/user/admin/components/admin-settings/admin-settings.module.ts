@@ -29,6 +29,7 @@ import { UseSuperToolsComponent } from './admin-product-management/admin-product
 import { HelpCommunityGrowComponent } from './admin-product-management/admin-product-shared-tracking-table/help-community-grow.component';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-management/admin-product-shared-tracking-table/admin-product-shared-tracking-table.component';
 import { SharedDateSelectorModule } from '../../../../shared/components/shared-date-selector/shared-date-selector.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { SharedDateSelectorModule } from '../../../../shared/components/shared-d
     InputListModule,
     AutoSuggestionModule,
     SharedDateSelectorModule,
+    TableComponentsModule,
   ],
   declarations: [
     AdminSettingsComponent,

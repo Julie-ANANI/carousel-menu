@@ -15,23 +15,25 @@ import { SharedWorldmapModule } from "../../../../../shared/components/shared-wo
 import { SidebarCommunityFormModule } from "../../../../../sidebars/components/community-form/sidebar-community-form.module";
 import { ErrorTemplate1Module } from '../../../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../../utility/messages/message-template-2/message-template-2.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SharedProsListModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    SidebarModule,
-    TableModule,
-    SharedAmbassadorListModule,
-    SharedWorldmapModule,
-    SidebarCommunityFormModule,
-    ErrorTemplate1Module,
-    MessageTemplate2Module
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SharedProsListModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        SidebarModule,
+        TableModule,
+        SharedAmbassadorListModule,
+        SharedWorldmapModule,
+        SidebarCommunityFormModule,
+        ErrorTemplate1Module,
+        MessageTemplate2Module,
+        TableComponentsModule
+    ],
   declarations: [
     AdminCommunityProjectsComponent,
     AdminCommunityProjectComponent

@@ -9,18 +9,20 @@ import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { TableModule } from '../../../table/table.module';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild(),
-    SidebarModule,
-    TableModule,
-    AutoCompleteInputModule,
-    InputListModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        SidebarModule,
+        TableModule,
+        AutoCompleteInputModule,
+        InputListModule,
+        TableComponentsModule
+    ],
   declarations: [
    SidebarBlacklistComponent
   ],

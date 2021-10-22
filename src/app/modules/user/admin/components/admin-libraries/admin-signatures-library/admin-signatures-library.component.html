@@ -47,12 +47,12 @@
       <!-- /add button -->
 
       <!-- table -->
-      <app-shared-table
+      <umius-table
         (editRow)="editSignature($event)"
         (removeRows)="OnClickDelete($event)"
         [(config)]="config"
         [data]="table">
-      </app-shared-table>
+      </umius-table>
       <!-- /table -->
 
     </ng-container>

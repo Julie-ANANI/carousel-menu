@@ -23,12 +23,12 @@
 
       <!-- table -->
       <section>
-        <app-shared-table
+        <umius-table
           (editRow)="editCountry($event)"
           (removeRows)="deleteCountriesModal($event)"
           [(config)]="config"
           [data]="countriesTable">
-        </app-shared-table>
+        </umius-table>
       </section>
       <!-- /table -->
 

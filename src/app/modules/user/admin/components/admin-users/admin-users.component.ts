@@ -8,7 +8,7 @@ import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interf
 import { first } from 'rxjs/operators';
 import { Config } from '../../../../../models/config';
 import { Response } from '../../../../../models/response';
-import { ConfigService } from '../../../../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';

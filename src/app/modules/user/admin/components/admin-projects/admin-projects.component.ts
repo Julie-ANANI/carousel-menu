@@ -19,8 +19,8 @@ import { ObjectivesPrincipal } from '../../../../../models/static-data/missionOb
 import { Mission, MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
-import { Table, Config, Column } from '@umius/umi-common-component/src/lib/models';
-import {ConfigService} from '@umius/umi-common-component/src/lib/services/config';
+import { Table, Config, Column } from '@umius/umi-common-component/models';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 
 @Component({
   templateUrl: './admin-projects.component.html',

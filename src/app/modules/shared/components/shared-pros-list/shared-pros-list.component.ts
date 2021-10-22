@@ -4,11 +4,12 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import { Table } from '../../../table/models/table';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
+import { Table } from '@umius/umi-common-component/models';
+
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;

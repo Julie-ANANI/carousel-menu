@@ -8,15 +8,17 @@ import { TranslateModule } from '@ngx-translate/core';
 // Components
 import { SharedAnswersListComponent } from './shared-answers-list.component';
 import {TableModule} from '../../../table/table.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    TableModule,
-    TranslateModule.forChild()
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        TableModule,
+        TranslateModule.forChild(),
+        TableComponentsModule
+    ],
   declarations: [
     SharedAnswersListComponent
   ],

@@ -1,16 +1,15 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Subject} from 'rxjs';
-import {Table} from '../../../../../table/models/table';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
-import {Config} from '../../../../../../models/config';
 import {isPlatformBrowser} from '@angular/common';
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {domainRegEx} from '../../../../../../utils/regex';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: 'admin-email-blacklist.component.html',

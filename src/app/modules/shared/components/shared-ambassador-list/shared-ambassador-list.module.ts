@@ -12,20 +12,22 @@ import { SidebarTagsModule } from '../../../sidebars/components/sidebar-tags/sid
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { ErrorTemplate1Module } from '../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SidebarModule,
-    TableModule,
-    TranslateModule.forChild(),
-    SidebarUserFormModule,
-    SidebarTagsModule,
-    ModalModule,
-    ErrorTemplate1Module,
-    MessageTemplateModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SidebarModule,
+        TableModule,
+        TranslateModule.forChild(),
+        SidebarUserFormModule,
+        SidebarTagsModule,
+        ModalModule,
+        ErrorTemplate1Module,
+        MessageTemplateModule,
+        TableComponentsModule
+    ],
   declarations: [
     SharedAmbassadorListComponent
   ],

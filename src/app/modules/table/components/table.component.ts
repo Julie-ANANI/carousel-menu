@@ -8,7 +8,7 @@ import { countries } from '../../../models/static-data/country';
 import { Config } from '../../../models/config';
 import { Pagination } from '../../utility/paginations/interfaces/pagination';
 import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
-import { ConfigService } from '../../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';

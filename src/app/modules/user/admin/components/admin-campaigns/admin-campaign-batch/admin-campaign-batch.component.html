@@ -147,12 +147,12 @@
         </div>
 
         <div class="card-body">
-          <app-shared-table
+          <umius-table
             (editRow)="onClickEdit($event, batch)"
             [config]="localConfig"
             (performAction)="_updateBatch($event, batch)"
             [data]="getBatch(batchIndex)">
-          </app-shared-table>
+          </umius-table>
         </div>
 
       </section>

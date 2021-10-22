@@ -9,19 +9,21 @@ import { MissionService } from '../../../../../services/mission/mission.service'
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { MissionFormModule } from '../../../../sidebars/components/mission-form/mission-form.module';
+import { TableComponentsModule } from '@umius/umi-common-component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    TableModule,
-    TranslateModule.forChild(),
-    ModalModule,
-    SidebarModule,
-    MissionFormModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        RouterModule,
+        TableModule,
+        TranslateModule.forChild(),
+        ModalModule,
+        SidebarModule,
+        MissionFormModule,
+        TableComponentsModule
+    ],
   declarations: [
     AdminMissionsListComponent
   ],

@@ -3,14 +3,13 @@ import { PresetService } from '../../../../../../../services/preset/preset.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
 import { first } from 'rxjs/operators';
-import { Config } from '../../../../../../../models/config';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
-import { Table } from '../../../../../../table/models/table';
+import { Table, Config } from '@umius/umi-common-component/models';
 import { Response } from '../../../../../../../models/response';
-import { isPlatformBrowser } from "@angular/common";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../../../services/error/error-front.service";
-import { RolesFrontService } from "../../../../../../../services/roles/roles-front.service";
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
+import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 
 @Component({
   templateUrl: './admin-presets-list.component.html',
@@ -206,7 +205,7 @@ export class AdminPresetsListComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
-      })
+      });
     });
     this._modalOpen = false;
   }

@@ -5,14 +5,16 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ShowcaseHistoryComponent } from './showcase-history.component';
 import { TableModule } from '../../../table/table.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    TranslateModule.forChild(),
-    TableModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        TableModule,
+        TableComponentsModule
+    ],
   declarations: [
    ShowcaseHistoryComponent
   ],

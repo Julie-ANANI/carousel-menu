@@ -13,7 +13,7 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SharedWorldListModule} from '../shared-world-list/shared-world-list.module';
 import {SharedTargetingWorldModule} from '../shared-targeting-world/shared-targeting-world.module';
-import { TableComponentsModule } from '@umius/umi-common-component/src/lib/components/table';
+import { TableComponentsModule } from '@umius/umi-common-component';
 
 @NgModule({
   imports: [

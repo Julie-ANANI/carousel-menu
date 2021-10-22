@@ -9,9 +9,8 @@ import { Enterprise /*, Pattern*/ } from '../../../../../../models/enterprise';
 // import {Clearbit} from '../../../../../../models/clearbit';
 // import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
 /*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
-import { Table } from '../../../../../table/models/table';
+import { Table, Config } from '@umius/umi-common-component/models';
 import { first } from 'rxjs/operators';
-import { Config } from '../../../../../../models/config';
 import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';

@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MissionQuestion} from '../../../../../models/mission';
-import {Table} from '../../../../table/models/table';
-import {Config} from '../../../../../models/config';
 import {Answer} from '../../../../../models/answer';
 import {Innovation} from '../../../../../models/innovation';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
@@ -16,6 +14,7 @@ import {AnswerService} from '../../../../../services/answer/answer.service';
 import {Professional} from '../../../../../models/professional';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
+import { Config, Table } from '@umius/umi-common-component/models';
 
 interface Pending {
   answersIds?: Array<string>;

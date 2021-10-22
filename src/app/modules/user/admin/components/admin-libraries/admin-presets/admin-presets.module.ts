@@ -13,20 +13,22 @@ import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 import { TableModule } from '../../../../../table/table.module';
 import { MessageErrorModule } from "../../../../../utility/messages/message-error/message-error.module";
 import { MessageTemplateModule } from "../../../../../utility/messages/message-template/message-template.module";
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    RouterModule,
-    AdminProjectQuestionnaireModule,
-    SharedPresetModule,
-    ModalModule,
-    TableModule,
-    FormsModule,
-    MessageErrorModule,
-    MessageTemplateModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        RouterModule,
+        AdminProjectQuestionnaireModule,
+        SharedPresetModule,
+        ModalModule,
+        TableModule,
+        FormsModule,
+        MessageErrorModule,
+        MessageTemplateModule,
+        TableComponentsModule
+    ],
   declarations: [
     AdminPresetsEditComponent,
     AdminPresetsListComponent

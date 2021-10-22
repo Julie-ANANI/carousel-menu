@@ -6,14 +6,16 @@ import { SidebarSearchToolComponent } from './sidebar-search-tool.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { TableModule } from "../../../table/table.module";
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    SidebarModule,
-    TableModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        SidebarModule,
+        TableModule,
+        TableComponentsModule
+    ],
   declarations: [
    SidebarSearchToolComponent
   ],

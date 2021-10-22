@@ -9,18 +9,20 @@ import { TableModule } from '../../../../table/table.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarWorkflowModule } from '../../../../sidebars/components/sidebar-workflow/sidebar-workflow.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
+import { TableComponentsModule } from '@umius/umi-common-component';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    RouterModule,
-    TableModule,
-    SidebarModule,
-    SidebarWorkflowModule,
-    ModalModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        RouterModule,
+        TableModule,
+        SidebarModule,
+        SidebarWorkflowModule,
+        ModalModule,
+        TableComponentsModule
+    ],
   declarations: [
     AdminEditWorkflowComponent
   ],

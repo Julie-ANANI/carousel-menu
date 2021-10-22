@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailQueueModel } from '../../../../models/mail.queue.model';
-import { Table } from '../../../table/models/table';
-import { Config } from '../../../../models/config';
 import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
@@ -10,6 +8,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { Enterprise } from '../../../../models/enterprise';
 import { Blacklist } from '../../../../models/blacklist';
 import { emailRegEx } from '../../../../utils/regex';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 

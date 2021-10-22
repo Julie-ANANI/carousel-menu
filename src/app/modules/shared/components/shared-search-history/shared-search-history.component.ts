@@ -2,15 +2,13 @@ import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
-import { Config } from '../../../../models/config';
-import { Table } from '../../../table/models/table';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { COUNTRIES } from '../shared-search-pros/COUNTRIES';
 import { countries } from '../../../../models/static-data/country';
 import { Campaign } from '../../../../models/campaign';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { Router } from '@angular/router';
-import { ConfigService } from '../../../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { GeographySettings } from '../../../../models/innov-settings';
 import { IndexService } from '../../../../services/index/index.service';
@@ -19,7 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { JobConfig, TargetPros } from '../../../../models/targetPros';
-
+import { Table, Config } from '@umius/umi-common-component/models';
 import * as _ from 'lodash';
 
 @Component({

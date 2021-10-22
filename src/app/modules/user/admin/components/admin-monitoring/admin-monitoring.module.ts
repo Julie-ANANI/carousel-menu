@@ -14,18 +14,20 @@ import { AdminBatchInformationComponent } from './admin-batch-information/admin-
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { TableModule } from '../../../../table/table.module';
 import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    SidebarModule,
-    PipeModule,
-    TableModule,
-    RouterModule,
-    SidebarBlacklistModule,
-    AdminMonitoringRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        SidebarModule,
+        PipeModule,
+        TableModule,
+        RouterModule,
+        SidebarBlacklistModule,
+        AdminMonitoringRoutingModule,
+        TableComponentsModule
+    ],
   declarations: [
     AdminMonitoringComponent,
     AdminEmailQueueComponent,

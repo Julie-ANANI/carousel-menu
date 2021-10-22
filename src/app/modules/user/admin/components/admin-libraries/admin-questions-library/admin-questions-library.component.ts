@@ -11,8 +11,7 @@ import {Router} from '@angular/router';
 import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {ConfigService} from '../../../../../../services/config/config.service';
-import {HttpErrorResponse} from '@angular/common/http';
+import {ConfigService} from '@umius/umi-common-component/services/config';import {HttpErrorResponse} from '@angular/common/http';
 
 interface NewQuestion {
   controlType: any;

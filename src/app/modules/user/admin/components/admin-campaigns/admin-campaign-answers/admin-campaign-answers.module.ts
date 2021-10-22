@@ -6,15 +6,17 @@ import {MessageTemplate2Module} from '../../../../../utility/messages/message-te
 import {TableModule} from '../../../../../table/table.module';
 import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import {SidebarUserAnswerModule} from '../../../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MessageTemplate2Module,
-    TableModule,
-    SidebarModule,
-    SidebarUserAnswerModule
-  ],
+    imports: [
+        CommonModule,
+        MessageTemplate2Module,
+        TableModule,
+        SidebarModule,
+        SidebarUserAnswerModule,
+        TableComponentsModule
+    ],
   declarations: [
     AdminCampaignAnswersComponent
   ]

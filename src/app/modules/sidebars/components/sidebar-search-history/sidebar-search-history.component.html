@@ -127,12 +127,12 @@
 
   <!-- table -->
   <div *ngIf="showChildren" class="p-top-30">
-    <app-shared-table
+    <umius-table
       [(config)]="config"
       [data]="tableInfos"
       (editRow)="goToRequest($event)"
       (performAction)="onClickActions($event)">
-    </app-shared-table>
+    </umius-table>
   </div>
   <!-- /table -->
 

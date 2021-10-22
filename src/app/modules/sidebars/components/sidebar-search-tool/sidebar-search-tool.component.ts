@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SearchService } from "../../../../services/search/search.service";
-import { Table } from "../../../table/models/table";
+import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Config } from '../../../../models/config';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   selector: 'app-sidebar-search-tool',

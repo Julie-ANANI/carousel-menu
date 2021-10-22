@@ -11,7 +11,7 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { GeographySettings } from '../../../../models/innov-settings';
-import { Table, Config } from '@umius/umi-common-component/src/lib/models';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;

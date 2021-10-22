@@ -4,9 +4,9 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Config } from '../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import { CampaignService } from '../../services/campaign/campaign.service';
-import { ConfigService } from '../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
 
 const CAMPAIGN_ANSWERS_KEY = makeStateKey('campaign_answers');

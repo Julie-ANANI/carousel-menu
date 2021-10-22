@@ -16,24 +16,26 @@ import { SidebarSearchHistoryModule } from "../../../sidebars/components/sidebar
 import { AutoCompleteInputModule } from "../../../utility/auto-complete-input/auto-complete-input.module";
 import { ModalModule } from "../../../utility/modals/modal/modal.module";
 import {SharedTargetingWorldModule} from "../shared-targeting-world/shared-targeting-world.module";
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    SharedFilterInputModule,
-    TranslateModule.forChild(),
-    PaginationTemplate1Module,
-    SharedSearchMultiModule,
-    CountryFlagModule,
-    TableModule,
-    SidebarModule,
-    SidebarSearchHistoryModule,
-    AutoCompleteInputModule,
-    ModalModule,
-    SharedTargetingWorldModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        SharedFilterInputModule,
+        TranslateModule.forChild(),
+        PaginationTemplate1Module,
+        SharedSearchMultiModule,
+        CountryFlagModule,
+        TableModule,
+        SidebarModule,
+        SidebarSearchHistoryModule,
+        AutoCompleteInputModule,
+        ModalModule,
+        SharedTargetingWorldModule,
+        TableComponentsModule
+    ],
   declarations: [
     SharedSearchHistoryComponent,
   ],

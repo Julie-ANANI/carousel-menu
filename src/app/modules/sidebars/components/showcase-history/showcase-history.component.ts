@@ -1,13 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ShowcaseService } from '../../../demo/components/showcase/services/showcase.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../models/answer';
 import { Clearbit } from '../../../../models/clearbit';
-import { Config } from '../../../../models/config';
 import { Innovation } from '../../../../models/innovation';
 import { Showcase } from '../../../../models/showcase';
-import { Table } from '../../../table/models/table';
 import { TagStats } from '../../../../models/tag-stats';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   selector: 'app-sidebar-showcase-history[tagsStats]',
@@ -47,7 +46,13 @@ export class ShowcaseHistoryComponent implements OnInit {
     _isPaginable: true,
     _columns: [
       {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true},
-      {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSortable: true, _isSearchable: true},
+      {
+        _attrs: ['owner.firstName', 'owner.lastName'],
+        _name: 'TABLE.HEADING.OWNER',
+        _type: 'TEXT',
+        _isSortable: true,
+        _isSearchable: true
+      },
       {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE', _isSortable: true},
     ]
   };
@@ -55,7 +60,8 @@ export class ShowcaseHistoryComponent implements OnInit {
   public showcaseName = '';
 
   constructor(private _showcaseService: ShowcaseService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
     this.loadShowcases();

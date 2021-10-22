@@ -8,17 +8,19 @@ import {TableModule} from '../../../../../table/table.module';
 import {ModalModule} from '../../../../../utility/modals/modal/modal.module';
 import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import {SidebarBatchModule} from '../../../../../sidebars/components/sidebar-batch/sidebar-batch.module';
+import { TableComponentsModule } from "@umius/umi-common-component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MessageTemplateModule,
-    FormsModule,
-    TableModule,
-    ModalModule,
-    SidebarModule,
-    SidebarBatchModule
-  ],
+    imports: [
+        CommonModule,
+        MessageTemplateModule,
+        FormsModule,
+        TableModule,
+        ModalModule,
+        SidebarModule,
+        SidebarBatchModule,
+        TableComponentsModule
+    ],
   declarations: [
     AdminCampaignBatchComponent
   ]
