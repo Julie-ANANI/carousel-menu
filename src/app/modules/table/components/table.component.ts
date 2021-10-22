@@ -427,13 +427,15 @@ export class TableComponent implements OnInit, OnDestroy {
    * This function initialise the values of a column.
    */
   private _initializeColumns() {
-    this._table._columns.forEach((value, index) => {
-      this._table._columns[index]._isSearchable = this._table._columns[index]
-        ._isSearchable
-        ? this._table._columns[index]._isSearchable
-        : false;
-      this._table._columns[index]._isSelected = this._columnActive(value);
-    });
+    if (this._table._columns && this._table._columns.length) {
+      this._table._columns.forEach((value, index) => {
+        this._table._columns[index]._isSearchable = this._table._columns[index]
+          ._isSearchable
+          ? this._table._columns[index]._isSearchable
+          : false;
+        this._table._columns[index]._isSelected = this._columnActive(value);
+      });
+    }
   }
 
   /***
@@ -1062,7 +1064,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public getStringForColumn(row: any, column: any, label: string) {
     this._stringInArrayColumn = '';
     const temList = this.getContentValue(row, this.getAttrs(column)[0]);
-    if(temList) {
+    if (temList) {
       temList.map((item: any, index: any) => {
         if (index === temList.length - 1) {
           this._stringInArrayColumn = this._stringInArrayColumn.concat(
