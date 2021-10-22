@@ -82,7 +82,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   loadAnswers() {
     this.answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first()).subscribe((response: any) => {
-      this._answers = response._answers || [];
+      this._answers = response.answers || [];
 
       this._answers.map((answer: Answer) => {
         if (!answer.job) {
@@ -95,8 +95,8 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       if (this._anonymousAnswers) {
         this._tableInfos = {
           _selector: 'client-answer',
-          _content: response._answers,
-          _total: response._answers.length,
+          _content: response.answers,
+          _total: response.answers.length,
           _clickIndex: 1,
           _isLocal: true,
           _isPaginable: true,
@@ -108,8 +108,8 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       } else {
         this._tableInfos = {
           _selector: 'client-answer',
-          _content: response._answers,
-          _total: response._answers.length,
+          _content: response.answers,
+          _total: response.answers.length,
           _clickIndex: 1,
           _isLocal: true,
           _isPaginable: true,
@@ -123,7 +123,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         };
       }
 
-      this._countries = response._answers.reduce((acc: any, answer: any) => {
+      this._countries = response.answers.reduce((acc: any, answer: any) => {
         if (!!answer.country &&
           !!answer.country.flag &&
           acc.indexOf(answer.country.flag) === -1) {
