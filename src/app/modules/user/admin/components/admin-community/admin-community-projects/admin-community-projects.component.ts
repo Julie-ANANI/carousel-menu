@@ -19,11 +19,11 @@ export class AdminCommunityProjectsComponent implements OnInit {
     limit: '',
     offset: '0',
     search: '{}',
-    status: "EVALUATING",
+    status: 'EVALUATING',
     sort: '{ "created": -1 }'
   };
 
-  private _total: number = -1;
+  private _total = -1;
 
   private _table: Table;
 

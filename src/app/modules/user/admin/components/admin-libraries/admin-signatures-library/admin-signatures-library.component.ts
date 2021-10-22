@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { EmailSignature } from '../../../../../../models/email-signature';
-import { Table } from '../../../../../table/models/table';
+import { Table, Config } from '@umius/umi-common-component/models';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import { Config } from '../../../../../../models/config';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '../../../../../../models/response';
@@ -115,7 +114,7 @@ export class AdminSignaturesLibraryComponent {
   }
 
   public onAddConfirm() {
-    this._templatesService.createSignature({ name: this._newSignatureName }).pipe(first()).subscribe((response: EmailSignature) => {
+    this._templatesService.createSignature({name: this._newSignatureName}).pipe(first()).subscribe((response: EmailSignature) => {
       this._getSignatures();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.ADDED');
       this._newSignatureName = null;

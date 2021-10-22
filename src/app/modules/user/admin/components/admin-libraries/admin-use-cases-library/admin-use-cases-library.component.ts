@@ -1,17 +1,16 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Table} from '../../../../../table/models/table';
-import {Config} from '../../../../../../models/config';
-import {MissionService} from '../../../../../../services/mission/mission.service';
-import {isPlatformBrowser} from '@angular/common';
-import {MissionTemplate} from '../../../../../../models/mission';
-import {first} from 'rxjs/operators';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
-import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
-import {TranslateService} from '@ngx-translate/core';
-import {Router} from '@angular/router';
-import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Config, Table } from '@umius/umi-common-component/models';
+import { MissionService } from '../../../../../../services/mission/mission.service';
+import { isPlatformBrowser } from '@angular/common';
+import { MissionTemplate } from '../../../../../../models/mission';
+import { first } from 'rxjs/operators';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { MissionFrontService } from '../../../../../../services/mission/mission-front.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { MissionQuestionService } from '../../../../../../services/mission/mission-question.service';
 
 @Component({
   selector: 'app-admin-use-cases-library',
@@ -71,7 +70,8 @@ export class AdminUseCasesLibraryComponent implements OnInit {
               private _missionQuestionService: MissionQuestionService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionService: MissionService) { }
+              private _missionService: MissionService) {
+  }
 
   ngOnInit() {
     this._initializeTable();

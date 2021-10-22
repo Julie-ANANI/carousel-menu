@@ -1,14 +1,10 @@
 import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnDestroy, OnInit, Output } from '@angular/core';
-import { Table } from '../models/table';
-import { Row } from '../models/row';
-import { Column, types } from '../models/column';
-import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
 import { countries } from '../../../models/static-data/country';
-import { Config } from '../../../models/config';
+import { Config, Column, types, Choice, Row, Table } from '@umius/umi-common-component/models';
 import { Pagination } from '../../utility/paginations/interfaces/pagination';
 import { LocalStorageService } from '../../../services/localStorage/localStorage.service';
-import {ConfigService} from '@umius/umi-common-component/services/config';
+import { ConfigService } from '@umius/umi-common-component/services/config';
 
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
