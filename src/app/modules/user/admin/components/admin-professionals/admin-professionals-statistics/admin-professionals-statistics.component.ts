@@ -12,9 +12,6 @@ import * as moment from 'moment';
   styleUrls: ['./admin-professionals-statistics.component.scss']
 })
 export class AdminProfessionalsStatisticsComponent implements OnInit {
-  get repartitionStats(): { emailConfidence: EmailType; total: number; notClassified: number; classified: number } {
-    return this._repartitionStats;
-  }
 
   constructor(private _rolesFrontService: RolesFrontService,
               private _classificationService: ClassificationService) {
@@ -99,9 +96,13 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     return this._isLoading;
   }
 
-  private _allRepartitionStats: Array<{ emailConfidence: EmailType, total: number, notClassified: number, classified: number }> = [];
-  private _repartitionStats: { emailConfidence: EmailType, total: number, notClassified: number, classified: number };
-  private _notClassified = 0;
+  private _allRepartitionStats: Array<{ emailConfidence: EmailType, classified: number }> = [];
+
+  get repartitionStats(): { emailConfidence: EmailType; classified: number } {
+    return this._repartitionStats;
+  }
+
+  private _repartitionStats: { emailConfidence: EmailType, classified: number };
   private _classified = 0;
 
   private _selectedEmailConfidenceType: EmailType = 'ALL';
@@ -192,8 +193,8 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
   }
 
   public computeEmailConfidenceStats() {
-    this._nbRiskyEmailsClassified = this._allRepartitionStats.find(r => r.emailConfidence === 'RISKY').total;
-    this._nbGoodEmailsClassified = this._allRepartitionStats.find(r => r.emailConfidence === 'GOOD').total;
+    this._nbRiskyEmailsClassified = this._allRepartitionStats.find(r => r.emailConfidence === 'RISKY').classified;
+    this._nbGoodEmailsClassified = this._allRepartitionStats.find(r => r.emailConfidence === 'GOOD').classified;
   }
 
   private _getSeniorityLevelsClassification(config: any) {
@@ -201,18 +202,6 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
       this._classificationService.seniorityLevels(config).subscribe((res: { classification: SeniorityClassification }) => {
 
         if (res.classification) {
-          this._allRepartitionStats.push({
-            emailConfidence: config.emailConfidence,
-            total: res.classification.total,
-            notClassified: (res.classification.seniorityLevels.find(c => !c._id) || {count: 0}).count,
-            classified: res.classification.total - this._notClassified
-          });
-
-          if (config.emailConfidence === 'ALL') {
-            this._notClassified = (res.classification.seniorityLevels.find(c => !c._id) || {count: 0}).count;
-            this._classified = res.classification.total - this._notClassified;
-          }
-
           const seniorityLevelsOrder = ['Top executive', 'Top manager', 'Manager', 'Expert', 'Other', 'Excluding', 'Irregular', 'No jobs'];
           res.classification.seniorityLevels.sort(function (a, b) {
             return seniorityLevelsOrder.indexOf(a.name) - seniorityLevelsOrder.indexOf(b.name);
@@ -243,6 +232,15 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
             const bLabel = (b.label || {en: 'Not classified yet'}).en;
             return aLabel.localeCompare(bLabel);
           });
+
+          this._allRepartitionStats.push({
+            emailConfidence: config.emailConfidence,
+            classified: res.classification.total
+          });
+
+          if (config.emailConfidence === 'ALL') {
+            this._classified = res.classification.total;
+          }
 
           res.classification.categories.forEach(category => {
             category.jobs = category.jobs.sort((a, b) => a.label.en.localeCompare(b.label.en));
