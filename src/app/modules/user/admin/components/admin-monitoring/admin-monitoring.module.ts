@@ -14,8 +14,7 @@ import { AdminBatchInformationComponent } from './admin-batch-information/admin-
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { TableModule } from '../../../../table/table.module';
 import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
-import { TableComponentsModule } from "@umius/umi-common-component";
-
+import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
     imports: [
         CommonModule,

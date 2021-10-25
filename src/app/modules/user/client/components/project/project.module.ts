@@ -44,8 +44,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import {SidebarInPageModule} from '../../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
 import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 import {MessageTemplate2Module} from '../../../../utility/messages/message-template-2/message-template-2.module';
-import { TableComponentsModule } from "@umius/umi-common-component";
-
+import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
     imports: [
         CommonModule,

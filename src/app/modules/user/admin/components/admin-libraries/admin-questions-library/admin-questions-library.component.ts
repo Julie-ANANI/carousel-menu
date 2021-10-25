@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Table,Config} from '@umius/umi-common-component/models';
+import {Table, Config} from '@umius/umi-common-component/models';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';

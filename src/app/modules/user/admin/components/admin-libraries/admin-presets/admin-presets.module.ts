@@ -13,8 +13,7 @@ import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 import { TableModule } from '../../../../../table/table.module';
 import { MessageErrorModule } from "../../../../../utility/messages/message-error/message-error.module";
 import { MessageTemplateModule } from "../../../../../utility/messages/message-template/message-template.module";
-import { TableComponentsModule } from "@umius/umi-common-component";
-
+import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
     imports: [
         CommonModule,
