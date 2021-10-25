@@ -19,15 +19,16 @@
         <!-- sidebar -->
         <aside [ngStyle]="{'max-width': '297px'}" class="sidebar-wrapper">
           <app-sidebar-in-page [(sidebarTemplate)]="leftSidebarTemplateValue">
-            <app-sidebar-filter-answers *ngIf="displayFilters"
-              [reportingLang]="reportingLang"
-              [innovation]="innovation"
-              [templateType]="leftSidebarTemplateValue.type"
-              [isViewsEditable]="canAccess(['edit', 'views'])"
-              [questions]="questions"
+            <app-sidebar-filter-answers
+              *ngIf="displayFilters"
               [answers]="answers"
+              [innovation]="innovation"
               [isAdminSide]="adminSide"
-              [isOwner]="isOwner">
+              [isOwner]="isOwner"
+              [isViewsEditable]="canAccess(['edit', 'views']) || !adminSide"
+              [questions]="questions"
+              [reportingLang]="reportingLang"
+              [templateType]="leftSidebarTemplateValue.type">
             </app-sidebar-filter-answers>
             <div *ngIf="!displayFilters" class="m-top-30 loading is-lg"></div>
           </app-sidebar-in-page>
