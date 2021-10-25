@@ -730,9 +730,9 @@ export class TableComponent implements OnInit, OnDestroy {
   /***
    * This function return the alias of a choice that will be show to the user instead of the initial name
    * @param {Choice} choice
-   * @returns {string}
+   * @returns {any}
    */
-  public getChoiceAlias(choice: Choice): string {
+  public getChoiceAlias(choice: Choice): any {
     if (choice) {
       return choice._alias || choice._name;
     } else {

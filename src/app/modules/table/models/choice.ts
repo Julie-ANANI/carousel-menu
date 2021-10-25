@@ -1,5 +1,5 @@
 export interface Choice {
-  readonly _name: string;
+  readonly _name: string | number;
   readonly _alias?: string;
   readonly _class?: labelClass | any;
   readonly _disabledClass?: labelClass;
