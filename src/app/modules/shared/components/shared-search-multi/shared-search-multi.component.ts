@@ -183,11 +183,11 @@ export class SharedSearchMultiComponent {
     return column._choices || [];
   }
 
-  getChoiceName(choice: Choice): string {
+  getChoiceName(choice: Choice): string | number {
     return choice._name;
   }
 
-  getChoiceAlias(choice: Choice): string {
+  getChoiceAlias(choice: Choice): any {
     return choice._alias || choice._name;
   }
 
