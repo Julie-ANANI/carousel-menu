@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
+import { Config } from '@umius/umi-common-component/models';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class AdminCommunityMembersComponent {
       title: 'SIDEBAR.TITLE.ADD_AMBASSADOR',
       type: 'addAmbassador',
       animate_state: 'active'
-    }
+    };
 
   }
 

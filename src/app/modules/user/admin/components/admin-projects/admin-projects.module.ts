@@ -12,7 +12,7 @@ import { AdminBatchesDisplayModule } from '../admin-batches-display/admin-batche
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
 import { AdminProjectsRoutingModule } from './admin-projects-routing.module';
 import { AdminProjectModule } from '../admin-project/admin-project.module';
-import { TableComponentsModule } from '@umius/umi-common-component';
+import { TableComponentsModule } from '@umius/umi-common-component/table';
 
 @NgModule({
     imports: [
