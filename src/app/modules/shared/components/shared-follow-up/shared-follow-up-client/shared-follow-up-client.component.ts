@@ -33,14 +33,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     return this._answers.filter((_answer) => !SharedFollowUpClientComponent._isRowDisabled(_answer)).length;
   }
 
-  set toUpdateCompany(value: boolean) {
-    this._toUpdateCompany = value;
-  }
-
-  get toUpdateCompany(): boolean {
-    return this._toUpdateCompany;
-  }
-
   get platformLang(): string {
     return this._translateService.currentLang;
   }
@@ -208,7 +200,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         return !this._selectedIds.length;
 
       case 'STEP_CONFIGURE':
-        return !this.isValidCompany || this._toUpdateCompany || !this._selectedCC.length;
+        return !this.isValidCompany || !this._selectedCC.length;
 
       default:
         return false;
@@ -336,8 +328,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _subscribe: Subject<any> = new Subject<any>();
 
-  private _toUpdateCompany = false;
-
   private static _isRowDisabled(answer: Answer): boolean {
     return !!(answer.followUp && answer.followUp.date);
   }
@@ -415,7 +405,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   public updateEntity() {
     this._saveProject({followUpEmails: this._followUpObj('entity')}).then(() => {
-      this._toUpdateCompany = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_COMPANY');
     }).catch((err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -468,7 +457,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       followUp.cc = this._selectedCC;
     }
     if (update === 'entity') {
-      followUp.entity = this.companyName;
+      followUp.entity = this._companyName;
     }
     return followUp;
   }
@@ -607,7 +596,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {
-    console.log('replacing shit');
     this._emailsObjectReplaced[lang].subject = this._emailsObjectReplaced[lang].subject.
     replace(/\*\|TITLE\|\*/g, card.title);
 
