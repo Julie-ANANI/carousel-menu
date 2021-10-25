@@ -60,7 +60,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     limit: '10',
     offset: '0',
     search: '{}',
-    sort: '{"name":-1}',
+    sort: '{"goodEmails":-1}',
   };
 
   private _resultTableConfiguration: Table = <Table>{};

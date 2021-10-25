@@ -152,6 +152,9 @@ video.video-responsive {
 }
 
 .img-editor {
-  width: 90%;
+  width: auto;
+  height: auto;
+  max-width: 350px;
+  max-height: 350px;
   margin: 5px 5%;
 }
