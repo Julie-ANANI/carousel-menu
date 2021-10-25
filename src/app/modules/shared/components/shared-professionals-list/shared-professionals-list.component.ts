@@ -13,6 +13,7 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { GeographySettings } from '../../../../models/innov-settings';
+import {Column} from '../../../table/models/column';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -188,7 +189,7 @@ export class SharedProfessionalsListComponent {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'country']),
           _isHidden: !this.canAccess(['tableColumns', 'country']),
-          _width: '180px',
+          _width: '150px',
         },
         {
           _attrs: ['jobTitle'],
@@ -224,32 +225,45 @@ export class SharedProfessionalsListComponent {
           _isHidden: !this.canAccess(['tableColumns', 'contact']),
           _width: '120px',
         },
-        {
-          _attrs: ['unshield'],
-          _name: 'Unshield',
-          _type: 'DATE',
-          _width: '140px',
-          _isHidden: !this.canAccess(['tableColumns', 'unshield']),
-        },
-        {
-          _attrs: ['emailConfidence'],
-          _name: 'Email Confidence',
-          _type: 'MULTI-CHOICES',
-          _width: '180px',
-          _isHidden: !this.canAccess(['tableColumns', 'emailConfidence']),
-          _choices: this._professionals.map((_pro) => {
-            const _choice = {_name: _pro.emailConfidence, _alias: '--'};
-            if (_pro.emailConfidence >= 90) {
-              _choice._alias = 'Good';
-              _choice['_class'] = 'label is-success';
-            } else if (_pro.emailConfidence >= 80 && _pro.emailConfidence <= 85) {
-              _choice._alias = 'Risky';
-              _choice['_class'] = 'label is-progress';
-            }
-            return _choice;
-          })
-        },
       ],
+    };
+
+    if (this._table._selector === 'admin-campaign-pros-limit') {
+      this._table._columns.push(this._emailConfCol(), this._unShieldCol());
+    } else {
+      this._table._columns.push(this._unShieldCol(), this._emailConfCol());
+    }
+
+  }
+
+  private _unShieldCol(): Column {
+    return {
+      _attrs: ['unshield'],
+      _name: 'Unshield',
+      _type: 'DATE',
+      _width: '140px',
+      _isHidden: !this.canAccess(['tableColumns', 'unshield']),
+    };
+  }
+
+  private _emailConfCol(): Column {
+    return {
+      _attrs: ['emailConfidence'],
+      _name: 'Email Confidence',
+      _type: 'MULTI-CHOICES',
+      _width: '180px',
+      _isHidden: !this.canAccess(['tableColumns', 'emailConfidence']),
+      _choices: this._professionals.map((_pro) => {
+        const _choice = {_name: _pro.emailConfidence, _alias: '--'};
+        if (_pro.emailConfidence >= 90) {
+          _choice._alias = 'Good';
+          _choice['_class'] = 'label is-success';
+        } else if (_pro.emailConfidence >= 80 && _pro.emailConfidence <= 85) {
+          _choice._alias = 'Risky';
+          _choice['_class'] = 'label is-progress';
+        }
+        return _choice;
+      })
     };
   }
 
