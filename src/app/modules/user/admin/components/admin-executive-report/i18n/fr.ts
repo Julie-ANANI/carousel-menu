@@ -63,7 +63,7 @@ export const ADMIN_EXECUTIVE_REPORT = {
 
   'QUOTE_SECTION': {
     'QUOTATION': 'Citation',
-    'SHOW_QUOTES': 'Afficher les citations',
+    'SHOW_QUOTES': 'Afficher les guillemets',
   },
 
   'BAR_SECTION': {
