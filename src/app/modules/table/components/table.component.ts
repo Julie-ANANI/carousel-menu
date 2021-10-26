@@ -1172,6 +1172,7 @@ export class TableComponent implements OnInit, OnDestroy {
     if (gridInput.searchControl) {
       gridInput.searchControl.enable();
     }
+    console.log(gridInput);
   }
 
   /**
@@ -1274,9 +1275,9 @@ export class TableComponent implements OnInit, OnDestroy {
         case 'MULTI-CHOICES':
           const choiceItem = column._choices.find(item => item._alias.toLowerCase() === _dataToUpdate.input.toLowerCase());
           if (choiceItem) {
-            lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
+            lodash.set(_dataToUpdate.value, _attrs, choiceItem._alias);
           }
-          _dataToUpdate.input = choiceItem._name;
+          _dataToUpdate.input = choiceItem._alias;
           break;
         case 'MULTI-INPUT':
           const valueToReplace: any[] = [];
