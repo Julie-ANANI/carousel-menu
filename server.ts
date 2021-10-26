@@ -50,7 +50,7 @@ app.use('*', (req, res, next) => {
 });
 
 app.use('*.*', function (req, res, next) {
-  console.log(`Compressing`);
+  console.log(`Compressing`); // TODO
   const indexParams = req.url.indexOf('?');
   if (indexParams !== - 1) {
     req.url = req.url.substring(0, indexParams) + '.gz' + req.url.substring(indexParams);
@@ -59,7 +59,7 @@ app.use('*.*', function (req, res, next) {
   }
   res.set('Content-Encoding', 'gzip');
   res.set('Content-Type', lookup(extname(req.originalUrl)));
-  console.log(`Compressed`);
+  console.log(`Compressed`); // TODO
   next();
 });
 
@@ -88,9 +88,9 @@ app.get('*', (req, res) => {
     if (err) {
       // Here we catch the errors and we send back a generic error message.
       console.error(err);
-      res.send('An error occured.');
+      res.send('An error occurred.');
     }
-    console.log(`Rendering ${html.substring(0, 128)}`);
+    console.log(`Rendering ${html.substring(0, 128)}`); // TODO
     res.send(html);
   });
 });
