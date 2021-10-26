@@ -827,7 +827,7 @@ export class AdminProjectsComponent implements OnInit {
         break;
       case 'mission.type':
         const missionObject = {
-          type: value
+          type: value.toUpperCase()
         };
         this._updateMission(missionObject, context.mission._id);
         break;

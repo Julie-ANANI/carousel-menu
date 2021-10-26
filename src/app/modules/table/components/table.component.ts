@@ -427,15 +427,15 @@ export class TableComponent implements OnInit, OnDestroy {
    * This function initialise the values of a column.
    */
   private _initializeColumns() {
-    if (this._table._columns && this._table._columns.length) {
-      this._table._columns.forEach((value, index) => {
-        this._table._columns[index]._isSearchable = this._table._columns[index]
-          ._isSearchable
-          ? this._table._columns[index]._isSearchable
-          : false;
-        this._table._columns[index]._isSelected = this._columnActive(value);
-      });
-    }
+    //   if (this._table._columns && this._table._columns.length) {
+    this._table._columns.forEach((value, index) => {
+      this._table._columns[index]._isSearchable = this._table._columns[index]
+        ._isSearchable
+        ? this._table._columns[index]._isSearchable
+        : false;
+      this._table._columns[index]._isSelected = this._columnActive(value);
+    });
+    //   }
   }
 
   /***
@@ -1172,6 +1172,7 @@ export class TableComponent implements OnInit, OnDestroy {
     if (gridInput.searchControl) {
       gridInput.searchControl.enable();
     }
+    console.log(gridInput);
   }
 
   /**
@@ -1273,10 +1274,11 @@ export class TableComponent implements OnInit, OnDestroy {
       switch (column._editType) {
         case 'MULTI-CHOICES':
           const choiceItem = column._choices.find(item => item._alias.toLowerCase() === _dataToUpdate.input.toLowerCase());
+          console.log(choiceItem);
           if (choiceItem) {
-            lodash.set(_dataToUpdate.value, _attrs, choiceItem._name);
+            lodash.set(_dataToUpdate.value, _attrs, choiceItem._alias);
           }
-          _dataToUpdate.input = choiceItem._name;
+          _dataToUpdate.input = choiceItem._alias;
           break;
         case 'MULTI-INPUT':
           const valueToReplace: any[] = [];
@@ -1314,6 +1316,7 @@ export class TableComponent implements OnInit, OnDestroy {
         _value: _dataToUpdate.input,
         _column: column
       });
+      console.log(_dataToUpdate);
       _dataToUpdate.disabled = true;
     }
   }
