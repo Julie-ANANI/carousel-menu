@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DocsGuardService } from '../../../guards/docs-guard.service';
-
 import { DocsCssComponent } from './docs-css.component';
 import { OverviewComponent } from './overview/overview.component';
 import { AccordionsComponent } from './components/accordions/accordions.component';
@@ -49,7 +47,6 @@ const docsCssRoutes: Routes = [
   {
     path: '',
     component: DocsCssComponent,
-    canActivateChild: [DocsGuardService],
     children: [
       {
         path: '',
@@ -132,9 +129,6 @@ const docsCssRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(docsCssRoutes)
-  ],
-  providers: [
-    DocsGuardService
   ],
   exports: [
     RouterModule

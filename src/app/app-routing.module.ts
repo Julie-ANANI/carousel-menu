@@ -7,9 +7,6 @@ import { AdHocAuthGuard } from './guards/adhoc-auth-guard.service';
 import { ShareSynthesisGuard } from './guards/share-synthesis-guard.service';
 import { NotFoundComponent } from './modules/errors/not-found/not-found.component';
 import { demoRoutes } from './modules/demo/demo-routing.module';
-import {environment} from '../environments/environment';
-
-const devRoutes = environment.devRoutes || [];
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'user' },
@@ -23,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'demo', canActivate: [AuthGuard, AdHocAuthGuard], children: [ ...demoRoutes ] },
   { path: 'logout', canActivate: [AuthGuard], loadChildren: './modules/common/logout/logout.module#LogoutModule' },
   { path: 'monitoring', loadChildren: './modules/monitoring/monitoring.module#MonitoringModule' },
+  {path: 'documentation', loadChildren: './modules/documentation/documentation.module#DocumentationModule'},
   {
     path: 'not-authorized',
     canActivate: [AuthGuard],
@@ -40,7 +38,7 @@ const config: ExtraOptions = {
 
 @NgModule({
   imports: [
-    RouterModule.forRoot([...appRoutes, ...devRoutes], config)
+    RouterModule.forRoot(appRoutes, config)
   ],
   exports: [
     RouterModule
