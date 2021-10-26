@@ -3,6 +3,7 @@ import { FileSystemFileEntry } from 'ngx-file-drop';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-upload-zone-photo',
@@ -73,9 +74,7 @@ export class SharedUploadZonePhotoComponent {
         if (this.uploadCloudinary) {
           const _formData = new FormData();
           _formData.append('file', file, file.name);
-          console.log(_formData);
-          console.log(this.uri);
-          this._httpClient.post(this.uri, _formData).subscribe((data: any) => {
+          this._httpClient.post(this.uri, _formData).pipe(first()).subscribe((data: any) => {
             // Sanitized image returned from backend.
             this.cbFn.emit(data);
             this._isUploading = false;
