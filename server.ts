@@ -45,10 +45,12 @@ app.set('views', join(DIST_FOLDER, 'browser'));
 
 app.use('*', (req, res, next) => {
   res.header('X-powered-by', 'Blood, sweat, and tears');
+  console.log(`Setting header`);
   next();
 });
 
 app.use('*.*', function (req, res, next) {
+  console.log(`Compressing`);
   const indexParams = req.url.indexOf('?');
   if (indexParams !== - 1) {
     req.url = req.url.substring(0, indexParams) + '.gz' + req.url.substring(indexParams);
@@ -57,6 +59,7 @@ app.use('*.*', function (req, res, next) {
   }
   res.set('Content-Encoding', 'gzip');
   res.set('Content-Type', lookup(extname(req.originalUrl)));
+  console.log(`Compressed`);
   next();
 });
 
@@ -87,6 +90,7 @@ app.get('*', (req, res) => {
       console.error(err);
       res.send('An error occured.');
     }
+    console.log(`Rendering ${html.substring(0, 128)}`);
     res.send(html);
   });
 });
