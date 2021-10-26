@@ -1274,7 +1274,6 @@ export class TableComponent implements OnInit, OnDestroy {
       switch (column._editType) {
         case 'MULTI-CHOICES':
           const choiceItem = column._choices.find(item => item._alias.toLowerCase() === _dataToUpdate.input.toLowerCase());
-          console.log(choiceItem);
           if (choiceItem) {
             lodash.set(_dataToUpdate.value, _attrs, choiceItem._alias);
           }
@@ -1316,7 +1315,6 @@ export class TableComponent implements OnInit, OnDestroy {
         _value: _dataToUpdate.input,
         _column: column
       });
-      console.log(_dataToUpdate);
       _dataToUpdate.disabled = true;
     }
   }
