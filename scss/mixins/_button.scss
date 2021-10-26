@@ -14,7 +14,7 @@
 }
 
 @mixin button-default-variant($bg-color: $primary-color) {
-  color: $white-color;
+  color: $white-color !important;
   background-color: $bg-color;
   border-color: $bg-color;
 
@@ -42,7 +42,7 @@
 }
 
 @mixin button-outline-variant($color: $primary-color) {
-  color: $color;
+  color: $color !important;
   border-color: $color;
   border-width: $border-width-lg;
   background-color: transparent;
@@ -96,7 +96,7 @@
 }
 
 @mixin button-link-variant($color: $primary-color) {
-  color: $color;
+  color: $color !important;
   border: none;
   background-color: transparent;
 

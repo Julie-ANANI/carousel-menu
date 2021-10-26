@@ -26,6 +26,14 @@
     border-radius: 25px;
   }
 
+  .icon-left {
+    margin-right: $unit-2;
+  }
+
+  .icon-right {
+    margin-left: $unit-2;
+  }
+
   &.is-black {
     @include label($dark-color);
   }

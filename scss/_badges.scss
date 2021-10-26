@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .badge {
   position: relative;
@@ -51,6 +52,14 @@
       top: 0;
       right: 0;
       transform: translate(50%, -50%);
+    }
+
+    &.is-rounded {
+
+      &::after {
+        transform: translate(30%, -50%);
+      }
+
     }
 
   }
@@ -115,17 +124,39 @@
     }
 
     &.badge-active {
-      border-color: $success-color;
-      background-color: transparent;
-      color: $dark-color;
-
-      &:hover {
-        background-color: #eafaf1;
-      }
+      @include button-outline-variant($success-color);
 
       i {
         display: inline-flex;
         background: $success-color;
+      }
+
+      &.is-danger {
+        @include button-outline-variant($alert-color);
+        i {
+          background: $alert-color !important;
+        }
+      }
+
+      &.is-warning {
+        @include button-outline-variant($warning-color);
+        i {
+          background: $warning-color !important;
+        }
+      }
+
+      &.is-info {
+        @include button-outline-variant($meta-color);
+        i {
+          background: $meta-color !important;
+        }
+      }
+
+      &.is-dark {
+        @include button-outline-variant($dark-color);
+        i {
+          background: $dark-color !important;
+        }
       }
 
     }

@@ -101,15 +101,11 @@
 }
 
 .bg-transparent {
-  background: transparent !important;
+  background: transparent none !important;
 }
 
 .bg-primary-gradient {
   background: $primary-gradient-color !important;
-}
-
-.bg-no {
-  background: transparent none !important;
 }
 
 .bg-navbar {

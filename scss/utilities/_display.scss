@@ -1,3 +1,5 @@
+@import "../mixins";
+
 .d-block {
   display: block !important;
 }
@@ -28,4 +30,12 @@
 
 .d-invisible {
   visibility: hidden !important;
+}
+
+.text-hide {
+  @include text-hide();
+}
+
+.text-assistive {
+  @include text-assistive();
 }

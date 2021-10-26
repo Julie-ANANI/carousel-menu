@@ -37,6 +37,7 @@
       display: inline-flex;
 
       .button {
+        @include button-outline-variant($draft-color);
         border: none;
 
         i {
@@ -64,9 +65,10 @@
       .button {
         margin-left: 4px;
         margin-right: 4px;
+        border: 1px solid transparent;
 
         &.active {
-          border: 1px solid $draft-color !important;
+          border-color: $draft-color !important;
           background-color: lighten($draft-color, 50%);
         }
 
@@ -79,17 +81,13 @@
   .popover {
 
     .button {
-      border: none;
+      @include button-link-variant($draft-color);
       padding: 0;
       min-width: 101px;
       font-weight: 600;
 
       i {
         margin-left: 4px;
-      }
-
-      &:hover {
-        text-decoration: underline;
       }
 
     }

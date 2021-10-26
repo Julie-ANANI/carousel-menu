@@ -484,10 +484,21 @@ textarea {
 
       &::before {
         border-color: $form-alert-color !important;
-        background: $form-alert-color !important;
       }
 
     }
+  }
+
+}
+
+.form-radio {
+
+  &.is-error {
+
+    .form-icon::before {
+      background: $form-alert-color !important;
+    }
+
   }
 
 }

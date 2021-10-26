@@ -4,6 +4,23 @@
   @include clearfix();
 }
 
+.flex-full {
+  flex: 1 !important;
+}
+
+.flex-no-shrink {
+  flex-shrink: 0 !important;
+}
+
+.block-centered {
+  display: block;
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// float position
+
 .float-left {
   float: left !important;
 }
@@ -11,6 +28,8 @@
 .float-right {
   float: right !important;
 }
+
+// position
 
 .relative {
   position: relative;
@@ -32,6 +51,8 @@
   position: static;
 }
 
+// flex position
+
 .flex-centered {
   @include flex-position(center);
 }
@@ -52,9 +73,7 @@
   @include flex-position(space-around);
 }
 
-.flex-full {
-  flex: 1 !important;
-}
+// justify position
 
 .justify-center {
   justify-content: center !important;
@@ -76,17 +95,47 @@
   justify-content: space-around !important;
 }
 
+// align position
+
 .align-center {
   align-items: center !important;
 }
 
 .align-start {
+  align-items: start !important;
+}
+
+.align-end {
+  align-items: end !important;
+}
+
+.align-flex-start {
   align-items: flex-start !important;
 }
+
+.align-flex-end {
+  align-items: flex-end !important;
+}
+
+.align-stretch {
+  align-items: stretch !important;
+}
+
+// white space wrap
 
 .whitespace-nowrap {
   white-space: nowrap !important;
 }
+
+.whitespace-pre-wrap {
+  white-space: pre-wrap !important;
+}
+
+.whitespace-break-spaces {
+  white-space: break-spaces !important;
+}
+
+// flex wrap
 
 .flex-wrap-nowrap {
   flex-wrap: nowrap !important;
@@ -96,23 +145,14 @@
   flex-wrap: wrap !important;
 }
 
+// flex column
+
 .flex-d-column {
   flex-direction: column !important;
 }
 
 .flex-r-column {
   flex-direction: row !important;
-}
-
-.flex-no-shrink {
-  flex-shrink: 0 !important;
-}
-
-.block-centered {
-  display: block;
-  float: none;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 

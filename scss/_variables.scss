@@ -12,7 +12,7 @@ $primary-color: #00B0FF !default;
 $page-light-color: #F5F5F5 !default;
 $page-color: #2E6188 !default;
 $highlight-color: #FFB300 !default;
-$alert-dark-color: #a94442 !default;
+$alert-dark-color: #A94442 !default;
 
 
 // common variables
@@ -40,7 +40,7 @@ $dark-gradient-color: linear-gradient(90deg, #23303C 0%, #4F5D6B 100%) !default;
 
 
 // avatar variables
-$avatar-bg-color: $bg-default-color;
+$avatar-bg-color: #E0E0E0 !default;
 
 
 // notification variables
@@ -70,13 +70,13 @@ $bg-overlay-dark-color: rgba(58,66,77,0.96)!default;
 $bg-tooltip-color: rgba(0,0,0,1) !default;
 $bg-menu-item-color: #F2F2F2 !default;
 $bg-alert-light-color: #F2DEDE !default;
-$bg-modal-header: $dark-gradient-color;
+$bg-modal-header: linear-gradient(90deg, #23303C 0%, #4F5D6B 100%) !default;
 
 
 // form variables
 $form-placeholder-color: #7D7D7D !default;
-$form-input-color: $dark-color !default;
-$form-label-color: $dark-color !default;
+$form-input-color: #333333 !default;
+$form-label-color: #333333 !default;
 $form-border-color: #CED4E2 !default;
 $form-disabled-color: #eef0f3 !default;
 $form-disabled-text-color: #A9A9A9 !default;
@@ -100,8 +100,8 @@ $box-shadow-menu: 0 4px 16px rgba(20,23,28,0.25) !default;
 $box-shadow-form: 0 4px 10px 0 rgba(189,199,222,0.23) !default;
 
 // Fonts
-$base-font-family: 'Open Sans' !default;
-$fallback-font-family: Roboto, "Helvetica Neue", -apple-system, system-ui, "Segoe UI", !default;
+$base-font-family: 'Open Sans', sans-serif !default;
+$fallback-font-family: -apple-system, "system-ui", Roboto, "Helvetica Neue", "Segoe UI", !default;
 $font-family: $base-font-family, $fallback-font-family !default;
 $font-family-oswald: Oswald !default;
 $font-family-open-sans-light: 'Open Sans Light' !default;

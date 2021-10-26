@@ -5,6 +5,10 @@
   display: inline-block;
   position: relative;
 
+  .dropdown-toggle {
+    line-height: 1.5;
+  }
+
   .menu {
     animation: menu-slide-down .2s ease 1;
     display: none;
@@ -60,7 +64,7 @@
   }
 
   .dropdown-toggle.button {
-    text-decoration: none;
+    text-decoration: none !important;
 
     i {
       font-size: 26px;
