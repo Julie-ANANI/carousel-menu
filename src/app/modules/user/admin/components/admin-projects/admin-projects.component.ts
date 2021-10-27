@@ -821,7 +821,7 @@ export class AdminProjectsComponent implements OnInit {
     switch (column._attrs[0]) {
       case 'status':
         const saveObject = {
-          status: value
+          status: value.toUpperCase()
         };
         this._updateInnovation('The project has been updated.', saveObject, context._id);
         break;
