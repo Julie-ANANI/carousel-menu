@@ -7,7 +7,7 @@
     "universal": "npm run build:ssr && npm run serve:ssr",
     "build:ssr": "npm run build:client-and-server-bundles && gzip -k -r dist/browser/ && npm run webpack:server",
     "serve:ssr": "node dist/server",
-    "serve_prof": "node --prof dist/server",
+    "serve_prof:ssr": "node --prof dist/server",
     "serve_mon:ssr": "pm2-runtime dist/server",
     "build:client-and-server-bundles": "ng build -c=local --prod && ng run umi:server -c=local",
     "webpack:server": "webpack --config webpack.server.config.js --progress --color",
