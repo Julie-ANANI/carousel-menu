@@ -9,7 +9,7 @@ WORKDIR /var/web
 
 # build client
 RUN echo build ${APP_NAME} -c=${ENV_NAME} --prod
-RUN node --max-old-space-size=8192 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME} --prod
+RUN node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME} --prod
 
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
@@ -29,4 +29,4 @@ RUN gzip -k -r dist/browser/
 RUN npm run webpack:server
 
 EXPOSE  3080
-CMD ["npm", "run", "serve:ssr"]
+CMD ["npm", "run", "serve_mon:ssr"]
