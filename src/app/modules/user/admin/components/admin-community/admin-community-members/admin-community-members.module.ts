@@ -11,7 +11,6 @@ import { SidebarModule } from '../../../../../sidebars/templates/sidebar/sidebar
 import { SidebarAddAmbassadorFormModule } from '../../../../../sidebars/components/add-ambassador-form/sidebar-add-ambassador-form.module';
 import { SharedAmbassadorListModule } from '../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module';
 import { PipeModule } from '../../../../../../pipe/pipe.module';
-import { TableModule } from '../../../../../table/table.module';
 import { SidebarCommunityFormModule } from '../../../../../sidebars/components/community-form/sidebar-community-form.module';
 import { ErrorTemplate1Module } from '../../../../../utility/errors/error-template-1/error-template-1.module';
 import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
@@ -29,7 +28,6 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         SidebarModule,
         SidebarAdvsearchFormModule,
         SidebarAddAmbassadorFormModule,
-        TableModule,
         SidebarCommunityFormModule,
         ErrorTemplate1Module,
         NguiAutoCompleteModule,

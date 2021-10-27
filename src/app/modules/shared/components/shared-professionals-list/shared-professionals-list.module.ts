@@ -3,7 +3,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedProfessionalsListComponent } from './shared-professionals-list.component';
 
-import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebars/components/user-form/sidebar-user-form.module';
 import { SidebarTagsModule } from '../../../sidebars/components/sidebar-tags/sidebar-tags.module';
@@ -20,7 +19,6 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
     CommonModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    TableModule,
     SidebarModule,
     SidebarUserFormModule,
     SidebarTagsModule,

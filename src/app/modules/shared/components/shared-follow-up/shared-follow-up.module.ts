@@ -8,7 +8,6 @@ import { SidebarLeftModule } from '../../../sidebars/templates/sidebar-left/side
 import { ModalModule } from "../../../utility/modals/modal/modal.module";
 import { SharedMailEditorModule } from "../shared-mail-editor/shared-mail-editor.module";
 import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module';
-import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from "../../../sidebars/templates/sidebar/sidebar.module";
 import { SidebarUserAnswerModule } from "../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module";
 import {SidebarInPageModule} from '../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
@@ -26,7 +25,6 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         ModalModule,
         SharedMailEditorModule,
         SidebarFilterAnswersModule,
-        TableModule,
         SidebarModule,
         SidebarUserAnswerModule,
         SidebarInPageModule,

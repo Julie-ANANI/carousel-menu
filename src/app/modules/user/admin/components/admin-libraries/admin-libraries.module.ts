@@ -12,7 +12,6 @@ import { AdminLibrariesWorkflowsModule } from './admin-libraries-workflows/admin
 import { AdminSignaturesLibraryModule } from './admin-signatures-library/admin-signatures-library.module';
 import { AdminEmailsLibraryModule } from './admin-emails-library/admin-emails-library.module';
 import { AdminPresetsModule } from './admin-presets/admin-presets.module';
-import { TableModule } from '../../../../table/table.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
@@ -33,7 +32,7 @@ import {AdminQuestionsLibraryModule} from './admin-questions-library/admin-quest
     AdminQuestionsLibraryModule,
     AdminEmailsLibraryModule,
     AdminPresetsModule,
-    TableModule,
+
     SidebarModule,
     SidebarBlacklistModule,
     ModalModule,

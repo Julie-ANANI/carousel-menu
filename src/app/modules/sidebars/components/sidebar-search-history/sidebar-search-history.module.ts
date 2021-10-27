@@ -7,7 +7,6 @@ import { SidebarSearchHistoryComponent } from './sidebar-search-history.componen
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
-import { TableModule } from "../../../table/table.module";
 import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
     imports: [
@@ -17,7 +16,6 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         TranslateModule.forChild(),
         SidebarModule,
         CountryFlagModule,
-        TableModule,
         TableComponentsModule
     ],
   declarations: [

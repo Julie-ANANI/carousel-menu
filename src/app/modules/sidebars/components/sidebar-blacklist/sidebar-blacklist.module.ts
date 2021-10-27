@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarBlacklistComponent } from './sidebar-blacklist.component';
 
 import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-import { TableModule } from '../../../table/table.module';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { InputListModule } from '../../../utility/input-list/input-list.module';
 import { TableComponentsModule } from '@umius/umi-common-component/table';
@@ -17,7 +16,6 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         ReactiveFormsModule,
         TranslateModule.forChild(),
         SidebarModule,
-        TableModule,
         AutoCompleteInputModule,
         InputListModule,
         TableComponentsModule

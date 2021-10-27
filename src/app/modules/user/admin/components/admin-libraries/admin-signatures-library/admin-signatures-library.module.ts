@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { TableModule } from '../../../../../table/table.module';
 import { FormsModule } from '@angular/forms';
 
 import { AdminSignaturesLibraryComponent } from './admin-signatures-library.component';
@@ -19,7 +18,7 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         TranslateModule.forChild(),
         FormsModule,
         SidebarModule,
-        TableModule,
+
         SidebarSignatureModule,
         ModalModule,
         ErrorTemplate1Module,

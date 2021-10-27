@@ -10,7 +10,6 @@ import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-li
 import { SharedPresetModule } from '../../../../../shared/components/shared-preset/shared-preset.module';
 import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-project-questionnaire/admin-project-questionnaire.module';
 import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
-import { TableModule } from '../../../../../table/table.module';
 import { MessageErrorModule } from "../../../../../utility/messages/message-error/message-error.module";
 import { MessageTemplateModule } from "../../../../../utility/messages/message-template/message-template.module";
 import { TableComponentsModule } from '@umius/umi-common-component/table';
@@ -22,7 +21,7 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         AdminProjectQuestionnaireModule,
         SharedPresetModule,
         ModalModule,
-        TableModule,
+
         FormsModule,
         MessageErrorModule,
         MessageTemplateModule,

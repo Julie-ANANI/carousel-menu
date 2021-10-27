@@ -1,4 +1,4 @@
-export const TABLE = {
+export const TABLE_FR = {
 
   STATUS: {
     STATUS: 'Statut',

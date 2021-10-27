@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import {TableModule} from '../../../../table/table.module';
 import { AdminMissionsListComponent } from './admin-missions-list.component';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
@@ -16,7 +15,7 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         ReactiveFormsModule,
         FormsModule,
         RouterModule,
-        TableModule,
+
         TranslateModule.forChild(),
         ModalModule,
         SidebarModule,
