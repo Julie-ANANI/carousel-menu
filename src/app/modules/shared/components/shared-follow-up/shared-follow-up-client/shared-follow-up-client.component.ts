@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
+import {Table, Config} from '@umius/umi-common-component/models';
 import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
 import {MissionQuestion} from '../../../../../models/mission';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
@@ -15,7 +16,6 @@ import {ErrorFrontService} from '../../../../../services/error/error-front.servi
 import {AnswerService} from '../../../../../services/answer/answer.service';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
-import { Config, Table } from '@umius/umi-common-component/models';
 import {emailRegEx} from '../../../../../utils/regex';
 import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';
@@ -212,6 +212,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   @Input() set startContactProcess(value: boolean) {
+    console.log(value);
     if (!!value) {
       this._initVariables();
     }
@@ -420,12 +421,12 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
           this._isSending = false;
           this.toggleStartContact(false);
-          }, (err: HttpErrorResponse) => {
+        }, (err: HttpErrorResponse) => {
           this._isSending = false;
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });
-        }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         this._isSending = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -566,7 +567,10 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   public initEmailObject() {
-    this._emailsObject = JSON.parse(JSON.stringify(this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()]))
+    console.log(this._selectedPhrase.toLocaleLowerCase());
+    console.log(this._project.followUpEmails);
+    console.log(this._emailsObject);
+    this._emailsObject = JSON.parse(JSON.stringify(this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()] || {}))
       || {};
     this._emailsObjectReplaced = null;
     this._emailsObjectReplaced = JSON.parse(JSON.stringify(this._emailsObject));
@@ -582,12 +586,12 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   private _highlightFields(lang: string, card: InnovCard, cc: string) {
-    this._emailsObject[lang].subject = this._emailsObject[lang].subject
+    this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
       .replace(/\*\|TITLE\|\*/g,
-      `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
-    );
+        `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
+      );
 
-    this._emailsObject[lang].content = this._emailsObject[lang].content
+    this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
       .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
        text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
       .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
@@ -595,10 +599,10 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {
-    this._emailsObjectReplaced[lang].subject = this._emailsObjectReplaced[lang].subject.
+    this._emailsObjectReplaced[lang]['subject'] = this._emailsObjectReplaced[lang]['subject'].
     replace(/\*\|TITLE\|\*/g, card.title);
 
-    this._emailsObjectReplaced[lang].content = this._emailsObjectReplaced[lang].content
+    this._emailsObjectReplaced[lang]['content'] = this._emailsObjectReplaced[lang]['content']
       .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
       .replace(/\*\|CLIENT_NAME\|\*/g, cc)
       .replace(/\*\|TITLE\|\*/g, `${card.title}`);

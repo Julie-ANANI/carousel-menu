@@ -257,7 +257,7 @@ export class SharedProfessionalsListComponent {
       _width: '180px',
       _isHidden: !this.canAccess(['tableColumns', 'emailConfidence']),
       _choices: this._professionals.map((_pro) => {
-        const _choice = {_name: _pro.emailConfidence, _alias: '--'};
+        const _choice = {_name: _pro.emailConfidence.toString(), _alias: '--'};
         if (_pro.emailConfidence >= 90) {
           _choice._alias = 'Good';
           _choice['_class'] = 'label is-success';
