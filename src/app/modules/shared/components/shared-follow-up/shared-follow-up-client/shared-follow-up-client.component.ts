@@ -212,7 +212,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   @Input() set startContactProcess(value: boolean) {
-    console.log(value);
     if (!!value) {
       this._initVariables();
     }
@@ -567,9 +566,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   public initEmailObject() {
-    console.log(this._selectedPhrase.toLocaleLowerCase());
-    console.log(this._project.followUpEmails);
-    console.log(this._emailsObject);
     this._emailsObject = JSON.parse(JSON.stringify(this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()] || {}))
       || {};
     this._emailsObjectReplaced = null;
