@@ -48,6 +48,8 @@ export const PROJECT_SETTINGS = {
 
   'NO_SECONDARY': 'No Secondary Objectives.',
 
+  'TOOLTIP_PENDING': 'This collaborator has not an account yet.',
+
   'PROJECT_IN': 'Project in ',
 
   'AUTHORISATION_TEXT': 'In order to optimize feedbacks, I authorize UMI to make my project visible anonymously on its networks:',

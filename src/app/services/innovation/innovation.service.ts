@@ -14,6 +14,7 @@ import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
 import {Community} from '../../models/community';
 import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-blacklist/sidebar-blacklist.component';
+import {Invitation} from '../../models/invitation';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -132,6 +133,14 @@ export class InnovationService {
     return this._http.post<Collaborator>('/innovation/' + innovationId + '/invite', {
       collaborators: collaboratorsEmails
     });
+  }
+
+  public getPendingCollaborators(innovationId: string): Observable<Array<Invitation>> {
+    const params = JSON.parse(JSON.stringify({
+      innovation: innovationId,
+      invitation_used: false
+    }));
+    return this._http.get<Array<Invitation>>(`/innovation/${innovationId}/invite`, {params: params});
   }
 
   public removeCollaborator(innovationId: string, collaborator: User): Observable<Array<User>> {
