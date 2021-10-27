@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { SharedAdvancedSearchComponent } from './shared-advanced-search.component';
-import {TableModule} from '../../../table/table.module';
 
 @NgModule({
   imports: [
@@ -15,7 +14,6 @@ import {TableModule} from '../../../table/table.module';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    TableModule,
     TranslateModule.forChild()
   ],
   declarations: [

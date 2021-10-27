@@ -484,14 +484,14 @@
 
           <!-- emails -->
           <div *ngIf="emailTableInfo._total !== 0" class="section-pad rm-pad-bottom">
-            <app-shared-table [config]="configEmail" [data]="emailTableInfo" (editRow)="onClickEmailShow($event)"></app-shared-table>
+            <umius-table [config]="configEmail" [data]="emailTableInfo" (editRow)="onClickEmailShow($event)"></umius-table>
           </div>
           <!-- emails -->
 
 
           <!-- participated in projects -->
           <div *ngIf="projectTableInfo._total !== 0" class="section-pad rm-pad-bottom">
-            <app-shared-table [config]="configProject" [data]="projectTableInfo" (editRow)="onClickProjectShow($event)"></app-shared-table>
+            <umius-table [config]="configProject" [data]="projectTableInfo" (editRow)="onClickProjectShow($event)"></umius-table>
           </div>
           <!-- participated in projects -->
 

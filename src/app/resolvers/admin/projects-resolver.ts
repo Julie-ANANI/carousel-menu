@@ -4,9 +4,9 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
-import { Config } from '../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import { InnovationService } from '../../services/innovation/innovation.service';
-import { ConfigService } from '../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
 
 const INNOVATIONS_KEY = makeStateKey('projects');

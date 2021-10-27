@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmailQueueModel } from '../../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import {Table} from '../../../../../table/models/table';
-import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
+import { Table } from '@umius/umi-common-component/models';
+import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -14,7 +14,7 @@ import { first } from 'rxjs/operators';
 })
 export class AdminEmailQueueComponent implements OnInit {
 
-  private _queueList: {mailqueues: Array<EmailQueueModel>, _metadata: any} = {
+  private _queueList: { mailqueues: Array<EmailQueueModel>, _metadata: any } = {
     mailqueues: [],
     _metadata: {}
   };
@@ -33,7 +33,8 @@ export class AdminEmailQueueComponent implements OnInit {
   private _currentQueue: EmailQueueModel = null;
 
   constructor(private _emailService: EmailService,
-              private _notificationsService: TranslateNotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
     this.loadQueue(this._config);
@@ -64,9 +65,15 @@ export class AdminEmailQueueComponent implements OnInit {
             _isPaginable: true,
             _clickIndex: 1,
             _columns: [
-              {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSearchable: true},
+              {
+                _attrs: ['payload.metadata.campaignName'],
+                _name: 'CAMPAIGNS.CAMPAIGN-NAME',
+                _type: 'TEXT',
+                _isSearchable: true
+              },
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSearchable: true},
-              {_attrs: ['status'], _name: 'COMMON.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
+              {
+                _attrs: ['status'], _name: 'COMMON.STATUS', _type: 'MULTI-CHOICES', _isSearchable: true,
                 _choices: [
                   {_name: 'QUEUED', _alias: 'Queued', _class: 'label is-draft'},
                   {_name: 'PROCESSING', _alias: 'Processing', _class: 'label is-progress'},
@@ -74,7 +81,7 @@ export class AdminEmailQueueComponent implements OnInit {
                   {_name: 'DONE', _alias: 'Done', _class: 'label is-success'}
                 ]
               }
-              ]
+            ]
           };
         },
         (error: any) => this._notificationsService.error('ERROR', error.message)
@@ -120,16 +127,28 @@ export class AdminEmailQueueComponent implements OnInit {
     this.loadQueue(value);
   }
 
-  get config(): any { return this._config; }
+  get config(): any {
+    return this._config;
+  }
 
-  get queueSize(): number { return this._queueList._metadata.totalCount || 0; }
+  get queueSize(): number {
+    return this._queueList._metadata.totalCount || 0;
+  }
 
-  get queue() { return this._queueList.mailqueues; }
+  get queue() {
+    return this._queueList.mailqueues;
+  }
 
-  get tableInfos() { return this._tableInfos; }
+  get tableInfos() {
+    return this._tableInfos;
+  }
 
-  get currentQueue(): any { return this._currentQueue; }
+  get currentQueue(): any {
+    return this._currentQueue;
+  }
 
-  get more(): SidebarInterface { return this._more; }
+  get more(): SidebarInterface {
+    return this._more;
+  }
 
 }

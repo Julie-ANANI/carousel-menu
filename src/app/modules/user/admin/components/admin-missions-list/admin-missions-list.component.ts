@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { Table } from '../../../../table/models/table';
-import {Config} from '../../../../../models/config';
+import { Table, Config } from '@umius/umi-common-component/models';
 import { Mission } from '../../../../../models/mission';
-import {SidebarInterface} from "../../../../sidebars/interfaces/sidebar-interface";
+import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
 
 
 @Component({

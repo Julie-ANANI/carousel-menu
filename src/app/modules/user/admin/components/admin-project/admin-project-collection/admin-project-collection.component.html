@@ -50,13 +50,13 @@
 
       <!-- table -->
       <section>
-        <app-shared-table
+        <umius-table
           (customFilter)="onCustomFilter($event)"
           (editRow)="onEdit($event)"
           (performAction)="onActions($event)"
           [(config)]="localConfig"
           [data]="tableData">
-        </app-shared-table>
+        </umius-table>
       </section>
       <!-- /table -->
 

@@ -6,7 +6,7 @@ import {TranslateTitleService} from '../../../../../services/title/title.service
 import {TranslateService} from '@ngx-translate/core';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
 import {DiscoverService} from '../../../../../services/discover/discover.service';
-import {Config} from '../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {Response} from '../../../../../models/response';

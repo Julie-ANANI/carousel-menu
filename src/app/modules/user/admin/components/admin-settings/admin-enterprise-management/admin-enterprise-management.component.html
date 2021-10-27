@@ -21,14 +21,14 @@
 
     <!-- searching finished and result -->
     <section class="p-bottom-30 p-top-20">
-      <app-shared-table
+      <umius-table
         (editRow)="openSidebar($event, 'EDIT')"
         (removeRows)="removeCompanies($event)"
         [(config)]="queryConfig"
         (performAction)="performAction($event)"
         [data]="resultTableConfiguration"
         [loading]="isSearching">
-      </app-shared-table>
+      </umius-table>
     </section>
     <!-- /searching finished and result -->
 

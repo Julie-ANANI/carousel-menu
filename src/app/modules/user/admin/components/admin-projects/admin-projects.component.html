@@ -19,12 +19,18 @@
 
       <!-- table -->
       <section>
-        <app-shared-table
+        <umius-table
           [(config)]="config"
           [data]="table"
           (performAction)="getPerformedAction($event)"
           (editRow)="navigate($event)">
-        </app-shared-table>
+        </umius-table>
+<!--        <umius-table-->
+<!--          [(config)]="config"-->
+<!--          [data]="table"-->
+<!--          (performAction)="getPerformedAction($event)"-->
+<!--          (editRow)="navigate($event)">-->
+<!--        </umius-table>-->
       </section>
       <!-- /table -->
 

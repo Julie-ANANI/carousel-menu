@@ -27,13 +27,13 @@
 
       <!-- table -->
       <section>
-        <app-shared-table
+        <umius-table
           (editRow)="onClickEdit($event)"
           (performAction)="getPerformActions($event)"
           (removeRows)="onClickDelete($event)"
           [(config)]="config"
           [data]="table">
-        </app-shared-table>
+        </umius-table>
       </section>
       <!-- /table -->
 

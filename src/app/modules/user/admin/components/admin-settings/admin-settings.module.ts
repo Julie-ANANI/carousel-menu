@@ -12,7 +12,6 @@ import { AdminEmailBlacklistComponent } from './admin-email-blacklist/admin-emai
 
 import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
-import { TableModule } from '../../../../table/table.module';
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
 import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { SidebarEnterprisesModule } from '../../../../sidebars/components/sidebar-enterprises/sidebar-enterprises.module';
@@ -29,7 +28,7 @@ import { UseSuperToolsComponent } from './admin-product-management/admin-product
 import { HelpCommunityGrowComponent } from './admin-product-management/admin-product-shared-tracking-table/help-community-grow.component';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-management/admin-product-shared-tracking-table/admin-product-shared-tracking-table.component';
 import { SharedDateSelectorModule } from '../../../../shared/components/shared-date-selector/shared-date-selector.module';
-
+import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +36,6 @@ import { SharedDateSelectorModule } from '../../../../shared/components/shared-d
     SidebarBlacklistModule,
     RouterModule,
     SidebarModule,
-    TableModule,
     MessageErrorModule,
     MessageTemplateModule,
     SidebarEnterprisesModule,
@@ -50,6 +48,7 @@ import { SharedDateSelectorModule } from '../../../../shared/components/shared-d
     InputListModule,
     AutoSuggestionModule,
     SharedDateSelectorModule,
+    TableComponentsModule,
   ],
   declarations: [
     AdminSettingsComponent,

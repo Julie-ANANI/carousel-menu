@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
-import {Table} from '../../../../table/models/table';
-import {Config} from '../../../../../models/config';
 import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
 import {MissionQuestion} from '../../../../../models/mission';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
@@ -17,6 +15,7 @@ import {ErrorFrontService} from '../../../../../services/error/error-front.servi
 import {AnswerService} from '../../../../../services/answer/answer.service';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
+import { Config, Table } from '@umius/umi-common-component/models';
 import {emailRegEx} from '../../../../../utils/regex';
 import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';

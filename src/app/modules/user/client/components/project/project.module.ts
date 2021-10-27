@@ -17,7 +17,6 @@ import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 // tslint:disable-next-line:max-line-length
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
-import { TableModule } from '../../../../table/table.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
@@ -44,42 +43,43 @@ import { ContactComponent } from './components/contact/contact.component';
 import {SidebarInPageModule} from '../../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
 import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 import {MessageTemplate2Module} from '../../../../utility/messages/message-template-2/message-template-2.module';
-
+import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
-  imports: [
-    CommonModule,
-    ProjectRoutingModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    SidebarModule,
-    SharedProjectSettingsModule,
-    TableModule,
-    SharedWorldmapModule,
-    SidebarUserAnswerModule,
-    SharedMarketReportModule,
-    ModalModule,
-    FormsModule,
-    SharedEditorTinymceModule,
-    ObjectivesSecondaryModule,
-    ModalEmptyModule,
-    ObjectivesPrimaryModule,
-    AngularMyDatePickerModule,
-    AutoSuggestionModule,
-    NgxPageScrollModule,
-    BannerModule,
-    SidebarProjectPitchModule,
-    InnovCardTitlePipeModule,
-    MessageErrorModule,
-    CleanHtmlModule,
-    MarketTestMethodologyModule,
-    MarketTestObjectivesModule,
-    DatePickerModule,
-    MarketTestObjectivesComplementaryModule,
-    ModalMediaModule,
-    SidebarInPageModule,
-    SharedFollowUpModule,
-    MessageTemplate2Module
-  ],
+    imports: [
+        CommonModule,
+        ProjectRoutingModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        SidebarModule,
+        SharedProjectSettingsModule,
+
+        SharedWorldmapModule,
+        SidebarUserAnswerModule,
+        SharedMarketReportModule,
+        ModalModule,
+        FormsModule,
+        SharedEditorTinymceModule,
+        ObjectivesSecondaryModule,
+        ModalEmptyModule,
+        ObjectivesPrimaryModule,
+        AngularMyDatePickerModule,
+        AutoSuggestionModule,
+        NgxPageScrollModule,
+        BannerModule,
+        SidebarProjectPitchModule,
+        InnovCardTitlePipeModule,
+        MessageErrorModule,
+        CleanHtmlModule,
+        MarketTestMethodologyModule,
+        MarketTestObjectivesModule,
+        DatePickerModule,
+        MarketTestObjectivesComplementaryModule,
+        ModalMediaModule,
+        SidebarInPageModule,
+        SharedFollowUpModule,
+        MessageTemplate2Module,
+        TableComponentsModule
+    ],
   declarations: [
     ProjectComponent,
     SetupComponent,

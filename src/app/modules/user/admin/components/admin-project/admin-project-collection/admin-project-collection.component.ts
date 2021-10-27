@@ -11,13 +11,11 @@ import { isPlatformBrowser } from '@angular/common';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
-import { Config } from '../../../../../../models/config';
-import { ConfigService } from '../../../../../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
@@ -27,6 +25,7 @@ import { SocketService } from '../../../../../../services/socket/socket.service'
 import { Professional } from '../../../../../../models/professional';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',

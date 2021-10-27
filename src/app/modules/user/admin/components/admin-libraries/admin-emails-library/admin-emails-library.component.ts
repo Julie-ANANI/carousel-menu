@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TransactionalEmail } from '../../../../../../models/transactionnal-email';
-import { Table } from '../../../../../table/models/table';
+import { Table } from '@umius/umi-common-component/models';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../../models/email-signature';

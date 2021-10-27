@@ -6,14 +6,12 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
 import { Campaign } from '../../../../../../models/campaign';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
-import { Table } from '../../../../../table/models/table';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
-import { Config } from '../../../../../../models/config';
+import { Config, Table } from '@umius/umi-common-component/models';
 import { Response } from '../../../../../../models/response';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
-import { ConfigService } from '../../../../../../services/config/config.service';
-import { Company } from '../../../../../../models/company';
+import {ConfigService} from '@umius/umi-common-component/services/config';import { Company } from '../../../../../../models/company';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';

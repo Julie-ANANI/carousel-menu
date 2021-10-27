@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Table } from '../../../../../../table/models/table';
-import { Column } from '../../../../../../table/models/column';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
-import { Config } from '../../../../../../../models/config';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
+import { Table, Config, Column } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: './admin-product-shared-tracking-table.component.html',

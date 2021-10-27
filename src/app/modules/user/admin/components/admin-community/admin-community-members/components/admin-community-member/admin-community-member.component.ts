@@ -15,7 +15,7 @@ import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationFrontService } from '../../../../../../../../services/innovation/innovation-front.service';
 import { InnovCard } from '../../../../../../../../models/innov-card';
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
-import { Table } from '../../../../../../../table/models/table';
+import { Table } from '@umius/umi-common-component/models';
 import { Company } from '../../../../../../../../models/company';
 
 @Component({

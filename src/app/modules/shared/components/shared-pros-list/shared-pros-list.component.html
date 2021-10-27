@@ -1,12 +1,12 @@
 <section id="pros-list-component">
-  <app-shared-table
+  <umius-table
     [(config)]="config"
     [data]="tableInfos"
     (editRow)="onClickEdit($event)"
     (removeRows)="deleteProsModal($event)"
     (performAction)="performActions($event)"
     (selectRowAction)="selectPro($event)">
-  </app-shared-table>
+  </umius-table>
 </section>
 
 

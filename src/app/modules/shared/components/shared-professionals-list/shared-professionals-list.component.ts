@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Professional } from '../../../../models/professional';
-import { Table } from '../../../table/models/table';
-import { Config } from '../../../../models/config';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -13,7 +11,7 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { GeographySettings } from '../../../../models/innov-settings';
-import {Column} from '../../../table/models/column';
+import { Table, Config, Column } from '@umius/umi-common-component/models';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -127,7 +125,12 @@ export class SharedProfessionalsListComponent {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isTitle: true,
       _isPaginable: true,
-      _isFilterCountry: this.tableSelector === 'admin-campaign-pros-limit',
+      _filterButtons: this.tableSelector === 'admin-campaign-pros-limit' ? [
+        {
+          _label: 'Filter by country',
+          _action: 'filter by country'
+        }
+      ] : [],
       _isCanSelectAll: this.tableSelector === 'admin-campaign-pros-limit',
       _isNoMinHeight: this.total < 11,
       _isDeletable: this.canAccess(['user', 'delete']),
@@ -436,7 +439,7 @@ export class SharedProfessionalsListComponent {
         this._professionalsToRemove = value._rows;
         break;
 
-      case 'Filter':
+      case 'filter by country':
         this._filtersByCountry();
         break;
 

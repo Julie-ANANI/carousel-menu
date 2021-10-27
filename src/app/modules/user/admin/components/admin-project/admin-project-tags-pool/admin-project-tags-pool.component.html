@@ -22,12 +22,12 @@
 
       <!-- table -->
       <section>
-        <app-shared-table
+        <umius-table
           (removeRows)="onClickDelete($event)"
           (editRow)="onClickEdit($event)"
           [config]="localConfig"
           [data]="table">
-        </app-shared-table>
+        </umius-table>
       </section>
       <!-- /table -->
 

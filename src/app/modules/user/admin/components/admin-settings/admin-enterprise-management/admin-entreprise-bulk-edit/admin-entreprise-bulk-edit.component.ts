@@ -1,14 +1,12 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { Table } from '../../../../../../table/models/table';
+import { Table, Config, Column } from '@umius/umi-common-component/models';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
-import { Config } from '../../../../../../../models/config';
 import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
 import { AutoSuggestionConfig } from '../../../../../../utility/auto-suggestion/interface/auto-suggestion-config';
-import { Column } from '../../../../../../table/models/column';
 import { EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries } from '../../../../../../../models/static-data/enterprise';
 // import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
 // import {UserService} from "../../services/user/user.service";
