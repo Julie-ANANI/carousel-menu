@@ -1275,7 +1275,7 @@ export class TableComponent implements OnInit, OnDestroy {
         case 'MULTI-CHOICES':
           const choiceItem = column._choices.find(item => item._alias.toLowerCase() === _dataToUpdate.input.toLowerCase());
           if (choiceItem) {
-            lodash.set(_dataToUpdate.value, _attrs, choiceItem._alias);
+            lodash.set(_dataToUpdate.value, _attrs, choiceItem._alias.toUpperCase());
           }
           _dataToUpdate.input = choiceItem._alias;
           break;
