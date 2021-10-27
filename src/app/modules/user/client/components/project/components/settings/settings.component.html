@@ -202,6 +202,14 @@
                       {{ 'COMMON.BUTTON.DELETE' | translate }}
                     </div>
                   </div>
+                  <div *ngFor="let pending of pendingCollaborators" class="collaborator-wrapper">
+                    <div class="m-right-10">{{ pending }}</div>
+                    <div
+                      [attr.data-tooltip]="'PROJECT_SETTINGS.TOOLTIP_PENDING' | translate"
+                      class="label is-sm is-progress tooltip is-fullwidth">
+                      {{ 'COMMON.LABEL.PENDING' | translate }}
+                    </div>
+                  </div>
                 </ng-template>
               </div>
               <!-- /COLLABORATORS -->

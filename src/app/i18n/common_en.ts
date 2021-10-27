@@ -125,6 +125,7 @@ export const COMMON = {
     'TENTATIVE_LEFT': 'attempt(s) left',
     'ADD': 'Add',
     'FROM': 'From',
+    'PENDING': 'Pending',
     'TO': 'To',
     'SUBJECT': 'Subject',
     'FEEDBACK_COLLECTION': 'Feedback collection',
