@@ -5,9 +5,16 @@ import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CampaignFrontService {
-  private _allCampaigns: Subject<Array<Campaign>> = new Subject<
-    Array<Campaign>
-  >();
+
+  get allCampaigns(): Array<Campaign> {
+    return this._allCampaigns;
+  }
+
+  set allCampaigns(value: Array<Campaign>) {
+    this._allCampaigns = value;
+  }
+
+  private _allCampaigns: Array<Campaign> = [];
 
   private _activeCampaign: Subject<Campaign> = new Subject<Campaign>();
 
@@ -226,15 +233,11 @@ export class CampaignFrontService {
   }
 
   /***
-   * these function to set and get all the campaigns
+   * these function to set all the campaigns
    * @param value
    */
   public setAllCampaigns(value: Array<Campaign>) {
-    this._allCampaigns.next(value);
-  }
-
-  public allCampaigns(): Subject<Campaign[]> {
-    return this._allCampaigns;
+    this._allCampaigns = value;
   }
 
   /***
