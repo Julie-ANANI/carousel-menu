@@ -189,7 +189,8 @@
               <!-- COLLABORATORS -->
               <div *ngSwitchCase="'COLLABORATORS'">
                 <ng-container
-                  *ngIf="innovation.collaborators && innovation.collaborators.length === 0; else noCollaborators">
+                  *ngIf="(innovation.collaborators && innovation.collaborators.length === 0
+                  || !pendingCollaborators.length); else noCollaborators">
                   <div class="text-md">{{ 'PROJECT_SETTINGS.NO_COLLABORATORS' | translate }}</div>
                 </ng-container>
                 <ng-template #noCollaborators>
