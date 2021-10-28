@@ -11,6 +11,7 @@ RUN apt-get update
 
 RUN npm install -g @angular/cli@8.3.29
 RUN npm install -g typings
+RUN npm install pm2 -g
 
 WORKDIR /var/web
 ADD . .
