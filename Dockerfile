@@ -29,4 +29,4 @@ RUN gzip -k -r dist/browser/
 RUN npm run webpack:server
 
 EXPOSE  3080
-CMD ["npm", "run", "serve_prof:ssr"]
+CMD ["npm", "run", "serve:ssr"]
