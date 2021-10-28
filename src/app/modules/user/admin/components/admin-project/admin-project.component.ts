@@ -501,6 +501,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
       this._campaignFrontService.setActiveCampaignTab(path[path.length - 1]);
       this._campaignFrontService.setShowCampaignTabs(true);
       this._campaignFrontService.defaultCampaign = this._allCampaigns[0];
+      this._campaignFrontService.setAllCampaigns(this._allCampaigns);
     }
     this._navigationFrontService.setNavigation({tab: tab, item: item});
   }
