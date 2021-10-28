@@ -23,7 +23,7 @@ import { CommonService } from '../../../../../services/common/common.service';
 import { NavigationFrontService } from '../../../../../services/navigation/navigation-front.service';
 import { Response } from '../../../../../models/response';
 import { Campaign } from '../../../../../models/campaign';
-import { analysisSubTubs, preparationSubTabs } from "../../../../../models/static-data/subtabs";
+import { analysisSubTubs, preparationSubTabs } from '../../../../../models/static-data/subtabs';
 
 interface Tab {
   route: string;

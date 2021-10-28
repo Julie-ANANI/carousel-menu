@@ -59,7 +59,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _selectedCampaign: Campaign = <Campaign>{};
 
-  private _allCampaigns: Array<Campaign> = [];
+  private _allCampaigns: Array<Campaign> = this._campaignFrontService.allCampaigns;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -112,10 +112,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           this.setPageTitle();
         }, 100);
       }
-    });
-
-    this._campaignFrontService.allCampaigns().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaigns) => {
-      this._allCampaigns = campaigns || [];
     });
 
     this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
