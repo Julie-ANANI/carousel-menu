@@ -62,7 +62,7 @@ import { CommonService } from '../../../../../../services/common/common.service'
 export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
   private _innovation: Innovation = <Innovation>{};
 
-  private _campaigns: Array<Campaign> = [];
+  private _campaigns: Array<Campaign> = this._campaignFrontService.allCampaigns;
 
   private _activateModal = false;
 
