@@ -193,13 +193,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _getPendingCollaborators() {
     if (this._innovation._id && isPlatformBrowser(this._platformId) && this._getCollaborators) {
       this._getCollaborators = false;
-      this._innovationService.getPendingCollaborators(this._innovation._id).pipe(first()).subscribe((response) => {
-        this._pendingCollaborators = response.map((_res) => _res.invitee_email) || [];
-      }, (err: HttpErrorResponse) => {
-        this._getCollaborators = true;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
+      this._innovationService.getPendingCollaborators(this._innovation._id)
+        .pipe(first())
+        .subscribe((response) => {
+          if (response && response.result && response.result.length) {
+            this._pendingCollaborators = response.result.map((_res) => _res.invitee_email);
+          }
+          }, (err: HttpErrorResponse) => {
+          this._getCollaborators = true;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+        });
     }
   }
 
@@ -392,10 +396,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param event
    * @param section
    * @param value
+   * @param type
    */
-  public openDeleteModal(event: Event, section: Section, value: any) {
+  public openDeleteModal(event: Event, section: Section, value: any, type: any = null) {
     event.preventDefault();
-    this._selectedValue = value;
+    this._selectedValue = !!type ? {value, type} : value;
     this._activeModalSection = section;
     this._showDeleteModal = true;
   }
@@ -412,7 +417,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     switch (this._activeModalSection.name) {
 
       case 'COLLABORATORS':
-        this._deleteCollaborator(this._selectedValue);
+        if (this._selectedValue.type === 'PENDING_COLLABORATOR') {
+          this._removePendingCollaborator();
+        } else {
+          this._deleteCollaborator(this._selectedValue);
+        }
         break;
 
       case 'LANGUAGE':
@@ -777,18 +786,35 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _removePendingCollaborator() {
+    this._innovationService.removePendingCollaborator(this._selectedValue.value, this._innovation._id)
+      .pipe(first())
+      .subscribe(() => {
+        this._pendingCollaborators = this._pendingCollaborators.filter((_collaborator) => {
+          return _collaborator !== this._selectedValue.value;
+        });
+        this.closeModal();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATOR_DELETED');
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._isDeleting = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+  }
+
   /***
    * this deletes the collaborator.
    * @param collaborator
    * @private
    */
   private _deleteCollaborator(collaborator: User) {
-    this._innovationService.removeCollaborator(this._innovation._id, collaborator).pipe(first())
+    this._innovationService.removeCollaborator(this._innovation._id, collaborator)
+      .pipe(first())
       .subscribe((collaborators: Array<User>) => {
         this._innovation.collaborators = collaborators;
         this._innovationFrontService.setInnovation(this._innovation);
         this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATOR_DELETED');
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._isDeleting = false;

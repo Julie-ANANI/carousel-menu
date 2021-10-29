@@ -190,10 +190,10 @@
               <div *ngSwitchCase="'COLLABORATORS'">
                 <ng-container
                   *ngIf="(innovation.collaborators && innovation.collaborators.length === 0
-                  || !pendingCollaborators.length); else noCollaborators">
+                  && !pendingCollaborators.length); else collaborators">
                   <div class="text-md">{{ 'PROJECT_SETTINGS.NO_COLLABORATORS' | translate }}</div>
                 </ng-container>
-                <ng-template #noCollaborators>
+                <ng-template #collaborators>
                   <div *ngFor="let collaborator of innovation.collaborators" class="collaborator-wrapper">
                     <div class="m-right-40">{{ collaborator.email }}</div>
                     <div
@@ -207,8 +207,14 @@
                     <div class="m-right-10">{{ pending }}</div>
                     <div
                       [attr.data-tooltip]="'PROJECT_SETTINGS.TOOLTIP_PENDING' | translate"
-                      class="label is-sm is-progress tooltip is-fullwidth">
+                      class="label is-sm is-progress tooltip is-fullwidth m-right-40">
                       {{ 'COMMON.LABEL.PENDING' | translate }}
+                    </div>
+                    <div
+                      (click)="openDeleteModal($event, section, pending, 'PENDING_COLLABORATOR')"
+                      [id]="'open-modal-delete-collaborators'"
+                      class="button is-xs is-outlined is-danger">
+                      {{ 'COMMON.BUTTON.DELETE' | translate }}
                     </div>
                   </div>
                 </ng-template>
@@ -570,7 +576,7 @@
   <section class="modal-body">
 
     <!-- heading -->
-    <h2 [ngStyle]="{ 'color': '4C4C4C' }" class="title is-4 text-center m-bottom-50 text-bold">
+    <h2 [ngStyle]="{ 'color': '4C4C4C' }" class="title is-4 text-center m-bottom-30 text-bold">
       {{ 'COMMON.MODAL.TITLE_DELETE' | translate }}
     </h2>
     <!-- /heading -->
@@ -581,7 +587,12 @@
       <!-- COLLABORATORS -->
       <div *ngSwitchCase="'COLLABORATORS'">
         <p>{{ 'PROJECT_SETTINGS.MODAL_DELETE.COLLABORATOR' | translate }}</p>
-        <p class="text-sm text-medium">{{ selectedValue['email'] }}</p>
+        <ng-container *ngIf="selectedValue.type === 'PENDING_COLLABORATOR'; else normalCollab">
+          <p class="text-sm text-medium">{{ selectedValue.value }}</p>
+        </ng-container>
+        <ng-template #normalCollab>
+          <p class="text-sm text-medium">{{ selectedValue['email'] }}</p>
+        </ng-template>
       </div>
       <!-- /COLLABORATORS -->
 
