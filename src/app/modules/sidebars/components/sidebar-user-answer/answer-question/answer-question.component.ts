@@ -20,6 +20,10 @@ import { MissionQuestionService } from '../../../../../services/mission/mission-
 
 export class AnswerQuestionComponent {
 
+  get platformLang(): string {
+    return this._translateService.currentLang;
+  }
+
   get questionLabel(): string {
     return MissionQuestionService.label(this.question, 'label', this.currentLang);
   }
@@ -45,7 +49,7 @@ export class AnswerQuestionComponent {
     this._showCommentTranslation = false;
   }
 
-  @Input() currentLang = this._translateService.currentLang;
+  @Input() currentLang = this.platformLang;
 
   @Output() fullAnswerChange: EventEmitter<Answer> = new EventEmitter<Answer>();
 
@@ -103,8 +107,6 @@ export class AnswerQuestionComponent {
     this._answerService.addTag(this.fullAnswer._id, tag._id, q_identifier)
       .pipe(first())
       .subscribe((a: any) => {
-        console.log(a);
-        console.log(tag);
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(tag);
         } else {
@@ -140,7 +142,7 @@ export class AnswerQuestionComponent {
         this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
         this._translateNotificationsService.success('Success', 'The tag is removed from the answer.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
         console.error(err);
       });
   }
@@ -153,7 +155,7 @@ export class AnswerQuestionComponent {
   set showQuestionTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier][this.currentLang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier][this.platformLang]) {
           this._showQuestionTranslation = true;
         } else {
           throw new Error('no translation');
@@ -162,16 +164,16 @@ export class AnswerQuestionComponent {
         if (!this._fullAnswer.answers_translations[this.question.identifier]) {
           this._fullAnswer.answers_translations[this.question.identifier] = {};
         }
-        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this.currentLang)
+        this._deepl.translate(this._fullAnswer.answers[this.question.identifier], this.platformLang)
           .pipe(first())
           .subscribe((_value) => {
-            this._fullAnswer.answers_translations[this.question.identifier][this.currentLang] = _value.translation;
+            this._fullAnswer.answers_translations[this.question.identifier][this.platformLang] = _value.translation;
             this._showQuestionTranslation = true;
-            const objToSave = {answers_translations: {[this.question.identifier]: {[this.currentLang]: _value.translation}}};
+            const objToSave = {answers_translations: {[this.question.identifier]: {[this.platformLang]: _value.translation}}};
             this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {
             });
           }, (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
             console.error(err);
           });
       }
@@ -187,7 +189,7 @@ export class AnswerQuestionComponent {
   set showCommentTranslation(value: boolean) {
     if (!!value) {
       try {
-        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang]) {
+        if (this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.platformLang]) {
           this._showCommentTranslation = true;
         } else {
           throw new Error('no translation');
@@ -197,21 +199,21 @@ export class AnswerQuestionComponent {
           this._fullAnswer.answers_translations[this.question.identifier + 'Comment'] = {};
         }
         this._deepl.translate(this._fullAnswer.answers[this.question.identifier + 'Comment'],
-          this.currentLang)
+          this.platformLang)
           .pipe(first())
           .subscribe((_value) => {
-            this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.currentLang] = _value.translation;
+            this._fullAnswer.answers_translations[this.question.identifier + 'Comment'][this.platformLang] = _value.translation;
             this._showCommentTranslation = true;
             const objToSave = {
               answers_translations: {
                 [this.question.identifier + 'Comment']:
-                  {[this.currentLang]: _value.translation}
+                  {[this.platformLang]: _value.translation}
               }
             };
             this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {
             });
           }, (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
             console.error(err);
           });
       }
